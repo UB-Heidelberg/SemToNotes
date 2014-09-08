@@ -11,6 +11,9 @@ goog.require('xrx.graphic.Rect');
 
 
 
+/**
+ * @constructor
+ */
 xrx.canvas.Rect = function(canvas) {
 
   goog.base(this, canvas);

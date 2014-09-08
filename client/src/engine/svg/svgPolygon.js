@@ -13,6 +13,9 @@ goog.require('xrx.svg.Stylable');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Polygon = function(element) {
 
   goog.base(this, element);

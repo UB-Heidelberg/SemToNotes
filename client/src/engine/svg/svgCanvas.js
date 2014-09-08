@@ -11,6 +11,9 @@ goog.require('xrx.svg.Element');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Canvas = function(element) {
 
   goog.base(this, element);
@@ -28,8 +31,8 @@ xrx.svg.Canvas.tagName = 'svg';
 
 
 xrx.svg.Canvas.prototype.addChild = function(element) {
-  element.draw();
   goog.dom.append(this.element_, element.getElement());
+  element.draw();
 };
 
 

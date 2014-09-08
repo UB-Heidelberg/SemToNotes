@@ -7,10 +7,13 @@ goog.provide('xrx.svg.Image');
 
 
 goog.require('xrx.svg.Element');
-goog.require('xrx.svg.Namespace');
+goog.require('xrx.svg');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Image = function(element, image) {
 
   goog.base(this, element);

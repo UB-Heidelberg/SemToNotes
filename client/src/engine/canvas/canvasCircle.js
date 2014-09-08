@@ -11,6 +11,9 @@ goog.require('xrx.canvas.Stylable');
 
 
 
+/**
+ * @constructor
+ */
 xrx.canvas.Circle = function(canvas) {
 
   goog.base(this, canvas);

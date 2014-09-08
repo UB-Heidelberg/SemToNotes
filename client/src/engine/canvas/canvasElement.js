@@ -11,6 +11,9 @@ goog.require('xrx.canvas');
 
 
 
+/**
+ * @constructor
+ */
 xrx.canvas.Element = function(element, canvas) {
 
   this.element_ = element;

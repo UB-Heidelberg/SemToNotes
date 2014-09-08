@@ -11,6 +11,7 @@ goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
+goog.require('goog.style');
 goog.require('xrx');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
@@ -24,8 +25,10 @@ goog.require('xrx.drawing.State');
 goog.require('xrx.drawing.Viewbox');
 goog.require('xrx.graphics.Engine');
 goog.require('xrx.graphics.Graphics');
+goog.require('xrx.shape');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.Shapes');
+goog.require('xrx.svg.Canvas');
 
 
 
@@ -293,9 +296,15 @@ xrx.drawing.Drawing.prototype.draw = function() {
     this.layer_[3].draw();
     ctx.closePath();
     ctx.restore();
-  } else {
+  } else if (this.engine_ === xrx.graphics.Engine.SVG) {
     xrx.svg.setCTM(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
+  } else if (this.engine_ === xrx.graphics.Engine.VML) {
+    xrx.vml.setCTM(this.canvas_.getRaphael(),
+        this.viewbox_.getCTM());
+    this.viewbox_.getGroup().draw();
+  } else {
+    throw Error('Unknown engine.');
   }
 };
 
@@ -314,17 +323,32 @@ xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
 
 
 /**
- * Switch a canvas over into mode <i>background</i> to allow view-box panning
+ * Switch a canvas over into mode <i>disabled</i>.
+ */
+xrx.drawing.Drawing.prototype.setModeDisabled = function() {
+  this.getLayerBackground().setLocked(true);
+  this.getLayerShape().setLocked(true);
+  this.getLayerShapeModify().setLocked(true);
+  this.getLayerShapeCreate().setLocked(true);
+  this.getLayerShapeModify().removeShapes();
+  this.getLayerShapeCreate().removeShapes();
+  this.setMode_(xrx.drawing.Mode.DISABLED);
+};
+
+
+
+/**
+ * Switch a canvas over into mode <i>view</i> to allow view-box panning
  * zooming and rotating.
  */
-xrx.drawing.Drawing.prototype.setModePan = function() {
+xrx.drawing.Drawing.prototype.setModeView = function() {
   this.getLayerBackground().setLocked(false);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);
   this.getLayerShapeCreate().setLocked(true);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  this.setMode_(xrx.drawing.Mode.PAN);
+  this.setMode_(xrx.drawing.Mode.VIEW);
 };
 
 
@@ -387,12 +411,10 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
 
 
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  var width = this.element_.clientWidth;
-  var height = this.element_.clientHeight;
-  this.elementCanvas_.setAttribute('width', width);
-  this.elementCanvas_.setAttribute('height', height);
-  this.layer_[0].handleResize(width, height);
-  // TODO: handle other groups
+  var size = goog.style.getSize(this.element_);
+  this.canvas_.setHeight(size.height);
+  this.canvas_.setWidth(size.width);
+  this.draw();
 };
 
 
@@ -402,6 +424,7 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   var self = this;
+  var size = goog.style.getSize(self.element_);
 
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
@@ -409,8 +432,8 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   }, false, self);
 
   this.canvas_ = this.getGraphics().Canvas.create(self.element_);
-  this.canvas_.setHeight(this.element_.clientHeight);
-  this.canvas_.setWidth(this.element_.clientWidth);
+  this.canvas_.setHeight(size.height);
+  this.canvas_.setWidth(size.width);
 };
 
 

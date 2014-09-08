@@ -12,6 +12,9 @@ goog.require('xrx.svg.Stylable');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Circle = function(element) {
 
   goog.base(this, element);

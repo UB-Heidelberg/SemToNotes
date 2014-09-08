@@ -10,6 +10,9 @@ goog.require('xrx.svg.Element');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Stylable = function(element) {
 
   goog.base(this, element);

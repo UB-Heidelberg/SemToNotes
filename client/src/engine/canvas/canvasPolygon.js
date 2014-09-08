@@ -11,6 +11,9 @@ goog.require('xrx.graphic.Polygon');
 
 
 
+/**
+ * @constructor
+ */
 xrx.canvas.Polygon = function(canvas) {
 
   goog.base(this, canvas);

@@ -1,46 +1,49 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<script src="./lib/raphael/raphael.js"></script>
 <script src="./lib/closure-library/closure/goog/base.js"></script>
 <script src="./src/deps.js"></script>
-<!--script src="./stn.js"/-->
+<!--script src="./SemToNotes.js"/-->
 <script>
-  goog.require('xrx.stn');
+  goog.require('SemToNotes');
 </script>
 <style type="text/css">
 * {
 margin: 0px;
 padding: 0px;
 }
-body {
+html, body {
+width: 100%;
+height: 100%;
 overflow: hidden;
 margin: 0px;
 padding: 0px;
 }
 #canvasSVG {
 position: absolute;
-width: 50%;
+width: 33%;
 height: 100%;
+display: block;
 }
 #canvasCanvas {
 position: absolute;
-width: 50%;
+width: 33%;
 height: 100%;
-right: 0px;
+left: 33%;
+display: block;
 }
-#toolbarSVG, #toolbarCanvas {
+#canvasVML {
+position: absolute;
+width: 33%;
+height: 100%;
+left: 66%;
+display: block;
+}
+#toolbarSVG, #toolbarCanvas, #toolbarVML{
 position: absolute;
 right: 2px;
 top: 2px;
-}
-.xrx-ui-state-mouseover {
-border-top: solid red 2px;
-}
-.xrx-ui-state-mouseout {
-border-top: solid white 2px;
-}
-.xrx-ui-state-selected {
-border-top: solid red 2px;
 }
 </style>
 </head>
@@ -51,8 +54,11 @@ border-top: solid red 2px;
   <div id="canvasCanvas">
     <div id="toolbarCanvas"></div>
   </div>
+  <div id="canvasVML">
+    <div id="toolbarVML"></div>
+  </div>
   <script>
-    xrx.stn.install();
+    SemToNotes.install();
   </script>
 </body>
 </html>

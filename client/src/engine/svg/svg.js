@@ -3,15 +3,18 @@
  */
 
 goog.provide('xrx.svg');
-goog.provide('xrx.svg.Namespace');
 
 
 
 goog.require('goog.dom');
 goog.require('goog.math.AffineTransform');
+goog.require('xrx');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg = function() {};
 
 
@@ -19,12 +22,6 @@ xrx.svg = function() {};
 xrx.svg.Namespace = {
   'svg': 'http://www.w3.org/2000/svg',
   'xlink': 'http://www.w3.org/1999/xlink'
-};
-
-
-
-xrx.svg.getEventTarget = function(element) {
-  return element;
 };
 
 
@@ -177,7 +174,6 @@ xrx.svg.setCTM = function(element, affineTransform) {
 
   element.setAttribute('transform', s);  
 };
-
 
 
 

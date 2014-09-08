@@ -6,6 +6,13 @@ goog.provide('xrx.canvas');
 
 
 
+goog.require('xrx');
+
+
+
+/**
+ * @constructor
+ */
 xrx.canvas = function() {};
 
 

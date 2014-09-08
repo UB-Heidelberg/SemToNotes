@@ -49,6 +49,9 @@ xrx.drawing.Event = {
 
 
 
+/**
+ * @constructor
+ */
 xrx.drawing.EventTarget = function() {
 
   this.handler_ = new goog.events.EventHandler(this);
@@ -220,8 +223,9 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
 
   switch(mode) {
   case undefined:
+  case xrx.drawing.Mode.DISABLED:
     break;
-  case xrx.drawing.Mode.PAN:
+  case xrx.drawing.Mode.VIEW:
     this.registerDblClick(this.viewbox_);
     this.registerDrag(this.viewbox_);
     this.registerOut(this.viewbox_);

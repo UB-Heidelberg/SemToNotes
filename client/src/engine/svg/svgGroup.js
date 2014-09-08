@@ -11,6 +11,9 @@ goog.require('xrx.svg.Element');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Group = function(element) {
 
   goog.base(this, element);

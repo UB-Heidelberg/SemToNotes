@@ -7,6 +7,9 @@ goog.provide('xrx.graphics.Engine');
 
 
 
+/**
+ * @constructor
+ */
 xrx.graphics = function() {};
 
 

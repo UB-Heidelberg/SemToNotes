@@ -12,6 +12,9 @@ goog.require('xrx.svg.Stylable');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Rect = function(element) {
 
   goog.base(this, element);

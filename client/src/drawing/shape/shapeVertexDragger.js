@@ -12,6 +12,9 @@ goog.require('xrx.shape.Shape');
 
 
 
+/**
+ * @constructor
+ */
 xrx.shape.VertexDragger = function(drawing) {
 
   goog.base(this, drawing);

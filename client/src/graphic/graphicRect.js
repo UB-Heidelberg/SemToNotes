@@ -6,6 +6,9 @@ goog.provide('xrx.graphic.Rect');
 
 
 
+/**
+ * @constructor
+ */
 xrx.graphic.Rect = function() {
 
   this.x = 0;

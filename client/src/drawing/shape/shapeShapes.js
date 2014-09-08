@@ -15,4 +15,7 @@ goog.require('xrx.shape.RectCreate');
 
 
 
+/**
+ * @constructor
+ */
 xrx.shape.Shapes = function() {};

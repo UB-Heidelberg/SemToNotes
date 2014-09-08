@@ -97,7 +97,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   // viewer buttons
   var buttonPanImage = xrx.drawing.ToolbarToggle.create('./res/openhand.png',
       'Zoom, Pan or Rotate the Canvas.');
-  registerButtonClick(buttonPanImage, self.drawing_, 'setModePan');
+  registerButtonClick(buttonPanImage, self.drawing_, 'setModeView');
   var buttonZoomIn = xrx.drawing.ToolbarButton.create('./res/zoomIn.png',
       'Zoom In.');
   registerButtonClick(buttonZoomIn, viewbox, 'zoomIn');

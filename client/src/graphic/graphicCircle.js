@@ -6,6 +6,9 @@ goog.provide('xrx.graphic.Circle');
 
 
 
+/**
+ * @constructor
+ */
 xrx.graphic.Circle = function() {
 
   this.cx = 0;

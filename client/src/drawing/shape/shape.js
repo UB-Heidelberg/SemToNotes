@@ -6,6 +6,13 @@ goog.provide('xrx.shape');
 
 
 
+goog.require('xrx');
+
+
+
+/**
+ * @constructor
+ */
 xrx.shape = function() {};
 
 

@@ -17,6 +17,9 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
+/**
+ * @constructor
+ */
 xrx.shape.Polygon = function(drawing) {
 
   goog.base(this, drawing);

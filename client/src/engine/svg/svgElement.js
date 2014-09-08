@@ -11,10 +11,12 @@ goog.require('goog.math.AffineTransform');
 goog.require('goog.style');
 goog.require('xrx.drawing.State');
 goog.require('xrx.svg');
-goog.require('xrx.svg.Namespace');
 
 
 
+/**
+ * @constructor
+ */
 xrx.svg.Element = function(element) {
 
   this.element_ = element;
