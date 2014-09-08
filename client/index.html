@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<!--script src="./lib/closure-library/closure/goog/base.js"></script>
+<script src="./src/deps.js"></script-->
+<script src="./stn-minified.js"/>
+<script>
+  goog.require('xrx.stn');
+</script>
+<style type="text/css">
+* {
+margin: 0px;
+padding: 0px;
+}
+body {
+overflow: hidden;
+margin: 0px;
+padding: 0px;
+}
+#stnImage {
+display: none;
+}
+#stn {
+position: absolute;
+width: 100%;
+height: 100%;
+}
+#toolbar {
+position: absolute;
+right: 2px;
+top: 2px;
+}
+.xrx-ui-state-mouseover {
+border-top: solid red 2px;
+}
+.xrx-ui-state-mouseout {
+border-top: solid white 2px;
+}
+.xrx-ui-state-selected {
+border-top: solid red 2px;
+}
+.xrx-shape {
+fill-opacity: 0.0;
+stroke: #47D1FF;
+stroke-width: 1;
+}
+</style>
+</head>
+<body>
+  <img id="stnImage"/>
+  <div id="stn"></div>
+  <div id="toolbar"></div>
+  <script>
+    xrx.stn.install('stn');
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+/* Tomorrow Theme***REMOVED***
+/* Original theme - https://github.com/chriskempson/tomorrow-theme***REMOVED***
+/* Pretty printing styles. Used with prettify.js.***REMOVED***
+/* SPAN elements with the classes below are added by prettyprint.***REMOVED***
+/* plain text***REMOVED***
+.pln {
+  color: #4d4d4c; }
+
+@media screen {
+  /* string content***REMOVED***
+  .str {
+    color: #718c00; }
+
+  /* a keyword***REMOVED***
+  .kwd {
+    color: #8959a8; }
+
+  /* a comment***REMOVED***
+  .com {
+    color: #8e908c; }
+
+  /* a type name***REMOVED***
+  .typ {
+    color: #4271ae; }
+
+  /* a literal value***REMOVED***
+  .lit {
+    color: #f5871f; }
+
+  /* punctuation***REMOVED***
+  .pun {
+    color: #4d4d4c; }
+
+  /* lisp open bracket***REMOVED***
+  .opn {
+    color: #4d4d4c; }
+
+  /* lisp close bracket***REMOVED***
+  .clo {
+    color: #4d4d4c; }
+
+  /* a markup tag name***REMOVED***
+  .tag {
+    color: #c82829; }
+
+  /* a markup attribute name***REMOVED***
+  .atn {
+    color: #f5871f; }
+
+  /* a markup attribute value***REMOVED***
+  .atv {
+    color: #3e999f; }
+
+  /* a declaration***REMOVED***
+  .dec {
+    color: #f5871f; }
+
+  /* a variable name***REMOVED***
+  .var {
+    color: #c82829; }
+
+  /* a function name***REMOVED***
+  .fun {
+    color: #4271ae; } }
+/* Use higher contrast and text-weight for printable form.***REMOVED***
+@media print, projection {
+  .str {
+    color: #060; }
+
+  .kwd {
+    color: #006;
+    font-weight: bold; }
+
+  .com {
+    color: #600;
+    font-style: italic; }
+
+  .typ {
+    color: #404;
+    font-weight: bold; }
+
+  .lit {
+    color: #044; }
+
+  .pun, .opn, .clo {
+    color: #440; }
+
+  .tag {
+    color: #006;
+    font-weight: bold; }
+
+  .atn {
+    color: #404; }
+
+  .atv {
+    color: #060; } }
+/* Style***REMOVED***
+/*
+pre.prettyprint {
+  background: white;
+  font-family: Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  border: 1px solid #ccc;
+  padding: 10px; }
+*/
+
+/* Specify class=linenums on a pre to get line numbering***REMOVED***
+ol.linenums {
+  margin-top: 0;
+  margin-bottom: 0; }
+
+/* IE indents via margin-left***REMOVED***
+li.L0,
+li.L1,
+li.L2,
+li.L3,
+li.L4,
+li.L5,
+li.L6,
+li.L7,
+li.L8,
+li.L9 {
+ ***REMOVED*****REMOVED*****REMOVED*** }
+
+/* Alternate shading for lines***REMOVED***
+li.L1,
+li.L3,
+li.L5,
+li.L7,
+li.L9 {
+ ***REMOVED*****REMOVED*****REMOVED*** }

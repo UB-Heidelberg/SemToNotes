@@ -1,0 +1,111 @@
+/* JSDoc prettify.js theme***REMOVED***
+
+/* plain text***REMOVED***
+.pln {
+  color: #000000;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* string content***REMOVED***
+.str {
+  color: #006400;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a keyword***REMOVED***
+.kwd {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* a comment***REMOVED***
+.com {
+  font-weight: normal;
+  font-style: italic;
+}
+
+/* a type name***REMOVED***
+.typ {
+  color: #000000;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a literal value***REMOVED***
+.lit {
+  color: #006400;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* punctuation***REMOVED***
+.pun {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* lisp open bracket***REMOVED***
+.opn {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* lisp close bracket***REMOVED***
+.clo {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* a markup tag name***REMOVED***
+.tag {
+  color: #006400;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a markup attribute name***REMOVED***
+.atn {
+  color: #006400;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a markup attribute value***REMOVED***
+.atv {
+  color: #006400;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a declaration***REMOVED***
+.dec {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* a variable name***REMOVED***
+.var {
+  color: #000000;
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* a function name***REMOVED***
+.fun {
+  color: #000000;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Specify class=linenums on a pre to get line numbering***REMOVED***
+ol.linenums {
+  margin-top: 0;
+  margin-bottom: 0;
+}

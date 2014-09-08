@@ -1,0 +1,17 @@
+***REMOVED***
+    @module {ConnectServer} blog/server
+*/
+
+module.exports = require('connect').createServer(
+  Connect.logger(),
+  Connect.conditionalGet(),
+  Connect.favicon(),
+  Connect.cache(),
+  Connect.gzip(),
+  require('wheat')(__dirname)
+);
+
+***REMOVED***
+    @member {number} module:blog/server.port
+    @default 8080
+*/
