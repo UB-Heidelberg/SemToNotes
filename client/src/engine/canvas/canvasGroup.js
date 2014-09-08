@@ -10,6 +10,9 @@ goog.require('xrx.canvas.Element');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.canvas.Group = function(canvas) {
 
   goog.base(this, undefined, canvas);

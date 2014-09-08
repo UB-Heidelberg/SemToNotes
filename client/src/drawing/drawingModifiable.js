@@ -11,6 +11,9 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.drawing.Modifiable = function(drawing) {
 
   this.drawing_ = drawing;

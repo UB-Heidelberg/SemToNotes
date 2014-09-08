@@ -11,6 +11,9 @@ goog.require('xrx.graphic.Rect');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.canvas.Rect = function(canvas) {
 
   goog.base(this, canvas);

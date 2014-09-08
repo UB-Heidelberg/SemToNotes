@@ -10,6 +10,9 @@ goog.require('xrx.graphics');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.graphics.Coordinate = function() {***REMOVED***
 
 

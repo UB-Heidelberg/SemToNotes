@@ -17,6 +17,9 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.shape.Polygon = function(drawing) {
 
   goog.base(this, drawing);

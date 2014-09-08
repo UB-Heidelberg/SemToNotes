@@ -9,9 +9,13 @@ goog.provide('xrx.shape.Shape');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.State');
 goog.require('xrx.graphics.Graphics');
+goog.require('xrx.shape');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.shape.Shape = function(drawing) {
 
   this.drawing_ = drawing;

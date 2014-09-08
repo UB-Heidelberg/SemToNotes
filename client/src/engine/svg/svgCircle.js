@@ -12,6 +12,9 @@ goog.require('xrx.svg.Stylable');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.svg.Circle = function(element) {
 
 ***REMOVED***

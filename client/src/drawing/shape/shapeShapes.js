@@ -15,4 +15,7 @@ goog.require('xrx.shape.RectCreate');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.shape.Shapes = function() {***REMOVED***

@@ -11,6 +11,9 @@ goog.require('xrx.canvas.Element');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.canvas.Canvas = function(element) {
 
   goog.base(this, element, element);

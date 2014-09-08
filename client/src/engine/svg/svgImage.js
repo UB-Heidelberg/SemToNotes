@@ -7,10 +7,13 @@ goog.provide('xrx.svg.Image');
 
 
 goog.require('xrx.svg.Element');
-goog.require('xrx.svg.Namespace');
+goog.require('xrx.svg');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.svg.Image = function(element, image) {
 
 ***REMOVED***

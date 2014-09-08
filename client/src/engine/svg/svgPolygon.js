@@ -13,6 +13,9 @@ goog.require('xrx.svg.Stylable');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.svg.Polygon = function(element) {
 
 ***REMOVED***

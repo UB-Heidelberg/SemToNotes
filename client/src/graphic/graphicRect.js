@@ -6,6 +6,9 @@ goog.provide('xrx.graphic.Rect');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.graphic.Rect = function() {
 
   this.x = 0;

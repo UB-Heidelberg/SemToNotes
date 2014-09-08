@@ -11,6 +11,9 @@ goog.require('xrx.svg.Element');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.svg.Group = function(element) {
 
 ***REMOVED***

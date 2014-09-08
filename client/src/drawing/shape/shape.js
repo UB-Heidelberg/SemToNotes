@@ -6,6 +6,13 @@ goog.provide('xrx.shape');
 
 
 
+goog.require('xrx');
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.shape = function() {***REMOVED***
 
 

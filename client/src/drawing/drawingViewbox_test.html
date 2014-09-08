@@ -64,11 +64,10 @@
 <script type="text/javascript">
 var url = './drawing_test.png';
 
-function getDrawingSvg(id, callback) {
+function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
       xrx.graphics.Engine.SVG);
-  svgDrawing.setBackgroundImage(url, callback);
   return svgDrawing;
 ***REMOVED***
 
@@ -76,67 +75,81 @@ function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
     xrx.graphics.Engine.CANVAS);
-  canvasDrawing.setBackgroundImage(url, callback);
   return canvasDrawing;
 ***REMOVED***
 
 function test0Original() {
   var svgDrawing = getDrawingSvg('svgOriginal');
+  svgDrawing.setBackgroundImage(url);
+  svgDrawing.draw();
   var canvasDrawing = getDrawingCanvas('canvasOriginal');
+  canvasDrawing.setBackgroundImage(url);
+  canvasDrawing.draw();
 ***REMOVED***
 
 function test1Transform() {
   // TODO
-  var svgDrawing = getDrawingSvg('svgSetMatrix', function() {
-    svgDrawing.getViewbox().transform();
+  var svgDrawing = getDrawingSvg('svgSetMatrix');
+  svgDrawing.setBackgroundImage(url, function() {
+    //svgDrawing.getViewbox().transform();
     svgDrawing.draw();
   });
-  var canvasDrawing = getDrawingCanvas('canvasSetMatrix', function() {
-    canvasDrawing.getViewbox().transform();
+  var canvasDrawing = getDrawingCanvas('canvasSetMatrix');
+  canvasDrawing.setBackgroundImage(url, function() {
+    //canvasDrawing.getViewbox().transform();
     canvasDrawing.draw();
   });
 
 ***REMOVED***
 
 function test2RotateLeft() {
-  var svgDrawing = getDrawingSvg('svgRotateLeft', function() {
+  // TODO
+  var svgDrawing = getDrawingSvg('svgRotateLeft');
+  svgDrawing.setBackgroundImage(url, function() {
     svgDrawing.getViewbox().rotateLeft();
     svgDrawing.draw();
   });
-  var canvasDrawing = getDrawingCanvas('canvasRotateLeft', function() {
+  var canvasDrawing = getDrawingCanvas('canvasRotateLeft');
+  canvasDrawing.setBackgroundImage(url, function() {
     canvasDrawing.getViewbox().rotateLeft();
     canvasDrawing.draw();
   });
 ***REMOVED***
 
 function test3RotateRight() {
-  var svgDrawing = getDrawingSvg('svgRotateRight', function() {
+  var svgDrawing = getDrawingSvg('svgRotateRight');
+  svgDrawing.setBackgroundImage(url, function() {
     svgDrawing.getViewbox().rotateRight();
     svgDrawing.draw();
   });
-  var canvasDrawing = getDrawingCanvas('canvasRotateRight', function() {
+  var canvasDrawing = getDrawingCanvas('canvasRotateRight');
+  canvasDrawing.setBackgroundImage(url, function() {
     canvasDrawing.getViewbox().rotateRight();
     canvasDrawing.draw();
   });
 ***REMOVED***
 
 function test4ZoomIn() {
-  var svgDrawing = getDrawingSvg('svgZoomIn', function() {
+  var svgDrawing = getDrawingSvg('svgZoomIn');
+  svgDrawing.setBackgroundImage(url, function() {
     for (var i = 0; i < 10; i++) { svgDrawing.getViewbox().zoomIn(); }
     svgDrawing.draw();
   });
-  var canvasDrawing = getDrawingCanvas('canvasZoomIn', function() {
+  var canvasDrawing = getDrawingCanvas('canvasZoomIn');
+  canvasDrawing.setBackgroundImage(url, function() {
     for (var i = 0; i < 10; i++) { canvasDrawing.getViewbox().zoomIn(); }
     canvasDrawing.draw();
   });
 ***REMOVED***
 
 function test5ZoomOut() {
-  var svgDrawing = getDrawingSvg('svgZoomOut', function() {
+  var svgDrawing = getDrawingSvg('svgZoomOut');
+  svgDrawing.setBackgroundImage(url, function() {
     for (var i = 0; i < 10; i++) { svgDrawing.getViewbox().zoomOut(); }
     svgDrawing.draw();
   });
-  var canvasDrawing = getDrawingCanvas('canvasZoomOut', function() {
+  var canvasDrawing = getDrawingCanvas('canvasZoomOut');
+  canvasDrawing.setBackgroundImage(url, function() {
     for (var i = 0; i < 10; i++) { canvasDrawing.getViewbox().zoomOut(); }
     canvasDrawing.draw();
   });

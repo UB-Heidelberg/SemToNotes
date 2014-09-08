@@ -22,7 +22,18 @@ goog.require('xrx.svg.Group');
 goog.require('xrx.svg.Image');
 goog.require('xrx.svg.Polygon');
 goog.require('xrx.svg.Rect');
+goog.require('xrx.vml');
+goog.require('xrx.vml.Canvas');
+goog.require('xrx.vml.Circle');
+goog.require('xrx.vml.Element');
+goog.require('xrx.vml.Group');
+goog.require('xrx.vml.Image');
+goog.require('xrx.vml.Polygon');
+goog.require('xrx.vml.Rect');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.graphics.Graphics = function() {***REMOVED***

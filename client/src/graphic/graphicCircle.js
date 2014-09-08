@@ -6,6 +6,9 @@ goog.provide('xrx.graphic.Circle');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.graphic.Circle = function() {
 
   this.cx = 0;

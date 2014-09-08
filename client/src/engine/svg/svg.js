@@ -3,15 +3,18 @@
 ***REMOVED***
 
 goog.provide('xrx.svg');
-goog.provide('xrx.svg.Namespace');
 
 
 
 goog.require('goog.dom');
 goog.require('goog.math.AffineTransform');
+goog.require('xrx');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.svg = function() {***REMOVED***
 
 
@@ -19,12 +22,6 @@ xrx.svg = function() {***REMOVED***
 xrx.svg.Namespace = {
   'svg': 'http://www.w3.org/2000/svg',
   'xlink': 'http://www.w3.org/1999/xlink'
-***REMOVED***
-
-
-
-xrx.svg.getEventTarget = function(element) {
-  return element;
 ***REMOVED***
 
 
@@ -177,7 +174,6 @@ xrx.svg.setCTM = function(element, affineTransform) {
 
   element.setAttribute('transform', s);  
 ***REMOVED***
-
 
 
 

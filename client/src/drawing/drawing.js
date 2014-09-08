@@ -9,9 +9,12 @@ goog.provide('xrx.drawing.State');
 
 
 
+goog.require('xrx');
+
+
+
 ***REMOVED***
 ***REMOVED*** A static class providing enumerations for the drawing classes.
-***REMOVED*** @class
 ***REMOVED***
 xrx.drawing = function() {***REMOVED***
 
@@ -34,7 +37,8 @@ xrx.drawing.State = {
 ***REMOVED***
 xrx.drawing.Mode = {
   PAN: 1,
-  DRAW: 2,
+  VIEW: 2,
   MODIFY: 3,
-  DELETE: 4
+  DELETE: 4,
+  DISABLED: 5
 ***REMOVED***

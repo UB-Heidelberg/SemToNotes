@@ -6,6 +6,13 @@ goog.provide('xrx.canvas');
 
 
 
+goog.require('xrx');
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.canvas = function() {***REMOVED***
 
 

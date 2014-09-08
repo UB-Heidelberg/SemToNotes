@@ -6,6 +6,9 @@ goog.provide('xrx.graphic.Polygon');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.graphic.Polygon = function() {
 
   this.coords = [];
