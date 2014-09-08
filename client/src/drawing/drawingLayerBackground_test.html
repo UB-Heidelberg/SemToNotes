@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.drawing.LayerBackground</title>
+<script src='../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+ ***REMOVED*****REMOVED***
+  goog.require('xrx.drawing.Drawing');
+  goog.require('xrx.drawing.Mode');
+  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.shape.Shapes');
+</script>
+<style>
+.drawing {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border: solid grey 1px;
+}
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td>Listener</td>
+    <td>SVG</td>
+	<td>Canvas</td>
+	<td>Comment</td>
+  </tr>
+  <tr>
+    <td>Mouse-wheel</td>
+    <td><div id="svgWheel" class="drawing"></div></td>
+	<td><div id="canvasWheel" class="drawing"></div></td>
+    <td>Zoom in and out the background image with the mouse-wheel.</td>
+  </tr>
+  <tr>
+    <td>Double click</td>
+    <td><div id="svgDblClick" class="drawing"></div></td>
+	<td><div id="canvasDblClick" class="drawing"></div></td>
+    <td>A double click rotates the background image right</td>
+  </tr>
+  <tr>
+    <td>Drag (down, move, up)</td>
+    <td><div id="svgDrag" class="drawing"></div></td>
+	<td><div id="canvasDrag" class="drawing"></div></td>
+    <td>Touch and move to drag the background image.</td>
+  </tr>
+  <tr>
+    <td>Mouse out</td>
+    <td><div id="svgOut" class="drawing"></div></td>
+	<td><div id="canvasOut" class="drawing"></div></td>
+    <td>Drag the background image and in doing so move the mouse
+      outside the canvas keeping the mouse pressed. Move in again
+      and hover the background image, still keeping the mouse
+      pressed. The background image should not drag when hovered.</td>
+  </tr>
+  <tr>
+    <td>All events</td>
+    <td><div id="svgAll" class="drawing"></div></td>
+	<td><div id="canvasAll" class="drawing"></div></td>
+    <td>All events should be handled as above.</td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+var url = './drawing_test.png';
+
+function getDrawingSvg(id, callback) {
+  var svgDiv = goog.dom.getElement(id);
+  var svgDrawing = new xrx.drawing.Drawing(svgDiv,
+      xrx.graphics.Engine.SVG);
+  svgDrawing.setBackgroundImage(url, callback);
+  return svgDrawing;
+***REMOVED***
+
+function getDrawingCanvas(id, callback) {
+  var canvasDiv = goog.dom.getElement(id);
+  var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
+    xrx.graphics.Engine.CANVAS);
+  canvasDrawing.setBackgroundImage(url, callback);
+  return canvasDrawing;
+***REMOVED***
+
+function test1Wheel() {
+  var svgDrawing = getDrawingSvg('svgWheel');
+  var canvasDrawing = getDrawingCanvas('canvasWheel');
+
+  svgDrawing.registerWheel(svgDrawing.getViewbox());
+  canvasDrawing.registerWheel(canvasDrawing.getViewbox());
+***REMOVED***
+
+function test2DblClick() {
+  var svgDrawing = getDrawingSvg('svgDblClick');
+  var canvasDrawing = getDrawingCanvas('canvasDblClick');
+
+  svgDrawing.registerDblClick(svgDrawing.getViewbox());
+  canvasDrawing.registerDblClick(canvasDrawing.getViewbox());
+***REMOVED***
+
+function test4Drag() {
+  var svgDrawing = getDrawingSvg('svgDrag');
+  var canvasDrawing = getDrawingCanvas('canvasDrag');
+
+  svgDrawing.registerDrag(svgDrawing.getViewbox());
+  canvasDrawing.registerDrag(canvasDrawing.getViewbox());
+***REMOVED***
+
+function test5Out() {
+  var svgDrawing = getDrawingSvg('svgDrag');
+  var canvasDrawing = getDrawingCanvas('canvasDrag');
+
+  svgDrawing.registerDrag(svgDrawing.getViewbox());
+  svgDrawing.registerOut(svgDrawing.getViewbox());
+  canvasDrawing.registerDrag(canvasDrawing.getViewbox());
+  canvasDrawing.registerOut(canvasDrawing.getViewbox());
+***REMOVED***
+
+function test6All() {
+  var svgDrawing = getDrawingSvg('svgAll');
+  var canvasDrawing = getDrawingCanvas('canvasAll');
+
+  svgDrawing.registerEvents(xrx.drawing.Mode.PAN);
+  canvasDrawing.registerEvents(xrx.drawing.Mode.PAN);
+***REMOVED***
+
+</script>
+
+</body>
+</html>

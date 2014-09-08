@@ -6,4 +6,4 @@
   --output_mode=compiled ^
   --compiler_jar=.\lib\closure-compiler\compiler.jar ^
   --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" ^
-  > .\stn-minified.js
+  > .\stn.js

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.drawing.Drawing</title>
+<script src='../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+ ***REMOVED*****REMOVED***
+  goog.require('xrx.drawing.Drawing');
+  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.shape.Shapes');
+</script>
+<style>
+.drawing {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border: solid grey 1px;
+}
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td></td>
+    <td>Drawing</td>
+	<td>Set Background Image</td>
+	<td>Add Shapes</td>
+  </tr>
+  <tr>
+    <td>SVG</td>
+    <td><div id="svgDrawing" class="drawing"></div></td>
+    <td><div id="svgBackgroundImage" class="drawing"></div></td>
+    <td><div id="svgAddShapes" class="drawing"></div></td>
+  </tr>
+  <tr>
+	<td>Canvas</td>
+	<td><div id="canvasDrawing" class="drawing"></div></td>
+    <td><div id="canvasBackgroundImage" class="drawing"></div></td>
+    <td><div id="canvasAddShapes" class="drawing"></div></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+function getDrawingSvg(id) {
+  var svgDiv = goog.dom.getElement(id);
+  return new xrx.drawing.Drawing(svgDiv,
+      xrx.graphics.Engine.SVG);
+***REMOVED***
+
+function getDrawingCanvas(id) {
+  var canvasDiv = goog.dom.getElement(id);
+  return new xrx.drawing.Drawing(canvasDiv,
+    xrx.graphics.Engine.CANVAS);
+***REMOVED***
+
+function test0Structure() {
+  var svgDrawing = getDrawingSvg('svgDrawing');
+
+  
+***REMOVED***
+
+
+function test1drawing() {
+  var svgDrawing = getDrawingSvg('svgDrawing');
+  var canvasDrawing = getDrawingCanvas('canvasDrawing');
+
+  // drawing size
+  assertEquals(150, svgDrawing.getElement().clientWidth);
+  assertEquals(152, svgDrawing.getElement().offsetWidth);
+  assertEquals(150, canvasDrawing.getElement().clientWidth);
+  assertEquals(152, canvasDrawing.getElement().offsetWidth);
+  assertEquals(150, svgDrawing.getElement().clientHeight);
+  assertEquals(152, svgDrawing.getElement().offsetHeight);
+  assertEquals(150, canvasDrawing.getElement().clientHeight);
+  assertEquals(152, canvasDrawing.getElement().offsetHeight);
+
+  // canvas size
+  assertEquals('150', svgDrawing.getCanvas().getElement().getAttribute('width'));
+  assertEquals('150', svgDrawing.getCanvas().getElement().getAttribute('height'));
+  assertEquals('150', canvasDrawing.getCanvas().getElement().getAttribute('width'));
+  assertEquals('150', canvasDrawing.getCanvas().getElement().getAttribute('height'));
+***REMOVED***
+
+function test2setBackgroundImage() {
+  var url = './drawing_test.png';
+  var svgDrawing = getDrawingSvg('svgBackgroundImage');
+  var canvasDrawing = getDrawingCanvas('canvasBackgroundImage');
+
+  svgDrawing.setBackgroundImage(url);
+  canvasDrawing.setBackgroundImage(url);
+***REMOVED***
+
+function test3resize() {
+***REMOVED***
+
+function test4addShapes() {
+  var svgDrawing = getDrawingSvg('svgAddShapes');
+  var canvasDrawing = getDrawingCanvas('canvasAddShapes');
+
+  var svgRect1 = xrx.shape.Rect.create(svgDrawing);
+  svgRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
+  var svgRect2 = xrx.shape.Rect.create(svgDrawing);
+  svgRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
+
+  svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2]);
+  svgDrawing.draw();
+
+  var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
+  canvasRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
+  var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
+  canvasRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
+
+  canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2]);
+  canvasDrawing.draw();
+***REMOVED***
+
+</script>
+</body>
+</html>
