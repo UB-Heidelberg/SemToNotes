@@ -1,10 +1,2 @@
-### Licence ###
-
-Creative Commons-Lizenz CC-BY-SA 3.0 DE
-<http://creativecommons.org/licenses/by-sa/3.0/de/>
-<http://www.ub.uni-heidelberg.de/helios/digi/nutzung/Welcome.html>
-
-### Source ###
-
 Universitätsbibliothek Heidelberg: HeidICON. Die Heidelberger Bilddatenbank
-<http://HeidICON.uni-hd.de>
+< http://HeidICON.uni-hd.de >

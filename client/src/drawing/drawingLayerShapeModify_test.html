@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.drawing.LayerShapeModify</title>
+<script src='../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.dom.DomHelper');
+  goog.require('xrx.drawing.Drawing');
+  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.shape.Shapes');
+</script>
+<style>
+.drawing {
+  display: block;
+  width: 150px;
+  height: 150px;
+  border: solid grey 1px;
+}
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <td>Test</td>
+    <td>SVG</td>
+	<td>Canvas</td>
+	<td>Comment</td>
+  </tr>
+  <tr>
+    <td>Delete rectangle</td>
+    <td><div id="svgDeleteRectangle" class="drawing"></div></td>
+	<td><div id="canvasDeleteRectangle" class="drawing"></div></td>
+  </tr>
+  <tr>
+    <td>Delete polygon</td>
+    <td><div id="svgDeletePolygon" class="drawing"></div></td>
+	<td><div id="canvasDeletePolygon" class="drawing"></div></td>
+  </tr>
+  <tr>
+    <td>Modify rectangle</td>
+    <td><div id="svgModifyRectangle" class="drawing"></div></td>
+	<td><div id="canvasModifyRectangle" class="drawing"></div></td>
+  </tr>
+  <tr>
+    <td>Modify polygon</td>
+    <td><div id="svgModifyPolygon" class="drawing"></div></td>
+	<td><div id="canvasModifyPolygon" class="drawing"></div></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+var url = './drawing_test.png';
+var rectCoords = [[10,10],[10,30],[30,30],[30,10]];
+var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
+
+function getDrawingSvg(id, callback) {
+  var svgDiv = goog.dom.getElement(id);
+  var svgDrawing = new xrx.drawing.Drawing(svgDiv,
+      xrx.graphics.Engine.SVG);
+  svgDrawing.setBackgroundImage(url, callback);
+  for (var i = 0; i < 8; i++) { svgDrawing.getViewbox().zoomIn() };
+  return svgDrawing;
+};
+
+function getDrawingCanvas(id, callback) {
+  var canvasDiv = goog.dom.getElement(id);
+  var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
+    xrx.graphics.Engine.CANVAS);
+  canvasDrawing.setBackgroundImage(url, callback);
+  for (var i = 0; i < 8; i++) { canvasDrawing.getViewbox().zoomIn() };
+  return canvasDrawing;
+};
+
+function test1DeleteRectangle() {
+  var svgDrawing = getDrawingSvg('svgDeleteRectangle');
+  var canvasDrawing = getDrawingCanvas('canvasDeleteRectangle');
+
+  svgDrawing.setModeDelete();
+  canvasDrawing.setModeDelete();
+
+  var svgRect = xrx.shape.Rect.create(svgDrawing);
+  svgRect.setCoords(rectCoords);
+  var canvasRect = xrx.shape.Rect.create(canvasDrawing);
+  canvasRect.setCoords(rectCoords);
+
+  svgDrawing.getLayerShape().addShapes(svgRect);
+  svgDrawing.draw();
+  canvasDrawing.getLayerShape().addShapes(canvasRect);
+  canvasDrawing.draw();
+};
+
+function test2deletePolygon() {
+  var svgDrawing = getDrawingSvg('svgDeletePolygon');
+  var canvasDrawing = getDrawingCanvas('canvasDeletePolygon');
+
+  svgDrawing.setModeDelete();
+  canvasDrawing.setModeDelete();
+
+  var svgPolygon = xrx.shape.Polygon.create(svgDrawing);
+  svgPolygon.setCoords(polygonCoords);
+  var canvasPolygon = xrx.shape.Polygon.create(canvasDrawing);
+  canvasPolygon.setCoords(polygonCoords);
+
+  svgDrawing.getLayerShape().addShapes(svgPolygon);
+  svgDrawing.draw();
+  canvasDrawing.getLayerShape().addShapes(canvasPolygon);
+  canvasDrawing.draw();
+};
+
+function test3ModifyRectangle() {
+  var svgDrawing = getDrawingSvg('svgModifyRectangle');
+  var canvasDrawing = getDrawingCanvas('canvasModifyRectangle');
+
+  svgDrawing.setModeModify();
+  canvasDrawing.setModeModify();
+
+  var svgRect = xrx.shape.Rect.create(svgDrawing);
+  svgRect.setCoords(rectCoords);
+  var canvasRect = xrx.shape.Rect.create(canvasDrawing);
+  canvasRect.setCoords(rectCoords);
+
+  svgDrawing.getLayerShape().addShapes(svgRect);
+  svgDrawing.draw();
+  canvasDrawing.getLayerShape().addShapes(canvasRect);
+  canvasDrawing.draw();
+};
+
+function test4ModifyPolygon() {
+  var svgDrawing = getDrawingSvg('svgModifyPolygon');
+  var canvasDrawing = getDrawingCanvas('canvasModifyPolygon');
+
+  svgDrawing.setModeModify();
+  canvasDrawing.setModeModify();
+
+  var svgPolygon = xrx.shape.Polygon.create(svgDrawing);
+  svgPolygon.setCoords(polygonCoords);
+  var canvasPolygon = xrx.shape.Polygon.create(canvasDrawing);
+  canvasPolygon.setCoords(polygonCoords);
+
+  svgDrawing.getLayerShape().addShapes(svgPolygon);
+  svgDrawing.draw();
+  canvasDrawing.getLayerShape().addShapes(canvasPolygon);
+  canvasDrawing.draw();
+};
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.graphics.Rect, xrx.graphics.Polygon, xrx.graphics.Circle, xrx.graphics.Group, xrx.graphics.Image</title>
+<script src='../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.dom.DomHelper');
+  goog.require('xrx.graphics.Graphics');
+</script>
+<style>
+canvas, svg {
+border: solid grey 1px;
+}
+.table {
+display: table;
+width: auto;
+}
+.row {
+display: table-row;
+width: auto;
+}
+.column {
+display: table-column;
+width: auto;
+}
+</style>
+</head>
+<body>
+
+<img id="testImage" src="./graphics_test.png" style="display:none"></img>
+<table>
+  <tr>
+    <td></td>
+	<td><span>Rectangle</span></td>
+	<td><span>Polygon</span></td>
+	<td><span>Circle</span></td>
+	<td><span>Image</span></td>
+	<td><span>Group</span></td>
+  <tr>
+  <tr>
+    <td><span>SVG</span></td>
+	<td id="svgRect"></td>
+	<td id="svgPolygon"></td>
+	<td id="svgCircle"></td>
+	<td id="svgImage"></td>
+	<td id="svgGroup"></td>
+  <tr>
+  <tr>
+    <td><span>Canvas</span></td>
+	<td id="canvasRect"></td>
+	<td id="canvasPolygon"></td>
+	<td id="canvasCircle"></td>
+	<td id="canvasImage"></td>
+	<td id="canvasGroup"></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+function getCanvasSvg(id) {
+  var divSvg = goog.dom.getElement(id);
+  var svgCanvas = xrx.svg.Canvas.create(divSvg);
+  svgCanvas.setWidth(100);
+  svgCanvas.setHeight(100);
+  return svgCanvas;
+};
+
+function getCanvasCanvas(id) {
+  var divCanvas = goog.dom.getElement(id);
+  var canvasCanvas = xrx.canvas.Canvas.create(divCanvas);
+  canvasCanvas.setWidth(100);
+  canvasCanvas.setHeight(100);
+  return canvasCanvas;
+};
+
+function makeStyle(shape) {
+  shape.setStrokeColor('red');
+  shape.setStrokeWidth(2);
+  shape.setFillColor('green');
+  shape.setFillOpacity(.5);
+};
+
+function getRect(graphics, opt_canvas) {
+  var rect = graphics.Rect.create(opt_canvas);
+  rect.setX(10);
+  rect.setY(10);
+  rect.setWidth(10);
+  rect.setHeight(10);
+  makeStyle(rect);
+  return rect;
+};
+
+function getPolygon(graphics, opt_canvas) {
+  var coords = new Array(3);
+  coords[0] = [10,10];
+  coords[1] = [90,0];
+  coords[2] = [0,60];
+  var polygon = graphics.Polygon.create(opt_canvas);
+  polygon.setCoords(coords);
+  makeStyle(polygon);
+  return polygon;
+};
+
+function getCircle(graphics, opt_canvas) {
+  var circle = graphics.Circle.create(opt_canvas);
+  circle.setCenter(50,50);
+  circle.setRadius(30);
+  makeStyle(circle);
+  return circle;
+};
+
+function getImage(graphics, img, opt_canvas) {
+  var image = graphics.Image.create(img, opt_canvas);
+  image.setWidth(50);
+  image.setHeight(50);
+  return image;
+};
+
+function test1Rect() {
+  var svgCanvas = getCanvasSvg('svgRect');
+  var canvasCanvas = getCanvasCanvas('canvasRect');
+  
+  var svgRect = getRect(xrx.svg);
+  svgCanvas.addChild(svgRect);
+
+  var canvasRect = getRect(xrx.canvas, canvasCanvas);
+  canvasCanvas.addChild(canvasRect);
+};
+
+function test2Polygon() {
+  var svgCanvas = getCanvasSvg('svgPolygon');
+  var canvasCanvas = getCanvasCanvas('canvasPolygon');
+  
+  var svgPolygon = getPolygon(xrx.svg);
+  svgCanvas.addChild(svgPolygon);
+
+  var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
+  canvasCanvas.addChild(canvasPolygon);
+};
+
+function test3Circle() {
+  var svgCanvas = getCanvasSvg('svgCircle');
+  var canvasCanvas = getCanvasCanvas('canvasCircle');
+  
+  var svgCircle = getCircle(xrx.svg);
+  svgCanvas.addChild(svgCircle);
+
+  var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
+  canvasCanvas.addChild(canvasCircle);
+};
+
+function test4Image() {
+  var svgCanvas = getCanvasSvg('svgImage');
+  var canvasCanvas = getCanvasCanvas('canvasImage');
+  var image = goog.dom.getElement('testImage');
+  
+  var svgImage = getImage(xrx.svg, image);
+  svgCanvas.addChild(svgImage);
+
+  var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
+  canvasCanvas.addChild(canvasImage);
+};
+
+function test5Group() {
+  var svgCanvas = getCanvasSvg('svgGroup');
+  var canvasCanvas = getCanvasCanvas('canvasGroup');
+
+  var svgGroup = xrx.svg.Group.create();
+  var svgRect = getRect(xrx.svg);
+  var svgPolygon = getPolygon(xrx.svg);
+  var svgCircle = getCircle(xrx.svg);
+  var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
+  var canvasRect = getRect(xrx.canvas, canvasCanvas);
+  var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
+  var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
+
+  // one graphic
+  svgGroup.addChildren(svgRect);
+  canvasGroup.addChildren(canvasRect);
+  // array of graphics
+  svgGroup.addChildren([svgPolygon, svgCircle]);
+  canvasGroup.addChildren([canvasPolygon, canvasCircle]);
+
+  svgCanvas.addChild(svgGroup);
+  canvasCanvas.addChild(canvasGroup);
+};
+
+</script>
+</body>
+</html>

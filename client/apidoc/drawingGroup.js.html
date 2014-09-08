@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: drawing/drawingGroup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: drawing/drawingGroup.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class representing a group of a canvas.
+ */
+
+goog.provide('xrx.drawing.Group');
+
+
+
+goog.require('goog.dom.DomHelper');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
+goog.require('goog.events.MouseWheelHandler');
+goog.require('goog.events.MouseWheelHandler.EventType');
+goog.require('xrx.drawing.Shield');
+goog.require('xrx.graphics.Graphics');
+goog.require('xrx.drawing.GroupHandler');
+
+
+
+/**
+ * A class representing a group of a canvas. Groups are used to
+ * register mouse events mainly.
+ *
+ * @param {xrx.drawing.Canvas} canvas A canvas object.
+ * @constructor
+ */
+xrx.drawing.Group = function(canvas) {
+
+  this.canvas_ = canvas;
+
+  this.element_;
+
+  this.shapeWrapper_;
+
+  this.shield_;
+
+  this.create_();
+
+  this.registerEvents_();
+};
+
+
+
+/**
+ * Returns the canvas element.
+ * @return {xrx.drawing.Canvas}
+ */
+xrx.drawing.Group.prototype.getCanvas = function() {
+  return this.canvas_;
+};
+
+
+
+/**
+ * Returns the DOM element used to install the group.
+ * @return {DOMElement} The DOM element.
+ */
+xrx.drawing.Group.prototype.getElement = function() {
+  return this.element_;
+};
+
+
+
+/**
+ * Returns the shield of the group.
+ * @return {xrx.drawing.Shield} The shield.
+ */
+xrx.drawing.Group.prototype.getShield = function() {
+  return this.shield_;
+};
+
+
+
+/**
+ * Returns the wrapper element which holds the shapes.
+ * @return {DOMElement} The wrapper element.
+ */
+xrx.drawing.Group.prototype.getShapeWrapper = function() {
+  return this.shapeWrapper_;
+};
+
+
+
+/**
+ * Adds shapes to the group.
+ * @param {Array.&lt;DOMElement>} shapes The shapes.
+ */
+xrx.drawing.Group.prototype.addShapes = function(shapes) {
+  goog.dom.append(this.getShapeWrapper(), shapes);
+};
+
+
+
+/**
+ * Returns all shapes available in the group.
+ * @return {Array.&lt;DOMElement>} The shapes.
+ */
+xrx.drawing.Group.prototype.getShapes = function() {
+  return goog.dom.getChildren(this.getShapeWrapper());
+};
+
+
+
+/**
+ * Removes all shapes from the group;
+ */
+xrx.drawing.Group.prototype.removeShapes = function() {
+  goog.dom.removeChildren(this.getShapeWrapper());
+};
+
+
+
+/**
+ * Removes a shape from the group.
+ * @param {DOMElement} shape The shape to remove.
+ */
+xrx.drawing.Group.prototype.removeShape = function(shape) {
+  goog.dom.removeNode(shape);
+};
+
+
+
+/**
+ * Function forwards an event handler.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {Object} handlerClass The class which implements the event handler.
+ */
+xrx.drawing.Group.prototype.handleEvent = function(e, handler) {
+  e.preventDefault();
+  handler(e, this.getCanvas());
+};
+
+
+
+/**
+ * Register all events for mouse-based shape dragging at once.
+ * @param {Object} group A canvas group.
+ * @param {Object} handlerClass The class which implements the event handler.
+ */
+xrx.drawing.Group.prototype.registerMouseDrag = function(group, handlerClass) {
+  var self = this;
+  goog.events.listen(group,
+    [goog.events.EventType.MOUSEDOWN, goog.events.EventType.TOUCHSTART],
+    function(e) { self.handleEvent(e, handlerClass.handleMouseDown); }
+  );
+  goog.events.listen(group,
+    [goog.events.EventType.MOUSEMOVE, goog.events.EventType.TOUCHMOVE],
+    function(e) { self.handleEvent(e, handlerClass.handleMouseMove); }
+  );
+  goog.events.listen(group,
+    [goog.events.EventType.MOUSEUP, goog.events.EventType.TOUCHEND],
+    function(e) { self.handleEvent(e, handlerClass.handleMouseUp); }
+  );
+};
+
+
+
+/**
+ * Register all events for mouse-based view-port zoom at once.
+ * @param {Object} group A canvas group.
+ * @param {Object} handlerClass The class which implements the event handler.
+ */
+xrx.drawing.Group.prototype.registerMouseZoom = function(group, handlerClass) {
+  var self = this;
+  var mwh = new goog.events.MouseWheelHandler(group);
+  goog.events.listen(mwh,
+    goog.events.MouseWheelHandler.EventType.MOUSEWHEEL,
+    function(e) { self.handleEvent(e, handlerClass.handleMousewheel); }
+  );
+};
+
+
+
+/**
+ * Register all events for view-port rotation at once.
+ * @param {Object} group A canvas group.
+ * @param {Object} handlerClass The class which implements the event handler.
+ */
+xrx.drawing.Group.prototype.registerMouseRotate = function(group, handlerClass) {
+  var self = this;
+  goog.events.listen(group, [goog.events.EventType.DBLCLICK],
+    function(e) { self.handleEvent(e, handlerClass.handleDblClick); }
+  );
+};
+
+
+
+/**
+ * Register all events for shape deletion at once.
+ * @param {Object} group A canvas group.
+ * @param {Object} handlerClass The class which implements the event handler.
+ */
+xrx.drawing.Group.prototype.registerMouseDelete = function(group, handlerClass) {
+  var self = this;
+  goog.events.listen(group, [goog.events.EventType.CLICK],
+    function(e) { self.handleEvent(e, handlerClass.handleClick); }
+  );
+};
+
+
+
+/**
+ * @private
+ */
+xrx.drawing.Group.prototype.create_ = function() {
+  var graphics = this.getCanvas().getGraphics();
+  this.element_ = graphics.Group.create();
+  this.shapeWrapper_ = graphics.Group.create();
+
+  // install a shield
+  this.shield_ = new xrx.drawing.Shield(this.canvas_);
+  goog.dom.append(this.element_, this.shield_.getElement());
+
+  // install a shape wrapper
+  goog.dom.append(this.element_, this.shapeWrapper_);
+
+  return this.element_;
+};
+
+
+
+/**
+ * Abstract method for event registration to be implemented by all subclasses.
+ * @private
+ */
+xrx.drawing.Group.prototype.registerEvents_ = goog.abstractMethod;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:36 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

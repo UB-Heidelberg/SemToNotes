@@ -5,4 +5,5 @@
   --namespace="stn" \
   --output_mode=compiled \
   --compiler_jar=./lib/closure-compiler/compiler.jar \
-  > ./stn-minified.js
+  --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
+  > ./stn.js
