@@ -73,6 +73,7 @@ xrx.drawing.Toolbar.prototype.handleClick = function(e) {
  */
 xrx.drawing.Toolbar.prototype.create_ = function() {
   var self = this;
+  var tool = self.drawing_.getLayerTool();
   var viewbox = self.drawing_.getViewbox();
 
   var registerButtonClick = function(button, handler, handle) {
@@ -110,6 +111,9 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var buttonRotateRight = xrx.drawing.ToolbarButton.create('./res/rotateRight.png',
       'Rotate Right.');
   registerButtonClick(buttonRotateRight, viewbox, 'rotateRight');
+  var buttonMagnifier = xrx.drawing.ToolbarToggle.create('./res/magnifier.png',
+      'Magnifier.');
+  registerToggleClick(buttonMagnifier, tool, 'toggleMagnifier');
 
   // shape create buttons
   var buttonShapeRect = xrx.drawing.ToolbarToggle.create('./res/shapeRect.png',
@@ -132,6 +136,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   goog.dom.append(this.element_, buttonZoomOut);
   goog.dom.append(this.element_, buttonRotateLeft);
   goog.dom.append(this.element_, buttonRotateRight);
+  goog.dom.append(this.element_, buttonMagnifier);
   goog.dom.append(this.element_, buttonShapeRect);
   goog.dom.append(this.element_, buttonShapePolygon);
   goog.dom.append(this.element_, buttonShapeModify);

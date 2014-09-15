@@ -38,6 +38,6 @@ xrx.canvas.Canvas.prototype.addChild = function(element) {
 xrx.canvas.Canvas.create = function(parent) {
   var element = goog.dom.createElement(xrx.canvas.Canvas.tagName);
   var canvas = new xrx.canvas.Canvas(element);
-  goog.dom.insertChildAt(parent, canvas.getElement(), 0);
+  goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 };

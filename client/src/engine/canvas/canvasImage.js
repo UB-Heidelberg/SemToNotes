@@ -52,8 +52,16 @@ xrx.canvas.Image.prototype.setHeight = function(height) {
 
 
 
+xrx.canvas.Image.prototype.getImage = function() {
+  return this.image_;
+};
+
+
+
 xrx.canvas.Image.prototype.setImage = function(image) {
   this.image_ = image;
+  this.width_ = image.naturalWidth;
+  this.height_ = image.naturalHeight;
 };
 
 
@@ -66,11 +74,14 @@ xrx.canvas.Image.prototype.getBox = function() {
 
 xrx.canvas.Image.prototype.draw = function() {
   if (this.image_) this.context_.drawImage(this.image_, this.x_,
-      this.y_);
+      this.y_, this.width_, this.height_);
 };
 
 
 
 xrx.canvas.Image.create = function(image, canvas) {
-  return new xrx.canvas.Image(canvas, image);
+  var i = new xrx.canvas.Image(canvas, image);
+  i.width_ = image ? image.naturalWidth : 0;
+  i.height_ = image ? image.naturalHeight : 0;
+  return i;
 };

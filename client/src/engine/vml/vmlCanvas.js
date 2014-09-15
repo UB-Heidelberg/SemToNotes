@@ -52,6 +52,6 @@ xrx.vml.Canvas.create = function(parent) {
   var element = goog.dom.createElement('div');
   var raphael = Raphael(element, 0, 0);
   var canvas = new xrx.vml.Canvas(raphael);
-  goog.dom.insertChildAt(parent, canvas.getElement(), 0);
+  goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 };
