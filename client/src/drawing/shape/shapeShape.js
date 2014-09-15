@@ -16,9 +16,11 @@ goog.require('xrx.shape');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.shape.Shape = function(drawing) {
+xrx.shape.Shape = function(drawing, id) {
 
   this.drawing_ = drawing;
+
+  this.id_ = id;
 
   this.primitiveShape_;
 

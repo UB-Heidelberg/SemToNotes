@@ -19,6 +19,7 @@ goog.require('xrx.drawing.LayerBackground');
 goog.require('xrx.drawing.LayerShape');
 goog.require('xrx.drawing.LayerShapeCreate');
 goog.require('xrx.drawing.LayerShapeModify');
+goog.require('xrx.drawing.LayerTool');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.State');
@@ -220,10 +221,20 @@ xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
 
 ***REMOVED***
 ***REMOVED*** Returns the group of the canvas where new shapes can be drawn.
-***REMOVED*** @return {DOMElement} The element representing the shape create group.
+***REMOVED*** @return {?} The element representing the shape create group.
 ***REMOVED***
 xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
   return this.layer_[3];
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Returns the layer of the canvas where tools can be plugged in.
+***REMOVED*** @return {?} The element representing the shape create group.
+***REMOVED***
+xrx.drawing.Drawing.prototype.getLayerTool = function() {
+  return this.layer_[4];
 ***REMOVED***
 
 
@@ -296,6 +307,7 @@ xrx.drawing.Drawing.prototype.draw = function() {
     this.layer_[3].draw();
     ctx.closePath();
     ctx.restore();
+    this.layer_[4].draw();
   } else if (this.engine_ === xrx.graphics.Engine.SVG) {
     xrx.svg.setCTM(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
@@ -491,6 +503,16 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
+xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
+  this.layer_[4] = new xrx.drawing.LayerTool(this);
+***REMOVED***
+
+
+
+
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
 xrx.drawing.Drawing.prototype.install_ = function() {
 
   // install the drawing canvas
@@ -504,4 +526,7 @@ xrx.drawing.Drawing.prototype.install_ = function() {
   this.installLayerShape_();
   this.installLayerShapeModify_();
   this.installLayerShapeCreate_();
+
+  // install the tool layer
+  this.installLayerTool_();
 ***REMOVED***

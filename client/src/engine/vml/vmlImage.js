@@ -59,6 +59,12 @@ xrx.vml.Image.prototype.draw = function() {
 
 
 
+xrx.vml.Image.prototype.getImage = function() {
+  return this.image_;
+***REMOVED***
+
+
+
 xrx.vml.Image.prototype.setImage = function(image) {
   this.image_ = image;
   this.raphael_.attr({'src': image.src, 'width': image.naturalWidth,
