@@ -14,6 +14,7 @@ goog.require('xrx.canvas.Group');
 goog.require('xrx.canvas.Image');
 goog.require('xrx.canvas.Polygon');
 goog.require('xrx.canvas.Rect');
+goog.require('xrx.graphics');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Canvas');
 goog.require('xrx.svg.Circle');

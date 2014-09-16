@@ -61,5 +61,5 @@ xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
   this.context_.globalAlpha = 1;
   this.context_.strokeStyle = this.stroke_.color;
   this.context_.lineWidth = this.stroke_.width;
-  this.context_.stroke();
+  if (this.stroke_.width > 0) this.context_.stroke();
 };

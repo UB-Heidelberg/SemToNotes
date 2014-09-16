@@ -28,10 +28,12 @@ SemToNotes.install = function() {
   var drawingSVG = new xrx.drawing.Drawing(canvasSVG, xrx.engine.Engine.SVG);
   new xrx.drawing.Toolbar(toolbarSVG, drawingSVG);
   drawingSVG.setBackgroundImage(url, function() { drawingSVG.setModeView(); });
-  var rectSVG = xrx.shape.Rect.create(drawingSVG);
-  rectSVG.setCoords([[10,10],[10,30],[30,30],[30,10]]);
-  drawingSVG.getLayerShape().addShapes(rectSVG);
-  drawingSVG.draw();
+  for(var i = 0; i < 100; i++) {
+    var rectSVG = xrx.shape.Rect.create(drawingSVG);
+    rectSVG.setCoords([[10,10],[10,30],[30,30],[30,10]]);
+    drawingSVG.getLayerShape().addShapes(rectSVG);
+    drawingSVG.draw();
+  }
 
   // install a drawing canvas with HTML5 Canvas rendering
   var canvasCanvas = goog.dom.getElement('canvasCanvas');

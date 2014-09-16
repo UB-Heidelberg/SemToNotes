@@ -11,7 +11,6 @@ goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
-goog.require('goog.style');
 goog.require('xrx');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
@@ -20,6 +19,7 @@ goog.require('xrx.drawing.LayerBackground');
 goog.require('xrx.drawing.LayerShape');
 goog.require('xrx.drawing.LayerShapeCreate');
 goog.require('xrx.drawing.LayerShapeModify');
+goog.require('xrx.drawing.LayerTool');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.State');
@@ -75,6 +75,8 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @private
    */
   this.layer_ = [];
+
+  this.shield_;
 
   /**
    * @type {number}
@@ -223,7 +225,7 @@ xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
 
 /**
  * Returns the group of the canvas where new shapes can be drawn.
- * @return {DOMElement} The element representing the shape create group.
+ * @return {?} The element representing the shape create group.
  */
 xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
   return this.layer_[3];
@@ -233,6 +235,16 @@ xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
 
 xrx.drawing.Drawing.prototype.getLayers = function() {
   return [this.layer_[0], this.layer_[1], this.layer_[2], this.layer_[3]];
+};
+
+
+
+/**
+ * Returns the layer of the canvas where tools can be plugged in.
+ * @return {?} The element representing the shape create group.
+ */
+xrx.drawing.Drawing.prototype.getLayerTool = function() {
+  return this.layer_[4];
 };
 
 
@@ -290,6 +302,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 
 xrx.drawing.Drawing.prototype.draw = function() {
+<<<<<<< HEAD
   var self = this;
   if (this.engine_ === xrx.engine.Engine.CANVAS) {
     xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
@@ -301,6 +314,26 @@ xrx.drawing.Drawing.prototype.draw = function() {
   });
   } else if (this.engine_ === xrx.engine.Engine.SVG) {
     xrx.svg.render(this.viewbox_.getGroup().getElement(),
+=======
+
+  if (this.engine_ === xrx.graphics.Engine.CANVAS) {
+    var c = this.canvas_.getElement();
+    var ctx = c.getContext('2d');
+    ctx.save();
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.beginPath();
+    xrx.canvas.setTransform(ctx, this.viewbox_.getCTM());
+    this.layer_[0].draw();
+    this.layer_[1].draw();
+    this.layer_[2].draw();
+    this.layer_[3].draw();
+    ctx.closePath();
+    ctx.restore();
+    this.layer_[4].draw();
+  } else if (this.engine_ === xrx.graphics.Engine.SVG) {
+    xrx.svg.setCTM(this.viewbox_.getGroup().getElement(),
+>>>>>>> ed11b0087dee2402832dff8d5fdea3b3bd3b2102
         this.viewbox_.getCTM());
   } else if (this.engine_ === xrx.engine.Engine.VML) {
     xrx.vml.render(this.canvas_.getRaphael(),
@@ -414,9 +447,10 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
 
 
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  var size = goog.style.getSize(this.element_);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.element_.clientHeight);
+  this.canvas_.setWidth(this.element_.clientWidth);
+  this.shield_.setHeight(this.element_.clientHeight);
+  this.shield_.setWidth(this.element_.clientWidth);
   this.draw();
 };
 
@@ -427,7 +461,6 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   var self = this;
-  var size = goog.style.getSize(self.element_);
 
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
@@ -435,8 +468,8 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   }, false, self);
 
   this.canvas_ = this.getGraphics().Canvas.create(self.element_);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.element_.clientHeight);
+  this.canvas_.setWidth(this.element_.clientWidth);
 };
 
 
@@ -494,6 +527,31 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
 /**
  * @private
  */
+xrx.drawing.Drawing.prototype.installShield_ = function() {
+  this.shield_ = this.graphics_.Rect.create(this.canvas_);
+  this.shield_.setX(0);
+  this.shield_.setY(0);
+  this.shield_.setWidth(this.element_.clientWidth);
+  this.shield_.setHeight(this.element_.clientHeight);
+  this.shield_.setFillOpacity(0);
+  this.canvas_.addChild(this.shield_);
+};
+
+
+
+/**
+ * @private
+ */
+xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
+  this.layer_[4] = new xrx.drawing.LayerTool(this);
+};
+
+
+
+
+/**
+ * @private
+ */
 xrx.drawing.Drawing.prototype.install_ = function() {
 
   // install the drawing canvas
@@ -507,4 +565,10 @@ xrx.drawing.Drawing.prototype.install_ = function() {
   this.installLayerShape_();
   this.installLayerShapeModify_();
   this.installLayerShapeCreate_();
+
+  // install a shield
+  this.installShield_();
+
+  // install the tool layer
+  this.installLayerTool_();
 };
