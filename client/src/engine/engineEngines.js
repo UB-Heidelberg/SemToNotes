@@ -2,7 +2,7 @@
  * @fileoverview
  */
 
-goog.provide('xrx.graphics.Graphics');
+goog.provide('xrx.engine.Engines');
 
 
 
@@ -36,4 +36,4 @@ goog.require('xrx.vml.Rect');
 /**
  * @constructor
  */
-xrx.graphics.Graphics = function() {};
+xrx.engine.Engines = function() {};

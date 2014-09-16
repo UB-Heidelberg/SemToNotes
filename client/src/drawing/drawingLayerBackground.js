@@ -12,8 +12,8 @@ goog.require('goog.math');
 goog.require('xrx.drawing.Layer');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.State');
-goog.require('xrx.graphics.Engine');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engine');
+goog.require('xrx.engine.Engines');
 
 
 

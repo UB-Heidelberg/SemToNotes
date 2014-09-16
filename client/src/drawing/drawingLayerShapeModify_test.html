@@ -8,7 +8,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.engine.Engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -60,7 +60,7 @@ var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.graphics.Engine.SVG);
+      xrx.engine.Engine.SVG);
   svgDrawing.setBackgroundImage(url, callback);
   for (var i = 0; i < 8; i++) { svgDrawing.getViewbox().zoomIn() };
   return svgDrawing;
@@ -69,7 +69,7 @@ function getDrawingSvg(id, callback) {
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.graphics.Engine.CANVAS);
+    xrx.engine.Engine.CANVAS);
   canvasDrawing.setBackgroundImage(url, callback);
   for (var i = 0; i < 8; i++) { canvasDrawing.getViewbox().zoomIn() };
   return canvasDrawing;

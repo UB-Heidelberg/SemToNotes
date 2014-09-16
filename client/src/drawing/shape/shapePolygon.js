@@ -10,8 +10,8 @@ goog.provide('xrx.shape.PolygonCreate');
 
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
-goog.require('xrx.graphics.Coordinate');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Coordinate');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.VertexDragger');
 
@@ -113,7 +113,7 @@ xrx.shape.PolygonCreate.handleMouseClick = function(e, canvas) {
     groupShapeCreate.addShapes(circle);
   } else {
     var coords = xrx.svg.getCoords(shapes[0]);
-    if (!xrx.graphics.Coordinate.equals(coords[coords.length - 1], point)) {
+    if (!xrx.engine.Coordinate.equals(coords[coords.length - 1], point)) {
       coords = coords.concat([point]);
       xrx.shape.Polygon.setCoords(shapes[0], coords, canvas);
     }

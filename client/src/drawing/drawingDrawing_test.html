@@ -8,7 +8,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.engine.Engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -48,13 +48,13 @@
 function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(svgDiv,
-      xrx.graphics.Engine.SVG);
+      xrx.engine.Engine.SVG);
 };
 
 function getDrawingCanvas(id) {
   var canvasDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(canvasDiv,
-    xrx.graphics.Engine.CANVAS);
+    xrx.engine.Engine.CANVAS);
 };
 
 function test0Structure() {

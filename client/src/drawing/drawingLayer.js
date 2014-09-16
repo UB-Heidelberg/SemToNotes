@@ -11,7 +11,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.events.MouseWheelHandler');
 goog.require('goog.events.MouseWheelHandler.EventType');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engines');
 
 
 
@@ -60,7 +60,7 @@ xrx.drawing.Layer.prototype.isLocked = function() {
 
 /**
  * Returns the layers group.
- * @return {xrx.graphics.Group} The group.
+ * @return {xrx.engine.Group} The group.
  */
 xrx.drawing.Layer.prototype.getGroup = function() {
   return this.group_;

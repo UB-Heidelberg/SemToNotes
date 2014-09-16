@@ -7,7 +7,7 @@ goog.provide('SemToNotes');
 
 
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.graphics.Engine');
+goog.require('xrx.engine.Engine');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.drawing.Mode');
@@ -25,7 +25,7 @@ SemToNotes.install = function() {
   // install a drawing canvas with SVG rendering
   var canvasSVG = goog.dom.getElement('canvasSVG');
   var toolbarSVG = goog.dom.getElement('toolbarSVG');
-  var drawingSVG = new xrx.drawing.Drawing(canvasSVG, xrx.graphics.Engine.SVG);
+  var drawingSVG = new xrx.drawing.Drawing(canvasSVG, xrx.engine.Engine.SVG);
   new xrx.drawing.Toolbar(toolbarSVG, drawingSVG);
   drawingSVG.setBackgroundImage(url, function() { drawingSVG.setModeView(); });
   var rectSVG = xrx.shape.Rect.create(drawingSVG);
@@ -36,7 +36,7 @@ SemToNotes.install = function() {
   // install a drawing canvas with HTML5 Canvas rendering
   var canvasCanvas = goog.dom.getElement('canvasCanvas');
   var toolbarCanvas = goog.dom.getElement('toolbarCanvas');
-  var drawingCanvas = new xrx.drawing.Drawing(canvasCanvas, xrx.graphics.Engine.CANVAS);
+  var drawingCanvas = new xrx.drawing.Drawing(canvasCanvas, xrx.engine.Engine.CANVAS);
   new xrx.drawing.Toolbar(toolbarCanvas, drawingCanvas);
   drawingCanvas.setBackgroundImage(url, function() { drawingCanvas.setModeView(); });
   var rectCanvas = xrx.shape.Rect.create(drawingCanvas);
@@ -47,7 +47,7 @@ SemToNotes.install = function() {
   // install a drawing canvas with VML rendering
   var canvasVML = goog.dom.getElement('canvasVML');
   var toolbarVML = goog.dom.getElement('toolbarVML');
-  var drawingVML = new xrx.drawing.Drawing(canvasVML, xrx.graphics.Engine.VML);
+  var drawingVML = new xrx.drawing.Drawing(canvasVML, xrx.engine.Engine.VML);
   new xrx.drawing.Toolbar(toolbarVML, drawingVML);
   drawingVML.setBackgroundImage(url, function() { drawingVML.setModeView(); });
   var rectVML = xrx.shape.Rect.create(drawingVML);

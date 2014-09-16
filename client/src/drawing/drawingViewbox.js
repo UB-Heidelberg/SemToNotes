@@ -9,7 +9,7 @@ goog.provide('xrx.drawing.Viewbox');
 goog.require('goog.math');
 goog.require('goog.math.AffineTransform');
 goog.require('xrx.drawing');
-goog.require('xrx.graphics.Engine');
+goog.require('xrx.engine.Engine');
 
 
 

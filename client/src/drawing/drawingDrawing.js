@@ -13,6 +13,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('xrx');
+goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
 goog.require('xrx.drawing.LayerBackground');
@@ -23,12 +24,14 @@ goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.State');
 goog.require('xrx.drawing.Viewbox');
-goog.require('xrx.graphics.Engine');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engine');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.shape');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.Shapes');
+goog.require('xrx.svg');
 goog.require('xrx.svg.Canvas');
+goog.require('xrx.vml');
 
 
 
@@ -38,7 +41,7 @@ goog.require('xrx.svg.Canvas');
  *
  * @param {DOMElement} element The HTML element used to install the canvas.
  * @param {string} The name of the rendering engine.
- * @see xrx.graphics.Engine
+ * @see xrx.engine.Engine
  * @constructor
  */
 xrx.drawing.Drawing = function(element, opt_engine) {
@@ -50,7 +53,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @type {string}
    * @private
    */
-  this.engine_ = opt_engine || xrx.graphics.Engine.SVG;
+  this.engine_ = opt_engine || xrx.engine.Engine.SVG;
   this.graphics_ = goog.getObjectByName('xrx.' + this.engine_);
 
   /**
@@ -62,7 +65,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
 
   /**
    * The graphics canvas.
-   * @type {xrx.graphics.Canvas}
+   * @type {xrx.engine.Canvas}
    * @private
    */
   this.canvas_;
@@ -129,7 +132,7 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
 
 /**
  * Returns the engine used for rendering.
- * @see xrx.graphics.Engine
+ * @see xrx.engine.Engine
  * @return {Object} The rendering engine.
  */
 xrx.drawing.Drawing.prototype.getGraphics = function() {
@@ -228,6 +231,12 @@ xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
 
 
 
+xrx.drawing.Drawing.prototype.getLayers = function() {
+  return [this.layer_[0], this.layer_[1], this.layer_[2], this.layer_[3]];
+};
+
+
+
 /**
  * Returns the view-box of the drawing canvas.
  * @return {Object} The view-box.
@@ -281,26 +290,20 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 
 xrx.drawing.Drawing.prototype.draw = function() {
-
-  if (this.engine_ === xrx.graphics.Engine.CANVAS) {
-    var c = this.canvas_.getElement();
-    var ctx = c.getContext('2d');
-    ctx.save();
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, c.width, c.height);
-    ctx.beginPath();
-    xrx.canvas.setTransform(ctx, this.viewbox_.getCTM());
-    this.layer_[0].draw();
-    this.layer_[1].draw();
-    this.layer_[2].draw();
-    this.layer_[3].draw();
-    ctx.closePath();
-    ctx.restore();
-  } else if (this.engine_ === xrx.graphics.Engine.SVG) {
-    xrx.svg.setCTM(this.viewbox_.getGroup().getElement(),
+  var self = this;
+  if (this.engine_ === xrx.engine.Engine.CANVAS) {
+    xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
+        function() {
+          self.layer_[0].draw();
+          self.layer_[1].draw();
+          self.layer_[2].draw();
+          self.layer_[3].draw();
+  });
+  } else if (this.engine_ === xrx.engine.Engine.SVG) {
+    xrx.svg.render(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
-  } else if (this.engine_ === xrx.graphics.Engine.VML) {
-    xrx.vml.setCTM(this.canvas_.getRaphael(),
+  } else if (this.engine_ === xrx.engine.Engine.VML) {
+    xrx.vml.render(this.canvas_.getRaphael(),
         this.viewbox_.getCTM());
     this.viewbox_.getGroup().draw();
   } else {

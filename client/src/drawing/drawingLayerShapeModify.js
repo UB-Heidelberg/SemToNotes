@@ -10,8 +10,8 @@ goog.provide('xrx.drawing.LayerShapeModify');
 goog.require('goog.dom.DomHelper');
 goog.require('xrx.drawing.Layer');
 goog.require('xrx.drawing.LayerBackground');
-goog.require('xrx.graphics.Engine');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engine');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.shape.VertexDragger');
 
 

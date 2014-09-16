@@ -8,7 +8,7 @@ goog.provide('xrx.shape.Shape');
 
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.State');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.shape');
 
 
