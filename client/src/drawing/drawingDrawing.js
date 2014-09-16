@@ -11,7 +11,6 @@ goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
-goog.require('goog.style');
 goog.require('xrx');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
@@ -73,6 +72,8 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @private
    */
   this.layer_ = [];
+
+  this.shield_;
 
   /**
    * @type {number}
@@ -423,9 +424,10 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
 
 
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  var size = goog.style.getSize(this.element_);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.element_.clientHeight);
+  this.canvas_.setWidth(this.element_.clientWidth);
+  this.shield_.setHeight(this.element_.clientHeight);
+  this.shield_.setWidth(this.element_.clientWidth);
   this.draw();
 };
 
@@ -436,7 +438,6 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   var self = this;
-  var size = goog.style.getSize(self.element_);
 
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
@@ -444,8 +445,8 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   }, false, self);
 
   this.canvas_ = this.getGraphics().Canvas.create(self.element_);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.element_.clientHeight);
+  this.canvas_.setWidth(this.element_.clientWidth);
 };
 
 
@@ -503,6 +504,21 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
 /**
  * @private
  */
+xrx.drawing.Drawing.prototype.installShield_ = function() {
+  this.shield_ = this.graphics_.Rect.create(this.canvas_);
+  this.shield_.setX(0);
+  this.shield_.setY(0);
+  this.shield_.setWidth(this.element_.clientWidth);
+  this.shield_.setHeight(this.element_.clientHeight);
+  this.shield_.setFillOpacity(0);
+  this.canvas_.addChild(this.shield_);
+};
+
+
+
+/**
+ * @private
+ */
 xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
   this.layer_[4] = new xrx.drawing.LayerTool(this);
 };
@@ -526,6 +542,9 @@ xrx.drawing.Drawing.prototype.install_ = function() {
   this.installLayerShape_();
   this.installLayerShapeModify_();
   this.installLayerShapeCreate_();
+
+  // install a shield
+  this.installShield_();
 
   // install the tool layer
   this.installLayerTool_();

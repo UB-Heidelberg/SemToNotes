@@ -62,8 +62,9 @@ xrx.drawing.tool.Magnifier.prototype.reset = function() {
   canvas.setHeight(this.height_);
   goog.style.setStyle(this.element_, 'position', 'absolute');
   goog.style.setStyle(this.element_, 'display', 'block');
-  goog.style.setStyle(this.element_, 'left', '0px');
-  goog.style.setStyle(this.element_, 'top', '0px');
+  goog.style.setStyle(this.element_, 'z-index', '999');
+  goog.style.setStyle(this.element_, 'left', '50px');
+  goog.style.setStyle(this.element_, 'top', '50px');
   goog.style.setStyle(this.element_, 'border', 'solid white 2px');
   this.group_.draw();
 };
@@ -80,6 +81,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
   viewboxCtm.createInverse().transform(eventPoint, 0, point, 0, 1);
   ctm = this.ctm_.createInverse().translate(-point[0], -point[1]);
 
+  // TODO: same as in xrx.drawing.Drawing
   if (engine === xrx.graphics.Engine.CANVAS) {
     var c = this.canvas_.getElement();
     var ctx = c.getContext('2d');
@@ -106,7 +108,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
 xrx.drawing.tool.Magnifier.prototype.registerDrag_ = function() {
   var size = goog.style.getSize(this.drawing_.getCanvas().getElement());
   var limits = new goog.math.Rect(0, 0, size.width, size.height);
-  var dragger = new goog.fx.Dragger(this.element_, this.element_, limits);
+  var dragger = new goog.fx.Dragger(this.element_, this.element_); // TODO: limits (IE < 9)
   goog.events.listen(dragger, goog.events.EventType.DRAG, function(e) {
     this.handleDrag_(e, dragger);
   }, false, this);
