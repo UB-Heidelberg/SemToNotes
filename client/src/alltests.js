@@ -11,7 +11,7 @@ var _allTests = [
   './drawing/drawingLayerShapeModify_test.html',
   './drawing/drawingViewbox_test.html',
   // engine
-  './engine/graphics_test.html',
+  './engine/engine_test.html',
   // graphic
   './graphic/graphic_test.html',
   ];

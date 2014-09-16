@@ -7,7 +7,7 @@ goog.provide('xrx.shape.VertexDragger');
 
 
 goog.require('xrx.drawing.State');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.shape.Shape');
 
 
@@ -88,7 +88,7 @@ xrx.shape.VertexDragger.prototype.handleMouseMove = function(e, canvas) {
   var position = gsm.getVertexDraggerPosition(dragTarget, vertexDraggers);
   var postProcess = canvas.getSelectedShape().getAffineCoords;
 
-  xrx.graphics.Element.handleMouseMove(e, canvas, xrx.shape.VertexDragger);
+  xrx.engine.Element.handleMouseMove(e, canvas, xrx.shape.VertexDragger);
   coords = gsm.getVertexDraggerCoords(vertexDraggers);
 
   if (postProcess) coords = postProcess(coords, position);

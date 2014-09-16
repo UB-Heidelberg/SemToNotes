@@ -2,7 +2,7 @@
 ***REMOVED*** @fileoverview
 ***REMOVED***
 
-goog.provide('xrx.graphics.Graphics');
+goog.provide('xrx.engine.Engines');
 
 
 
@@ -36,4 +36,4 @@ goog.require('xrx.vml.Rect');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.graphics.Graphics = function() {***REMOVED***
+xrx.engine.Engines = function() {***REMOVED***

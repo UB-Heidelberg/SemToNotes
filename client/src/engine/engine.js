@@ -2,19 +2,19 @@
 ***REMOVED*** @fileoverview
 ***REMOVED***
 
-goog.provide('xrx.graphics');
-goog.provide('xrx.graphics.Engine');
+goog.provide('xrx.engine');
+goog.provide('xrx.engine.Engine');
 
 
 
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.graphics = function() {***REMOVED***
+xrx.engine = function() {***REMOVED***
 
 
 
-xrx.graphics.Engine = {
+xrx.engine.Engine = {
   SVG: 'svg',
   VML: 'vml',
   CANVAS: 'canvas'

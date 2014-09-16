@@ -9,7 +9,7 @@
  ***REMOVED*****REMOVED***
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.drawing.Mode');
-  goog.require('xrx.graphics.Engine');
+  goog.require('xrx.engine.Engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -72,7 +72,7 @@ var url = './drawing_test.png';
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.graphics.Engine.SVG);
+      xrx.engine.Engine.SVG);
   svgDrawing.setBackgroundImage(url, callback);
   return svgDrawing;
 ***REMOVED***
@@ -80,7 +80,7 @@ function getDrawingSvg(id, callback) {
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.graphics.Engine.CANVAS);
+    xrx.engine.Engine.CANVAS);
   canvasDrawing.setBackgroundImage(url, callback);
   return canvasDrawing;
 ***REMOVED***
