@@ -40,6 +40,6 @@ xrx.svg.Canvas.prototype.addChild = function(element) {
 xrx.svg.Canvas.create = function(parent) {
   var element = xrx.svg.Element.create(xrx.svg.Canvas);
   var canvas = new xrx.svg.Canvas(element);
-  goog.dom.insertChildAt(parent, canvas.getElement(), 0);
+  goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 ***REMOVED***

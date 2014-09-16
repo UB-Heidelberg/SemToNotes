@@ -48,6 +48,12 @@ xrx.svg.Image.prototype.draw = function() {***REMOVED***
 
 
 
+xrx.svg.Image.prototype.getImage = function() {
+  return this.image_;
+***REMOVED***
+
+
+
 xrx.svg.Image.prototype.setImage = function(image) {
   this.element_.setAttributeNS(xrx.svg.Namespace['xlink'], 'xlink:href', image.src);
   this.image_ = image;

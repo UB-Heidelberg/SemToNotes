@@ -1,8 +1,10 @@
 SemToNotes
 ==========
 
-_Semantic Topological Notes_ (SemToNotes) is a Topological Image Annotation and Image Retrieval System written in JavaScript. It is currently developed by the [Institute of Humanities Computer Science](http://hki.uni-koeln.de) at the Unviversity of Cologne as part of the [DARIAH-DE Project](https://de.dariah.eu/) (Phase II, March 2014 - February 2016).
+_Semantic Topological Notes_ (SemToNotes) is a topological image annotation and image retrieval system written in JavaScript. It allows the analysis of spatio-topological relations between semantically enriched image areas.
 
-Demo Applications: https://hkikoeln.github.io/SemToNotes
+SemToNotes is currently developed at the [Institute of Humanities Computer Science](http://hki.uni-koeln.de) at the University of Cologne as part of the [DARIAH-DE Project](https://de.dariah.eu/) (Phase II, March 2014 - February 2016).
 
-API Documentation: https://hkikoeln.github.io/SemToNotes/client/apidoc
+Homepage: https://semtonotes.github.io/SemToNotes
+
+API Documentation: https://semtonotes.github.io/SemToNotes/client/apidoc
