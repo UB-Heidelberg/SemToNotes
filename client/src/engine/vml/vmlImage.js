@@ -1,86 +1,118 @@
 /**
- * @fileoverview
+ * @fileoverview VML class representing an image.
  */
 
 goog.provide('xrx.vml.Image');
 
 
 
-goog.require('xrx.graphic.Rect');
-goog.require('xrx.vml');
-goog.require('xrx.vml.Element');
+goog.require('xrx.geometry.Rect');
+goog.require('xrx.vml.Stylable');
 
 
 
 /**
+ * VML class representing an image.
+ * @param {Raphael.circle} raphael The Raphael circle object.
  * @constructor
+ * @extends xrx.canvas.Stylable
  */
-xrx.vml.Image = function(raphael, image) {
+xrx.vml.Image = function(raphael) {
 
-  goog.base(this, raphael);
+  goog.base(this, raphael, new xrx.geometry.Rect());
 
-  this.image_ = image;
-
-  this.graphic_ = new xrx.graphic.Rect()
+  /**
+   * The HTML image element used to instantiate the image.
+   * @type {Image}
+   */
+  this.image_;
 };
-goog.inherits(xrx.vml.Image, xrx.vml.Element);
+goog.inherits(xrx.vml.Image, xrx.vml.Stylable);
 
 
 
+/**
+ * Returns the natural width of the image.
+ * @return {number} The width.
+ */
 xrx.vml.Image.prototype.getWidth = function() {
-  return this.image_ ? this.image_.naturalWidth : 0;
+  return this.geometry_.width;
 };
 
 
 
-xrx.vml.Image.prototype.setWidth = function(width) {
-  this.graphic_.width = width;
+/**
+ * @private
+ */
+xrx.vml.Image.prototype.setWidth_ = function(width) {
+  this.geometry_.width = width;
   this.raphael_.attr({width: width});
 };
 
 
 
+/**
+ * Returns the natural height of the image.
+ * @return {number} The height.
+ */
 xrx.vml.Image.prototype.getHeight = function() {
-  return this.image_ ? this.image_.naturalHeight : 0;
+  return this.geometry_.height;
 };
 
 
 
-xrx.vml.Image.prototype.setHeight = function(height) {
-  this.graphic_.height = height;
+/**
+ * @private
+ */
+xrx.vml.Image.prototype.setHeight_ = function(height) {
+  this.geometry_.height = height;
   this.raphael_.attr({height: height});
 };
 
 
 
-xrx.vml.Image.prototype.draw = function() {
-  this.raphael_.show();
-};
-
-
-
+/**
+ * Returns the HTML image element used to create the image.
+ * @return {Image} The HTML image element.
+ */
 xrx.vml.Image.prototype.getImage = function() {
   return this.image_;
 };
 
 
 
+/**
+ * Sets a new HTML image element.
+ * @param {Image} image The HTML image element.
+ */
 xrx.vml.Image.prototype.setImage = function(image) {
-  this.image_ = image;
   this.raphael_.attr({'src': image.src, 'width': image.naturalWidth,
       'height': image.naturalHeight});
+  this.image_ = image;
+  this.setWidth_(image.naturalWidth);
+  this.setHeight_(image.naturalHeight);
 };
 
 
 
-xrx.vml.Image.prototype.getBox = function() {
-  return new goog.math.Box(this.y_, this.width_, this.height_, this.x_);
+/**
+ * Draws the image.
+ */
+xrx.vml.Image.prototype.draw = function() {
+  this.raphael_.show();
 };
 
 
 
-xrx.vml.Image.create = function(image, canvas) {
+/**
+ * Creates a new image by optionally overloading a HTML image element.
+ * @param {?Image} The HTML image element.
+ * @param {Raphael} canvas The parent Raphael object.
+ */
+xrx.vml.Image.create = function(opt_image, canvas) {
   var raphael = canvas.getRaphael().image('', 0, 0, 0, 0);
+  var newImage = new xrx.vml.Image(raphael)
+  if (opt_image) newImage.setImage(opt_image);
   raphael.hide();
-  return new xrx.vml.Image(raphael, image);
+  return newImage;
 };

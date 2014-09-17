@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/canvas/canvasImage.js</title>
+    <title>JSDoc: Source: canvas/canvasImage.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/canvas/canvasImage.js</h1>
+    <h1 class="page-title">Source: canvas/canvasImage.js</h1>
 
     
 
@@ -26,51 +26,118 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview
+ * @fileoverview Canvas class representing an image.
  */
 
 goog.provide('xrx.canvas.Image');
 
 
 
-goog.require('xrx.canvas.Element');
+goog.require('goog.math.Box');
+goog.require('xrx.canvas.Stylable');
+goog.require('xrx.geometry.Rect');
 
 
 
-xrx.canvas.Image = function(canvas, image) {
+/**
+ * Canvas class representing an image.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ * @constructor
+ * @extends xrx.canvas.Stylable
+ */
+xrx.canvas.Image = function(canvas) {
 
-  goog.base(this, canvas);
+  goog.base(this, canvas, new xrx.geometry.Rect());
 
+  /**
+   * The HTML image element used to instantiate the image.
+   * @type {Image}
+   */
+  this.image_;
+};
+goog.inherits(xrx.canvas.Image, xrx.canvas.Stylable);
+
+
+
+/**
+ * Returns the natural width of the image.
+ * @return {number} The width.
+ */
+xrx.canvas.Image.prototype.getWidth = function() {
+  return this.geometry_.width;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.canvas.Image.prototype.setWidth_ = function(width) {
+  this.geometry_.width = width;
+};
+
+
+
+/**
+ * Returns the natural height of the image.
+ * @return {number} The height.
+ */
+xrx.canvas.Image.prototype.getHeight = function() {
+  return this.geometry_.height;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.canvas.Image.prototype.setHeight_ = function(height) {
+  this.geometry_.height = height;
+};
+
+
+
+/**
+ * Returns the HTML image element used to create the image.
+ * @return {Image} The HTML image element.
+ */
+xrx.canvas.Image.prototype.getImage = function() {
+  return this.image_;
+};
+
+
+
+/**
+ * Sets a new HTML image element.
+ * @param {Image} image The HTML image element.
+ */
+xrx.canvas.Image.prototype.setImage = function(image) {
   this.image_ = image;
-
-  this.height_ = 0;
-
-  this.width_ = 0;
-};
-goog.inherits(xrx.canvas.Image, xrx.canvas.Element);
-
-
-
-xrx.canvas.Image.setHeight = function(image, height) {
-  this.height_ = height;
+  this.setWidth_(image.naturalWidth);
+  this.setHeight_(image.naturalHeight);
 };
 
 
 
-xrx.canvas.Image.setWidth = function(image, width) {
-  this.width_ = width;
-};
-
-
-
+/**
+ * Draws the image.
+ */
 xrx.canvas.Image.prototype.draw = function() {
-  this.context_.drawImage(this.image_, 0, 0, this.width_, this.height_);
+  if (this.image_) this.context_.drawImage(this.image_, this.geometry_.x,
+      this.geometry_.y, this.geometry_.width, this.geometry_.height);
 };
 
 
 
-xrx.canvas.Image.create = function(canvas, image) {
-  return new xrx.canvas.Image(canvas, image);
+/**
+ * Creates a new image by optionally overloading a HTML image element.
+ * @param {?Image} The HTML image element.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ */
+xrx.canvas.Image.create = function(opt_image, canvas) {
+  var newImage = new xrx.canvas.Image(canvas);
+  if (opt_image) newImage.setImage(opt_image);
+  return newImage;
 };
 </code></pre>
         </article>
@@ -82,13 +149,13 @@ xrx.canvas.Image.create = function(canvas, image) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

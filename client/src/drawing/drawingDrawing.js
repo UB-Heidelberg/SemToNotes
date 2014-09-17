@@ -137,7 +137,7 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
  * @see xrx.engine.Engine
  * @return {Object} The rendering engine.
  */
-xrx.drawing.Drawing.prototype.getGraphics = function() {
+xrx.drawing.Drawing.prototype.getGeometrys = function() {
   return this.graphics_;
 };
 
@@ -302,7 +302,6 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 
 xrx.drawing.Drawing.prototype.draw = function() {
-<<<<<<< HEAD
   var self = this;
   if (this.engine_ === xrx.engine.Engine.CANVAS) {
     xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
@@ -314,26 +313,6 @@ xrx.drawing.Drawing.prototype.draw = function() {
   });
   } else if (this.engine_ === xrx.engine.Engine.SVG) {
     xrx.svg.render(this.viewbox_.getGroup().getElement(),
-=======
-
-  if (this.engine_ === xrx.graphics.Engine.CANVAS) {
-    var c = this.canvas_.getElement();
-    var ctx = c.getContext('2d');
-    ctx.save();
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, c.width, c.height);
-    ctx.beginPath();
-    xrx.canvas.setTransform(ctx, this.viewbox_.getCTM());
-    this.layer_[0].draw();
-    this.layer_[1].draw();
-    this.layer_[2].draw();
-    this.layer_[3].draw();
-    ctx.closePath();
-    ctx.restore();
-    this.layer_[4].draw();
-  } else if (this.engine_ === xrx.graphics.Engine.SVG) {
-    xrx.svg.setCTM(this.viewbox_.getGroup().getElement(),
->>>>>>> ed11b0087dee2402832dff8d5fdea3b3bd3b2102
         this.viewbox_.getCTM());
   } else if (this.engine_ === xrx.engine.Engine.VML) {
     xrx.vml.render(this.canvas_.getRaphael(),

@@ -1,5 +1,5 @@
 /**
- * @fileoverview A class representing the event handling of a
+ * @fileoverview A class implementing the event handling for a
  * drawing canvas.
  */
 

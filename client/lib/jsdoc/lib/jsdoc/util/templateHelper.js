@@ -141,11 +141,6 @@ function hasUrlPrefix(text) {
     return (/^(http|ftp)s?:\/\//).test(text);
 }
 
-function isComplexTypeExpression(expr) {
-    // record types, type unions, and type applications all count as "complex"
-    return expr.search(/[{(|]/) !== -1 || expr.search(/</) > 0;
-}
-
 /**
  * Build an HTML link to the symbol with the specified longname. If the longname is not
  * associated with a URL, this method simply returns the link text, if provided, or the longname.
@@ -190,7 +185,7 @@ function buildLink(longname, linkText, options) {
     }
     // handle complex type expressions that may require multiple links
     // (but skip anything that looks like an inline tag)
-    else if (longname && isComplexTypeExpression(longname) && /\{\@.+\}/.test(longname) === false) {
+    else if (longname && longname.search(/[<{(]/) !== -1 && /\{\@.+\}/.test(longname) === false) {
         parsedType = parseType(longname);
         return stringifyType(parsedType, options.cssClass, options.linkMap);
     }

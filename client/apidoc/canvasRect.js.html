@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/canvas/canvasRect.js</title>
+    <title>JSDoc: Source: canvas/canvasRect.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/canvas/canvasRect.js</h1>
+    <h1 class="page-title">Source: canvas/canvasRect.js</h1>
 
     
 
@@ -26,68 +26,95 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview
+ * @fileoverview Canvas class representing a rectangle.
  */
 
 goog.provide('xrx.canvas.Rect');
 
 
 
-goog.require('xrx.canvas.Element');
+goog.require('xrx.canvas.Stylable');
+goog.require('xrx.geometry.Rect');
 
 
 
+/**
+ * Canvas class representing a rectangle.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ * @constructor
+ * @extends {xrx.canvas.Stylable}
+ */
 xrx.canvas.Rect = function(canvas) {
 
-  goog.base(this, canvas);
-
-  this.x_ = 0;
-
-  this.y_ = 0;
-
-  this.width_ = 0;
-
-  this.height_ = 0;
-
-  this.fill_ = {
-    color: 'black'
-  };
+  goog.base(this, canvas, new xrx.geometry.Rect());
 };
-goog.inherits(xrx.canvas.Rect, xrx.canvas.Element);
+goog.inherits(xrx.canvas.Rect, xrx.canvas.Stylable);
 
 
 
-xrx.canvas.Rect.setHeight = function(rect, height) {
-  rect.height_ = height;
+/**
+ * Sets the X coordinate of the rectangle.
+ * @param {number} x The coordinate.
+ */
+xrx.canvas.Rect.prototype.setX = function(x) {
+  this.geometry_.x = x;
 };
 
 
 
-xrx.canvas.Rect.setWidth = function(rect, width) {
-  rect.width_ = width;
+/**
+ * Sets the Y coordinate of the rectangle.
+ * @param {number} y The coordinate.
+ */
+xrx.canvas.Rect.prototype.setY = function(y) {
+  this.geometry_.y = y;
 };
 
 
 
-xrx.canvas.Rect.setFill = function(rect, color) {
-  rect.fill_.color = color;
+/**
+ * Sets the width of the rectangle.
+ * @param {number} width The width.
+ */
+xrx.canvas.Rect.prototype.setWidth = function(width) {
+  this.geometry_.width = width;
 };
 
 
 
+/**
+ * Sets the height of the rectangle.
+ * @param {height} height The height.
+ */
+xrx.canvas.Rect.prototype.setHeight = function(height) {
+  this.geometry_.height = height;
+};
+
+
+
+/**
+ * Draws the rectangle.
+ */
 xrx.canvas.Rect.prototype.draw = function() {
+  var x = this.geometry_.x;
+  var y = this.geometry_.y;
+  var width = this.geometry_.width;
+  var height = this.geometry_.height;
   this.context_.beginPath();
-  this.context_.moveTo(this.x_, this.y_);
-  this.context_.lineTo(this.x_, this.y_ + this.height_);
-  this.context_.lineTo(this.x_ + this.width_, this.y_ + this.height_);
-  this.context_.lineTo(this.x_ + this.width_, this.y_);
-  this.context_.fillStyle = this.fill_.color;
-  this.context_.fill();
+  this.context_.moveTo(x, y);
+  this.context_.lineTo(x, y + height);
+  this.context_.lineTo(x + width, y + height);
+  this.context_.lineTo(x + width, y);
   this.context_.closePath();
+  this.strokeAndFill_();
 };
 
 
 
+/**
+ * Creates a new rectangle.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ */
 xrx.canvas.Rect.create = function(canvas) {
   return new xrx.canvas.Rect(canvas);
 };
@@ -101,13 +128,13 @@ xrx.canvas.Rect.create = function(canvas) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

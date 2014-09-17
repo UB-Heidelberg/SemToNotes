@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/svg/svgGroup.js</title>
+    <title>JSDoc: Source: svg/svgGroup.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/svg/svgGroup.js</h1>
+    <h1 class="page-title">Source: svg/svgGroup.js</h1>
 
     
 
@@ -26,7 +26,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview
+ * @fileoverview SVG class representing a group.
  */
 
 goog.provide('xrx.svg.Group');
@@ -34,28 +34,93 @@ goog.provide('xrx.svg.Group');
 
 
 goog.require('goog.dom.DomHelper');
+goog.require('xrx.svg');
 goog.require('xrx.svg.Element');
 
 
 
-xrx.svg.Group = function() {};
+/**
+ * SVG class representing a group.
+ * @param {SVGGroupElement} element The SVG group element.
+ * @constructor
+ * @extends xrx.svg.Element
+ */
+xrx.svg.Group = function(element) {
+
+  goog.base(this, element);
+
+  /**
+   * The child elements of the group.
+   * @type {Array.&lt;xrx.svg.Element>}
+   */
+  this.childs_ = [];
+};
+goog.inherits(xrx.svg.Group, xrx.svg.Element);
 
 
 
-xrx.svg.Group.tagName = 'g';
-
-
-
-xrx.svg.Group.addChild = function(group, child) {
-  goog.dom.append(group, child);
+/**
+ * Returns the child elements of the group.
+ * @return {xrx.svg.Element} The child elements.
+ */
+xrx.svg.Group.prototype.getChildren = function() {
+  return this.childs_;
 };
 
 
 
-xrx.svg.Group.create = function() {
-  return xrx.svg.Element.create(xrx.svg.Group);
+/**
+ * Adds child elements to a group.
+ * @param {xrx.svg.Element} children The child elements.
+ */
+xrx.svg.Group.prototype.addChildren = function(children) {
+  if (!goog.isArray(children)) children = [children];
+  var child;
+  for(var i = 0, len = children.length; i &lt; len; i++) {
+    child = children[i];
+    this.childs_.push(child);
+    goog.dom.append(this.element_, child.getElement());
+  }
 };
 
+
+
+/**
+ * Removes all child elements from the group.
+ */
+xrx.svg.Group.prototype.removeChildren = function() {
+  goog.dom.removeChildren(this.element_);
+  this.childs_ = [];
+};
+
+
+
+/**
+ * Removes a child element at an index.
+ * @param {number} index The index.
+ */
+xrx.svg.Group.prototype.removeChildAt = function(index) {
+  var child = this.childs_[index];
+  goog.dom.removeNode(child.getElement());
+  this.childs_.splice(index, 1);
+};
+
+
+
+/**
+ * Draws each child element of the group.
+ */
+xrx.svg.Group.prototype.draw = function() {};
+
+
+
+/**
+ * Creates a new group.
+ */
+xrx.svg.Group.create = function(undefined_) {
+  var element = document.createElementNS(xrx.svg.Namespace['svg'], 'g');
+  return new xrx.svg.Group(element);
+};
 </code></pre>
         </article>
     </section>
@@ -66,13 +131,13 @@ xrx.svg.Group.create = function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

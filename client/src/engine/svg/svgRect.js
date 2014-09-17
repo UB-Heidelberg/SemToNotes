@@ -1,67 +1,86 @@
 /**
- * @fileoverview
+ * @fileoverview SVG class representing a rectangle.
  */
 
 goog.provide('xrx.svg.Rect');
 
 
 
-goog.require('xrx.graphic.Rect');
-goog.require('xrx.svg.Element');
+goog.require('xrx.geometry.Rect');
+goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
 
 
 /**
+ * SVG class representing a rectangle.
+ * @param {SVGRectElement} element The SVG element.
  * @constructor
+ * @extends {xrx.svg.Stylable}
  */
 xrx.svg.Rect = function(element) {
 
-  goog.base(this, element);
-
-  this.graphic_ = new xrx.graphic.Rect()
+  goog.base(this, element, new xrx.geometry.Rect());
 };
 goog.inherits(xrx.svg.Rect, xrx.svg.Stylable);
 
 
 
-xrx.svg.Rect.tagName = 'rect';
-
-
-
+/**
+ * Sets the X coordinate of the rectangle.
+ * @param {number} x The coordinate.
+ */
 xrx.svg.Rect.prototype.setX = function(x) {
-  this.graphic_.x = x;
+  this.geometry_.x = x;
   this.element_.setAttribute('x', x);
 };
 
 
 
+/**
+ * Sets the Y coordinate of the rectangle.
+ * @param {number} y The coordinate.
+ */
 xrx.svg.Rect.prototype.setY = function(y) {
-  this.graphic_.y = y;
+  this.geometry_.y = y;
   this.element_.setAttribute('y', y);
 };
 
 
 
+/**
+ * Sets the width of the rectangle.
+ * @param {number} width The width.
+ */
 xrx.svg.Rect.prototype.setWidth = function(width) {
-  this.graphic_.width = width;
+  this.geometry_.width = width;
   this.element_.setAttribute('width', width);
 };
 
 
 
+/**
+ * Sets the height of the rectangle.
+ * @param {height} height The height.
+ */
 xrx.svg.Rect.prototype.setHeight = function(height) {
-  this.graphic_.height = height;
+  this.geometry_.height = height;
   this.element_.setAttribute('height', height);
 };
 
 
 
+/**
+ * Draws the rectangle.
+ */
 xrx.svg.Rect.prototype.draw = function() {};
 
 
 
-xrx.svg.Rect.create = function() {
-  var element = xrx.svg.Element.create(xrx.svg.Rect);
+/**
+ * Creates a new rectangle.
+ */
+xrx.svg.Rect.create = function(undefined_) {
+  var element = document.createElementNS(xrx.svg.Namespace['svg'], 'rect');
   return new xrx.svg.Rect(element);
 };
