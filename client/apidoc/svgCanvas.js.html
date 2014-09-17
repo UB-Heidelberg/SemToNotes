@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/svg/svgCanvas.js</title>
+    <title>JSDoc: Source: svg/svgCanvas.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/svg/svgCanvas.js</h1>
+    <h1 class="page-title">Source: svg/svgCanvas.js</h1>
 
     
 
@@ -26,35 +26,114 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview SVG rendering class representing a canvas.
 ***REMOVED***
 
 goog.provide('xrx.svg.Canvas');
 
 
 
+***REMOVED***
+goog.require('xrx.svg');
 goog.require('xrx.svg.Element');
 
 
 
-xrx.svg.Canvas = function() {***REMOVED***
+***REMOVED***
+***REMOVED*** SVG rendering class representing a canvas.
+***REMOVED*** @param {SVGElement} element The SVG element.
+***REMOVED***
+***REMOVED*** @extends xrx.svg.Element
+***REMOVED***
+xrx.svg.Canvas = function(element) {
+
+***REMOVED***
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The child elements of the canvas.
+  ***REMOVED*** @type {xrx.svg.Element}
+ ***REMOVED*****REMOVED***
+  this.childs_ = [];
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The canvas width.
+  ***REMOVED*** @type {number}
+ ***REMOVED*****REMOVED***
+  this.width_ = 0;
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The canvas height.
+  ***REMOVED*** @type {number}
+ ***REMOVED*****REMOVED***
+  this.height_ = 0;
+***REMOVED***
+goog.inherits(xrx.svg.Canvas, xrx.svg.Element);
 
 
 
-xrx.svg.Canvas.tagName = 'svg';
+***REMOVED***
+***REMOVED*** Returns the width of the canvas.
+***REMOVED*** @return {number} The width.
+***REMOVED***
+xrx.svg.Canvas.prototype.getWidth = function() {
+  return this.width_;
+***REMOVED***
 
 
 
-xrx.svg.Canvas.setHeight = xrx.svg.Element.setHeight;
+***REMOVED***
+***REMOVED*** Sets the width of the canvas.
+***REMOVED*** @param {number} width the width.
+***REMOVED***
+xrx.svg.Canvas.prototype.setWidth = function(width) {
+  this.width_ = width;
+  this.element_.setAttribute('width', width);
+***REMOVED***
 
 
 
-xrx.svg.Canvas.setWidth = xrx.svg.Element.setWidth;
+***REMOVED***
+***REMOVED*** Returns the height of the canvas.
+***REMOVED*** @return {number} The height.
+***REMOVED***
+xrx.svg.Canvas.prototype.getHeight = function() {
+  return this.height_;
+***REMOVED***
 
 
 
-xrx.svg.Canvas.create = function() {
-  return xrx.svg.Element.create(xrx.svg.Canvas);
+***REMOVED***
+***REMOVED*** Sets the height of the canvas.
+***REMOVED*** @param {number} width the height.
+***REMOVED***
+xrx.svg.Canvas.prototype.setHeight = function(height) {
+  this.height_ = height;
+  this.element_.setAttribute('height', height);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Adds a child element to the canvas.
+***REMOVED*** @param {Object} element The child element.
+***REMOVED***
+xrx.svg.Canvas.prototype.addChild = function(element) {
+  goog.dom.append(this.element_, element.getElement());
+  element.draw();
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Creates a new canvas.
+***REMOVED*** @param {Element} parent The parent HTML element to which the canvas
+***REMOVED***     shall be appended.
+***REMOVED***
+xrx.svg.Canvas.create = function(parent) {
+  var element = document.createElementNS(xrx.svg.Namespace['svg'], 'svg');
+  var canvas = new xrx.svg.Canvas(element);
+  goog.dom.appendChild(parent, canvas.getElement());
+  return canvas;
 ***REMOVED***
 </code></pre>
         </article>
@@ -66,13 +145,13 @@ xrx.svg.Canvas.create = function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

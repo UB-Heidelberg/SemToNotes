@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/svg/svg.js</title>
+    <title>JSDoc: Source: svg/svg.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/svg/svg.js</h1>
+    <h1 class="page-title">Source: svg/svg.js</h1>
 
     
 
@@ -26,179 +26,84 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview SVG base class providing enumerations and static functions
+***REMOVED***     for the SVG sub-classes.
 ***REMOVED***
 
 goog.provide('xrx.svg');
-goog.provide('xrx.svg.Namespace');
 
 
 
-goog.require('goog.dom');
-goog.require('goog.math.AffineTransform');
+goog.require('xrx');
 
 
 
+***REMOVED***
+***REMOVED*** SVG base class providing enumerations and static functions
+***REMOVED*** for the SVG sub-classes.
+***REMOVED***
+***REMOVED***
 xrx.svg = function() {***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Enumeration of SVG related namespaces.
+***REMOVED*** @enum {string}
+***REMOVED***
 xrx.svg.Namespace = {
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The SVG namespace.
+ ***REMOVED*****REMOVED***
   'svg': 'http://www.w3.org/2000/svg',
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The XLINK namespace.
+ ***REMOVED*****REMOVED***
   'xlink': 'http://www.w3.org/1999/xlink'
 ***REMOVED***
 
 
 
-xrx.svg.addCoordsX = function(coords, value) {
-  for (var i = 0, len = coords.length; i &lt; len; i++) {
-    coords[i][0] += value;
-  }
+***REMOVED***
+***REMOVED*** Returns whether SVG rendering is supported by the current user agent.
+***REMOVED*** @return {boolean} Whether SVG rendering is supported.
+***REMOVED***
+xrx.svg.isSupported = function() {
+  !!document.createElementNS &amp;&amp;
+      !!document.createElementNS(xrx.svg.Namespace['svg'], 'svg').createSVGRect;
 ***REMOVED***
 
 
 
-xrx.svg.addCoordsY = function(coords, value) {
-  for (var i = 0, len = coords.length; i &lt; len; i++) {
-    coords[i][1] += value;
-  }
 ***REMOVED***
-
-
-
-xrx.svg.getBBox = function(coords) {
-  var x;
-  var y;
-  var bbox = {
-    x: coords[0][0],
-    y: coords[0][1],
-    x2: coords[0][0],
-    y2: coords[0][1],
-    width: 0,
-    height: 0
- ***REMOVED*****REMOVED***
-
-  for (var i = 1, len = coords.length; i &lt; len; i++) {
-    x = coords[i][0];
-    y = coords[i][1];
-    if (x &lt; bbox.x) bbox.x = x;
-    if (y &lt; bbox.y) bbox.y = y;
-    if (x > bbox.x2) bbox.x2 = x;
-    if (y > bbox.y2) bbox.y2 = y;
-  }
-  
-  bbox.width = bbox.x2 - bbox.x;
-  bbox.height = bbox.y2 - bbox.y;
-
-  return bbox;
+***REMOVED*** Sets the coordinates for various SVG elements such as polygons.
+***REMOVED*** @param {Element} element The SVG element.
+***REMOVED*** @param {Array.&lt;Array.&lt;number>>} points Array of coordinates.
 ***REMOVED***
-
-
-
-xrx.svg.getPoints = function(element) {
-  var points = [];
-  var point;
-  var xy = 0;
-  var token;
-
-  var string = element.getAttribute('points');
-
-  var tokens = string.split(/\s|\,/);
-
-  for(var i = 0, len = tokens.length; i &lt; len; i++) {
-    if (xy === 0) point = [];
-    token = tokens[i];
-    
-    if (token !== '') {
-      point[xy] = parseInt(token);
-      if (xy === 1) points.push(point);
-      xy === 0 ? xy = 1 : xy = 0;
-    }
-  }
-
-  return points;
-***REMOVED***
-
-
-
-xrx.svg.setPoints = function(element, points) {
+xrx.svg.setCoords = function(element, coordinates) {
   var s = '';
-
-  for(var i = 0, len = points.length; i &lt; len; i++) {
-    s += points[i][0].toString() + ',' + points[i][1].toString() + ' ';
+  for(var i = 0, len = coordinates.length; i &lt; len; i++) {
+    s += coordinates[i][0] + ',' + coordinates[i][1] + ' ';
   }
-
   element.setAttribute('points', s);
 ***REMOVED***
 
 
 
 ***REMOVED***
-***REMOVED*** @private
+***REMOVED*** Re-renders a SVG element according to a transformation matrix.
+***REMOVED*** @param {Element} element The HTML element to be transformed and rendered.
+***REMOVED*** @param {goog.math.AffineTransform} affineTransform Transformation matrix to
+***REMOVED***     be applied.
 ***REMOVED***
-xrx.svg.ctmPatternString_ = '(matrix)\\(\\s*([+-]?[\\d\\.]+)\\s*' +
-  '(?:[\\s,]\\s*([+-]?[\\d\\.]+)\\s*' +
-  '(?:[\\s,]\\s*([+-]?[\\d\\.]+)\\s*' +
-  '(?:[\\s,]\\s*([+-]?[\\d\\.]+)\\s*' +
-  '[\\s,]\\s*([+-]?[\\d\\.]+)\\s*' +
-  '[\\s,]\\s*([+-]?[\\d\\.]+)\\s*)?)?)?\\)';
-
-
-
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
-xrx.svg.ctmPattern_ = new RegExp(xrx.svg.ctmPatternString_);
-
-
-
-
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
-xrx.svg.ctmParse_ = function(string) {
-  var token;
-  var matrix;
-
-  token = xrx.svg.ctmPattern_.exec(string);
-
-  if (token) {
-    matrix = new Array(6);
-    matrix[0] = parseFloat(token[2]);
-    matrix[1] = parseFloat(token[3]);
-    matrix[2] = parseFloat(token[4]);
-    matrix[3] = parseFloat(token[5]);
-    matrix[4] = parseFloat(token[6]);
-    matrix[5] = parseFloat(token[7]);
-  }
-
-  return matrix;
-***REMOVED***
-
-
-
-xrx.svg.getCTM = function(element) {
-
-  var string = element.getAttribute('transform');
-
-  var coords = xrx.svg.ctmParse_(string);
-
-  return !coords ? new goog.math.AffineTransform() :
-      new goog.math.AffineTransform(coords[0], coords[1], coords[2],
-          coords[3], coords[4], coords[5]);
-***REMOVED***
-
-
-
-xrx.svg.setCTM = function(element, affineTransform) {
-
+xrx.svg.render = function(element, affineTransform) {
   var s = 'matrix(' + affineTransform.m00_ + ',' + affineTransform.m10_ +
       ',' + affineTransform.m01_ + ',' + affineTransform.m11_ +
       ',' + affineTransform.m02_ + ',' + affineTransform.m12_ + ')';
-
   element.setAttribute('transform', s);  
 ***REMOVED***
-
 
 
 
@@ -213,13 +118,13 @@ goog.exportProperty(xrx, 'svg', xrx.svg);
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

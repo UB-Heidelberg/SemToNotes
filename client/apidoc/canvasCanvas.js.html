@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/canvas/canvasCanvas.js</title>
+    <title>JSDoc: Source: canvas/canvasCanvas.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/canvas/canvasCanvas.js</h1>
+    <h1 class="page-title">Source: canvas/canvasCanvas.js</h1>
 
     
 
@@ -26,7 +26,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview Canvas rendering class representing a canvas.
 ***REMOVED***
 
 goog.provide('xrx.canvas.Canvas');
@@ -37,24 +37,119 @@ goog.provide('xrx.canvas.Canvas');
 
 
 
-xrx.canvas.Canvas = function() {***REMOVED***
+***REMOVED***
+***REMOVED*** Canvas rendering class representing a canvas.
+***REMOVED*** @param {HTMLCanvasElement} element The HTML canvas element.
+***REMOVED***
+***REMOVED***
+xrx.canvas.Canvas = function(element) {
 
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The rendering context.
+  ***REMOVED*** @type {CanvasRenderingContext2D}
+ ***REMOVED*****REMOVED***
+  this.context_ = element.getContext('2d');
 
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The HTML canvas element.
+  ***REMOVED*** @type {HTMLCanvasElement}
+ ***REMOVED*****REMOVED***
+  this.element_ = element;
 
-xrx.canvas.Canvas.setHeight = function(element, height) {
-  element.setAttribute('height', height);
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The child elements of the canvas.
+  ***REMOVED*** @type {xrx.canvas.Element}
+ ***REMOVED*****REMOVED***
+  this.childs_ = [];
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The canvas width.
+  ***REMOVED*** @type {number}
+ ***REMOVED*****REMOVED***
+  this.width_ = 0;
+
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** The canvas height.
+  ***REMOVED*** @type {number}
+ ***REMOVED*****REMOVED***
+  this.height_ = 0;
 ***REMOVED***
 
 
 
-xrx.canvas.Canvas.setWidth = function(element, width) {
-  element.setAttribute('width', width);
+***REMOVED***
+***REMOVED*** Returns the HTML canvas element.
+***REMOVED*** @return {HTMLCanvasElement} The HTML canvas element.
+***REMOVED***
+xrx.canvas.Canvas.prototype.getElement = function() {
+  return this.element_;
 ***REMOVED***
 
 
 
-xrx.canvas.Canvas.create = function(opt_properties) {
-  return goog.dom.createElement('canvas');
+***REMOVED***
+***REMOVED*** Returns the width of the canvas.
+***REMOVED*** @return {number} The width.
+***REMOVED***
+xrx.canvas.Canvas.prototype.getWidth = function() {
+  return this.width_;
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Sets the width of the canvas.
+***REMOVED*** @param {number} width the width.
+***REMOVED***
+xrx.canvas.Canvas.prototype.setWidth = function(width) {
+  this.width_ = width;
+  this.element_.setAttribute('width', width);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Returns the height of the canvas.
+***REMOVED*** @return {number} The height.
+***REMOVED***
+xrx.canvas.Canvas.prototype.getHeight = function() {
+  return this.height_;
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Sets the height of the canvas.
+***REMOVED*** @param {number} width the height.
+***REMOVED***
+xrx.canvas.Canvas.prototype.setHeight = function(height) {
+  this.height_ = height;
+  this.element_.setAttribute('height', height);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Adds a child element to the canvas.
+***REMOVED*** @param {Object} element The child element.
+***REMOVED***
+xrx.canvas.Canvas.prototype.addChild = function(element) {
+  this.childs_.push(element);
+  element.draw();
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Creates a new canvas.
+***REMOVED*** @param {Element} parent The parent HTML element to which the canvas
+***REMOVED***     shall be appended.
+***REMOVED***
+xrx.canvas.Canvas.create = function(parent) {
+  var element = goog.dom.createElement('canvas');
+  var canvas = new xrx.canvas.Canvas(element);
+  goog.dom.appendChild(parent, canvas.getElement());
+  return canvas;
 ***REMOVED***
 </code></pre>
         </article>
@@ -66,13 +161,13 @@ xrx.canvas.Canvas.create = function(opt_properties) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

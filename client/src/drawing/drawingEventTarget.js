@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class representing the event handling of a
+***REMOVED*** @fileoverview A class implementing the event handling for a
 ***REMOVED*** drawing canvas.
 ***REMOVED***
 

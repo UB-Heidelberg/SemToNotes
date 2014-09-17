@@ -47,7 +47,7 @@
 
     
     <div class="description">
-        A static class providing enumerations for the canvas classes.
+        Canvas base class providing static functions for the canvas sub-classes.
     </div>
     
 
@@ -80,7 +80,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line15">line 15</a>
+        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line18">line 18</a>
     </li></ul></dd>
     
 
@@ -123,25 +123,25 @@
             <dt><a href="xrx.canvas.Canvas.html">Canvas</a></dt>
             <dd></dd>
         
+            <dt><a href="xrx.canvas.Circle.html">Circle</a></dt>
+            <dd></dd>
+        
+            <dt><a href="xrx.canvas.Element.html">Element</a></dt>
+            <dd></dd>
+        
             <dt><a href="xrx.canvas.Group.html">Group</a></dt>
             <dd></dd>
         
-            <dt><a href="xrx.canvas.GroupBackground.html">GroupBackground</a></dt>
+            <dt><a href="xrx.canvas.Image.html">Image</a></dt>
             <dd></dd>
         
-            <dt><a href="xrx.canvas.GroupShape.html">GroupShape</a></dt>
+            <dt><a href="xrx.canvas.Polygon.html">Polygon</a></dt>
             <dd></dd>
         
-            <dt><a href="xrx.canvas.GroupShapeCreate.html">GroupShapeCreate</a></dt>
+            <dt><a href="xrx.canvas.Rect.html">Rect</a></dt>
             <dd></dd>
         
-            <dt><a href="xrx.canvas.GroupShapeModify.html">GroupShapeModify</a></dt>
-            <dd></dd>
-        
-            <dt><a href="xrx.canvas.Shield.html">Shield</a></dt>
-            <dd></dd>
-        
-            <dt><a href="xrx.canvas.Toolbar.html">Toolbar</a></dt>
+            <dt><a href="xrx.canvas.Stylable.html">Stylable</a></dt>
             <dd></dd>
         </dl>
     
@@ -151,182 +151,33 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
+
+    
+        <h3 class="subsection-title">Methods</h3>
 
         <dl>
             
 <dt>
-    <h4 class="name" id="Mode"><span class="type-signature">(static) </span>Mode<span class="type-signature"> :string</span></h4>
+    <h4 class="name" id="isSupported"><span class="type-signature">(static) </span>isSupported<span class="signature">()</span><span class="type-signature"> &rarr; {boolean}</span></h4>
 
     
 </dt>
 <dd>
+
     
     <div class="description">
-        Enumeration for canvas modes.
+        Returns whether HTML Canvas rendering is supported by the current user agent.
     </div>
     
 
     
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">string</span>
 
+    
 
-            </li>
-        </ul>
     
 
     
 <dl class="details">
-    
-
-        <h5 class="subsection-title">Properties:</h5>
-
-        <dl>
-
-<table class="props">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>PAN</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    pan
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>DRAW</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    draw
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>MODIFY</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    modify
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>DELETE</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-                <td class="default">
-                
-                    delete
-                
-                </td>
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table></dl>
-
     
 
     
@@ -348,7 +199,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line34">line 34</a>
+        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line26">line 26</a>
     </li></ul></dd>
     
 
@@ -361,6 +212,38 @@
 
 
     
+
+    
+
+    
+
+    
+
+    
+
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    Whether HTML Canvas rendering is supported.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">boolean</span>
+
+
+    </dd>
+</dl>
+
+        
 
     
 </dd>
@@ -368,38 +251,27 @@
         
             
 <dt>
-    <h4 class="name" id="State"><span class="type-signature">(static) </span>State<span class="type-signature"> :string</span></h4>
+    <h4 class="name" id="render"><span class="type-signature">(static) </span>render<span class="signature">(canvas, affineTransform, callback)</span><span class="type-signature"></span></h4>
 
     
 </dt>
 <dd>
+
     
     <div class="description">
-        Enumeration for canvas states.
+        Re-renders 2D HTML Canvas elements according to a transformation matrix.
     </div>
     
 
     
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">string</span>
 
-
-            </li>
-        </ul>
     
 
     
-<dl class="details">
-    
+        <h5>Parameters:</h5>
+        
 
-        <h5 class="subsection-title">Properties:</h5>
-
-        <dl>
-
-<table class="props">
+<table class="params">
     <thead>
     <tr>
         
@@ -411,8 +283,6 @@
         
 
         
-        <th>Default</th>
-        
 
         <th class="last">Description</th>
     </tr>
@@ -423,13 +293,13 @@
 
         <tr>
             
-                <td class="name"><code>DRAG</code></td>
+                <td class="name"><code>canvas</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">HTMLCanvasElement</span>
 
 
             
@@ -438,27 +308,21 @@
             
 
             
-                <td class="default">
-                
-                    drag
-                
-                </td>
-            
 
-            <td class="description last"></td>
+            <td class="description last">The HTML canvas element.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>NONE</code></td>
+                <td class="name"><code>affineTransform</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">goog.math.AffineTransform</span>
 
 
             
@@ -467,20 +331,40 @@
             
 
             
-                <td class="default">
-                
-                    none
-                
-                </td>
+
+            <td class="description last">Transformation matrix to    be applied before rendering.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
             
 
-            <td class="description last"></td>
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Callback function, called after the canvas is cleaned    and the matrix is transformed.</td>
         </tr>
 
     
     </tbody>
-</table></dl>
+</table>
+    
 
+    
+<dl class="details">
     
 
     
@@ -502,7 +386,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line23">line 23</a>
+        <a href="canvas.js.html">canvas/canvas.js</a>, <a href="canvas.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -513,6 +397,16 @@
     
 </dl>
 
+
+    
+
+    
+
+    
+
+    
+
+    
 
     
 
@@ -520,8 +414,6 @@
 </dd>
 
         </dl>
-    
-
     
 
     
@@ -537,13 +429,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.canvas.GroupShape.html">GroupShape</a></li><li><a href="xrx.canvas.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.canvas.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.canvas.Shield.html">Shield</a></li><li><a href="xrx.canvas.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Tue Jun 17 2014 19:40:18 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:22 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

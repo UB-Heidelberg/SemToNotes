@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/svg/svgRect.js</title>
+    <title>JSDoc: Source: svg/svgRect.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/svg/svgRect.js</h1>
+    <h1 class="page-title">Source: svg/svgRect.js</h1>
 
     
 
@@ -26,39 +26,90 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview SVG class representing a rectangle.
 ***REMOVED***
 
 goog.provide('xrx.svg.Rect');
 
 
 
-goog.require('xrx.svg.Element');
+goog.require('xrx.geometry.Rect');
+goog.require('xrx.svg');
+goog.require('xrx.svg.Stylable');
 
 
 
-xrx.svg.Rect = function() {***REMOVED***
+***REMOVED***
+***REMOVED*** SVG class representing a rectangle.
+***REMOVED*** @param {SVGRectElement} element The SVG element.
+***REMOVED***
+***REMOVED*** @extends {xrx.svg.Stylable}
+***REMOVED***
+xrx.svg.Rect = function(element) {
+
+  goog.base(this, element, new xrx.geometry.Rect());
+***REMOVED***
+goog.inherits(xrx.svg.Rect, xrx.svg.Stylable);
 
 
 
-xrx.svg.Rect.tagName = 'rect';
+***REMOVED***
+***REMOVED*** Sets the X coordinate of the rectangle.
+***REMOVED*** @param {number} x The coordinate.
+***REMOVED***
+xrx.svg.Rect.prototype.setX = function(x) {
+  this.geometry_.x = x;
+  this.element_.setAttribute('x', x);
+***REMOVED***
 
 
 
-xrx.svg.Rect.setHeight = xrx.svg.Element.setHeight;
+***REMOVED***
+***REMOVED*** Sets the Y coordinate of the rectangle.
+***REMOVED*** @param {number} y The coordinate.
+***REMOVED***
+xrx.svg.Rect.prototype.setY = function(y) {
+  this.geometry_.y = y;
+  this.element_.setAttribute('y', y);
+***REMOVED***
 
 
 
-xrx.svg.Rect.setWidth = xrx.svg.Element.setWidth;
+***REMOVED***
+***REMOVED*** Sets the width of the rectangle.
+***REMOVED*** @param {number} width The width.
+***REMOVED***
+xrx.svg.Rect.prototype.setWidth = function(width) {
+  this.geometry_.width = width;
+  this.element_.setAttribute('width', width);
+***REMOVED***
 
 
 
-xrx.svg.Rect.setFill = xrx.svg.Element.setFill;
+***REMOVED***
+***REMOVED*** Sets the height of the rectangle.
+***REMOVED*** @param {height} height The height.
+***REMOVED***
+xrx.svg.Rect.prototype.setHeight = function(height) {
+  this.geometry_.height = height;
+  this.element_.setAttribute('height', height);
+***REMOVED***
 
 
 
-xrx.svg.Rect.create = function(canvas) {
-  return xrx.svg.Element.create(xrx.svg.Rect);
+***REMOVED***
+***REMOVED*** Draws the rectangle.
+***REMOVED***
+xrx.svg.Rect.prototype.draw = function() {***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Creates a new rectangle.
+***REMOVED***
+xrx.svg.Rect.create = function(undefined_) {
+  var element = document.createElementNS(xrx.svg.Namespace['svg'], 'rect');
+  return new xrx.svg.Rect(element);
 ***REMOVED***
 </code></pre>
         </article>
@@ -70,13 +121,13 @@ xrx.svg.Rect.create = function(canvas) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.html">drawing</a></li><li><a href="xrx.drawing.Canvas.html">Canvas</a></li><li><a href="xrx.drawing.Group.html">Group</a></li><li><a href="xrx.drawing.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.drawing.GroupShape.html">GroupShape</a></li><li><a href="xrx.drawing.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.drawing.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.drawing.Shield.html">Shield</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Thu Jun 19 2014 16:53:37 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -123,6 +123,7 @@ var Tag = exports.Tag = function(tagTitle, tagBody, meta) {
     if (this.text) {
         try {
             processTagText(this, tagDef);
+            jsdoc.tag.validator.validate(this, tagDef, meta);
         }
         catch (e) {
             // probably a type-parsing error
@@ -135,6 +136,4 @@ var Tag = exports.Tag = function(tagTitle, tagBody, meta) {
           ***REMOVED***
         }
     }
-
-    jsdoc.tag.validator.validate(this, tagDef, meta);
 ***REMOVED***

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: graphics/svg/svgPolygon.js</title>
+    <title>JSDoc: Source: svg/svgPolygon.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: graphics/svg/svgPolygon.js</h1>
+    <h1 class="page-title">Source: svg/svgPolygon.js</h1>
 
     
 
@@ -26,177 +26,79 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview SVG class representing a polygon.
 ***REMOVED***
 
 goog.provide('xrx.svg.Polygon');
-goog.provide('xrx.svg.PolygonModify');
-goog.provide('xrx.svg.PolygonCreate');
 
 
 
-goog.require('goog.dom');
-goog.require('goog.dom.classes');
-goog.require('xrx.canvas.GroupShapeCreate');
-goog.require('xrx.graphics.Coordinate');
-goog.require('xrx.svg.Circle');
-goog.require('xrx.svg.Element');
-goog.require('xrx.svg.Group');
-goog.require('xrx.svg.Shape');
-goog.require('xrx.svg.VertexDragger');
+goog.require('xrx.geometry.Polygon');
+goog.require('xrx.svg');
+goog.require('xrx.svg.Stylable');
 
 
 
-xrx.svg.Polygon = function() {***REMOVED***
+***REMOVED***
+***REMOVED*** SVG class representing a polygon
+***REMOVED*** @param {SVGPolygonElement} element The SVG polygon element.
+***REMOVED***
+***REMOVED*** @extends xrx.canvas.Stylable
+***REMOVED***
+xrx.svg.Polygon = function(element) {
+
+  goog.base(this, element, new xrx.geometry.Polygon());
+***REMOVED***
+goog.inherits(xrx.svg.Polygon, xrx.svg.Stylable);
 
 
 
-xrx.svg.Polygon.className = 'xrx-shape-polygon';
-
-
-
-xrx.svg.Polygon.getCoords = function(element) {
-  return xrx.svg.getPoints(element);
+***REMOVED***
+***REMOVED*** Sets the coordinates for the polygon.
+***REMOVED*** @param {Array.&lt;Array.&lt;number>>} coords The coordinates.
+***REMOVED***
+xrx.svg.Polygon.prototype.setCoords = function(coords) {
+  this.geometry_.coords = coords;
+  xrx.svg.setCoords(this.element_, coords);
 ***REMOVED***
 
 
 
-xrx.svg.Polygon.setCoords = function(element, coords) {
-  xrx.svg.setPoints(element, coords);
+***REMOVED***
+***REMOVED*** Returns the coordinates of the polygon.
+***REMOVED*** @return {Array.&lt;Array.&lt;number>>} The coordinates.
+***REMOVED***
+xrx.svg.Polygon.prototype.getCoords = function(coords) {
+  return this.geometry_.coords;
 ***REMOVED***
 
 
 
-xrx.svg.Polygon.getBBox = function(element) {
-  var coords = xrx.svg.Polygon.getCoords(element);
-  return xrx.svg.getBBox(coords);
+***REMOVED***
+***REMOVED*** Updates one coordinate in the list of coordinates.
+***REMOVED*** @param {number} pos Index of the coordinate to be updated.
+***REMOVED*** @param {Array.&lt;number>} coord The new coordinate.
+***REMOVED***
+xrx.svg.Polygon.prototype.setCoordAt = function(pos, coord) {
+  this.geometry_.coords[pos] = coord;
+  xrx.svg.setCoords(this.element_, this.geometry_.coords);
 ***REMOVED***
 
 
 
-xrx.svg.Polygon.onMouseOver = function(element, e) {***REMOVED***
-
-
-
-xrx.svg.Polygon.handleMouseDown = function(e, canvas) {
-  xrx.svg.Shape.handleMouseDown(e, canvas, xrx.svg.Polygon);
 ***REMOVED***
-
-
-
-xrx.svg.Polygon.handleMouseMove = function(e, canvas) {
-  xrx.svg.Shape.handleMouseMove(e, canvas, xrx.svg.Polygon);
+***REMOVED*** Draws the polygon.
 ***REMOVED***
+xrx.svg.Polygon.prototype.draw = function() {***REMOVED***
 
 
 
-xrx.svg.Polygon.handleMouseUp = function(e, canvas) {
-  xrx.svg.Shape.handleMouseUp(e, canvas, xrx.svg.Polygon);
 ***REMOVED***
-
-
-
-xrx.svg.Polygon.handleClick = function(e, canvas) {
-  xrx.svg.Shape.handleClick(e, canvas, xrx.svg.Polygon);
+***REMOVED*** Creates a new polygon.
 ***REMOVED***
-
-
-
-xrx.svg.Polygon.createModify = function(polygon, canvas) {
-  return xrx.svg.PolygonModify.create(polygon, canvas);
-***REMOVED***
-
-
-
-xrx.svg.Polygon.create = function(opt_properties) {
-  return xrx.svg.Shape.create('polygon', xrx.svg.Polygon.className, opt_properties);
-***REMOVED***
-
-
-
-xrx.svg.PolygonModify = function() {
-
-  this.canvas;
-
-  this.polygon;
-
-  this.points = [];
-***REMOVED***
-
-
-
-xrx.svg.PolygonModify.create = function(polygon, canvas) {
-  var vertexDragger;
-  var edit = new xrx.svg.PolygonModify();
-
-  edit.polygon = polygon;
-  edit.points = xrx.svg.getPoints(polygon);
-  edit.canvas = canvas;
-
-  var group = xrx.svg.Group.create();
-
-  for (var i = 0, len = edit.points.length; i &lt; len; i++) {
-    vertexDragger = xrx.svg.VertexDragger.create(edit.points[i], edit);
-
-    goog.dom.append(group, vertexDragger);
-  }
-
-  return group;
-***REMOVED***
-
-
-
-xrx.svg.PolygonCreate = function() {***REMOVED***
-
-
-
-xrx.svg.PolygonCreate.isFirstTouch = function(shapes) {
-  return shapes.length === 0;
-***REMOVED***
-
-
-
-xrx.svg.PolygonCreate.isLastTouch = function(element) {
-  return element.getAttribute('class') === 'xrx-shape-endpoint';
-***REMOVED***
-
-
-
-xrx.svg.PolygonCreate.handleMouseClick = function(e, canvas) {
-  var eventPoint = [e.clientX, e.clientY];
-  var point = new Array(2);
-  canvas.getViewBox().ctm.createInverse().transform(eventPoint, 0, point, 0, 1);
-  var groupShapeCreate = canvas.getGroupShapeCreate();
-  var shapes = groupShapeCreate.getShapes();
-
-  if (xrx.svg.PolygonCreate.isLastTouch(e.target)) {
-    var coords = xrx.svg.getPoints(shapes[0]);
-    var polygon = xrx.svg.Polygon.create();
-    xrx.svg.Polygon.setCoords(polygon, coords);
-
-    canvas.getGroupShape().addShapes(polygon);
-    groupShapeCreate.removeShapes();
-
-  } else if (xrx.svg.PolygonCreate.isFirstTouch(shapes)) {
-    var polyline = xrx.svg.Shape.create('polyline', 'xrx-shape-polyline', {
-      'points': point
-    });
-    groupShapeCreate.addShapes(polyline);
-    var circle = xrx.svg.Circle.create({
-      'cx': point[0],
-      'cy': point[1],
-      'r': '4',
-      'style': 'fill:white;stroke:black;stroke-width:1',
-      'class': 'xrx-shape-endpoint'
-    })
-    groupShapeCreate.addShapes(circle);
-  } else {
-    var coords = xrx.svg.getPoints(shapes[0]);
-    if (!xrx.graphics.Coordinate.equals(coords[coords.length - 1], point)) {
-      coords = coords.concat([point]);
-      xrx.svg.Polygon.setCoords(shapes[0], coords);
-    }
-  }
+xrx.svg.Polygon.create = function(undefined_) {
+  var element = document.createElementNS(xrx.svg.Namespace['svg'], 'polygon');
+  return new xrx.svg.Polygon(element);
 ***REMOVED***
 </code></pre>
         </article>
@@ -208,13 +110,13 @@ xrx.svg.PolygonCreate.handleMouseClick = function(e, canvas) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.GroupBackground.html">GroupBackground</a></li><li><a href="xrx.canvas.GroupShape.html">GroupShape</a></li><li><a href="xrx.canvas.GroupShapeCreate.html">GroupShapeCreate</a></li><li><a href="xrx.canvas.GroupShapeModify.html">GroupShapeModify</a></li><li><a href="xrx.canvas.Shield.html">Shield</a></li><li><a href="xrx.canvas.Toolbar.html">Toolbar</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-dev</a> on Tue Jun 17 2014 19:40:17 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 17 2014 12:17:19 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

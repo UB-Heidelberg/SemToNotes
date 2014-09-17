@@ -1,6 +1,4 @@
 /*global afterEach, beforeEach, describe, expect, env, it, jasmine, spyOn***REMOVED***
-'use strict';
-
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
 describe("jsdoc/util/templateHelper", function() {
@@ -293,20 +291,6 @@ describe("jsdoc/util/templateHelper", function() {
             var link = helper.linkto('Array.<(linktoTest|LinktoFakeClass)>', 'link text');
             expect(link).toBe('Array.&lt;(<a href="test.html">linktoTest</a>|' +
                 '<a href="fakeclass.html">LinktoFakeClass</a>)>');
-        });
-
-        it('works correctly with type unions that are not enclosed in parentheses', function() {
-            var link = helper.linkto('linktoTest|LinktoFakeClass', 'link text');
-            expect(link).toBe('(<a href="test.html">linktoTest</a>|' +
-                '<a href="fakeclass.html">LinktoFakeClass</a>)');
-        });
-
-        it('does not try to parse a longname starting with <anonymous> as a type application',
-            function() {
-            spyOn(logger, 'error');
-
-            helper.linkto('<anonymous>~foo');
-            expect(logger.error).not.toHaveBeenCalled();
         });
 
         it('returns a link when a URL is specified', function() {

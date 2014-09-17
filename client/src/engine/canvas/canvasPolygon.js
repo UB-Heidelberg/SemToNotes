@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview Canvas class representing a polygon.
 ***REMOVED***
 
 goog.provide('xrx.canvas.Polygon');
@@ -7,43 +7,60 @@ goog.provide('xrx.canvas.Polygon');
 
 
 goog.require('xrx.canvas.Stylable');
-goog.require('xrx.graphic.Polygon');
+goog.require('xrx.geometry.Polygon');
 
 
 
 ***REMOVED***
+***REMOVED*** Canvas class representing a polygon.
+***REMOVED*** @param {xrx.canvas.Canvas} canvas The parent canvas object.
 ***REMOVED***
+***REMOVED*** @extends xrx.canvas.Stylable
 ***REMOVED***
 xrx.canvas.Polygon = function(canvas) {
 
-  goog.base(this, canvas);
-
-  this.graphic_ = new xrx.graphic.Polygon();
+  goog.base(this, canvas, new xrx.geometry.Polygon());
 ***REMOVED***
 goog.inherits(xrx.canvas.Polygon, xrx.canvas.Stylable);
 
 
 
+***REMOVED***
+***REMOVED*** Sets the coordinates for the polygon.
+***REMOVED*** @param {Array.<Array.<number>>} coords The coordinates.
+***REMOVED***
 xrx.canvas.Polygon.prototype.setCoords = function(coords) {
-  this.graphic_.coords = coords;
+  this.geometry_.coords = coords;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Returns the coordinates of the polygon.
+***REMOVED*** @return {Array.<Array.<number>>} The coordinates.
+***REMOVED***
 xrx.canvas.Polygon.prototype.getCoords = function(coords) {
-  return this.graphic_.coords;
+  return this.geometry_.coords;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Updates one coordinate in the list of coordinates.
+***REMOVED*** @param {number} pos Index of the coordinate to be updated.
+***REMOVED*** @param {Array.<number>} coord The new coordinate.
+***REMOVED***
 xrx.canvas.Polygon.prototype.setCoordAt = function(pos, coord) {
-  this.graphic_.coords[pos] = coord;
+  this.geometry_.coords[pos] = coord;
 ***REMOVED***
 
 
 
-xrx.canvas.Polygon.prototype.drawPath = function() {
-  var coords = this.graphic_.coords;
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
+xrx.canvas.Polygon.prototype.drawPath_ = function() {
+  var coords = this.geometry_.coords;
   this.context_.beginPath();
   this.context_.moveTo(coords[0][0], coords[0][1]);
   for(var i = 1, len = coords.length; i < len; i++) {
@@ -55,13 +72,20 @@ xrx.canvas.Polygon.prototype.drawPath = function() {
 
 
 
+***REMOVED***
+***REMOVED*** Draws the polygon.
+***REMOVED***
 xrx.canvas.Polygon.prototype.draw = function() {
-  this.drawPath();
+  this.drawPath_();
   this.strokeAndFill_();
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Creates a new polygon.
+***REMOVED*** @param {xrx.canvas.Canvas} canvas The parent canvas object.
+***REMOVED***
 xrx.canvas.Polygon.create = function(canvas) {
   return new xrx.canvas.Polygon(canvas);
 ***REMOVED***

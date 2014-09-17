@@ -1,4 +1,4 @@
-/*global env***REMOVED***
+/*global env: true***REMOVED***
 
 ***REMOVED***
 ***REMOVED*** Provides access to Markdown-related functions.
@@ -7,8 +7,6 @@
 ***REMOVED*** @author Ben Blank <ben.blank@gmail.com>
 ***REMOVED***
 'use strict';
-
-var util = require('util');
 
 ***REMOVED***
 ***REMOVED*** Enumeration of Markdown parsers that are available.
@@ -67,18 +65,6 @@ function unescapeUrls(source) {
 }
 
 ***REMOVED***
-***REMOVED*** Escape characters in text within a code block.
-***REMOVED***
-***REMOVED*** @param {string} source - The source text to escape.
-***REMOVED*** @return {string} The escaped source text.
-***REMOVED***
-function escapeCode(source) {
-    return source.replace(/</g, '&lt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-***REMOVED***
 ***REMOVED*** Retrieve a function that accepts a single parameter containing Markdown source. The function uses
 ***REMOVED*** the specified parser to transform the Markdown source to HTML, then returns the HTML as a string.
 ***REMOVED***
@@ -100,17 +86,14 @@ function getParseFunction(parserName, conf) {
     if (parserName === parserNames.marked) {
         // Marked generates an "id" attribute for headers; this custom renderer suppresses it
         markedRenderer = new marked.Renderer();
-
         markedRenderer.heading = function(text, level) {
+            var util = require('util');
+
             return util.format('<h%s>%s</h%s>', level, text, level);
        ***REMOVED*****REMOVED***
-
         // Allow prettyprint to work on inline code samples
         markedRenderer.code = function(code, language) {
-            var langClass = language ? ' lang-' + language : '';
-
-            return util.format( '<pre class="prettyprint source%s"><code>%s</code></pre>',
-                langClass, escapeCode(code) );
+          return '<pre class="prettyprint source"><code>' + code + '</code></pre>';
        ***REMOVED*****REMOVED***
 
         parserFunction = function(source) {

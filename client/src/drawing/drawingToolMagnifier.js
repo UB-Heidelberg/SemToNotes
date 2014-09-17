@@ -14,8 +14,8 @@ goog.require('goog.math.AffineTransform');
 goog.require('goog.math.Rect');
 goog.require('goog.style');
 goog.require('xrx.drawing.tool.Tool');
-goog.require('xrx.graphics.Engine');
-goog.require('xrx.graphics.Graphics');
+goog.require('xrx.engine.Engine');
+goog.require('xrx.engine.Engines');
 goog.require('xrx.svg');
 goog.require('xrx.vml');
 
@@ -82,7 +82,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
   ctm = this.ctm_.createInverse().translate(-point[0], -point[1]);
 
   // TODO: same as in xrx.drawing.Drawing
-  if (engine === xrx.graphics.Engine.CANVAS) {
+  if (engine === xrx.engine.Engine.CANVAS) {
     var c = this.canvas_.getElement();
     var ctx = c.getContext('2d');
     ctx.save();
@@ -93,9 +93,9 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
     this.group_.draw();
     ctx.closePath();
     ctx.restore();
-  } else if (engine === xrx.graphics.Engine.SVG) {
+  } else if (engine === xrx.engine.Engine.SVG) {
     xrx.svg.setCTM(this.group_.getElement(), ctm);
-  } else if (engine === xrx.graphics.Engine.VML) {
+  } else if (engine === xrx.engine.Engine.VML) {
     xrx.vml.setCTM(this.group_.getRaphael(), ctm);
     this.viewbox_.getGroup().draw();
   } else {

@@ -12,6 +12,7 @@ var _allTests = [
   './drawing/drawingViewbox_test.html',
   // engine
   './engine/engine_test.html',
+  './engine/engineEngines_test.html',
   // graphic
   './graphic/graphic_test.html',
   ];

@@ -1,5 +1,6 @@
 ***REMOVED***
-***REMOVED*** @fileoverview
+***REMOVED*** @fileoverview Engine entry-point class useful to include all rendering engine
+***REMOVED***     classes at once.
 ***REMOVED***
 
 goog.provide('xrx.engine.Engines');
@@ -14,7 +15,7 @@ goog.require('xrx.canvas.Group');
 goog.require('xrx.canvas.Image');
 goog.require('xrx.canvas.Polygon');
 goog.require('xrx.canvas.Rect');
-goog.require('xrx.graphics');
+goog.require('xrx.engine');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Canvas');
 goog.require('xrx.svg.Circle');
@@ -35,6 +36,8 @@ goog.require('xrx.vml.Rect');
 
 
 ***REMOVED***
+***REMOVED*** Engine entry-point class useful to include all rendering engine
+***REMOVED*** classes at once.
 ***REMOVED***
 ***REMOVED***
 xrx.engine.Engines = function() {***REMOVED***
