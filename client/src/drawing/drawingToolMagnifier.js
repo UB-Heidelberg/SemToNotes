@@ -13,6 +13,7 @@ goog.require('goog.fx.Dragger');
 goog.require('goog.math.AffineTransform');
 goog.require('goog.math.Rect');
 goog.require('goog.style');
+goog.require('xrx.canvas');
 goog.require('xrx.drawing.tool.Tool');
 goog.require('xrx.engine.Engine');
 goog.require('xrx.engine.Engines');
@@ -43,14 +44,14 @@ goog.inherits(xrx.drawing.tool.Magnifier, xrx.drawing.tool.Tool);
 
 
 xrx.drawing.tool.Magnifier.prototype.hide = function() {
-  goog.style.setStyle(this.canvas_.getElement(), 'display', 'none');
+  goog.style.setStyle(this.element_, 'display', 'none');
   this.isActive_ = false;
 };
 
 
 
 xrx.drawing.tool.Magnifier.prototype.show = function() {
-  goog.style.setStyle(this.canvas_.getElement(), 'display', 'block');
+  goog.style.setStyle(this.element_, 'display', 'block');
   this.isActive_ = true;
 };
 
@@ -89,15 +90,14 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, c.width, c.height);
     ctx.beginPath();
-    xrx.canvas.setTransform(ctx, ctm);
+    xrx.canvas.setTransform_(ctx, ctm);
     this.group_.draw();
     ctx.closePath();
     ctx.restore();
   } else if (engine === xrx.engine.Engine.SVG) {
-    xrx.svg.setCTM(this.group_.getElement(), ctm);
+    xrx.svg.render(this.group_.getElement(), ctm);
   } else if (engine === xrx.engine.Engine.VML) {
-    xrx.vml.setCTM(this.group_.getRaphael(), ctm);
-    this.viewbox_.getGroup().draw();
+    xrx.vml.render(this.group_.getRaphael(), ctm);
   } else {
     throw Error('Unknown engine.');
   }
@@ -106,9 +106,9 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
 
 
 xrx.drawing.tool.Magnifier.prototype.registerDrag_ = function() {
-  var size = goog.style.getSize(this.drawing_.getCanvas().getElement());
+  var size = goog.style.getSize(this.drawing_.getElement());
   var limits = new goog.math.Rect(0, 0, size.width, size.height);
-  var dragger = new goog.fx.Dragger(this.element_, this.element_); // TODO: limits (IE < 9)
+  var dragger = new goog.fx.Dragger(this.element_, this.element_, limits); // TODO: limits (IE < 9)
   goog.events.listen(dragger, goog.events.EventType.DRAG, function(e) {
     this.handleDrag_(e, dragger);
   }, false, this);

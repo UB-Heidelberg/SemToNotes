@@ -6,6 +6,10 @@ goog.provide('xrx.geometry.Circle');
 
 
 
+goog.require('xrx.geometry');
+
+
+
 /**
  * @constructor
  */

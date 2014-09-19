@@ -16,7 +16,7 @@ goog.require('xrx.svg.Stylable');
  * SVG class representing an image.
  * @param {SVGImageElement} element The SVG image element.
  * @constructor
- * @extends xrx.canvas.Stylable
+ * @extends xrx.svg.Stylable
  */
 xrx.svg.Image = function(element) {
 

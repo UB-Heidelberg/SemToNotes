@@ -6,6 +6,7 @@ goog.provide('xrx.vml.Group');
 
 
 
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.vml.Element');
 
 
@@ -47,11 +48,13 @@ xrx.vml.Group.prototype.getChildren = function() {
 xrx.vml.Group.prototype.addChildren = function(children) {
   if (!goog.isArray(children)) children = [children];
   var child;
+  var shield = this.raphael_.paper.getById('shield');
   for(var i = 0, len = children.length; i < len; i++) {
     child = children[i];
     this.childs_.push(child);
     this.raphael_.push(child.getRaphael());
   }
+  if (shield) shield.toFront();
 };
 
 
@@ -60,8 +63,11 @@ xrx.vml.Group.prototype.addChildren = function(children) {
  * Removes all child elements from the group.
  */
 xrx.vml.Group.prototype.removeChildren = function() {
+  var len = this.raphael_.length;
   this.childs_ = [];
-  this.raphael_.clear();
+  for (var i = 0; i < len; i++) {
+    goog.dom.removeNode(this.raphael_.pop().node);
+  }
 };
 
 
@@ -72,7 +78,7 @@ xrx.vml.Group.prototype.removeChildren = function() {
  */
 xrx.vml.Group.prototype.removeChildAt = function(index) {
   this.childs_.splice(index, 1);
-  this.raphael_.splice(index, 1);
+  goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
 };
 
 

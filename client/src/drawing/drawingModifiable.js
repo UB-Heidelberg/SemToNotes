@@ -7,6 +7,7 @@ goog.provide('xrx.drawing.Modifiable');
 
 
 goog.require('xrx.drawing');
+goog.require('xrx.geometry');
 goog.require('xrx.shape.VertexDragger');
 
 
@@ -23,6 +24,10 @@ xrx.drawing.Modifiable = function(drawing) {
   this.mode_;
 
   this.shape_;
+
+  this.coords_;
+
+  this.originCoords_;
 
   this.shapeOriginCoords_;
 
@@ -46,9 +51,7 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e) {
   this.state_ = xrx.drawing.State.DRAG;
   var modifier;
   var modifiable;
-  var eventPoint = [e.offsetX, e.offsetY];
-  this.drawing_.getViewbox().getCTM().createInverse().transform(eventPoint, 0,
-      this.mousePoint_, 0, 1);
+  this.mousePoint_ = this.drawing_.getEventPoint(e);
   modifier = this.drawing_.getShapeSelected(this.mousePoint_);
 
   if (!modifier) {
@@ -71,11 +74,10 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e) {
 
 xrx.drawing.Modifiable.prototype.handleMove = function(e) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
-  var originCoords;
   if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGVERTEX) {
-    originCoords = this.draggerOriginCoords_;
+    this.originCoords_ = this.draggerOriginCoords_;
   } else {
-    originCoords = this.shapeOriginCoords_;
+    this.originCoords_ = this.shapeOriginCoords_;
   }
 
   var eventPoint = [e.offsetX, e.offsetY];
@@ -88,36 +90,36 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
   };
   var bboxS;
   var point = new Array(2);
-  var coords = new Array(originCoords.length);
+  this.coords_ = new Array(this.originCoords_.length);
 
   this.drawing_.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
 
-  for (var i = 0, len = originCoords.length; i < len; i++) {
-    coords[i] = new Array(2);
-    coords[i][0] = - this.mousePoint_[0] + point[0] + originCoords[i][0];
-    coords[i][1] = - this.mousePoint_[1] + point[1] + originCoords[i][1];
+  for (var i = 0, len = this.originCoords_.length; i < len; i++) {
+    this.coords_[i] = new Array(2);
+    this.coords_[i][0] = - this.mousePoint_[0] + point[0] + this.originCoords_[i][0];
+    this.coords_[i][1] = - this.mousePoint_[1] + point[1] + this.originCoords_[i][1];
   };
 
-  bboxS = xrx.svg.getBBox(coords);
+  bboxS = xrx.geometry.getBBox(this.coords_);
 
   diff.x = bboxS.x - bboxA.x;
   diff.x2 = bboxA.x2 - bboxS.x2;
   diff.y = bboxS.y - bboxA.y;
   diff.y2 = bboxA.y2 - bboxS.y2;
 
-  if (diff.x < 0) xrx.svg.addCoordsX(coords, -diff.x);
-  if (diff.x2 < 0) xrx.svg.addCoordsX(coords, diff.x2);
-  if (diff.y < 0) xrx.svg.addCoordsY(coords, -diff.y);
-  if (diff.y2 < 0) xrx.svg.addCoordsY(coords, diff.y2);
+  if (diff.x < 0) xrx.geometry.addCoordsX(this.coords_, -diff.x);
+  if (diff.x2 < 0) xrx.geometry.addCoordsX(this.coords_, diff.x2);
+  if (diff.y < 0) xrx.geometry.addCoordsY(this.coords_, -diff.y);
+  if (diff.y2 < 0) xrx.geometry.addCoordsY(this.coords_, diff.y2);
 
   if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGVERTEX) {
     var pos = this.dragger_.getPosition();
-    this.shape_.setCoordAt(pos, coords[0]);
+    this.shape_.setCoordAt(pos, this.coords_[0]);
     if (this.shape_.setAffineCoords) this.shape_.setAffineCoords(pos);
-    this.dragger_.setCoords(coords);
+    this.dragger_.setCoords(this.coords_);
     this.drawing_.getLayerShapeModify().update(this.shape_.getCoords(), pos);
   } else {
-    this.shape_.setCoords(coords);
+    this.shape_.setCoords(this.coords_);
     this.drawing_.getLayerShapeModify().update(this.shape_.getCoords());
   }
 };
@@ -137,10 +139,14 @@ xrx.drawing.Modifiable.prototype.handleClick = function(e) {
   var drawing = this.drawing_;
   var shape = drawing.getShapeSelected(this.mousePoint_);
 
-  drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
-  var confirm = window.confirm('Delete forever?');
-  if (confirm) {
-    drawing.getLayerShape().removeShape(shape);
+  if (shape) {
+    drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
+    var confirm = window.confirm('Delete forever?');
+    if (confirm) {
+      drawing.getLayerShape().removeShape(shape);
+      drawing.getLayerShapeModify().removeShapes();
+    }
+  } else {
     drawing.getLayerShapeModify().removeShapes();
   }
 };

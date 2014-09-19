@@ -44,6 +44,12 @@ goog.inherits(xrx.svg.Canvas, xrx.svg.Element);
 
 
 
+xrx.svg.Canvas.prototype.getEventTarget = function() {
+  return this.element_;
+};
+
+
+
 /**
  * Returns the width of the canvas.
  * @return {number} The width.

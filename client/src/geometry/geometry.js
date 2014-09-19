@@ -2,11 +2,11 @@
  * @fileoverview
  */
 
-goog.provide('xrx.graphic');
+goog.provide('xrx.geometry');
 
 
 
-goog.graphic = function() {};
+xrx.geometry = function() {};
 
 
 

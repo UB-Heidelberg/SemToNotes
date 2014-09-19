@@ -111,7 +111,7 @@ xrx.vml.Image.prototype.draw = function() {
  */
 xrx.vml.Image.create = function(opt_image, canvas) {
   var raphael = canvas.getRaphael().image('', 0, 0, 0, 0);
-  var newImage = new xrx.vml.Image(raphael)
+  var newImage = new xrx.vml.Image(raphael);
   if (opt_image) newImage.setImage(opt_image);
   raphael.hide();
   return newImage;

@@ -48,6 +48,16 @@ goog.inherits(xrx.svg.Stylable, xrx.svg.Element);
 
 
 /**
+ * Returns the geometry object of the stylable element.
+ * @return {xrx.geometry.Geometry} The geometry object.
+ */
+xrx.svg.Stylable.prototype.getGeometry = function() {
+  return this.geometry_;
+};
+
+
+
+/**
  * Sets the stroke width of the stylable element.
  * @param {number} width The stroke width.
  */

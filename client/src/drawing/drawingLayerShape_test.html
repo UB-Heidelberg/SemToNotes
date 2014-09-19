@@ -2,6 +2,7 @@
 <html>
 <head>
 <title>XRX++ Unit Tests - xrx.drawing.LayerShape</title>
+<script src='../../lib/raphael/raphael.js'></script>
 <script src='../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../deps.js'></script>
 <script type="text/javascript">
@@ -25,26 +26,30 @@
 <table>
   <tr>
     <td>Test</td>
-    <td>SVG</td>
 	<td>Canvas</td>
+    <td>SVG</td>
+    <td>VML</td>
 	<td>Comment</td>
   </tr>
   <tr>
     <td>Add shapes</td>
-    <td><div id="svgAddShapes" class="drawing"></div></td>
 	<td><div id="canvasAddShapes" class="drawing"></div></td>
+    <td><div id="svgAddShapes" class="drawing"></div></td>
+    <td><div id="vmlAddShapes" class="drawing"></div></td>
     <td>A small and a large rectangle plus a polygon.</td>
   </tr>
   <tr>
     <td>Remove shapes</td>
-    <td><div id="svgRemoveShapes" class="drawing"></div></td>
 	<td><div id="canvasRemoveShapes" class="drawing"></div></td>
+    <td><div id="svgRemoveShapes" class="drawing"></div></td>
+    <td><div id="vmlRemoveShapes" class="drawing"></div></td>
     <td>Drawing canvas should be empty.</td>
   </tr>
   <tr>
     <td>Remove one shape</td>
-    <td><div id="svgRemoveOneShape" class="drawing"></div></td>
 	<td><div id="canvasRemoveOneShape" class="drawing"></div></td>
+    <td><div id="svgRemoveOneShape" class="drawing"></div></td>
+    <td><div id="vmlRemoveOneShape" class="drawing"></div></td>
     <td>A small and a large rectangle.</td>
   </tr>
 </table>
@@ -55,19 +60,8 @@ var rectCoords1 = [[10,10],[10,30],[30,30],[30,10]];
 var rectCoords2 = [[40,40],[40,140],[140,140],[140,40]];
 var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
 
-function getDrawingSvg(id, callback) {
-  var svgDiv = goog.dom.getElement(id);
-  var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.Engine.SVG);
-  var svgRect1 = xrx.shape.Rect.create(svgDrawing);
-  svgRect1.setCoords(rectCoords1);
-  var svgRect2 = xrx.shape.Rect.create(svgDrawing);
-  svgRect2.setCoords(rectCoords2);
-  var svgPolygon = xrx.shape.Polygon.create(svgDrawing);
-  svgPolygon.setCoords(polygonCoords);
-  svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2, svgPolygon]);
-  svgDrawing.draw();
-  return svgDrawing;
+function isOldIE() {
+  return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9);
 };
 
 function getDrawingCanvas(id, callback) {
@@ -85,44 +79,98 @@ function getDrawingCanvas(id, callback) {
   return canvasDrawing;
 };
 
+function getDrawingSvg(id, callback) {
+  var svgDiv = goog.dom.getElement(id);
+  var svgDrawing = new xrx.drawing.Drawing(svgDiv,
+      xrx.engine.Engine.SVG);
+  var svgRect1 = xrx.shape.Rect.create(svgDrawing);
+  svgRect1.setCoords(rectCoords1);
+  var svgRect2 = xrx.shape.Rect.create(svgDrawing);
+  svgRect2.setCoords(rectCoords2);
+  var svgPolygon = xrx.shape.Polygon.create(svgDrawing);
+  svgPolygon.setCoords(polygonCoords);
+  svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2, svgPolygon]);
+  svgDrawing.draw();
+  return svgDrawing;
+};
+
+function getDrawingVml(id, callback) {
+  var vmlDiv = goog.dom.getElement(id);
+  var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
+      xrx.engine.Engine.VML);
+  var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
+  vmlRect1.setCoords(rectCoords1);
+  var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);
+  vmlRect2.setCoords(rectCoords2);
+  var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
+  vmlPolygon.setCoords(polygonCoords);
+  vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2, vmlPolygon]);
+  vmlDrawing.draw();
+  return vmlDrawing;
+};
+
 function test1AddShapes() {
-  var svgDrawing = getDrawingSvg('svgAddShapes');
-  var canvasDrawing = getDrawingCanvas('canvasAddShapes');
+  if (!isOldIE()) {
+    var canvasDrawing = getDrawingCanvas('canvasAddShapes');
+    var svgDrawing = getDrawingSvg('svgAddShapes');
+  }
+
+  var vmlDrawing = getDrawingVml('vmlAddShapes');
 };
 
 function test2RemoveShapes() {
-  var svgDrawing = getDrawingSvg('svgRemoveShapes');
-  var canvasDrawing = getDrawingCanvas('canvasRemoveShapes');
+  if (!isOldIE()) {
+    var canvasDrawing = getDrawingCanvas('canvasRemoveShapes');
+    var svgDrawing = getDrawingSvg('svgRemoveShapes');
 
-  svgDrawing.getLayerShape().removeShapes();
-  svgDrawing.draw();
-  canvasDrawing.getLayerShape().removeShapes();
-  canvasDrawing.draw();
+    canvasDrawing.getLayerShape().removeShapes();
+    canvasDrawing.draw();
+    svgDrawing.getLayerShape().removeShapes();
+    svgDrawing.draw();
 
-  assertEquals(0, svgDrawing.getLayerShape().getShapes().length);
-  assertEquals(0, canvasDrawing.getLayerShape().getShapes().length);
-  assertEquals(0, svgDrawing.getLayerShape().getGroup().getChildren().length);
-  assertEquals(0, canvasDrawing.getLayerShape().getGroup().getChildren().length);
-  assertEquals(0, goog.dom.getChildren(svgDrawing.getLayerShape().getGroup().getElement()).length);
+    assertEquals(0, canvasDrawing.getLayerShape().getShapes().length);
+    assertEquals(0, svgDrawing.getLayerShape().getShapes().length);
+    assertEquals(0, canvasDrawing.getLayerShape().getGroup().getChildren().length);
+    assertEquals(0, svgDrawing.getLayerShape().getGroup().getChildren().length);
+  }
+
+  var vmlDrawing = getDrawingVml('vmlRemoveShapes');
+
+  vmlDrawing.getLayerShape().removeShapes();
+  vmlDrawing.draw();
+
+  assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
+  assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
 };
 
 function test3RemoveOneShape() {
-  var svgDrawing = getDrawingSvg('svgRemoveOneShape');
-  var canvasDrawing = getDrawingCanvas('canvasRemoveOneShape');
+  if (!isOldIE()) {
+    var canvasDrawing = getDrawingCanvas('canvasRemoveOneShape');
+    var svgDrawing = getDrawingSvg('svgRemoveOneShape');
 
-  var svgPolygon = svgDrawing.getLayerShape().getShapes()[2];
-  var canvasPolygon = canvasDrawing.getLayerShape().getShapes()[2];
+    var canvasPolygon = canvasDrawing.getLayerShape().getShapes()[2];
+    var svgPolygon = svgDrawing.getLayerShape().getShapes()[2];
 
-  svgDrawing.getLayerShape().removeShape(svgPolygon);
-  svgDrawing.draw();
-  canvasDrawing.getLayerShape().removeShape(canvasPolygon);
-  canvasDrawing.draw();
+    canvasDrawing.getLayerShape().removeShape(canvasPolygon);
+    canvasDrawing.draw();
+    svgDrawing.getLayerShape().removeShape(svgPolygon);
+    svgDrawing.draw();
 
-  assertEquals(2, svgDrawing.getLayerShape().getShapes().length);
-  assertEquals(2, canvasDrawing.getLayerShape().getShapes().length);
-  assertEquals(2, svgDrawing.getLayerShape().getGroup().getChildren().length);
-  assertEquals(2, canvasDrawing.getLayerShape().getGroup().getChildren().length);
-  assertEquals(2, goog.dom.getChildren(svgDrawing.getLayerShape().getGroup().getElement()).length);
+    assertEquals(2, canvasDrawing.getLayerShape().getShapes().length);
+    assertEquals(2, svgDrawing.getLayerShape().getShapes().length);
+    assertEquals(2, canvasDrawing.getLayerShape().getGroup().getChildren().length);
+    assertEquals(2, svgDrawing.getLayerShape().getGroup().getChildren().length);
+  }
+
+  var vmlDrawing = getDrawingVml('vmlRemoveOneShape');
+
+  var vmlPolygon = vmlDrawing.getLayerShape().getShapes()[2];
+
+  vmlDrawing.getLayerShape().removeShape(vmlPolygon);
+  vmlDrawing.draw();
+
+  assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
+  assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
 };
 
 </script>
