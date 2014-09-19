@@ -53,7 +53,7 @@ xrx.drawing.Viewbox.prototype.getCTM = function() {
 
 xrx.drawing.Viewbox.prototype.getBox = function() {
   var image = this.drawing_.getLayerBackground().getImage();
-  return image.getBox();
+  return image.getGeometry().getBox();
 ***REMOVED***
 
 

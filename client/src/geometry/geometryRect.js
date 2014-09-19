@@ -6,6 +6,11 @@ goog.provide('xrx.geometry.Rect');
 
 
 
+goog.require('xrx.geometry');
+goog.require('goog.math.Box');
+
+
+
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
@@ -18,6 +23,13 @@ xrx.geometry.Rect = function() {
   this.width = 0;
 
   this.height = 0;
+***REMOVED***
+
+
+
+xrx.geometry.Rect.prototype.getBox = function() {
+  return new goog.math.Box(this.y, this.x + this.width, this.y + this.height,
+      this.x);
 ***REMOVED***
 
 

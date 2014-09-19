@@ -66,58 +66,49 @@ xrx.shape.PolygonModify.create = function(polygon) {
 
 
 
-xrx.shape.PolygonCreate = function() {***REMOVED***
+xrx.shape.PolygonCreate = function(drawing) {
 
+  this.drawing_ = drawing;
 
+  this.close_;
 
-xrx.shape.PolygonCreate.isFirstTouch = function(shapes) {
-  return shapes.length === 0;
+  this.count_ = 0;
 ***REMOVED***
 
 
 
-xrx.shape.PolygonCreate.isLastTouch = function(element) {
-  return element.getAttribute('class') === 'xrx-shape-endpoint';
-***REMOVED***
+xrx.shape.PolygonCreate.prototype.handleClick = function(e, canvas) {
+  var circle;
+  var polygon;
+  var coords;
+  var shapes;
+  var point = this.drawing_.getEventPoint(e);
+  var shape = this.drawing_.getShapeSelected(point);
 
-
-
-xrx.shape.PolygonCreate.handleMouseClick = function(e, canvas) {
-  var eventPoint = [e.clientX, e.clientY];
-  var point = new Array(2);
-  canvas.getViewBox().ctm.createInverse().transform(eventPoint, 0, point, 0, 1);
-  var groupShapeCreate = canvas.getLayerShapeCreate();
-  var shapes = groupShapeCreate.getShapes();
-
-  if (xrx.shape.PolygonCreate.isLastTouch(e.target)) {
-    var coords = xrx.svg.getCoords(shapes[0]);
-    var polygon = xrx.shape.Polygon.create(canvas);
-    xrx.shape.Polygon.setCoords(polygon, coords, canvas);
-
-    canvas.getLayerShape().addShapes(polygon);
-    groupShapeCreate.removeShapes();
-
-  } else if (xrx.shape.PolygonCreate.isFirstTouch(shapes)) {
-    var polyline = xrx.shape.Shape.create('polyline', 'xrx-shape-polyline', {
-      'points': point
-    });
-    groupShapeCreate.addShapes(polyline);
-    var circle = xrx.svg.Circle.create({
-      'cx': point[0],
-      'cy': point[1],
-      'r': '4',
-      'style': 'fill:white;stroke:black;stroke-width:1',
-      'class': 'xrx-shape-endpoint'
-    })
-    groupShapeCreate.addShapes(circle);
-  } else {
-    var coords = xrx.svg.getCoords(shapes[0]);
-    /*
-    if (!xrx.engine.Coordinate.equals(coords[coords.length - 1], point)) {
-      coords = coords.concat([point]);
-      xrx.shape.Polygon.setCoords(shapes[0], coords, canvas);
+  if (this.count_ === 0) {
+    this.close_ = xrx.shape.VertexDragger.create(this.drawing_);
+    this.close_.setCoords([point]);
+    this.drawing_.getLayerShapeCreate().addShapes(this.close_);
+    this.drawing_.draw();
+    this.count_ += 1;
+  } else if (shape === this.close_) {
+    shapes = this.drawing_.getLayerShapeCreate().getShapes();
+    coords = new Array(shapes.length + 1);
+    for (var i = 0; i < shapes.length; i++) {
+      coords[i] = shapes[i].getCoordsCopy()[0];
     }
-  ***REMOVED*****REMOVED***
+    coords[shapes.length] = point;
+    polygon = xrx.shape.Polygon.create(this.drawing_);
+    polygon.setCoords(coords);
+    this.drawing_.getLayerShape().addShapes(polygon);
+    this.drawing_.getLayerShapeCreate().removeShapes();
+    this.drawing_.draw();
+    this.count_ = 0;
+  } else {
+    cirlce = xrx.shape.VertexDragger.create(this.drawing_);
+    cirlce.setCoords([point]);
+    this.drawing_.getLayerShapeCreate().addShapes(cirlce);
+    this.drawing_.draw();
   }
 ***REMOVED***
 

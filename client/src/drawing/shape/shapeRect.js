@@ -30,7 +30,7 @@ xrx.shape.Rect.prototype.primitiveClass_ = 'Polygon';
 
 
 
-xrx.shape.Rect.prototype.getBox = function() {
+xrx.shape.Rect.prototype.getBox = function() { 
 ***REMOVED***
 
 
@@ -73,45 +73,41 @@ xrx.shape.RectModify.create = xrx.shape.PolygonModify.create;
 
 
 
-xrx.shape.RectCreate = function() {***REMOVED***
+xrx.shape.RectCreate = function(drawing) {
 
+  this.drawing_ = drawing;
 
-
-xrx.shape.RectCreate.isFirstTouch = function(shapes) {
-  return shapes.length === 0;
+  this.count_ = 0;
 ***REMOVED***
 
 
 
-xrx.shape.RectCreate.isLastTouch = function(shapes) {
-  return !xrx.shape.RectCreate.isFirstTouch(shapes);
-***REMOVED***
+xrx.shape.RectCreate.prototype.handleClick = function(e) {
+  var circle;
+  var shape;
+  var coords;
+  var rect;
+  var point = this.drawing_.getEventPoint(e);
 
-
-
-xrx.shape.RectCreate.handleMouseClick = function(e, canvas) {
-  var eventPoint = [e.clientX, e.clientY];
-  var point = new Array(2);
-  canvas.getViewBox().ctm.createInverse().transform(eventPoint, 0, point, 0, 1);
-  var groupShapeCreate = canvas.getLayerShapeCreate();
-  var shapes = groupShapeCreate.getShapes();
-
-  if (xrx.shape.RectCreate.isLastTouch(shapes)) {
-    var coords = xrx.shape.getCoords(shapes[0]);
-    coords.push(point[0], coords[0][1]);
-    coords.push(point);
-    coords.push(coords[0][0], point[1]);
-    var rect = xrx.shape.Rect.create(canvas);
-
-    canvas.getLayerShape().addShapes(rect);
-    groupShapeCreate.removeShapes();
+  if (this.count_ === 1) {
+    shape = this.drawing_.getLayerShapeCreate().getShapes()[0];
+    coords = new Array(4);
+    coords[0] = shape.getCoordsCopy()[0];
+    coords[1] = [point[0], coords[0][1]];
+    coords[2] = [point[0], point[1]];
+    coords[3] = [coords[0][0], point[1]];
+    rect = xrx.shape.Rect.create(this.drawing_);
+    rect.setCoords(coords);
+    this.drawing_.getLayerShape().addShapes(rect);
+    this.drawing_.getLayerShapeCreate().removeShapes();
+    this.drawing_.draw();
+    this.count_ = 0;
   } else {
-    var rect = xrx.shape.Rect.create(canvas);
-    groupShapeCreate.addShapes(rect);
-	/*
-    var circle = xrx.shape.Circle.create(canvas)
-    groupShapeCreate.addShapes(circle);
-	*/
+    circle = xrx.shape.VertexDragger.create(this.drawing_);
+    circle.setCoords([point]);
+    this.drawing_.getLayerShapeCreate().addShapes(circle);
+    this.drawing_.draw();
+    this.count_ += 1;
   }
 ***REMOVED***
 

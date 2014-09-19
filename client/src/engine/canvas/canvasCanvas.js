@@ -60,6 +60,12 @@ xrx.canvas.Canvas.prototype.getElement = function() {
 
 
 
+xrx.canvas.Canvas.prototype.getEventTarget = function() {
+  return this.element_;
+***REMOVED***
+
+
+
 ***REMOVED***
 ***REMOVED*** Returns the width of the canvas.
 ***REMOVED*** @return {number} The width.

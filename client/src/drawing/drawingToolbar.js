@@ -76,6 +76,8 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var tool = self.drawing_.getLayerTool();
   var viewbox = self.drawing_.getViewbox();
 
+  goog.style.setStyle(self.element_, 'z-index', '999');
+
   var registerButtonClick = function(button, handler, handle) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
       handler[handle]();
@@ -86,7 +88,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var registerToggleClick = function(button, handler, handle, arg) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
       var isSelected = goog.dom.classes.has(e.target, 'xrx-ui-state-selected');
-      !isSelected ? handler[handle]() : handler[handle]();
+      !isSelected ? handler[handle]() : handler[handle](arg);
     }, false, handler);
  ***REMOVED*****REMOVED***
 
@@ -118,10 +120,10 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   // shape create buttons
   var buttonShapeRect = xrx.drawing.ToolbarToggle.create('./res/shapeRect.png',
       'Draw a Rect.');
-  registerToggleClick(buttonShapeRect, xrx.drawing.EventTarget.setModeCreate, 'RectCreate');
+  registerToggleClick(buttonShapeRect, self.drawing_, 'setModeCreate', 'RectCreate');
   var buttonShapePolygon = xrx.drawing.ToolbarToggle.create('./res/shapePolygon.png',
       'Draw a Polygon.');
-  registerToggleClick(buttonShapePolygon, xrx.drawing.EventTarget.setModeCreate, 'PolygonCreate');
+  registerToggleClick(buttonShapePolygon, self.drawing_, 'setModeCreate', 'PolygonCreate');
 
   // shape modify buttons
   var buttonShapeModify = xrx.drawing.ToolbarToggle.create('./res/move.png',

@@ -2,11 +2,11 @@
 ***REMOVED*** @fileoverview
 ***REMOVED***
 
-goog.provide('xrx.graphic');
+goog.provide('xrx.geometry');
 
 
 
-goog.graphic = function() {***REMOVED***
+xrx.geometry = function() {***REMOVED***
 
 
 

@@ -123,8 +123,7 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
 
 xrx.shape.Shape.prototype.create_ = function() {
   var primitiveShape = this.drawing_.getGraphics()[this.primitiveClass_];
-  this.primitiveShape_ = primitiveShape.create(this.drawing_.getCanvas(),
-      this.drawing_);
+  this.primitiveShape_ = primitiveShape.create(this.drawing_.getCanvas());
   this.primitiveShape_.setStrokeColor('#47D1FF');
   this.primitiveShape_.setStrokeWidth(1.);
   this.primitiveShape_.setFillOpacity(0.);

@@ -96,9 +96,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   ***REMOVED*** @type {Object}
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
-  this.created_ = {
-    shape: null
- ***REMOVED*****REMOVED***
+  this.create_;
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** The view-box of the drawing canvas.
@@ -137,7 +135,7 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
 ***REMOVED*** @see xrx.engine.Engine
 ***REMOVED*** @return {Object} The rendering engine.
 ***REMOVED***
-xrx.drawing.Drawing.prototype.getGeometrys = function() {
+xrx.drawing.Drawing.prototype.getGraphics = function() {
   return this.graphics_;
 ***REMOVED***
 
@@ -160,7 +158,7 @@ xrx.drawing.Drawing.prototype.getShapeSelected = function(coordinate) {
       shapes = layer.getShapes() || [];
       for (var j = shapes.length - 1; j >= 0; j--) {
         shape = shapes[j];
-        if (shape.getPrimitiveShape().getGraphic().containsPoint(coordinate)) {
+        if (shape.getPrimitiveShape().getGeometry().containsPoint(coordinate)) {
           found = true;
           break;
         }
@@ -315,7 +313,7 @@ xrx.drawing.Drawing.prototype.draw = function() {
     xrx.svg.render(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
   } else if (this.engine_ === xrx.engine.Engine.VML) {
-    xrx.vml.render(this.canvas_.getRaphael(),
+    xrx.vml.render(this.viewbox_.getGroup().getRaphael(),
         this.viewbox_.getCTM());
     this.viewbox_.getGroup().draw();
   } else {
@@ -403,9 +401,11 @@ xrx.drawing.Drawing.prototype.setModeModify = function() {
 ***REMOVED***
 ***REMOVED*** Switch the drawing canvas over into mode <i>create</i> to allow drawing of new shapes.
 ***REMOVED*** @see xrx.drawing.Mode
-***REMOVED*** @param {xrx.shape.Shape} shape The shape to create.
+***REMOVED*** @param {string} shape The shape to create.
 ***REMOVED***
 xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
+  if (!shape) return;
+***REMOVED***
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);
@@ -413,12 +413,11 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
 
-  //TODO: move to event handler
-  canvas.created_.shape = xrx.shape[shapeCreate];
-  if (canvas.drawEvent) goog.events.unlistenByKey(canvas.drawEvent);
-  canvas.drawEvent = goog.events.listen(canvas.getLayerShapeCreate().getElement(),
+  this.create_ = new xrx.shape[shape](this);
+  if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
+  this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
       goog.events.EventType.CLICK,
-      function(e) { canvas.created_.shape.handleMouseClick(e, canvas); }
+      function(e) { if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e); }
 ***REMOVED***
   this.setMode_(xrx.drawing.Mode.CREATE);
 ***REMOVED***
@@ -513,6 +512,10 @@ xrx.drawing.Drawing.prototype.installShield_ = function() {
   this.shield_.setWidth(this.element_.clientWidth);
   this.shield_.setHeight(this.element_.clientHeight);
   this.shield_.setFillOpacity(0);
+  this.shield_.setStrokeWidth(0);
+  if (this.shield_.raphael_) { // hack for Raphael rendering
+    this.shield_.raphael_.id = 'shield';
+  }
   this.canvas_.addChild(this.shield_);
 ***REMOVED***
 

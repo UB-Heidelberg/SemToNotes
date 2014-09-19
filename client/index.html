@@ -2,9 +2,9 @@
 <html>
 <head>
 <script src="./lib/raphael/raphael.js"></script>
-<!--script src="./lib/closure-library/closure/goog/base.js"></script>
-<script src="./src/deps.js"></script-->
-<script src="./SemToNotes.js"/>
+<script src="./lib/closure-library/closure/goog/base.js"></script>
+<script src="./src/deps.js"></script>
+<!--script src="./SemToNotes.js"/-->
 <script>
   goog.require('SemToNotes');
 </script>
@@ -25,6 +25,7 @@ position: absolute;
 width: 33%;
 height: 100%;
 display: block;
+overflow: hidden;
 }
 #canvasCanvas {
 position: absolute;
@@ -32,6 +33,7 @@ width: 33%;
 height: 100%;
 left: 33%;
 display: block;
+overflow: hidden;
 }
 #canvasVML {
 position: absolute;
@@ -39,6 +41,7 @@ width: 33%;
 height: 100%;
 left: 66%;
 display: block;
+overflow: hidden;
 }
 #toolbarSVG, #toolbarCanvas, #toolbarVML{
 position: absolute;

@@ -78,34 +78,14 @@ xrx.shape.VertexDragger.prototype.setRadius = function(radius) {
 
 
 
-xrx.shape.VertexDragger.prototype.handleMouseMove = function(e, canvas) {
-  if (canvas.getState() === xrx.drawing.State.NONE) return;
-
-  var coords;
-  var dragTarget = canvas.getDragElement();
-  var gsm = canvas.getLayerShapeModify();
-  var vertexDraggers = gsm.getVertexDraggers();
-  var position = gsm.getVertexDraggerPosition(dragTarget, vertexDraggers);
-  var postProcess = canvas.getSelectedShape().getAffineCoords;
-
-  xrx.engine.Element.handleMouseMove(e, canvas, xrx.shape.VertexDragger);
-  coords = gsm.getVertexDraggerCoords(vertexDraggers);
-
-  if (postProcess) coords = postProcess(coords, position);
-
-  canvas.getLayerShape().update(coords, canvas);
-  canvas.getLayerShapeModify().update(coords, position);
-***REMOVED***
-
-
-
 
 xrx.shape.VertexDragger.create = function(drawing) {
   var dragger = new xrx.shape.VertexDragger(drawing);
   dragger.setRadius(2);
   dragger.setStrokeColor('black');
+  dragger.setStrokeWidth(1);
   dragger.setFillColor('white');
-  dragger.setFillOpacity(1.);
+  dragger.setFillOpacity(1.0);
   return dragger;
 ***REMOVED***
 

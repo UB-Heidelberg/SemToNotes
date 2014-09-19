@@ -16,6 +16,7 @@ goog.require('goog.events.EventHandler');
 goog.require('goog.events.MouseWheelHandler');
 goog.require('goog.events.MouseWheelHandler.EventType');
 goog.require('goog.math');
+goog.require('goog.style');
 goog.require('goog.userAgent');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.shape.Shapes');
@@ -74,6 +75,16 @@ goog.inherits(xrx.drawing.EventTarget, goog.Disposable);
 
 
 
+xrx.drawing.EventTarget.prototype.getEventPoint = function(e) {
+  var pos = goog.style.getPosition(this.element_);
+  var eventPoint = [e.clientX - pos.x, e.clientY - pos.y];
+  var point = new Array(2);
+  this.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
+  return point;
+***REMOVED***
+
+
+
 xrx.drawing.EventTarget.prototype.getHandler = function() {
   return this.handler_;
 ***REMOVED***
@@ -85,6 +96,7 @@ xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
   if (goog.userAgent.MOBILE) 
       e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
   e.preventDefault();
+  e.stopPropagation();
   handler[event](e);
   this.draw();
 ***REMOVED***
@@ -93,7 +105,7 @@ xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
 
 xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
 ***REMOVED***
-  if (!this.keyClick_) this.keyClick_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyClick_) this.keyClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.CLICK); },
     false,
@@ -105,7 +117,7 @@ xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
 
 xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
 ***REMOVED***
-  if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DBLCLICK); },
     false,
@@ -120,7 +132,7 @@ xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
 ***REMOVED***
 xrx.drawing.EventTarget.prototype.registerDown_ = function(handler) {
 ***REMOVED***
-  if (!this.keyDown_) this.keyDown_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyDown_) this.keyDown_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DOWN); },
     false,
@@ -143,7 +155,7 @@ xrx.drawing.EventTarget.prototype.registerDrag = function(handler) {
 ***REMOVED***
 xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
 ***REMOVED***
-  if (!this.keyMove_) this.keyMove_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyMove_) this.keyMove_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.MOVE); },
     false,
@@ -155,7 +167,7 @@ xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
 
 xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
 ***REMOVED***
-  if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.OUT); },
     false,
@@ -170,7 +182,7 @@ xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
 ***REMOVED***
 xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
 ***REMOVED***
-  if (!this.keyUp_) this.keyUp_ = this.handler_.listen(self.canvas_.getElement(),
+  if (!this.keyUp_) this.keyUp_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.UP,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.UP) },
     false,
@@ -182,7 +194,7 @@ xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
 
 xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
 ***REMOVED***
-  var mwh = new goog.events.MouseWheelHandler(self.canvas_.getElement());
+  var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
   if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.drawing.EventType.ZOOM,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.ZOOM) },
     false,
@@ -218,7 +230,7 @@ xrx.drawing.EventTarget.prototype.unregisterAll = function() {
 
 
 
-xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
+xrx.drawing.EventTarget.prototype.registerEvents = function(mode, opt_handler) {
   this.unregisterAll();
 
   switch(mode) {

@@ -7,6 +7,7 @@ goog.provide('xrx.vml.Canvas');
 
 
 ***REMOVED***
+goog.require('goog.style');
 goog.require('xrx.vml.Element');
 
 
@@ -38,8 +39,16 @@ xrx.vml.Canvas = function(raphael) {
   ***REMOVED*** @type {number}
  ***REMOVED*****REMOVED***
   this.height_ = 0;
+
+  this.shield_;
 ***REMOVED***
 goog.inherits(xrx.vml.Canvas, xrx.vml.Element);
+
+
+
+xrx.vml.Canvas.prototype.getEventTarget = function() {
+  return this.raphael_.canvas.parentElement;
+***REMOVED***
 
 
 

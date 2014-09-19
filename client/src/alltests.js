@@ -13,6 +13,6 @@ var _allTests = [
   // engine
   './engine/engine_test.html',
   './engine/engineEngines_test.html',
-  // graphic
-  './graphic/graphic_test.html',
+  // geometry
+  './geometry/geometry_test.html',
   ];

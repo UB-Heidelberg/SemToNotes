@@ -6,6 +6,10 @@ goog.provide('xrx.geometry.Polygon');
 
 
 
+goog.require('xrx.geometry');
+
+
+
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
