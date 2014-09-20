@@ -44,7 +44,7 @@ xrx.svg.Namespace = {
  * @return {boolean} Whether SVG rendering is supported.
  */
 xrx.svg.isSupported = function() {
-  !!document.createElementNS &&
+  return !!document.createElementNS &&
       !!document.createElementNS(xrx.svg.Namespace['svg'], 'svg').createSVGRect;
 };
 

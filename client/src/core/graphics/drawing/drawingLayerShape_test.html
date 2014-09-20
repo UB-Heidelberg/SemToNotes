@@ -8,7 +8,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine.Engine');
+  goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -66,7 +66,7 @@ function isOldIE() {
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.engine.Engine.CANVAS);
+    xrx.engine.CANVAS);
   var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
   canvasRect1.setCoords(rectCoords1);
   var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
@@ -81,7 +81,7 @@ function getDrawingCanvas(id, callback) {
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.Engine.SVG);
+      xrx.engine.SVG);
   var svgRect1 = xrx.shape.Rect.create(svgDrawing);
   svgRect1.setCoords(rectCoords1);
   var svgRect2 = xrx.shape.Rect.create(svgDrawing);
@@ -96,7 +96,7 @@ function getDrawingSvg(id, callback) {
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
   var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
-      xrx.engine.Engine.VML);
+      xrx.engine.VML);
   var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
   vmlRect1.setCoords(rectCoords1);
   var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);

@@ -24,6 +24,7 @@ goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.State');
 goog.require('xrx.drawing.Viewbox');
+goog.require('xrx.engine');
 goog.require('xrx.engine.Engine');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.shape');
@@ -41,20 +42,12 @@ goog.require('xrx.vml');
  *
  * @param {DOMElement} element The HTML element used to install the canvas.
  * @param {string} The name of the rendering engine.
- * @see xrx.engine.Engine
+ * @see xrx.engine
  * @constructor
  */
 xrx.drawing.Drawing = function(element, opt_engine) {
 
   goog.base(this);
-
-  /**
-   * The graphics engine.
-   * @type {string}
-   * @private
-   */
-  this.engine_ = opt_engine || xrx.engine.Engine.SVG;
-  this.graphics_ = goog.getObjectByName('xrx.' + this.engine_);
 
   /**
    * The DOM element used to install the drawing canvas.
@@ -64,6 +57,13 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   this.element_ = element;
 
   /**
+   * The graphics rendering engine.
+   * @type {xrx.engine.Engine}
+   * @private
+   */
+  this.engine_;
+
+  /**
    * The graphics canvas.
    * @type {xrx.engine.Canvas}
    * @private
@@ -71,11 +71,17 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   this.canvas_;
 
   /**
+   * The layers of the drawing canvas.
    * @type {Array}
    * @private
    */
   this.layer_ = [];
 
+  /**
+   * A shield in front of the canvas needed by the SVG and the
+   * VML rendering engine for smooth dragging of elements.
+   * @type {?}
+   */
   this.shield_;
 
   /**
@@ -106,7 +112,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   this.viewbox_;
 
   // install the canvas
-  this.install_();
+  this.install_(opt_engine);
 };
 goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventTarget);
 
@@ -132,11 +138,11 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
 
 /**
  * Returns the engine used for rendering.
- * @see xrx.engine.Engine
+ * @see xrx.engine
  * @return {Object} The rendering engine.
  */
 xrx.drawing.Drawing.prototype.getGraphics = function() {
-  return this.graphics_;
+  return this.engine_.getRenderer();
 };
 
 
@@ -301,7 +307,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
-  if (this.engine_ === xrx.engine.Engine.CANVAS) {
+  if (this.engine_.hasRenderer(xrx.engine.CANVAS)) {
     xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
         function() {
           self.layer_[0].draw();
@@ -309,10 +315,10 @@ xrx.drawing.Drawing.prototype.draw = function() {
           self.layer_[2].draw();
           self.layer_[3].draw();
   });
-  } else if (this.engine_ === xrx.engine.Engine.SVG) {
+  } else if (this.engine_.hasRenderer(xrx.engine.SVG)) {
     xrx.svg.render(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
-  } else if (this.engine_ === xrx.engine.Engine.VML) {
+  } else if (this.engine_.hasRenderer(xrx.engine.VML)) {
     xrx.vml.render(this.viewbox_.getGroup().getRaphael(),
         this.viewbox_.getCTM());
     this.viewbox_.getGroup().draw();
@@ -506,7 +512,7 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  this.shield_ = this.graphics_.Rect.create(this.canvas_);
+  this.shield_ = this.engine_.getRenderer().Rect.create(this.canvas_);
   this.shield_.setX(0);
   this.shield_.setY(0);
   this.shield_.setWidth(this.element_.clientWidth);
@@ -530,27 +536,55 @@ xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
 
 
 
+/**
+ * @private
+ */
+xrx.drawing.Drawing.prototype.installFallback_ = function(opt_engine) {
+  var span = goog.dom.createElement('span');
+  goog.dom.setTextContent(span, 'Your browser does not support ' + opt_engine +
+      ' rendering.');
+  goog.dom.appendChild(this.element_, span);
+};
+
+
 
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.install_ = function() {
+xrx.drawing.Drawing.prototype.initEngine_ = function(opt_engine) {
+  this.engine_ = new xrx.engine.Engine(opt_engine);
+};
 
-  // install the drawing canvas
-  this.installCanvas_();
 
-  // install the drawing view-box
-  this.installViewbox_();
 
-  // install the drawing layers
-  this.installLayerBackground_();
-  this.installLayerShape_();
-  this.installLayerShapeModify_();
-  this.installLayerShapeCreate_();
+/**
+ * @private
+ */
+xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
-  // install a shield
-  this.installShield_();
+  // initialize the graphics rendering engine
+  this.initEngine_(opt_engine);
 
-  // install the tool layer
-  this.installLayerTool_();
+  if (this.engine_.isAvailable()) {
+    // install the drawing canvas
+    this.installCanvas_();
+
+    // install the drawing view-box
+    this.installViewbox_();
+
+    // install the drawing layers
+    this.installLayerBackground_();
+    this.installLayerShape_();
+    this.installLayerShapeModify_();
+    this.installLayerShapeCreate_();
+
+    // install a shield
+    this.installShield_();
+
+    // install the tool layer
+    this.installLayerTool_();
+  } else {
+    // install an unavailable message
+    this.installFallback_(opt_engine);
+  }
 };

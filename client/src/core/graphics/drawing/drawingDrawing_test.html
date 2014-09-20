@@ -10,7 +10,7 @@
   goog.require('goog.style');
   goog.require('goog.userAgent');
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine.Engine');
+  goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -60,19 +60,19 @@ function isOldIE() {
 function getDrawingCanvas(id) {
   var canvasDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(canvasDiv,
-    xrx.engine.Engine.CANVAS);
+    xrx.engine.CANVAS);
 };
 
 function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.Engine.SVG);
+      xrx.engine.SVG);
 };
 
 function getDrawingVml(id) {
   var vmlDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(vmlDiv,
-      xrx.engine.Engine.VML);
+      xrx.engine.VML);
 };
 
 function test1drawing() {

@@ -10,10 +10,10 @@ goog.provide('demo.renderingVML');
 
 
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.engine.Engine');
+goog.require('xrx');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
-goog.require('xrx.drawing.Mode');
+goog.require('xrx.engine');
 
 
 
@@ -31,21 +31,21 @@ demo.rendering = function(engine) {
 
 
 demo.renderingCanvas.install = function() {
-  demo.rendering(xrx.engine.Engine.CANVAS);
+  demo.rendering(xrx.engine.CANVAS);
   return true;
 };
 
 
 
 demo.renderingSVG.install = function() {
-  demo.rendering(xrx.engine.Engine.SVG);
+  demo.rendering(xrx.engine.SVG);
   return true;
 };
 
 
 
 demo.renderingVML.install = function() {
-  demo.rendering(xrx.engine.Engine.VML);
+  demo.rendering(xrx.engine.VML);
   return true;
 };
 

@@ -9,7 +9,7 @@
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.drawing.Mode');
-  goog.require('xrx.engine.Engine');
+  goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -81,7 +81,7 @@ function isOldIE() {
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.engine.Engine.CANVAS);
+    xrx.engine.CANVAS);
   canvasDrawing.setBackgroundImage(url, callback);
   return canvasDrawing;
 };
@@ -89,7 +89,7 @@ function getDrawingCanvas(id, callback) {
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.Engine.SVG);
+      xrx.engine.SVG);
   svgDrawing.setBackgroundImage(url, callback);
   return svgDrawing;
 };
@@ -97,7 +97,7 @@ function getDrawingSvg(id, callback) {
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
   var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
-    xrx.engine.Engine.VML);
+    xrx.engine.VML);
   vmlDrawing.setBackgroundImage(url, callback);
   return vmlDrawing;
 };

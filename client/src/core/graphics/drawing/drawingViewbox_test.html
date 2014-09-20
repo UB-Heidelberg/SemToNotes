@@ -8,7 +8,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine.Engine');
+  goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
 </script>
 <style>
@@ -67,14 +67,14 @@ var url = './drawing_test.png';
 function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.Engine.SVG);
+      xrx.engine.SVG);
   return svgDrawing;
 };
 
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.engine.Engine.CANVAS);
+    xrx.engine.CANVAS);
   return canvasDrawing;
 };
 

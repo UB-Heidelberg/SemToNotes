@@ -1,14 +1,17 @@
 /**
- * @fileoverview Engine base class providing enumerations for the engine sub-classes.
+ * @fileoverview Engine base class.
  */
 
 goog.provide('xrx.engine');
-goog.provide('xrx.engine.Engine');
+
+
+
+goog.require('xrx');
 
 
 
 /**
- * Engine base class providing enumerations for the engine sub-classes.
+ * Engine base class.
  * @constructor
  */
 xrx.engine = function() {};
@@ -16,23 +19,23 @@ xrx.engine = function() {};
 
 
 /**
- * Enumeration of the rendering engines.
+ * <a href="http://www.w3.org/TR/2014/CR-2dcontext-20140821/">The 2D Canvas rendering engine.</a>
  * @enum {string}
  */
-xrx.engine.Engine = {
+xrx.engine.CANVAS = 'canvas';
 
-  /**
-   * <a href="http://www.w3.org/TR/SVG/">SVG rendering engine</a>
-   */
-  SVG: 'svg',
 
-  /**
-   * <a href="http://www.w3.org/TR/NOTE-VML">VML rendering engine</a>
-   */
-  VML: 'vml',
 
-  /**
-   * <a href="http://www.w3.org/TR/2014/CR-2dcontext-20140821/">2D Canvas rendering engine</a>
-   */
-  CANVAS: 'canvas'
-};
+/**
+ * <a href="http://www.w3.org/TR/SVG/">The SVG rendering engine.</a>
+ * @enum {string}
+ */
+xrx.engine.SVG = 'svg';
+
+
+
+/**
+ * <a href="http://www.w3.org/TR/NOTE-VML">The VML rendering engine.</a>
+ * @enum {string}
+ */
+xrx.engine.VML = 'vml';
