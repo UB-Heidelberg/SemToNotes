@@ -39,8 +39,8 @@ xrx.canvas.Stylable = function(canvas, geometry) {
   ***REMOVED*** Object describing the fill style.
  ***REMOVED*****REMOVED***
   this.fill_ = {
-    color: 'black',
-    opacity: 1
+    color: '',
+    opacity: 0
  ***REMOVED*****REMOVED***
 ***REMOVED***
 goog.inherits(xrx.canvas.Stylable, xrx.canvas.Element);

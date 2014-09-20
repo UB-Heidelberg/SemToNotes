@@ -2,7 +2,7 @@
 ***REMOVED*** @fileoverview The SemToNotes main class.
 ***REMOVED***
 
-goog.provide('SemToNotes');
+goog.provide('stn');
 
 
 
@@ -16,20 +16,20 @@ goog.require('xrx.shape.Shape');
 
 
 
-SemToNotes = function() {***REMOVED***
+stn = function() {***REMOVED***
 
 
 
-SemToNotes.isOldIE = function() {
+stn.isOldIE = function() {
   return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9);
 ***REMOVED***
 
 
 
-SemToNotes.install = function() {
+stn.install = function() {
   var url = '../data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg';
 
-  if (!SemToNotes.isOldIE()) {
+  if (!stn.isOldIE()) {
     // install a drawing canvas with SVG rendering
     var canvasSVG = goog.dom.getElement('canvasSVG');
     var toolbarSVG = goog.dom.getElement('toolbarSVG');
@@ -68,5 +68,5 @@ SemToNotes.install = function() {
 
 
 
-goog.exportSymbol('SemToNotes.install', SemToNotes.install);
+goog.exportSymbol('stn.install', stn.install);
  

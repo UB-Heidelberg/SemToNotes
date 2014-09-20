@@ -230,7 +230,7 @@ xrx.drawing.EventTarget.prototype.unregisterAll = function() {
 
 
 
-xrx.drawing.EventTarget.prototype.registerEvents = function(mode, opt_handler) {
+xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
   this.unregisterAll();
 
   switch(mode) {

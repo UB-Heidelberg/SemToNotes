@@ -6,6 +6,10 @@ goog.provide('xrx.vml.Element');
 
 
 
+goog.require('xrx.vml');
+
+
+
 ***REMOVED***
 ***REMOVED*** VML super class.
 ***REMOVED*** @param {Object} raphael A Raphael object.

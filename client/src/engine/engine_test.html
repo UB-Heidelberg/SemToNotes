@@ -4,7 +4,6 @@
 <title>XRX++ Unit Tests - xrx.engine.Rect, xrx.engine.Polygon, xrx.engine.Circle, xrx.engine.Group, xrx.engine.Image</title>
 <script src='../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../deps.js'></script>
-<script src='../../lib/raphael/raphael.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
  ***REMOVED*****REMOVED***
@@ -29,6 +28,7 @@ height: 100;
     <td></td>
 	  <td><span>Rectangle</span></td>
 	  <td><span>Polygon</span></td>
+	  <td><span>Poly-line</span></td>
 	  <td><span>Circle</span></td>
 	  <td><span>Image</span></td>
 	  <td><span>Group</span></td>
@@ -38,6 +38,7 @@ height: 100;
     <td><span>SVG</span></td>
 	  <td id="svgRect"></td>
 	  <td id="svgPolygon"></td>
+	  <td id="svgPolyline"></td>
 	  <td id="svgCircle"></td>
 	  <td id="svgImage"></td>
 	  <td id="svgGroup"></td>
@@ -47,6 +48,7 @@ height: 100;
     <td><span>Canvas</span></td>
 	  <td id="canvasRect"></td>
 	  <td id="canvasPolygon"></td>
+	  <td id="canvasPolyline"></td>
 	  <td id="canvasCircle"></td>
 	  <td id="canvasImage"></td>
 	  <td id="canvasGroup"></td>
@@ -56,6 +58,7 @@ height: 100;
     <td><span>VML</span></td>
 	  <td id="vmlRect"></td>
 	  <td id="vmlPolygon"></td>
+	  <td id="vmlPolyline"></td>
 	  <td id="vmlCircle"></td>
 	  <td id="vmlImage"></td>
 	  <td id="vmlGroup"></td>
@@ -63,6 +66,7 @@ height: 100;
   </tr>
   <tr>
     <td><span>Comment</span></td>
+	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
@@ -130,6 +134,20 @@ function getPolygon(graphics, opt_canvas) {
   return polygon;
 ***REMOVED***
 
+function getPolyline(graphics, opt_canvas) {
+  var coords = new Array(3);
+  coords[0] = [10,10];
+  coords[1] = [90,0];
+  coords[2] = [0,60];
+  var polyline = graphics.Polyline.create(opt_canvas);
+  polyline.setCoords(coords);
+  polyline.setStrokeColor('red');
+  polyline.setStrokeWidth(2);
+  polyline.setFillColor('');
+  polyline.setFillOpacity(0);
+  return polyline;
+***REMOVED***
+
 function getCircle(graphics, opt_canvas) {
   var circle = graphics.Circle.create(opt_canvas);
   circle.setRadius(30);
@@ -143,53 +161,27 @@ function getImage(graphics, img, opt_canvas) {
   return image;
 ***REMOVED***
 
-function test1Rect() {
-  if (!isOldIE()) {
-    var svgCanvas = getCanvasSvg('svgRect');
-    var svgRect = getRect(xrx.svg);
-    svgCanvas.addChild(svgRect);
+function test1Shapes() {
+  var shapes = ['Circle', 'Polygon', 'Polyline', 'Rect'];
+  var shape;
+  for (var i = 0, len = shapes.length; i < len; i++) {
+    shape = shapes[i];
+    if (!isOldIE()) {
+      var svgCanvas = getCanvasSvg('svg' + shape);
+      var svgShape = this['get' + shape](xrx.svg);
+      svgCanvas.addChild(svgShape);
 
-    var canvasCanvas = getCanvasCanvas('canvasRect');
-    var canvasRect = getRect(xrx.canvas, canvasCanvas);
-    canvasCanvas.addChild(canvasRect);
+      var canvasCanvas = getCanvasCanvas('canvas' + shape);
+      var canvasShape = this['get' + shape](xrx.canvas, canvasCanvas);
+      canvasCanvas.addChild(canvasShape);
+    }
+    var vmlCanvas = getCanvasVml('vml' + shape);
+    var vmlShape = this['get' + shape](xrx.vml, vmlCanvas);
+    vmlCanvas.addChild(vmlShape);
   }
-  var vmlCanvas = getCanvasVml('vmlRect');
-  var vmlRect = getRect(xrx.vml, vmlCanvas);
-  vmlCanvas.addChild(vmlRect);
 ***REMOVED***
 
-function test2Polygon() {
-  if (!isOldIE()) {
-    var svgCanvas = getCanvasSvg('svgPolygon');  
-    var svgPolygon = getPolygon(xrx.svg);
-    svgCanvas.addChild(svgPolygon);
-
-    var canvasCanvas = getCanvasCanvas('canvasPolygon');
-    var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
-    canvasCanvas.addChild(canvasPolygon);
-  }
-  var vmlCanvas = getCanvasVml('vmlPolygon');
-  var vmlPolygon = getPolygon(xrx.vml, vmlCanvas);
-  vmlCanvas.addChild(vmlPolygon);
-***REMOVED***
-
-function test3Circle() {
-  if (!isOldIE()) {
-    var svgCanvas = getCanvasSvg('svgCircle');
-    var canvasCanvas = getCanvasCanvas('canvasCircle');
-
-    var svgCircle = getCircle(xrx.svg);
-    svgCanvas.addChild(svgCircle);
-
-    var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
-    canvasCanvas.addChild(canvasCircle);
-  }
-  var vmlCanvas = getCanvasVml('vmlCircle');
-  var vmlCircle = getCircle(xrx.vml, vmlCanvas);
-  vmlCanvas.addChild(vmlCircle);
-***REMOVED***
-
-function test4Image() {
+function test2Image() {
   var image = goog.dom.getElement('testImage');
   if (!isOldIE()) {
     var svgCanvas = getCanvasSvg('svgImage');  
@@ -203,10 +195,9 @@ function test4Image() {
   var vmlCanvas = getCanvasVml('vmlImage');
   var vmlImage = getImage(xrx.vml, image, vmlCanvas);
   vmlCanvas.addChild(vmlImage);
-  console.log(vmlImage);
 ***REMOVED***
 
-function test5Group() {
+function test3Group() {
   if (!isOldIE()) {
     var svgCanvas = getCanvasSvg('svgGroup');
     var svgGroup = xrx.svg.Group.create();
@@ -247,7 +238,7 @@ function test5Group() {
 
 // make sure that Raphael components are not rendered before
 // function addChild(), respectively addChildren() is called
-function test6Vml() {
+function test4Vml() {
   var image = goog.dom.getElement('testImage');
   if (!isOldIE()) {
     var svgCanvas = getCanvasSvg('svgRaphael');

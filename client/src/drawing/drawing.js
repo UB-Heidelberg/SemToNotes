@@ -36,9 +36,9 @@ xrx.drawing.State = {
 ***REMOVED*** @enum {number}
 ***REMOVED***
 xrx.drawing.Mode = {
-  PAN: 1,
-  VIEW: 2,
-  MODIFY: 3,
-  DELETE: 4,
+  VIEW: 1,
+  MODIFY: 2,
+  DELETE: 3,
+  CREATE: 4,
   DISABLED: 5
 ***REMOVED***

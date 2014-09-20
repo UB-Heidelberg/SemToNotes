@@ -6,21 +6,21 @@ goog.provide('xrx.svg.Polygon');
 
 
 
-goog.require('xrx.geometry.Polygon');
+goog.require('xrx.geometry.Path');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
 
 
 ***REMOVED***
-***REMOVED*** SVG class representing a polygon
+***REMOVED*** SVG class representing a polygon.
 ***REMOVED*** @param {SVGPolygonElement} element The SVG polygon element.
 ***REMOVED***
-***REMOVED*** @extends xrx.canvas.Stylable
+***REMOVED*** @extends xrx.svg.Stylable
 ***REMOVED***
 xrx.svg.Polygon = function(element) {
 
-  goog.base(this, element, new xrx.geometry.Polygon());
+  goog.base(this, element, new xrx.geometry.Path());
 ***REMOVED***
 goog.inherits(xrx.svg.Polygon, xrx.svg.Stylable);
 

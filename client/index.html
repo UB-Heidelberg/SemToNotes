@@ -1,12 +1,11 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<script src="./lib/raphael/raphael.js"></script>
 <script src="./lib/closure-library/closure/goog/base.js"></script>
-<script src="./src/deps.js"></script>
-<!--script src="./SemToNotes.js"/-->
+<script src="./src/deps.js"></script/>
+<!--script src="./SemToNotes.js"></script-->
 <script>
-  goog.require('SemToNotes');
+  goog.require('stn');
 </script>
 <style type="text/css">
 * {
@@ -61,7 +60,7 @@ top: 2px;
     <div id="toolbarVML"></div>
   </div>
   <script>
-    SemToNotes.install();
+    stn.install();
   </script>
 </body>
 </html>
