@@ -8,6 +8,7 @@ goog.provide('xrx.vml');
 
 
 goog.require('xrx');
+goog.require('xrx.svg');
 
 
 
@@ -22,10 +23,12 @@ xrx.vml = function() {***REMOVED***
 
 ***REMOVED***
 ***REMOVED*** Returns whether VML rendering is supported by the current user agent.
+***REMOVED*** Since VML rendering is based on the Raphael library, browsers with a SVG
+***REMOVED*** rendering engine are supported as well.
 ***REMOVED*** @return {boolean} Whether VML rendering is supported.
 ***REMOVED***
 xrx.vml.isSupported = function() {
-  return !!document.namespaces;
+  return !!document.namespaces || xrx.svg.isSupported();
 ***REMOVED***
 
 

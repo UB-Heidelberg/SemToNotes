@@ -20,27 +20,27 @@
 function methodsTest(impl, methods) {
   goog.array.forEach(methods, function(e, i, a) {
     assertFalse('Function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.CANVAS + '.',
-          !xrx[xrx.engine.Engine.CANVAS][impl].prototype[e]);
+          ' in engine ' + xrx.engine.CANVAS + '.',
+          !xrx[xrx.engine.CANVAS][impl].prototype[e]);
     assertFalse('Function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.SVG + '.',
-          !xrx[xrx.engine.Engine.SVG][impl].prototype[e]);
+          ' in engine ' + xrx.engine.SVG + '.',
+          !xrx[xrx.engine.SVG][impl].prototype[e]);
     assertFalse('Function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.VML + '.',
-          !xrx[xrx.engine.Engine.VML][impl].prototype[e]);
+          ' in engine ' + xrx.engine.VML + '.',
+          !xrx[xrx.engine.VML][impl].prototype[e]);
   });
 ***REMOVED***
 
 function staticsTest(impl, methods) {
   goog.array.forEach(methods, function(e, i, a) {
     assertFalse('Static function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.CANVAS + '.',
+          ' in engine ' + xrx.engine.CANVAS + '.',
           !e);
     assertFalse('Static function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.SVG + '.',
+          ' in engine ' + xrx.engine.SVG + '.',
           !e);
     assertFalse('Static function ' + e + '() is not implemented for class ' + impl +
-          ' in engine ' + xrx.engine.Engine.VML + '.',
+          ' in engine ' + xrx.engine.VML + '.',
           !e);
   });
 ***REMOVED***

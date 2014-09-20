@@ -10,7 +10,7 @@ goog.provide('xrx.drawing.LayerShapeModify');
 ***REMOVED***
 goog.require('xrx.drawing.Layer');
 goog.require('xrx.drawing.LayerBackground');
-goog.require('xrx.engine.Engine');
+goog.require('xrx.engine');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.shape.VertexDragger');
 

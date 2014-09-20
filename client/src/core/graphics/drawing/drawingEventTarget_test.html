@@ -10,7 +10,7 @@
   goog.require('goog.testing.jsunit');
  ***REMOVED*****REMOVED***
   goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine.Engine');
+  goog.require('xrx.engine');
 </script>
 </head>
 <body>
@@ -21,7 +21,7 @@
 
 function test1RegisterUnregister() {
   var div = goog.dom.getElement('drawing');
-  var drawing = new xrx.drawing.Drawing(div, xrx.engine.Engine.CANVAS);
+  var drawing = new xrx.drawing.Drawing(div, xrx.engine.CANVAS);
   var target = drawing.getCanvas().getElement();
   var handler = drawing.getHandler();
 
