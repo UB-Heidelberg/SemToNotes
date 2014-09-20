@@ -46,7 +46,6 @@ xrx.vml.Raphael = function(element, width, height) {
 // └─────────────────────────────────────────────────────────────────────┘ \\
 
 (function (glob, factory) {
-  console.log(glob);
   factory(glob);
 }(this, function (window) {
     /*\

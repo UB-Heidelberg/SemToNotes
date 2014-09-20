@@ -56,7 +56,7 @@ goog.addDependency('../../../../src/engine/vml/vmlRect.js', ['xrx.vml.Rect'], ['
 goog.addDependency('../../../../src/engine/vml/vmlStylable.js', ['xrx.vml.Stylable'], ['xrx.vml.Element']);
 goog.addDependency('../../../../src/geometry/geometry.js', ['xrx.geometry'], []);
 goog.addDependency('../../../../src/geometry/geometryCircle.js', ['xrx.geometry.Circle'], ['xrx.geometry']);
-goog.addDependency('../../../../src/geometry/geometryPolygon.js', ['xrx.geometry.Path'], ['xrx.geometry']);
+goog.addDependency('../../../../src/geometry/geometryPath.js', ['xrx.geometry.Path'], ['xrx.geometry']);
 goog.addDependency('../../../../src/geometry/geometryRect.js', ['xrx.geometry.Rect'], ['goog.math.Box', 'xrx.geometry']);
 goog.addDependency('../../../../src/stn.js', ['stn'], ['goog.dom.DomHelper', 'goog.userAgent', 'xrx.drawing.Drawing', 'xrx.drawing.Mode', 'xrx.drawing.Toolbar', 'xrx.engine.Engine', 'xrx.shape.Shape']);
 goog.addDependency('../../../../src/xrx.js', ['xrx'], []);
