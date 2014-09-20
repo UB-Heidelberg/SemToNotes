@@ -27,3 +27,11 @@ position: absolute;
 left: 2px;
 top: 2px;
 }
+
+.xrx-ui-state-mouseout {
+border-top: solid white 4px;
+}
+
+.xrx-ui-state-selected, .xrx-ui-state-mouseover {
+border-top: solid red 4px;
+}
