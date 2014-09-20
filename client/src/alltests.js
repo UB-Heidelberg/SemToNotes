@@ -4,15 +4,16 @@
 
 var _allTests = [
   // drawing
-  './drawing/drawingDrawing_test.html',
-  './drawing/drawingEventTarget_test.html',
-  './drawing/drawingLayerBackground_test.html',
-  './drawing/drawingLayerShape_test.html',
-  './drawing/drawingLayerShapeModify_test.html',
-  './drawing/drawingViewbox_test.html',
+  './core/graphics/drawing/drawingDrawing_test.html',
+  './core/graphics/drawing/drawingEventTarget_test.html',
+  './core/graphics/drawing/drawingLayerBackground_test.html',
+  './core/graphics/drawing/drawingLayerShape_test.html',
+  './core/graphics/drawing/drawingLayerShapeModify_test.html',
+  './core/graphics/drawing/drawingViewbox_test.html',
   // engine
-  './engine/engine_test.html',
-  './engine/engineEngines_test.html',
+  './core/graphics/engine/engine_test.html',
+  './core/graphics/engine/engineEngines_test.html',
   // geometry
-  './geometry/geometry_test.html',
+  './core/graphics/geometry/geometry_test.html',
+  // shape
   ];
