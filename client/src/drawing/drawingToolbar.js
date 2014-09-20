@@ -98,38 +98,38 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   }, true);
 
   // viewer buttons
-  var buttonPanImage = xrx.drawing.ToolbarToggle.create('./res/openhand.png',
+  var buttonPanImage = xrx.drawing.ToolbarToggle.create('../res/openhand.png',
       'Zoom, Pan or Rotate the Canvas.');
   registerButtonClick(buttonPanImage, self.drawing_, 'setModeView');
-  var buttonZoomIn = xrx.drawing.ToolbarButton.create('./res/zoomIn.png',
+  var buttonZoomIn = xrx.drawing.ToolbarButton.create('../res/zoomIn.png',
       'Zoom In.');
   registerButtonClick(buttonZoomIn, viewbox, 'zoomIn');
-  var buttonZoomOut = xrx.drawing.ToolbarButton.create('./res/zoomOut.png',
+  var buttonZoomOut = xrx.drawing.ToolbarButton.create('../res/zoomOut.png',
       'Zoom Out.');
   registerButtonClick(buttonZoomOut, viewbox, 'zoomOut');
-  var buttonRotateLeft = xrx.drawing.ToolbarButton.create('./res/rotateLeft.png',
+  var buttonRotateLeft = xrx.drawing.ToolbarButton.create('../res/rotateLeft.png',
       'Rotate Left.');
   registerButtonClick(buttonRotateLeft, viewbox, 'rotateLeft');
-  var buttonRotateRight = xrx.drawing.ToolbarButton.create('./res/rotateRight.png',
+  var buttonRotateRight = xrx.drawing.ToolbarButton.create('../res/rotateRight.png',
       'Rotate Right.');
   registerButtonClick(buttonRotateRight, viewbox, 'rotateRight');
-  var buttonMagnifier = xrx.drawing.ToolbarToggle.create('./res/magnifier.png',
+  var buttonMagnifier = xrx.drawing.ToolbarToggle.create('../res/magnifier.png',
       'Magnifier.');
   registerToggleClick(buttonMagnifier, tool, 'toggleMagnifier');
 
   // shape create buttons
-  var buttonShapeRect = xrx.drawing.ToolbarToggle.create('./res/shapeRect.png',
+  var buttonShapeRect = xrx.drawing.ToolbarToggle.create('../res/shapeRect.png',
       'Draw a Rect.');
   registerToggleClick(buttonShapeRect, self.drawing_, 'setModeCreate', 'RectCreate');
-  var buttonShapePolygon = xrx.drawing.ToolbarToggle.create('./res/shapePolygon.png',
+  var buttonShapePolygon = xrx.drawing.ToolbarToggle.create('../res/shapePolygon.png',
       'Draw a Polygon.');
   registerToggleClick(buttonShapePolygon, self.drawing_, 'setModeCreate', 'PolygonCreate');
 
   // shape modify buttons
-  var buttonShapeModify = xrx.drawing.ToolbarToggle.create('./res/move.png',
+  var buttonShapeModify = xrx.drawing.ToolbarToggle.create('../res/move.png',
       'Move or Modify a Shape.');
   registerToggleClick(buttonShapeModify, self.drawing_, 'setModeModify');
-  var buttonShapeDelete = xrx.drawing.ToolbarToggle.create('./res/delete.png',
+  var buttonShapeDelete = xrx.drawing.ToolbarToggle.create('../res/delete.png',
       'Delete a Shape.');
   registerToggleClick(buttonShapeDelete, self.drawing_, 'setModeDelete');
 
