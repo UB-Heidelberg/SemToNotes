@@ -6,7 +6,7 @@ goog.provide('xrx.vml.Polygon');
 
 
 
-goog.require('xrx.geometry.Polygon');
+goog.require('xrx.geometry.Path');
 goog.require('xrx.vml');
 goog.require('xrx.vml.Stylable');
 
@@ -16,11 +16,11 @@ goog.require('xrx.vml.Stylable');
  * VML class representing a polygon.
  * @param {Raphael.path} raphael The Raphael path object.
  * @constructor
- * @extends xrx.canvas.Stylable
+ * @extends xrx.vml.Stylable
  */
 xrx.vml.Polygon = function(raphael) {
 
-  goog.base(this, raphael, new xrx.geometry.Polygon());
+  goog.base(this, raphael, new xrx.geometry.Path());
 };
 goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
 
@@ -32,7 +32,7 @@ goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
  */
 xrx.vml.Polygon.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
-  xrx.vml.setCoords(this.raphael_, coords);
+  xrx.vml.setCoords(this.raphael_, coords, true);
 };
 
 
@@ -54,7 +54,7 @@ xrx.vml.Polygon.prototype.getCoords = function(coords) {
  */
 xrx.vml.Polygon.prototype.setCoordAt = function(pos, coord) {
   this.geometry_.coords[pos] = coord;
-  xrx.vml.setCoords(this.raphael_, this.geometry_.coords);
+  xrx.vml.setCoords(this.raphael_, this.geometry_.coords, true);
 };
 
 

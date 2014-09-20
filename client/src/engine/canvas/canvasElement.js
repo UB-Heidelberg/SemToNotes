@@ -6,6 +6,10 @@ goog.provide('xrx.canvas.Element');
 
 
 
+goog.require('xrx.canvas');
+
+
+
 /**
  * Canvas super class.
  * @param {xrx.canvas.Canvas} canvas The parent canvas object.

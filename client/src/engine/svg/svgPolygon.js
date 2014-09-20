@@ -6,21 +6,21 @@ goog.provide('xrx.svg.Polygon');
 
 
 
-goog.require('xrx.geometry.Polygon');
+goog.require('xrx.geometry.Path');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
 
 
 /**
- * SVG class representing a polygon
+ * SVG class representing a polygon.
  * @param {SVGPolygonElement} element The SVG polygon element.
  * @constructor
- * @extends xrx.canvas.Stylable
+ * @extends xrx.svg.Stylable
  */
 xrx.svg.Polygon = function(element) {
 
-  goog.base(this, element, new xrx.geometry.Polygon());
+  goog.base(this, element, new xrx.geometry.Path());
 };
 goog.inherits(xrx.svg.Polygon, xrx.svg.Stylable);
 

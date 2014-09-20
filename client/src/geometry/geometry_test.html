@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.geometry.Circle, xrx.geometry.Polygon, xrx.geometry.Rect</title>
+<title>XRX++ Unit Tests - xrx.geometry.Circle, xrx.geometry.Path, xrx.geometry.Rect</title>
 <script src='../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.geometry.Circle');
-  goog.require('xrx.geometry.Polygon');
+  goog.require('xrx.geometry.Path');
   goog.require('xrx.geometry.Rect');
 </script>
 </head>
@@ -29,7 +29,7 @@ function test1CircleContainsPoint() {
 };
 
 function test2PolygonContainsPoint() {
-  var polygon = new xrx.geometry.Polygon();
+  var polygon = new xrx.geometry.Path();
   polygon.coords = [[10,10],[30,10],[30,30],[10,30]];
 
   //TODO: handle point on line consistently

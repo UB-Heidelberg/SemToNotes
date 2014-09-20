@@ -39,8 +39,8 @@ xrx.svg.Stylable = function(element, geometry) {
    * Object describing the fill style.
    */
   this.fill_ = {
-    color: 'black',
-    opacity: 1
+    color: '',
+    opacity: 0
   };
 };
 goog.inherits(xrx.svg.Stylable, xrx.svg.Element);

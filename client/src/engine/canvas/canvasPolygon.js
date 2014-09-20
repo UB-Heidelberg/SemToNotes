@@ -7,7 +7,7 @@ goog.provide('xrx.canvas.Polygon');
 
 
 goog.require('xrx.canvas.Stylable');
-goog.require('xrx.geometry.Polygon');
+goog.require('xrx.geometry.Path');
 
 
 
@@ -19,7 +19,7 @@ goog.require('xrx.geometry.Polygon');
  */
 xrx.canvas.Polygon = function(canvas) {
 
-  goog.base(this, canvas, new xrx.geometry.Polygon());
+  goog.base(this, canvas, new xrx.geometry.Path());
 };
 goog.inherits(xrx.canvas.Polygon, xrx.canvas.Stylable);
 

@@ -36,12 +36,12 @@ xrx.vml.isSupported = function() {
  * @param {Object} raphael The Raphael object.
  * @param {Array.<Array.<number>>} points Array of coordinates.
  */
-xrx.vml.setCoords = function(raphael, coordinates) {
+xrx.vml.setCoords = function(raphael, coordinates, closePath) {
   var s = 'M' + coordinates[0][0].toString() + ' ' + coordinates[0][1].toString();
   for(var i = 1, len = coordinates.length; i < len; i++) {
     s += 'L' + coordinates[i][0].toString() + ' ' + coordinates[i][1].toString();
   }
-  s += 'Z';
+  if (closePath) s += 'Z';
   raphael.attr({'path': s});
 };
 

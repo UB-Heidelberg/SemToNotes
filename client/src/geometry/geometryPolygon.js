@@ -2,7 +2,7 @@
  * @fileoverview
  */
 
-goog.provide('xrx.geometry.Polygon');
+goog.provide('xrx.geometry.Path');
 
 
 
@@ -13,14 +13,14 @@ goog.require('xrx.geometry');
 /**
  * @constructor
  */
-xrx.geometry.Polygon = function() {
+xrx.geometry.Path = function() {
 
   this.coords = [];
 };
 
 
 
-xrx.geometry.Polygon.prototype.containsPoint = function(point) {
+xrx.geometry.Path.prototype.containsPoint = function(point) {
   var x = point[0], y = point[1];
   var coords = this.coords;
   var xi;

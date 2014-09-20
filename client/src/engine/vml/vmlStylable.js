@@ -39,8 +39,8 @@ xrx.vml.Stylable = function(raphael, geometry) {
    * Object describing the fill style.
    */
   this.fill_ = {
-    color: 'black',
-    opacity: 1
+    color: '',
+    opacity: 0
   };
 };
 goog.inherits(xrx.vml.Stylable, xrx.vml.Element);

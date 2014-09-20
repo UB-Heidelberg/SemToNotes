@@ -8,6 +8,7 @@ goog.provide('xrx.vml.Canvas');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.style');
+goog.require('xrx.vml.Raphael');
 goog.require('xrx.vml.Element');
 
 
@@ -47,7 +48,7 @@ goog.inherits(xrx.vml.Canvas, xrx.vml.Element);
 
 
 xrx.vml.Canvas.prototype.getEventTarget = function() {
-  return this.raphael_.canvas.parentElement;
+  return goog.dom.getParentElement(this.raphael_.canvas);
 };
 
 
@@ -112,7 +113,8 @@ xrx.vml.Canvas.prototype.addChild = function(element) {
  */
 xrx.vml.Canvas.create = function(parent) {
   var element = goog.dom.createElement('div');
-  var raphael = Raphael(element, 0, 0);
+  var raphael = xrx.vml.Raphael(element, 0, 0);
+  console.log();
   var canvas = new xrx.vml.Canvas(raphael);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;

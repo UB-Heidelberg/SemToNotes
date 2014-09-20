@@ -109,7 +109,21 @@ function test5Image() {
   staticsTest('Image', statics);
 };
 
-function test6Polygon() {
+function test6Polyline() {
+  var methods = [
+      'setCoords',
+      'getCoords',
+      'appendCoord',
+      'draw'
+  ];
+  var statics = [
+      'create'
+  ];
+  methodsTest('Polyline', methods);
+  staticsTest('Polyline', statics);
+};
+
+function test7Polygon() {
   var methods = [
       'setCoords',
       'getCoords',
@@ -123,7 +137,7 @@ function test6Polygon() {
   staticsTest('Polygon', statics);
 };
 
-function test7Rect() {
+function test8Rect() {
   var methods = [
       'setX',
       'setY',
@@ -138,7 +152,7 @@ function test7Rect() {
   staticsTest('Rect', statics);
 };
 
-function test8Stylable() {
+function test9Stylable() {
   var methods = [
       'getGeometry',
       'setStrokeWidth',
