@@ -80,6 +80,8 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
 
   var registerButtonClick = function(button, handler, handle) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
+      e.preventDefault();
+      e.stopPropagate();
       handler[handle]();
       self.drawing_.draw();
     }, false, handler);
@@ -87,6 +89,8 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
 
   var registerToggleClick = function(button, handler, handle, arg) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
+      e.preventDefault();
+      e.stopPropagate();
       var isSelected = goog.dom.classes.has(e.target, 'xrx-ui-state-selected');
       !isSelected ? handler[handle]() : handler[handle](arg);
     }, false, handler);
