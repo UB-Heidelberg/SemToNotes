@@ -22,10 +22,27 @@ goog.require('xrx.vml');
 ***REMOVED***
 xrx.engine.Engine = function(opt_engine) {
 
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** Name of the rendering engine.
+  ***REMOVED*** @see xrx.engine
+  ***REMOVED*** @type {string}
+  ***REMOVED*** @private
+ ***REMOVED*****REMOVED***
   this.engine_ = opt_engine;
 
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** Pointer to the rendering engine base class.
+  ***REMOVED*** @type {(xrx.canvas|xrx.svg|xrx.vml)}
+  ***REMOVED*** @private
+ ***REMOVED*****REMOVED***
   this.renderer_;
 
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** Indicates whether a rendering engine could be initialized
+  ***REMOVED*** successfully.
+  ***REMOVED*** @type {boolean}
+  ***REMOVED*** @private
+ ***REMOVED*****REMOVED***
   this.available_ = false;
 
   this.init_();
@@ -44,7 +61,7 @@ xrx.engine.Engine.prototype.getRenderer = function() {
 
 
 ***REMOVED***
-***REMOVED*** Test whether the overloaded renderer name is the currently installed.
+***REMOVED*** Tests whether the overloaded renderer name is the currently installed.
 ***REMOVED*** @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} name The
 ***REMOVED***     renderer name.
 ***REMOVED*** @return {boolean} Whether the renderer matches.
@@ -70,12 +87,15 @@ xrx.engine.Engine.prototype.isAvailable = function() {
 ***REMOVED***
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
   if (xrx.canvas.isSupported()) {
+    this.engine_ = xrx.engine.CANVAS;
     this.renderer_ = xrx.canvas;
     this.available_ = true;
   } else if (xrx.svg.isSupported()) {
+    this.engine_ = xrx.engine.SVG;
     this.renderer_ = xrx.svg;
     this.available_ = true;
   } else if (xrx.vml.isSupported()) {
+    this.engine_ = xrx.engine.VML;
     this.renderer_ = xrx.vml;
     this.available_ = true;
   } else {
@@ -89,7 +109,6 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
-  console.log(this.engine_);
   if (this.engine_ === xrx.engine.CANVAS) {
     this.renderer_ = xrx.canvas;
     this.available_ = xrx.canvas.isSupported();

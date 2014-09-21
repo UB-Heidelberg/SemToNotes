@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class representing a canvas group where new shapes
+***REMOVED*** @fileoverview A class representing a drawing layer where new shapes
 ***REMOVED*** can be created.
 ***REMOVED***
 
@@ -7,22 +7,18 @@ goog.provide('xrx.drawing.LayerShapeCreate');
 
 
 
-***REMOVED***
 goog.require('xrx.drawing.Layer');
-goog.require('xrx.drawing.LayerBackground');
-goog.require('xrx.engine');
-goog.require('xrx.engine.Engines');
 
 
 
 ***REMOVED***
-***REMOVED*** A class representing a canvas group where new shapes can be created.
-***REMOVED*** @param {xrx.drawing.Drawing} canvas A canvas object.
+***REMOVED*** A class representing a drawing layer where new shapes can be created.
+***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
 ***REMOVED***
 ***REMOVED*** @extends xrx.drawing.Layer
 ***REMOVED***
-xrx.drawing.LayerShapeCreate = function(canvas) {
+xrx.drawing.LayerShapeCreate = function(drawing) {
 
-  goog.base(this, canvas);
+  goog.base(this, drawing);
 ***REMOVED***
 goog.inherits(xrx.drawing.LayerShapeCreate, xrx.drawing.Layer);

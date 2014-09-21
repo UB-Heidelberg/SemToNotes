@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class offering a tool-bar for a canvas.
+***REMOVED*** @fileoverview A class offering a tool-bar for a drawing canvas.
 ***REMOVED***
 
 goog.provide('xrx.drawing.Toolbar');
@@ -19,7 +19,7 @@ goog.require('xrx.drawing.EventTarget');
 ***REMOVED***
 ***REMOVED*** A class offering a tool-bar for a drawing canvas.
 ***REMOVED*** @param {DOMElement} element The element used to install the tool-bar.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The drawing canvas.
+***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
 ***REMOVED***
 ***REMOVED***
 xrx.drawing.Toolbar = function(element, drawing) {
@@ -81,7 +81,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var registerButtonClick = function(button, handler, handle) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
       e.preventDefault();
-      e.stopPropagate();
+      e.stopPropagation();
       handler[handle]();
       self.drawing_.draw();
     }, false, handler);
@@ -90,7 +90,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var registerToggleClick = function(button, handler, handle, arg) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
       e.preventDefault();
-      e.stopPropagate();
+      e.stopPropagation();
       var isSelected = goog.dom.classes.has(e.target, 'xrx-ui-state-selected');
       !isSelected ? handler[handle]() : handler[handle](arg);
     }, false, handler);
@@ -242,10 +242,14 @@ xrx.drawing.ToolbarToggle.create = function(imageUrl, tooltip) {
 
 ***REMOVED***wrapper, goog.events.EventType.MOUSEOVER,
       function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         xrx.drawing.ToolbarToggle.handleMouseOver(e);
   });
 ***REMOVED***wrapper, goog.events.EventType.MOUSEOUT,
       function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         xrx.drawing.ToolbarToggle.handleMouseOut(e);
   });
 

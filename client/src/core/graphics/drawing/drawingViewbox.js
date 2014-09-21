@@ -9,11 +9,12 @@ goog.provide('xrx.drawing.Viewbox');
 goog.require('goog.math');
 goog.require('goog.math.AffineTransform');
 goog.require('xrx.drawing');
-goog.require('xrx.engine');
 
 
 
 ***REMOVED***
+***REMOVED*** A class representing the view-box of a drawing canvas.
+***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
 ***REMOVED***
 ***REMOVED***
 xrx.drawing.Viewbox = function(drawing) {
@@ -33,24 +34,40 @@ xrx.drawing.Viewbox = function(drawing) {
 
 
 
+***REMOVED***
+***REMOVED*** Returns the parent drawing object of the view-box.
+***REMOVED*** @return {xrx.drawing.Drawing} The drawing object.
+***REMOVED***
 xrx.drawing.Viewbox.prototype.getDrawing = function() {
   return this.drawing_;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Returns the group of the view-box.
+***REMOVED*** @return {Object} The group.
+***REMOVED***
 xrx.drawing.Viewbox.prototype.getGroup = function() {
   return this.group_;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Returns the current transformation matrix of the view-box.
+***REMOVED*** @return {goog.math.affineTransform} The transformation matrix.
+***REMOVED***
 xrx.drawing.Viewbox.prototype.getCTM = function() {
   return this.ctm_;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Returns the bounding-box for the view-box.
+***REMOVED*** @return {goog.math.Box} The bounding box.
+***REMOVED***
 xrx.drawing.Viewbox.prototype.getBox = function() {
   var image = this.drawing_.getLayerBackground().getImage();
   return image.getGeometry().getBox();
@@ -59,7 +76,7 @@ xrx.drawing.Viewbox.prototype.getBox = function() {
 
 
 ***REMOVED***
-***REMOVED*** Double click event handler.
+***REMOVED*** Handles double-click events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
 ***REMOVED***
 xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
@@ -69,7 +86,7 @@ xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
 
 
 ***REMOVED***
-***REMOVED*** Mouse down event handler.
+***REMOVED*** Handles mouse-down events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
 ***REMOVED***
 xrx.drawing.Viewbox.prototype.handleDown = function(e) {
@@ -86,7 +103,7 @@ xrx.drawing.Viewbox.prototype.handleDown = function(e) {
 
 
 ***REMOVED***
-***REMOVED*** Mouse move event handler.
+***REMOVED*** Handles mouse-move events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
 ***REMOVED***
 xrx.drawing.Viewbox.prototype.handleMove = function(e) {
@@ -108,6 +125,10 @@ xrx.drawing.Viewbox.prototype.handleMove = function(e) {
 
 
 
+***REMOVED***
+***REMOVED*** Handles mouse-out events for the view-box.
+***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
+***REMOVED*** /
 xrx.drawing.Viewbox.prototype.handleOut = function(e) {
   this.resetState_();
 ***REMOVED***
@@ -115,7 +136,7 @@ xrx.drawing.Viewbox.prototype.handleOut = function(e) {
 
 
 ***REMOVED***
-***REMOVED*** Mouse up event handler.
+***REMOVED*** Handles mouse-up events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
 ***REMOVED***
 xrx.drawing.Viewbox.prototype.handleUp = function(e) {
@@ -125,9 +146,8 @@ xrx.drawing.Viewbox.prototype.handleUp = function(e) {
 
 
 ***REMOVED***
-***REMOVED*** Mouse-wheel event handler.
+***REMOVED*** Handles mouse-wheel events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @param {xrx.drawing.Drawing} canvas The canvas object.
 ***REMOVED***
 xrx.drawing.Viewbox.prototype.handleZoom = function(e) {
   e.deltaY < 0 ? this.zoomIn() : this.zoomOut();

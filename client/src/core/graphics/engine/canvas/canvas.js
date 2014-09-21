@@ -61,4 +61,4 @@ xrx.canvas.render = function(canvas, affineTransform, callback) {
 
 
 
-goog.exportProperty(xrx, 'canvas', xrx.canvas);
+goog.exportSymbol('xrx.canvas', xrx.canvas);

@@ -1,2 +1,2 @@
 
-.\lib\jsdoc\jsdoc -r -d .\apidoc .\src\engine
+.\lib\jsdoc\jsdoc -r -d .\apidoc .\src

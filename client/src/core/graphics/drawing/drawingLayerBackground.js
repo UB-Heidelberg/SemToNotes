@@ -1,19 +1,12 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class representing the background group of a drawing canvas.
+***REMOVED*** @fileoverview A class representing the background layer of a drawing canvas.
 ***REMOVED***
 
 goog.provide('xrx.drawing.LayerBackground');
 
 
 
-***REMOVED***
-goog.require('goog.math.AffineTransform');
-goog.require('goog.math');
 goog.require('xrx.drawing.Layer');
-goog.require('xrx.drawing.Mode');
-goog.require('xrx.drawing.State');
-goog.require('xrx.engine');
-goog.require('xrx.engine.Engines');
 
 
 
@@ -28,50 +21,42 @@ xrx.drawing.LayerBackground = function(drawing) {
 
   goog.base(this, drawing);
 
-  this.panningRect_;
-
+ ***REMOVED*****REMOVED***
+  ***REMOVED*** Pointer to the background image object.
+  ***REMOVED*** @type {Object}
+  ***REMOVED*** @private
+ ***REMOVED*****REMOVED***
   this.image_;
 ***REMOVED***
 goog.inherits(xrx.drawing.LayerBackground, xrx.drawing.Layer);
 
 
 
-xrx.drawing.LayerBackground.prototype.setCTM = function(matrix) {
-  var graphics = this.getCanvas().getGraphics();
-  graphics.setCTM(this.image_, matrix);
 ***REMOVED***
-
-
-
+***REMOVED*** Returns the background image object.
+***REMOVED*** @return {Object} The background image object. 
+***REMOVED***
 xrx.drawing.LayerBackground.prototype.getImage = function(image) {
   return this.image_;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Sets a new background image.
+***REMOVED*** @param {Image} image The new image.
+***REMOVED***
 xrx.drawing.LayerBackground.prototype.setImage = function(image) {
   this.image_.setImage(image);
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Draws the layer.
+***REMOVED***
 xrx.drawing.LayerBackground.prototype.draw = function() {
   this.image_.draw();
-***REMOVED***
-
-
-
-xrx.drawing.LayerBackground.prototype.getPanningRect = function() {
-  return this.panningRect_;
-***REMOVED***
-
-
-
-xrx.drawing.LayerBackground.prototype.handleResize = function(width, height) {
-***REMOVED***
-  var graphics = this.getCanvas().getGraphics();
-  graphics.Rect.setWidth(self.panningRect_, width);
-  graphics.Rect.setHeight(self.panningRect_, height);
 ***REMOVED***
 
 

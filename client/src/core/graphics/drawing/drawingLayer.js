@@ -7,18 +7,8 @@ goog.provide('xrx.drawing.Layer');
 
 
 ***REMOVED***
-***REMOVED***
-***REMOVED***
-goog.require('goog.events.MouseWheelHandler');
-goog.require('goog.events.MouseWheelHandler.EventType');
-goog.require('xrx.engine.Engines');
-
-
-
-***REMOVED***
 ***REMOVED*** A class representing a layer of a drawing canvas.
-***REMOVED***
-***REMOVED*** @param {xrx.drawing.Drawing} canvas A drawing object.
+***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
 ***REMOVED***
 ***REMOVED***
 xrx.drawing.Layer = function(drawing) {
@@ -37,7 +27,7 @@ xrx.drawing.Layer = function(drawing) {
 
 
 ***REMOVED***
-***REMOVED*** Returns the drawing canvas.
+***REMOVED*** Returns the drawing object.
 ***REMOVED*** @return {xrx.drawing.Drawing}
 ***REMOVED***
 xrx.drawing.Layer.prototype.getDrawing = function() {
@@ -46,12 +36,21 @@ xrx.drawing.Layer.prototype.getDrawing = function() {
 
 
 
+***REMOVED***
+***REMOVED*** Locks or unlocks the layer so that the shapes are ignored by
+***REMOVED*** xrx.drawing.EventTarget.
+***REMOVED*** @param {boolean} flag Whether to lock or unlock the layer.
+***REMOVED***
 xrx.drawing.Layer.prototype.setLocked = function(flag) {
   flag === true ? this.locked_ = true : this.locked_ = false;
 ***REMOVED***
 
 
 
+***REMOVED***
+***REMOVED*** Returns whether the layer is locked currently.
+***REMOVED*** @return {boolean} Locked or not.
+***REMOVED***
 xrx.drawing.Layer.prototype.isLocked = function() {
   return this.locked_;
 ***REMOVED***
@@ -60,7 +59,7 @@ xrx.drawing.Layer.prototype.isLocked = function() {
 
 ***REMOVED***
 ***REMOVED*** Returns the layers group.
-***REMOVED*** @return {xrx.engine.Group} The group.
+***REMOVED*** @return {Object} The group.
 ***REMOVED***
 xrx.drawing.Layer.prototype.getGroup = function() {
   return this.group_;
@@ -89,26 +88,16 @@ xrx.drawing.Layer.prototype.draw = function() {
 
 ***REMOVED***
 ***REMOVED*** Adds shapes to the layer.
-***REMOVED*** @param {?} shapes The shapes.
+***REMOVED*** @param {xrx.shape.Shape} shapes The shapes.
 ***REMOVED***
 xrx.drawing.Layer.prototype.addShapes = function(shapes) {
   if (!goog.isArray(shapes)) shapes = [shapes];
   var primitiveShapes = [];
   for(var i = 0, len = shapes.length; i < len; i++) {
     this.shapes_.push(shapes[i]);
-    primitiveShapes.push(shapes[i].getPrimitiveShape());
+    primitiveShapes.push(shapes[i].getEngineShape());
   }
   this.group_.addChildren(primitiveShapes);
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Returns all shapes available in the layer.
-***REMOVED*** @return {xrx.shape.Shape} The shapes.
-***REMOVED***
-xrx.drawing.Layer.prototype.getShapes = function() {
-  return this.shapes_;
 ***REMOVED***
 
 
@@ -124,7 +113,7 @@ xrx.drawing.Layer.prototype.removeShapes = function() {
 
 
 ***REMOVED***
-***REMOVED*** Removes a shape from the layer.
+***REMOVED*** Removes one shape from the layer.
 ***REMOVED*** @param {xrx.shape.Shape} shape The shape to remove.
 ***REMOVED***
 xrx.drawing.Layer.prototype.removeShape = function(shape) {
