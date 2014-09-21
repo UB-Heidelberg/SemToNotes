@@ -27,11 +27,9 @@ goog.require('xrx.drawing.Viewbox');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Engine');
 goog.require('xrx.engine.Engines');
-goog.require('xrx.shape');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.Shapes');
 goog.require('xrx.svg');
-goog.require('xrx.svg.Canvas');
 goog.require('xrx.vml');
 
 
@@ -164,7 +162,7 @@ xrx.drawing.Drawing.prototype.getShapeSelected = function(coordinate) {
       shapes = layer.getShapes() || [];
       for (var j = shapes.length - 1; j >= 0; j--) {
         shape = shapes[j];
-        if (shape.getPrimitiveShape().getGeometry().containsPoint(coordinate)) {
+        if (shape.getEngineShape().getGeometry().containsPoint(coordinate)) {
           found = true;
           break;
         }
@@ -293,7 +291,6 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
   tmpImage.src = url;
 
   goog.events.listen(imageLoader, goog.events.EventType.LOAD, function(e) {
-
     self.layer_[0].setImage(e.target);
     self.draw();
     if (callback) callback();

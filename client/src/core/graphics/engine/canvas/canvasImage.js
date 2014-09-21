@@ -51,6 +51,10 @@ xrx.canvas.Image.prototype.setWidth_ = function(width) {
 
 
 
+goog.exportSymbol('xrx.canvas.Image', xrx.canvas.Image);
+
+
+
 /**
  * Returns the natural height of the image.
  * @return {number} The height.

@@ -6,19 +6,9 @@ goog.provide('xrx.drawing.Layer');
 
 
 
-goog.require('goog.dom.DomHelper');
-goog.require('goog.events');
-goog.require('goog.events.EventType');
-goog.require('goog.events.MouseWheelHandler');
-goog.require('goog.events.MouseWheelHandler.EventType');
-goog.require('xrx.engine.Engines');
-
-
-
 /**
  * A class representing a layer of a drawing canvas.
- *
- * @param {xrx.drawing.Drawing} canvas A drawing object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
  */
 xrx.drawing.Layer = function(drawing) {
@@ -37,7 +27,7 @@ xrx.drawing.Layer = function(drawing) {
 
 
 /**
- * Returns the drawing canvas.
+ * Returns the drawing object.
  * @return {xrx.drawing.Drawing}
  */
 xrx.drawing.Layer.prototype.getDrawing = function() {
@@ -46,12 +36,21 @@ xrx.drawing.Layer.prototype.getDrawing = function() {
 
 
 
+/**
+ * Locks or unlocks the layer so that the shapes are ignored by
+ * xrx.drawing.EventTarget.
+ * @param {boolean} flag Whether to lock or unlock the layer.
+ */
 xrx.drawing.Layer.prototype.setLocked = function(flag) {
   flag === true ? this.locked_ = true : this.locked_ = false;
 };
 
 
 
+/**
+ * Returns whether the layer is locked currently.
+ * @return {boolean} Locked or not.
+ */
 xrx.drawing.Layer.prototype.isLocked = function() {
   return this.locked_;
 };
@@ -60,7 +59,7 @@ xrx.drawing.Layer.prototype.isLocked = function() {
 
 /**
  * Returns the layers group.
- * @return {xrx.engine.Group} The group.
+ * @return {Object} The group.
  */
 xrx.drawing.Layer.prototype.getGroup = function() {
   return this.group_;
@@ -89,26 +88,16 @@ xrx.drawing.Layer.prototype.draw = function() {
 
 /**
  * Adds shapes to the layer.
- * @param {?} shapes The shapes.
+ * @param {xrx.shape.Shape} shapes The shapes.
  */
 xrx.drawing.Layer.prototype.addShapes = function(shapes) {
   if (!goog.isArray(shapes)) shapes = [shapes];
   var primitiveShapes = [];
   for(var i = 0, len = shapes.length; i < len; i++) {
     this.shapes_.push(shapes[i]);
-    primitiveShapes.push(shapes[i].getPrimitiveShape());
+    primitiveShapes.push(shapes[i].getEngineShape());
   }
   this.group_.addChildren(primitiveShapes);
-};
-
-
-
-/**
- * Returns all shapes available in the layer.
- * @return {xrx.shape.Shape} The shapes.
- */
-xrx.drawing.Layer.prototype.getShapes = function() {
-  return this.shapes_;
 };
 
 
@@ -124,7 +113,7 @@ xrx.drawing.Layer.prototype.removeShapes = function() {
 
 
 /**
- * Removes a shape from the layer.
+ * Removes one shape from the layer.
  * @param {xrx.shape.Shape} shape The shape to remove.
  */
 xrx.drawing.Layer.prototype.removeShape = function(shape) {

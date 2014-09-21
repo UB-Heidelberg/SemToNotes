@@ -114,7 +114,6 @@ xrx.vml.Canvas.prototype.addChild = function(element) {
 xrx.vml.Canvas.create = function(parent) {
   var element = goog.dom.createElement('div');
   var raphael = xrx.vml.Raphael(element, 0, 0);
-  console.log();
   var canvas = new xrx.vml.Canvas(raphael);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;

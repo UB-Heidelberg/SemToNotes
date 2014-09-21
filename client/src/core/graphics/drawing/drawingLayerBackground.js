@@ -1,19 +1,12 @@
 /**
- * @fileoverview A class representing the background group of a drawing canvas.
+ * @fileoverview A class representing the background layer of a drawing canvas.
  */
 
 goog.provide('xrx.drawing.LayerBackground');
 
 
 
-goog.require('goog.dom.DomHelper');
-goog.require('goog.math.AffineTransform');
-goog.require('goog.math');
 goog.require('xrx.drawing.Layer');
-goog.require('xrx.drawing.Mode');
-goog.require('xrx.drawing.State');
-goog.require('xrx.engine');
-goog.require('xrx.engine.Engines');
 
 
 
@@ -28,50 +21,42 @@ xrx.drawing.LayerBackground = function(drawing) {
 
   goog.base(this, drawing);
 
-  this.panningRect_;
-
+  /**
+   * Pointer to the background image object.
+   * @type {Object}
+   * @private
+   */
   this.image_;
 };
 goog.inherits(xrx.drawing.LayerBackground, xrx.drawing.Layer);
 
 
 
-xrx.drawing.LayerBackground.prototype.setCTM = function(matrix) {
-  var graphics = this.getCanvas().getGraphics();
-  graphics.setCTM(this.image_, matrix);
-};
-
-
-
+/**
+ * Returns the background image object.
+ * @return {Object} The background image object. 
+ */
 xrx.drawing.LayerBackground.prototype.getImage = function(image) {
   return this.image_;
 };
 
 
 
+/**
+ * Sets a new background image.
+ * @param {Image} image The new image.
+ */
 xrx.drawing.LayerBackground.prototype.setImage = function(image) {
   this.image_.setImage(image);
 };
 
 
 
+/**
+ * Draws the layer.
+ */
 xrx.drawing.LayerBackground.prototype.draw = function() {
   this.image_.draw();
-};
-
-
-
-xrx.drawing.LayerBackground.prototype.getPanningRect = function() {
-  return this.panningRect_;
-};
-
-
-
-xrx.drawing.LayerBackground.prototype.handleResize = function(width, height) {
-  var self = this;
-  var graphics = this.getCanvas().getGraphics();
-  graphics.Rect.setWidth(self.panningRect_, width);
-  graphics.Rect.setHeight(self.panningRect_, height);
 };
 
 

@@ -1,5 +1,6 @@
 /**
- * @fileoverview A class representing the layer where tools can be plugged in.
+ * @fileoverview A class representing a drawing layer where tools can be
+ *     plugged in.
  */
 
 goog.provide('xrx.drawing.LayerTool');
@@ -12,7 +13,10 @@ goog.require('xrx.drawing.tool.Magnifier');
 
 
 /**
+ * A class representing a drawing layer where tools can be plugged in.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
+ * @extends {xrx.drawing.Layer}
  */
 xrx.drawing.LayerTool = function(drawing) {
 
@@ -24,6 +28,9 @@ goog.inherits(xrx.drawing.LayerTool, xrx.drawing.Layer);
 
 
 
+/**
+ * Activates or deactivates the magnifier tool.
+ */
 xrx.drawing.LayerTool.prototype.toggleMagnifier = function() {
   if (!this.magnifier_) this.magnifier_ = xrx.drawing.tool.Magnifier.create(
       this.drawing_);

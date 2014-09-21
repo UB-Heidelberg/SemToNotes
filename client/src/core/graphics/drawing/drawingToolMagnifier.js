@@ -83,7 +83,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
   ctm = this.ctm_.createInverse().translate(-point[0], -point[1]);
 
   // TODO: same as in xrx.drawing.Drawing
-  if (engine === xrx.engine.CANVAS) {
+  if (engine.hasRenderer(xrx.engine.CANVAS)) {
     var c = this.canvas_.getElement();
     var ctx = c.getContext('2d');
     ctx.save();
@@ -94,9 +94,9 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
     this.group_.draw();
     ctx.closePath();
     ctx.restore();
-  } else if (engine === xrx.engine.SVG) {
+  } else if (engine.hasRenderer(xrx.engine.SVG)) {
     xrx.svg.render(this.group_.getElement(), ctm);
-  } else if (engine === xrx.engine.VML) {
+  } else if (engine.hasRenderer(xrx.engine.VML)) {
     xrx.vml.render(this.group_.getRaphael(), ctm);
   } else {
     throw Error('Unknown engine.');

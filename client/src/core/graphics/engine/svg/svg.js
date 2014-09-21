@@ -80,4 +80,4 @@ xrx.svg.render = function(element, affineTransform) {
 
 
 
-goog.exportProperty(xrx, 'svg', xrx.svg);
+goog.exportSymbol('xrx.svg', xrx.svg);

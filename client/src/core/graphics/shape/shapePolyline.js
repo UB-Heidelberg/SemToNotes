@@ -21,12 +21,12 @@ goog.inherits(xrx.shape.Polyline, xrx.shape.Shape);
 
 
 
-xrx.shape.Polyline.prototype.primitiveClass_ = 'Polyline';
+xrx.shape.Polyline.prototype.engineClass_ = 'Polyline';
 
 
 
 xrx.shape.Polyline.prototype.appendCoord = function(coord) {
-  this.primitiveShape_.appendCoord(coord);
+  this.engineShape_.appendCoord(coord);
 };
 
 
