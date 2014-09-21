@@ -149,7 +149,7 @@ xrx.drawing.Drawing.prototype.getGraphics = function() {
  * Returns the shape which is currently selected.
  * @return {?}
  */
-xrx.drawing.Drawing.prototype.getShapeSelected = function(coordinate) {
+xrx.drawing.Drawing.prototype.getShapeSelected = function(point) {
   var layer;
   var shapes;
   var shape;
@@ -162,7 +162,7 @@ xrx.drawing.Drawing.prototype.getShapeSelected = function(coordinate) {
       shapes = layer.getShapes() || [];
       for (var j = shapes.length - 1; j >= 0; j--) {
         shape = shapes[j];
-        if (shape.getEngineShape().getGeometry().containsPoint(coordinate)) {
+        if (shape.getEngineShape().getGeometry().containsPoint(point)) {
           found = true;
           break;
         }
