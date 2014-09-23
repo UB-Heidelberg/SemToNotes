@@ -14,7 +14,7 @@ goog.require('goog.net.ImageLoader');
 goog.require('xrx');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
-goog.require('xrx.drawing.EventTarget');
+goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.LayerBackground');
 goog.require('xrx.drawing.LayerShape');
 goog.require('xrx.drawing.LayerShapeCreate');
@@ -112,7 +112,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   // install the canvas
   this.install_(opt_engine);
 };
-goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventTarget);
+goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
 
 
 
@@ -141,36 +141,6 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
  */
 xrx.drawing.Drawing.prototype.getGraphics = function() {
   return this.engine_.getRenderer();
-};
-
-
-
-/**
- * Returns the shape which is currently selected.
- * @return {?}
- */
-xrx.drawing.Drawing.prototype.getShapeSelected = function(point) {
-  var layer;
-  var shapes;
-  var shape;
-  var coords;
-  var coord;
-  var found = false;
-  for (var i = this.layer_.length - 1; i >= 0; i--) {
-    layer = this.layer_[i];
-    if (!layer.isLocked()) {
-      shapes = layer.getShapes() || [];
-      for (var j = shapes.length - 1; j >= 0; j--) {
-        shape = shapes[j];
-        if (shape.getEngineShape().getGeometry().containsPoint(point)) {
-          found = true;
-          break;
-        }
-      }
-    }
-    if (found === true) break;
-  }
-  return found ? shape : undefined;
 };
 
 
@@ -339,7 +309,7 @@ xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
 
 
 /**
- * Switch a canvas over into mode <i>disabled</i>.
+ * Switch the drawing canvas over into mode <i>disabled</i>.
  */
 xrx.drawing.Drawing.prototype.setModeDisabled = function() {
   this.getLayerBackground().setLocked(true);
@@ -354,10 +324,26 @@ xrx.drawing.Drawing.prototype.setModeDisabled = function() {
 
 
 /**
- * Switch a canvas over into mode <i>view</i> to allow view-box panning
+ * Switch the drawing canvas over into mode <i>view</i> to allow view-box panning
  * zooming and rotating.
  */
 xrx.drawing.Drawing.prototype.setModeView = function() {
+  this.getLayerBackground().setLocked(false);
+  this.getLayerShape().setLocked(true);
+  this.getLayerShapeModify().setLocked(true);
+  this.getLayerShapeCreate().setLocked(true);
+  this.getLayerShapeModify().removeShapes();
+  this.getLayerShapeCreate().removeShapes();
+  this.setMode_(xrx.drawing.Mode.VIEW);
+};
+
+
+
+/**
+ * Switch the drawing canvas over into mode <i>hover</i> to allow view-box panning
+ * zooming and rotating.
+ */
+xrx.drawing.Drawing.prototype.setModeHover = function() {
   this.getLayerBackground().setLocked(false);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);

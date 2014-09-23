@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class implementing the event handling for a
- * drawing canvas.
+ * @fileoverview A class implementing the event target behavior of a
+ *     drawing canvas.
  */
 
 goog.provide('xrx.drawing.EventTarget');
@@ -51,6 +51,8 @@ xrx.drawing.Event = {
 
 
 /**
+ * A class implementing the event target behavior of a drawing canvas.
+ * It receives events and invokes handler functions in xrx.drawing.EventHandler.
  * @constructor
  */
 xrx.drawing.EventTarget = function() {
@@ -72,16 +74,6 @@ xrx.drawing.EventTarget = function() {
   this.keyWheel_;
 };
 goog.inherits(xrx.drawing.EventTarget, goog.Disposable);
-
-
-
-xrx.drawing.EventTarget.prototype.getEventPoint = function(e) {
-  var pos = goog.style.getPosition(this.element_);
-  var eventPoint = [e.clientX - pos.x, e.clientY - pos.y];
-  var point = new Array(2);
-  this.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
-  return point;
-};
 
 
 
