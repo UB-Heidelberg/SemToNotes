@@ -35,6 +35,31 @@ xrx.drawing.Viewbox = function(drawing) {
 
 
 ***REMOVED***
+***REMOVED*** Makes the whole view-box width visible.
+***REMOVED***
+xrx.drawing.Viewbox.prototype.setOptimalWidth = function() {
+  var canvasWidth = this.drawing_.getCanvas().getWidth();
+  var imageWidth = this.drawing_.getLayerBackground().getImage().getWidth();
+  var scale = canvasWidth / imageWidth;
+  this.ctm_.scale(scale, scale);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Makes the whole view-box height visible.
+***REMOVED***
+xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
+  var canvasHeight = this.drawing_.getCanvas().getHeight();
+  var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
+  var scale = canvasHeight / imageHeight;
+  this.ctm_.scale(scale, scale);
+  this.ctm_.translate(translate, 0);
+***REMOVED***
+
+
+
+***REMOVED***
 ***REMOVED*** Returns the parent drawing object of the view-box.
 ***REMOVED*** @return {xrx.drawing.Drawing} The drawing object.
 ***REMOVED***
@@ -128,7 +153,7 @@ xrx.drawing.Viewbox.prototype.handleMove = function(e) {
 ***REMOVED***
 ***REMOVED*** Handles mouse-out events for the view-box.
 ***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** /
+***REMOVED***
 xrx.drawing.Viewbox.prototype.handleOut = function(e) {
   this.resetState_();
 ***REMOVED***
