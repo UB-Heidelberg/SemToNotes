@@ -54,7 +54,6 @@ xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
   var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
   var scale = canvasHeight / imageHeight;
   this.ctm_.scale(scale, scale);
-  this.ctm_.translate(translate, 0);
 };
 
 

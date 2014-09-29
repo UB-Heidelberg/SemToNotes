@@ -6,6 +6,7 @@ goog.provide('xrx.engine');
 
 
 
+goog.require('goog.userAgent');
 goog.require('xrx');
 
 
@@ -39,3 +40,13 @@ xrx.engine.SVG = 'svg';
  * @enum {string}
  */
 xrx.engine.VML = 'vml';
+
+
+
+/**
+ * Returns whether the current agent is an old Internet Explorer,
+ * that is IE 7 or IE 8
+ */
+xrx.engine.isOldIE = function() {
+  return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9)
+};

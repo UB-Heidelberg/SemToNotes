@@ -100,7 +100,7 @@ xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
   if (!this.keyClick_) this.keyClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.CLICK); },
-    false,
+    true,
     handler
   );
 };
@@ -112,7 +112,7 @@ xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
   if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DBLCLICK); },
-    false,
+    true,
     handler
   );
 };
@@ -127,7 +127,7 @@ xrx.drawing.EventTarget.prototype.registerDown_ = function(handler) {
   if (!this.keyDown_) this.keyDown_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DOWN); },
-    false,
+    true,
     handler
   );
 };
@@ -150,7 +150,7 @@ xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
   if (!this.keyMove_) this.keyMove_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.MOVE); },
-    false,
+    true,
     handler
   );
 };
@@ -162,7 +162,7 @@ xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
   if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.OUT); },
-    false,
+    true,
     handler
   );
 };
@@ -177,7 +177,7 @@ xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
   if (!this.keyUp_) this.keyUp_ = this.handler_.listen(self.canvas_.getEventTarget(),
     xrx.drawing.EventType.UP,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.UP) },
-    false,
+    true,
     handler
   );
 };
@@ -189,7 +189,7 @@ xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
   if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.drawing.EventType.ZOOM,
     function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.ZOOM) },
-    false,
+    true,
     handler
   );
 };

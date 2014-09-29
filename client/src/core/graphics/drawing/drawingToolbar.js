@@ -142,7 +142,7 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   goog.dom.append(this.element_, buttonZoomOut);
   goog.dom.append(this.element_, buttonRotateLeft);
   goog.dom.append(this.element_, buttonRotateRight);
-  goog.dom.append(this.element_, buttonMagnifier);
+  //goog.dom.append(this.element_, buttonMagnifier);
   goog.dom.append(this.element_, buttonShapeRect);
   goog.dom.append(this.element_, buttonShapePolygon);
   goog.dom.append(this.element_, buttonShapeModify);

@@ -547,6 +547,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
   // initialize the graphics rendering engine
   this.initEngine_(opt_engine);
+  console.log(this.engine_.isAvailable());
 
   if (this.engine_.isAvailable()) {
     // install the drawing canvas

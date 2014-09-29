@@ -23,12 +23,10 @@ xrx.vml = function() {};
 
 /**
  * Returns whether VML rendering is supported by the current user agent.
- * Since VML rendering uses the Raphael library, browsers with a SVG
- * rendering engine are supported as well.
  * @return {boolean} Whether VML rendering is supported.
  */
 xrx.vml.isSupported = function() {
-  return !!document.namespaces || xrx.svg.isSupported();
+  return !!document.namespaces;
 };
 
 
