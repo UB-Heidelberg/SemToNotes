@@ -66,7 +66,7 @@ xrx.drawing.tool.Magnifier.prototype.reset = function() {
   goog.style.setStyle(this.element_, 'z-index', '999');
   goog.style.setStyle(this.element_, 'left', '50px');
   goog.style.setStyle(this.element_, 'top', '50px');
-  goog.style.setStyle(this.element_, 'border', 'solid white 2px');
+  goog.style.setStyle(this.element_, 'border', 'solid black 4px');
   this.group_.draw();
 ***REMOVED***
 

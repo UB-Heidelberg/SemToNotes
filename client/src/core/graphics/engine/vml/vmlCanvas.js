@@ -48,7 +48,7 @@ goog.inherits(xrx.vml.Canvas, xrx.vml.Element);
 
 
 xrx.vml.Canvas.prototype.getEventTarget = function() {
-  return goog.dom.getParentElement(this.raphael_.canvas);
+  return this.raphael_.canvas;
 ***REMOVED***
 
 
@@ -115,6 +115,7 @@ xrx.vml.Canvas.create = function(parent) {
   var element = goog.dom.createElement('div');
   var raphael = xrx.vml.Raphael(element, 0, 0);
   var canvas = new xrx.vml.Canvas(raphael);
+  goog.style.setStyle(canvas.getElement(), 'z-index', '25');
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 ***REMOVED***

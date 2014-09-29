@@ -22,10 +22,12 @@ demo.rendering = function(engine) {
   var canvas = goog.dom.getElement('canvas');
   var toolbar = goog.dom.getElement('toolbar');
   var drawing = new xrx.drawing.Drawing(canvas, engine);
-  new xrx.drawing.Toolbar(toolbar, drawing);
-  drawing.setBackgroundImage(url, function() {
-    drawing.setModeView();
-  });
+  if (drawing.getEngine().isAvailable()) { 
+    new xrx.drawing.Toolbar(toolbar, drawing);
+    drawing.setBackgroundImage(url, function() {
+      drawing.setModeView();
+    });
+  }
 ***REMOVED***
 
 
