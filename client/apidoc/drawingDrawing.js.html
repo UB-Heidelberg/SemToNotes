@@ -41,7 +41,7 @@ goog.require('goog.net.ImageLoader');
 goog.require('xrx');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
-goog.require('xrx.drawing.EventTarget');
+goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.LayerBackground');
 goog.require('xrx.drawing.LayerShape');
 goog.require('xrx.drawing.LayerShapeCreate');
@@ -139,7 +139,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   // install the canvas
   this.install_(opt_engine);
 ***REMOVED***
-goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventTarget);
+goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
 
 
 
@@ -168,36 +168,6 @@ xrx.drawing.Drawing.prototype.getHeight = function() {
 ***REMOVED***
 xrx.drawing.Drawing.prototype.getGraphics = function() {
   return this.engine_.getRenderer();
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Returns the shape which is currently selected.
-***REMOVED*** @return {?}
-***REMOVED***
-xrx.drawing.Drawing.prototype.getShapeSelected = function(coordinate) {
-  var layer;
-  var shapes;
-  var shape;
-  var coords;
-  var coord;
-  var found = false;
-  for (var i = this.layer_.length - 1; i >= 0; i--) {
-    layer = this.layer_[i];
-    if (!layer.isLocked()) {
-      shapes = layer.getShapes() || [];
-      for (var j = shapes.length - 1; j >= 0; j--) {
-        shape = shapes[j];
-        if (shape.getEngineShape().getGeometry().containsPoint(coordinate)) {
-          found = true;
-          break;
-        }
-      }
-    }
-    if (found === true) break;
-  }
-  return found ? shape : undefined;
 ***REMOVED***
 
 
@@ -366,7 +336,7 @@ xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
 
 
 ***REMOVED***
-***REMOVED*** Switch a canvas over into mode &lt;i>disabled&lt;/i>.
+***REMOVED*** Switch the drawing canvas over into mode &lt;i>disabled&lt;/i>.
 ***REMOVED***
 xrx.drawing.Drawing.prototype.setModeDisabled = function() {
   this.getLayerBackground().setLocked(true);
@@ -381,10 +351,26 @@ xrx.drawing.Drawing.prototype.setModeDisabled = function() {
 
 
 ***REMOVED***
-***REMOVED*** Switch a canvas over into mode &lt;i>view&lt;/i> to allow view-box panning
+***REMOVED*** Switch the drawing canvas over into mode &lt;i>view&lt;/i> to allow view-box panning
 ***REMOVED*** zooming and rotating.
 ***REMOVED***
 xrx.drawing.Drawing.prototype.setModeView = function() {
+  this.getLayerBackground().setLocked(false);
+  this.getLayerShape().setLocked(true);
+  this.getLayerShapeModify().setLocked(true);
+  this.getLayerShapeCreate().setLocked(true);
+  this.getLayerShapeModify().removeShapes();
+  this.getLayerShapeCreate().removeShapes();
+  this.setMode_(xrx.drawing.Mode.VIEW);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Switch the drawing canvas over into mode &lt;i>hover&lt;/i> to allow view-box panning
+***REMOVED*** zooming and rotating.
+***REMOVED***
+xrx.drawing.Drawing.prototype.setModeHover = function() {
   this.getLayerBackground().setLocked(false);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);
@@ -588,6 +574,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
   // initialize the graphics rendering engine
   this.initEngine_(opt_engine);
+  console.log(this.engine_.isAvailable());
 
   if (this.engine_.isAvailable()) {
     // install the drawing canvas
@@ -622,13 +609,13 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Sun Sep 21 2014 14:04:17 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Mon Sep 29 2014 14:04:41 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>
