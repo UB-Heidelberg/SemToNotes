@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../src/xrx2html.xsl" type="text/xsl"?>
+<html xmlns:xrx="http://www.monasterium.net/NS/xrx"
+    xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Hello XRX++! - A Basic XRX++ Document.</title>
+  </head>
+  <body>
+    <div style="width:500px">
+      <h2>Hello XRX++! - A Basic XRX++ Document.</h2>
+
+      <xrx:instance id="i">
+        <data xmlns="">
+          <text>Hello XRX++!</text>
+        </data>
+      </xrx:instance>
+      <xrx:bind id="b1" ref="xrx:instance('i')//text"/>
+      <xrx:bind id="b2" ref="xrx:instance('i')"/>
+      <xrx:input bind="b1"/>
+      <xrx:console bind="b2"/>
+
+    </div>
+  </body>
+</html>

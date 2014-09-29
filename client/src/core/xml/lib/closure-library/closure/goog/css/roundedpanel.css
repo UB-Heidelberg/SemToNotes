@@ -1,0 +1,29 @@
+/*
+***REMOVED*** Copyright 2010 The Closure Library Authors. All Rights Reserved.
+***REMOVED***
+***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
+***REMOVED*** See the COPYING file for details.
+***REMOVED***
+
+/*
+***REMOVED*** Standard styles for RoundedPanel.
+***REMOVED***
+***REMOVED*** @author pallosp@google.com (Peter Pallos)
+***REMOVED***
+
+.goog-roundedpanel {
+  position: relative;
+  z-index: 0;
+}
+
+.goog-roundedpanel-background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.goog-roundedpanel-content {
+}

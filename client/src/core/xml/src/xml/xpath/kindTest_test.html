@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.xpath.KindTest</title>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.dom');
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx.node');
+  goog.require('xrx.node.AttributeS');
+  goog.require('xrx.node.DocumentS');
+  goog.require('xrx.node.ElementS');
+  goog.require('xrx.node.TextS');
+  goog.require('xrx.instance');
+  goog.require('xrx.xpath');
+</script>
+</head>
+<body>
+<script type="text/javascript">
+
+var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
+
+function test01Text() {
+  var expr = '//text()';
+  var element = goog.dom.createElement('div');
+  goog.dom.setTextContent(element, xml);
+  var instance = new xrx.instance(element);
+  var node = new xrx.node.DocumentS(instance);
+
+  var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
+  assertEquals(7, result.snapshotLength);
+  assertEquals('1', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('2', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('3', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('4', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('t', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('5', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('6', result.iterateNext().getToken().xml(instance.xml()));
+  
+***REMOVED***
+
+function test02Node() {
+  var expr = '//node()';
+  var element = goog.dom.createElement('div');
+  goog.dom.setTextContent(element, xml);
+  var instance = new xrx.instance(element);
+  var node = new xrx.node.DocumentS(instance);
+
+  var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
+
+  assertEquals(13, result.snapshotLength);
+  assertEquals('<a>', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('1', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('<b>', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('2', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('3', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('<c/>', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('4', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('<d>', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('t', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('<e type="attrValue">', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('5', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('6', result.iterateNext().getToken().xml(instance.xml()));
+  assertEquals('<d id="test"/>', result.iterateNext().getToken().xml(instance.xml()));
+***REMOVED***
+
+function test03Comment() {
+  //TODO: implement this
+***REMOVED***
+
+function test03ProcessingInstruction() {
+  //TODO: implement this
+***REMOVED***
+
+</script>
+</body>
+</html>

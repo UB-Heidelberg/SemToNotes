@@ -1,0 +1,25 @@
+/*
+***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
+***REMOVED***
+***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
+***REMOVED*** See the COPYING file for details.
+***REMOVED***
+
+/* Author: pupius@google.com (Daniel Pupius)***REMOVED***
+
+/* goog.ui.FilterObservingMenuItem***REMOVED***
+
+.goog-filterobsmenuitem {
+  padding: 2px 5px;
+  margin: 0;
+  list-style: none;
+}
+
+.goog-filterobsmenuitem-highlight {
+  background-color: #4279A5;
+  color: #FFF;
+}
+
+.goog-filterobsmenuitem-disabled {
+  color: #999;
+}

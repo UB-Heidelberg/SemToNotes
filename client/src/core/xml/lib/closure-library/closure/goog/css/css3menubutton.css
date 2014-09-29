@@ -1,0 +1,23 @@
+/*
+***REMOVED*** Copyright 2010 The Closure Library Authors. All Rights Reserved.
+***REMOVED***
+***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
+***REMOVED*** See the COPYING file for details.
+***REMOVED***
+
+/*
+***REMOVED*** Standard styling for buttons created by goog.ui.Css3MenuButtonRenderer.
+***REMOVED***
+***REMOVED*** @author attila@google.com (Attila Bodis)
+***REMOVED*** @author dalewis@google.com (Darren Lewis)
+***REMOVED***
+
+/* Dropdown arrow style.***REMOVED***
+.goog-css3-button-dropdown {
+  height: 16px;
+  width: 7px;
+  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  background: url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -388px 0;
+  vertical-align: top;
+  margin-left: 3px;
+}

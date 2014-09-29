@@ -1,0 +1,41 @@
+/*
+***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
+***REMOVED***
+***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
+***REMOVED*** See the COPYING file for details.
+***REMOVED***
+
+/*
+***REMOVED*** Cross-browser implementation of the "display: inline-block" CSS property.
+***REMOVED*** See http://www.w3.org/TR/CSS21/visuren.html#propdef-display for details.
+***REMOVED*** Tested on IE 6 & 7, FF 1.5 & 2.0, Safari 2 & 3, Webkit, and Opera 9.
+***REMOVED***
+***REMOVED*** @author attila@google.com (Attila Bodis)
+***REMOVED***
+
+/*
+***REMOVED*** Default rule; only Safari, Webkit, and Opera handle it without hacks.
+***REMOVED***
+.goog-inline-block {
+  position: relative;
+  display: -moz-inline-box; /* Ignored by FF3 and later.***REMOVED***
+  display: inline-block;
+}
+
+/*
+***REMOVED*** Pre-IE7 IE hack.  On IE, "display: inline-block" only gives the element
+***REMOVED*** layout, but doesn't give it inline behavior.  Subsequently setting display
+***REMOVED*** to inline does the trick.
+***REMOVED***
+* html .goog-inline-block {
+  display: inline;
+}
+
+/*
+***REMOVED*** IE7-only hack.  On IE, "display: inline-block" only gives the element
+***REMOVED*** layout, but doesn't give it inline behavior.  Subsequently setting display
+***REMOVED*** to inline does the trick.
+***REMOVED***
+*:first-child+html .goog-inline-block {
+  display: inline;
+}

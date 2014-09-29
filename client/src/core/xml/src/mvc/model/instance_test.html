@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.instance</title>
+<script src='../../../lib/codemirror/lib/codemirror.js'></script>
+<link rel="stylesheet" href="../../../lib/codemirror/lib/codemirror.css"/>
+<script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx');
+  goog.require('xrx.model');
+</script>
+</head>
+<body>
+
+<div id="i1" class="xrx-instance" data-xrx-src="../../../data/hamlet.xml.txt"></div>
+<div id="i2" class="xrx-instance" data-xrx-src="../../../data/hamlet.xml.txt"></div>
+<div id="i3" class="xrx-instance" data-xrx-src="../../../data/hamlet.xml.txt"></div>
+<div id="i4" class="xrx-instance">&lt;dummy/&gt;</div>
+<div id="i5" class="xrx-instance" data-xrx-src="../../../data/entity.xml.txt"></div>
+
+<div id="b1" class="xrx-bind" data-xrx-ref="xrx:instance('i1')"></div>
+
+<script type="text/javascript">
+
+function test01callback() {
+
+  assertTrue(xrx.model.getComponent('i1').xml() !== undefined);
+  assertTrue(xrx.model.getComponent('i2').xml() !== undefined);
+  assertTrue(xrx.model.getComponent('i3').xml() !== undefined);
+  assertEquals('<dummy/>', xrx.model.getComponent('i4').xml());
+  assertTrue(xrx.model.getComponent('b1').node_ !== undefined);
+***REMOVED***
+
+function test02entity() {
+  console.log(xrx.model.getComponent('i5').xml());
+***REMOVED***
+
+</script>
+<script>
+  xrx.install();
+</script>
+</body>
+</html>
