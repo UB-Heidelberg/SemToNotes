@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.repeat</title>
+<script src='../../../lib/codemirror/lib/codemirror.js'></script>
+<link rel="stylesheet" href="../../../lib/codemirror/lib/codemirror.css"/>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx');
+</script>
+<link rel="stylesheet" type="text/css" href="../../ui/wysiwym/default.css"/>
+</head>
+<body>
+
+<div id="i1" class="xrx-instance">&lt;data&gt;&lt;a&gt;1&lt;/a&gt;&lt;b&gt;2&lt;/b&gt;&lt;c&gt;3&lt;/c&gt;&lt;/data&gt;</div>
+<div id="b1" class="xrx-bind" data-xrx-ref="xrx:instance('i1')/data/*"></div>
+<div id="b2" class="xrx-bind" data-xrx-ref="xrx:instance('i1')/data/a"></div>
+<div id="r1" class="xrx-repeat" data-xrx-bind="b1">
+  <textarea class="xrx-wysiwym-input" data-xrx-ref="./self::*"></textarea>
+</div>
+
+<script type="text/javascript">
+
+function test01() {
+  console.log(xrx.view.getComponent('r1'));
+};
+
+</script>
+
+<script type="text/javascript">
+  xrx.install();
+</script>
+</body>
+</html>

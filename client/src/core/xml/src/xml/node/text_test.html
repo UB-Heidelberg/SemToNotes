@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.node.Text, xrx.node.TextS, xrx.node.TextB</title>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.dom');
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx.instance');
+  goog.require('xrx.node.Element');
+  goog.require('xrx.node.ElementS');
+  goog.require('xrx.node.ElementB');
+  goog.require('xrx.node.Text');
+  goog.require('xrx.node.TextS');
+  goog.require('xrx.node.TextB');
+  goog.require('xrx.pilot');
+  goog.require('xrx.token.EndTag');
+  goog.require('xrx.token.StartTag');
+  goog.require('xrx.xpath');
+  goog.require('xrx.xpath.NameTest');
+  goog.require('xrx.xpath.KindTest');
+</script>
+</head>
+<body>
+
+<script type="text/javascript">
+
+function test01nameFunctions() {
+  // always ''
+};
+
+function test02identityFunctions() {
+  var xml = '<a>1<b/>2<c id="test">3</c>4</a>';
+  var element = goog.dom.createElement('div');
+  goog.dom.setTextContent(element, xml);
+  var instance = new xrx.instance(element);
+
+  // binary node
+  var eB = new xrx.node.ElementB(instance, 1);
+  var tB1 = new xrx.node.TextB(instance, 1);
+  // important!
+  var tB2 = new xrx.node.TextB(instance, 2); // [1,2,0]
+  var tB3 = new xrx.node.TextB(instance, 3); // [1,2]
+
+  assertTrue(tB1.isSameAs(tB1));
+  assertTrue(tB1.isAfter(eB));
+  assertTrue(eB.isBefore(tB1));
+  // important!
+  assertTrue(tB2.isBefore(tB3));
+  assertTrue(tB3.isAfter(tB2));
+
+  // streaming node
+  var tok1 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var eS1 = new xrx.node.ElementS(instance, tok1);
+  var tS1 = new xrx.node.TextS(instance, tok1, 1);
+  var tok2 = new xrx.token.StartTag(new xrx.label([1,2]), 9, 13);
+  var tS2 = new xrx.node.TextS(instance, tok2, 1);
+  var tok3 = new xrx.token.EndTag(new xrx.label([1,2]), 23, 4);
+  var tS3 = new xrx.node.TextS(instance, tok3, 1);
+
+  assertTrue(tS1.isSameAs(tS1));
+  assertTrue(tS1.isAfter(eS1));
+  assertTrue(eS1.isBefore(tS1));
+};
+
+function test03contentFunctions() {
+  var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
+  var element = goog.dom.createElement('div');
+  goog.dom.setTextContent(element, xml);
+  var instance = new xrx.instance(element);
+
+  // binary node
+  var tB1 = new xrx.node.TextB(instance, 0);
+  var tB2 = new xrx.node.TextB(instance, 1);
+  var tB3 = new xrx.node.TextB(instance, 2);
+  var tB4 = new xrx.node.TextB(instance, 3);
+
+  assertEquals('1', tB1.getXml());
+  assertEquals('2', tB2.getXml());
+  assertEquals('3', tB3.getStringValue());
+  assertEquals('4', tB4.getStringValue());
+
+  // streaming node
+  var tok1 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var tS1 = new xrx.node.TextS(instance, tok1, 1);
+  var tok2 = new xrx.token.StartTag(new xrx.label([1,1]), 4, 3);
+  var tS2 = new xrx.node.TextS(instance, tok2, 1);
+  var tok3 = new xrx.token.EndTag(new xrx.label([1,1]), 8, 4);
+  var tS3 = new xrx.node.TextS(instance, tok3, 1);
+  var tok4 = new xrx.token.EndTag(new xrx.label([1,2]), 13, 4);
+  var tS4 = new xrx.node.TextS(instance, tok4, 1);
+
+  assertEquals('1', tS1.getXml());
+  assertEquals('2', tS2.getXml());
+  assertEquals('3', tS3.getStringValue());
+  assertEquals('4', tS4.getStringValue());
+};
+
+function axisTest(key, func, expected) {
+  var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
+  var element = goog.dom.createElement('div');
+  goog.dom.setTextContent(element, xml);
+  var instance = new xrx.instance(element);
+
+  // binary node
+  var tB = new xrx.node.TextB(instance, key);
+  var test = {
+    node: tB[func](new xrx.xpath.KindTest('node')),
+    element: tB[func](new xrx.xpath.NameTest('*')),
+    text: tB[func](new xrx.xpath.KindTest('text')),
+    attribute: tB[func](new xrx.xpath.NameTest('@*'))
+  }
+
+  assertEquals(expected.node, test.node.getLength());
+  assertEquals(expected.element, test.element.getLength());
+  assertEquals(expected.text, test.text.getLength());
+  assertEquals(expected.attribute, test.attribute.getLength());
+
+  // streaming node
+  var tag;
+  var rowType = tB.getRow().getType();
+  if (rowType === xrx.token.START_TAG) {
+    tag = 'StartTag';
+  } else if (rowType === xrx.token.EMPTY_TAG) {
+    tag = 'EmptyTag';
+  } else {
+    tag = 'EndTag';
+  }
+
+  var pilot = new xrx.pilot(xml);
+  var eB = new xrx.node.ElementB(instance, key);
+  var t = pilot.location(null, new xrx.token[tag](eB.getLabel(),
+      eB.getOffset(), eB.getLength()));
+  var tS = new xrx.node.TextS(instance, t, tB.getLength());
+  var testS = {
+    node: tS[func](new xrx.xpath.KindTest('node')),
+    element: tS[func](new xrx.xpath.NameTest('*')),
+    text: tS[func](new xrx.xpath.KindTest('text')),
+    attribute: tS[func](new xrx.xpath.NameTest('@*'))
+  }
+
+  assertEquals(expected.node, testS.node.getLength());
+  assertEquals(expected.element, testS.element.getLength());
+  assertEquals(expected.text, testS.text.getLength());
+  assertEquals(expected.attribute, testS.attribute.getLength());
+};
+
+
+function test04nodeFunctions() {
+
+  // ancestor
+  //axisTest(5, 'getNodeAncestor', { node: 4, element: 3, text: 0, attribute: 0 });
+
+  // child
+  axisTest(0, 'getNodeChild', { node: 0, element: 0, text: 0, attribute: 0 });
+
+  // descendant
+  axisTest(0, 'getNodeDescendant', { node: 0, element: 0, text: 0, attribute: 0 });
+
+  // following
+  axisTest(2, 'getNodeFollowing', { node: 8, element: 4, text: 4, attribute: 0 });
+
+  // following sibling
+  axisTest(2, 'getNodeFollowingSibling', { node: 4, element: 3, text: 1, attribute: 0 });
+
+  // parent
+  axisTest(6, 'getNodeParent', { node: 1, element: 1, text: 0, attribute: 0 });
+
+  // preceding
+  //axisTest(6, 'getNodePreceding', { node: 10, element: 3, text: 6, attribute: 0 });
+
+  // preceding sibling
+  //axisTest(2, 'getNodePrecedingSibling', { node: 2, element: 1, text: 1, attribute: 0 });
+
+};
+
+</script>
+</body>
+</html>
+

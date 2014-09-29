@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Benchmark Tests - xrx.reader, xrx.traverse, xrx.index, jssaxparser</title>
+<script src='../lib/closure-library/closure/goog/base.js'></script>
+<link rel="stylesheet" type="text/css" 
+    href="../lib/closure-library/closure/goog/testing/performancetable.css" />
+<script type="text/javascript" src="../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../src/deps.js'></script>
+<script type="text/javascript">  
+  goog.require('goog.net.XhrIo');
+  goog.require('goog.testing.AsyncTestCase');
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.testing.PerformanceTable');
+  goog.require('goog.userAgent.product');
+  goog.require('xrx.index');
+  goog.require('xrx.parse');
+  goog.require('xrx.reader');
+  goog.require('xrx.traverse');
+</script>
+
+<script>
+  if (goog.userAgent.product.CHROME &&
+      window.location.toString().indexOf('file:') == 0) {
+    document.write(
+        '<div class="warning">' +
+        'WARNING: Due to Chrome\'s security restrictions ' +
+        'this test will not be able to load files off your local disk ' +
+        'unless you start Chrome with:<br>' +
+        '<code>--allow-file-access-from-files</code></div><br>');
+  }
+</script>
+
+</head>
+<body>
+
+<h2>xrx.reader</h2>
+<div id="readerTable"></div>
+<h2>xrx.traverse (features off)</h2>
+<div id="traverseTable"></div>
+<h2>xrx.traverse (features on)</h2>
+<div id="traverseFeaturesTable"></div>
+<h2>xrx.index</h2>
+<div id="indexTable"></div>
+<h2>jssaxparser</h2>
+<div id="saxTable"></div>
+
+<script type="text/javascript">
+
+var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
+asyncTestCase.stepTimeout = 10 * 1000;
+
+var readerTable = new goog.testing.PerformanceTable(
+    goog.dom.getElement('readerTable'));
+
+var traverseTable = new goog.testing.PerformanceTable(
+    goog.dom.getElement('traverseTable'));
+
+var traverseFeaturesTable = new goog.testing.PerformanceTable(
+    goog.dom.getElement('traverseFeaturesTable'));
+
+var indexTable = new goog.testing.PerformanceTable(
+    goog.dom.getElement('indexTable'));
+
+var saxTable = new goog.testing.PerformanceTable(
+    goog.dom.getElement('saxTable'));
+
+
+var doRequest = function(name, file, func, table) {
+  var request = new goog.net.XhrIo();
+  var xml;
+  var parse;
+
+  goog.events.listen(request, 'ready', function() {
+    asyncTestCase.waitForAsync('Waiting for xhr to respond');
+  });
+
+  goog.events.listen(request, 'complete', function() {
+    xml = request.getResponseText();
+    parse = new xrx.parse();
+    xml = parse.normalize(xml);
+    console.log(xml.length);
+
+    table.run(goog.partial(func, xml), name);
+  
+    asyncTestCase.continueTesting();
+  });
+
+  request.send(file, 'GET');
+};
+
+function test01reader() {
+	
+	//xrx.reader shared function
+	var readForward = function(xml) {
+		var reader = new xrx.reader(xml);
+		
+		reader.first();
+		
+		for(;;) {
+		  reader.next();
+		  if (reader.finished()) break;
+		}
+	};
+	
+	//xrx.reader shared function
+	var readBackward = function(xml) {
+		var reader = new xrx.reader(xml);
+		
+		reader.last();
+		
+		for(;;) {
+		  reader.previous();
+		  if (reader.finished()) break;
+		}
+	};
+  
+	doRequest('xrx.reader.forward :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', readForward, readerTable);
+  
+	doRequest('xrx.reader.backward :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', readBackward, readerTable);
+  
+  doRequest('xrx.reader.forward :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', readForward, readerTable);
+  
+  doRequest('xrx.reader.backward :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', readBackward, readerTable);
+
+	doRequest('xrx.reader.forward :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', readForward, readerTable);
+
+	doRequest('xrx.reader.backward :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', readBackward, readerTable);
+};
+
+function test02traverse() {
+
+  function traverseForward(xml) {
+    var traverse = new xrx.traverse(xml);
+    traverse.rowStartTag = function() {};
+    traverse.rowEmptyTag = function() {};
+    traverse.rowEndTag = function() {};
+    traverse.forward();
+  };
+
+  function traverseBackward(xml) {
+    var traverse = new xrx.traverse(xml);
+    traverse.rowStartTag = function() {};
+    traverse.rowEmptyTag = function() {};
+    traverse.rowEndTag = function() {};
+    traverse.backward();
+  };
+  
+  doRequest('xrx.traverse.forward (with secondary tokens off) :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', traverseForward, traverseTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens off) :: hamlet.xml  (384kb)',
+      '../data/hamlet.xml.txt', traverseBackward, traverseTable);
+  
+  doRequest('xrx.traverse.forward (with secondary tokens off) :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', traverseForward, traverseTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens off) :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', traverseBackward, traverseTable);
+  
+  doRequest('xrx.traverse.forward (with secondary tokens off) :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', traverseForward, traverseTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens off) :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', traverseBackward, traverseTable);
+};
+
+function test03traverseFeatures() {
+
+  function traverseForward(xml) {
+    var traverse = new xrx.traverse(xml);
+    traverse.setFeatures(true);
+    traverse.rowStartTag = function() {};
+    traverse.rowEmptyTag = function() {};
+    traverse.rowEndTag = function() {};
+    traverse.eventTagName = function() {};
+    traverse.eventAttribute = function() {};
+    traverse.eventAttrName = function() {};
+    traverse.eventAttrValue = function() {};
+    traverse.eventNamespace = function() {};
+    traverse.eventNsPrefix = function() {};
+    traverse.eventNsUri = function() {};
+    traverse.forward();
+  };
+
+  function traverseBackward(xml) {
+    var traverse = new xrx.traverse(xml);
+    traverse.setFeatures(true);
+    traverse.rowStartTag = function() {};
+    traverse.rowEmptyTag = function() {};
+    traverse.rowEndTag = function() {};
+    traverse.eventTagName = function() {};
+    traverse.eventAttribute = function() {};
+    traverse.eventAttrName = function() {};
+    traverse.eventAttrValue = function() {};
+    traverse.eventNamespace = function() {};
+    traverse.eventNsPrefix = function() {};
+    traverse.eventNsUri = function() {};
+    traverse.backward();
+  };
+  
+  doRequest('xrx.traverse.forward (with secondary tokens on) :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', traverseForward, traverseFeaturesTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens on) :: hamlet.xml  (384kb)',
+      '../data/hamlet.xml.txt', traverseBackward, traverseFeaturesTable);
+  
+  doRequest('xrx.traverse.forward (with secondary tokens on) :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', traverseForward, traverseFeaturesTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens on) :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', traverseBackward, traverseFeaturesTable);
+  
+  doRequest('xrx.traverse.forward (with secondary tokens on) :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', traverseForward, traverseFeaturesTable);
+  
+  doRequest('xrx.traverse.backward (with secondary tokens on) :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', traverseBackward, traverseFeaturesTable);
+};
+
+function test04index() {
+
+  var index = function(xml) {
+    return new xrx.index(xml);
+  };
+  
+  doRequest('xrx.index :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', index, indexTable);
+
+  doRequest('xrx.index :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', index, indexTable);
+  
+  doRequest('xrx.index :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', index, indexTable);
+};
+
+function test05Sax() {
+
+  var parse = function(xml) {
+    var contentHandler = new DefaultHandler2();
+    var saxParser = XMLReaderFactory.createXMLReader();
+    saxParser.setHandler(contentHandler);
+
+    saxParser.parseString(xml);
+  };
+  
+  doRequest('jssaxparser.parseString :: hamlet.xml (384kb)',
+      '../data/hamlet.xml.txt', parse, saxTable);
+
+  doRequest('jssaxparser.parseString :: CSGIII.xml (3MB)',
+      '../data/CSGIII.xml.txt', parse, saxTable);
+  
+  doRequest('jssaxparser.parseString :: 6MB.xml (5.7 MB)',
+      '../data/6MB.xml.txt', parse, saxTable);
+};
+
+</script>
+</body>
+</html>
+
+
+

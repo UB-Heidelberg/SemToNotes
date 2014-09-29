@@ -1,0 +1,39 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * @fileoverview A class implementing the element node
+<span class='line'>  3</span>  * type for streaming XPath evaluation.
+<span class='line'>  4</span>  */</span><span class="WHIT">
+<span class='line'>  5</span> 
+<span class='line'>  6</span> </span><span class="NAME">goog.provide</span><span class="PUNC">(</span><span class="STRN">'xrx.node.ElementS'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> 
+<span class='line'>  9</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'xrx.node.Element'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="NAME">goog.require</span><span class="PUNC">(</span><span class="STRN">'xrx.nodeS'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> 
+<span class='line'> 13</span> </span><span class="NAME">xrx.node.ElementS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">token</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">instance</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">  </span><span class="NAME">goog.base</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">token</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">instance</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="NAME">goog.inherits</span><span class="PUNC">(</span><span class="NAME">xrx.node.ElementS</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">xrx.node.Element</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> 
+<span class='line'> 18</span> 
+<span class='line'> 19</span> 
+<span class='line'> 20</span> </span><span class="NAME">xrx.nodeS.sharedFunctions</span><span class="PUNC">(</span><span class="NAME">xrx.node.ElementS</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> 
+<span class='line'> 22</span> 
+<span class='line'> 23</span> 
+<span class='line'> 24</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeAncestor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeAncestor</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeAttribute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeAttribute</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeChild</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeChild</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeDescendant</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeDescendant</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeFollowing</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeFollowing</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeFollowingSibling</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeFollowingSibling</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodeParent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodeParent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodePreceding</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodePreceding</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="NAME">xrx.node.ElementS.prototype.getNodePrecedingSibling</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">xrx.nodeS.prototype.getNodePrecedingSibling</span><span class="PUNC">;</span></pre></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.node</title>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.array');
+  goog.require('goog.dom');
+  goog.require('goog.string');
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx.label');
+  goog.require('xrx.node');
+  goog.require('xrx.nodeS');
+  goog.require('xrx.node.Attribute');
+  goog.require('xrx.node.AttributeS');
+  goog.require('xrx.node.AttributeB');
+  goog.require('xrx.node.Comment');
+  goog.require('xrx.node.Document');
+  goog.require('xrx.node.DocumentS');
+  goog.require('xrx.node.DocumentB');
+  goog.require('xrx.node.Element');
+  goog.require('xrx.node.ElementS');
+  goog.require('xrx.node.ElementB');
+  goog.require('xrx.node.Namespace');
+  goog.require('xrx.node.ProcessingInstruction');
+  goog.require('xrx.node.Text');
+  goog.require('xrx.node.TextS');
+  goog.require('xrx.node.TextB');
+  goog.require('xrx.instance');
+  goog.require('xrx.token');
+  goog.require('xrx.xdm');
+</script>
+</head>
+<body>
+<script type="text/javascript">
+
+function test02abstractMethods() {
+  var abstractMethods = [
+    'isSameAs',
+    'isBefore',
+    'isAfter',
+    'isAncestorOf',
+    'isAttributeOf',
+    'isChildOf',
+    'isDescendantOf',
+    'isFollowingOf',
+    'isFollowingSiblingOf',
+    'isParentOf',
+    'isPrecedingOf',
+    'isPrecedingSiblingOf',
+    'getName',
+    //'getNameLocal',
+    'getNamespaceUri',
+    //'getNamePrefix',
+    //'getNamePrefixed',
+    //'getNameExpanded',
+    'getStringValue',
+    'getXml',
+    'getNodeAncestor',
+    'getNodeAttribute',
+    'getNodeChild',
+    'getNodeDescendant',
+    'getNodeFollowing',
+    'getNodeFollowingSibling',
+    'getNodeParent',
+    'getNodePreceding',
+    'getNodePrecedingSibling'
+  ];
+
+  // xrx.node.DocumentS
+  goog.array.forEach(abstractMethods, function(method, index, arr) {
+
+    assertEquals(false, xrx.node.DocumentS.prototype[method] == goog.abstractMethod);
+    assertEquals(false, xrx.node.DocumentB.prototype[method] == goog.abstractMethod);
+  });
+  // xrx.node.ElementS
+  goog.array.forEach(abstractMethods, function(method, index, arr) {
+
+    assertEquals(false, xrx.node.ElementS.prototype[method] == goog.abstractMethod);
+    assertEquals(false, xrx.node.ElementB.prototype[method] == goog.abstractMethod);
+  });
+  // xrx.node.AttributeS
+  goog.array.forEach(abstractMethods, function(method, index, arr) {
+
+    assertEquals(false, xrx.node.AttributeS.prototype[method] == goog.abstractMethod);
+    assertEquals(false, xrx.node.AttributeB.prototype[method] == goog.abstractMethod);
+  });
+  // xrx.node.TextS
+  goog.array.forEach(abstractMethods, function(method, index, arr) {
+
+    assertEquals(false, xrx.node.TextS.prototype[method] == goog.abstractMethod);
+    assertEquals(false, xrx.node.TextB.prototype[method] == goog.abstractMethod);
+  });
+};
+
+</script>
+</body>
+</html>

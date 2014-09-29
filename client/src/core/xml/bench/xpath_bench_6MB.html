@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Benchmark Tests - xrx.xpath</title>
+<script src='../lib/codemirror/lib/codemirror.js'></script>
+<link rel="stylesheet" href="../lib/codemirror/lib/codemirror.css"/>
+<script src='../lib/closure-library/closure/goog/base.js'></script>
+<link rel="stylesheet" type="text/css" 
+    href="../lib/closure-library/closure/goog/testing/performancetable.css" />
+<script type="text/javascript" src="../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../src/deps.js'></script>
+<script type="text/javascript">  
+  goog.require('goog.dom');
+  goog.require('goog.net.XhrIo');
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.testing.PerformanceTable');
+  goog.require('goog.userAgent.product');
+  goog.require('xrx');
+  goog.require('xrx.model');
+  goog.require('xrx.node');
+  goog.require('xrx.node.Element');
+  goog.require('xrx.node.ElementB');
+  goog.require('xrx.node.AttributeB');
+  goog.require('xrx.node.TextB');
+  goog.require('xrx.node.DocumentB');
+  goog.require('xrx.xpath.test');
+  goog.require('xrx.instance');
+  goog.require('xrx.xpath');
+</script>
+
+<script>
+  if (goog.userAgent.product.CHROME &&
+      window.location.toString().indexOf('file:') == 0) {
+    document.write(
+        '<div class="warning">' +
+        'WARNING: Due to Chrome\'s security restrictions ' +
+        'this test will not be able to load files off your local disk ' +
+        'unless you start Chrome with:<br>' +
+        '<code>--allow-file-access-from-files</code></div><br>');
+  }
+</script>
+
+</head>
+<body>
+
+<div id="table"></div>
+
+<div id="i6MB" class="xrx-instance" data-xrx-src="../data/6MB.xml.txt" style="display:none"/>
+
+
+<script type="text/javascript">
+
+var table = new goog.testing.PerformanceTable(
+    goog.dom.getElement('table'));
+
+function createIndex(instance) {
+  return instance.getIndex();
+};
+
+var instance = new xrx.instance(goog.dom.getElement('i6MB'), createIndex);
+var doc = new xrx.node.DocumentB(instance);
+
+function resultEquals(expression, hits, expected) {
+
+  table.run(goog.partial(xrx.xpath.evaluate, expression, doc, null,
+      xrx.xpath.XPathResultType.ANY_TYPE), expression);
+
+  var r = xrx.xpath.evaluate(expression, doc, null, xrx.xpath.XPathResultType.ANY_TYPE);
+
+	switch (r.resultType) {
+	case xrx.xpath.XPathResultType.NUMBER_TYPE:
+	  assertEquals(expected, r.numberValue);
+	  break;
+	case xrx.xpath.XPathResultType.STRING_TYPE:
+	  assertEquals(expected, r.stringValue);
+	  break;
+	case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+	  assertEquals(expected, r.booleanValue);
+	  break;
+	default:
+	  assertEquals(hits, r.snapshotLength);
+	  for (var n in expected) {
+	    assertEquals(expected[n], r.iterateNext().getXml());
+	  }
+	  break;
+	}
+};
+
+function test1() {
+  resultEquals('count(/site)', 1, 1);
+};
+
+function test2() {
+  resultEquals('count(/site/people)', 1, 1);
+}
+
+function test3() {
+  resultEquals('/site/people/person[1]/name', 1, ['<name>Odette Morrison</name>']);
+}
+
+function test4() {
+  resultEquals('count(/site/people/person)', 1275, 1275);
+}
+
+function test5() {
+  resultEquals('/site/people/person[@id = "person0"]/name/text()', 1, ['Odette Morrison']);
+}
+
+</script>
+
+</body>
+</html>
