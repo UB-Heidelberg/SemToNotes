@@ -59,10 +59,6 @@ var rectCoords1 = [[10,10],[10,30],[30,30],[30,10]];
 var rectCoords2 = [[40,40],[40,140],[140,140],[140,40]];
 var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
 
-function isOldIE() {
-  return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9);
-};
-
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
@@ -109,16 +105,16 @@ function getDrawingVml(id, callback) {
 };
 
 function test1AddShapes() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasAddShapes');
     var svgDrawing = getDrawingSvg('svgAddShapes');
+  } else {
+    var vmlDrawing = getDrawingVml('vmlAddShapes');
   }
-
-  var vmlDrawing = getDrawingVml('vmlAddShapes');
 };
 
 function test2RemoveShapes() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasRemoveShapes');
     var svgDrawing = getDrawingSvg('svgRemoveShapes');
 
@@ -131,19 +127,19 @@ function test2RemoveShapes() {
     assertEquals(0, svgDrawing.getLayerShape().getShapes().length);
     assertEquals(0, canvasDrawing.getLayerShape().getGroup().getChildren().length);
     assertEquals(0, svgDrawing.getLayerShape().getGroup().getChildren().length);
+  } else {
+    var vmlDrawing = getDrawingVml('vmlRemoveShapes');
+
+    vmlDrawing.getLayerShape().removeShapes();
+    vmlDrawing.draw();
+
+    assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
+    assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
   }
-
-  var vmlDrawing = getDrawingVml('vmlRemoveShapes');
-
-  vmlDrawing.getLayerShape().removeShapes();
-  vmlDrawing.draw();
-
-  assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
-  assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
 };
 
 function test3RemoveOneShape() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasRemoveOneShape');
     var svgDrawing = getDrawingSvg('svgRemoveOneShape');
 
@@ -159,17 +155,16 @@ function test3RemoveOneShape() {
     assertEquals(2, svgDrawing.getLayerShape().getShapes().length);
     assertEquals(2, canvasDrawing.getLayerShape().getGroup().getChildren().length);
     assertEquals(2, svgDrawing.getLayerShape().getGroup().getChildren().length);
+  } else {
+    var vmlDrawing = getDrawingVml('vmlRemoveOneShape');
+    var vmlPolygon = vmlDrawing.getLayerShape().getShapes()[2];
+
+    vmlDrawing.getLayerShape().removeShape(vmlPolygon);
+    vmlDrawing.draw();
+
+    assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
+    assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
   }
-
-  var vmlDrawing = getDrawingVml('vmlRemoveOneShape');
-
-  var vmlPolygon = vmlDrawing.getLayerShape().getShapes()[2];
-
-  vmlDrawing.getLayerShape().removeShape(vmlPolygon);
-  vmlDrawing.draw();
-
-  assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
-  assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
 };
 
 </script>

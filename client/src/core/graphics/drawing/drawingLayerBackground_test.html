@@ -74,10 +74,6 @@ height: 150px;
 
 var url = './drawing_test.png';
 
-function isOldIE() {
-  return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9);
-};
-
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
@@ -103,46 +99,46 @@ function getDrawingVml(id, callback) {
 };
 
 function test1Wheel() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasWheel');
     var svgDrawing = getDrawingSvg('svgWheel');
 
     canvasDrawing.registerWheel(canvasDrawing.getViewbox());
     svgDrawing.registerWheel(svgDrawing.getViewbox());
+  } else {
+    var vmlDrawing = getDrawingVml('vmlWheel');
+    vmlDrawing.registerWheel(vmlDrawing.getViewbox());
   }
-
-  var vmlDrawing = getDrawingVml('vmlWheel');
-  vmlDrawing.registerWheel(vmlDrawing.getViewbox());
 };
 
 function test2DblClick() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasDblClick');
     var svgDrawing = getDrawingSvg('svgDblClick');
 
     canvasDrawing.registerDblClick(canvasDrawing.getViewbox());
     svgDrawing.registerDblClick(svgDrawing.getViewbox());
+  } else {
+    var vmlDrawing = getDrawingVml('vmlDblClick');
+    vmlDrawing.registerDblClick(vmlDrawing.getViewbox());
   }
-
-  var vmlDrawing = getDrawingVml('vmlDblClick');
-  vmlDrawing.registerDblClick(vmlDrawing.getViewbox());
 };
 
 function test4Drag() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasDrag');
     var svgDrawing = getDrawingSvg('svgDrag');
 
     canvasDrawing.registerDrag(canvasDrawing.getViewbox());
     svgDrawing.registerDrag(svgDrawing.getViewbox());
+  } else {
+    var vmlDrawing = getDrawingVml('vmlDrag');
+    vmlDrawing.registerDrag(vmlDrawing.getViewbox());
   }
-  
-  var vmlDrawing = getDrawingVml('vmlDrag');
-  vmlDrawing.registerDrag(vmlDrawing.getViewbox());
 };
 
 function test5Out() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasDrag');
     var svgDrawing = getDrawingSvg('svgDrag');
 
@@ -150,24 +146,24 @@ function test5Out() {
     canvasDrawing.registerOut(canvasDrawing.getViewbox());
     svgDrawing.registerDrag(svgDrawing.getViewbox());
     svgDrawing.registerOut(svgDrawing.getViewbox());
+  } else {
+    var vmlDrawing = getDrawingVml('vmlDrag');
+    vmlDrawing.registerDrag(vmlDrawing.getViewbox());
+    vmlDrawing.registerOut(vmlDrawing.getViewbox());
   }
-
-  var vmlDrawing = getDrawingVml('vmlDrag');
-  vmlDrawing.registerDrag(vmlDrawing.getViewbox());
-  vmlDrawing.registerOut(vmlDrawing.getViewbox());
 };
 
 function test6All() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasAll');
     var svgDrawing = getDrawingSvg('svgAll');
 
     canvasDrawing.registerEvents(xrx.drawing.Mode.VIEW);
     svgDrawing.registerEvents(xrx.drawing.Mode.VIEW);
+  } else {
+    var vmlDrawing = getDrawingVml('vmlAll');
+    vmlDrawing.registerEvents(xrx.drawing.Mode.VIEW);
   }
-
-  var vmlDrawing = getDrawingVml('vmlAll');
-  vmlDrawing.registerEvents(xrx.drawing.Mode.VIEW);
 };
 
 </script>

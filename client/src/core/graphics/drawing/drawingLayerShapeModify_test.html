@@ -63,10 +63,6 @@ var url = './drawing_test.png';
 var rectCoords = [[10,10],[10,30],[30,30],[30,10]];
 var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
 
-function isOldIE() {
-  return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9);
-};
-
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
@@ -95,7 +91,7 @@ function getDrawingVml(id, callback) {
 };
 
 function test1DeleteRectangle() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var svgDrawing = getDrawingSvg('svgDeleteRectangle');
     var canvasDrawing = getDrawingCanvas('canvasDeleteRectangle');
 
@@ -111,21 +107,21 @@ function test1DeleteRectangle() {
     svgDrawing.draw();
     canvasDrawing.getLayerShape().addShapes(canvasRect);
     canvasDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlDeleteRectangle');
+
+    vmlDrawing.setModeDelete();
+
+    var vmlRect = xrx.shape.Rect.create(vmlDrawing);
+    vmlRect.setCoords(rectCoords);
+
+    vmlDrawing.getLayerShape().addShapes(vmlRect);
+    vmlDrawing.draw();
   }
-
-  var vmlDrawing = getDrawingVml('vmlDeleteRectangle');
-
-  vmlDrawing.setModeDelete();
-
-  var vmlRect = xrx.shape.Rect.create(vmlDrawing);
-  vmlRect.setCoords(rectCoords);
-
-  vmlDrawing.getLayerShape().addShapes(vmlRect);
-  vmlDrawing.draw();
 };
 
 function test2deletePolygon() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var svgDrawing = getDrawingSvg('svgDeletePolygon');
     var canvasDrawing = getDrawingCanvas('canvasDeletePolygon');
 
@@ -141,21 +137,21 @@ function test2deletePolygon() {
     svgDrawing.draw();
     canvasDrawing.getLayerShape().addShapes(canvasPolygon);
     canvasDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlDeletePolygon');
+
+    vmlDrawing.setModeDelete();
+
+    var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
+    vmlPolygon.setCoords(polygonCoords);
+
+    vmlDrawing.getLayerShape().addShapes(vmlPolygon);
+    vmlDrawing.draw();
   }
-
-  var vmlDrawing = getDrawingVml('vmlDeletePolygon');
-
-  vmlDrawing.setModeDelete();
-
-  var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
-  vmlPolygon.setCoords(polygonCoords);
-
-  vmlDrawing.getLayerShape().addShapes(vmlPolygon);
-  vmlDrawing.draw();
 };
 
 function test3ModifyRectangle() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var svgDrawing = getDrawingSvg('svgModifyRectangle');
     var canvasDrawing = getDrawingCanvas('canvasModifyRectangle');
 
@@ -171,21 +167,21 @@ function test3ModifyRectangle() {
     svgDrawing.draw();
     canvasDrawing.getLayerShape().addShapes(canvasRect);
     canvasDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlModifyRectangle');
+
+    vmlDrawing.setModeModify();
+
+    var vmlRect = xrx.shape.Rect.create(vmlDrawing);
+    vmlRect.setCoords(rectCoords);
+
+    vmlDrawing.getLayerShape().addShapes(vmlRect);
+    vmlDrawing.draw();
   }
-
-  var vmlDrawing = getDrawingVml('vmlModifyRectangle');
-
-  vmlDrawing.setModeModify();
-
-  var vmlRect = xrx.shape.Rect.create(vmlDrawing);
-  vmlRect.setCoords(rectCoords);
-
-  vmlDrawing.getLayerShape().addShapes(vmlRect);
-  vmlDrawing.draw();
 };
 
 function test4ModifyPolygon() {
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var svgDrawing = getDrawingSvg('svgModifyPolygon');
     var canvasDrawing = getDrawingCanvas('canvasModifyPolygon');
 
@@ -201,17 +197,17 @@ function test4ModifyPolygon() {
     svgDrawing.draw();
     canvasDrawing.getLayerShape().addShapes(canvasPolygon);
     canvasDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlModifyPolygon');
+
+    vmlDrawing.setModeModify();
+
+    var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
+    vmlPolygon.setCoords(polygonCoords);
+
+    vmlDrawing.getLayerShape().addShapes(vmlPolygon);
+    vmlDrawing.draw();
   }
-
-  var vmlDrawing = getDrawingVml('vmlModifyPolygon');
-
-  vmlDrawing.setModeModify();
-
-  var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
-  vmlPolygon.setCoords(polygonCoords);
-
-  vmlDrawing.getLayerShape().addShapes(vmlPolygon);
-  vmlDrawing.draw();
 };
 
 </script>
