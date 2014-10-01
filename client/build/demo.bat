@@ -2,7 +2,7 @@
 .\lib\closure-library\closure\bin\build\closurebuilder.py ^
   --root=.\lib\closure-library\ ^
   --root=.\src\ ^
-  --root=.\demo\ ^
+  --root=.\demo\demo\ ^
   --namespace="demo" ^
   --output_mode=compiled ^
   --compiler_jar=.\lib\closure-compiler\compiler.jar ^
