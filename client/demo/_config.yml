@@ -1,0 +1,32 @@
+# Dependencies
+markdown:            redcarpet
+highlighter:         pygments
+
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
+# GitHub
+github:
+  repo:              https://github.com/HKIKoeln/SemToNotes
+  download:          https://github.com/HKIKoeln/SemToNotes/zipball/master
+
+# Setup
+title:               SemToNotes
+description:         'A Topological Image Annotation and Image Retrieval System'
+url:                 http://hkikoeln.github.io/SemToNotes/
+baseurl:             /
+paginate:            5
+
+# About/contact
+author:
+  name:              Jochen Graf
+  url:               https://github.com/JochenGraf
+  email:             jochen.graf(at)uni-koeln.de
+
+# Maintainer
+maintainer:
+  name:              HKIKoeln
+  url:               https://github.com/HKIKoeln

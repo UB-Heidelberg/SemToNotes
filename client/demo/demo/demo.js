@@ -18,7 +18,7 @@ goog.require('xrx.engine');
 
 
 demo.rendering = function(engine) {
-  var url = '../../data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg';
+  var url = './data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg';
   var canvas = goog.dom.getElement('canvas');
   var toolbar = goog.dom.getElement('toolbar');
   var drawing = new xrx.drawing.Drawing(canvas, engine);
