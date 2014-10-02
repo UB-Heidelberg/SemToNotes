@@ -12,8 +12,6 @@ goog.require('xrx.label');
 goog.require('xrx.node');
 goog.require('xrx.nodeB');
 goog.require('xrx.node.Document');
-goog.require('xrx.node.ElementB');
-goog.require('xrx.node.TextB');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
 

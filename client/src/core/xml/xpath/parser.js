@@ -4,7 +4,8 @@
 
 goog.provide('xrx.xpath.Parser');
 
-goog.require('xrx.xpath');
+
+
 goog.require('xrx.xpath.BinaryExpr');
 goog.require('xrx.xpath.FilterExpr');
 goog.require('xrx.xpath.FunctionCall');

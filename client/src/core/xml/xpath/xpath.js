@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A streaming XPath 3.0 implementation forked
+***REMOVED*** @fileoverview A streaming XPath 1.0 implementation forked
 ***REMOVED*** from Google's Wicked Good XPath library. The implementation
 ***REMOVED*** is not yet complete.
 ***REMOVED***

@@ -8,10 +8,7 @@ goog.provide('xrx.node.ElementB');
 
 
 goog.require('xrx.node');
-goog.require('xrx.node.AttributeB');
-goog.require('xrx.node.DocumentB');
 goog.require('xrx.node.Element');
-goog.require('xrx.node.TextB');
 goog.require('xrx.nodeB');
 goog.require('xrx.token');
 goog.require('xrx.token.EndTag');
@@ -381,5 +378,5 @@ xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.node.ElementB.prototype.find = xrx.node.prototype.find;
+xrx.node.ElementB.prototype.find = xrx.node.Node.prototype.find;
 

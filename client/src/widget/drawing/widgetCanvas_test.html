@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.widget.Canvas</title>
+<script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+<script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+ ***REMOVED*****REMOVED***
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx');
+ ***REMOVED*****REMOVED***
+  goog.require('xrx.widget.Canvas');
+</script>
+</head>
+<body>
+
+<!-- HTML UIDL -->
+
+<!-- model -->
+<div class="xrx-mvc-model" data-xrx-namespaces='{"xmlns:tei":"http://www.tei-c.org/ns/1.0"}'/>
+
+<!-- instances -->
+<div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.xml.txt"></div>
+
+<!-- binds -->
+<div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
+<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points]"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
+
+<div id="d1" class="xrx-widget-canvas"></div>
+<div class="xrx-widget-container" data-xrx-for="d1">
+  <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
+  <div class="xrx-widget-canvas-layer-graphics">
+    <div id="r1" class="xrx-mvc-repeat" data-xrx-bind="b2">
+      <div class="xrx-widget-shape-polygon" data-xrx-ref-points="./@points"></div>
+    </div>
+    <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
+      <div class="xrx-widget-shape-rect" data-xrx-ref-x="./@ulx" data-xrx-ref-y="./@uly"
+          data-xrx-ref-width="./@rlx" data-xrx-ref-height="./@rly"></div>
+    </div>
+  </div>
+</div>
+
+<!-- XML UIDL -->
+
+<xrx:canvas id="d1" http://monasterium.net/NS/xrx>
+  <xrx:backgroundImage bind="b1"/>
+  <xrx:layerGraphics>
+    <xrx:repeat id="r1" bind="b2">
+      <xrx:polygon>
+        <xrx:points ref="./@points"/>
+      </xrx:polygon>
+    </xrx:repeat>
+    <xrx:repeat id="r2" bind="b3">
+      <xrx:rect>
+        <xrx:x ref="./@ulx"/>
+        <xrx:y ref="./@uly"/>
+        <xrx:width ref="./@rlx"/>
+        <xrx:height ref="./@rly"/>
+      </xrx:rect>
+    </xrx:repeat>
+  </xrx:layerGraphics>
+</xrx:canvas>
+
+<script type="text/javascript">
+ 
+function testCanvas() {
+
+***REMOVED***
+
+</script>
+
+<script type="text/javascript">
+  xrx.install();
+</script>
+
+</body>
+</html>

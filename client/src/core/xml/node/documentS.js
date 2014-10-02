@@ -210,7 +210,7 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
-xrx.node.DocumentS.prototype.find = xrx.node.prototype.find;
+xrx.node.DocumentS.prototype.find = xrx.node.Node.prototype.find;
 
 
 

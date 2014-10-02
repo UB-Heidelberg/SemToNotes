@@ -1,27 +1,33 @@
 ***REMOVED***
-***REMOVED*** @fileoverview The XRX++ main class.
+***REMOVED*** @fileoverview The MVC main class.
 ***REMOVED***
 
-goog.provide('xrx');
+goog.provide('xrx.mvc');
 
 
 
 goog.require('goog.array');
 goog.require('goog.dom');
+goog.require('goog.dom.dataset');
+goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
+goog.require('goog.Promise');
 goog.require('goog.result');
+goog.require('xrx.widget.Canvas');
+goog.require('xrx');
 goog.require('xrx.func');
-goog.require('xrx.bind');
+goog.require('xrx.mvc.Bind');
 goog.require('xrx.console');
 goog.require('xrx.instance');
 goog.require('xrx.model');
 goog.require('xrx.output');
 goog.require('xrx.repeat');
 goog.require('xrx.view');
+goog.require('xrx.xpath');
 
 
 
-xrx.install_ = function(className) {
+xrx.mvc.install_ = function(className) {
   var element = goog.dom.getElementsByClass(className);
 
   var classFromClassName_ = function(obj, arr) {
@@ -38,7 +44,7 @@ xrx.install_ = function(className) {
 
   for(var i = 0, len = element.length; i < len; i++) {
     var e = element[i];
-    var cmpClass = classFromClassName(className);
+    var cmpClass = xrx.mvc.Bind;
 
     if (!cmpClass) throw Error('Implementation of class <' + 
         className + '> could not be found.');
@@ -58,24 +64,41 @@ xrx.install_ = function(className) {
 ***REMOVED***
 
 
-xrx.installModel = function() {
+xrx.mvc.installModel = function() {
 
   for(var i = 0, len = xrx.model.classes.length; i < len; i++) {
-    xrx.install_(xrx.model.classes[i]);
+    xrx.mvc.install_(xrx.model.classes[i]);
   }
 ***REMOVED***
 
 
-xrx.installView = function() {
+xrx.mvc.installView = function() {
 
   for(var i = 0, len = xrx.view.classes.length; i < len; i++) {
-    xrx.install_(xrx.view.classes[i]);
+    xrx.mvc.install_(xrx.view.classes[i]);
   }
 ***REMOVED***
 
 
-xrx.installInstances = function() {
-  var elements = goog.dom.getElementsByClass('xrx-instance');
+
+xrx.mvc.installModels = function() {
+  var elements = goog.dom.getElementsByClass('xrx-mvc-model');
+  var prefix;
+  var url;
+  var attr;
+  var json;
+  goog.array.forEach(elements, function(e, i, a) {
+    attr = goog.dom.dataset.get(e, 'xrxNamespaces');
+    json = goog.json.parse(attr);
+    for (var i in json) {
+      xrx.xpath.declareNamespace(i, json[i]);
+   ***REMOVED*****REMOVED***
+  });
+***REMOVED***
+
+
+xrx.mvc.installInstances = function() {
+  var elements = goog.dom.getElementsByClass('xrx-mvc-instance');
   var requests = [];
   var instances = [];
 
@@ -91,27 +114,27 @@ xrx.installInstances = function() {
     }
   });
 
-  var instanceReady = goog.result.combine.apply(goog.global, requests);
+  var instancesReady = goog.Promise.all(requests);
 
-  goog.result.waitOnSuccess(instanceReady, function(results) {
+  instancesReady.then(function() {
 
-    goog.array.forEach(results, function(result, num) {
-      instances[num].recalculate(new String(result.getValue()));
+    goog.array.forEach(requests, function(result, num) {
+      instances[num].recalculate(new String(result.result_));
       xrx.model.addComponent(instances[num].getId(), instances[num]);
     });
 
-    xrx.installModel();
-    xrx.installView();
+    xrx.mvc.installModel();
+    xrx.mvc.installView();
   });
 
   if (requests.length === 0) {
-    xrx.installModel();
-    xrx.installView();
+    xrx.mvc.installModel();
+    xrx.mvc.installView();
  ***REMOVED*****REMOVED***
 ***REMOVED***
 
 
-xrx.install = function() {
-  xrx.installInstances();
+xrx.mvc.install = function() {
+  xrx.mvc.installModels();
+  xrx.mvc.installInstances();
 ***REMOVED***
-

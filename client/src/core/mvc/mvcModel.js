@@ -16,8 +16,6 @@ goog.require('xrx.component');
 ***REMOVED***
 xrx.model = function(element) {
 
-
-
 ***REMOVED***
 
 
@@ -33,7 +31,7 @@ xrx.model.prototype.recalculate = goog.abstractMethod;
 
 
 xrx.model.classes = [
-  'xrx-bind'
+  'xrx-mvc-bind'
 ];
 
 

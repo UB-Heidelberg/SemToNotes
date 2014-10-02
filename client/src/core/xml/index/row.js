@@ -9,8 +9,9 @@ goog.provide('xrx.index.row.mask');
 
 
 
-goog.require('goog.math.Long');
+
 goog.require('xrx.index');
+goog.require('goog.math.Long');
 
 
 
@@ -32,12 +33,12 @@ xrx.index.row.format = {***REMOVED***
 
 xrx.index.row.format['128Bit'] = {
 
-  TYPE: { bits: 'low_', shift: 59, size: 4 },
-  POSITION: { bits: 'low_', shift: 41, size: 18 },
-  PARENT: { bits: 'low_', shift: 24, size: 17 },
-  OFFSET: { bits: 'low_', shift: 0, size: 24 },
-  LENGTH1: { bits: 'high_', shift: 43, size: 20 },
-  LENGTH2: { bits: 'high_', shift: 23, size: 20 }
+  TYPE: { bits: 'low_', shft: 59, size: 4 },
+  POSITION: { bits: 'low_', shft: 41, size: 18 },
+  PARENT: { bits: 'low_', shft: 24, size: 17 },
+  OFFSET: { bits: 'low_', shft: 0, size: 24 },
+  LENGTH1: { bits: 'high_', shft: 43, size: 20 },
+  LENGTH2: { bits: 'high_', shft: 23, size: 20 }
 ***REMOVED***
 
 
@@ -46,12 +47,12 @@ xrx.index.row.mask = {***REMOVED***
 
 
 
-xrx.index.row.mask.fromFormat = function(format, item) {
-  var item = xrx.index.row.format[format][item];
-  var shift = item.shift;
-  var integer = Math.pow(2, item.size) - 1;
+xrx.index.row.mask.fromFormat = function(format, itm) {
+  var item = xrx.index.row.format[format][itm];
+  var shft = item.shft;
+  var int = Math.pow(2, item.size) - 1;
 
-  return goog.math.Long.fromInt(integer).shiftLeft(shift);
+  return goog.math.Long.fromInt(int).shiftLeft(shft);
 ***REMOVED***
 
 
@@ -76,7 +77,7 @@ xrx.index.row.prototype.get = function(item) {
   var i = xrx.index.row.format[xrx.index.row.format_][item];
   var mask = xrx.index.row.mask[xrx.index.row.format_][item];
 
-  return this[i.bits].and(mask).shiftRight(i.shift).toInt();
+  return this[i.bits].and(mask).shiftRight(i.shft).toInt();
 ***REMOVED***
 
 
@@ -85,10 +86,10 @@ xrx.index.row.prototype.get = function(item) {
 ***REMOVED*** Shared function for all setter functions.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.index.row.prototype.set = function(integer, format) {
-  var long = goog.math.Long.fromInt(integer);
+xrx.index.row.prototype.set = function(int, format) {
+  var long = goog.math.Long.fromInt(int);
 
-  long = long.shiftLeft(format.shift);
+  long = long.shiftLeft(format.shft);
   this[format.bits] = this[format.bits].or(long);
 ***REMOVED***
 
@@ -101,7 +102,7 @@ xrx.index.row.prototype.set = function(integer, format) {
 xrx.index.row.prototype.update = function(diff, format) {
   var long = goog.math.Long.fromInt(diff);
 
-  long = long.shiftLeft(format.shift);
+  long = long.shiftLeft(format.shft);
   this[format.bits] = this[format.bits].add(long);
 ***REMOVED***
 

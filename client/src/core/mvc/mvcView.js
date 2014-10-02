@@ -51,9 +51,10 @@ xrx.view.prototype.refresh = goog.abstractMethod;
 
 
 xrx.view.classes = [
-  'xrx-repeat',
   'xrx-console',
+  'xrx-drawing-Canvas',
   'xrx-output',
+  'xrx-repeat',
   'xrx-richxml-tagname',
   'xrx-wysiwym-input',
   'xrx-wysiwym-richxml',

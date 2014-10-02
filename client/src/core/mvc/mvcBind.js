@@ -3,7 +3,8 @@
 ***REMOVED*** model-view-controller.
 ***REMOVED***
 
-goog.provide('xrx.bind');
+goog.provide('xrx.mvc.Bind');
+
 
 
 goog.require('xrx.model');
@@ -14,7 +15,8 @@ goog.require('xrx.xpath');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.bind = function(element) {
+xrx.mvc.Bind = function(element) {
+
 ***REMOVED***
 
 
@@ -25,7 +27,7 @@ xrx.bind = function(element) {
 
   this.recalculate()
 ***REMOVED***
-goog.inherits(xrx.bind, xrx.model);
+goog.inherits(xrx.mvc.Bind, xrx.model);
 
 
 
@@ -35,7 +37,7 @@ goog.inherits(xrx.bind, xrx.model);
 ***REMOVED*** 
 ***REMOVED*** @override
 ***REMOVED***
-xrx.bind.prototype.recalculate = function() {
+xrx.mvc.Bind.prototype.recalculate = function() {
   var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.model.getInstanceDefault(), null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];

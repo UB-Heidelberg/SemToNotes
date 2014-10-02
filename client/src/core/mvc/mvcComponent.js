@@ -116,7 +116,7 @@ xrx.component.prototype.getSrcUri = function() {
 
 ***REMOVED***
 ***REMOVED*** Gets the bind referenced by the component.
-***REMOVED*** @return {?xrx.bind} The bind.
+***REMOVED*** @return {?xrx.mvc.Bind} The bind.
 ***REMOVED***
 xrx.component.prototype.getBind = function() {
   return xrx.model.getComponent(this.getBindId());
