@@ -8,6 +8,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx.label');
   goog.require('xrx.token');
+  goog.require('xrx.token.Tokens');
 </script>
 </head>
 <body>
@@ -16,7 +17,7 @@
 function testCast() {
   var label = new xrx.label([1, 1]);
   var token = new xrx.token.Abstract(xrx.token.START_TAG, label, 4, 10);
-  var newToken = xrx.token.native(token);
+  var newToken = xrx.token.Tokens.getNative(token);
   
 
   assertEquals(true, newToken instanceof xrx.token.StartTag);

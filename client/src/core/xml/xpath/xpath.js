@@ -1,5 +1,5 @@
 /**
- * @fileoverview A streaming XPath 3.0 implementation forked
+ * @fileoverview A streaming XPath 1.0 implementation forked
  * from Google's Wicked Good XPath library. The implementation
  * is not yet complete.
  */

@@ -7,6 +7,7 @@ goog.provide('xrx.nodeS');
 
 
 goog.require('xrx.node');
+goog.require('xrx.node.Node');
 
 
 
@@ -33,7 +34,7 @@ xrx.nodeS = function(type, instance, token) {
     Text: 'TextS'
   };
 };
-goog.inherits(xrx.nodeS, xrx.node);
+goog.inherits(xrx.nodeS, xrx.node.Node);
 
 
 

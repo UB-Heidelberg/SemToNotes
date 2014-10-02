@@ -7,6 +7,7 @@ goog.provide('xrx.nodeB');
 
 
 goog.require('xrx.node');
+goog.require('xrx.node.Node');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
 
@@ -36,7 +37,7 @@ xrx.nodeB = function(type, instance, key) {
     Text: 'TextB'
   };
 };
-goog.inherits(xrx.nodeB, xrx.node);
+goog.inherits(xrx.nodeB, xrx.node.Node);
 
 
 

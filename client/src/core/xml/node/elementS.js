@@ -8,9 +8,7 @@ goog.provide('xrx.node.ElementS');
 
 
 goog.require('xrx.node');
-goog.require('xrx.node.DocumentS');
 goog.require('xrx.node.Element');
-goog.require('xrx.node.TextS');
 goog.require('xrx.nodeS');
 goog.require('xrx.token');
 goog.require('xrx.token.StartTag');
@@ -382,5 +380,5 @@ xrx.node.ElementS.prototype.backward = function(stop) {
 /**
  * 
  */
-xrx.node.ElementS.prototype.find = xrx.node.prototype.find;
+xrx.node.ElementS.prototype.find = xrx.node.Node.prototype.find;
 
