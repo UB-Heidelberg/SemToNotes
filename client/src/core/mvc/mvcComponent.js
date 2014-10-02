@@ -116,7 +116,7 @@ xrx.component.prototype.getSrcUri = function() {
 
 /**
  * Gets the bind referenced by the component.
- * @return {?xrx.bind} The bind.
+ * @return {?xrx.mvc.Bind} The bind.
  */
 xrx.component.prototype.getBind = function() {
   return xrx.model.getComponent(this.getBindId());
