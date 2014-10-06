@@ -14,7 +14,7 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.node');
   goog.require('xrx.node.AttributeB');
   goog.require('xrx.node.DocumentB');
@@ -34,7 +34,7 @@
 var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
 var element = goog.dom.createElement('div');
 goog.dom.setTextContent(element, xml);
-var instance = new xrx.instance(element);
+var instance = new xrx.mvc.Instance(element);
 var node = new xrx.node.DocumentB(instance);
 
 function test01FnInstance() {

@@ -22,7 +22,7 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED***
 ***REMOVED*** Creates a streaming element node.
 ***REMOVED***
-***REMOVED*** @param {!xrx.instance}
+***REMOVED*** @param {!xrx.mvc.Instance}
 ***REMOVED*** @param {!xrx.token} 
 ***REMOVED***
 ***REMOVED***

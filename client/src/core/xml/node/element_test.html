@@ -12,7 +12,7 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.node.Element');
   goog.require('xrx.node.ElementS');
   goog.require('xrx.node.ElementB');
@@ -35,7 +35,7 @@ function test01identityFunctions() {
   var xml = '<a>1<b/>2<c id="test"/>3<d/>4</a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var e1 = new xrx.node.ElementB(instance, 0);
@@ -63,7 +63,7 @@ function test02nameFunctions() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var elementB1 = new xrx.node.ElementB(instance, 1);
@@ -119,7 +119,7 @@ function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var e0 = new xrx.node.ElementB(instance, 0);
@@ -148,7 +148,7 @@ function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
   var eB = new xrx.node.ElementB(instance, key);
 
   // binary node
@@ -213,7 +213,7 @@ function test05attributeFunction() {
   var xml = '<a><b xmlns="http://example.org" attr1="v1" attr2="v2"/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   var e0 = new xrx.node.ElementB(instance, 0);
   var e1 = new xrx.node.ElementB(instance, 1);

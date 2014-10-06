@@ -11,7 +11,7 @@ goog.require('xrx.node.ElementS');
 goog.require('xrx.node.AttributeS');
 goog.require('xrx.node.TextS');
 goog.require('xrx.node.DocumentS');
-goog.require('xrx.instance');
+goog.require('xrx.mvc.Instance');
 goog.require('xrx.xpath');
 
 
@@ -23,7 +23,7 @@ xrx.xpath.test = {***REMOVED***
 xrx.xpath.test.query = function(expression) {
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, '<dummy/>');
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
   var node = new xrx.node.DocumentS(instance);
 
   return xrx.xpath.evaluate(expression, node, null, xrx.xpath.XPathResultType.ANY_TYPE);

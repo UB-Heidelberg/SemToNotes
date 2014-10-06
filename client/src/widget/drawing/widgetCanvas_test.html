@@ -17,13 +17,19 @@
  ***REMOVED*****REMOVED***
   goog.require('xrx.widget.Canvas');
 </script>
+<style>
+#d1 {
+width: 650px;
+height: 300px;
+}
+</style>
 </head>
 <body>
 
 <!-- HTML UIDL -->
 
 <!-- model -->
-<div class="xrx-mvc-model" data-xrx-namespaces='{"xmlns:tei":"http://www.tei-c.org/ns/1.0"}'/>
+<div class="xrx-mvc-namespaces" data-xrx-namespaces='{"xmlns:tei":"http://www.tei-c.org/ns/1.0"}'/>
 
 <!-- instances -->
 <div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.xml.txt"></div>
@@ -38,12 +44,12 @@
   <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
   <div class="xrx-widget-canvas-layer-graphics">
     <div id="r1" class="xrx-mvc-repeat" data-xrx-bind="b2">
-      <div class="xrx-widget-shape-polygon" data-xrx-ref-points="./@points"></div>
+      <div class="xrx-widget-shape-polygon" data-xrx-ref="./@points"></div>
     </div>
-    <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
+    <!--div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
       <div class="xrx-widget-shape-rect" data-xrx-ref-x="./@ulx" data-xrx-ref-y="./@uly"
           data-xrx-ref-width="./@rlx" data-xrx-ref-height="./@rly"></div>
-    </div>
+    </div-->
   </div>
 </div>
 
@@ -78,6 +84,7 @@ function testCanvas() {
 
 <script type="text/javascript">
   xrx.install();
+  console.log(xrx.mvc);
 </script>
 
 </body>

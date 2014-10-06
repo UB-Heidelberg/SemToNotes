@@ -19,7 +19,7 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED***
 ***REMOVED*** Creates a binary element node.
 ***REMOVED***
-***REMOVED*** @param {!xrx.instance}
+***REMOVED*** @param {!xrx.mvc.Instance}
 ***REMOVED*** @param {!integer} 
 ***REMOVED***
 ***REMOVED***

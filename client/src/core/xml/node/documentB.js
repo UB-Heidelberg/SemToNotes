@@ -20,7 +20,7 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED***
 ***REMOVED*** Creates a binary document node.
 ***REMOVED***
-***REMOVED*** @param {!xrx.instance}
+***REMOVED*** @param {!xrx.mvc.Instance}
 ***REMOVED***
 ***REMOVED***
 xrx.node.DocumentB = function(instance) {

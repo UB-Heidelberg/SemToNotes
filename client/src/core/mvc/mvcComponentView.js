@@ -3,12 +3,13 @@
 ***REMOVED*** control of the model-view-controller.
 ***REMOVED***
 
-goog.provide('xrx.control');
+goog.provide('xrx.mvc.ComponentView');
 
 
 
 goog.require('goog.dom');
-goog.require('xrx.component');
+goog.require('xrx.mvc.Component');
+goog.require('xrx.mvc.Mvc');
 goog.require('xrx.node.ElementS');
 
 
@@ -16,23 +17,30 @@ goog.require('xrx.node.ElementS');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.control = function(element) {
+xrx.mvc.ComponentView = function(element) {
+
 ***REMOVED***
+
+  xrx.mvc.Mvc.addModelComponent(this.getId(), this);
+
+  this.createDom();
+
+  this.refresh();
 ***REMOVED***
-goog.inherits(xrx.control, xrx.component);
+goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
 
 
-xrx.control.prototype.getRepeat = function() {
+xrx.mvc.ComponentView.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-repeat');
   var id = element.getAttribute('id');
 
-  return xrx.view.getComponent(id);
+  return xrx.mvc.Mvc.getComponentView(id);
 ***REMOVED***
 
 
 
-xrx.control.prototype.getRepeatIndex = function() {
+xrx.mvc.ComponentView.prototype.getRepeatIndex = function() {
   var repeatItem = goog.dom.getAncestorByClass(this.element_,
       'xrx-repeat-item');
 
@@ -52,13 +60,13 @@ xrx.control.prototype.getRepeatIndex = function() {
 
 
 
-xrx.control.prototype.getNodeBind = function(num) {
+xrx.mvc.ComponentView.prototype.getNodeBind = function(num) {
   return this.getBind().node_[num];
 ***REMOVED***
 
 
 
-xrx.control.prototype.getNodeRef = function() {
+xrx.mvc.ComponentView.prototype.getNodeRef = function() {
   var context = this.getRepeat().getNode(this.getRepeatIndex());
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getInstance(), context.getToken());
@@ -74,7 +82,7 @@ xrx.control.prototype.getNodeRef = function() {
 ***REMOVED*** Gets the node referenced by the control.
 ***REMOVED*** @return {xrx.node} The node.
 ***REMOVED***
-xrx.control.prototype.getNode = function(num) {
+xrx.mvc.ComponentView.prototype.getNode = function(num) {
   var n = num || 0;
 
   if (this.getBind()) {

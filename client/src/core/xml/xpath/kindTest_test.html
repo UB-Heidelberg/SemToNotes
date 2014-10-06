@@ -18,7 +18,7 @@
   goog.require('xrx.node.DocumentS');
   goog.require('xrx.node.ElementS');
   goog.require('xrx.node.TextS');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
 </head>
@@ -31,7 +31,7 @@ function test01Text() {
   var expr = '//text()';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
   var node = new xrx.node.DocumentS(instance);
 
   var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -50,7 +50,7 @@ function test02Node() {
   var expr = '//node()';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
   var node = new xrx.node.DocumentS(instance);
 
   var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);

@@ -10,4 +10,8 @@ goog.require('xrx.widget.Canvas');
 
 
 
-xrx.widget.Widgets = function() {***REMOVED***
+xrx.widget.Widgets = {***REMOVED***
+
+
+
+xrx.widget.Widgets['xrx-widget-canvas'] = xrx.widget.Canvas;

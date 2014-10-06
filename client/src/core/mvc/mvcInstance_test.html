@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.instance</title>
+<title>XRX++ Unit Tests - xrx.mvc.Instance</title>
 <script type="text/javascript" src="../../../../lib/jssaxparser/SAXException.js"></script>
 <script type="text/javascript" src="../../../../lib/jssaxparser/AttributesImpl.js"></script>
 <script type="text/javascript" src="../../../../lib/jssaxparser/LocatorImpls.js"></script>
@@ -13,7 +13,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.model');
+  goog.require('xrx.mvc.Mvc');
 </script>
 </head>
 <body>
@@ -30,15 +30,15 @@
 
 function stest01callback() { // TODO
 
-  assertTrue(xrx.model.getComponent('i1').xml() !== undefined);
-  assertTrue(xrx.model.getComponent('i2').xml() !== undefined);
-  assertTrue(xrx.model.getComponent('i3').xml() !== undefined);
-  assertEquals('<dummy/>', xrx.model.getComponent('i4').xml());
-  assertTrue(xrx.model.getComponent('b1').node_ !== undefined);
+  assertTrue(xrx.mvc.Mvc.getModelComponent('i1').xml() !== undefined);
+  assertTrue(xrx.mvc.Mvc.getModelComponent('i2').xml() !== undefined);
+  assertTrue(xrx.mvc.Mvc.getModelComponent('i3').xml() !== undefined);
+  assertEquals('<dummy/>', xrx.mvc.Mvc.getModelComponent('i4').xml());
+  assertTrue(xrx.mvc.Mvc.getModelComponent('b1').node_ !== undefined);
 ***REMOVED***
 
 function test02entity() { // TODO
-  //console.log(xrx.model.getComponent('i5').xml());
+  //console.log(xrx.mvc.Mvc.getModelComponent('i5').xml());
 ***REMOVED***
 
 </script>

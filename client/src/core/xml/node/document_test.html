@@ -12,7 +12,7 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.node.Element');
   goog.require('xrx.node.ElementS');
   goog.require('xrx.node.ElementB');
@@ -38,7 +38,7 @@ function test02identityFunctions() {
   var xml = '<a>1<b/>2<c id="test"/>3<d/>4</a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance);
@@ -72,7 +72,7 @@ function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance);
@@ -91,7 +91,7 @@ function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance);

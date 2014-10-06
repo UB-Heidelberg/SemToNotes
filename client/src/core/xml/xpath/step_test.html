@@ -23,7 +23,7 @@
   goog.require('xrx.node.DocumentB');
   goog.require('xrx.node.ElementB');
   goog.require('xrx.node.TextB');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
 </head>
@@ -33,7 +33,7 @@
 var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
 var element = goog.dom.createElement('div');
 goog.dom.setTextContent(element, xml)
-var instance = new xrx.instance(element);
+var instance = new xrx.mvc.Instance(element);
 var node = new xrx.node.DocumentB(instance);
 
 function test01ancestor() {

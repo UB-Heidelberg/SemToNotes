@@ -19,7 +19,7 @@
   goog.require('xrx.node.TextB');
   goog.require('xrx.node.DocumentB');
   goog.require('xrx.xpath.test');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
 </head>
@@ -87,7 +87,7 @@ function test10FnFirstLast() {
   var xml = '<a><b/><c/><d/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   var first = xrx.xpath.evaluate('/a/*[1]', new xrx.node.DocumentB(instance),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -107,7 +107,7 @@ function getDocumentForNametest() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   return new xrx.node.DocumentB(instance);
 ***REMOVED***
@@ -179,7 +179,7 @@ function test17FnPosition() {
   var xml = '<x><a>1</a><b>2</b><c>3</c><d>4</d></x>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   var r = xrx.xpath.evaluate('sum(/x/*[position() <= 3]/text())', new xrx.node.DocumentB(instance),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -236,7 +236,7 @@ function test25FnSum() {
   var xml = '<x><a>1</a><b>2</b><c>3</c></x>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   var r = xrx.xpath.evaluate('sum(/x/*)', new xrx.node.DocumentB(instance),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
