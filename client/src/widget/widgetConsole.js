@@ -8,11 +8,11 @@ goog.provide('xrx.console');
 
 goog.require('goog.dom');
 goog.require('goog.string');
-goog.require('xrx.model');
+goog.require('xrx.mvc.Mvc');
 goog.require('xrx.serialize');
 goog.require('xrx.token.StartTag');
 goog.require('xrx.token.EndTag');
-goog.require('xrx.view');
+goog.require('xrx.mvc.Mvc');
 
 
 
@@ -25,7 +25,7 @@ xrx.console = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.console, xrx.view);
+goog.inherits(xrx.console, xrx.mvc.ComponentView);
 
 
 
@@ -50,7 +50,7 @@ xrx.console.prototype.setFocus = function() {};
 
 
 xrx.console.prototype.setValue = function(xml) {
-  var cursor = xrx.model.cursor.getNode(0);
+  var cursor = xrx.mvc.Cursor.getNode(0);
 
   if (!cursor) {
     var text = xrx.serialize.indent.forward(xml, 4, undefined, 30);

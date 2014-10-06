@@ -20,7 +20,7 @@ goog.require('xrx.xpath.NodeSet');
 /**
  * Creates a binary text node.
  *
- * @param {!xrx.instance}
+ * @param {!xrx.mvc.Instance}
  * @param {!integer} 
  * @constructor
  */

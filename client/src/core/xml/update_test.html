@@ -12,7 +12,7 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.pilot');
   goog.require('xrx.rebuild');
   goog.require('xrx.token');
@@ -40,7 +40,7 @@ function resetForNextTest() {
   element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
   instance = undefined;
-  instance = new xrx.instance(element);
+  instance = new xrx.mvc.Instance(element);
   instance.getIndex();
 
   xmlNs = undefined;
@@ -49,7 +49,7 @@ function resetForNextTest() {
   elementNs = goog.dom.createElement('div');
   goog.dom.setTextContent(elementNs, xmlNs);
   instanceNs = undefined;
-  instanceNs = new xrx.instance(elementNs);
+  instanceNs = new xrx.mvc.Instance(elementNs);
   instanceNs.getIndex();
 };
 

@@ -13,7 +13,7 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.node.Attribute');
   goog.require('xrx.node.AttributeS');
   goog.require('xrx.node.AttributeB');
@@ -40,7 +40,7 @@ function test01basic() {
 
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB = new xrx.node.ElementB(instance, 0);
@@ -64,7 +64,7 @@ function test01nameFunctions() {
   var xml = '<x:x xmlns:x="http://example.org/x"><y:y xmlns:y="http://example.org/y" y:a=""/><z x:b=""/></x:x>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB1 = new xrx.node.ElementB(instance, 1);
@@ -96,7 +96,7 @@ function test02identityFunctions() {
   var xml = '<a a="v">1<b/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB1 = new xrx.node.ElementB(instance, 0);
@@ -125,7 +125,7 @@ function test03contentFunctions() {
   var xml = '<a attr1="v1" attr2="v2"/>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB = new xrx.node.ElementB(instance, 0);
@@ -153,7 +153,7 @@ function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB = new xrx.node.ElementB(instance, key);
@@ -220,7 +220,7 @@ function test05attributeFunction() {
   var xml = '<a><b xmlns="http://example.org" attr1="v1" attr2="v2"/></a>';
   var element = goog.dom.createElement('div');
   goog.dom.setTextContent(element, xml);
-  var instance = new xrx.instance(element);
+  var instance = new xrx.mvc.Instance(element);
 
   // binary node
   var eB0 = new xrx.node.ElementB(instance, 0);

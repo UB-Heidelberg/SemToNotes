@@ -29,8 +29,8 @@
 function test() {
   var expectedLabel = new xrx.label([1, 2, 0]);
 
-  assertEquals(xrx.node.TEXT, xrx.model.getComponent('b1').node_[0].getType());
-  assertEquals(true, xrx.model.getComponent('b1').node_[0].getLabel().sameAs(expectedLabel));
+  assertEquals(xrx.node.TEXT, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getType());
+  assertEquals(true, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getLabel().sameAs(expectedLabel));
 };
 
 </script>
