@@ -66,7 +66,7 @@ xrx.update.remove_ = function(instance, offset, length) {
 /**
  * Replaces a not-tag token with another not-tag token.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target The token to be replaced.
  * @param {!string} string The new not-tag string. 
  */
@@ -85,7 +85,7 @@ xrx.update.replaceTagName = function(instance, token, localName, opt_namespaceUr
 /**
  * Replaces the value of an attribute with another value.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.AttrValue} target The token to be replaced.
  * @param {!string} token The new value. 
  */
@@ -98,7 +98,7 @@ xrx.update.replaceAttrValue = function(instance, target, value) {
 /**
  * Inserts a not-tag token into another not-tag token at an offset.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target The token to be replaced.
  * @param {!integer} target The offset relative to the not-tag token.
  * @param {!string} string The new not-tag string. 
@@ -112,7 +112,7 @@ xrx.update.insertNotTag = function(instance, target, offset, string) {
 /**
  * Inserts a new empty tag into a not-tag token.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target The not-tag token where the empty tag is inserted.
  * @param {!integer} offset The offset relative to the not-tag token.
  * @param {!string} localName The local name of the new token.
@@ -142,7 +142,7 @@ xrx.update.insertEmptyTag = function(instance, target, offset, localName,
 /**
  * Wrap a piece of XML with a start-tag and a end-tag.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target1 The left not-tag token where the new
  * start-tag shall be inserted.
  * @param {!xrx.token.NotTag} target2 The right not-tag token where the
@@ -197,7 +197,7 @@ xrx.update.insertMixed = function(instance, target, offset, localName,
 /**
  * Inserts a new attribute into a start-tag or a empty tag.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where the attribute 
  * shall be inserted.
  * @param {!string} qName The qualified name of the new attribute.
@@ -232,7 +232,7 @@ xrx.update.insertAttribute = function(instance, parent, qName,
 /**
  * Removes characters from a not-tag token.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target The token to be replaced.
  * @param {!integer} target The offset relative to the not-tag token.
  * @param {!integer} string The number of characters to be removed. 
@@ -246,7 +246,7 @@ xrx.update.reduceNotTag = function(instance, target, offset, length) {
 /**
  * Removes a empty tag.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.EmptyTag} target The tag to be removed.
  */
 xrx.update.removeEmptyTag = function(instance, token) {
@@ -263,7 +263,7 @@ xrx.update.removeEmptyTag = function(instance, token) {
  * Removes a start-tag and a end-tag at once but keeping the content
  * between the two tags. 
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.StartTag} token1 The start-tag to be removed.
  * @param {!xrx.token.EndTag} token2 The end-tag to be removed.
  */
@@ -282,7 +282,7 @@ xrx.update.removeStartEndTag = function(instance, token1, token2) {
  * Removes a start-tag, a end-tag and the content between the two
  * tags. 
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Fragment} token The tag to be removed.
  */
 xrx.update.removeFragment = function(instance, token) {
@@ -294,7 +294,7 @@ xrx.update.removeFragment = function(instance, token) {
 /**
  * Removes a mixed set of nodes. 
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Mixed} token The token to be removed.
  */
 xrx.update.removeMixed = function(instance, token) {
@@ -306,7 +306,7 @@ xrx.update.removeMixed = function(instance, token) {
 /**
  * Removes a attribute token.
  * 
- * @param {!xrx.instance} instance The instance to be updated.
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Attribute} token The token to be removed.
  */
 xrx.update.removeAttribute = function(instance, token) {

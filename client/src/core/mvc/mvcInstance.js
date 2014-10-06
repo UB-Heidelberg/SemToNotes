@@ -3,7 +3,7 @@
  * the model-view-controller.
  */
 
-goog.provide('xrx.instance');
+goog.provide('xrx.mvc.Instance');
 
 
 
@@ -11,7 +11,7 @@ goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 goog.require('xrx.index');
-goog.require('xrx.model');
+goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.node');
 goog.require('xrx.node.DocumentB');
 goog.require('xrx.parse');
@@ -23,29 +23,24 @@ goog.require('xrx.pilot');
 /**
  * @constructor
  */
-xrx.instance = function(element) {
+xrx.mvc.Instance = function(element) {
+
   goog.base(this, element);
-
-
 
   this.xml_;
 
-
-
   this.stream_;
-
-
 
   this.pilot_;
 };
-goog.inherits(xrx.instance, xrx.model);
+goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
 
 
 
 /**
  * 
  */
-xrx.instance.prototype.update = function(offset, length, xml) {
+xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
 
   var tmp = this.xml_.substr(0, offset) + xml + this.xml_.substr(
       offset + length);
@@ -63,7 +58,7 @@ xrx.instance.prototype.update = function(offset, length, xml) {
 /**
  * 
  */
-xrx.instance.prototype.getDataInline = function() {
+xrx.mvc.Instance.prototype.getDataInline = function() {
   var parse = new xrx.parse();
 
   this.xml_ = parse.normalize(goog.dom.getRawTextContent(this.getElement()));
@@ -76,7 +71,7 @@ xrx.instance.prototype.getDataInline = function() {
 /**
  * 
  */
-xrx.instance.prototype.getDataRemote = function(xml) {
+xrx.mvc.Instance.prototype.getDataRemote = function(xml) {
   var parse = new xrx.parse();
 
   this.xml_ = parse.normalize(xml);
@@ -90,7 +85,7 @@ xrx.instance.prototype.getDataRemote = function(xml) {
 /**
  * @override
  */
-xrx.instance.prototype.recalculate = function(xml) {
+xrx.mvc.Instance.prototype.recalculate = function(xml) {
   this.getSrcUri() ? this.getDataRemote(xml) : this.getDataInline();
 };
 
@@ -99,7 +94,7 @@ xrx.instance.prototype.recalculate = function(xml) {
 /**
  * @return {!string} The XML instance as string.
  */
-xrx.instance.prototype.xml = function(xml) {
+xrx.mvc.Instance.prototype.xml = function(xml) {
   if (xml) this.xml_ = xml;
   if (!this.xml_) this.recalculate();
   return this.xml_;
@@ -110,7 +105,7 @@ xrx.instance.prototype.xml = function(xml) {
 /**
  * @return {xrx.stream} The stream.
  */
-xrx.instance.prototype.getStream = function() {
+xrx.mvc.Instance.prototype.getStream = function() {
   return this.stream_;
 };
 
@@ -119,7 +114,7 @@ xrx.instance.prototype.getStream = function() {
 /**
  * @return {xrx.pilot} The pilot.
  */
-xrx.instance.prototype.getPilot = function() {
+xrx.mvc.Instance.prototype.getPilot = function() {
   return this.pilot_;
 };
 
@@ -128,7 +123,7 @@ xrx.instance.prototype.getPilot = function() {
 /**
  * @return {!xrx.node.Document} The XML instance as node.
  */
-xrx.instance.prototype.getDocument = function(id) {
+xrx.mvc.Instance.prototype.getDocument = function(id) {
   return new xrx.node.DocumentB(this);
 };
 
@@ -137,7 +132,7 @@ xrx.instance.prototype.getDocument = function(id) {
 /**
  * @return {!xrx.index}
  */
-xrx.instance.prototype.getIndex = function() {
+xrx.mvc.Instance.prototype.getIndex = function() {
   if (!this.xml_) this.recalculate();
   if (this.index_ === undefined) this.index_ = new xrx.index(this.xml_);
 

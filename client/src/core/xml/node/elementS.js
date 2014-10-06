@@ -22,7 +22,7 @@ goog.require('xrx.xpath.NodeSet');
 /**
  * Creates a streaming element node.
  *
- * @param {!xrx.instance}
+ * @param {!xrx.mvc.Instance}
  * @param {!xrx.token} 
  * @constructor
  */

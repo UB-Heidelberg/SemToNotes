@@ -7,7 +7,7 @@ goog.provide('xrx.output');
 
 
 goog.require('goog.dom');
-goog.require('xrx.view');
+goog.require('xrx.mvc.Mvc');
 
 
 
@@ -17,7 +17,7 @@ xrx.output = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.output, xrx.view);
+goog.inherits(xrx.output, xrx.mvc.ComponentView);
 
 
 

@@ -5,7 +5,7 @@
 goog.provide('xrx.func');
 
 
-goog.require('xrx.model');
+goog.require('xrx.mvc.Mvc');
 goog.require('xrx.xpath');
 goog.require('xrx.xpath.DataType');
 goog.require('xrx.xpath.FunctionCall');
@@ -23,7 +23,7 @@ xrx.func = {
       function(ctx, expr) {
         var nodeset = new xrx.xpath.NodeSet();
         var instance = expr.evaluate(ctx);
-        nodeset.add(xrx.model.getComponent(instance).getDocument());
+        nodeset.add(xrx.mvc.Mvc.getModelComponent(instance).getDocument());
 
         return nodeset;
       }, 1, 1)

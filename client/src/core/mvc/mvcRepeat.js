@@ -2,24 +2,25 @@
  * @fileoverview Class implements a repeat control.
  */
 
-goog.provide('xrx.repeat');
+goog.provide('xrx.mvc.Repeat');
 
 
 
 goog.require('goog.dom');
 goog.require('goog.dom.classes');
-goog.require('xrx.view');
+goog.require('xrx.mvc.ComponentView');
 
 
 
-xrx.repeat = function(element) {
+xrx.mvc.Repeat = function(element) {
+
   goog.base(this, element);
 };
-goog.inherits(xrx.repeat, xrx.view);
+goog.inherits(xrx.mvc.Repeat, xrx.mvc.ComponentView);
 
 
 
-xrx.component.prototype.createDom = function() {
+xrx.mvc.Repeat.prototype.createDom = function() {
   var child = goog.dom.getFirstElementChild(this.element_);
   var n = 0;
   var node;
@@ -42,21 +43,21 @@ xrx.component.prototype.createDom = function() {
 
 
 
-xrx.repeat.prototype.eventBeforeChange = function() {};
+xrx.mvc.Repeat.prototype.eventBeforeChange = function() {};
 
 
 
-xrx.repeat.prototype.eventFocus = function() {};
+xrx.mvc.Repeat.prototype.eventFocus = function() {};
 
 
 
-xrx.repeat.prototype.getValue = function() {};
+xrx.mvc.Repeat.prototype.getValue = function() {};
 
 
 
-xrx.repeat.prototype.setFocus = function() {};
+xrx.mvc.Repeat.prototype.setFocus = function() {};
 
 
 
-xrx.repeat.prototype.refresh = function() {};
+xrx.mvc.Repeat.prototype.refresh = function() {};
 

@@ -7,7 +7,7 @@ goog.provide('xrx.mvc.Bind');
 
 
 
-goog.require('xrx.model');
+goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.xpath');
 
 
@@ -27,7 +27,7 @@ xrx.mvc.Bind = function(element) {
 
   this.recalculate()
 };
-goog.inherits(xrx.mvc.Bind, xrx.model);
+goog.inherits(xrx.mvc.Bind, xrx.mvc.ComponentModel);
 
 
 
@@ -38,7 +38,7 @@ goog.inherits(xrx.mvc.Bind, xrx.model);
  * @override
  */
 xrx.mvc.Bind.prototype.recalculate = function() {
-  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.model.getInstanceDefault(), null, 
+  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.mvc.Mvc.getInstanceDefault(), null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;

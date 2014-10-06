@@ -3,7 +3,7 @@
  * a component of the model-view-controller.
  */
 
-goog.provide('xrx.component');
+goog.provide('xrx.mvc.Component');
 
 
 goog.require('goog.events.EventHandler');
@@ -15,9 +15,7 @@ goog.require('goog.ui.IdGenerator');
  * Constructs a new model-view-controller component.
  * @constructor
  */
-xrx.component = function(element) {
-
-
+xrx.mvc.Component = function(element) {
 
   this.element_ = element;
 };
@@ -28,7 +26,7 @@ xrx.component = function(element) {
  * Function is called by the model-view-controller when the component
  * is inizialized the first time. Each component must implement this.
  */
-xrx.component.prototype.createDom = goog.abstractMethod;
+xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
 
 
 
@@ -37,18 +35,18 @@ xrx.component.prototype.createDom = goog.abstractMethod;
  * @type {goog.ui.IdGenerator}
  * @private
  */
-xrx.component.prototype.idGenerator_ = goog.ui.IdGenerator.getInstance();
+xrx.mvc.Component.prototype.idGenerator_ = goog.ui.IdGenerator.getInstance();
 
 
 
 /**
  * Unique ID of the component, lazily initialized in {@link
- * xrx.component#getId} if needed. This property is strictly private and
+ * xrx.mvc.Component#getId} if needed. This property is strictly private and
  * must not be accessed directly outside of this class!
  * @type {?string}
  * @private
  */
-xrx.component.prototype.id_ = null;
+xrx.mvc.Component.prototype.id_ = null;
 
 
 
@@ -57,7 +55,7 @@ xrx.component.prototype.id_ = null;
  * @type {goog.events.EventHandler}
  * @private
  */
-xrx.component.prototype.handler_;
+xrx.mvc.Component.prototype.handler_;
 
 
 
@@ -66,7 +64,7 @@ xrx.component.prototype.handler_;
  * Gets the component's element.
  * @return {Element} The element for the component.
  */
-xrx.component.prototype.getElement = function() {
+xrx.mvc.Component.prototype.getElement = function() {
   return this.element_;
 };
 
@@ -77,7 +75,7 @@ xrx.component.prototype.getElement = function() {
  * doesn't already have an ID, generates one on the fly.
  * @return {string} Unique component ID.
  */
-xrx.component.prototype.getId = function() {
+xrx.mvc.Component.prototype.getId = function() {
   return this.id_ || this.element_.getAttribute('id') || 
       (this.id_ = this.idGenerator_.getNextUniqueId());
 };
@@ -88,7 +86,7 @@ xrx.component.prototype.getId = function() {
  * Gets the XPath expression found in the component's data-xrx-ref attribute.
  * @return {?string} The expression.
  */
-xrx.component.prototype.getRefExpression = function() {
+xrx.mvc.Component.prototype.getRefExpression = function() {
   return this.getElement().getAttribute('data-xrx-ref');
 };
 
@@ -98,7 +96,7 @@ xrx.component.prototype.getRefExpression = function() {
  * Gets the bind ID found in the component's data-xrx-bind attribute.
  * @return {?string} The bind ID.
  */
-xrx.component.prototype.getBindId = function() {
+xrx.mvc.Component.prototype.getBindId = function() {
   return this.getElement().getAttribute('data-xrx-bind');
 };
 
@@ -108,7 +106,7 @@ xrx.component.prototype.getBindId = function() {
  * Gets the source URI found in the component's data-xrx-src attribute.
  * @return {?string} The source URI.
  */
-xrx.component.prototype.getSrcUri = function() {
+xrx.mvc.Component.prototype.getSrcUri = function() {
   return this.getElement().getAttribute('data-xrx-src');
 };
 
@@ -118,8 +116,8 @@ xrx.component.prototype.getSrcUri = function() {
  * Gets the bind referenced by the component.
  * @return {?xrx.mvc.Bind} The bind.
  */
-xrx.component.prototype.getBind = function() {
-  return xrx.model.getComponent(this.getBindId());
+xrx.mvc.Component.prototype.getBind = function() {
+  return xrx.mvc.Mvc.getModelComponent(this.getBindId());
 };
 
 
@@ -130,8 +128,7 @@ xrx.component.prototype.getBind = function() {
  * @return {!goog.events.EventHandler} Event handler for this component.
  * @protected
  */
-xrx.component.prototype.getHandler = function() {
+xrx.mvc.Component.prototype.getHandler = function() {
   return this.handler_ ||
       (this.handler_ = new goog.events.EventHandler(this));
 };
-

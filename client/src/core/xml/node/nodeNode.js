@@ -15,7 +15,7 @@ goog.require('xrx.xpath.NodeSet');
  * Base class for all XML nodes.
  * 
  * @param {!integer} type The node type.
- * @param {!xrx.instance} instance The XML instance.
+ * @param {!xrx.mvc.Instance} instance The XML instance.
  * @constructor
  */
 xrx.node.Node = function(type, instance) {
@@ -27,7 +27,7 @@ xrx.node.Node = function(type, instance) {
   this.type_ = type;
 
   /**
-   * @type {xrx.instance}
+   * @type {xrx.mvc.Instance}
    * @private
    */
   this.instance_ = instance;

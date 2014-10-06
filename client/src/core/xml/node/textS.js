@@ -17,7 +17,7 @@ goog.require('xrx.token.NotTag');
 /**
  * Constructs a new streaming text node.
  *
- * @param {!xrx.instance} instance
+ * @param {!xrx.mvc.Instance} instance
  * @param {!xrx.token} tag
  * @param {!integer} length
  * @constructor

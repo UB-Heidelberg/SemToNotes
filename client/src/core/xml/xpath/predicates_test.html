@@ -22,7 +22,7 @@
   goog.require('xrx.node.DocumentB');
   goog.require('xrx.node.ElementB');
   goog.require('xrx.node.TextB');
-  goog.require('xrx.instance');
+  goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.DataType');
 </script>
@@ -33,7 +33,7 @@
 var xml = '<a><a><b>1</b><c attr="v"/>2</a></a>';
 var element = goog.dom.createElement('div');
 goog.dom.setTextContent(element, xml);
-var instance = new xrx.instance(element);
+var instance = new xrx.mvc.Instance(element);
 var doc = new xrx.node.DocumentB(instance);
 
 function resultEquals(expression, hits, xml) {
