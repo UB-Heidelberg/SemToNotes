@@ -7,7 +7,6 @@ goog.provide('xrx.engine');
 
 
 goog.require('goog.userAgent');
-goog.require('xrx');
 
 
 

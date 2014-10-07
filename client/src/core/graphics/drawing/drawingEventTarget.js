@@ -18,6 +18,7 @@ goog.require('goog.events.MouseWheelHandler.EventType');
 goog.require('goog.math');
 goog.require('goog.style');
 goog.require('goog.userAgent');
+goog.require('xrx.drawing');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.shape.Shapes');
 
@@ -56,6 +57,8 @@ xrx.drawing.Event = {
  * @constructor
  */
 xrx.drawing.EventTarget = function() {
+
+  goog.base(this);
 
   this.handler_ = new goog.events.EventHandler(this);
 

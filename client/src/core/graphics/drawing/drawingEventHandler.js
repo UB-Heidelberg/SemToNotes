@@ -6,6 +6,8 @@ goog.provide('xrx.drawing.EventHandler');
 
 
 
+goog.require('goog.style');
+goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
 
 

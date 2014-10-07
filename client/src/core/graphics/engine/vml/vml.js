@@ -7,11 +7,6 @@ goog.provide('xrx.vml');
 
 
 
-goog.require('xrx');
-goog.require('xrx.svg');
-
-
-
 /**
  * VML base class providing enumerations and static functions
  * for the VML sub-classes.

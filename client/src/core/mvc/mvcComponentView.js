@@ -21,7 +21,7 @@ xrx.mvc.ComponentView = function(element) {
 
   goog.base(this, element);
 
-  xrx.mvc.Mvc.addModelComponent(this.getId(), this);
+  xrx.mvc.Mvc.addViewComponent(this.getId(), this);
 
   this.createDom();
 
@@ -35,7 +35,7 @@ xrx.mvc.ComponentView.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
   var id = element.getAttribute('id');
 
-  return xrx.mvc.Mvc.getComponentView(id);
+  return xrx.mvc.Mvc.getViewComponent(id);
 };
 
 

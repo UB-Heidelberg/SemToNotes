@@ -106,8 +106,8 @@ xrx.controller.removeStartEndTag = function(control, token1, token2) {
 xrx.controller.refresh = function(control) {
   var node = control.getNode();
 
-  for (var c in xrx.mvc.Mvc.getComponentViews()) {
-    var contr = xrx.mvc.Mvc.getComponentView(c);
+  for (var c in xrx.mvc.Mvc.getViewComponents()) {
+    var contr = xrx.mvc.Mvc.getViewComponent(c);
     var nIter = contr.getNode();
     if (nIter && node.getInstance() === nIter.getInstance()) {
 

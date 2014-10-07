@@ -7,10 +7,6 @@ goog.provide('xrx.svg');
 
 
 
-goog.require('xrx');
-
-
-
 /**
  * SVG base class providing enumerations and static functions
  * for the SVG sub-classes.
