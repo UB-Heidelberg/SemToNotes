@@ -32,7 +32,7 @@ goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
 
 xrx.mvc.ComponentView.prototype.getRepeat = function() {
-  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-repeat');
+  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
   var id = element.getAttribute('id');
 
   return xrx.mvc.Mvc.getComponentView(id);
@@ -56,7 +56,7 @@ xrx.mvc.ComponentView.prototype.getRepeatIndex = function() {
 
     throw Error('Repeat item could not be found.');
   }
-};
+}; 
 
 
 
@@ -73,7 +73,7 @@ xrx.mvc.ComponentView.prototype.getNodeRef = function() {
   var result = xrx.xpath.evaluate(this.getRefExpression(), nodeS, null,
       xrx.xpath.XPathResultType.ANY_TYPE);
 
-  return context.isSameAs(nodeS) ? context : result.iterateNext();
+  return result.iterateNext();
 };
 
 
@@ -94,7 +94,7 @@ xrx.mvc.ComponentView.prototype.getNode = function(num) {
     return this.getNodeRef(n);
 
   } else {
-    throw Error('A control must define a data-xrx-bind or a data-xrx-ref ' +
+    throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
         'attribute.');
   }
 };

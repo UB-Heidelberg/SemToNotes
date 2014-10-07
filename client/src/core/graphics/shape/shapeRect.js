@@ -43,7 +43,9 @@ xrx.shape.Rect.prototype.engineClass_ = 'Polygon';
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  */
 xrx.shape.Rect.create = function(drawing) {
-  return new xrx.shape.Rect(drawing);
+  var rect = new xrx.shape.Rect(drawing);
+  rect.setCoords([[0,0],[0,0],[0,0],[0,0]]);
+  return rect;
 };
 
 
@@ -51,7 +53,7 @@ xrx.shape.Rect.create = function(drawing) {
 /**
  * Function makes sure that the underlying polygon rendering class
  * stays a rectangle.
- * @param {number} position The nth vertex currently dragged by the user.
+ * @param {number} position The nth vertex currently modified.
  */
 xrx.shape.Rect.prototype.setAffineCoords = function(position) {
   var coords = this.getCoords();

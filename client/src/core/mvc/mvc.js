@@ -22,7 +22,7 @@ goog.require('xrx.xpath');
 
 
 
-xrx.mvc.installComponent = function(obj) {
+xrx.mvc.installComponents = function(obj) {
   var elements;
   goog.object.forEach(obj, function(component, key, o) {
     elements = goog.dom.getElementsByClass(key);
@@ -35,13 +35,13 @@ xrx.mvc.installComponent = function(obj) {
 
 
 xrx.mvc.installMvc = function() {
-  xrx.mvc.installComponent(xrx.mvc.Components);
+  xrx.mvc.installComponents(xrx.mvc.Components);
 };
 
 
 
 xrx.mvc.installWidgets = function() {
-  xrx.mvc.installComponent(xrx.widget.Widgets);
+  xrx.mvc.installComponents(xrx.widget.Widgets);
 };
 
 
