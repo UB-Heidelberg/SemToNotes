@@ -18,12 +18,9 @@ var _allTests = [
   // core :: graphics :: shape
   // core :: mvc
   './core/mvc/mvc_test.html',
-  // core :: mvc :: model
-  './core/mvc/model/bind_test.html',
-  './core/mvc/model/instance_test.html',
-  // core :: mvc :: view
-  './core/mvc/view/repeat_test.html',
-  './core/mvc/view/view_test.html',
+  './core/mvc/mvcBind_test.html',
+  './core/mvc/mvcInstance_test.html',
+  './core/mvc/mvcRepeat_test.html',
   // core :: xml
   './core/xml/label_test.html',
   './core/xml/parse_test.html',

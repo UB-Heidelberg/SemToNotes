@@ -26,11 +26,11 @@
   <tr>
     <td></td>
     <td>Original</td>
-	<td>Transform</td>
+	  <td>Transform</td>
     <td>Rotate Left</td>
     <td>Rotate Right</td>
-	<td>Zoom In</td>
-	<td>Zoom Out</td>
+	  <td>Zoom In</td>
+	  <td>Zoom Out</td>
   </tr>
   <tr>
     <td>SVG</td>
@@ -79,6 +79,7 @@ function getDrawingCanvas(id, callback) {
 ***REMOVED***
 
 function test0Original() {
+  console.log(xrx.drawing.Drawing);
   var svgDrawing = getDrawingSvg('svgOriginal');
   svgDrawing.setBackgroundImage(url);
   svgDrawing.draw();

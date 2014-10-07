@@ -11,6 +11,9 @@ goog.require('xrx.mvc.Mvc');
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.mvc.ComponentModel = function(element) {
 
 ***REMOVED***

@@ -9,7 +9,6 @@ goog.provide('xrx.widget.CanvasBackgroundImage');
 
 ***REMOVED***
 goog.require('goog.object');
-goog.require('xrx');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.mvc.Mvc');
 goog.require('xrx.widget.Shapes');
@@ -55,7 +54,7 @@ xrx.widget.Canvas.prototype.createBackgroundImage_ = function() {
   var backgroundImage = goog.dom.getElementsByClass('xrx-widget-canvas-background-image',
       container)[0];
   this.backgroundImage_ = new xrx.widget.CanvasBackgroundImage(backgroundImage, this);
-  xrx.mvc.Mvc.addComponentView(this.backgroundImage_);
+  xrx.mvc.Mvc.addViewComponent(this.backgroundImage_);
 ***REMOVED***
 
 

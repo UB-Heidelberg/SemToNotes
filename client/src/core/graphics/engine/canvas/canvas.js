@@ -7,10 +7,6 @@ goog.provide('xrx.canvas');
 
 
 
-goog.require('xrx');
-
-
-
 ***REMOVED***
 ***REMOVED*** Canvas base class providing static functions for the canvas sub-classes.
 ***REMOVED***

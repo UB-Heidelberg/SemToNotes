@@ -10,7 +10,6 @@ goog.provide('xrx.index.row.mask');
 
 
 
-goog.require('xrx.index');
 goog.require('goog.math.Long');
 
 
@@ -50,9 +49,9 @@ xrx.index.row.mask = {***REMOVED***
 xrx.index.row.mask.fromFormat = function(format, itm) {
   var item = xrx.index.row.format[format][itm];
   var shft = item.shft;
-  var int = Math.pow(2, item.size) - 1;
+  var integ = Math.pow(2, item.size) - 1;
 
-  return goog.math.Long.fromInt(int).shiftLeft(shft);
+  return goog.math.Long.fromInt(integ).shiftLeft(shft);
 ***REMOVED***
 
 
@@ -86,11 +85,11 @@ xrx.index.row.prototype.get = function(item) {
 ***REMOVED*** Shared function for all setter functions.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.index.row.prototype.set = function(int, format) {
-  var long = goog.math.Long.fromInt(int);
+xrx.index.row.prototype.set = function(integ, format) {
+  var lng = goog.math.Long.fromInt(integ);
 
-  long = long.shiftLeft(format.shft);
-  this[format.bits] = this[format.bits].or(long);
+  lng = lng.shiftLeft(format.shft);
+  this[format.bits] = this[format.bits].or(lng);
 ***REMOVED***
 
 
@@ -100,10 +99,10 @@ xrx.index.row.prototype.set = function(int, format) {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.index.row.prototype.update = function(diff, format) {
-  var long = goog.math.Long.fromInt(diff);
+  var lng = goog.math.Long.fromInt(diff);
 
-  long = long.shiftLeft(format.shft);
-  this[format.bits] = this[format.bits].add(long);
+  lng = lng.shiftLeft(format.shft);
+  this[format.bits] = this[format.bits].add(lng);
 ***REMOVED***
 
 

@@ -15,7 +15,6 @@ goog.require('goog.math.Rect');
 goog.require('goog.style');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing.tool.Tool');
-goog.require('xrx.engine');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.svg');
 goog.require('xrx.vml');

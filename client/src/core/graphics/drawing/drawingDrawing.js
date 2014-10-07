@@ -11,7 +11,6 @@ goog.require('goog.dom.ViewportSizeMonitor');
 ***REMOVED***
 ***REMOVED***
 goog.require('goog.net.ImageLoader');
-goog.require('xrx');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');

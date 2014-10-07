@@ -13,7 +13,6 @@ goog.provide('demo.renderingVML');
 goog.require('xrx');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
-goog.require('xrx.engine');
 
 
 

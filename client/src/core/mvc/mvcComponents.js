@@ -7,6 +7,7 @@ goog.provide('xrx.mvc.Components');
 
 
 goog.require('xrx.mvc.Bind');
+goog.require('xrx.mvc.Instance');
 goog.require('xrx.mvc.Repeat');
 
 

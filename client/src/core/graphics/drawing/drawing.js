@@ -9,10 +9,6 @@ goog.provide('xrx.drawing.State');
 
 
 
-goog.require('xrx');
-
-
-
 ***REMOVED***
 ***REMOVED*** A static class providing enumerations for the drawing classes.
 ***REMOVED***
