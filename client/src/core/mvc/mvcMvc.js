@@ -6,14 +6,18 @@ goog.provide('xrx.mvc.Mvc');
 
 
 
-goog.require('xrx.mvc.Instance');
-
-
-
 /**
  * @constructor
  */
 xrx.mvc.Mvc = function() {};
+
+
+
+xrx.mvc.Mvc.MODEL = 'model';
+
+
+
+xrx.mvc.Mvc.VIEW = 'view';
 
 
 
@@ -37,7 +41,7 @@ xrx.mvc.Mvc.addModelComponent = function(id, component) {
 
 
 
-xrx.mvc.Mvc.addComponentView = function(id, component) {
+xrx.mvc.Mvc.addViewComponent = function(id, component) {
   xrx.mvc.Mvc.addComponent(id, component, xrx.mvc.Mvc.VIEW);
 };
 
@@ -56,7 +60,7 @@ xrx.mvc.Mvc.getModelComponent = function(id) {
 
 
 
-xrx.mvc.Mvc.getComponentView = function(id) {
+xrx.mvc.Mvc.getViewComponent = function(id) {
   return xrx.mvc.Mvc[xrx.mvc.Mvc.VIEW][id];
 };
 
@@ -74,7 +78,7 @@ xrx.mvc.Mvc.getModelComponents = function() {
 
 
 
-xrx.mvc.Mvc.getComponentViews = function() {
+xrx.mvc.Mvc.getViewComponents = function() {
   return xrx.mvc.Mvc[xrx.mvc.Mvc.VIEW]
 };
 
@@ -83,8 +87,8 @@ xrx.mvc.Mvc.getComponentViews = function() {
 xrx.mvc.Mvc.getInstanceDefault = function() {
   var instance;
 
-  for(var i in xrx.mvc.Mvc) {
-    var component = xrx.mvc.Mvc[i];
+  for(var i in xrx.mvc.Mvc[xrx.mvc.Mvc.MODEL]) {
+    var component = xrx.mvc.Mvc[xrx.mvc.Mvc.MODEL][i];
     if (component instanceof xrx.mvc.Instance) {
       instance = component;
       break;

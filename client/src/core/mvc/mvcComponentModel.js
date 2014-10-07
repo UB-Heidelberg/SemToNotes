@@ -11,6 +11,9 @@ goog.require('xrx.mvc.Mvc');
 
 
 
+/**
+ * @constructor
+ */
 xrx.mvc.ComponentModel = function(element) {
 
   goog.base(this, element);

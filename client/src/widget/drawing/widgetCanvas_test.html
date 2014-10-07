@@ -16,6 +16,7 @@
   goog.require('xrx');
   goog.require('xrx.node.Nodes');
   goog.require('xrx.widget.Canvas');
+  goog.require('xrx.xpath');
 </script>
 <style>
 #d1 {
@@ -29,26 +30,26 @@ height: 300px;
 <!-- HTML UIDL -->
 
 <!-- model -->
-<div class="xrx-mvc-namespaces" data-xrx-namespaces='{"xmlns:tei":"http://www.tei-c.org/ns/1.0"}'/>
+<div class="xrx-mvc-namespaces" data-xrx-namespaces='{"xmlns:tei":"http://www.tei-c.org/ns/1.0"}'></div>
 
 <!-- instances -->
 <div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.xml.txt"></div>
 
 <!-- binds -->
 <div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
-<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points != '']"></div>
-<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx != '']"></div>
+<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[2]"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[1]"></div>
 
 <div id="d1" class="xrx-widget-canvas"></div>
 <div class="xrx-widget-container" data-xrx-for="d1">
   <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
   <div class="xrx-widget-canvas-layer-graphics">
     <div id="r1" class="xrx-mvc-repeat" data-xrx-bind="b2">
-      <div class="xrx-widget-shape-polygon" data-xrx-ref="." data-xrx-ref-coords="@points"></div>
+      <div class="xrx-widget-shape-polygon" data-xrx-ref="." data-xrx-ref-coords="./@points"></div>
     </div>
     <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
-      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-x="./@ulx" data-xrx-ref-y="./@uly"
-          data-xrx-ref-width="./@rlx" data-xrx-ref-height="./@rly"></div>
+      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-x="@ulx" data-xrx-ref-y="@uly"
+          data-xrx-ref-width="@rlx" data-xrx-ref-height="@rly"></div>
     </div>
   </div>
 </div>
@@ -76,8 +77,9 @@ height: 300px;
 
 <script type="text/javascript">
  
-function testCanvas() {
-
+function testXpath() {
+  var node;
+  var r = xrx.xpath.evaluate("xrx:instance('i1')//tei:zone/@uly", undefined, null, xrx.xpath.XPathResultType.ANY_TYPE);
 };
 
 </script>

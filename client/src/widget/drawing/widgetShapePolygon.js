@@ -3,6 +3,7 @@
  */
 
 goog.provide('xrx.widget.ShapePolygon');
+goog.provide('xrx.widget.ShapePolygonCoords');
 
 
 
@@ -17,6 +18,8 @@ goog.require('xrx.widget.Shape');
 xrx.widget.ShapePolygon = function(element, drawing) {
 
   goog.base(this, element, drawing);
+
+  this.coords_;
 };
 goog.inherits(xrx.widget.ShapePolygon, xrx.widget.Shape);
 
@@ -38,13 +41,50 @@ xrx.widget.ShapePolygon.prototype.parseCoords = function(str) {
 
 
 xrx.widget.ShapePolygon.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
-  var coords = this.parseCoords(str);
-  this.shape_.setCoords(coords);
 };
 
 
 
 xrx.widget.ShapePolygon.prototype.createDom = function() {
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
+  this.coords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
 };
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapePolygonCoords = function(element, polygon) {
+
+  this.polygon_ = polygon;
+
+  goog.base(this, element);
+};
+goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.ComponentView);
+
+
+
+/**
+ * @override
+ */
+xrx.widget.ShapePolygonCoords.prototype.getRefExpression = function() {
+  return goog.dom.dataset.get(this.element_, 'xrxRefCoords');
+};
+
+
+
+xrx.widget.ShapePolygonCoords.prototype.createDom = function() {
+};
+
+
+
+xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var coords = this.polygon_.parseCoords(str);
+  this.polygon_.getShape().setCoords(coords);
+};
+
+
+
+

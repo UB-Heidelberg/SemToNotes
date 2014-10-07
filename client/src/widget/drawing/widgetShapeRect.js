@@ -40,33 +40,37 @@ goog.inherits(xrx.widget.ShapeRect, xrx.widget.Shape);
 
 
 xrx.widget.ShapeRect.prototype.setX = function(coord) {
-  this.shape_.getCoords()[0][0] = coord;
+  var coords = this.shape_.getCoords();
+  coords[0][0] = coord;
+  this.shape_.setCoords(coords);
   this.shape_.setAffineCoords(0);
-  this.drawing_.draw();
 };
 
 
 
 xrx.widget.ShapeRect.prototype.setY = function(coord) {
-  this.shape_.getCoords()[0][1] = coord;
+  var coords = this.shape_.getCoords();
+  coords[0][1] = coord;
+  this.shape_.setCoords(coords);
   this.shape_.setAffineCoords(0);
-  this.drawing_.draw();
 };
 
 
 
 xrx.widget.ShapeRect.prototype.setWidth = function(width) {
-  this.shape_.getCoords()[1][0] = this.shape_.getCoords()[0][0] + width;
+  var coords = this.shape_.getCoords();
+  coords[1][0] = coords[0][0] + width;
+  this.shape_.setCoords(coords);
   this.shape_.setAffineCoords(1);
-  this.drawing_.draw();
 };
 
 
 
 xrx.widget.ShapeRect.prototype.setHeight = function(height) {
-  this.shape_.getCoords()[3][1] = this.shape_.getCoords()[0][1] + height;
+  var coords = this.shape_.getCoords();
+  coords[3][1] = coords[0][1] + height;
+  this.shape_.setCoords(coords);
   this.shape_.setAffineCoords(3);
-  this.drawing_.draw();
 };
 
 
@@ -77,7 +81,6 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   this.y_ = new xrx.widget.ShapeRectY(this.element_, this, 'xrxRefY');
   this.width_ = new xrx.widget.ShapeRectWidth(this.element_, this, 'xrxRefWidth');
   this.height_ = new xrx.widget.ShapeRectHeight(this.element_, this, 'xrxRefHeight');
-  console.log(this);
 };
 
 
@@ -131,6 +134,7 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setX(point);
+  this.rect_.getDrawing().draw();
 };
 
 
@@ -150,6 +154,7 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setY(point);
+  this.rect_.getDrawing().draw();
 };
 
 
@@ -169,6 +174,7 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setWidth(point);
+  this.rect_.getDrawing().draw();
 };
 
 
@@ -187,5 +193,7 @@ goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 xrx.widget.ShapeRectHeight.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
+  console.log(this.getRefExpression());
   this.rect_.setHeight(point);
+  this.rect_.getDrawing().draw();
 };

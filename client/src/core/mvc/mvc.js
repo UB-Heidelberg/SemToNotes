@@ -13,7 +13,6 @@ goog.require('goog.dom.dataset');
 goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
 goog.require('goog.Promise');
-goog.require('xrx');
 goog.require('xrx.func');
 goog.require('xrx.widget.Widgets');
 goog.require('xrx.mvc.Components');
