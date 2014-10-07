@@ -142,7 +142,11 @@ goog.addDependency('../../../../src/core/xml/xpath/test.js', ['xrx.xpath.test'],
 goog.addDependency('../../../../src/core/xml/xpath/unaryExpr.js', ['xrx.xpath.UnaryExpr'], ['xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/core/xml/xpath/unionExpr.js', ['xrx.xpath.UnionExpr'], ['goog.array', 'xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/core/xml/xpath/xpath.js', ['xrx.xpath'], ['xrx.xpath.Context', 'xrx.xpath.FunctionCall', 'xrx.xpath.Lexer', 'xrx.xpath.NodeSet', 'xrx.xpath.Parser']);
-goog.addDependency('../../../../src/widget/drawing/widgetCanvas.js', ['xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage'], ['goog.dom.DomHelper', 'xrx', 'xrx.drawing.Drawing', 'xrx.mvc.Mvc']);
+goog.addDependency('../../../../src/widget/drawing/widgetCanvas.js', ['xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage'], ['goog.dom.DomHelper', 'goog.object', 'xrx', 'xrx.drawing.Drawing', 'xrx.mvc.Mvc', 'xrx.widget.Shapes']);
+goog.addDependency('../../../../src/widget/drawing/widgetShape.js', ['xrx.widget.Shape'], ['xrx.mvc.ComponentView']);
+goog.addDependency('../../../../src/widget/drawing/widgetShapePolygon.js', ['xrx.widget.ShapePolygon'], ['xrx.shape.Polygon', 'xrx.widget.Shape']);
+goog.addDependency('../../../../src/widget/drawing/widgetShapeRect.js', ['xrx.widget.ShapeRect', 'xrx.widget.ShapeRectGeometry', 'xrx.widget.ShapeRectHeight', 'xrx.widget.ShapeRectWidth', 'xrx.widget.ShapeRectX', 'xrx.widget.ShapeRectY'], ['goog.dom.dataset', 'xrx.mvc.ComponentView', 'xrx.shape.Rect', 'xrx.widget.Shape']);
+goog.addDependency('../../../../src/widget/drawing/widgetShapeShapes.js', ['xrx.widget.Shapes'], ['xrx.widget.ShapePolygon', 'xrx.widget.ShapeRect']);
 goog.addDependency('../../../../src/widget/widgetConsole.js', ['xrx.console'], ['goog.dom', 'goog.string', 'xrx.mvc.Mvc', 'xrx.serialize', 'xrx.token.EndTag', 'xrx.token.StartTag']);
 goog.addDependency('../../../../src/widget/widgetOutput.js', ['xrx.output'], ['goog.dom', 'xrx.mvc.Mvc']);
 goog.addDependency('../../../../src/widget/widgetWidget.js', ['xrx.widget.Widget'], []);
