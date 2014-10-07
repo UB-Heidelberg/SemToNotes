@@ -36,20 +36,20 @@ height: 300px;
 
 <!-- binds -->
 <div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
-<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points]"></div>
-<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
+<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points != '']"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx != '']"></div>
 
 <div id="d1" class="xrx-widget-canvas"></div>
 <div class="xrx-widget-container" data-xrx-for="d1">
   <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
   <div class="xrx-widget-canvas-layer-graphics">
     <div id="r1" class="xrx-mvc-repeat" data-xrx-bind="b2">
-      <div class="xrx-widget-shape-polygon" data-xrx-ref="./@points"></div>
+      <div class="xrx-widget-shape-polygon" data-xrx-ref="." data-xrx-ref-coords="@points"></div>
     </div>
-    <!--div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
-      <div class="xrx-widget-shape-rect" data-xrx-ref-x="./@ulx" data-xrx-ref-y="./@uly"
+    <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
+      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-x="./@ulx" data-xrx-ref-y="./@uly"
           data-xrx-ref-width="./@rlx" data-xrx-ref-height="./@rly"></div>
-    </div-->
+    </div>
   </div>
 </div>
 
@@ -59,12 +59,12 @@ height: 300px;
   <xrx:backgroundImage bind="b1"/>
   <xrx:layerGraphics>
     <xrx:repeat id="r1" bind="b2">
-      <xrx:polygon>
-        <xrx:points ref="./@points"/>
+      <xrx:polygon ref=".">
+        <xrx:coords ref="./@points"/>
       </xrx:polygon>
     </xrx:repeat>
     <xrx:repeat id="r2" bind="b3">
-      <xrx:rect>
+      <xrx:rect ref=".">
         <xrx:x ref="./@ulx"/>
         <xrx:y ref="./@uly"/>
         <xrx:width ref="./@rlx"/>
@@ -84,7 +84,6 @@ function testCanvas() {
 
 <script type="text/javascript">
   xrx.install();
-  console.log(xrx.mvc);
 </script>
 
 </body>
