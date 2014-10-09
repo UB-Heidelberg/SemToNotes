@@ -15,16 +15,20 @@ goog.require('xrx.stream');
 
 
 xrx.node.AttributeS = function(num, parent) {
+
   goog.base(this, xrx.node.ATTRIBUTE);
 
-
   this.num_ = num;
-
-
 
   this.parent_ = parent;
 };
 goog.inherits(xrx.node.AttributeS, xrx.nodeS);
+
+
+
+xrx.node.AttributeS.prototype.getParent = function() {
+  return this.parent_;
+};
 
 
 

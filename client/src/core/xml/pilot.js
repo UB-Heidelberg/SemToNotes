@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class representing a pilot to reach the 
- * tokens of a XML tree.
+ * @fileoverview A class representing a pilot to reach all 
+ *     tokens of a XML document.
  */
 
 goog.provide('xrx.pilot');
@@ -440,7 +440,7 @@ xrx.pilot.prototype.attrName = function(context, target) {
 
 
 /**
- * Get the location and optionally update a xrx.token.AttrValue.
+ * Get the location of a attribute value token.
  * 
  * @param {?} context
  * @param {!xrx.token.AttrValue} target The attribute-value token.
@@ -449,7 +449,8 @@ xrx.pilot.prototype.attrName = function(context, target) {
  */
 xrx.pilot.prototype.attrValue = function(context, target, opt_update) {
   var pos = this.stream_.pos();
-  var tag = this.path(context, target.tag());
+
+  var tag = context || this.path(context, target.tag());
   var xml = this.stream_.xml().substr(tag.offset(), tag.length());
   var location = this.stream_.attrValue(xml, target.label().last());
   var attrValue = new xrx.token.AttrValue(target.label().clone(), 

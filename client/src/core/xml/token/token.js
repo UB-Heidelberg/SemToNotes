@@ -1,6 +1,6 @@
 /**
- * @fileoverview A static token class providing functions and
- * constants.
+ * @fileoverview A static class providing functions and
+ *     constants for the token classes.
  */
 
 goog.provide('xrx.token');

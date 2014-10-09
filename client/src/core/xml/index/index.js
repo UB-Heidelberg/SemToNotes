@@ -369,7 +369,8 @@ xrx.index.prototype.getNamespacePrefix = function(token, uri) {
  * @return {xrx.index.row} The new row.
  */
 xrx.index.prototype.head = function() {
-  this.rows_.push(new xrx.index.row());
+  var row = new xrx.index.row();
+  this.rows_.push(row);
 
   return this.rows_[this.rows_.length - 1];
 };

@@ -30,7 +30,7 @@
 <body>
 <script type="text/javascript">
 
-var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
+var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test" id2="test2"/></a>';
 var element = goog.dom.createElement('div');
 goog.dom.setTextContent(element, xml)
 var instance = new xrx.mvc.Instance(element);
@@ -58,42 +58,45 @@ function test02ancestorOrSelf() {
 };
 
 function test03attribute() {
+  var expr;
 
-  // '/a//@type'
-  /*
-  var result1 = xrx.xpath.evaluate('/a//@type', node, null, 
+  expr = '/a//@type';
+  var result1 = xrx.xpath.evaluate(expr, node, null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
-  assertEquals(1, result1.snapshotLength);
-  assertEquals('attrValue', result1.iterateNext().getStringValue());
-  */
-  // '//@id'
-  /*
-  var result2 = xrx.xpath.evaluate('//@id', node, null, 
-      xrx.xpath.XPathResultType.ANY_TYPE);
-  assertEquals(1, result2.snapshotLength);
-  assertEquals('test', result2.iterateNext().stringValue());
-  */
-  // '//d/@id'
-  var result3 = xrx.xpath.evaluate('//d/@id', node, null, 
-      xrx.xpath.XPathResultType.ANY_TYPE);
-  assertEquals(1, result3.snapshotLength);
-  assertEquals('test', result3.iterateNext().getStringValue());
+  assertEquals(expr, 1, result1.snapshotLength);
+  assertEquals(expr, 'attrValue', result1.iterateNext().getStringValue());
 
-  // '//@id'
-  /*
-  var result4 = xrx.xpath.evaluate('//@id', node, null, 
+  expr = '//@id';
+  var result2 = xrx.xpath.evaluate(expr, node, null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
-  assertEquals(1, result4.snapshotLength);
-  assertEquals('test', result4.iterateNext().stringValue());
-  */
-  // '//@*'
-  /*
-  var result5 = xrx.xpath.evaluate('//@*', node, null, 
+  assertEquals(expr, 1, result2.snapshotLength);
+  assertEquals(expr, 'test', result2.iterateNext().getStringValue());
+
+  expr = '//d/@id';
+  var result3 = xrx.xpath.evaluate(expr, node, null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
-  assertEquals(2, result5.snapshotLength);
-  assertEquals('attrValue', result5.iterateNext().stringValue());
-  assertEquals('test', result5.iterateNext().stringValue());
-  */
+  assertEquals(expr, 1, result3.snapshotLength);
+  assertEquals(expr, 'test', result3.iterateNext().getStringValue());
+
+  expr = '//d/@id2';
+  var result4 = xrx.xpath.evaluate(expr, node, null, 
+      xrx.xpath.XPathResultType.ANY_TYPE);
+  assertEquals(expr, 1, result4.snapshotLength);
+  assertEquals(expr, 'test2', result4.iterateNext().getStringValue());
+
+  expr = '//@id';
+  var result5 = xrx.xpath.evaluate(expr, node, null, 
+      xrx.xpath.XPathResultType.ANY_TYPE);
+  assertEquals(expr, 1, result5.snapshotLength);
+  assertEquals(expr, 'test', result5.iterateNext().getStringValue());
+
+  expr = '//@*'; // TODO: wrong ordering of attribute nodes
+  var result6 = xrx.xpath.evaluate(expr, node, null, 
+      xrx.xpath.XPathResultType.ANY_TYPE);
+  assertEquals(expr, 3, result6.snapshotLength);
+  //assertEquals(expr, 'attrValue', result6.iterateNext().getStringValue());
+  //assertEquals(expr, 'test', result6.iterateNext().getStringValue());
+  //assertEquals(expr, 'test2', result6.iterateNext().getStringValue());
 };
 
 function test04child() {

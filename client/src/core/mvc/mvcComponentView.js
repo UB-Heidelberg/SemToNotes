@@ -72,8 +72,8 @@ xrx.mvc.ComponentView.prototype.getNodeRef = function() {
   var nodeS = new xrx.node.ElementS(context.getInstance(), context.getToken());
   var result = xrx.xpath.evaluate(this.getRefExpression(), nodeS, null,
       xrx.xpath.XPathResultType.ANY_TYPE);
-
-  return result.iterateNext();
+  var next = result.iterateNext();
+  return next;
 };
 
 

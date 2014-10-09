@@ -10,10 +10,6 @@ goog.require('xrx.mvc');
 
 
 
-xrx = function() {};
-
-
-
 xrx.install = function() {
   xrx.mvc.install();
 };

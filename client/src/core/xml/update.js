@@ -27,11 +27,8 @@ xrx.update = function() {};
  */
 xrx.update.replace_ = function(instance, token, xml) {
   var diff = xml.length - token.length();
-
   instance.update(token.offset(), token.length(), xml);
-
   token.length(xml.length);
-
   return diff;
 };
 
@@ -42,9 +39,7 @@ xrx.update.replace_ = function(instance, token, xml) {
  * @private
  */
 xrx.update.insert_ = function(instance, offset, xml) {
-
   instance.update(offset, 0, xml);
-
   return xml.length;
 };
 
@@ -55,9 +50,7 @@ xrx.update.insert_ = function(instance, offset, xml) {
  * @private
  */
 xrx.update.remove_ = function(instance, offset, length) {
-
   instance.update(offset, length, '');
-
   return -length;
 };
 

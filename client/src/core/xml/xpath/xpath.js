@@ -1,7 +1,6 @@
 /**
  * @fileoverview A streaming XPath 1.0 implementation forked
- * from Google's Wicked Good XPath library. The implementation
- * is not yet complete.
+ *     from Google's Wicked Good XPath library.
  */
 /**
  * The MIT License
@@ -227,4 +226,3 @@ xrx.xpath.evaluate = function(expr, context, nsResolver, type, result) {
   return new xrx.xpath.XPathExpression(expr, nsResolver).
       evaluate(context, type);
 };
-

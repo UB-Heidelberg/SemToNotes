@@ -27,8 +27,8 @@ goog.require('xrx.xpath.NodeSet');
  * @constructor
  */
 xrx.node.ElementS = function(instance, token) {
-  goog.base(this, xrx.node.ELEMENT, instance, token);
 
+  goog.base(this, xrx.node.ELEMENT, instance, token);
 };
 goog.inherits(xrx.node.ElementS, xrx.nodeS);
 
@@ -237,13 +237,13 @@ xrx.node.ElementS.prototype.getNodeAttribute = function(test) {
   var xml = this.instance_.xml().substr(this.getOffset(), this.getLength());
   var locs = this.instance_.getStream().attributes(xml);
   var i = 0;
-
+  var a;
+  var attr;
   for(var l in locs) {
-    var a = locs[l];
-    var attr = new xrx.node.AttributeS(parseInt(l), this);
-    nodeset.add(attr);
+    a = locs[l];
+    attr = new xrx.node.AttributeS(parseInt(l), this);
+    if (test.matches(attr)) nodeset.add(attr);
   };
-
   return nodeset;
 };
 
