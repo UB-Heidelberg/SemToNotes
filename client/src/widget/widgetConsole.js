@@ -3,15 +3,17 @@
  * print XML instances in the browser.
  */
 
-goog.provide('xrx.console');
+goog.provide('xrx.widget.Console');
 
 
 goog.require('goog.dom');
 goog.require('goog.string');
-goog.require('xrx.mvc.Mvc');
+goog.require('goog.style');
+goog.require('xrx.mvc.Cursor');
 goog.require('xrx.serialize');
 goog.require('xrx.token.StartTag');
 goog.require('xrx.token.EndTag');
+goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Mvc');
 
 
@@ -19,61 +21,62 @@ goog.require('xrx.mvc.Mvc');
 /**
  * @constructor
  */
-xrx.console = function(element) {
+xrx.widget.Console = function(element) {
 
-
+  this.tabSize_ = 2;
 
   goog.base(this, element);
 };
-goog.inherits(xrx.console, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.Console, xrx.mvc.ComponentView);
 
 
 
-xrx.console.prototype.createDom = function() {};
+xrx.widget.Console.prototype.createDom = function() {
+  goog.style.setStyle(this.element_, 'white-space', 'pre-wrap');
+  goog.style.setStyle(this.element_, 'white-space', '-moz-pre-wrap');
+  goog.style.setStyle(this.element_, 'white-space', '-o-pre-wrap');
+  goog.style.setStyle(this.element_, 'word-wrap', 'break-word');
+};
 
 
 
-xrx.console.prototype.eventBeforeChange = function() {};
+xrx.widget.Console.prototype.eventBeforeChange = function() {};
 
 
 
-xrx.console.prototype.eventFocus = function() {};
+xrx.widget.Console.prototype.eventFocus = function() {};
 
 
 
-xrx.console.prototype.getValue = function() {};
+xrx.widget.Console.prototype.getValue = function() {};
 
 
 
-xrx.console.prototype.setFocus = function() {};
+xrx.widget.Console.prototype.setFocus = function() {};
 
 
 
-xrx.console.prototype.setValue = function(xml) {
+xrx.widget.Console.prototype.setValue = function(xml) {
   var cursor = xrx.mvc.Cursor.getNode(0);
 
   if (!cursor) {
-    var text = xrx.serialize.indent.forward(xml, 4, undefined, 30);
-    if (xml.length > text.length) text += ' ...';
-
+    var text = xrx.serialize.indent.forward(xml, this.tabSize_, undefined, 30);
     goog.dom.setTextContent(this.getElement(), text);
-
   } else {
     var pilot = cursor.getInstance().getPilot();
     var token = cursor.getToken();
     var text = '';
-    text += goog.string.trimRight(xrx.serialize.indent.backward(xml, 4, token, 15));
+    text += goog.string.trimRight(xrx.serialize.indent.backward(xml, this.tabSize_, token, 15));
     if (text.match('\n') && !text.match('\n').length < 15) text = '... ' + text;
-    text += xrx.serialize.indent.forward(xml, 4, token, 15);
+    text += xrx.serialize.indent.forward(xml, this.tabSize_, token, 15);
     text += ' ...';
 
-    goog.dom.setTextContent(this.getElement(), text);
+    goog.dom.setTextContent(this.element_, text);
   }
 };
 
 
-xrx.console.prototype.refresh = function() {
+xrx.widget.Console.prototype.refresh = function() {
   var xml = this.getNode().getXml();
-
   this.setValue(xml);
 };

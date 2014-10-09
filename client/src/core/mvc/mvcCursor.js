@@ -2,6 +2,8 @@
  * @fileoverview
  */
 
+goog.provide('xrx.mvc.Cursor');
+
 
 
 xrx.mvc.Cursor = {};

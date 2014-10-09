@@ -1,5 +1,6 @@
 /**
- * @fileoverview An abstract class representing a XML node.
+ * @fileoverview Constants and static functions for the node
+ *     classes.
  */
 
 goog.provide('xrx.node');

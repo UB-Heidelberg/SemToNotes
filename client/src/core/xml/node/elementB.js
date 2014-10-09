@@ -242,13 +242,13 @@ xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
   var xml = this.instance_.xml().substr(row.getOffset(), row.getLength2());
   var locs = this.instance_.getStream().attributes(xml);
   var i = 0;
-
+  var a;
+  var attr;
   for(var l in locs) {
-    var a = locs[l];
-    var attr = new xrx.node.AttributeB(parseInt(l), this);
-    nodeset.add(attr);
+    a = locs[l];
+    attr = new xrx.node.AttributeB(parseInt(l), this);
+    if (test.matches(attr)) nodeset.add(attr);
   };
-
   return nodeset;
 };
 

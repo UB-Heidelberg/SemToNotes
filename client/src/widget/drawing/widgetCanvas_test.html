@@ -16,12 +16,20 @@
   goog.require('xrx');
   goog.require('xrx.node.Nodes');
   goog.require('xrx.widget.Canvas');
+  goog.require('xrx.index.row');
   goog.require('xrx.xpath');
 </script>
 <style>
 #d1 {
 width: 650px;
 height: 300px;
+}
+pre {
+width: 650px;
+white-space: pre-wrap;
+white-space: -moz-pre-wrap;
+white-space: -o-pre-wrap;
+word-wrap: break-word;
 }
 </style>
 </head>
@@ -37,10 +45,14 @@ height: 300px;
 
 <!-- binds -->
 <div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
-<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[2]"></div>
-<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[1]"></div>
+<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points]"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
+<div id="b4" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@x]"></div>
+<div id="b5" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')"></div>
 
-<div id="d1" class="xrx-widget-canvas"></div>
+<div id="d1" class="xrx-widget-canvas">
+  <div class="xrx-widget-canvas-toolbar"></div>
+</div>
 <div class="xrx-widget-container" data-xrx-for="d1">
   <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
   <div class="xrx-widget-canvas-layer-graphics">
@@ -48,11 +60,16 @@ height: 300px;
       <div class="xrx-widget-shape-polygon" data-xrx-ref="." data-xrx-ref-coords="./@points"></div>
     </div>
     <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
-      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-x="@ulx" data-xrx-ref-y="@uly"
-          data-xrx-ref-width="@rlx" data-xrx-ref-height="@rly"></div>
+      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
+          data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
+    </div>
+    <div id="r3" class="xrx-mvc-repeat" data-xrx-bind="b4">
+      <div class="xrx-widget-shape-rect" data-xrx-ref="." data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
+          data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
     </div>
   </div>
 </div>
+<pre id="c1" class="xrx-widget-console" data-xrx-bind="b5"></pre>
 
 <!-- XML UIDL -->
 
@@ -77,9 +94,7 @@ height: 300px;
 
 <script type="text/javascript">
  
-function testXpath() {
-  var node;
-  var r = xrx.xpath.evaluate("xrx:instance('i1')//tei:zone/@uly", undefined, null, xrx.xpath.XPathResultType.ANY_TYPE);
+function test() {
 };
 
 </script>

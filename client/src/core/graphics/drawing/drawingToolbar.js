@@ -11,6 +11,7 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.style');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
 
@@ -76,7 +77,8 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var tool = self.drawing_.getLayerTool();
   var viewbox = self.drawing_.getViewbox();
 
-  goog.style.setStyle(self.element_, 'z-index', '999');
+  goog.style.setStyle(this.element_, 'position', 'absolute');
+  goog.style.setStyle(this.element_, 'z-index', '999');
 
   var registerButtonClick = function(button, handler, handle) {
     goog.events.listen(button, goog.events.EventType.CLICK, function(e) {

@@ -7,6 +7,9 @@ goog.provide('xrx.widget.ShapePolygonCoords');
 
 
 
+goog.require('goog.dom.dataset');
+goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Controller');
 goog.require('xrx.shape.Polygon');
 goog.require('xrx.widget.Shape');
 
@@ -19,7 +22,7 @@ xrx.widget.ShapePolygon = function(element, drawing) {
 
   goog.base(this, element, drawing);
 
-  this.coords_;
+  this.shapePolygonCoords_;
 };
 goog.inherits(xrx.widget.ShapePolygon, xrx.widget.Shape);
 
@@ -40,14 +43,32 @@ xrx.widget.ShapePolygon.prototype.parseCoords = function(str) {
 
 
 
+xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
+  var str = '';
+  for(var i = 0, len = coords.length; i < len; i++) {
+    str += coords[i][0].toString();
+    str += ',';
+    str += coords[i][1].toString();
+    if (i <= len - 1) str += ' ';
+  }
+  return str;
+};
+
+
+
 xrx.widget.ShapePolygon.prototype.refresh = function() {
 };
 
 
 
 xrx.widget.ShapePolygon.prototype.createDom = function() {
+  var self = this;
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
-  this.coords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
+  this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
+  // handle value changes
+  this.shape_.handleValueChanged = function() {
+    self.shapePolygonCoords_.mvcEventValueChanged();
+  }
 };
 
 
@@ -87,4 +108,7 @@ xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
 
 
 
-
+xrx.widget.ShapePolygonCoords.prototype.mvcEventValueChanged = function(coords) {
+  xrx.mvc.Controller.updateValueLike(this, this.polygon_.serializeCoords(
+      this.polygon_.getShape().getCoords()));
+};
