@@ -10,6 +10,7 @@ goog.provide('xrx.widget.CanvasBackgroundImage');
 ***REMOVED***
 goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
+goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.mvc.Mvc');
 goog.require('xrx.widget.Shapes');
 
@@ -23,6 +24,8 @@ xrx.widget.Canvas = function(element) {
   this.element_ = element;
 
   this.drawing_;
+
+  this.toolbar_;
 
   this.backgroundImage_;
 
@@ -43,8 +46,17 @@ xrx.widget.Canvas.prototype.refresh = function() {
 
 
 xrx.widget.Canvas.prototype.createDrawing_ = function() {
-  this.drawing_ = new xrx.drawing.Drawing(this.element_, 'svg');
+  this.drawing_ = new xrx.drawing.Drawing(this.element_);
   this.drawing_.setModeView();
+***REMOVED***
+
+
+
+xrx.widget.Canvas.prototype.createToolbar_ = function() {
+  var element = goog.dom.getElementsByClass('xrx-widget-canvas-toolbar',
+      this.element_)[0];
+  if (this.drawing_.getEngine().isAvailable() && element)
+      this.toolbar_ = new xrx.drawing.Toolbar(element, this.drawing_);
 ***REMOVED***
 
 
@@ -80,6 +92,7 @@ xrx.widget.Canvas.prototype.createLayerGraphics_ = function() {
 
 xrx.widget.Canvas.prototype.createDom = function() {
   this.createDrawing_();
+  this.createToolbar_();
   this.createBackgroundImage_();
   this.createLayerGraphics_();
 ***REMOVED***

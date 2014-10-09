@@ -20,16 +20,20 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED***
 ***REMOVED***
 xrx.node.AttributeB = function(num, parent) {
+
   goog.base(this, xrx.node.ATTRIBUTE);
 
-
   this.num_ = num;
-
-
 
   this.parent_ = parent;
 ***REMOVED***
 goog.inherits(xrx.node.AttributeB, xrx.nodeB);
+
+
+
+xrx.node.AttributeB.prototype.getParent = function() {
+  return this.parent_;
+***REMOVED***
 
 
 

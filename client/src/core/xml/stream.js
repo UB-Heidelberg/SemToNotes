@@ -670,8 +670,8 @@ xrx.stream.prototype.attrName = function(xml, pos) {
 ***REMOVED*** @param {!number} pos The attribute position.
 ***REMOVED*** @return {!xrx.location} The attribute value location.
 ***REMOVED***
-xrx.stream.prototype.attrValue = function(xml, pos) {
-  return this.attr_(xml, pos, xrx.token.ATTR_VALUE);
+xrx.stream.prototype.attrValue = function(xml, pos, opt_offset) {
+  return this.attr_(xml, pos, xrx.token.ATTR_VALUE, opt_offset);
 ***REMOVED***
 
 

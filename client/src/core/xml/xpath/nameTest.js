@@ -4,6 +4,8 @@
 
 goog.provide('xrx.xpath.NameTest');
 
+
+
 goog.require('xrx.node');
 
 
@@ -50,7 +52,6 @@ xrx.xpath.NameTest.prototype.matches = function(node) {
       type !== xrx.node.ATTRIBUTE) {
     return false;
   }
-
   if (this.name_ === '*') {
     return true;
   } else if (this.namespaceUri_ === '') {

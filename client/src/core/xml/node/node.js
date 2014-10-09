@@ -1,5 +1,6 @@
 ***REMOVED***
-***REMOVED*** @fileoverview An abstract class representing a XML node.
+***REMOVED*** @fileoverview Constants and static functions for the node
+***REMOVED***     classes.
 ***REMOVED***
 
 goog.provide('xrx.node');

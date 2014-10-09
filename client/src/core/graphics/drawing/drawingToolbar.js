@@ -11,6 +11,7 @@ goog.provide('xrx.drawing.ToolbarOption');
 goog.require('goog.dom.classes');
 ***REMOVED***
 ***REMOVED***
+goog.require('goog.style');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
 
@@ -76,7 +77,8 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   var tool = self.drawing_.getLayerTool();
   var viewbox = self.drawing_.getViewbox();
 
-  goog.style.setStyle(self.element_, 'z-index', '999');
+  goog.style.setStyle(this.element_, 'position', 'absolute');
+  goog.style.setStyle(this.element_, 'z-index', '999');
 
   var registerButtonClick = function(button, handler, handle) {
   ***REMOVED***button, goog.events.EventType.CLICK, function(e) {

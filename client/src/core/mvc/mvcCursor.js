@@ -2,6 +2,8 @@
 ***REMOVED*** @fileoverview
 ***REMOVED***
 
+goog.provide('xrx.mvc.Cursor');
+
 
 
 xrx.mvc.Cursor = {***REMOVED***

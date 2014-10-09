@@ -30,6 +30,5 @@ goog.inherits(xrx.token.Attribute, xrx.token.Abstract);
 xrx.token.Attribute.prototype.tag = function() {
   var label = this.label().clone();
   label.parent();
-
   return new xrx.token.StartEmptyTag(label);
 ***REMOVED***

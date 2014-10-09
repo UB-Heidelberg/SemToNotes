@@ -122,6 +122,7 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     this.shape_.setCoords(this.coords_);
     this.drawing_.getLayerShapeModify().update(this.shape_.getCoords());
   }
+  if (this.shape_.handleValueChanged) this.shape_.handleValueChanged();
 ***REMOVED***
 
 

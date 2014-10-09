@@ -6,7 +6,7 @@ goog.provide('xrx.token.Tokens');
 
 
 
-goog.require('xrx.label');
+goog.require('xrx.token');
 goog.require('xrx.token.Attribute');
 goog.require('xrx.token.AttrName');
 goog.require('xrx.token.AttrValue');

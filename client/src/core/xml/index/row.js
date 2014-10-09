@@ -11,6 +11,7 @@ goog.provide('xrx.index.row.mask');
 
 
 goog.require('goog.math.Long');
+goog.require('xrx.index');
 
 
 
