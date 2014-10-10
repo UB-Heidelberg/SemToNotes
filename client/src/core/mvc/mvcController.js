@@ -126,7 +126,7 @@ xrx.mvc.Controller.removeEmptyTag = function(control, token) {
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
   xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
   xrx.mvc.Controller.recalculate();
-  xrx.mvc.Controller.refresh(control);
+  xrx.mvc.Controller.refresh(control, node);
 };
 
 
@@ -162,26 +162,13 @@ xrx.mvc.Controller.recalculate = function() {
 /**
  * Refreshes all view components affected by the update.
  */
-xrx.mvc.Controller.refresh = function(control) {
-  xrx.mvc.Mvc.getViewComponent('c1').refresh();
-  return;
+xrx.mvc.Controller.refresh = function(control, node) {
   var nIter;
   var contr;
-  var node = control.getNode();
 
   for (var c in xrx.mvc.Mvc.getViewComponents()) {
     contr = xrx.mvc.Mvc.getViewComponent(c);
     if (contr) nIter = contr.getNode();
-    if (contr && nIter && node && node.getInstance() === nIter.getInstance()) {
-      if (nIter.isSameAs(node) && c != control.getId()) {
-        contr.refresh()
-      } else if (node.getLabel().isDescendantOf(nIter.getLabel())
-          && c != control.getId()) {
-        contr.refresh();
-      } else {}
-    }
+    if (contr && nIter && c != control.getId()) contr.refresh();
   }
 };
-
-
-
