@@ -167,6 +167,17 @@ xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
 
 
 
+xrx.widget.ShapeRect.prototype.refresh = function() {
+***REMOVED***
+
+
+
+xrx.widget.ShapeRect.prototype.mvcDelete = function() {
+  xrx.mvc.Controller.removeTagLike(this);
+***REMOVED***
+
+
+
 xrx.widget.ShapeRect.prototype.createDom = function() {
 ***REMOVED***
   this.shape_ = xrx.shape.Rect.create(this.drawing_);
@@ -196,22 +207,30 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
       this.element_, this, right);
   if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(
       this.element_, this, bottom);
-  // handle value changes
+  // refresh coordinates
+  if (this.rectX_)      this.rectX_.refresh();
+  if (this.rectY_)      this.rectY_.refresh();
+  if (this.rectWidth_)  this.rectWidth_.refresh();
+  if (this.rectHeight_) this.rectHeight_.refresh();
+  if (this.rectLeft_)   this.rectLeft_.refresh();
+  if (this.rectTop_)    this.rectTop_.refresh();
+  if (this.rectRight_)  this.rectRight_.refresh();
+  if (this.rectBottom_) this.rectBottom_.refresh();
+  // handle value changed
   this.shape_.handleValueChanged = function() {
-    if (self.rectX_)      self.rectX_.mvcEventValueChanged();
-    if (self.rectY_)      self.rectY_.mvcEventValueChanged();
-    if (self.rectWidth_)  self.rectWidth_.mvcEventValueChanged();
-    if (self.rectHeight_) self.rectHeight_.mvcEventValueChanged();
-    if (self.rectLeft_)   self.rectLeft_.mvcEventValueChanged();
-    if (self.rectTop_)    self.rectTop_.mvcEventValueChanged();
-    if (self.rectRight_)  self.rectRight_.mvcEventValueChanged();
-    if (self.rectBottom_) self.rectBottom_.mvcEventValueChanged();
+    if (self.rectX_)      self.rectX_.mvcUpdate();
+    if (self.rectY_)      self.rectY_.mvcUpdate();
+    if (self.rectWidth_)  self.rectWidth_.mvcUpdate();
+    if (self.rectHeight_) self.rectHeight_.mvcUpdate();
+    if (self.rectLeft_)   self.rectLeft_.mvcUpdate();
+    if (self.rectTop_)    self.rectTop_.mvcUpdate();
+    if (self.rectRight_)  self.rectRight_.mvcUpdate();
+    if (self.rectBottom_) self.rectBottom_.mvcUpdate();
   }
-***REMOVED***
-
-
-
-xrx.widget.ShapeRect.prototype.refresh = function() {
+  // handle deleted
+  this.shape_.handleDeleted = function() {
+    self.mvcDelete();
+  }
 ***REMOVED***
 
 
@@ -265,9 +284,9 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectX.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectX.prototype.mvcUpdate = function() {
   var x = this.rect_.getX();
-  xrx.mvc.Controller.updateValueLike(this, x.toString());
+  xrx.mvc.Controller.replaceValueLike(this, x.toString());
 ***REMOVED***
 
 
@@ -292,9 +311,9 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectY.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectY.prototype.mvcUpdate = function() {
   var y = this.rect_.getY();
-  xrx.mvc.Controller.updateValueLike(this, y.toString());
+  xrx.mvc.Controller.replaceValueLike(this, y.toString());
 ***REMOVED***
 
 
@@ -319,9 +338,9 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectWidth.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectWidth.prototype.mvcUpdate = function() {
   var width = this.rect_.getWidth();
-  xrx.mvc.Controller.updateValueLike(this, width.toString());
+  xrx.mvc.Controller.replaceValueLike(this, width.toString());
 ***REMOVED***
 
 
@@ -346,9 +365,9 @@ xrx.widget.ShapeRectHeight.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectHeight.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectHeight.prototype.mvcUpdate = function() {
   var height = this.rect_.getHeight();
-  xrx.mvc.Controller.updateValueLike(this, height.toString());
+  xrx.mvc.Controller.replaceValueLike(this, height.toString());
 ***REMOVED***
 
 
@@ -373,9 +392,9 @@ xrx.widget.ShapeRectLeft.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectLeft.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectLeft.prototype.mvcUpdate = function() {
   var left = this.rect_.getLeft();
-  xrx.mvc.Controller.updateValueLike(this, left.toString());
+  xrx.mvc.Controller.replaceValueLike(this, left.toString());
 ***REMOVED***
 
 
@@ -400,9 +419,9 @@ xrx.widget.ShapeRectTop.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectTop.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectTop.prototype.mvcUpdate = function() {
   var top = this.rect_.getTop();
-  xrx.mvc.Controller.updateValueLike(this, top.toString());
+  xrx.mvc.Controller.replaceValueLike(this, top.toString());
 ***REMOVED***
 
 
@@ -427,9 +446,9 @@ xrx.widget.ShapeRectRight.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectRight.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectRight.prototype.mvcUpdate = function() {
   var right = this.rect_.getRight();
-  xrx.mvc.Controller.updateValueLike(this, right.toString());
+  xrx.mvc.Controller.replaceValueLike(this, right.toString());
 ***REMOVED***
 
 
@@ -454,7 +473,7 @@ xrx.widget.ShapeRectBottom.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectBottom.prototype.mvcEventValueChanged = function() {
+xrx.widget.ShapeRectBottom.prototype.mvcUpdate = function() {
   var bottom = this.rect_.getBottom();
-  xrx.mvc.Controller.updateValueLike(this, bottom.toString());
+  xrx.mvc.Controller.replaceValueLike(this, bottom.toString());
 ***REMOVED***

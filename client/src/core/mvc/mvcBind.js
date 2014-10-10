@@ -19,15 +19,17 @@ xrx.mvc.Bind = function(element) {
 
 ***REMOVED***
 
-
-
   this.node_;
-
-
 
   this.recalculate()
 ***REMOVED***
 goog.inherits(xrx.mvc.Bind, xrx.mvc.ComponentModel);
+
+
+
+xrx.mvc.Bind.prototype.getNode = function(num) {
+  return this.node_[num];
+***REMOVED***
 
 
 
@@ -42,9 +44,7 @@ xrx.mvc.Bind.prototype.recalculate = function() {
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;
-
   while(node = result.iterateNext()) {
     this.node_.push(node);
  ***REMOVED*****REMOVED***
 ***REMOVED***
-

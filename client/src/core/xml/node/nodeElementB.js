@@ -24,8 +24,8 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED***
 ***REMOVED***
 xrx.node.ElementB = function(instance, key) {
-  goog.base(this, xrx.node.ELEMENT, instance, key);
 
+  goog.base(this, xrx.node.ELEMENT, instance, key);
 ***REMOVED***
 goog.inherits(xrx.node.ElementB, xrx.node.Binary);
 

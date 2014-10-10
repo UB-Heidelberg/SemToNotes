@@ -7,9 +7,11 @@ goog.provide('xrx.mvc.Controller');
 
 
 
+goog.require('xrx.mvc.Components');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
 goog.require('xrx.rebuild');
+goog.require('xrx.token');
 goog.require('xrx.token.Tokens');
 goog.require('xrx.xml.Update');
 
@@ -36,7 +38,22 @@ xrx.mvc.Controller.update = function(control, operation, token, update) {
 
 
 
-xrx.mvc.Controller.updateValueLike = function(control, update) {
+xrx.mvc.Controller.removeTagLike = function(control) {
+  var node = control.getNode();
+  var token = node.getToken();
+  switch(token.type()) {
+  case xrx.token.EMPTY_TAG:
+    xrx.mvc.Controller.removeEmptyTag(control, token);
+    break;
+  default:
+    throw Error('Remove operation not supported for this token-type.');
+    break;
+  }
+***REMOVED***
+
+
+
+xrx.mvc.Controller.replaceValueLike = function(control, update) {
   var node = control.getNode();
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
@@ -106,12 +123,9 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
 
 xrx.mvc.Controller.removeEmptyTag = function(control, token) {
   var node = control.getNode();
-
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
-
-  if (node instanceof xrx.node.Binary) xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(),
-      token, diff);
-
+  xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
+  xrx.mvc.Controller.recalculate();
   xrx.mvc.Controller.refresh(control);
 ***REMOVED***
 
@@ -131,17 +145,34 @@ xrx.mvc.Controller.removeStartEndTag = function(control, token1, token2) {
 
 
 ***REMOVED***
-***REMOVED*** Refreshes all other controls that are affected by the update.
+***REMOVED*** Recalculates all model components affected by the update.
+***REMOVED***
+xrx.mvc.Controller.recalculate = function() {
+  var contr;
+  for (var c in xrx.mvc.Mvc.getModelComponents()) {
+    contr = xrx.mvc.Mvc.getModelComponent(c);
+    if (contr instanceof xrx.mvc.Bind) {
+      contr.recalculate();
+    }
+  }
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Refreshes all view components affected by the update.
 ***REMOVED***
 xrx.mvc.Controller.refresh = function(control) {
+  xrx.mvc.Mvc.getViewComponent('c1').refresh();
+  return;
   var nIter;
+  var contr;
   var node = control.getNode();
 
   for (var c in xrx.mvc.Mvc.getViewComponents()) {
-    var contr = xrx.mvc.Mvc.getViewComponent(c);
+    contr = xrx.mvc.Mvc.getViewComponent(c);
     if (contr) nIter = contr.getNode();
-    if (contr && nIter && node.getInstance() === nIter.getInstance()) {
-
+    if (contr && nIter && node && node.getInstance() === nIter.getInstance()) {
       if (nIter.isSameAs(node) && c != control.getId()) {
         contr.refresh()
       } else if (node.getLabel().isDescendantOf(nIter.getLabel())

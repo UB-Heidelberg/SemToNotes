@@ -144,6 +144,7 @@ xrx.drawing.Modifiable.prototype.handleClick = function(e) {
     drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
     var confirm = window.confirm('Delete forever?');
     if (confirm) {
+      if (shape.handleDeleted) shape.handleDeleted();
       drawing.getLayerShape().removeShape(shape);
       drawing.getLayerShapeModify().removeShapes();
     }

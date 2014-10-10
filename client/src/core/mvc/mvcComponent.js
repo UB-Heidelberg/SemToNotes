@@ -6,6 +6,7 @@
 goog.provide('xrx.mvc.Component');
 
 
+
 goog.require('goog.events.EventHandler');
 goog.require('goog.ui.IdGenerator');
 
@@ -61,7 +62,7 @@ xrx.mvc.Component.prototype.handler_;
 
 
 ***REMOVED***
-***REMOVED*** Gets the component's element.
+***REMOVED*** Returns the component's element.
 ***REMOVED*** @return {Element} The element for the component.
 ***REMOVED***
 xrx.mvc.Component.prototype.getElement = function() {
@@ -71,7 +72,7 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 
 ***REMOVED***
-***REMOVED*** Gets the unique ID for the instance of this component. If the instance
+***REMOVED*** Returns the unique ID for the instance of this component. If the instance
 ***REMOVED*** doesn't already have an ID, generates one on the fly.
 ***REMOVED*** @return {string} Unique component ID.
 ***REMOVED***
@@ -83,7 +84,7 @@ xrx.mvc.Component.prototype.getId = function() {
 
 
 ***REMOVED***
-***REMOVED*** Gets the XPath expression found in the component's data-xrx-ref attribute.
+***REMOVED*** Returns the XPath expression found in the component's data-xrx-ref attribute.
 ***REMOVED*** @return {?string} The expression.
 ***REMOVED***
 xrx.mvc.Component.prototype.getRefExpression = function() {
@@ -93,7 +94,7 @@ xrx.mvc.Component.prototype.getRefExpression = function() {
 
 
 ***REMOVED***
-***REMOVED*** Gets the bind ID found in the component's data-xrx-bind attribute.
+***REMOVED*** Returns the bind ID found in the component's data-xrx-bind attribute.
 ***REMOVED*** @return {?string} The bind ID.
 ***REMOVED***
 xrx.mvc.Component.prototype.getBindId = function() {
@@ -103,7 +104,7 @@ xrx.mvc.Component.prototype.getBindId = function() {
 
 
 ***REMOVED***
-***REMOVED*** Gets the source URI found in the component's data-xrx-src attribute.
+***REMOVED*** Returns the source URI found in the component's data-xrx-src attribute.
 ***REMOVED*** @return {?string} The source URI.
 ***REMOVED***
 xrx.mvc.Component.prototype.getSrcUri = function() {
@@ -113,7 +114,7 @@ xrx.mvc.Component.prototype.getSrcUri = function() {
 
 
 ***REMOVED***
-***REMOVED*** Gets the bind referenced by the component.
+***REMOVED*** Returns the bind referenced by the component.
 ***REMOVED*** @return {?xrx.mvc.Bind} The bind.
 ***REMOVED***
 xrx.mvc.Component.prototype.getBind = function() {
