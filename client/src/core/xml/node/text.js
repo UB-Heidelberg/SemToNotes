@@ -195,7 +195,7 @@ xrx.node.Text.prototype.getXml = function() {
  */
 xrx.node.Text.prototype.getNodeAncestor = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Text].prototype.isDescendantOf,
-      true, new xrx.label());
+      true, new xrx.xml.Label());
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
@@ -238,7 +238,7 @@ xrx.node.Text.prototype.getNodeDescendant = function(test) {
 xrx.node.Text.prototype.getNodeFollowing = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Text].prototype.isPrecedingOf, false,
-      new xrx.label());
+      new xrx.xml.Label());
 };
 
 
@@ -248,7 +248,7 @@ xrx.node.Text.prototype.getNodeFollowing = function(test) {
  */
 xrx.node.Text.prototype.getNodePreceding = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Text].prototype.isFollowingOf, true,
-      new xrx.label());
+      new xrx.xml.Label());
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 

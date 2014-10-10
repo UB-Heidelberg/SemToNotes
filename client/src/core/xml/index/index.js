@@ -11,10 +11,10 @@ goog.provide('xrx.index.Namespace');
 
 goog.require('goog.array');
 goog.require('xrx.index.row');
-goog.require('xrx.label');
+goog.require('xrx.xml.Label');
 goog.require('xrx.token');
 goog.require('xrx.token.Tokens');
-goog.require('xrx.traverse');
+goog.require('xrx.xml.Traverse');
 
 
 
@@ -180,7 +180,7 @@ xrx.index.prototype.getRowByTag = function(token, opt_start) {
 
 /**
  * Returns a row label by overloading a index key.
- * @return {xrx.label} The label.
+ * @return {xrx.xml.Label} The label.
  */
 xrx.index.prototype.getLabel = function(key) {
   var row = this.rows_[key];
@@ -189,7 +189,7 @@ xrx.index.prototype.getLabel = function(key) {
   var label = [];
 
   label.unshift(row.getPosition());
-  if (key === 0 || key === this.getLastKey()) return new xrx.label(label);
+  if (key === 0 || key === this.getLastKey()) return new xrx.xml.Label(label);
 
   for(;;) {
     next = row.getParent();
@@ -199,7 +199,7 @@ xrx.index.prototype.getLabel = function(key) {
     last = next; // to avoid endless loop
   }
 
-  return new xrx.label(label);
+  return new xrx.xml.Label(label);
 };
 
 
@@ -296,7 +296,7 @@ xrx.index.prototype.iterPrevious = function() {
  * A namespace object. Namespace tokens as the only XML tokens
  * are statically extracted during index building.
  *
- * @param {xrx.label} opt_label The label of the namespace token.
+ * @param {xrx.xml.Label} opt_label The label of the namespace token.
  * @param {string} opt_prefix The namespace prefix.
  * @param {string} opt_uri The namespace URI.
  */
@@ -382,7 +382,7 @@ xrx.index.prototype.head = function() {
  * @param {!string} The XML string.
  */
 xrx.index.prototype.build = function(xml) {
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var row;
   var index = this;
   var parent;

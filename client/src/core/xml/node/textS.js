@@ -273,11 +273,11 @@ xrx.node.TextS.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.TextS.prototype.forward = function(stop) {
   var self = this;
-  var traverse = new xrx.traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.instance_.xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
@@ -312,11 +312,11 @@ xrx.node.TextS.prototype.forward = function(stop) {
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.TextS.prototype.backward = function(stop) {
   var self = this;
-  var traverse = new xrx.traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.instance_.xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {

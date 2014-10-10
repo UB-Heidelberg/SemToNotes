@@ -304,7 +304,7 @@ xrx.node.ElementB.prototype.getNodePrecedingSibling = xrx.node.Element.prototype
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
   var self = this;
@@ -340,7 +340,7 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
   var self = this;

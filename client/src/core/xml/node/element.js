@@ -130,7 +130,7 @@ xrx.node.Element.prototype.isPrecedingSiblingOf = function(node) {
 
 xrx.node.Element.prototype.getNodeAncestor = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Element].prototype.isDescendantOf,
-      true, new xrx.label());
+      true, new xrx.xml.Label());
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
@@ -159,7 +159,7 @@ xrx.node.Element.prototype.getNodeDescendant = function(test) {
 xrx.node.Element.prototype.getNodeFollowing = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isPrecedingOf, false,
-      new xrx.label());
+      new xrx.xml.Label());
 };
 
 
@@ -185,7 +185,7 @@ xrx.node.Element.prototype.getNodeParent = function(test) {
 
 xrx.node.Element.prototype.getNodePreceding = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Element].prototype.isFollowingOf, true,
-      new xrx.label());
+      new xrx.xml.Label());
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 

@@ -50,7 +50,7 @@ function test02identityFunctions() {
 
   // streaming node
   var dS = new xrx.node.DocumentS(instance);
-  var tag = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var tag = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
   var eS = new xrx.node.ElementS(instance, tag);
 
   assertEquals(false, dS.isSameAs(eS));

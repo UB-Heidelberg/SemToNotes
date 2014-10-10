@@ -3,20 +3,20 @@
  * document serialization.
  */
 
-goog.provide('xrx.serialize');
+goog.provide('xrx.xml.Serialize');
 
 
 
-goog.require('xrx.stream');
+goog.require('xrx.xml.Stream');
 goog.require('xrx.token');
-goog.require('xrx.traverse');
+goog.require('xrx.xml.Traverse');
 
 
 
 /**
  * Function module for XML serializazion.
  */
-xrx.serialize = function() {};
+xrx.xml.Serialize = function() {};
 
 
 
@@ -24,7 +24,7 @@ xrx.serialize = function() {};
  * Serialize a attribute token.
  * @return {string} The attribute token string.
  */
-xrx.serialize.attribute = function(qName, value) {
+xrx.xml.Serialize.attribute = function(qName, value) {
   return ' ' + qName + '="' + value.replace(/\"/g, "'") + '"';
 };
 
@@ -34,15 +34,15 @@ xrx.serialize.attribute = function(qName, value) {
  * Serialize a attribute token with namespace.
  * @return {string} The attribute token string.
  */
-xrx.serialize.attributeNs = function(nsPrefix, qName, namespaceUri) {
+xrx.xml.Serialize.attributeNs = function(nsPrefix, qName, namespaceUri) {
 
   if (nsPrefix === undefined || nsPrefix === "xmlns") {
 
-    return xrx.serialize.namespace('xmlns:' + qName.split(':')[0], namespaceUri) +
-        xrx.serialize.attribute(qName, '');
+    return xrx.xml.Serialize.namespace('xmlns:' + qName.split(':')[0], namespaceUri) +
+        xrx.xml.Serialize.attribute(qName, '');
   } else {
 
-    return xrx.serialize.attribute(qName, '');
+    return xrx.xml.Serialize.attribute(qName, '');
   }
 };
 
@@ -53,11 +53,11 @@ xrx.serialize.attributeNs = function(nsPrefix, qName, namespaceUri) {
  * @private
  * @return {string} The tag string.
  */
-xrx.serialize.tagNs_ = function(func, nsPrefix, localName, namespaceUri) {
+xrx.xml.Serialize.tagNs_ = function(func, nsPrefix, localName, namespaceUri) {
 
   if (nsPrefix === undefined) {
 
-    return func(localName, xrx.serialize.namespace('xmlns',
+    return func(localName, xrx.xml.Serialize.namespace('xmlns',
         namespaceUri));
   } else if (nsPrefix === 'xmlns') {
 
@@ -75,7 +75,7 @@ xrx.serialize.tagNs_ = function(func, nsPrefix, localName, namespaceUri) {
  * Serialize a start-tag token.
  * @return {string} The start-tag token string.
  */
-xrx.serialize.startTag = function(qName, opt_namespaces, opt_attributes) {
+xrx.xml.Serialize.startTag = function(qName, opt_namespaces, opt_attributes) {
   var namespaces = opt_namespaces || '';
   var attributes = opt_attributes || '';
 
@@ -88,8 +88,8 @@ xrx.serialize.startTag = function(qName, opt_namespaces, opt_attributes) {
  * Serialize a start-tag token with namespace.
  * @return {string} The start-tag token string.
  */
-xrx.serialize.startTagNs = function(nsPrefix, localName, namespaceUri) {
-  return xrx.serialize.tagNs_(xrx.serialize.startTag, nsPrefix, localName,
+xrx.xml.Serialize.startTagNs = function(nsPrefix, localName, namespaceUri) {
+  return xrx.xml.Serialize.tagNs_(xrx.xml.Serialize.startTag, nsPrefix, localName,
       namespaceUri);
 };
 
@@ -99,7 +99,7 @@ xrx.serialize.startTagNs = function(nsPrefix, localName, namespaceUri) {
  * Serialize a end-tag token.
  * @return {string} The end-tag token string.
  */
-xrx.serialize.endTag = function(qName) {
+xrx.xml.Serialize.endTag = function(qName) {
   return '</' + qName + '>';
 };
 
@@ -109,15 +109,15 @@ xrx.serialize.endTag = function(qName) {
  * Serialize a end-tag token with namespace.
  * @return {string} The end-tag token string.
  */
-xrx.serialize.endTagNs = function(nsPrefix, localName, namespaceUri) {
+xrx.xml.Serialize.endTagNs = function(nsPrefix, localName, namespaceUri) {
 
   if (nsPrefix === undefined || nsPrefix === 'xmlns') {
 
-    return xrx.serialize.endTag(localName);
+    return xrx.xml.Serialize.endTag(localName);
   } else {
     var colonIndex = nsPrefix.indexOf(':');
 
-    return xrx.serialize.endTag(nsPrefix.substr(colonIndex + 1) + ':' + localName);
+    return xrx.xml.Serialize.endTag(nsPrefix.substr(colonIndex + 1) + ':' + localName);
   }
 };
 
@@ -127,7 +127,7 @@ xrx.serialize.endTagNs = function(nsPrefix, localName, namespaceUri) {
  * Serialize a start-empty-tag token.
  * @return {string} The start-empty-tag token string.
  */
-xrx.serialize.startEmptyTag = function(qName, opt_namespaces, opt_attributes) {
+xrx.xml.Serialize.startEmptyTag = function(qName, opt_namespaces, opt_attributes) {
   var namespaces = opt_namespaces || '';
   var attributes = opt_attributes || '';
 
@@ -140,7 +140,7 @@ xrx.serialize.startEmptyTag = function(qName, opt_namespaces, opt_attributes) {
  * Serialize a empty-tag token.
  * @return {string} The empty-tag token string.
  */
-xrx.serialize.emptyTag = function(qName, opt_namespaces, opt_attributes) {
+xrx.xml.Serialize.emptyTag = function(qName, opt_namespaces, opt_attributes) {
   var namespaces = opt_namespaces || '';
   var attributes = opt_attributes || '';
 
@@ -153,8 +153,8 @@ xrx.serialize.emptyTag = function(qName, opt_namespaces, opt_attributes) {
  * Serialize a empty-tag token with namespace.
  * @return {string} The empty-tag token string.
  */
-xrx.serialize.emptyTagNs = function(nsPrefix, localName, namespaceUri) {
-  return xrx.serialize.tagNs_(xrx.serialize.emptyTag, nsPrefix, localName,
+xrx.xml.Serialize.emptyTagNs = function(nsPrefix, localName, namespaceUri) {
+  return xrx.xml.Serialize.tagNs_(xrx.xml.Serialize.emptyTag, nsPrefix, localName,
       namespaceUri);
 };
 
@@ -164,7 +164,7 @@ xrx.serialize.emptyTagNs = function(nsPrefix, localName, namespaceUri) {
  * Serialize a namespace token.
  * @return {string} The namespace token string.
  */
-xrx.serialize.namespace = function(prefix, uri) {
+xrx.xml.Serialize.namespace = function(prefix, uri) {
   return ' ' + prefix + '="' + uri + '"';
 };
 
@@ -173,7 +173,7 @@ xrx.serialize.namespace = function(prefix, uri) {
 /**
  *
  */
-xrx.serialize.indent = {};
+xrx.xml.Serialize.indent = {};
 
 
 
@@ -181,8 +181,8 @@ xrx.serialize.indent = {};
  * Serialize a XML document with indentation in forward direction.
  * @return {string} The indented XML document.
  */
-xrx.serialize.indent.forward = function(xml, indent, opt_start, opt_maxLines) {
-  var traverse = new xrx.traverse(xml);
+xrx.xml.Serialize.indent.forward = function(xml, indent, opt_start, opt_maxLines) {
+  var traverse = new xrx.xml.Traverse(xml);
   var lastToken = opt_start ? opt_start.type() : xrx.token.UNDEFINED;
   var output = '';
   var lines = 0;
@@ -260,8 +260,8 @@ xrx.serialize.indent.forward = function(xml, indent, opt_start, opt_maxLines) {
  * Serialize a XML document with indentation in backward direction.
  * @return {string} The indented XML document.
  */
-xrx.serialize.indent.backward = function(xml, indent, opt_start, opt_maxLines) {
-  var traverse = new xrx.traverse(xml);
+xrx.xml.Serialize.indent.backward = function(xml, indent, opt_start, opt_maxLines) {
+  var traverse = new xrx.xml.Traverse(xml);
   var lastToken = opt_start ? opt_start.type() : xrx.token.UNDEFINED;
   var output = '';
   var lines = 0;

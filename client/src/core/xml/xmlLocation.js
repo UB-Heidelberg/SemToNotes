@@ -1,9 +1,9 @@
 /**
- * @fileoverview A class which represents the location of a token 
- * in a XML stream.
+ * @fileoverview A class representing the location of a token 
+ *     in a XML stream.
  */
 
-goog.provide('xrx.location');
+goog.provide('xrx.xml.Location');
 
 
 
@@ -15,13 +15,9 @@ goog.provide('xrx.location');
  * @param {!number} length The number of characters occupied.
  * @constructor
  */
-xrx.location = function(offset, length) {
-
-
+xrx.xml.Location = function(offset, length) {
 
   this.offset = offset;
-
-
 
   this.length = length;
 };
@@ -29,12 +25,11 @@ xrx.location = function(offset, length) {
 
 
 /**
- * Returns the XML string of the location in a
- * XML stream.
+ * Returns the XML string of the location in a XML stream.
  * 
  * @param {!string} stream The XML stream.
  * @return {!string} The XML string occupied by the location
  */
-xrx.location.prototype.xml = function(stream) {
+xrx.xml.Location.prototype.xml = function(stream) {
   return stream.substr(this.offset, this.length);
 };

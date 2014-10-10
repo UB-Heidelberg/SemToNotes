@@ -10,7 +10,7 @@ goog.provide('xrx.node.AttributeS');
 goog.require('xrx.node');
 goog.require('xrx.node.Attribute');
 goog.require('xrx.nodeS');
-goog.require('xrx.stream');
+goog.require('xrx.xml.Stream');
 
 
 
@@ -130,7 +130,7 @@ xrx.node.AttributeS.prototype.isPrecedingSiblingOf = xrx.node.Attribute.prototyp
 xrx.node.AttributeS.prototype.getName = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
-  var stream = new xrx.stream(xml);
+  var stream = new xrx.xml.Stream(xml);
   var loc = stream.attrName(xml, this.num_);
 
   return loc.xml(xml);

@@ -14,9 +14,9 @@ goog.require('xrx.index');
 goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.node');
 goog.require('xrx.node.DocumentB');
-goog.require('xrx.parse');
-goog.require('xrx.stream');
-goog.require('xrx.pilot');
+goog.require('xrx.xml.Parser');
+goog.require('xrx.xml.Stream');
+goog.require('xrx.xml.Pilot');
 
 
 
@@ -48,9 +48,9 @@ xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
   this.xml_ = undefined;
   this.xml_ = tmp;
   this.stream_ = undefined;
-  this.stream_ = new xrx.stream(this.xml_);
+  this.stream_ = new xrx.xml.Stream(this.xml_);
   this.pilot_ = undefined;
-  this.pilot_ = new xrx.pilot(this.xml_);
+  this.pilot_ = new xrx.xml.Pilot(this.xml_);
 };
 
 
@@ -59,11 +59,11 @@ xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
  * 
  */
 xrx.mvc.Instance.prototype.getDataInline = function() {
-  var parse = new xrx.parse();
+  var parse = new xrx.xml.Parser();
 
   this.xml_ = parse.normalize(goog.dom.getRawTextContent(this.getElement()));
-  this.stream_ = new xrx.stream(this.xml_);
-  this.pilot_ = new xrx.pilot(this.xml_);
+  this.stream_ = new xrx.xml.Stream(this.xml_);
+  this.pilot_ = new xrx.xml.Pilot(this.xml_);
 };
 
 
@@ -72,11 +72,11 @@ xrx.mvc.Instance.prototype.getDataInline = function() {
  * 
  */
 xrx.mvc.Instance.prototype.getDataRemote = function(xml) {
-  var parse = new xrx.parse();
+  var parse = new xrx.xml.Parser();
 
   this.xml_ = parse.normalize(xml);
-  this.stream_ = new xrx.stream(this.xml_);
-  this.pilot_ = new xrx.pilot(this.xml_);
+  this.stream_ = new xrx.xml.Stream(this.xml_);
+  this.pilot_ = new xrx.xml.Pilot(this.xml_);
 };
 
 
@@ -103,7 +103,7 @@ xrx.mvc.Instance.prototype.xml = function(xml) {
 
 
 /**
- * @return {xrx.stream} The stream.
+ * @return {xrx.xml.Stream} The stream.
  */
 xrx.mvc.Instance.prototype.getStream = function() {
   return this.stream_;
@@ -112,7 +112,7 @@ xrx.mvc.Instance.prototype.getStream = function() {
 
 
 /**
- * @return {xrx.pilot} The pilot.
+ * @return {xrx.xml.Pilot} The pilot.
  */
 xrx.mvc.Instance.prototype.getPilot = function() {
   return this.pilot_;
