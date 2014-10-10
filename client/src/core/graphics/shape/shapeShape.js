@@ -168,6 +168,6 @@ xrx.shape.Shape.prototype.create_ = function() {
   var primitiveShape = this.drawing_.getGraphics()[this.engineClass_];
   this.engineShape_ = primitiveShape.create(this.drawing_.getCanvas());
   this.engineShape_.setStrokeColor('#47D1FF');
-  this.engineShape_.setStrokeWidth(1.);
+  this.engineShape_.setStrokeWidth(3.);
   this.engineShape_.setFillOpacity(0.);
 ***REMOVED***
