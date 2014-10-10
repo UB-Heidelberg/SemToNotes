@@ -61,6 +61,7 @@ xrx.mvc.ComponentView.prototype.getNodeBind = function(num) {
 
 xrx.mvc.ComponentView.prototype.getNodeRef = function() {
   var context = this.getRepeat().getNode(this.getRepeatIndex());
+  if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getInstance(), context.getToken());
   var result = xrx.xpath.evaluate(this.getRefExpression(), nodeS, null,
