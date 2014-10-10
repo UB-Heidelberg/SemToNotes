@@ -2,7 +2,7 @@
  * @fileoverview A node implementation for streaming XPath evaluation.
  */
 
-goog.provide('xrx.nodeS');
+goog.provide('xrx.node.Streaming');
 
 
 
@@ -14,7 +14,7 @@ goog.require('xrx.node.Node');
 /**
  * @constructor
  */
-xrx.nodeS = function(type, instance, token) {
+xrx.node.Streaming = function(type, instance, token) {
   goog.base(this, type, instance);
 
   /**
@@ -34,33 +34,33 @@ xrx.nodeS = function(type, instance, token) {
     Text: 'TextS'
   };
 };
-goog.inherits(xrx.nodeS, xrx.node.Node);
+goog.inherits(xrx.node.Streaming, xrx.node.Node);
 
 
 
 /**
  * 
  */
-xrx.nodeS.prototype.getToken = goog.abstractMethod;
+xrx.node.Streaming.prototype.getToken = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeS.prototype.getLabel = goog.abstractMethod;
+xrx.node.Streaming.prototype.getLabel = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeS.prototype.getOffset = goog.abstractMethod;
+xrx.node.Streaming.prototype.getOffset = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeS.prototype.getLength = goog.abstractMethod;
+xrx.node.Streaming.prototype.getLength = goog.abstractMethod;
 

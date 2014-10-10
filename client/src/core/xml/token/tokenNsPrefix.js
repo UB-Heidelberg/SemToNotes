@@ -6,7 +6,7 @@ goog.provide('xrx.token.NsPrefix');
 
 
 
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 
 
 
@@ -18,4 +18,4 @@ goog.require('xrx.token.Abstract');
 xrx.token.NsPrefix = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.NS_PREFIX, label, opt_offset, opt_length);
 };
-goog.inherits(xrx.token.NsPrefix, xrx.token.Abstract);
+goog.inherits(xrx.token.NsPrefix, xrx.token.Token);

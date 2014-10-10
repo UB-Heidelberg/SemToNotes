@@ -3,7 +3,7 @@
  * XML model.
  */
 
-goog.provide('xrx.nodeB');
+goog.provide('xrx.node.Binary');
 
 
 goog.require('xrx.node');
@@ -17,7 +17,7 @@ goog.require('xrx.xpath.NodeSet');
  * Base class to construct a binary node.
  * @constructor
  */
-xrx.nodeB = function(type, instance, key) {
+xrx.node.Binary = function(type, instance, key) {
   goog.base(this, type, instance);
 
   /**
@@ -37,42 +37,42 @@ xrx.nodeB = function(type, instance, key) {
     Text: 'TextB'
   };
 };
-goog.inherits(xrx.nodeB, xrx.node.Node);
+goog.inherits(xrx.node.Binary, xrx.node.Node);
 
 
 
 /**
  * 
  */
-xrx.nodeB.prototype.getToken = goog.abstractMethod;
+xrx.node.Binary.prototype.getToken = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeB.prototype.getLabel = goog.abstractMethod;
+xrx.node.Binary.prototype.getLabel = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeB.prototype.getOffset = goog.abstractMethod;
+xrx.node.Binary.prototype.getOffset = goog.abstractMethod;
 
 
 
 /**
  * 
  */
-xrx.nodeB.prototype.getLength = goog.abstractMethod;
+xrx.node.Binary.prototype.getLength = goog.abstractMethod;
 
 
 
 /**
  * @return {!integer}
  */
-xrx.nodeB.prototype.getKey = function() {
+xrx.node.Binary.prototype.getKey = function() {
   return this.key_;
 };
 
@@ -81,15 +81,15 @@ xrx.nodeB.prototype.getKey = function() {
 /**
  * @return {!xrx.index}
  */
-xrx.nodeB.prototype.getIndex = function() {
+xrx.node.Binary.prototype.getIndex = function() {
   return this.instance_.getIndex();
 };
 
 
 /**
- * @return {!xrx.index.row}
+ * @return {!xrx.index.Row}
  */
-xrx.nodeB.prototype.getRow = function() {
+xrx.node.Binary.prototype.getRow = function() {
   return this.getIndex().getRowByKey(this.key_);
 };
 

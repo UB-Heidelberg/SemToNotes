@@ -7,7 +7,7 @@ goog.provide('xrx.token.EndTag');
 
 
 goog.require('xrx.token');
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 
 
 
@@ -19,7 +19,7 @@ goog.require('xrx.token.Abstract');
 xrx.token.EndTag = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.END_TAG, label, opt_offset, opt_length);
 };
-goog.inherits(xrx.token.EndTag, xrx.token.Abstract);
+goog.inherits(xrx.token.EndTag, xrx.token.Token);
 
 
 

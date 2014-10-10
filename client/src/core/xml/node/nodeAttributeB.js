@@ -8,7 +8,7 @@ goog.provide('xrx.node.AttributeB');
 
 goog.require('xrx.node');
 goog.require('xrx.node.Attribute');
-goog.require('xrx.nodeB');
+goog.require('xrx.node.Binary');
 goog.require('xrx.xpath.NodeSet');
 
 
@@ -27,7 +27,7 @@ xrx.node.AttributeB = function(num, parent) {
 
   this.parent_ = parent;
 };
-goog.inherits(xrx.node.AttributeB, xrx.nodeB);
+goog.inherits(xrx.node.AttributeB, xrx.node.Binary);
 
 
 

@@ -8,7 +8,7 @@ goog.provide('xrx.node.TextS');
 
 goog.require('xrx.node');
 goog.require('xrx.node.Text');
-goog.require('xrx.nodeS');
+goog.require('xrx.node.Streaming');
 goog.require('xrx.token');
 goog.require('xrx.token.NotTag');
 
@@ -33,7 +33,7 @@ xrx.node.TextS = function(instance, tag, length) {
 
   this.length_ = length;
 };
-goog.inherits(xrx.node.TextS, xrx.nodeS);
+goog.inherits(xrx.node.TextS, xrx.node.Streaming);
 
 
 

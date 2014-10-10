@@ -8,7 +8,7 @@ goog.provide('xrx.node.DocumentS');
 
 
 goog.require('xrx.node');
-goog.require('xrx.nodeS');
+goog.require('xrx.node.Streaming');
 goog.require('xrx.node.Document');
 goog.require('xrx.xml.Traverse');
 goog.require('xrx.xpath.NodeSet');
@@ -18,7 +18,7 @@ goog.require('xrx.xpath.NodeSet');
 xrx.node.DocumentS = function(instance) {
   goog.base(this, xrx.node.DOCUMENT, instance);
 };
-goog.inherits(xrx.node.DocumentS, xrx.nodeS);
+goog.inherits(xrx.node.DocumentS, xrx.node.Streaming);
 
 
 

@@ -6,7 +6,7 @@ goog.provide('xrx.token.NsUri');
 
 
 
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 
 
 
@@ -18,4 +18,4 @@ goog.require('xrx.token.Abstract');
 xrx.token.NsUri = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.NS_URI, label, opt_offset, opt_length);
 };
-goog.inherits(xrx.token.NsUri, xrx.token.Abstract);
+goog.inherits(xrx.token.NsUri, xrx.token.Token);
