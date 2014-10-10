@@ -57,6 +57,13 @@ xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
 
 
 xrx.widget.ShapePolygon.prototype.refresh = function() {
+  console.log('test');
+};
+
+
+
+xrx.widget.ShapePolygon.prototype.mvcDelete = function() {
+  xrx.mvc.Controller.removeTagLike(this);
 };
 
 
@@ -65,9 +72,15 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   var self = this;
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
+  // refresh coordinates
+  this.shapePolygonCoords_.refresh();
   // handle value changes
   this.shape_.handleValueChanged = function() {
-    self.shapePolygonCoords_.mvcEventValueChanged();
+    self.shapePolygonCoords_.mvcUpdate();
+  }
+  // handle deleted
+  this.shape_.handleDeleted = function() {
+    self.mvcDelete();
   }
 };
 
@@ -108,7 +121,7 @@ xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapePolygonCoords.prototype.mvcEventValueChanged = function(coords) {
-  xrx.mvc.Controller.updateValueLike(this, this.polygon_.serializeCoords(
+xrx.widget.ShapePolygonCoords.prototype.mvcUpdate = function(coords) {
+  xrx.mvc.Controller.replaceValueLike(this, this.polygon_.serializeCoords(
       this.polygon_.getShape().getCoords()));
 };

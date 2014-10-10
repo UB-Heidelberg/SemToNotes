@@ -6,6 +6,7 @@
 goog.provide('xrx.mvc.Component');
 
 
+
 goog.require('goog.events.EventHandler');
 goog.require('goog.ui.IdGenerator');
 
@@ -61,7 +62,7 @@ xrx.mvc.Component.prototype.handler_;
 
 
 /**
- * Gets the component's element.
+ * Returns the component's element.
  * @return {Element} The element for the component.
  */
 xrx.mvc.Component.prototype.getElement = function() {
@@ -71,7 +72,7 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 
 /**
- * Gets the unique ID for the instance of this component. If the instance
+ * Returns the unique ID for the instance of this component. If the instance
  * doesn't already have an ID, generates one on the fly.
  * @return {string} Unique component ID.
  */
@@ -83,7 +84,7 @@ xrx.mvc.Component.prototype.getId = function() {
 
 
 /**
- * Gets the XPath expression found in the component's data-xrx-ref attribute.
+ * Returns the XPath expression found in the component's data-xrx-ref attribute.
  * @return {?string} The expression.
  */
 xrx.mvc.Component.prototype.getRefExpression = function() {
@@ -93,7 +94,7 @@ xrx.mvc.Component.prototype.getRefExpression = function() {
 
 
 /**
- * Gets the bind ID found in the component's data-xrx-bind attribute.
+ * Returns the bind ID found in the component's data-xrx-bind attribute.
  * @return {?string} The bind ID.
  */
 xrx.mvc.Component.prototype.getBindId = function() {
@@ -103,7 +104,7 @@ xrx.mvc.Component.prototype.getBindId = function() {
 
 
 /**
- * Gets the source URI found in the component's data-xrx-src attribute.
+ * Returns the source URI found in the component's data-xrx-src attribute.
  * @return {?string} The source URI.
  */
 xrx.mvc.Component.prototype.getSrcUri = function() {
@@ -113,7 +114,7 @@ xrx.mvc.Component.prototype.getSrcUri = function() {
 
 
 /**
- * Gets the bind referenced by the component.
+ * Returns the bind referenced by the component.
  * @return {?xrx.mvc.Bind} The bind.
  */
 xrx.mvc.Component.prototype.getBind = function() {
