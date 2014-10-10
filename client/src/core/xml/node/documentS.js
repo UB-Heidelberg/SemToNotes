@@ -10,7 +10,7 @@ goog.provide('xrx.node.DocumentS');
 goog.require('xrx.node');
 goog.require('xrx.nodeS');
 goog.require('xrx.node.Document');
-goog.require('xrx.traverse');
+goog.require('xrx.xml.Traverse');
 goog.require('xrx.xpath.NodeSet');
 
 
@@ -96,7 +96,7 @@ xrx.node.DocumentS.prototype.getNamespaceUri = xrx.node.Document.prototype.getNa
 
 xrx.node.DocumentS.prototype.getStringValue = function() {
   var xml = this.instance_.xml();
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var string = '';
 ***REMOVED***
 
@@ -168,11 +168,11 @@ xrx.node.DocumentS.prototype.getNodePrecedingSibling = xrx.node.Document.prototy
 
 
 ***REMOVED***
-***REMOVED*** @param {!xrx.label}
+***REMOVED*** @param {!xrx.xml.Label}
 ***REMOVED***
 xrx.node.DocumentS.prototype.forward = function(stop) {
 ***REMOVED***
-  var traverse = new xrx.traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.instance_.xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {

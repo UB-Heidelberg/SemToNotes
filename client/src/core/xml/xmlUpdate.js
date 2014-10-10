@@ -3,12 +3,12 @@
 ***REMOVED*** on XML tokens.
 ***REMOVED***
 
-goog.provide('xrx.update');
+goog.provide('xrx.xml.Update');
 
 
 
-goog.require('xrx.serialize');
-goog.require('xrx.stream');
+goog.require('xrx.xml.Serialize');
+***REMOVED***
 goog.require('xrx.token');
 
 
@@ -17,7 +17,7 @@ goog.require('xrx.token');
 ***REMOVED*** Shared function for all update operations.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.update = function() {***REMOVED***
+xrx.xml.Update = function() {***REMOVED***
 
 
 
@@ -25,7 +25,7 @@ xrx.update = function() {***REMOVED***
 ***REMOVED*** Shared function for all replace operations.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.update.replace_ = function(instance, token, xml) {
+xrx.xml.Update.replace_ = function(instance, token, xml) {
   var diff = xml.length - token.length();
   instance.update(token.offset(), token.length(), xml);
   token.length(xml.length);
@@ -38,7 +38,7 @@ xrx.update.replace_ = function(instance, token, xml) {
 ***REMOVED*** Shared function for all insert operations.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.update.insert_ = function(instance, offset, xml) {
+xrx.xml.Update.insert_ = function(instance, offset, xml) {
   instance.update(offset, 0, xml);
   return xml.length;
 ***REMOVED***
@@ -49,7 +49,7 @@ xrx.update.insert_ = function(instance, offset, xml) {
 ***REMOVED*** Shared function for all remove operations.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.update.remove_ = function(instance, offset, length) {
+xrx.xml.Update.remove_ = function(instance, offset, length) {
   instance.update(offset, length, '');
   return -length;
 ***REMOVED***
@@ -63,13 +63,13 @@ xrx.update.remove_ = function(instance, offset, length) {
 ***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
 ***REMOVED*** @param {!string} string The new not-tag string. 
 ***REMOVED***
-xrx.update.replaceNotTag = function(instance, target, string) {
-  return xrx.update.replace_(instance, target, string);
+xrx.xml.Update.replaceNotTag = function(instance, target, string) {
+  return xrx.xml.Update.replace_(instance, target, string);
 ***REMOVED***
 
 
 
-xrx.update.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
+xrx.xml.Update.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
   //TODO: implement this
 ***REMOVED***
 
@@ -82,8 +82,8 @@ xrx.update.replaceTagName = function(instance, token, localName, opt_namespaceUr
 ***REMOVED*** @param {!xrx.token.AttrValue} target The token to be replaced.
 ***REMOVED*** @param {!string} token The new value. 
 ***REMOVED***
-xrx.update.replaceAttrValue = function(instance, target, value) {
-  return xrx.update.replace_(instance, target, value);
+xrx.xml.Update.replaceAttrValue = function(instance, target, value) {
+  return xrx.xml.Update.replace_(instance, target, value);
 ***REMOVED***
 
 
@@ -96,8 +96,8 @@ xrx.update.replaceAttrValue = function(instance, target, value) {
 ***REMOVED*** @param {!integer} target The offset relative to the not-tag token.
 ***REMOVED*** @param {!string} string The new not-tag string. 
 ***REMOVED***
-xrx.update.insertNotTag = function(instance, target, offset, string) {
-  return xrx.update.insert_(instance, target.offset() + offset, string);
+xrx.xml.Update.insertNotTag = function(instance, target, offset, string) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset, string);
 ***REMOVED***
 
 
@@ -111,18 +111,18 @@ xrx.update.insertNotTag = function(instance, target, offset, string) {
 ***REMOVED*** @param {!string} localName The local name of the new token.
 ***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new token.
 ***REMOVED***
-xrx.update.insertEmptyTag = function(instance, target, offset, localName,
+xrx.xml.Update.insertEmptyTag = function(instance, target, offset, localName,
     opt_namespaceUri) {
   var diff;
 
   if (!opt_namespaceUri) {
-    diff = xrx.update.insert_(instance, target.offset() + offset,
-        xrx.serialize.emptyTag(localName));
+    diff = xrx.xml.Update.insert_(instance, target.offset() + offset,
+        xrx.xml.Serialize.emptyTag(localName));
   } else {
     var nsPrefix = instance.getIndex().getNamespacePrefix(target, opt_namespaceUri);
 
-    diff = xrx.update.insert_(instance, target.offset() + offset,
-        xrx.serialize.emptyTagNs(nsPrefix, localName, opt_namespaceUri));
+    diff = xrx.xml.Update.insert_(instance, target.offset() + offset,
+        xrx.xml.Serialize.emptyTagNs(nsPrefix, localName, opt_namespaceUri));
 
     //TODO: add namespace declaration to index
   }
@@ -145,25 +145,25 @@ xrx.update.insertEmptyTag = function(instance, target, offset, localName,
 ***REMOVED*** @param {!string} localName The local name of the new token.
 ***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new token.
 ***REMOVED***
-xrx.update.insertStartEndTag = function(instance, target1, target2, offset1, offset2,
+xrx.xml.Update.insertStartEndTag = function(instance, target1, target2, offset1, offset2,
     localName, opt_namespaceUri) {
   var diffs;
   var diff2;
 
   if (!opt_namespaceUri) {
 
-    diff1 = xrx.update.insert_(instance, target2.offset() + offset2,
-        xrx.serialize.endTag(localName));
-    diff2 = xrx.update.insert_(instance, target1.offset() + offset1,
-        xrx.serialize.startTag(localName));
+    diff1 = xrx.xml.Update.insert_(instance, target2.offset() + offset2,
+        xrx.xml.Serialize.endTag(localName));
+    diff2 = xrx.xml.Update.insert_(instance, target1.offset() + offset1,
+        xrx.xml.Serialize.startTag(localName));
   } else {
     var nsPrefix = instance.getIndex().getNamespacePrefix(target1, opt_namespaceUri);
 
-    diff1 = xrx.update.insert_(instance, target2.offset() + offset2,
-        xrx.serialize.endTagNs(nsPrefix, localName, opt_namespaceUri));
+    diff1 = xrx.xml.Update.insert_(instance, target2.offset() + offset2,
+        xrx.xml.Serialize.endTagNs(nsPrefix, localName, opt_namespaceUri));
 
-    diff2 = xrx.update.insert_(instance, target1.offset() + offset1,
-        xrx.serialize.startTagNs(nsPrefix, localName, opt_namespaceUri));
+    diff2 = xrx.xml.Update.insert_(instance, target1.offset() + offset1,
+        xrx.xml.Serialize.startTagNs(nsPrefix, localName, opt_namespaceUri));
 
     //TODO: add namespace declaration to index
   }
@@ -173,14 +173,14 @@ xrx.update.insertStartEndTag = function(instance, target1, target2, offset1, off
 
 
 
-xrx.update.insertFragment = function(instance, target, offset, localName,
+xrx.xml.Update.insertFragment = function(instance, target, offset, localName,
     opt_namespaceUri) {
   //TODO: implement this
 ***REMOVED***
 
 
 
-xrx.update.insertMixed = function(instance, target, offset, localName,
+xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
     opt_namespaceUri) {
   //TODO: implement this
 ***REMOVED***
@@ -196,14 +196,14 @@ xrx.update.insertMixed = function(instance, target, offset, localName,
 ***REMOVED*** @param {!string} qName The qualified name of the new attribute.
 ***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new attribute.
 ***REMOVED***
-xrx.update.insertAttribute = function(instance, parent, qName,
+xrx.xml.Update.insertAttribute = function(instance, parent, qName,
     opt_namespaceUri) {
   var diff;
   var loc = instance.getStream().tagName(parent.xml(instance.xml()));
 
   if (!opt_namespaceUri) {
-    diff = xrx.update.insert_(instance, parent.offset() + loc.offset +
-        loc.length, xrx.serialize.attribute(qName, ''));
+    diff = xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
+        loc.length, xrx.xml.Serialize.attribute(qName, ''));
   } else {
     var nsPrefix1 = instance.getIndex().getNamespacePrefix(parent, opt_namespaceUri);
     var nsPrefix2 = qName.split(':')[0];
@@ -211,8 +211,8 @@ xrx.update.insertAttribute = function(instance, parent, qName,
         nsPrefix1 !== 'xmlns') throw Error('Prefix ' + nsPrefix2 +
         ' is not bound to namespace ' + opt_namespaceUri + '.');
 
-    diff = xrx.update.insert_(instance, parent.offset() + loc.offset +
-        loc.length, xrx.serialize.attributeNs(nsPrefix1, qName, opt_namespaceUri));
+    diff = xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
+        loc.length, xrx.xml.Serialize.attributeNs(nsPrefix1, qName, opt_namespaceUri));
 
     //TODO: add namespace declaration to index
   }
@@ -230,8 +230,8 @@ xrx.update.insertAttribute = function(instance, parent, qName,
 ***REMOVED*** @param {!integer} target The offset relative to the not-tag token.
 ***REMOVED*** @param {!integer} string The number of characters to be removed. 
 ***REMOVED***
-xrx.update.reduceNotTag = function(instance, target, offset, length) {
-  return xrx.update.remove_(instance, target.offset() + offset, length);
+xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
+  return xrx.xml.Update.remove_(instance, target.offset() + offset, length);
 ***REMOVED***
 
 
@@ -242,8 +242,8 @@ xrx.update.reduceNotTag = function(instance, target, offset, length) {
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.EmptyTag} target The tag to be removed.
 ***REMOVED***
-xrx.update.removeEmptyTag = function(instance, token) {
-  var diff = xrx.update.remove_(instance, token.offset(), token.length());
+xrx.xml.Update.removeEmptyTag = function(instance, token) {
+  var diff = xrx.xml.Update.remove_(instance, token.offset(), token.length());
 
   //TODO: remove namespace declaration from index
 
@@ -260,9 +260,9 @@ xrx.update.removeEmptyTag = function(instance, token) {
 ***REMOVED*** @param {!xrx.token.StartTag} token1 The start-tag to be removed.
 ***REMOVED*** @param {!xrx.token.EndTag} token2 The end-tag to be removed.
 ***REMOVED***
-xrx.update.removeStartEndTag = function(instance, token1, token2) {
-  var diff2 = xrx.update.remove_(instance, token2.offset(), token2.length());
-  var diff1 = xrx.update.remove_(instance, token1.offset(), token1.length());
+xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
+  var diff2 = xrx.xml.Update.remove_(instance, token2.offset(), token2.length());
+  var diff1 = xrx.xml.Update.remove_(instance, token1.offset(), token1.length());
 
   //TODO: remove namespace declaration from index
 
@@ -278,7 +278,7 @@ xrx.update.removeStartEndTag = function(instance, token1, token2) {
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.Fragment} token The tag to be removed.
 ***REMOVED***
-xrx.update.removeFragment = function(instance, token) {
+xrx.xml.Update.removeFragment = function(instance, token) {
   //TODO: implement this
 ***REMOVED***
 
@@ -290,7 +290,7 @@ xrx.update.removeFragment = function(instance, token) {
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.Mixed} token The token to be removed.
 ***REMOVED***
-xrx.update.removeMixed = function(instance, token) {
+xrx.xml.Update.removeMixed = function(instance, token) {
   //TODO: implement this
 ***REMOVED***
 
@@ -302,8 +302,8 @@ xrx.update.removeMixed = function(instance, token) {
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.Attribute} token The token to be removed.
 ***REMOVED***
-xrx.update.removeAttribute = function(instance, token) {
-  var diff = xrx.update.remove_(instance, token.offset() - 1, token.length() + 1);
+xrx.xml.Update.removeAttribute = function(instance, token) {
+  var diff = xrx.xml.Update.remove_(instance, token.offset() - 1, token.length() + 1);
 
   return diff;
 ***REMOVED***

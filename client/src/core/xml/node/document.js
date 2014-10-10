@@ -7,7 +7,7 @@ goog.provide('xrx.node.Document');
 
 
 
-goog.require('xrx.label');
+goog.require('xrx.xml.Label');
 goog.require('xrx.node');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
@@ -30,7 +30,7 @@ xrx.node.Document.prototype.getToken = function() {
 
 
 xrx.node.Document.prototype.getLabel = function() {
-  return new xrx.label();
+  return new xrx.xml.Label();
 ***REMOVED***
 
 
@@ -104,7 +104,7 @@ xrx.node.Document.prototype.isFollowingSiblingOf = function(node) {
 
 xrx.node.Document.prototype.isParentOf = function(node) {
   return node.getType() === xrx.node.ELEMENT && node.getLabel().sameAs(
-      new xrx.label([1]));
+      new xrx.xml.Label([1]));
 ***REMOVED***
 
 

@@ -16,6 +16,6 @@ goog.require('xrx.token.Abstract');
 ***REMOVED*** @extends xrx.token
 ***REMOVED***
 xrx.token.Root = function() {
-  goog.base(this, xrx.token.ROOT, new xrx.label(), 0, 0);
+  goog.base(this, xrx.token.ROOT, new xrx.xml.Label(), 0, 0);
 ***REMOVED***
 goog.inherits(xrx.token.Root, xrx.token.Abstract);

@@ -7,7 +7,7 @@ goog.provide('xrx.node.TextB');
 
 
 
-goog.require('xrx.label');
+goog.require('xrx.xml.Label');
 goog.require('xrx.node');
 goog.require('xrx.nodeB');
 goog.require('xrx.node.Text');
@@ -187,7 +187,7 @@ xrx.node.TextB.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
 
 
 ***REMOVED***
-***REMOVED*** @param {!xrx.label}
+***REMOVED*** @param {!xrx.xml.Label}
 ***REMOVED***
 xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
 ***REMOVED***
@@ -223,7 +223,7 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
 
 
 ***REMOVED***
-***REMOVED*** @param {!xrx.label}
+***REMOVED*** @param {!xrx.xml.Label}
 ***REMOVED***
 xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
 ***REMOVED***

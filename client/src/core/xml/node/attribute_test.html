@@ -20,7 +20,7 @@
   goog.require('xrx.node.Element');
   goog.require('xrx.node.ElementS');
   goog.require('xrx.node.ElementB');
-  goog.require('xrx.pilot');
+ ***REMOVED*****REMOVED***
   goog.require('xrx.token');
   goog.require('xrx.token.StartTag');
   goog.require('xrx.token.StartEmptyTag');
@@ -50,7 +50,7 @@ function test01basic() {
   assertEquals(9, aB.getLength());
 
   // streaming node
-  var tok = new xrx.token.StartTag(new xrx.label([1]), 0, 53);
+  var tok = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 53);
   var eS = new xrx.node.ElementS(instance, tok);
   var aS = new xrx.node.AttributeS(2, eS);
 
@@ -78,9 +78,9 @@ function test01nameFunctions() {
   assertEquals('http://example.org/x', aB2.getNamespaceUri('xmlns:x'));
 
   // streaming node
-  var pilot = new xrx.pilot(instance.xml());
-  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1,1])));
-  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1,2])));
+  var pilot = new xrx.xml.Pilot(instance.xml());
+  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,1])));
+  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,2])));
   var eS1 = new xrx.node.ElementS(instance, t1);
   var eS2 = new xrx.node.ElementS(instance, t2);
   var aS1 = new xrx.node.AttributeS(2, eS1);
@@ -109,8 +109,8 @@ function test02identityFunctions() {
   assertEquals(true, aB.isAttributeOf(eB1));
 
   // streaming node
-  var t1 = new xrx.token.StartTag(new xrx.label([1]), 0, 9);
-  var t2 = new xrx.token.StartTag(new xrx.label([1,1]), 10, 4);
+  var t1 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 9);
+  var t2 = new xrx.token.StartTag(new xrx.xml.Label([1,1]), 10, 4);
   var eS1 = new xrx.node.ElementS(instance, t1);
   var aS = new xrx.node.AttributeS(1, eS1);
   var eS2 = new xrx.node.ElementS(instance, t2);
@@ -138,7 +138,7 @@ function test03contentFunctions() {
   assertEquals('v2', aB2.getStringValue());
 
   // streaming node
-  var t = new xrx.token.EmptyTag(new xrx.label([1]), 0, 26);
+  var t = new xrx.token.EmptyTag(new xrx.xml.Label([1]), 0, 26);
   var eS = new xrx.node.ElementS(instance, t);
   var aS1 = new xrx.node.AttributeS(1, eS);
   var aS2 = new xrx.node.AttributeS(2, eS);
@@ -230,8 +230,8 @@ function test05attributeFunction() {
   assertEquals(2, eB1.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
 
   // streaming node
-  var t0 = new xrx.token.EmptyTag(new xrx.label([1]), 0, 3);
-  var t1 = new xrx.token.EmptyTag(new xrx.label([1,1]), 3, 53);
+  var t0 = new xrx.token.EmptyTag(new xrx.xml.Label([1]), 0, 3);
+  var t1 = new xrx.token.EmptyTag(new xrx.xml.Label([1,1]), 3, 53);
   var eS0 = new xrx.node.ElementS(instance, t0);
   var eS1 = new xrx.node.ElementS(instance, t1);
 

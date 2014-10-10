@@ -15,7 +15,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.mvc.Mvc');
-  goog.require('xrx.label');
+  goog.require('xrx.xml.Label');
   goog.require('xrx.node');
  ***REMOVED*****REMOVED***
 </script>
@@ -28,7 +28,7 @@
 <script type="text/javascript">
 
 function test() {
-  var expectedLabel = new xrx.label([1, 2, 0]);
+  var expectedLabel = new xrx.xml.Label([1, 2, 0]);
 
   assertEquals(xrx.node.TEXT, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getType());
   assertEquals(true, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getLabel().sameAs(expectedLabel));

@@ -19,7 +19,7 @@
   goog.require('xrx.node.Text');
   goog.require('xrx.node.TextS');
   goog.require('xrx.node.TextB');
-  goog.require('xrx.pilot');
+ ***REMOVED*****REMOVED***
   goog.require('xrx.token.EndTag');
   goog.require('xrx.token.StartTag');
   goog.require('xrx.xpath');
@@ -56,12 +56,12 @@ function test02identityFunctions() {
   assertTrue(tB3.isAfter(tB2));
 
   // streaming node
-  var tok1 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var tok1 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
   var eS1 = new xrx.node.ElementS(instance, tok1);
   var tS1 = new xrx.node.TextS(instance, tok1, 1);
-  var tok2 = new xrx.token.StartTag(new xrx.label([1,2]), 9, 13);
+  var tok2 = new xrx.token.StartTag(new xrx.xml.Label([1,2]), 9, 13);
   var tS2 = new xrx.node.TextS(instance, tok2, 1);
-  var tok3 = new xrx.token.EndTag(new xrx.label([1,2]), 23, 4);
+  var tok3 = new xrx.token.EndTag(new xrx.xml.Label([1,2]), 23, 4);
   var tS3 = new xrx.node.TextS(instance, tok3, 1);
 
   assertTrue(tS1.isSameAs(tS1));
@@ -87,13 +87,13 @@ function test03contentFunctions() {
   assertEquals('4', tB4.getStringValue());
 
   // streaming node
-  var tok1 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var tok1 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
   var tS1 = new xrx.node.TextS(instance, tok1, 1);
-  var tok2 = new xrx.token.StartTag(new xrx.label([1,1]), 4, 3);
+  var tok2 = new xrx.token.StartTag(new xrx.xml.Label([1,1]), 4, 3);
   var tS2 = new xrx.node.TextS(instance, tok2, 1);
-  var tok3 = new xrx.token.EndTag(new xrx.label([1,1]), 8, 4);
+  var tok3 = new xrx.token.EndTag(new xrx.xml.Label([1,1]), 8, 4);
   var tS3 = new xrx.node.TextS(instance, tok3, 1);
-  var tok4 = new xrx.token.EndTag(new xrx.label([1,2]), 13, 4);
+  var tok4 = new xrx.token.EndTag(new xrx.xml.Label([1,2]), 13, 4);
   var tS4 = new xrx.node.TextS(instance, tok4, 1);
 
   assertEquals('1', tS1.getXml());
@@ -133,7 +133,7 @@ function axisTest(key, func, expected) {
     tag = 'EndTag';
   }
 
-  var pilot = new xrx.pilot(xml);
+  var pilot = new xrx.xml.Pilot(xml);
   var eB = new xrx.node.ElementB(instance, key);
   var t = pilot.location(null, new xrx.token[tag](eB.getLabel(),
       eB.getOffset(), eB.getLength()));

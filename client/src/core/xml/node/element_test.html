@@ -14,7 +14,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx.mvc.Instance');
  ***REMOVED*****REMOVED***
-  goog.require('xrx.pilot');
+ ***REMOVED*****REMOVED***
   goog.require('xrx.token');
   goog.require('xrx.token.StartTag');
   goog.require('xrx.token.StartEmptyTag');
@@ -45,9 +45,9 @@ function test01identityFunctions() {
   assertTrue(e1.isBefore(e3));
 
   // streaming node
-  var t4 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
-  var t5 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
-  var t6 = new xrx.token.StartTag(new xrx.label([1,1]), 4, 4);
+  var t4 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
+  var t5 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
+  var t6 = new xrx.token.StartTag(new xrx.xml.Label([1,1]), 4, 4);
   var e4 = new xrx.node.ElementS(instance, t4);
   var e5 = new xrx.node.ElementS(instance, t5);
   var e6 = new xrx.node.ElementS(instance, t6);
@@ -94,9 +94,9 @@ function test02nameFunctions() {
   assertEquals(expandedNameB2, 'http://example.org/x#z');
 
   // streaming node
-  var pilot = new xrx.pilot(instance.xml());
-  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1, 1])));
-  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1, 2])));
+  var pilot = new xrx.xml.Pilot(instance.xml());
+  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1, 1])));
+  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1, 2])));
   var elementS1 = new xrx.node.ElementS(instance, t1);
   var elementS2 = new xrx.node.ElementS(instance, t2);
 
@@ -132,9 +132,9 @@ function test03contentFunctions() {
   assertEquals('', e3.getStringValue());
 
   // streaming node
-  var t4 = new xrx.token.StartTag(new xrx.label([1]), 0, 3);
+  var t4 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
   var e4 = new xrx.node.ElementS(instance, t4);
-  var t5 = new xrx.token.StartTag(new xrx.label([1, 1]), 4, 3);
+  var t5 = new xrx.token.StartTag(new xrx.xml.Label([1, 1]), 4, 3);
   var e5 = new xrx.node.ElementS(instance, t5);
   assertEquals('<a>1<b>2</b>3<c/>4<d/></a>', e4.getXml());
   assertEquals('<b>2</b>', e5.getXml());
@@ -163,7 +163,7 @@ function axisTest(key, func, expected) {
   assertEquals(expected.attribute, testB.attribute.getLength());
 
   // streaming node
-  var pilot = new xrx.pilot(instance.xml());
+  var pilot = new xrx.xml.Pilot(instance.xml());
   var t = pilot.location(null, new xrx.token.StartEmptyTag(eB.getLabel()));
   var eS = new xrx.node.ElementS(instance, t);
   var testS = {

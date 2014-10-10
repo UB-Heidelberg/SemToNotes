@@ -22,14 +22,14 @@ var _allTests = [
   './core/mvc/mvcInstance_test.html',
   './core/mvc/mvcRepeat_test.html',
   // core :: xml
-  './core/xml/label_test.html',
-  './core/xml/parse_test.html',
-  './core/xml/pilot_test.html',
-  './core/xml/reader_test.html',
-  './core/xml/serialize_test.html',
-  './core/xml/stream_test.html',
-  './core/xml/traverse_test.html',
-  './core/xml/update_test.html',
+  './core/xml/xmlLabel_test.html',
+  './core/xml/xmlParse_test.html',
+  './core/xml/xmlPilot_test.html',
+  './core/xml/xmlReader_test.html',
+  './core/xml/xmlSerialize_test.html',
+  './core/xml/xmlStream_test.html',
+  './core/xml/xmlTraverse_test.html',
+  './core/xml/xmlUpdate_test.html',
   // core :: xml :: index
   './core/xml/index/index_test.html',
   // core :: xml :: node

@@ -3,12 +3,12 @@
 ***REMOVED*** stringified XML documents.
 ***REMOVED***
 
-goog.provide('xrx.parse');
+goog.provide('xrx.xml.Parser');
 
 
 
 goog.require('goog.string');
-goog.require('xrx.serialize');
+goog.require('xrx.xml.Serialize');
 
 
 
@@ -16,7 +16,7 @@ goog.require('xrx.serialize');
 ***REMOVED*** A class to parse and normalize stringified XML
 ***REMOVED*** documents
 ***REMOVED***
-xrx.parse = function() {
+xrx.xml.Parser = function() {
 
 
 
@@ -33,7 +33,7 @@ xrx.parse = function() {
 
 
 
-xrx.parse.prototype.initSax = function() {
+xrx.xml.Parser.prototype.initSax = function() {
 
   this.contentHandler = new DefaultHandler2();
   this.saxParser = XMLReaderFactory.createXMLReader();
@@ -42,7 +42,7 @@ xrx.parse.prototype.initSax = function() {
 
 
 
-xrx.parse.prototype.normalize = function(xml) {
+xrx.xml.Parser.prototype.normalize = function(xml) {
 ***REMOVED***
   var idx = -2;
   var namespaces = [];
@@ -75,10 +75,10 @@ xrx.parse.prototype.normalize = function(xml) {
       normalized += '/>';
       lastToken = xrx.token.EMPTY_TAG;
     } else if (lastToken === xrx.token.START_TAG) {
-      normalized += '>' + xrx.serialize.endTag(qName);
+      normalized += '>' + xrx.xml.Serialize.endTag(qName);
       lastToken = xrx.token.END_TAG;
     } else {
-      normalized += xrx.serialize.endTag(qName);
+      normalized += xrx.xml.Serialize.endTag(qName);
     }
  ***REMOVED*****REMOVED***
 
@@ -118,14 +118,14 @@ xrx.parse.prototype.normalize = function(xml) {
     for (var nn in namespaces) {
       var prefix = namespaces[nn].prefix;
       prefix === '' ? prefix += 'xmlns' : prefix = 'xmlns:' + prefix;
-      n += xrx.serialize.namespace(prefix, namespaces[nn].uri);
+      n += xrx.xml.Serialize.namespace(prefix, namespaces[nn].uri);
    ***REMOVED*****REMOVED***
     namespaces = [];
     for (var aa in atts.attsArray) {
-      a += xrx.serialize.attribute(arr[aa].qName, arr[aa].value);
+      a += xrx.xml.Serialize.attribute(arr[aa].qName, arr[aa].value);
    ***REMOVED*****REMOVED***
 
-    normalized += xrx.serialize.startEmptyTag(qName, n, a);
+    normalized += xrx.xml.Serialize.startEmptyTag(qName, n, a);
     lastToken = xrx.token.START_TAG;
  ***REMOVED*****REMOVED***
 

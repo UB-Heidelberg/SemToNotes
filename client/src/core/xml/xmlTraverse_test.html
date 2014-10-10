@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.traverse</title>
+<title>XRX++ Unit Tests - xrx.xml.Traverse</title>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.array');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.label');
+  goog.require('xrx.xml.Label');
   goog.require('xrx.token');
   goog.require('xrx.token.StartTag');
   goog.require('xrx.token.StartEmptyTag');
   goog.require('xrx.token.EmptyTag');
   goog.require('xrx.token.EndTag');
-  goog.require('xrx.traverse');
+  goog.require('xrx.xml.Traverse');
 </script>
 </head>
 <body>
@@ -50,7 +50,7 @@ function test01forward() {
     13: [1]
  ***REMOVED*****REMOVED***
   var labels = [];
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
 
   traverse.rowStartTag = function(label) {
     labels.push(label);
@@ -68,20 +68,20 @@ function test01forward() {
   traverse.forward();
   traverse.backward();
 
-  assertTrue(new xrx.label(test[0]).sameAs(labels[0]));
-  assertTrue(new xrx.label(test[1]).sameAs(labels[1]));
-  assertTrue(new xrx.label(test[2]).sameAs(labels[2]));
-  assertTrue(new xrx.label(test[3]).sameAs(labels[3]));
-  assertTrue(new xrx.label(test[4]).sameAs(labels[4]));
-  assertTrue(new xrx.label(test[5]).sameAs(labels[5]));
-  assertTrue(new xrx.label(test[6]).sameAs(labels[6]));
-  assertTrue(new xrx.label(test[7]).sameAs(labels[7]));
-  assertTrue(new xrx.label(test[8]).sameAs(labels[8]));
-  assertTrue(new xrx.label(test[9]).sameAs(labels[9]));
-  assertTrue(new xrx.label(test[10]).sameAs(labels[10]));
-  assertTrue(new xrx.label(test[11]).sameAs(labels[11]));
-  assertTrue(new xrx.label(test[12]).sameAs(labels[12]));
-  assertTrue(new xrx.label(test[13]).sameAs(labels[13]));
+  assertTrue(new xrx.xml.Label(test[0]).sameAs(labels[0]));
+  assertTrue(new xrx.xml.Label(test[1]).sameAs(labels[1]));
+  assertTrue(new xrx.xml.Label(test[2]).sameAs(labels[2]));
+  assertTrue(new xrx.xml.Label(test[3]).sameAs(labels[3]));
+  assertTrue(new xrx.xml.Label(test[4]).sameAs(labels[4]));
+  assertTrue(new xrx.xml.Label(test[5]).sameAs(labels[5]));
+  assertTrue(new xrx.xml.Label(test[6]).sameAs(labels[6]));
+  assertTrue(new xrx.xml.Label(test[7]).sameAs(labels[7]));
+  assertTrue(new xrx.xml.Label(test[8]).sameAs(labels[8]));
+  assertTrue(new xrx.xml.Label(test[9]).sameAs(labels[9]));
+  assertTrue(new xrx.xml.Label(test[10]).sameAs(labels[10]));
+  assertTrue(new xrx.xml.Label(test[11]).sameAs(labels[11]));
+  assertTrue(new xrx.xml.Label(test[12]).sameAs(labels[12]));
+  assertTrue(new xrx.xml.Label(test[13]).sameAs(labels[13]));
 
 ***REMOVED***
 
@@ -112,7 +112,7 @@ function test02backward() {
     8:  [1]
  ***REMOVED*****REMOVED***
   var labels = [];
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
 
   traverse.rowStartTag = function(label, offset, length) {
     labels.push(label);
@@ -127,22 +127,22 @@ function test02backward() {
  ***REMOVED*****REMOVED***
 
   // test backward
-  traverse.backward(new xrx.token.EndTag(new xrx.label([1,3,3]), 66, 6));
+  traverse.backward(new xrx.token.EndTag(new xrx.xml.Label([1,3,3]), 66, 6));
 
-  assertTrue(new xrx.label(test[0]).sameAs(labels[0]));
-  assertTrue(new xrx.label(test[1]).sameAs(labels[1]));
-  assertTrue(new xrx.label(test[2]).sameAs(labels[2]));
-  assertTrue(new xrx.label(test[3]).sameAs(labels[3]));
-  assertTrue(new xrx.label(test[4]).sameAs(labels[4]));
-  assertTrue(new xrx.label(test[5]).sameAs(labels[5]));
-  assertTrue(new xrx.label(test[6]).sameAs(labels[6]));
-  assertTrue(new xrx.label(test[7]).sameAs(labels[7]));
-  assertTrue(new xrx.label(test[8]).sameAs(labels[8]));
+  assertTrue(new xrx.xml.Label(test[0]).sameAs(labels[0]));
+  assertTrue(new xrx.xml.Label(test[1]).sameAs(labels[1]));
+  assertTrue(new xrx.xml.Label(test[2]).sameAs(labels[2]));
+  assertTrue(new xrx.xml.Label(test[3]).sameAs(labels[3]));
+  assertTrue(new xrx.xml.Label(test[4]).sameAs(labels[4]));
+  assertTrue(new xrx.xml.Label(test[5]).sameAs(labels[5]));
+  assertTrue(new xrx.xml.Label(test[6]).sameAs(labels[6]));
+  assertTrue(new xrx.xml.Label(test[7]).sameAs(labels[7]));
+  assertTrue(new xrx.xml.Label(test[8]).sameAs(labels[8]));
 ***REMOVED***
 
 function test03offsetStartTag() {
   var xml = '<test><a></a></test>';
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
@@ -155,16 +155,16 @@ function test03offsetStartTag() {
   traverse.rowEmptyTag = function(label) {
  ***REMOVED*****REMOVED***
 
-  traverse.forward(new xrx.token.StartTag(new xrx.label([1, 1]), 5, 3));
+  traverse.forward(new xrx.token.StartTag(new xrx.xml.Label([1, 1]), 5, 3));
 
   assertEquals(2, endLabels.length);
-  assertTrue(endLabels[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(endLabels[1].sameAs(new xrx.label([1])));
+  assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1])));
 ***REMOVED***
 
 function test04offsetStartEmptyTag() {
   var xml = '<test><a></a><b/><c></c></test>';
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
@@ -177,17 +177,17 @@ function test04offsetStartEmptyTag() {
   traverse.rowEmptyTag = function(label) {
  ***REMOVED*****REMOVED***
 
-  traverse.forward(new xrx.token.StartEmptyTag(new xrx.label([1, 1]), 5, 3));
+  traverse.forward(new xrx.token.StartEmptyTag(new xrx.xml.Label([1, 1]), 5, 3));
 
   assertEquals(3, endLabels.length);
-  assertTrue(endLabels[0].sameAs(new xrx.label([1,1])));
-  assertTrue(endLabels[1].sameAs(new xrx.label([1,3])));
-  assertTrue(endLabels[2].sameAs(new xrx.label([1])));
+  assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1,1])));
+  assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1,3])));
+  assertTrue(endLabels[2].sameAs(new xrx.xml.Label([1])));
 ***REMOVED***
 
 function test05offsetEmptyTag() {
   var xml = '<test><a/></test>';
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
@@ -200,15 +200,15 @@ function test05offsetEmptyTag() {
   traverse.rowEmptyTag = function(label) {
  ***REMOVED*****REMOVED***
 
-  traverse.forward(new xrx.token.EmptyTag(new xrx.label([1, 1]), 5, 4));
+  traverse.forward(new xrx.token.EmptyTag(new xrx.xml.Label([1, 1]), 5, 4));
 
   assertEquals(1, endLabels.length);
-  assertTrue(endLabels[0].sameAs(new xrx.label([1])));
+  assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1])));
 ***REMOVED***
 
 function test06offsetEndTag() {
   var xml = '<test><a></a></test>';
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
@@ -221,18 +221,18 @@ function test06offsetEndTag() {
   traverse.rowEmptyTag = function(label) {
  ***REMOVED*****REMOVED***
 
-  traverse.forward(new xrx.token.EndTag(new xrx.label([1,1]), 9, 4));
+  traverse.forward(new xrx.token.EndTag(new xrx.xml.Label([1,1]), 9, 4));
 
   assertEquals(2, endLabels.length);
-  assertTrue(endLabels[0].sameAs(new xrx.label([1,1])));
-  assertTrue(endLabels[1].sameAs(new xrx.label([1])));
+  assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1,1])));
+  assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1])));
 ***REMOVED***
 
 function test07features() {
   var xml = '<test attr1="v1" attr2="v2"' + 
       ' xmlns:a="http://example.org/a"' + 
       ' xmlns:b="http://example.org/b"></test>';
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   traverse.setFeatures(true);
   traverse.setFeature('ATTRIBUTE', false);
   
@@ -272,27 +272,27 @@ function test07features() {
   traverse.forward();
   traverse.backward();
   
-  assertTrue(tagNames[0].sameAs(new xrx.label([1])));
-  assertTrue(tagNames[1].sameAs(new xrx.label([1])));
-  assertTrue(tagNames[3].sameAs(new xrx.label([1])));
+  assertTrue(tagNames[0].sameAs(new xrx.xml.Label([1])));
+  assertTrue(tagNames[1].sameAs(new xrx.xml.Label([1])));
+  assertTrue(tagNames[3].sameAs(new xrx.xml.Label([1])));
 
-  assertTrue(attributes[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(attributes[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(attributes[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(attributes[1].sameAs(new xrx.xml.Label([1, 2])));
 
-  assertTrue(attrNames[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(attrNames[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(attrNames[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(attrNames[1].sameAs(new xrx.xml.Label([1, 2])));
 
-  assertTrue(attrValues[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(attrValues[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(attrValues[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(attrValues[1].sameAs(new xrx.xml.Label([1, 2])));
 
-  assertTrue(namespaces[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(namespaces[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(namespaces[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(namespaces[1].sameAs(new xrx.xml.Label([1, 2])));
 
-  assertTrue(nsPrefixes[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(nsPrefixes[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(nsPrefixes[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(nsPrefixes[1].sameAs(new xrx.xml.Label([1, 2])));
 
-  assertTrue(nsUris[0].sameAs(new xrx.label([1, 1])));
-  assertTrue(nsUris[1].sameAs(new xrx.label([1, 2])));
+  assertTrue(nsUris[0].sameAs(new xrx.xml.Label([1, 1])));
+  assertTrue(nsUris[1].sameAs(new xrx.xml.Label([1, 2])));
 ***REMOVED***
 
 </script>
