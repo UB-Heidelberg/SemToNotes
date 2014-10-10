@@ -46,7 +46,7 @@ xrx.widget.Canvas.prototype.refresh = function() {
 
 
 xrx.widget.Canvas.prototype.createDrawing_ = function() {
-  this.drawing_ = new xrx.drawing.Drawing(this.element_);
+  this.drawing_ = new xrx.drawing.Drawing(this.element_, 'svg');
   this.drawing_.setModeView();
 };
 
