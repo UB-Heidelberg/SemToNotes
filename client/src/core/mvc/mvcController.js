@@ -8,7 +8,7 @@ goog.provide('xrx.mvc.Controller');
 
 
 goog.require('xrx.node');
-goog.require('xrx.nodeB');
+goog.require('xrx.node.Binary');
 goog.require('xrx.rebuild');
 goog.require('xrx.token.Tokens');
 goog.require('xrx.xml.Update');
@@ -28,7 +28,7 @@ xrx.mvc.Controller.update = function(control, operation, token, update) {
 
   var diff = xrx.xml.Update[operation](node.getInstance(), tok, update);
 
-  if (node instanceof xrx.nodeB) xrx.rebuild[operation](node.getInstance().getIndex(),
+  if (node instanceof xrx.node.Binary) xrx.rebuild[operation](node.getInstance().getIndex(),
       tok, diff);
 
   xrx.mvc.Controller.refresh(control, diff, update);
@@ -57,7 +57,7 @@ xrx.mvc.Controller.updateValueLike = function(control, update) {
 xrx.mvc.Controller.replaceNotTag = function(control, token, update) {
   var node = control.getNode();
   var diff = xrx.xml.Update.replaceNotTag(node.getInstance(), token, update);
-  if (node instanceof xrx.nodeB) xrx.rebuild.replaceNotTag(node.getInstance().getIndex(),
+  if (node instanceof xrx.node.Binary) xrx.rebuild.replaceNotTag(node.getInstance().getIndex(),
       token, diff);
   xrx.mvc.Controller.refresh(control);
 };
@@ -82,7 +82,7 @@ xrx.mvc.Controller.insertNotTag = function(control, token, offset, update) {
 
   var diff = xrx.xml.Update.insertNotTag(node.getInstance(), tok, offset, update);
 
-  if (node instanceof xrx.nodeB) xrx.rebuild.insertNotTag(node.getInstance().getIndex(),
+  if (node instanceof xrx.node.Binary) xrx.rebuild.insertNotTag(node.getInstance().getIndex(),
       tok, diff);
 
   xrx.mvc.Controller.refresh(control, diff, update);
@@ -96,7 +96,7 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
 
   var diff = xrx.xml.Update.reduceNotTag(node.getInstance(), tok, offset, length);
 
-  //if (node instanceof xrx.nodeB) xrx.rebuild.reduceNotTag(node.getInstance().getIndex(),
+  //if (node instanceof xrx.node.Binary) xrx.rebuild.reduceNotTag(node.getInstance().getIndex(),
   //    tok, diff);
 
   xrx.mvc.Controller.refresh(control, diff, '');
@@ -109,7 +109,7 @@ xrx.mvc.Controller.removeEmptyTag = function(control, token) {
 
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
 
-  if (node instanceof xrx.nodeB) xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(),
+  if (node instanceof xrx.node.Binary) xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(),
       token, diff);
 
   xrx.mvc.Controller.refresh(control);
@@ -122,7 +122,7 @@ xrx.mvc.Controller.removeStartEndTag = function(control, token1, token2) {
 
   var diff = xrx.xml.Update.removeStartEndTag(node.getInstance(), token1, token2);
 
-  //if (node instanceof xrx.nodeB) xrx.rebuild.removeStartEndTag(node.getInstance().getIndex(),
+  //if (node instanceof xrx.node.Binary) xrx.rebuild.removeStartEndTag(node.getInstance().getIndex(),
   //    token1, diff);
 
   xrx.mvc.Controller.refresh(control);

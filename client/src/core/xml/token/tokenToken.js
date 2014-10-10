@@ -3,7 +3,7 @@
  * instance.
  */
 
-goog.provide('xrx.token.Abstract');
+goog.provide('xrx.token.Token');
 
 
 
@@ -24,7 +24,7 @@ goog.require('xrx.xml.Label');
  * @param {?number} length The number of characters occupied 
  *     in the XML stream.
  */
-xrx.token.Abstract = function(type, opt_label, opt_offset, opt_length) {
+xrx.token.Token = function(type, opt_label, opt_offset, opt_length) {
 
 
 
@@ -63,7 +63,7 @@ xrx.token.Abstract = function(type, opt_label, opt_offset, opt_length) {
  * @param {!number} type The type to check against.
  * @return {!boolean}
  */
-xrx.token.Abstract.prototype.typeOf = function(type) {
+xrx.token.Token.prototype.typeOf = function(type) {
   return this.type_ === type;
 };
 
@@ -79,7 +79,7 @@ xrx.token.Abstract.prototype.typeOf = function(type) {
  * @param {!xrx.token} token The token to check against.
  * @return {!boolean}
  */
-xrx.token.Abstract.prototype.sameAs = function(token) {
+xrx.token.Token.prototype.sameAs = function(token) {
   return this.typeOf(token.type()) && this.label_.sameAs(token.label());
 };
 
@@ -93,7 +93,7 @@ xrx.token.Abstract.prototype.sameAs = function(token) {
  * @param {!label} label The label to check against.
  * @return {!boolean}
  */
-xrx.token.Abstract.prototype.compare = function(type, label) {
+xrx.token.Token.prototype.compare = function(type, label) {
   return this.typeOf(type) && this.label_.sameAs(label);
 };
 
@@ -106,7 +106,7 @@ xrx.token.Abstract.prototype.compare = function(type, label) {
  * @param {!xrx.token} token The token to compare.
  * @return {!boolean} 
  */
-xrx.token.Abstract.prototype.isBefore = function(token) {
+xrx.token.Token.prototype.isBefore = function(token) {
   return this.label_.isBefore(token.label()) || 
       (this.label_.sameAs(token.label()) && this.type_ < token.type());
 };
@@ -120,7 +120,7 @@ xrx.token.Abstract.prototype.isBefore = function(token) {
  * @param {!xrx.token} token The token to compare.
  * @return {!boolean} 
  */
-xrx.token.Abstract.prototype.isAfter = function(token) {
+xrx.token.Token.prototype.isAfter = function(token) {
   return this.label_.isAfter(token.label()) || 
       (this.label_.sameAs(token.label()) && this.type_ > token.type());
 };
@@ -135,7 +135,7 @@ xrx.token.Abstract.prototype.isAfter = function(token) {
  * @param {?number} offset The offset relative to the start of the XML stream.
  * @param {?number} length The number of characters in the XML stream.
  */
-xrx.token.Abstract.prototype.set = function(type, label, offset, length) {
+xrx.token.Token.prototype.set = function(type, label, offset, length) {
 
   this.type_ = type;
   this.label_ = label;
@@ -152,7 +152,7 @@ xrx.token.Abstract.prototype.set = function(type, label, offset, length) {
  * @param {?number} opt_type The value to be set (optional).
  * @return {!number}
  */
-xrx.token.Abstract.prototype.type = function(opt_type) {
+xrx.token.Token.prototype.type = function(opt_type) {
   opt_type !== undefined ? this.type_ = opt_type : null;
   return this.type_;
 };
@@ -166,7 +166,7 @@ xrx.token.Abstract.prototype.type = function(opt_type) {
  * @param {?number} opt_label The value to be set (optional).
  * @return {!number}
  */
-xrx.token.Abstract.prototype.label = function(opt_label) {
+xrx.token.Token.prototype.label = function(opt_label) {
   opt_label !== undefined ? this.label_ = opt_label : null;
   return this.label_;
 };
@@ -180,7 +180,7 @@ xrx.token.Abstract.prototype.label = function(opt_label) {
  * @param {?number} opt_offset The value to be set (optional).
  * @return {!number}
  */
-xrx.token.Abstract.prototype.offset = function(opt_offset) {
+xrx.token.Token.prototype.offset = function(opt_offset) {
   opt_offset !== undefined ? this.offset_ = opt_offset : null;
   return this.offset_;
 };
@@ -194,7 +194,7 @@ xrx.token.Abstract.prototype.offset = function(opt_offset) {
  * @param {?number} opt_length The value to be set (optional).
  * @return {!number}
  */
-xrx.token.Abstract.prototype.length = function(opt_length) {
+xrx.token.Token.prototype.length = function(opt_length) {
   opt_length !== undefined ? this.length_ = opt_length : null;
   return this.length_;
 };
@@ -207,7 +207,7 @@ xrx.token.Abstract.prototype.length = function(opt_length) {
  * @param {!string} stream A XML stream.
  * @return {!string} The token string.
  */
-xrx.token.Abstract.prototype.xml = function(stream) {
+xrx.token.Token.prototype.xml = function(stream) {
   return stream.substr(this.offset_, this.length_);
 };
 

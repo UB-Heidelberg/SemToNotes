@@ -10,7 +10,7 @@ goog.provide('xrx.mvc.Instance');
 goog.require('goog.dom');
 goog.require('goog.events');
 goog.require('goog.net.XhrIo');
-goog.require('xrx.index');
+goog.require('xrx.index.Index');
 goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.node');
 goog.require('xrx.node.DocumentB');
@@ -134,7 +134,7 @@ xrx.mvc.Instance.prototype.getDocument = function(id) {
  */
 xrx.mvc.Instance.prototype.getIndex = function() {
   if (!this.xml_) this.recalculate();
-  if (this.index_ === undefined) this.index_ = new xrx.index(this.xml_);
+  if (this.index_ === undefined) this.index_ = new xrx.index.Index(this.xml_);
 
   return this.index_;
 };

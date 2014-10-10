@@ -7,10 +7,10 @@ goog.provide('xrx.node.DocumentB');
 
 
 
-goog.require('xrx.index');
+goog.require('xrx.index.Index');
 goog.require('xrx.xml.Label');
 goog.require('xrx.node');
-goog.require('xrx.nodeB');
+goog.require('xrx.node.Binary');
 goog.require('xrx.node.Document');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
@@ -26,7 +26,7 @@ goog.require('xrx.xpath.NodeSet');
 xrx.node.DocumentB = function(instance) {
   goog.base(this, xrx.node.DOCUMENT, instance);
 };
-goog.inherits(xrx.node.DocumentB, xrx.nodeB);
+goog.inherits(xrx.node.DocumentB, xrx.node.Binary);
 
 
 

@@ -7,7 +7,7 @@ goog.provide('xrx.token.AttrName');
 
 
 goog.require('xrx.token');
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 goog.require('xrx.token.Attribute');
 
 
@@ -20,7 +20,7 @@ goog.require('xrx.token.Attribute');
 xrx.token.AttrName = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.ATTR_NAME, label, opt_offset, opt_length);
 };
-goog.inherits(xrx.token.AttrName, xrx.token.Abstract);
+goog.inherits(xrx.token.AttrName, xrx.token.Token);
 
 
 

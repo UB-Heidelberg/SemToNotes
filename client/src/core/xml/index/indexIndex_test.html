@@ -8,7 +8,7 @@
   goog.require('goog.array');
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.index');
+  goog.require('xrx.index.Index');
   goog.require('xrx.xml.Label');
   goog.require('xrx.xml.Pilot');
   goog.require('xrx.token');
@@ -21,7 +21,7 @@
 function test01basic() {
   var xml = '<start><empty/><empty/><start><start></end></end><start><empty/></end><start></end><empty/></end>';
   //         [1]    [1,1]   [1,2]   [1,3]  [1,3,1][1,3,1][1,3][1,4]  [1,4,1] [1,4] [1,5]  [1,5] [1,6]   [1]
-  var index = new xrx.index(xml);
+  var index = new xrx.index.Index(xml);
   
   assertEquals(14, index.getLength());
   assertEquals(13, index.getLastKey());
@@ -44,7 +44,7 @@ function test01basic() {
 function test02iter() {
   var xml           =         '<a>1<b>2</b>3<c/>4<d><e>5</e>6</d></a>';
   var startTags = [], endTags = [], emptyTags = [], notTags = [];
-  var index = new xrx.index(xml);
+  var index = new xrx.index.Index(xml);
   var row = index.iterGetRow();
   var key;
   var offset;
@@ -100,7 +100,7 @@ function test02iter() {
 
 function test03namespaceFunctions() {
   var xml = '<x><y/><a xmlns="http://www.example.org/a"><b:b xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
-  var index = new xrx.index(xml);
+  var index = new xrx.index.Index(xml);
   var pilot = new xrx.xml.Pilot(xml);
 
   // default namespace uri
