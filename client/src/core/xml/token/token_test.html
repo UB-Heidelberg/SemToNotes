@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.label');
+  goog.require('xrx.xml.Label');
   goog.require('xrx.token');
   goog.require('xrx.token.Tokens');
 </script>
@@ -15,7 +15,7 @@
 <script type="text/javascript">
 
 function testCast() {
-  var label = new xrx.label([1, 1]);
+  var label = new xrx.xml.Label([1, 1]);
   var token = new xrx.token.Abstract(xrx.token.START_TAG, label, 4, 10);
   var newToken = xrx.token.Tokens.getNative(token);
   
@@ -28,7 +28,7 @@ function testCast() {
 };
 
 function test01SameAs() {
-  var label = new xrx.label([1]);
+  var label = new xrx.xml.Label([1]);
   
   var start = new xrx.token.StartTag(label);
   var end = new xrx.token.EndTag(label);
@@ -82,7 +82,7 @@ function test01SameAs() {
 };
 
 function test02Compare() {
-  var label = new xrx.label([1]);
+  var label = new xrx.xml.Label([1]);
   
   var start = new xrx.token.StartTag(label);
   var end = new xrx.token.EndTag(label);
@@ -130,7 +130,7 @@ function test03IsBeforeSameLabel() {
   // <a atrr="v"><b><b>t</a>
   //    _        _  _  _
   //    1.1
-  var label = new xrx.label([1,1]);
+  var label = new xrx.xml.Label([1,1]);
 
   var token = ['StartTag', 'EmptyTag', 'EndTag', 'NotTag', 'Attribute'];
   var matrix = new Array(token.length);
@@ -161,7 +161,7 @@ function test04IsAfterSameLabel() {
   // <a± a1="" a2=""><b> <b> t   <e/></a>
   //    _           _   _   _   _
   //    1.1   1.2   1.1 1.1 1.1 1.2
-  var label = new xrx.label([1,1]);
+  var label = new xrx.xml.Label([1,1]);
 
   var token = ['StartTag', 'EmptyTag', 'EndTag', 'NotTag', 'Attribute'];
   var matrix = new Array(token.length);

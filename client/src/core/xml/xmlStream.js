@@ -3,14 +3,14 @@
  * a XML instance.
  */
 
-goog.provide('xrx.stream');
+goog.provide('xrx.xml.Stream');
 
 
 
 goog.require('goog.object');
 goog.require('goog.string');
-goog.require('xrx.location');
-goog.require('xrx.reader');
+goog.require('xrx.xml.Location');
+goog.require('xrx.xml.Reader');
 goog.require('xrx.token');
 
 
@@ -22,7 +22,7 @@ goog.require('xrx.token');
  * XML fragment. Make sure that the input is parsed with
  * @constructor
  */
-xrx.stream = function(xml) {
+xrx.xml.Stream = function(xml) {
 
 
 
@@ -30,7 +30,7 @@ xrx.stream = function(xml) {
    * @type
    * @private
    */
-  this.reader_ = new xrx.reader(xml);
+  this.reader_ = new xrx.xml.Reader(xml);
   
   
 
@@ -69,70 +69,70 @@ xrx.stream = function(xml) {
 /**
  * Event, thrown whenever a start-tag row is found.
  */
-xrx.stream.prototype.rowStartTag = goog.abstractMethod;
+xrx.xml.Stream.prototype.rowStartTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a end-tag row is found.
  */
-xrx.stream.prototype.rowEndTag = goog.abstractMethod;
+xrx.xml.Stream.prototype.rowEndTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a empty-tag row is found.
  */
-xrx.stream.prototype.rowEmptyTag = goog.abstractMethod;
+xrx.xml.Stream.prototype.rowEmptyTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a tag-name is found.
  */
-xrx.stream.prototype.eventTagName = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventTagName = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute token is found.
  */
-xrx.stream.prototype.eventAttribute = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventAttribute = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute name is found.
  */
-xrx.stream.prototype.eventAttrName = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventAttrName = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute value is found.
  */
-xrx.stream.prototype.eventAttrValue = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventAttrValue = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace token is found.
  */
-xrx.stream.prototype.eventNamespace = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventNamespace = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace prefix is found.
  */
-xrx.stream.prototype.eventNsPrefix = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventNsPrefix = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace URI is found.
  */
-xrx.stream.prototype.eventNsUri = goog.abstractMethod;
+xrx.xml.Stream.prototype.eventNsUri = goog.abstractMethod;
 
 
 
@@ -142,7 +142,7 @@ xrx.stream.prototype.eventNsUri = goog.abstractMethod;
  * @param {!string} feature The name of the feature.
  * @param {!boolean} flag On or off.
  */
-xrx.stream.prototype.setFeature = function(feature, flag) {
+xrx.xml.Stream.prototype.setFeature = function(feature, flag) {
   if (this.features_[feature] === undefined) throw Error('Unknown feature.');
   var on = false;
 
@@ -161,7 +161,7 @@ xrx.stream.prototype.setFeature = function(feature, flag) {
  * 
  * @param {!boolean} flag On or off.
  */
-xrx.stream.prototype.setFeatures = function(flag) {
+xrx.xml.Stream.prototype.setFeatures = function(flag) {
   
   for(var f in this.features_) {
     this.features_[f] = flag;
@@ -177,7 +177,7 @@ xrx.stream.prototype.setFeatures = function(flag) {
  * @param {!string} feature The feature to test.
  * @return {!boolean} True when on otherwise false.
  */
-xrx.stream.prototype.hasFeature = function(feature) {
+xrx.xml.Stream.prototype.hasFeature = function(feature) {
   return this.features_[feature] === true;
 };
 
@@ -189,7 +189,7 @@ xrx.stream.prototype.hasFeature = function(feature) {
  * @param opt_xml Well-formed, normalized UTF-8 XML string.
  * @return The content of the stream reader.
  */
-xrx.stream.prototype.xml = function(opt_xml) {
+xrx.xml.Stream.prototype.xml = function(opt_xml) {
   
   return !opt_xml ? this.reader_.input() : this.reader_.input(opt_xml);
 };
@@ -203,7 +203,7 @@ xrx.stream.prototype.xml = function(opt_xml) {
  * @param {!number} length Number of characters to replace.
  * @param {!string} xml The new string.
  */
-xrx.stream.prototype.update = function(offset, length, xml) {
+xrx.xml.Stream.prototype.update = function(offset, length, xml) {
   
   this.reader_.input(this.xml().substr(0, offset) + xml + 
       this.xml().substr(offset + length));
@@ -214,7 +214,7 @@ xrx.stream.prototype.update = function(offset, length, xml) {
 /**
  * Can be called to stop streaming.
  */
-xrx.stream.prototype.stop = function() {
+xrx.xml.Stream.prototype.stop = function() {
 
   this.stopped_ = true;
 };
@@ -227,7 +227,7 @@ xrx.stream.prototype.stop = function() {
  * @param opt_pos The position.
  * @return {!number} The position or the new position.
  */
-xrx.stream.prototype.pos = function(opt_pos) {
+xrx.xml.Stream.prototype.pos = function(opt_pos) {
   if (opt_pos) this.reader_.set(opt_pos);
   return this.reader_.pos();
 };
@@ -243,7 +243,7 @@ xrx.stream.prototype.pos = function(opt_pos) {
  * @param {!number} offset The current offset.
  * @param {!number} length The current length.
  */
-xrx.stream.prototype.features = function(token, offset, length) {
+xrx.xml.Stream.prototype.features = function(token, offset, length) {
   var stream = this;
 
   if (stream.oneFeatureOn_ === true) {
@@ -314,7 +314,7 @@ xrx.stream.prototype.features = function(token, offset, length) {
  * @enum
  * @private
  */
-xrx.stream.State_ = {
+xrx.xml.Stream.State_ = {
   XML_START: 'XML_START',
   XML_END: 'XML_END',
   START_TAG: 'START_TAG',
@@ -341,8 +341,8 @@ xrx.stream.State_ = {
  * 
  * @param {?number} opt_offset The offset.
  */
-xrx.stream.prototype.forward = function(opt_offset) {
-  var state = xrx.stream.State_.XML_START;
+xrx.xml.Stream.prototype.forward = function(opt_offset) {
+  var state = xrx.xml.Stream.State_.XML_START;
   var token;
   var offset;
   var length;
@@ -353,14 +353,14 @@ xrx.stream.prototype.forward = function(opt_offset) {
 
   var process = {
     'XML_START': function() {
-      reader.get() === '<' ? state = xrx.stream.State_.LT_SEEN :
-        state = xrx.stream.State_.NOT_TAG;
+      reader.get() === '<' ? state = xrx.xml.Stream.State_.LT_SEEN :
+        state = xrx.xml.Stream.State_.NOT_TAG;
     },
     'XML_END': function() {},
     'START_TAG': function() {
       offset = reader.pos();
       reader.forwardInclusive('>');
-      state = xrx.stream.State_.NOT_TAG;
+      state = xrx.xml.Stream.State_.NOT_TAG;
       reader.peek(-2) === '/' ? token = xrx.token.EMPTY_TAG : 
           token = xrx.token.START_TAG;
       length = reader.pos() - offset;
@@ -368,19 +368,19 @@ xrx.stream.prototype.forward = function(opt_offset) {
     'END_TAG': function() {
       offset = reader.pos();
       reader.forwardInclusive('>');
-      state = xrx.stream.State_.NOT_TAG;
+      state = xrx.xml.Stream.State_.NOT_TAG;
       token = xrx.token.END_TAG;
       length = reader.pos() - offset;
     },
     'EMPTY_TAG': function() {},
     'NOT_TAG': function(stream) {
       if (!reader.get()) {
-        state = xrx.stream.State_.XML_END;
+        state = xrx.xml.Stream.State_.XML_END;
       } else if (reader.peek() === '<') {
-        state = xrx.stream.State_.LT_SEEN;
+        state = xrx.xml.Stream.State_.LT_SEEN;
       } else {
         reader.forwardExclusive('<');
-        state = xrx.stream.State_.LT_SEEN;
+        state = xrx.xml.Stream.State_.LT_SEEN;
       }
       // if we have parsed the not-tag, the row is complete.
       if (token === xrx.token.START_TAG) {
@@ -395,9 +395,9 @@ xrx.stream.prototype.forward = function(opt_offset) {
     },
     'LT_SEEN': function() {
       if (reader.peek(1) === '/') {
-        state = xrx.stream.State_.END_TAG;
+        state = xrx.xml.Stream.State_.END_TAG;
       } else {
-        state = xrx.stream.State_.START_TAG;
+        state = xrx.xml.Stream.State_.START_TAG;
       }
     }
   };
@@ -410,7 +410,7 @@ xrx.stream.prototype.forward = function(opt_offset) {
       throw Error('Invalid parser state.');
     }
 
-    if (state === xrx.stream.State_.XML_END || this.stopped_) {
+    if (state === xrx.xml.Stream.State_.XML_END || this.stopped_) {
       this.stopped_ = false;
       break;
     }
@@ -427,8 +427,8 @@ xrx.stream.prototype.forward = function(opt_offset) {
  * 
  * @param {?number} opt_offset The offset.
  */
-xrx.stream.prototype.backward = function(opt_offset) {
-  var state = xrx.stream.State_.XML_START;
+xrx.xml.Stream.prototype.backward = function(opt_offset) {
+  var state = xrx.xml.Stream.State_.XML_START;
   var reader = this.reader_;
   var token;
   var offset;
@@ -441,15 +441,15 @@ xrx.stream.prototype.backward = function(opt_offset) {
   var process = {
     'XML_START': function() {
       if (reader.get() === '<') reader.previous();
-      reader.get() === '>' ? state = xrx.stream.State_.GT_SEEN : 
-          state = xrx.stream.State_.NOT_TAG;
+      reader.get() === '>' ? state = xrx.xml.Stream.State_.GT_SEEN : 
+          state = xrx.xml.Stream.State_.NOT_TAG;
     },
     'XML_END': function() {},
     'START_TAG': function() {},
     'END_TAG': function(stream) {
       offset = reader.pos();
       reader.backwardInclusive('<');
-      state = xrx.stream.State_.NOT_TAG;
+      state = xrx.xml.Stream.State_.NOT_TAG;
       if (reader.peek(1) !== '/') {
         var off = reader.pos();
         var len1 = offset - reader.pos() + 1;
@@ -462,36 +462,36 @@ xrx.stream.prototype.backward = function(opt_offset) {
         stream.features(xrx.token.END_TAG, reader.pos(), offset - reader.pos() + 1);
       }
       reader.previous();
-      if (reader.finished()) state = xrx.stream.State_.XML_END;
+      if (reader.finished()) state = xrx.xml.Stream.State_.XML_END;
     },
     'EMPTY_TAG': function(stream) {
       offset = reader.pos();
       reader.backwardInclusive('<');
-      state = xrx.stream.State_.NOT_TAG;
+      state = xrx.xml.Stream.State_.NOT_TAG;
       var off = reader.pos();
       var len1 = offset - reader.pos() + 1;
       stream.rowEmptyTag(off, len1, pos - reader.pos());
       pos = reader.pos();
       stream.features(xrx.token.EMPTY_TAG, off, len1);
       reader.previous();
-      if (reader.finished()) state = xrx.stream.State_.XML_END;
+      if (reader.finished()) state = xrx.xml.Stream.State_.XML_END;
     },
     'NOT_TAG': function(stream) {
       if (reader.get() === '>') {
-        state = xrx.stream.State_.GT_SEEN;
+        state = xrx.xml.Stream.State_.GT_SEEN;
       } else {
         offset = reader.pos();
         reader.backwardExclusive('>');
         reader.previous();
-        state = xrx.stream.State_.GT_SEEN;
+        state = xrx.xml.Stream.State_.GT_SEEN;
       }
-      if (reader.finished()) state = xrx.stream.State_.XML_END;
+      if (reader.finished()) state = xrx.xml.Stream.State_.XML_END;
     },
     'GT_SEEN': function() {
       if (reader.peek(-1) === '/') {
-        state = xrx.stream.State_.EMPTY_TAG;
+        state = xrx.xml.Stream.State_.EMPTY_TAG;
       } else {
-        state = xrx.stream.State_.END_TAG;
+        state = xrx.xml.Stream.State_.END_TAG;
       }
     }
   };
@@ -504,7 +504,7 @@ xrx.stream.prototype.backward = function(opt_offset) {
       throw Error('Invalid parser state.');
     }
 
-    if (state === xrx.stream.State_.XML_END || this.stopped_) {
+    if (state === xrx.xml.Stream.State_.XML_END || this.stopped_) {
       this.stopped_ = false;
       break;
     }
@@ -518,21 +518,21 @@ xrx.stream.prototype.backward = function(opt_offset) {
  * returns the location of the name of the tag.
  * 
  * @param {!string} xml The tag.
- * @param {?xrx.reader} opt_reader Optional reader object.
- * @return {!xrx.location} The tag-name.
+ * @param {?xrx.xml.Reader} opt_reader Optional reader object.
+ * @return {!xrx.xml.Location} The tag-name.
  */
-xrx.stream.prototype.tagName = function(xml, opt_reader) {
-  var state = xrx.stream.State_.TAG_START;
+xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
+  var state = xrx.xml.Stream.State_.TAG_START;
   var offset;
   var length;
-  var reader = opt_reader || new xrx.reader(xml);
+  var reader = opt_reader || new xrx.xml.Reader(xml);
 
   this.stopped_ = false;
 
   var process = {
     'TAG_START': function() {
       if (reader.next() === '<') {
-        state = xrx.stream.State_.TAG_NAME;
+        state = xrx.xml.Stream.State_.TAG_NAME;
         reader.get() === '/' ? reader.next() : null;
         offset = reader.pos();
       } else {
@@ -542,7 +542,7 @@ xrx.stream.prototype.tagName = function(xml, opt_reader) {
     'TAG_NAME': function() {
       var next = reader.next();
       if (next === ' ' || next === '/' || next === '>') {
-        state = xrx.stream.State_.TOK_END;
+        state = xrx.xml.Stream.State_.TOK_END;
         reader.backward();
         length = reader.pos() - offset - 1;
       }
@@ -557,10 +557,10 @@ xrx.stream.prototype.tagName = function(xml, opt_reader) {
       throw Error('Invalid parser state.');
     }
 
-    if (state === xrx.stream.State_.TOK_END) break; 
+    if (state === xrx.xml.Stream.State_.TOK_END) break; 
   }
 
-  return new xrx.location(offset, length);
+  return new xrx.xml.Location(offset, length);
 };
 
 
@@ -573,7 +573,7 @@ xrx.stream.prototype.tagName = function(xml, opt_reader) {
  * @param {!number} pos The attribute position.
  * @return {string|null} The attribute at position n or null.
  */
-xrx.stream.prototype.attribute = function(xml, pos, opt_offset) {
+xrx.xml.Stream.prototype.attribute = function(xml, pos, opt_offset) {
   return this.attr_(xml, pos, xrx.token.ATTRIBUTE, opt_offset);
 };
 
@@ -584,11 +584,11 @@ xrx.stream.prototype.attribute = function(xml, pos, opt_offset) {
  * locations of all attributes found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
- * @return {Array.<xrx.location>} The location array.
+ * @return {Array.<xrx.xml.Location>} The location array.
  */
-xrx.stream.prototype.attributes = function(xml) {
+xrx.xml.Stream.prototype.attributes = function(xml) {
   var locs = {};
-  var location = new xrx.location();
+  var location = new xrx.xml.Location();
 
   for(var i = 1;;i++) {
     var newLocation = this.attribute(xml, i, location.offset + location.length);
@@ -607,11 +607,11 @@ xrx.stream.prototype.attributes = function(xml) {
  * locations of all namespaces found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
- * @return {Array.<xrx.location>} The location array.
+ * @return {Array.<xrx.xml.Location>} The location array.
  */
-xrx.stream.prototype.namespaces = function(xml) {
+xrx.xml.Stream.prototype.namespaces = function(xml) {
   var locs = {};
-  var location = new xrx.location();
+  var location = new xrx.xml.Location();
 
   for(var i = 1;;i++) {
     var newLocation = this.attribute(xml, i, location.offset + location.length);
@@ -630,11 +630,11 @@ xrx.stream.prototype.namespaces = function(xml) {
  * locations of all attributes and namespaces found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
- * @return {Array.<xrx.location>} The location array.
+ * @return {Array.<xrx.xml.Location>} The location array.
  */
-xrx.stream.prototype.secondaries = function(xml) {
+xrx.xml.Stream.prototype.secondaries = function(xml) {
   var locs = {};
-  var location = new xrx.location();
+  var location = new xrx.xml.Location();
 
   for(var i = 1;;i++) {
     var newLocation = this.attribute(xml, i, location.offset + location.length);
@@ -654,9 +654,9 @@ xrx.stream.prototype.secondaries = function(xml) {
  * 
  * @param {!string} xml The tag.
  * @param {!number} pos The attribute position.
- * @return {!xrx.location} The attribute name location.
+ * @return {!xrx.xml.Location} The attribute name location.
  */
-xrx.stream.prototype.attrName = function(xml, pos) {
+xrx.xml.Stream.prototype.attrName = function(xml, pos) {
   return this.attr_(xml, pos, xrx.token.ATTR_NAME);
 };
 
@@ -668,9 +668,9 @@ xrx.stream.prototype.attrName = function(xml, pos) {
  * 
  * @param {!string} xml The attribute.
  * @param {!number} pos The attribute position.
- * @return {!xrx.location} The attribute value location.
+ * @return {!xrx.xml.Location} The attribute value location.
  */
-xrx.stream.prototype.attrValue = function(xml, pos, opt_offset) {
+xrx.xml.Stream.prototype.attrValue = function(xml, pos, opt_offset) {
   return this.attr_(xml, pos, xrx.token.ATTR_VALUE, opt_offset);
 };
 
@@ -680,16 +680,16 @@ xrx.stream.prototype.attrValue = function(xml, pos, opt_offset) {
  * 
  * @private
  */
-xrx.stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reader) {
-  var reader = opt_reader || new xrx.reader(xml);
+xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reader) {
+  var reader = opt_reader || new xrx.xml.Reader(xml);
   if (opt_offset) reader.set(opt_offset);
   this.stopped_ = false;
   
-  var location = !opt_offset ? this.tagName(xml, reader) : new xrx.location();
+  var location = !opt_offset ? this.tagName(xml, reader) : new xrx.xml.Location();
   // tag does not contain any attributes ? => return null
   if (reader.peek(-1).match(/(\/|>)/g)) return null; 
 
-  var state = xrx.stream.State_.ATTR_NAME;
+  var state = xrx.xml.Stream.State_.ATTR_NAME;
   var offset = reader.pos();
   var length;
   var found = 0;
@@ -704,11 +704,11 @@ xrx.stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reade
       if (tokenType === xrx.token.ATTR_NAME && found === pos) {
         location.offset = offset;
         location.length = reader.pos() - offset - 1;
-        state = xrx.stream.State_.TOK_END;
+        state = xrx.xml.Stream.State_.TOK_END;
       } else {
         quote = reader.next();
         tokenType === xrx.token.ATTR_VALUE ? offset = reader.pos() : null;
-        state = xrx.stream.State_.ATTR_VAL;
+        state = xrx.xml.Stream.State_.ATTR_VAL;
       }
     },
     'ATTR_VAL': function() {
@@ -720,15 +720,15 @@ xrx.stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reade
         } else if (tokenType === xrx.token.ATTR_VALUE) {
           location.length = reader.pos() - offset - 1;
         } else {}
-        state = xrx.stream.State_.TOK_END;
+        state = xrx.xml.Stream.State_.TOK_END;
       } else {
         reader.next();
         var lst = reader.peek(-1);
         if(lst === '/' || lst === '>') {
-          state = xrx.stream.State_.TOK_END;
+          state = xrx.xml.Stream.State_.TOK_END;
           location = null;
         } else {
-          state = xrx.stream.State_.ATTR_NAME;
+          state = xrx.xml.Stream.State_.ATTR_NAME;
         }
       }
     }
@@ -742,7 +742,7 @@ xrx.stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reade
       throw Error('Invalid parser state.');
     }
     
-    if (state === xrx.stream.State_.TOK_END) break;
+    if (state === xrx.xml.Stream.State_.TOK_END) break;
   }
   return location;
 };
@@ -753,7 +753,7 @@ xrx.stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reade
  * Streams over some XML content and returns the location of 
  * one or more comments.
  */
-xrx.stream.prototype.comment = function(xml) {
+xrx.xml.Stream.prototype.comment = function(xml) {
   // TODO(jochen)
 };
 
@@ -765,7 +765,7 @@ xrx.stream.prototype.comment = function(xml) {
  * 
  * @param xml XML string.
  */
-xrx.stream.prototype.pi = function(xml) {
+xrx.xml.Stream.prototype.pi = function(xml) {
   // TODO(jochen)
 };
 
@@ -777,7 +777,7 @@ xrx.stream.prototype.pi = function(xml) {
  * 
  * @param xml XML string.
  */
-xrx.stream.prototype.cdata = function(xml) {
+xrx.xml.Stream.prototype.cdata = function(xml) {
   // TODO(jochen)
 };
 
@@ -789,6 +789,6 @@ xrx.stream.prototype.cdata = function(xml) {
  * 
  * @param xml XML string.
  */
-xrx.stream.prototype.doctypedecl = function(xml) {
+xrx.xml.Stream.prototype.doctypedecl = function(xml) {
   // TODO(jochen)
 };

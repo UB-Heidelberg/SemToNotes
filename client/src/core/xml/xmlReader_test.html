@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.reader</title>
+<title>XRX++ Unit Tests - xrx.xml.Reader</title>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.reader');
+  goog.require('xrx.xml.Reader');
 </script>
 </head>
 <body>
@@ -14,7 +14,7 @@
 
 var xml = '<a>1<b>2</b>3<c/>4<d><e>5</e>6</d></a>';
 
-var reader = new xrx.reader(xml);
+var reader = new xrx.xml.Reader(xml);
 
 
 function testFirst() {

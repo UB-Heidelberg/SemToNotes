@@ -8,7 +8,7 @@ goog.provide('xrx.node.DocumentB');
 
 
 goog.require('xrx.index');
-goog.require('xrx.label');
+goog.require('xrx.xml.Label');
 goog.require('xrx.node');
 goog.require('xrx.nodeB');
 goog.require('xrx.node.Document');

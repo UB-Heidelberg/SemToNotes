@@ -3,11 +3,11 @@
  * instance.
  */
 
-goog.provide('xrx.traverse');
+goog.provide('xrx.xml.Traverse');
 
 
-goog.require('xrx.label');
-goog.require('xrx.stream');
+goog.require('xrx.xml.Label');
+goog.require('xrx.xml.Stream');
 goog.require('xrx.token');
 
 
@@ -15,11 +15,11 @@ goog.require('xrx.token');
 /**
  * A class to stream over a labeled XML instance.
  */
-xrx.traverse = function(xml) {
+xrx.xml.Traverse = function(xml) {
 
 
 
-  this.stream_ = new xrx.stream(xml);
+  this.stream_ = new xrx.xml.Stream(xml);
 };
 
 
@@ -27,7 +27,7 @@ xrx.traverse = function(xml) {
 /**
  * 
  */
-xrx.traverse.prototype.stream = function() {
+xrx.xml.Traverse.prototype.stream = function() {
   return this.stream_;
 };
 
@@ -36,7 +36,7 @@ xrx.traverse.prototype.stream = function() {
 /**
  * 
  */
-xrx.traverse.prototype.xml = function() {
+xrx.xml.Traverse.prototype.xml = function() {
   return this.stream_.xml();
 };
 
@@ -45,7 +45,7 @@ xrx.traverse.prototype.xml = function() {
 /**
  * 
  */
-xrx.traverse.prototype.stop = function() {
+xrx.xml.Traverse.prototype.stop = function() {
   this.stream_.stop();
 };
 
@@ -54,70 +54,70 @@ xrx.traverse.prototype.stop = function() {
 /**
  * Event, thrown whenever a start-tag row is found.
  */
-xrx.traverse.prototype.rowStartTag = goog.abstractMethod;
+xrx.xml.Traverse.prototype.rowStartTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a empty-tag row is found.
  */
-xrx.traverse.prototype.rowEmptyTag = goog.abstractMethod;
+xrx.xml.Traverse.prototype.rowEmptyTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a end-tag row is found.
  */
-xrx.traverse.prototype.rowEndTag = goog.abstractMethod;
+xrx.xml.Traverse.prototype.rowEndTag = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a tag-name is found.
  */
-xrx.traverse.prototype.eventTagName = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventTagName = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute token is found.
  */
-xrx.traverse.prototype.eventAttribute = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventAttribute = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute name is found.
  */
-xrx.traverse.prototype.eventAttrName = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventAttrName = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a attribute value is found.
  */
-xrx.traverse.prototype.eventAttrValue = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventAttrValue = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace token is found.
  */
-xrx.traverse.prototype.eventNamespace = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventNamespace = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace prefix is found.
  */
-xrx.traverse.prototype.eventNsPrefix = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventNsPrefix = goog.abstractMethod;
 
 
 
 /**
  * Event, thrown whenever a namespace URI is found.
  */
-xrx.traverse.prototype.eventNsUri = goog.abstractMethod;
+xrx.xml.Traverse.prototype.eventNsUri = goog.abstractMethod;
 
 
 
@@ -128,7 +128,7 @@ xrx.traverse.prototype.eventNsUri = goog.abstractMethod;
  * @param {!string} feature The name of the feature.
  * @param {!boolean} flag On or off.
  */
-xrx.traverse.prototype.setFeature = function(feature, flag) {
+xrx.xml.Traverse.prototype.setFeature = function(feature, flag) {
   this.stream_.setFeature(feature, flag);
 };
 
@@ -139,7 +139,7 @@ xrx.traverse.prototype.setFeature = function(feature, flag) {
  * @param {!string} feature The feature to test.
  * @return {!boolean} True when on otherwise false.
  */
-xrx.traverse.prototype.hasFeature = function(feature) {
+xrx.xml.Traverse.prototype.hasFeature = function(feature) {
   return this.stream_.hasFeature(feature);
 };
 
@@ -150,7 +150,7 @@ xrx.traverse.prototype.hasFeature = function(feature) {
  * 
  * @param {!boolean} flag On or off.
  */
-xrx.traverse.prototype.setFeatures = function(flag) {
+xrx.xml.Traverse.prototype.setFeatures = function(flag) {
   this.stream_.setFeatures(flag);
 };
 
@@ -159,7 +159,7 @@ xrx.traverse.prototype.setFeatures = function(flag) {
 /**
  * @private
  */
-xrx.traverse.prototype.secondaryLabel = function(label, primaryLabel) {
+xrx.xml.Traverse.prototype.secondaryLabel = function(label, primaryLabel) {
 
   if (label.isRoot()) {
     label = primaryLabel.clone();
@@ -177,13 +177,13 @@ xrx.traverse.prototype.secondaryLabel = function(label, primaryLabel) {
  * backward direction.
  * @private
  */
-xrx.traverse.prototype.traverse = function(opt_token, forward) {
+xrx.xml.Traverse.prototype.traverse = function(opt_token, forward) {
   var traverse = this;
-  var label = opt_token ? opt_token.label().clone() : new xrx.label();
+  var label = opt_token ? opt_token.label().clone() : new xrx.xml.Label();
   var start = opt_token ? opt_token.offset() : undefined;
   var lastTag = opt_token ? opt_token.type() : xrx.token.UNDEFINED;
-  var attrLabel = new xrx.label();
-  var nsLabel = new xrx.label();
+  var attrLabel = new xrx.xml.Label();
+  var nsLabel = new xrx.xml.Label();
   var firstTag = opt_token ? true : false;
 
   this.stream_.rowStartTag = function(offset, length1, length2) {
@@ -200,8 +200,8 @@ xrx.traverse.prototype.traverse = function(opt_token, forward) {
     traverse.rowStartTag(label.clone(), offset, length1, length2);
 
     lastTag = xrx.token.START_TAG;
-    attrLabel = new xrx.label();
-    nsLabel = new xrx.label();
+    attrLabel = new xrx.xml.Label();
+    nsLabel = new xrx.xml.Label();
   };
 
   this.stream_.rowEmptyTag = function(offset, length1, length2) {
@@ -222,8 +222,8 @@ xrx.traverse.prototype.traverse = function(opt_token, forward) {
     traverse.rowEmptyTag(label.clone(), offset, length1, length2);
 
     forward ? lastTag = xrx.token.END_TAG : lastTag = xrx.token.START_TAG;
-    attrLabel = new xrx.label();
-    nsLabel = new xrx.label();
+    attrLabel = new xrx.xml.Label();
+    nsLabel = new xrx.xml.Label();
   };
 
   this.stream_.rowEndTag = function(offset, length1, length2) {
@@ -287,7 +287,7 @@ xrx.traverse.prototype.traverse = function(opt_token, forward) {
 /**
  * Stream over the labels of a XML instance in forward direction.
  */
-xrx.traverse.prototype.forward = function(opt_token) {
+xrx.xml.Traverse.prototype.forward = function(opt_token) {
   this.traverse(opt_token, true);
 };
 
@@ -296,7 +296,7 @@ xrx.traverse.prototype.forward = function(opt_token) {
 /**
  * Stream over the labels of a XML instance in backward direction.
  */
-xrx.traverse.prototype.backward = function(opt_token) {
+xrx.xml.Traverse.prototype.backward = function(opt_token) {
   this.traverse(opt_token, false);
 };
 

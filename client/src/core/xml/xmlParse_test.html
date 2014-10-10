@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.parse</title>
+<title>XRX++ Unit Tests - xrx.xml.Parser</title>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <!--script type="text/javascript" src="../../lib/codemirror/lib/codemirror.js"></script>
 <link rel="stylesheet" href="../../lib/codemirror/lib/codemirror.css"/-->
@@ -17,7 +17,7 @@
   goog.require('goog.result');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.parse');
+  goog.require('xrx.xml.Parser');
 </script>
 </head>
 <body>
@@ -25,7 +25,7 @@
 <script type="text/javascript">
 
 function test01remote() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input;
   var request = new goog.net.XhrIo();
   var normalized;
@@ -40,35 +40,35 @@ function test01remote() {
 };
 
 function test02emptyElement() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input = '<test>text<empty/>text</test>';
   var output = parser.normalize(input);
   assertEquals(input, output);
 };
 
 function test03namespace() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input = '<n:test xmlns:n="http://example.org/n" xmlns:m="http://example.org/m"></n:test>';
   var output = parser.normalize(input);
   assertEquals(input, output);
 };
 
 function test04defaultNamespace() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input = '<test xmlns="http://example.org"/>';
   var output = parser.normalize(input);
   assertEquals(input, output);
 };
 
 function test05attributes() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input = '<test attr1="value1" attr2="value2"/>';
   var output = parser.normalize(input);
   assertEquals(input, output);
 };
 
 function test06singelQuotes() {
-  var parser = new xrx.parse();
+  var parser = new xrx.xml.Parser();
   var input = "<test attr='\"'/>";
   var output = '<test attr="\'"/>';
   var normalized = parser.normalize(input);

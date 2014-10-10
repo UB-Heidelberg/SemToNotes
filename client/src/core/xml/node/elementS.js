@@ -182,7 +182,7 @@ xrx.node.ElementS.prototype.getNamespaceUri = function(prefix) {
 
 xrx.node.ElementS.prototype.getStringValue = function() {
   var xml = this.instance_.xml();
-  var traverse = new xrx.traverse(xml);
+  var traverse = new xrx.xml.Traverse(xml);
   var string = '';
   var self = this;
 
@@ -212,7 +212,7 @@ xrx.node.ElementS.prototype.getXml = function() {
     return this.getToken().xml(this.instance_.xml());
   }
 
-  var pilot = new xrx.pilot(this.instance_.xml());
+  var pilot = new xrx.xml.Pilot(this.instance_.xml());
   var target = new xrx.token.EndTag(this.getLabel().clone());
   var endTag = pilot.location(this.getToken(), target);
 
@@ -299,11 +299,11 @@ xrx.node.ElementS.prototype.getNodePrecedingSibling = xrx.node.Element.prototype
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.ElementS.prototype.forward = function(stop) {
   var self = this;
-  var traverse = new xrx.traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.instance_.xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
@@ -338,11 +338,11 @@ xrx.node.ElementS.prototype.forward = function(stop) {
 
 
 /**
- * @param {!xrx.label}
+ * @param {!xrx.xml.Label}
  */
 xrx.node.ElementS.prototype.backward = function(stop) {
   var self = this;
-  var traverse = new xrx.traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.instance_.xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {

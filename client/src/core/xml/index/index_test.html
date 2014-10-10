@@ -9,8 +9,8 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx.index');
-  goog.require('xrx.label');
-  goog.require('xrx.pilot');
+  goog.require('xrx.xml.Label');
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.token');
   goog.require('xrx.token.EmptyTag');
 </script>
@@ -25,20 +25,20 @@ function test01basic() {
   
   assertEquals(14, index.getLength());
   assertEquals(13, index.getLastKey());
-  assertTrue(index.getLabel(0).sameAs(new xrx.label([1])));
-  assertTrue(index.getLabel(1).sameAs(new xrx.label([1,1])));
-  assertTrue(index.getLabel(2).sameAs(new xrx.label([1,2])));
-  assertTrue(index.getLabel(3).sameAs(new xrx.label([1,3])));
-  assertTrue(index.getLabel(4).sameAs(new xrx.label([1,3,1])));
-  assertTrue(index.getLabel(5).sameAs(new xrx.label([1,3,1])));
-  assertTrue(index.getLabel(6).sameAs(new xrx.label([1,3])));
-  assertTrue(index.getLabel(7).sameAs(new xrx.label([1,4])));
-  assertTrue(index.getLabel(8).sameAs(new xrx.label([1,4,1])));
-  assertTrue(index.getLabel(9).sameAs(new xrx.label([1,4])));
-  assertTrue(index.getLabel(10).sameAs(new xrx.label([1,5])));
-  assertTrue(index.getLabel(11).sameAs(new xrx.label([1,5])));
-  assertTrue(index.getLabel(12).sameAs(new xrx.label([1,6])));
-  assertTrue(index.getLabel(13).sameAs(new xrx.label([1])));
+  assertTrue(index.getLabel(0).sameAs(new xrx.xml.Label([1])));
+  assertTrue(index.getLabel(1).sameAs(new xrx.xml.Label([1,1])));
+  assertTrue(index.getLabel(2).sameAs(new xrx.xml.Label([1,2])));
+  assertTrue(index.getLabel(3).sameAs(new xrx.xml.Label([1,3])));
+  assertTrue(index.getLabel(4).sameAs(new xrx.xml.Label([1,3,1])));
+  assertTrue(index.getLabel(5).sameAs(new xrx.xml.Label([1,3,1])));
+  assertTrue(index.getLabel(6).sameAs(new xrx.xml.Label([1,3])));
+  assertTrue(index.getLabel(7).sameAs(new xrx.xml.Label([1,4])));
+  assertTrue(index.getLabel(8).sameAs(new xrx.xml.Label([1,4,1])));
+  assertTrue(index.getLabel(9).sameAs(new xrx.xml.Label([1,4])));
+  assertTrue(index.getLabel(10).sameAs(new xrx.xml.Label([1,5])));
+  assertTrue(index.getLabel(11).sameAs(new xrx.xml.Label([1,5])));
+  assertTrue(index.getLabel(12).sameAs(new xrx.xml.Label([1,6])));
+  assertTrue(index.getLabel(13).sameAs(new xrx.xml.Label([1])));
 };
 
 function test02iter() {
@@ -101,10 +101,10 @@ function test02iter() {
 function test03namespaceFunctions() {
   var xml = '<x><y/><a xmlns="http://www.example.org/a"><b:b xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
   var index = new xrx.index(xml);
-  var pilot = new xrx.pilot(xml);
+  var pilot = new xrx.xml.Pilot(xml);
 
   // default namespace uri
-  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1,2,1,1])));
+  var t1 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,2,1,1])));
   var uriDefault = index.getNamespaceUri(t1, 'xmlns');
   assertEquals('http://www.example.org/a', uriDefault);
 
@@ -117,7 +117,7 @@ function test03namespaceFunctions() {
   assertEquals(undefined, uriPrefixUndefined);
 
   // default namespace prefix
-  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.label([1,2,1,1])));
+  var t2 = pilot.location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,2,1,1])));
   var prefixDefault = index.getNamespacePrefix(t2, 'http://www.example.org/a');
   assertEquals('xmlns', prefixDefault);
 

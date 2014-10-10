@@ -7,7 +7,7 @@ goog.provide('xrx.token.Abstract');
 
 
 
-goog.require('xrx.label');
+goog.require('xrx.xml.Label');
 
 
 
@@ -18,7 +18,7 @@ goog.require('xrx.label');
  *
  * @constructor
  * @param {!number} type The type of the token.
- * @param {?xrx.label} label The label attached to the token.
+ * @param {?xrx.xml.Label} label The label attached to the token.
  * @param {?number} offset The offset relative to the start of 
  *     the XML stream.
  * @param {?number} length The number of characters occupied 
@@ -131,7 +131,7 @@ xrx.token.Abstract.prototype.isAfter = function(token) {
  * A cumulative setter function for all private members.
  *
  * @param {!number} type The type of the token.
- * @param {!xrx.label} label The label attached to the token.
+ * @param {!xrx.xml.Label} label The label attached to the token.
  * @param {?number} offset The offset relative to the start of the XML stream.
  * @param {?number} length The number of characters in the XML stream.
  */
