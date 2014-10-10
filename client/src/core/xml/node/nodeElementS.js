@@ -9,7 +9,7 @@ goog.provide('xrx.node.ElementS');
 
 goog.require('xrx.node');
 goog.require('xrx.node.Element');
-goog.require('xrx.nodeS');
+goog.require('xrx.node.Streaming');
 goog.require('xrx.token');
 goog.require('xrx.token.StartTag');
 goog.require('xrx.token.EmptyTag');
@@ -30,7 +30,7 @@ xrx.node.ElementS = function(instance, token) {
 
   goog.base(this, xrx.node.ELEMENT, instance, token);
 ***REMOVED***
-goog.inherits(xrx.node.ElementS, xrx.nodeS);
+goog.inherits(xrx.node.ElementS, xrx.node.Streaming);
 
 
 

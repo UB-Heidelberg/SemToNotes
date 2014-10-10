@@ -8,7 +8,7 @@ goog.provide('xrx.token.Tag');
 
 
 goog.require('xrx.token');
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 
 
 
@@ -23,7 +23,7 @@ goog.require('xrx.token.Abstract');
 xrx.token.Tag = function(label) {
   goog.base(this, xrx.token.TAG, label);
 ***REMOVED***
-goog.inherits(xrx.token.Tag, xrx.token.Abstract);
+goog.inherits(xrx.token.Tag, xrx.token.Token);
 
 
 

@@ -31,20 +31,20 @@ var _allTests = [
   './core/xml/xmlTraverse_test.html',
   './core/xml/xmlUpdate_test.html',
   // core :: xml :: index
-  './core/xml/index/index_test.html',
+  './core/xml/index/indexIndex_test.html',
   // core :: xml :: node
-  './core/xml/node/attribute_test.html',
-  './core/xml/node/document_test.html',
-  './core/xml/node/element_test.html',
-  './core/xml/node/node_test.html',
-  './core/xml/node/text_test.html',
+  './core/xml/node/nodeAttribute_test.html',
+  './core/xml/node/nodeDocument_test.html',
+  './core/xml/node/nodeElement_test.html',
+  './core/xml/node/nodeNodes_test.html',
+  './core/xml/node/nodeText_test.html',
   // core :: xml :: token
   './core/xml/token/token_test.html',
   // core :: xml :: xpath
-  './core/xml/xpath/functionCall_test.html',
-  './core/xml/xpath/kindTest_test.html',
-  './core/xml/xpath/nameTest_test.html',
-  './core/xml/xpath/predicates_test.html',
-  './core/xml/xpath/step_test.html',
+  './core/xml/xpath/xpathFunctionCall_test.html',
+  './core/xml/xpath/xpathKindTest_test.html',
+  './core/xml/xpath/xpathNameTest_test.html',
+  './core/xml/xpath/xpathPredicates_test.html',
+  './core/xml/xpath/xpathStep_test.html',
   './core/xml/xpath/xpath_test.html'
   ];

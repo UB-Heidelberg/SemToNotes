@@ -9,7 +9,7 @@ goog.provide('xrx.node.TextB');
 
 goog.require('xrx.xml.Label');
 goog.require('xrx.node');
-goog.require('xrx.nodeB');
+goog.require('xrx.node.Binary');
 goog.require('xrx.node.Text');
 goog.require('xrx.token');
 goog.require('xrx.token.NotTag');
@@ -27,7 +27,7 @@ goog.require('xrx.xpath.NodeSet');
 xrx.node.TextB = function(instance, key) {
   goog.base(this, xrx.node.TEXT, instance, key);
 ***REMOVED***
-goog.inherits(xrx.node.TextB, xrx.nodeB);
+goog.inherits(xrx.node.TextB, xrx.node.Binary);
 
 
 

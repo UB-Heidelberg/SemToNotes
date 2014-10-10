@@ -4,13 +4,13 @@
 ***REMOVED***
 
 
-goog.provide('xrx.index');
+goog.provide('xrx.index.Index');
 goog.provide('xrx.index.Namespace');
 
 
 
 goog.require('goog.array');
-goog.require('xrx.index.row');
+goog.require('xrx.index.Row');
 goog.require('xrx.xml.Label');
 goog.require('xrx.token');
 goog.require('xrx.token.Tokens');
@@ -24,11 +24,11 @@ goog.require('xrx.xml.Traverse');
 ***REMOVED*** @param {string} The XML string to be indexed.
 ***REMOVED***
 ***REMOVED***
-xrx.index = function(xml) {
+xrx.index.Index = function(xml) {
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** The indexed XML rows.
-  ***REMOVED*** @type {Array.<xrx.index.row>}
+  ***REMOVED*** @type {Array.<xrx.index.Row>}
  ***REMOVED*****REMOVED***
   this.rows_ = [];
 
@@ -55,7 +55,7 @@ xrx.index = function(xml) {
 ***REMOVED*** Returns the number of rows of the index.
 ***REMOVED*** @return {integer}
 ***REMOVED***
-xrx.index.prototype.getLength = function() {
+xrx.index.Index.prototype.getLength = function() {
   return this.rows_.length;
 ***REMOVED***
 
@@ -65,7 +65,7 @@ xrx.index.prototype.getLength = function() {
 ***REMOVED*** Returns the last key of the index.
 ***REMOVED*** @return {integer}
 ***REMOVED***
-xrx.index.prototype.getLastKey = function() {
+xrx.index.Index.prototype.getLastKey = function() {
   return this.getLength() - 1;
 ***REMOVED***
 
@@ -80,7 +80,7 @@ xrx.index.prototype.getLastKey = function() {
 ***REMOVED*** backward direction.
 ***REMOVED*** @return {integer} The key.
 ***REMOVED***
-xrx.index.prototype.getKeyByTag = function(token, opt_start) {
+xrx.index.Index.prototype.getKeyByTag = function(token, opt_start) {
   var row;
   var key;
 
@@ -105,7 +105,7 @@ xrx.index.prototype.getKeyByTag = function(token, opt_start) {
 ***REMOVED*** @param {xrx.token} token The not-tag token.
 ***REMOVED*** @return {integer} The key.
 ***REMOVED***
-xrx.index.prototype.getKeyByNotTag = function(token, opt_start) {
+xrx.index.Index.prototype.getKeyByNotTag = function(token, opt_start) {
   var row;
   var key;
   var isStartTagRow = token.label().last() === 0 ? true : false;
@@ -146,9 +146,9 @@ xrx.index.prototype.getKeyByNotTag = function(token, opt_start) {
 ***REMOVED***
 ***REMOVED*** Returns a index row by overloading a key.
 ***REMOVED*** @param {!integer} key The key.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.getRowByKey = function(key) {
+xrx.index.Index.prototype.getRowByKey = function(key) {
   return this.rows_[key];
 ***REMOVED***
 
@@ -157,9 +157,9 @@ xrx.index.prototype.getRowByKey = function(key) {
 ***REMOVED***
 ***REMOVED*** Searches a index row by overloading a tag token.
 ***REMOVED*** @param {xrx.token} token The token.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.getRowByTag = function(token, opt_start) {
+xrx.index.Index.prototype.getRowByTag = function(token, opt_start) {
 
   return this.getRowByKey(this.getKeyByTag(token, opt_start));
 ***REMOVED***
@@ -169,9 +169,9 @@ xrx.index.prototype.getRowByTag = function(token, opt_start) {
 ***REMOVED***
 ***REMOVED*** Searches a index row by overloading a not-tag token.
 ***REMOVED*** @param {xrx.token} token The token.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.getRowByTag = function(token, opt_start) {
+xrx.index.Index.prototype.getRowByTag = function(token, opt_start) {
 
   return this.getRowByKey(this.getKeyByNotTag(token, opt_start));
 ***REMOVED***
@@ -182,7 +182,7 @@ xrx.index.prototype.getRowByTag = function(token, opt_start) {
 ***REMOVED*** Returns a row label by overloading a index key.
 ***REMOVED*** @return {xrx.xml.Label} The label.
 ***REMOVED***
-xrx.index.prototype.getLabel = function(key) {
+xrx.index.Index.prototype.getLabel = function(key) {
   var row = this.rows_[key];
   var next;
   var last;
@@ -208,9 +208,9 @@ xrx.index.prototype.getLabel = function(key) {
 ***REMOVED*** Returns a tag token by overloading a row.
 ***REMOVED*** @return {xrx.token.StartTag|xrx.token.EmptyTag|xrx.token.EndTag} The tag. 
 ***REMOVED***
-xrx.index.prototype.getTag = function(row) {
+xrx.index.Index.prototype.getTag = function(row) {
   var r = this.rows_[row];
-  var tag = new xrx.token.Abstract(r.getType(), this.getLabel(row),
+  var tag = new xrx.token.Token(r.getType(), this.getLabel(row),
       r.getOffset(), r.getLength1());
   
   return xrx.token.Tokens.getNative(tag);
@@ -222,7 +222,7 @@ xrx.index.prototype.getTag = function(row) {
 ***REMOVED*** Sets the iterator key at a position.
 ***REMOVED*** @param {integer} key The key.
 ***REMOVED***
-xrx.index.prototype.iterSetKey = function(key) {
+xrx.index.Index.prototype.iterSetKey = function(key) {
 
   this.iterKey_ = key || 0;
 ***REMOVED***
@@ -232,7 +232,7 @@ xrx.index.prototype.iterSetKey = function(key) {
 ***REMOVED***
 ***REMOVED*** Sets the iterator key at the first position.
 ***REMOVED***
-xrx.index.prototype.iterAtFirst = function() {
+xrx.index.Index.prototype.iterAtFirst = function() {
 
   this.iterKey_ = 0;
 ***REMOVED***
@@ -242,7 +242,7 @@ xrx.index.prototype.iterAtFirst = function() {
 ***REMOVED***
 ***REMOVED*** Sets the iterator key at the last position.
 ***REMOVED***
-xrx.index.prototype.iterAtLast = function() {
+xrx.index.Index.prototype.iterAtLast = function() {
 
   this.iterKey_ = this.getLastKey();
 ***REMOVED***
@@ -253,7 +253,7 @@ xrx.index.prototype.iterAtLast = function() {
 ***REMOVED*** Returns the current iterator key.
 ***REMOVED*** @return {integer} The key.
 ***REMOVED***
-xrx.index.prototype.iterGetKey = function() {
+xrx.index.Index.prototype.iterGetKey = function() {
 
   return this.iterKey_;
 ***REMOVED***
@@ -262,9 +262,9 @@ xrx.index.prototype.iterGetKey = function() {
 
 ***REMOVED***
 ***REMOVED*** Returns the current row at which the iterator is placed.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.iterGetRow = function() {
+xrx.index.Index.prototype.iterGetRow = function() {
   return this.getRowByKey(this.iterKey_);
 ***REMOVED***
 
@@ -272,9 +272,9 @@ xrx.index.prototype.iterGetRow = function() {
 
 ***REMOVED***
 ***REMOVED*** Iterates to the next row and returns the row.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.iterNext = function() {
+xrx.index.Index.prototype.iterNext = function() {
 
   return this.getRowByKey(++this.iterKey_);
 ***REMOVED***
@@ -283,9 +283,9 @@ xrx.index.prototype.iterNext = function() {
 
 ***REMOVED***
 ***REMOVED*** Iterates to the previous row and returns the row.
-***REMOVED*** @return {xrx.index.row} The row.
+***REMOVED*** @return {xrx.index.Row} The row.
 ***REMOVED***
-xrx.index.prototype.iterPrevious = function() {
+xrx.index.Index.prototype.iterPrevious = function() {
 
   return this.getRowByKey(--this.iterKey_);
 ***REMOVED***
@@ -324,7 +324,7 @@ xrx.index.Namespace = function(opt_label, opt_prefix, opt_uri) {
 ***REMOVED***
 ***REMOVED*** @return {xrx.index.Namespace|undefined}
 ***REMOVED***
-xrx.index.prototype.getNamespace = function(token, prefix) {
+xrx.index.Index.prototype.getNamespace = function(token, prefix) {
 
   return goog.array.findRight(this.tNamespace_, function(ns, ind, arr) {
     return ns.prefix === prefix && (token.label().sameAs(ns.parentLabel) ||
@@ -337,7 +337,7 @@ xrx.index.prototype.getNamespace = function(token, prefix) {
 ***REMOVED***
 ***REMOVED*** @return {string|undefined}
 ***REMOVED***
-xrx.index.prototype.getNamespaceUri = function(token, prefix) {
+xrx.index.Index.prototype.getNamespaceUri = function(token, prefix) {
 
   var namespace = goog.array.findRight(this.tNamespace_, function(ns, ind, arr) {
     return ns.prefix === prefix && (token.label().sameAs(ns.parentLabel) ||
@@ -352,7 +352,7 @@ xrx.index.prototype.getNamespaceUri = function(token, prefix) {
 ***REMOVED***
 ***REMOVED*** @return {string|undefined}
 ***REMOVED***
-xrx.index.prototype.getNamespacePrefix = function(token, uri) {
+xrx.index.Index.prototype.getNamespacePrefix = function(token, uri) {
 
   var namespace = goog.array.findRight(this.tNamespace_, function(ns, ind, arr) {
     return ns.uri === uri && (token.label().sameAs(ns.parentLabel) ||
@@ -366,10 +366,10 @@ xrx.index.prototype.getNamespacePrefix = function(token, uri) {
 
 ***REMOVED***
 ***REMOVED*** Adds a new row to the end of the index and returns the new row.
-***REMOVED*** @return {xrx.index.row} The new row.
+***REMOVED*** @return {xrx.index.Row} The new row.
 ***REMOVED***
-xrx.index.prototype.head = function() {
-  var row = new xrx.index.row();
+xrx.index.Index.prototype.head = function() {
+  var row = new xrx.index.Row();
   this.rows_.push(row);
 
   return this.rows_[this.rows_.length - 1];
@@ -381,7 +381,7 @@ xrx.index.prototype.head = function() {
 ***REMOVED*** Builds an index from scratch.
 ***REMOVED*** @param {!string} The XML string.
 ***REMOVED***
-xrx.index.prototype.build = function(xml) {
+xrx.index.Index.prototype.build = function(xml) {
   var traverse = new xrx.xml.Traverse(xml);
   var row;
   var index = this;
@@ -442,7 +442,7 @@ xrx.index.prototype.build = function(xml) {
 ***REMOVED*** @param {!integer} key The key.
 ***REMOVED*** @param {!row} row The row.
 ***REMOVED***
-xrx.index.prototype.insertRowAfter = function(key, row) {
+xrx.index.Index.prototype.insertRowAfter = function(key, row) {
   this.rows_.splice(++key, 0, row);
 ***REMOVED***
 
@@ -454,7 +454,7 @@ xrx.index.prototype.insertRowAfter = function(key, row) {
 ***REMOVED*** @param {!integer} opt_num The number of rows to be removed.
 ***REMOVED*** @param {!row} row The row.
 ***REMOVED***
-xrx.index.prototype.removeRow = function(key, opt_num) {
+xrx.index.Index.prototype.removeRow = function(key, opt_num) {
   var num = opt_num || 1;
 
   this.rows_.splice(key, num);

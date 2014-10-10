@@ -166,7 +166,7 @@ xrx.rebuild.insertEmptyTag = function(index, token, offset, diff) {
   row.updateLength2(length1 + offset - length2);
 
   // insert new row
-  var newRow = new xrx.index.row();
+  var newRow = new xrx.index.Row();
   var newLabel = token.label().clone();
   newLabel.nextSibling();
   var newParentLabel = newLabel.clone();

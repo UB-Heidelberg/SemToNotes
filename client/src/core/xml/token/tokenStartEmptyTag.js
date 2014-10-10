@@ -8,7 +8,7 @@ goog.provide('xrx.token.StartEmptyTag');
 
 
 goog.require('xrx.token');
-goog.require('xrx.token.Abstract');
+goog.require('xrx.token.Token');
 
 
 
@@ -24,7 +24,7 @@ goog.require('xrx.token.Abstract');
 xrx.token.StartEmptyTag = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.START_EMPTY_TAG, label, opt_offset, opt_length);
 ***REMOVED***
-goog.inherits(xrx.token.StartEmptyTag, xrx.token.Abstract);
+goog.inherits(xrx.token.StartEmptyTag, xrx.token.Token);
 
 
 

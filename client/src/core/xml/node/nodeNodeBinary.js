@@ -3,7 +3,7 @@
 ***REMOVED*** XML model.
 ***REMOVED***
 
-goog.provide('xrx.nodeB');
+goog.provide('xrx.node.Binary');
 
 
 goog.require('xrx.node');
@@ -17,7 +17,7 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED*** Base class to construct a binary node.
 ***REMOVED***
 ***REMOVED***
-xrx.nodeB = function(type, instance, key) {
+xrx.node.Binary = function(type, instance, key) {
   goog.base(this, type, instance);
 
  ***REMOVED*****REMOVED***
@@ -37,42 +37,42 @@ xrx.nodeB = function(type, instance, key) {
     Text: 'TextB'
  ***REMOVED*****REMOVED***
 ***REMOVED***
-goog.inherits(xrx.nodeB, xrx.node.Node);
+goog.inherits(xrx.node.Binary, xrx.node.Node);
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeB.prototype.getToken = goog.abstractMethod;
+xrx.node.Binary.prototype.getToken = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeB.prototype.getLabel = goog.abstractMethod;
+xrx.node.Binary.prototype.getLabel = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeB.prototype.getOffset = goog.abstractMethod;
+xrx.node.Binary.prototype.getOffset = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeB.prototype.getLength = goog.abstractMethod;
+xrx.node.Binary.prototype.getLength = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** @return {!integer}
 ***REMOVED***
-xrx.nodeB.prototype.getKey = function() {
+xrx.node.Binary.prototype.getKey = function() {
   return this.key_;
 ***REMOVED***
 
@@ -81,15 +81,15 @@ xrx.nodeB.prototype.getKey = function() {
 ***REMOVED***
 ***REMOVED*** @return {!xrx.index}
 ***REMOVED***
-xrx.nodeB.prototype.getIndex = function() {
+xrx.node.Binary.prototype.getIndex = function() {
   return this.instance_.getIndex();
 ***REMOVED***
 
 
 ***REMOVED***
-***REMOVED*** @return {!xrx.index.row}
+***REMOVED*** @return {!xrx.index.Row}
 ***REMOVED***
-xrx.nodeB.prototype.getRow = function() {
+xrx.node.Binary.prototype.getRow = function() {
   return this.getIndex().getRowByKey(this.key_);
 ***REMOVED***
 

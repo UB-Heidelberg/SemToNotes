@@ -2,7 +2,7 @@
 ***REMOVED*** @fileoverview A node implementation for streaming XPath evaluation.
 ***REMOVED***
 
-goog.provide('xrx.nodeS');
+goog.provide('xrx.node.Streaming');
 
 
 
@@ -14,7 +14,7 @@ goog.require('xrx.node.Node');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.nodeS = function(type, instance, token) {
+xrx.node.Streaming = function(type, instance, token) {
   goog.base(this, type, instance);
 
  ***REMOVED*****REMOVED***
@@ -34,33 +34,33 @@ xrx.nodeS = function(type, instance, token) {
     Text: 'TextS'
  ***REMOVED*****REMOVED***
 ***REMOVED***
-goog.inherits(xrx.nodeS, xrx.node.Node);
+goog.inherits(xrx.node.Streaming, xrx.node.Node);
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeS.prototype.getToken = goog.abstractMethod;
+xrx.node.Streaming.prototype.getToken = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeS.prototype.getLabel = goog.abstractMethod;
+xrx.node.Streaming.prototype.getLabel = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeS.prototype.getOffset = goog.abstractMethod;
+xrx.node.Streaming.prototype.getOffset = goog.abstractMethod;
 
 
 
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.nodeS.prototype.getLength = goog.abstractMethod;
+xrx.node.Streaming.prototype.getLength = goog.abstractMethod;
 

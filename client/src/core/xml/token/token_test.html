@@ -16,7 +16,7 @@
 
 function testCast() {
   var label = new xrx.xml.Label([1, 1]);
-  var token = new xrx.token.Abstract(xrx.token.START_TAG, label, 4, 10);
+  var token = new xrx.token.Token(xrx.token.START_TAG, label, 4, 10);
   var newToken = xrx.token.Tokens.getNative(token);
   
 

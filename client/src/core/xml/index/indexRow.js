@@ -3,19 +3,19 @@
 ***REMOVED*** of a XML instance. 
 ***REMOVED***
 
-goog.provide('xrx.index.row');
-goog.provide('xrx.index.row.format');
-goog.provide('xrx.index.row.mask');
+goog.provide('xrx.index.Row');
+goog.provide('xrx.index.Row.format');
+goog.provide('xrx.index.Row.mask');
 
 
 
 
 goog.require('goog.math.Long');
-goog.require('xrx.index');
+***REMOVED***
 
 
 
-xrx.index.row = function() {
+xrx.index.Row = function() {
 
   this.low_ = new goog.math.Long();
   this.high_ = new goog.math.Long();
@@ -23,15 +23,15 @@ xrx.index.row = function() {
 
 
 
-xrx.index.row.format_ = '128Bit';
+xrx.index.Row.format_ = '128Bit';
 
 
 
-xrx.index.row.format = {***REMOVED***
+xrx.index.Row.format = {***REMOVED***
 
 
 
-xrx.index.row.format['128Bit'] = {
+xrx.index.Row.format['128Bit'] = {
 
   TYPE: { bits: 'low_', shft: 59, size: 4 },
   POSITION: { bits: 'low_', shft: 41, size: 18 },
@@ -43,12 +43,12 @@ xrx.index.row.format['128Bit'] = {
 
 
 
-xrx.index.row.mask = {***REMOVED***
+xrx.index.Row.mask = {***REMOVED***
 
 
 
-xrx.index.row.mask.fromFormat = function(format, itm) {
-  var item = xrx.index.row.format[format][itm];
+xrx.index.Row.mask.fromFormat = function(format, itm) {
+  var item = xrx.index.Row.format[format][itm];
   var shft = item.shft;
   var integ = Math.pow(2, item.size) - 1;
 
@@ -57,14 +57,14 @@ xrx.index.row.mask.fromFormat = function(format, itm) {
 
 
 
-xrx.index.row.mask['128Bit'] = {
+xrx.index.Row.mask['128Bit'] = {
 
-  TYPE: xrx.index.row.mask.fromFormat('128Bit', 'TYPE'),
-  POSITION: xrx.index.row.mask.fromFormat('128Bit', 'POSITION'),
-  PARENT: xrx.index.row.mask.fromFormat('128Bit', 'PARENT'),
-  OFFSET: xrx.index.row.mask.fromFormat('128Bit', 'OFFSET'),
-  LENGTH1: xrx.index.row.mask.fromFormat('128Bit', 'LENGTH1'),
-  LENGTH2: xrx.index.row.mask.fromFormat('128Bit', 'LENGTH2')
+  TYPE: xrx.index.Row.mask.fromFormat('128Bit', 'TYPE'),
+  POSITION: xrx.index.Row.mask.fromFormat('128Bit', 'POSITION'),
+  PARENT: xrx.index.Row.mask.fromFormat('128Bit', 'PARENT'),
+  OFFSET: xrx.index.Row.mask.fromFormat('128Bit', 'OFFSET'),
+  LENGTH1: xrx.index.Row.mask.fromFormat('128Bit', 'LENGTH1'),
+  LENGTH2: xrx.index.Row.mask.fromFormat('128Bit', 'LENGTH2')
 ***REMOVED***
 
 
@@ -73,9 +73,9 @@ xrx.index.row.mask['128Bit'] = {
 ***REMOVED*** Shared function for all getter functions.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.index.row.prototype.get = function(item) {
-  var i = xrx.index.row.format[xrx.index.row.format_][item];
-  var mask = xrx.index.row.mask[xrx.index.row.format_][item];
+xrx.index.Row.prototype.get = function(item) {
+  var i = xrx.index.Row.format[xrx.index.Row.format_][item];
+  var mask = xrx.index.Row.mask[xrx.index.Row.format_][item];
 
   return this[i.bits].and(mask).shiftRight(i.shft).toInt();
 ***REMOVED***
@@ -86,7 +86,7 @@ xrx.index.row.prototype.get = function(item) {
 ***REMOVED*** Shared function for all setter functions.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.index.row.prototype.set = function(integ, format) {
+xrx.index.Row.prototype.set = function(integ, format) {
   var lng = goog.math.Long.fromInt(integ);
 
   lng = lng.shiftLeft(format.shft);
@@ -99,7 +99,7 @@ xrx.index.row.prototype.set = function(integ, format) {
 ***REMOVED*** Shared function for all update functions.
 ***REMOVED*** @private
 ***REMOVED***
-xrx.index.row.prototype.update = function(diff, format) {
+xrx.index.Row.prototype.update = function(diff, format) {
   var lng = goog.math.Long.fromInt(diff);
 
   lng = lng.shiftLeft(format.shft);
@@ -113,7 +113,7 @@ xrx.index.row.prototype.update = function(diff, format) {
 ***REMOVED*** integer and returns the type as integer.
 ***REMOVED*** @return {!integer} The token type.
 ***REMOVED***
-xrx.index.row.prototype.getType = function() {
+xrx.index.Row.prototype.getType = function() {
   return this.get('TYPE');
 ***REMOVED***
 
@@ -122,8 +122,8 @@ xrx.index.row.prototype.getType = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setType = function(type) {
-  this.set(type, xrx.index.row.format[xrx.index.row.format_].TYPE);
+xrx.index.Row.prototype.setType = function(type) {
+  this.set(type, xrx.index.Row.format[xrx.index.Row.format_].TYPE);
 ***REMOVED***
 
 
@@ -131,8 +131,8 @@ xrx.index.row.prototype.setType = function(type) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updateType = function(type) {
-  this.update(type, xrx.index.row.format[xrx.index.row.format_].TYPE);
+xrx.index.Row.prototype.updateType = function(type) {
+  this.update(type, xrx.index.Row.format[xrx.index.Row.format_].TYPE);
 ***REMOVED***
 
 
@@ -142,7 +142,7 @@ xrx.index.row.prototype.updateType = function(type) {
 ***REMOVED*** integer and returns the position as integer.
 ***REMOVED*** @return {!integer} The label position.
 ***REMOVED***
-xrx.index.row.prototype.getPosition = function() {
+xrx.index.Row.prototype.getPosition = function() {
   return this.get('POSITION');
 ***REMOVED***
 
@@ -151,8 +151,8 @@ xrx.index.row.prototype.getPosition = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setPosition = function(position) {
-  this.set(position, xrx.index.row.format[xrx.index.row.format_].POSITION); 
+xrx.index.Row.prototype.setPosition = function(position) {
+  this.set(position, xrx.index.Row.format[xrx.index.Row.format_].POSITION); 
 ***REMOVED***
 
 
@@ -160,8 +160,8 @@ xrx.index.row.prototype.setPosition = function(position) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updatePosition = function(position) {
-  this.update(position, xrx.index.row.format[xrx.index.row.format_].POSITION); 
+xrx.index.Row.prototype.updatePosition = function(position) {
+  this.update(position, xrx.index.Row.format[xrx.index.Row.format_].POSITION); 
 ***REMOVED***
 
 
@@ -171,7 +171,7 @@ xrx.index.row.prototype.updatePosition = function(position) {
 ***REMOVED*** integer and returns the parent as integer.
 ***REMOVED*** @return {!integer} The label parent.
 ***REMOVED***
-xrx.index.row.prototype.getParent = function() {
+xrx.index.Row.prototype.getParent = function() {
   return this.get('PARENT');
 ***REMOVED***
 
@@ -180,8 +180,8 @@ xrx.index.row.prototype.getParent = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setParent = function(parent) {
-  this.set(parent, xrx.index.row.format[xrx.index.row.format_].PARENT); 
+xrx.index.Row.prototype.setParent = function(parent) {
+  this.set(parent, xrx.index.Row.format[xrx.index.Row.format_].PARENT); 
 ***REMOVED***
 
 
@@ -189,8 +189,8 @@ xrx.index.row.prototype.setParent = function(parent) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updateParent = function(parent) {
-  this.update(parent, xrx.index.row.format[xrx.index.row.format_].PARENT); 
+xrx.index.Row.prototype.updateParent = function(parent) {
+  this.update(parent, xrx.index.Row.format[xrx.index.Row.format_].PARENT); 
 ***REMOVED***
 
 
@@ -200,7 +200,7 @@ xrx.index.row.prototype.updateParent = function(parent) {
 ***REMOVED*** integer and returns the position as integer.
 ***REMOVED*** @return {!integer} The token offset.
 ***REMOVED***
-xrx.index.row.prototype.getOffset = function() {
+xrx.index.Row.prototype.getOffset = function() {
   return this.get('OFFSET');
 ***REMOVED***
 
@@ -209,8 +209,8 @@ xrx.index.row.prototype.getOffset = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setOffset = function(offset) {
-  this.set(offset, xrx.index.row.format[xrx.index.row.format_].OFFSET); 
+xrx.index.Row.prototype.setOffset = function(offset) {
+  this.set(offset, xrx.index.Row.format[xrx.index.Row.format_].OFFSET); 
 ***REMOVED***
 
 
@@ -218,8 +218,8 @@ xrx.index.row.prototype.setOffset = function(offset) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updateOffset = function(offset) {
-  this.update(offset, xrx.index.row.format[xrx.index.row.format_].OFFSET); 
+xrx.index.Row.prototype.updateOffset = function(offset) {
+  this.update(offset, xrx.index.Row.format[xrx.index.Row.format_].OFFSET); 
 ***REMOVED***
 
 
@@ -229,7 +229,7 @@ xrx.index.row.prototype.updateOffset = function(offset) {
 ***REMOVED*** integer and returns the length1 as integer.
 ***REMOVED*** @return {!integer} Length1 of the token.
 ***REMOVED***
-xrx.index.row.prototype.getLength1 = function() {
+xrx.index.Row.prototype.getLength1 = function() {
   return this.get('LENGTH1');
 ***REMOVED***
 
@@ -238,8 +238,8 @@ xrx.index.row.prototype.getLength1 = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setLength1 = function(length) {
-  this.set(length, xrx.index.row.format[xrx.index.row.format_].LENGTH1);
+xrx.index.Row.prototype.setLength1 = function(length) {
+  this.set(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH1);
 ***REMOVED***
 
 
@@ -247,8 +247,8 @@ xrx.index.row.prototype.setLength1 = function(length) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updateLength1 = function(length) {
-  this.update(length, xrx.index.row.format[xrx.index.row.format_].LENGTH1);
+xrx.index.Row.prototype.updateLength1 = function(length) {
+  this.update(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH1);
 ***REMOVED***
 
 
@@ -258,7 +258,7 @@ xrx.index.row.prototype.updateLength1 = function(length) {
 ***REMOVED*** integer and returns the length2 as integer.
 ***REMOVED*** @return {!integer} Length2 of the token.
 ***REMOVED***
-xrx.index.row.prototype.getLength2 = function() {
+xrx.index.Row.prototype.getLength2 = function() {
   return this.get('LENGTH2');
 ***REMOVED***
 
@@ -267,8 +267,8 @@ xrx.index.row.prototype.getLength2 = function() {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.setLength2 = function(length) {
-  this.set(length, xrx.index.row.format[xrx.index.row.format_].LENGTH2);
+xrx.index.Row.prototype.setLength2 = function(length) {
+  this.set(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH2);
 ***REMOVED***
 
 
@@ -276,8 +276,8 @@ xrx.index.row.prototype.setLength2 = function(length) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.updateLength2 = function(length) {
-  this.update(length, xrx.index.row.format[xrx.index.row.format_].LENGTH2);
+xrx.index.Row.prototype.updateLength2 = function(length) {
+  this.update(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH2);
 ***REMOVED***
 
 
@@ -285,7 +285,7 @@ xrx.index.row.prototype.updateLength2 = function(length) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.index.row.prototype.toString = function() {
+xrx.index.Row.prototype.toString = function() {
 
   var formatNumber = function(number) {
     var str = "" + number.toString(2);

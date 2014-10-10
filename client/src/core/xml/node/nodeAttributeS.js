@@ -9,7 +9,7 @@ goog.provide('xrx.node.AttributeS');
 
 goog.require('xrx.node');
 goog.require('xrx.node.Attribute');
-goog.require('xrx.nodeS');
+goog.require('xrx.node.Streaming');
 ***REMOVED***
 
 
@@ -22,7 +22,7 @@ xrx.node.AttributeS = function(num, parent) {
 
   this.parent_ = parent;
 ***REMOVED***
-goog.inherits(xrx.node.AttributeS, xrx.nodeS);
+goog.inherits(xrx.node.AttributeS, xrx.node.Streaming);
 
 
 
