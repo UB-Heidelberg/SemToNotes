@@ -57,7 +57,6 @@ xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
 
 
 xrx.widget.ShapePolygon.prototype.refresh = function() {
-  console.log('test');
 };
 
 

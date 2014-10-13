@@ -31,7 +31,6 @@ xrx.widget.Shape.prototype.getDrawing = function() {
 
 
 
-
 xrx.widget.Shape.prototype.getShape = function() {
   return this.shape_;
 };
