@@ -33,6 +33,7 @@ goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
 xrx.mvc.ComponentView.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
+  if (!element) return;
   var id = element.getAttribute('id');
   return xrx.mvc.Mvc.getViewComponent(id);
 ***REMOVED***
@@ -60,6 +61,7 @@ xrx.mvc.ComponentView.prototype.getNodeBind = function(num) {
 
 
 xrx.mvc.ComponentView.prototype.getNodeRef = function() {
+  if (!this.getRepeat()) console.log(this.getElement());
   var context = this.getRepeat().getNode(this.getRepeatIndex());
   if (!context) return;
   // TODO: Node conversion function

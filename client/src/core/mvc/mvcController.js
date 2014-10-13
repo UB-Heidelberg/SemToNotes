@@ -8,6 +8,7 @@ goog.provide('xrx.mvc.Controller');
 
 
 goog.require('xrx.mvc.Components');
+goog.require('xrx.mvc.Mvc');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
 goog.require('xrx.rebuild');
@@ -18,6 +19,22 @@ goog.require('xrx.xml.Update');
 
 
 xrx.mvc.Controller = function() {***REMOVED***
+
+
+
+xrx.mvc.Controller.INSERT = 'insert';
+
+
+
+xrx.mvc.Controller.REMOVE = 'remove';
+
+
+
+xrx.mvc.Controller.UPDATE = 'update';
+
+
+
+xrx.mvc.Controller.currentOperation = '';
 
 
 
@@ -41,6 +58,7 @@ xrx.mvc.Controller.update = function(control, operation, token, update) {
 xrx.mvc.Controller.removeTagLike = function(control) {
   var node = control.getNode();
   var token = node.getToken();
+  xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.REMOVE;
   switch(token.type()) {
   case xrx.token.EMPTY_TAG:
     xrx.mvc.Controller.removeEmptyTag(control, token);
@@ -87,7 +105,7 @@ xrx.mvc.Controller.replaceAttrValue = function(control, token, update) {
   var instance = node.getInstance();
   var diff = xrx.xml.Update.replaceAttrValue(instance, token, update);
   xrx.rebuild.replaceAttrValue(instance.getIndex(), token, diff);
-  xrx.mvc.Controller.refresh(control);
+  xrx.mvc.Controller.refresh(control, node);
   return diff;
 ***REMOVED***
 
@@ -160,15 +178,47 @@ xrx.mvc.Controller.recalculate = function() {
 
 
 ***REMOVED***
+***REMOVED*** @private
+***REMOVED***
+xrx.mvc.Controller.refreshDynamicView_ = function(control) {
+  var repeat = control.getRepeat();
+  if (repeat) {
+    if (xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.REMOVE) {
+      xrx.mvc.Mvc.removeViewComponent(control.getId());
+      repeat.refresh();
+    }
+ ***REMOVED*****REMOVED***
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
+xrx.mvc.Controller.refreshStaticView_ = function(control, node) {
+  var nIter;
+  var contr;
+  for (var c in xrx.mvc.Mvc.getViewComponents()) {
+    console.log(c);
+    contr = xrx.mvc.Mvc.getViewComponent(c);
+    contr && !(contr instanceof xrx.mvc.Repeat) ? nIter = contr.getNode() : nIter = undefined;
+    if (contr && nIter && node && node.getInstance() === nIter.getInstance()) {
+      if (nIter.isSameAs(node) && c != control.getId()) {
+        contr.refresh();
+      } else if (node.getLabel().isDescendantOf(nIter.getLabel())
+          && c != control.getId()) {
+        contr.refresh();
+      } else {}
+    }
+  }
+***REMOVED***
+
+
+
+***REMOVED***
 ***REMOVED*** Refreshes all view components affected by the update.
 ***REMOVED***
 xrx.mvc.Controller.refresh = function(control, node) {
-  var nIter;
-  var contr;
-
-  for (var c in xrx.mvc.Mvc.getViewComponents()) {
-    contr = xrx.mvc.Mvc.getViewComponent(c);
-    if (contr) nIter = contr.getNode();
-    if (contr && nIter && c != control.getId()) contr.refresh();
-  }
+  xrx.mvc.Controller.refreshDynamicView_(control);
+  xrx.mvc.Controller.refreshStaticView_(control, node);
 ***REMOVED***
