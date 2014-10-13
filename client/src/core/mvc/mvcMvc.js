@@ -6,6 +6,10 @@ goog.provide('xrx.mvc.Mvc');
 
 
 
+goog.require('goog.object');
+
+
+
 /**
  * @constructor
  */
@@ -62,6 +66,12 @@ xrx.mvc.Mvc.getModelComponent = function(id) {
 
 xrx.mvc.Mvc.getViewComponent = function(id) {
   return xrx.mvc.Mvc[xrx.mvc.Mvc.VIEW][id];
+};
+
+
+
+xrx.mvc.Mvc.removeViewComponent = function(key) {
+  goog.object.remove(xrx.mvc.Mvc[xrx.mvc.Mvc.VIEW], key);
 };
 
 
