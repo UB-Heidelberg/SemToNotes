@@ -6,10 +6,10 @@ goog.provide('xrx');
 
 
 
-goog.require('xrx.mvc');
+goog.require('xrx.mvc.Mvc');
 
 
 
 xrx.install = function() {
-  xrx.mvc.install();
+  xrx.mvc.Mvc.getInstance();
 };

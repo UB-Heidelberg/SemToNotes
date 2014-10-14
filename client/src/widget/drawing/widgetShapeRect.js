@@ -167,13 +167,27 @@ xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
 
 
 
-xrx.widget.ShapeRect.prototype.refresh = function() {
+xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
 };
 
 
 
 xrx.widget.ShapeRect.prototype.mvcDelete = function() {
   xrx.mvc.Controller.removeTagLike(this);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.mvcRemove = function() {
+  this.shape_ = null;
+  this.rectX_ = null;
+  this.rectY_ = null;
+  this.rectWidth_ = null;
+  this.rectHeight_ = null;
+  this.rectLeft_ = null;
+  this.rectTop_ = null;
+  this.rectRight_ = null;
+  this.rectBottom_ = null;
 };
 
 
@@ -208,14 +222,14 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(
       this.element_, this, bottom);
   // refresh coordinates
-  if (this.rectX_)      this.rectX_.refresh();
-  if (this.rectY_)      this.rectY_.refresh();
-  if (this.rectWidth_)  this.rectWidth_.refresh();
-  if (this.rectHeight_) this.rectHeight_.refresh();
-  if (this.rectLeft_)   this.rectLeft_.refresh();
-  if (this.rectTop_)    this.rectTop_.refresh();
-  if (this.rectRight_)  this.rectRight_.refresh();
-  if (this.rectBottom_) this.rectBottom_.refresh();
+  if (this.rectX_)      this.rectX_.mvcRefresh();
+  if (this.rectY_)      this.rectY_.mvcRefresh();
+  if (this.rectWidth_)  this.rectWidth_.mvcRefresh();
+  if (this.rectHeight_) this.rectHeight_.mvcRefresh();
+  if (this.rectLeft_)   this.rectLeft_.mvcRefresh();
+  if (this.rectTop_)    this.rectTop_.mvcRefresh();
+  if (this.rectRight_)  this.rectRight_.mvcRefresh();
+  if (this.rectBottom_) this.rectBottom_.mvcRefresh();
   // handle value changed
   this.shape_.handleValueChanged = function() {
     if (self.rectX_)      self.rectX_.mvcUpdate();
@@ -275,7 +289,7 @@ goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectX.prototype.refresh = function() {
+xrx.widget.ShapeRectX.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setX(point);
@@ -302,7 +316,7 @@ goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectY.prototype.refresh = function() {
+xrx.widget.ShapeRectY.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setY(point);
@@ -329,7 +343,7 @@ goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectWidth.prototype.refresh = function() {
+xrx.widget.ShapeRectWidth.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setWidth(point);
@@ -356,7 +370,7 @@ goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectHeight.prototype.refresh = function() {
+xrx.widget.ShapeRectHeight.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setHeight(point);
@@ -383,7 +397,7 @@ goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectLeft.prototype.refresh = function() {
+xrx.widget.ShapeRectLeft.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setLeft(point);
@@ -410,7 +424,7 @@ goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectTop.prototype.refresh = function() {
+xrx.widget.ShapeRectTop.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setTop(point);
@@ -437,7 +451,7 @@ goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectRight.prototype.refresh = function() {
+xrx.widget.ShapeRectRight.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setRight(point);
@@ -464,7 +478,7 @@ goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
 
 
 
-xrx.widget.ShapeRectBottom.prototype.refresh = function() {
+xrx.widget.ShapeRectBottom.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setBottom(point);
