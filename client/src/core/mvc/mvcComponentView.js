@@ -7,7 +7,8 @@ goog.provide('xrx.mvc.ComponentView');
 
 
 
-goog.require('goog.dom');
+goog.require('goog.dom.DomHelper');
+goog.require('goog.dom.dataset');
 goog.require('xrx.mvc.Component');
 goog.require('xrx.mvc.Mvc');
 goog.require('xrx.node.ElementS');
@@ -33,17 +34,15 @@ goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
 xrx.mvc.ComponentView.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
-  if (!element) return;
-  var id = element.getAttribute('id');
-  return xrx.mvc.Mvc.getViewComponent(id);
+  return !element ? undefined : xrx.mvc.Mvc.getViewComponent(element.id);
 };
 
 
 
 xrx.mvc.ComponentView.prototype.getRepeatIndex = function() {
   var repeatItem = goog.dom.getAncestorByClass(this.element_,
-      'xrx-repeat-item');
-  if (goog.dom.classes.has(this.element_, 'xrx-repeat-item')) {
+      'xrx-mvc-repeat-item');
+  if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
     return this.element_.getAttribute('data-xrx-repeat-index');
   } else if (repeatItem) {
     return repeatItem.getAttribute('data-xrx-repeat-index');
