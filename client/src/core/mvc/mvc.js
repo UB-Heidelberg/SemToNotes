@@ -14,9 +14,10 @@ goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
 goog.require('goog.Promise');
 goog.require('xrx.func');
-goog.require('xrx.widget.Widgets');
+***REMOVED***
 goog.require('xrx.mvc.Components');
 goog.require('xrx.mvc.Instance');
+goog.require('xrx.widget.Widgets');
 goog.require('xrx.xpath');
 
 
@@ -86,8 +87,10 @@ xrx.mvc.installInstances = function() {
       instances[num].recalculate(new String(result.result_));
     });
 
-    xrx.mvc.installMvc();
-    xrx.mvc.installWidgets();
+    if (requests.length !== 0) {
+      xrx.mvc.installMvc();
+      xrx.mvc.installWidgets();
+    }
   });
 
   if (requests.length === 0) {
