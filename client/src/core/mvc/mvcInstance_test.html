@@ -14,7 +14,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
  ***REMOVED*****REMOVED***
-  goog.require('xrx.mvc.Mvc');
+  goog.require('xrx.mvc');
 </script>
 </head>
 <body>
@@ -31,15 +31,15 @@
 
 function stest01callback() { // TODO
 
-  assertTrue(xrx.mvc.Mvc.getModelComponent('i1').xml() !== undefined);
-  assertTrue(xrx.mvc.Mvc.getModelComponent('i2').xml() !== undefined);
-  assertTrue(xrx.mvc.Mvc.getModelComponent('i3').xml() !== undefined);
-  assertEquals('<dummy/>', xrx.mvc.Mvc.getModelComponent('i4').xml());
-  assertTrue(xrx.mvc.Mvc.getModelComponent('b1').node_ !== undefined);
+  assertTrue(xrx.mvc.getModelComponent('i1').xml() !== undefined);
+  assertTrue(xrx.mvc.getModelComponent('i2').xml() !== undefined);
+  assertTrue(xrx.mvc.getModelComponent('i3').xml() !== undefined);
+  assertEquals('<dummy/>', xrx.mvc.getModelComponent('i4').xml());
+  assertTrue(xrx.mvc.getModelComponent('b1').node_ !== undefined);
 ***REMOVED***
 
 function test02entity() { // TODO
-  //console.log(xrx.mvc.Mvc.getModelComponent('i5').xml());
+  //console.log(xrx.mvc.getModelComponent('i5').xml());
 ***REMOVED***
 
 </script>

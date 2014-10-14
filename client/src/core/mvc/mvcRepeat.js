@@ -11,6 +11,7 @@ goog.require('goog.array');
 ***REMOVED***
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 
 
@@ -43,8 +44,30 @@ xrx.mvc.Repeat.prototype.appendItem = function(item) {
 xrx.mvc.Repeat.prototype.indexOfItem = function(item) {
   var index;
   item === this.firstItem_ ? index = 0 : index = goog.array.findIndex(
-      this.nextItems_, function(e, i, a) { e === item }) + 3;
+      this.nextItems_, function(e, i, a) { e === item }) + 1;
   return index;
+***REMOVED***
+
+
+
+xrx.mvc.Repeat.prototype.createItems_ = function() {
+  this.firstItem_ = new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
+  var n = 1;
+  var item;
+  while(this.getNode(n)) {
+    item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
+    this.nextItems_.push(item);
+    n++;
+  }
+***REMOVED***
+
+
+
+xrx.mvc.Repeat.prototype.removeItems_ = function() {
+  var item;
+  while (item = this.nextItems_.pop()) {
+    item.removeDom();
+  }
 ***REMOVED***
 
 
@@ -60,15 +83,11 @@ xrx.mvc.Repeat.prototype.createDom = function() {
 
 
 
-xrx.mvc.Repeat.prototype.refresh = function() {
-  this.firstItem_ = new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
-  var n = 1;
-  var item;
-  while(this.getNode(n)) {
-    item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
-    this.nextItems_.push(item);
-    n++;
-  }
+xrx.mvc.Repeat.prototype.mvcRefresh = function() {
+  xrx.mvc.removeViewComponents(this.element_);
+  this.removeItems_();
+  this.createItems_();
+  //xrx.mvc.Mvc.getInstance().installComponents(this.element_);
 ***REMOVED***
 
 
@@ -116,3 +135,12 @@ xrx.mvc.RepeatItem.prototype.createDom = function() {
     goog.dom.dataset.set(this.elements_[i], 'xrxRepeatIndex', this.index_);
   }
 ***REMOVED***
+
+
+
+xrx.mvc.RepeatItem.prototype.removeDom = function() {
+  for (var i = 0, len = this.elements_.length; i < len; i++) {
+    goog.dom.removeNode(this.elements_[i]);
+  }
+***REMOVED***
+

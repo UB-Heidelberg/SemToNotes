@@ -7,7 +7,7 @@ goog.provide('xrx.output');
 
 
 goog.require('goog.dom');
-goog.require('xrx.mvc.Mvc');
+goog.require('xrx.mvc');
 
 
 
@@ -48,7 +48,7 @@ xrx.output.prototype.setValue = function(value) {
 
 
 
-xrx.output.prototype.refresh = function() {
+xrx.output.prototype.mvcRefresh = function() {
   var value = this.getNode().getStringValue();
 
   this.setValue(value);

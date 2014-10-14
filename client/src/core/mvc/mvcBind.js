@@ -1,6 +1,6 @@
 ***REMOVED***
 ***REMOVED*** @fileoverview Class implements data binding for the
-***REMOVED*** model-view-controller.
+***REMOVED***     model-view-controller.
 ***REMOVED***
 
 goog.provide('xrx.mvc.Bind');
@@ -17,16 +17,17 @@ goog.require('xrx.xpath');
 ***REMOVED***
 xrx.mvc.Bind = function(element) {
 
-***REMOVED***
-
   this.node_;
 
-  this.recalculate()
+***REMOVED***
 ***REMOVED***
 goog.inherits(xrx.mvc.Bind, xrx.mvc.ComponentModel);
 
 
 
+***REMOVED***
+***REMOVED***
+***REMOVED***
 xrx.mvc.Bind.prototype.getNode = function(num) {
   return this.node_[num];
 ***REMOVED***
@@ -34,13 +35,20 @@ xrx.mvc.Bind.prototype.getNode = function(num) {
 
 
 ***REMOVED***
-***REMOVED*** (Re)calculates the XPath expression defined in attribute
-***REMOVED*** data-xrx-ref.
-***REMOVED*** 
 ***REMOVED*** @override
 ***REMOVED***
-xrx.mvc.Bind.prototype.recalculate = function() {
-  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.mvc.Mvc.getInstanceDefault(), null, 
+xrx.mvc.Bind.prototype.mvcRemove = function() {
+  this.node_ = null;
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** (Re)calculates the component's node-set.
+***REMOVED*** @override
+***REMOVED***
+xrx.mvc.Bind.prototype.mvcRecalculate = function() {
+  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.mvc.getInstanceDefault(), null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;

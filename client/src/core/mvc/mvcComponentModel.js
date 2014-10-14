@@ -7,7 +7,7 @@ goog.provide('xrx.mvc.ComponentModel');
 
 
 goog.require('xrx.mvc.Component');
-goog.require('xrx.mvc.Mvc');
+goog.require('xrx.mvc');
 
 
 
@@ -18,6 +18,8 @@ xrx.mvc.ComponentModel = function(element) {
 
 ***REMOVED***
 
-  xrx.mvc.Mvc.addModelComponent(this.getId(), this);
+  xrx.mvc.addModelComponent(this.getId(), this);
+
+  this.mvcRecalculate();
 ***REMOVED***
 goog.inherits(xrx.mvc.ComponentModel, xrx.mvc.Component);

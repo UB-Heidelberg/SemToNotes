@@ -1,107 +1,146 @@
 ***REMOVED***
-***REMOVED*** @fileoverview The MVC main class.
+***REMOVED*** @fileoverview
 ***REMOVED***
 
 goog.provide('xrx.mvc');
 
 
 
-goog.require('goog.array');
+***REMOVED***
 goog.require('goog.object');
-goog.require('goog.dom');
-goog.require('goog.dom.dataset');
-goog.require('goog.json');
-goog.require('goog.labs.net.xhr');
-goog.require('goog.Promise');
-goog.require('xrx.func');
+
+
+
 ***REMOVED***
-goog.require('xrx.mvc.Components');
-goog.require('xrx.mvc.Instance');
-goog.require('xrx.widget.Widgets');
-goog.require('xrx.xpath');
+***REMOVED***
+***REMOVED***
+xrx.mvc = function() {***REMOVED***
 
 
 
-xrx.mvc.installComponents = function(obj) {
-  var elements;
-  goog.object.forEach(obj, function(component, key, o) {
-    elements = goog.dom.getElementsByClass(key);
-    for (var i = 0; i < elements.length; i++) {
-      new obj[key](elements[i]);
+***REMOVED*** @const***REMOVED*** xrx.mvc.MODEL = 'model';
+
+
+
+***REMOVED*** @const***REMOVED*** xrx.mvc.VIEW = 'view';
+
+
+
+***REMOVED***
+***REMOVED*** Stack of model components.
+***REMOVED***
+xrx.mvc[xrx.mvc.MODEL] = {***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Stack of view components.
+***REMOVED***
+xrx.mvc[xrx.mvc.VIEW] = {***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
+xrx.mvc.addComponent_ = function(id, component, mv) {
+  xrx.mvc[mv][id] = component;
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Add a model component to the MVC stack.
+***REMOVED***
+xrx.mvc.addModelComponent = function(id, component) {
+  xrx.mvc.addComponent_(id, component, xrx.mvc.MODEL);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Add a view component to the MVC stack.
+***REMOVED***
+xrx.mvc.addViewComponent = function(id, component) {
+  xrx.mvc.addComponent_(id, component, xrx.mvc.VIEW);
+***REMOVED***
+
+
+
+xrx.mvc.getComponent = function(id) {
+  return xrx.mvc[xrx.mvc.MODEL][id] ||
+      xrx.mvc[xrx.mvc.VIEW][id];
+***REMOVED***
+
+
+
+xrx.mvc.getModelComponent = function(id) {
+  return xrx.mvc[xrx.mvc.MODEL][id];
+***REMOVED***
+
+
+
+xrx.mvc.getViewComponent = function(id) {
+  return xrx.mvc[xrx.mvc.VIEW][id];
+***REMOVED***
+
+
+
+xrx.mvc.getModelComponents = function() {
+  return xrx.mvc[xrx.mvc.MODEL];
+***REMOVED***
+
+
+
+xrx.mvc.getViewComponents = function() {
+  return xrx.mvc[xrx.mvc.VIEW];
+***REMOVED***
+
+
+
+xrx.mvc.removeModelComponent = function(id) {
+  var component = xrx.mvc[xrx.mvc.MODEL][id];
+  component.mvcRemove();
+  if (component) goog.object.remove(xrx.mvc[xrx.mvc.MODEL], id);
+***REMOVED***
+
+
+
+xrx.mvc.removeModelComponents = function(parent) {
+  goog.object.forEach(xrx.mvc[xrx.mvc.MODEL], function(component, id) {
+    if (goog.dom.contains(parent, component.getElement()))
+        if (parent !== component.getElement()) xrx.mvc.removeModelComponent(id);
+  }, this);
+***REMOVED***
+
+
+
+xrx.mvc.removeViewComponent = function(id) {
+  var component = xrx.mvc[xrx.mvc.VIEW][id];
+  component.mvcRemove();
+  if (component) goog.object.remove(xrx.mvc[xrx.mvc.VIEW], id);
+***REMOVED***
+
+
+
+xrx.mvc.removeViewComponents = function(parent) {
+  goog.object.forEach(xrx.mvc[xrx.mvc.VIEW], function(component, id) {
+    if (goog.dom.contains(parent, component.getElement())) {
+      if (parent !== component.getElement()) xrx.mvc.removeViewComponent(id);
     }
-  });
+  }, this);
 ***REMOVED***
 
 
 
-xrx.mvc.installMvc = function() {
-  xrx.mvc.installComponents(xrx.mvc.Components);
-***REMOVED***
-
-
-
-xrx.mvc.installWidgets = function() {
-  xrx.mvc.installComponents(xrx.widget.Widgets);
-***REMOVED***
-
-
-
-xrx.mvc.installNamespaces = function() {
-  var elements = goog.dom.getElementsByClass('xrx-mvc-namespaces');
-  var prefix;
-  var url;
-  var attr;
-  var json;
-  goog.array.forEach(elements, function(e, i, a) {
-    attr = goog.dom.dataset.get(e, 'xrxNamespaces');
-    json = goog.json.parse(attr);
-    for (var i in json) {
-      xrx.xpath.declareNamespace(i, json[i]);
-   ***REMOVED*****REMOVED***
-  });
-***REMOVED***
-
-
-
-xrx.mvc.installInstances = function() {
-  var elements = goog.dom.getElementsByClass('xrx-mvc-instance');
-  var requests = [];
-  var instances = [];
-
-  goog.array.forEach(elements, function(e, num) {
-    var instance = new xrx.mvc.Instance(e);
-    var srcUri = instance.getSrcUri();
-    if (srcUri) {
-      requests.push(goog.labs.net.xhr.get(srcUri));
-      instances.push(instance);
-    } else {
-      instance.recalculate();
+xrx.mvc.getInstanceDefault = function() {
+  var instance;
+  for(var i in xrx.mvc[xrx.mvc.MODEL]) {
+    var component = xrx.mvc[xrx.mvc.MODEL][i];
+    if (component instanceof xrx.mvc.Instance) {
+      instance = component;
+      break;
     }
-  });
-
-  var instancesReady = goog.Promise.all(requests);
-
-  instancesReady.then(function() {
-
-    goog.array.forEach(requests, function(result, num) {
-      instances[num].recalculate(new String(result.result_));
-    });
-
-    if (requests.length !== 0) {
-      xrx.mvc.installMvc();
-      xrx.mvc.installWidgets();
-    }
-  });
-
-  if (requests.length === 0) {
-    xrx.mvc.installMvc();
-    xrx.mvc.installWidgets();
- ***REMOVED*****REMOVED***
-***REMOVED***
-
-
-
-xrx.mvc.install = function() {
-  xrx.mvc.installNamespaces();
-  xrx.mvc.installInstances();
+  }
+  return instance;
 ***REMOVED***

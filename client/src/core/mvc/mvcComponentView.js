@@ -10,7 +10,7 @@ goog.provide('xrx.mvc.ComponentView');
 ***REMOVED***
 goog.require('goog.dom.dataset');
 goog.require('xrx.mvc.Component');
-goog.require('xrx.mvc.Mvc');
+goog.require('xrx.mvc');
 goog.require('xrx.node.ElementS');
 
 
@@ -22,11 +22,11 @@ xrx.mvc.ComponentView = function(element) {
 
 ***REMOVED***
 
-  xrx.mvc.Mvc.addViewComponent(this.getId(), this);
+  xrx.mvc.addViewComponent(this.getId(), this);
 
   this.createDom();
 
-  this.refresh();
+  this.mvcRefresh();
 ***REMOVED***
 goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
@@ -34,7 +34,7 @@ goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
 
 xrx.mvc.ComponentView.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
-  return !element ? undefined : xrx.mvc.Mvc.getViewComponent(element.id);
+  return !element ? undefined : xrx.mvc.getViewComponent(element.id);
 ***REMOVED***
 
 
