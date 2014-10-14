@@ -72,13 +72,18 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 
 /**
- * Returns the unique ID for the instance of this component. If the instance
- * doesn't already have an ID, generates one on the fly.
+ * Returns the unique ID of this component. If the instance
+ * doesn't already have an ID generate one on the fly.
  * @return {string} Unique component ID.
  */
 xrx.mvc.Component.prototype.getId = function() {
-  return this.id_ || this.element_.getAttribute('id') || 
-      (this.id_ = this.idGenerator_.getNextUniqueId());
+  if (!this.id_) {
+    this.id_ = this.element_.getAttribute('id') ||
+        this.idGenerator_.getNextUniqueId();
+    if (this.element_.getAttribute('id'))
+        this.element_.setAttribute('id', this.id_)
+  }
+  return this.id_;
 };
 
 
