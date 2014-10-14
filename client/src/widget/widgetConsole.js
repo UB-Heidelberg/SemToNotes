@@ -1,6 +1,6 @@
 /**
- * @fileoverview Class implements a XML console to pretty
- * print XML instances in the browser.
+ * @fileoverview Class implements an XML console to pretty
+ *     print XML instances in the browser.
  */
 
 goog.provide('xrx.widget.Console');
@@ -14,7 +14,7 @@ goog.require('xrx.xml.Serialize');
 goog.require('xrx.token.StartTag');
 goog.require('xrx.token.EndTag');
 goog.require('xrx.mvc.ComponentView');
-goog.require('xrx.mvc.Mvc');
+goog.require('xrx.mvc');
 
 
 
@@ -40,28 +40,11 @@ xrx.widget.Console.prototype.createDom = function() {
 
 
 
-xrx.widget.Console.prototype.eventBeforeChange = function() {};
-
-
-
-xrx.widget.Console.prototype.eventFocus = function() {};
-
-
-
-xrx.widget.Console.prototype.getValue = function() {};
-
-
-
-xrx.widget.Console.prototype.setFocus = function() {};
-
-
-
 xrx.widget.Console.prototype.setValue = function(xml) {
   var cursor = xrx.mvc.Cursor.getNode(0);
-
   if (!cursor) {
     var text = xrx.xml.Serialize.indent.forward(xml, this.tabSize_, undefined, 30);
-    goog.dom.setTextContent(this.getElement(), text);
+    goog.dom.setTextContent(this.element_, text);
   } else {
     var pilot = cursor.getInstance().getPilot();
     var token = cursor.getToken();
@@ -70,13 +53,25 @@ xrx.widget.Console.prototype.setValue = function(xml) {
     if (text.match('\n') && !text.match('\n').length < 15) text = '... ' + text;
     text += xrx.xml.Serialize.indent.forward(xml, this.tabSize_, token, 15);
     text += ' ...';
-
     goog.dom.setTextContent(this.element_, text);
   }
 };
 
 
-xrx.widget.Console.prototype.refresh = function() {
+
+/**
+ *
+ */
+xrx.widget.Console.prototype.mvcRemove = function() {
+  goog.dom.setTextContent(this.element_, '');
+};
+
+
+
+/**
+ *
+ */
+xrx.widget.Console.prototype.mvcRefresh = function() {
   var xml = this.getNode().getXml();
   this.setValue(xml);
 };

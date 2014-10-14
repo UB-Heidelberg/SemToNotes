@@ -1,6 +1,6 @@
 /**
  * @fileoverview Class implements data instance component for 
- * the model-view-controller.
+ *     the model-view-controller.
  */
 
 goog.provide('xrx.mvc.Instance');
@@ -25,13 +25,13 @@ goog.require('xrx.xml.Pilot');
  */
 xrx.mvc.Instance = function(element) {
 
-  goog.base(this, element);
-
   this.xml_;
 
   this.stream_;
 
   this.pilot_;
+
+  goog.base(this, element);
 };
 goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
 
@@ -73,7 +73,6 @@ xrx.mvc.Instance.prototype.getDataInline = function() {
  */
 xrx.mvc.Instance.prototype.getDataRemote = function(xml) {
   var parse = new xrx.xml.Parser();
-
   this.xml_ = parse.normalize(xml);
   this.stream_ = new xrx.xml.Stream(this.xml_);
   this.pilot_ = new xrx.xml.Pilot(this.xml_);
@@ -81,11 +80,14 @@ xrx.mvc.Instance.prototype.getDataRemote = function(xml) {
 
 
 
+xrx.mvc.Instance.prototype.mvcRecalculate = function() {};
+
+
 
 /**
  * @override
  */
-xrx.mvc.Instance.prototype.recalculate = function(xml) {
+xrx.mvc.Instance.prototype.setData = function(xml) {
   this.getSrcUri() ? this.getDataRemote(xml) : this.getDataInline();
 };
 
@@ -96,7 +98,7 @@ xrx.mvc.Instance.prototype.recalculate = function(xml) {
  */
 xrx.mvc.Instance.prototype.xml = function(xml) {
   if (xml) this.xml_ = xml;
-  if (!this.xml_) this.recalculate();
+  if (!this.xml_) this.setData();
   return this.xml_;
 };
 
@@ -133,7 +135,7 @@ xrx.mvc.Instance.prototype.getDocument = function(id) {
  * @return {!xrx.index}
  */
 xrx.mvc.Instance.prototype.getIndex = function() {
-  if (!this.xml_) this.recalculate();
+  if (!this.xml_) this.setData();
   if (this.index_ === undefined) this.index_ = new xrx.index.Index(this.xml_);
 
   return this.index_;

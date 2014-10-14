@@ -11,7 +11,7 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
-goog.require('xrx.mvc.Mvc');
+goog.require('xrx.mvc');
 goog.require('xrx.widget.Shapes');
 
 
@@ -40,7 +40,7 @@ xrx.widget.Canvas.prototype.getDrawing = function() {
 
 
 
-xrx.widget.Canvas.prototype.refresh = function() {
+xrx.widget.Canvas.prototype.mvcRefresh = function() {
 };
 
 
@@ -66,7 +66,6 @@ xrx.widget.Canvas.prototype.createBackgroundImage_ = function() {
   var backgroundImage = goog.dom.getElementsByClass('xrx-widget-canvas-background-image',
       container)[0];
   this.backgroundImage_ = new xrx.widget.CanvasBackgroundImage(backgroundImage, this);
-  xrx.mvc.Mvc.addViewComponent(this.backgroundImage_);
 };
 
 
@@ -118,7 +117,7 @@ xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
 
 
 
-xrx.widget.CanvasBackgroundImage.prototype.refresh = function() {
+xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
   var url = this.getNode().getStringValue();
   this.canvas_.getDrawing().setBackgroundImage(url);
 };

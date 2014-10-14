@@ -123,7 +123,7 @@ xrx.mvc.Component.prototype.getSrcUri = function() {
  * @return {?xrx.mvc.Bind} The bind.
  */
 xrx.mvc.Component.prototype.getBind = function() {
-  return xrx.mvc.Mvc.getModelComponent(this.getBindId());
+  return xrx.mvc.getModelComponent(this.getBindId());
 };
 
 

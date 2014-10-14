@@ -8,11 +8,16 @@ goog.provide('xrx.mvc.Components');
 
 goog.require('xrx.mvc.Bind');
 goog.require('xrx.mvc.Instance');
+goog.require('xrx.mvc.Namespace');
 goog.require('xrx.mvc.Repeat');
 
 
 
 xrx.mvc.Components = {};
+
+
+
+xrx.mvc.Components['xrx-mvc-namespace'] = xrx.mvc.Namespace;
 
 
 

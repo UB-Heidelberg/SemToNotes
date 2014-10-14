@@ -56,7 +56,7 @@ xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
 
 
 
-xrx.widget.ShapePolygon.prototype.refresh = function() {
+xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
 };
 
 
@@ -72,7 +72,7 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
   // refresh coordinates
-  this.shapePolygonCoords_.refresh();
+  this.shapePolygonCoords_.mvcRefresh();
   // handle value changes
   this.shape_.handleValueChanged = function() {
     self.shapePolygonCoords_.mvcUpdate();
@@ -112,7 +112,7 @@ xrx.widget.ShapePolygonCoords.prototype.createDom = function() {
 
 
 
-xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
+xrx.widget.ShapePolygonCoords.prototype.mvcRefresh = function() {
   var str = this.getNode().getStringValue();
   var coords = this.polygon_.parseCoords(str);
   this.polygon_.getShape().setCoords(coords);

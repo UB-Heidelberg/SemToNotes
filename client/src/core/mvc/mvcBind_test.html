@@ -14,7 +14,7 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.mvc.Mvc');
+  goog.require('xrx.mvc');
   goog.require('xrx.xml.Label');
   goog.require('xrx.node');
   goog.require('xrx.node.Nodes');
@@ -30,8 +30,8 @@
 function test() {
   var expectedLabel = new xrx.xml.Label([1, 2, 0]);
 
-  assertEquals(xrx.node.TEXT, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getType());
-  assertEquals(true, xrx.mvc.Mvc.getModelComponent('b1').node_[0].getLabel().sameAs(expectedLabel));
+  assertEquals(xrx.node.TEXT, xrx.mvc.getModelComponent('b1').node_[0].getType());
+  assertEquals(true, xrx.mvc.getModelComponent('b1').node_[0].getLabel().sameAs(expectedLabel));
 };
 
 </script>
