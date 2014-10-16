@@ -1,9 +1,12 @@
 /**
- * @fileoverview A class representing the attribute node of the
- * XDM interface.
+ * @fileoverview An abstract class representing the attribute node.
  */
 
 goog.provide('xrx.node.Attribute');
+
+
+
+goog.require('xrx.node');
 
 
 
@@ -112,13 +115,13 @@ xrx.node.Attribute.prototype.isPrecedingSiblingOf = function(node) {
 
 xrx.node.Attribute.prototype.getNodeAncestor = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
+  if (test.getType && test.getType() === xrx.node.ATTRIBUTE) return nodeset;
+  if (test.getType && test.getType() === xrx.node.TEXT) return nodeset;
   if (test.matches(this.parent_)) nodeset.add(this.parent_);
   nodeset.add(this.parent_.getNodeAncestor(test));
-
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
       nodeset.unshift(new xrx.node.DocumentB(this.instance_));
-
   return nodeset;
 };
 

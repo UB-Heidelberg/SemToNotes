@@ -17,7 +17,7 @@ goog.require('xrx.xpath');
  */
 xrx.mvc.Bind = function(element) {
 
-  this.node_;
+  this.node_ = [];
 
   goog.base(this, element);
 };
@@ -38,7 +38,7 @@ xrx.mvc.Bind.prototype.getNode = function(num) {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRemove = function() {
-  this.node_ = null;
+  this.node_ = [];
 };
 
 
@@ -48,7 +48,7 @@ xrx.mvc.Bind.prototype.mvcRemove = function() {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRecalculate = function() {
-  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.mvc.getInstanceDefault(), null, 
+  var result = xrx.xpath.evaluate(this.getRefExpression(), undefined, null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;

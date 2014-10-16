@@ -31,6 +31,8 @@ xrx.mvc.Instance = function(element) {
 
   this.pilot_;
 
+  this.document_ = new xrx.node.DocumentB(this);
+
   goog.base(this, element);
 };
 goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
@@ -41,10 +43,8 @@ goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
  * 
  */
 xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
-
   var tmp = this.xml_.substr(0, offset) + xml + this.xml_.substr(
       offset + length);
-
   this.xml_ = undefined;
   this.xml_ = tmp;
   this.stream_ = undefined;
@@ -126,7 +126,7 @@ xrx.mvc.Instance.prototype.getPilot = function() {
  * @return {!xrx.node.Document} The XML instance as node.
  */
 xrx.mvc.Instance.prototype.getDocument = function(id) {
-  return new xrx.node.DocumentB(this);
+  return this.document_;
 };
 
 
@@ -137,6 +137,5 @@ xrx.mvc.Instance.prototype.getDocument = function(id) {
 xrx.mvc.Instance.prototype.getIndex = function() {
   if (!this.xml_) this.setData();
   if (this.index_ === undefined) this.index_ = new xrx.index.Index(this.xml_);
-
   return this.index_;
 };

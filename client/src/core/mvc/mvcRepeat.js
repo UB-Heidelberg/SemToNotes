@@ -41,17 +41,9 @@ xrx.mvc.Repeat.prototype.appendItem = function(item) {
 
 
 
-xrx.mvc.Repeat.prototype.indexOfItem = function(item) {
-  var index;
-  item === this.firstItem_ ? index = 0 : index = goog.array.findIndex(
-      this.nextItems_, function(e, i, a) { e === item }) + 1;
-  return index;
-};
-
-
-
 xrx.mvc.Repeat.prototype.createItems_ = function() {
-  this.firstItem_ = new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
+  if (!this.firstItem_) this.firstItem_ =
+      new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
   var n = 1;
   var item;
   while(this.getNode(n)) {
@@ -87,7 +79,7 @@ xrx.mvc.Repeat.prototype.mvcRefresh = function() {
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();
-  //xrx.mvc.Mvc.getInstance().installComponents(this.element_);
+  xrx.mvc.Mvc.getInstance().install(this.element_);
 };
 
 
@@ -119,8 +111,11 @@ xrx.mvc.RepeatItem.prototype.getElements = function() {
  */
 xrx.mvc.RepeatItem.prototype.getClonedElements = function() {
   var elements = [];
+  var element;
   for (var i = 0, len = this.elements_.length; i < len; i++) {
-    elements.push(this.elements_[i].cloneNode(true));
+    element = this.elements_[i].cloneNode(true);
+    element.id = '';
+    elements.push(element);
   }
   return elements;
 };
@@ -128,7 +123,6 @@ xrx.mvc.RepeatItem.prototype.getClonedElements = function() {
 
 
 xrx.mvc.RepeatItem.prototype.createDom = function() {
-  var self = this;
   this.repeat_.appendItem(this);
   for (var i = 0, len = this.elements_.length; i < len; i++) {
     goog.dom.classes.add(this.elements_[i], 'xrx-mvc-repeat-item');

@@ -14,17 +14,9 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx.mvc.Instance');
-  goog.require('xrx.node.Attribute');
-  goog.require('xrx.node.AttributeS');
-  goog.require('xrx.node.AttributeB');
-  goog.require('xrx.node.Element');
-  goog.require('xrx.node.ElementS');
-  goog.require('xrx.node.ElementB');
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.xml.Pilot');
-  goog.require('xrx.token');
-  goog.require('xrx.token.StartTag');
-  goog.require('xrx.token.StartEmptyTag');
-  goog.require('xrx.token.EmptyTag');
+  goog.require('xrx.token.Tokens');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.NameTest');
   goog.require('xrx.xpath.KindTest');
@@ -162,7 +154,7 @@ function axisTest(key, func, expected) {
     node: aB[func](new xrx.xpath.KindTest('node')),
     element: aB[func](new xrx.xpath.NameTest('*')),
     text: aB[func](new xrx.xpath.KindTest('text')),
-    attribute: aB[func](new xrx.xpath.NameTest('@*'))
+    attribute: aB[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, test.node.getLength());
@@ -178,7 +170,7 @@ function axisTest(key, func, expected) {
     node: aS[func](new xrx.xpath.KindTest('node')),
     element: aS[func](new xrx.xpath.NameTest('*')),
     text: aS[func](new xrx.xpath.KindTest('text')),
-    attribute: aS[func](new xrx.xpath.NameTest('@*'))
+    attribute: aS[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, test.node.getLength());
@@ -191,19 +183,19 @@ function axisTest(key, func, expected) {
 function test04nodeFunctions() {
 
   // ancestor
-  //axisTest(5, 'getNodeAncestor', { node: 3, element: 2, text: 0, attribute: 0 });
+  axisTest(5, 'getNodeAncestor', { node: 3, element: 2, text: 0, attribute: 0 });
 
   // child
-  //axisTest(5, 'getNodeChild', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest(5, 'getNodeChild', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // descendant
-  //axisTest(5, 'getNodeDescendant', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest(5, 'getNodeDescendant', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // following
-  //axisTest(5, 'getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest(5, 'getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // following sibling
-  //axisTest(5, 'getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest(5, 'getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // parent
   axisTest(5, 'getNodeParent', { node: 1, element: 1, text: 0, attribute: 0 });
@@ -226,8 +218,8 @@ function test05attributeFunction() {
   var eB0 = new xrx.node.ElementB(instance, 0);
   var eB1 = new xrx.node.ElementB(instance, 1);
 
-  assertEquals(0, eB0.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
-  assertEquals(2, eB1.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
+  assertEquals(0, eB0.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
+  assertEquals(2, eB1.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
 
   // streaming node
   var t0 = new xrx.token.EmptyTag(new xrx.xml.Label([1]), 0, 3);
@@ -235,8 +227,8 @@ function test05attributeFunction() {
   var eS0 = new xrx.node.ElementS(instance, t0);
   var eS1 = new xrx.node.ElementS(instance, t1);
 
-  assertEquals(0, eS0.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
-  assertEquals(2, eS1.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
+  assertEquals(0, eS0.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
+  assertEquals(2, eS1.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
 };
 
 </script>

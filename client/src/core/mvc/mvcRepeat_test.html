@@ -14,6 +14,8 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx');
+  goog.require('xrx.mvc');
+  goog.require('xrx.mvc.Controller');
 </script>
 </head>
 <body>
@@ -22,16 +24,21 @@
 <div id="b0" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')"></div>
 <div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')/data/*"></div>
 <div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')/data/a"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')/data/b"></div>
+<div id="b4" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')/data/c"></div>
+
 <h1>Test 01</h1>
 <div id="r01" class="xrx-mvc-repeat" data-xrx-bind="b1">
   <div></div>
   <div></div>
 </div>
+
 <h1>Test 02</h1>
 <div id="r02" class="xrx-mvc-repeat" data-xrx-bind="b1">
   <span></span>
   <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
 </div>
+
 <h1>Test 03</h1>
 <div id="r03" class="xrx-mvc-repeat" data-xrx-bind="b1">
   <div><span>-----</span></div>
@@ -40,12 +47,36 @@
     <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
   </div>
 </div>
+
 <h1>Test 04</h1>
-<div id="r04" class="xrx-mvc-repeat" data-xrx-bind="b1">
+<div id="i04" class="xrx-mvc-instance">&lt;data&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/data&gt;</div>
+<div id="b040" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')"></div>
+<div id="b041" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/*"></div>
+<div id="b042" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/c"></div>
+<div id="r04" class="xrx-mvc-repeat" data-xrx-bind="b041">
+  <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+</div>
+
+<h1>Test 05</h1>
+<div id="r05" class="xrx-mvc-repeat" data-xrx-bind="b1">
+  <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+</div>
+<h1>Test 06</h1>
+<div id="r06" class="xrx-mvc-repeat" data-xrx-bind="b1">
+  <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+</div>
+<h1>Test 07</h1>
+<div id="r07" class="xrx-mvc-repeat" data-xrx-bind="b1">
+  <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+</div>
+<h1>Test 08</h1>
+<div id="r08" class="xrx-mvc-repeat" data-xrx-bind="b1">
   <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
 </div>
 
 <script type="text/javascript">
+
+
 
 function test01RepeatItem() {
   var r01 = goog.dom.getElement('r01');
@@ -55,26 +86,80 @@ function test01RepeatItem() {
   assertEquals(6, repeatItems.length);
 };
 
+
+
 function test02RepatedControlsUnwrapped() {
   var r02 = goog.dom.getElement('r02');
   var consoles = goog.dom.getElementsByClass('xrx-widget-console', r02);
   assertEquals(3, consoles.length);
+  // test values
   assertEquals('<a>1</a>', goog.dom.getTextContent(consoles[0]));
   assertEquals('<b>2</b>', goog.dom.getTextContent(consoles[1]));
   assertEquals('<c>3</c>', goog.dom.getTextContent(consoles[2]));
+  // test IDs
+  assertFalse(consoles[0].id === consoles[1].id);
+  assertFalse(consoles[1].id === consoles[2].id);
+  assertFalse(consoles[2].id === consoles[0].id);
 };
+
+
 
 function test03RepeatedControlsWrapped() {
   var r03 = goog.dom.getElement('r03');
   var consoles = goog.dom.getElementsByClass('xrx-widget-console', r03);
   assertEquals(6, consoles.length);
+  // test values
   assertEquals('<a>1</a>', goog.dom.getTextContent(consoles[1]));
   assertEquals('<b>2</b>', goog.dom.getTextContent(consoles[3]));
   assertEquals('<c>3</c>', goog.dom.getTextContent(consoles[5]));
+  // test IDs
+  assertFalse(consoles[0].id === consoles[1].id);
+  assertFalse(consoles[1].id === consoles[2].id);
+  assertFalse(consoles[2].id === consoles[0].id);
 };
 
-function test04() {
+
+
+function test04RemoveLastNode() {
+  var r04 = goog.dom.getElement('r04');
+  var lastNode = xrx.mvc.getComponent('b042').getNode();
+  var pres = goog.dom.getElementsByTagNameAndClass('pre', 'xrx-widget-console', r04);
+  var lastPre = pres[pres.length - 1]
+  var lastComponent = xrx.mvc.getComponent(lastPre.id);
+
+  xrx.mvc.Controller.removeTagLike(lastComponent);
+
+  var consoles = goog.dom.getElementsByClass('xrx-widget-console', r04);
+  assertEquals(2, consoles.length);
+  // test values
+  assertEquals('<a/>', goog.dom.getTextContent(consoles[0]));
+  assertEquals('<b/>', goog.dom.getTextContent(consoles[1]));
+  // test IDs
+  assertFalse(consoles[0].id === consoles[1].id);
+  assertFalse(consoles[1].id === consoles[2].id);
 };
+
+
+
+function test05RemoveMiddleNode() {
+};
+
+
+
+function test06RemoveFirstNode() {
+};
+
+
+
+function test07RemoveNodesForward() {
+};
+
+
+
+function test08RemoveNodesBackward() {
+};
+
+
 
 </script>
 

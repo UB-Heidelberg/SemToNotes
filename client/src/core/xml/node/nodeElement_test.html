@@ -154,7 +154,7 @@ function axisTest(key, func, expected) {
     node: eB[func](new xrx.xpath.KindTest('node')),
     element: eB[func](new xrx.xpath.NameTest('*')),
     text: eB[func](new xrx.xpath.KindTest('text')),
-    attribute: eB[func](new xrx.xpath.NameTest('@*'))
+    attribute: eB[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, testB.node.getLength());
@@ -170,7 +170,7 @@ function axisTest(key, func, expected) {
     node: eS[func](new xrx.xpath.KindTest('node')),
     element: eS[func](new xrx.xpath.NameTest('*')),
     text: eS[func](new xrx.xpath.KindTest('text')),
-    attribute: eS[func](new xrx.xpath.NameTest('@*'))
+    attribute: eS[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, testS.node.getLength());
@@ -216,8 +216,8 @@ function test05attributeFunction() {
   var e0 = new xrx.node.ElementB(instance, 0);
   var e1 = new xrx.node.ElementB(instance, 1);
 
-  assertEquals(0, e0.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
-  assertEquals(2, e1.getNodeAttribute(new xrx.xpath.NameTest('@*')).getLength());
+  assertEquals(0, e0.getNodeAttribute(new xrx.xpath.KindTest('attribute')).getLength());
+  assertEquals(2, e1.getNodeAttribute(new xrx.xpath.KindTest('attribute')).getLength());
 };
 
 </script>
