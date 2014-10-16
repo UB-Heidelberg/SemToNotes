@@ -15,6 +15,7 @@ goog.require('xrx.node.Node');
  * @constructor
  */
 xrx.node.Streaming = function(type, instance, token) {
+
   goog.base(this, type, instance);
 
   /**

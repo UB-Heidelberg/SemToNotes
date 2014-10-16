@@ -179,15 +179,6 @@ xrx.widget.ShapeRect.prototype.mvcDelete = function() {
 
 
 xrx.widget.ShapeRect.prototype.mvcRemove = function() {
-  this.shape_ = null;
-  this.rectX_ = null;
-  this.rectY_ = null;
-  this.rectWidth_ = null;
-  this.rectHeight_ = null;
-  this.rectLeft_ = null;
-  this.rectTop_ = null;
-  this.rectRight_ = null;
-  this.rectBottom_ = null;
 };
 
 
@@ -274,6 +265,11 @@ xrx.widget.ShapeRectGeometry.prototype.getRefExpression = function() {
 
 
 xrx.widget.ShapeRectGeometry.prototype.createDom = function() {
+};
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.mvcRemove = function() {
 };
 
 

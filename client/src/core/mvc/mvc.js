@@ -97,11 +97,18 @@ xrx.mvc.getViewComponents = function() {
 };
 
 
+xrx.mvc.hasComponent = function(id) {
+  return !!xrx.mvc.getComponent(id);
+};
+
+
 
 xrx.mvc.removeModelComponent = function(id) {
   var component = xrx.mvc[xrx.mvc.MODEL][id];
-  component.mvcRemove();
-  if (component) goog.object.remove(xrx.mvc[xrx.mvc.MODEL], id);
+  if (component) {
+    component.mvcRemove();
+    goog.object.remove(xrx.mvc[xrx.mvc.MODEL], id);
+  }
 };
 
 
@@ -117,8 +124,10 @@ xrx.mvc.removeModelComponents = function(parent) {
 
 xrx.mvc.removeViewComponent = function(id) {
   var component = xrx.mvc[xrx.mvc.VIEW][id];
-  component.mvcRemove();
-  if (component) goog.object.remove(xrx.mvc[xrx.mvc.VIEW], id);
+  if (component) { 
+    component.mvcRemove();
+    goog.object.remove(xrx.mvc[xrx.mvc.VIEW], id);
+  }
 };
 
 

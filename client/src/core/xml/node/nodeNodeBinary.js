@@ -18,6 +18,7 @@ goog.require('xrx.xpath.NodeSet');
  * @constructor
  */
 xrx.node.Binary = function(type, instance, key) {
+
   goog.base(this, type, instance);
 
   /**

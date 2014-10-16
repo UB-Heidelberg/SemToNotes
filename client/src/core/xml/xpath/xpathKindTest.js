@@ -39,7 +39,11 @@ xrx.xpath.KindTest = function(typeName, opt_literal) {
    * @private
    */
   this.type_ = null;
+
   switch (typeName) {
+    case 'attribute':
+      this.type_ = xrx.node.ATTRIBUTE;
+      break;
     case 'comment':
       this.type_ = xrx.node.COMMENT;
       break;
@@ -65,7 +69,8 @@ xrx.xpath.KindTest = function(typeName, opt_literal) {
  */
 xrx.xpath.KindTest.isValidType = function(typeName) {
   return typeName == 'comment' || typeName == 'text' ||
-      typeName == 'processing-instruction' || typeName == 'node';
+      typeName == 'processing-instruction' || typeName == 'node' ||
+      typeName == 'attribute';
 };
 
 

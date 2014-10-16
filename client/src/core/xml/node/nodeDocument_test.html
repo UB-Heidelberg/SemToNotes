@@ -95,7 +95,7 @@ function axisTest(key, func, expected) {
     node: dB[func](new xrx.xpath.KindTest('node')),
     element: dB[func](new xrx.xpath.NameTest('*')),
     text: dB[func](new xrx.xpath.KindTest('text')),
-    attribute: dB[func](new xrx.xpath.NameTest('@*'))
+    attribute: dB[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, test.node.getLength());
@@ -110,7 +110,7 @@ function axisTest(key, func, expected) {
     node: dS[func](new xrx.xpath.KindTest('node')),
     element: dS[func](new xrx.xpath.NameTest('*')),
     text: dS[func](new xrx.xpath.KindTest('text')),
-    attribute: dS[func](new xrx.xpath.NameTest('@*'))
+    attribute: dS[func](new xrx.xpath.KindTest('attribute'))
   }
 
   assertEquals(expected.node, test.node.getLength());
