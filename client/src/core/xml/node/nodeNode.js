@@ -8,6 +8,7 @@ goog.provide('xrx.node.Node');
 
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
+goog.require('xrx.mvc');
 
 
 

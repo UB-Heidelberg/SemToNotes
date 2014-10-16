@@ -15,6 +15,7 @@ goog.require('xrx.node.Node');
 ***REMOVED***
 ***REMOVED***
 xrx.node.Streaming = function(type, instance, token) {
+
   goog.base(this, type, instance);
 
  ***REMOVED*****REMOVED***

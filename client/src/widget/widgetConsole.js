@@ -72,6 +72,7 @@ xrx.widget.Console.prototype.mvcRemove = function() {
 ***REMOVED***
 ***REMOVED***
 xrx.widget.Console.prototype.mvcRefresh = function() {
-  var xml = this.getNode().getXml();
+  var node = this.getNode();
+  var xml = node ? node.getXml() : '';
   this.setValue(xml);
 ***REMOVED***

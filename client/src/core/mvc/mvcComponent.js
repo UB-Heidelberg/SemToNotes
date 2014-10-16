@@ -43,7 +43,7 @@ xrx.mvc.Component.prototype.idGenerator_ = goog.ui.IdGenerator.getInstance();
 ***REMOVED***
 ***REMOVED*** Unique ID of the component, lazily initialized in {@link
 ***REMOVED*** xrx.mvc.Component#getId} if needed. This property is strictly private and
-***REMOVED*** must not be accessed directly outside of this class!
+***REMOVED*** must not be accessed directly outside of this class.
 ***REMOVED*** @type {?string}
 ***REMOVED*** @private
 ***REMOVED***
@@ -77,12 +77,7 @@ xrx.mvc.Component.prototype.getElement = function() {
 ***REMOVED*** @return {string} Unique component ID.
 ***REMOVED***
 xrx.mvc.Component.prototype.getId = function() {
-  if (!this.id_) {
-    this.id_ = this.element_.getAttribute('id') ||
-        this.idGenerator_.getNextUniqueId();
-    if (this.element_.getAttribute('id'))
-        this.element_.setAttribute('id', this.id_)
-  }
+  if (!this.id_) this.id_ = this.element_.id;
   return this.id_;
 ***REMOVED***
 

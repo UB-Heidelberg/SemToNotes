@@ -139,9 +139,19 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
 
 
 
+xrx.mvc.Controller.insertEmptyTag = function(control, emptyTag) {
+***REMOVED***
+
+
+
 xrx.mvc.Controller.removeEmptyTag = function(control, token) {
+  console.log(xrx.mvc.getComponent('i04').xml());
   var node = control.getNode();
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
+  console.log(xrx.mvc.getComponent('i04').xml());
+  console.log(xrx.mvc.getComponent('i04') === node.getInstance());
+  console.log(node.getInstance().getId());
+  console.log(node.getInstance().xml());
   xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
@@ -169,9 +179,7 @@ xrx.mvc.Controller.mvcRecalculate = function() {
   var contr;
   for (var c in xrx.mvc.getModelComponents()) {
     contr = xrx.mvc.getModelComponent(c);
-    if (contr instanceof xrx.mvc.Bind) {
-      contr.mvcRecalculate();
-    }
+    if (contr.mvcRecalculate) contr.mvcRecalculate();
   }
 ***REMOVED***
 
@@ -184,7 +192,6 @@ xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
   var repeat = control.getRepeat();
   if (repeat) {
     if (xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.REMOVE) {
-      xrx.mvc.removeViewComponent(control.getId());
       repeat.mvcRefresh();
     }
  ***REMOVED*****REMOVED***
@@ -196,19 +203,10 @@ xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
-  var nIter;
   var contr;
   for (var c in xrx.mvc.getViewComponents()) {
     contr = xrx.mvc.getViewComponent(c);
-    contr && !(contr instanceof xrx.mvc.Repeat) ? nIter = contr.getNode() : nIter = undefined;
-    if (contr && nIter && node && node.getInstance() === nIter.getInstance()) {
-      if (nIter.isSameAs(node) && c != control.getId()) {
-        contr.mvcRefresh();
-      } else if (node.getLabel().isDescendantOf(nIter.getLabel())
-          && c != control.getId()) {
-        contr.mvcRefresh();
-      } else {}
-    }
+    contr.mvcRefresh();
   }
 ***REMOVED***
 

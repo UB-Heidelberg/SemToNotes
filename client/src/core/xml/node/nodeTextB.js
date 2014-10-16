@@ -262,4 +262,3 @@ xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.node.TextB.prototype.find = xrx.node.Node.prototype.find;
-

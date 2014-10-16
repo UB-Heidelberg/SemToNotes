@@ -12,8 +12,10 @@ goog.require('goog.dom');
 goog.require('goog.dom.dataset');
 goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
+goog.require('goog.ui.IdGenerator');
 goog.require('goog.Promise');
 goog.require('xrx.func');
+goog.require('xrx.mvc');
 ***REMOVED***
 goog.require('xrx.mvc.Components');
 goog.require('xrx.widget.Widgets');
@@ -26,7 +28,7 @@ goog.require('xrx.xpath');
 ***REMOVED***
 xrx.mvc.Mvc = function() {
 
-  this.install_();
+  this.install();
 ***REMOVED***
 goog.addSingletonGetter(xrx.mvc.Mvc);
 
@@ -35,12 +37,23 @@ goog.addSingletonGetter(xrx.mvc.Mvc);
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
+xrx.mvc.Mvc.idGenerator_ = goog.ui.IdGenerator.getInstance();
+
+
+
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
 xrx.mvc.Mvc.prototype.installComponents_ = function(obj, opt_context) {
   var elements;
+  var element;
   goog.object.forEach(obj, function(component, key, o) {
     elements = goog.dom.getElementsByClass(key, opt_context);
     for (var i = 0; i < elements.length; i++) {
-      new obj[key](elements[i]);
+      element = elements[i];
+      if (!element.id || element.id === '') element.id =
+          xrx.mvc.Mvc.idGenerator_.getNextUniqueId();
+      if (!xrx.mvc.hasComponent(element.id)) new obj[key](element);
     }
   });
 ***REMOVED***
@@ -65,7 +78,10 @@ xrx.mvc.Mvc.prototype.installWidgetComponents_ = function(opt_context) {
 
 
 
-xrx.mvc.Mvc.prototype.installComponents = function(opt_context) {
+***REMOVED***
+***REMOVED*** @private
+***REMOVED***
+xrx.mvc.Mvc.prototype.installComponents__ = function(opt_context) {
   this.installMvcComponents_(opt_context);
   this.installWidgetComponents_(opt_context);
 ***REMOVED***
@@ -75,9 +91,9 @@ xrx.mvc.Mvc.prototype.installComponents = function(opt_context) {
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
-xrx.mvc.Mvc.prototype.installInstances_ = function() {
+xrx.mvc.Mvc.prototype.installInstances_ = function(opt_context) {
 ***REMOVED***
-  var elements = goog.dom.getElementsByClass('xrx-mvc-instance');
+  var elements = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
   var requests = [];
   var instances = [];
 
@@ -99,21 +115,20 @@ xrx.mvc.Mvc.prototype.installInstances_ = function() {
       instances[num].setData(new String(result.result_));
     });
     if (requests.length !== 0) {
-      self.installComponents();
-  console.log(xrx.mvc.getViewComponents());
+      self.installComponents__(opt_context);
     }
   });
 
   if (requests.length === 0) {
-    self.installComponents();
+    self.installComponents__(opt_context);
  ***REMOVED*****REMOVED***
 ***REMOVED***
 
 
 
 ***REMOVED***
-***REMOVED*** @private
+***REMOVED*** 
 ***REMOVED***
-xrx.mvc.Mvc.prototype.install_ = function() {
-  this.installInstances_();
+xrx.mvc.Mvc.prototype.install = function(opt_context) {
+  this.installInstances_(opt_context);
 ***REMOVED***

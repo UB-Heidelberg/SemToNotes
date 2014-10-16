@@ -17,7 +17,7 @@ goog.require('xrx.xpath');
 ***REMOVED***
 xrx.mvc.Bind = function(element) {
 
-  this.node_;
+  this.node_ = [];
 
 ***REMOVED***
 ***REMOVED***
@@ -38,7 +38,7 @@ xrx.mvc.Bind.prototype.getNode = function(num) {
 ***REMOVED*** @override
 ***REMOVED***
 xrx.mvc.Bind.prototype.mvcRemove = function() {
-  this.node_ = null;
+  this.node_ = [];
 ***REMOVED***
 
 
@@ -48,7 +48,7 @@ xrx.mvc.Bind.prototype.mvcRemove = function() {
 ***REMOVED*** @override
 ***REMOVED***
 xrx.mvc.Bind.prototype.mvcRecalculate = function() {
-  var result = xrx.xpath.evaluate(this.getRefExpression(), xrx.mvc.getInstanceDefault(), null, 
+  var result = xrx.xpath.evaluate(this.getRefExpression(), undefined, null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;

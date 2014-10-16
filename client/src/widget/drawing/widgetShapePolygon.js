@@ -67,6 +67,11 @@ xrx.widget.ShapePolygon.prototype.mvcDelete = function() {
 
 
 
+xrx.widget.ShapePolygon.prototype.mvcRemove = function() {
+***REMOVED***
+
+
+
 xrx.widget.ShapePolygon.prototype.createDom = function() {
 ***REMOVED***
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
@@ -123,4 +128,9 @@ xrx.widget.ShapePolygonCoords.prototype.mvcRefresh = function() {
 xrx.widget.ShapePolygonCoords.prototype.mvcUpdate = function(coords) {
   xrx.mvc.Controller.replaceValueLike(this, this.polygon_.serializeCoords(
       this.polygon_.getShape().getCoords()));
+***REMOVED***
+
+
+
+xrx.widget.ShapePolygonCoords.prototype.mvcRemove = function() {
 ***REMOVED***
