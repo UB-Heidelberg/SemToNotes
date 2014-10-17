@@ -31,9 +31,9 @@ xrx.mvc.Instance = function(element) {
 
   this.pilot_;
 
-  this.document_ = new xrx.node.DocumentB(this);
-
   goog.base(this, element);
+
+  this.document_ = new xrx.node.DocumentB(this.getId());
 };
 goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
 

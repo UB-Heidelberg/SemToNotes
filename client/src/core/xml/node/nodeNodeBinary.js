@@ -17,9 +17,9 @@ goog.require('xrx.xpath.NodeSet');
  * Base class to construct a binary node.
  * @constructor
  */
-xrx.node.Binary = function(type, instance, key) {
+xrx.node.Binary = function(type, document, key) {
 
-  goog.base(this, type, instance);
+  goog.base(this, type, document);
 
   /**
    * @type {integer}
@@ -83,7 +83,7 @@ xrx.node.Binary.prototype.getKey = function() {
  * @return {!xrx.index}
  */
 xrx.node.Binary.prototype.getIndex = function() {
-  return this.instance_.getIndex();
+  return this.document_.getInstance().getIndex();
 };
 
 

@@ -20,12 +20,12 @@ goog.require('xrx.xpath.NodeSet');
 /**
  * Creates a binary text node.
  *
- * @param {!xrx.mvc.Instance}
+ * @param {!xrx.node.Document}
  * @param {!integer} 
  * @constructor
  */
-xrx.node.TextB = function(instance, key) {
-  goog.base(this, xrx.node.TEXT, instance, key);
+xrx.node.TextB = function(document, key) {
+  goog.base(this, xrx.node.TEXT, document, key);
 };
 goog.inherits(xrx.node.TextB, xrx.node.Binary);
 
@@ -170,7 +170,7 @@ xrx.node.TextB.prototype.getNodeFollowingSibling = function(test) {
 
 xrx.node.TextB.prototype.getNodeParent = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
-  var element = new xrx.node.ElementB(this.instance_, this.key_);
+  var element = new xrx.node.ElementB(this.getDocument(), this.key_);
   if (test.matches(element)) nodeset.add(element);
 
   return nodeset;
@@ -191,7 +191,7 @@ xrx.node.TextB.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
  */
 xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
   var self = this;
-  var index = this.instance_.getIndex();
+  var index = this.getDocument().getInstance().getIndex();
   index.iterSetKey(this.key_);
   var row = index.iterGetRow();
   var type;
@@ -201,17 +201,17 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
       break;
     default:
       break;
     };
 
     if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
     }
 
     if (type === xrx.token.END_TAG &&
@@ -236,15 +236,15 @@ xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
     type = row.getType();
 
     if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
     }
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.instance_, index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
       break;
     default:
       break;

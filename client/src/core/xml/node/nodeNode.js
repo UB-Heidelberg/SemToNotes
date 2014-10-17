@@ -6,9 +6,9 @@ goog.provide('xrx.node.Node');
 
 
 
+goog.require('xrx.node.Document');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
-goog.require('xrx.mvc');
 
 
 
@@ -16,10 +16,10 @@ goog.require('xrx.mvc');
  * Base class for all XML nodes.
  * 
  * @param {!integer} type The node type.
- * @param {!xrx.mvc.Instance} instance The XML instance.
+ * @param {!xrx.node.Document} document The document node.
  * @constructor
  */
-xrx.node.Node = function(type, instance) {
+xrx.node.Node = function(type, document) {
 
   /**
    * @type {xrx.node}
@@ -28,20 +28,30 @@ xrx.node.Node = function(type, instance) {
   this.type_ = type;
 
   /**
-   * @type {xrx.mvc.Instance}
+   * @type {xrx.node.Document}
    * @private
    */
-  this.instance_ = instance;
+  this.document_ = document;
 };
 
 
 
 /**
- * Returns the the node's instance.
- * @return {!integer} The type number.
+ * Returns the the node's document.
+ * @return {!xrx.node.Document} The document.
  */
 xrx.node.Node.prototype.getInstance = function() {
-  return this.instance_;
+  return this.document_.getInstance();
+};
+
+
+
+/**
+ * Returns the the node's document.
+ * @return {!xrx.node.Document} The document.
+ */
+xrx.node.Node.prototype.getDocument = function() {
+  return this.document_;
 };
 
 
@@ -101,7 +111,7 @@ xrx.node.Node.prototype.find = function(test, axisTest, reverse, stop) {
   var nodeset = new xrx.xpath.NodeSet();
 
   this.eventNode = function(node) {
-    if (self.instance_ === node.getInstance() && axisTest.call(self, node) &&
+    if (self.getDocument().getInstance() === node.getDocument().getInstance() && axisTest.call(self, node) &&
         test.matches(node)) {
       reverse ? nodeset.unshift(node) : nodeset.add(node);
     }
