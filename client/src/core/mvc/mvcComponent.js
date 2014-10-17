@@ -23,20 +23,15 @@ xrx.mvc.Component = function(element) {
 
 
 
+xrx.mvc.Component.idGenerator = goog.ui.IdGenerator.getInstance();
+
+
+
 ***REMOVED***
 ***REMOVED*** Function is called by the model-view-controller when the component
 ***REMOVED*** is inizialized the first time. Each component must implement this.
 ***REMOVED***
 xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Generator for unique IDs.
-***REMOVED*** @type {goog.ui.IdGenerator}
-***REMOVED*** @private
-***REMOVED***
-xrx.mvc.Component.prototype.idGenerator_ = goog.ui.IdGenerator.getInstance();
 
 
 
@@ -77,7 +72,14 @@ xrx.mvc.Component.prototype.getElement = function() {
 ***REMOVED*** @return {string} Unique component ID.
 ***REMOVED***
 xrx.mvc.Component.prototype.getId = function() {
-  if (!this.id_) this.id_ = this.element_.id;
+  if (!this.id_) {
+    if (this.element_.id && this.element_.id !== '') {
+      this.id_ = this.element_.id;
+    } else {
+      this.id_ = xrx.mvc.Component.idGenerator.getNextUniqueId();
+      this.element_.id = this.id_;
+    }
+  }
   return this.id_;
 ***REMOVED***
 

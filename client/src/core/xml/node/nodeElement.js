@@ -141,7 +141,6 @@ xrx.node.Element.prototype.getNodeAncestor = function(test) {
 
 
 xrx.node.Element.prototype.getNodeChild = function(test) {
-
   return this.find(test, xrx.node[this.impl_.Element].prototype.isParentOf, false,
       this.getLabel());
 ***REMOVED***

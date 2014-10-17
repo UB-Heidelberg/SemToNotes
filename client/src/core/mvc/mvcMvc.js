@@ -37,7 +37,7 @@ goog.addSingletonGetter(xrx.mvc.Mvc);
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
-xrx.mvc.Mvc.idGenerator_ = goog.ui.IdGenerator.getInstance();
+xrx.mvc.Mvc.idGenerator = goog.ui.IdGenerator.getInstance();
 
 
 
@@ -52,7 +52,7 @@ xrx.mvc.Mvc.prototype.installComponents_ = function(obj, opt_context) {
     for (var i = 0; i < elements.length; i++) {
       element = elements[i];
       if (!element.id || element.id === '') element.id =
-          xrx.mvc.Mvc.idGenerator_.getNextUniqueId();
+          xrx.mvc.Mvc.idGenerator.getNextUniqueId();
       if (!xrx.mvc.hasComponent(element.id)) new obj[key](element);
     }
   });

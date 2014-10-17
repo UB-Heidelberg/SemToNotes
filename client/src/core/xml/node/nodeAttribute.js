@@ -19,13 +19,13 @@ xrx.node.Attribute = function() {***REMOVED***
 
 
 xrx.node.Attribute.prototype.getStream = function() {
-  return this.parent_.getInstance().getStream();
+  return this.parent_.getDocument().getInstance().getStream();
 ***REMOVED***
 
 
 
 xrx.node.Attribute.prototype.getInstance = function() {
-  return this.parent_.getInstance();
+  return this.parent_.getDocument().getInstance();
 ***REMOVED***
 
 

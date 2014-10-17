@@ -36,8 +36,8 @@ function test02identityFunctions() {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var dB = new xrx.node.DocumentB(instance);
-  var eB = new xrx.node.ElementB(instance, 0);
+  var dB = new xrx.node.DocumentB(instance.getId());
+  var eB = new xrx.node.ElementB(dB, 0);
 
   assertEquals(false, dB.isSameAs(eB));
   assertEquals(true, dB.isSameAs(dB));
@@ -49,9 +49,9 @@ function test02identityFunctions() {
   assertEquals(true, eB.isDescendantOf(dB));
 
   // streaming node
-  var dS = new xrx.node.DocumentS(instance);
+  var dS = new xrx.node.DocumentS(instance.getId());
   var tag = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
-  var eS = new xrx.node.ElementS(instance, tag);
+  var eS = new xrx.node.ElementS(dS, tag);
 
   assertEquals(false, dS.isSameAs(eS));
   assertEquals(true, dS.isSameAs(dS));
@@ -70,13 +70,13 @@ function test03contentFunctions() {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var dB = new xrx.node.DocumentB(instance);
+  var dB = new xrx.node.DocumentB(instance.getId());
 
   assertEquals('<a>1<b>2</b>3<c/>4<d/></a>', dB.getXml());
   assertEquals('1234', dB.getStringValue());
 
   // streaming node
-  var dS = new xrx.node.DocumentS(instance);
+  var dS = new xrx.node.DocumentS(instance.getId());
 
   assertEquals('<a>1<b>2</b>3<c/>4<d/></a>', dS.getXml());
   assertEquals('1234', dS.getStringValue());
@@ -89,7 +89,7 @@ function axisTest(key, func, expected) {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var dB = new xrx.node.DocumentB(instance);
+  var dB = new xrx.node.DocumentB(instance.getId());
 
   var test = {
     node: dB[func](new xrx.xpath.KindTest('node')),
@@ -104,7 +104,7 @@ function axisTest(key, func, expected) {
   assertEquals(expected.attribute, test.attribute.getLength());
 
   // streaming node
-  var dS = new xrx.node.DocumentS(instance);
+  var dS = new xrx.node.DocumentS(instance.getId());
 
   var test = {
     node: dS[func](new xrx.xpath.KindTest('node')),

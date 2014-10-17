@@ -8,6 +8,7 @@ goog.provide('xrx.node.Document');
 
 
 goog.require('xrx.xml.Label');
+goog.require('xrx.mvc');
 goog.require('xrx.node');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
@@ -17,7 +18,12 @@ goog.require('xrx.xpath.NodeSet');
 ***REMOVED*** 
 ***REMOVED*** 
 ***REMOVED***
-xrx.node.Document = function() {
+xrx.node.Document = function() {***REMOVED***
+
+
+
+xrx.node.Document.prototype.getInstance = function() {
+  return xrx.mvc.getModelComponent(this.instanceId_);
 ***REMOVED***
 
 
@@ -134,7 +140,7 @@ xrx.node.Document.prototype.getNamespaceUri = function(prefix) {
 
 
 xrx.node.Document.prototype.getXml = function() {
-  return this.instance_.xml();
+  return this.getInstance().xml();
 ***REMOVED***
 
 
@@ -177,5 +183,3 @@ xrx.node.Document.prototype.getNodePreceding = function(test) {
 xrx.node.Document.prototype.getNodePrecedingSibling = function(test) {
   return new xrx.xpath.NodeSet();
 ***REMOVED***
-
-

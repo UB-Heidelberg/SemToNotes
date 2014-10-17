@@ -176,7 +176,7 @@ xrx.node.Text.prototype.getNamespaceUri = function(prefix) {
 ***REMOVED*** 
 ***REMOVED***
 xrx.node.Text.prototype.getStringValue = function() {
-  return this.instance_.xml().substr(this.getOffset(), this.getLength());
+  return this.getDocument().getInstance().xml().substr(this.getOffset(), this.getLength());
 ***REMOVED***
 
 
@@ -199,7 +199,7 @@ xrx.node.Text.prototype.getNodeAncestor = function(test) {
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
-      nodeset.unshift(new xrx.node[this.impl_.Document](this.instance_));
+      nodeset.unshift(new xrx.node[this.impl_.Document](this.getInstance().getId()));
   return nodeset;
 ***REMOVED***
 
@@ -252,7 +252,7 @@ xrx.node.Text.prototype.getNodePreceding = function(test) {
 
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
-      nodeset.unshift(new xrx.node[this.impl_.Document](this.instance_));
+      nodeset.unshift(new xrx.node[this.impl_.Document](this.getInstance().getId()));
 
   return nodeset;
 ***REMOVED***

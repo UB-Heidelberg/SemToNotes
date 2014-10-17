@@ -17,13 +17,13 @@ goog.require('xrx.token.NotTag');
 ***REMOVED***
 ***REMOVED*** Constructs a new streaming text node.
 ***REMOVED***
-***REMOVED*** @param {!xrx.mvc.Instance} instance
+***REMOVED*** @param {!xrx.node.Document} instance
 ***REMOVED*** @param {!xrx.token} tag
 ***REMOVED*** @param {!integer} length
 ***REMOVED***
 ***REMOVED***
-xrx.node.TextS = function(instance, tag, length) {
-  goog.base(this, xrx.node.TEXT, instance, null);
+xrx.node.TextS = function(document, tag, length) {
+  goog.base(this, xrx.node.TEXT, document, null);
 
 
 
@@ -248,7 +248,7 @@ xrx.node.TextS.prototype.getNodeFollowingSibling = function(test) {
 ***REMOVED***
 xrx.node.TextS.prototype.getNodeParent = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
-  var element = new xrx.node.ElementS(this.getInstance(), this.tag_);
+  var element = new xrx.node.ElementS(this.getDocument().getInstance(), this.tag_);
 
   if (test.matches(element)) nodeset.add(element);
 
@@ -277,23 +277,23 @@ xrx.node.TextS.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
 ***REMOVED***
 xrx.node.TextS.prototype.forward = function(stop) {
 ***REMOVED***
-  var traverse = new xrx.xml.Traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.getDocument().getInstance().xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.StartTag(label.clone(), offset, length1);
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
  ***REMOVED*****REMOVED***
 
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
 
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
  ***REMOVED*****REMOVED***
 
@@ -301,7 +301,7 @@ xrx.node.TextS.prototype.forward = function(stop) {
     var tag = new xrx.token.EndTag(label.clone(), offset, length1);
 
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
     if (label.sameAs(stop)) traverse.stop();
  ***REMOVED*****REMOVED***
@@ -316,16 +316,16 @@ xrx.node.TextS.prototype.forward = function(stop) {
 ***REMOVED***
 xrx.node.TextS.prototype.backward = function(stop) {
 ***REMOVED***
-  var traverse = new xrx.xml.Traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.getDocument().getInstance().xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.StartTag(label.clone(), offset, length1);
 
     if (length1 !== length2) {
-      //self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (label.sameAs(stop)) traverse.stop();
  ***REMOVED*****REMOVED***
 
@@ -333,9 +333,9 @@ xrx.node.TextS.prototype.backward = function(stop) {
     var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
 
     if (length1 !== length2) {
-      //self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (label.sameAs(stop)) traverse.stop();
  ***REMOVED*****REMOVED***
 
@@ -343,7 +343,7 @@ xrx.node.TextS.prototype.backward = function(stop) {
     var tag = new xrx.token.EndTag(label.clone(), offset, length1);
 
     if (length1 !== length2) {
-      //self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
  ***REMOVED*****REMOVED***
   traverse.backward(self.tag_);

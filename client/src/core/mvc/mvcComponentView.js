@@ -67,7 +67,7 @@ xrx.mvc.ComponentView.prototype.getNodeRef = function() {
   var context = this.getRepeat().getNode(this.getRepeatIndex());
   if (!context) return;
   // TODO: Node conversion function
-  var nodeS = new xrx.node.ElementS(context.getInstance(), context.getToken());
+  var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
   var result = xrx.xpath.evaluate(this.getRefExpression(), nodeS, null,
       xrx.xpath.XPathResultType.ANY_TYPE);
   var next = result.iterateNext();
