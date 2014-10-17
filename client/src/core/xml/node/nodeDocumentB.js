@@ -20,13 +20,20 @@ goog.require('xrx.xpath.NodeSet');
 /**
  * Creates a binary document node.
  *
- * @param {!xrx.mvc.Instance}
+ * @param {!string} instanceId The ID of the instance. 
  * @constructor
  */
-xrx.node.DocumentB = function(instance) {
-  goog.base(this, xrx.node.DOCUMENT, instance);
+xrx.node.DocumentB = function(instanceId) {
+
+  goog.base(this, xrx.node.DOCUMENT, this);
+
+  this.instanceId_ = instanceId;
 };
 goog.inherits(xrx.node.DocumentB, xrx.node.Binary);
+
+
+
+xrx.node.DocumentB.prototype.getInstance = xrx.node.Document.prototype.getInstance;
 
 
 
@@ -104,7 +111,7 @@ xrx.node.DocumentB.prototype.getNamespaceUri = xrx.node.Document.prototype.getNa
 
 xrx.node.DocumentB.prototype.getStringValue = function() {
   var string = '';
-  var xml = this.instance_.xml();
+  var xml = this.getInstance().xml();
   var row;
 
   for(var key = 0; key <= this.getIndex().getLastKey(); key++) {
@@ -132,7 +139,7 @@ xrx.node.DocumentB.prototype.getNodeAttribute = xrx.node.Document.prototype.getN
 
 xrx.node.DocumentB.prototype.getNodeChild = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
-  var element = new xrx.node.ElementB(this.instance_, 0);
+  var element = new xrx.node.ElementB(this.getDocument(), 0);
 
   if (test.matches(element)) nodeset.add(element);
 
@@ -143,7 +150,7 @@ xrx.node.DocumentB.prototype.getNodeChild = function(test) {
 
 xrx.node.DocumentB.prototype.getNodeDescendant = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
-  var index = this.instance_.getIndex();
+  var index = this.getInstance().getIndex();
   index.iterSetKey(0);
   var row = index.iterGetRow();
   var element;
@@ -153,14 +160,14 @@ xrx.node.DocumentB.prototype.getNodeDescendant = function(test) {
   do {
 
     if (row.getType() !== xrx.token.END_TAG) {
-      element = new xrx.node.ElementB(this.instance_, index.iterGetKey());
+      element = new xrx.node.ElementB(this.getDocument(), index.iterGetKey());
       if (test.matches(element)) {
         nodeset.add(element);
       }
     }
 
     if (needTextNode && row.getLength1() !== row.getLength2()) {
-      text = new xrx.node.TextB(this.instance_, index.iterGetKey());
+      text = new xrx.node.TextB(this.getDocument(), index.iterGetKey());
       if (test.matches(text)) {
         nodeset.add(text);
       }

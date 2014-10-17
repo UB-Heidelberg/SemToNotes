@@ -15,10 +15,24 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-xrx.node.DocumentS = function(instance) {
-  goog.base(this, xrx.node.DOCUMENT, instance);
+/**
+ * @constructor
+ */
+xrx.node.DocumentS = function(instanceId) {
+
+  goog.base(this, xrx.node.DOCUMENT, this);
+
+  this.instanceId_ = instanceId;
 };
 goog.inherits(xrx.node.DocumentS, xrx.node.Streaming);
+
+
+
+xrx.node.DocumentS.prototype.getInstance = xrx.node.Document.prototype.getInstance;
+
+
+
+xrx.node.DocumentS.prototype.getInstance = xrx.node.Document.prototype.getInstance;
 
 
 
@@ -95,7 +109,7 @@ xrx.node.DocumentS.prototype.getNamespaceUri = xrx.node.Document.prototype.getNa
 
 
 xrx.node.DocumentS.prototype.getStringValue = function() {
-  var xml = this.instance_.xml();
+  var xml = this.getInstance().xml();
   var traverse = new xrx.xml.Traverse(xml);
   var string = '';
   var self = this;
@@ -172,14 +186,14 @@ xrx.node.DocumentS.prototype.getNodePrecedingSibling = xrx.node.Document.prototy
  */
 xrx.node.DocumentS.prototype.forward = function(stop) {
   var self = this;
-  var traverse = new xrx.xml.Traverse(this.instance_.xml());
+  var traverse = new xrx.xml.Traverse(this.getInstance().xml());
   var token;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.StartTag(label.clone(), offset, length1);
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
     if (label.sameAs(stop)) traverse.stop();
   };
@@ -187,9 +201,9 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
 
-    self.eventNode(new xrx.node.ElementS(self.instance_, tag));
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
     if (label.sameAs(stop)) traverse.stop();
   };
@@ -198,7 +212,7 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
     var tag = new xrx.token.EndTag(label.clone(), offset, length1);
 
     if (length1 !== length2) {
-      self.eventNode(new xrx.node.TextS(self.instance_, tag, length2 - length1));
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
   };
 

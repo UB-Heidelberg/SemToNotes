@@ -19,13 +19,13 @@ xrx.node.Attribute = function() {};
 
 
 xrx.node.Attribute.prototype.getStream = function() {
-  return this.parent_.getInstance().getStream();
+  return this.parent_.getDocument().getInstance().getStream();
 };
 
 
 
 xrx.node.Attribute.prototype.getInstance = function() {
-  return this.parent_.getInstance();
+  return this.parent_.getDocument().getInstance();
 };
 
 

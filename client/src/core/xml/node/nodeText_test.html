@@ -13,15 +13,9 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx.mvc.Instance');
-  goog.require('xrx.node.Element');
-  goog.require('xrx.node.ElementS');
-  goog.require('xrx.node.ElementB');
-  goog.require('xrx.node.Text');
-  goog.require('xrx.node.TextS');
-  goog.require('xrx.node.TextB');
+  goog.require('xrx.node.Nodes');
+  goog.require('xrx.token.Tokens');
   goog.require('xrx.xml.Pilot');
-  goog.require('xrx.token.EndTag');
-  goog.require('xrx.token.StartTag');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.NameTest');
   goog.require('xrx.xpath.KindTest');
@@ -42,11 +36,12 @@ function test02identityFunctions() {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var eB = new xrx.node.ElementB(instance, 1);
-  var tB1 = new xrx.node.TextB(instance, 1);
+  var dB = new xrx.node.DocumentB(instance.getId());
+  var eB = new xrx.node.ElementB(dB, 1);
+  var tB1 = new xrx.node.TextB(dB, 1);
   // important!
-  var tB2 = new xrx.node.TextB(instance, 2); // [1,2,0]
-  var tB3 = new xrx.node.TextB(instance, 3); // [1,2]
+  var tB2 = new xrx.node.TextB(dB, 2); // [1,2,0]
+  var tB3 = new xrx.node.TextB(dB, 3); // [1,2]
 
   assertTrue(tB1.isSameAs(tB1));
   assertTrue(tB1.isAfter(eB));
@@ -56,13 +51,14 @@ function test02identityFunctions() {
   assertTrue(tB3.isAfter(tB2));
 
   // streaming node
+  var dS = new xrx.node.DocumentB(instance.getId());
   var tok1 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
-  var eS1 = new xrx.node.ElementS(instance, tok1);
-  var tS1 = new xrx.node.TextS(instance, tok1, 1);
+  var eS1 = new xrx.node.ElementS(dS, tok1);
+  var tS1 = new xrx.node.TextS(dS, tok1, 1);
   var tok2 = new xrx.token.StartTag(new xrx.xml.Label([1,2]), 9, 13);
-  var tS2 = new xrx.node.TextS(instance, tok2, 1);
+  var tS2 = new xrx.node.TextS(dS, tok2, 1);
   var tok3 = new xrx.token.EndTag(new xrx.xml.Label([1,2]), 23, 4);
-  var tS3 = new xrx.node.TextS(instance, tok3, 1);
+  var tS3 = new xrx.node.TextS(dS, tok3, 1);
 
   assertTrue(tS1.isSameAs(tS1));
   assertTrue(tS1.isAfter(eS1));
@@ -76,10 +72,11 @@ function test03contentFunctions() {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var tB1 = new xrx.node.TextB(instance, 0);
-  var tB2 = new xrx.node.TextB(instance, 1);
-  var tB3 = new xrx.node.TextB(instance, 2);
-  var tB4 = new xrx.node.TextB(instance, 3);
+  var dB = new xrx.node.DocumentB(instance.getId());
+  var tB1 = new xrx.node.TextB(dB, 0);
+  var tB2 = new xrx.node.TextB(dB, 1);
+  var tB3 = new xrx.node.TextB(dB, 2);
+  var tB4 = new xrx.node.TextB(dB, 3);
 
   assertEquals('1', tB1.getXml());
   assertEquals('2', tB2.getXml());
@@ -87,14 +84,15 @@ function test03contentFunctions() {
   assertEquals('4', tB4.getStringValue());
 
   // streaming node
+  var dS = new xrx.node.DocumentB(instance.getId());
   var tok1 = new xrx.token.StartTag(new xrx.xml.Label([1]), 0, 3);
-  var tS1 = new xrx.node.TextS(instance, tok1, 1);
+  var tS1 = new xrx.node.TextS(dS, tok1, 1);
   var tok2 = new xrx.token.StartTag(new xrx.xml.Label([1,1]), 4, 3);
-  var tS2 = new xrx.node.TextS(instance, tok2, 1);
+  var tS2 = new xrx.node.TextS(dS, tok2, 1);
   var tok3 = new xrx.token.EndTag(new xrx.xml.Label([1,1]), 8, 4);
-  var tS3 = new xrx.node.TextS(instance, tok3, 1);
+  var tS3 = new xrx.node.TextS(dS, tok3, 1);
   var tok4 = new xrx.token.EndTag(new xrx.xml.Label([1,2]), 13, 4);
-  var tS4 = new xrx.node.TextS(instance, tok4, 1);
+  var tS4 = new xrx.node.TextS(dS, tok4, 1);
 
   assertEquals('1', tS1.getXml());
   assertEquals('2', tS2.getXml());
@@ -109,7 +107,8 @@ function axisTest(key, func, expected) {
   var instance = new xrx.mvc.Instance(element);
 
   // binary node
-  var tB = new xrx.node.TextB(instance, key);
+  var dB = new xrx.node.DocumentB(instance.getId());
+  var tB = new xrx.node.TextB(dB, key);
   var test = {
     node: tB[func](new xrx.xpath.KindTest('node')),
     element: tB[func](new xrx.xpath.NameTest('*')),
@@ -134,10 +133,11 @@ function axisTest(key, func, expected) {
   }
 
   var pilot = new xrx.xml.Pilot(xml);
-  var eB = new xrx.node.ElementB(instance, key);
+  var dS = new xrx.node.DocumentS(instance.getId());
+  var eB = new xrx.node.ElementB(dB, key);
   var t = pilot.location(null, new xrx.token[tag](eB.getLabel(),
       eB.getOffset(), eB.getLength()));
-  var tS = new xrx.node.TextS(instance, t, tB.getLength());
+  var tS = new xrx.node.TextS(dS, t, tB.getLength());
   var testS = {
     node: tS[func](new xrx.xpath.KindTest('node')),
     element: tS[func](new xrx.xpath.NameTest('*')),
