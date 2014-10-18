@@ -13,6 +13,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
+  goog.require('goog.object');
   goog.require('xrx');
   goog.require('xrx.mvc');
   goog.require('xrx.mvc.Controller');
@@ -30,7 +31,9 @@
 <h1>Test 01</h1>
 <div id="r01" class="xrx-mvc-repeat" data-xrx-bind="b1">
   <div></div>
-  <div></div>
+  <div>
+    <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+  </div>
 </div>
 
 <h1>Test 02</h1>
@@ -52,7 +55,9 @@
 <div id="i04" class="xrx-mvc-instance">&lt;data&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/data&gt;</div>
 <div id="b040" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')"></div>
 <div id="b041" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/*"></div>
-<div id="b042" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/c"></div>
+<div id="b042" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/a"></div>
+<div id="b043" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/b"></div>
+<div id="b044" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i04')/data/c"></div>
 <div id="r04" class="xrx-mvc-repeat" data-xrx-bind="b041">
   <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
 </div>
@@ -78,12 +83,48 @@
 
 
 
-function test01RepeatItem() {
+function test01MvcRefresh() {
+  var children;
+  var repeatItems;
   var r01 = goog.dom.getElement('r01');
-  var children = goog.dom.getChildren(r01);
-  var repeatItems = goog.dom.getElementsByClass('xrx-mvc-repeat-item', r01);
+  var repeat = xrx.mvc.getComponent('r01');
+
+  // initial state
+  children = goog.dom.getChildren(r01);
+  repeatItems = goog.dom.getElementsByClass('xrx-mvc-repeat-item', r01);
+  assertFalse(undefined === repeat.firstItem_);
+  assertEquals(2, repeat.nextItems_.length);
   assertEquals(6, children.length);
   assertEquals(6, repeatItems.length);
+
+  // remove components
+  var len1 = goog.object.getKeys(xrx.mvc.getViewComponents()).length;
+  xrx.mvc.removeViewComponents(r01);
+  var len2 = goog.object.getKeys(xrx.mvc.getViewComponents()).length;
+  assertEquals(3, len1 - len2);
+
+  // remove items
+  repeat.removeItems_();
+  children = goog.dom.getChildren(r01);
+  repeatItems = goog.dom.getElementsByClass('xrx-mvc-repeat-item', r01);
+  assertFalse(undefined === repeat.firstItem_);
+  assertEquals(0, repeat.nextItems_.length);
+  assertEquals(2, children.length);
+  assertEquals(2, repeatItems.length);
+
+  // create items
+  repeat.createItems_();
+  children = goog.dom.getChildren(r01);
+  repeatItems = goog.dom.getElementsByClass('xrx-mvc-repeat-item', r01);
+  assertFalse(undefined === repeat.firstItem_);
+  assertEquals(2, repeat.nextItems_.length);
+  assertEquals(6, children.length);
+  assertEquals(6, repeatItems.length);
+
+  // install components 
+  xrx.mvc.Mvc.getInstance().install(r01);
+  var len3 = goog.object.getKeys(xrx.mvc.getViewComponents()).length;
+  assertEquals(len1, len3);
 };
 
 

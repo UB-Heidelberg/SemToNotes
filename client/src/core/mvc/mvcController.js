@@ -7,8 +7,8 @@ goog.provide('xrx.mvc.Controller');
 
 
 
-goog.require('xrx.mvc.Components');
 goog.require('xrx.mvc');
+goog.require('xrx.mvc.Components');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
 goog.require('xrx.rebuild');
@@ -75,6 +75,7 @@ xrx.mvc.Controller.replaceValueLike = function(control, update) {
   var node = control.getNode();
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
+  xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
   switch(node.getType()) {
   case xrx.node.ATTRIBUTE:
     var attrValue = new xrx.token.AttrValue(token.label().clone());
@@ -145,13 +146,8 @@ xrx.mvc.Controller.insertEmptyTag = function(control, emptyTag) {
 
 
 xrx.mvc.Controller.removeEmptyTag = function(control, token) {
-  console.log(xrx.mvc.getComponent('i04').xml());
   var node = control.getNode();
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
-  console.log(xrx.mvc.getComponent('i04').xml());
-  console.log(xrx.mvc.getComponent('i04') === node.getInstance());
-  console.log(node.getInstance().getId());
-  console.log(node.getInstance().xml());
   xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
@@ -189,11 +185,10 @@ xrx.mvc.Controller.mvcRecalculate = function() {
  * @private
  */
 xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
+  if (xrx.mvc.Controller.currentOperation_ !== xrx.mvc.Controller.REMOVE) return;
   var repeat = control.getRepeat();
   if (repeat) {
-    if (xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.REMOVE) {
-      repeat.mvcRefresh();
-    }
+    repeat.mvcRefresh();
   };
 };
 
@@ -206,7 +201,11 @@ xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
   var contr;
   for (var c in xrx.mvc.getViewComponents()) {
     contr = xrx.mvc.getViewComponent(c);
-    contr.mvcRefresh();
+    if (contr instanceof xrx.mvc.Repeat) {
+    } else if (contr === control) {
+    } else {
+      contr.mvcRefresh();
+    }
   }
 };
 

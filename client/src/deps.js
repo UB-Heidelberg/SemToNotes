@@ -71,7 +71,7 @@ goog.addDependency('../../../../src/core/mvc/mvcCursor.js', ['xrx.mvc.Cursor'], 
 goog.addDependency('../../../../src/core/mvc/mvcInstance.js', ['xrx.mvc.Instance'], ['goog.dom', 'goog.events', 'goog.net.XhrIo', 'xrx.index.Index', 'xrx.mvc.ComponentModel', 'xrx.node', 'xrx.node.DocumentB', 'xrx.xml.Parser', 'xrx.xml.Pilot', 'xrx.xml.Stream']);
 goog.addDependency('../../../../src/core/mvc/mvcMvc.js', ['xrx.mvc.Mvc'], ['goog.Promise', 'goog.array', 'goog.dom', 'goog.dom.dataset', 'goog.json', 'goog.labs.net.xhr', 'goog.object', 'goog.ui.IdGenerator', 'xrx.func', 'xrx.mvc', 'xrx.mvc.Components', 'xrx.node.Nodes', 'xrx.widget.Widgets', 'xrx.xpath']);
 goog.addDependency('../../../../src/core/mvc/mvcNamespace.js', ['xrx.mvc.Namespace'], ['xrx.mvc.ComponentModel', 'xrx.xpath']);
-goog.addDependency('../../../../src/core/mvc/mvcRepeat.js', ['xrx.mvc.Repeat', 'xrx.mvc.RepeatItem'], ['goog.array', 'goog.dom.DomHelper', 'goog.dom.classes', 'goog.dom.dataset', 'xrx.mvc', 'xrx.mvc.ComponentView']);
+goog.addDependency('../../../../src/core/mvc/mvcRepeat.js', ['xrx.mvc.Repeat', 'xrx.mvc.RepeatItem'], ['goog.array', 'goog.dom.DomHelper', 'goog.dom.classes', 'goog.dom.dataset', 'goog.ui.IdGenerator', 'xrx.mvc', 'xrx.mvc.ComponentView']);
 goog.addDependency('../../../../src/core/xml/func/func.js', ['xrx.func'], ['xrx.mvc', 'xrx.xpath', 'xrx.xpath.DataType', 'xrx.xpath.FunctionCall', 'xrx.xpath.NodeSet']);
 goog.addDependency('../../../../src/core/xml/index/indexIndex.js', ['xrx.index.Index', 'xrx.index.Namespace'], ['goog.array', 'xrx.index.Row', 'xrx.token', 'xrx.token.Tokens', 'xrx.xml.Label', 'xrx.xml.Traverse']);
 goog.addDependency('../../../../src/core/xml/index/indexRebuild.js', ['xrx.rebuild'], ['goog.object', 'xrx.token', 'xrx.token.StartEmptyTag']);
