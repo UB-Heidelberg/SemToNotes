@@ -135,3 +135,64 @@ xrx.mvc.Component.prototype.getHandler = function() {
   return this.handler_ ||
       (this.handler_ = new goog.events.EventHandler(this));
 };
+
+
+
+xrx.mvc.Component.prototype.getRepeat = function() {
+  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
+  return !element ? undefined : xrx.mvc.getViewComponent(element.id);
+};
+
+
+
+xrx.mvc.Component.prototype.getRepeatIndex = function() {
+  var repeatItem = goog.dom.getAncestorByClass(this.element_,
+      'xrx-mvc-repeat-item');
+  if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
+    return this.element_.getAttribute('data-xrx-repeat-index');
+  } else if (repeatItem) {
+    return repeatItem.getAttribute('data-xrx-repeat-index');
+  } else {
+    throw Error('Repeat item could not be found.');
+  }
+}; 
+
+
+
+xrx.mvc.Component.prototype.getNodeBind = function(num) {
+  return this.getBind().getNode(num);
+};
+
+
+
+xrx.mvc.Component.prototype.getNodeRef = function() {
+  var repeat = this.getRepeat();
+  if (!repeat) return;
+  var context = repeat.getNode(this.getRepeatIndex());
+  if (!context) return;
+  // TODO: Node conversion function
+  var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
+  var result = xrx.xpath.evaluate(this.getRefExpression(), nodeS, null,
+      xrx.xpath.XPathResultType.ANY_TYPE);
+  var next = result.iterateNext();
+  return next;
+};
+
+
+
+/**
+ * Returns the node referenced by the component.
+ * @return {xrx.node} The node.
+ */
+xrx.mvc.Component.prototype.getNode = function(num) {
+  var n = num || 0;
+
+  if (this.getBind()) {
+    return this.getNodeBind(n);
+  } else if (this.getRefExpression()) {
+    return this.getNodeRef(n);
+  } else {
+    throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
+        'attribute.');
+  }
+};

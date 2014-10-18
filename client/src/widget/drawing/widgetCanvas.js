@@ -46,7 +46,7 @@ xrx.widget.Canvas.prototype.mvcRefresh = function() {
 
 
 xrx.widget.Canvas.prototype.createDrawing_ = function() {
-  this.drawing_ = new xrx.drawing.Drawing(this.element_, 'svg');
+  this.drawing_ = new xrx.drawing.Drawing(this.element_);
   this.drawing_.setModeView();
 };
 
@@ -78,9 +78,9 @@ xrx.widget.Canvas.prototype.createLayerGraphics_ = function() {
   var widget;
   var shapes = [];
   goog.object.forEach(xrx.widget.Shapes, function(component, key, o) {
-    elements = goog.dom.getElementsByClass(key);
+    elements = goog.dom.getElementsByClass(key, container);
     for (var i = 0; i < elements.length; i++) {
-      widget = new xrx.widget.Shapes[key](elements[i], this.drawing_)
+      widget = new xrx.widget.Shapes[key](elements[i], this.drawing_);
       shapes.push(widget.getShape());
     }
   }, this);
