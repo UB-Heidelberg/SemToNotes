@@ -17,9 +17,9 @@ xrx.widget.Shape = function(element, drawing) {
 
   this.drawing_ = drawing;
 
-***REMOVED***
-
   this.shape_;
+
+***REMOVED***
 ***REMOVED***
 goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 

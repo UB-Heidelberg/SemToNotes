@@ -20,8 +20,6 @@ goog.require('xrx.widget.Shape');
 ***REMOVED***
 xrx.widget.ShapePolygon = function(element, drawing) {
 
-  console.log(element);
-
   goog.base(this, element, drawing);
 
   this.shapePolygonCoords_;
@@ -59,6 +57,7 @@ xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
 
 
 xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
+  this.shapePolygonCoords_.refresh();
 ***REMOVED***
 
 
@@ -74,17 +73,21 @@ xrx.widget.ShapePolygon.prototype.mvcRemove = function() {
 
 
 
+xrx.widget.ShapePolygon.prototype.update = function() {
+  this.shapePolygonCoords_.update();
+***REMOVED***
+
+
+
 xrx.widget.ShapePolygon.prototype.createDom = function() {
 ***REMOVED***
   this.shape_ = xrx.shape.Polygon.create(this.drawing_);
-  this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this.element_, this);
-  // refresh coordinates
-  this.shapePolygonCoords_.mvcRefresh();
+  this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {
-    self.shapePolygonCoords_.mvcUpdate();
+    self.update();
   }
-  // handle deleted
+  // handle delete component
   this.shape_.handleDeleted = function() {
     self.mvcDelete();
   }
@@ -95,13 +98,13 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.widget.ShapePolygonCoords = function(element, polygon) {
+xrx.widget.ShapePolygonCoords = function(polygon) {
 
   this.polygon_ = polygon;
 
+  goog.base(this, polygon.getElement());
 ***REMOVED***
-***REMOVED***
-goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.Component);
 
 
 
@@ -114,12 +117,7 @@ xrx.widget.ShapePolygonCoords.prototype.getRefExpression = function() {
 
 
 
-xrx.widget.ShapePolygonCoords.prototype.createDom = function() {
-***REMOVED***
-
-
-
-xrx.widget.ShapePolygonCoords.prototype.mvcRefresh = function() {
+xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var coords = this.polygon_.parseCoords(str);
   this.polygon_.getShape().setCoords(coords);
@@ -127,12 +125,7 @@ xrx.widget.ShapePolygonCoords.prototype.mvcRefresh = function() {
 
 
 
-xrx.widget.ShapePolygonCoords.prototype.mvcUpdate = function(coords) {
+xrx.widget.ShapePolygonCoords.prototype.update = function(coords) {
   xrx.mvc.Controller.replaceValueLike(this, this.polygon_.serializeCoords(
       this.polygon_.getShape().getCoords()));
-***REMOVED***
-
-
-
-xrx.widget.ShapePolygonCoords.prototype.mvcRemove = function() {
 ***REMOVED***

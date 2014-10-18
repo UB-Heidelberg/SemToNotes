@@ -76,7 +76,6 @@ xrx.mvc.Repeat.prototype.createDom = function() {
 
 
 xrx.mvc.Repeat.prototype.mvcRefresh = function() {
-  console.log('test');
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();

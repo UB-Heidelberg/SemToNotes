@@ -198,13 +198,19 @@ xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
-  var contr;
+  var component;
+  var nIter;
   for (var c in xrx.mvc.getViewComponents()) {
-    contr = xrx.mvc.getViewComponent(c);
-    if (contr instanceof xrx.mvc.Repeat) {
-    } else if (contr === control) {
+    component = xrx.mvc.getViewComponent(c);
+    nIter = component.getNode();
+    if (component instanceof xrx.mvc.Repeat) {
+    } else if (component === control) {
+    } else if (component && node && nIter && xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.UPDATE) {
+      if (nIter.getInstance() === node.getInstance() && node.getLabel().isDescendantOf(nIter.getLabel())) {
+        component.mvcRefresh();
+      }
     } else {
-      contr.mvcRefresh();
+      component.mvcRefresh();
     }
   }
 ***REMOVED***
