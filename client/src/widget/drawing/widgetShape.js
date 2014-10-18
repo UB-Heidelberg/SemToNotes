@@ -17,9 +17,9 @@ xrx.widget.Shape = function(element, drawing) {
 
   this.drawing_ = drawing;
 
-  goog.base(this, element);
-
   this.shape_;
+
+  goog.base(this, element);
 };
 goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 

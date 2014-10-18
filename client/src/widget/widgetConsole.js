@@ -6,7 +6,7 @@
 goog.provide('xrx.widget.Console');
 
 
-goog.require('goog.dom');
+goog.require('goog.dom.DomHelper');
 goog.require('goog.string');
 goog.require('goog.style');
 goog.require('xrx.mvc.Cursor');
@@ -36,6 +36,12 @@ xrx.widget.Console.prototype.createDom = function() {
   goog.style.setStyle(this.element_, 'white-space', '-moz-pre-wrap');
   goog.style.setStyle(this.element_, 'white-space', '-o-pre-wrap');
   goog.style.setStyle(this.element_, 'word-wrap', 'break-word');
+};
+
+
+
+xrx.widget.Console.prototype.getValue = function() {
+  return goog.dom.getTextContent(this.element_);
 };
 
 
