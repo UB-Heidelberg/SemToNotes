@@ -76,6 +76,7 @@ xrx.mvc.Repeat.prototype.createDom = function() {
 
 
 xrx.mvc.Repeat.prototype.mvcRefresh = function() {
+  console.log('test');
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();
@@ -106,6 +107,18 @@ xrx.mvc.RepeatItem.prototype.getElements = function() {
 
 
 
+xrx.mvc.RepeatItem.prototype.removeIds_ = function(parent) {
+  var elements = goog.dom.findNodes(parent, function(n) {
+      return n instanceof Element;
+  });
+  parent.removeAttribute('id');
+  goog.array.forEach(elements, function(e, i, a) {
+    e.removeAttribute('id');
+  });
+***REMOVED***
+
+
+
 ***REMOVED***
 ***REMOVED*** @private
 ***REMOVED***
@@ -114,7 +127,7 @@ xrx.mvc.RepeatItem.prototype.getClonedElements = function() {
   var element;
   for (var i = 0, len = this.elements_.length; i < len; i++) {
     element = this.elements_[i].cloneNode(true);
-    element.id = '';
+    this.removeIds_(element);
     elements.push(element);
   }
   return elements;

@@ -60,11 +60,9 @@ xrx.mvc.ComponentView.prototype.getNodeBind = function(num) {
 
 
 xrx.mvc.ComponentView.prototype.getNodeRef = function() {
-  if (!this.getRepeat()) {
-    //console.log(this.element_);
-    //console.log(goog.dom.getParentElement(this.element_));
-  }
-  var context = this.getRepeat().getNode(this.getRepeatIndex());
+  var repeat = this.getRepeat();
+  if (!repeat) return;
+  var context = repeat.getNode(this.getRepeatIndex());
   if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
