@@ -20,6 +20,8 @@ goog.require('xrx.widget.Shape');
  */
 xrx.widget.ShapePolygon = function(element, drawing) {
 
+  console.log(element);
+
   goog.base(this, element, drawing);
 
   this.shapePolygonCoords_;
@@ -49,7 +51,7 @@ xrx.widget.ShapePolygon.prototype.serializeCoords = function(coords) {
     str += coords[i][0].toString();
     str += ',';
     str += coords[i][1].toString();
-    if (i <= len - 1) str += ' ';
+    if (i <= len - 2) str += ' ';
   }
   return str;
 };

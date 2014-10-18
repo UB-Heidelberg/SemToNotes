@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class implementing low-level update operations 
- * on XML tokens.
+ * @fileoverview A static class implementing update operations 
+ *     on XML tokens.
  */
 
 goog.provide('xrx.xml.Update');
@@ -14,8 +14,8 @@ goog.require('xrx.token');
 
 
 /**
- * Shared function for all update operations.
- * @private
+ * A static class implementing update operations 
+ * on XML tokens.
  */
 xrx.xml.Update = function() {};
 
@@ -133,7 +133,7 @@ xrx.xml.Update.insertEmptyTag = function(instance, target, offset, localName,
 
 
 /**
- * Wrap a piece of XML with a start-tag and a end-tag.
+ * Wraps a piece of XML with a start-tag token and an end-tag token.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target1 The left not-tag token where the new
@@ -188,7 +188,7 @@ xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
 
 
 /**
- * Inserts a new attribute into a start-tag or a empty tag.
+ * Inserts a new attribute into a start-tag or a empty tag token.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where the attribute 
@@ -237,7 +237,7 @@ xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
 
 
 /**
- * Removes a empty tag.
+ * Removes an empty tag.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.EmptyTag} target The tag to be removed.
@@ -272,8 +272,8 @@ xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
 
 
 /**
- * Removes a start-tag, a end-tag and the content between the two
- * tags. 
+ * Removes a start-tag token, a end-tag token and the content between
+ * the two tag tokens. 
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Fragment} token The tag to be removed.
@@ -285,7 +285,7 @@ xrx.xml.Update.removeFragment = function(instance, token) {
 
 
 /**
- * Removes a mixed set of nodes. 
+ * Removes a mixed sequence of tokens. 
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Mixed} token The token to be removed.
@@ -297,7 +297,7 @@ xrx.xml.Update.removeMixed = function(instance, token) {
 
 
 /**
- * Removes a attribute token.
+ * Removes an attribute token.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.Attribute} token The token to be removed.
