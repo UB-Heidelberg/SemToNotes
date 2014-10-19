@@ -11,5 +11,5 @@ goog.require('xrx.mvc.Mvc');
 
 
 xrx.install = function() {
-  xrx.mvc.Mvc.getInstance();
+  xrx.mvc.Mvc.install();
 };

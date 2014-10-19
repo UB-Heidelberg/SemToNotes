@@ -8,6 +8,7 @@ goog.provide('xrx.mvc');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.object');
+goog.require('xrx.mvc.Components');
 
 
 
@@ -37,6 +38,14 @@ xrx.mvc[xrx.mvc.MODEL] = {};
  * Stack of view components.
  */
 xrx.mvc[xrx.mvc.VIEW] = {};
+
+
+
+xrx.mvc.registerComponent = function(htmlClassName, componentClass) {
+  if (xrx.mvc.Components[htmlClassName] !== undefined) throw Error('Component <' + htmlClassName +
+      '> already registered.');
+  xrx.mvc.Components[htmlClassName] = componentClass;
+};
 
 
 
@@ -135,7 +144,9 @@ xrx.mvc.removeViewComponent = function(id) {
 xrx.mvc.removeViewComponents = function(parent) {
   goog.object.forEach(xrx.mvc[xrx.mvc.VIEW], function(component, id) {
     if (goog.dom.contains(parent, component.getElement())) {
-      if (parent !== component.getElement()) xrx.mvc.removeViewComponent(id);
+      if (parent !== component.getElement()) {
+        xrx.mvc.removeViewComponent(id);
+      }
     }
   }, this);
 };

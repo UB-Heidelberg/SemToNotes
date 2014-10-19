@@ -12,7 +12,7 @@ goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.mvc');
-goog.require('xrx.widget.Shapes');
+goog.require('xrx.mvc.ComponentView');
 
 
 
@@ -21,21 +21,25 @@ goog.require('xrx.widget.Shapes');
  */
 xrx.widget.Canvas = function(element) {
 
-  this.element_ = element;
-
   this.drawing_;
 
   this.toolbar_;
 
-  this.backgroundImage_;
-
-  this.createDom();
+  goog.base(this, element);
 };
+goog.inherits(xrx.widget.Canvas, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-widget-canvas', xrx.widget.Canvas);
 
 
 
 xrx.widget.Canvas.prototype.getDrawing = function() {
   return this.drawing_;
+};
+
+
+
+xrx.widget.Canvas.prototype.getNode = function() {
+  return undefined;
 };
 
 
@@ -61,39 +65,9 @@ xrx.widget.Canvas.prototype.createToolbar_ = function() {
 
 
 
-xrx.widget.Canvas.prototype.createBackgroundImage_ = function() {
-  var container = goog.dom.getNextElementSibling(this.element_);
-  var backgroundImage = goog.dom.getElementsByClass('xrx-widget-canvas-background-image',
-      container)[0];
-  this.backgroundImage_ = new xrx.widget.CanvasBackgroundImage(backgroundImage, this);
-};
-
-
-
-xrx.widget.Canvas.prototype.createLayerGraphics_ = function() {
-  var container = goog.dom.getNextElementSibling(this.element_);
-  var graphicsLayer = goog.dom.getElementsByClass('xrx-widget-canvas-layer-graphics',
-      container)[0];
-  var elements;
-  var widget;
-  var shapes = [];
-  goog.object.forEach(xrx.widget.Shapes, function(component, key, o) {
-    elements = goog.dom.getElementsByClass(key, container);
-    for (var i = 0; i < elements.length; i++) {
-      widget = new xrx.widget.Shapes[key](elements[i], this.drawing_);
-      shapes.push(widget.getShape());
-    }
-  }, this);
-  this.drawing_.getLayerShape().addShapes(shapes);
-};
-
-
-
 xrx.widget.Canvas.prototype.createDom = function() {
   this.createDrawing_();
   this.createToolbar_();
-  this.createBackgroundImage_();
-  this.createLayerGraphics_();
 };
 
 
@@ -102,17 +76,21 @@ xrx.widget.Canvas.prototype.createDom = function() {
 /**
  * @constructor
  */
-xrx.widget.CanvasBackgroundImage = function(element, canvas) {
+xrx.widget.CanvasBackgroundImage = function(element) {
 
-  this.canvas_ = canvas;
+  this.canvas_;
 
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasBackgroundImage, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-widget-canvas-background-image', xrx.widget.CanvasBackgroundImage);
 
 
 
 xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
+  var containerDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-container');
+  var canvasDiv = goog.dom.getPreviousElementSibling(containerDiv);
+  this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
 };
 
 

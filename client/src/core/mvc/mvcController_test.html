@@ -10,7 +10,6 @@
 <script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../deps.js'></script>
-<script src="./mvc_test.js"></script>
 <script type="text/javascript">
   goog.require('goog.array');
   goog.require('goog.dom.DomHelper');
@@ -61,7 +60,7 @@ function prepareTest(testId) {
     if (bind) goog.dom.dataset.set(e, 'xrxBind', bind.replace('[%]', testId));
   });
   goog.dom.append(testDiv, template);
-  xrx.mvc.Mvc.getInstance().install(testDiv);
+  xrx.mvc.Mvc.install(testDiv);
 };
 
 
@@ -75,19 +74,19 @@ function test01RemoveEmptyTag() {
   // remove last console widget
   cons = xrx.mvc.getComponent('c' + testId + '3');
   token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, token);
+  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
   assertEquals('<data><a/><b/></data>', xrx.mvc.getComponent('i' + testId).xml());
 
   // remove middle console widget
   cons = xrx.mvc.getComponent('c' + testId + '2');
   token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, token);
+  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
   assertEquals('<data><a/></data>', xrx.mvc.getComponent('i' + testId).xml());
 
   // remove first console widget
   cons = xrx.mvc.getComponent('c' + testId + '1');
   token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, token);
+  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
   assertEquals('<data></data>', xrx.mvc.getComponent('i' + testId).xml());
 };
 

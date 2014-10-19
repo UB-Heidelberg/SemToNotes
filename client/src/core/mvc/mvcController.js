@@ -55,13 +55,13 @@ xrx.mvc.Controller.update = function(control, operation, token, update) {
 
 
 
-xrx.mvc.Controller.removeTagLike = function(control) {
-  var node = control.getNode();
+xrx.mvc.Controller.removeNodeTag = function(control, opt_node) {
+  var node = opt_node || control.getNode();
   var token = node.getToken();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.REMOVE;
   switch(token.type()) {
   case xrx.token.EMPTY_TAG:
-    xrx.mvc.Controller.removeEmptyTag(control, token);
+    xrx.mvc.Controller.removeEmptyTag(control, node, token);
     break;
   default:
     throw Error('Remove operation not supported for this token-type.');
@@ -71,8 +71,8 @@ xrx.mvc.Controller.removeTagLike = function(control) {
 
 
 
-xrx.mvc.Controller.replaceValueLike = function(control, update) {
-  var node = control.getNode();
+xrx.mvc.Controller.replaceNodeValue = function(control, opt_node, update) {
+  var node = opt_node || control.getNode();
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
@@ -80,7 +80,7 @@ xrx.mvc.Controller.replaceValueLike = function(control, update) {
   case xrx.node.ATTRIBUTE:
     var attrValue = new xrx.token.AttrValue(token.label().clone());
     attrValue = pilot.attrValue(node.parent_.getToken(), attrValue);
-    xrx.mvc.Controller.replaceAttrValue(control, attrValue, update);
+    xrx.mvc.Controller.replaceAttrValue(control, node, attrValue, update);
     break;
   default:
     throw Error('Value update not supported for this node-type.');
@@ -100,8 +100,7 @@ xrx.mvc.Controller.replaceNotTag = function(control, token, update) {
 
 
 
-xrx.mvc.Controller.replaceAttrValue = function(control, token, update) {
-  var node = control.getNode();
+xrx.mvc.Controller.replaceAttrValue = function(control, node, token, update) {
   var parent = node.getParent();
   var instance = node.getInstance();
   var diff = xrx.xml.Update.replaceAttrValue(instance, token, update);
@@ -145,8 +144,7 @@ xrx.mvc.Controller.insertEmptyTag = function(control, emptyTag) {
 
 
 
-xrx.mvc.Controller.removeEmptyTag = function(control, token) {
-  var node = control.getNode();
+xrx.mvc.Controller.removeEmptyTag = function(control, node, token) {
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
   xrx.rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
   xrx.mvc.Controller.mvcRecalculate();
