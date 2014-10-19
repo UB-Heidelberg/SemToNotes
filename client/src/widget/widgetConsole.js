@@ -28,6 +28,7 @@ xrx.widget.Console = function(element) {
 ***REMOVED***
 ***REMOVED***
 goog.inherits(xrx.widget.Console, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-widget-console', xrx.widget.Console);
 
 
 

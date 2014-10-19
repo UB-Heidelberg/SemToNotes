@@ -13,6 +13,7 @@ goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Mvc');
 
 
 
@@ -79,7 +80,7 @@ xrx.mvc.Repeat.prototype.mvcRefresh = function() {
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();
-  xrx.mvc.Mvc.getInstance().install(this.element_);
+  xrx.mvc.Mvc.install(this.element_);
 ***REMOVED***
 
 

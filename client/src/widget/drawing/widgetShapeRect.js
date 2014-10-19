@@ -48,6 +48,7 @@ xrx.widget.ShapeRect = function(element, drawing) {
   this.rectBottom_;
 ***REMOVED***
 goog.inherits(xrx.widget.ShapeRect, xrx.widget.Shape);
+xrx.mvc.registerComponent('xrx-widget-shape-rect', xrx.widget.ShapeRect);
 
 
 
@@ -168,6 +169,7 @@ xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
 
 
 xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
+  if (!this.getNode()) return;
   if (this.rectX_)      this.rectX_.refresh();
   if (this.rectY_)      this.rectY_.refresh();
   if (this.rectWidth_)  this.rectWidth_.refresh();
@@ -180,33 +182,36 @@ xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
 
 
 
-xrx.widget.ShapeRect.prototype.mvcDelete = function() {
-  xrx.mvc.Controller.removeTagLike(this);
-***REMOVED***
-
-
-
 xrx.widget.ShapeRect.prototype.mvcRemove = function() {
+  this.getDrawing().getLayerShape().removeShape(this.shape_);
+  this.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRect.prototype.update = function() {
-  if (self.rectX_)      self.rectX_.update();
-  if (self.rectY_)      self.rectY_.update();
-  if (self.rectWidth_)  self.rectWidth_.update();
-  if (self.rectHeight_) self.rectHeight_.update();
-  if (self.rectLeft_)   self.rectLeft_.update();
-  if (self.rectTop_)    self.rectTop_.update();
-  if (self.rectRight_)  self.rectRight_.update();
-  if (self.rectBottom_) self.rectBottom_.update();
+xrx.widget.ShapeRect.prototype.mvcModelDeleteData = function() {
+  xrx.mvc.Controller.removeNodeTag(this);
+***REMOVED***
+
+
+
+xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
+  if (this.rectX_)      this.rectX_.updateModelData();
+  if (this.rectY_)      this.rectY_.updateModelData();
+  if (this.rectWidth_)  this.rectWidth_.updateModelData();
+  if (this.rectHeight_) this.rectHeight_.updateModelData();
+  if (this.rectLeft_)   this.rectLeft_.updateModelData();
+  if (this.rectTop_)    this.rectTop_.updateModelData();
+  if (this.rectRight_)  this.rectRight_.updateModelData();
+  if (this.rectBottom_) this.rectBottom_.updateModelData();
 ***REMOVED***
 
 
 
 xrx.widget.ShapeRect.prototype.createDom = function() {
 ***REMOVED***
-  this.shape_ = xrx.shape.Rect.create(this.drawing_);
+  this.shape_ = xrx.shape.Rect.create(this.getDrawing());
+  if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
   // get datasets
   var x      = goog.dom.dataset.get(this.element_, 'xrxRefX');
   var y      = goog.dom.dataset.get(this.element_, 'xrxRefY');
@@ -217,29 +222,21 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   var right  = goog.dom.dataset.get(this.element_, 'xrxRefRight');
   var bottom = goog.dom.dataset.get(this.element_, 'xrxRefBottom');
   // initialize coordinate components
-  if (x)      this.rectX_      = new xrx.widget.ShapeRectX(
-      this.element_, this, x);
-  if (y)      this.rectY_      = new xrx.widget.ShapeRectY(
-      this.element_, this, y);
-  if (width)  this.rectWidth_  = new xrx.widget.ShapeRectWidth(
-      this.element_, this, width);
-  if (height) this.rectHeight_ = new xrx.widget.ShapeRectHeight(
-      this.element_, this, height);
-  if (left)   this.rectLeft_   = new xrx.widget.ShapeRectLeft(
-      this.element_, this, left);
-  if (top)    this.rectTop_    = new xrx.widget.ShapeRectTop(
-      this.element_, this, top);
-  if (right)  this.rectRight_  = new xrx.widget.ShapeRectRight(
-      this.element_, this, right);
-  if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(
-      this.element_, this, bottom);
+  if (x)      this.rectX_      = new xrx.widget.ShapeRectX(this, x);
+  if (y)      this.rectY_      = new xrx.widget.ShapeRectY(this, y);
+  if (width)  this.rectWidth_  = new xrx.widget.ShapeRectWidth(this, width);
+  if (height) this.rectHeight_ = new xrx.widget.ShapeRectHeight(this, height);
+  if (left)   this.rectLeft_   = new xrx.widget.ShapeRectLeft(this, left);
+  if (top)    this.rectTop_    = new xrx.widget.ShapeRectTop(this, top);
+  if (right)  this.rectRight_  = new xrx.widget.ShapeRectRight(this, right);
+  if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(this, bottom);
   // handle value changed
   this.shape_.handleValueChanged = function() {
-    self.update();
+    self.mvcModelUpdateData();
   }
   // handle deleted
   this.shape_.handleDeleted = function() {
-    self.mvcDelete();
+    self.mvcModelDeleteData();
   }
 ***REMOVED***
 
@@ -248,13 +245,13 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.widget.ShapeRectGeometry = function(element, rect, dataset) {
+xrx.widget.ShapeRectGeometry = function(rect, dataset) {
 
   this.rect_ = rect;
 
   this.dataset_ = dataset;
 
-***REMOVED***
+  goog.base(this, rect.getElement());
 ***REMOVED***
 goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
 
@@ -284,14 +281,13 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setX(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectX.prototype.update = function() {
+xrx.widget.ShapeRectX.prototype.updateModelData = function() {
   var x = this.rect_.getX();
-  xrx.mvc.Controller.replaceValueLike(this, x.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), x.toString());
 ***REMOVED***
 
 
@@ -311,14 +307,13 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setY(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectY.prototype.update = function() {
+xrx.widget.ShapeRectY.prototype.updateModelData = function() {
   var y = this.rect_.getY();
-  xrx.mvc.Controller.replaceValueLike(this, y.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), y.toString());
 ***REMOVED***
 
 
@@ -338,14 +333,13 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setWidth(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectWidth.prototype.update = function() {
+xrx.widget.ShapeRectWidth.prototype.updateModelData = function() {
   var width = this.rect_.getWidth();
-  xrx.mvc.Controller.replaceValueLike(this, width.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), width.toString());
 ***REMOVED***
 
 
@@ -365,14 +359,13 @@ xrx.widget.ShapeRectHeight.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setHeight(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectHeight.prototype.update = function() {
+xrx.widget.ShapeRectHeight.prototype.updateModelData = function() {
   var height = this.rect_.getHeight();
-  xrx.mvc.Controller.replaceValueLike(this, height.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), height.toString());
 ***REMOVED***
 
 
@@ -392,14 +385,13 @@ xrx.widget.ShapeRectLeft.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setLeft(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectLeft.prototype.update = function() {
+xrx.widget.ShapeRectLeft.prototype.updateModelData = function() {
   var left = this.rect_.getLeft();
-  xrx.mvc.Controller.replaceValueLike(this, left.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), left.toString());
 ***REMOVED***
 
 
@@ -419,14 +411,13 @@ xrx.widget.ShapeRectTop.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setTop(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectTop.prototype.update = function() {
+xrx.widget.ShapeRectTop.prototype.updateModelData = function() {
   var top = this.rect_.getTop();
-  xrx.mvc.Controller.replaceValueLike(this, top.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), top.toString());
 ***REMOVED***
 
 
@@ -446,14 +437,13 @@ xrx.widget.ShapeRectRight.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setRight(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectRight.prototype.update = function() {
+xrx.widget.ShapeRectRight.prototype.updateModelData = function() {
   var right = this.rect_.getRight();
-  xrx.mvc.Controller.replaceValueLike(this, right.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), right.toString());
 ***REMOVED***
 
 
@@ -473,12 +463,11 @@ xrx.widget.ShapeRectBottom.prototype.refresh = function() {
   var str = this.getNode().getStringValue();
   var point = parseFloat(str);
   this.rect_.setBottom(point);
-  this.rect_.getDrawing().draw();
 ***REMOVED***
 
 
 
-xrx.widget.ShapeRectBottom.prototype.update = function() {
+xrx.widget.ShapeRectBottom.prototype.updateModelData = function() {
   var bottom = this.rect_.getBottom();
-  xrx.mvc.Controller.replaceValueLike(this, bottom.toString());
+  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), bottom.toString());
 ***REMOVED***

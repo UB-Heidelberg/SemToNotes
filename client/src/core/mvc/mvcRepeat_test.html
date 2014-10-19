@@ -109,7 +109,7 @@ function mvcRefreshTest(repeatId) {
   // elements have no IDs here yet
 
   // install components
-  xrx.mvc.Mvc.getInstance().install(repeatDiv);
+  xrx.mvc.Mvc.install(repeatDiv);
   checkFirstItemExists(repeatComponent);
   checkNextItemsLength(repeatComponent, 2);
   checkItemElementsLength(repeatComponent, 6);
@@ -187,7 +187,7 @@ function test03RemoveNodesForward() {
   var removeFirstNode = function() {
     consoles = goog.dom.getElementsByClass('xrx-widget-console', repeatDiv);
     component = xrx.mvc.getComponent(consoles[0].id);
-    xrx.mvc.Controller.removeTagLike(component);
+    xrx.mvc.Controller.removeNodeTag(component);
  ***REMOVED*****REMOVED***
 
   // initial state
