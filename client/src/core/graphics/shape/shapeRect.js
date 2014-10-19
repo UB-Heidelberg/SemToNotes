@@ -145,9 +145,10 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
     coords[3] = [coords[0][0], point[1]];
     rect = xrx.shape.Rect.create(this.drawing_);
     rect.setCoords(coords);
+    this.drawing_.getLayerShape().addShapes(rect);
+    if (this.drawing_.handleCreated) this.drawing_.handleCreated();
 
     // remove the temporary shapes
-    this.drawing_.getLayerShape().addShapes(rect);
     this.drawing_.getLayerShapeCreate().removeShapes();
 
     // redraw

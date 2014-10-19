@@ -181,6 +181,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     polygon = xrx.shape.Polygon.create(this.drawing_);
     polygon.setCoords(coords);
     this.drawing_.getLayerShape().addShapes(polygon);
+    if (this.drawing_.handleCreated) this.drawing_.handleCreated();
 
     // remove the temporary shapes
     this.drawing_.getLayerShapeCreate().removeShapes();

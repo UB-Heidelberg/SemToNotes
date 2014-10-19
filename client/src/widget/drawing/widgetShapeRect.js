@@ -190,20 +190,20 @@ xrx.widget.ShapeRect.prototype.mvcRemove = function() {
 
 
 xrx.widget.ShapeRect.prototype.mvcModelDeleteData = function() {
-  xrx.mvc.Controller.removeNodeTag(this);
+  xrx.mvc.Controller.removeNode(this);
 ***REMOVED***
 
 
 
 xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
-  if (this.rectX_)      this.rectX_.updateModelData();
-  if (this.rectY_)      this.rectY_.updateModelData();
-  if (this.rectWidth_)  this.rectWidth_.updateModelData();
-  if (this.rectHeight_) this.rectHeight_.updateModelData();
-  if (this.rectLeft_)   this.rectLeft_.updateModelData();
-  if (this.rectTop_)    this.rectTop_.updateModelData();
-  if (this.rectRight_)  this.rectRight_.updateModelData();
-  if (this.rectBottom_) this.rectBottom_.updateModelData();
+  if (this.rectX_)      this.rectX_.modelUpdateData();
+  if (this.rectY_)      this.rectY_.modelUpdateData();
+  if (this.rectWidth_)  this.rectWidth_.modelUpdateData();
+  if (this.rectHeight_) this.rectHeight_.modelUpdateData();
+  if (this.rectLeft_)   this.rectLeft_.modelUpdateData();
+  if (this.rectTop_)    this.rectTop_.modelUpdateData();
+  if (this.rectRight_)  this.rectRight_.modelUpdateData();
+  if (this.rectBottom_) this.rectBottom_.modelUpdateData();
 ***REMOVED***
 
 
@@ -285,9 +285,9 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectX.prototype.updateModelData = function() {
+xrx.widget.ShapeRectX.prototype.modelUpdateData = function() {
   var x = this.rect_.getX();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), x.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), x.toString());
 ***REMOVED***
 
 
@@ -311,9 +311,9 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectY.prototype.updateModelData = function() {
+xrx.widget.ShapeRectY.prototype.modelUpdateData = function() {
   var y = this.rect_.getY();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), y.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), y.toString());
 ***REMOVED***
 
 
@@ -337,9 +337,9 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectWidth.prototype.updateModelData = function() {
+xrx.widget.ShapeRectWidth.prototype.modelUpdateData = function() {
   var width = this.rect_.getWidth();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), width.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), width.toString());
 ***REMOVED***
 
 
@@ -363,9 +363,9 @@ xrx.widget.ShapeRectHeight.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectHeight.prototype.updateModelData = function() {
+xrx.widget.ShapeRectHeight.prototype.modelUpdateData = function() {
   var height = this.rect_.getHeight();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), height.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), height.toString());
 ***REMOVED***
 
 
@@ -389,9 +389,9 @@ xrx.widget.ShapeRectLeft.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectLeft.prototype.updateModelData = function() {
+xrx.widget.ShapeRectLeft.prototype.modelUpdateData = function() {
   var left = this.rect_.getLeft();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), left.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), left.toString());
 ***REMOVED***
 
 
@@ -415,9 +415,9 @@ xrx.widget.ShapeRectTop.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectTop.prototype.updateModelData = function() {
+xrx.widget.ShapeRectTop.prototype.modelUpdateData = function() {
   var top = this.rect_.getTop();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), top.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), top.toString());
 ***REMOVED***
 
 
@@ -441,9 +441,9 @@ xrx.widget.ShapeRectRight.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectRight.prototype.updateModelData = function() {
+xrx.widget.ShapeRectRight.prototype.modelUpdateData = function() {
   var right = this.rect_.getRight();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), right.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), right.toString());
 ***REMOVED***
 
 
@@ -467,7 +467,7 @@ xrx.widget.ShapeRectBottom.prototype.refresh = function() {
 
 
 
-xrx.widget.ShapeRectBottom.prototype.updateModelData = function() {
+xrx.widget.ShapeRectBottom.prototype.modelUpdateData = function() {
   var bottom = this.rect_.getBottom();
-  xrx.mvc.Controller.replaceNodeValue(this.rect_, this.getNode(), bottom.toString());
+  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), bottom.toString());
 ***REMOVED***

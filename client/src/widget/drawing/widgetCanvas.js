@@ -8,11 +8,13 @@ goog.provide('xrx.widget.CanvasBackgroundImage');
 
 
 ***REMOVED***
+goog.require('goog.dom.dataset');
 goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Controller');
 
 
 
@@ -65,9 +67,36 @@ xrx.widget.Canvas.prototype.createToolbar_ = function() {
 
 
 
+xrx.widget.Canvas.prototype.createLayerGraphicsCreate_ = function() {
+***REMOVED***
+  var containerDiv = goog.dom.getNextElementSibling(this.element_);
+  var polygonDiv = goog.dom.getElementsByClass('xrx-widget-shape-polygon',
+      containerDiv)[0];
+  var rectDiv = goog.dom.getElementsByClass('xrx-widget-shape-rect',
+      containerDiv)[0];
+  var polygonDataset = goog.dom.dataset.get(polygonDiv, 'xrxInsertOrigin');
+  var rectDataset = goog.dom.dataset.get(rectDiv, 'xrxInsertOrigin');
+  var polygonOriginNode = xrx.mvc.getModelComponent(polygonDataset).getNode(0);
+  var rectOriginNode = xrx.mvc.getModelComponent(rectDataset).getNode(0);
+  // handle shape create
+  this.drawing_.handleCreated = function() {
+    var polygonRepeat = xrx.mvc.getViewComponent(polygonDiv.id).getRepeat();
+    var rectRepeat = xrx.mvc.getViewComponent(rectDiv.id).getRepeat();
+    var create = self.getDrawing().getCreate();
+    if (create instanceof xrx.shape.PolygonCreate) {
+      xrx.mvc.Controller.insertNode(polygonRepeat, polygonOriginNode);
+    } else if (create instanceof xrx.shape.RectCreate) {
+      //xrx.mvc.Controller.insertNode(undefined, rectOriginNode);
+    } else {}
+ ***REMOVED*****REMOVED***
+***REMOVED***
+
+
+
 xrx.widget.Canvas.prototype.createDom = function() {
   this.createDrawing_();
   this.createToolbar_();
+  this.createLayerGraphicsCreate_();
 ***REMOVED***
 
 

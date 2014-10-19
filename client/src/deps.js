@@ -144,13 +144,12 @@ goog.addDependency('../../../../src/core/xml/xpath/xpathStep.js', ['xrx.xpath.St
 goog.addDependency('../../../../src/core/xml/xpath/xpathTest.js', ['xrx.xpath.test'], ['goog.dom', 'goog.testing.jsunit', 'xrx.mvc.Instance', 'xrx.node', 'xrx.node.AttributeS', 'xrx.node.DocumentS', 'xrx.node.ElementS', 'xrx.node.TextS', 'xrx.xpath']);
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnaryExpr.js', ['xrx.xpath.UnaryExpr'], ['xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnionExpr.js', ['xrx.xpath.UnionExpr'], ['goog.array', 'xrx.xpath.DataType', 'xrx.xpath.Expr']);
-goog.addDependency('../../../../src/widget/drawing/widgetCanvas.js', ['xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage'], ['goog.dom.DomHelper', 'goog.object', 'xrx.drawing.Drawing', 'xrx.drawing.Toolbar', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.widget.Shapes']);
-goog.addDependency('../../../../src/widget/drawing/widgetShape.js', ['xrx.widget.Shape'], ['xrx.mvc.ComponentView']);
-goog.addDependency('../../../../src/widget/drawing/widgetShapePolygon.js', ['xrx.widget.ShapePolygon', 'xrx.widget.ShapePolygonCoords'], ['goog.dom.dataset', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller', 'xrx.shape.Polygon', 'xrx.widget.Shape']);
+goog.addDependency('../../../../src/widget/drawing/widgetCanvas.js', ['xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage'], ['goog.dom.DomHelper', 'goog.dom.dataset', 'goog.object', 'xrx.drawing.Drawing', 'xrx.drawing.Toolbar', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller']);
+goog.addDependency('../../../../src/widget/drawing/widgetShape.js', ['xrx.widget.Shape'], ['xrx.mvc.ComponentView', 'xrx.widget.Canvas']);
+goog.addDependency('../../../../src/widget/drawing/widgetShapePolygon.js', ['xrx.widget.ShapePolygon', 'xrx.widget.ShapePolygonCoords', 'xrx.widget.ShapePolygonInsert'], ['goog.dom.dataset', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller', 'xrx.shape.Polygon', 'xrx.widget.Shape']);
 goog.addDependency('../../../../src/widget/drawing/widgetShapeRect.js', ['xrx.widget.ShapeRect', 'xrx.widget.ShapeRectBottom', 'xrx.widget.ShapeRectGeometry', 'xrx.widget.ShapeRectHeight', 'xrx.widget.ShapeRectLeft', 'xrx.widget.ShapeRectRight', 'xrx.widget.ShapeRectTop', 'xrx.widget.ShapeRectWidth', 'xrx.widget.ShapeRectX', 'xrx.widget.ShapeRectY'], ['goog.dom.dataset', 'xrx.mvc.ComponentView', 'xrx.shape.Rect', 'xrx.widget.Shape']);
-goog.addDependency('../../../../src/widget/drawing/widgetShapeShapes.js', ['xrx.widget.Shapes'], ['xrx.widget.ShapePolygon', 'xrx.widget.ShapeRect']);
 goog.addDependency('../../../../src/widget/widgetConsole.js', ['xrx.widget.Console'], ['goog.dom.DomHelper', 'goog.string', 'goog.style', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Cursor', 'xrx.token.EndTag', 'xrx.token.StartTag', 'xrx.xml.Serialize']);
 goog.addDependency('../../../../src/widget/widgetOutput.js', ['xrx.output'], ['goog.dom', 'xrx.mvc']);
 goog.addDependency('../../../../src/widget/widgetWidget.js', ['xrx.widget.Widget'], []);
-goog.addDependency('../../../../src/widget/widgetWidgets.js', ['xrx.widget.Widgets'], ['xrx.widget.Canvas', 'xrx.widget.Console']);
+goog.addDependency('../../../../src/widget/widgetWidgets.js', ['xrx.widget.Widgets'], ['xrx.widget.Canvas', 'xrx.widget.Console', 'xrx.widget.ShapePolygon', 'xrx.widget.ShapeRect']);
 goog.addDependency('../../../../src/xrx.js', ['xrx'], ['xrx.mvc.Mvc']);
