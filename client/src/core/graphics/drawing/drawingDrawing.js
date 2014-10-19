@@ -221,6 +221,16 @@ xrx.drawing.Drawing.prototype.getLayerTool = function() {
 
 
 /**
+ * Returns the shape currently created by the user.
+ * @return {xrx.shape.Shape} The shape.
+ */
+xrx.drawing.Drawing.prototype.getCreate = function() {
+  return this.create_;
+};
+
+
+
+/**
  * Returns the view-box of the drawing canvas.
  * @return {Object} The view-box.
  */
