@@ -55,7 +55,7 @@ xrx.mvc.Controller.update = function(control, operation, token, update) {
 
 
 
-xrx.mvc.Controller.removeNodeTag = function(control, opt_node) {
+xrx.mvc.Controller.removeNode = function(control, opt_node) {
   var node = opt_node || control.getNode();
   var token = node.getToken();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.REMOVE;
@@ -71,7 +71,12 @@ xrx.mvc.Controller.removeNodeTag = function(control, opt_node) {
 
 
 
-xrx.mvc.Controller.replaceNodeValue = function(control, opt_node, update) {
+xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
+};
+
+
+
+xrx.mvc.Controller.updateNodeValue = function(control, opt_node, update) {
   var node = opt_node || control.getNode();
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
