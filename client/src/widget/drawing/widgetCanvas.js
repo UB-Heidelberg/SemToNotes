@@ -95,8 +95,8 @@ xrx.widget.Canvas.prototype.createLayerGraphicsCreate_ = function() {
 
 xrx.widget.Canvas.prototype.createDom = function() {
   this.createDrawing_();
-  this.createToolbar_();
-  this.createLayerGraphicsCreate_();
+  //this.createToolbar_();
+  //this.createLayerGraphicsCreate_();
 };
 
 
