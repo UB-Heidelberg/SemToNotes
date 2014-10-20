@@ -186,7 +186,6 @@ xrx.mvc.Component.prototype.getNodeRef = function() {
  */
 xrx.mvc.Component.prototype.getNode = function(num) {
   var n = num || 0;
-
   if (this.getBind()) {
     return this.getNodeBind(n);
   } else if (this.getRefExpression()) {
@@ -195,4 +194,9 @@ xrx.mvc.Component.prototype.getNode = function(num) {
     throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
         'attribute.');
   }
+};
+
+
+
+xrx.mvc.Component.prototype.getParentComponent = function() {
 };

@@ -14,6 +14,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.style');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
+goog.require('xrx.mvc');
 
 
 

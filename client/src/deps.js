@@ -13,7 +13,7 @@ goog.addDependency('../../../../src/core/graphics/drawing/drawingLayerTool.js', 
 goog.addDependency('../../../../src/core/graphics/drawing/drawingModifiable.js', ['xrx.drawing.Modifiable'], ['xrx.drawing', 'xrx.geometry', 'xrx.shape.VertexDragger']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolMagnifier.js', ['xrx.drawing.tool.Magnifier'], ['goog.dom.DomHelper', 'goog.events', 'goog.events.EventType', 'goog.fx.Dragger', 'goog.math.AffineTransform', 'goog.math.Rect', 'goog.style', 'xrx.canvas', 'xrx.drawing.tool.Tool', 'xrx.engine.Engines', 'xrx.svg', 'xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolTool.js', ['xrx.drawing.tool.Tool'], []);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingToolbar.js', ['xrx.drawing.Toolbar', 'xrx.drawing.ToolbarButton', 'xrx.drawing.ToolbarOption'], ['goog.dom.DomHelper', 'goog.dom.classes', 'goog.events', 'goog.events.EventType', 'goog.style', 'xrx.drawing', 'xrx.drawing.EventTarget']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingToolbar.js', ['xrx.drawing.Toolbar', 'xrx.drawing.ToolbarButton', 'xrx.drawing.ToolbarOption'], ['goog.dom.DomHelper', 'goog.dom.classes', 'goog.events', 'goog.events.EventType', 'goog.style', 'xrx.drawing', 'xrx.drawing.EventTarget', 'xrx.mvc']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingViewbox.js', ['xrx.drawing.Viewbox'], ['goog.math', 'goog.math.AffineTransform', 'xrx.drawing']);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvas.js', ['xrx.canvas'], []);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasCanvas.js', ['xrx.canvas.Canvas'], ['goog.dom.DomHelper']);
@@ -64,7 +64,7 @@ goog.addDependency('../../../../src/core/mvc/mvcBind.js', ['xrx.mvc.Bind'], ['xr
 goog.addDependency('../../../../src/core/mvc/mvcComponent.js', ['xrx.mvc.Component'], ['goog.events.EventHandler', 'goog.ui.IdGenerator']);
 goog.addDependency('../../../../src/core/mvc/mvcComponentContext.js', ['xrx.mvc.ComponentContext'], []);
 goog.addDependency('../../../../src/core/mvc/mvcComponentModel.js', ['xrx.mvc.ComponentModel'], ['xrx.mvc', 'xrx.mvc.Component']);
-goog.addDependency('../../../../src/core/mvc/mvcComponentView.js', ['xrx.mvc.ComponentView'], ['goog.dom.DomHelper', 'goog.dom.dataset', 'xrx.mvc', 'xrx.mvc.Component', 'xrx.node.ElementS']);
+goog.addDependency('../../../../src/core/mvc/mvcComponentView.js', ['xrx.mvc.ComponentView'], ['xrx.mvc', 'xrx.mvc.Component']);
 goog.addDependency('../../../../src/core/mvc/mvcComponents.js', ['xrx.mvc.Components'], ['xrx.mvc.Bind', 'xrx.mvc.Instance', 'xrx.mvc.Namespace', 'xrx.mvc.Repeat']);
 goog.addDependency('../../../../src/core/mvc/mvcController.js', ['xrx.mvc.Controller'], ['xrx.mvc', 'xrx.mvc.Components', 'xrx.node', 'xrx.node.Binary', 'xrx.rebuild', 'xrx.token', 'xrx.token.Tokens', 'xrx.xml.Update']);
 goog.addDependency('../../../../src/core/mvc/mvcCursor.js', ['xrx.mvc.Cursor'], []);
@@ -145,11 +145,13 @@ goog.addDependency('../../../../src/core/xml/xpath/xpathTest.js', ['xrx.xpath.te
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnaryExpr.js', ['xrx.xpath.UnaryExpr'], ['xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnionExpr.js', ['xrx.xpath.UnionExpr'], ['goog.array', 'xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/widget/drawing/widgetCanvas.js', ['xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage'], ['goog.dom.DomHelper', 'goog.dom.dataset', 'goog.object', 'xrx.drawing.Drawing', 'xrx.drawing.Toolbar', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller']);
+goog.addDependency('../../../../src/widget/drawing/widgetCanvasToolbar.js', ['xrx.widget.CanvasToolbar'], ['goog.dom.classes', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.widget.Canvas']);
+goog.addDependency('../../../../src/widget/drawing/widgetCanvasToolbarItem.js', ['xrx.widget.CanvasToolbarItem', 'xrx.widget.CanvasToolbarItemDelete', 'xrx.widget.CanvasToolbarItemDraw', 'xrx.widget.CanvasToolbarItemModify', 'xrx.widget.CanvasToolbarItemRotateLeft', 'xrx.widget.CanvasToolbarItemRotateRight', 'xrx.widget.CanvasToolbarItemView', 'xrx.widget.CanvasToolbarItemZoomIn', 'xrx.widget.CanvasToolbarItemZoomOut'], ['goog.dom.DomHelper', 'goog.dom.classes', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.widget.CanvasToolbar']);
 goog.addDependency('../../../../src/widget/drawing/widgetShape.js', ['xrx.widget.Shape'], ['xrx.mvc.ComponentView', 'xrx.widget.Canvas']);
 goog.addDependency('../../../../src/widget/drawing/widgetShapePolygon.js', ['xrx.widget.ShapePolygon', 'xrx.widget.ShapePolygonCoords', 'xrx.widget.ShapePolygonInsert'], ['goog.dom.dataset', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller', 'xrx.shape.Polygon', 'xrx.widget.Shape']);
 goog.addDependency('../../../../src/widget/drawing/widgetShapeRect.js', ['xrx.widget.ShapeRect', 'xrx.widget.ShapeRectBottom', 'xrx.widget.ShapeRectGeometry', 'xrx.widget.ShapeRectHeight', 'xrx.widget.ShapeRectLeft', 'xrx.widget.ShapeRectRight', 'xrx.widget.ShapeRectTop', 'xrx.widget.ShapeRectWidth', 'xrx.widget.ShapeRectX', 'xrx.widget.ShapeRectY'], ['goog.dom.dataset', 'xrx.mvc.ComponentView', 'xrx.shape.Rect', 'xrx.widget.Shape']);
 goog.addDependency('../../../../src/widget/widgetConsole.js', ['xrx.widget.Console'], ['goog.dom.DomHelper', 'goog.string', 'goog.style', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Cursor', 'xrx.token.EndTag', 'xrx.token.StartTag', 'xrx.xml.Serialize']);
 goog.addDependency('../../../../src/widget/widgetOutput.js', ['xrx.output'], ['goog.dom', 'xrx.mvc']);
 goog.addDependency('../../../../src/widget/widgetWidget.js', ['xrx.widget.Widget'], []);
-goog.addDependency('../../../../src/widget/widgetWidgets.js', ['xrx.widget.Widgets'], ['xrx.widget.Canvas', 'xrx.widget.Console', 'xrx.widget.ShapePolygon', 'xrx.widget.ShapeRect']);
+goog.addDependency('../../../../src/widget/widgetWidgets.js', ['xrx.widget.Widgets'], ['xrx.widget.Canvas', 'xrx.widget.CanvasToolbar', 'xrx.widget.CanvasToolbarItemDelete', 'xrx.widget.CanvasToolbarItemDraw', 'xrx.widget.CanvasToolbarItemModify', 'xrx.widget.CanvasToolbarItemRotateLeft', 'xrx.widget.CanvasToolbarItemRotateRight', 'xrx.widget.CanvasToolbarItemView', 'xrx.widget.CanvasToolbarItemZoomIn', 'xrx.widget.CanvasToolbarItemZoomOut', 'xrx.widget.Console', 'xrx.widget.ShapePolygon', 'xrx.widget.ShapeRect']);
 goog.addDependency('../../../../src/xrx.js', ['xrx'], ['xrx.mvc.Mvc']);
