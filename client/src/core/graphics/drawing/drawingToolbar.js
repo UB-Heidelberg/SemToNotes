@@ -14,6 +14,7 @@ goog.require('goog.dom.classes');
 goog.require('goog.style');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
+goog.require('xrx.mvc');
 
 
 

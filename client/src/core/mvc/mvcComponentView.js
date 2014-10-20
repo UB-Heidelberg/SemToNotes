@@ -7,11 +7,8 @@ goog.provide('xrx.mvc.ComponentView');
 
 
 
-***REMOVED***
-goog.require('goog.dom.dataset');
 goog.require('xrx.mvc.Component');
 goog.require('xrx.mvc');
-goog.require('xrx.node.ElementS');
 
 
 

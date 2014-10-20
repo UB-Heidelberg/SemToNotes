@@ -19,11 +19,8 @@
   goog.require('xrx.index.Row');
   goog.require('xrx.xpath');
 </script>
+<link rel="stylesheet" type="text/css" href="../../../res/xrx.css">
 <style>
-#d1 {
-width: 650px;
-height: 300px;
-}
 pre {
 width: 650px;
 white-space: pre-wrap;
@@ -56,30 +53,43 @@ word-wrap: break-word;
 <div id="b6" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[1]"></div>
 <div id="b7" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[2]"></div>
 
+<!-- HTML UIDL -->
 <div id="d1" class="xrx-widget-canvas">
-  <div class="xrx-widget-canvas-toolbar"></div>
+  <div class="xrx-widget-canvas-toolbar">
+    <span class="xrx-widget-canvas-toolbar-item-view xrx-icon-openhand32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-zoom-in xrx-icon-zoomIn32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-zoom-out xrx-icon-zoomOut32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-draw xrx-icon-shapeRect32"
+        title="Draw a red rectangle." data-xrx-graphic="my-red-rectangle"></span>
+    <span class="xrx-widget-canvas-toolbar-item-draw xrx-icon-shapeRect32"
+        title="Draw a blue rectangle." data-xrx-graphic="my-blue-rectangle"></span>
+    <span class="xrx-widget-canvas-toolbar-item-draw xrx-icon-shapePolygon32"
+        title="Draw a red polygon." data-xrx-graphic="my-red-polygon"></span>
+    <span class="xrx-widget-canvas-toolbar-item-modify xrx-icon-move32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-delete xrx-icon-delete32"></span>
+  </div>
 </div>
 <div class="xrx-widget-container" data-xrx-for="d1">
   <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
   <div class="xrx-widget-canvas-layer-graphics">
     <div id="r1" class="xrx-mvc-repeat" data-xrx-bind="b2">
-      <div class="xrx-widget-shape-polygon" data-xrx-ref="./self::*" data-xrx-ref-coords="./@points"
-        data-xrx-insert-origin="b6"></div>
+      <div class="xrx-widget-shape-polygon" data-xrx-graphic="my-red-polygon" data-xrx-ref="./self::*" data-xrx-ref-coords="./@points"></div>
     </div>
     <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3">
-      <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*" data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-          data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry" data-xrx-insert-origin="b7"></div>
+      <div class="xrx-widget-shape-rect" data-xrx-graphic="my-red-rectangle" data-xrx-ref="./self::*" data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
+          data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
     </div>
-    <!--div id="r3" class="xrx-mvc-repeat" data-xrx-bind="b4">
-      <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*" data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
+    <div id="r3" class="xrx-mvc-repeat" data-xrx-bind="b4">
+      <div class="xrx-widget-shape-rect" data-xrx-graphic="my-blue-rectangle" data-xrx-ref="./self::*" data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
           data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
-    </div-->
+    </div>
   </div>
 </div>
 <pre id="c1" class="xrx-widget-console" data-xrx-bind="b5"></pre>
 
 <!-- XML UIDL -->
-
 <xrx:canvas id="d1" http://monasterium.net/NS/xrx>
   <xrx:backgroundImage bind="b1"/>
   <xrx:layerGraphics>
