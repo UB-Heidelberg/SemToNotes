@@ -7,6 +7,10 @@ goog.provide('xrx.node.Element');
 
 
 
+goog.require('xrx.xpath.KindTest');
+
+
+
 /** 
  * A class providing functions that can be
  * shared by element node implementations.
@@ -128,6 +132,13 @@ xrx.node.Element.prototype.isPrecedingSiblingOf = function(node) {
 
 
 
+xrx.node.Element.prototype.getAttributes = function() {
+  var kindTest = new xrx.xpath.KindTest('attribute');
+  return this.getNodeAttribute(kindTest);
+};
+
+
+
 xrx.node.Element.prototype.getNodeAncestor = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Element].prototype.isDescendantOf,
       true, new xrx.xml.Label());
@@ -202,4 +213,3 @@ xrx.node.Element.prototype.getNodePrecedingSibling = function(test) {
   return this.find(test, xrx.node[this.impl_.Element].prototype.isFollowingSiblingOf, true,
       stop);
 };
-
