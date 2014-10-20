@@ -6,6 +6,7 @@ goog.provide('xrx.node.Node');
 
 
 
+goog.require('xrx.node');
 goog.require('xrx.node.Document');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');
@@ -57,11 +58,39 @@ xrx.node.Node.prototype.getDocument = function() {
 
 
 /**
- * Returns type of the node.
- * @return {!integer} The type number.
+ * Returns the type of the node.
+ * @return {!integer} The type.
  */
 xrx.node.Node.prototype.getType = function() {
   return this.type_;
+};
+
+
+
+/**
+ *
+ */
+xrx.node.Node.prototype.getNameLocal = function() {
+  return xrx.node.getNameLocal(this.getName());
+};
+
+
+
+/**
+ *
+ */
+xrx.node.Node.prototype.getNamePrefix = function() {
+  return xrx.node.getNamePrefix(this.getName());
+};
+
+
+
+/**
+ *
+ */
+xrx.node.Node.prototype.getNameExpanded = function() {
+  return xrx.node.getNameExpanded(this.getNamespaceUri(),
+    this.getNameLocal(this.getName()));
 };
 
 

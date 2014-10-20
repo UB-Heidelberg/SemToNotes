@@ -1,6 +1,6 @@
 /**
  * @fileoverview A function module for XML token and XML
- * document serialization.
+ *   document serialization.
  */
 
 goog.provide('xrx.xml.Serialize');

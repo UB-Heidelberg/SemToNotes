@@ -137,9 +137,9 @@ xrx.xml.Update.insertEmptyTag = function(instance, target, offset, localName,
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!xrx.token.NotTag} target1 The left not-tag token where the new
- * start-tag shall be inserted.
+ *   start-tag shall be inserted.
  * @param {!xrx.token.NotTag} target2 The right not-tag token where the
- * new end-tag shall be inserted.
+ *   new end-tag shall be inserted.
  * @param {!integer} offset1 The offset relative to the left not-tag token.
  * @param {!integer} offset2 The offset relative to the right not-tag token.
  * @param {!string} localName The local name of the new token.
@@ -188,7 +188,7 @@ xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
 
 
 /**
- * Inserts a new attribute into a start-tag or a empty tag token.
+ * Inserts a new attribute into a start-tag or an empty tag token.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
  * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where the attribute 
@@ -272,7 +272,7 @@ xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
 
 
 /**
- * Removes a start-tag token, a end-tag token and the content between
+ * Removes a start-tag token, an end-tag token and the content between
  * the two tag tokens. 
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
