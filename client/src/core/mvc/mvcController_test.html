@@ -19,22 +19,25 @@
   goog.require('xrx.mvc');
   goog.require('xrx.mvc.Mvc');
   goog.require('xrx.mvc.Controller');
+  goog.require('xrx.token.Tokens');
 </script>
 </head>
 <body>
 
-<!-- template used to create a new test -->
+<!-- template used to create new test data and components -->
 <div id="template" style="display:none">
-  <div id="i[%]" class="xrx-mvc-instance[%]">&lt;data&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/data&gt;</div>
-  <div id="b[%]1" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]')//a"></div>
-  <div id="b[%]2" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]')//b"></div>
-  <div id="b[%]3" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]')//c"></div>
+  <div id="i[%]1" class="xrx-mvc-instance[%]">&lt;data&gt;&lt;a/&gt;&lt;b/&gt;&lt;c/&gt;&lt;/data&gt;</div>
+  <div id="i[%]2" class="xrx-mvc-instance[%]">&lt;data&gt;&lt;x a="1" b="2"/&gt;&lt;/data&gt;</div>
+  <div id="b[%]1" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]1')//a"></div>
+  <div id="b[%]2" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]1')//b"></div>
+  <div id="b[%]3" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]1')//c"></div>
+  <div id="b[%]4" class="xrx-mvc-bind[%]" data-xrx-ref="xrx:instance('i[%]2')//x"></div>
   <pre id="c[%]1" class="xrx-widget-console[%]" data-xrx-bind="b[%]1"></pre>
   <pre id="c[%]2" class="xrx-widget-console[%]" data-xrx-bind="b[%]2"></pre>
   <pre id="c[%]3" class="xrx-widget-console[%]" data-xrx-bind="b[%]3"></pre>
 </div>
 
-<div id="test01"></div>
+<div id="tests"></div>
 
 <script type="text/javascript">
 
@@ -42,7 +45,9 @@
 function prepareTest(testId) {
   var template = goog.dom.getElement('template').cloneNode(true);
   template.id = template.id + testId;
-  var testDiv = goog.dom.getElement('test' + testId);
+  var testsDiv = goog.dom.getElement('tests');
+  var testDiv = goog.dom.createElement('div');
+  testDiv.id = 'test' + testId;
   var children = goog.dom.getChildren(template);
   var id;
   var clas;
@@ -60,34 +65,79 @@ function prepareTest(testId) {
     if (bind) goog.dom.dataset.set(e, 'xrxBind', bind.replace('[%]', testId));
   });
   goog.dom.append(testDiv, template);
+  goog.dom.append(testsDiv, testDiv);
   xrx.mvc.Mvc.install(testDiv);
 ***REMOVED***
 
 
 
-function test01RemoveEmptyTag() {
+function test01InsertNode() {
   var testId = '01';
-  var cons;
-  var token;
+  prepareTest(testId);
+  var newNode = xrx.mvc.getComponent('b' + testId + '4').getNode(0);
+
+  var insertNode = function(comp, expected) {
+    var cons = xrx.mvc.getComponent('c' + testId + comp);
+    var node = cons.getNode();
+    xrx.mvc.Controller.insertNode(cons, node, newNode);
+    assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
+ ***REMOVED*****REMOVED***
+
+  // insert node (empty tag and attributes) after first console widget
+  insertNode(1, '<data><a a="1" b="2"/><x/><b/><c/></data>');
+***REMOVED***
+
+
+
+function test02RemoveEmptyTag() {
+  var testId = '02';
   prepareTest(testId);
 
+  var removeEmptyTag = function(comp, expected) {
+    var cons = xrx.mvc.getComponent('c' + testId + comp);
+    var node = cons.getNode();
+    var token = node.getToken();
+    xrx.mvc.Controller.removeEmptyTag(cons, node, token);
+    assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
+ ***REMOVED*****REMOVED***
+
   // remove last console widget
-  cons = xrx.mvc.getComponent('c' + testId + '3');
-  token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
-  assertEquals('<data><a/><b/></data>', xrx.mvc.getComponent('i' + testId).xml());
+  removeEmptyTag(3, '<data><a/><b/></data>');
 
   // remove middle console widget
-  cons = xrx.mvc.getComponent('c' + testId + '2');
-  token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
-  assertEquals('<data><a/></data>', xrx.mvc.getComponent('i' + testId).xml());
+  removeEmptyTag(2, '<data><a/></data>');
 
   // remove first console widget
-  cons = xrx.mvc.getComponent('c' + testId + '1');
-  token = cons.getNode().getToken();
-  xrx.mvc.Controller.removeEmptyTag(cons, cons.getNode(), token);
-  assertEquals('<data></data>', xrx.mvc.getComponent('i' + testId).xml());
+  removeEmptyTag(1, '<data></data>');
+***REMOVED***
+
+
+
+function test03InsertEmptyTag() {
+  var testId = '03';
+  prepareTest(testId);
+  var newNode = xrx.mvc.getComponent('b' + testId + '4').getNode(0);
+  var localName = newNode.getNameLocal();
+  var nsUri = newNode.getNamespaceUri();
+
+  var insertEmptyTag = function(comp, expected) {
+    var cons = xrx.mvc.getComponent('c' + testId + comp);
+    var node = cons.getNode();
+    var pilot = node.getInstance().getPilot();
+    var notTag = new xrx.token.NotTag(node.getToken().label().clone());
+    notTag = pilot.notTag(node.getToken(), notTag);
+    xrx.mvc.Controller.insertEmptyTag(cons, node, notTag, 0, localName, nsUri);
+    assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
+ ***REMOVED*****REMOVED***
+
+  // insert empty tag after first console widget
+  insertEmptyTag(1, '<data><a/><x/><b/><c/></data>');
+
+  // insert empty tag after second console widget
+  insertEmptyTag(2, '<data><a/><x/><b/><x/><c/></data>');
+
+  // insert empty tag after third console widget
+  insertEmptyTag(3, '<data><a/><x/><b/><x/><c/><x/></data>');
 ***REMOVED***
 
 

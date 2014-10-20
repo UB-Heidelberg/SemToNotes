@@ -236,6 +236,13 @@ xrx.node.ElementB.prototype.getNodeAncestor = xrx.node.Element.prototype.getNode
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
+xrx.node.ElementB.prototype.getAttributes = xrx.node.Element.prototype.getAttributes;
+
+
+
+***REMOVED***
+***REMOVED*** 
+***REMOVED***
 xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
   var row = this.getRow();
@@ -379,4 +386,3 @@ xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
 ***REMOVED*** 
 ***REMOVED***
 xrx.node.ElementB.prototype.find = xrx.node.Node.prototype.find;
-

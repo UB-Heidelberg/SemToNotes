@@ -232,6 +232,13 @@ xrx.node.ElementS.prototype.getNodeAncestor = xrx.node.Element.prototype.getNode
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
+xrx.node.ElementS.prototype.getAttributes = xrx.node.Element.prototype.getAttributes;
+
+
+
+***REMOVED***
+***REMOVED*** 
+***REMOVED***
 xrx.node.ElementS.prototype.getNodeAttribute = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
   var xml = this.getDocument().getInstance().xml().substr(this.getOffset(), this.getLength());

@@ -150,9 +150,9 @@ xrx.rebuild.insertNotTag = xrx.rebuild.replaceNotTag;
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.index} index The index.
 ***REMOVED*** @param {!xrx.token.NotTag} token The not-tag token into which the empty tag
-***REMOVED*** was inserted.
+***REMOVED***   was inserted.
 ***REMOVED*** @param {!integer} token The offset relative to the not-tag token where the
-***REMOVED*** empty tag was inserted.
+***REMOVED***   empty tag was inserted.
 ***REMOVED*** @param {!integer} diff The length difference of the updated token.
 ***REMOVED***
 xrx.rebuild.insertEmptyTag = function(index, token, offset, diff) {

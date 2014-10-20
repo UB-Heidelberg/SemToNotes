@@ -1,6 +1,6 @@
 ***REMOVED***
 ***REMOVED*** @fileoverview A function module for XML token and XML
-***REMOVED*** document serialization.
+***REMOVED***   document serialization.
 ***REMOVED***
 
 goog.provide('xrx.xml.Serialize');

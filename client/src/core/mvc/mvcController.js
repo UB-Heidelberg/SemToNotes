@@ -1,6 +1,6 @@
 ***REMOVED***
 ***REMOVED*** @fileoverview A class representing the controller of
-***REMOVED*** the model-view-controller.
+***REMOVED***    the model-view-controller.
 ***REMOVED***
 
 goog.provide('xrx.mvc.Controller');
@@ -38,19 +38,46 @@ xrx.mvc.Controller.currentOperation = '';
 
 
 
+xrx.mvc.Controller.updateNodeValue = function(control, opt_node, update) {
+  var node = opt_node || control.getNode();
+  var token = node.getToken();
+  var pilot = node.getInstance().getPilot();
+  xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
+  switch(node.getType()) {
+  case xrx.node.ATTRIBUTE:
+    var attrValue = new xrx.token.AttrValue(token.label().clone());
+    attrValue = pilot.attrValue(node.parent_.getToken(), attrValue);
+    xrx.mvc.Controller.replaceAttrValue(control, node, attrValue, update);
+    break;
+  default:
+    throw Error('Value update not supported for this node-type.');
+    break;
+  }
 ***REMOVED***
-***REMOVED*** 
-***REMOVED***
-xrx.mvc.Controller.update = function(control, operation, token, update) {
-  var node = control.getNode();
-  var tok = token || node.getToken();
 
-  var diff = xrx.xml.Update[operation](node.getInstance(), tok, update);
 
-  if (node instanceof xrx.node.Binary) xrx.rebuild[operation](node.getInstance().getIndex(),
-      tok, diff);
 
-  xrx.mvc.Controller.mvcRefresh(control, diff, update);
+xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
+  var node = opt_node || control.getNode();
+  var pilot = node.getInstance().getPilot();
+  var token = node.getToken();
+  xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.INSERT;
+  switch(token.type()) {
+  case xrx.token.EMPTY_TAG:
+    var notTag = new xrx.token.NotTag(token.label().clone());
+    notTag = pilot.notTag(token, notTag);
+    xrx.mvc.Controller.insertEmptyTag(control, node, notTag, 0,
+        newNode.getNameLocal(), newNode.getNamespaceUri());
+    var attributes = newNode.getAttributes();
+    var iter = attributes.iterator();
+    for(var n = iter.next(); n; n = iter.next()) {
+      xrx.mvc.Controller.insertAttribute();
+    }
+    break;
+  default:
+    throw Error('Insert operation not supported for this token-type.');
+    break;
+  }
 ***REMOVED***
 
 
@@ -65,30 +92,6 @@ xrx.mvc.Controller.removeNode = function(control, opt_node) {
     break;
   default:
     throw Error('Remove operation not supported for this token-type.');
-    break;
-  }
-***REMOVED***
-
-
-
-xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
-***REMOVED***
-
-
-
-xrx.mvc.Controller.updateNodeValue = function(control, opt_node, update) {
-  var node = opt_node || control.getNode();
-  var token = node.getToken();
-  var pilot = node.getInstance().getPilot();
-  xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
-  switch(node.getType()) {
-  case xrx.node.ATTRIBUTE:
-    var attrValue = new xrx.token.AttrValue(token.label().clone());
-    attrValue = pilot.attrValue(node.parent_.getToken(), attrValue);
-    xrx.mvc.Controller.replaceAttrValue(control, node, attrValue, update);
-    break;
-  default:
-    throw Error('Value update not supported for this node-type.');
     break;
   }
 ***REMOVED***
@@ -144,7 +147,13 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
 
 
 
-xrx.mvc.Controller.insertEmptyTag = function(control, emptyTag) {
+xrx.mvc.Controller.insertEmptyTag = function(control, node, notTag, offset, localName,
+    opt_namespaceUri) {
+  var diff = xrx.xml.Update.insertEmptyTag(node.getInstance(), notTag, offset, localName,
+    opt_namespaceUri);
+  xrx.rebuild.insertEmptyTag(node.getInstance().getIndex(), notTag, offset, diff);
+  xrx.mvc.Controller.mvcRecalculate();
+  xrx.mvc.Controller.mvcRefresh(control, node);
 ***REMOVED***
 
 
