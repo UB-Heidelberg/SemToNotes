@@ -84,7 +84,7 @@ function test01InsertNode() {
  ***REMOVED*****REMOVED***
 
   // insert node (empty tag and attributes) after first console widget
-  insertNode(1, '<data><a a="1" b="2"/><x/><b/><c/></data>');
+  insertNode(1, '<data><a/><x a="1" b="2"/><b/><c/></data>');
 ***REMOVED***
 
 
@@ -117,8 +117,7 @@ function test03InsertEmptyTag() {
   var testId = '03';
   prepareTest(testId);
   var newNode = xrx.mvc.getComponent('b' + testId + '4').getNode(0);
-  var localName = newNode.getNameLocal();
-  var nsUri = newNode.getNamespaceUri();
+  var newTag = newNode.getXml();
 
   var insertEmptyTag = function(comp, expected) {
     var cons = xrx.mvc.getComponent('c' + testId + comp);
@@ -126,18 +125,18 @@ function test03InsertEmptyTag() {
     var pilot = node.getInstance().getPilot();
     var notTag = new xrx.token.NotTag(node.getToken().label().clone());
     notTag = pilot.notTag(node.getToken(), notTag);
-    xrx.mvc.Controller.insertEmptyTag(cons, node, notTag, 0, localName, nsUri);
+    xrx.mvc.Controller.insertEmptyTag(cons, node, notTag, 0, newTag);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
  ***REMOVED*****REMOVED***
 
   // insert empty tag after first console widget
-  insertEmptyTag(1, '<data><a/><x/><b/><c/></data>');
+  insertEmptyTag(1, '<data><a/><x a="1" b="2"/><b/><c/></data>');
 
   // insert empty tag after second console widget
-  insertEmptyTag(2, '<data><a/><x/><b/><x/><c/></data>');
+  insertEmptyTag(2, '<data><a/><x a="1" b="2"/><b/><x a="1" b="2"/><c/></data>');
 
   // insert empty tag after third console widget
-  insertEmptyTag(3, '<data><a/><x/><b/><x/><c/><x/></data>');
+  insertEmptyTag(3, '<data><a/><x a="1" b="2"/><b/><x a="1" b="2"/><c/><x a="1" b="2"/></data>');
 ***REMOVED***
 
 

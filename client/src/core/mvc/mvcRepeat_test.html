@@ -22,13 +22,19 @@
 </script>
 <script type="text/javascript">
 
+
+
 function checkFirstItemExists(repeatComponent) {
   assertFalse(undefined === repeatComponent.firstItem_);
 ***REMOVED***
 
+
+
 function checkNextItemsLength(repeatComponent, length) {
   assertEquals(length, repeatComponent.nextItems_.length);
 ***REMOVED***
+
+
 
 function checkItemElementsLength(repeatComponent, length) {
   var repeatDiv = repeatComponent.getElement();
@@ -37,6 +43,8 @@ function checkItemElementsLength(repeatComponent, length) {
   assertEquals(length, children.length);
   assertEquals(length, repeatItems.length);
 ***REMOVED***
+
+
 
 function getComponents_(repeatComponent) {
   var components = [];
@@ -48,15 +56,21 @@ function getComponents_(repeatComponent) {
   return components;
 ***REMOVED***
 
+
+
 function checkComponentsLength(repeatComponent, length) {
   assertEquals(length, getComponents_(repeatComponent).length);
 ***REMOVED***
+
+
 
 function checkComponentValues(repeatComponent, values) {
   goog.array.forEach(getComponents_(repeatComponent), function(component, i){
     assertEquals(values[i], component.getValue());
   }, this);
 ***REMOVED***
+
+
 
 function checkIdsAreUnique(repeatComponent) {
   var ids = [];
@@ -68,6 +82,8 @@ function checkIdsAreUnique(repeatComponent) {
   goog.array.removeDuplicates(uniqueIds);
   assertTrue(ids.length === uniqueIds.length);
 ***REMOVED***
+
+
 
 function mvcRefreshTest(repeatId) {
   var children;
@@ -118,6 +134,8 @@ function mvcRefreshTest(repeatId) {
       '<b>2</b>', '<c>3</c>', '<c>3</c>']);
   checkIdsAreUnique(repeatComponent);
 ***REMOVED***
+
+
 
 </script>
 </head>

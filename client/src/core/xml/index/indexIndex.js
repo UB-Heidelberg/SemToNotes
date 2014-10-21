@@ -52,6 +52,18 @@ xrx.index.Index = function(xml) {
 
 
 ***REMOVED***
+***REMOVED*** Rebuilds the index
+***REMOVED***
+xrx.index.Index.prototype.rebuild = function(xml) {
+  this.rows_ = [];
+  this.iterKey_ = 0;
+  this.tNamespace = [];
+  this.build(xml);
+***REMOVED***
+
+
+
+***REMOVED***
 ***REMOVED*** Returns the number of rows of the index.
 ***REMOVED*** @return {integer}
 ***REMOVED***

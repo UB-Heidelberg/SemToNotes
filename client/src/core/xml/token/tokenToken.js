@@ -13,9 +13,6 @@ goog.require('xrx.xml.Label');
 
 ***REMOVED***
 ***REMOVED*** Base class to construct a new token.
-***REMOVED*** This constructor should never be called directly, but
-***REMOVED*** by one of the inherited token classes.
-***REMOVED***
 ***REMOVED***
 ***REMOVED*** @param {!number} type The type of the token.
 ***REMOVED*** @param {?xrx.xml.Label} label The label attached to the token.
@@ -23,6 +20,7 @@ goog.require('xrx.xml.Label');
 ***REMOVED***     the XML stream.
 ***REMOVED*** @param {?number} length The number of characters occupied 
 ***REMOVED***     in the XML stream.
+***REMOVED***
 ***REMOVED***
 xrx.token.Token = function(type, opt_label, opt_offset, opt_length) {
 
@@ -71,10 +69,8 @@ xrx.token.Token.prototype.typeOf = function(type) {
 
 ***REMOVED***
 ***REMOVED*** Checks if two tokens are the same. 
-***REMOVED*** Note that two tokens are considered as 'the same' 
-***REMOVED*** if the types and the labels of the two tokens are 
-***REMOVED*** identical. Offset and length do not play any role 
-***REMOVED*** for 'sameness'. 
+***REMOVED*** Two tokens are 'the same' if the types and the labels are 
+***REMOVED*** identical. Offset and length do not play any role. 
 ***REMOVED***
 ***REMOVED*** @param {!xrx.token} token The token to check against.
 ***REMOVED*** @return {!boolean}
@@ -136,7 +132,6 @@ xrx.token.Token.prototype.isAfter = function(token) {
 ***REMOVED*** @param {?number} length The number of characters in the XML stream.
 ***REMOVED***
 xrx.token.Token.prototype.set = function(type, label, offset, length) {
-
   this.type_ = type;
   this.label_ = label;
   this.offset_ = offset;
@@ -210,4 +205,3 @@ xrx.token.Token.prototype.length = function(opt_length) {
 xrx.token.Token.prototype.xml = function(stream) {
   return stream.substr(this.offset_, this.length_);
 ***REMOVED***
-

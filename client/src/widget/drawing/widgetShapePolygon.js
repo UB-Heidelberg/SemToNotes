@@ -4,6 +4,7 @@
 
 goog.provide('xrx.widget.ShapePolygon');
 goog.provide('xrx.widget.ShapePolygonCoords');
+goog.provide('xrx.widget.ShapePolygonCreate');
 goog.provide('xrx.widget.ShapePolygonInsert');
 
 
@@ -71,7 +72,6 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   this.shape_ = xrx.shape.Polygon.create(this.getDrawing());
   if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this);
-  this.shapePolygonInsert_ = new xrx.widget.ShapePolygonInsert(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {
     self.mvcModelUpdateData();
@@ -80,35 +80,6 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   this.shape_.handleDeleted = function() {
     self.mvcModelDeleteData();
   }
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED***
-***REMOVED***
-xrx.widget.ShapePolygonInsert = function(polygon) {
-
-  this.polygon_ = polygon;
-
-  goog.base(this, polygon.getElement());
-***REMOVED***
-goog.inherits(xrx.widget.ShapePolygonInsert, xrx.mvc.Component);
-
-
-
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
-xrx.widget.ShapePolygonInsert.prototype.getRefExpression = function() {
-  return goog.dom.dataset.get(this.element_, 'xrxRefInsert');
-***REMOVED***
-
-
-
-
-xrx.widget.ShapePolygonInsert.prototype.modelInsertData = function() {
-
 ***REMOVED***
 
 
@@ -146,4 +117,41 @@ xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
 xrx.widget.ShapePolygonCoords.prototype.modelUpdateData = function(coords) {
   xrx.mvc.Controller.updateNodeValue(this.polygon_, this.getNode(),
       this.polygon_.serializeCoords(this.polygon_.getShape().getCoords()));
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED***
+xrx.widget.ShapePolygonCreate = function(element) {
+
+  this.shape_;
+
+***REMOVED***
+***REMOVED***
+goog.inherits(xrx.widget.ShapePolygonCreate, xrx.mvc.Insert);
+xrx.mvc.registerComponent('xrx-widget-shape-polygon-create', xrx.widget.ShapePolygonCreate);
+
+
+
+xrx.widget.ShapePolygonCreate.prototype.getShape = xrx.widget.Shape.prototype.getShape;
+
+
+
+xrx.widget.ShapePolygonCreate.prototype.findDrawing_ = xrx.widget.Shape.prototype.findDrawing_;
+
+
+
+xrx.widget.ShapePolygonCreate.prototype.getDrawing = xrx.widget.Shape.prototype.getDrawing;
+
+
+
+xrx.widget.ShapePolygonCreate.prototype.mvcRefresh = function() {***REMOVED***
+
+
+
+xrx.widget.ShapePolygonCreate.prototype.createDom = function() {
+  var drawing = this.getDrawing();
+  this.shape_ = new xrx.shape.PolygonCreate(drawing);
 ***REMOVED***

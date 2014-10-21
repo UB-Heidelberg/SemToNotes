@@ -57,47 +57,18 @@ xrx.xml.Update.remove_ = function(instance, offset, length) {
 
 
 ***REMOVED***
-***REMOVED*** Replaces a not-tag token with another not-tag token.
+***REMOVED*** Inserts a new attribute into a start-tag or an empty tag token.
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
-***REMOVED*** @param {!string} string The new not-tag string. 
+***REMOVED*** @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where to insert
+***REMOVED***   the attribute.
+***REMOVED*** @param {!string} attribute The new attribute token as string.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
-xrx.xml.Update.replaceNotTag = function(instance, target, string) {
-  return xrx.xml.Update.replace_(instance, target, string);
-***REMOVED***
-
-
-
-xrx.xml.Update.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
-  //TODO: implement this
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Replaces the value of an attribute with another value.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.AttrValue} target The token to be replaced.
-***REMOVED*** @param {!string} token The new value. 
-***REMOVED***
-xrx.xml.Update.replaceAttrValue = function(instance, target, value) {
-  return xrx.xml.Update.replace_(instance, target, value);
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Inserts a not-tag token into another not-tag token at an offset.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
-***REMOVED*** @param {!integer} target The offset relative to the not-tag token.
-***REMOVED*** @param {!string} string The new not-tag string. 
-***REMOVED***
-xrx.xml.Update.insertNotTag = function(instance, target, offset, string) {
-  return xrx.xml.Update.insert_(instance, target.offset() + offset, string);
+xrx.xml.Update.insertAttribute = function(instance, parent, attribute) {
+  var loc = instance.getStream().tagName(parent.xml(instance.xml()));
+  return xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
+      loc.length, ' ' + attribute);
 ***REMOVED***
 
 
@@ -108,26 +79,54 @@ xrx.xml.Update.insertNotTag = function(instance, target, offset, string) {
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.NotTag} target The not-tag token where the empty tag is inserted.
 ***REMOVED*** @param {!integer} offset The offset relative to the not-tag token.
-***REMOVED*** @param {!string} localName The local name of the new token.
-***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new token.
+***REMOVED*** @param {!string} emptyTag The new empty tag token as string.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
-xrx.xml.Update.insertEmptyTag = function(instance, target, offset, localName,
+xrx.xml.Update.insertEmptyTag = function(instance, target, offset, emptyTag) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset,
+      emptyTag);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Inserts a new fragment token into a not-tag token.
+***REMOVED***
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.NotTag} target The not-tag token where the fragment is inserted.
+***REMOVED*** @param {!integer} offset The offset relative to the not-tag token.
+***REMOVED*** @param {!string} fragment The new fragment token as string.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.insertFragment = function(instance, target, offset, fragment) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset,
+      fragment);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** 
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
     opt_namespaceUri) {
-  var diff;
+  //TODO: implement this
+***REMOVED***
 
-  if (!opt_namespaceUri) {
-    diff = xrx.xml.Update.insert_(instance, target.offset() + offset,
-        xrx.xml.Serialize.emptyTag(localName));
-  } else {
-    var nsPrefix = instance.getIndex().getNamespacePrefix(target, opt_namespaceUri);
 
-    diff = xrx.xml.Update.insert_(instance, target.offset() + offset,
-        xrx.xml.Serialize.emptyTagNs(nsPrefix, localName, opt_namespaceUri));
 
-    //TODO: add namespace declaration to index
-  }
-
-  return diff;
+***REMOVED***
+***REMOVED*** Inserts a not-tag token into another not-tag token at an offset.
+***REMOVED*** 
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
+***REMOVED*** @param {!integer} target The offset relative to the not-tag token.
+***REMOVED*** @param {!string} string The new not-tag string.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.insertNotTag = function(instance, target, offset, string) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset, string);
 ***REMOVED***
 
 
@@ -144,6 +143,7 @@ xrx.xml.Update.insertEmptyTag = function(instance, target, offset, localName,
 ***REMOVED*** @param {!integer} offset2 The offset relative to the right not-tag token.
 ***REMOVED*** @param {!string} localName The local name of the new token.
 ***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new token.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
 xrx.xml.Update.insertStartEndTag = function(instance, target1, target2, offset1, offset2,
     localName, opt_namespaceUri) {
@@ -173,65 +173,32 @@ xrx.xml.Update.insertStartEndTag = function(instance, target1, target2, offset1,
 
 
 
-xrx.xml.Update.insertFragment = function(instance, target, offset, localName,
-    opt_namespaceUri) {
-  //TODO: implement this
-***REMOVED***
-
-
-
-xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
-    opt_namespaceUri) {
-  //TODO: implement this
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Inserts a new attribute into a start-tag or an empty tag token.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where the attribute 
-***REMOVED*** shall be inserted.
-***REMOVED*** @param {!string} qName The qualified name of the new attribute.
-***REMOVED*** @param {!string} opt_namespaceUri The namespace URI of the new attribute.
-***REMOVED***
-xrx.xml.Update.insertAttribute = function(instance, parent, qName,
-    opt_namespaceUri) {
-  var diff;
-  var loc = instance.getStream().tagName(parent.xml(instance.xml()));
-
-  if (!opt_namespaceUri) {
-    diff = xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
-        loc.length, xrx.xml.Serialize.attribute(qName, ''));
-  } else {
-    var nsPrefix1 = instance.getIndex().getNamespacePrefix(parent, opt_namespaceUri);
-    var nsPrefix2 = qName.split(':')[0];
-    if (nsPrefix1 !== 'xmlns:' + nsPrefix2 && nsPrefix1 !== undefined &&
-        nsPrefix1 !== 'xmlns') throw Error('Prefix ' + nsPrefix2 +
-        ' is not bound to namespace ' + opt_namespaceUri + '.');
-
-    diff = xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
-        loc.length, xrx.xml.Serialize.attributeNs(nsPrefix1, qName, opt_namespaceUri));
-
-    //TODO: add namespace declaration to index
-  }
-
-  return diff;
-***REMOVED***
-
-
-
 ***REMOVED***
 ***REMOVED*** Removes characters from a not-tag token.
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
 ***REMOVED*** @param {!integer} target The offset relative to the not-tag token.
-***REMOVED*** @param {!integer} string The number of characters to be removed. 
+***REMOVED*** @param {!integer} string The number of characters to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
 xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
   return xrx.xml.Update.remove_(instance, target.offset() + offset, length);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Removes an attribute token.
+***REMOVED*** 
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.Attribute} token The token to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.removeAttribute = function(instance, token) {
+  var diff = xrx.xml.Update.remove_(instance, token.offset() - 1, token.length() + 1);
+
+  return diff;
 ***REMOVED***
 
 
@@ -241,6 +208,7 @@ xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.EmptyTag} target The tag to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
 xrx.xml.Update.removeEmptyTag = function(instance, token) {
   var diff = xrx.xml.Update.remove_(instance, token.offset(), token.length());
@@ -253,12 +221,40 @@ xrx.xml.Update.removeEmptyTag = function(instance, token) {
 
 
 ***REMOVED***
+***REMOVED*** Removes a start-tag token, an end-tag token and the content between
+***REMOVED*** the two tag tokens. 
+***REMOVED*** 
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.Fragment} token The tag to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.removeFragment = function(instance, token) {
+  //TODO: implement this
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Removes a mixed sequence of tokens. 
+***REMOVED*** 
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.Mixed} token The token to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.removeMixed = function(instance, token) {
+  //TODO: implement this
+***REMOVED***
+
+
+
+***REMOVED***
 ***REMOVED*** Removes a start-tag and a end-tag at once but keeping the content
 ***REMOVED*** between the two tags. 
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
 ***REMOVED*** @param {!xrx.token.StartTag} token1 The start-tag to be removed.
 ***REMOVED*** @param {!xrx.token.EndTag} token2 The end-tag to be removed.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
 xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
   var diff2 = xrx.xml.Update.remove_(instance, token2.offset(), token2.length());
@@ -272,38 +268,37 @@ xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
 
 
 ***REMOVED***
-***REMOVED*** Removes a start-tag token, an end-tag token and the content between
-***REMOVED*** the two tag tokens. 
+***REMOVED*** Replaces the value of an attribute with another value.
 ***REMOVED*** 
 ***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.Fragment} token The tag to be removed.
+***REMOVED*** @param {!xrx.token.AttrValue} target The token to be replaced.
+***REMOVED*** @param {!string} token The new value.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
 ***REMOVED***
-xrx.xml.Update.removeFragment = function(instance, token) {
+xrx.xml.Update.replaceAttrValue = function(instance, target, value) {
+  return xrx.xml.Update.replace_(instance, target, value);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Replaces a not-tag token with another not-tag token.
+***REMOVED*** 
+***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
+***REMOVED*** @param {!xrx.token.NotTag} target The token to be replaced.
+***REMOVED*** @param {!string} string The new not-tag string.
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.replaceNotTag = function(instance, target, string) {
+  return xrx.xml.Update.replace_(instance, target, string);
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED*** @return {integer} Number of characters removed or inserted.
+***REMOVED***
+xrx.xml.Update.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
   //TODO: implement this
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Removes a mixed sequence of tokens. 
-***REMOVED*** 
-***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.Mixed} token The token to be removed.
-***REMOVED***
-xrx.xml.Update.removeMixed = function(instance, token) {
-  //TODO: implement this
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Removes an attribute token.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.mvc.Instance} instance The instance to be updated.
-***REMOVED*** @param {!xrx.token.Attribute} token The token to be removed.
-***REMOVED***
-xrx.xml.Update.removeAttribute = function(instance, token) {
-  var diff = xrx.xml.Update.remove_(instance, token.offset() - 1, token.length() + 1);
-
-  return diff;
 ***REMOVED***

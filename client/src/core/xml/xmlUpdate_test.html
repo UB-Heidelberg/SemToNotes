@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.xml.Update, xrx.rebuild</title>
+<title>XRX++ Unit Tests - xrx.xml.Update, xrx.index.Rebuild</title>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
 <script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
@@ -12,18 +12,19 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
+  goog.require('xrx.mvc');
   goog.require('xrx.mvc.Instance');
  ***REMOVED*****REMOVED***
-  goog.require('xrx.rebuild');
+  goog.require('xrx.index.Rebuild');
   goog.require('xrx.token');
-  goog.require('xrx.token.StartTag');
-  goog.require('xrx.token.EndTag');
-  goog.require('xrx.token.EmptyTag');
+  goog.require('xrx.token.Tokens');
   goog.require('xrx.xml.Update');
 </script>
 </head>
 <body>
 <script type="text/javascript">
+
+
 
 var xml;
 var element;
@@ -32,6 +33,8 @@ var instance;
 var xmlNs;
 var elementNs;
 var instanceNs;
+
+
 
 function resetForNextTest() {
   xml = undefined;
@@ -52,6 +55,8 @@ function resetForNextTest() {
   instanceNs = new xrx.mvc.Instance(elementNs);
   instanceNs.getIndex();
 ***REMOVED***
+
+
 
 function _testStringStream(inst) {
   var traverse = new xrx.xml.Traverse(inst.xml());
@@ -77,6 +82,8 @@ function _testStringStream(inst) {
   return testString;
 ***REMOVED***
 
+
+
 function _testStringBinary(inst) {
   var index = inst.getIndex();
   index.iterAtFirst();
@@ -93,6 +100,8 @@ function _testStringBinary(inst) {
   return testStringB;
 ***REMOVED***
 
+
+
 function test00() {
   resetForNextTest();
 
@@ -100,116 +109,97 @@ function test00() {
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
 ***REMOVED***
 
-function test01replaceNotTag() {
+
+
+function test01_1insertAttribute() {
   resetForNextTest();
-  
-  // replace a value with another but shorter value
-  var expected1 = '<a>1<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
-  var t1 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
-  var diff1 = xrx.xml.Update.replaceNotTag(instance, t1, '1');
+  var insert = 'attr0=""';
+
+  // start-tag, attribute exists
+  var expected1 = '<a>test<b>2</b>3<c attr0="" attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t1 = instance.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2])));
+  var diff1 = xrx.xml.Update.insertAttribute(instance, t1, insert);
   assertEquals(expected1, instance.xml());
 
-  xrx.rebuild.replaceNotTag(instance.getIndex(), t1, diff1);
+  xrx.index.Rebuild.insertAttribute(instance.getIndex(), t1, diff1);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
   
-  // replace a value with another but longer value
-  var expected2 = '<a>testtest<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
-  var t2 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
-  var diff2 = xrx.xml.Update.replaceNotTag(instance, t2, 'testtest');
+  // empty tag, no attribute exists
+  var expected2 = '<a>test<b>2</b>3<c attr0="" attr1="test" attr2="">4<d attr0=""/>55<e/>6</c><f/></a>';
+  var t2 = instance.getPilot().location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,2,1])));
+  var diff2 = xrx.xml.Update.insertAttribute(instance, t2, insert);
   assertEquals(expected2, instance.xml());
 
-  xrx.rebuild.replaceNotTag(instance.getIndex(), t2, diff2);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
-  
-  // replace a value with the empty string
-  var expected3 = '<a>testtest<b></b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
-  var t3 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,1,0])));
-  var diff3 = xrx.xml.Update.replaceNotTag(instance, t3, '');
-  assertEquals(expected3, instance.xml());
-
-  xrx.rebuild.replaceNotTag(instance.getIndex(), t3, diff3);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
-  
-  // replace a empty not-tag token with a value
-  var expected4 = '<a>testtest<b></b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/>new</a>';
-  var t4 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,3])));
-  var diff4 = xrx.xml.Update.replaceNotTag(instance, t4, 'new');
-  assertEquals(expected4, instance.xml());
-
-  xrx.rebuild.replaceNotTag(instance.getIndex(), t4, diff4);
+  xrx.index.Rebuild.insertAttribute(instance.getIndex(), t2, diff2);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
 
-function test02replaceTagName() {
-  //TODO
-***REMOVED***
 
-function test03replaceAttrValue() {
+
+function TODOtest01_2insertAttributeNs() {
   resetForNextTest();
 
-  // replace a value with another but longer value
-  var expected1 = '<a>test<b>2</b>3<c attr1="test" attr2="test">4<d/>55<e/>6</c><f/></a>';
-  var t1 = instance.getPilot().location(null, new xrx.token.AttrValue(new xrx.xml.Label([1,2,2])));
-  var diff1 = xrx.xml.Update.replaceAttrValue(instance, t1, 'test');
-  assertEquals(expected1, instance.xml());
+  // prefix is defined
+  var expected1 = '<x><y/><a xmlns="http://www.example.org/a"><b:b b:b="" xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
+  var t1 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2,1])));
+  var diff1 = xrx.xml.Update.insertAttribute(instanceNs, t1, 'b:b', 'http://www.example.org/b');
+  assertEquals(expected1, instanceNs.xml());
 
-  xrx.rebuild.replaceAttrValue(instance.getIndex(), t1, diff1);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  xrx.index.Rebuild.insertAttribute(instanceNs.getIndex(), t1, diff1);
+  assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
 
-  // replace a value with another but shorter value
-  var expected2 = '<a>test<b>2</b>3<c attr1="" attr2="test">4<d/>55<e/>6</c><f/></a>';
-  var t2 = instance.getPilot().location(null, new xrx.token.AttrValue(new xrx.xml.Label([1,2,1])));
-  var diff2 = xrx.xml.Update.replaceAttrValue(instance, t2, '');
-  assertEquals(expected2, instance.xml());
+  // prefix is not defined
+  var expected2 = '<x><y/><a xmlns:a="http://www.example.org/a" a:a="" xmlns="http://www.example.org/a"><b:b b:b="" xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
+  var t2 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2])));
+  var diff2 = xrx.xml.Update.insertAttribute(instanceNs, t2, 'a:a', 'http://www.example.org/a');
+  assertEquals(expected2, instanceNs.xml());
 
-  xrx.rebuild.replaceAttrValue(instance.getIndex(), t2, diff2);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
-
-function test04insertNotTag() {
-  resetForNextTest();
+  xrx.index.Rebuild.insertAttribute(instanceNs.getIndex(), t2, diff2);
+  assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
   
-  var expected = '<a>test1<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
-  var t = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
-  var diff = xrx.xml.Update.insertNotTag(instance, t, 4, '1');
-  assertEquals(expected, instance.xml());
-
-  xrx.rebuild.insertNotTag(instance.getIndex(), t, diff);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  // prefix of namespace and prefix of qName do not match
+  var t3 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2,1])));
+  assertThrows('Prefix c is not bound to namespace http://www.example.org/b.',
+      goog.partial(xrx.xml.Update.insertAttribute, instanceNs, t3, 'c:a', 'http://www.example.org/b'));
 ***REMOVED***
 
-function test05insertEmptyTag() {
+
+
+function test02_1insertEmptyTag() {
   resetForNextTest();
+  var insert = '<x/>';
 
   // start-tag, offset 0
   var expected1 = '<a><x/>test<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
   var t1 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
-  var diff1 = xrx.xml.Update.insertEmptyTag(instance, t1, 0, 'x');
+  var diff1 = xrx.xml.Update.insertEmptyTag(instance, t1, 0, insert);
   assertEquals(expected1, instance.xml());
 
-  xrx.rebuild.insertEmptyTag(instance.getIndex(), t1, 0, diff1);
+  xrx.index.Rebuild.insertEmptyTag(instance.getIndex(), t1, 0, diff1);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
   
   // end-tag, at end of not-tag
   var expected2 = '<a><x/>test<b>2</b>3<x/><c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
   var t2 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,2])));
-  var diff2 = xrx.xml.Update.insertEmptyTag(instance, t2, 1, 'x');
+  var diff2 = xrx.xml.Update.insertEmptyTag(instance, t2, 1, insert);
   assertEquals(expected2, instance.xml());
 
-  xrx.rebuild.insertEmptyTag(instance.getIndex(), t2, 1, diff2);
+  xrx.index.Rebuild.insertEmptyTag(instance.getIndex(), t2, 1, diff2);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
   
   // empty tag, with offset
   var expected3 = '<a><x/>test<b>2</b>3<x/><c attr1="test" attr2="">4<d/>5<x/>5<e/>6</c><f/></a>';
   var t3 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,4,1])));
-  var diff3 = xrx.xml.Update.insertEmptyTag(instance, t3, 1, 'x');
+  var diff3 = xrx.xml.Update.insertEmptyTag(instance, t3, 1, insert);
   assertEquals(expected3, instance.xml());
 
-  xrx.rebuild.insertEmptyTag(instance.getIndex(), t3, 1, diff3);
+  xrx.index.Rebuild.insertEmptyTag(instance.getIndex(), t3, 1, diff3);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
 
-function test05insertEmptyTagNs() {
+
+
+function TODOtest02_2insertEmptyTagNs() {
   resetForNextTest();
 
   // default namespace
@@ -218,7 +208,7 @@ function test05insertEmptyTagNs() {
   var diff1 = xrx.xml.Update.insertEmptyTag(instanceNs, t1, 0, 'y', 'http://www.example.org/a');
   assertEquals(expected1, instanceNs.xml());
 
-  xrx.rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff1);
+  xrx.index.Rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff1);
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
 
   // namespace with prefix
@@ -226,7 +216,7 @@ function test05insertEmptyTagNs() {
   var diff2 = xrx.xml.Update.insertEmptyTag(instanceNs, t1, 0, 'y', 'http://www.example.org/b');
   assertEquals(expected2, instanceNs.xml());
 
-  xrx.rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff2);
+  xrx.index.Rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff2);
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
 
   // undefined namespace
@@ -235,11 +225,66 @@ function test05insertEmptyTagNs() {
   var diff3 = xrx.xml.Update.insertEmptyTag(instanceNs, t1, 0, 'y', 'http://www.example.org/c');
   assertEquals(expected3, instanceNs.xml());
 
-  xrx.rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff3);
+  xrx.index.Rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff3);
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
 ***REMOVED***
 
-function test06insertStartEndTag() {
+
+
+function test03insertFragment() {
+  resetForNextTest();
+  var insert = '<x attr="0">1<y/></x>';
+
+  // start-tag, offset 0
+  var expected1 = '<a><x attr="0">1<y/></x>test<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t1 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
+  var diff1 = xrx.xml.Update.insertFragment(instance, t1, 0, insert);
+  assertEquals(expected1, instance.xml());
+
+  xrx.index.Rebuild.insertFragment(instance.getIndex(), instance.xml());
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  
+  // end-tag, at end of not-tag
+  var expected2 = '<a><x attr="0">1<y/></x>test<b>2</b>3<x attr="0">1<y/></x><c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t2 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,2])));
+  var diff2 = xrx.xml.Update.insertFragment(instance, t2, 1, insert);
+  assertEquals(expected2, instance.xml());
+
+  xrx.index.Rebuild.insertFragment(instance.getIndex(), instance.xml());
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  
+  // empty tag, with offset
+  var expected3 = '<a><x attr="0">1<y/></x>test<b>2</b>3<x attr="0">1<y/></x><c attr1="test" attr2="">4<d/>5<x attr="0">1<y/></x>5<e/>6</c><f/></a>';
+  var t3 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,4,1])));
+  var diff3 = xrx.xml.Update.insertFragment(instance, t3, 1, insert);
+  assertEquals(expected3, instance.xml());
+
+  xrx.index.Rebuild.insertFragment(instance.getIndex(), instance.xml());
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+***REMOVED***
+
+
+
+function test04insertMixed() {
+***REMOVED***
+
+
+
+function test05insertNotTag() {
+  resetForNextTest();
+  
+  var expected = '<a>test1<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
+  var diff = xrx.xml.Update.insertNotTag(instance, t, 4, '1');
+  assertEquals(expected, instance.xml());
+
+  xrx.index.Rebuild.insertNotTag(instance.getIndex(), t, diff);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+***REMOVED***
+
+
+
+function test06_1insertStartEndTag() {
   resetForNextTest();
 
   // start-tag, offset 0
@@ -263,7 +308,9 @@ function test06insertStartEndTag() {
   assertEquals(expected3, instance.xml());
 ***REMOVED***
 
-function test06insertStartEndTagNs() {
+
+
+function test06_2insertStartEndTagNs() {
   resetForNextTest();
 
   // default namespace
@@ -284,54 +331,21 @@ function test06insertStartEndTagNs() {
   assertEquals(expected3, instanceNs.xml());
 ***REMOVED***
 
-function test07insertAttribute() {
+
+
+function test07removeAttribute() {
   resetForNextTest();
 
-  // start-tag, attribute exists
-  var expected1 = '<a>test<b>2</b>3<c attr0="" attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
-  var t1 = instance.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2])));
-  var diff1 = xrx.xml.Update.insertAttribute(instance, t1, 'attr0');
-  assertEquals(expected1, instance.xml());
+  var expected = '<a>test<b>2</b>3<c attr1="test">4<d/>55<e/>6</c><f/></a>';
+  var t = instance.getPilot().location(null, new xrx.token.Attribute(new xrx.xml.Label([1,2,2])));
+  var diff = xrx.xml.Update.removeAttribute(instance, t);
+  assertEquals(expected, instance.xml());
 
-  xrx.rebuild.insertAttribute(instance.getIndex(), t1, diff1);
-  assertEquals(_testStringStream(instance), _testStringBinary(instance));
-  
-  // empty tag, no attribute exists
-  var expected2 = '<a>test<b>2</b>3<c attr0="" attr1="test" attr2="">4<d attr0=""/>55<e/>6</c><f/></a>';
-  var t2 = instance.getPilot().location(null, new xrx.token.EmptyTag(new xrx.xml.Label([1,2,1])));
-  var diff2 = xrx.xml.Update.insertAttribute(instance, t2, 'attr0');
-  assertEquals(expected2, instance.xml());
-
-  xrx.rebuild.insertAttribute(instance.getIndex(), t2, diff2);
+  xrx.index.Rebuild.removeAttribute(instance.getIndex(), t, diff);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
 
-function test07insertAttributeNs() {
-  resetForNextTest();
 
-  // prefix is defined
-  var expected1 = '<x><y/><a xmlns="http://www.example.org/a"><b:b b:b="" xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
-  var t1 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2,1])));
-  var diff1 = xrx.xml.Update.insertAttribute(instanceNs, t1, 'b:b', 'http://www.example.org/b');
-  assertEquals(expected1, instanceNs.xml());
-
-  xrx.rebuild.insertAttribute(instanceNs.getIndex(), t1, diff1);
-  assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
-
-  // prefix is not defined
-  var expected2 = '<x><y/><a xmlns:a="http://www.example.org/a" a:a="" xmlns="http://www.example.org/a"><b:b b:b="" xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
-  var t2 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2])));
-  var diff2 = xrx.xml.Update.insertAttribute(instanceNs, t2, 'a:a', 'http://www.example.org/a');
-  assertEquals(expected2, instanceNs.xml());
-
-  xrx.rebuild.insertAttribute(instanceNs.getIndex(), t2, diff2);
-  assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
-  
-  // prefix of namespace and prefix of qName do not match
-  var t3 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2,1])));
-  assertThrows('Prefix c is not bound to namespace http://www.example.org/b.',
-      goog.partial(xrx.xml.Update.insertAttribute, instanceNs, t3, 'c:a', 'http://www.example.org/b'));
-***REMOVED***
 
 function test08removeEmptyTag() {
   resetForNextTest();
@@ -341,11 +355,23 @@ function test08removeEmptyTag() {
   var diff = xrx.xml.Update.removeEmptyTag(instance, t);
   assertEquals(expected, instance.xml());
 
-  xrx.rebuild.removeEmptyTag(instance.getIndex(), t, diff);
+  xrx.index.Rebuild.removeEmptyTag(instance.getIndex(), t, diff);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
 
-function test09removeStartEndTag() {
+
+
+function test09removeFragment() {
+***REMOVED***
+
+
+
+function test10removeMixed() {
+***REMOVED***
+
+
+
+function test11removeStartEndTag() {
   resetForNextTest();
 
   var expected1 = '<a>test23<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
@@ -354,7 +380,7 @@ function test09removeStartEndTag() {
   var diffs1 = xrx.xml.Update.removeStartEndTag(instance, t11, t12);
   assertEquals(expected1, instance.xml());
 
-  xrx.rebuild.removeStartEndTag(instance.getIndex(), t11, t12, diffs1[0], diffs1[1]);
+  xrx.index.Rebuild.removeStartEndTag(instance.getIndex(), t11, t12, diffs1[0], diffs1[1]);
   //assertEquals(_testStringStream(instance), _testStringBinary(instance));
 
   var expected2 = '<a>test234<d/>55<e/>6<f/></a>';
@@ -363,21 +389,83 @@ function test09removeStartEndTag() {
   var diffs2 = xrx.xml.Update.removeStartEndTag(instance, t21, t22);
   assertEquals(expected2, instance.xml());
 
-  xrx.rebuild.removeStartEndTag(instance.getIndex(), t21, t22, diffs2[0], diffs2[1]);
+  xrx.index.Rebuild.removeStartEndTag(instance.getIndex(), t21, t22, diffs2[0], diffs2[1]);
   //assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
 
-function test10removeAttribute() {
+
+
+function test12replaceAttrValue() {
   resetForNextTest();
 
-  var expected = '<a>test<b>2</b>3<c attr1="test">4<d/>55<e/>6</c><f/></a>';
-  var t = instance.getPilot().location(null, new xrx.token.Attribute(new xrx.xml.Label([1,2,2])));
-  var diff = xrx.xml.Update.removeAttribute(instance, t);
-  assertEquals(expected, instance.xml());
+  // replace a value with another but longer value
+  var expected1 = '<a>test<b>2</b>3<c attr1="test" attr2="test">4<d/>55<e/>6</c><f/></a>';
+  var t1 = instance.getPilot().location(null, new xrx.token.AttrValue(new xrx.xml.Label([1,2,2])));
+  var diff1 = xrx.xml.Update.replaceAttrValue(instance, t1, 'test');
+  assertEquals(expected1, instance.xml());
 
-  xrx.rebuild.removeAttribute(instance.getIndex(), t, diff);
+  xrx.index.Rebuild.replaceAttrValue(instance.getIndex(), t1, diff1);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+
+  // replace a value with another but shorter value
+  var expected2 = '<a>test<b>2</b>3<c attr1="" attr2="test">4<d/>55<e/>6</c><f/></a>';
+  var t2 = instance.getPilot().location(null, new xrx.token.AttrValue(new xrx.xml.Label([1,2,1])));
+  var diff2 = xrx.xml.Update.replaceAttrValue(instance, t2, '');
+  assertEquals(expected2, instance.xml());
+
+  xrx.index.Rebuild.replaceAttrValue(instance.getIndex(), t2, diff2);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
 ***REMOVED***
+
+
+
+function test13replaceNotTag() {
+  resetForNextTest();
+  
+  // replace a value with another but shorter value
+  var expected1 = '<a>1<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t1 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
+  var diff1 = xrx.xml.Update.replaceNotTag(instance, t1, '1');
+  assertEquals(expected1, instance.xml());
+
+  xrx.index.Rebuild.replaceNotTag(instance.getIndex(), t1, diff1);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  
+  // replace a value with another but longer value
+  var expected2 = '<a>testtest<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t2 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,0])));
+  var diff2 = xrx.xml.Update.replaceNotTag(instance, t2, 'testtest');
+  assertEquals(expected2, instance.xml());
+
+  xrx.index.Rebuild.replaceNotTag(instance.getIndex(), t2, diff2);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  
+  // replace a value with the empty string
+  var expected3 = '<a>testtest<b></b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
+  var t3 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,1,0])));
+  var diff3 = xrx.xml.Update.replaceNotTag(instance, t3, '');
+  assertEquals(expected3, instance.xml());
+
+  xrx.index.Rebuild.replaceNotTag(instance.getIndex(), t3, diff3);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+  
+  // replace a empty not-tag token with a value
+  var expected4 = '<a>testtest<b></b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/>new</a>';
+  var t4 = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,3])));
+  var diff4 = xrx.xml.Update.replaceNotTag(instance, t4, 'new');
+  assertEquals(expected4, instance.xml());
+
+  xrx.index.Rebuild.replaceNotTag(instance.getIndex(), t4, diff4);
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
+***REMOVED***
+
+
+
+function test14replaceTagName() {
+  //TODO
+***REMOVED***
+
+
 
 </script>
 </body>

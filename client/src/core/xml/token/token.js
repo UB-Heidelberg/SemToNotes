@@ -1,6 +1,6 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A static class providing functions and
-***REMOVED***     constants for the token classes.
+***REMOVED*** @fileoverview A static class providing constants for
+***REMOVED***   the token classes.
 ***REMOVED***
 
 goog.provide('xrx.token');

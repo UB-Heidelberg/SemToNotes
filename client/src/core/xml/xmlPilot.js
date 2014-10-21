@@ -269,52 +269,49 @@ xrx.xml.Pilot.prototype.path = function(context, tag) {
 
 ***REMOVED***
 ***REMOVED*** Returns the location of a token.
-***REMOVED*** @return {?}
+***REMOVED*** @return {xrx.token.Token}
 ***REMOVED***
 xrx.xml.Pilot.prototype.location = function(opt_context, target) {
-  return this.update(opt_context, target);
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Updates a token and returns its location.
-***REMOVED***
-xrx.xml.Pilot.prototype.update = function(context, target, update) {
   var token;
   
   switch(target.type()) {
   // primary tokens
   case xrx.token.START_TAG:
-    token = this.startTag(context, target, update);
+    token = this.startTag(opt_context, target);
     break;
   case xrx.token.END_TAG:
-    token = this.endTag(context, target, update);
+    token = this.endTag(opt_context, target);
     break;
   case xrx.token.EMPTY_TAG:
-    token = this.emptyTag(context, target, update);
+    token = this.emptyTag(opt_context, target);
     break;
   case xrx.token.NOT_TAG:
-    token = this.notTag(context, target, update);
+    token = this.notTag(opt_context, target);
     break;
   // secondary tokens
   case xrx.token.TAG_NAME:
     throw Error('Not supported. Use function xrx.xml.Pilot.tagName instead.');
     break;
   case xrx.token.ATTRIBUTE:
-    token = this.attribute(context, target, update);
+    token = this.attribute(opt_context, target);
     break;
   case xrx.token.ATTR_NAME:
-    token = this.attrName(context, target, update);
+    token = this.attrName(opt_context, target);
     break;
   case xrx.token.ATTR_VALUE:
-    token = this.attrValue(context, target, update);
+    token = this.attrValue(opt_context, target);
     break;
   // generic tokens
   case xrx.token.START_EMPTY_TAG:
-    token = this.startEmptyTag(context, target, update);
+    token = this.startEmptyTag(opt_context, target);
     break;
-  // TODO: complex tokens 
+  // complex tokens
+  case xrx.token.FRAGMENT:
+    token = this.fragment(opt_context, target);
+    break;
+  case xrx.token.MIXED:
+    token = this.mixed(opt_context, target);
+    break;
   default:
     throw Error('Unknown type.');
     break;
@@ -327,9 +324,8 @@ xrx.xml.Pilot.prototype.update = function(context, target, update) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.xml.Pilot.prototype.startTag = function(context, target, opt_update) {
+xrx.xml.Pilot.prototype.startTag = function(context, target) {
   var startTag = this.path(context, target);
-
   return startTag;
 ***REMOVED***
 
@@ -338,7 +334,7 @@ xrx.xml.Pilot.prototype.startTag = function(context, target, opt_update) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.xml.Pilot.prototype.endTag = function(context, target, opt_update) {
+xrx.xml.Pilot.prototype.endTag = function(context, target) {
   var endTag = this.path(context, target);
 
   return endTag;
@@ -349,9 +345,8 @@ xrx.xml.Pilot.prototype.endTag = function(context, target, opt_update) {
 ***REMOVED***
 ***REMOVED*** 
 ***REMOVED***
-xrx.xml.Pilot.prototype.emptyTag = function(context, target, opt_update) {
+xrx.xml.Pilot.prototype.emptyTag = function(context, target) {
   var emptyTag = this.path(context, target);
-
   return emptyTag;
 ***REMOVED***
 
