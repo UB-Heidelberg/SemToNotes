@@ -8,7 +8,7 @@ goog.provide('xrx.widget.CanvasToolbarItemZoomIn');
 goog.provide('xrx.widget.CanvasToolbarItemZoomOut');
 goog.provide('xrx.widget.CanvasToolbarItemRotateLeft');
 goog.provide('xrx.widget.CanvasToolbarItemRotateRight');
-goog.provide('xrx.widget.CanvasToolbarItemDraw');
+goog.provide('xrx.widget.CanvasToolbarItemCreate');
 goog.provide('xrx.widget.CanvasToolbarItemModify');
 goog.provide('xrx.widget.CanvasToolbarItemDelete');
 
@@ -16,6 +16,7 @@ goog.provide('xrx.widget.CanvasToolbarItemDelete');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
+goog.require('goog.dom.dataset');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.widget.CanvasToolbar');
@@ -268,18 +269,30 @@ xrx.widget.CanvasToolbarItemRotateRight.prototype.createDom = function() {
 /**
  * @constructor
  */
-xrx.widget.CanvasToolbarItemDraw = function(element) {
+xrx.widget.CanvasToolbarItemCreate = function(element) {
 
   goog.base(this, element);
+
+  this.graphicsName_;
 };
-goog.inherits(xrx.widget.CanvasToolbarItemDraw, xrx.widget.CanvasToolbarItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-draw', xrx.widget.CanvasToolbarItemDraw);
+goog.inherits(xrx.widget.CanvasToolbarItemCreate, xrx.widget.CanvasToolbarToggleItem);
+xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-create', xrx.widget.CanvasToolbarItemCreate);
 
 
 
-xrx.widget.CanvasToolbarItemDraw.prototype.createDom = function() {
+xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
+  var canvas = this.getToolbar().getCanvas();
+  canvas.setNameShapeCreate(this.graphicsName_);
+  console.log(canvas.getWidgetShapeCreate().getShape());
+  canvas.getDrawing().setModeCreate(canvas.getWidgetShapeCreate().getShape());
+};
+
+
+
+xrx.widget.CanvasToolbarItemCreate.prototype.createDom = function() {
   if (!this.element_.hasAttribute('title'))
       this.element_.setAttribute('title', 'Draw.');
+  this.graphicsName_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
 };
 
 

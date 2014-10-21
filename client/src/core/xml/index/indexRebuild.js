@@ -1,9 +1,8 @@
 /**
- * @fileoverview A class extending class xrx.index with rebuild
- * operations on binary encodings. 
+ * @fileoverview A static class rebuild operations on binary encodings. 
  */
 
-goog.provide('xrx.rebuild');
+goog.provide('xrx.index.Rebuild');
 
 
 
@@ -13,7 +12,10 @@ goog.require('xrx.token.StartEmptyTag');
 
 
 
-xrx.rebuild = function() {};
+/**
+ *
+ */
+xrx.index.Rebuild = function() {};
 
 
 
@@ -23,7 +25,7 @@ xrx.rebuild = function() {};
  * @param {!xrx.index} index The index.
  * @param {!integer} diff The offset difference.
  */
-xrx.rebuild.offset = function(index, diff) {
+xrx.index.Rebuild.offset = function(index, diff) {
   var row = index.iterGetRow();
 
   do {
@@ -46,7 +48,7 @@ xrx.rebuild.offset = function(index, diff) {
  * @param {!intger} numPosition Number of positions decremented or incremented
  * during remove or insert. Positive integer for insertions, negative for deletions.
  */
-xrx.rebuild.relabel = function(index, diff, parentKey, numParent, numPosition) {
+xrx.index.Rebuild.relabel = function(index, diff, parentKey, numParent, numPosition) {
   var row = index.iterGetRow();
   var key;
   var sibling = -3;
@@ -75,49 +77,15 @@ xrx.rebuild.relabel = function(index, diff, parentKey, numParent, numPosition) {
 
 /**
  * Rebuilds an index after a XML instance has been updated by
- * a replaceNotTag update operation.
+ * a insertAttribute update operation.
  * 
  * @param {!xrx.index} index The index.
- * @param {!xrx.token.NotTag} token The not-tag token which was updated.
- * @param {!integer} diff The length difference of the updated token.
+ * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} parent The tag token into which the
+ * attribute was inserted.
+ * @param {!integer} diff The length difference of the updated parent token.
  */
-xrx.rebuild.replaceNotTag = function(index, token, diff) {
-  var key = index.getKeyByNotTag(token);
-  var row = index.getRowByKey(key);
-
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.rebuild.offset(index, diff);
-};
-
-
-
-/**
- * 
- */
-xrx.rebuild.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
-  //TODO: implement this
-};
-
-
-
-
-/**
- * Rebuilds an index after a XML instance has been updated by
- * a replaceAttrValue update operation.
- * 
- * @param {!xrx.index} index The index.
- * @param {!xrx.token.AttrValue} token The attribute value token which was updated.
- * @param {!integer} diff The length difference of the updated token.
- */
-xrx.rebuild.replaceAttrValue = function(index, token, diff) {
-  var label = token.label().clone();
-  label.parent();
-  var tag = new xrx.token.StartEmptyTag(label);
-  var key = index.getKeyByTag(tag);
+xrx.index.Rebuild.insertAttribute = function(index, parent, diff) {
+  var key = index.getKeyByTag(parent);
   var row = index.getRowByKey(key);
 
   row.updateLength1(diff);
@@ -126,20 +94,8 @@ xrx.rebuild.replaceAttrValue = function(index, token, diff) {
   index.iterSetKey(key);
   index.iterNext();
 
-  xrx.rebuild.offset(index, diff);
+  xrx.index.Rebuild.offset(index, diff);  
 };
-
-
-
-/**
- * Rebuilds an index after a XML instance has been updated by
- * a insertNotTag update operation.
- * 
- * @param {!xrx.index} index The index.
- * @param {!xrx.token.NotTag} token The not-tag token which was updated.
- * @param {!integer} diff The length difference of the updated token.
- */
-xrx.rebuild.insertNotTag = xrx.rebuild.replaceNotTag;
 
 
 
@@ -155,7 +111,7 @@ xrx.rebuild.insertNotTag = xrx.rebuild.replaceNotTag;
  *   empty tag was inserted.
  * @param {!integer} diff The length difference of the updated token.
  */
-xrx.rebuild.insertEmptyTag = function(index, token, offset, diff) {
+xrx.index.Rebuild.insertEmptyTag = function(index, token, offset, diff) {
   var key = index.getKeyByNotTag(token);
   var row = index.getRowByKey(key);
   var length1 = row.getLength1();
@@ -187,7 +143,7 @@ xrx.rebuild.insertEmptyTag = function(index, token, offset, diff) {
   index.iterNext();
   index.iterNext();
 
-  xrx.rebuild.relabel(index, diff, newParentKey, 1, 1);
+  xrx.index.Rebuild.relabel(index, diff, newParentKey, 1, 1);
 };
 
 
@@ -195,41 +151,67 @@ xrx.rebuild.insertEmptyTag = function(index, token, offset, diff) {
 /**
  * 
  */
-xrx.rebuild.insertStartEndTag = function(index, token1, token2, offset1, offset2,
+xrx.index.Rebuild.insertFragment = function(index, xml) {
+  index.rebuild(xml);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Rebuild.insertMixed = function(index, token, offset, diff) {
+  //TODO: implement this
+};
+
+
+
+/**
+ * Rebuilds an index after an XML instance has been updated by
+ * an insertNotTag update operation.
+ * 
+ * @param {!xrx.index} index The index.
+ * @param {!xrx.token.NotTag} token The not-tag token which was updated.
+ * @param {!integer} diff The length difference of the updated token.
+ */
+xrx.index.Rebuild.insertNotTag = function(index, token, diff) {
+  var key = index.getKeyByNotTag(token);
+  var row = index.getRowByKey(key);
+
+  row.updateLength2(diff);
+
+  index.iterSetKey(key);
+  index.iterNext();
+
+  xrx.index.Rebuild.offset(index, diff);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Rebuild.insertStartEndTag = function(index, token1, token2, offset1, offset2,
     diff1, diff2) {
-};
-
-
-
-/**
- * 
- */
-xrx.rebuild.insertFragment = function(index, token, offset, diff) {
-  //TODO: implement this
-};
-
-
-
-/**
- * 
- */
-xrx.rebuild.insertMixed = function(index, token, offset, diff) {
-  //TODO: implement this
+  // TODO: iimplement this
 };
 
 
 
 /**
  * Rebuilds an index after a XML instance has been updated by
- * a insertAttribute update operation.
+ * a removeAttribute update operation.
+ * TODO: handle namespace declaration
  * 
  * @param {!xrx.index} index The index.
- * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} parent The tag token into which the
- * attribute was inserted.
+ * @param {!xrx.token.Attribute} token The attribute token which was removed.
  * @param {!integer} diff The length difference of the updated parent token.
  */
-xrx.rebuild.insertAttribute = function(index, parent, diff) {
-  var key = index.getKeyByTag(parent);
+xrx.index.Rebuild.removeAttribute = function(index, token, diff) {
+  var parentLabel = token.label().clone();
+  parentLabel.parent();
+  var parentToken = new xrx.token.StartEmptyTag(parentLabel);
+  var key = index.getKeyByTag(parentToken);
   var row = index.getRowByKey(key);
 
   row.updateLength1(diff);
@@ -238,7 +220,7 @@ xrx.rebuild.insertAttribute = function(index, parent, diff) {
   index.iterSetKey(key);
   index.iterNext();
 
-  xrx.rebuild.offset(index, diff);  
+  xrx.index.Rebuild.offset(index, diff);  
 };
 
 
@@ -251,7 +233,7 @@ xrx.rebuild.insertAttribute = function(index, parent, diff) {
  * @param {!xrx.token.EmptyTag} token The empty tag which was removed.
  * @param {!integer} diff The length difference of the updated empty tag token.
  */
-xrx.rebuild.removeEmptyTag = function(index, token, diff) {
+xrx.index.Rebuild.removeEmptyTag = function(index, token, diff) {
   var key = index.getKeyByNotTag(token);
   var row = index.getRowByKey(key);
   var length1 = row.getLength1();
@@ -275,7 +257,23 @@ xrx.rebuild.removeEmptyTag = function(index, token, diff) {
 
   index.iterSetKey(key);
 
-  xrx.rebuild.relabel(index, diff, parentKey, -1, -1);
+  xrx.index.Rebuild.relabel(index, diff, parentKey, -1, -1);
+};
+
+
+
+/**
+ *
+ */
+xrx.index.Rebuild.removeFragment = function() {
+};
+
+
+
+/**
+ *
+ */
+xrx.index.Rebuild.removeMixed = function() {
 };
 
 
@@ -289,7 +287,7 @@ xrx.rebuild.removeEmptyTag = function(index, token, diff) {
  * @param {!xrx.token.EmptyTag} token The empty tag which was removed.
  * @param {!integer} diff The length difference of the updated empty tag token.
  */
-xrx.rebuild.removeStartEndTag = function(index, token1, token2, diff1, diff2) {
+xrx.index.Rebuild.removeStartEndTag = function(index, token1, token2, diff1, diff2) {
   // get token1
   var key1 = index.getKeyByTag(token1);
   var row1 = index.getRowByKey(key1);
@@ -305,7 +303,7 @@ xrx.rebuild.removeStartEndTag = function(index, token1, token2, diff1, diff2) {
   var length22 = row2.getLength2();
   var notTagLength2 = length22 - length21;
 
-  // end-tag row directly after start-tag row? 
+  // end-tag row directly after start-tag row
   if (key1 === key2 - 1) {
 
     // rebuild row before token1
@@ -324,7 +322,7 @@ xrx.rebuild.removeStartEndTag = function(index, token1, token2, diff1, diff2) {
 
     index.iterSetKey(key1);
 
-    xrx.rebuild.relabel(index, diff1 + diff2, parentKey, -2, -1);
+    xrx.index.Rebuild.relabel(index, diff1 + diff2, parentKey, -2, -1);
 
   } else {
 
@@ -337,18 +335,17 @@ xrx.rebuild.removeStartEndTag = function(index, token1, token2, diff1, diff2) {
 
 /**
  * Rebuilds an index after a XML instance has been updated by
- * a removeAttribute update operation.
- * TODO: handle namespace declaration
+ * a replaceAttrValue update operation.
  * 
  * @param {!xrx.index} index The index.
- * @param {!xrx.token.Attribute} token The attribute token which was removed.
- * @param {!integer} diff The length difference of the updated parent token.
+ * @param {!xrx.token.AttrValue} token The attribute value token which was updated.
+ * @param {!integer} diff The length difference of the updated token.
  */
-xrx.rebuild.removeAttribute = function(index, token, diff) {
-  var parentLabel = token.label().clone();
-  parentLabel.parent();
-  var parentToken = new xrx.token.StartEmptyTag(parentLabel);
-  var key = index.getKeyByTag(parentToken);
+xrx.index.Rebuild.replaceAttrValue = function(index, token, diff) {
+  var label = token.label().clone();
+  label.parent();
+  var tag = new xrx.token.StartEmptyTag(label);
+  var key = index.getKeyByTag(tag);
   var row = index.getRowByKey(key);
 
   row.updateLength1(diff);
@@ -357,6 +354,36 @@ xrx.rebuild.removeAttribute = function(index, token, diff) {
   index.iterSetKey(key);
   index.iterNext();
 
-  xrx.rebuild.offset(index, diff);  
+  xrx.index.Rebuild.offset(index, diff);
 };
 
+
+
+/**
+ * Rebuilds an index after a XML instance has been updated by
+ * a replaceNotTag update operation.
+ * 
+ * @param {!xrx.index} index The index.
+ * @param {!xrx.token.NotTag} token The not-tag token which was updated.
+ * @param {!integer} diff The length difference of the updated token.
+ */
+xrx.index.Rebuild.replaceNotTag = function(index, token, diff) {
+  var key = index.getKeyByNotTag(token);
+  var row = index.getRowByKey(key);
+
+  row.updateLength2(diff);
+
+  index.iterSetKey(key);
+  index.iterNext();
+
+  xrx.index.Rebuild.offset(index, diff);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Rebuild.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
+  //TODO: implement this
+};

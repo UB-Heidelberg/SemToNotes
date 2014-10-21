@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.token</title>
+<title>XRX++ Unit Tests - xrx.token.Tokens</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
@@ -14,7 +14,9 @@
 <body>
 <script type="text/javascript">
 
-function testCast() {
+
+
+function test00getNative() {
   var label = new xrx.xml.Label([1, 1]);
   var token = new xrx.token.Token(xrx.token.START_TAG, label, 4, 10);
   var newToken = xrx.token.Tokens.getNative(token);
@@ -27,6 +29,8 @@ function testCast() {
   assertEquals(10, token.length());
 };
 
+
+
 function test01SameAs() {
   var label = new xrx.xml.Label([1]);
   
@@ -37,7 +41,7 @@ function test01SameAs() {
   var tag = new xrx.token.Tag(label);
   var attribute = new xrx.token.Attribute(label);
 
-  // start tag
+  // start-tag
   assertEquals(true, start.sameAs(start, label));
   assertEquals(false, start.sameAs(end, label));
   assertEquals(false, start.sameAs(empty, label));
@@ -53,7 +57,7 @@ function test01SameAs() {
   assertEquals(true, empty.sameAs(tag, label));
   assertEquals(false, empty.sameAs(attribute, label));
   
-  // end tag
+  // end-tag
   assertEquals(false, end.sameAs(start, label));
   assertEquals(true, end.sameAs(end, label));
   assertEquals(false, end.sameAs(empty, label));
@@ -61,7 +65,7 @@ function test01SameAs() {
   assertEquals(true, end.sameAs(tag, label));
   assertEquals(false, end.sameAs(attribute, label));
   
-  // start empty tag
+  // start-empty tag
   assertEquals(true, startEmpty.sameAs(start, label));
   assertEquals(false, startEmpty.sameAs(end, label));
   assertEquals(true, startEmpty.sameAs(empty, label));
@@ -80,6 +84,8 @@ function test01SameAs() {
   // attribute
   assertEquals(true, attribute.sameAs(attribute, label));
 };
+
+
 
 function test02Compare() {
   var label = new xrx.xml.Label([1]);
@@ -126,6 +132,8 @@ function test02Compare() {
   assertEquals(true, tag.compare(xrx.token.TAG, label));
 };
 
+
+
 function test03IsBeforeSameLabel() {
   // <a atrr="v"><b><b>t</a>
   //    _        _  _  _
@@ -157,6 +165,8 @@ function test03IsBeforeSameLabel() {
   };
 };
 
+
+
 function test04IsAfterSameLabel() {
   // <a± a1="" a2=""><b> <b> t   <e/></a>
   //    _           _   _   _   _
@@ -187,6 +197,8 @@ function test04IsAfterSameLabel() {
     };
   };
 };
+
+
 
 </script>
 </body>

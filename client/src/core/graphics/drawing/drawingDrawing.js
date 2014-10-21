@@ -411,7 +411,7 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
 
-  this.create_ = new xrx.shape[shape](this);
+  this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
   if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
   this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
       goog.events.EventType.CLICK,

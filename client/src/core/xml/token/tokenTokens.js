@@ -12,6 +12,8 @@ goog.require('xrx.token.AttrName');
 goog.require('xrx.token.AttrValue');
 goog.require('xrx.token.EmptyTag');
 goog.require('xrx.token.EndTag');
+goog.require('xrx.token.Fragment');
+goog.require('xrx.token.Mixed');
 goog.require('xrx.token.Namespace');
 goog.require('xrx.token.NotTag');
 goog.require('xrx.token.NsPrefix');

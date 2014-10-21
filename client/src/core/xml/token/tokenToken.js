@@ -13,16 +13,14 @@ goog.require('xrx.xml.Label');
 
 /**
  * Base class to construct a new token.
- * This constructor should never be called directly, but
- * by one of the inherited token classes.
  *
- * @constructor
  * @param {!number} type The type of the token.
  * @param {?xrx.xml.Label} label The label attached to the token.
  * @param {?number} offset The offset relative to the start of 
  *     the XML stream.
  * @param {?number} length The number of characters occupied 
  *     in the XML stream.
+ * @constructor
  */
 xrx.token.Token = function(type, opt_label, opt_offset, opt_length) {
 
@@ -71,10 +69,8 @@ xrx.token.Token.prototype.typeOf = function(type) {
 
 /**
  * Checks if two tokens are the same. 
- * Note that two tokens are considered as 'the same' 
- * if the types and the labels of the two tokens are 
- * identical. Offset and length do not play any role 
- * for 'sameness'. 
+ * Two tokens are 'the same' if the types and the labels are 
+ * identical. Offset and length do not play any role. 
  *
  * @param {!xrx.token} token The token to check against.
  * @return {!boolean}
@@ -136,7 +132,6 @@ xrx.token.Token.prototype.isAfter = function(token) {
  * @param {?number} length The number of characters in the XML stream.
  */
 xrx.token.Token.prototype.set = function(type, label, offset, length) {
-
   this.type_ = type;
   this.label_ = label;
   this.offset_ = offset;
@@ -210,4 +205,3 @@ xrx.token.Token.prototype.length = function(opt_length) {
 xrx.token.Token.prototype.xml = function(stream) {
   return stream.substr(this.offset_, this.length_);
 };
-
