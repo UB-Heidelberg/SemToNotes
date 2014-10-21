@@ -7,6 +7,7 @@ goog.provide('xrx.widget.CanvasBackgroundImage');
 
 
 
+goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.object');
@@ -26,6 +27,8 @@ xrx.widget.Canvas = function(element) {
   this.drawing_;
 
   this.toolbar_;
+
+  this.nameInsertShapeCreate_;
 
   goog.base(this, element);
 };
@@ -58,36 +61,32 @@ xrx.widget.Canvas.prototype.createDrawing_ = function() {
 
 
 
-xrx.widget.Canvas.prototype.createToolbar_ = function() {
-  var element = goog.dom.getElementsByClass('xrx-widget-canvas-toolbar',
-      this.element_)[0];
-  if (this.drawing_.getEngine().isAvailable() && element)
-      this.toolbar_ = new xrx.drawing.Toolbar(element, this.drawing_);
+xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
+  this.nameInsertShapeCreate_ = name;
+};
+
+
+
+xrx.widget.Canvas.prototype.getWidgetShapeCreate = function() {
+  var insertId;
+  var containerDiv = goog.dom.getNextElementSibling(this.element_);
+  var layerCreateDiv = goog.dom.getElementsByClass(
+      'xrx-widget-canvas-layer-graphics-create', containerDiv)[0];
+  var shapeDivs = goog.dom.getChildren(layerCreateDiv);
+  goog.array.forEach(shapeDivs, function(e, i, a) {
+    if (goog.dom.dataset.get(e, 'xrxGraphicsName') === this.nameInsertShapeCreate_)
+        insertId = e.id;
+  }, this);
+  return xrx.mvc.getViewComponent(insertId);
 };
 
 
 
 xrx.widget.Canvas.prototype.createLayerGraphicsCreate_ = function() {
   var self = this;
-  var containerDiv = goog.dom.getNextElementSibling(this.element_);
-  var polygonDiv = goog.dom.getElementsByClass('xrx-widget-shape-polygon',
-      containerDiv)[0];
-  var rectDiv = goog.dom.getElementsByClass('xrx-widget-shape-rect',
-      containerDiv)[0];
-  var polygonDataset = goog.dom.dataset.get(polygonDiv, 'xrxInsertOrigin');
-  var rectDataset = goog.dom.dataset.get(rectDiv, 'xrxInsertOrigin');
-  var polygonOriginNode = xrx.mvc.getModelComponent(polygonDataset).getNode(0);
-  var rectOriginNode = xrx.mvc.getModelComponent(rectDataset).getNode(0);
   // handle shape create
   this.drawing_.handleCreated = function() {
-    var polygonRepeat = xrx.mvc.getViewComponent(polygonDiv.id).getRepeat();
-    var rectRepeat = xrx.mvc.getViewComponent(rectDiv.id).getRepeat();
-    var create = self.getDrawing().getCreate();
-    if (create instanceof xrx.shape.PolygonCreate) {
-      xrx.mvc.Controller.insertNode(polygonRepeat, polygonOriginNode);
-    } else if (create instanceof xrx.shape.RectCreate) {
-      //xrx.mvc.Controller.insertNode(undefined, rectOriginNode);
-    } else {}
+    self.getWidgetShapeCreate().execute();
   };
 };
 
@@ -95,8 +94,7 @@ xrx.widget.Canvas.prototype.createLayerGraphicsCreate_ = function() {
 
 xrx.widget.Canvas.prototype.createDom = function() {
   this.createDrawing_();
-  //this.createToolbar_();
-  //this.createLayerGraphicsCreate_();
+  this.createLayerGraphicsCreate_();
 };
 
 

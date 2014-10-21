@@ -52,6 +52,18 @@ xrx.index.Index = function(xml) {
 
 
 /**
+ * Rebuilds the index
+ */
+xrx.index.Index.prototype.rebuild = function(xml) {
+  this.rows_ = [];
+  this.iterKey_ = 0;
+  this.tNamespace = [];
+  this.build(xml);
+};
+
+
+
+/**
  * Returns the number of rows of the index.
  * @return {integer}
  */
