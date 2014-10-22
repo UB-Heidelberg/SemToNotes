@@ -3,6 +3,7 @@
  */
 
 goog.provide('xrx.widget.Canvas');
+goog.provide('xrx.widget.CanvasGroup');
 goog.provide('xrx.widget.CanvasBackgroundImage');
 
 
@@ -26,7 +27,9 @@ xrx.widget.Canvas = function(element) {
 
   this.drawing_;
 
-  this.toolbar_;
+  this.graphics_;
+
+  this.groups_ = [];
 
   this.nameInsertShapeCreate_;
 
@@ -54,13 +57,6 @@ xrx.widget.Canvas.prototype.mvcRefresh = function() {
 
 
 
-xrx.widget.Canvas.prototype.createDrawing_ = function() {
-  this.drawing_ = new xrx.drawing.Drawing(this.element_);
-  this.drawing_.setModeView();
-};
-
-
-
 xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
   this.nameInsertShapeCreate_ = name;
 };
@@ -68,35 +64,112 @@ xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
 
 
 xrx.widget.Canvas.prototype.getWidgetShapeCreate = function() {
-  var insertId;
-  var containerDiv = goog.dom.getNextElementSibling(this.element_);
-  var layerCreateDiv = goog.dom.getElementsByClass(
-      'xrx-widget-canvas-layer-graphics-create', containerDiv)[0];
-  var shapeDivs = goog.dom.getChildren(layerCreateDiv);
-  goog.array.forEach(shapeDivs, function(e, i, a) {
-    if (goog.dom.dataset.get(e, 'xrxGraphicsName') === this.nameInsertShapeCreate_)
-        insertId = e.id;
+  var widget;
+  goog.array.forEach(this.groups_, function(e, i, a) {
+    if (e.getName() === this.nameInsertShapeCreate_)
+        widget = e.getShapeCreate();
   }, this);
-  return xrx.mvc.getViewComponent(insertId);
+  return widget;
 };
 
 
 
-xrx.widget.Canvas.prototype.createLayerGraphicsCreate_ = function() {
+xrx.widget.Canvas.prototype.getWidgetShapeInsert = function() {
+  var widget;
+  goog.array.forEach(this.groups_, function(e, i, a) {
+    if (e.getName() === this.nameInsertShapeCreate_)
+        widget = e.getShapeInsert();
+  }, this);
+  return widget;
+};
+
+
+
+xrx.widget.Canvas.prototype.getWidgetShape = function() {
   var self = this;
-  // handle shape create
-  this.drawing_.handleCreated = function() {
-    self.getWidgetShapeCreate().execute();
-  };
+  var layerGraphics = goog.dom.getElementsByClass(
+      'xrx-widget-canvas-layer-graphics', this.element_)[0];
+  var shapeDiv = goog.dom.findNode(layerGraphics, function(node) {
+    if (!goog.dom.isElement(node)) {
+      return false;
+    } else if (goog.dom.dataset.get(node, 'xrxGraphicsName') === self.nameInsertShapeCreate_) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return xrx.mvc.getViewComponent(shapeDiv.id);
+};
+
+
+
+xrx.widget.Canvas.prototype.refresh = function() {
+  var repeat;
+  this.drawing_.getLayerShape().removeShapes();
+  goog.array.forEach(this.groups_, function(e, i, a) {
+    repeat = goog.dom.getChildren(e.getElement())[0];
+    xrx.mvc.getComponent(repeat.id).mvcRefresh();
+  });
 };
 
 
 
 xrx.widget.Canvas.prototype.createDom = function() {
-  this.createDrawing_();
-  this.createLayerGraphicsCreate_();
+  var self = this;
+  this.drawing_ = new xrx.drawing.Drawing(this.element_);
+  this.drawing_.setModeView();
+  this.graphics_ = goog.dom.getElementsByClass('xrx-widget-canvas-graphics',
+      this.element_)[0];
+  var groups = goog.dom.getChildren(this.graphics_);
+  goog.array.forEach(groups, function(e, i, a) {
+    self.groups_.push(new xrx.widget.CanvasGroup(e, self));
+  });
+  // handle shape create
+  this.drawing_.handleCreated = function() {
+    self.getWidgetShapeInsert().execute();
+    self.refresh();
+  };
 };
 
+
+
+/**
+ * @constructor
+ */
+xrx.widget.CanvasGroup = function(element, canvas) {
+
+  this.element_ = element;
+
+  this.canvas_ = canvas;
+
+  this.name_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
+};
+
+
+
+xrx.widget.CanvasGroup.prototype.getElement = function() {
+  return this.element_;
+};
+
+
+
+xrx.widget.CanvasGroup.prototype.getName = function() {
+  return this.name_;
+};
+
+
+
+xrx.widget.CanvasGroup.prototype.getShapeCreate = function() {
+  var div = goog.dom.getChildren(goog.dom.getChildren(this.element_)[1])[0];
+  return xrx.mvc.getComponent(div.id);
+};
+
+
+
+xrx.widget.CanvasGroup.prototype.getShapeInsert = function() {
+  var div = goog.dom.getChildren(this.element_)[2];
+  return xrx.mvc.getComponent(div.id);
+};
 
 
 
@@ -114,15 +187,14 @@ xrx.mvc.registerComponent('xrx-widget-canvas-background-image', xrx.widget.Canva
 
 
 
-xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
-  var containerDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-container');
-  var canvasDiv = goog.dom.getPreviousElementSibling(containerDiv);
-  this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
+xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
+  var url = this.getNode().getStringValue();
+  this.canvas_.getDrawing().setBackgroundImage(url);
 };
 
 
 
-xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
-  var url = this.getNode().getStringValue();
-  this.canvas_.getDrawing().setBackgroundImage(url);
+xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
+  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
+  this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
 };

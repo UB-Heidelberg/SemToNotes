@@ -138,6 +138,12 @@ xrx.shape.PolygonCreate = function(drawing) {
 
 
 
+xrx.shape.PolygonCreate.prototype.getCoords = function() {
+  return this.polyline_.getCoords();
+};
+
+
+
 /**
  * Handles click events for a creatable polygon shape.
  * @param {goog.events.BrowserEvent} e The browser event.
@@ -165,6 +171,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     this.drawing_.draw();
     this.count_ += 1;
 
+    if (this.handleValueChanged) this.handleValueChanged();
   } else if (shape === this.close_ && this.count_ === 1) { // user tries to create an invalid vertex
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
@@ -206,6 +213,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     this.drawing_.draw();
     this.count_ += 1;
 
+    if (this.handleValueChanged) this.handleValueChanged();
   } 
 };
 
