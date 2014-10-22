@@ -27,16 +27,16 @@ goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 
 
 xrx.widget.Shape.prototype.findDrawing_ = function() {
-  var containerDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-container');
-  var canvasDiv = goog.dom.getPreviousElementSibling(containerDiv);
+  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
   var canvasComponent = xrx.mvc.getViewComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
-  return canvasComponent.getDrawing();
+  this.drawing_ = canvasComponent.getDrawing()
+  return this.drawing_;
 ***REMOVED***
 
 
 
 xrx.widget.Shape.prototype.getDrawing = function() {
-  return this.drawing_ || this.findDrawing_();
+  return this.drawing_ ||  this.findDrawing_();
 ***REMOVED***
 
 
@@ -65,9 +65,9 @@ xrx.widget.Shape.prototype.parseCoords = function(str) {
 xrx.widget.Shape.prototype.serializeCoords = function(coords) {
   var str = '';
   for(var i = 0, len = coords.length; i < len; i++) {
-    str += coords[i][0].toString();
+    str += coords[i][0].toFixed(1).toString();
     str += ',';
-    str += coords[i][1].toString();
+    str += coords[i][1].toFixed(1).toString();
     if (i <= len - 2) str += ' ';
   }
   return str;
