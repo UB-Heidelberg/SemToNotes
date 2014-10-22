@@ -8,7 +8,6 @@ goog.provide('xrx.mvc.Controller');
 
 
 goog.require('xrx.mvc');
-goog.require('xrx.mvc.Components');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
 goog.require('xrx.index.Rebuild');
