@@ -3,15 +3,17 @@
 ***REMOVED***
 
 goog.provide('xrx.widget.ShapeRect');
+goog.provide('xrx.widget.ShapeRectBottom');
+goog.provide('xrx.widget.ShapeRectCreate');
 goog.provide('xrx.widget.ShapeRectGeometry');
+goog.provide('xrx.widget.ShapeRectHeight');
+goog.provide('xrx.widget.ShapeRectInsert');
+goog.provide('xrx.widget.ShapeRectLeft');
+goog.provide('xrx.widget.ShapeRectRight');
+goog.provide('xrx.widget.ShapeRectTop');
+goog.provide('xrx.widget.ShapeRectWidth');
 goog.provide('xrx.widget.ShapeRectX');
 goog.provide('xrx.widget.ShapeRectY');
-goog.provide('xrx.widget.ShapeRectWidth');
-goog.provide('xrx.widget.ShapeRectHeight');
-goog.provide('xrx.widget.ShapeRectLeft');
-goog.provide('xrx.widget.ShapeRectTop');
-goog.provide('xrx.widget.ShapeRectRight');
-goog.provide('xrx.widget.ShapeRectBottom');
 
 
 
@@ -208,10 +210,7 @@ xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
 
 
 
-xrx.widget.ShapeRect.prototype.createDom = function() {
-***REMOVED***
-  this.shape_ = xrx.shape.Rect.create(this.getDrawing());
-  if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
+xrx.widget.ShapeRect.prototype.initCoordComponents = function() {
   // get datasets
   var x      = goog.dom.dataset.get(this.element_, 'xrxRefX');
   var y      = goog.dom.dataset.get(this.element_, 'xrxRefY');
@@ -230,6 +229,14 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   if (top)    this.rectTop_    = new xrx.widget.ShapeRectTop(this, top);
   if (right)  this.rectRight_  = new xrx.widget.ShapeRectRight(this, right);
   if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(this, bottom);
+***REMOVED***
+
+
+
+xrx.widget.ShapeRect.prototype.createDom = function() {
+***REMOVED***
+  this.shape_ = xrx.shape.Rect.create(this.getDrawing());
+  if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
   // handle value changed
   this.shape_.handleValueChanged = function() {
     self.mvcModelUpdateData();
@@ -238,6 +245,7 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   this.shape_.handleDeleted = function() {
     self.mvcModelDeleteData();
   }
+  this.initCoordComponents();
 ***REMOVED***
 
 
@@ -254,6 +262,12 @@ xrx.widget.ShapeRectGeometry = function(rect, dataset) {
   goog.base(this, rect.getElement());
 ***REMOVED***
 goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
+  return this.rect_.getNode();
+***REMOVED***
 
 
 
@@ -471,3 +485,91 @@ xrx.widget.ShapeRectBottom.prototype.modelUpdateData = function() {
   var bottom = this.rect_.getBottom().toFixed(1);
   xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), bottom.toString());
 ***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED***
+xrx.widget.ShapeRectCreate = function(element) {
+
+  this.shape_;
+
+  this.rectX_;
+
+  this.rectY_;
+
+  this.rectWidth_;
+
+  this.rectHeight_;
+
+  this.rectLeft_;
+
+  this.rectTop_;
+
+  this.rectRight_;
+
+  this.rectBottom_;
+
+***REMOVED***
+***REMOVED***
+goog.inherits(xrx.widget.ShapeRectCreate, xrx.widget.ShapeRect);
+xrx.mvc.registerComponent('xrx-widget-shape-rect-create', xrx.widget.ShapeRectCreate);
+
+
+
+xrx.widget.ShapeRectCreate.prototype.mvcRefresh = function() {***REMOVED***
+
+
+
+xrx.widget.ShapeRectCreate.prototype.createDom = function() {
+***REMOVED***
+  this.shape_ = new xrx.shape.RectCreate(this.getDrawing());
+  // handle value changed
+  this.shape_.handleValueChanged = function() {
+    self.mvcModelUpdateData();
+  }
+  this.initCoordComponents();
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED***
+***REMOVED***
+xrx.widget.ShapeRectInsert = function(element) {
+
+  this.shape_;
+
+***REMOVED***
+***REMOVED***
+goog.inherits(xrx.widget.ShapeRectInsert, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-widget-shape-rect-insert', xrx.widget.ShapeRectInsert);
+
+
+
+xrx.widget.ShapeRectInsert.prototype.getNode = function() {***REMOVED***
+
+
+
+xrx.widget.ShapeRectInsert.prototype.mvcRefresh = function() {***REMOVED***
+
+
+
+xrx.widget.ShapeRectInsert.prototype.getShapeComponent = function() {
+  var groupDiv = goog.dom.getParentElement(this.element_);
+  var shapeDiv = goog.dom.getChildren(goog.dom.getChildren(groupDiv)[0])[0];
+  return xrx.mvc.getViewComponent(shapeDiv.id);
+***REMOVED***
+
+
+
+xrx.widget.ShapeRectInsert.prototype.execute = function() {
+  var origin = this.getNodeBind(0, 'xrxOrigin');
+  var target = this.getNodeBind(0, 'xrxTarget');
+  xrx.mvc.Controller.insertNode(this.getShapeComponent(), target, origin);
+***REMOVED***
+
+
+
+xrx.widget.ShapeRectInsert.prototype.createDom = function() {***REMOVED***

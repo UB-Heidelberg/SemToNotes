@@ -21,3 +21,5 @@ goog.require('xrx.widget.ShapePolygon');
 goog.require('xrx.widget.ShapePolygonCreate');
 goog.require('xrx.widget.ShapePolygonInsert');
 goog.require('xrx.widget.ShapeRect');
+goog.require('xrx.widget.ShapeRectCreate');
+goog.require('xrx.widget.ShapeRectInsert');

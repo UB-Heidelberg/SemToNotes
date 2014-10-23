@@ -113,12 +113,24 @@ xrx.shape.RectCreate = function(drawing) {
  ***REMOVED*****REMOVED***
   this.drawing_ = drawing;
 
+  this.rect_;
+
  ***REMOVED*****REMOVED***
   ***REMOVED*** Number of vertexes the user has created so far.
   ***REMOVED*** @type {number}
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
   this.count_ = 0;
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Returns the coordinates of the rectangle currently created.
+***REMOVED*** @return Array.<Array.<number>> The coordinates.
+***REMOVED***
+xrx.shape.RectCreate.prototype.getCoords = function() {
+  return this.rect_.getCoords();
 ***REMOVED***
 
 
@@ -131,7 +143,6 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
   var vertex;
   var shape;
   var coords;
-  var rect;
   var point = this.drawing_.getEventPoint(e);
 
   if (this.count_ === 1) { // The user creates the second vertex and
@@ -143,10 +154,8 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
     coords[1] = [point[0], coords[0][1]];
     coords[2] = [point[0], point[1]];
     coords[3] = [coords[0][0], point[1]];
-    rect = xrx.shape.Rect.create(this.drawing_);
-    rect.setCoords(coords);
-    this.drawing_.getLayerShape().addShapes(rect);
-    if (this.drawing_.handleCreated) this.drawing_.handleCreated();
+    this.rect_.setCoords(coords);
+    this.drawing_.getLayerShape().addShapes(this.rect_);
 
     // remove the temporary shapes
     this.drawing_.getLayerShapeCreate().removeShapes();
@@ -155,7 +164,20 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
     this.drawing_.draw();
     this.count_ = 0;
 
+    if (this.handleValueChanged) this.handleValueChanged();
+
+    if (this.drawing_.handleCreated) this.drawing_.handleCreated();
+
   } else { // The user creates the first vertex
+    // create a rectangle
+    this.rect_ = xrx.shape.Rect.create(this.drawing_);
+    coords = new Array(4);
+    coords[0] = point;
+    coords[1] = [0, point[1]];
+    coords[2] = [0, 0];
+    coords[3] = [point[0], 0];
+    this.rect_.setCoords(coords);
+    
     // insert a vertex
     vertex = xrx.shape.VertexDragger.create(this.drawing_);
     vertex.setCoords([point]);
@@ -164,6 +186,8 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
     // redraw
     this.drawing_.draw();
     this.count_ += 1;
+
+    if (this.handleValueChanged) this.handleValueChanged();
   }
 ***REMOVED***
 
