@@ -25,6 +25,8 @@ xrx.widget.Console = function(element) {
 
   this.tabSize_ = 2;
 
+  this.maxLines_ = 200;
+
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.Console, xrx.mvc.ComponentView);
@@ -50,15 +52,15 @@ xrx.widget.Console.prototype.getValue = function() {
 xrx.widget.Console.prototype.setValue = function(xml) {
   var cursor = xrx.mvc.Cursor.getNode(0);
   if (!cursor) {
-    var text = xrx.xml.Serialize.indent.forward(xml, this.tabSize_, undefined, 30);
+    var text = xrx.xml.Serialize.indent.forward(xml, this.tabSize_, undefined, this.maxLines_);
     goog.dom.setTextContent(this.element_, text);
   } else {
     var pilot = cursor.getInstance().getPilot();
     var token = cursor.getToken();
     var text = '';
-    text += goog.string.trimRight(xrx.xml.Serialize.indent.backward(xml, this.tabSize_, token, 15));
-    if (text.match('\n') && !text.match('\n').length < 15) text = '... ' + text;
-    text += xrx.xml.Serialize.indent.forward(xml, this.tabSize_, token, 15);
+    text += goog.string.trimRight(xrx.xml.Serialize.indent.backward(xml, this.tabSize_, token, this.maxLines_ / 2));
+    if (text.match('\n') && !text.match('\n').length < this.maxLines_ / 2) text = '... ' + text;
+    text += xrx.xml.Serialize.indent.forward(xml, this.tabSize_, token, this.maxLines_ / 2);
     text += ' ...';
     goog.dom.setTextContent(this.element_, text);
   }

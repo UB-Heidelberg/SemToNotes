@@ -116,10 +116,13 @@ xrx.widget.Canvas.prototype.refresh = function() {
 
 xrx.widget.Canvas.prototype.createDom = function() {
   var self = this;
+  // initialize drawing
   this.drawing_ = new xrx.drawing.Drawing(this.element_);
   this.drawing_.setModeView();
+  // search for graphics DIV
   this.graphics_ = goog.dom.getElementsByClass('xrx-widget-canvas-graphics',
       this.element_)[0];
+  // initialize named graphic groups
   var groups = goog.dom.getChildren(this.graphics_);
   goog.array.forEach(groups, function(e, i, a) {
     self.groups_.push(new xrx.widget.CanvasGroup(e, self));
@@ -160,7 +163,7 @@ xrx.widget.CanvasGroup.prototype.getName = function() {
 
 
 xrx.widget.CanvasGroup.prototype.getShapeCreate = function() {
-  var div = goog.dom.getChildren(goog.dom.getChildren(this.element_)[1])[0];
+  var div = goog.dom.getChildren(this.element_)[1];
   return xrx.mvc.getComponent(div.id);
 };
 

@@ -138,6 +138,11 @@ xrx.shape.PolygonCreate = function(drawing) {
 
 
 
+/**
+ * Returns the coordinates of the poly-line currently creating a
+ * polygon.
+ * @return Array.<Array.<number>> The coordinates.
+ */
 xrx.shape.PolygonCreate.prototype.getCoords = function() {
   return this.polyline_.getCoords();
 };

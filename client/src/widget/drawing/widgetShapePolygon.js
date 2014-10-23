@@ -43,7 +43,6 @@ xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
 
 xrx.widget.ShapePolygon.prototype.mvcRemove = function() {
   this.getDrawing().getLayerShape().removeShape(this.shape_);
-  console.log('remove');
   this.getDrawing().draw();
 };
 
@@ -88,6 +87,12 @@ xrx.widget.ShapePolygonCoords = function(polygon) {
   goog.base(this, polygon.getElement());
 };
 goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.Component);
+
+
+
+xrx.widget.ShapePolygonCoords.prototype.getContext = function() {
+  return this.polygon_.getNode();
+};
 
 
 
@@ -157,25 +162,34 @@ xrx.widget.ShapePolygonCreate.prototype.createDom = function() {
 xrx.widget.ShapePolygonInsert = function(element) {
 
   goog.base(this, element);
-
-  this.shape_;
 };
-goog.inherits(xrx.widget.ShapePolygonInsert, xrx.mvc.Insert);
+goog.inherits(xrx.widget.ShapePolygonInsert, xrx.mvc.ComponentView);
 xrx.mvc.registerComponent('xrx-widget-shape-polygon-insert', xrx.widget.ShapePolygonInsert);
 
 
 
-xrx.widget.ShapePolygonInsert.prototype.getShape = xrx.widget.Shape.prototype.getShape;
+xrx.widget.ShapePolygonInsert.prototype.getNode = function() {};
 
 
 
-xrx.widget.ShapePolygonInsert.prototype.findDrawing_ = xrx.widget.Shape.prototype.findDrawing_;
+xrx.widget.ShapePolygonInsert.prototype.mvcRefresh = function() {};
 
 
 
-xrx.widget.ShapePolygonInsert.prototype.getDrawing = xrx.widget.Shape.prototype.getDrawing;
+xrx.widget.ShapePolygonInsert.prototype.getShapeComponent = function() {
+  var groupDiv = goog.dom.getParentElement(this.element_);
+  var shapeDiv = goog.dom.getChildren(goog.dom.getChildren(groupDiv)[0])[0];
+  return xrx.mvc.getViewComponent(shapeDiv.id);
+};
 
 
 
-xrx.widget.ShapePolygonInsert.prototype.getRefExpression =
-    xrx.widget.ShapePolygonCoords.prototype.getRefExpression;
+xrx.widget.ShapePolygonInsert.prototype.execute = function() {
+  var origin = this.getNodeBind(0, 'xrxOrigin');
+  var target = this.getNodeBind(0, 'xrxTarget');
+  xrx.mvc.Controller.insertNode(this.getShapeComponent(), target, origin);
+};
+
+
+
+xrx.widget.ShapePolygonInsert.prototype.createDom = function() {};
