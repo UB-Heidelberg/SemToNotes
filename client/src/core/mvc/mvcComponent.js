@@ -77,8 +77,50 @@ xrx.mvc.Component.prototype.getId = function() {
 
 
 /**
+ * Whether the component has its own context other than a
+ * repeat context.
+ * @return {boolean}
+ */
+xrx.mvc.Component.prototype.hasContext = function() {
+  return !!this.getContext;
+};
+
+
+
+/**
+ * Returns the parent repeat component of the component.
+ * @return {xrx.mvc.Repeat} The repeat component.
+ */
+xrx.mvc.Component.prototype.getRepeat = function() {
+  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
+  return element ? xrx.mvc.getViewComponent(element.id) : undefined;
+};
+
+
+
+/**
+ * Returns the index of a dynamically repeated component.
+ * @return {number} The index.
+ */
+xrx.mvc.Component.prototype.getRepeatIndex = function() {
+  var value;
+  var repeatItem = goog.dom.getAncestorByClass(this.element_,
+      'xrx-mvc-repeat-item');
+  if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
+    value = goog.dom.dataset.get(this.element_, 'xrxRepeatIndex');
+  } else if (repeatItem) {
+    value = goog.dom.dataset.get(repeatItem, 'data-xrx-repeat-index');
+  } else {
+    throw Error('Repeat item could not be found.');
+  }
+  return parseInt(value);
+}; 
+
+
+
+/**
  * Returns the XPath expression found in the component's data-xrx-ref attribute.
- * @return {?string} The expression.
+ * @return {string} The expression.
  */
 xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxRef';
@@ -89,7 +131,7 @@ xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
 
 /**
  * Returns the bind ID found in the component's data-xrx-bind attribute.
- * @return {?string} The bind ID.
+ * @return {string} The bind ID.
  */
 xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxBind';
@@ -110,8 +152,8 @@ xrx.mvc.Component.prototype.getSrcUri = function(opt_dataset) {
 
 
 /**
- * Returns the bind referenced by the component.
- * @return {?xrx.mvc.Bind} The bind.
+ * Returns the bind component referenced by the component.
+ * @return {xrx.mvc.Bind} The bind component.
  */
 xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
   return xrx.mvc.getModelComponent(this.getBindId(opt_dataset));
@@ -119,36 +161,24 @@ xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
 
 
 
-xrx.mvc.Component.prototype.getRepeat = function() {
-  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
-  return !element ? undefined : xrx.mvc.getViewComponent(element.id);
-};
-
-
-
-xrx.mvc.Component.prototype.getRepeatIndex = function() {
-  var repeatItem = goog.dom.getAncestorByClass(this.element_,
-      'xrx-mvc-repeat-item');
-  if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
-    return this.element_.getAttribute('data-xrx-repeat-index');
-  } else if (repeatItem) {
-    return repeatItem.getAttribute('data-xrx-repeat-index');
-  } else {
-    throw Error('Repeat item could not be found.');
-  }
-}; 
-
-
-
+/**
+ * Returns the n'th node held by the component by means of a
+ * bind expression.
+ * @return {xrx.node.Node} The node.
+ */
 xrx.mvc.Component.prototype.getNodeBind = function(num, opt_dataset) {
   return this.getBind(opt_dataset).getNode(num);
 };
 
 
 
-xrx.mvc.Component.prototype.getNodeRef = function(opt_dataset) {
+/**
+ * Returns the node held by the component by means of a repeat component
+ * and a ref expression.
+ * @return {xrx.node.Node} The node.
+ */
+xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_context) {
   var repeat = this.getRepeat();
-  if (!repeat) return;
   var context = repeat.getNode(this.getRepeatIndex());
   if (!context) return;
   // TODO: Node conversion function
@@ -162,19 +192,43 @@ xrx.mvc.Component.prototype.getNodeRef = function(opt_dataset) {
 
 
 /**
+ * Returns the node held by the component by means of a context node
+ * and a ref expression.
+ * @return {xrx.node.Node} The node.
+ */
+xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_context) {
+  var context = this.getContext();
+  if (!context) return;
+  // TODO: Node conversion function
+  var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
+  var result = xrx.xpath.evaluate(this.getRefExpression(opt_dataset), nodeS, null,
+      xrx.xpath.XPathResultType.ANY_TYPE);
+  var next = result.iterateNext();
+  return next;
+};
+
+
+
+/**
  * Returns the node referenced by the component.
- * @return {xrx.node} The node.
+ * @return {xrx.node.Node} The node.
  */
 xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
+  var node;
   var n = num || 0;
-  if (this.getBind(opt_dataset)) {
-    return this.getNodeBind(n, opt_dataset);
+
+  if (this.hasContext()) {
+    node = this.getNodeRefWithContext(opt_dataset, this.getContext());
+  } else if (this.getBind(opt_dataset)) {
+    node = this.getNodeBind(n, opt_dataset);
   } else if (this.getRefExpression(opt_dataset)) {
-    return this.getNodeRef(opt_dataset);
+    node = this.getNodeRefWithRepeat(opt_dataset);
   } else {
     throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
         'attribute.');
   }
+
+  return node;
 };
 
 

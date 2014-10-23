@@ -85,9 +85,7 @@ word-wrap: break-word;
         <div class="xrx-widget-shape-polygon" data-xrx-ref="./self::*"
             data-xrx-ref-coords="./@points"></div>
       </div>
-      <div class="xrx-mvc-repeat" data-xrx-bind="b6">
-        <div class="xrx-widget-shape-polygon-create" data-xrx-ref="./self::*" data-xrx-ref-coords="./@points"></div>
-      </div>
+      <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b6" data-xrx-ref-coords="./@points"></div>
       <div class="xrx-widget-shape-polygon-insert" data-xrx-origin="b6" data-xrx-target="b0"></div>
     </div>
     <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-black-rectangles">
@@ -96,6 +94,11 @@ word-wrap: break-word;
             data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
             data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
       </div>
+      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b7"
+            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
+            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
+      </div>
+      <div class="xrx-widget-shape-rect-insert" data-xrx-origin="b7" data-xrx-target="b0"></div>
     </div>
     <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-red-rectangles">
       <div id="r3" class="xrx-mvc-repeat" data-xrx-bind="b4">
@@ -103,6 +106,11 @@ word-wrap: break-word;
             data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
             data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
       </div>
+      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b8"
+            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
+            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
+      </div>
+      <div class="xrx-widget-shape-rect-insert" data-xrx-origin="b8" data-xrx-target="b0"></div>
     </div>
   </div>
 </div>
@@ -127,14 +135,14 @@ word-wrap: break-word;
     <xrx:buttonDelete class="xrx-icon-delete32"/>
   </xrx:toolbar>
   <xrx:graphics>
-    <xrx:group name="my-black-polygons" origin="b6" bind="b0" at="2" position="into">
+    <xrx:group name="my-black-polygons" origin="b6" bind="b0" at="2" insert="into">
       <xrx:repeat id="r1" bind="b2">
         <xrx:polygon ref="./self::*">
           <xrx:coords ref="./@points"/>
         </xrx:polygon>
       </xrx:repeat>
     </xrx:group>
-    <xrx:group name="my-black-rectangles" origin="b7" bind="b0" at="2" position="into">
+    <xrx:group name="my-black-rectangles" origin="b7" bind="b0" at="2" insert="into">
       <xrx:repeat id="r2" bind="b3">
         <xrx:rect ref="./self::*">
           <xrx:left ref="./@ulx"/>
@@ -144,7 +152,7 @@ word-wrap: break-word;
         </xrx:rect>
       </xrx:repeat>
     </xrx:group>
-    <xrx:group name="my-red-rectangles" origin="b8" bind="b0" at="2" position="into">
+    <xrx:group name="my-red-rectangles" origin="b8" bind="b0" at="2" insert="into">
       <xrx:repeat id="r3" bind="b4">
         <xrx:rect ref="./self::*">
           <xrx:x ref="./@x"/>
