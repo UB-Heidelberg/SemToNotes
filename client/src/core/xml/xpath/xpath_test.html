@@ -11,21 +11,9 @@
 <script type="text/javascript" src="../../../../lib/jssaxparser/DefaultHandlers.js"></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
-  goog.require('goog.dom');
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.testing.jsunit');
-  goog.require('xrx.node');
-  goog.require('xrx.node.AttributeS');
-  goog.require('xrx.node.DocumentS');
-  goog.require('xrx.node.ElementS');
-  goog.require('xrx.node.TextS');
-  goog.require('xrx.node.AttributeB');
-  goog.require('xrx.node.DocumentB');
-  goog.require('xrx.node.ElementB');
-  goog.require('xrx.node.TextB');
-  goog.require('xrx.mvc.Instance');
-  goog.require('xrx.xpath');
-  goog.require('xrx.xpath.DataType');
-  goog.require('xrx.xpath.Function');
+  goog.require('xrx');
 </script>
 </head>
 <body>
@@ -35,7 +23,7 @@ var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a
 var element = goog.dom.createElement('div');
 goog.dom.setTextContent(element, xml);
 var instance = new xrx.mvc.Instance(element);
-var node = new xrx.node.DocumentB(instance);
+var node = new xrx.node.DocumentB(instance.getId());
 xrx.xpath.declareNamespace('xrx', 'http://www.monasterium.net/NS/xrx');
 
 function test01declareNamespace() {

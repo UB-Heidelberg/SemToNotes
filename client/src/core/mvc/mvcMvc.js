@@ -14,12 +14,9 @@ goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
 goog.require('goog.ui.IdGenerator');
 goog.require('goog.Promise');
-goog.require('xrx.func');
 goog.require('xrx.mvc');
-goog.require('xrx.node.Nodes');
 goog.require('xrx.mvc.Components');
 goog.require('xrx.widget.Widgets');
-goog.require('xrx.xpath');
 
 
 

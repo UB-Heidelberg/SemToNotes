@@ -7,7 +7,7 @@ goog.provide('xrx.mvc.Controller');
 
 
 
-goog.require('xrx.mvc');
+goog.require('xrx.mvc.Cursor');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
 goog.require('xrx.index.Rebuild');
@@ -42,6 +42,7 @@ xrx.mvc.Controller.updateNodeValue = function(control, opt_node, update) {
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
+  xrx.mvc.Cursor.setNode(node);
   switch(node.getType()) {
   case xrx.node.ATTRIBUTE:
     var attrValue = new xrx.token.AttrValue(token.label().clone());
@@ -66,6 +67,11 @@ xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
     var notTag = new xrx.token.NotTag(token.label().clone());
     notTag = pilot.notTag(token, notTag);
     xrx.mvc.Controller.insertEmptyTag(control, node, notTag, 0, newNode.getXml());
+    break;
+  case xrx.token.START_TAG:
+    var notTag = new xrx.token.NotTag(token.label().clone());
+    notTag = pilot.notTag(token, notTag);
+    xrx.mvc.Controller.insertFragment(control, node, notTag, 0, newNode.getXml());
     break;
   default:
     throw Error('Insert operation not supported for this token-type.');
@@ -143,6 +149,15 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
 xrx.mvc.Controller.insertEmptyTag = function(control, node, notTag, offset, emptyTag) {
   var diff = xrx.xml.Update.insertEmptyTag(node.getInstance(), notTag, offset, emptyTag);
   xrx.index.Rebuild.insertEmptyTag(node.getInstance().getIndex(), notTag, offset, diff);
+  xrx.mvc.Controller.mvcRecalculate();
+  xrx.mvc.Controller.mvcRefresh(control, node);
+};
+
+
+
+xrx.mvc.Controller.insertFragment = function(control, node, notTag, offset, xml) {
+  var diff = xrx.xml.Update.insertFragment(node.getInstance(), notTag, offset, xml);
+  xrx.index.Rebuild.insertFragment(node.getInstance().getIndex(), node.getInstance().xml());
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
 };

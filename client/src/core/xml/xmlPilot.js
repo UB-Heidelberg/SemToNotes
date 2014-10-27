@@ -336,7 +336,6 @@ xrx.xml.Pilot.prototype.startTag = function(context, target) {
  */
 xrx.xml.Pilot.prototype.endTag = function(context, target) {
   var endTag = this.path(context, target);
-
   return endTag;
 };
 
@@ -348,6 +347,20 @@ xrx.xml.Pilot.prototype.endTag = function(context, target) {
 xrx.xml.Pilot.prototype.emptyTag = function(context, target) {
   var emptyTag = this.path(context, target);
   return emptyTag;
+};
+
+
+
+/**
+ * Get the location of a fragment token.
+ *
+ *  
+ */
+xrx.xml.Pilot.prototype.fragment = function(context, target) {
+  var firstTag = target.firstTag();
+  var secondTag;
+  if (!(firstTag instanceof xrx.token.StartTag)) throw Error('Start-tag expected.');
+  console.log(firstTag);
 };
 
 

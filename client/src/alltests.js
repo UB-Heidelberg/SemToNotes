@@ -30,6 +30,8 @@ var _allTests = [
   './core/xml/xmlStream_test.html',
   './core/xml/xmlTraverse_test.html',
   './core/xml/xmlUpdate_test.html',
+  // core :: xml :: func
+  './core/xml/func/func_test.html',
   // core :: xml :: index
   './core/xml/index/indexIndex_test.html',
   // core :: xml :: node

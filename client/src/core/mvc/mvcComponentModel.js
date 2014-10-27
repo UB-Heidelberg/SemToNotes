@@ -7,7 +7,6 @@ goog.provide('xrx.mvc.ComponentModel');
 
 
 goog.require('xrx.mvc.Component');
-goog.require('xrx.mvc');
 
 
 

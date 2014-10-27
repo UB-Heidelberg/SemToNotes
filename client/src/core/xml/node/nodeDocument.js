@@ -8,7 +8,6 @@ goog.provide('xrx.node.Document');
 
 
 goog.require('xrx.xml.Label');
-goog.require('xrx.mvc');
 goog.require('xrx.node');
 goog.require('xrx.token');
 goog.require('xrx.xpath.NodeSet');

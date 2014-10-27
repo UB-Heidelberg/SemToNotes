@@ -6,11 +6,13 @@ goog.provide('xrx.mvc.Components');
 
 
 
+goog.require('xrx.mvc.Action');
 goog.require('xrx.mvc.Bind');
 goog.require('xrx.mvc.Insert');
 goog.require('xrx.mvc.Instance');
 goog.require('xrx.mvc.Namespace');
 goog.require('xrx.mvc.Repeat');
+goog.require('xrx.mvc.Setvalue');
 
 
 
@@ -30,4 +32,12 @@ xrx.mvc.Components['xrx-mvc-repeat'] = xrx.mvc.Repeat;
 
 
 
+xrx.mvc.Components['xrx-mvc-action'] = xrx.mvc.Action;
+
+
+
 xrx.mvc.Components['xrx-mvc-insert'] = xrx.mvc.Insert;
+
+
+
+xrx.mvc.Components['xrx-mvc-setvalue'] = xrx.mvc.Setvalue;
