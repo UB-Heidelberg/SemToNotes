@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.widget.Canvas</title>
+<title>XRX++ Unit Tests - xrx.widget.Canvas (RDF Example)</title>
 <script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
 <script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
 <script type="text/javascript" src="../../../lib/jssaxparser/LocatorImpls.js"></script>
@@ -15,17 +15,20 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
  ***REMOVED*****REMOVED***
+  goog.require('xrx.mvc');
   goog.require('xrx.widget.Canvas');
   goog.require('xrx.index.Row');
   goog.require('xrx.xpath');
 </script>
 <link rel="stylesheet" type="text/css" href="../../../res/xrx.css">
 <style>
+
 .xrx-widget-canvas-toolbar {
 position: absolute;
 left: 2px;
 top: 2px;
 }
+
 pre {
 width: 650px;
 white-space: pre-wrap;
@@ -33,6 +36,7 @@ white-space: -moz-pre-wrap;
 white-space: -o-pre-wrap;
 word-wrap: break-word;
 }
+
 </style>
 </head>
 <body>
@@ -41,25 +45,27 @@ word-wrap: break-word;
 
 <!-- namespaces -->
 <div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:tei" data-xrx-uri="http://www.tei-c.org/ns/1.0"></div>
+<div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:rdf" data-xrx-uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"></div>
+<div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:svg" data-xrx-uri="http://www.w3.org/2000/svg"></div>
+<div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:oa" data-xrx-uri="http://www.w3.org/ns/oa#"></div>
+<div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:ore" data-xrx-uri="http://www.openarchives.org/ore/terms/"></div>
 
 <!-- instances -->
-<div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.1.xml.txt"></div>
-<div id="i2" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.2.xml.txt"></div>
+<div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.3.xml.txt"></div>
+<div id="i2" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.4.xml.txt"></div>
 
 <!-- bind background image -->
-<div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
+<div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//oa:hasSource[1]/text()"></div>
 <!-- bind shapes -->
-<div id="b0" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic"></div>
-<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points]"></div>
-<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
-<div id="b4" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@x]"></div>
+<div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//svg:polygon[1]"></div>
 <!-- bind console -->
-<div id="b5" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')"></div>
+<div id="b3" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')/*"></div>
 <!-- bind create shapes -->
-<div id="b6" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[1]"></div>
-<div id="b7" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[2]"></div>
-<div id="b8" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[3]"></div>
-<div id="b9" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')"></div>
+<div id="b4" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//svg:polygon[1]"></div>
+<!-- bind console -->
+<div id="b5" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//rdf:Description[1]"></div>
+<!-- bind insert shapes -->
+<div id="b6" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//ore:ResourceMap[1]"></div>
 
 <!-- HTML UIDL -->
 <div id="d1" class="xrx-widget-canvas">
@@ -71,11 +77,7 @@ word-wrap: break-word;
     <span class="xrx-widget-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
     <span class="xrx-widget-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
     <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapePolygon32"
-        title="Draw a red polygon." data-xrx-graphics-name="my-black-polygons"></span>
-    <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapeRect32"
-        title="Draw a red rectangle." data-xrx-graphics-name="my-black-rectangles"></span>
-    <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapeRect32"
-        title="Draw a blue rectangle." data-xrx-graphics-name="my-red-rectangles"></span>
+        title="Draw a black polygon." data-xrx-graphics-name="my-black-polygons"></span>
     <span class="xrx-widget-canvas-toolbar-item-modify xrx-icon-move32"></span>
     <span class="xrx-widget-canvas-toolbar-item-delete xrx-icon-delete32"></span>
   </div>
@@ -85,37 +87,13 @@ word-wrap: break-word;
         <div class="xrx-widget-shape-polygon" data-xrx-ref="./self::*"
             data-xrx-ref-coords="./@points"></div>
       </div>
-      <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b6" data-xrx-ref-coords="./@points"></div>
-      <div class="xrx-widget-shape-polygon-insert" data-xrx-origin="b6" data-xrx-target="b0"></div>
-    </div>
-    <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-black-rectangles">
-      <div id="r2" class="xrx-mvc-repeat" data-xrx-bind="b3"> 
-        <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*"
-            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
-      </div>
-      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b7"
-            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
-      </div>
-      <div class="xrx-widget-shape-rect-insert" data-xrx-origin="b7" data-xrx-target="b0"></div>
-    </div>
-    <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-red-rectangles">
-      <div id="r3" class="xrx-mvc-repeat" data-xrx-bind="b4">
-        <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*"
-            data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
-            data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
-      </div>
-      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b8"
-            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
-      </div>
-      <div class="xrx-widget-shape-rect-insert" data-xrx-origin="b8" data-xrx-target="b0"></div>
+      <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b4" data-xrx-ref-coords="./@points"></div>
+      <div class="xrx-widget-shape-polygon-insert" data-xrx-origin="b5" data-xrx-target="b6"></div>
     </div>
   </div>
 </div>
-<pre id="c1" class="xrx-widget-console" data-xrx-bind="b9"></pre>
-<pre id="c2" class="xrx-widget-console" data-xrx-bind="b5"></pre>
+<pre id="c2" class="xrx-widget-console" data-xrx-bind="b4"></pre>
+<pre id="c1" class="xrx-widget-console" data-xrx-bind="b3"></pre>
 
 <!-- XML UIDL -->
 <xrx:canvas id="d1" xmlns:xrx="http://monasterium.net/NS/xrx" style="display:none">
@@ -168,6 +146,7 @@ word-wrap: break-word;
 <script type="text/javascript">
  
 function test() {
+  console.log(xrx.mvc.getModelComponent('b6').getNode(0).getXml());
 ***REMOVED***
 
 </script>

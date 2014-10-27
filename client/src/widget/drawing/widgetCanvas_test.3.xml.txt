@@ -1,0 +1,82 @@
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:oa="http://www.w3.org/ns/oa#"
+         xmlns:foaf="http://xmlns.com/foaf/spec/"
+         xmlns:dc="http://purl.org/dc/terms/"
+         xmlns:cnt="http://www.w3.org/2011/content#"
+         xmlns:exif="http://www.w3.org/2003/12/exif/ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:ore="http://www.openarchives.org/ore/terms/">
+  <rdf:Description rdf:about="http://hkikoeln.github.io/SemToNotes/Canvas1">
+    <exif:height rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1400</exif:height>
+    <exif:width rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1000</exif:width>
+    <rdfs:label>Page 1</rdfs:label>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://hkikoeln.github.io/SemToNotes/AnnoList1">
+    <rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
+    <ore:aggregates rdf:resource="http://hkikoeln.github.io/SemToNotes/Anno1"/>
+    <ore:aggregates rdf:resource="http://hkikoeln.github.io/SemToNotes/Anno2"/>
+  </rdf:Description>
+  <ore:ResourceMap rdf:about="http://hkikoeln.github.io/SemToNotes/ResourceMap1">
+    <ore:describes rdf:resource="http://hkikoeln.github.io/SemToNotes/AnnoList1"/>
+    <dc:modified>2011-08-24T19:09:59Z</dc:modified>
+    <dc:creator>
+      <dc:Agent rdf:about="http://njh.me/Agent1">
+        <foaf:name>Creator Name</foaf:name>
+      </dc:Agent>
+    </dc:creator>
+  </ore:ResourceMap>
+  <rdf:Description rdf:about="http://hkikoeln.github.io/SemToNotes/Anno1">
+    <oa:annotatedAt>2014-07-18T02:03:58Z</oa:annotatedAt>
+    <oa:annotatedBy>
+      <foaf:Person rdf:about="http://hkikoeln.github.io/SemToNotes/Person">
+        <foaf:mbox>person@hkikoeln.github.io</foaf:mbox>
+        <foaf:name>Person</foaf:name>
+      </foaf:Person>
+    </oa:annotatedBy>
+    <oa:serializedAt>2014-07-18T02:03:58Z</oa:serializedAt>
+    <oa:serializedBy rdf:resource="http://hkikoeln.github.io/SemToNotes"/>
+    <oa:motivatedBy rdf:resource="http://www.shared-canvas.org/ns/painting"/>
+    <oa:hasBody>
+      <oa:SemanticTag rdf:about="http://www.iconclass.org/31A221"/>
+    </oa:hasBody>
+    <oa:hasTarget>
+      <oa:SpecificResource rdf:about="http://hkikoeln.github.io/SemToNotes/SpecificResource1">
+        <oa:hasSelector>
+          <cnt:ContentAsXML rdf:about="http://hkikoeln.github.io/SemToNotes/Content1">
+            <cnt:rest>
+              <svg:polygon xmlns:svg="http://www.w3.org/2000/svg" points="14.8,41.0 7.4,80.7 56.5,32.2 56.8,32.8 67.1,33.4 5.5,33.7 67.1,33.3 4.6,32.2"/>
+            </cnt:rest>
+          </cnt:ContentAsXML>
+        </oa:hasSelector>
+        <oa:hasSource>./widgetCanvas_test.jpg</oa:hasSource>
+      </oa:SpecificResource>
+    </oa:hasTarget>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://hkikoeln.github.io/SemToNotes/Anno2">
+    <oa:annotatedAt>2014-07-18T02:03:58Z</oa:annotatedAt>
+    <oa:annotatedBy>
+      <foaf:Person rdf:about="http://hkikoeln.github.io/SemToNotes/Person">
+        <foaf:mbox>person@hkikoeln.github.io</foaf:mbox>
+        <foaf:name>Person</foaf:name>
+      </foaf:Person>
+    </oa:annotatedBy>
+    <oa:serializedAt>2014-07-18T02:03:58Z</oa:serializedAt>
+    <oa:serializedBy rdf:resource="http://hkikoeln.github.io/SemToNotes"/>
+    <oa:motivatedBy rdf:resource="http://www.shared-canvas.org/ns/painting"/>
+    <oa:hasBody>
+      <oa:SemanticTag rdf:about="http://www.iconclass.org/31A221"/>
+    </oa:hasBody>
+    <oa:hasTarget>
+      <oa:SpecificResource rdf:about="http://hkikoeln.github.io/SemToNotes/SpecificResource1">
+        <oa:hasSelector>
+          <cnt:ContentAsXML rdf:about="http://hkikoeln.github.io/SemToNotes/Content1">
+            <cnt:rest>
+              <svg:polygon xmlns:svg="http://www.w3.org/2000/svg" points="14.8,41.0 7.4,80.7 56.5,32.2 56.8,32.8 67.1,33.4 5.5,33.7 67.1,33.3 4.6,32.2"/>
+            </cnt:rest>
+          </cnt:ContentAsXML>
+        </oa:hasSelector>
+        <oa:hasSource>./widgetCanvas_test.jpg</oa:hasSource>
+      </oa:SpecificResource>
+    </oa:hasTarget>
+  </rdf:Description>
+</rdf:RDF>

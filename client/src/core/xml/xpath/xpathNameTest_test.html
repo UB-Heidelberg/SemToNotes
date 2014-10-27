@@ -13,15 +13,9 @@
 <script type="text/javascript">
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
+  goog.require('xrx');
   goog.require('xrx.node');
-  goog.require('xrx.node.AttributeS');
-  goog.require('xrx.node.DocumentS');
-  goog.require('xrx.node.ElementS');
-  goog.require('xrx.node.TextS');
-  goog.require('xrx.node.AttributeB');
-  goog.require('xrx.node.DocumentB');
-  goog.require('xrx.node.ElementB');
-  goog.require('xrx.node.TextB');
+ ***REMOVED*****REMOVED***
   goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
@@ -39,18 +33,18 @@ function test01namespace() {
   xrx.xpath.declareNamespace('xmlns:y', 'http://example.org/y');
 
   // '//y:y'
-  var r1 = xrx.xpath.evaluate('//y:y', new xrx.node.DocumentB(instance),
+  var r1 = xrx.xpath.evaluate('//y:y', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals(1, r1.snapshotLength);
   assertEquals('<y:y xmlns:y="http://example.org/y"/>', r1.iterateNext().getXml());
 
   // '//x:z'
-  var r2 = xrx.xpath.evaluate('//x:z', new xrx.node.DocumentB(instance),
+  var r2 = xrx.xpath.evaluate('//x:z', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals('<z/>', r2.iterateNext().getXml());
 
   // '//z'
-  var r3 = xrx.xpath.evaluate('//z', new xrx.node.DocumentB(instance),
+  var r3 = xrx.xpath.evaluate('//z', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   //assertEquals(0, r3.snapshotLength);
 ***REMOVED***

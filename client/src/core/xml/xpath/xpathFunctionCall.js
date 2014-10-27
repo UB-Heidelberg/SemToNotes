@@ -4,7 +4,10 @@
 
 goog.provide('xrx.xpath.FunctionCall');
 
+
+
 goog.require('goog.array');
+goog.require('goog.date.DateTime');
 goog.require('goog.dom');
 goog.require('goog.string');
 goog.require('xrx.xpath.DataType');
@@ -187,6 +190,12 @@ xrx.xpath.FunctionCall.BuiltInFunc = {
       function(ctx, expr) {
         return expr.evaluate(ctx).getLength();
       }, 1, 1, true),
+  CURRENT_DATE_TIME: xrx.xpath.FunctionCall.createFunc('current-dateTime',
+      xrx.xpath.DataType.STRING, false, false, false,
+      function(ctx, expr) {
+        var dateTime = new goog.date.DateTime();
+        return dateTime.toXmlDateTime(true);
+      }, 0, 0, false),
   FALSE: xrx.xpath.FunctionCall.createFunc('false',
       xrx.xpath.DataType.BOOLEAN, false, false, false,
       function(ctx) {

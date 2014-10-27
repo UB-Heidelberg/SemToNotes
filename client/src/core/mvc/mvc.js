@@ -8,14 +8,13 @@ goog.provide('xrx.mvc');
 
 ***REMOVED***
 goog.require('goog.object');
-goog.require('xrx.mvc.Components');
 
 
 
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.mvc = function() {***REMOVED***
+xrx.mvc =  {***REMOVED***
 
 
 

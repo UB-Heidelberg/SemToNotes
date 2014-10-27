@@ -1,11 +1,12 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class implementing the insert action.
+***REMOVED*** @fileoverview A class representing an insert action.
 ***REMOVED***
 
 goog.provide('xrx.mvc.Insert');
 
 
 
+***REMOVED***
 goog.require('xrx.mvc.Controller');
 
 

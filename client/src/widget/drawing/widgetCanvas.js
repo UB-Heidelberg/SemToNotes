@@ -63,24 +63,13 @@ xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
 
 
 
-xrx.widget.Canvas.prototype.getWidgetShapeCreate = function() {
-  var widget;
+xrx.widget.Canvas.prototype.getActiveGroup = function() {
+  var group;
   goog.array.forEach(this.groups_, function(e, i, a) {
     if (e.getName() === this.nameInsertShapeCreate_)
-        widget = e.getShapeCreate();
+        group = e;
   }, this);
-  return widget;
-***REMOVED***
-
-
-
-xrx.widget.Canvas.prototype.getWidgetShapeInsert = function() {
-  var widget;
-  goog.array.forEach(this.groups_, function(e, i, a) {
-    if (e.getName() === this.nameInsertShapeCreate_)
-        widget = e.getShapeInsert();
-  }, this);
-  return widget;
+  return group;
 ***REMOVED***
 
 
@@ -129,7 +118,7 @@ xrx.widget.Canvas.prototype.createDom = function() {
   });
   // handle shape create
   this.drawing_.handleCreated = function() {
-    self.getWidgetShapeInsert().execute();
+    self.getActiveGroup().dispatchShapeCreated();
     self.refresh();
  ***REMOVED*****REMOVED***
 ***REMOVED***
@@ -146,6 +135,17 @@ xrx.widget.CanvasGroup = function(element, canvas) {
   this.canvas_ = canvas;
 
   this.name_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
+***REMOVED***
+
+
+
+xrx.widget.CanvasGroup.prototype.dispatchShapeCreated = function() {
+  var actionElement = goog.dom.findNode(this.element_, function(node) {
+    return goog.dom.isElement(node) &&
+    goog.dom.dataset.get(node, 'xrxEvent') === 'xrx-event-graphic-created' ?
+        true : false; 
+  });
+  if (actionElement) xrx.mvc.getModelComponent(actionElement.id).execute();
 ***REMOVED***
 
 
