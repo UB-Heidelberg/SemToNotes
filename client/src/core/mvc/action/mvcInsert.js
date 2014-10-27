@@ -1,11 +1,12 @@
 /**
- * @fileoverview A class implementing the insert action.
+ * @fileoverview A class representing an insert action.
  */
 
 goog.provide('xrx.mvc.Insert');
 
 
 
+goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.mvc.Controller');
 
 

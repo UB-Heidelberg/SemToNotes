@@ -7,8 +7,8 @@ goog.provide('xrx.mvc.Component');
 
 
 
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
-goog.require('goog.events.EventHandler');
 goog.require('goog.ui.IdGenerator');
 
 
@@ -24,13 +24,15 @@ xrx.mvc.Component = function(element) {
 
 
 
-xrx.mvc.Component.idGenerator = goog.ui.IdGenerator.getInstance();
+xrx.mvc.Component.prototype.getAction = function(eventKey) {
+  xrx.mvc.getComponent
+};
 
 
 
 /**
  * Function is called by the model-view-controller when the component
- * is inizialized the first time. Each component must implement this.
+ * is initialized the first time. Each component must implement this.
  */
 xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
 
@@ -67,7 +69,7 @@ xrx.mvc.Component.prototype.getId = function() {
     if (this.element_.id && this.element_.id !== '') {
       this.id_ = this.element_.id;
     } else {
-      this.id_ = xrx.mvc.Component.idGenerator.getNextUniqueId();
+      this.id_ = goog.ui.IdGenerator.getInstance().getNextUniqueId();
       this.element_.id = this.id_;
     }
   }
@@ -109,7 +111,7 @@ xrx.mvc.Component.prototype.getRepeatIndex = function() {
   if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
     value = goog.dom.dataset.get(this.element_, 'xrxRepeatIndex');
   } else if (repeatItem) {
-    value = goog.dom.dataset.get(repeatItem, 'data-xrx-repeat-index');
+    value = goog.dom.dataset.get(repeatItem, 'xrxRepeatIndex');
   } else {
     throw Error('Repeat item could not be found.');
   }
@@ -216,7 +218,6 @@ xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_co
 xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
   var node;
   var n = num || 0;
-
   if (this.hasContext()) {
     node = this.getNodeRefWithContext(opt_dataset, this.getContext());
   } else if (this.getBind(opt_dataset)) {
@@ -227,7 +228,6 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
     throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
         'attribute.');
   }
-
   return node;
 };
 

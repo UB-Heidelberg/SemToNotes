@@ -283,7 +283,7 @@ xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-create', xrx.widget.Ca
 xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
   var canvas = this.getToolbar().getCanvas();
   canvas.setNameShapeCreate(this.graphicsName_);
-  canvas.getDrawing().setModeCreate(canvas.getWidgetShapeCreate().getShape());
+  canvas.getDrawing().setModeCreate(canvas.getActiveGroup().getShapeCreate().getShape());
 };
 
 

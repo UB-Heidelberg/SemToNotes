@@ -8,14 +8,13 @@ goog.provide('xrx.mvc');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.object');
-goog.require('xrx.mvc.Components');
 
 
 
 /**
  * @constructor
  */
-xrx.mvc = function() {};
+xrx.mvc =  {};
 
 
 
