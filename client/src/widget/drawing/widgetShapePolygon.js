@@ -114,7 +114,7 @@ xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
 
 
 xrx.widget.ShapePolygonCoords.prototype.modelUpdateData = function(coords) {
-  xrx.mvc.Controller.updateNodeValue(this.polygon_, this.getNode(),
+  xrx.mvc.Controller.updateNode(this.polygon_, this.getNode(),
       this.polygon_.serializeCoords(this.polygon_.getShape().getCoords()));
 ***REMOVED***
 

@@ -37,17 +37,19 @@ xrx.mvc.Controller.currentOperation = '';
 
 
 
-xrx.mvc.Controller.updateNodeValue = function(control, opt_node, update) {
+xrx.mvc.Controller.updateNode = function(control, opt_node, update) {
   var node = opt_node || control.getNode();
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.UPDATE;
-  xrx.mvc.Cursor.setNode(node);
   switch(node.getType()) {
   case xrx.node.ATTRIBUTE:
     var attrValue = new xrx.token.AttrValue(token.label().clone());
     attrValue = pilot.attrValue(node.parent_.getToken(), attrValue);
     xrx.mvc.Controller.replaceAttrValue(control, node, attrValue, update);
+    break;
+  case xrx.node.TEXT:
+    xrx.mvc.Controller.replaceNotTag(control, node, token, update);
     break;
   default:
     throw Error('Value update not supported for this node-type.');
@@ -97,12 +99,11 @@ xrx.mvc.Controller.removeNode = function(control, opt_node) {
 
 
 
-xrx.mvc.Controller.replaceNotTag = function(control, token, update) {
-  var node = control.getNode();
-  var diff = xrx.xml.Update.replaceNotTag(node.getInstance(), token, update);
-  if (node instanceof xrx.node.Binary) xrx.index.Rebuild.replaceNotTag(node.getInstance().getIndex(),
-      token, diff);
-  xrx.mvc.Controller.mvcRefresh(control);
+xrx.mvc.Controller.replaceNotTag = function(control, node, token, update) {
+  var instance = node.getInstance();
+  var diff = xrx.xml.Update.replaceNotTag(instance, token, update);
+  xrx.index.Rebuild.replaceNotTag(instance.getIndex(), token, diff);
+  xrx.mvc.Controller.mvcRefresh(control, node);
 ***REMOVED***
 
 
@@ -220,7 +221,7 @@ xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
   var nIter;
   for (var c in xrx.mvc.getViewComponents()) {
     component = xrx.mvc.getViewComponent(c);
-    nIter = component.getNode();
+    nIter = component.getNode(0);
     if (component instanceof xrx.mvc.Repeat) {
     } else if (component === control) {
     } else if (component && node && nIter && xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.UPDATE) {
