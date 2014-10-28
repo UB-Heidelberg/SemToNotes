@@ -131,6 +131,13 @@ xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
 
 
 
+xrx.mvc.Component.prototype.getValueExpression = function(opt_dataset) {
+  var dataset = opt_dataset || 'xrxValue';
+  return goog.dom.dataset.get(this.getElement(), dataset);
+};
+
+
+
 /**
  * Returns the bind ID found in the component's data-xrx-bind attribute.
  * @return {string} The bind ID.
@@ -229,6 +236,16 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
         'attribute.');
   }
   return node;
+};
+
+
+
+/**
+ * 
+ */
+xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
+  return xrx.xpath.evaluate(this.getValueExpression(opt_dataset), undefined, null,
+      xrx.xpath.XPathResultType.STRING_TYPE).stringValue;  
 };
 
 
