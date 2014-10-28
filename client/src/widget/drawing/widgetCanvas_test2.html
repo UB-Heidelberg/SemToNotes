@@ -49,13 +49,14 @@ word-wrap: break-word;
 <div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:svg" data-xrx-uri="http://www.w3.org/2000/svg"></div>
 <div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:oa" data-xrx-uri="http://www.w3.org/ns/oa#"></div>
 <div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:ore" data-xrx-uri="http://www.openarchives.org/ore/terms/"></div>
+<div class="xrx-mvc-namespace" data-xrx-prefix="xmlns:cnt" data-xrx-uri="http://www.w3.org/2011/content#"></div>
 
 <!-- instances -->
 <div id="i1" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.3.xml.txt"></div>
 <div id="i2" class="xrx-mvc-instance" data-xrx-src="./widgetCanvas_test.4.xml.txt"></div>
 
-<!-- bind background image -->
-<div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//oa:hasSource[1]/text()"></div>
+<!-- bind background image --> 
+<div id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//oa:hasSource[1]/text()"></div>
 <!-- bind shapes -->
 <div id="b2" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//svg:polygon[1]"></div>
 <!-- bind console -->
@@ -66,6 +67,13 @@ word-wrap: break-word;
 <div id="b5" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//rdf:Description[1]"></div>
 <!-- bind insert shapes -->
 <div id="b6" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')//ore:ResourceMap[1]"></div>
+<!-- bindings for the origin template-->
+<div id="b-annotatedAt"    class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//oa:annotatedAt/text()"></div>
+<div id="b-serializedAt"   class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//oa:serializedAt/text()"></div>
+<div id="b-uriDescription" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//rdf:Description/@rdf:about"></div>
+<div id="b-uriResource"    class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//oa:SpecificResource/@rdf:about"></div>
+<div id="b-uriContent"     class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i2')//cnt:ContentAsXML/@rdf:about"></div>
+<!-- bindings for the XML consoles -->
 
 <!-- HTML UIDL -->
 <div id="d1" class="xrx-widget-canvas">
@@ -88,11 +96,21 @@ word-wrap: break-word;
             data-xrx-ref-coords="./@points"></div>
       </div>
       <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b4" data-xrx-ref-coords="./@points"></div>
-      <div class="xrx-widget-shape-polygon-insert" data-xrx-origin="b5" data-xrx-target="b6"></div>
+      <div class="xrx-mvc-action" data-xrx-event="xrx-event-graphic-modified">
+        <div class="xrx-mvc-update" data-xrx-bind=""></div>
+      </div>
+      <div class="xrx-mvc-action" data-xrx-event="xrx-event-graphic-created">
+        <div class="xrx-mvc-update" data-xrx-bind="b-uriDescription" data-xrx-value="concat('http://hkikoeln.github.io/SemToNotes/', xrx:uuid())"></div>
+        <div class="xrx-mvc-update" data-xrx-bind="b-annotatedAt" data-xrx-value="current-dateTime()"></div>
+        <div class="xrx-mvc-update" data-xrx-bind="b-serializedAt" data-xrx-value="current-dateTime()"></div>
+        <div class="xrx-mvc-update" data-xrx-bind="b-uriResource" data-xrx-value="concat('http://hkikoeln.github.io/SemToNotes/', xrx:uuid())"></div>
+        <div class="xrx-mvc-update" data-xrx-bind="b-uriContent" data-xrx-value="concat('http://hkikoeln.github.io/SemToNotes/', xrx:uuid())"></div>
+        <div class="xrx-mvc-insert" data-xrx-origin="b5" data-xrx-target="b6"></div>
+      </div>
     </div>
   </div>
 </div>
-<pre id="c2" class="xrx-widget-console" data-xrx-bind="b4"></pre>
+<pre id="c2" class="xrx-widget-console" data-xrx-bind="b5"></pre>
 <pre id="c1" class="xrx-widget-console" data-xrx-bind="b3"></pre>
 
 <!-- XML UIDL -->

@@ -12,7 +12,7 @@ goog.require('xrx.mvc.Insert');
 goog.require('xrx.mvc.Instance');
 goog.require('xrx.mvc.Namespace');
 goog.require('xrx.mvc.Repeat');
-goog.require('xrx.mvc.Setvalue');
+goog.require('xrx.mvc.Update');
 
 
 
@@ -40,4 +40,4 @@ xrx.mvc.Components['xrx-mvc-insert'] = xrx.mvc.Insert;
 
 
 
-xrx.mvc.Components['xrx-mvc-setvalue'] = xrx.mvc.Setvalue;
+xrx.mvc.Components['xrx-mvc-update'] = xrx.mvc.Update;

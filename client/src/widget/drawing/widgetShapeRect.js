@@ -301,7 +301,7 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
 
 xrx.widget.ShapeRectX.prototype.modelUpdateData = function() {
   var x = this.rect_.getX().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), x.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), x.toString());
 };
 
 
@@ -327,7 +327,7 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
 
 xrx.widget.ShapeRectY.prototype.modelUpdateData = function() {
   var y = this.rect_.getY().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), y.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), y.toString());
 };
 
 
@@ -353,7 +353,7 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
 
 xrx.widget.ShapeRectWidth.prototype.modelUpdateData = function() {
   var width = this.rect_.getWidth().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), width.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), width.toString());
 };
 
 
@@ -379,7 +379,7 @@ xrx.widget.ShapeRectHeight.prototype.refresh = function() {
 
 xrx.widget.ShapeRectHeight.prototype.modelUpdateData = function() {
   var height = this.rect_.getHeight().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), height.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), height.toString());
 };
 
 
@@ -405,7 +405,7 @@ xrx.widget.ShapeRectLeft.prototype.refresh = function() {
 
 xrx.widget.ShapeRectLeft.prototype.modelUpdateData = function() {
   var left = this.rect_.getLeft().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), left.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), left.toString());
 };
 
 
@@ -431,7 +431,7 @@ xrx.widget.ShapeRectTop.prototype.refresh = function() {
 
 xrx.widget.ShapeRectTop.prototype.modelUpdateData = function() {
   var top = this.rect_.getTop().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), top.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), top.toString());
 };
 
 
@@ -457,7 +457,7 @@ xrx.widget.ShapeRectRight.prototype.refresh = function() {
 
 xrx.widget.ShapeRectRight.prototype.modelUpdateData = function() {
   var right = this.rect_.getRight().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), right.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), right.toString());
 };
 
 
@@ -483,7 +483,7 @@ xrx.widget.ShapeRectBottom.prototype.refresh = function() {
 
 xrx.widget.ShapeRectBottom.prototype.modelUpdateData = function() {
   var bottom = this.rect_.getBottom().toFixed(1);
-  xrx.mvc.Controller.updateNodeValue(this.rect_, this.getNode(), bottom.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), bottom.toString());
 };
 
 
