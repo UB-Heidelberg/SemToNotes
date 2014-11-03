@@ -108,22 +108,22 @@ xrx.widget.Canvas.prototype.createDom = function() {
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
   this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
-  if (this.drawing_.getEngine().isAvailable()) {
-    this.drawing_.setModeView();
-    // search for graphics DIV
-    this.graphics_ = goog.dom.getElementsByClass('xrx-widget-canvas-graphics',
-        this.element_)[0];
-    // initialize named graphic groups
-    var groups = goog.dom.getChildren(this.graphics_);
-    goog.array.forEach(groups, function(e, i, a) {
-      self.groups_.push(new xrx.widget.CanvasGroup(e, self));
-    });
-    // handle shape create
-    this.drawing_.handleCreated = function() {
-      self.getActiveGroup().dispatchShapeCreated();
-      self.refresh();
-   ***REMOVED*****REMOVED***
-  }
+  console.log(this.drawing_);
+  if (!this.drawing_.getEngine().isAvailable()) return;
+  this.drawing_.setModeView();
+  // search for graphics DIV
+  this.graphics_ = goog.dom.getElementsByClass('xrx-widget-canvas-graphics',
+      this.element_)[0];
+  // initialize named graphic groups
+  var groups = goog.dom.getChildren(this.graphics_);
+  goog.array.forEach(groups, function(e, i, a) {
+    self.groups_.push(new xrx.widget.CanvasGroup(e, self));
+  });
+  // handle shape create
+  this.drawing_.handleCreated = function() {
+    self.getActiveGroup().dispatchShapeCreated();
+    self.refresh();
+ ***REMOVED*****REMOVED***
 ***REMOVED***
 
 
