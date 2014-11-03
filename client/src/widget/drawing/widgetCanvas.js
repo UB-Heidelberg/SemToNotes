@@ -105,7 +105,6 @@ xrx.widget.Canvas.prototype.refresh = function() {
 
 
 xrx.widget.Canvas.prototype.createDom = function() {
-  console.log('xrx.widget.Canvas');
   var self = this;
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
@@ -203,7 +202,6 @@ xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
 
 
 xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
-  console.log('xrx.widget.CanvasBackgroundImage');
   var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
   this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
 };
