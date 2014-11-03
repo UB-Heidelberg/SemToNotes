@@ -1,12 +1,14 @@
 
+.xrx-mvc-instance {
+display: none;
+}
+
 .xrx-ui-state-mouseover {
-border-left: solid grey 1px;
-border-right: solid grey 1px;
+border-bottom: solid grey 4px;
 }
 
 .xrx-ui-state-selected {
-border-left: solid #FF6633 1px;
-border-right: solid #FF6633 1px;
+border-bottom: solid #FF6633 4px;
 }
 
 .xrx-icon-openhand32 {
