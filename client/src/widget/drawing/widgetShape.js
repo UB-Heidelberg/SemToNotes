@@ -29,7 +29,7 @@ goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 xrx.widget.Shape.prototype.findDrawing_ = function() {
   var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
   var canvasComponent = xrx.mvc.getViewComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
-  this.drawing_ = canvasComponent.getDrawing()
+  this.drawing_ = canvasComponent.getDrawing();
   return this.drawing_;
 ***REMOVED***
 
