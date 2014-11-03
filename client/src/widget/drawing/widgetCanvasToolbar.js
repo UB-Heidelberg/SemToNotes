@@ -57,7 +57,6 @@ xrx.widget.CanvasToolbar.prototype.mvcRefresh = function() {
 
 
 xrx.widget.CanvasToolbar.prototype.createDom = function() {
-  console.log('xrx.widget.CanvasToolbar');
   if (!this.getCanvas().getDrawing().getEngine().isAvailable())
       goog.style.setStyle(this.element_, 'display', 'none');
 ***REMOVED***
