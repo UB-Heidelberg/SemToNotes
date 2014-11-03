@@ -99,6 +99,7 @@ xrx.widget.Canvas.prototype.refresh = function() {
     repeat = goog.dom.getChildren(e.getElement())[0];
     xrx.mvc.getComponent(repeat.id).mvcRefresh();
   });
+  this.drawing_.draw();
 };
 
 
@@ -108,8 +109,6 @@ xrx.widget.Canvas.prototype.createDom = function() {
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
   this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
-  console.log('########################################');
-  console.log(this.drawing_);
   if (!this.drawing_.getEngine().isAvailable()) return;
   this.drawing_.setModeView();
   // search for graphics DIV
