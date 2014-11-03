@@ -144,7 +144,7 @@ xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-view', xrx.widget.Canv
 
 xrx.widget.CanvasToolbarItem.prototype.handleToggle = function() {
   var drawing = this.getToolbar().getCanvas().getDrawing();
-  drawing.setModeView();  
+  if (drawing.getEngine().isAvailable()) drawing.setModeView();  
 ***REMOVED***
 
 
@@ -282,6 +282,7 @@ xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-create', xrx.widget.Ca
 
 xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
   var canvas = this.getToolbar().getCanvas();
+  if (!canvas.getDrawing().getEngine().isAvailable()) return;
   canvas.setNameShapeCreate(this.graphicsName_);
   canvas.getDrawing().setModeCreate(canvas.getActiveGroup().getShapeCreate().getShape());
 ***REMOVED***
@@ -310,7 +311,7 @@ xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-modify', xrx.widget.Ca
 
 xrx.widget.CanvasToolbarItemModify.prototype.handleToggle = function() {
   var drawing = this.getToolbar().getCanvas().getDrawing();
-  drawing.setModeModify();
+  if (drawing.getEngine().isAvailable()) drawing.setModeModify();
 ***REMOVED***
 
 
@@ -336,7 +337,7 @@ xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-delete', xrx.widget.Ca
 
 xrx.widget.CanvasToolbarItemDelete.prototype.handleToggle = function() {
   var drawing = this.getToolbar().getCanvas().getDrawing();
-  drawing.setModeDelete();
+  if (drawing.getEngine().isAvailable()) drawing.setModeDelete();
 ***REMOVED***
 
 
