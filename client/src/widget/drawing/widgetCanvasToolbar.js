@@ -7,6 +7,7 @@ goog.provide('xrx.widget.CanvasToolbar');
 
 
 goog.require('goog.dom.classes');
+goog.require('goog.style');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.widget.Canvas');
@@ -56,4 +57,6 @@ xrx.widget.CanvasToolbar.prototype.mvcRefresh = function() {
 
 
 xrx.widget.CanvasToolbar.prototype.createDom = function() {
+  if (!this.getCanvas().getDrawing().getEngine().isAvailable())
+      goog.style.setStyle(this.element_, 'display', 'none');
 ***REMOVED***
