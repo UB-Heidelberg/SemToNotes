@@ -108,6 +108,7 @@ xrx.widget.Canvas.prototype.createDom = function() {
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
   this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
+  console.log('########################################');
   console.log(this.drawing_);
   if (!this.drawing_.getEngine().isAvailable()) return;
   this.drawing_.setModeView();
