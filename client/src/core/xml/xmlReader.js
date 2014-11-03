@@ -52,8 +52,7 @@ xrx.xml.Reader.prototype.get = function() {
 
 
 xrx.xml.Reader.prototype.input = function(xml) {
-  
-  xml ? this.input_ = xml : null;
+  if (xml) this.input_ = xml;
   return this.input_;
 ***REMOVED***
 

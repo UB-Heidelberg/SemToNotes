@@ -16,6 +16,7 @@ goog.require('xrx.xml.Serialize');
 ***REMOVED*** A class to parse and normalize stringified XML
 ***REMOVED*** documents
 ***REMOVED***
+***REMOVED***
 xrx.xml.Parser = function() {
 
 

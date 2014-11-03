@@ -533,7 +533,7 @@ xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
     'TAG_START': function() {
       if (reader.next() === '<') {
         state = xrx.xml.Stream.State_.TAG_NAME;
-        reader.get() === '/' ? reader.next() : null;
+        if (reader.get() === '/') reader.next();
         offset = reader.pos();
       } else {
         throw Error('< is expected.');
@@ -698,8 +698,8 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
   var process = {
     'ATTR_NAME': function() {
       found += 1;
-      tokenType === xrx.token.ATTRIBUTE || tokenType === xrx.token.ATTR_NAME ? 
-          offset = reader.pos() : null;
+      if (tokenType === xrx.token.ATTRIBUTE || tokenType === xrx.token.ATTR_NAME) 
+          offset = reader.pos();
       reader.forwardInclusive('=');
       if (tokenType === xrx.token.ATTR_NAME && found === pos) {
         location.offset = offset;
@@ -707,7 +707,7 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
         state = xrx.xml.Stream.State_.TOK_END;
       } else {
         quote = reader.next();
-        tokenType === xrx.token.ATTR_VALUE ? offset = reader.pos() : null;
+        if (tokenType === xrx.token.ATTR_VALUE) offset = reader.pos();
         state = xrx.xml.Stream.State_.ATTR_VAL;
       }
     },

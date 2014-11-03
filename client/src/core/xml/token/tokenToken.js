@@ -148,7 +148,7 @@ xrx.token.Token.prototype.set = function(type, label, offset, length) {
 ***REMOVED*** @return {!number}
 ***REMOVED***
 xrx.token.Token.prototype.type = function(opt_type) {
-  opt_type !== undefined ? this.type_ = opt_type : null;
+  if (opt_type !== undefined) this.type_ = opt_type;
   return this.type_;
 ***REMOVED***
 
@@ -162,7 +162,7 @@ xrx.token.Token.prototype.type = function(opt_type) {
 ***REMOVED*** @return {!number}
 ***REMOVED***
 xrx.token.Token.prototype.label = function(opt_label) {
-  opt_label !== undefined ? this.label_ = opt_label : null;
+  if (opt_label !== undefined) this.label_ = opt_label;
   return this.label_;
 ***REMOVED***
 
@@ -176,7 +176,7 @@ xrx.token.Token.prototype.label = function(opt_label) {
 ***REMOVED*** @return {!number}
 ***REMOVED***
 xrx.token.Token.prototype.offset = function(opt_offset) {
-  opt_offset !== undefined ? this.offset_ = opt_offset : null;
+  if (opt_offset !== undefined) this.offset_ = opt_offset;
   return this.offset_;
 ***REMOVED***
 
@@ -190,7 +190,7 @@ xrx.token.Token.prototype.offset = function(opt_offset) {
 ***REMOVED*** @return {!number}
 ***REMOVED***
 xrx.token.Token.prototype.length = function(opt_length) {
-  opt_length !== undefined ? this.length_ = opt_length : null;
+  if (opt_length !== undefined) this.length_ = opt_length;
   return this.length_;
 ***REMOVED***
 
