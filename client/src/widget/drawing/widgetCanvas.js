@@ -105,6 +105,7 @@ xrx.widget.Canvas.prototype.refresh = function() {
 
 
 xrx.widget.Canvas.prototype.createDom = function() {
+  console.log('###################################################');
   var self = this;
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
