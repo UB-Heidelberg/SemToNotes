@@ -1,9 +1,0 @@
-<TEI xmlns="http://www.tei-c.org/ns/1.0">
-  <facsimile>
-    <surface ulx="0" uly="0" lrx="200" lry="300">
-      <graphic url="./tei.jpg"/>
-      <zone ulx="25" uly="25" lrx="180" lry="60"/>
-      <zone points="4.8,31.0 5.4,30.7 5.5,32.2 5.8,32.8 6.1,33.4 5.5,33.7 5.1,33.3 4.6,32.2"/>
-    </surface>
-  </facsimile>
-</TEI>
