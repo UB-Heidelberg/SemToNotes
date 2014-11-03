@@ -106,7 +106,8 @@ xrx.widget.Canvas.prototype.refresh = function() {
 xrx.widget.Canvas.prototype.createDom = function() {
 ***REMOVED***
   // initialize drawing
-  this.drawing_ = new xrx.drawing.Drawing(this.element_);
+  var datasetEngine = goog.dom.dataset.get(this.elment_, 'xrxEngine');
+  this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
   this.drawing_.setModeView();
   // search for graphics DIV
   this.graphics_ = goog.dom.getElementsByClass('xrx-widget-canvas-graphics',
