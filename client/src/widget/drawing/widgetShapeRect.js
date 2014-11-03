@@ -235,8 +235,10 @@ xrx.widget.ShapeRect.prototype.initCoordComponents = function() {
 
 xrx.widget.ShapeRect.prototype.createDom = function() {
 ***REMOVED***
-  this.shape_ = xrx.shape.Rect.create(this.getDrawing());
-  if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
+  var drawing = this.getDrawing();
+  if (!drawing.getEngine().isAvailable()) return;
+  this.shape_ = xrx.shape.Rect.create(drawing);
+  if (this.getNode()) drawing.getLayerShape().addShapes(this.shape_);
   // handle value changed
   this.shape_.handleValueChanged = function() {
     self.mvcModelUpdateData();

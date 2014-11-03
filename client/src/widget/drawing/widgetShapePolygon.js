@@ -62,8 +62,10 @@ xrx.widget.ShapePolygon.prototype.mvcModelDeleteData = function() {
 
 xrx.widget.ShapePolygon.prototype.createDom = function() {
 ***REMOVED***
-  this.shape_ = xrx.shape.Polygon.create(this.getDrawing());
-  if (this.getNode()) this.getDrawing().getLayerShape().addShapes(this.shape_);
+  var drawing = this.getDrawing();
+  if (!drawing.getEngine().isAvailable()) return;
+  this.shape_ = xrx.shape.Polygon.create(drawing);
+  if (this.getNode()) drawing.getLayerShape().addShapes(this.shape_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {
