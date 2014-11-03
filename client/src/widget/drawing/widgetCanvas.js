@@ -195,7 +195,8 @@ xrx.mvc.registerComponent('xrx-widget-canvas-background-image', xrx.widget.Canva
 
 xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
   var url = this.getNode().getStringValue();
-  this.canvas_.getDrawing().setBackgroundImage(url);
+  var drawing = this.canvas_.getDrawing()
+  if (drawing.getEngine().isAvailable()) drawing.setBackgroundImage(url);
 ***REMOVED***
 
 
