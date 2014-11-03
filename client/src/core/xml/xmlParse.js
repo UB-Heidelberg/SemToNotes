@@ -15,6 +15,7 @@ goog.require('xrx.xml.Serialize');
 /**
  * A class to parse and normalize stringified XML
  * documents
+ * @constructor
  */
 xrx.xml.Parser = function() {
 

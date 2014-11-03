@@ -108,7 +108,7 @@ xrx.xml.Label.prototype.jointParent = function(label) {
 
   for(var i = 0; i < label.length(); i++) {
     val = this.label_[i];
-    val === label.value(i) ? arr.push(val) : null;
+    if (val === label.value(i)) arr.push(val);
   }
   return arr.length === 0 ? new xrx.xml.Label() : new xrx.xml.Label(arr);
 };
