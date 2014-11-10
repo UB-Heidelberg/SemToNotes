@@ -34,10 +34,10 @@ xrx.mvc.registerComponent('xrx-widget-console', xrx.widget.Console);
 
 
 xrx.widget.Console.prototype.createDom = function() {
-  goog.style.setStyle(this.element_, 'white-space', 'pre-wrap');
-  goog.style.setStyle(this.element_, 'white-space', '-moz-pre-wrap');
-  goog.style.setStyle(this.element_, 'white-space', '-o-pre-wrap');
-  goog.style.setStyle(this.element_, 'word-wrap', 'break-word');
+  //goog.style.setStyle(this.element_, 'white-space', 'pre-wrap');
+  //goog.style.setStyle(this.element_, 'white-space', '-moz-pre-wrap');
+  //goog.style.setStyle(this.element_, 'white-space', '-o-pre-wrap');
+  //goog.style.setStyle(this.element_, 'word-wrap', 'break-word');
 };
 
 

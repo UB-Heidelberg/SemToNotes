@@ -520,7 +520,7 @@ xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
   var attributes = [];
   var label = target.label().clone();
   label.child();
-  for (var pos in locations) {
+  for (var pos = 0; pos < locations.length; pos++) {
     var location = locations[pos];
     attributes.push(new xrx.token.Attribute(label.clone(),
         location.offset + tag.offset(), location.length));

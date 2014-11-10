@@ -11,6 +11,7 @@ goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
+goog.require('goog.style');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
@@ -575,6 +576,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
     // install the tool layer
     this.installLayerTool_();
+
   } else {
     // install an unavailable message
     this.installFallback_(opt_engine);
