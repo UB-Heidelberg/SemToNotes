@@ -150,7 +150,7 @@ xrx.widget.CanvasToolbarItem.prototype.handleToggle = function() {
 
 
 xrx.widget.CanvasToolbarItem.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Zoom, Pan or Rotate the Canvas.');
   this.handleToggle_();
   this.handleToggle();
@@ -179,7 +179,7 @@ xrx.widget.CanvasToolbarItemZoomIn.prototype.handleClick = function() {
 
 
 xrx.widget.CanvasToolbarItemZoomIn.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Zoom In.'); 
 };
 
@@ -206,7 +206,7 @@ xrx.widget.CanvasToolbarItemZoomOut.prototype.handleClick = function() {
 
 
 xrx.widget.CanvasToolbarItemZoomOut.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Zoom Out.');
 };
 
@@ -233,7 +233,7 @@ xrx.widget.CanvasToolbarItemRotateLeft.prototype.handleClick = function() {
 
 
 xrx.widget.CanvasToolbarItemRotateLeft.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Rotate left.');
 };
 
@@ -260,7 +260,7 @@ xrx.widget.CanvasToolbarItemRotateRight.prototype.handleClick = function() {
 
 
 xrx.widget.CanvasToolbarItemRotateRight.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Rotate right.');
 };
 
@@ -290,7 +290,7 @@ xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
 
 
 xrx.widget.CanvasToolbarItemCreate.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Draw.');
   this.graphicsName_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
 };
@@ -317,7 +317,7 @@ xrx.widget.CanvasToolbarItemModify.prototype.handleToggle = function() {
 
 
 xrx.widget.CanvasToolbarItemModify.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Move or Modify a Shape.');
 };
 
@@ -343,6 +343,6 @@ xrx.widget.CanvasToolbarItemDelete.prototype.handleToggle = function() {
 
 
 xrx.widget.CanvasToolbarItemDelete.prototype.createDom = function() {
-  if (!this.element_.hasAttribute('title'))
+  if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Delete a Shape.');
 };
