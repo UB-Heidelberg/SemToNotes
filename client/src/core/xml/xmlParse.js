@@ -35,7 +35,6 @@ xrx.xml.Parser = function() {
 
 
 xrx.xml.Parser.prototype.initSax = function() {
-
   this.contentHandler = new DefaultHandler2();
   this.saxParser = XMLReaderFactory.createXMLReader();
   this.saxParser.setHandler(this.contentHandler);
@@ -116,14 +115,14 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     completeStartTag();
 
     idx = self.saxParser.saxScanner.reader.reader.nextIdx;
-    for (var nn in namespaces) {
-      var prefix = namespaces[nn].prefix;
+    for (var i = 0; i < namespaces.length; i++) {
+      var prefix = namespaces[i].prefix;
       prefix === '' ? prefix += 'xmlns' : prefix = 'xmlns:' + prefix;
-      n += xrx.xml.Serialize.namespace(prefix, namespaces[nn].uri);
+      n += xrx.xml.Serialize.namespace(prefix, namespaces[i].uri);
    ***REMOVED*****REMOVED***
     namespaces = [];
-    for (var aa in atts.attsArray) {
-      a += xrx.xml.Serialize.attribute(arr[aa].qName, arr[aa].value);
+    for (var i = 0; i < arr.length; i++) {
+      a += xrx.xml.Serialize.attribute(arr[i].qName, arr[i].value);
    ***REMOVED*****REMOVED***
 
     normalized += xrx.xml.Serialize.startEmptyTag(qName, n, a);
@@ -131,7 +130,6 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
  ***REMOVED*****REMOVED***
 
   this.contentHandler.startPrefixMapping = function(prefix, uri) {
-
     namespaces.push({ prefix: prefix, uri: uri });
  ***REMOVED*****REMOVED***
 
