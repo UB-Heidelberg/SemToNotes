@@ -25,12 +25,16 @@ goog.require('xrx.shape.Shapes');
 
 
 xrx.drawing.EventType = {
-  CLICK: [goog.events.EventType.TOUCHSTART, goog.events.EventType.CLICK],
+  CLICK: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHSTART :
+        goog.events.EventType.CLICK,
   DBLCLICK: goog.events.EventType.DBLCLICK, //TODO: mobile event?
-  DOWN: [goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN],
-  MOVE: [goog.events.EventType.TOUCHMOVE, goog.events.EventType.MOUSEMOVE],
+  DOWN: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHSTART :
+            goog.events.EventType.MOUSEDOWN,
+  MOVE: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHMOVE :
+            goog.events.EventType.MOUSEMOVE,
   OUT: goog.events.EventType.MOUSEOUT, //TODO: mobile event?
-  UP: [goog.events.EventType.TOUCHEND, goog.events.EventType.MOUSEUP],
+  UP: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHEND :
+          goog.events.EventType.MOUSEUP,
   ZOOM: goog.events.MouseWheelHandler.EventType.MOUSEWHEEL
 };
 
