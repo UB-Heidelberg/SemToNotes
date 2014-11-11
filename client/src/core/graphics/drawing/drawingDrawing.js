@@ -12,6 +12,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
+goog.require('goog.userAgent');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
@@ -415,7 +416,7 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
   if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
   this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
-      goog.events.EventType.CLICK,
+      xrx.drawing.EventType.CLICK,
       function(e) { if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e); }
   );
   this.setMode_(xrx.drawing.Mode.CREATE);
@@ -576,6 +577,16 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
     // install the tool layer
     this.installLayerTool_();
+
+    if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9)) {
+      // IE 7 and IE 8 z-index fix
+      var divs = goog.dom.getElementsByTagNameAndClass('div', undefined, this.element_);
+      var zIndex = 1000;
+      goog.array.forEach(divs, function(e, i, a) {
+        goog.style.setStyle(e, 'z-index', zIndex);
+        zIndex -= 10;
+      })
+    };
 
   } else {
     // install an unavailable message
