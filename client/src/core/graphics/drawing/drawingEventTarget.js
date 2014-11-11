@@ -25,15 +25,12 @@ goog.require('xrx.shape.Shapes');
 
 
 xrx.drawing.EventType = {
-  CLICK: goog.events.EventType.CLICK, //TODO: mobile event?
+  CLICK: [goog.events.EventType.TOUCHSTART, goog.events.EventType.CLICK],
   DBLCLICK: goog.events.EventType.DBLCLICK, //TODO: mobile event?
-  DOWN: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHSTART :
-            goog.events.EventType.MOUSEDOWN,
-  MOVE: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHMOVE :
-            goog.events.EventType.MOUSEMOVE,
+  DOWN: [goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN],
+  MOVE: [goog.events.EventType.TOUCHMOVE, goog.events.EventType.MOUSEMOVE],
   OUT: goog.events.EventType.MOUSEOUT, //TODO: mobile event?
-  UP: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHEND :
-          goog.events.EventType.MOUSEUP,
+  UP: [goog.events.EventType.TOUCHEND, goog.events.EventType.MOUSEUP],
   ZOOM: goog.events.MouseWheelHandler.EventType.MOUSEWHEEL
 ***REMOVED***
 
@@ -88,7 +85,7 @@ xrx.drawing.EventTarget.prototype.getHandler = function() {
 
 xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
   // re-initialize the browser event in the case of mobile touch events
-  if (goog.userAgent.MOBILE) 
+  if (e.getBrowserEvent().changedTouches) 
       e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
   e.preventDefault();
   e.stopPropagation();
@@ -188,6 +185,7 @@ xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
 
 
 xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
+  if (goog.userAgent.MOBILE) return;
 ***REMOVED***
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
   if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.drawing.EventType.ZOOM,

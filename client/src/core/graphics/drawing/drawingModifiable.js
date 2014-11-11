@@ -80,7 +80,7 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     this.originCoords_ = this.shapeOriginCoords_;
   }
 
-  var eventPoint = [e.offsetX, e.offsetY];
+  var point = this.drawing_.getEventPoint(e);
   var bboxA = this.drawing_.getViewbox().getBox();
   var diff = {
     x: 0,
@@ -89,10 +89,7 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     y2: 0
  ***REMOVED*****REMOVED***
   var bboxS;
-  var point = new Array(2);
   this.coords_ = new Array(this.originCoords_.length);
-
-  this.drawing_.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
 
   for (var i = 0, len = this.originCoords_.length; i < len; i++) {
     this.coords_[i] = new Array(2);
@@ -134,10 +131,8 @@ xrx.drawing.Modifiable.prototype.handleUp = function(e) {
 
 
 xrx.drawing.Modifiable.prototype.handleClick = function(e) {
-  var eventPoint = [e.offsetX, e.offsetY];
-  this.drawing_.getViewbox().getCTM().createInverse().transform(eventPoint, 0,
-      this.mousePoint_, 0, 1);
   var drawing = this.drawing_;
+  this.mousePoint_ = drawing.getEventPoint(e);
   var shape = drawing.getShapeSelected(this.mousePoint_);
 
   if (shape) {

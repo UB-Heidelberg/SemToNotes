@@ -17,6 +17,8 @@ goog.provide('xrx.widget.CanvasToolbarItemDelete');
 ***REMOVED***
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
+***REMOVED***
+***REMOVED***
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.widget.CanvasToolbar');
@@ -93,7 +95,8 @@ goog.inherits(xrx.widget.CanvasToolbarClickItem, xrx.widget.CanvasToolbarItem);
 
 
 xrx.widget.CanvasToolbarClickItem.prototype.registerClickEvents_ = function() {
-***REMOVED***this.element_, goog.events.EventType.MOUSEDOWN, function(e) {
+***REMOVED***this.element_,
+    [goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN], function(e) {
     e.preventDefault();
     this.handleClick();
   }, false, this);
@@ -121,7 +124,8 @@ xrx.widget.CanvasToolbarToggleItem.prototype.handleToggle_ = function() {
 
 
 xrx.widget.CanvasToolbarToggleItem.prototype.registerToggleEvents_ = function() {
-***REMOVED***this.element_, goog.events.EventType.MOUSEDOWN, function(e) {
+***REMOVED***this.element_,
+    [goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN], function(e) {
     e.preventDefault();
     this.handleToggle_();
     this.handleToggle();

@@ -14,7 +14,6 @@ goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
 goog.require('goog.style');
 goog.require('goog.ui.IdGenerator');
-goog.require('goog.userAgent');
 goog.require('goog.Promise');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.Components');
@@ -98,14 +97,4 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
 ***REMOVED***
 xrx.mvc.Mvc.install = function(opt_context) {
   xrx.mvc.Mvc.installInstances_(opt_context);
-
-  if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9)) {
-    // IE 7 and IE 8 fix
-    var divs = goog.dom.getElementsByTagNameAndClass('div', undefined, opt_context);
-    var zIndex = 1000;
-    goog.array.forEach(divs, function(e, i, a) {
-      goog.style.setStyle(e, 'z-index', zIndex);
-      zIndex -= 10;
-    })
- ***REMOVED*****REMOVED***
 ***REMOVED***
