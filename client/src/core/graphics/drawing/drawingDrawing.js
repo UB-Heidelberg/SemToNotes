@@ -416,8 +416,13 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
   if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
   this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
-      xrx.drawing.EventType.CLICK,
-      function(e) { if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e); }
+      xrx.drawing.EventType.DOWN,
+      function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e);
+      },
+      true
 ***REMOVED***
   this.setMode_(xrx.drawing.Mode.CREATE);
 ***REMOVED***
