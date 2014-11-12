@@ -1,6 +1,6 @@
 /**
  * @fileoverview A class to parse and normalize 
- * stringified XML documents.
+ *     stringified XML documents.
  */
 
 goog.provide('xrx.xml.Parser');
@@ -14,34 +14,48 @@ goog.require('xrx.xml.Serialize');
 
 /**
  * A class to parse and normalize stringified XML
- * documents
+ * documents.
  * @constructor
  */
 xrx.xml.Parser = function() {
 
 
-
-  this.contentHandler;
-
-
-
-  this.saxParser;
-
+  /**
+   * @type {DefaultHandler2}
+   * @private
+   */
+  this.contentHandler_;
 
 
-  this.initSax();
+
+  /**
+   * @type {XMLReader}
+   * @private
+   */
+  this.saxParser_;
+
+
+
+  this.initSax_();
 };
 
 
 
-xrx.xml.Parser.prototype.initSax = function() {
-  this.contentHandler = new DefaultHandler2();
-  this.saxParser = XMLReaderFactory.createXMLReader();
-  this.saxParser.setHandler(this.contentHandler);
+/**
+ * @private
+ */
+xrx.xml.Parser.prototype.initSax_ = function() {
+  this.contentHandler_ = new DefaultHandler2();
+  this.saxParser_ = XMLReaderFactory.createXMLReader();
+  this.saxParser_.setHandler(this.contentHandler_);
 };
 
 
 
+/**
+ * Normalize a stringified XML document.
+ * @return {string} The normalized XML document string.
+ */
 xrx.xml.Parser.prototype.normalize = function(xml) {
   var self = this;
   var idx = -2;
@@ -49,29 +63,32 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
   var normalized = '';
   var lastToken;
 
-
   var completeStartTag = function() {
     if (lastToken === xrx.token.START_TAG) normalized += '>';
   };
 
-
-  this.contentHandler.characters = function(ch, start, length) {
-
+  this.contentHandler_.characters = function(ch, start, length) {
     completeStartTag();
-
-    normalized += goog.string.trim(ch.split('\n').join(''));
+    normalized += ch;
     idx = -2;
-
     lastToken = xrx.token.NOT_TAG;
   };
 
-  this.contentHandler.endDocument = function() {
-
+  this.contentHandler_.comment = function(ch, start, length) {
+    completeStartTag();
+    normalized += xrx.xml.Serialize.comment(ch);
+    lastToken = xrx.token.NOT_TAG;
   };
 
-  this.contentHandler.endElement = function(uri, localName, qName) {
+  this.contentHandler_.endCDATA = function() {
+    normalized += ']]>';
+    lastToken = xrx.token.NOT_TAG;
+  };
 
-    if (self.saxParser.saxScanner.reader.reader.nextIdx === idx) {
+  this.contentHandler_.endDocument = function() {}; // do nothing
+
+  this.contentHandler_.endElement = function(uri, localName, qName) {
+    if (self.saxParser_.saxScanner.reader.reader.nextIdx === idx) {
       normalized += '/>';
       lastToken = xrx.token.EMPTY_TAG;
     } else if (lastToken === xrx.token.START_TAG) {
@@ -82,39 +99,38 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     }
   };
 
-  this.contentHandler.endPrefixMapping = function(prefix) {
+  this.contentHandler_.endPrefixMapping = function(prefix) {}; // do nothing
 
-  };
-
-  this.contentHandler.ignorableWhitespace = function(ch, start, length) {
-
+  this.contentHandler_.ignorableWhitespace = function(ch, start, length) {
     completeStartTag();
-
     idx = -2;
-
     lastToken = xrx.token.NOT_TAG;
   };
 
-  this.contentHandler.processingInstruction = function(target, data) {
-
+  this.contentHandler_.processingInstruction = function(target, data) {
+    completeStartTag();
+    normalized += xrx.xml.Serialize.processingInstruction(target, data);
+    lastToken = xrx.token.NOT_TAG;
   };
 
-  this.contentHandler.skippedEntity = function(name) {
+  this.contentHandler_.skippedEntity = function(name) {}; // do nothing
 
+  this.contentHandler_.startCDATA = function() {
+    completeStartTag();
+    normalized += '<![CDATA[';
+    lastToken = xrx.token.NOT_TAG;
   };
 
-  this.contentHandler.startDocument = function() {
+  this.contentHandler_.startDocument = function() {}; // do nothing
 
-  };
-
-  this.contentHandler.startElement = function(uri, localName, qName, atts) {
+  this.contentHandler_.startElement = function(uri, localName, qName, atts) {
     var n = "";
     var a = "";
     var arr = atts.attsArray;
 
     completeStartTag();
 
-    idx = self.saxParser.saxScanner.reader.reader.nextIdx;
+    idx = self.saxParser_.saxScanner.reader.reader.nextIdx;
     for (var i = 0; i < namespaces.length; i++) {
       var prefix = namespaces[i].prefix;
       prefix === '' ? prefix += 'xmlns' : prefix = 'xmlns:' + prefix;
@@ -129,11 +145,11 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     lastToken = xrx.token.START_TAG;
   };
 
-  this.contentHandler.startPrefixMapping = function(prefix, uri) {
+  this.contentHandler_.startPrefixMapping = function(prefix, uri) {
     namespaces.push({ prefix: prefix, uri: uri });
   };
 
-  this.saxParser.parseString(xml);
+  this.saxParser_.parseString(xml);
 
   return normalized;
 };
