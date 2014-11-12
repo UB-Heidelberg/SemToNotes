@@ -76,11 +76,13 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
   this.contentHandler_.comment = function(ch, start, length) {
     completeStartTag();
     normalized += xrx.xml.Serialize.comment(ch);
+    idx = -2;
     lastToken = xrx.token.NOT_TAG;
  ***REMOVED*****REMOVED***
 
   this.contentHandler_.endCDATA = function() {
     normalized += ']]>';
+    idx = -2;
     lastToken = xrx.token.NOT_TAG;
  ***REMOVED*****REMOVED***
 
@@ -119,6 +121,7 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
   this.contentHandler_.processingInstruction = function(target, data) {
     completeStartTag();
     normalized += xrx.xml.Serialize.processingInstruction(target, data);
+    idx = -2;
     lastToken = xrx.token.NOT_TAG;
  ***REMOVED*****REMOVED***
 
@@ -127,10 +130,21 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
   this.contentHandler_.startCDATA = function() {
     completeStartTag();
     normalized += '<![CDATA[';
+    idx = -2;
     lastToken = xrx.token.NOT_TAG;
  ***REMOVED*****REMOVED***
 
-  this.contentHandler_.startDocument = function() {***REMOVED*** // do nothing
+  this.contentHandler_.startDocument = function() {
+    reader = self.saxParser_.saxScanner.reader.reader;
+    if (reader.s[0] === '<' &&
+        reader.s[1] === '?' &&
+        reader.s[2] === 'x' &&
+        reader.s[3] === 'm' &&
+        reader.s[4] === 'l' &&
+        reader.s[5] === ' ') {
+      normalized += reader.s.substring(0, reader.s.indexOf('?>') + 2);
+    }
+ ***REMOVED*****REMOVED***
 
   this.contentHandler_.startDTD = function(name, publicId, systemId) {***REMOVED*** // do nothing
 

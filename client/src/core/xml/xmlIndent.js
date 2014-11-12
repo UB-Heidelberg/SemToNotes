@@ -14,7 +14,7 @@ xrx.xml.Indent = function() {***REMOVED***
 
 
 ***REMOVED***
-***REMOVED*** Serialize a XML document with indentation in forward direction.
+***REMOVED*** Serialize a XML fragment with indentation in forward direction.
 ***REMOVED*** @return {string} The indented XML fragment.
 ***REMOVED***
 xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
@@ -93,7 +93,7 @@ xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
 
 
 ***REMOVED***
-***REMOVED*** Serialize a XML document with indentation in backward direction.
+***REMOVED*** Serialize a XML fragment with indentation in backward direction.
 ***REMOVED*** @return {string} The indented XML fragment.
 ***REMOVED***
 xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {

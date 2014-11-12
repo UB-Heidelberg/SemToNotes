@@ -15,7 +15,7 @@
 
 
 
-function test01() {
+function test01standard() {
   var xml1 = '<a><b>1</b><c>2</c><d>3</d></a>';
   var expected1 =
       '<a>\n' +
@@ -29,7 +29,7 @@ function test01() {
 
 
 
-function test02() {
+function test02xmlMixedContent() {
   var xml1 = '<a><b>1</b><c>2</c><d><e>3</e><f>4</f><g></g><h/></d></a>';
   var expected1 =
       '<a>\n' +
