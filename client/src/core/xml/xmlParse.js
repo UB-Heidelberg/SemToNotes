@@ -1,5 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class to parse and normalize 
+***REMOVED*** @fileoverview A static class to parse and normalize 
 ***REMOVED***     stringified XML documents.
 ***REMOVED***
 
@@ -13,7 +13,7 @@ goog.require('xrx.xml.Serialize');
 
 
 ***REMOVED***
-***REMOVED*** A class to parse and normalize stringified XML
+***REMOVED*** A static class to parse and normalize stringified XML
 ***REMOVED*** documents.
 ***REMOVED***
 ***REMOVED***
@@ -33,8 +33,6 @@ xrx.xml.Parser = function() {
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
   this.saxParser_;
-
-
 
   this.initSax_();
 ***REMOVED***
@@ -61,6 +59,7 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
   var idx = -2;
   var namespaces = [];
   var normalized = '';
+  var reader;
   var lastToken;
 
   var completeStartTag = function() {
@@ -87,6 +86,14 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
 
   this.contentHandler_.endDocument = function() {***REMOVED*** // do nothing
 
+  this.contentHandler_.endDTD = function() {
+    var str = '';
+    reader = self.saxParser_.saxScanner.reader.reader;
+    str = reader.s.substring(0, reader.nextIdx - 1);
+    str = str.substr(str.indexOf('<!DOCTYPE'));
+    normalized += str;
+ ***REMOVED*****REMOVED***
+
   this.contentHandler_.endElement = function(uri, localName, qName) {
     if (self.saxParser_.saxScanner.reader.reader.nextIdx === idx) {
       normalized += '/>';
@@ -98,6 +105,8 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
       normalized += xrx.xml.Serialize.endTag(qName);
     }
  ***REMOVED*****REMOVED***
+
+  this.contentHandler_.endEntity = function() {***REMOVED*** // do nothing
 
   this.contentHandler_.endPrefixMapping = function(prefix) {***REMOVED*** // do nothing
 
@@ -123,6 +132,8 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
 
   this.contentHandler_.startDocument = function() {***REMOVED*** // do nothing
 
+  this.contentHandler_.startDTD = function(name, publicId, systemId) {***REMOVED*** // do nothing
+
   this.contentHandler_.startElement = function(uri, localName, qName, atts) {
     var n = "";
     var a = "";
@@ -144,6 +155,8 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     normalized += xrx.xml.Serialize.startEmptyTag(qName, n, a);
     lastToken = xrx.token.START_TAG;
  ***REMOVED*****REMOVED***
+
+  this.contentHandler_.startEntity = function() {***REMOVED*** // do nothing
 
   this.contentHandler_.startPrefixMapping = function(prefix, uri) {
     namespaces.push({ prefix: prefix, uri: uri });
