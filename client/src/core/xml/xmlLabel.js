@@ -182,7 +182,7 @@ xrx.xml.Label.prototype.sameAs = function(label) {
 
 ***REMOVED***
 ***REMOVED*** Tests whether a label is the root label.
-***REMOVED*** @return {!boolean} 
+***REMOVED*** @return {boolean} 
 ***REMOVED***
 xrx.xml.Label.prototype.isRoot = function() {
   return this.label_.length === 0;
@@ -193,7 +193,7 @@ xrx.xml.Label.prototype.isRoot = function() {
 ***REMOVED***
 ***REMOVED*** Tests whether the label appears before another label
 ***REMOVED*** in document order.
-***REMOVED*** @return {!boolean} 
+***REMOVED*** @return {boolean} 
 ***REMOVED***
 xrx.xml.Label.prototype.isBefore = function(label) {
 
@@ -209,7 +209,7 @@ xrx.xml.Label.prototype.isBefore = function(label) {
 ***REMOVED***
 ***REMOVED*** Tests whether the label appears after another label
 ***REMOVED*** in document order.
-***REMOVED*** @return {!boolean} 
+***REMOVED*** @return {boolean} 
 ***REMOVED***
 xrx.xml.Label.prototype.isAfter = function(label) {
 
@@ -225,7 +225,7 @@ xrx.xml.Label.prototype.isAfter = function(label) {
 ***REMOVED***
 ***REMOVED*** Tests whether the label is the child label of another
 ***REMOVED*** label.
-***REMOVED*** @return {!boolean} 
+***REMOVED*** @return {boolean} 
 ***REMOVED***
 xrx.xml.Label.prototype.isChildOf = function(label) {
 
@@ -239,6 +239,11 @@ xrx.xml.Label.prototype.isChildOf = function(label) {
 
 
 
+***REMOVED***
+***REMOVED*** Tests whether the label is an ancestor label of another
+***REMOVED*** label.
+***REMOVED*** @return {boolean} 
+***REMOVED***
 xrx.xml.Label.prototype.isAncestorOf = function(label) {
 
   if (this.length() >= label.length()) return false;
@@ -262,6 +267,7 @@ xrx.xml.Label.prototype.isDescendantOf = function(label) {
 ***REMOVED***
 
 
+
 xrx.xml.Label.prototype.isParentOf = function(label) {
 
   if (this.length() !== label.length() - 1) return false;
@@ -271,6 +277,8 @@ xrx.xml.Label.prototype.isParentOf = function(label) {
   }
   return true;
 ***REMOVED***
+
+
 
 xrx.xml.Label.prototype.isPrecedingSiblingOf = function(label) {
 
@@ -282,6 +290,8 @@ xrx.xml.Label.prototype.isPrecedingSiblingOf = function(label) {
   if (this.label_[len - 1] >= label.value(len - 1)) return false;
   return true;
 ***REMOVED***
+
+
 
 xrx.xml.Label.prototype.isFollowingSiblingOf = function(label) {
 
@@ -299,4 +309,3 @@ xrx.xml.Label.prototype.isFollowingSiblingOf = function(label) {
 xrx.xml.Label.prototype.toString = function() {
   return this.label_.join('.');
 ***REMOVED***
-

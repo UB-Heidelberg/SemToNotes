@@ -8,7 +8,7 @@ goog.provide('xrx.xml.Location');
 
 
 ***REMOVED***
-***REMOVED*** A class representing the location of a token in a XML 
+***REMOVED*** A class representing the location of a token in an XML 
 ***REMOVED*** stream.
 ***REMOVED*** 
 ***REMOVED*** @param {!number} offset The offset.

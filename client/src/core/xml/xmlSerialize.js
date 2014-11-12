@@ -49,6 +49,26 @@ xrx.xml.Serialize.attributeNs = function(nsPrefix, qName, namespaceUri) {
 
 
 ***REMOVED***
+***REMOVED*** Serialize a comment token.
+***REMOVED*** @return {string} The comment token string.
+***REMOVED***
+xrx.xml.Serialize.comment = function(ch) {
+  return '<!--' + ch + '-->';
+***REMOVED***
+
+
+
+***REMOVED***
+***REMOVED*** Serialize a processing instruction token.
+***REMOVED*** @return {string} The processing instruction token as string.
+***REMOVED***
+xrx.xml.Serialize.processingInstruction = function(target, data) {
+  return '<?' + target + ' ' + data + '?>';
+***REMOVED***
+
+
+
+***REMOVED***
 ***REMOVED*** Shared function for tag serialization.
 ***REMOVED*** @private
 ***REMOVED*** @return {string} The tag string.
