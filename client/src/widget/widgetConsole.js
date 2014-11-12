@@ -51,14 +51,14 @@ xrx.widget.Console.prototype.getValue = function() {
 xrx.widget.Console.prototype.setValue = function(xml) {
   var node = xrx.mvc.Cursor.getNode(0);
   if (!node) {
-    var text = xrx.xml.Serialize.indent.forward(xml, this.tabSize_, undefined, this.maxLines_);
+    var text = xrx.xml.Indent.forward(xml, this.tabSize_, undefined, this.maxLines_);
     goog.dom.setTextContent(this.element_, text);
   } else {
     var pilot = node.getInstance().getPilot();
     var token = node.getToken();
     var text = '';
-    text += goog.string.trimRight(xrx.xml.Serialize.indent.backward(xml, this.tabSize_, token, this.maxLines_ / 2));
-    text += xrx.xml.Serialize.indent.forward(xml, this.tabSize_, token, this.maxLines_ / 2);
+    text += goog.string.trimRight(xrx.xml.Indent.backward(xml, this.tabSize_, token, this.maxLines_ / 2));
+    text += xrx.xml.Indent.forward(xml, this.tabSize_, token, this.maxLines_ / 2);
     goog.dom.setTextContent(this.element_, text);
   }
 };

@@ -23,6 +23,7 @@ var _allTests = [
   './core/mvc/mvcRepeat_test.html',
   // core :: xml
   './core/xml/xml_test.html',
+  './core/xml/xmlIndent_test.html',
   './core/xml/xmlLabel_test.html',
   './core/xml/xmlParse_test.html',
   './core/xml/xmlPilot_test.html',
