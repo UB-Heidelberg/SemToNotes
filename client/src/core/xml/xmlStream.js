@@ -197,7 +197,7 @@ xrx.xml.Stream.State_ = {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a XML document or XML fragment in forward direction
+***REMOVED*** Streams an XML document or XML fragment in forward direction
 ***REMOVED*** and fires start-row, end-row, empty row and namespace events. 
 ***REMOVED*** The streaming starts at the beginning of the XML document i.e. 
 ***REMOVED*** fragment by default or optionally at an offset.
@@ -216,15 +216,13 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
 
   var process = {
     'CDATA': function(stream) {
-      offset = reader.pos();
       reader.forward(9);
       while (reader.peek() !== ']' && !xrx.xml.Lexer.atCDEnd(reader)) {
-        reader.forward();
+        reader.forward(1);
      ***REMOVED*****REMOVED***
       reader.forwardInclusive('>');
       state = xrx.xml.Stream.State_.NOT_TAG;
-      token = xrx.token.CDATA;
-      length = reader.pos() - offset;
+      stream.rowCDATA();
     },
     'COMMENT': function(stream) {
       offset = reader.pos();
@@ -267,11 +265,9 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
         reader.forwardExclusive('<');
         state = xrx.xml.Stream.State_.LT_SEEN;
       }
-      // if there is a CDATA section, we continue the not tag
-      if (xrx.xml.Lexer.atCDStart(reader)) {
-        
+      if (xrx.xml.Lexer.atCDStart(reader)) return;
       // if we have parsed the not-tag, the row is complete.
-      } else if (token === xrx.token.START_TAG) {
+      if (token === xrx.token.START_TAG) {
         stream.rowStartTag(offset, length, reader.pos() - offset);
       } else if (token === xrx.token.END_TAG) {
         stream.rowEndTag(offset, length, reader.pos() - offset);
@@ -338,7 +334,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a XML document or XML fragment in backward direction
+***REMOVED*** Streams an XML document or XML fragment in backward direction
 ***REMOVED*** and fires start-row, end-row, empty row and namespace events. The 
 ***REMOVED*** streaming starts at the end of the XML document / fragment by 
 ***REMOVED*** default or optionally at an offset.
@@ -432,7 +428,7 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag, a empty tag or an end-tag and
+***REMOVED*** Streams a start-tag, a empty tag or an end-tag and
 ***REMOVED*** returns the location of the name of the tag.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The tag.
@@ -484,7 +480,7 @@ xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or a empty tag and returns the location
+***REMOVED*** Streams a start-tag or an empty tag and returns the location
 ***REMOVED*** of the n'th attribute, or null if the attribute does not exist.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The start-tag or empty tag.
@@ -498,7 +494,7 @@ xrx.xml.Stream.prototype.attribute = function(xml, pos, opt_offset) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or a empty tag and returns an array of 
+***REMOVED*** Streams a start-tag or an empty tag and returns an array of 
 ***REMOVED*** locations of all attributes found in the tag.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The start-tag or empty tag.
@@ -521,7 +517,7 @@ xrx.xml.Stream.prototype.attributes = function(xml) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or a empty tag and returns an array of 
+***REMOVED*** Streams a start-tag or a empty tag and returns an array of 
 ***REMOVED*** locations of all namespaces found in the tag.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The start-tag or empty tag.
@@ -544,7 +540,7 @@ xrx.xml.Stream.prototype.namespaces = function(xml) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or a empty tag and returns an array of 
+***REMOVED*** Streams a start-tag or a empty tag and returns an array of 
 ***REMOVED*** locations of all attributes and namespaces found in the tag.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The start-tag or empty tag.
@@ -567,7 +563,7 @@ xrx.xml.Stream.prototype.secondaries = function(xml) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or empty tag and returns the location
+***REMOVED*** Streams a start-tag or empty tag and returns the location
 ***REMOVED*** of the name of the n'th attribute.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The tag.
@@ -581,7 +577,7 @@ xrx.xml.Stream.prototype.attrName = function(xml, pos) {
 
 
 ***REMOVED***
-***REMOVED*** Streams over a start-tag or empty tag and returns the location 
+***REMOVED*** Streams a start-tag or empty tag and returns the location 
 ***REMOVED*** of the value of the n'th attribute.
 ***REMOVED*** 
 ***REMOVED*** @param {!string} xml The attribute.
@@ -594,7 +590,7 @@ xrx.xml.Stream.prototype.attrValue = function(xml, pos, opt_offset) {
 
 
 ***REMOVED***
-***REMOVED*** Shared utility function for attributes.
+***REMOVED*** Shared utility function for attribute tokens.
 ***REMOVED*** 
 ***REMOVED*** @private
 ***REMOVED***
@@ -663,38 +659,4 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
     if (state === xrx.xml.Stream.State_.TOK_END) break;
   }
   return location;
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Streams over some XML content and returns the location of 
-***REMOVED*** one or more comments.
-***REMOVED***
-xrx.xml.Stream.prototype.comment = function(xml) {
-  // TODO(jochen)
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Streams over some XML content and returns the location of 
-***REMOVED*** one or more processing instructions (PI).
-***REMOVED*** 
-***REMOVED*** @param xml XML string.
-***REMOVED***
-xrx.xml.Stream.prototype.pi = function(xml) {
-  // TODO(jochen)
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Streams over some XML content and returns the location of
-***REMOVED*** one or more character data (CDATA) sections.
-***REMOVED*** 
-***REMOVED*** @param xml XML string.
-***REMOVED***
-xrx.xml.Stream.prototype.cdata = function(xml) {
-  // TODO(jochen)
 ***REMOVED***

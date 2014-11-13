@@ -24,6 +24,7 @@ xrx.token = function() {***REMOVED***
 ***REMOVED*** @const***REMOVED*** xrx.token.PI = 10;
 ***REMOVED*** @const***REMOVED*** xrx.token.END_TAG = 11;
 ***REMOVED*** @const***REMOVED*** xrx.token.NOT_TAG = 13;
+***REMOVED*** @const***REMOVED*** xrx.token.CDATA = 14;
 
 
 
@@ -49,7 +50,7 @@ xrx.token = function() {***REMOVED***
 ***REMOVED*** @const***REMOVED*** xrx.token.START_EMPTY_TAG = 12;
 
 // either xrx.token.END_TAG or xrx.token.START_EMPTY_TAG
-***REMOVED*** @const***REMOVED*** xrx.token.TAG = 14;
+***REMOVED*** @const***REMOVED*** xrx.token.TAG = 15;
 
 
 
@@ -60,16 +61,16 @@ xrx.token = function() {***REMOVED***
 // different type forming a peace of 
 // well-formed XML. Corresponds to what 
 // a DOM element is.
-***REMOVED*** @const***REMOVED*** xrx.token.FRAGMENT = 15;
+***REMOVED*** @const***REMOVED*** xrx.token.FRAGMENT = 16;
 
 // xrx.token.START_TAG plus xrx.token.END_TAG
-***REMOVED*** @const***REMOVED*** xrx.token.START_END = 16;
+***REMOVED*** @const***REMOVED*** xrx.token.START_END = 17;
 
 // same as xrx.token.FRAGMENT, but may 
 // start and end with xrx.token.NOT_TAG 
 // or even may end or start with a part 
 // of xrx.token.NOT_TAG
-***REMOVED*** @const***REMOVED*** xrx.token.MIXED = 17;
+***REMOVED*** @const***REMOVED*** xrx.token.MIXED = 18;
 
 // numbering of tokens is important to 
 // compute document order!
