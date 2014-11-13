@@ -1,6 +1,5 @@
 ***REMOVED***
-***REMOVED*** @fileoverview A class to stream over the tokens of
-***REMOVED*** a XML instance.
+***REMOVED*** @fileoverview A class to stream the tokens of an XML instance.
 ***REMOVED***
 
 goog.provide('xrx.xml.Stream');
@@ -9,6 +8,8 @@ goog.provide('xrx.xml.Stream');
 
 goog.require('goog.object');
 goog.require('goog.string');
+goog.require('xrx.xml.Event');
+goog.require('xrx.xml.Lexer');
 goog.require('xrx.xml.Location');
 goog.require('xrx.xml.Reader');
 goog.require('xrx.token');
@@ -16,23 +17,22 @@ goog.require('xrx.token');
 
 
 ***REMOVED***
-***REMOVED*** A class to stream over the tokens of a XML instance.
+***REMOVED*** A class to stream the tokens of an XML instance.
 ***REMOVED***   
 ***REMOVED*** @param {!string} xml A well-formed, normalized XML document or
-***REMOVED*** XML fragment. Make sure that the input is parsed with
+***REMOVED*** XML fragment. Make sure that the XML input is parsed with 
+***REMOVED*** xrx.xml.Parser beforehand.
 ***REMOVED***
 ***REMOVED***
 xrx.xml.Stream = function(xml) {
 
-
+  goog.base(this);
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** @type
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
   this.reader_ = new xrx.xml.Reader(xml);
-  
-  
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** Whether the stream is stopped.
@@ -40,146 +40,8 @@ xrx.xml.Stream = function(xml) {
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
   this.stopped_ = false;
-
-
-
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.features_ = {
-    TAG_NAME: false,
-    ATTRIBUTE: false,
-    ATTR_NAME: false,
-    ATTR_VALUE: false,
-    NAMESPACE: false,
-    NS_PREFIX: false,
-    NS_URI: false
-  }
-
-
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether at least one feature is on.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.oneFeatureOn_ = false;
 ***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a start-tag row is found.
-***REMOVED***
-xrx.xml.Stream.prototype.rowStartTag = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a end-tag row is found.
-***REMOVED***
-xrx.xml.Stream.prototype.rowEndTag = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a empty-tag row is found.
-***REMOVED***
-xrx.xml.Stream.prototype.rowEmptyTag = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a tag-name is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventTagName = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a attribute token is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventAttribute = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a attribute name is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventAttrName = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a attribute value is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventAttrValue = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a namespace token is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventNamespace = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a namespace prefix is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventNsPrefix = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Event, thrown whenever a namespace URI is found.
-***REMOVED***
-xrx.xml.Stream.prototype.eventNsUri = goog.abstractMethod;
-
-
-
-***REMOVED***
-***REMOVED*** Function to turn events on and off.
-***REMOVED*** 
-***REMOVED*** @param {!string} feature The name of the feature.
-***REMOVED*** @param {!boolean} flag On or off.
-***REMOVED***
-xrx.xml.Stream.prototype.setFeature = function(feature, flag) {
-  if (this.features_[feature] === undefined) throw Error('Unknown feature.');
-  var on = false;
-
-  this.features_[feature] = flag || true;
-
-  for(var f in this.features_) {
-    if (this.features_[f] === true) on = true;
- ***REMOVED*****REMOVED***
-  this.oneFeatureOn_ = on;
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Convenience function to turn all events on or off.
-***REMOVED*** 
-***REMOVED*** @param {!boolean} flag On or off.
-***REMOVED***
-xrx.xml.Stream.prototype.setFeatures = function(flag) {
-  
-  for(var f in this.features_) {
-    this.features_[f] = flag;
-  }
-  flag === true ? this.oneFeatureOn_ = true :
-    this.oneFeatureOn_ = false;
-***REMOVED***
-
-
-***REMOVED***
-***REMOVED*** Whether a specific feature is turned on or off.
-***REMOVED*** 
-***REMOVED*** @param {!string} feature The feature to test.
-***REMOVED*** @return {!boolean} True when on otherwise false.
-***REMOVED***
-xrx.xml.Stream.prototype.hasFeature = function(feature) {
-  return this.features_[feature] === true;
-***REMOVED***
+goog.inherits(xrx.xml.Stream, xrx.xml.Event);
 
 
 
@@ -190,21 +52,19 @@ xrx.xml.Stream.prototype.hasFeature = function(feature) {
 ***REMOVED*** @return The content of the stream reader.
 ***REMOVED***
 xrx.xml.Stream.prototype.xml = function(opt_xml) {
-  
   return !opt_xml ? this.reader_.input() : this.reader_.input(opt_xml);
 ***REMOVED***
 
 
 
 ***REMOVED***
-***REMOVED*** Updates the XML stream at a given location.
+***REMOVED*** Updates the XML stream at a location.
 ***REMOVED*** 
 ***REMOVED*** @param {!number} offset The offset.
 ***REMOVED*** @param {!number} length Number of characters to replace.
 ***REMOVED*** @param {!string} xml The new string.
 ***REMOVED***
 xrx.xml.Stream.prototype.update = function(offset, length, xml) {
-  
   this.reader_.input(this.xml().substr(0, offset) + xml + 
       this.xml().substr(offset + length));
 ***REMOVED***
@@ -215,7 +75,6 @@ xrx.xml.Stream.prototype.update = function(offset, length, xml) {
 ***REMOVED*** Can be called to stop streaming.
 ***REMOVED***
 xrx.xml.Stream.prototype.stop = function() {
-
   this.stopped_ = true;
 ***REMOVED***
 
@@ -237,7 +96,7 @@ xrx.xml.Stream.prototype.pos = function(opt_pos) {
 ***REMOVED***
 ***REMOVED*** Throws events for the secondary tokens of a tag for the features
 ***REMOVED*** is turned on.
-***REMOVED*** TODO(jochen): can we avoid reparsing of tokens?
+***REMOVED*** TODO(jochen): can we avoid re-parsing of tokens?
 ***REMOVED***
 ***REMOVED*** @param token The current token.
 ***REMOVED*** @param {!number} offset The current offset.
@@ -315,20 +174,24 @@ xrx.xml.Stream.prototype.features = function(token, offset, length) {
 ***REMOVED*** @private
 ***REMOVED***
 xrx.xml.Stream.State_ = {
-  XML_START: 'XML_START',
-  XML_END: 'XML_END',
-  START_TAG: 'START_TAG',
-  END_TAG: 'END_TAG',
-  EMPTY_TAG: 'EMPTY_TAG',
-  NOT_TAG: 'NOT_TAG',
-  LT_SEEN: 'LT_SEEN',
-  GT_SEEN: 'GT_SEEN',
-  WS_SEEN: 'WS_SEEN',
-  TAG_START: 'TAG_START',
-  TAG_NAME: 'TAG_NAME',
-  TOK_END: 'TOK_END',
   ATTR_NAME: 'ATTR_NAME',
-  ATTR_VAL: 'ATTR_VAL'
+  ATTR_VAL: 'ATTR_VAL',
+  CDATA: 'CDATA',
+  COMMENT: 'COMMENT',
+  EMPTY_TAG: 'EMPTY_TAG',
+  END_TAG: 'END_TAG',
+  GT_SEEN: 'GT_SEEN',
+  LT_SEEN: 'LT_SEEN',
+  NOT_TAG: 'NOT_TAG',
+  PI: 'PI',
+  START_TAG: 'START_TAG',
+  TAG_NAME: 'TAG_NAME',
+  TAG_START: 'TAG_START',
+  TOK_END: 'TOK_END',
+  WS_SEEN: 'WS_SEEN',
+  XML_DECL: 'XML_DECL',
+  XML_END: 'XML_END',
+  XML_PROLOG: 'XML_PROLOG'
 ***REMOVED***
 
 
@@ -336,13 +199,13 @@ xrx.xml.Stream.State_ = {
 ***REMOVED***
 ***REMOVED*** Streams over a XML document or XML fragment in forward direction
 ***REMOVED*** and fires start-row, end-row, empty row and namespace events. 
-***REMOVED*** The streaming starts at the beginning of the XML document / 
+***REMOVED*** The streaming starts at the beginning of the XML document i.e. 
 ***REMOVED*** fragment by default or optionally at an offset.
 ***REMOVED*** 
 ***REMOVED*** @param {?number} opt_offset The offset.
 ***REMOVED***
 xrx.xml.Stream.prototype.forward = function(opt_offset) {
-  var state = xrx.xml.Stream.State_.XML_START;
+  var state = xrx.xml.Stream.State_.XML_PROLOG;
   var token;
   var offset;
   var length;
@@ -352,17 +215,26 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
   this.stopped_ = false;
 
   var process = {
-    'XML_START': function() {
-      reader.get() === '<' ? state = xrx.xml.Stream.State_.LT_SEEN :
-        state = xrx.xml.Stream.State_.NOT_TAG;
-    },
-    'XML_END': function() {},
-    'START_TAG': function() {
+    'CDATA': function(stream) {
       offset = reader.pos();
+      reader.forward(9);
+      while (reader.peek() !== ']' && !xrx.xml.Lexer.atCDEnd(reader)) {
+        reader.forward();
+     ***REMOVED*****REMOVED***
       reader.forwardInclusive('>');
       state = xrx.xml.Stream.State_.NOT_TAG;
-      reader.peek(-2) === '/' ? token = xrx.token.EMPTY_TAG : 
-          token = xrx.token.START_TAG;
+      token = xrx.token.CDATA;
+      length = reader.pos() - offset;
+    },
+    'COMMENT': function(stream) {
+      offset = reader.pos();
+      reader.forward(3);
+      while (reader.peek() !== '-') {
+        reader.forwardInclusive('-');
+     ***REMOVED*****REMOVED***
+      reader.forwardInclusive('>');
+      state = xrx.xml.Stream.State_.NOT_TAG;
+      token = xrx.token.COMMENT;
       length = reader.pos() - offset;
     },
     'END_TAG': function() {
@@ -373,6 +245,19 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
       length = reader.pos() - offset;
     },
     'EMPTY_TAG': function() {},
+    'LT_SEEN': function() {
+      if (xrx.xml.Lexer.atEndTag(reader)) {
+        state = xrx.xml.Stream.State_.END_TAG;
+      } else if (xrx.xml.Lexer.atComment(reader)) {
+        state = xrx.xml.Stream.State_.COMMENT;
+      } else if (xrx.xml.Lexer.atPI(reader)) {
+        state = xrx.xml.Stream.State_.PI;
+      } else if (xrx.xml.Lexer.atCDStart(reader)) {
+        state = xrx.xml.Stream.State_.CDATA;
+      } else {
+        state = xrx.xml.Stream.State_.START_TAG;
+      }
+    },
     'NOT_TAG': function(stream) {
       if (!reader.get()) {
         state = xrx.xml.Stream.State_.XML_END;
@@ -382,34 +267,67 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
         reader.forwardExclusive('<');
         state = xrx.xml.Stream.State_.LT_SEEN;
       }
+      // if there is a CDATA section, we continue the not tag
+      if (xrx.xml.Lexer.atCDStart(reader)) {
+        
       // if we have parsed the not-tag, the row is complete.
-      if (token === xrx.token.START_TAG) {
+      } else if (token === xrx.token.START_TAG) {
         stream.rowStartTag(offset, length, reader.pos() - offset);
       } else if (token === xrx.token.END_TAG) {
         stream.rowEndTag(offset, length, reader.pos() - offset);
       } else if (token === xrx.token.EMPTY_TAG) {
         stream.rowEmptyTag(offset, length, reader.pos() - offset);
+      } else if (token === xrx.token.COMMENT) {
+        stream.rowComment(offset, length, reader.pos() - offset);
+      } else if (token === xrx.token.PI) {
+        stream.rowPI(offset, length, reader.pos() - offset);
       } else {}
 
       stream.features(token, offset, length);
     },
-    'LT_SEEN': function() {
-      if (reader.peek(1) === '/') {
-        state = xrx.xml.Stream.State_.END_TAG;
+    'PI': function() {
+      offset = reader.pos();
+      while (reader.peek() !== '>') {
+        reader.forwardInclusive('?');
+     ***REMOVED*****REMOVED***
+      reader.forwardInclusive('>');
+      state = xrx.xml.Stream.State_.NOT_TAG;
+      token = xrx.token.PI;
+      length = reader.pos() - offset;
+    },
+    'START_TAG': function() {
+      offset = reader.pos();
+      reader.forwardInclusive('>');
+      state = xrx.xml.Stream.State_.NOT_TAG;
+      reader.peek(-2) === '/' ? token = xrx.token.EMPTY_TAG : 
+          token = xrx.token.START_TAG;
+      length = reader.pos() - offset;
+    },
+    'XML_DECL': function(stream) {
+      offset = reader.pos();
+      reader.forwardInclusive('>');
+      state = xrx.xml.Stream.State_.XML_PROLOG;
+      if (stream.hasFeature('XML_DECL')) {
+        stream.eventXmlDecl(offset, reader.pos() - offset);
+      }
+    }, 
+    'XML_END': function() {},
+    'XML_PROLOG': function() {
+      if (reader.pos() === 0 && xrx.xml.Lexer.atXmlDecl(reader)) {
+        state = xrx.xml.Stream.State_.XML_DECL;
+      } else if (reader.get() === '<') {
+        state = xrx.xml.Stream.State_.LT_SEEN;
       } else {
-        state = xrx.xml.Stream.State_.START_TAG;
+        state = xrx.xml.Stream.State_.NOT_TAG;
       }
     }
  ***REMOVED*****REMOVED***
-
   for (;;) {
-
     if (process[state]) { 
       process[state](this);
     } else {
       throw Error('Invalid parser state.');
     }
-
     if (state === xrx.xml.Stream.State_.XML_END || this.stopped_) {
       this.stopped_ = false;
       break;
@@ -428,7 +346,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
 ***REMOVED*** @param {?number} opt_offset The offset.
 ***REMOVED***
 xrx.xml.Stream.prototype.backward = function(opt_offset) {
-  var state = xrx.xml.Stream.State_.XML_START;
+  var state = xrx.xml.Stream.State_.XML_PROLOG;
   var reader = this.reader_;
   var token;
   var offset;
@@ -439,7 +357,7 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
   this.stopped_ = false;
 
   var process = {
-    'XML_START': function() {
+    'XML_PROLOG': function() {
       if (reader.get() === '<') reader.previous();
       reader.get() === '>' ? state = xrx.xml.Stream.State_.GT_SEEN : 
           state = xrx.xml.Stream.State_.NOT_TAG;
@@ -778,17 +696,5 @@ xrx.xml.Stream.prototype.pi = function(xml) {
 ***REMOVED*** @param xml XML string.
 ***REMOVED***
 xrx.xml.Stream.prototype.cdata = function(xml) {
-  // TODO(jochen)
-***REMOVED***
-
-
-
-***REMOVED***
-***REMOVED*** Streams over some XML content and returns the location of
-***REMOVED*** one or more document type declarations.
-***REMOVED*** 
-***REMOVED*** @param xml XML string.
-***REMOVED***
-xrx.xml.Stream.prototype.doctypedecl = function(xml) {
   // TODO(jochen)
 ***REMOVED***

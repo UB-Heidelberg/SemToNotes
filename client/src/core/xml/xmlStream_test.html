@@ -9,15 +9,7 @@
   goog.require('xrx.xml.Label');
  ***REMOVED*****REMOVED***
   goog.require('xrx.token');
-  goog.require('xrx.token.Attribute');
-  goog.require('xrx.token.AttrName');
-  goog.require('xrx.token.AttrValue');
-  goog.require('xrx.token.EndTag');
-  goog.require('xrx.token.EmptyTag');
-  goog.require('xrx.token.Namespace');
-  goog.require('xrx.token.NotTag');
-  goog.require('xrx.token.StartEmptyTag');
-  goog.require('xrx.token.StartTag');
+  goog.require('xrx.token.Tokens');
 </script>
 </head>
 <body>
@@ -31,6 +23,8 @@ var notTagsTest   =         '   3   7    12   17  21 24   29   34  38'.replace(/
 var length2Test   =         '4   4   5    5    3  4   5    4   4     '.replace(/ /g, '');
 
 var startTags, endTags, emptyTags, notTags;
+
+
 
 function test01StopAtTagWithoutText() {
   var stream = new xrx.xml.Stream(xml);
@@ -53,6 +47,8 @@ function test01StopAtTagWithoutText() {
   assertEquals(3, len2);
 ***REMOVED***
 
+
+
 function test02StopAtEndTag() {
   var stream = new xrx.xml.Stream(xml);
   var off, len1, len2;
@@ -74,6 +70,8 @@ function test02StopAtEndTag() {
   assertEquals(5, len2);
 ***REMOVED***
 
+
+
 function test03StopAtEmptyTagWithOffset() {
   var stream = new xrx.xml.Stream(xml);
   var off, len1, len2;
@@ -94,6 +92,8 @@ function test03StopAtEmptyTagWithOffset() {
   assertEquals(4, len1);
   assertEquals(5, len2);
 ***REMOVED***
+
+
 
 function test04Forward() {
   var startTags = [], endTags = [], emptyTags = [], notTags = [], len2 = [];
@@ -126,6 +126,8 @@ function test04Forward() {
   assertEquals(length2Test, len2.join(''));
 ***REMOVED***
 
+
+
 function test05ForwardWithOffset() {
   var startTags = [], endTags = [], emptyTags = [];
   var stream = new xrx.xml.Stream(xml);
@@ -156,6 +158,8 @@ function test05ForwardWithOffset() {
   assertEquals(endTagsTest, endTags.join(''));
   assertEquals(emptyTagsTest, emptyTags.join(''));
 ***REMOVED***
+
+
 
 function test06Backward() {
   var startTags = [], endTags = [], emptyTags = [], notTags = [], len2 = [];
@@ -188,6 +192,8 @@ function test06Backward() {
   assertEquals(length2Test, len2.join(''));
 ***REMOVED***
 
+
+
 function test07BackwardWithOffset() {
   var startTags = [], endTags = [], emptyTags = [];
   var stream = new xrx.xml.Stream(xml);
@@ -213,8 +219,59 @@ function test07BackwardWithOffset() {
   assertEquals(emptyTagsTest, emptyTags.join('')); 
 ***REMOVED***
 
-function test08TagName() {
-  var xml08 = '<a>1<b attr="value"/>2<c/></a>';
+
+
+function test08rowComment() {
+  var test = [];
+  var xml = '<!-- - --><test><!-- --><!---->a<!----><a/><!----><b></b><!----></test>';
+  var stream = new xrx.xml.Stream(xml);
+
+  stream.rowEndTag = function() {***REMOVED***
+  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {***REMOVED***
+  stream.rowComment = function(offset, length) {
+    test.push(xml.substring(offset, offset + length));
+ ***REMOVED*****REMOVED***
+  
+  stream.forward();
+  stream.backward();
+
+  assertEquals('<!-- - -->', test[0]);
+  assertEquals('<!-- -->', test[1]);
+  assertEquals('<!---->', test[2]);
+  assertEquals('<!---->', test[3]);
+  assertEquals('<!---->', test[4]);
+***REMOVED***
+
+
+
+function test09rowPI() {
+  var test = [];
+  var pi = '<?xml-stylesheet href="shakes.xsl" type="text/xsl"?>'
+  var xml = pi + '<test>' + pi + pi + 'a' + pi + '<a/>' + pi + '<b></b>' + pi + '</test>';
+  var stream = new xrx.xml.Stream(xml);
+
+  stream.rowEndTag = function() {***REMOVED***
+  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {***REMOVED***
+  stream.rowPI = function(offset, length) {
+    test.push(xml.substring(offset, offset + length));
+ ***REMOVED*****REMOVED***
+  
+  stream.forward();
+  stream.backward();
+
+  assertEquals(pi, test[0]);
+  assertEquals(pi, test[1]);
+  assertEquals(pi, test[2]);
+  assertEquals(pi, test[3]);
+  assertEquals(pi, test[4]);
+***REMOVED***
+
+
+
+function test09TagName() {
+  var xml09 = '<a>1<b attr="value"/>2<c/></a>';
   var stream = new xrx.xml.Stream(xml);
   
   // <a>
@@ -222,7 +279,7 @@ function test08TagName() {
   var tok1 = new xrx.token.StartTag(lab1);
   tok1.offset(0);
   tok1.length(3);
-  var xmlTok1 = xml08.substr(tok1.offset(), tok1.length());
+  var xmlTok1 = xml09.substr(tok1.offset(), tok1.length());
   var location1 = stream.tagName(xmlTok1);
   assertEquals('a', xmlTok1.substr(location1.offset, location1.length));
   
@@ -231,7 +288,7 @@ function test08TagName() {
   var tok2 = new xrx.token.EmptyTag(lab2);
   tok2.offset(4);
   tok2.length(17);
-  var xmlTok2 = xml08.substr(tok2.offset(), tok2.length());
+  var xmlTok2 = xml09.substr(tok2.offset(), tok2.length());
   var location2 = stream.tagName(xmlTok2);
   assertEquals('b', xmlTok2.substr(location2.offset, location2.length));
   
@@ -240,7 +297,7 @@ function test08TagName() {
   var tok3 = new xrx.token.EmptyTag(lab3);
   tok3.offset(22);
   tok3.length(4);
-  var xmlTok3 = xml08.substr(tok3.offset(), tok3.length());
+  var xmlTok3 = xml09.substr(tok3.offset(), tok3.length());
   var location3 = stream.tagName(xmlTok3);
   assertEquals('c', xmlTok3.substr(location3.offset, location3.length));
   
@@ -249,40 +306,42 @@ function test08TagName() {
   var tok4 = new xrx.token.EndTag(lab4);
   tok4.offset(26);
   tok4.length(4);
-  var xmlTok4 = xml08.substr(tok4.offset(), tok4.length());
+  var xmlTok4 = xml09.substr(tok4.offset(), tok4.length());
   var location4 = stream.tagName(xmlTok4);
   assertEquals('a', xmlTok4.substr(location4.offset, location4.length));
 ***REMOVED***
 
-function test09Attribute() {
+
+
+function test10Attribute() {
 
   // test with double quotes
-  var xml09a = '<a>1<b attr1="value" attr2="value"/>2<c/></a>';
+  var xml10a = '<a>1<b attr1="value" attr2="value"/>2<c/></a>';
   var off1 = '    4                21                      ';
-  var stream1 = new xrx.xml.Stream(xml09a);
+  var stream1 = new xrx.xml.Stream(xml10a);
 
   // @return attr2="value"
   var tok1 = new xrx.token.EmptyTag(new xrx.xml.Label([1, 1]));
   var attr1 = new xrx.token.Attribute(new xrx.xml.Label([1, 1, 2]));
   tok1.offset(4);
   tok1.length(32);
-  var xmlTok1 = xml09a.substr(tok1.offset(), tok1.length());
+  var xmlTok1 = xml10a.substr(tok1.offset(), tok1.length());
   var location1 = stream1.attribute(xmlTok1, attr1.label().last());
   assertEquals('attr2="value"', xmlTok1.substr(location1.offset, location1.length));
 
   
   // test with single quotes
-  var xml09b = "<a>1<b attr='value'/>2<c/></a>";
+  var xml10b = "<a>1<b attr='value'/>2<c/></a>";
   var off2 = '    4  7              22      ';
-  var stream09b = new xrx.xml.Stream(xml09b);
+  var stream10b = new xrx.xml.Stream(xml10b);
   
   // @return attr='value'
   var tok2 = new xrx.token.EmptyTag(new xrx.xml.Label([1, 1]));
   var attr2 = new xrx.token.Attribute(new xrx.xml.Label([1, 1, 1]));
   tok2.offset(4);
   tok2.length(17);
-  var xmlTok2 = xml09b.substr(tok2.offset(), tok2.length());
-  var location2 = stream09b.attribute(xmlTok2, attr2.label().last());
+  var xmlTok2 = xml10b.substr(tok2.offset(), tok2.length());
+  var location2 = stream10b.attribute(xmlTok2, attr2.label().last());
   assertEquals("attr='value'", xmlTok2.substr(location2.offset, location2.length));
 
   // test a tag without attributes
@@ -290,22 +349,23 @@ function test09Attribute() {
   var attr3 = new xrx.token.Attribute(new xrx.xml.Label([1, 2, 1]));
   tok3.offset(22);
   tok3.length(4);
-  var xmlTok3 = xml09b.substr(tok3.offset(), tok3.length());
-  var location3 = stream09b.attribute(xmlTok3, attr3.label().last());
+  var xmlTok3 = xml10b.substr(tok3.offset(), tok3.length());
+  var location3 = stream10b.attribute(xmlTok3, attr3.label().last());
   assertEquals(null, location3);
 ***REMOVED***
 
-function test10AttrName() {
 
-  var xml10 = '<a>1<b attr1="value1" attr2="value2"/>2<c/></a>';
+
+function test11AttrName() {
+  var xml11 = '<a>1<b attr1="value1" attr2="value2"/>2<c/></a>';
   var off =   '    4                21                      ';
-  var stream = new xrx.xml.Stream(xml10);
+  var stream = new xrx.xml.Stream(xml11);
   var tok = new xrx.token.EmptyTag(new xrx.xml.Label([1, 1]));
   var attr1 = new xrx.token.AttrName(new xrx.xml.Label([1, 1, 1]));
   var attr2 = new xrx.token.AttrName(new xrx.xml.Label([1, 1, 2]));
   tok.offset(4);
   tok.length(32);
-  var xmlTok = xml10.substr(tok.offset(), tok.length());
+  var xmlTok = xml11.substr(tok.offset(), tok.length());
 
   // @return attr1
   var location1 = stream.attrName(xmlTok, attr1.label().last());
@@ -316,10 +376,11 @@ function test10AttrName() {
   assertEquals('attr2', xmlTok.substr(location2.offset, location2.length));
 ***REMOVED***
 
-function test11AttrValue() {
 
-  var xml11 = '<a>1<b attr1="value1" attr2="value2" attr3=""/>2<c/></a>';
-  var stream = new xrx.xml.Stream(xml11);
+
+function test12AttrValue() {
+  var xml12 = '<a>1<b attr1="value1" attr2="value2" attr3=""/>2<c/></a>';
+  var stream = new xrx.xml.Stream(xml12);
   var lab = new xrx.xml.Label([1, 1]);
   var tok = new xrx.token.EmptyTag(lab);
   tok.offset(4);
@@ -328,7 +389,7 @@ function test11AttrValue() {
   var attr2 = new xrx.token.AttrValue(new xrx.xml.Label([1, 1, 2]));
   var attr3 = new xrx.token.AttrValue(new xrx.xml.Label([1, 1, 3]));
   var attr4 = new xrx.token.AttrValue(new xrx.xml.Label([1, 1, 4]));
-  var xmlTok = xml11.substr(tok.offset(), tok.length());
+  var xmlTok = xml12.substr(tok.offset(), tok.length());
 
   // @return 'value1'
   var location1 = stream.attrValue(xmlTok, attr1.label().last());
@@ -347,14 +408,16 @@ function test11AttrValue() {
   assertEquals(null, location4); 
 ***REMOVED***
 
-function test12aAttributes() {
-  var xml12 = '<a>1<b attr1="value1" xmlns="http://example.org" attr2="value2" attr3=""/>2<c/></a>';
-  var stream = new xrx.xml.Stream(xml12);
+
+
+function test13Attributes() {
+  var xml13 = '<a>1<b attr1="value1" xmlns="http://example.org" attr2="value2" attr3=""/>2<c/></a>';
+  var stream = new xrx.xml.Stream(xml13);
   var lab = new xrx.xml.Label([1, 1]);
   var tok = new xrx.token.EmptyTag(lab);
   tok.offset(4);
   tok.length(71);
-  var xmlTok = xml12.substr(tok.offset(), tok.length());
+  var xmlTok = xml13.substr(tok.offset(), tok.length());
 
   // @return ['attr1="value1"', 'attr2="value2"', 'attr3=""']
   var locations = stream.attributes(xmlTok);
@@ -365,14 +428,16 @@ function test12aAttributes() {
   assertEquals('attr3=""', xmlTok.substr(locations[4].offset, locations[4].length));
 ***REMOVED***
 
-function test12bNamespaces() {
-  var xml12 = '<a>1<b attr1="value1" xmlns="http://example.org" attr2="value2" attr3=""/>2<c/></a>';
-  var stream = new xrx.xml.Stream(xml12);
+
+
+function test14Namespaces() {
+  var xml14 = '<a>1<b attr1="value1" xmlns="http://example.org" attr2="value2" attr3=""/>2<c/></a>';
+  var stream = new xrx.xml.Stream(xml14);
   var lab = new xrx.xml.Label([1, 1]);
   var tok = new xrx.token.EmptyTag(lab);
   tok.offset(4);
   tok.length(71);
-  var xmlTok = xml12.substr(tok.offset(), tok.length());
+  var xmlTok = xml14.substr(tok.offset(), tok.length());
 
   // @return ['attr1="value1"', 'attr2="value2"', 'attr3=""']
   var locations = stream.namespaces(xmlTok);
@@ -380,6 +445,8 @@ function test12bNamespaces() {
   assertEquals(undefined, locations[1])
   assertEquals('xmlns="http://example.org"', xmlTok.substr(locations[2].offset, locations[2].length));
 ***REMOVED***
+
+
 
 function test13namespaceForward() {
   var xml13 = '<a xmlns="http://example.org/NS/a"><b xmlns="http://example.org/NS/b"><c/></b></a>';
@@ -402,6 +469,8 @@ function test13namespaceForward() {
   assertEquals('xmlns="http://example.org/NS/a"', namespaces[0].xml(xml13));
   assertEquals('xmlns="http://example.org/NS/b"', namespaces[1].xml(xml13));
 ***REMOVED***
+
+
 
 function test14namespaceBackward() {
   var xml14 = '<a xmlns="http://example.org/NS/a"><b xmlns="http://example.org/NS/b"/></a>';
@@ -426,6 +495,8 @@ function test14namespaceBackward() {
   
 ***REMOVED***
 
+
+
 function test15nsPrefix() {
   var xml14 = '<a xmlns="http://example.org/NS/a" xmlns:b="http://example.org/NS/b">';
   var stream = new xrx.xml.Stream(xml14);
@@ -437,6 +508,8 @@ function test15nsPrefix() {
   assertEquals('xmlns:b', attrName2.xml(xml14));
 ***REMOVED***
 
+
+
 function test16nsUri() {
   var xml14 = '<a xmlns="http://example.org/NS/a" xmlns:b="http://example.org/NS/b">';
   var stream = new xrx.xml.Stream(xml14);
@@ -447,6 +520,8 @@ function test16nsUri() {
   assertEquals('http://example.org/NS/a', attrValue1.xml(xml14));
   assertEquals('http://example.org/NS/b', attrValue2.xml(xml14));
 ***REMOVED***
+
+
 
 function test17featureTagName() {
   var test = [];
@@ -467,6 +542,8 @@ function test17featureTagName() {
   assertEquals('e1e2e3e3e1e1e3e3e2e1', test.join(''));
 ***REMOVED***
 
+
+
 function test18featureAttribute() {
   var test = [];
   var xml18 = '<a attr1="v1" attr2="v2"/>';
@@ -486,6 +563,8 @@ function test18featureAttribute() {
   assertEquals('attr1="v1"attr2="v2"attr1="v1"attr2="v2"', test.join(''));
 ***REMOVED***
 
+
+
 function test19featureAttrName() {
   var test = [];
   var xml19 = '<a attr1="v1" attr2="v2"/>';
@@ -503,8 +582,9 @@ function test19featureAttrName() {
   stream.backward();
 
   assertEquals('attr1attr2attr1attr2', test.join(''));
-
 ***REMOVED***
+
+
 
 function test20featureAttrValue() {
   var test = [];
@@ -526,6 +606,8 @@ function test20featureAttrValue() {
 
 ***REMOVED***
 
+
+
 function test21featureNsPrefix() {
   var test = [];
   var xml21 = '<a xmlns:a="http://example.org/NS/a" attr="v"/>';
@@ -543,8 +625,9 @@ function test21featureNsPrefix() {
   stream.backward();
 
   assertEquals('xmlns:axmlns:a', test.join(''));
-  
 ***REMOVED***
+
+
 
 function test22featureNsUri() {
   var test = [];
@@ -563,7 +646,26 @@ function test22featureNsUri() {
   stream.backward();
 
   assertEquals('http://example.org/NS/ahttp://example.org/NS/a', test.join(''));
+***REMOVED***
 
+
+
+function test23featureXmlDecl() {
+  var test = [];
+  var xml23 = '<?xml version="1.0"?><test></test>';
+  var stream = new xrx.xml.Stream(xml23);
+  stream.setFeature('XML_DECL', true);
+
+  stream.rowEndTag = function() {***REMOVED***
+  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {***REMOVED***
+  stream.eventXmlDecl = function(offset, length) {
+    test.push(xml23.substr(offset, length));
+ ***REMOVED*****REMOVED***
+  
+  stream.forward();
+
+  assertEquals('<?xml version="1.0"?>', test[0]);
 ***REMOVED***
 
 
