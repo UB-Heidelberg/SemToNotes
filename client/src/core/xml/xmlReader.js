@@ -14,7 +14,7 @@ goog.provide('xrx.xml.Reader');
 xrx.xml.Reader = function(input) {
 
   /**
-   * The XML string.
+   * The string.
    * @type {string}
    * @private
    */
@@ -28,7 +28,7 @@ xrx.xml.Reader = function(input) {
   this.pos_ = 0;
 
   /**
-   * Length of the XML string.
+   * Length of the string.
    * @type {number}
    * @private
    */
@@ -70,7 +70,7 @@ xrx.xml.Reader.prototype.length = function() {
 
 
 /**
- * Put the cursor at first position.
+ * Put the cursor at the beginning.
  */
 xrx.xml.Reader.prototype.first = function() {
   this.pos_ = 0;
@@ -79,7 +79,7 @@ xrx.xml.Reader.prototype.first = function() {
 
 
 /**
- * Put the cursor at last position.
+ * Put the cursor at the end.
  */
 xrx.xml.Reader.prototype.last = function() {
   this.pos_ = this.length_ - 1;
@@ -171,7 +171,9 @@ xrx.xml.Reader.prototype.backward = function(i) {
 
 
 /**
- * 
+ * Moves the cursor forward until a specific symbol is reached. The
+ * target position includes the position of the symbol.
+ * @param {string} ch The symbol to be reached.
  */
 xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
   var i;
@@ -183,6 +185,11 @@ xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
 
 
 
+/**
+ * Moves the cursor forward until a specific symbol is reached. The
+ * target position excludes the position of the symbol.
+ * @param {string} ch The symbol to be reached.
+ */
 xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
   var i;
   for (i = 0;; i++) {
@@ -193,6 +200,11 @@ xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
 
 
 
+/**
+ * Moves the cursor backward until a specific symbol is reached. The
+ * target position includes the position of the symbol.
+ * @param {string} ch The symbol to be reached.
+ */
 xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
   var i;
   for (i = 0;; i++) {
@@ -203,6 +215,11 @@ xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
 
 
 
+/**
+ * Moves the cursor backward until a specific symbol is reached. The
+ * target position excludes the position of the symbol.
+ * @param {string} ch The symbol to be reached.
+ */
 xrx.xml.Reader.prototype.backwardExclusive = function(ch) {
   var i;
   for (i = 0;; i++) {
