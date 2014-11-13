@@ -270,6 +270,39 @@ function test09rowPI() {
 
 
 
+function test10rowCDATA() {
+  var startTag = [];
+  var endTag = [];
+  var test = [];
+  var count = 0;
+  var cdata = '<![CDATA[<greeting>Hello, world!</greeting>]]>'
+  var xml = '<test>a' + cdata + 'b</test>';
+  var stream = new xrx.xml.Stream(xml);
+
+  stream.rowStartTag = function(offset, length1, length2) {
+    startTag.push(xml.substring(offset, offset + length1));
+    test.push(xml.substring(offset + length1, offset + length2));
+  };
+  stream.rowEndTag = function(offset, length1, length2) {
+    endTag.push(xml.substring(offset, offset + length1));
+  };
+  stream.rowCDATA = function() {
+    count++;
+  };
+  
+  stream.forward();
+
+  assertEquals(1, count);
+  assertEquals(1, startTag.length);
+  assertEquals('<test>', startTag[0]);
+  assertEquals(1, endTag.length);
+  assertEquals('</test>', endTag[0]);
+  assertEquals('</test>', endTag[0]);
+  assertEquals('a' + cdata + 'b', test[0]);
+};
+
+
+
 function test09TagName() {
   var xml09 = '<a>1<b attr="value"/>2<c/></a>';
   var stream = new xrx.xml.Stream(xml);

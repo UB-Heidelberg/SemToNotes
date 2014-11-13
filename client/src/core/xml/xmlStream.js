@@ -197,7 +197,7 @@ xrx.xml.Stream.State_ = {
 
 
 /**
- * Streams over a XML document or XML fragment in forward direction
+ * Streams an XML document or XML fragment in forward direction
  * and fires start-row, end-row, empty row and namespace events. 
  * The streaming starts at the beginning of the XML document i.e. 
  * fragment by default or optionally at an offset.
@@ -216,15 +216,13 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
 
   var process = {
     'CDATA': function(stream) {
-      offset = reader.pos();
       reader.forward(9);
       while (reader.peek() !== ']' && !xrx.xml.Lexer.atCDEnd(reader)) {
-        reader.forward();
+        reader.forward(1);
       };
       reader.forwardInclusive('>');
       state = xrx.xml.Stream.State_.NOT_TAG;
-      token = xrx.token.CDATA;
-      length = reader.pos() - offset;
+      stream.rowCDATA();
     },
     'COMMENT': function(stream) {
       offset = reader.pos();
@@ -267,11 +265,9 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
         reader.forwardExclusive('<');
         state = xrx.xml.Stream.State_.LT_SEEN;
       }
-      // if there is a CDATA section, we continue the not tag
-      if (xrx.xml.Lexer.atCDStart(reader)) {
-        
+      if (xrx.xml.Lexer.atCDStart(reader)) return;
       // if we have parsed the not-tag, the row is complete.
-      } else if (token === xrx.token.START_TAG) {
+      if (token === xrx.token.START_TAG) {
         stream.rowStartTag(offset, length, reader.pos() - offset);
       } else if (token === xrx.token.END_TAG) {
         stream.rowEndTag(offset, length, reader.pos() - offset);
@@ -338,7 +334,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
 
 
 /**
- * Streams over a XML document or XML fragment in backward direction
+ * Streams an XML document or XML fragment in backward direction
  * and fires start-row, end-row, empty row and namespace events. The 
  * streaming starts at the end of the XML document / fragment by 
  * default or optionally at an offset.
@@ -432,7 +428,7 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
 
 
 /**
- * Streams over a start-tag, a empty tag or an end-tag and
+ * Streams a start-tag, a empty tag or an end-tag and
  * returns the location of the name of the tag.
  * 
  * @param {!string} xml The tag.
@@ -484,7 +480,7 @@ xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
 
 
 /**
- * Streams over a start-tag or a empty tag and returns the location
+ * Streams a start-tag or an empty tag and returns the location
  * of the n'th attribute, or null if the attribute does not exist.
  * 
  * @param {!string} xml The start-tag or empty tag.
@@ -498,7 +494,7 @@ xrx.xml.Stream.prototype.attribute = function(xml, pos, opt_offset) {
 
 
 /**
- * Streams over a start-tag or a empty tag and returns an array of 
+ * Streams a start-tag or an empty tag and returns an array of 
  * locations of all attributes found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
@@ -521,7 +517,7 @@ xrx.xml.Stream.prototype.attributes = function(xml) {
 
 
 /**
- * Streams over a start-tag or a empty tag and returns an array of 
+ * Streams a start-tag or a empty tag and returns an array of 
  * locations of all namespaces found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
@@ -544,7 +540,7 @@ xrx.xml.Stream.prototype.namespaces = function(xml) {
 
 
 /**
- * Streams over a start-tag or a empty tag and returns an array of 
+ * Streams a start-tag or a empty tag and returns an array of 
  * locations of all attributes and namespaces found in the tag.
  * 
  * @param {!string} xml The start-tag or empty tag.
@@ -567,7 +563,7 @@ xrx.xml.Stream.prototype.secondaries = function(xml) {
 
 
 /**
- * Streams over a start-tag or empty tag and returns the location
+ * Streams a start-tag or empty tag and returns the location
  * of the name of the n'th attribute.
  * 
  * @param {!string} xml The tag.
@@ -581,7 +577,7 @@ xrx.xml.Stream.prototype.attrName = function(xml, pos) {
 
 
 /**
- * Streams over a start-tag or empty tag and returns the location 
+ * Streams a start-tag or empty tag and returns the location 
  * of the value of the n'th attribute.
  * 
  * @param {!string} xml The attribute.
@@ -594,7 +590,7 @@ xrx.xml.Stream.prototype.attrValue = function(xml, pos, opt_offset) {
 
 
 /**
- * Shared utility function for attributes.
+ * Shared utility function for attribute tokens.
  * 
  * @private
  */
@@ -663,38 +659,4 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
     if (state === xrx.xml.Stream.State_.TOK_END) break;
   }
   return location;
-};
-
-
-
-/**
- * Streams over some XML content and returns the location of 
- * one or more comments.
- */
-xrx.xml.Stream.prototype.comment = function(xml) {
-  // TODO(jochen)
-};
-
-
-
-/**
- * Streams over some XML content and returns the location of 
- * one or more processing instructions (PI).
- * 
- * @param xml XML string.
- */
-xrx.xml.Stream.prototype.pi = function(xml) {
-  // TODO(jochen)
-};
-
-
-
-/**
- * Streams over some XML content and returns the location of
- * one or more character data (CDATA) sections.
- * 
- * @param xml XML string.
- */
-xrx.xml.Stream.prototype.cdata = function(xml) {
-  // TODO(jochen)
 };
