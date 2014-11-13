@@ -51,7 +51,8 @@ xrx.xml.Parser.prototype.initSax_ = function() {
 
 
 /**
- * Normalize a stringified XML document.
+ * Normalize a stringified XML document. Whitespace and Document
+ * Type Declarations (DTD) are removed.
  * @return {string} The normalized XML document string.
  */
 xrx.xml.Parser.prototype.normalize = function(xml) {
@@ -88,12 +89,14 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
 
   this.contentHandler_.endDocument = function() {}; // do nothing
 
-  this.contentHandler_.endDTD = function() {
+  this.contentHandler_.endDTD = function() { // do nothing
+    /*
     var str = '';
     reader = self.saxParser_.saxScanner.reader.reader;
     str = reader.s.substring(0, reader.nextIdx - 1);
     str = str.substr(str.indexOf('<!DOCTYPE'));
     normalized += str;
+    */
   };
 
   this.contentHandler_.endElement = function(uri, localName, qName) {

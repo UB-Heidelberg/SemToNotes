@@ -20,8 +20,10 @@ xrx.token = function() {};
  */
 /** @const */ xrx.token.START_TAG = 7;
 /** @const */ xrx.token.EMPTY_TAG = 8;
-/** @const */ xrx.token.END_TAG = 9;
-/** @const */ xrx.token.NOT_TAG = 11;
+/** @const */ xrx.token.COMMENT = 9;
+/** @const */ xrx.token.PI = 10;
+/** @const */ xrx.token.END_TAG = 11;
+/** @const */ xrx.token.NOT_TAG = 13;
 
 
 
@@ -44,10 +46,10 @@ xrx.token = function() {};
 /** @const */ xrx.token.UNDEFINED = -1;
 
 // either xrx.token.START_TAG or xrx.token.EMPTY_TAG
-/** @const */ xrx.token.START_EMPTY_TAG = 10;
+/** @const */ xrx.token.START_EMPTY_TAG = 12;
 
 // either xrx.token.END_TAG or xrx.token.START_EMPTY_TAG
-/** @const */ xrx.token.TAG = 12;
+/** @const */ xrx.token.TAG = 14;
 
 
 
@@ -58,16 +60,16 @@ xrx.token = function() {};
 // different type forming a peace of 
 // well-formed XML. Corresponds to what 
 // a DOM element is.
-/** @const */ xrx.token.FRAGMENT = 13;
+/** @const */ xrx.token.FRAGMENT = 15;
 
 // xrx.token.START_TAG plus xrx.token.END_TAG
-/** @const */ xrx.token.START_END = 14;
+/** @const */ xrx.token.START_END = 16;
 
 // same as xrx.token.FRAGMENT, but may 
 // start and end with xrx.token.NOT_TAG 
 // or even may end or start with a part 
 // of xrx.token.NOT_TAG
-/** @const */ xrx.token.MIXED = 15;
+/** @const */ xrx.token.MIXED = 17;
 
 // numbering of tokens is important to 
 // compute document order!
