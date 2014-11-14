@@ -118,7 +118,8 @@ xrx.xml.Reader.prototype.finished = function() {
 
 
 ***REMOVED***
-***REMOVED*** Puts the cursor one symbol forward and returns the new symbol.
+***REMOVED*** Returns the current symbol and after that moves the cursor one
+***REMOVED*** symbol forward.
 ***REMOVED*** @return {string} The symbol.
 ***REMOVED***
 xrx.xml.Reader.prototype.next = function() {
@@ -128,7 +129,8 @@ xrx.xml.Reader.prototype.next = function() {
 
 
 ***REMOVED***
-***REMOVED*** Puts the cursor one symbol backward and returns the new symbol.
+***REMOVED*** Returns the current symbol and after that moves the cursor one
+***REMOVED*** symbol backward.
 ***REMOVED*** @return {string} The symbol.
 ***REMOVED***
 xrx.xml.Reader.prototype.previous = function() {
@@ -172,12 +174,12 @@ xrx.xml.Reader.prototype.backward = function(i) {
 
 ***REMOVED***
 ***REMOVED*** Moves the cursor forward until a specific symbol is reached. The
-***REMOVED*** target position includes the position of the symbol.
+***REMOVED*** target position is one step behind the symbol (inclusive).
 ***REMOVED*** @param {string} ch The symbol to be reached.
 ***REMOVED***
 xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(i) === ch) break;
   }
   this.forward(++i);
@@ -187,12 +189,12 @@ xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
 
 ***REMOVED***
 ***REMOVED*** Moves the cursor forward until a specific symbol is reached. The
-***REMOVED*** target position excludes the position of the symbol.
+***REMOVED*** target position is at the symbol (exclusive).
 ***REMOVED*** @param {string} ch The symbol to be reached.
 ***REMOVED***
 xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(i) === ch) break;
   }
   this.forward(i);
@@ -202,12 +204,12 @@ xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
 
 ***REMOVED***
 ***REMOVED*** Moves the cursor backward until a specific symbol is reached. The
-***REMOVED*** target position includes the position of the symbol.
+***REMOVED*** target position is at the symbol (inclusive).
 ***REMOVED*** @param {string} ch The symbol to be reached.
 ***REMOVED***
 xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(-i) === ch) break;
   }
   this.backward(i);
@@ -217,12 +219,12 @@ xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
 
 ***REMOVED***
 ***REMOVED*** Moves the cursor backward until a specific symbol is reached. The
-***REMOVED*** target position excludes the position of the symbol.
+***REMOVED*** target position is one step behind the symbol (exclusive).
 ***REMOVED*** @param {string} ch The symbol to be reached.
 ***REMOVED***
 xrx.xml.Reader.prototype.backwardExclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(-i) === ch) break;
   }
   this.backward(--i);

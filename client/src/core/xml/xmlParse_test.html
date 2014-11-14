@@ -144,26 +144,7 @@ function test09CDATA() {
 ***REMOVED***
 
 
-/*
-function test10DTD() {
-  var input;
-  var output;
-  var parser = new xrx.xml.Parser();
-  input = '<?xml version="1.0"?><!DOCTYPE greeting SYSTEM "hello.dtd">';
-  input += '<greeting>Hello, world!</greeting>';
-  output = parser.normalize(input);
-  assertEquals(input, output);
-  input = '<?xml version="1.0"?><!DOCTYPE greeting [';
-  input += '<!ELEMENT greeting (#PCDATA)>';
-  input += ']>';
-  input += '<greeting>Hello, world!</greeting>';
-  output = parser.normalize(input);
-  assertEquals(input, output);
-***REMOVED***
-*/
-
-
-function test11entity() {
+function test10entity() {
   var parser = new xrx.xml.Parser();
   var input = '<test>&amp;</test>';
   var output = parser.normalize(input);
@@ -172,7 +153,7 @@ function test11entity() {
 
 
 
-function test12xmlDeclaration() {
+function test11xmlDeclaration() {
   var parser = new xrx.xml.Parser();
   var input = '<?xml version="1.0"?><test></test>';
   var output = parser.normalize(input);

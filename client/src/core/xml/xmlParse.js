@@ -1,6 +1,6 @@
 ***REMOVED***
 ***REMOVED*** @fileoverview A static class to parse and normalize 
-***REMOVED***     stringified XML documents.
+***REMOVED***     stringified XML instances.
 ***REMOVED***
 
 goog.provide('xrx.xml.Parser');
@@ -14,19 +14,16 @@ goog.require('xrx.xml.Serialize');
 
 ***REMOVED***
 ***REMOVED*** A static class to parse and normalize stringified XML
-***REMOVED*** documents.
+***REMOVED*** instances.
 ***REMOVED***
 ***REMOVED***
 xrx.xml.Parser = function() {
-
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** @type {DefaultHandler2}
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
   this.contentHandler_;
-
-
 
  ***REMOVED*****REMOVED***
   ***REMOVED*** @type {XMLReader}
@@ -51,9 +48,9 @@ xrx.xml.Parser.prototype.initSax_ = function() {
 
 
 ***REMOVED***
-***REMOVED*** Normalize a stringified XML document. Whitespace and Document
+***REMOVED*** Normalize a stringified XML instance. Whitespace and Document
 ***REMOVED*** Type Declarations (DTD) are removed.
-***REMOVED*** @return {string} The normalized XML document string.
+***REMOVED*** @return {string} The normalized XML instance string.
 ***REMOVED***
 xrx.xml.Parser.prototype.normalize = function(xml) {
 ***REMOVED***
