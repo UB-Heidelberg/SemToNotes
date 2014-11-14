@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: widget/drawing/widgetShapeRect.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: widget/drawing/widgetShapeRect.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview 
+ */
+
+goog.provide('xrx.widget.ShapeRect');
+goog.provide('xrx.widget.ShapeRectBottom');
+goog.provide('xrx.widget.ShapeRectCreate');
+goog.provide('xrx.widget.ShapeRectGeometry');
+goog.provide('xrx.widget.ShapeRectHeight');
+goog.provide('xrx.widget.ShapeRectInsert');
+goog.provide('xrx.widget.ShapeRectLeft');
+goog.provide('xrx.widget.ShapeRectRight');
+goog.provide('xrx.widget.ShapeRectTop');
+goog.provide('xrx.widget.ShapeRectWidth');
+goog.provide('xrx.widget.ShapeRectX');
+goog.provide('xrx.widget.ShapeRectY');
+
+
+
+goog.require('goog.dom.dataset');
+goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.shape.Rect');
+goog.require('xrx.widget.Shape');
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRect = function(element, drawing) {
+
+  goog.base(this, element, drawing);
+
+  this.shape_;
+
+  this.rectX_;
+
+  this.rectY_;
+
+  this.rectWidth_;
+
+  this.rectHeight_;
+
+  this.rectLeft_;
+
+  this.rectTop_;
+
+  this.rectRight_;
+
+  this.rectBottom_;
+};
+goog.inherits(xrx.widget.ShapeRect, xrx.widget.Shape);
+xrx.mvc.registerComponent('xrx-widget-shape-rect', xrx.widget.ShapeRect);
+
+
+
+xrx.widget.ShapeRect.prototype.getX = function() {
+  return this.shape_.getCoords()[0][0];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setX = function(coord) {
+  var coords = this.shape_.getCoords();
+  coords[0][0] = coord;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(0);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getLeft = function() {
+  return this.getX();
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setLeft = function(coord) {
+  return this.setX(coord);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getY = function() {
+  return this.shape_.getCoords()[0][1];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setY = function(coord) {
+  var coords = this.shape_.getCoords();
+  coords[0][1] = coord;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(0);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getTop = function() {
+  return this.getY();
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setTop = function(coord) {
+  return this.setY(coord);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getWidth = function() {
+  var coords = this.shape_.getCoords();
+  return coords[1][0] - coords[0][0];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setWidth = function(width) {
+  var coords = this.shape_.getCoords();
+  coords[1][0] = coords[0][0] + width;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(1);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getRight = function() {
+  return this.shape_.getCoords()[1][0];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setRight = function(coord) {
+  var coords = this.shape_.getCoords();
+  coords[1][0] = coord;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(1);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getHeight = function() {
+  var coords = this.shape_.getCoords();
+  return coords[3][1] - coords[0][1];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setHeight = function(height) {
+  var coords = this.shape_.getCoords();
+  coords[3][1] = coords[0][1] + height;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(3);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.getBottom = function() {
+  return this.shape_.getCoords()[3][1];
+};
+
+
+
+xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
+  var coords = this.shape_.getCoords();
+  coords[3][1] = coord;
+  this.shape_.setCoords(coords);
+  this.shape_.setAffineCoords(3);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
+  if (!this.getNode()) return;
+  if (this.rectX_)      this.rectX_.refresh();
+  if (this.rectY_)      this.rectY_.refresh();
+  if (this.rectWidth_)  this.rectWidth_.refresh();
+  if (this.rectHeight_) this.rectHeight_.refresh();
+  if (this.rectLeft_)   this.rectLeft_.refresh();
+  if (this.rectTop_)    this.rectTop_.refresh();
+  if (this.rectRight_)  this.rectRight_.refresh();
+  if (this.rectBottom_) this.rectBottom_.refresh();
+};
+
+
+
+xrx.widget.ShapeRect.prototype.mvcRemove = function() {
+  this.getDrawing().getLayerShape().removeShape(this.shape_);
+  this.getDrawing().draw();
+};
+
+
+
+xrx.widget.ShapeRect.prototype.mvcModelDeleteData = function() {
+  xrx.mvc.Controller.removeNode(this);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
+  if (this.rectX_)      this.rectX_.modelUpdateData();
+  if (this.rectY_)      this.rectY_.modelUpdateData();
+  if (this.rectWidth_)  this.rectWidth_.modelUpdateData();
+  if (this.rectHeight_) this.rectHeight_.modelUpdateData();
+  if (this.rectLeft_)   this.rectLeft_.modelUpdateData();
+  if (this.rectTop_)    this.rectTop_.modelUpdateData();
+  if (this.rectRight_)  this.rectRight_.modelUpdateData();
+  if (this.rectBottom_) this.rectBottom_.modelUpdateData();
+};
+
+
+
+xrx.widget.ShapeRect.prototype.initCoordComponents = function() {
+  // get datasets
+  var x      = goog.dom.dataset.get(this.element_, 'xrxRefX');
+  var y      = goog.dom.dataset.get(this.element_, 'xrxRefY');
+  var width  = goog.dom.dataset.get(this.element_, 'xrxRefWidth');
+  var height = goog.dom.dataset.get(this.element_, 'xrxRefHeight');
+  var left   = goog.dom.dataset.get(this.element_, 'xrxRefLeft');
+  var top    = goog.dom.dataset.get(this.element_, 'xrxRefTop');
+  var right  = goog.dom.dataset.get(this.element_, 'xrxRefRight');
+  var bottom = goog.dom.dataset.get(this.element_, 'xrxRefBottom');
+  // initialize coordinate components
+  if (x)      this.rectX_      = new xrx.widget.ShapeRectX(this, x);
+  if (y)      this.rectY_      = new xrx.widget.ShapeRectY(this, y);
+  if (width)  this.rectWidth_  = new xrx.widget.ShapeRectWidth(this, width);
+  if (height) this.rectHeight_ = new xrx.widget.ShapeRectHeight(this, height);
+  if (left)   this.rectLeft_   = new xrx.widget.ShapeRectLeft(this, left);
+  if (top)    this.rectTop_    = new xrx.widget.ShapeRectTop(this, top);
+  if (right)  this.rectRight_  = new xrx.widget.ShapeRectRight(this, right);
+  if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(this, bottom);
+};
+
+
+
+xrx.widget.ShapeRect.prototype.createDom = function() {
+  var self = this;
+  var drawing = this.getDrawing();
+  if (!drawing.getEngine().isAvailable()) return;
+  this.shape_ = xrx.shape.Rect.create(drawing);
+  if (this.getNode()) drawing.getLayerShape().addShapes(this.shape_);
+  // handle value changed
+  this.shape_.handleValueChanged = function() {
+    self.mvcModelUpdateData();
+  }
+  // handle deleted
+  this.shape_.handleDeleted = function() {
+    self.mvcModelDeleteData();
+  }
+  this.initCoordComponents();
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectGeometry = function(rect, dataset) {
+
+  this.rect_ = rect;
+
+  this.dataset_ = dataset;
+
+  goog.base(this, rect.getElement());
+};
+goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
+  return this.rect_.getNode();
+};
+
+
+
+/**
+ * @override
+ */
+xrx.widget.ShapeRectGeometry.prototype.getRefExpression = function() {
+  return this.dataset_;
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectX = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectX.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setX(point);
+};
+
+
+
+xrx.widget.ShapeRectX.prototype.modelUpdateData = function() {
+  var x = this.rect_.getX().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), x.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectY = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectY.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setY(point);
+};
+
+
+
+xrx.widget.ShapeRectY.prototype.modelUpdateData = function() {
+  var y = this.rect_.getY().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), y.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectWidth = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectWidth.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setWidth(point);
+};
+
+
+
+xrx.widget.ShapeRectWidth.prototype.modelUpdateData = function() {
+  var width = this.rect_.getWidth().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), width.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectHeight = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectHeight.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setHeight(point);
+};
+
+
+
+xrx.widget.ShapeRectHeight.prototype.modelUpdateData = function() {
+  var height = this.rect_.getHeight().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), height.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectLeft = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectLeft.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setLeft(point);
+};
+
+
+
+xrx.widget.ShapeRectLeft.prototype.modelUpdateData = function() {
+  var left = this.rect_.getLeft().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), left.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectTop = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectTop.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setTop(point);
+};
+
+
+
+xrx.widget.ShapeRectTop.prototype.modelUpdateData = function() {
+  var top = this.rect_.getTop().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), top.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectRight = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectRight.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setRight(point);
+};
+
+
+
+xrx.widget.ShapeRectRight.prototype.modelUpdateData = function() {
+  var right = this.rect_.getRight().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), right.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectBottom = function(element, rect, dataset) {
+
+  goog.base(this, element, rect, dataset);
+};
+goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
+
+
+
+xrx.widget.ShapeRectBottom.prototype.refresh = function() {
+  var str = this.getNode().getStringValue();
+  var point = parseFloat(str);
+  this.rect_.setBottom(point);
+};
+
+
+
+xrx.widget.ShapeRectBottom.prototype.modelUpdateData = function() {
+  var bottom = this.rect_.getBottom().toFixed(1);
+  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), bottom.toString());
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectCreate = function(element) {
+
+  this.shape_;
+
+  this.rectX_;
+
+  this.rectY_;
+
+  this.rectWidth_;
+
+  this.rectHeight_;
+
+  this.rectLeft_;
+
+  this.rectTop_;
+
+  this.rectRight_;
+
+  this.rectBottom_;
+
+  goog.base(this, element);
+};
+goog.inherits(xrx.widget.ShapeRectCreate, xrx.widget.ShapeRect);
+xrx.mvc.registerComponent('xrx-widget-shape-rect-create', xrx.widget.ShapeRectCreate);
+
+
+
+xrx.widget.ShapeRectCreate.prototype.mvcRefresh = function() {};
+
+
+
+xrx.widget.ShapeRectCreate.prototype.createDom = function() {
+  var self = this;
+  this.shape_ = new xrx.shape.RectCreate(this.getDrawing());
+  // handle value changed
+  this.shape_.handleValueChanged = function() {
+    self.mvcModelUpdateData();
+  }
+  this.initCoordComponents();
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.widget.ShapeRectInsert = function(element) {
+
+  this.shape_;
+
+  goog.base(this, element);
+};
+goog.inherits(xrx.widget.ShapeRectInsert, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-widget-shape-rect-insert', xrx.widget.ShapeRectInsert);
+
+
+
+xrx.widget.ShapeRectInsert.prototype.getNode = function() {};
+
+
+
+xrx.widget.ShapeRectInsert.prototype.mvcRefresh = function() {};
+
+
+
+xrx.widget.ShapeRectInsert.prototype.getShapeComponent = function() {
+  var groupDiv = goog.dom.getParentElement(this.element_);
+  var shapeDiv = goog.dom.getChildren(goog.dom.getChildren(groupDiv)[0])[0];
+  return xrx.mvc.getViewComponent(shapeDiv.id);
+};
+
+
+
+xrx.widget.ShapeRectInsert.prototype.execute = function() {
+  var origin = this.getNodeBind(0, 'xrxOrigin');
+  var target = this.getNodeBind(0, 'xrxTarget');
+  xrx.mvc.Controller.insertNode(this.getShapeComponent(), target, origin);
+};
+
+
+
+xrx.widget.ShapeRectInsert.prototype.createDom = function() {};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:46 GMT+0100 (MEZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

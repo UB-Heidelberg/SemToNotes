@@ -118,7 +118,8 @@ xrx.xml.Reader.prototype.finished = function() {
 
 
 /**
- * Puts the cursor one symbol forward and returns the new symbol.
+ * Returns the current symbol and after that moves the cursor one
+ * symbol forward.
  * @return {string} The symbol.
  */
 xrx.xml.Reader.prototype.next = function() {
@@ -128,7 +129,8 @@ xrx.xml.Reader.prototype.next = function() {
 
 
 /**
- * Puts the cursor one symbol backward and returns the new symbol.
+ * Returns the current symbol and after that moves the cursor one
+ * symbol backward.
  * @return {string} The symbol.
  */
 xrx.xml.Reader.prototype.previous = function() {
@@ -172,12 +174,12 @@ xrx.xml.Reader.prototype.backward = function(i) {
 
 /**
  * Moves the cursor forward until a specific symbol is reached. The
- * target position includes the position of the symbol.
+ * target position is one step behind the symbol (inclusive).
  * @param {string} ch The symbol to be reached.
  */
 xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(i) === ch) break;
   }
   this.forward(++i);
@@ -187,12 +189,12 @@ xrx.xml.Reader.prototype.forwardInclusive = function(ch) {
 
 /**
  * Moves the cursor forward until a specific symbol is reached. The
- * target position excludes the position of the symbol.
+ * target position is at the symbol (exclusive).
  * @param {string} ch The symbol to be reached.
  */
 xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(i) === ch) break;
   }
   this.forward(i);
@@ -202,12 +204,12 @@ xrx.xml.Reader.prototype.forwardExclusive = function(ch) {
 
 /**
  * Moves the cursor backward until a specific symbol is reached. The
- * target position includes the position of the symbol.
+ * target position is at the symbol (inclusive).
  * @param {string} ch The symbol to be reached.
  */
 xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(-i) === ch) break;
   }
   this.backward(i);
@@ -217,12 +219,12 @@ xrx.xml.Reader.prototype.backwardInclusive = function(ch) {
 
 /**
  * Moves the cursor backward until a specific symbol is reached. The
- * target position excludes the position of the symbol.
+ * target position is one step behind the symbol (exclusive).
  * @param {string} ch The symbol to be reached.
  */
 xrx.xml.Reader.prototype.backwardExclusive = function(ch) {
   var i;
-  for (i = 0;; i++) {
+  for (i = 1;; i++) {
     if (this.peek(-i) === ch) break;
   }
   this.backward(--i);
