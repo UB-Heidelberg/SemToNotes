@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/xml/node/nodeTextS.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/xml/node/nodeTextS.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class implementing the text node
+ * type for streaming XPath evaluation.
+ */
+
+goog.provide('xrx.node.TextS');
+
+
+goog.require('xrx.node');
+goog.require('xrx.node.Text');
+goog.require('xrx.node.Streaming');
+goog.require('xrx.token');
+goog.require('xrx.token.NotTag');
+
+
+
+/**
+ * Constructs a new streaming text node.
+ *
+ * @param {!xrx.node.Document} instance
+ * @param {!xrx.token} tag
+ * @param {!integer} length
+ * @constructor
+ */
+xrx.node.TextS = function(document, tag, length) {
+  goog.base(this, xrx.node.TEXT, document, null);
+
+
+
+  this.tag_ = tag;
+
+
+
+  this.length_ = length;
+};
+goog.inherits(xrx.node.TextS, xrx.node.Streaming);
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getToken = function() {
+  return new xrx.token.NotTag(this.getLabel(), this.getOffset(),
+      this.getLength());
+};
+
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getLabel = function() {
+  var label = this.tag_.label().clone();
+  if (this.tag_.type() === xrx.token.START_TAG) {
+    label.push0();
+  } else if (this.tag_.type() === xrx.token.END_TAG) {
+    var tmp = label.pop();
+    label.push(tmp + .5);
+  } else {};
+
+  return label;
+};
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getOffset = function() {
+  return this.tag_.offset() + this.tag_.length();
+};
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getLength = function() {
+  return this.length_;
+};
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isSameAs = xrx.node.Text.prototype.isSameAs;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isBefore = xrx.node.Text.prototype.isBefore;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isAfter = xrx.node.Text.prototype.isAfter;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isAncestorOf = xrx.node.Text.prototype.isAncestorOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isAttributeOf = xrx.node.Text.prototype.isAttributeOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isChildOf = xrx.node.Text.prototype.isChildOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isDescendantOf = xrx.node.Text.prototype.isDescendantOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isFollowingOf = xrx.node.Text.prototype.isFollowingOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isFollowingSiblingOf = xrx.node.Text.prototype.isFollowingSiblingOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isParentOf = xrx.node.Text.prototype.isParentOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isPrecedingOf = xrx.node.Text.prototype.isPrecedingOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.isPrecedingSiblingOf = xrx.node.Text.prototype.isPrecedingSiblingOf;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getName = xrx.node.Text.prototype.getName;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNamespaceUri = xrx.node.Text.prototype.getNamespaceUri;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getStringValue = xrx.node.Text.prototype.getStringValue;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getXml = xrx.node.Text.prototype.getXml;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeAncestor = xrx.node.Text.prototype.getNodeAncestor;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeAttribute = xrx.node.Text.prototype.getNodeAttribute;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeChild = xrx.node.Text.prototype.getNodeChild;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeDescendant = xrx.node.Text.prototype.getNodeDescendant;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeFollowing = xrx.node.Text.prototype.getNodeFollowing;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeFollowingSibling = function(test) {
+  var stop = this.tag_.label().clone();
+  stop.parent();
+
+  return this.find(test, xrx.node[this.impl_.Text].prototype.isPrecedingSiblingOf,
+      false, stop);
+};
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodeParent = function(test) {
+  var nodeset = new xrx.xpath.NodeSet();
+  var element = new xrx.node.ElementS(this.getDocument().getInstance(), this.tag_);
+
+  if (test.matches(element)) nodeset.add(element);
+
+  return nodeset;
+};
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodePreceding = xrx.node.Text.prototype.getNodePreceding;
+
+
+
+/**
+ * 
+ */
+xrx.node.TextS.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNodePrecedingSibling;
+
+
+
+
+/**
+ * @param {!xrx.xml.Label}
+ */
+xrx.node.TextS.prototype.forward = function(stop) {
+  var self = this;
+  var traverse = new xrx.xml.Traverse(this.getDocument().getInstance().xml());
+  var token;
+
+  traverse.rowStartTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.StartTag(label.clone(), offset, length1);
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
+    if (length1 !== length2) {
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+  };
+
+  traverse.rowEmptyTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
+
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
+    if (length1 !== length2) {
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+  };
+
+  traverse.rowEndTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.EndTag(label.clone(), offset, length1);
+
+    if (length1 !== length2) {
+      self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+    if (label.sameAs(stop)) traverse.stop();
+  };
+
+  traverse.forward(self.tag_);
+};
+
+
+
+/**
+ * @param {!xrx.xml.Label}
+ */
+xrx.node.TextS.prototype.backward = function(stop) {
+  var self = this;
+  var traverse = new xrx.xml.Traverse(this.getDocument().getInstance().xml());
+  var token;
+
+  traverse.rowStartTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.StartTag(label.clone(), offset, length1);
+
+    if (length1 !== length2) {
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
+    if (label.sameAs(stop)) traverse.stop();
+  };
+
+  traverse.rowEmptyTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
+
+    if (length1 !== length2) {
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+    self.eventNode(new xrx.node.ElementS(self.getDocument(), tag));
+    if (label.sameAs(stop)) traverse.stop();
+  };
+
+  traverse.rowEndTag = function(label, offset, length1, length2) {
+    var tag = new xrx.token.EndTag(label.clone(), offset, length1);
+
+    if (length1 !== length2) {
+      //self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
+    }
+  };
+  traverse.backward(self.tag_);
+};
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:45 GMT+0100 (MEZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/xml/xmlPilot.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/xml/xmlPilot.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class representing a pilot to reach all 
+ *     tokens of a XML document.
+ */
+
+goog.provide('xrx.xml.Pilot');
+
+
+
+goog.require('xrx.xml.Label');
+goog.require('xrx.xml.Stream');
+goog.require('xrx.token');
+goog.require('xrx.xml.Traverse');
+
+
+
+/**
+ * Constructs a new XML pilot.
+ * 
+ * @param {!string} xml A XML string. 
+ * @constructor
+ */
+xrx.xml.Pilot = function(xml) {
+
+  /**
+   * Traverse object.
+   * @type {xrx.xml.Traverse}
+   * @private
+   */
+  this.traverse_ = new xrx.xml.Traverse(xml);
+
+  /**
+   * Stream object.
+   * @type {xrx.xml.Stream}
+   * @private
+   */
+  this.stream_ = this.traverse_.stream();
+
+  /**
+   * Path lastly used to traverse the XML instance 
+   * (for debugging only).
+   * @type {string}
+   * @private
+   */
+  this.currentPath_;
+};
+
+
+/**
+ * Returns the path lastly used to traverse the XML instance 
+ * (for debugging only).
+ * @return {?}
+ */
+xrx.xml.Pilot.prototype.currentPath = function() {
+  return this.currentPath_;
+};
+
+
+
+/**
+ * Returns a token string or the content of the XML stream.
+ * @return {!string}
+ */
+xrx.xml.Pilot.prototype.xml = function(token) {
+  return token ? this.traverse_.xml() : 
+    this.traverse_.xml().substr(token.offset(), token.length());
+};
+
+
+
+/**
+ * Stops the XML stream.
+ * @private
+ */
+xrx.xml.Pilot.prototype.stop = function() {
+  this.traverse_.stop();
+};
+
+
+
+/**
+ * Forward piloting.
+ * 
+ * @param context The context token.
+ * @param target The target token.
+ */
+xrx.xml.Pilot.prototype.forward = function(context, target) {
+  var tok;
+  var pilot = this;
+
+  pilot.traverse_.rowStartTag = function(label, offset, length1, length2) {
+    var tmp;
+
+    if (target.type() === xrx.token.NOT_TAG) {
+      tmp = label.clone();
+      tmp.push0();
+    }
+
+    if (target.compare(xrx.token.START_TAG, label)) {
+      tok = new xrx.token.StartTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    } else if (target.compare(xrx.token.NOT_TAG, tmp)) {
+      tok = new xrx.token.NotTag(tmp);
+      tok.offset(offset + length1);
+      tok.length(length2 - length1);
+      pilot.stop();
+    } else {}
+  };
+  
+  pilot.traverse_.rowEndTag = function(label, offset, length1, length2) {
+
+    if (target.compare(xrx.token.END_TAG, label)) {
+      tok = new xrx.token.EndTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    } else if (target.compare(xrx.token.NOT_TAG, label)) {
+      tok = new xrx.token.NotTag(label);
+      tok.offset(offset + length1);
+      tok.length(length2 - length1);
+      pilot.stop();
+    } else {}
+  };
+  
+  pilot.traverse_.rowEmptyTag = function(label, offset, length1, length2) {
+ 
+    if (target.compare(xrx.token.EMPTY_TAG, label)) {
+      tok = new xrx.token.EmptyTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    } else if (target.compare(xrx.token.NOT_TAG, label)) {
+      tok = new xrx.token.NotTag(label);
+      tok.offset(offset + length1);
+      tok.length(length2 - length1);
+      pilot.stop();
+    } else {}
+  };
+  
+  pilot.traverse_.forward(context);
+
+  return tok;
+};
+
+
+
+/**
+ * Backward piloting.
+ * 
+ * @param context The context token.
+ * @param target The target token.
+ */
+xrx.xml.Pilot.prototype.backward = function(context, target) {
+  var tok;
+  var pilot = this;
+  
+  pilot.traverse_.rowStartTag = function(label, offset, length1, length2) {
+
+    if (target.compare(xrx.token.START_TAG, label)) {
+      tok = new xrx.token.StartTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    }
+  };
+  
+  pilot.traverse_.rowEndTag = function(label, offset, length1, length2) {
+
+    if (target.compare(xrx.token.END_TAG, label)) {
+      tok = new xrx.token.EndTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    }
+  };
+  
+  pilot.traverse_.rowEmptyTag = function(label, offset, length1, length2) {
+
+    if (target.compare(xrx.token.EMPTY_TAG, label)) {
+      tok = new xrx.token.EmptyTag(label.clone());
+      tok.offset(offset);
+      tok.length(length1);
+      pilot.stop();
+    }
+  };
+
+  pilot.traverse_.backward(context);
+
+  return tok;
+};
+
+
+
+/**
+ * Returns the joint parent of two tags.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The overloaded tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
+xrx.xml.Pilot.prototype.jointParent = function(context, tag) {
+  var label = context.label().jointParent(tag.label());
+
+  return new xrx.token.StartEmptyTag(label);
+};
+
+
+
+/**
+ * Helper function for xrx.xml.Pilot.prototype.path.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The target tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
+xrx.xml.Pilot.prototype.onLocation = function(tag) {
+  return tag;
+};
+
+
+/**
+ * Helper function for xrx.xml.Pilot.prototype.path.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The target tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
+xrx.xml.Pilot.prototype.zigzag = function(context, tag) {
+
+  // we first traverse to the joint parent tag
+  var jointParent = this.backward(context, this.jointParent(context, tag));
+  
+  // then we've (a) already found the target tag or (b) we 
+  // stream forward. We can use xrx.xml.Pilot.path short hand for 
+  // (a) and (b).
+  return this.path(jointParent, tag);
+};
+
+
+/**
+ * 
+ */
+xrx.xml.Pilot.prototype.path = function(context, tag) {
+
+  if (context === null) {
+    return this.forward(context, tag);
+  } else if (context.sameAs(tag)) {
+    // context is already at the right place?
+    // => return tag
+    this.currentPath_ = 'xrx.xml.Pilot.prototype.onLocation';
+    return this.onLocation(tag);
+  } else if (context.isBefore(tag)) {
+    // context is placed before the target tag?
+    // => stream forward
+    this.currentPath_ = 'xrx.xml.Pilot.prototype.forward';
+    return this.forward(context, tag);
+  } else {
+    // context is placed after the target tag?
+    // => zigzag course
+    var zigzag = this.zigzag(context, tag);
+    this.currentPath_ = 'xrx.xml.Pilot.prototype.zigzag';
+    return zigzag;
+  }
+};
+
+
+
+/**
+ * Returns the location of a token.
+ * @return {xrx.token.Token}
+ */
+xrx.xml.Pilot.prototype.location = function(opt_context, target) {
+  var token;
+  
+  switch(target.type()) {
+  // primary tokens
+  case xrx.token.START_TAG:
+    token = this.startTag(opt_context, target);
+    break;
+  case xrx.token.END_TAG:
+    token = this.endTag(opt_context, target);
+    break;
+  case xrx.token.EMPTY_TAG:
+    token = this.emptyTag(opt_context, target);
+    break;
+  case xrx.token.NOT_TAG:
+    token = this.notTag(opt_context, target);
+    break;
+  // secondary tokens
+  case xrx.token.TAG_NAME:
+    throw Error('Not supported. Use function xrx.xml.Pilot.tagName instead.');
+    break;
+  case xrx.token.ATTRIBUTE:
+    token = this.attribute(opt_context, target);
+    break;
+  case xrx.token.ATTR_NAME:
+    token = this.attrName(opt_context, target);
+    break;
+  case xrx.token.ATTR_VALUE:
+    token = this.attrValue(opt_context, target);
+    break;
+  // generic tokens
+  case xrx.token.START_EMPTY_TAG:
+    token = this.startEmptyTag(opt_context, target);
+    break;
+  // complex tokens
+  case xrx.token.FRAGMENT:
+    token = this.fragment(opt_context, target);
+    break;
+  case xrx.token.MIXED:
+    token = this.mixed(opt_context, target);
+    break;
+  default:
+    throw Error('Unknown type.');
+    break;
+  }
+  return token;
+};
+
+
+
+/**
+ * 
+ */
+xrx.xml.Pilot.prototype.startTag = function(context, target) {
+  var startTag = this.path(context, target);
+  return startTag;
+};
+
+
+
+/**
+ * 
+ */
+xrx.xml.Pilot.prototype.endTag = function(context, target) {
+  var endTag = this.path(context, target);
+  return endTag;
+};
+
+
+
+/**
+ * 
+ */
+xrx.xml.Pilot.prototype.emptyTag = function(context, target) {
+  var emptyTag = this.path(context, target);
+  return emptyTag;
+};
+
+
+
+/**
+ * Get the location of a fragment token.
+ *
+ *  
+ */
+xrx.xml.Pilot.prototype.fragment = function(context, target) {
+  var firstTag = target.firstTag();
+  var secondTag;
+  if (!(firstTag instanceof xrx.token.StartTag)) throw Error('Start-tag expected.');
+  console.log(firstTag);
+};
+
+
+
+/**
+ * Get the location of a tag-name token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag|!xrx.token.Tag)} target The tag to which 
+ * the tag-name belongs. 
+ * @return {xrx.token.TagName} The tag-name token with offset and length
+ * information.
+ */
+xrx.xml.Pilot.prototype.tagName = function(context, target) {
+  var pos = this.stream_.pos();
+  var tag = this.path(context, target);
+  var xml = this.stream_.xml().substr(tag.offset(), tag.length());
+  var location = this.stream_.tagName(xml);
+  var tagName = new xrx.token.TagName(tag.label().clone(), 
+      location.offset + tag.offset(), location.length);
+  
+  // reset the stream reader position, important!
+  this.stream_.pos(pos);
+
+  return tagName;
+};
+
+
+
+/**
+ * Get the location of a attribute token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {!xrx.token.Attribute} target The attribute token without
+ * offset and length information.
+ * @return {xrx.token.Attribute} The attribute token with offset and
+ * length information.
+ */
+xrx.xml.Pilot.prototype.attribute = function(context, target) {
+  var pos = this.stream_.pos();
+  var tag = this.path(context, target.tag());
+  var xml = this.stream_.xml().substr(tag.offset(), tag.length());
+  var location = this.stream_.attribute(xml, target.label().last());
+  var attribute = new xrx.token.Attribute(target.label().clone(), 
+      location.offset + tag.offset(), location.length);
+  
+  // reset the stream reader position, important!
+  this.stream_.pos(pos);
+  
+  return attribute;
+};
+
+
+
+/**
+ * Get the location of a attribute name token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {!xrx.token.AttrName} target The attribute-name token without
+ * offset and length information.
+ * @return {xrx.token.AttrName} the attribute-name token with offset and
+ * length information.
+ */
+xrx.xml.Pilot.prototype.attrName = function(context, target) {
+  var pos = this.stream_.pos();
+  var tag = this.path(context, target.tag());
+  var xml = this.stream_.xml().substr(tag.offset(), tag.length());
+  var location = this.stream_.attrName(xml, target.label().last());
+  var attrName = new xrx.token.AttrName(target.label().clone(), 
+      location.offset + tag.offset(), location.length);
+  
+  // reset the stream reader position, important!
+  this.stream_.pos(pos);
+
+  return attrName;  
+};
+
+
+
+/**
+ * Get the location of a attribute value token.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.AttrValue} target The attribute-value token.
+ * @param {?string} opt_update The new attribute-value.
+ * @return {!xrx.token.AttrValue}
+ */
+xrx.xml.Pilot.prototype.attrValue = function(context, target, opt_update) {
+  var pos = this.stream_.pos();
+
+  var tag = context || this.path(context, target.tag());
+  var xml = this.stream_.xml().substr(tag.offset(), tag.length());
+  var location = this.stream_.attrValue(xml, target.label().last());
+  var attrValue = new xrx.token.AttrValue(target.label().clone(), 
+      location.offset + tag.offset(), location.length);
+  
+  // reset the stream reader position, important!
+  this.stream_.pos(pos);  
+
+  return opt_update === undefined ? attrValue :
+      xrx.xml.Update.attrValue(this.stream_, attrValue, opt_update);
+};
+
+
+
+/**
+ * Get the location and optionally update a xrx.token.NotTag.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.NotTag} target The not-tag token.
+ * @param {?string} opt_update The new not-tag.
+ * @return {!xrx.token.NotTag}
+ */
+xrx.xml.Pilot.prototype.notTag = function(context, target, opt_update) {
+  var notTag = this.path(context, target);
+
+  return opt_update === undefined ? notTag :
+      xrx.xml.Update.notTag(this.stream_, notTag, opt_update);
+};
+
+
+
+xrx.xml.Pilot.prototype.startEmptyTag = function(context, target, opt_update) {
+  var startEmptyTag = this.path(context, target);
+
+  return opt_update === undefined ? startEmptyTag :
+      xrx.xml.Update.startEmptyTag(this.stream_, startEmptyTag, opt_update);
+};
+
+
+
+xrx.xml.Pilot.prototype.tag = function(context, target, opt_update) {
+  
+};
+
+
+/**
+ * Get or update an array of xrx.token.Attribute.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.StartEmptyTag} target The start-empty tag.
+ * @param {?Array.&lt;xrx.token.Attribute>} opt_update Array of new attribute tokens.
+ * @return {!Array.&lt;xrx.token.Attribute>}
+ */
+xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
+  var pos = this.stream_.pos();
+  var tag = this.path(context, target);
+  var xml = this.stream_.xml().substr(tag.offset(), tag.length());
+  var locations = this.stream_.attributes(xml);
+  var attributes = [];
+  var label = target.label().clone();
+  label.child();
+  for (var pos = 0; pos &lt; locations.length; pos++) {
+    var location = locations[pos];
+    attributes.push(new xrx.token.Attribute(label.clone(),
+        location.offset + tag.offset(), location.length));
+    label.nextSibling();
+  }
+  
+  // reset the stream reader position, important!
+  this.stream_.pos(pos); 
+
+  return opt_update === undefined ? attributes : 
+      xrx.xml.Update.attributes(this.stream_, attributes, opt_update);
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:46 GMT+0100 (MEZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

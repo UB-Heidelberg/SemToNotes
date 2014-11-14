@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/xml/xmlUpdate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/xml/xmlUpdate.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A static class implementing update operations 
+ *     on XML tokens.
+ */
+
+goog.provide('xrx.xml.Update');
+
+
+
+goog.require('xrx.xml.Serialize');
+goog.require('xrx.xml.Stream');
+goog.require('xrx.token');
+
+
+
+/**
+ * A static class implementing update operations 
+ * on XML tokens.
+ */
+xrx.xml.Update = function() {};
+
+
+
+/**
+ * Shared function for all replace operations.
+ * @private
+ */
+xrx.xml.Update.replace_ = function(instance, token, xml) {
+  var diff = xml.length - token.length();
+  instance.update(token.offset(), token.length(), xml);
+  token.length(xml.length);
+  return diff;
+};
+
+
+
+/**
+ * Shared function for all insert operations.
+ * @private
+ */
+xrx.xml.Update.insert_ = function(instance, offset, xml) {
+  instance.update(offset, 0, xml);
+  return xml.length;
+};
+
+
+
+/**
+ * Shared function for all remove operations.
+ * @private
+ */
+xrx.xml.Update.remove_ = function(instance, offset, length) {
+  instance.update(offset, length, '');
+  return -length;
+};
+
+
+
+/**
+ * Inserts a new attribute into a start-tag or an empty tag token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} target The tag where to insert
+ *   the attribute.
+ * @param {!string} attribute The new attribute token as string.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertAttribute = function(instance, parent, attribute) {
+  var loc = instance.getStream().tagName(parent.xml(instance.xml()));
+  return xrx.xml.Update.insert_(instance, parent.offset() + loc.offset +
+      loc.length, ' ' + attribute);
+};
+
+
+
+/**
+ * Inserts a new empty tag into a not-tag token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target The not-tag token where the empty tag is inserted.
+ * @param {!integer} offset The offset relative to the not-tag token.
+ * @param {!string} emptyTag The new empty tag token as string.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertEmptyTag = function(instance, target, offset, emptyTag) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset,
+      emptyTag);
+};
+
+
+
+/**
+ * Inserts a new fragment token into a not-tag token.
+ *
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target The not-tag token where the fragment is inserted.
+ * @param {!integer} offset The offset relative to the not-tag token.
+ * @param {!string} fragment The new fragment token as string.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertFragment = function(instance, target, offset, fragment) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset,
+      fragment);
+};
+
+
+
+/**
+ * 
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertMixed = function(instance, target, offset, localName,
+    opt_namespaceUri) {
+  //TODO: implement this
+};
+
+
+
+/**
+ * Inserts a not-tag token into another not-tag token at an offset.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target The token to be replaced.
+ * @param {!integer} target The offset relative to the not-tag token.
+ * @param {!string} string The new not-tag string.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertNotTag = function(instance, target, offset, string) {
+  return xrx.xml.Update.insert_(instance, target.offset() + offset, string);
+};
+
+
+
+/**
+ * Wraps a piece of XML with a start-tag token and an end-tag token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target1 The left not-tag token where the new
+ *   start-tag shall be inserted.
+ * @param {!xrx.token.NotTag} target2 The right not-tag token where the
+ *   new end-tag shall be inserted.
+ * @param {!integer} offset1 The offset relative to the left not-tag token.
+ * @param {!integer} offset2 The offset relative to the right not-tag token.
+ * @param {!string} localName The local name of the new token.
+ * @param {!string} opt_namespaceUri The namespace URI of the new token.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.insertStartEndTag = function(instance, target1, target2, offset1, offset2,
+    localName, opt_namespaceUri) {
+  var diffs;
+  var diff2;
+
+  if (!opt_namespaceUri) {
+
+    diff1 = xrx.xml.Update.insert_(instance, target2.offset() + offset2,
+        xrx.xml.Serialize.endTag(localName));
+    diff2 = xrx.xml.Update.insert_(instance, target1.offset() + offset1,
+        xrx.xml.Serialize.startTag(localName));
+  } else {
+    var nsPrefix = instance.getIndex().getNamespacePrefix(target1, opt_namespaceUri);
+
+    diff1 = xrx.xml.Update.insert_(instance, target2.offset() + offset2,
+        xrx.xml.Serialize.endTagNs(nsPrefix, localName, opt_namespaceUri));
+
+    diff2 = xrx.xml.Update.insert_(instance, target1.offset() + offset1,
+        xrx.xml.Serialize.startTagNs(nsPrefix, localName, opt_namespaceUri));
+
+    //TODO: add namespace declaration to index
+  }
+
+  return [diff1, diff2];
+};
+
+
+
+/**
+ * Removes characters from a not-tag token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target The token to be replaced.
+ * @param {!integer} target The offset relative to the not-tag token.
+ * @param {!integer} string The number of characters to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
+  return xrx.xml.Update.remove_(instance, target.offset() + offset, length);
+};
+
+
+
+/**
+ * Removes an attribute token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.Attribute} token The token to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.removeAttribute = function(instance, token) {
+  var diff = xrx.xml.Update.remove_(instance, token.offset() - 1, token.length() + 1);
+
+  return diff;
+};
+
+
+
+/**
+ * Removes an empty tag.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.EmptyTag} target The tag to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.removeEmptyTag = function(instance, token) {
+  var diff = xrx.xml.Update.remove_(instance, token.offset(), token.length());
+
+  //TODO: remove namespace declaration from index
+
+  return diff;
+};
+
+
+
+/**
+ * Removes a start-tag token, an end-tag token and the content between
+ * the two tag tokens. 
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.Fragment} token The tag to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.removeFragment = function(instance, token) {
+  //TODO: implement this
+};
+
+
+
+/**
+ * Removes a mixed sequence of tokens. 
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.Mixed} token The token to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.removeMixed = function(instance, token) {
+  //TODO: implement this
+};
+
+
+
+/**
+ * Removes a start-tag and a end-tag at once but keeping the content
+ * between the two tags. 
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.StartTag} token1 The start-tag to be removed.
+ * @param {!xrx.token.EndTag} token2 The end-tag to be removed.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.removeStartEndTag = function(instance, token1, token2) {
+  var diff2 = xrx.xml.Update.remove_(instance, token2.offset(), token2.length());
+  var diff1 = xrx.xml.Update.remove_(instance, token1.offset(), token1.length());
+
+  //TODO: remove namespace declaration from index
+
+  return [diff1, diff2];
+};
+
+
+
+/**
+ * Replaces the value of an attribute with another value.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.AttrValue} target The token to be replaced.
+ * @param {!string} token The new value.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.replaceAttrValue = function(instance, target, value) {
+  return xrx.xml.Update.replace_(instance, target, value);
+};
+
+
+
+/**
+ * Replaces a not-tag token with another not-tag token.
+ * 
+ * @param {!xrx.mvc.Instance} instance The instance to be updated.
+ * @param {!xrx.token.NotTag} target The token to be replaced.
+ * @param {!string} string The new not-tag string.
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.replaceNotTag = function(instance, target, string) {
+  return xrx.xml.Update.replace_(instance, target, string);
+};
+
+
+
+/**
+ *
+ * @return {integer} Number of characters removed or inserted.
+ */
+xrx.xml.Update.replaceTagName = function(instance, token, localName, opt_namespaceUri) {
+  //TODO: implement this
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:46 GMT+0100 (MEZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

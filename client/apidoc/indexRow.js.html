@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/xml/index/indexRow.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/xml/index/indexRow.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class representing a binary encoded row
+ * of a XML instance. 
+ */
+
+goog.provide('xrx.index.Row');
+goog.provide('xrx.index.Row.format');
+goog.provide('xrx.index.Row.mask');
+
+
+
+
+goog.require('goog.math.Long');
+
+
+
+xrx.index.Row = function() {
+
+  this.low_ = new goog.math.Long();
+  this.high_ = new goog.math.Long();
+};
+
+
+
+xrx.index.Row.format_ = '128Bit';
+
+
+
+xrx.index.Row.format = {};
+
+
+
+xrx.index.Row.format['128Bit'] = {
+
+  TYPE: { bits: 'low_', shft: 59, size: 4 },
+  POSITION: { bits: 'low_', shft: 41, size: 18 },
+  PARENT: { bits: 'low_', shft: 24, size: 17 },
+  OFFSET: { bits: 'low_', shft: 0, size: 24 },
+  LENGTH1: { bits: 'high_', shft: 43, size: 20 },
+  LENGTH2: { bits: 'high_', shft: 23, size: 20 }
+};
+
+
+
+xrx.index.Row.mask = {};
+
+
+
+xrx.index.Row.mask.fromFormat = function(format, itm) {
+  var item = xrx.index.Row.format[format][itm];
+  var shft = item.shft;
+  var integ = Math.pow(2, item.size) - 1;
+
+  return goog.math.Long.fromInt(integ).shiftLeft(shft);
+};
+
+
+
+xrx.index.Row.mask['128Bit'] = {
+
+  TYPE: xrx.index.Row.mask.fromFormat('128Bit', 'TYPE'),
+  POSITION: xrx.index.Row.mask.fromFormat('128Bit', 'POSITION'),
+  PARENT: xrx.index.Row.mask.fromFormat('128Bit', 'PARENT'),
+  OFFSET: xrx.index.Row.mask.fromFormat('128Bit', 'OFFSET'),
+  LENGTH1: xrx.index.Row.mask.fromFormat('128Bit', 'LENGTH1'),
+  LENGTH2: xrx.index.Row.mask.fromFormat('128Bit', 'LENGTH2')
+};
+
+
+
+/**
+ * Shared function for all getter functions.
+ * @private
+ */
+xrx.index.Row.prototype.get = function(item) {
+  var i = xrx.index.Row.format[xrx.index.Row.format_][item];
+  var mask = xrx.index.Row.mask[xrx.index.Row.format_][item];
+
+  return this[i.bits].and(mask).shiftRight(i.shft).toInt();
+};
+
+
+
+/**
+ * Shared function for all setter functions.
+ * @private
+ */
+xrx.index.Row.prototype.set = function(integ, format) {
+  var lng = goog.math.Long.fromInt(integ);
+
+  lng = lng.shiftLeft(format.shft);
+  this[format.bits] = this[format.bits].or(lng);
+};
+
+
+
+/**
+ * Shared function for all update functions.
+ * @private
+ */
+xrx.index.Row.prototype.update = function(diff, format) {
+  var lng = goog.math.Long.fromInt(diff);
+
+  lng = lng.shiftLeft(format.shft);
+  this[format.bits] = this[format.bits].add(lng);
+};
+
+
+
+/**
+ * Decodes the type descriptor of the row from binary to
+ * integer and returns the type as integer.
+ * @return {!integer} The token type.
+ */
+xrx.index.Row.prototype.getType = function() {
+  return this.get('TYPE');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setType = function(type) {
+  this.set(type, xrx.index.Row.format[xrx.index.Row.format_].TYPE);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updateType = function(type) {
+  this.update(type, xrx.index.Row.format[xrx.index.Row.format_].TYPE);
+};
+
+
+
+/**
+ * Decodes the position descriptor of the row from binary to
+ * integer and returns the position as integer.
+ * @return {!integer} The label position.
+ */
+xrx.index.Row.prototype.getPosition = function() {
+  return this.get('POSITION');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setPosition = function(position) {
+  this.set(position, xrx.index.Row.format[xrx.index.Row.format_].POSITION); 
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updatePosition = function(position) {
+  this.update(position, xrx.index.Row.format[xrx.index.Row.format_].POSITION); 
+};
+
+
+
+/**
+ * Decodes the parent descriptor of the row from binary to
+ * integer and returns the parent as integer.
+ * @return {!integer} The label parent.
+ */
+xrx.index.Row.prototype.getParent = function() {
+  return this.get('PARENT');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setParent = function(parent) {
+  this.set(parent, xrx.index.Row.format[xrx.index.Row.format_].PARENT); 
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updateParent = function(parent) {
+  this.update(parent, xrx.index.Row.format[xrx.index.Row.format_].PARENT); 
+};
+
+
+
+/**
+ * Decodes the position descriptor of the row from binary to
+ * integer and returns the position as integer.
+ * @return {!integer} The token offset.
+ */
+xrx.index.Row.prototype.getOffset = function() {
+  return this.get('OFFSET');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setOffset = function(offset) {
+  this.set(offset, xrx.index.Row.format[xrx.index.Row.format_].OFFSET); 
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updateOffset = function(offset) {
+  this.update(offset, xrx.index.Row.format[xrx.index.Row.format_].OFFSET); 
+};
+
+
+
+/**
+ * Decodes the length1 descriptor of the row from binary to
+ * integer and returns the length1 as integer.
+ * @return {!integer} Length1 of the token.
+ */
+xrx.index.Row.prototype.getLength1 = function() {
+  return this.get('LENGTH1');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setLength1 = function(length) {
+  this.set(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH1);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updateLength1 = function(length) {
+  this.update(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH1);
+};
+
+
+
+/**
+ * Decodes the length2 descriptor of the row from binary to
+ * integer and returns the length2 as integer.
+ * @return {!integer} Length2 of the token.
+ */
+xrx.index.Row.prototype.getLength2 = function() {
+  return this.get('LENGTH2');
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.setLength2 = function(length) {
+  this.set(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH2);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.updateLength2 = function(length) {
+  this.update(length, xrx.index.Row.format[xrx.index.Row.format_].LENGTH2);
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Row.prototype.toString = function() {
+
+  var formatNumber = function(number) {
+    var str = "" + number.toString(2);
+    while (str.length &lt; 64) {
+      str = "0" + str;
+    }
+    return str;
+  };
+
+  return formatNumber(this.low_) + '|' + formatNumber(this.high_);
+};
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:45 GMT+0100 (MEZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

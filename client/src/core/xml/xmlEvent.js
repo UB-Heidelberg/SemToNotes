@@ -12,6 +12,8 @@ goog.provide('xrx.xml.Event');
 xrx.xml.Event = function() {
 
   /**
+   * Feature flags
+   * @type {Object}
    * @private
    */
   this.features_ = {
@@ -36,7 +38,6 @@ xrx.xml.Event = function() {
 
 /**
  * Function to turn events on and off.
- * 
  * @param {!string} feature The name of the feature.
  * @param {!boolean} opt_flag On or off.
  */
@@ -54,7 +55,6 @@ xrx.xml.Event.prototype.setFeature = function(feature, opt_flag) {
 
 /**
  * Convenience function to turn all events on or off.
- * 
  * @param {!boolean} flag On or off.
  */
 xrx.xml.Event.prototype.setFeatures = function(flag) {
@@ -70,7 +70,6 @@ xrx.xml.Event.prototype.setFeatures = function(flag) {
 
 /**
  * Whether a specific feature is turned on or off.
- * 
  * @param {!string} feature The feature to test.
  * @return {!boolean} True when on otherwise false.
  */
@@ -113,6 +112,13 @@ xrx.xml.Event.prototype.rowComment = goog.abstractMethod;
  * Event, thrown whenever a processing instruction row is found.
  */
 xrx.xml.Event.prototype.rowPI = goog.abstractMethod;
+
+
+
+/**
+ * Event, thrown whenever a CDATA row is found.
+ */
+xrx.xml.Event.prototype.rowCDATA = goog.abstractMethod;
 
 
 
