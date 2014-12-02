@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ page.title }}</title>
+    <meta name="description" content="SemToNotes - A Topological Image Annotation and Image Retrieval System">
+    <link rel="stylesheet" type="text/css" href="../client/res/xrx.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/demo.css">
+    <script type="text/javascript" src="../client/lib/jssaxparser/SAXException.js"></script>
+    <script type="text/javascript" src="../client/lib/jssaxparser/AttributesImpl.js"></script>
+    <script type="text/javascript" src="../client/lib/jssaxparser/LocatorImpls.js"></script>
+    <script type="text/javascript" src="../client/lib/jssaxparser/NamespaceSupport.js"></script>
+    <script type="text/javascript" src="../client/lib/jssaxparser/sax.js"></script>
+    <script type="text/javascript" src="../client/lib/jssaxparser/DefaultHandlers.js"></script>
+    <script src='../client/lib/closure-library/closure/goog/base.js'></script>
+    <script src='../client/src/deps.js'></script>
+    <script>
+      goog.require('xrx');
+    </script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+      <script src="../js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div id="header_wrap" class="outer">
+      <header class="inner">
+        <h1 id="project_title"><a href="../">&lt;&nbsp;</a>{{ page.title }}</h1>
+        <h2 id="project_tagline">{{ page.tagline }}</h2>
+      </header>
+    </div>
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+      {{ content }}
+      </section>
+    </div>
+    {% include footer.html %}
+    {% include analytics.html %}
+    <script>
+      xrx.install();
+    </script>
+  </body>
+</html>
