@@ -1,0 +1,42 @@
+<!-- polygons -->
+<div class="xrx-instance" id="i-origin">&lt;data&gt;&lt;polygon points=""&gt;&lt;/polygon&gt;&lt;/data&gt;</div>
+<div class="xrx-instance" id="i-target">&lt;polygons&gt;
+    &lt;url&gt;../data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg&lt;/url&gt;
+  &lt;/polygons&gt;
+</div>
+<div id="b-origin" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i-origin')//polygon"></div>
+<div id="b-target" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i-target')//url"></div>
+<div id="b-polygons" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i-target')//polygon"></div>
+<!-- background image -->
+<div id="b-url" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i-target')//url/text()"></div>
+<!-- drawing canvas -->
+<div class="xrx-widget-canvas" data-xrx-engine="{{ page.engine }}">
+  <div class="xrx-widget-canvas-background-image" data-xrx-bind="b-url"></div>
+  <div class="xrx-widget-canvas-toolbar">
+    <span class="xrx-widget-canvas-toolbar-item-view xrx-icon-openhand32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-zoom-in xrx-icon-zoomIn32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-zoom-out xrx-icon-zoomOut32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
+    <span title="Draw a polygon"
+        data-xrx-graphics-name="my-polygons"
+        class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapePolygon32"></span>
+    <span class="xrx-widget-canvas-toolbar-item-modify xrx-icon-move32"></span>
+  </div>
+  <div class="xrx-widget-canvas-graphics">
+    <div class="xrx-widget-canvas-group" data-xrx-graphics-name="my-polygons">
+      <div class="xrx-mvc-repeat" data-xrx-bind="b-polygons"> 
+        <div class="xrx-widget-shape-polygon"
+            data-xrx-ref="./self::*"
+            data-xrx-ref-coords="./@points">
+        </div>
+      </div>
+      <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b-origin"
+            data-xrx-ref-coords="./@points">
+      </div>
+      <div class="xrx-mvc-action" data-xrx-event="xrx-event-graphic-created">
+        <div class="xrx-mvc-insert" data-xrx-origin="b-origin" data-xrx-target="b-target"></div>
+      </div>
+    </div>
+  </div>
+</div>

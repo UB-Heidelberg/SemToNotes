@@ -1,0 +1,12 @@
+markdown: kramdown
+highlighter: pygments
+
+collections:
+  milestone:
+    output: true
+  stylesheets:
+    output: true
+  js:
+    output: true
+  images:
+    output: true
