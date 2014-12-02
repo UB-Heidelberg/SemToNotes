@@ -10,6 +10,7 @@ goog.provide('xrx.mvc.Component');
 ***REMOVED***
 goog.require('goog.dom.dataset');
 goog.require('goog.ui.IdGenerator');
+goog.require('xrx.mvc.Validate');
 
 
 
@@ -17,15 +18,22 @@ goog.require('goog.ui.IdGenerator');
 ***REMOVED*** Constructs a new model-view-controller component.
 ***REMOVED***
 ***REMOVED***
-xrx.mvc.Component = function(element) {
+xrx.mvc.Component = function(element, uidl) {
 
   this.element_ = element;
+
+  this.uidl = uidl;
+
+  goog.base(this);
+
+  this.validate();
 ***REMOVED***
+goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
 xrx.mvc.Component.prototype.getAction = function(eventKey) {
-  xrx.mvc.getComponent
+  xrx.mvc.getComponent;
 ***REMOVED***
 
 

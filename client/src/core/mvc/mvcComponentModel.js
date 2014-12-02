@@ -13,9 +13,9 @@ goog.require('xrx.mvc.Component');
 ***REMOVED***
 ***REMOVED***
 ***REMOVED***
-xrx.mvc.ComponentModel = function(element) {
+xrx.mvc.ComponentModel = function(element, uidl) {
 
-***REMOVED***
+  goog.base(this, element, uidl);
 
   xrx.mvc.addModelComponent(this.getId(), this);
 

@@ -16,7 +16,7 @@ xrx.xml.Event = function() {
   ***REMOVED*** @type {Object}
   ***REMOVED*** @private
  ***REMOVED*****REMOVED***
-  this.features_ = {
+  this.features_ = {  
     'ATTRIBUTE': false,
     'ATTR_NAME': false,
     'ATTR_VALUE': false,
