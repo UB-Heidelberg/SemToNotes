@@ -16,7 +16,7 @@ xrx.xml.Event = function() {
    * @type {Object}
    * @private
    */
-  this.features_ = {
+  this.features_ = {  
     'ATTRIBUTE': false,
     'ATTR_NAME': false,
     'ATTR_VALUE': false,

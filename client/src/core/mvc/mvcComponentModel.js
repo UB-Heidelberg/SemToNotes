@@ -13,9 +13,9 @@ goog.require('xrx.mvc.Component');
 /**
  * @constructor
  */
-xrx.mvc.ComponentModel = function(element) {
+xrx.mvc.ComponentModel = function(element, uidl) {
 
-  goog.base(this, element);
+  goog.base(this, element, uidl);
 
   xrx.mvc.addModelComponent(this.getId(), this);
 

@@ -14,9 +14,9 @@ goog.require('xrx.mvc.Component');
 /**
  * @constructor
  */
-xrx.mvc.ComponentView = function(element) {
+xrx.mvc.ComponentView = function(element, uidl) {
 
-  goog.base(this, element);
+  goog.base(this, element, uidl);
 
   xrx.mvc.addViewComponent(this.getId(), this);
 

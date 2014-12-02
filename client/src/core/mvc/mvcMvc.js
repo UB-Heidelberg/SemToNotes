@@ -59,7 +59,7 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
  */
 xrx.mvc.Mvc.installInstances_ = function(opt_context) {
   var self = this;
-  var elements = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
+  var elements = goog.dom.getElementsByClass('xrx-instance', opt_context);
   var requests = [];
   var instances = [];
 
