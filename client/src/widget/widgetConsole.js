@@ -9,6 +9,7 @@ goog.provide('xrx.widget.Console');
 ***REMOVED***
 goog.require('goog.string');
 goog.require('goog.style');
+***REMOVED***
 goog.require('xrx.xml.Serialize');
 goog.require('xrx.token.Tokens');
 goog.require('xrx.mvc');
