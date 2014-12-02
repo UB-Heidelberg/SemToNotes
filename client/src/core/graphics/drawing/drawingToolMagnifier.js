@@ -62,7 +62,7 @@ xrx.drawing.tool.Magnifier.prototype.reset = function() {
   canvas.setHeight(this.height_);
   goog.style.setStyle(this.element_, 'position', 'absolute');
   goog.style.setStyle(this.element_, 'display', 'block');
-  goog.style.setStyle(this.element_, 'z-index', '999');
+  goog.style.setStyle(this.element_, 'z-index', '1001');
   goog.style.setStyle(this.element_, 'left', '50px');
   goog.style.setStyle(this.element_, 'top', '50px');
   goog.style.setStyle(this.element_, 'border', 'solid black 4px');

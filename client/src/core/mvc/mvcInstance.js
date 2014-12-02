@@ -12,6 +12,7 @@ goog.require('goog.events');
 goog.require('goog.net.XhrIo');
 goog.require('xrx.index.Index');
 goog.require('xrx.mvc.ComponentModel');
+goog.require('xrx.mvc.Uidl');
 goog.require('xrx.node.Nodes');
 goog.require('xrx.xml.Parser');
 goog.require('xrx.xml.Stream');
@@ -22,7 +23,7 @@ goog.require('xrx.xml.Pilot');
 /**
  * @constructor
  */
-xrx.mvc.Instance = function(element) {
+xrx.mvc.Instance = function(element) { 
 
   this.xml_;
 
@@ -30,11 +31,28 @@ xrx.mvc.Instance = function(element) {
 
   this.pilot_;
 
-  goog.base(this, element);
+  goog.base(this, element, new xrx.mvc.Uidl('span',
+    'xrx-instance',
+    [['dataset', 'src'], ['dataset', 'xrxSrc'], ['text', true]]
+  ));
 
   this.document_ = new xrx.node.DocumentB(this.getId());
 };
 goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
+
+
+
+/**
+ *
+ */
+xrx.mvc.Instance.prototype.suidl = {
+  'tagName': 'span',
+  'className': 'xrx-instance',
+  'dataset': {'src': undefined, 'xrxSrc': undefined},
+  'text': true,
+  'choice': [[['dataset']['src']], [['dataset']['xrxSrc']],
+      [['text']]]
+};
 
 
 
