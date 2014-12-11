@@ -19,6 +19,17 @@ xrx.xpath.declareNamespace('xrx', 'http://www.monasterium.net/NS/xrx');
 
 
 xrx.func = {
+  BIND: xrx.xpath.FunctionCall.createFunc('xrx:bind',
+      xrx.xpath.DataType.NODESET, true, true, true,
+      function(ctx, expr) {
+        var nodeset = new xrx.xpath.NodeSet();
+        var bindId = expr.evaluate(ctx);
+        var nodes = xrx.mvc.getModelComponent(bindId).getNodes();
+        for (var i = 0; i < nodes.length; i++) {
+          nodeset.add(nodes[i]);
+        }
+        return nodeset;
+      }, 1, 1),
   INSTANCE: xrx.xpath.FunctionCall.createFunc('xrx:instance',
       xrx.xpath.DataType.NODESET, true, true, true,
       function(ctx, expr) {
