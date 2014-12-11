@@ -31,6 +31,7 @@ goog.provide('xrx.xpath');
 
 
 
+goog.require('goog.string');
 goog.require('xrx.xpath.Context');
 goog.require('xrx.xpath.FunctionCall');
 goog.require('xrx.xpath.Lexer');
@@ -48,7 +49,7 @@ xrx.xpath.XPathFunctions = {};
  * @enum {string}
  */
 xrx.xpath.XPathNSResolver = {
-  'xml': 'http://www.w3.org/XML/1998/namespace',
+  'xmlns:xml': 'http://www.w3.org/XML/1998/namespace',
   'xmlns': 'http://www.w3.org/2000/xmlns/',
   'xs': 'http://www.w3.org/2001/XMLSchema',
   'fn': 'http://www.w3.org/2005/xpath-functions',
@@ -64,7 +65,12 @@ xrx.xpath.XPathNSResolver = {
  * @param {!string} uri The namespace uri.
  */
 xrx.xpath.declareNamespace = function(prefix, uri) {
-  xrx.xpath.XPathNSResolver[prefix] = uri;
+  if (prefix === 'xmlns') return;
+  if (goog.string.startsWith(prefix, 'xmlns:')) {
+    xrx.xpath.XPathNSResolver[prefix] = uri;
+  } else {
+    xrx.xpath.XPathNSResolver['xmlns:' + prefix] = uri;
+  }
 };
 
 
