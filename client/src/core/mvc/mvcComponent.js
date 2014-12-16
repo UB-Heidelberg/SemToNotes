@@ -1,5 +1,5 @@
 /**
- * @fileoverview An abstract class which represents
+ * @fileoverview An abstract class representing
  *   a component of the model-view-controller.
  */
 
@@ -68,6 +68,23 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 
 /**
+ *
+ */
+xrx.mvc.Component.prototype.getDataset = function(key) {
+  var shortened;
+  var standard = goog.dom.dataset.get(this.element_, key);
+  if (!standard) {
+    shortened = key.replace(/^xrx/, '');
+    shortened = shortened.charAt(0).toLowerCase() + shortened.slice(1);
+    return goog.dom.dataset.get(this.element_, shortened);
+  } else {
+    return standard;
+  }
+};
+
+
+
+/**
  * Returns the unique ID of this component. If the instance
  * doesn't already have an ID generate one on the fly.
  * @return {string} Unique component ID.
@@ -117,9 +134,9 @@ xrx.mvc.Component.prototype.getRepeatIndex = function() {
   var repeatItem = goog.dom.getAncestorByClass(this.element_,
       'xrx-mvc-repeat-item');
   if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
-    value = goog.dom.dataset.get(this.element_, 'xrxRepeatIndex');
+    value = this.getDataset('xrxRepeatIndex');
   } else if (repeatItem) {
-    value = goog.dom.dataset.get(repeatItem, 'xrxRepeatIndex');
+    value = this.getDataset('xrxRepeatIndex');
   } else {
     throw Error('Repeat item could not be found.');
   }
@@ -134,14 +151,14 @@ xrx.mvc.Component.prototype.getRepeatIndex = function() {
  */
 xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxRef';
-  return goog.dom.dataset.get(this.getElement(), dataset);
+  return this.getDataset(dataset);
 };
 
 
 
 xrx.mvc.Component.prototype.getValueExpression = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxValue';
-  return goog.dom.dataset.get(this.getElement(), dataset);
+  return this.getDataset(dataset);
 };
 
 
@@ -152,7 +169,7 @@ xrx.mvc.Component.prototype.getValueExpression = function(opt_dataset) {
  */
 xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxBind';
-  return goog.dom.dataset.get(this.getElement(), dataset);
+  return this.getDataset(dataset);
 };
 
 
@@ -163,7 +180,7 @@ xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
  */
 xrx.mvc.Component.prototype.getSrcUri = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxSrc';
-  return goog.dom.dataset.get(this.getElement(), dataset);
+  return this.getDataset(dataset);
 };
 
 
