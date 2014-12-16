@@ -34,7 +34,7 @@ xrx.html5.Input.prototype.createDom = function() {
 
 xrx.html5.Input.prototype.mvcRefresh = function() {
   var node = this.getNode();
-  var xml = node ? node.getXml() : undefined;
+  var xml = node ? node.getStringValue() : undefined;
   if (xml) goog.dom.forms.setValue(this.element_, xml);
 ***REMOVED***
 

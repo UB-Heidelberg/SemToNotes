@@ -11,6 +11,7 @@ goog.require('goog.array');
 ***REMOVED***
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
+goog.require('goog.style');
 goog.require('xrx.mvc.ComponentView');
 
 
@@ -49,6 +50,15 @@ xrx.mvc.Repeat.prototype.createItems_ = function() {
     item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
     this.nextItems_.push(item);
     n++;
+  }
+  if (!this.getNode(0)) {
+    goog.array.forEach(this.firstElements_, function(elmnt) {
+      goog.style.setStyle(elmnt, 'display', 'none');
+    }, this);
+  } else {
+    goog.array.forEach(this.firstElements_, function(elmnt) {
+      goog.style.setStyle(elmnt, 'display', '');
+    }, this);
   }
 ***REMOVED***
 
