@@ -34,29 +34,18 @@ xrx.mvc.registerComponent('xrx-widget-console', xrx.widget.Console);
 
 
 
+/**
+ *
+ */
 xrx.widget.Console.prototype.createDom = function() {};
 
 
 
+/**
+ *
+ */
 xrx.widget.Console.prototype.getValue = function() {
   return goog.dom.getTextContent(this.element_);
-};
-
-
-
-xrx.widget.Console.prototype.setValue = function(xml) {
-  var node = xrx.mvc.Cursor.getNode(0);
-  if (!node) {
-    var text = xrx.xml.Indent.forward(xml, this.tabSize_, undefined, this.maxLines_);
-    goog.dom.setTextContent(this.element_, text);
-  } else {
-    var pilot = node.getInstance().getPilot();
-    var token = node.getToken();
-    var text = '';
-    text += goog.string.trimRight(xrx.xml.Indent.backward(xml, this.tabSize_, token, this.maxLines_ / 2));
-    text += xrx.xml.Indent.forward(xml, this.tabSize_, token, this.maxLines_ / 2);
-    goog.dom.setTextContent(this.element_, text);
-  }
 };
 
 
@@ -75,6 +64,13 @@ xrx.widget.Console.prototype.mvcRemove = function() {
  */
 xrx.widget.Console.prototype.mvcRefresh = function() {
   var node = this.getNode();
-  var xml = node ? node.getXml() : '';
-  this.setValue(xml);
+  var type = node ? node.getType() : undefined;
+  if (!node) {
+    goog.dom.setTextContent(this.element_, '');
+  } else if (type === xrx.node.ELEMENT || type === xrx.node.DOCUMENT) {
+    var text = xrx.xml.Indent.forward(node.getXml(), this.tabSize_, undefined, this.maxLines_);
+    goog.dom.setTextContent(this.element_, text);
+  } else {
+    goog.dom.setTextContent(this.element_, node.getXml());
+  }
 };
