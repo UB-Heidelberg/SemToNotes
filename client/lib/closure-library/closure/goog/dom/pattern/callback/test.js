@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Callback object that tests if a pattern matches at least once.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Callback object that tests if a pattern matches at least once.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.callback.Test');
 
@@ -24,38 +24,38 @@ goog.require('goog.iter.StopIteration');
 
 
 
-***REMOVED***
-***REMOVED*** Callback class for testing for at least one match.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Callback class for testing for at least one match.
+ * @constructor
+ * @final
+ */
 goog.dom.pattern.callback.Test = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether or not the pattern matched.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether or not the pattern matched.
+ *
+ * @type {boolean}
+ */
 goog.dom.pattern.callback.Test.prototype.matched = false;
 
 
-***REMOVED***
-***REMOVED*** The callback function.  Suitable as a callback for
-***REMOVED*** {@link goog.dom.pattern.Matcher}.
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The callback function.  Suitable as a callback for
+ * {@link goog.dom.pattern.Matcher}.
+ * @type {Function}
+ * @private
+ */
 goog.dom.pattern.callback.Test.prototype.callback_ = null;
 
 
-***REMOVED***
-***REMOVED*** Get a bound callback function that is suitable as a callback for
-***REMOVED*** {@link goog.dom.pattern.Matcher}.
-***REMOVED***
-***REMOVED*** @return {!Function} A callback function.
-***REMOVED***
+/**
+ * Get a bound callback function that is suitable as a callback for
+ * {@link goog.dom.pattern.Matcher}.
+ *
+ * @return {!Function} A callback function.
+ */
 goog.dom.pattern.callback.Test.prototype.getCallback = function() {
   if (!this.callback_) {
     this.callback_ = goog.bind(function(node, position) {
@@ -67,12 +67,12 @@ goog.dom.pattern.callback.Test.prototype.getCallback = function() {
     }, this);
   }
   return this.callback_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset the counter.
-***REMOVED***
+/**
+ * Reset the counter.
+ */
 goog.dom.pattern.callback.Test.prototype.reset = function() {
   this.matched = false;
-***REMOVED***
+};

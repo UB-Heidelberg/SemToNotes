@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview 
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview 
+ */
 
 goog.provide('xrx.widget.Canvas');
 goog.provide('xrx.widget.CanvasGroup');
@@ -36,7 +36,7 @@ goog.provide('xrx.widget.CanvasBackgroundImage');
 
 
 goog.require('goog.array');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
@@ -47,9 +47,9 @@ goog.require('xrx.mvc.Controller');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.widget.Canvas = function(element) {
 
   this.drawing_;
@@ -60,8 +60,8 @@ xrx.widget.Canvas = function(element) {
 
   this.nameInsertShapeCreate_;
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.widget.Canvas, xrx.mvc.ComponentView);
 xrx.mvc.registerComponent('xrx-widget-canvas', xrx.widget.Canvas);
 
@@ -69,24 +69,24 @@ xrx.mvc.registerComponent('xrx-widget-canvas', xrx.widget.Canvas);
 
 xrx.widget.Canvas.prototype.getDrawing = function() {
   return this.drawing_;
-***REMOVED***
+};
 
 
 
 xrx.widget.Canvas.prototype.getNode = function() {
   return undefined;
-***REMOVED***
+};
 
 
 
 xrx.widget.Canvas.prototype.mvcRefresh = function() {
-***REMOVED***
+};
 
 
 
 xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
   this.nameInsertShapeCreate_ = name;
-***REMOVED***
+};
 
 
 
@@ -97,12 +97,12 @@ xrx.widget.Canvas.prototype.getActiveGroup = function() {
         group = e;
   }, this);
   return group;
-***REMOVED***
+};
 
 
 
 xrx.widget.Canvas.prototype.getWidgetShape = function() {
-***REMOVED***
+  var self = this;
   var layerGraphics = goog.dom.getElementsByClass(
       'xrx-widget-canvas-layer-graphics', this.element_)[0];
   var shapeDiv = goog.dom.findNode(layerGraphics, function(node) {
@@ -115,7 +115,7 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
     }
   });
   return xrx.mvc.getViewComponent(shapeDiv.id);
-***REMOVED***
+};
 
 
 
@@ -127,12 +127,12 @@ xrx.widget.Canvas.prototype.refresh = function() {
     xrx.mvc.getComponent(repeat.id).mvcRefresh();
   });
   this.drawing_.draw();
-***REMOVED***
+};
 
 
 
 xrx.widget.Canvas.prototype.createDom = function() {
-***REMOVED***
+  var self = this;
   // initialize drawing
   var datasetEngine = goog.dom.dataset.get(this.element_, 'xrxEngine');
   this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
@@ -150,14 +150,14 @@ xrx.widget.Canvas.prototype.createDom = function() {
   this.drawing_.handleCreated = function() {
     self.getActiveGroup().dispatchShapeCreated();
     self.refresh();
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.widget.CanvasGroup = function(element, canvas) {
 
   this.element_ = element;
@@ -165,7 +165,7 @@ xrx.widget.CanvasGroup = function(element, canvas) {
   this.canvas_ = canvas;
 
   this.name_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
-***REMOVED***
+};
 
 
 
@@ -176,45 +176,45 @@ xrx.widget.CanvasGroup.prototype.dispatchShapeCreated = function() {
         true : false; 
   });
   if (actionElement) xrx.mvc.getModelComponent(actionElement.id).execute();
-***REMOVED***
+};
 
 
 
 xrx.widget.CanvasGroup.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};
 
 
 
 xrx.widget.CanvasGroup.prototype.getName = function() {
   return this.name_;
-***REMOVED***
+};
 
 
 
 xrx.widget.CanvasGroup.prototype.getShapeCreate = function() {
   var div = goog.dom.getChildren(this.element_)[1];
   return xrx.mvc.getComponent(div.id);
-***REMOVED***
+};
 
 
 
 xrx.widget.CanvasGroup.prototype.getShapeInsert = function() {
   var div = goog.dom.getChildren(this.element_)[2];
   return xrx.mvc.getComponent(div.id);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.widget.CanvasBackgroundImage = function(element) {
 
   this.canvas_;
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.widget.CanvasBackgroundImage, xrx.mvc.ComponentView);
 xrx.mvc.registerComponent('xrx-widget-canvas-background-image', xrx.widget.CanvasBackgroundImage);
 
@@ -224,14 +224,14 @@ xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
   var url = this.getNode().getStringValue();
   var drawing = this.canvas_.getDrawing()
   if (drawing.getEngine().isAvailable()) drawing.setBackgroundImage(url);
-***REMOVED***
+};
 
 
 
 xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
   var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
   this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

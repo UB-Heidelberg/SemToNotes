@@ -48,7 +48,7 @@ goog.inherits(MockMessagePort, goog.events.EventTarget);
 
 MockMessagePort.prototype.start = function() {
   this.started = true;
-***REMOVED***
+};
 
 function testGetPort() {
   mockChannel.send(

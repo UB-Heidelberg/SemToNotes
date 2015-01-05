@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Loads a list of URIs in bulk. All requests must be a success
-***REMOVED*** in order for the load to be considered a success.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Loads a list of URIs in bulk. All requests must be a success
+ * in order for the load to be considered a success.
+ *
+ */
 
 goog.provide('goog.net.BulkLoader');
 
@@ -25,67 +25,67 @@ goog.require('goog.events.EventTarget');
 goog.require('goog.log');
 goog.require('goog.net.BulkLoaderHelper');
 goog.require('goog.net.EventType');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 
 
 
-***REMOVED***
-***REMOVED*** Class used to load multiple URIs.
-***REMOVED*** @param {Array.<string|goog.Uri>} uris The URIs to load.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class used to load multiple URIs.
+ * @param {Array.<string|goog.Uri>} uris The URIs to load.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.net.BulkLoader = function(uris) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The bulk loader helper.
-  ***REMOVED*** @type {goog.net.BulkLoaderHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The bulk loader helper.
+   * @type {goog.net.BulkLoaderHelper}
+   * @private
+   */
   this.helper_ = new goog.net.BulkLoaderHelper(uris);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The handler for managing events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.net.BulkLoader>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The handler for managing events.
+   * @type {goog.events.EventHandler.<!goog.net.BulkLoader>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
-***REMOVED***
+};
 goog.inherits(goog.net.BulkLoader, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** A logger.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A logger.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.net.BulkLoader.prototype.logger_ =
     goog.log.getLogger('goog.net.BulkLoader');
 
 
-***REMOVED***
-***REMOVED*** Gets the response texts, in order.
-***REMOVED*** @return {Array.<string>} The response texts.
-***REMOVED***
+/**
+ * Gets the response texts, in order.
+ * @return {Array.<string>} The response texts.
+ */
 goog.net.BulkLoader.prototype.getResponseTexts = function() {
   return this.helper_.getResponseTexts();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the request Uris.
-***REMOVED*** @return {Array.<string>} The request URIs, in order.
-***REMOVED***
+/**
+ * Gets the request Uris.
+ * @return {Array.<string>} The request URIs, in order.
+ */
 goog.net.BulkLoader.prototype.getRequestUris = function() {
   return this.helper_.getUris();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the process of loading the URIs.
-***REMOVED***
+/**
+ * Starts the process of loading the URIs.
+ */
 goog.net.BulkLoader.prototype.load = function() {
   var eventHandler = this.eventHandler_;
   var uris = this.helper_.getUris();
@@ -100,34 +100,34 @@ goog.net.BulkLoader.prototype.load = function() {
 
     xhrIo.send(uris[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles all events fired by the XhrManager.
-***REMOVED*** @param {number} id The id of the request.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles all events fired by the XhrManager.
+ * @param {number} id The id of the request.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.net.BulkLoader.prototype.handleEvent_ = function(id, e) {
   goog.log.info(this.logger_, 'Received event "' + e.type + '" for id ' + id +
       ' with uri ' + this.helper_.getUri(id));
-  var xhrIo =***REMOVED*****REMOVED*** @type {goog.net.XhrIo}***REMOVED*** (e.target);
+  var xhrIo = /** @type {goog.net.XhrIo} */ (e.target);
   if (xhrIo.isSuccess()) {
     this.handleSuccess_(id, xhrIo);
   } else {
     this.handleError_(id, xhrIo);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles when a request is successful (i.e., completed and response received).
-***REMOVED*** Stores thhe responseText and checks if loading is complete.
-***REMOVED*** @param {number} id The id of the request.
-***REMOVED*** @param {goog.net.XhrIo} xhrIo The XhrIo objects that was used.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles when a request is successful (i.e., completed and response received).
+ * Stores thhe responseText and checks if loading is complete.
+ * @param {number} id The id of the request.
+ * @param {goog.net.XhrIo} xhrIo The XhrIo objects that was used.
+ * @private
+ */
 goog.net.BulkLoader.prototype.handleSuccess_ = function(
     id, xhrIo) {
   // Save the response text.
@@ -138,16 +138,16 @@ goog.net.BulkLoader.prototype.handleSuccess_ = function(
     this.finishLoad_();
   }
   xhrIo.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles when a request has ended in error (i.e., all retries completed and
-***REMOVED*** none were successful). Cancels loading of the URI's.
-***REMOVED*** @param {number|string} id The id of the request.
-***REMOVED*** @param {goog.net.XhrIo} xhrIo The XhrIo objects that was used.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles when a request has ended in error (i.e., all retries completed and
+ * none were successful). Cancels loading of the URI's.
+ * @param {number|string} id The id of the request.
+ * @param {goog.net.XhrIo} xhrIo The XhrIo objects that was used.
+ * @private
+ */
 goog.net.BulkLoader.prototype.handleError_ = function(
     id, xhrIo) {
   // TODO(user): Abort all pending requests.
@@ -155,22 +155,22 @@ goog.net.BulkLoader.prototype.handleError_ = function(
   // Dispatch the ERROR event.
   this.dispatchEvent(goog.net.EventType.ERROR);
   xhrIo.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finishes the load of the URI's. Dispatches the SUCCESS event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finishes the load of the URI's. Dispatches the SUCCESS event.
+ * @private
+ */
 goog.net.BulkLoader.prototype.finishLoad_ = function() {
   goog.log.info(this.logger_, 'All uris loaded.');
 
   // Dispatch the SUCCESS event.
   this.dispatchEvent(goog.net.EventType.SUCCESS);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.BulkLoader.prototype.disposeInternal = function() {
   goog.net.BulkLoader.superClass_.disposeInternal.call(this);
 
@@ -179,4 +179,4 @@ goog.net.BulkLoader.prototype.disposeInternal = function() {
 
   this.helper_.dispose();
   this.helper_ = null;
-***REMOVED***
+};

@@ -1,20 +1,20 @@
 define(function () {
-  ***REMOVED*****REMOVED***
+   /**
         A module representing a shirt.
         @exports my/shirt
         @version 1.0
-   ***REMOVED*****REMOVED***
+     */
     var shirt = {
 
-       ***REMOVED*****REMOVED*** A property of the module.***REMOVED***
+        /** A property of the module. */
         color: "black",
 
-       ***REMOVED*****REMOVED*** @constructor***REMOVED***
+        /** @constructor */
         Turtleneck: function(size) {
-           ***REMOVED*****REMOVED*** A property of the class.***REMOVED***
+            /** A property of the class. */
             this.size = size;
         }
-   ***REMOVED*****REMOVED***
+    };
 
     return shirt;
 });

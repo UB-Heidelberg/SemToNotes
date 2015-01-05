@@ -12,47 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a files drag and drop event detector. It works on
-***REMOVED*** HTML5 browsers.
-***REMOVED***
-***REMOVED*** @see ../demos/filedrophandler.html
-***REMOVED***
+/**
+ * @fileoverview Provides a files drag and drop event detector. It works on
+ * HTML5 browsers.
+ *
+ * @see ../demos/filedrophandler.html
+ */
 
 goog.provide('goog.events.FileDropHandler');
 goog.provide('goog.events.FileDropHandler.EventType');
 
 goog.require('goog.array');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** A files drag and drop event detector. Gets an {@code element} as parameter
-***REMOVED*** and fires {@code goog.events.FileDropHandler.EventType.DROP} event when files
-***REMOVED*** are dropped in the {@code element}.
-***REMOVED***
-***REMOVED*** @param {Element|Document} element The element or document to listen on.
-***REMOVED*** @param {boolean=} opt_preventDropOutside Whether to prevent a drop on the
-***REMOVED***     area outside the {@code element}. Default false.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A files drag and drop event detector. Gets an {@code element} as parameter
+ * and fires {@code goog.events.FileDropHandler.EventType.DROP} event when files
+ * are dropped in the {@code element}.
+ *
+ * @param {Element|Document} element The element or document to listen on.
+ * @param {boolean=} opt_preventDropOutside Whether to prevent a drop on the
+ *     area outside the {@code element}. Default false.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.events.FileDropHandler = function(element, opt_preventDropOutside) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Handler for drag/drop events.
-  ***REMOVED*** @type {!goog.events.EventHandler.<!goog.events.FileDropHandler>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Handler for drag/drop events.
+   * @type {!goog.events.EventHandler.<!goog.events.FileDropHandler>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   var doc = element;
@@ -80,69 +80,69 @@ goog.events.FileDropHandler = function(element, opt_preventDropOutside) {
   this.eventHandler_.listen(element,
                             goog.events.EventType.DROP,
                             this.onElemDrop_);
-***REMOVED***
+};
 goog.inherits(goog.events.FileDropHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Whether the drag event contains files. It is initialized only in the
-***REMOVED*** dragenter event. It is used in all the drag events to prevent default actions
-***REMOVED*** only if the drag contains files. Preventing default actions is necessary to
-***REMOVED*** go from dragenter to dragover and from dragover to drop. However we do not
-***REMOVED*** always want to prevent default actions, e.g. when the user drags text or
-***REMOVED*** links on a text area we should not prevent the browser default action that
-***REMOVED*** inserts the text in the text area. It is also necessary to stop propagation
-***REMOVED*** when handling drag events on the element to prevent them from propagating
-***REMOVED*** to the document.
-***REMOVED*** @private
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the drag event contains files. It is initialized only in the
+ * dragenter event. It is used in all the drag events to prevent default actions
+ * only if the drag contains files. Preventing default actions is necessary to
+ * go from dragenter to dragover and from dragover to drop. However we do not
+ * always want to prevent default actions, e.g. when the user drags text or
+ * links on a text area we should not prevent the browser default action that
+ * inserts the text in the text area. It is also necessary to stop propagation
+ * when handling drag events on the element to prevent them from propagating
+ * to the document.
+ * @private
+ * @type {boolean}
+ */
 goog.events.FileDropHandler.prototype.dndContainsFiles_ = false;
 
 
-***REMOVED***
-***REMOVED*** A logger, used to help us debug the algorithm.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A logger, used to help us debug the algorithm.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.events.FileDropHandler.prototype.logger_ =
     goog.log.getLogger('goog.events.FileDropHandler');
 
 
-***REMOVED***
-***REMOVED*** The types of events fired by this class.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The types of events fired by this class.
+ * @enum {string}
+ */
 goog.events.FileDropHandler.EventType = {
   DROP: goog.events.EventType.DROP
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.FileDropHandler.prototype.disposeInternal = function() {
   goog.events.FileDropHandler.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches the DROP event.
-***REMOVED*** @param {goog.events.BrowserEvent} e The underlying browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches the DROP event.
+ * @param {goog.events.BrowserEvent} e The underlying browser event.
+ * @private
+ */
 goog.events.FileDropHandler.prototype.dispatch_ = function(e) {
   goog.log.fine(this.logger_, 'Firing DROP event...');
   var event = new goog.events.BrowserEvent(e.getBrowserEvent());
   event.type = goog.events.FileDropHandler.EventType.DROP;
   this.dispatchEvent(event);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles dragenter on the document.
-***REMOVED*** @param {goog.events.BrowserEvent} e The dragenter event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles dragenter on the document.
+ * @param {goog.events.BrowserEvent} e The dragenter event.
+ * @private
+ */
 goog.events.FileDropHandler.prototype.onDocDragEnter_ = function(e) {
   goog.log.log(this.logger_, goog.log.Level.FINER,
       '"' + e.target.id + '" (' + e.target + ') dispatched: ' + e.type);
@@ -160,14 +160,14 @@ goog.events.FileDropHandler.prototype.onDocDragEnter_ = function(e) {
   }
   goog.log.log(this.logger_, goog.log.Level.FINER,
       'dndContainsFiles_: ' + this.dndContainsFiles_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles dragging something over the document.
-***REMOVED*** @param {goog.events.BrowserEvent} e The dragover event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles dragging something over the document.
+ * @param {goog.events.BrowserEvent} e The dragover event.
+ * @private
+ */
 goog.events.FileDropHandler.prototype.onDocDragOver_ = function(e) {
   goog.log.log(this.logger_, goog.log.Level.FINEST,
       '"' + e.target.id + '" (' + e.target + ') dispatched: ' + e.type);
@@ -178,14 +178,14 @@ goog.events.FileDropHandler.prototype.onDocDragOver_ = function(e) {
     var dt = e.getBrowserEvent().dataTransfer;
     dt.dropEffect = 'none';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles dragging something over the element (drop zone).
-***REMOVED*** @param {goog.events.BrowserEvent} e The dragover event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles dragging something over the element (drop zone).
+ * @param {goog.events.BrowserEvent} e The dragover event.
+ * @private
+ */
 goog.events.FileDropHandler.prototype.onElemDragOver_ = function(e) {
   goog.log.log(this.logger_, goog.log.Level.FINEST,
       '"' + e.target.id + '" (' + e.target + ') dispatched: ' + e.type);
@@ -199,14 +199,14 @@ goog.events.FileDropHandler.prototype.onElemDragOver_ = function(e) {
     dt.effectAllowed = 'all';
     dt.dropEffect = 'copy';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles dropping something onto the element (drop zone).
-***REMOVED*** @param {goog.events.BrowserEvent} e The drop event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles dropping something onto the element (drop zone).
+ * @param {goog.events.BrowserEvent} e The drop event.
+ * @private
+ */
 goog.events.FileDropHandler.prototype.onElemDrop_ = function(e) {
   goog.log.log(this.logger_, goog.log.Level.FINER,
       '"' + e.target.id + '" (' + e.target + ') dispatched: ' + e.type);
@@ -219,4 +219,4 @@ goog.events.FileDropHandler.prototype.onElemDrop_ = function(e) {
     // Dispatch DROP event.
     this.dispatch_(e);
   }
-***REMOVED***
+};

@@ -8,7 +8,7 @@ var VISITOR_STOP = false;
 
 // TODO: docs; empty array means any node type, otherwise only the node types in the array
 var acceptsLeadingComments = (function() {
-    var accepts = {***REMOVED***
+    var accepts = {};
 
     // these nodes always accept leading comments
     var commentable = [
@@ -28,13 +28,13 @@ var acceptsLeadingComments = (function() {
     }
 
     // these nodes accept leading comments if they have specific types of parent nodes
-    // like: function foo(***REMOVED*** @type {string}***REMOVED*** bar) {}
+    // like: function foo(/** @type {string} */ bar) {}
     accepts[Syntax.Identifier] = [
         Syntax.CatchClause,
         Syntax.FunctionDeclaration,
         Syntax.FunctionExpression
     ];
-    // like: var Foo = Class.create(***REMOVED*** @lends Foo***REMOVED***{ // ... })
+    // like: var Foo = Class.create(/** @lends Foo */{ // ... })
     accepts[Syntax.ObjectExpression] = [
         Syntax.CallExpression,
         Syntax.Property,
@@ -79,12 +79,12 @@ function isJsdocComment(comment) {
     return comment && (comment.type === 'Block') && (comment.value[0] === '*');
 }
 
-***REMOVED***
-***REMOVED*** Add the raw comment string to a block comment node.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {!Object} comment - A comment node with `type` and `value` properties.
-***REMOVED***
+/**
+ * Add the raw comment string to a block comment node.
+ *
+ * @private
+ * @param {!Object} comment - A comment node with `type` and `value` properties.
+ */
 function addRawComment(comment) {
     comment.raw = comment.raw || ('/*' + comment.value + '*/');
     return comment;
@@ -107,7 +107,7 @@ function scrubComments(comments) {
 }
 
 // TODO: docs
-var AstBuilder = exports.AstBuilder = function() {***REMOVED***
+var AstBuilder = exports.AstBuilder = function() {};
 
 function parse(source, filename, esprimaOpts) {
     var esprima = require('esprima');
@@ -134,7 +134,7 @@ AstBuilder.prototype.build = function(source, filename) {
         loc: true,
         range: true,
         tokens: true
-   ***REMOVED*****REMOVED***
+    };
 
     ast = parse(source, filename, esprimaOpts);
 
@@ -143,7 +143,7 @@ AstBuilder.prototype.build = function(source, filename) {
     }
 
     return ast;
-***REMOVED***
+};
 
 // TODO: docs
 function atomSorter(a, b) {
@@ -192,24 +192,24 @@ CommentAttacher.prototype._resetPendingComment = function() {
     this._pendingCommentRange = null;
 
     return this;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._resetCandidates = function() {
     this._candidates = [];
 
     return this;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._nextComment = function() {
     return this._comments[0] || null;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._nextToken = function() {
     return this._tokens[this._tokenIndex] || null;
-***REMOVED***
+};
 
 // TODO: docs
 // find the index of the atom whose end position is closest to (but not after) the specified
@@ -231,7 +231,7 @@ CommentAttacher.prototype._nextIndexBefore = function(startIndex, atoms, positio
     }
 
     return newIndex;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._advanceTokenIndex = function(node) {
@@ -240,7 +240,7 @@ CommentAttacher.prototype._advanceTokenIndex = function(node) {
     this._tokenIndex = this._nextIndexBefore(this._tokenIndex, this._tokens, position);
 
     return this;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._fastForwardComments = function(node) {
@@ -252,7 +252,7 @@ CommentAttacher.prototype._fastForwardComments = function(node) {
         this._strayComments = this._strayComments.concat( this._comments.splice(0,
             commentIndex) );
     }
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._attachPendingComment = function() {
@@ -275,7 +275,7 @@ CommentAttacher.prototype._attachPendingComment = function() {
         ._resetCandidates();
 
     return this;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype._isEligible = function(node) {
@@ -301,7 +301,7 @@ CommentAttacher.prototype._isEligible = function(node) {
     }
 
     return isEligible;
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: do we ever get multiple candidate nodes?
@@ -339,7 +339,7 @@ CommentAttacher.prototype.visit = function(node) {
     }
 
     return VISITOR_CONTINUE;
-***REMOVED***
+};
 
 // TODO: docs
 CommentAttacher.prototype.finish = function() {
@@ -353,14 +353,14 @@ CommentAttacher.prototype.finish = function() {
     if (this._strayComments.length) {
         this._astRoot.trailingComments = this._strayComments.slice(0);
     }
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: refactor to make this extensible
-***REMOVED***
-***REMOVED*** @param {string} filename - The full path to the source file.
-***REMOVED*** @param {Object} ast - An abstract syntax tree that conforms to the Mozilla Parser API.
-***REMOVED***
+/**
+ * @param {string} filename - The full path to the source file.
+ * @param {Object} ast - An abstract syntax tree that conforms to the Mozilla Parser API.
+ */
 AstBuilder.prototype._postProcess = function(filename, ast) {
     var astnode = require('jsdoc/src/astnode');
     var Walker = require('jsdoc/src/walker').Walker;
@@ -373,7 +373,7 @@ AstBuilder.prototype._postProcess = function(filename, ast) {
                 attachComments = commentAttacher.visit(node);
             }
         }
-   ***REMOVED*****REMOVED***
+    };
 
     var walker = new Walker();
     walker.recurse(filename, ast, visitor);
@@ -383,4 +383,4 @@ AstBuilder.prototype._postProcess = function(filename, ast) {
     // remove the comment/token arrays; we no longer need then
     ast.comments = [];
     ast.tokens = [];
-***REMOVED***
+};

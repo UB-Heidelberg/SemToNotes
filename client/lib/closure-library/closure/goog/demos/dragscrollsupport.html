@@ -105,10 +105,10 @@ List 1 in a scrollable area.
   list1.init();
 
   // Set up event handlers
-***REMOVED***list1, 'dragover', dragOver);
-***REMOVED***list1, 'dragout', dragOut);
-***REMOVED***list1, 'dragstart', dragStart);
-***REMOVED***list1, 'dragend', dragEnd);
+  goog.events.listen(list1, 'dragover', dragOver);
+  goog.events.listen(list1, 'dragout', dragOut);
+  goog.events.listen(list1, 'dragstart', dragStart);
+  goog.events.listen(list1, 'dragend', dragEnd);
 
   function dragOver(event) {
     event.dropTargetItem.element.style.background = 'red';

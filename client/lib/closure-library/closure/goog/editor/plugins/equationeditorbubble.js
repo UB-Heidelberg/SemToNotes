@@ -24,62 +24,62 @@ goog.require('goog.ui.equation.ImageRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Property bubble plugin for equations.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractBubblePlugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Property bubble plugin for equations.
+ *
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractBubblePlugin}
+ * @final
+ */
 goog.editor.plugins.equation.EquationBubble = function() {
   goog.editor.plugins.equation.EquationBubble.base(this, 'constructor');
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.equation.EquationBubble,
     goog.editor.plugins.AbstractBubblePlugin);
 
 
-***REMOVED***
-***REMOVED*** Id for 'edit' link.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Id for 'edit' link.
+ * @type {string}
+ * @private
+ */
 goog.editor.plugins.equation.EquationBubble.EDIT_ID_ = 'ee_bubble_edit';
 
 
-***REMOVED***
-***REMOVED*** Id for 'remove' link.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Id for 'remove' link.
+ * @type {string}
+ * @private
+ */
 goog.editor.plugins.equation.EquationBubble.REMOVE_ID_ = 'ee_remove_remove';
 
 
-***REMOVED***
-***REMOVED*** @desc Label for the equation property bubble.
-***REMOVED***
+/**
+ * @desc Label for the equation property bubble.
+ */
 var MSG_EE_BUBBLE_EQUATION = goog.getMsg('Equation:');
 
 
-***REMOVED***
-***REMOVED*** @desc Link text for equation property bubble to edit the equation.
-***REMOVED***
+/**
+ * @desc Link text for equation property bubble to edit the equation.
+ */
 var MSG_EE_BUBBLE_EDIT = goog.getMsg('Edit');
 
 
-***REMOVED***
-***REMOVED*** @desc Link text for equation property bubble to remove the equation.
-***REMOVED***
+/**
+ * @desc Link text for equation property bubble to remove the equation.
+ */
 var MSG_EE_BUBBLE_REMOVE = goog.getMsg('Remove');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.equation.EquationBubble.prototype.getTrogClassId =
     function() {
   return 'EquationBubble';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.equation.EquationBubble.prototype.
     getBubbleTargetFromSelection = function(selectedElement) {
   if (selectedElement &&
@@ -87,10 +87,10 @@ goog.editor.plugins.equation.EquationBubble.prototype.
     return selectedElement;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.equation.EquationBubble.prototype.createBubbleContents =
     function(bubbleContainer) {
   goog.dom.appendChild(bubbleContainer,
@@ -107,29 +107,29 @@ goog.editor.plugins.equation.EquationBubble.prototype.createBubbleContents =
 
   this.createLink(goog.editor.plugins.equation.EquationBubble.REMOVE_ID_,
       MSG_EE_BUBBLE_REMOVE, this.removeEquation_, bubbleContainer);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.equation.EquationBubble.prototype.getBubbleType =
     function() {
   return goog.dom.TagName.IMG;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.equation.EquationBubble.prototype.getBubbleTitle =
     function() {
- ***REMOVED*****REMOVED*** @desc Title for the equation bubble.***REMOVED***
+  /** @desc Title for the equation bubble. */
   var MSG_EQUATION_BUBBLE_TITLE = goog.getMsg('Equation');
   return MSG_EQUATION_BUBBLE_TITLE;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the equation associated with the bubble.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes the equation associated with the bubble.
+ * @private
+ */
 goog.editor.plugins.equation.EquationBubble.prototype.removeEquation_ =
     function() {
   this.getFieldObject().dispatchBeforeChange();
@@ -139,16 +139,16 @@ goog.editor.plugins.equation.EquationBubble.prototype.removeEquation_ =
   this.closeBubble();
 
   this.getFieldObject().dispatchChange();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opens equation editor for the equation associated with the bubble.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Opens equation editor for the equation associated with the bubble.
+ * @private
+ */
 goog.editor.plugins.equation.EquationBubble.prototype.editEquation_ =
     function() {
   var equationNode = this.getTargetElement();
   this.closeBubble();
   this.getFieldObject().execCommand(goog.editor.Command.EQUATION, equationNode);
-***REMOVED***
+};

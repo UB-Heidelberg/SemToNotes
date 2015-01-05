@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides functions to parse and pretty-print HTML strings.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides functions to parse and pretty-print HTML strings.
+ *
+ */
 
 goog.provide('goog.format.HtmlPrettyPrinter');
 goog.provide('goog.format.HtmlPrettyPrinter.Buffer');
@@ -25,74 +25,74 @@ goog.require('goog.string.StringBuffer');
 
 
 
-***REMOVED***
-***REMOVED*** This class formats HTML to be more human-readable.
-***REMOVED*** TODO(user): Add hierarchical indentation.
-***REMOVED*** @param {number=} opt_timeOutMillis Max # milliseconds to spend on #format. If
-***REMOVED***     this time is exceeded, return partially formatted. 0 or negative number
-***REMOVED***     indicates no timeout.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class formats HTML to be more human-readable.
+ * TODO(user): Add hierarchical indentation.
+ * @param {number=} opt_timeOutMillis Max # milliseconds to spend on #format. If
+ *     this time is exceeded, return partially formatted. 0 or negative number
+ *     indicates no timeout.
+ * @constructor
+ * @final
+ */
 goog.format.HtmlPrettyPrinter = function(opt_timeOutMillis) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Max # milliseconds to spend on #format.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Max # milliseconds to spend on #format.
+   * @type {number}
+   * @private
+   */
   this.timeOutMillis_ = opt_timeOutMillis && opt_timeOutMillis > 0 ?
       opt_timeOutMillis : 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Singleton.
-***REMOVED*** @type {goog.format.HtmlPrettyPrinter?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Singleton.
+ * @type {goog.format.HtmlPrettyPrinter?}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.instance_ = null;
 
 
-***REMOVED***
-***REMOVED*** Singleton lazy initializer.
-***REMOVED*** @return {!goog.format.HtmlPrettyPrinter} Singleton.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Singleton lazy initializer.
+ * @return {!goog.format.HtmlPrettyPrinter} Singleton.
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.getInstance_ = function() {
   if (!goog.format.HtmlPrettyPrinter.instance_) {
     goog.format.HtmlPrettyPrinter.instance_ =
         new goog.format.HtmlPrettyPrinter();
   }
   return goog.format.HtmlPrettyPrinter.instance_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static utility function. See prototype #format.
-***REMOVED*** @param {string} html The HTML text to pretty print.
-***REMOVED*** @return {string} Formatted result.
-***REMOVED***
+/**
+ * Static utility function. See prototype #format.
+ * @param {string} html The HTML text to pretty print.
+ * @return {string} Formatted result.
+ */
 goog.format.HtmlPrettyPrinter.format = function(html) {
   return goog.format.HtmlPrettyPrinter.getInstance_().format(html);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** List of patterns used to tokenize HTML for pretty printing. Cache
-***REMOVED*** subexpression for tag name.
-***REMOVED*** comment|meta-tag|tag|text|other-less-than-characters
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * List of patterns used to tokenize HTML for pretty printing. Cache
+ * subexpression for tag name.
+ * comment|meta-tag|tag|text|other-less-than-characters
+ * @type {RegExp}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.TOKEN_REGEX_ =
     /(?:<!--.*?-->|<!.*?>|<(\/?)(\w+)[^>]*>|[^<]+|<)/g;
 
 
-***REMOVED***
-***REMOVED*** Tags whose contents we don't want pretty printed.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tags whose contents we don't want pretty printed.
+ * @type {Object}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_ = goog.object.createSet(
     'script',
     'style',
@@ -100,15 +100,15 @@ goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_ = goog.object.createSet(
     'xmp');
 
 
-***REMOVED***
-***REMOVED*** 'Block' tags. We should add newlines before and after these tags during
-***REMOVED*** pretty printing. Tags drawn mostly from HTML4 definitions for block and other
-***REMOVED*** non-online tags, excepting the ones in
-***REMOVED*** #goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_.
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * 'Block' tags. We should add newlines before and after these tags during
+ * pretty printing. Tags drawn mostly from HTML4 definitions for block and other
+ * non-online tags, excepting the ones in
+ * #goog.format.HtmlPrettyPrinter.NON_PRETTY_PRINTED_TAGS_.
+ *
+ * @type {Object}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.BLOCK_TAGS_ = goog.object.createSet(
     'address',
     'applet',
@@ -161,12 +161,12 @@ goog.format.HtmlPrettyPrinter.BLOCK_TAGS_ = goog.object.createSet(
     'ul');
 
 
-***REMOVED***
-***REMOVED*** Non-block tags that break flow. We insert a line break after, but not before
-***REMOVED*** these. Tags drawn from HTML4 definitions.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Non-block tags that break flow. We insert a line break after, but not before
+ * these. Tags drawn from HTML4 definitions.
+ * @type {Object}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.BREAKS_FLOW_TAGS_ = goog.object.createSet(
     'br',
     'dd',
@@ -176,30 +176,30 @@ goog.format.HtmlPrettyPrinter.BREAKS_FLOW_TAGS_ = goog.object.createSet(
     'noframes');
 
 
-***REMOVED***
-***REMOVED*** Empty tags. These are treated as both start and end tags.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Empty tags. These are treated as both start and end tags.
+ * @type {Object}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.EMPTY_TAGS_ = goog.object.createSet(
     'br',
     'hr',
     'isindex');
 
 
-***REMOVED***
-***REMOVED*** Breaks up HTML so it's easily readable by the user.
-***REMOVED*** @param {string} html The HTML text to pretty print.
-***REMOVED*** @return {string} Formatted result.
-***REMOVED*** @throws {Error} Regex error, data loss, or endless loop detected.
-***REMOVED***
+/**
+ * Breaks up HTML so it's easily readable by the user.
+ * @param {string} html The HTML text to pretty print.
+ * @return {string} Formatted result.
+ * @throws {Error} Regex error, data loss, or endless loop detected.
+ */
 goog.format.HtmlPrettyPrinter.prototype.format = function(html) {
   // Trim leading whitespace, but preserve first indent; in other words, keep
   // any spaces immediately before the first non-whitespace character (that's
   // what $1 is), but remove all other leading whitespace. This adjustment
   // historically had been made in Docs. The motivation is that some
   // browsers prepend several line breaks in designMode.
-  html = html.replace(/^\s*?(***REMOVED***\S)/, '$1');
+  html = html.replace(/^\s*?( *\S)/, '$1');
 
   // Trim trailing whitespace.
   html = html.replace(/\s+$/, '');
@@ -310,57 +310,57 @@ goog.format.HtmlPrettyPrinter.prototype.format = function(html) {
   }
 
   return result;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This class is a buffer to which we push our output. It tracks line breaks to
-***REMOVED*** make sure we don't add unnecessary ones.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class is a buffer to which we push our output. It tracks line breaks to
+ * make sure we don't add unnecessary ones.
+ * @constructor
+ * @final
+ */
 goog.format.HtmlPrettyPrinter.Buffer = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tokens to be output in #toString.
-  ***REMOVED*** @type {goog.string.StringBuffer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tokens to be output in #toString.
+   * @type {goog.string.StringBuffer}
+   * @private
+   */
   this.out_ = new goog.string.StringBuffer();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tracks number of line breaks added.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Tracks number of line breaks added.
+ * @type {number}
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.breakCount = 0;
 
 
-***REMOVED***
-***REMOVED*** Tracks if we are at the start of a new line.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tracks if we are at the start of a new line.
+ * @type {boolean}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.isBeginningOfNewLine_ = true;
 
 
-***REMOVED***
-***REMOVED*** Tracks if we need a new line before the next token.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tracks if we need a new line before the next token.
+ * @type {boolean}
+ * @private
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.needsNewLine_ = false;
 
 
-***REMOVED***
-***REMOVED*** Adds token and necessary line breaks to output buffer.
-***REMOVED*** @param {boolean} breakBefore If true, add line break before token if
-***REMOVED***     necessary.
-***REMOVED*** @param {string} token Token to push.
-***REMOVED*** @param {boolean} breakAfter If true, add line break after token if
-***REMOVED***     necessary.
-***REMOVED***
+/**
+ * Adds token and necessary line breaks to output buffer.
+ * @param {boolean} breakBefore If true, add line break before token if
+ *     necessary.
+ * @param {string} token Token to push.
+ * @param {boolean} breakAfter If true, add line break after token if
+ *     necessary.
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.pushToken = function(
     breakBefore, token, breakAfter) {
   // If this token needs a preceeding line break, and
@@ -386,24 +386,24 @@ goog.format.HtmlPrettyPrinter.Buffer.prototype.pushToken = function(
   // here because we might not have to if the next token starts with a line
   // break.
   this.needsNewLine_ = breakAfter && !this.isBeginningOfNewLine_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Append line break if we need one.
-***REMOVED***
+/**
+ * Append line break if we need one.
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.lineBreak = function() {
   if (!this.isBeginningOfNewLine_) {
     this.out_.append('\n');
     ++this.breakCount;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} String representation of tokens.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} String representation of tokens.
+ * @override
+ */
 goog.format.HtmlPrettyPrinter.Buffer.prototype.toString = function() {
   return this.out_.toString();
-***REMOVED***
+};

@@ -46,7 +46,7 @@ function testSlice() {
   assertEquals('b', blob.slice(-5, 2).toString());
 
   assertEquals('abcdef', blob.slice().toString());
-  assertEquals('abc', blob.slice(/* opt_start***REMOVED*** undefined, 3).toString());
+  assertEquals('abc', blob.slice(/* opt_start */ undefined, 3).toString());
   assertEquals('def', blob.slice(3).toString());
 
   assertEquals('text/plain', blob.slice(1, 2, 'text/plain').type);

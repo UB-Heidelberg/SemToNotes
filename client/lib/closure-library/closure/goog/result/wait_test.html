@@ -139,7 +139,7 @@ function testAsynchronousError() {
 }
 
 function testCustomScope() {
-  var scope = {***REMOVED***
+  var scope = {};
   goog.result.wait(result, waitCallback, scope);
   result.setValue(1);
   assertEquals(scope, waitCallback.popLastCall().getThis());
@@ -152,29 +152,29 @@ function testDefaultScope() {
 }
 
 function testOnSuccessScope() {
-  var scope = {***REMOVED***
+  var scope = {};
   goog.result.waitOnSuccess(result, waitOnSuccessCallback, scope);
   result.setValue(1);
   assertCall(waitOnSuccessCallback, 1, result, scope);
 }
 
 function testOnErrorScope() {
-  var scope = {***REMOVED***
+  var scope = {};
   goog.result.waitOnError(result, waitOnErrorCallback, scope);
   result.setError();
   assertCall(waitOnErrorCallback, undefined, result, scope);
 }
 
-***REMOVED***
-***REMOVED*** Assert that a callback function stubbed out with goog.recordFunction was
-***REMOVED*** called with the expected arguments by goog.result.waitOnSuccess/Error.
-***REMOVED*** @param {Function} recordedFunction The callback function.
-***REMOVED*** @param {?} value The value stored in the result.
-***REMOVED*** @param {!goog.result.Result} result The result that was resolved to SUCCESS
-***REMOVED***     or ERROR.
-***REMOVED*** @param {Object=} opt_scope Optional scope that the test function should be
-***REMOVED***     called in. By default, it is goog.global.
-***REMOVED***
+/**
+ * Assert that a callback function stubbed out with goog.recordFunction was
+ * called with the expected arguments by goog.result.waitOnSuccess/Error.
+ * @param {Function} recordedFunction The callback function.
+ * @param {?} value The value stored in the result.
+ * @param {!goog.result.Result} result The result that was resolved to SUCCESS
+ *     or ERROR.
+ * @param {Object=} opt_scope Optional scope that the test function should be
+ *     called in. By default, it is goog.global.
+ */
 function assertCall(recordedFunction, value, result, opt_scope) {
   var scope = opt_scope || goog.global;
   assertEquals(1, recordedFunction.getCallCount());
@@ -185,15 +185,15 @@ function assertCall(recordedFunction, value, result, opt_scope) {
   assertEquals(scope, call.getThis());
 }
 
-***REMOVED***
-***REMOVED*** Assert that a callback function stubbed out with goog.recordFunction was
-***REMOVED*** called with the expected arguments by goog.result.wait.
-***REMOVED*** @param {Function} recordedFunction The callback function.
-***REMOVED*** @param {!goog.result.Result} result The result that was resolved to SUCCESS
-***REMOVED***     or ERROR.
-***REMOVED*** @param {Object=} opt_scope Optional scope that the test function should be
-***REMOVED***     called in. By default, it is goog.global.
-***REMOVED***
+/**
+ * Assert that a callback function stubbed out with goog.recordFunction was
+ * called with the expected arguments by goog.result.wait.
+ * @param {Function} recordedFunction The callback function.
+ * @param {!goog.result.Result} result The result that was resolved to SUCCESS
+ *     or ERROR.
+ * @param {Object=} opt_scope Optional scope that the test function should be
+ *     called in. By default, it is goog.global.
+ */
 function assertWaitCall(recordedFunction, result, opt_scope) {
   var scope = opt_scope || goog.global;
   assertEquals(1, recordedFunction.getCallCount());

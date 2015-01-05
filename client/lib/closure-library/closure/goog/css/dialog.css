@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for goog.ui.Dialog.
-***REMOVED***
-***REMOVED*** @author ssaviano@google.com (Steven Saviano)
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for goog.ui.Dialog.
+ *
+ * @author ssaviano@google.com (Steven Saviano)
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
 .modal-dialog {
@@ -42,15 +42,15 @@
   font-size: 120%;
   font-weight: bold;
 
-  /* Add padding on the right to ensure the close button has room.***REMOVED***
+  /* Add padding on the right to ensure the close button has room. */
   padding: 8px 31px 8px 8px;
 
   position: relative;
-  _zoom: 1; /* Ensures proper width in IE6 RTL.***REMOVED***
+  _zoom: 1; /* Ensures proper width in IE6 RTL. */
 }
 
 .modal-dialog-title-close {
-  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  /* Client apps may override the URL at which they serve the sprite. */
   background: #e0edfe url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -528px 0;
   cursor: default;
   height: 15px;

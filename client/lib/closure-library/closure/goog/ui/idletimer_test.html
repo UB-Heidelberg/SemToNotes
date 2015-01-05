@@ -32,9 +32,9 @@ See the COPYING file for details.
   }
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests whether an event is fired when the user becomes idle
- ***REMOVED*****REMOVED***
+  /**
+   * Tests whether an event is fired when the user becomes idle
+   */
   function testBecomeIdle() {
     var idleThreshold = 1000;
     var mockActivityMonitor = new goog.ui.MockActivityMonitor();
@@ -46,8 +46,8 @@ See the COPYING file for details.
     var onBecomeIdleCount = 0;
     var onBecomeIdle = function() {
       onBecomeIdleCount += 1;
-   ***REMOVED*****REMOVED***
-  ***REMOVED***idleTimer,
+    };
+    goog.events.listen(idleTimer,
         goog.ui.IdleTimer.Event.BECOME_IDLE,
         onBecomeIdle);
 
@@ -65,9 +65,9 @@ See the COPYING file for details.
   }
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests whether an event is fired when the user becomes active
- ***REMOVED*****REMOVED***
+  /**
+   * Tests whether an event is fired when the user becomes active
+   */
   function testBecomeActive() {
     var idleThreshold = 1000;
     var mockActivityMonitor = new goog.ui.MockActivityMonitor();
@@ -79,8 +79,8 @@ See the COPYING file for details.
     var onBecomeActiveCount = 0;
     var onBecomeActive = function() {
       onBecomeActiveCount += 1;
-   ***REMOVED*****REMOVED***
-  ***REMOVED***idleTimer,
+    };
+    goog.events.listen(idleTimer,
         goog.ui.IdleTimer.Event.BECOME_ACTIVE,
         onBecomeActive);
 

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Standalone script to be included in the relay-document
-***REMOVED*** used by goog.net.xpc.IframeRelayTransport. This script will decode the
-***REMOVED*** fragment identifier, determine the target window object and deliver
-***REMOVED*** the data to it.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Standalone script to be included in the relay-document
+ * used by goog.net.xpc.IframeRelayTransport. This script will decode the
+ * fragment identifier, determine the target window object and deliver
+ * the data to it.
+ *
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.net.xpc.relay');
 
 (function() {

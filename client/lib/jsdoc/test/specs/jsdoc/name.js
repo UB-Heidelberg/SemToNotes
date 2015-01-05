@@ -1,7 +1,7 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 
 describe("jsdoc/name", function() {
-    var jsdoc = {name: require('jsdoc/name'), doclet: require('jsdoc/doclet')***REMOVED*****REMOVED***
+    var jsdoc = {name: require('jsdoc/name'), doclet: require('jsdoc/doclet') };
 
     it("should exist", function() {
         expect(jsdoc.name).toBeDefined();
@@ -226,7 +226,7 @@ describe("jsdoc/name", function() {
         // TODO: further tests (namespaces, modules, ...)
 
         function makeDoclet(bits) {
-            var comment = '***REMOVED***\n' + bits.join('\n') + '\n*/';
+            var comment = '/**\n' + bits.join('\n') + '\n*/';
             return new jsdoc.doclet.Doclet(comment, {});
         }
 

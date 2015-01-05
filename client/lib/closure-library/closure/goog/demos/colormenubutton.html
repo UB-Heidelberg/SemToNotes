@@ -14,7 +14,7 @@ See the COPYING file for details.
     goog.require('goog.color');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.ColorMenuButton');
@@ -40,13 +40,13 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/colormenubutton.css">
   <link rel="stylesheet" href="../css/toolbar.css">
   <style>
-    /* Text color.***REMOVED***
+    /* Text color. */
     .goog-text-color {
       width: 15px;
       height: 13px;
       background: url(../images/toolbar_icons.gif) no-repeat -48px;
     }
-    /* Background color.***REMOVED***
+    /* Background color. */
     .goog-bg-color {
       width: 15px;
       height: 13px;
@@ -160,12 +160,12 @@ See the COPYING file for details.
     cmb1.setTooltip('Click to select color');
     cmb1.setSelectedColor('#FF0000');
     cmb1.render(goog.dom.getElement('cmb1'));
-  ***REMOVED***cmb1, EVENTS, logEvent);
+    goog.events.listen(cmb1, EVENTS, logEvent);
 
     // Decorate the second ColorMenuButton.
     var cmb2 = goog.ui.decorate(goog.dom.getElement('cmb2'));
     cmb2.setSelectedColor('#0000FF');
-  ***REMOVED***cmb2, EVENTS, logEvent);
+    goog.events.listen(cmb2, EVENTS, logEvent);
 
     // Create a custom palette and add it to a menu.
     var customColorPalette = new goog.ui.CustomColorPalette(
@@ -184,7 +184,7 @@ See the COPYING file for details.
     // blurs the button unless we set it to non-focusable.
     cmb3.setSupportedState(goog.ui.Component.State.FOCUSED, false);
     cmb3.render(goog.dom.getElement('cmb3'));
-  ***REMOVED***cmb3, EVENTS, logEvent);
+    goog.events.listen(cmb3, EVENTS, logEvent);
 
     // Create the first toolbar-style ColorMenuButton programmatically.
     var tcmb1 = new goog.ui.ColorMenuButton('Color',
@@ -193,22 +193,22 @@ See the COPYING file for details.
     tcmb1.render(goog.dom.getElement('tcmb1'));
     tcmb1.setTooltip('Click to select color');
     tcmb1.setSelectedColor('#FF00FF');
-  ***REMOVED***tcmb1, EVENTS, logEvent);
+    goog.events.listen(tcmb1, EVENTS, logEvent);
 
     // Decorate the second toolbar-style ColorMenuButton.
     var tcmb2 = goog.ui.decorate(goog.dom.getElement('tcmb2'));
     tcmb2.setSelectedColor('#FFFF00');
-  ***REMOVED***tcmb2, EVENTS, logEvent);
+    goog.events.listen(tcmb2, EVENTS, logEvent);
 
     // Decorate the sample toolbar.
     var tb = new goog.ui.Toolbar();
     tb.decorate(goog.dom.getElement('tb'));
-  ***REMOVED***tb, EVENTS, logEvent);
+    goog.events.listen(tb, EVENTS, logEvent);
 
     // Decorate the BiDi toolbar.
     var tbRtl = new goog.ui.Toolbar();
     tbRtl.decorate(goog.dom.getElement('tbRtl'));
-  ***REMOVED***tbRtl, EVENTS, logEvent);
+    goog.events.listen(tbRtl, EVENTS, logEvent);
 
     // Perf and clean up
     goog.dom.setTextContent(goog.dom.getElement('perf'),

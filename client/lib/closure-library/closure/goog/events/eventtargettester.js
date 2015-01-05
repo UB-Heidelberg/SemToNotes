@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview goog.events.EventTarget tester.
-***REMOVED***
+/**
+ * @fileoverview goog.events.EventTarget tester.
+ */
 
 goog.provide('goog.events.eventTargetTester');
 goog.setTestOnly('goog.events.eventTargetTester');
@@ -24,54 +24,54 @@ goog.provide('goog.events.eventTargetTester.UnlistenReturnType');
 goog.setTestOnly('goog.events.eventTargetTester.UnlistenReturnType');
 
 goog.require('goog.array');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
 goog.require('goog.testing.asserts');
 goog.require('goog.testing.recordFunction');
 
 
-***REMOVED***
-***REMOVED*** Setup step for the test functions. This needs to be called from the
-***REMOVED*** test setUp.
-***REMOVED*** @param {function():!goog.events.Listenable} listenableFactoryFn Function
-***REMOVED***     that will return a new Listenable instance each time it is called.
-***REMOVED*** @param {Function} listenFn Function that, given the same signature
-***REMOVED***     as goog.events.listen, will add listener to the given event
-***REMOVED***     target.
-***REMOVED*** @param {Function} unlistenFn Function that, given the same
-***REMOVED***     signature as goog.events.unlisten, will remove listener from
-***REMOVED***     the given event target.
-***REMOVED*** @param {Function} unlistenByKeyFn Function that, given 2
-***REMOVED***     parameters: src and key, will remove the corresponding
-***REMOVED***     listener.
-***REMOVED*** @param {Function} listenOnceFn Function that, given the same
-***REMOVED***     signature as goog.events.listenOnce, will add a one-time
-***REMOVED***     listener to the given event target.
-***REMOVED*** @param {Function} dispatchEventFn Function that, given the same
-***REMOVED***     signature as goog.events.dispatchEvent, will dispatch the event
-***REMOVED***     on the given event target.
-***REMOVED*** @param {Function} removeAllFn Function that, given the same
-***REMOVED***     signature as goog.events.removeAll, will remove all listeners
-***REMOVED***     according to the contract of goog.events.removeAll.
-***REMOVED*** @param {Function} getListenersFn Function that, given the same
-***REMOVED***     signature as goog.events.getListeners, will retrieve listeners.
-***REMOVED*** @param {Function} getListenerFn Function that, given the same
-***REMOVED***     signature as goog.events.getListener, will retrieve the
-***REMOVED***     listener object.
-***REMOVED*** @param {Function} hasListenerFn Function that, given the same
-***REMOVED***     signature as goog.events.hasListener, will determine whether
-***REMOVED***     listeners exist.
-***REMOVED*** @param {goog.events.eventTargetTester.KeyType} listenKeyType The
-***REMOVED***     key type returned by listen call.
-***REMOVED*** @param {goog.events.eventTargetTester.UnlistenReturnType}
-***REMOVED***     unlistenFnReturnType
-***REMOVED***     Whether we should check return value from
-***REMOVED***     unlisten call. If unlisten does not return a value, this should
-***REMOVED***     be set to false.
-***REMOVED*** @param {boolean} objectListenerSupported Whether listener of type
-***REMOVED***     Object is supported.
-***REMOVED***
+/**
+ * Setup step for the test functions. This needs to be called from the
+ * test setUp.
+ * @param {function():!goog.events.Listenable} listenableFactoryFn Function
+ *     that will return a new Listenable instance each time it is called.
+ * @param {Function} listenFn Function that, given the same signature
+ *     as goog.events.listen, will add listener to the given event
+ *     target.
+ * @param {Function} unlistenFn Function that, given the same
+ *     signature as goog.events.unlisten, will remove listener from
+ *     the given event target.
+ * @param {Function} unlistenByKeyFn Function that, given 2
+ *     parameters: src and key, will remove the corresponding
+ *     listener.
+ * @param {Function} listenOnceFn Function that, given the same
+ *     signature as goog.events.listenOnce, will add a one-time
+ *     listener to the given event target.
+ * @param {Function} dispatchEventFn Function that, given the same
+ *     signature as goog.events.dispatchEvent, will dispatch the event
+ *     on the given event target.
+ * @param {Function} removeAllFn Function that, given the same
+ *     signature as goog.events.removeAll, will remove all listeners
+ *     according to the contract of goog.events.removeAll.
+ * @param {Function} getListenersFn Function that, given the same
+ *     signature as goog.events.getListeners, will retrieve listeners.
+ * @param {Function} getListenerFn Function that, given the same
+ *     signature as goog.events.getListener, will retrieve the
+ *     listener object.
+ * @param {Function} hasListenerFn Function that, given the same
+ *     signature as goog.events.hasListener, will determine whether
+ *     listeners exist.
+ * @param {goog.events.eventTargetTester.KeyType} listenKeyType The
+ *     key type returned by listen call.
+ * @param {goog.events.eventTargetTester.UnlistenReturnType}
+ *     unlistenFnReturnType
+ *     Whether we should check return value from
+ *     unlisten call. If unlisten does not return a value, this should
+ *     be set to false.
+ * @param {boolean} objectListenerSupported Whether listener of type
+ *     Object is supported.
+ */
 goog.events.eventTargetTester.setUp = function(
     listenableFactoryFn,
     listenFn, unlistenFn, unlistenByKeyFn, listenOnceFn,
@@ -101,89 +101,89 @@ goog.events.eventTargetTester.setUp = function(
   for (i = 0; i < goog.events.eventTargetTester.MAX_; i++) {
     eventTargets[i] = listenableFactory();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Teardown step for the test functions. This needs to be called from
-***REMOVED*** test teardown.
-***REMOVED***
+/**
+ * Teardown step for the test functions. This needs to be called from
+ * test teardown.
+ */
 goog.events.eventTargetTester.tearDown = function() {
   for (var i = 0; i < goog.events.eventTargetTester.MAX_; i++) {
     goog.dispose(eventTargets[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The type of key returned by key-returning functions (listen).
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * The type of key returned by key-returning functions (listen).
+ * @enum {number}
+ */
 goog.events.eventTargetTester.KeyType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns number for key.
- ***REMOVED*****REMOVED***
+  /**
+   * Returns number for key.
+   */
   NUMBER: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns undefined (no return value).
- ***REMOVED*****REMOVED***
+  /**
+   * Returns undefined (no return value).
+   */
   UNDEFINED: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The type of unlisten function's return value.
-***REMOVED***
+/**
+ * The type of unlisten function's return value.
+ */
 goog.events.eventTargetTester.UnlistenReturnType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns boolean indicating whether unlisten is successful.
- ***REMOVED*****REMOVED***
+  /**
+   * Returns boolean indicating whether unlisten is successful.
+   */
   BOOLEAN: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns undefind (no return value).
- ***REMOVED*****REMOVED***
+  /**
+   * Returns undefind (no return value).
+   */
   UNDEFINED: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Expando property used on "listener" function to determine if a
-***REMOVED*** listener has already been checked. This is what allows us to
-***REMOVED*** implement assertNoOtherListenerIsCalled.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Expando property used on "listener" function to determine if a
+ * listener has already been checked. This is what allows us to
+ * implement assertNoOtherListenerIsCalled.
+ * @type {string}
+ */
 goog.events.eventTargetTester.ALREADY_CHECKED_PROP = '__alreadyChecked';
 
 
-***REMOVED***
-***REMOVED*** Expando property used on "listener" function to record the number
-***REMOVED*** of times it has been called the last time assertListenerIsCalled is
-***REMOVED*** done. This allows us to verify that it has not been called more
-***REMOVED*** times in assertNoOtherListenerIsCalled.
-***REMOVED***
+/**
+ * Expando property used on "listener" function to record the number
+ * of times it has been called the last time assertListenerIsCalled is
+ * done. This allows us to verify that it has not been called more
+ * times in assertNoOtherListenerIsCalled.
+ */
 goog.events.eventTargetTester.NUM_CALLED_PROP = '__numCalled';
 
 
-***REMOVED***
-***REMOVED*** The maximum number of initialized event targets (in eventTargets
-***REMOVED*** array) and listeners (in listeners array).
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The maximum number of initialized event targets (in eventTargets
+ * array) and listeners (in listeners array).
+ * @type {number}
+ * @private
+ */
 goog.events.eventTargetTester.MAX_ = 10;
 
 
-***REMOVED***
-***REMOVED*** Contains test event types.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Contains test event types.
+ * @enum {string}
+ */
 var EventType = {
   A: goog.events.getUniqueId('a'),
   B: goog.events.getUniqueId('b'),
   C: goog.events.getUniqueId('c')
-***REMOVED***
+};
 
 
 var listen, unlisten, unlistenByKey, listenOnce, dispatchEvent;
@@ -193,34 +193,34 @@ var eventTargets, listeners;
 
 
 
-***REMOVED***
-***REMOVED*** Custom event object for testing.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Custom event object for testing.
+ * @constructor
+ * @extends {goog.events.Event}
+ * @final
+ */
 var TestEvent = function() {
   goog.base(this, EventType.A);
-***REMOVED***
+};
 goog.inherits(TestEvent, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Creates a listener that executes the given function (optional).
-***REMOVED*** @param {!Function=} opt_listenerFn The optional function to execute.
-***REMOVED*** @return {!Function} The listener function.
-***REMOVED***
+/**
+ * Creates a listener that executes the given function (optional).
+ * @param {!Function=} opt_listenerFn The optional function to execute.
+ * @return {!Function} The listener function.
+ */
 function createListener(opt_listenerFn) {
   return goog.testing.recordFunction(opt_listenerFn);
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given listener is called numCount number of times.
-***REMOVED*** @param {!Function} listener The listener to check.
-***REMOVED*** @param {number} numCount The number of times. See also the times()
-***REMOVED***     function below.
-***REMOVED***
+/**
+ * Asserts that the given listener is called numCount number of times.
+ * @param {!Function} listener The listener to check.
+ * @param {number} numCount The number of times. See also the times()
+ *     function below.
+ */
 function assertListenerIsCalled(listener, numCount) {
   assertEquals('Listeners is not called the correct number of times.',
                numCount, listener.getCallCount());
@@ -229,11 +229,11 @@ function assertListenerIsCalled(listener, numCount) {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that no other listeners, other than those verified via
-***REMOVED*** assertListenerIsCalled, have been called since the last
-***REMOVED*** resetListeners().
-***REMOVED***
+/**
+ * Asserts that no other listeners, other than those verified via
+ * assertListenerIsCalled, have been called since the last
+ * resetListeners().
+ */
 function assertNoOtherListenerIsCalled() {
   goog.array.forEach(listeners, function(l, index) {
     if (!l[goog.events.eventTargetTester.ALREADY_CHECKED_PROP]) {
@@ -249,9 +249,9 @@ function assertNoOtherListenerIsCalled() {
 }
 
 
-***REMOVED***
-***REMOVED*** Resets all listeners call count to 0.
-***REMOVED***
+/**
+ * Resets all listeners call count to 0.
+ */
 function resetListeners() {
   goog.array.forEach(listeners, function(l) {
     l.reset();
@@ -260,14 +260,14 @@ function resetListeners() {
 }
 
 
-***REMOVED***
-***REMOVED*** The number of times a listener should have been executed. This
-***REMOVED*** exists to make assertListenerIsCalled more readable.  This is used
-***REMOVED*** like so: assertListenerIsCalled(listener, times(2));
-***REMOVED*** @param {number} n The number of times a listener should have been
-***REMOVED***     executed.
-***REMOVED*** @return {number} The number n.
-***REMOVED***
+/**
+ * The number of times a listener should have been executed. This
+ * exists to make assertListenerIsCalled more readable.  This is used
+ * like so: assertListenerIsCalled(listener, times(2));
+ * @param {number} n The number of times a listener should have been
+ *     executed.
+ * @return {number} The number n.
+ */
 function times(n) {
   return n;
 }
@@ -342,7 +342,7 @@ function testScope() {
   listeners[1] = createListener(function(e) {
     assertEquals('Wrong scope with null scope', eventTargets[0], this);
   });
-  var scope = {***REMOVED***
+  var scope = {};
   listeners[2] = createListener(function(e) {
     assertEquals('Wrong scope with specific scope object', scope, this);
   });
@@ -399,13 +399,13 @@ function testDisposingEventTargetRemovesListeners() {
 }
 
 
-***REMOVED***
-***REMOVED*** Unlisten/unlistenByKey should still work after disposal. There are
-***REMOVED*** many circumstances when this is actually necessary. For example, a
-***REMOVED*** user may have listened to an event target and stored the key
-***REMOVED*** (e.g. in a goog.events.EventHandler) and only unlisten after the
-***REMOVED*** target has been disposed.
-***REMOVED***
+/**
+ * Unlisten/unlistenByKey should still work after disposal. There are
+ * many circumstances when this is actually necessary. For example, a
+ * user may have listened to an event target and stored the key
+ * (e.g. in a goog.events.EventHandler) and only unlisten after the
+ * target has been disposed.
+ */
 function testUnlistenWorksAfterDisposal() {
   var key = listen(eventTargets[0], EventType.A, listeners[0]);
   goog.dispose(eventTargets[0]);
@@ -690,7 +690,7 @@ function testHandleEvent() {
     return;
   }
 
-  var obj = {***REMOVED***
+  var obj = {};
   obj.handleEvent = goog.testing.recordFunction();
 
   listen(eventTargets[0], EventType.A, obj);
@@ -1023,20 +1023,20 @@ function testHasListener() {
 
 
 function testFiringEventBeforeDisposeInternalWorks() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @extends {goog.events.EventTarget}
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @final
- ***REMOVED*****REMOVED***
+  /**
+   * @extends {goog.events.EventTarget}
+   * @constructor
+   * @final
+   */
   var MockTarget = function() {
     goog.base(this);
- ***REMOVED*****REMOVED***
+  };
   goog.inherits(MockTarget, goog.events.EventTarget);
 
   MockTarget.prototype.disposeInternal = function() {
     dispatchEvent(this, EventType.A);
     goog.base(this, 'disposeInternal');
- ***REMOVED*****REMOVED***
+  };
 
   var t = new MockTarget();
   try {

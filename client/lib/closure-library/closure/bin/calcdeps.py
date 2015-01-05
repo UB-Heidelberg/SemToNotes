@@ -343,7 +343,7 @@ def GetRelpath(path, start):
 
   # Always use forward slashes, because this will get expanded to a url,
   # not a file path.
-  return '/'.join(['..']***REMOVED*** (len(start_list) - common_prefix_count) +
+  return '/'.join(['..'] * (len(start_list) - common_prefix_count) +
                   path_list[common_prefix_count:])
 
 

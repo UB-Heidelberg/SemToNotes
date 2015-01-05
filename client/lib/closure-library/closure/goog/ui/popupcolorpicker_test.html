@@ -53,7 +53,7 @@ function testCustomColorPicker() {
   assertNull(picker.getSelectedColor());
 
   var changeEvents = 0;
-***REMOVED***picker, goog.ui.ColorPicker.EventType.CHANGE, function(e) {
+  goog.events.listen(picker, goog.ui.ColorPicker.EventType.CHANGE, function(e) {
     changeEvents++;
   });
 

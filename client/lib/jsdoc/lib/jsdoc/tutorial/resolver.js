@@ -1,13 +1,13 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @overview
     @author Rafa&#322; Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 
-***REMOVED***
+/**
     @module jsdoc/tutorial/resolver
-***REMOVED***
+ */
 'use strict';
 
 var logger = require('jsdoc/util/logger');
@@ -17,37 +17,37 @@ var tutorial = require('jsdoc/tutorial');
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
-var conf = {***REMOVED***
+var conf = {};
 var finder = /^(.*)\.(x(?:ht)?ml|html?|md|markdown|json)$/i;
-var tutorials = {***REMOVED***
+var tutorials = {};
 
-***REMOVED*** checks if `conf` is the metadata for a single tutorial.
-***REMOVED*** A tutorial's metadata has a property 'title' and/or a property 'children'.
-***REMOVED*** @param {object} json - the object we want to test (typically from JSON.parse)
-***REMOVED*** @returns {boolean} whether `json` could be the metadata for a tutorial.
-***REMOVED***
+/** checks if `conf` is the metadata for a single tutorial.
+ * A tutorial's metadata has a property 'title' and/or a property 'children'.
+ * @param {object} json - the object we want to test (typically from JSON.parse)
+ * @returns {boolean} whether `json` could be the metadata for a tutorial.
+ */
 function isTutorialJSON(json) {
     // if conf.title exists or conf.children exists, it is metadata for a tutorial
     return (hasOwnProp.call(json, 'title') || hasOwnProp.call(json, 'children'));
 }
 
-***REMOVED*** Helper function that adds tutorial configuration to the `conf` variable.
-***REMOVED*** This helps when multiple tutorial configurations are specified in one object,
-***REMOVED*** or when a tutorial's children are specified as tutorial configurations as
-***REMOVED*** opposed to an array of tutorial names.
-***REMOVED***
-***REMOVED*** Recurses as necessary to ensure all tutorials are added.
-***REMOVED***
-***REMOVED*** @param {string} name - if `meta` is a configuration for a single tutorial,
-***REMOVED***                        this is that tutorial's name.
-***REMOVED*** @param {object} meta - object that contains tutorial information.
-***REMOVED***                        Can either be for a single tutorial, or for multiple
-***REMOVED***                        (where each key in `meta` is the tutorial name and each
-***REMOVED***                         value is the information for a single tutorial).
-***REMOVED***                        Additionally, a tutorial's 'children' property may
-***REMOVED***                        either be an array of strings (names of the child tutorials),
-***REMOVED***                        OR an object giving the configuration for the child tutorials.
-***REMOVED***
+/** Helper function that adds tutorial configuration to the `conf` variable.
+ * This helps when multiple tutorial configurations are specified in one object,
+ * or when a tutorial's children are specified as tutorial configurations as
+ * opposed to an array of tutorial names.
+ *
+ * Recurses as necessary to ensure all tutorials are added.
+ *
+ * @param {string} name - if `meta` is a configuration for a single tutorial,
+ *                        this is that tutorial's name.
+ * @param {object} meta - object that contains tutorial information.
+ *                        Can either be for a single tutorial, or for multiple
+ *                        (where each key in `meta` is the tutorial name and each
+ *                         value is the information for a single tutorial).
+ *                        Additionally, a tutorial's 'children' property may
+ *                        either be an array of strings (names of the child tutorials),
+ *                        OR an object giving the configuration for the child tutorials.
+ */
 function addTutorialConf(name, meta) {
     var names, i;
     if (isTutorialJSON(meta)) {
@@ -76,9 +76,9 @@ function addTutorialConf(name, meta) {
     }
 }
 
-***REMOVED*** Adds new tutorial.
+/** Adds new tutorial.
     @param {tutorial.Tutorial} current - New tutorial.
-***REMOVED***
+ */
 exports.addTutorial = function(current) {
     if (hasOwnProp.call(tutorials, current.name)) {
         logger.warn('The tutorial %s is defined more than once. Only the first definition will be used.', current.name);
@@ -88,24 +88,24 @@ exports.addTutorial = function(current) {
         // default temporary parent
         current.setParent(exports.root);
     }
-***REMOVED***
+};
 
-***REMOVED*** Root tutorial.
+/** Root tutorial.
     @type tutorial.Tutorial
-***REMOVED***
+ */
 exports.root = new tutorial.Tutorial('', '');
 
-***REMOVED*** Additional instance method for root node.
+/** Additional instance method for root node.
     @param {string} name - Tutorial name.
     @return {tutorial.Tutorial} Tutorial instance.
-***REMOVED***
+ */
 exports.root.getByName = function(name) {
     return hasOwnProp.call(tutorials, name) && tutorials[name];
-***REMOVED***
+};
 
-***REMOVED*** Load tutorials from given path.
+/** Load tutorials from given path.
     @param {string} _path - Tutorials directory.
-***REMOVED***
+ */
 exports.load = function(_path) {
     var match,
         type,
@@ -155,10 +155,10 @@ exports.load = function(_path) {
             exports.addTutorial(current);
         }
     });
-***REMOVED***
+};
 
-***REMOVED*** Resolves hierarchical structure.
-***REMOVED***
+/** Resolves hierarchical structure.
+ */
 exports.resolve = function() {
     var item,
         current;
@@ -190,4 +190,4 @@ exports.resolve = function() {
             }
         }
     }
-***REMOVED***
+};

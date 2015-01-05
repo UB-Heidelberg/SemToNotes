@@ -14,7 +14,7 @@ See the COPYING file for details.
 <script src="../../base.js"></script>
 <script>
   goog.require('goog.dom');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.editor.BrowserFeature');
   goog.require('goog.editor.Link');
   goog.require('goog.events.Event');
@@ -114,15 +114,15 @@ See the COPYING file for details.
     }
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Creates and shows the dialog to be tested.
-  ***REMOVED*** @param {Document=} opt_document Document to render the dialog into.
-  ***REMOVED***     Defaults to the main window's document.
-  ***REMOVED*** @param {boolean=} opt_openInNewWindow Whether the open in new window
-  ***REMOVED***     checkbox should be shown.
-  ***REMOVED*** @param {boolean=} opt_noFollow Whether rel=nofollow checkbox should be
-  ***REMOVED***     shown.
- ***REMOVED*****REMOVED***
+  /**
+   * Creates and shows the dialog to be tested.
+   * @param {Document=} opt_document Document to render the dialog into.
+   *     Defaults to the main window's document.
+   * @param {boolean=} opt_openInNewWindow Whether the open in new window
+   *     checkbox should be shown.
+   * @param {boolean=} opt_noFollow Whether rel=nofollow checkbox should be
+   *     shown.
+   */
   function createAndShow(opt_document, opt_openInNewWindow, opt_noFollow) {
     dialog = new goog.ui.editor.LinkDialog(new goog.dom.DomHelper(opt_document),
                                            mockLink);
@@ -137,10 +137,10 @@ See the COPYING file for details.
     dialog.show();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Sets up the mock event handler to expect an OK event with the given text
-  ***REMOVED*** and url.
- ***REMOVED*****REMOVED***
+  /**
+   * Sets up the mock event handler to expect an OK event with the given text
+   * and url.
+   */
   function expectOk(linkText, linkUrl, opt_openInNewWindow, opt_noFollow) {
     mockOkHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
         function(arg) {
@@ -155,21 +155,21 @@ See the COPYING file for details.
             ', noFollow: ' + opt_noFollow + '}'));
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Return true if we should use active element in our tests.
-  ***REMOVED*** @return {boolean} .
- ***REMOVED*****REMOVED***
+  /**
+   * Return true if we should use active element in our tests.
+   * @return {boolean} .
+   */
   function useActiveElement() {
     return goog.editor.BrowserFeature.HAS_ACTIVE_ELEMENT ||
         goog.userAgent.WEBKIT && goog.userAgent.isVersionOrHigher(9);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when you show the dialog for a new link, you can switch
-  ***REMOVED*** to the URL view.
-  ***REMOVED*** @param {Document=} opt_document Document to render the dialog into.
-  ***REMOVED***     Defaults to the main window's document.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when you show the dialog for a new link, you can switch
+   * to the URL view.
+   * @param {Document=} opt_document Document to render the dialog into.
+   *     Defaults to the main window's document.
+   */
   function testShowNewLinkSwitchToUrl(opt_document) {
     mockCtrl.$replayAll();
     setUpAnchor('', '', true); // Must be done before creating the dialog.
@@ -199,12 +199,12 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when you show the dialog for a new link, the input fields are
-  ***REMOVED*** empty, the web tab is selected and focus is in the url input field.
-  ***REMOVED*** @param {Document=} opt_document Document to render the dialog into.
-  ***REMOVED***     Defaults to the main window's document.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when you show the dialog for a new link, the input fields are
+   * empty, the web tab is selected and focus is in the url input field.
+   * @param {Document=} opt_document Document to render the dialog into.
+   *     Defaults to the main window's document.
+   */
   function testShowForNewLink(opt_document) {
     mockCtrl.$replayAll();
     setUpAnchor('', '', true); // Must be done before creating the dialog.
@@ -228,18 +228,18 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fakes that the mock field is using an iframe and does the same test as
-  ***REMOVED*** testShowForNewLink().
- ***REMOVED*****REMOVED***
+  /**
+   * Fakes that the mock field is using an iframe and does the same test as
+   * testShowForNewLink().
+   */
   function testShowForNewLinkWithDiffAppWindow() {
     testShowForNewLink(goog.dom.getElement('appWindowIframe').contentDocument);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when you show the dialog for a url link, the input fields are
-  ***REMOVED*** filled in, the web tab is selected and focus is in the url input field.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when you show the dialog for a url link, the input fields are
+   * filled in, the web tab is selected and focus is in the url input field.
+   */
   function testShowForUrlLink() {
     mockCtrl.$replayAll();
     setUpAnchor(ANCHOR_URL, ANCHOR_TEXT);
@@ -263,10 +263,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when you show the dialog for a mailto link, the input fields are
-  ***REMOVED*** filled in, the email tab is selected and focus is in the email input field.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when you show the dialog for a mailto link, the input fields are
+   * filled in, the email tab is selected and focus is in the email input field.
+   */
   function testShowForMailtoLink() {
     mockCtrl.$replayAll();
     setUpAnchor(ANCHOR_MAILTO, ANCHOR_TEXT);
@@ -290,10 +290,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that the display text is autogenerated from the url input in the
-  ***REMOVED*** right situations (and not generated when appropriate too).
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that the display text is autogenerated from the url input in the
+   * right situations (and not generated when appropriate too).
+   */
   function testAutogeneration() {
     mockCtrl.$replayAll();
     setUpAnchor('', '', true);
@@ -325,10 +325,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that the display text is not autogenerated from the url input in all
-  ***REMOVED*** situations when the autogeneration feature is turned off.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that the display text is not autogenerated from the url input in all
+   * situations when the autogeneration feature is turned off.
+   */
   function testAutogenerationOff() {
     mockCtrl.$replayAll();
 
@@ -365,10 +365,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that clicking OK with the url tab selected dispatches an event with
-  ***REMOVED*** the proper link data.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that clicking OK with the url tab selected dispatches an event with
+   * the proper link data.
+   */
   function testOkForUrl() {
     expectOk(ANCHOR_TEXT, ANCHOR_URL);
     mockCtrl.$replayAll();
@@ -383,10 +383,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that clicking OK with the url tab selected but with an email address
-  ***REMOVED*** in the url field dispatches an event with the proper link data.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that clicking OK with the url tab selected but with an email address
+   * in the url field dispatches an event with the proper link data.
+   */
   function testOkForUrlWithEmail() {
     expectOk(ANCHOR_TEXT, ANCHOR_MAILTO);
     mockCtrl.$replayAll();
@@ -401,10 +401,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that clicking OK with the email tab selected dispatches an event with
-  ***REMOVED*** the proper link data.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that clicking OK with the email tab selected dispatches an event with
+   * the proper link data.
+   */
   function testOkForEmail() {
     expectOk(ANCHOR_TEXT, ANCHOR_MAILTO);
     mockCtrl.$replayAll();
@@ -507,10 +507,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Test that clicking on the test button opens a new window with the correct
-  ***REMOVED*** options.
- ***REMOVED*****REMOVED***
+  /**
+   * Test that clicking on the test button opens a new window with the correct
+   * options.
+   */
   function testWebTestButton() {
     if (goog.userAgent.GECKO) {
       // TODO(robbyw): Figure out why this is flaky and fix it.
@@ -543,16 +543,16 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Test that clicking on the test button does not open a new window when
-  ***REMOVED*** the event is canceled.
- ***REMOVED*****REMOVED***
+  /**
+   * Test that clicking on the test button does not open a new window when
+   * the event is canceled.
+   */
   function testWebTestButtonPreventDefault() {
     mockCtrl.$replayAll();
     setUpAnchor(ANCHOR_URL, ANCHOR_TEXT);
     createAndShow();
 
-  ***REMOVED***dialog,
+    goog.events.listen(dialog,
         goog.ui.editor.LinkDialog.EventType.BEFORE_TEST_LINK,
         function(e) {
           assertEquals(e.url, ANCHOR_URL);
@@ -566,10 +566,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Test that the setTextToDisplayVisible() correctly works.
-  ***REMOVED*** options.
- ***REMOVED*****REMOVED***
+  /**
+   * Test that the setTextToDisplayVisible() correctly works.
+   * options.
+   */
   function testSetTextToDisplayVisible() {
     mockCtrl.$replayAll();
     setUpAnchor('', '', true);

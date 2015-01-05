@@ -52,9 +52,9 @@ See the COPYING file for details.
       goog.ui.FormPost.prototype.createDom = function() {
         originalCreateDom.apply(this, arguments);
 
-        this.getElement().submit = function() { submits++***REMOVED*****REMOVED***
+        this.getElement().submit = function() { submits++ };
       }
-      parameters = {'foo': 'bar', 'baz': 1, 'array': [0, 'yes']***REMOVED***
+      parameters = {'foo': 'bar', 'baz': 1, 'array': [0, 'yes']};
     }
 
     function tearDown() {
@@ -89,7 +89,7 @@ See the COPYING file for details.
       assertEquals('target attribute', target, form.target);
       var inputs = goog.dom.getElementsByTagNameAndClass(
           goog.dom.TagName.INPUT, null, form);
-      var formValues = {***REMOVED***
+      var formValues = {};
       for (var i = 0, input = inputs[i]; input = inputs[i]; i++) {
         if (goog.isArray(formValues[input.name])) {
           formValues[input.name].push(input.value);

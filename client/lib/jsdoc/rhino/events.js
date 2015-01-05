@@ -1,12 +1,12 @@
-***REMOVED***
-***REMOVED*** Shim for Node.js `events` module. Adapted from `node-browserify`.
-***REMOVED*** @see https://github.com/substack/node-browserify
-***REMOVED*** @license MIT
-***REMOVED***
+/**
+ * Shim for Node.js `events` module. Adapted from `node-browserify`.
+ * @see https://github.com/substack/node-browserify
+ * @license MIT
+ */
 'use strict';
 
 if (!process.EventEmitter) {
-  process.EventEmitter = function () {***REMOVED***
+  process.EventEmitter = function () {};
 }
 
 var EventEmitter = exports.EventEmitter = process.EventEmitter;
@@ -26,10 +26,10 @@ var isArray = typeof Array.isArray === 'function' ?
 var defaultMaxListeners = 10;
 EventEmitter.prototype.setMaxListeners = function(n) {
   if (!this._events) {
-    this._events = {***REMOVED***
+    this._events = {};
   }
   this._events.maxListeners = n;
-***REMOVED***
+};
 
 EventEmitter.prototype.emit = function(type) {
   var args;
@@ -87,7 +87,7 @@ EventEmitter.prototype.emit = function(type) {
   } else {
     return false;
   }
-***REMOVED***
+};
 
 // EventEmitter is defined in src/node_events.cc
 // EventEmitter.prototype.emit() is also defined there.
@@ -97,7 +97,7 @@ EventEmitter.prototype.addListener = function(type, listener) {
   }
 
   if (!this._events) {
-    this._events = {***REMOVED***
+    this._events = {};
   }
 
   // To avoid recursion in the case that type == "newListeners"! Before
@@ -136,19 +136,19 @@ EventEmitter.prototype.addListener = function(type, listener) {
   }
 
   return this;
-***REMOVED***
+};
 
 EventEmitter.prototype.on = EventEmitter.prototype.addListener;
 
 EventEmitter.prototype.once = function(type, listener) {
-***REMOVED***
+  var self = this;
   self.on(type, function g() {
     self.removeListener(type, g);
     listener.apply(this, arguments);
   });
 
   return this;
-***REMOVED***
+};
 
 EventEmitter.prototype.removeListener = function(type, listener) {
   if ('function' !== typeof listener) {
@@ -176,7 +176,7 @@ EventEmitter.prototype.removeListener = function(type, listener) {
   }
 
   return this;
-***REMOVED***
+};
 
 EventEmitter.prototype.removeAllListeners = function(type) {
   // does not use listeners(), so no side effect of creating _events[type]
@@ -184,11 +184,11 @@ EventEmitter.prototype.removeAllListeners = function(type) {
     this._events[type] = null;
   }
   return this;
-***REMOVED***
+};
 
 EventEmitter.prototype.listeners = function(type) {
   if (!this._events) {
-    this._events = {***REMOVED***
+    this._events = {};
   }
   if (!this._events[type]) {
     this._events[type] = [];
@@ -197,4 +197,4 @@ EventEmitter.prototype.listeners = function(type) {
     this._events[type] = [this._events[type]];
   }
   return this._events[type];
-***REMOVED***
+};

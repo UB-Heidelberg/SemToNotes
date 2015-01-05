@@ -33,13 +33,13 @@ var blobHasher = new goog.crypt.BlobHasher(hashFn);
 var startTime = 0;
 
 function computeMD5(file) {
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() {
     var hash = goog.crypt.byteArrayToHex(blobHasher.getHash());
     var time = goog.now() - startTime;
     display(hash + ' (' + time/1000 + 's)');
   });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
                      function() {
     display('Aborted');
   });

@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** Asdf.
-***REMOVED*** @class
-***REMOVED*** @classdesc A description of the class.
-***REMOVED***
+/**
+ * Asdf.
+ * @class
+ * @classdesc A description of the class.
+ */
 function Foo () {
 }

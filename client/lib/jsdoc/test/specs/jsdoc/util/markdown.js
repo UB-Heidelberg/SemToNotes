@@ -1,4 +1,4 @@
-/*global describe, env, expect, it, spyOn***REMOVED***
+/*global describe, env, expect, it, spyOn */
 'use strict';
 
 describe('jsdoc/util/markdown', function() {
@@ -19,10 +19,10 @@ describe('jsdoc/util/markdown', function() {
         // them back to the originals later.
         function setMarkdownConf(hash) {
             if (!env.conf.markdown) {
-                env.conf.markdown = {***REMOVED***
+                env.conf.markdown = {};
             }
             var keys = Object.keys(hash);
-            var storage = {***REMOVED***
+            var storage = {};
             for (var i = 0; i < keys.length; ++i) {
                 storage[keys[i]] = env.conf.markdown[keys[i]];
                 // works because hash[key] is a scalar not an array/object

@@ -1,4 +1,4 @@
-***REMOVED*** @module***REMOVED***
+/** @module */
 define({
     property: "foo",
     method: function() {}

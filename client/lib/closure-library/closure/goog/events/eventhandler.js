@@ -12,154 +12,154 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class to create objects which want to handle multiple events
-***REMOVED*** and have their listeners easily cleaned up via a dispose method.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED*** function Something() {
-***REMOVED***   Something.base(this);
-***REMOVED***
-***REMOVED***   ... set up object ...
-***REMOVED***
-***REMOVED***   // Add event listeners
-***REMOVED***   this.listen(this.starEl, goog.events.EventType.CLICK, this.handleStar);
-***REMOVED***   this.listen(this.headerEl, goog.events.EventType.CLICK, this.expand);
-***REMOVED***   this.listen(this.collapseEl, goog.events.EventType.CLICK, this.collapse);
-***REMOVED***   this.listen(this.infoEl, goog.events.EventType.MOUSEOVER, this.showHover);
-***REMOVED***   this.listen(this.infoEl, goog.events.EventType.MOUSEOUT, this.hideHover);
-***REMOVED*** }
-***REMOVED*** goog.inherits(Something, goog.events.EventHandler);
-***REMOVED***
-***REMOVED*** Something.prototype.disposeInternal = function() {
-***REMOVED***   Something.base(this, 'disposeInternal');
-***REMOVED***   goog.dom.removeNode(this.container);
-***REMOVED******REMOVED*****REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED*** // Then elsewhere:
-***REMOVED***
-***REMOVED*** var activeSomething = null;
-***REMOVED*** function openSomething() {
-***REMOVED***   activeSomething = new Something();
-***REMOVED*** }
-***REMOVED***
-***REMOVED*** function closeSomething() {
-***REMOVED***   if (activeSomething) {
-***REMOVED***     activeSomething.dispose();  // Remove event listeners
-***REMOVED***     activeSomething = null;
-***REMOVED***   }
-***REMOVED*** }
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class to create objects which want to handle multiple events
+ * and have their listeners easily cleaned up via a dispose method.
+ *
+ * Example:
+ * <pre>
+ * function Something() {
+ *   Something.base(this);
+ *
+ *   ... set up object ...
+ *
+ *   // Add event listeners
+ *   this.listen(this.starEl, goog.events.EventType.CLICK, this.handleStar);
+ *   this.listen(this.headerEl, goog.events.EventType.CLICK, this.expand);
+ *   this.listen(this.collapseEl, goog.events.EventType.CLICK, this.collapse);
+ *   this.listen(this.infoEl, goog.events.EventType.MOUSEOVER, this.showHover);
+ *   this.listen(this.infoEl, goog.events.EventType.MOUSEOUT, this.hideHover);
+ * }
+ * goog.inherits(Something, goog.events.EventHandler);
+ *
+ * Something.prototype.disposeInternal = function() {
+ *   Something.base(this, 'disposeInternal');
+ *   goog.dom.removeNode(this.container);
+ * };
+ *
+ *
+ * // Then elsewhere:
+ *
+ * var activeSomething = null;
+ * function openSomething() {
+ *   activeSomething = new Something();
+ * }
+ *
+ * function closeSomething() {
+ *   if (activeSomething) {
+ *     activeSomething.dispose();  // Remove event listeners
+ *     activeSomething = null;
+ *   }
+ * }
+ * </pre>
+ *
+ */
 
 goog.provide('goog.events.EventHandler');
 
 goog.require('goog.Disposable');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** Super class for objects that want to easily manage a number of event
-***REMOVED*** listeners.  It allows a short cut to listen and also provides a quick way
-***REMOVED*** to remove all events listeners belonging to this object.
-***REMOVED*** @param {SCOPE=} opt_scope Object in whose scope to call the listeners.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @template SCOPE
-***REMOVED***
+/**
+ * Super class for objects that want to easily manage a number of event
+ * listeners.  It allows a short cut to listen and also provides a quick way
+ * to remove all events listeners belonging to this object.
+ * @param {SCOPE=} opt_scope Object in whose scope to call the listeners.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @template SCOPE
+ */
 goog.events.EventHandler = function(opt_scope) {
   goog.Disposable.call(this);
   // TODO(user): Rename this to this.scope_ and fix the classes in google3
   // that access this private variable. :(
   this.handler_ = opt_scope;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Keys for events that are being listened to.
-  ***REMOVED*** @type {!Object.<!goog.events.Key>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.keys_ = {***REMOVED***
-***REMOVED***
+  /**
+   * Keys for events that are being listened to.
+   * @type {!Object.<!goog.events.Key>}
+   * @private
+   */
+  this.keys_ = {};
+};
 goog.inherits(goog.events.EventHandler, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Utility array used to unify the cases of listening for an array of types
-***REMOVED*** and listening for a single event, without using recursion or allocating
-***REMOVED*** an array each time.
-***REMOVED*** @type {!Array.<string>}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Utility array used to unify the cases of listening for an array of types
+ * and listening for a single event, without using recursion or allocating
+ * an array each time.
+ * @type {!Array.<string>}
+ * @const
+ * @private
+ */
 goog.events.EventHandler.typeArray_ = [];
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted then the
-***REMOVED*** EventHandler's handleEvent method will be used.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null=}
-***REMOVED***     opt_fn Optional callback function to be used as the listener or an object
-***REMOVED***     with handleEvent function.
-***REMOVED*** @param {boolean=} opt_capture Optional whether to use capture phase.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template EVENTOBJ
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted then the
+ * EventHandler's handleEvent method will be used.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null=}
+ *     opt_fn Optional callback function to be used as the listener or an object
+ *     with handleEvent function.
+ * @param {boolean=} opt_capture Optional whether to use capture phase.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template EVENTOBJ
+ */
 goog.events.EventHandler.prototype.listen = function(
     src, type, opt_fn, opt_capture) {
   return this.listen_(src, type, opt_fn, opt_capture);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted then the
-***REMOVED*** EventHandler's handleEvent method will be used.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}|
-***REMOVED***     null|undefined} fn Optional callback function to be used as the
-***REMOVED***     listener or an object with handleEvent function.
-***REMOVED*** @param {boolean|undefined} capture Optional whether to use capture phase.
-***REMOVED*** @param {T} scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template T,EVENTOBJ
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted then the
+ * EventHandler's handleEvent method will be used.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}|
+ *     null|undefined} fn Optional callback function to be used as the
+ *     listener or an object with handleEvent function.
+ * @param {boolean|undefined} capture Optional whether to use capture phase.
+ * @param {T} scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template T,EVENTOBJ
+ */
 goog.events.EventHandler.prototype.listenWithScope = function(
     src, type, fn, capture, scope) {
   // TODO(user): Deprecate this function.
   return this.listen_(src, type, fn, capture, scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted then the
-***REMOVED*** EventHandler's handleEvent method will be used.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
-***REMOVED***     Optional callback function to be used as the listener or an object with
-***REMOVED***     handleEvent function.
-***REMOVED*** @param {boolean=} opt_capture Optional whether to use capture phase.
-***REMOVED*** @param {Object=} opt_scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template EVENTOBJ
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted then the
+ * EventHandler's handleEvent method will be used.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
+ *     Optional callback function to be used as the listener or an object with
+ *     handleEvent function.
+ * @param {boolean=} opt_capture Optional whether to use capture phase.
+ * @param {Object=} opt_scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template EVENTOBJ
+ * @private
+ */
 goog.events.EventHandler.prototype.listen_ = function(src, type, opt_fn,
                                                       opt_capture,
                                                       opt_scope) {
@@ -187,78 +187,78 @@ goog.events.EventHandler.prototype.listen_ = function(src, type, opt_fn,
   }
 
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted, then the
-***REMOVED*** EventHandler's handleEvent method will be used. After the event has fired the
-***REMOVED*** event listener is removed from the target. If an array of event types is
-***REMOVED*** provided, each event type will be listened to once.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
-***REMOVED***    Optional callback function to be used as the listener or an object with
-***REMOVED***    handleEvent function.
-***REMOVED*** @param {boolean=} opt_capture Optional whether to use capture phase.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template EVENTOBJ
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted, then the
+ * EventHandler's handleEvent method will be used. After the event has fired the
+ * event listener is removed from the target. If an array of event types is
+ * provided, each event type will be listened to once.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(this:SCOPE, EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
+ *    Optional callback function to be used as the listener or an object with
+ *    handleEvent function.
+ * @param {boolean=} opt_capture Optional whether to use capture phase.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template EVENTOBJ
+ */
 goog.events.EventHandler.prototype.listenOnce = function(
     src, type, opt_fn, opt_capture) {
   // TODO(user): Remove the opt_scope from this function and then
   // templatize it.
   return this.listenOnce_(src, type, opt_fn, opt_capture);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted, then the
-***REMOVED*** EventHandler's handleEvent method will be used. After the event has fired the
-***REMOVED*** event listener is removed from the target. If an array of event types is
-***REMOVED*** provided, each event type will be listened to once.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}|
-***REMOVED***     null|undefined} fn Optional callback function to be used as the
-***REMOVED***     listener or an object with handleEvent function.
-***REMOVED*** @param {boolean|undefined} capture Optional whether to use capture phase.
-***REMOVED*** @param {T} scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template T,EVENTOBJ
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted, then the
+ * EventHandler's handleEvent method will be used. After the event has fired the
+ * event listener is removed from the target. If an array of event types is
+ * provided, each event type will be listened to once.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(this:T, EVENTOBJ):?|{handleEvent:function(this:T, ?):?}|
+ *     null|undefined} fn Optional callback function to be used as the
+ *     listener or an object with handleEvent function.
+ * @param {boolean|undefined} capture Optional whether to use capture phase.
+ * @param {T} scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template T,EVENTOBJ
+ */
 goog.events.EventHandler.prototype.listenOnceWithScope = function(
     src, type, fn, capture, scope) {
   // TODO(user): Deprecate this function.
   return this.listenOnce_(src, type, fn, capture, scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Listen to an event on a Listenable.  If the function is omitted, then the
-***REMOVED*** EventHandler's handleEvent method will be used. After the event has fired
-***REMOVED*** the event listener is removed from the target. If an array of event types is
-***REMOVED*** provided, each event type will be listened to once.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type to listen for or array of event types.
-***REMOVED*** @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
-***REMOVED***    Optional callback function to be used as the listener or an object with
-***REMOVED***    handleEvent function.
-***REMOVED*** @param {boolean=} opt_capture Optional whether to use capture phase.
-***REMOVED*** @param {Object=} opt_scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template EVENTOBJ
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Listen to an event on a Listenable.  If the function is omitted, then the
+ * EventHandler's handleEvent method will be used. After the event has fired
+ * the event listener is removed from the target. If an array of event types is
+ * provided, each event type will be listened to once.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type to listen for or array of event types.
+ * @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
+ *    Optional callback function to be used as the listener or an object with
+ *    handleEvent function.
+ * @param {boolean=} opt_capture Optional whether to use capture phase.
+ * @param {Object=} opt_scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template EVENTOBJ
+ * @private
+ */
 goog.events.EventHandler.prototype.listenOnce_ = function(
     src, type, opt_fn, opt_capture, opt_scope) {
   if (goog.isArray(type)) {
@@ -281,84 +281,84 @@ goog.events.EventHandler.prototype.listenOnce_ = function(
   }
 
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an event listener with a specific event wrapper on a DOM Node or an
-***REMOVED*** object that has implemented {@link goog.events.EventTarget}. A listener can
-***REMOVED*** only be added once to an object.
-***REMOVED***
-***REMOVED*** @param {EventTarget|goog.events.EventTarget} src The node to listen to
-***REMOVED***     events on.
-***REMOVED*** @param {goog.events.EventWrapper} wrapper Event wrapper to use.
-***REMOVED*** @param {function(this:SCOPE, ?):?|{handleEvent:function(?):?}|null} listener
-***REMOVED***     Callback method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED***
+/**
+ * Adds an event listener with a specific event wrapper on a DOM Node or an
+ * object that has implemented {@link goog.events.EventTarget}. A listener can
+ * only be added once to an object.
+ *
+ * @param {EventTarget|goog.events.EventTarget} src The node to listen to
+ *     events on.
+ * @param {goog.events.EventWrapper} wrapper Event wrapper to use.
+ * @param {function(this:SCOPE, ?):?|{handleEvent:function(?):?}|null} listener
+ *     Callback method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ */
 goog.events.EventHandler.prototype.listenWithWrapper = function(
     src, wrapper, listener, opt_capt) {
   // TODO(user): Remove the opt_scope from this function and then
   // templatize it.
   return this.listenWithWrapper_(src, wrapper, listener, opt_capt);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an event listener with a specific event wrapper on a DOM Node or an
-***REMOVED*** object that has implemented {@link goog.events.EventTarget}. A listener can
-***REMOVED*** only be added once to an object.
-***REMOVED***
-***REMOVED*** @param {EventTarget|goog.events.EventTarget} src The node to listen to
-***REMOVED***     events on.
-***REMOVED*** @param {goog.events.EventWrapper} wrapper Event wrapper to use.
-***REMOVED*** @param {function(this:T, ?):?|{handleEvent:function(this:T, ?):?}|null}
-***REMOVED***     listener Optional callback function to be used as the
-***REMOVED***     listener or an object with handleEvent function.
-***REMOVED*** @param {boolean|undefined} capture Optional whether to use capture phase.
-***REMOVED*** @param {T} scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * Adds an event listener with a specific event wrapper on a DOM Node or an
+ * object that has implemented {@link goog.events.EventTarget}. A listener can
+ * only be added once to an object.
+ *
+ * @param {EventTarget|goog.events.EventTarget} src The node to listen to
+ *     events on.
+ * @param {goog.events.EventWrapper} wrapper Event wrapper to use.
+ * @param {function(this:T, ?):?|{handleEvent:function(this:T, ?):?}|null}
+ *     listener Optional callback function to be used as the
+ *     listener or an object with handleEvent function.
+ * @param {boolean|undefined} capture Optional whether to use capture phase.
+ * @param {T} scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @template T
+ */
 goog.events.EventHandler.prototype.listenWithWrapperAndScope = function(
     src, wrapper, listener, capture, scope) {
   // TODO(user): Deprecate this function.
   return this.listenWithWrapper_(src, wrapper, listener, capture, scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an event listener with a specific event wrapper on a DOM Node or an
-***REMOVED*** object that has implemented {@link goog.events.EventTarget}. A listener can
-***REMOVED*** only be added once to an object.
-***REMOVED***
-***REMOVED*** @param {EventTarget|goog.events.EventTarget} src The node to listen to
-***REMOVED***     events on.
-***REMOVED*** @param {goog.events.EventWrapper} wrapper Event wrapper to use.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
-***REMOVED***     method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
-***REMOVED***     chaining of calls.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds an event listener with a specific event wrapper on a DOM Node or an
+ * object that has implemented {@link goog.events.EventTarget}. A listener can
+ * only be added once to an object.
+ *
+ * @param {EventTarget|goog.events.EventTarget} src The node to listen to
+ *     events on.
+ * @param {goog.events.EventWrapper} wrapper Event wrapper to use.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
+ *     method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @return {!goog.events.EventHandler.<SCOPE>} This object, allowing for
+ *     chaining of calls.
+ * @private
+ */
 goog.events.EventHandler.prototype.listenWithWrapper_ = function(
     src, wrapper, listener, opt_capt, opt_scope) {
   wrapper.listen(src, listener, opt_capt, opt_scope || this.handler_ || this,
                  this);
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} Number of listeners registered by this handler.
-***REMOVED***
+/**
+ * @return {number} Number of listeners registered by this handler.
+ */
 goog.events.EventHandler.prototype.getListenerCount = function() {
   var count = 0;
   for (var key in this.keys_) {
@@ -367,24 +367,24 @@ goog.events.EventHandler.prototype.getListenerCount = function() {
     }
   }
   return count;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unlistens on an event.
-***REMOVED*** @param {goog.events.ListenableType} src Event source.
-***REMOVED*** @param {string|Array.<string>|
-***REMOVED***     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
-***REMOVED***     type Event type or array of event types to unlisten to.
-***REMOVED*** @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
-***REMOVED***     Optional callback function to be used as the listener or an object with
-***REMOVED***     handleEvent function.
-***REMOVED*** @param {boolean=} opt_capture Optional whether to use capture phase.
-***REMOVED*** @param {Object=} opt_scope Object in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler} This object, allowing for chaining of
-***REMOVED***     calls.
-***REMOVED*** @template EVENTOBJ
-***REMOVED***
+/**
+ * Unlistens on an event.
+ * @param {goog.events.ListenableType} src Event source.
+ * @param {string|Array.<string>|
+ *     !goog.events.EventId.<EVENTOBJ>|!Array.<!goog.events.EventId.<EVENTOBJ>>}
+ *     type Event type or array of event types to unlisten to.
+ * @param {function(EVENTOBJ):?|{handleEvent:function(?):?}|null=} opt_fn
+ *     Optional callback function to be used as the listener or an object with
+ *     handleEvent function.
+ * @param {boolean=} opt_capture Optional whether to use capture phase.
+ * @param {Object=} opt_scope Object in whose scope to call the listener.
+ * @return {!goog.events.EventHandler} This object, allowing for chaining of
+ *     calls.
+ * @template EVENTOBJ
+ */
 goog.events.EventHandler.prototype.unlisten = function(src, type, opt_fn,
                                                        opt_capture,
                                                        opt_scope) {
@@ -404,56 +404,56 @@ goog.events.EventHandler.prototype.unlisten = function(src, type, opt_fn,
   }
 
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an event listener which was added with listenWithWrapper().
-***REMOVED***
-***REMOVED*** @param {EventTarget|goog.events.EventTarget} src The target to stop
-***REMOVED***     listening to events on.
-***REMOVED*** @param {goog.events.EventWrapper} wrapper Event wrapper to use.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener The
-***REMOVED***     listener function to remove.
-***REMOVED*** @param {boolean=} opt_capt In DOM-compliant browsers, this determines
-***REMOVED***     whether the listener is fired during the capture or bubble phase of the
-***REMOVED***     event.
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @return {!goog.events.EventHandler} This object, allowing for chaining of
-***REMOVED***     calls.
-***REMOVED***
+/**
+ * Removes an event listener which was added with listenWithWrapper().
+ *
+ * @param {EventTarget|goog.events.EventTarget} src The target to stop
+ *     listening to events on.
+ * @param {goog.events.EventWrapper} wrapper Event wrapper to use.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener The
+ *     listener function to remove.
+ * @param {boolean=} opt_capt In DOM-compliant browsers, this determines
+ *     whether the listener is fired during the capture or bubble phase of the
+ *     event.
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @return {!goog.events.EventHandler} This object, allowing for chaining of
+ *     calls.
+ */
 goog.events.EventHandler.prototype.unlistenWithWrapper = function(src, wrapper,
     listener, opt_capt, opt_scope) {
   wrapper.unlisten(src, listener, opt_capt,
                    opt_scope || this.handler_ || this, this);
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unlistens to all events.
-***REMOVED***
+/**
+ * Unlistens to all events.
+ */
 goog.events.EventHandler.prototype.removeAll = function() {
   goog.object.forEach(this.keys_, goog.events.unlistenByKey);
-  this.keys_ = {***REMOVED***
-***REMOVED***
+  this.keys_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Disposes of this EventHandler and removes all listeners that it registered.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Disposes of this EventHandler and removes all listeners that it registered.
+ * @override
+ * @protected
+ */
 goog.events.EventHandler.prototype.disposeInternal = function() {
   goog.events.EventHandler.superClass_.disposeInternal.call(this);
   this.removeAll();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default event handler
-***REMOVED*** @param {goog.events.Event} e Event object.
-***REMOVED***
+/**
+ * Default event handler
+ * @param {goog.events.Event} e Event object.
+ */
 goog.events.EventHandler.prototype.handleEvent = function(e) {
   throw Error('EventHandler.handleEvent not implemented');
-***REMOVED***
+};

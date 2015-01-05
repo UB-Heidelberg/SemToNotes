@@ -21,9 +21,9 @@ goog.require('goog.testing.jsunit');
 goog.crypt.Aes.ENABLE_TEST_MODE = true;
 
 /*
-***REMOVED*** Unit test for goog.crypt.Aes using the test vectors from the spec:
-***REMOVED*** http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf
-***REMOVED***
+ * Unit test for goog.crypt.Aes using the test vectors from the spec:
+ * http://csrc.nist.gov/publications/fips/fips197/fips-197.pdf
+ */
 
 var testData = null;
 
@@ -31,42 +31,42 @@ function test128() {
   doTest('000102030405060708090a0b0c0d0e0f',
          '00112233445566778899aabbccddeeff',
          v128,
-         true /* encrypt***REMOVED***);
+         true /* encrypt */);
 }
 
 function test192() {
   doTest('000102030405060708090a0b0c0d0e0f1011121314151617',
          '00112233445566778899aabbccddeeff',
          v192,
-         true /* encrypt***REMOVED***);
+         true /* encrypt */);
 }
 
 function test256() {
   doTest('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
          '00112233445566778899aabbccddeeff',
          v256,
-         true /* encrypt***REMOVED***);
+         true /* encrypt */);
 }
 
 function test128d() {
   doTest('000102030405060708090a0b0c0d0e0f',
          '69c4e0d86a7b0430d8cdb78070b4c55a',
          v128d,
-         false /* decrypt***REMOVED***);
+         false /* decrypt */);
 }
 
 function test192d() {
   doTest('000102030405060708090a0b0c0d0e0f1011121314151617',
          'dda97ca4864cdfe06eaf70a0ec0d7191',
          v192d,
-         false /* decrypt***REMOVED***);
+         false /* decrypt */);
 }
 
 function test256d() {
   doTest('000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
          '8ea2b7ca516745bfeafc49904b496089',
          v256d,
-         false /* decrypt***REMOVED***);
+         false /* decrypt */);
 }
 
 function doTest(key, input, values, dir) {
@@ -158,7 +158,7 @@ function encodeState(state) {
 function encodeKey(key, round) {
   var s = [];
 
-  for (var r = round***REMOVED*** 4; r < (round***REMOVED*** 4 + 4); r++) {
+  for (var r = round * 4; r < (round * 4 + 4); r++) {
     for (var c = 0; c < 4; c++) {
       s.push(encodeByte(key[r][c]));
     }
@@ -179,7 +179,7 @@ function encodeByte(val) {
 
 var v128 = [];
 (function v128_init() {
-  for (var i = 0; i <= 10; i++) v128[i] = {***REMOVED***
+  for (var i = 0; i <= 10; i++) v128[i] = {};
   v128.name = '128';
   v128[0].input = '00112233445566778899aabbccddeeff';
   v128[0].k_sch = '000102030405060708090a0b0c0d0e0f';
@@ -237,7 +237,7 @@ var v128 = [];
 
 var v128d = [];
 (function v128d_init() {
-  for (var i = 0; i <= 10; i++) v128d[i] = {***REMOVED***
+  for (var i = 0; i <= 10; i++) v128d[i] = {};
   v128d.name = '128d';
   v128d[0].input = '69c4e0d86a7b0430d8cdb78070b4c55a';
   v128d[0].k_sch = '13111d7fe3944a17f307a78b4d2b30c5';
@@ -295,7 +295,7 @@ var v128d = [];
 
 var v192 = [];
 (function v192_init() {
-  for (var i = 0; i <= 12; i++) v192[i] = {***REMOVED***
+  for (var i = 0; i <= 12; i++) v192[i] = {};
   v192.name = '192';
   v192[0].input = '00112233445566778899aabbccddeeff';
   v192[0].k_sch = '000102030405060708090a0b0c0d0e0f';
@@ -363,7 +363,7 @@ var v192 = [];
 
 var v192d = [];
 (function v192d_init() {
-  for (var i = 0; i <= 12; i++) v192d[i] = {***REMOVED***
+  for (var i = 0; i <= 12; i++) v192d[i] = {};
   v192d.name = '192d';
   v192d[0].input = 'dda97ca4864cdfe06eaf70a0ec0d7191';
   v192d[0].k_sch = 'a4970a331a78dc09c418c271e3a41d5d';
@@ -431,7 +431,7 @@ var v192d = [];
 
 var v256 = [];
 (function v256_init() {
-  for (var i = 0; i <= 14; i++) v256[i] = {***REMOVED***
+  for (var i = 0; i <= 14; i++) v256[i] = {};
   v256.name = '256';
   v256[0].input = '00112233445566778899aabbccddeeff';
   v256[0].k_sch = '000102030405060708090a0b0c0d0e0f';
@@ -509,7 +509,7 @@ var v256 = [];
 
 var v256d = [];
 (function v256d_init() {
-  for (var i = 0; i <= 14; i++) v256d[i] = {***REMOVED***
+  for (var i = 0; i <= 14; i++) v256d[i] = {};
   v256d.name = '256d';
   v256d[0].input = '8ea2b7ca516745bfeafc49904b496089';
   v256d[0].k_sch = '24fc79ccbf0979e9371ac23c6d68de36';

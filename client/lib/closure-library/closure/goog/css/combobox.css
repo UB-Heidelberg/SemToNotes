@@ -1,14 +1,14 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: pupius@google.com (Daniel Pupius)***REMOVED***
-/* Author: pallosp@google.com (Peter Pallos)***REMOVED***
+/* Author: pupius@google.com (Daniel Pupius) */
+/* Author: pallosp@google.com (Peter Pallos) */
 
-/* Styles for goog.ui.ComboBox and its derivatives.***REMOVED***
+/* Styles for goog.ui.ComboBox and its derivatives. */
 
 
 .goog-combobox {
@@ -25,7 +25,7 @@
   font: normal small arial, sans-serif;
   margin: 0;
   padding: 0 0 0 2px;
-  vertical-align: bottom; /* override demo.css***REMOVED***
+  vertical-align: bottom; /* override demo.css */
   width: 200px;
 }
 
@@ -36,7 +36,7 @@
 
 .goog-combobox .goog-menu {
   margin-top: -1px;
-  width: 219px;  /* input width + button width + 3***REMOVED*** 1px border***REMOVED***
+  width: 219px;  /* input width + button width + 3 * 1px border */
   z-index: 1000;
 }
 
@@ -48,7 +48,7 @@
   width: 16px;
 }
 
-/* IE6 only hack***REMOVED***
+/* IE6 only hack */
 * html .goog-combobox-button {
   padding: 0 3px;
 }

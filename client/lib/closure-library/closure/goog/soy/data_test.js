@@ -16,7 +16,7 @@ goog.provide('goog.soy.dataTest');
 goog.setTestOnly('goog.soy.dataTest');
 
 goog.require('goog.html.SafeHtml');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.soy.testHelper');
 goog.require('goog.testing.jsunit');
 

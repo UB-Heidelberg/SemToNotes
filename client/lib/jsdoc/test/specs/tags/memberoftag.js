@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("@memberof tag", function() {
 
     it('When a symbol has an @member tag, the doclet has a long name that includes the parent.', function() {

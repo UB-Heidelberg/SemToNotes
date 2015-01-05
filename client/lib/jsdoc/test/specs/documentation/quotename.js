@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("quoted names", function() {
 
     describe("when found in square brackets", function() {

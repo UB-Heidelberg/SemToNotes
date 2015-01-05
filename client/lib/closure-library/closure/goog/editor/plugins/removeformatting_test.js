@@ -147,10 +147,10 @@ function testTableTagsAreNotRemoved() {
 }
 
 
-***REMOVED***
-***REMOVED*** We select two cells from the table and then make sure that there is no
-***REMOVED*** data loss and basic formatting is removed from each cell.
-***REMOVED***
+/**
+ * We select two cells from the table and then make sure that there is no
+ * data loss and basic formatting is removed from each cell.
+ */
 function testTableDataIsNotRemoved() {
   setUpTableTests();
   if (goog.userAgent.IE) {
@@ -210,13 +210,13 @@ function testLinksAreNotRemoved() {
 }
 
 
-***REMOVED***
-***REMOVED*** A short formatting removal function for use with the RemoveFormatting
-***REMOVED*** plugin. Does enough that we can tell this function was run over the
-***REMOVED*** document.
-***REMOVED*** @param {string} text The HTML in from the document.
-***REMOVED*** @return {string} The "cleaned" HTML out.
-***REMOVED***
+/**
+ * A short formatting removal function for use with the RemoveFormatting
+ * plugin. Does enough that we can tell this function was run over the
+ * document.
+ * @param {string} text The HTML in from the document.
+ * @return {string} The "cleaned" HTML out.
+ */
 function replacementFormattingFunc(text) {
   // Really basic so that we can just see this is executing.
   return text.replace(/Foo/gi, 'Bar').replace(/<[\/]*span[^>]*>/gi, '');
@@ -253,7 +253,7 @@ function testGetValueForNode() {
       return '<b>' + this.removeFormattingWorker_(node.innerHTML) + '</b>';
     }
     return null;
- ***REMOVED*****REMOVED***
+  };
 
   var html = FORMATTER.removeFormattingWorker_('<div>foo<b>bar</b></div>');
   assertHTMLEquals('B tags should remain', 'foo<b>bar</b>', html);
@@ -265,7 +265,7 @@ function testGetValueForNode() {
       return '';
     }
     return null;
- ***REMOVED*****REMOVED***
+  };
 
   html = FORMATTER.removeFormattingWorker_('<div>foo<b>bar</b></div>');
   assertHTMLEquals('B tag and its contents should be removed', 'foo', html);
@@ -291,9 +291,9 @@ function testRemoveFormattingAddsNoNbsps() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 992795
-***REMOVED***
+/**
+ * @bug 992795
+ */
 function testRemoveFormattingNestedDivs() {
   var html = FORMATTER.removeFormattingWorker_(
       '<div>1</div><div><div>2</div></div>');
@@ -302,10 +302,10 @@ function testRemoveFormattingNestedDivs() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that when we perform remove formatting on an entire table,
-***REMOVED*** that the visual look is similiar to as if there was a table there.
-***REMOVED***
+/**
+ * Test that when we perform remove formatting on an entire table,
+ * that the visual look is similiar to as if there was a table there.
+ */
 function testRemoveFormattingForTableFormatting() {
   // We preserve the table formatting as much as possible.
   // Spaces separate TD's, <br>'s separate TR's.
@@ -317,9 +317,9 @@ function testRemoveFormattingForTableFormatting() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1319715
-***REMOVED***
+/**
+ * @bug 1319715
+ */
 function testRemoveFormattingDoesNotShrinkSelection() {
   var div = document.getElementById('html');
   div.innerHTML = '<div>l </div><div><br><b>a</b>foo bar</div>';
@@ -346,9 +346,9 @@ function testRemoveFormattingDoesNotShrinkSelection() {
 }
 
 
-***REMOVED***
-***REMOVED***  @bug 1447374
-***REMOVED***
+/**
+ *  @bug 1447374
+ */
 function testInsideListRemoveFormat() {
   var div = document.getElementById('html');
   div.innerHTML = '<ul><li>one</li><li><b>two</b></li><li>three</li></ul>';
@@ -393,9 +393,9 @@ function testFullListRemoveFormat() {
 }
 
 
-***REMOVED***
-***REMOVED***  @bug 1440935
-***REMOVED***
+/**
+ *  @bug 1440935
+ */
 function testPartialListRemoveFormat() {
   var div = document.getElementById('html');
   div.innerHTML =
@@ -443,9 +443,9 @@ function testBasicRemoveFormatting() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1480260
-***REMOVED***
+/**
+ * @bug 1480260
+ */
 function testPartialBasicRemoveFormatting() {
   var div = document.getElementById('html');
   div.innerHTML = '<b>bold<i>italic</i></b>';
@@ -466,9 +466,9 @@ function testPartialBasicRemoveFormatting() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 3075557
-***REMOVED***
+/**
+ * @bug 3075557
+ */
 function testRemoveFormattingLinkedImageBorderZero() {
   var testHtml = '<a href="http://www.google.com/">' +
       '<img src="http://www.google.com/images/logo.gif" border="0"></a>';
@@ -490,9 +490,9 @@ function testRemoveFormattingLinkedImageBorderZero() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 3075557
-***REMOVED***
+/**
+ * @bug 3075557
+ */
 function testRemoveFormattingLinkedImageBorderNonzero() {
   var testHtml = '<a href="http://www.google.com/">' +
       '<img src="http://www.google.com/images/logo.gif" border="1"></a>';
@@ -516,9 +516,9 @@ function testRemoveFormattingLinkedImageBorderNonzero() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 3075557
-***REMOVED***
+/**
+ * @bug 3075557
+ */
 function testRemoveFormattingUnlinkedImage() {
   var testHtml =
       '<img src="http://www.google.com/images/logo.gif" border="0">';
@@ -541,9 +541,9 @@ function testRemoveFormattingUnlinkedImage() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 3075557
-***REMOVED***
+/**
+ * @bug 3075557
+ */
 function testRemoveFormattingLinkedImageDeep() {
   var testHtml = '<a href="http://www.google.com/"><b>hello' +
       '<img src="http://www.google.com/images/logo.gif" border="0">' +
@@ -761,10 +761,10 @@ function testTwoTablesSelectedPartiallyRemoveFormatting() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test a random snippet from Google News (Google News has complicated
-***REMOVED*** dom structure, including tables, links, images, etc).
-***REMOVED***
+/**
+ * Test a random snippet from Google News (Google News has complicated
+ * dom structure, including tables, links, images, etc).
+ */
 function testRandomGoogleNewsSnippetRemoveFormatting() {
   if (goog.userAgent.IE) {
     // IE returns an "unspecified error" which seems to be beyond
@@ -882,9 +882,9 @@ function testGetTableAncestor() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1272905
-***REMOVED***
+/**
+ * @bug 1272905
+ */
 function testHardReturnsInHeadersPreserved() {
   var div = document.getElementById('html');
   div.innerHTML = '<h1>abcd</h1><h2>efgh</h2><h3>ijkl</h3>';
@@ -934,7 +934,7 @@ function testKeyboardShortcut_space() {
 
   FIELDMOCK.$replay();
 
-  var e = {***REMOVED***
+  var e = {};
   var key = ' ';
   var result = FORMATTER.handleKeyboardShortcut(e, key, true);
   assertTrue(result);
@@ -946,7 +946,7 @@ function testKeyboardShortcut_other() {
   FIELDMOCK.$reset();
   FIELDMOCK.$replay();
 
-  var e = {***REMOVED***
+  var e = {};
   var key = 'a';
   var result = FORMATTER.handleKeyboardShortcut(e, key, true);
   assertFalse(result);

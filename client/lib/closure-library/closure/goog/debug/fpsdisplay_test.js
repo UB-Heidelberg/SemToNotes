@@ -22,7 +22,7 @@ goog.require('goog.testing.jsunit');
 var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
 var fpsDisplay;
 var timer;
-asyncTestCase.stepTimeout = 10***REMOVED*** 1000;
+asyncTestCase.stepTimeout = 10 * 1000;
 
 function setUp() {
   fpsDisplay = new goog.debug.FpsDisplay();

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview SHA-512 cryptographic hash.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED***   var sha512 = new goog.crypt.Sha512();
-***REMOVED***   sha512.update(bytes);
-***REMOVED***   var hash = sha512.digest();
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview SHA-512 cryptographic hash.
+ *
+ * Usage:
+ *   var sha512 = new goog.crypt.Sha512();
+ *   sha512.update(bytes);
+ *   var hash = sha512.digest();
+ *
+ */
 
 goog.provide('goog.crypt.Sha512');
 
@@ -28,22 +28,22 @@ goog.require('goog.crypt.Sha2_64bit');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a SHA-512 cryptographic hash.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Sha2_64bit}
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Constructs a SHA-512 cryptographic hash.
+ *
+ * @constructor
+ * @extends {goog.crypt.Sha2_64bit}
+ * @final
+ * @struct
+ */
 goog.crypt.Sha512 = function() {
-  goog.crypt.Sha512.base(this, 'constructor', 8  /* numHashBlocks***REMOVED***,
+  goog.crypt.Sha512.base(this, 'constructor', 8  /* numHashBlocks */,
       goog.crypt.Sha512.INIT_HASH_BLOCK_);
-***REMOVED***
+};
 goog.inherits(goog.crypt.Sha512, goog.crypt.Sha2_64bit);
 
 
-***REMOVED*** @private {!Array.<number>}***REMOVED***
+/** @private {!Array.<number>} */
 goog.crypt.Sha512.INIT_HASH_BLOCK_ = [
   // Section 5.3.5 of
   // csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf

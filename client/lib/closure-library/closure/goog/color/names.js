@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Names of standard colors with their associated hex values.
-***REMOVED***
+/**
+ * @fileoverview Names of standard colors with their associated hex values.
+ */
 
 goog.provide('goog.color.names');
 
 
-***REMOVED***
-***REMOVED*** A map that contains a lot of colors that are recognised by various browsers.
-***REMOVED*** This list is way larger than the minimal one dictated by W3C.
-***REMOVED*** The keys of this map are the lowercase "readable" names of the colors, while
-***REMOVED*** the values are the "hex" values.
-***REMOVED***
+/**
+ * A map that contains a lot of colors that are recognised by various browsers.
+ * This list is way larger than the minimal one dictated by W3C.
+ * The keys of this map are the lowercase "readable" names of the colors, while
+ * the values are the "hex" values.
+ */
 goog.color.names = {
   'aliceblue': '#f0f8ff',
   'antiquewhite': '#faebd7',
@@ -173,4 +173,4 @@ goog.color.names = {
   'whitesmoke': '#f5f5f5',
   'yellow': '#ffff00',
   'yellowgreen': '#9acd32'
-***REMOVED***
+};

@@ -12,28 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file defines base classes used for creating mocks in
-***REMOVED*** JavaScript. The API was inspired by EasyMock.
-***REMOVED***
-***REMOVED*** The basic API is:
-***REMOVED*** <ul>
-***REMOVED***   <li>Create an object to be mocked
-***REMOVED***   <li>Create a mock object, passing in the above object to the constructor
-***REMOVED***   <li>Set expectations by calling methods on the mock object
-***REMOVED***   <li>Call $replay() on the mock object
-***REMOVED***   <li>Pass the mock to code that will make real calls on it
-***REMOVED***   <li>Call $verify() to make sure that expectations were met
-***REMOVED*** </ul>
-***REMOVED***
-***REMOVED*** For examples, please see the unit tests for LooseMock and StrictMock.
-***REMOVED***
-***REMOVED*** Still TODO
-***REMOVED***   implement better (and pluggable) argument matching
-***REMOVED***   Have the exceptions for LooseMock show the number of expected/actual calls
-***REMOVED***   loose and strict mocks share a lot of code - move it to the base class
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview This file defines base classes used for creating mocks in
+ * JavaScript. The API was inspired by EasyMock.
+ *
+ * The basic API is:
+ * <ul>
+ *   <li>Create an object to be mocked
+ *   <li>Create a mock object, passing in the above object to the constructor
+ *   <li>Set expectations by calling methods on the mock object
+ *   <li>Call $replay() on the mock object
+ *   <li>Pass the mock to code that will make real calls on it
+ *   <li>Call $verify() to make sure that expectations were met
+ * </ul>
+ *
+ * For examples, please see the unit tests for LooseMock and StrictMock.
+ *
+ * Still TODO
+ *   implement better (and pluggable) argument matching
+ *   Have the exceptions for LooseMock show the number of expected/actual calls
+ *   loose and strict mocks share a lot of code - move it to the base class
+ *
+ */
 
 goog.provide('goog.testing.Mock');
 goog.provide('goog.testing.MockExpectation');
@@ -46,124 +46,124 @@ goog.require('goog.testing.mockmatchers');
 
 
 
-***REMOVED***
-***REMOVED*** This is a class that represents an expectation.
-***REMOVED*** @param {string} name The name of the method for this expectation.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This is a class that represents an expectation.
+ * @param {string} name The name of the method for this expectation.
+ * @constructor
+ * @final
+ */
 goog.testing.MockExpectation = function(name) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The name of the method that is expected to be called.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The name of the method that is expected to be called.
+   * @type {string}
+   */
   this.name = name;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of error messages for expectations not met.
-  ***REMOVED*** @type {Array}
- ***REMOVED*****REMOVED***
+  /**
+   * An array of error messages for expectations not met.
+   * @type {Array}
+   */
   this.errorMessages = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The minimum number of times this method should be called.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The minimum number of times this method should be called.
+ * @type {number}
+ */
 goog.testing.MockExpectation.prototype.minCalls = 1;
 
 
-***REMOVED***
- ***REMOVED*** The maximum number of times this method should be called.
- ***REMOVED*** @type {number}
-***REMOVED*****REMOVED***
+/**
+  * The maximum number of times this method should be called.
+  * @type {number}
+  */
 goog.testing.MockExpectation.prototype.maxCalls = 1;
 
 
-***REMOVED***
-***REMOVED*** The value that this method should return.
-***REMOVED*** @type {*}
-***REMOVED***
+/**
+ * The value that this method should return.
+ * @type {*}
+ */
 goog.testing.MockExpectation.prototype.returnValue;
 
 
-***REMOVED***
-***REMOVED*** The value that will be thrown when the method is called
-***REMOVED*** @type {*}
-***REMOVED***
+/**
+ * The value that will be thrown when the method is called
+ * @type {*}
+ */
 goog.testing.MockExpectation.prototype.exceptionToThrow;
 
 
-***REMOVED***
-***REMOVED*** The arguments that are expected to be passed to this function
-***REMOVED*** @type {Array.<*>}
-***REMOVED***
+/**
+ * The arguments that are expected to be passed to this function
+ * @type {Array.<*>}
+ */
 goog.testing.MockExpectation.prototype.argumentList;
 
 
-***REMOVED***
-***REMOVED*** The number of times this method is called by real code.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of times this method is called by real code.
+ * @type {number}
+ */
 goog.testing.MockExpectation.prototype.actualCalls = 0;
 
 
-***REMOVED***
-***REMOVED*** The number of times this method is called during the verification phase.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of times this method is called during the verification phase.
+ * @type {number}
+ */
 goog.testing.MockExpectation.prototype.verificationCalls = 0;
 
 
-***REMOVED***
-***REMOVED*** The function which will be executed when this method is called.
-***REMOVED*** Method arguments will be passed to this function, and return value
-***REMOVED*** of this function will be returned by the method.
-***REMOVED*** @type {Function}
-***REMOVED***
+/**
+ * The function which will be executed when this method is called.
+ * Method arguments will be passed to this function, and return value
+ * of this function will be returned by the method.
+ * @type {Function}
+ */
 goog.testing.MockExpectation.prototype.toDo;
 
 
-***REMOVED***
-***REMOVED*** Allow expectation failures to include messages.
-***REMOVED*** @param {string} message The failure message.
-***REMOVED***
+/**
+ * Allow expectation failures to include messages.
+ * @param {string} message The failure message.
+ */
 goog.testing.MockExpectation.prototype.addErrorMessage = function(message) {
   this.errorMessages.push(message);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the error messages seen so far.
-***REMOVED*** @return {string} Error messages separated by \n.
-***REMOVED***
+/**
+ * Get the error messages seen so far.
+ * @return {string} Error messages separated by \n.
+ */
 goog.testing.MockExpectation.prototype.getErrorMessage = function() {
   return this.errorMessages.join('\n');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get how many error messages have been seen so far.
-***REMOVED*** @return {number} Count of error messages.
-***REMOVED***
+/**
+ * Get how many error messages have been seen so far.
+ * @return {number} Count of error messages.
+ */
 goog.testing.MockExpectation.prototype.getErrorMessageCount = function() {
   return this.errorMessages.length;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The base class for a mock object.
-***REMOVED*** @param {Object|Function} objectToMock The object that should be mocked, or
-***REMOVED***    the constructor of an object to mock.
-***REMOVED*** @param {boolean=} opt_mockStaticMethods An optional argument denoting that
-***REMOVED***     a mock should be constructed from the static functions of a class.
-***REMOVED*** @param {boolean=} opt_createProxy An optional argument denoting that
-***REMOVED***     a proxy for the target mock should be created.
-***REMOVED***
-***REMOVED*** @implements {goog.testing.MockInterface}
-***REMOVED***
+/**
+ * The base class for a mock object.
+ * @param {Object|Function} objectToMock The object that should be mocked, or
+ *    the constructor of an object to mock.
+ * @param {boolean=} opt_mockStaticMethods An optional argument denoting that
+ *     a mock should be constructed from the static functions of a class.
+ * @param {boolean=} opt_createProxy An optional argument denoting that
+ *     a proxy for the target mock should be created.
+ * @constructor
+ * @implements {goog.testing.MockInterface}
+ */
 goog.testing.Mock = function(objectToMock, opt_mockStaticMethods,
     opt_createProxy) {
   if (!goog.isObject(objectToMock) && !goog.isFunction(objectToMock)) {
@@ -171,11 +171,11 @@ goog.testing.Mock = function(objectToMock, opt_mockStaticMethods,
   }
   if (opt_createProxy && !opt_mockStaticMethods &&
       goog.isFunction(objectToMock)) {
-   ***REMOVED*****REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
-    var tempCtor = function() {***REMOVED***
+    /**
+ * @constructor
+ * @final
+ */
+    var tempCtor = function() {};
     goog.inherits(tempCtor, objectToMock);
     this.$proxy = new tempCtor();
   } else if (opt_createProxy && opt_mockStaticMethods &&
@@ -190,38 +190,38 @@ goog.testing.Mock = function(objectToMock, opt_mockStaticMethods,
   } else {
     this.$initializeFunctions_(objectToMock);
   }
-  this.$argumentListVerifiers_ = {***REMOVED***
-***REMOVED***
+  this.$argumentListVerifiers_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Option that may be passed when constructing function, method, and
-***REMOVED*** constructor mocks. Indicates that the expected calls should be accepted in
-***REMOVED*** any order.
-***REMOVED*** @const
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Option that may be passed when constructing function, method, and
+ * constructor mocks. Indicates that the expected calls should be accepted in
+ * any order.
+ * @const
+ * @type {number}
+ */
 goog.testing.Mock.LOOSE = 1;
 
 
-***REMOVED***
-***REMOVED*** Option that may be passed when constructing function, method, and
-***REMOVED*** constructor mocks. Indicates that the expected calls should be accepted in
-***REMOVED*** the recorded order only.
-***REMOVED*** @const
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Option that may be passed when constructing function, method, and
+ * constructor mocks. Indicates that the expected calls should be accepted in
+ * the recorded order only.
+ * @const
+ * @type {number}
+ */
 goog.testing.Mock.STRICT = 0;
 
 
-***REMOVED***
-***REMOVED*** This array contains the name of the functions that are part of the base
-***REMOVED*** Object prototype.
-***REMOVED*** Basically a copy of goog.object.PROTOTYPE_FIELDS_.
-***REMOVED*** @const
-***REMOVED*** @type {!Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * This array contains the name of the functions that are part of the base
+ * Object prototype.
+ * Basically a copy of goog.object.PROTOTYPE_FIELDS_.
+ * @const
+ * @type {!Array.<string>}
+ * @private
+ */
 goog.testing.Mock.PROTOTYPE_FIELDS_ = [
   'constructor',
   'hasOwnProperty',
@@ -233,52 +233,52 @@ goog.testing.Mock.PROTOTYPE_FIELDS_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** A proxy for the mock.  This can be used for dependency injection in lieu of
-***REMOVED*** the mock if the test requires a strict instanceof check.
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * A proxy for the mock.  This can be used for dependency injection in lieu of
+ * the mock if the test requires a strict instanceof check.
+ * @type {Object}
+ */
 goog.testing.Mock.prototype.$proxy = null;
 
 
-***REMOVED***
-***REMOVED*** Map of argument name to optional argument list verifier function.
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * Map of argument name to optional argument list verifier function.
+ * @type {Object}
+ */
 goog.testing.Mock.prototype.$argumentListVerifiers_;
 
 
-***REMOVED***
-***REMOVED*** Whether or not we are in recording mode.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether or not we are in recording mode.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.Mock.prototype.$recording_ = true;
 
 
-***REMOVED***
-***REMOVED*** The expectation currently being created. All methods that modify the
-***REMOVED*** current expectation return the Mock object for easy chaining, so this is
-***REMOVED*** where we keep track of the expectation that's currently being modified.
-***REMOVED*** @type {goog.testing.MockExpectation}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * The expectation currently being created. All methods that modify the
+ * current expectation return the Mock object for easy chaining, so this is
+ * where we keep track of the expectation that's currently being modified.
+ * @type {goog.testing.MockExpectation}
+ * @protected
+ */
 goog.testing.Mock.prototype.$pendingExpectation;
 
 
-***REMOVED***
-***REMOVED*** First exception thrown by this mock; used in $verify.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * First exception thrown by this mock; used in $verify.
+ * @type {Object}
+ * @private
+ */
 goog.testing.Mock.prototype.$threwException_ = null;
 
 
-***REMOVED***
-***REMOVED*** Initializes the functions on the mock object.
-***REMOVED*** @param {Object} objectToMock The object being mocked.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializes the functions on the mock object.
+ * @param {Object} objectToMock The object being mocked.
+ * @private
+ */
 goog.testing.Mock.prototype.$initializeFunctions_ = function(objectToMock) {
   // Gets the object properties.
   var enumerableProperties = goog.object.getKeys(objectToMock);
@@ -306,30 +306,30 @@ goog.testing.Mock.prototype.$initializeFunctions_ = function(objectToMock) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers a verfifier function to use when verifying method argument lists.
-***REMOVED*** @param {string} methodName The name of the method for which the verifierFn
-***REMOVED***     should be used.
-***REMOVED*** @param {Function} fn Argument list verifier function.  Should take 2 argument
-***REMOVED***     arrays as arguments, and return true if they are considered equivalent.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Registers a verfifier function to use when verifying method argument lists.
+ * @param {string} methodName The name of the method for which the verifierFn
+ *     should be used.
+ * @param {Function} fn Argument list verifier function.  Should take 2 argument
+ *     arrays as arguments, and return true if they are considered equivalent.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$registerArgumentListVerifier = function(methodName,
                                                                      fn) {
   this.$argumentListVerifiers_[methodName] = fn;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The function that replaces all methods on the mock object.
-***REMOVED*** @param {string} name The name of the method being mocked.
-***REMOVED*** @return {*} In record mode, returns the mock object. In replay mode, returns
-***REMOVED***    whatever the creator of the mock set as the return value.
-***REMOVED***
+/**
+ * The function that replaces all methods on the mock object.
+ * @param {string} name The name of the method being mocked.
+ * @return {*} In record mode, returns the mock object. In replay mode, returns
+ *    whatever the creator of the mock set as the return value.
+ */
 goog.testing.Mock.prototype.$mockMethod = function(name) {
   try {
     // Shift off the name argument so that args contains the arguments to
@@ -346,51 +346,51 @@ goog.testing.Mock.prototype.$mockMethod = function(name) {
   } catch (ex) {
     this.$recordAndThrow(ex);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Records the currently pending expectation, intended to be overridden by a
-***REMOVED*** subclass.
-***REMOVED*** @protected
-***REMOVED***
-goog.testing.Mock.prototype.$recordExpectation = function() {***REMOVED***
+/**
+ * Records the currently pending expectation, intended to be overridden by a
+ * subclass.
+ * @protected
+ */
+goog.testing.Mock.prototype.$recordExpectation = function() {};
 
 
-***REMOVED***
-***REMOVED*** Records an actual method call, intended to be overridden by a
-***REMOVED*** subclass. The subclass must find the pending expectation and return the
-***REMOVED*** correct value.
-***REMOVED*** @param {string} name The name of the method being called.
-***REMOVED*** @param {Array} args The arguments to the method.
-***REMOVED*** @return {*} The return expected by the mock.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Records an actual method call, intended to be overridden by a
+ * subclass. The subclass must find the pending expectation and return the
+ * correct value.
+ * @param {string} name The name of the method being called.
+ * @param {Array} args The arguments to the method.
+ * @return {*} The return expected by the mock.
+ * @protected
+ */
 goog.testing.Mock.prototype.$recordCall = function(name, args) {
   return undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If the expectation expects to throw, this method will throw.
-***REMOVED*** @param {goog.testing.MockExpectation} expectation The expectation.
-***REMOVED***
+/**
+ * If the expectation expects to throw, this method will throw.
+ * @param {goog.testing.MockExpectation} expectation The expectation.
+ */
 goog.testing.Mock.prototype.$maybeThrow = function(expectation) {
   if (typeof expectation.exceptionToThrow != 'undefined') {
     throw expectation.exceptionToThrow;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If this expectation defines a function to be called,
-***REMOVED*** it will be called and its result will be returned.
-***REMOVED*** Otherwise, if the expectation expects to throw, it will throw.
-***REMOVED*** Otherwise, this method will return defined value.
-***REMOVED*** @param {goog.testing.MockExpectation} expectation The expectation.
-***REMOVED*** @param {Array} args The arguments to the method.
-***REMOVED*** @return {*} The return value expected by the mock.
-***REMOVED***
+/**
+ * If this expectation defines a function to be called,
+ * it will be called and its result will be returned.
+ * Otherwise, if the expectation expects to throw, it will throw.
+ * Otherwise, this method will return defined value.
+ * @param {goog.testing.MockExpectation} expectation The expectation.
+ * @param {Array} args The arguments to the method.
+ * @return {*} The return value expected by the mock.
+ */
 goog.testing.Mock.prototype.$do = function(expectation, args) {
   if (typeof expectation.toDo == 'undefined') {
     this.$maybeThrow(expectation);
@@ -398,150 +398,150 @@ goog.testing.Mock.prototype.$do = function(expectation, args) {
   } else {
     return expectation.toDo.apply(this, args);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Specifies a return value for the currently pending expectation.
-***REMOVED*** @param {*} val The return value.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Specifies a return value for the currently pending expectation.
+ * @param {*} val The return value.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$returns = function(val) {
   this.$pendingExpectation.returnValue = val;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Specifies a value for the currently pending expectation to throw.
-***REMOVED*** @param {*} val The value to throw.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Specifies a value for the currently pending expectation to throw.
+ * @param {*} val The value to throw.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$throws = function(val) {
   this.$pendingExpectation.exceptionToThrow = val;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Specifies a function to call for currently pending expectation.
-***REMOVED*** Note, that using this method overrides declarations made
-***REMOVED*** using $returns() and $throws() methods.
-***REMOVED*** @param {Function} func The function to call.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Specifies a function to call for currently pending expectation.
+ * Note, that using this method overrides declarations made
+ * using $returns() and $throws() methods.
+ * @param {Function} func The function to call.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$does = function(func) {
   this.$pendingExpectation.toDo = func;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the expectation to be called 0 or 1 times.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Allows the expectation to be called 0 or 1 times.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$atMostOnce = function() {
   this.$pendingExpectation.minCalls = 0;
   this.$pendingExpectation.maxCalls = 1;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the expectation to be called any number of times, as long as it's
-***REMOVED*** called once.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Allows the expectation to be called any number of times, as long as it's
+ * called once.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$atLeastOnce = function() {
   this.$pendingExpectation.maxCalls = Infinity;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the expectation to be called exactly once.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Allows the expectation to be called exactly once.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$once = function() {
   this.$pendingExpectation.minCalls = 1;
   this.$pendingExpectation.maxCalls = 1;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disallows the expectation from being called.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Disallows the expectation from being called.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$never = function() {
   this.$pendingExpectation.minCalls = 0;
   this.$pendingExpectation.maxCalls = 0;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the expectation to be called any number of times.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Allows the expectation to be called any number of times.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$anyTimes = function() {
   this.$pendingExpectation.minCalls = 0;
   this.$pendingExpectation.maxCalls = Infinity;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Specifies the number of times the expectation should be called.
-***REMOVED*** @param {number} times The number of times this method will be called.
-***REMOVED*** @return {!goog.testing.Mock} This mock object.
-***REMOVED***
+/**
+ * Specifies the number of times the expectation should be called.
+ * @param {number} times The number of times this method will be called.
+ * @return {!goog.testing.Mock} This mock object.
+ */
 goog.testing.Mock.prototype.$times = function(times) {
   this.$pendingExpectation.minCalls = times;
   this.$pendingExpectation.maxCalls = times;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Switches from recording to replay mode.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Switches from recording to replay mode.
+ * @override
+ */
 goog.testing.Mock.prototype.$replay = function() {
   this.$recording_ = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the state of this mock object. This clears all pending expectations
-***REMOVED*** without verifying, and puts the mock in recording mode.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Resets the state of this mock object. This clears all pending expectations
+ * without verifying, and puts the mock in recording mode.
+ * @override
+ */
 goog.testing.Mock.prototype.$reset = function() {
   this.$recording_ = true;
   this.$threwException_ = null;
   delete this.$pendingExpectation;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Throws an exception and records that an exception was thrown.
-***REMOVED*** @param {string} comment A short comment about the exception.
-***REMOVED*** @param {?string=} opt_message A longer message about the exception.
-***REMOVED*** @throws {Object} JsUnitException object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Throws an exception and records that an exception was thrown.
+ * @param {string} comment A short comment about the exception.
+ * @param {?string=} opt_message A longer message about the exception.
+ * @throws {Object} JsUnitException object.
+ * @protected
+ */
 goog.testing.Mock.prototype.$throwException = function(comment, opt_message) {
   this.$recordAndThrow(new goog.testing.JsUnitException(comment, opt_message));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Throws an exception and records that an exception was thrown.
-***REMOVED*** @param {Object} ex Exception.
-***REMOVED*** @throws {Object} #ex.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Throws an exception and records that an exception was thrown.
+ * @param {Object} ex Exception.
+ * @throws {Object} #ex.
+ * @protected
+ */
 goog.testing.Mock.prototype.$recordAndThrow = function(ex) {
   // If it's an assert exception, record it.
   if (ex['isJsUnitException']) {
@@ -559,28 +559,28 @@ goog.testing.Mock.prototype.$recordAndThrow = function(ex) {
     }
   }
   throw ex;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Verify that all of the expectations were met. Should be overridden by
-***REMOVED*** subclasses.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Verify that all of the expectations were met. Should be overridden by
+ * subclasses.
+ * @override
+ */
 goog.testing.Mock.prototype.$verify = function() {
   if (this.$threwException_) {
     throw this.$threwException_;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Verifies that a method call matches an expectation.
-***REMOVED*** @param {goog.testing.MockExpectation} expectation The expectation to check.
-***REMOVED*** @param {string} name The name of the called method.
-***REMOVED*** @param {Array.<*>?} args The arguments passed to the mock.
-***REMOVED*** @return {boolean} Whether the call matches the expectation.
-***REMOVED***
+/**
+ * Verifies that a method call matches an expectation.
+ * @param {goog.testing.MockExpectation} expectation The expectation to check.
+ * @param {string} name The name of the called method.
+ * @param {Array.<*>?} args The arguments passed to the mock.
+ * @return {boolean} Whether the call matches the expectation.
+ */
 goog.testing.Mock.prototype.$verifyCall = function(expectation, name, args) {
   if (expectation.name != name) {
     return false;
@@ -591,15 +591,15 @@ goog.testing.Mock.prototype.$verifyCall = function(expectation, name, args) {
       goog.testing.mockmatchers.flexibleArrayMatcher;
 
   return verifierFn(expectation.argumentList, args, expectation);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Render the provided argument array to a string to help
-***REMOVED*** clients with debugging tests.
-***REMOVED*** @param {Array.<*>?} args The arguments passed to the mock.
-***REMOVED*** @return {string} Human-readable string.
-***REMOVED***
+/**
+ * Render the provided argument array to a string to help
+ * clients with debugging tests.
+ * @param {Array.<*>?} args The arguments passed to the mock.
+ * @return {string} Human-readable string.
+ */
 goog.testing.Mock.prototype.$argumentsAsString = function(args) {
   var retVal = [];
   for (var i = 0; i < args.length; i++) {
@@ -610,16 +610,16 @@ goog.testing.Mock.prototype.$argumentsAsString = function(args) {
     }
   }
   return '(' + retVal.join(', ') + ')';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Throw an exception based on an incorrect method call.
-***REMOVED*** @param {string} name Name of method called.
-***REMOVED*** @param {Array.<*>?} args Arguments passed to the mock.
-***REMOVED*** @param {goog.testing.MockExpectation=} opt_expectation Expected next call,
-***REMOVED***     if any.
-***REMOVED***
+/**
+ * Throw an exception based on an incorrect method call.
+ * @param {string} name Name of method called.
+ * @param {Array.<*>?} args Arguments passed to the mock.
+ * @param {goog.testing.MockExpectation=} opt_expectation Expected next call,
+ *     if any.
+ */
 goog.testing.Mock.prototype.$throwCallException = function(name, args,
                                                            opt_expectation) {
   var errorStringBuffer = [];
@@ -642,4 +642,4 @@ goog.testing.Mock.prototype.$throwCallException = function(name, args,
     }
   }
   this.$throwException(errorStringBuffer.join(''));
-***REMOVED***
+};

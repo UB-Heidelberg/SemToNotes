@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Contains application code for the XPC demo.
-***REMOVED*** This script is used in both the container page and the iframe.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Contains application code for the XPC demo.
+ * This script is used in both the container page and the iframe.
+ *
+ */
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('goog.net.xpc.CfgFields');
@@ -29,35 +29,35 @@ goog.require('goog.net.xpc.CrossPageChannel');
 
 
 
-***REMOVED***
-***REMOVED*** Namespace for the demo. We don't use goog.provide here because it's not a
-***REMOVED*** real module (cannot be required).
-***REMOVED***
-var xpcdemo = {***REMOVED***
+/**
+ * Namespace for the demo. We don't use goog.provide here because it's not a
+ * real module (cannot be required).
+ */
+var xpcdemo = {};
 
 
-***REMOVED***
-***REMOVED*** Global function to kick off initialization in the containing document.
-***REMOVED***
+/**
+ * Global function to kick off initialization in the containing document.
+ */
 goog.global.initOuter = function() {
-***REMOVED***window, 'load', function() { xpcdemo.initOuter(); });
-***REMOVED***
+  goog.events.listen(window, 'load', function() { xpcdemo.initOuter(); });
+};
 
 
-***REMOVED***
-***REMOVED*** Global function to kick off initialization in the iframe.
-***REMOVED***
+/**
+ * Global function to kick off initialization in the iframe.
+ */
 goog.global.initInner = function() {
-***REMOVED***window, 'load', function() { xpcdemo.initInner(); });
-***REMOVED***
+  goog.events.listen(window, 'load', function() { xpcdemo.initInner(); });
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes XPC in the containing page.
-***REMOVED***
+/**
+ * Initializes XPC in the containing page.
+ */
 xpcdemo.initOuter = function() {
   // Build the configuration object.
-  var cfg = {***REMOVED***
+  var cfg = {};
 
   var ownUri = new goog.Uri(window.location.href);
   var relayUri = ownUri.resolve(new goog.Uri('relay.html'));
@@ -114,12 +114,12 @@ xpcdemo.initOuter = function() {
 
   goog.dom.getElement('inactive').style.display = 'none';
   goog.dom.getElement('active').style.display = '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initialization in the iframe.
-***REMOVED***
+/**
+ * Initialization in the iframe.
+ */
 xpcdemo.initInner = function() {
   // Get the channel configuration passed by the containing document.
   var cfg = goog.json.parse(
@@ -128,14 +128,14 @@ xpcdemo.initInner = function() {
   xpcdemo.channel = new goog.net.xpc.CrossPageChannel(cfg);
 
   xpcdemo.initCommon_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the demo.
-***REMOVED*** Registers service-handlers and connects the channel.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializes the demo.
+ * Registers service-handlers and connects the channel.
+ * @private
+ */
 xpcdemo.initCommon_ = function() {
   var xpcLogger = goog.log.getLogger('goog.net.xpc');
   goog.log.addHandler(xpcLogger, function(logRecord) {
@@ -152,15 +152,15 @@ xpcdemo.initCommon_ = function() {
   // Connect the channel.
   xpcdemo.channel.connect(function() {
     xpcdemo.channel.send('log', 'Hi from ' + window.location.host);
-  ***REMOVED***goog.dom.getElement('clickfwd'),
+    goog.events.listen(goog.dom.getElement('clickfwd'),
                        'click', xpcdemo.mouseEventHandler_);
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Kills the peer iframe and the disposes the channel.
-***REMOVED***
+/**
+ * Kills the peer iframe and the disposes the channel.
+ */
 xpcdemo.teardown = function() {
   goog.events.unlisten(goog.dom.getElement('clickfwd'),
                        goog.events.EventType.CLICK, xpcdemo.mouseEventHandler_);
@@ -173,36 +173,36 @@ xpcdemo.teardown = function() {
 
   goog.dom.getElement('inactive').style.display = '';
   goog.dom.getElement('active').style.display = 'none';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logging function. Inserts log-message into element with it id 'console'.
-***REMOVED*** @param {string} msgString The log-message.
-***REMOVED***
+/**
+ * Logging function. Inserts log-message into element with it id 'console'.
+ * @param {string} msgString The log-message.
+ */
 xpcdemo.log = function(msgString) {
   xpcdemo.consoleElm || (xpcdemo.consoleElm = goog.dom.getElement('console'));
   var msgElm = goog.dom.createDom('div');
   msgElm.innerHTML = msgString;
   xpcdemo.consoleElm.insertBefore(msgElm, xpcdemo.consoleElm.firstChild);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a ping request to the peer.
-***REMOVED***
+/**
+ * Sends a ping request to the peer.
+ */
 xpcdemo.ping = function() {
   // send current time
   xpcdemo.channel.send('ping', goog.now() + '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The handler function for incoming pings (messages sent to the service
-***REMOVED*** called 'ping');
-***REMOVED*** @param {string} payload The message payload.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The handler function for incoming pings (messages sent to the service
+ * called 'ping');
+ * @param {string} payload The message payload.
+ * @private
+ */
 xpcdemo.pingHandler_ = function(payload) {
   // is the incoming message a response to a ping we sent?
   if (payload.charAt(0) == '#') {
@@ -215,61 +215,61 @@ xpcdemo.pingHandler_ = function(payload) {
     xpcdemo.channel.send('ping', '#' + payload);
     xpcdemo.log('ping reply sent');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Counter for mousemove events.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Counter for mousemove events.
+ * @type {number}
+ * @private
+ */
 xpcdemo.mmCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Holds timestamp when the last mousemove rate has been logged.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Holds timestamp when the last mousemove rate has been logged.
+ * @type {number}
+ * @private
+ */
 xpcdemo.mmLastRateOutput_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Start mousemove event forwarding. Registers a listener on the document which
-***REMOVED*** sends them over the channel.
-***REMOVED***
+/**
+ * Start mousemove event forwarding. Registers a listener on the document which
+ * sends them over the channel.
+ */
 xpcdemo.startMousemoveForwarding = function() {
-***REMOVED***document, goog.events.EventType.MOUSEMOVE,
+  goog.events.listen(document, goog.events.EventType.MOUSEMOVE,
                      xpcdemo.mouseEventHandler_);
   xpcdemo.mmLastRateOutput_ = goog.now();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stop mousemove event forwarding.
-***REMOVED***
+/**
+ * Stop mousemove event forwarding.
+ */
 xpcdemo.stopMousemoveForwarding = function() {
   goog.events.unlisten(document, goog.events.EventType.MOUSEMOVE,
                        xpcdemo.mouseEventHandler_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Function to be used as handler for mouse-events.
-***REMOVED*** @param {goog.events.BrowserEvent} e The mouse event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Function to be used as handler for mouse-events.
+ * @param {goog.events.BrowserEvent} e The mouse event.
+ * @private
+ */
 xpcdemo.mouseEventHandler_ = function(e) {
   xpcdemo.channel.send('events',
       [e.type, e.clientX, e.clientY, goog.now()].join(','));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for the 'events' service.
-***REMOVED*** @param {string} payload The string returned from the xpcdemo.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handler for the 'events' service.
+ * @param {string} payload The string returned from the xpcdemo.
+ * @private
+ */
 xpcdemo.eventsMsgHandler_ = function(payload) {
   var now = goog.now();
   var args = payload.split(',');
@@ -285,23 +285,23 @@ xpcdemo.eventsMsgHandler_ = function(payload) {
     xpcdemo.mmCount_++;
     var dt = now - xpcdemo.mmLastRateOutput_;
     if (dt > 1000) {
-      msg = 'RATE (mousemove/s): ' + (1000***REMOVED*** xpcdemo.mmCount_ / dt);
+      msg = 'RATE (mousemove/s): ' + (1000 * xpcdemo.mmCount_ / dt);
       xpcdemo.log(msg);
       xpcdemo.mmLastRateOutput_ = now;
       xpcdemo.mmCount_ = 0;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Send multiple messages.
-***REMOVED*** @param {number} n The number of messages to send.
-***REMOVED***
+/**
+ * Send multiple messages.
+ * @param {number} n The number of messages to send.
+ */
 xpcdemo.sendN = function(n) {
   xpcdemo.count_ || (xpcdemo.count_ = 1);
 
   for (var i = 0; i < n; i++) {
     xpcdemo.channel.send('log', '' + xpcdemo.count_++);
   }
-***REMOVED***
+};

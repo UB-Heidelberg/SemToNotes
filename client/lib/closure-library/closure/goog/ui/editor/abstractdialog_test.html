@@ -17,7 +17,7 @@ See the COPYING file for details.
 <title>Closure Unit Tests - goog.ui.editor.AbstractDialog</title>
 <script src="../../base.js"></script>
 <script>
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.dom.classlist');
   goog.require('goog.events.EventHandler');
   goog.require('goog.events.KeyCodes');
@@ -67,9 +67,9 @@ function tearDown() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect an AFTER_HIDE event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect an AFTER_HIDE event.
+ */
 function expectAfterHide() {
   mockAfterHideHandler.handleEvent(
       new goog.testing.mockmatchers.ArgumentMatcher(function(arg) {
@@ -78,9 +78,9 @@ function expectAfterHide() {
       }));
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect an OK event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect an OK event.
+ */
 function expectOk() {
   mockOkHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
       function(arg) {
@@ -88,10 +88,10 @@ function expectOk() {
       }));
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect an OK event and to call
-***REMOVED*** preventDefault when handling it.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect an OK event and to call
+ * preventDefault when handling it.
+ */
 function expectOkPreventDefault() {
   expectOk();
   mockOkHandler.$does(function(e) {
@@ -99,18 +99,18 @@ function expectOkPreventDefault() {
   });
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect an OK event and to return false
-***REMOVED*** when handling it.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect an OK event and to return false
+ * when handling it.
+ */
 function expectOkReturnFalse() {
   expectOk();
   mockOkHandler.$returns(false);
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect a CANCEL event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect a CANCEL event.
+ */
 function expectCancel() {
   mockCancelHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
       function(arg) {
@@ -118,9 +118,9 @@ function expectCancel() {
       }));
 }
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect a custom button event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect a custom button event.
+ */
 function expectCustomButton() {
   mockCustomButtonHandler.handleEvent(
       new goog.testing.mockmatchers.ArgumentMatcher(function(arg) {
@@ -128,22 +128,22 @@ function expectCustomButton() {
       }));
 }
 
-***REMOVED***
-***REMOVED*** Helper to create the dialog being tested in each test. Since NewDialog is
-***REMOVED*** abstract, needs to add a concrete version of any abstract methods. Also
-***REMOVED*** creates up the global builder variable which should be set up after the call
-***REMOVED*** to this method.
-***REMOVED*** @return {goog.ui.editor.AbstractDialog} The dialog.
-***REMOVED***
+/**
+ * Helper to create the dialog being tested in each test. Since NewDialog is
+ * abstract, needs to add a concrete version of any abstract methods. Also
+ * creates up the global builder variable which should be set up after the call
+ * to this method.
+ * @return {goog.ui.editor.AbstractDialog} The dialog.
+ */
 function createTestDialog() {
   var dialog = new goog.ui.editor.AbstractDialog(new goog.dom.DomHelper());
   builder = new goog.ui.editor.AbstractDialog.Builder(dialog);
   dialog.createDialogControl = function() {
     return builder.build();
- ***REMOVED*****REMOVED***
+  };
   dialog.createOkEvent = function(e) {
     return new goog.events.Event(goog.ui.editor.AbstractDialog.EventType.OK);
- ***REMOVED*****REMOVED***
+  };
   dialog.addEventListener(goog.ui.editor.AbstractDialog.EventType.AFTER_HIDE,
                           mockAfterHideHandler);
   dialog.addEventListener(goog.ui.editor.AbstractDialog.EventType.OK,
@@ -155,29 +155,29 @@ function createTestDialog() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given dialog is open.
-***REMOVED*** @param {string} msg Message to be printed in case of failure.
-***REMOVED*** @param {goog.ui.editor.AbstractDialog} dialog Dialog to be tested.
-***REMOVED***
+/**
+ * Asserts that the given dialog is open.
+ * @param {string} msg Message to be printed in case of failure.
+ * @param {goog.ui.editor.AbstractDialog} dialog Dialog to be tested.
+ */
 function assertOpen(msg, dialog) {
   assertTrue(msg + ' [AbstractDialog.isOpen()]', dialog && dialog.isOpen());
 }
 
-***REMOVED***
-***REMOVED*** Asserts that the given dialog is closed.
-***REMOVED*** @param {string} msg Message to be printed in case of failure.
-***REMOVED*** @param {goog.ui.editor.AbstractDialog} dialog Dialog to be tested.
-***REMOVED***
+/**
+ * Asserts that the given dialog is closed.
+ * @param {string} msg Message to be printed in case of failure.
+ * @param {goog.ui.editor.AbstractDialog} dialog Dialog to be tested.
+ */
 function assertNotOpen(msg, dialog) {
   assertFalse(msg + ' [AbstractDialog.isOpen()]', dialog && dialog.isOpen());
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if you create a dialog and hide it without having shown it, no
-***REMOVED*** errors occur.
-***REMOVED***
+/**
+ * Tests that if you create a dialog and hide it without having shown it, no
+ * errors occur.
+ */
 function testCreateAndHide() {
   dialog = createTestDialog();
   mockCtrl.$replayAll();
@@ -189,10 +189,10 @@ function testCreateAndHide() {
   mockCtrl.$verifyAll(); // Verifies AFTER_HIDE was not dispatched.
 }
 
-***REMOVED***
-***REMOVED*** Tests that when you show and hide a dialog the flags indicating open are
-***REMOVED*** correct and the AFTER_HIDE event is dispatched (and no errors happen).
-***REMOVED***
+/**
+ * Tests that when you show and hide a dialog the flags indicating open are
+ * correct and the AFTER_HIDE event is dispatched (and no errors happen).
+ */
 function testShowAndHide() {
   dialog = createTestDialog();
   expectAfterHide(dialog);
@@ -207,11 +207,11 @@ function testShowAndHide() {
   mockCtrl.$verifyAll(); // Verifies AFTER_HIDE was dispatched.
 }
 
-***REMOVED***
-***REMOVED*** Tests that when you show and dispose a dialog (without hiding it first) the
-***REMOVED*** flags indicating open are correct and the AFTER_HIDE event is dispatched (and
-***REMOVED*** no errors happen).
-***REMOVED***
+/**
+ * Tests that when you show and dispose a dialog (without hiding it first) the
+ * flags indicating open are correct and the AFTER_HIDE event is dispatched (and
+ * no errors happen).
+ */
 function testShowAndDispose() {
   dialog = createTestDialog();
   expectAfterHide(dialog);
@@ -226,11 +226,11 @@ function testShowAndDispose() {
   mockCtrl.$verifyAll(); // Verifies AFTER_HIDE was dispatched.
 }
 
-***REMOVED***
-***REMOVED*** Tests that when you dispose a dialog (without ever showing it first) the
-***REMOVED*** flags indicating open are correct and the AFTER_HIDE event is never
-***REMOVED*** dispatched (and no errors happen).
-***REMOVED***
+/**
+ * Tests that when you dispose a dialog (without ever showing it first) the
+ * flags indicating open are correct and the AFTER_HIDE event is never
+ * dispatched (and no errors happen).
+ */
 function testDisposeWithoutShow() {
   dialog = createTestDialog();
   mockCtrl.$replayAll();
@@ -242,10 +242,10 @@ function testDisposeWithoutShow() {
   mockCtrl.$verifyAll(); // Verifies AFTER_HIDE was NOT dispatched.
 }
 
-***REMOVED***
-***REMOVED*** Tests that labels set in the builder can be found in the resulting dialog's
-***REMOVED*** HTML.
-***REMOVED***
+/**
+ * Tests that labels set in the builder can be found in the resulting dialog's
+ * HTML.
+ */
 function testBasicLayout() {
   dialog = createTestDialog();
   mockCtrl.$replayAll();
@@ -284,10 +284,10 @@ function testBasicLayout() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that clicking the OK button dispatches the OK event and closes the
-***REMOVED*** dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that clicking the OK button dispatches the OK event and closes the
+ * dialog (dispatching the AFTER_HIDE event too).
+ */
 function testOk() {
   dialog = createTestDialog();
   expectOk(dialog);
@@ -301,10 +301,10 @@ function testOk() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that hitting the enter key dispatches the OK event and closes the
-***REMOVED*** dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that hitting the enter key dispatches the OK event and closes the
+ * dialog (dispatching the AFTER_HIDE event too).
+ */
 function testEnter() {
   dialog = createTestDialog();
   expectOk(dialog);
@@ -319,10 +319,10 @@ function testEnter() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that clicking the Cancel button dispatches the CANCEL event and closes
-***REMOVED*** the dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that clicking the Cancel button dispatches the CANCEL event and closes
+ * the dialog (dispatching the AFTER_HIDE event too).
+ */
 function testCancel() {
   dialog = createTestDialog();
   expectCancel(dialog);
@@ -338,10 +338,10 @@ function testCancel() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that hitting the escape key dispatches the CANCEL event and closes
-***REMOVED*** the dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that hitting the escape key dispatches the CANCEL event and closes
+ * the dialog (dispatching the AFTER_HIDE event too).
+ */
 function testEscape() {
   dialog = createTestDialog();
   expectCancel(dialog);
@@ -356,10 +356,10 @@ function testEscape() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that clicking the custom button dispatches the custom event and closes
-***REMOVED*** the dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that clicking the custom button dispatches the custom event and closes
+ * the dialog (dispatching the AFTER_HIDE event too).
+ */
 function testCustomButton() {
   dialog = createTestDialog();
   expectCustomButton(dialog);
@@ -382,9 +382,9 @@ function testCustomButton() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if the OK handler calls preventDefault, the dialog doesn't close.
-***REMOVED***
+/**
+ * Tests that if the OK handler calls preventDefault, the dialog doesn't close.
+ */
 function testOkPreventDefault() {
   dialog = createTestDialog();
   expectOkPreventDefault(dialog);
@@ -398,9 +398,9 @@ function testOkPreventDefault() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that if the OK handler returns false, the dialog doesn't close.
-***REMOVED***
+/**
+ * Tests that if the OK handler returns false, the dialog doesn't close.
+ */
 function testOkReturnFalse() {
   dialog = createTestDialog();
   expectOkReturnFalse(dialog);
@@ -414,15 +414,15 @@ function testOkReturnFalse() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that if creating the OK event fails, no event is dispatched and the
-***REMOVED*** dialog doesn't close.
-***REMOVED***
+/**
+ * Tests that if creating the OK event fails, no event is dispatched and the
+ * dialog doesn't close.
+ */
 function testCreateOkEventFail() {
   dialog = createTestDialog();
   dialog.createOkEvent = function() { // Override our mock createOkEvent.
     return null;
- ***REMOVED*****REMOVED***
+  };
   mockCtrl.$replayAll();
 
   dialog.show();
@@ -434,10 +434,10 @@ function testCreateOkEventFail() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that processOkAndClose() dispatches the OK event and closes the
-***REMOVED*** dialog (dispatching the AFTER_HIDE event too).
-***REMOVED***
+/**
+ * Tests that processOkAndClose() dispatches the OK event and closes the
+ * dialog (dispatching the AFTER_HIDE event too).
+ */
 function testProcessOkAndClose() {
   dialog = createTestDialog();
   expectOk(dialog);
@@ -451,11 +451,11 @@ function testProcessOkAndClose() {
   mockCtrl.$verifyAll();
 }
 
-***REMOVED***
-***REMOVED*** Tests that if the OK handler triggered by processOkAndClose calls
-***REMOVED*** preventDefault, the dialog doesn't close (in the old implementation this
-***REMOVED*** failed due to not great design, so this is sort of a regression test).
-***REMOVED***
+/**
+ * Tests that if the OK handler triggered by processOkAndClose calls
+ * preventDefault, the dialog doesn't close (in the old implementation this
+ * failed due to not great design, so this is sort of a regression test).
+ */
 function testProcessOkAndClosePreventDefault() {
   dialog = createTestDialog();
   expectOkPreventDefault(dialog);

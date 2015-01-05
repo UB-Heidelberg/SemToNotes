@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol Buffer 2 Serializer which serializes messages
-***REMOVED***  into a user-friendly text format. Note that this code can run a bit
-***REMOVED***  slowly (especially for parsing) and should therefore not be used for
-***REMOVED***  time or space-critical applications.
-***REMOVED***
-***REMOVED*** @see http://goo.gl/QDmDr
-***REMOVED***
+/**
+ * @fileoverview Protocol Buffer 2 Serializer which serializes messages
+ *  into a user-friendly text format. Note that this code can run a bit
+ *  slowly (especially for parsing) and should therefore not be used for
+ *  time or space-critical applications.
+ *
+ * @see http://goo.gl/QDmDr
+ */
 
 goog.provide('goog.proto2.TextFormatSerializer');
 
@@ -35,46 +35,46 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** TextFormatSerializer, a serializer which turns Messages into the human
-***REMOVED*** readable text format.
-***REMOVED*** @param {boolean=} opt_ignoreMissingFields If true, then fields that cannot be
-***REMOVED***     found on the proto when parsing the text format will be ignored.
-***REMOVED*** @param {boolean=} opt_useEnumValues If true, serialization code for enums
-***REMOVED***     will use enum integer values instead of human-readable symbolic names.
-***REMOVED***
-***REMOVED*** @extends {goog.proto2.Serializer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * TextFormatSerializer, a serializer which turns Messages into the human
+ * readable text format.
+ * @param {boolean=} opt_ignoreMissingFields If true, then fields that cannot be
+ *     found on the proto when parsing the text format will be ignored.
+ * @param {boolean=} opt_useEnumValues If true, serialization code for enums
+ *     will use enum integer values instead of human-readable symbolic names.
+ * @constructor
+ * @extends {goog.proto2.Serializer}
+ * @final
+ */
 goog.proto2.TextFormatSerializer = function(
     opt_ignoreMissingFields, opt_useEnumValues) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to ignore fields not defined on the proto when parsing the text
-  ***REMOVED*** format.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to ignore fields not defined on the proto when parsing the text
+   * format.
+   * @type {boolean}
+   * @private
+   */
   this.ignoreMissingFields_ = !!opt_ignoreMissingFields;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to use integer enum values during enum serialization.
-  ***REMOVED*** If false, symbolic names will be used.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to use integer enum values during enum serialization.
+   * If false, symbolic names will be used.
+   * @type {boolean}
+   * @private
+   */
   this.useEnumValues_ = !!opt_useEnumValues;
-***REMOVED***
+};
 goog.inherits(goog.proto2.TextFormatSerializer, goog.proto2.Serializer);
 
 
-***REMOVED***
-***REMOVED*** Deserializes a message from text format and places the data in the message.
-***REMOVED*** @param {goog.proto2.Message} message The message in which to
-***REMOVED***     place the information.
-***REMOVED*** @param {*} data The text format data.
-***REMOVED*** @return {?string} The parse error or null on success.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Deserializes a message from text format and places the data in the message.
+ * @param {goog.proto2.Message} message The message in which to
+ *     place the information.
+ * @param {*} data The text format data.
+ * @return {?string} The parse error or null on success.
+ * @override
+ */
 goog.proto2.TextFormatSerializer.prototype.deserializeTo =
     function(message, data) {
   var descriptor = message.getDescriptor();
@@ -85,29 +85,29 @@ goog.proto2.TextFormatSerializer.prototype.deserializeTo =
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes a message to a string.
-***REMOVED*** @param {goog.proto2.Message} message The message to be serialized.
-***REMOVED*** @return {string} The serialized form of the message.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Serializes a message to a string.
+ * @param {goog.proto2.Message} message The message to be serialized.
+ * @return {string} The serialized form of the message.
+ * @override
+ */
 goog.proto2.TextFormatSerializer.prototype.serialize = function(message) {
   var printer = new goog.proto2.TextFormatSerializer.Printer_();
   this.serializeMessage_(message, printer);
   return printer.toString();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes the message and prints the text form into the given printer.
-***REMOVED*** @param {goog.proto2.Message} message The message to serialize.
-***REMOVED*** @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
-***REMOVED***    which the text format will be printed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Serializes the message and prints the text form into the given printer.
+ * @param {goog.proto2.Message} message The message to serialize.
+ * @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
+ *    which the text format will be printed.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.prototype.serializeMessage_ =
     function(message, printer) {
   var descriptor = message.getDescriptor();
@@ -122,21 +122,21 @@ goog.proto2.TextFormatSerializer.prototype.serializeMessage_ =
   message.forEachUnknown(function(tag, value) {
     this.serializeUnknown_(tag, value, printer);
   }, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes an unknown field. When parsed from the JsPb object format, this
-***REMOVED*** manifests as either a primitive type, an array, or a raw object with integer
-***REMOVED*** keys. There is no descriptor available to interpret the types of nested
-***REMOVED*** messages.
-***REMOVED*** @param {number} tag The tag for the field. Since it's unknown, this is a
-***REMOVED***     number rather than a string.
-***REMOVED*** @param {*} value The value of the field.
-***REMOVED*** @param {!goog.proto2.TextFormatSerializer.Printer_} printer The printer to
-***REMOVED***     which the text format will be serialized.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Serializes an unknown field. When parsed from the JsPb object format, this
+ * manifests as either a primitive type, an array, or a raw object with integer
+ * keys. There is no descriptor available to interpret the types of nested
+ * messages.
+ * @param {number} tag The tag for the field. Since it's unknown, this is a
+ *     number rather than a string.
+ * @param {*} value The value of the field.
+ * @param {!goog.proto2.TextFormatSerializer.Printer_} printer The printer to
+ *     which the text format will be serialized.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.prototype.serializeUnknown_ =
     function(tag, value, printer) {
   if (!goog.isDefAndNotNull(value)) {
@@ -183,18 +183,18 @@ goog.proto2.TextFormatSerializer.prototype.serializeUnknown_ =
   printer.append(': ');
   printer.append(value.toString());
   printer.appendLine();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prints the serialized value for the given field to the printer.
-***REMOVED*** @param {*} value The field's value.
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field whose value is being
-***REMOVED***    printed.
-***REMOVED*** @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
-***REMOVED***    which the value will be printed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Prints the serialized value for the given field to the printer.
+ * @param {*} value The field's value.
+ * @param {goog.proto2.FieldDescriptor} field The field whose value is being
+ *    printed.
+ * @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
+ *    which the value will be printed.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.prototype.printFieldValue_ =
     function(value, field, printer) {
   switch (field.getFieldType()) {
@@ -241,20 +241,20 @@ goog.proto2.TextFormatSerializer.prototype.printFieldValue_ =
     case goog.proto2.FieldDescriptor.FieldType.GROUP:
     case goog.proto2.FieldDescriptor.FieldType.MESSAGE:
       this.serializeMessage_(
-         ***REMOVED*****REMOVED*** @type {goog.proto2.Message}***REMOVED*** (value), printer);
+          /** @type {goog.proto2.Message} */ (value), printer);
       break;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prints the serialized field to the printer.
-***REMOVED*** @param {goog.proto2.Message} message The parent message.
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field to print.
-***REMOVED*** @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
-***REMOVED***    which the field will be printed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Prints the serialized field to the printer.
+ * @param {goog.proto2.Message} message The parent message.
+ * @param {goog.proto2.FieldDescriptor} field The field to print.
+ * @param {goog.proto2.TextFormatSerializer.Printer_} printer The printer to
+ *    which the field will be printed.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.prototype.printField_ =
     function(message, field, printer) {
   // Skip fields not present.
@@ -290,72 +290,72 @@ goog.proto2.TextFormatSerializer.prototype.printField_ =
       printer.appendLine();
     }
   }
-***REMOVED***
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
 
-***REMOVED***
-***REMOVED*** Helper class used by the text format serializer for pretty-printing text.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper class used by the text format serializer for pretty-printing text.
+ * @constructor
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Printer_ = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current indentation count.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current indentation count.
+   * @type {number}
+   * @private
+   */
   this.indentation_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The buffer of string pieces.
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The buffer of string pieces.
+   * @type {Array.<string>}
+   * @private
+   */
   this.buffer_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether indentation is required before the next append of characters.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether indentation is required before the next append of characters.
+   * @type {boolean}
+   * @private
+   */
   this.requiresIndentation_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The contents of the printer.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} The contents of the printer.
+ * @override
+ */
 goog.proto2.TextFormatSerializer.Printer_.prototype.toString = function() {
   return this.buffer_.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Increases the indentation in the printer.
-***REMOVED***
+/**
+ * Increases the indentation in the printer.
+ */
 goog.proto2.TextFormatSerializer.Printer_.prototype.indent = function() {
   this.indentation_ += 2;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decreases the indentation in the printer.
-***REMOVED***
+/**
+ * Decreases the indentation in the printer.
+ */
 goog.proto2.TextFormatSerializer.Printer_.prototype.dedent = function() {
   this.indentation_ -= 2;
   goog.asserts.assert(this.indentation_ >= 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends the given value to the printer.
-***REMOVED*** @param {*} value The value to append.
-***REMOVED***
+/**
+ * Appends the given value to the printer.
+ * @param {*} value The value to append.
+ */
 goog.proto2.TextFormatSerializer.Printer_.prototype.append = function(value) {
   if (this.requiresIndentation_) {
     for (var i = 0; i < this.indentation_; ++i) {
@@ -365,93 +365,93 @@ goog.proto2.TextFormatSerializer.Printer_.prototype.append = function(value) {
   }
 
   this.buffer_.push(value.toString());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends a newline to the printer.
-***REMOVED***
+/**
+ * Appends a newline to the printer.
+ */
 goog.proto2.TextFormatSerializer.Printer_.prototype.appendLine = function() {
   this.buffer_.push('\n');
   this.requiresIndentation_ = true;
-***REMOVED***
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
 
-***REMOVED***
-***REMOVED*** Helper class for tokenizing the text format.
-***REMOVED*** @param {string} data The string data to tokenize.
-***REMOVED*** @param {boolean=} opt_ignoreWhitespace If true, whitespace tokens will not
-***REMOVED***    be reported by the tokenizer.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper class for tokenizing the text format.
+ * @param {string} data The string data to tokenize.
+ * @param {boolean=} opt_ignoreWhitespace If true, whitespace tokens will not
+ *    be reported by the tokenizer.
+ * @constructor
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_ =
     function(data, opt_ignoreWhitespace) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to skip whitespace tokens on output.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to skip whitespace tokens on output.
+   * @type {boolean}
+   * @private
+   */
   this.ignoreWhitespace_ = !!opt_ignoreWhitespace;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The data being tokenized.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The data being tokenized.
+   * @type {string}
+   * @private
+   */
   this.data_ = data;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current index in the data.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current index in the data.
+   * @type {number}
+   * @private
+   */
   this.index_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The data string starting at the current index.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The data string starting at the current index.
+   * @type {string}
+   * @private
+   */
   this.currentData_ = data;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current token type.
-  ***REMOVED*** @type {goog.proto2.TextFormatSerializer.Tokenizer_.Token}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current token type.
+   * @type {goog.proto2.TextFormatSerializer.Tokenizer_.Token}
+   * @private
+   */
   this.current_ = {
     type: goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes.END,
     value: null
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** @typedef {{type: goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes,
-***REMOVED***            value: ?string}}
-***REMOVED***
+/**
+ * @typedef {{type: goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes,
+ *            value: ?string}}
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_.Token;
 
 
-***REMOVED***
-***REMOVED*** @return {goog.proto2.TextFormatSerializer.Tokenizer_.Token} The current
-***REMOVED***     token.
-***REMOVED***
+/**
+ * @return {goog.proto2.TextFormatSerializer.Tokenizer_.Token} The current
+ *     token.
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_.prototype.getCurrent = function() {
   return this.current_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An enumeration of all the token types.
-***REMOVED*** @enum {!RegExp}
-***REMOVED***
+/**
+ * An enumeration of all the token types.
+ * @enum {!RegExp}
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes = {
   END: /---end---/,
   // Leading "-" to identify "-infinity"."
@@ -469,14 +469,14 @@ goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes = {
   COMMA: /^,/,
   SEMI: /^;/,
   WHITESPACE: /^\s/
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Advances to the next token.
-***REMOVED*** @return {boolean} True if a valid token was found, false if the end was
-***REMOVED***    reached or no valid token was found.
-***REMOVED***
+/**
+ * Advances to the next token.
+ * @return {boolean} True if a valid token was found, false if the end was
+ *    reached or no valid token was found.
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_.prototype.next = function() {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
 
@@ -491,17 +491,17 @@ goog.proto2.TextFormatSerializer.Tokenizer_.prototype.next = function() {
   this.current_ = {
     type: goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes.END,
     value: null
- ***REMOVED*****REMOVED***
+  };
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal method for determining the next token.
-***REMOVED*** @return {boolean} True if a next token was found, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal method for determining the next token.
+ * @return {boolean} True if a next token was found, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Tokenizer_.prototype.nextInternal_ =
     function() {
   if (this.index_ >= this.data_.length) {
@@ -525,64 +525,64 @@ goog.proto2.TextFormatSerializer.Tokenizer_.prototype.nextInternal_ =
       next = {
         type: type,
         value: info[0]
-     ***REMOVED*****REMOVED***
+      };
     }
   });
 
   // Advance the index by the length of the token.
   if (next) {
     this.current_ =
-       ***REMOVED*****REMOVED*** @type {goog.proto2.TextFormatSerializer.Tokenizer_.Token}***REMOVED*** (next);
+        /** @type {goog.proto2.TextFormatSerializer.Tokenizer_.Token} */ (next);
     this.index_ += next.value.length;
     this.currentData_ = this.currentData_.substring(next.value.length);
   }
 
   return !!next;
-***REMOVED***
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
 
 
 
-***REMOVED***
-***REMOVED*** Helper class for parsing the text format.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Helper class for parsing the text format.
+ * @constructor
+ * @final
+ */
 goog.proto2.TextFormatSerializer.Parser = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The error during parsing, if any.
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The error during parsing, if any.
+   * @type {?string}
+   * @private
+   */
   this.error_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current tokenizer.
-  ***REMOVED*** @type {goog.proto2.TextFormatSerializer.Tokenizer_}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current tokenizer.
+   * @type {goog.proto2.TextFormatSerializer.Tokenizer_}
+   * @private
+   */
   this.tokenizer_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to ignore missing fields in the proto when parsing.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to ignore missing fields in the proto when parsing.
+   * @type {boolean}
+   * @private
+   */
   this.ignoreMissingFields_ = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the given data, filling the message as it goes.
-***REMOVED*** @param {goog.proto2.Message} message The message to fill.
-***REMOVED*** @param {string} data The text format data.
-***REMOVED*** @param {boolean=} opt_ignoreMissingFields If true, fields missing in the
-***REMOVED***     proto will be ignored.
-***REMOVED*** @return {boolean} True on success, false on failure. On failure, the
-***REMOVED***     getError method can be called to get the reason for failure.
-***REMOVED***
+/**
+ * Parses the given data, filling the message as it goes.
+ * @param {goog.proto2.Message} message The message to fill.
+ * @param {string} data The text format data.
+ * @param {boolean=} opt_ignoreMissingFields If true, fields missing in the
+ *     proto will be ignored.
+ * @return {boolean} True on success, false on failure. On failure, the
+ *     getError method can be called to get the reason for failure.
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.parse =
     function(message, data, opt_ignoreMissingFields) {
   this.error_ = null;
@@ -590,37 +590,37 @@ goog.proto2.TextFormatSerializer.Parser.prototype.parse =
   this.tokenizer_ = new goog.proto2.TextFormatSerializer.Tokenizer_(data, true);
   this.tokenizer_.next();
   return this.consumeMessage_(message, '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The parse error, if any.
-***REMOVED***
+/**
+ * @return {?string} The parse error, if any.
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.getError = function() {
   return this.error_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reports a parse error.
-***REMOVED*** @param {string} msg The error message.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reports a parse error.
+ * @param {string} msg The error message.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.reportError_ =
     function(msg) {
   this.error_ = msg;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume the given message.
-***REMOVED*** @param {goog.proto2.Message} message The message to consume and fill. If
-***REMOVED***    null, then the message contents will be consumed without ever being set
-***REMOVED***    to anything.
-***REMOVED*** @param {string} delimiter The delimiter expected at the end of the message.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume the given message.
+ * @param {goog.proto2.Message} message The message to consume and fill. If
+ *    null, then the message contents will be consumed without ever being set
+ *    to anything.
+ * @param {string} delimiter The delimiter expected at the end of the message.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeMessage_ =
     function(message, delimiter) {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
@@ -638,16 +638,16 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeMessage_ =
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume the value of the given field.
-***REMOVED*** @param {goog.proto2.Message} message The parent message.
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume the value of the given field.
+ * @param {goog.proto2.Message} message The parent message.
+ * @param {goog.proto2.FieldDescriptor} field The field.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeFieldValue_ =
     function(message, field) {
   var value = this.getFieldValue_(field);
@@ -660,15 +660,15 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeFieldValue_ =
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to convert a string to a number.
-***REMOVED*** @param {string} num in hexadecimal or float format.
-***REMOVED*** @return {!number} The converted number or null on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to convert a string to a number.
+ * @param {string} num in hexadecimal or float format.
+ * @return {!number} The converted number or null on error.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.getNumberFromString_ =
     function(num) {
 
@@ -680,20 +680,20 @@ goog.proto2.TextFormatSerializer.Parser.getNumberFromString_ =
   goog.asserts.assert(isFinite(returnValue));
 
   return returnValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse NaN, positive infinity, or negative infinity from a string.
-***REMOVED*** @param {string} identifier An identifier string to check.
-***REMOVED*** @return {?number} Infinity, negative infinity, NaN, or null if none
-***REMOVED***     of the constants could be parsed.
-***REMOVED*** @private.
-***REMOVED***
+/**
+ * Parse NaN, positive infinity, or negative infinity from a string.
+ * @param {string} identifier An identifier string to check.
+ * @return {?number} Infinity, negative infinity, NaN, or null if none
+ *     of the constants could be parsed.
+ * @private.
+ */
 goog.proto2.TextFormatSerializer.Parser.parseNumericalConstant_ =
     function(identifier) {
   if (/^-?inf(?:inity)?f?$/i.test(identifier)) {
-    return Infinity***REMOVED*** (goog.string.startsWith(identifier, '-') ? -1 : 1);
+    return Infinity * (goog.string.startsWith(identifier, '-') ? -1 : 1);
   }
 
   if (/^nanf?$/i.test(identifier)) {
@@ -701,15 +701,15 @@ goog.proto2.TextFormatSerializer.Parser.parseNumericalConstant_ =
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the given field's value from the stream.
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field.
-***REMOVED*** @return {*} The field's value or null if none.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to parse the given field's value from the stream.
+ * @param {goog.proto2.FieldDescriptor} field The field.
+ * @return {*} The field's value or null if none.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.getFieldValue_ =
     function(field) {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
@@ -801,16 +801,16 @@ goog.proto2.TextFormatSerializer.Parser.prototype.getFieldValue_ =
     case goog.proto2.FieldDescriptor.FieldType.STRING:
       return this.consumeString_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume a nested message.
-***REMOVED*** @param {goog.proto2.Message} message The parent message.
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume a nested message.
+ * @param {goog.proto2.Message} message The parent message.
+ * @param {goog.proto2.FieldDescriptor} field The field.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeNestedMessage_ =
     function(message, field) {
   var delimiter = '';
@@ -835,15 +835,15 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeNestedMessage_ =
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume the value of an unknown field. This method uses
-***REMOVED*** heuristics to try to consume just the right tokens.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume the value of an unknown field. This method uses
+ * heuristics to try to consume just the right tokens.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeUnknownFieldValue_ =
     function() {
   // : is optional.
@@ -864,25 +864,25 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeUnknownFieldValue_ =
 
   // Handle nested messages/groups.
   if (this.tryConsume_('<')) {
-    return this.consumeMessage_(null /* unknown***REMOVED***, '>');
+    return this.consumeMessage_(null /* unknown */, '>');
   } else if (this.tryConsume_('{')) {
-    return this.consumeMessage_(null /* unknown***REMOVED***, '}');
+    return this.consumeMessage_(null /* unknown */, '}');
   } else {
     // Otherwise, consume a single token for the field value.
     this.tokenizer_.next();
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume a field under a message.
-***REMOVED*** @param {goog.proto2.Message} message The parent message. If null, then the
-***REMOVED***     field value will be consumed without being assigned to anything.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume a field under a message.
+ * @param {goog.proto2.Message} message The parent message. If null, then the
+ *     field value will be consumed without being assigned to anything.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeField_ =
     function(message) {
   var fieldName = this.consumeIdentifier_();
@@ -934,16 +934,16 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeField_ =
   // semicolons.
   this.tryConsume_(',') || this.tryConsume_(';');
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to consume a token with the given string value.
-***REMOVED*** @param {string} value The string value for the token.
-***REMOVED*** @return {boolean} True if the token matches and was consumed, false
-***REMOVED***    otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to consume a token with the given string value.
+ * @param {string} value The string value for the token.
+ * @return {boolean} True if the token matches and was consumed, false
+ *    otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.tryConsume_ =
     function(value) {
   if (this.lookingAt_(value)) {
@@ -951,16 +951,16 @@ goog.proto2.TextFormatSerializer.Parser.prototype.tryConsume_ =
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Consumes a token of the given type.
-***REMOVED*** @param {goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes} type The type
-***REMOVED***     of the token to consume.
-***REMOVED*** @return {?string} The string value of the token or null on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Consumes a token of the given type.
+ * @param {goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes} type The type
+ *     of the token to consume.
+ * @return {?string} The string value of the token or null on error.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeToken_ =
     function(type) {
   if (!this.lookingAtType_(type)) {
@@ -971,38 +971,38 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeToken_ =
   var value = this.tokenizer_.getCurrent().value;
   this.tokenizer_.next();
   return value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Consumes an IDENTIFIER token.
-***REMOVED*** @return {?string} The string value or null on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Consumes an IDENTIFIER token.
+ * @return {?string} The string value or null on error.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeIdentifier_ =
     function() {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
   return this.consumeToken_(types.IDENTIFIER);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Consumes a NUMBER token.
-***REMOVED*** @return {?string} The string value or null on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Consumes a NUMBER token.
+ * @return {?string} The string value or null on error.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeNumber_ =
     function() {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
   return this.consumeToken_(types.NUMBER);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Consumes a STRING token.
-***REMOVED*** @return {?string} The***REMOVED***deescaped* string value or null on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Consumes a STRING token.
+ * @return {?string} The *deescaped* string value or null on error.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consumeString_ =
     function() {
   var types = goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes;
@@ -1012,15 +1012,15 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consumeString_ =
   }
 
   return goog.json.parse(value).toString();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Consumes a token with the given value. If not found, reports an error.
-***REMOVED*** @param {string} value The string value expected for the token.
-***REMOVED*** @return {boolean} True on success, false otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Consumes a token with the given value. If not found, reports an error.
+ * @param {string} value The string value expected for the token.
+ * @return {boolean} True on success, false otherwise.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.consume_ = function(value) {
   if (!this.tryConsume_(value)) {
     this.reportError_('Expected token "' + value + '"');
@@ -1028,27 +1028,27 @@ goog.proto2.TextFormatSerializer.Parser.prototype.consume_ = function(value) {
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} value The value to check against.
-***REMOVED*** @return {boolean} True if the current token has the given string value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {string} value The value to check against.
+ * @return {boolean} True if the current token has the given string value.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.lookingAt_ =
     function(value) {
   return this.tokenizer_.getCurrent().value == value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes} type The
-***REMOVED***     token type.
-***REMOVED*** @return {boolean} True if the current token has the given type.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {goog.proto2.TextFormatSerializer.Tokenizer_.TokenTypes} type The
+ *     token type.
+ * @return {boolean} True if the current token has the given type.
+ * @private
+ */
 goog.proto2.TextFormatSerializer.Parser.prototype.lookingAtType_ =
     function(type) {
   return this.tokenizer_.getCurrent().type == type;
-***REMOVED***
+};

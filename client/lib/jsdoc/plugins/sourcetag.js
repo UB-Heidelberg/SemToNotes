@@ -1,13 +1,13 @@
-***REMOVED***
+/**
     @module plugins/sourcetag
     @author Michael Mathews <micmath@gmail.com>
-***REMOVED***
+ */
 'use strict';
 
 var logger = require('jsdoc/util/logger');
 
 exports.handlers = {
-   ***REMOVED*****REMOVED***
+    /**
         Support @source tag. Expected value like:
             { "filename": "myfile.js", "lineno": 123 }
         Modifies the corresponding meta values on the given doclet.
@@ -17,7 +17,7 @@ exports.handlers = {
         update your template settings to disable pretty-printed source files.
 
         @source { "filename": "sourcetag.js", "lineno": 13 }
-   ***REMOVED*****REMOVED***
+     */
     newDoclet: function(e) {
         var tags = e.doclet.tags,
             tag,
@@ -43,10 +43,10 @@ exports.handlers = {
                     return;
                 }
 
-                e.doclet.meta = e.doclet.meta || {***REMOVED***
+                e.doclet.meta = e.doclet.meta || {};
                 e.doclet.meta.filename = value.filename || '';
                 e.doclet.meta.lineno = value.lineno || '';
             }
         }
     }
-***REMOVED***
+};

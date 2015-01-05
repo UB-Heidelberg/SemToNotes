@@ -13,67 +13,67 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Graphics utility functions for advanced coordinates.
-***REMOVED***
-***REMOVED*** This file assists the use of advanced coordinates in goog.graphics.  Coords
-***REMOVED*** can be specified as simple numbers which will correspond to units in the
-***REMOVED*** graphics element's coordinate space.  Alternately, coords can be expressed
-***REMOVED*** in pixels, meaning no matter what tranformations or coordinate system changes
-***REMOVED*** are present, the number of pixel changes will remain constant.  Coords can
-***REMOVED*** also be expressed as percentages of their parent's size.
-***REMOVED***
-***REMOVED*** This file also allows for elements to have margins, expressable in any of
-***REMOVED*** the ways described above.
-***REMOVED***
-***REMOVED*** Additional pieces of advanced coordinate functionality can (soon) be found in
-***REMOVED*** element.js and groupelement.js.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Graphics utility functions for advanced coordinates.
+ *
+ * This file assists the use of advanced coordinates in goog.graphics.  Coords
+ * can be specified as simple numbers which will correspond to units in the
+ * graphics element's coordinate space.  Alternately, coords can be expressed
+ * in pixels, meaning no matter what tranformations or coordinate system changes
+ * are present, the number of pixel changes will remain constant.  Coords can
+ * also be expressed as percentages of their parent's size.
+ *
+ * This file also allows for elements to have margins, expressable in any of
+ * the ways described above.
+ *
+ * Additional pieces of advanced coordinate functionality can (soon) be found in
+ * element.js and groupelement.js.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.graphics.ext.coordinates');
 
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Cache of boolean values.  For a given string (key), is it special? (value)
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.graphics.ext.coordinates.specialCoordinateCache_ = {***REMOVED***
+/**
+ * Cache of boolean values.  For a given string (key), is it special? (value)
+ * @type {Object}
+ * @private
+ */
+goog.graphics.ext.coordinates.specialCoordinateCache_ = {};
 
 
-***REMOVED***
-***REMOVED*** Determines if the given coordinate is a percent based coordinate or an
-***REMOVED*** expression with a percent based component.
-***REMOVED*** @param {string} coord The coordinate to test.
-***REMOVED*** @return {boolean} Whether the coordinate contains the string '%'.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the given coordinate is a percent based coordinate or an
+ * expression with a percent based component.
+ * @param {string} coord The coordinate to test.
+ * @return {boolean} Whether the coordinate contains the string '%'.
+ * @private
+ */
 goog.graphics.ext.coordinates.isPercent_ = function(coord) {
   return goog.string.contains(coord, '%');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the given coordinate is a pixel based coordinate or an
-***REMOVED*** expression with a pixel based component.
-***REMOVED*** @param {string} coord The coordinate to test.
-***REMOVED*** @return {boolean} Whether the coordinate contains the string 'px'.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the given coordinate is a pixel based coordinate or an
+ * expression with a pixel based component.
+ * @param {string} coord The coordinate to test.
+ * @return {boolean} Whether the coordinate contains the string 'px'.
+ * @private
+ */
 goog.graphics.ext.coordinates.isPixels_ = function(coord) {
   return goog.string.contains(coord, 'px');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the given coordinate is special - i.e. not just a number.
-***REMOVED*** @param {string|number|null} coord The coordinate to test.
-***REMOVED*** @return {boolean} Whether the coordinate is special.
-***REMOVED***
+/**
+ * Determines if the given coordinate is special - i.e. not just a number.
+ * @param {string|number|null} coord The coordinate to test.
+ * @return {boolean} Whether the coordinate is special.
+ */
 goog.graphics.ext.coordinates.isSpecial = function(coord) {
   var cache = goog.graphics.ext.coordinates.specialCoordinateCache_;
 
@@ -84,52 +84,52 @@ goog.graphics.ext.coordinates.isSpecial = function(coord) {
   }
 
   return cache[coord];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the value of the given expression in the given context.
-***REMOVED***
-***REMOVED*** Should be treated as package scope.
-***REMOVED***
-***REMOVED*** @param {string|number} coord The coordinate to convert.
-***REMOVED*** @param {number} size The size of the parent element.
-***REMOVED*** @param {number} scale The ratio of pixels to units.
-***REMOVED*** @return {number} The number of coordinate space units that corresponds to
-***REMOVED***     this coordinate.
-***REMOVED***
+/**
+ * Returns the value of the given expression in the given context.
+ *
+ * Should be treated as package scope.
+ *
+ * @param {string|number} coord The coordinate to convert.
+ * @param {number} size The size of the parent element.
+ * @param {number} scale The ratio of pixels to units.
+ * @return {number} The number of coordinate space units that corresponds to
+ *     this coordinate.
+ */
 goog.graphics.ext.coordinates.computeValue = function(coord, size, scale) {
   var number = parseFloat(String(coord));
   if (goog.isString(coord)) {
     if (goog.graphics.ext.coordinates.isPercent_(coord)) {
-      return number***REMOVED*** size / 100;
+      return number * size / 100;
     } else if (goog.graphics.ext.coordinates.isPixels_(coord)) {
       return number / scale;
     }
   }
 
   return number;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts the given coordinate to a number value in units.
-***REMOVED***
-***REMOVED*** Should be treated as package scope.
-***REMOVED***
-***REMOVED*** @param {string|number} coord The coordinate to retrieve the value for.
-***REMOVED*** @param {boolean|undefined} forMaximum Whether we are computing the largest
-***REMOVED***     value this coordinate would be in a parent of no size.  The container
-***REMOVED***     size in this case should be set to the size of the current element.
-***REMOVED*** @param {number} containerSize The unit value of the size of the container of
-***REMOVED***     this element.  Should be set to the minimum width of this element if
-***REMOVED***     forMaximum is true.
-***REMOVED*** @param {number} scale The ratio of pixels to units.
-***REMOVED*** @param {Object=} opt_cache Optional (but highly recommend) object to store
-***REMOVED***     cached computations in.  The calling class should manage clearing out
-***REMOVED***     the cache when the scale or containerSize changes.
-***REMOVED*** @return {number} The correct number of coordinate space units.
-***REMOVED***
+/**
+ * Converts the given coordinate to a number value in units.
+ *
+ * Should be treated as package scope.
+ *
+ * @param {string|number} coord The coordinate to retrieve the value for.
+ * @param {boolean|undefined} forMaximum Whether we are computing the largest
+ *     value this coordinate would be in a parent of no size.  The container
+ *     size in this case should be set to the size of the current element.
+ * @param {number} containerSize The unit value of the size of the container of
+ *     this element.  Should be set to the minimum width of this element if
+ *     forMaximum is true.
+ * @param {number} scale The ratio of pixels to units.
+ * @param {Object=} opt_cache Optional (but highly recommend) object to store
+ *     cached computations in.  The calling class should manage clearing out
+ *     the cache when the scale or containerSize changes.
+ * @return {number} The correct number of coordinate space units.
+ */
 goog.graphics.ext.coordinates.getValue = function(coord, forMaximum,
     containerSize, scale, opt_cache) {
   if (!goog.isNumber(coord)) {
@@ -139,13 +139,13 @@ goog.graphics.ext.coordinates.getValue = function(coord, forMaximum,
       coord = opt_cache[cacheString];
     } else {
       if (goog.graphics.ext.coordinates.isSpecial(
-         ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (coord))) {
+          /** @type {string} */ (coord))) {
         coord = goog.graphics.ext.coordinates.computeValue(coord,
             containerSize, scale);
       } else {
         // Simple coordinates just need to be converted from a string to a
         // number.
-        coord = parseFloat(***REMOVED*** @type {string}***REMOVED*** (coord));
+        coord = parseFloat(/** @type {string} */ (coord));
       }
 
       // Cache the result.
@@ -156,4 +156,4 @@ goog.graphics.ext.coordinates.getValue = function(coord, forMaximum,
   }
 
   return coord;
-***REMOVED***
+};

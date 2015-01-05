@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview XRX utility functions.
-***REMOVED***
+/**
+ * @fileoverview XRX utility functions.
+ */
 
 goog.provide('xrx.Util');
 
@@ -10,7 +10,7 @@ goog.require('goog.math');
 
 
 
-xrx.Util = function() {***REMOVED***
+xrx.Util = function() {};
 
 
 
@@ -22,4 +22,4 @@ xrx.Util.createUUID = function() {
     return (c==='x' ? r : (r&0x7|0x8)).toString(16);
  });
  return uuid;
-***REMOVED***
+};

@@ -19,13 +19,13 @@ class Socket {
 // ClassExpression
 var WebSocket = class extends Socket {
     // ...
-***REMOVED***
+};
 
 // ExportBatchSpecifier, ExportDeclaration
-export***REMOVED*** from 'lib/network';
+export * from 'lib/network';
 
 // ExportSpecifier
-export {Socket***REMOVED***
+export {Socket};
 
 // ImportDeclaration, ImportSpecifier
 import {Packet} from 'lib/data';

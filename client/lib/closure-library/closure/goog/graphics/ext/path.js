@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A thick wrapper around paths.
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview A thick wrapper around paths.
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.graphics.ext.Path');
@@ -28,48 +28,48 @@ goog.require('goog.math.Rect');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a path object
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.Path}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a path object
+ * @constructor
+ * @extends {goog.graphics.Path}
+ * @final
+ */
 goog.graphics.ext.Path = function() {
   goog.graphics.Path.call(this);
-***REMOVED***
+};
 goog.inherits(goog.graphics.ext.Path, goog.graphics.Path);
 
 
-***REMOVED***
-***REMOVED*** Optional cached or user specified bounding box.  A user may wish to
-***REMOVED*** precompute a bounding box to save time and include more accurate
-***REMOVED*** computations.
-***REMOVED*** @type {goog.math.Rect?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Optional cached or user specified bounding box.  A user may wish to
+ * precompute a bounding box to save time and include more accurate
+ * computations.
+ * @type {goog.math.Rect?}
+ * @private
+ */
 goog.graphics.ext.Path.prototype.bounds_ = null;
 
 
-***REMOVED***
-***REMOVED*** Clones the path.
-***REMOVED*** @return {!goog.graphics.ext.Path} A clone of this path.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Clones the path.
+ * @return {!goog.graphics.ext.Path} A clone of this path.
+ * @override
+ */
 goog.graphics.ext.Path.prototype.clone = function() {
-  var output =***REMOVED*****REMOVED*** @type {goog.graphics.ext.Path}***REMOVED***
+  var output = /** @type {goog.graphics.ext.Path} */
       (goog.graphics.ext.Path.superClass_.clone.call(this));
   output.bounds_ = this.bounds_ && this.bounds_.clone();
   return output;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Transforms the path. Only simple paths are transformable. Attempting
-***REMOVED*** to transform a non-simple path will throw an error.
-***REMOVED*** @param {!goog.graphics.AffineTransform} tx The transformation to perform.
-***REMOVED*** @return {!goog.graphics.ext.Path} The path itself.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Transforms the path. Only simple paths are transformable. Attempting
+ * to transform a non-simple path will throw an error.
+ * @param {!goog.graphics.AffineTransform} tx The transformation to perform.
+ * @return {!goog.graphics.ext.Path} The path itself.
+ * @override
+ */
 goog.graphics.ext.Path.prototype.transform = function(tx) {
   goog.graphics.ext.Path.superClass_.transform.call(this, tx);
 
@@ -77,20 +77,20 @@ goog.graphics.ext.Path.prototype.transform = function(tx) {
   this.bounds_ = null;
 
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Modify the bounding box of the path.  This may cause the path to be
-***REMOVED*** simplified (i.e. arcs converted to curves) as a side-effect.
-***REMOVED*** @param {number} deltaX How far to translate the x coordinates.
-***REMOVED*** @param {number} deltaY How far to translate the y coordinates.
-***REMOVED*** @param {number} xFactor After translation, all x coordinates are multiplied
-***REMOVED***     by this number.
-***REMOVED*** @param {number} yFactor After translation, all y coordinates are multiplied
-***REMOVED***     by this number.
-***REMOVED*** @return {!goog.graphics.ext.Path} The path itself.
-***REMOVED***
+/**
+ * Modify the bounding box of the path.  This may cause the path to be
+ * simplified (i.e. arcs converted to curves) as a side-effect.
+ * @param {number} deltaX How far to translate the x coordinates.
+ * @param {number} deltaY How far to translate the y coordinates.
+ * @param {number} xFactor After translation, all x coordinates are multiplied
+ *     by this number.
+ * @param {number} yFactor After translation, all y coordinates are multiplied
+ *     by this number.
+ * @return {!goog.graphics.ext.Path} The path itself.
+ */
 goog.graphics.ext.Path.prototype.modifyBounds = function(deltaX, deltaY,
     xFactor, yFactor) {
   if (!this.isSimple()) {
@@ -101,23 +101,23 @@ goog.graphics.ext.Path.prototype.modifyBounds = function(deltaX, deltaY,
 
   return this.transform(goog.graphics.AffineTransform.getScaleInstance(
       xFactor, yFactor).translate(deltaX, deltaY));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the precomputed bounds.
-***REMOVED*** @param {goog.math.Rect?} bounds The bounds to use, or set to null to clear
-***REMOVED***     and recompute on the next call to getBoundingBox.
-***REMOVED***
+/**
+ * Set the precomputed bounds.
+ * @param {goog.math.Rect?} bounds The bounds to use, or set to null to clear
+ *     and recompute on the next call to getBoundingBox.
+ */
 goog.graphics.ext.Path.prototype.useBoundingBox = function(bounds) {
   this.bounds_ = bounds && bounds.clone();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.math.Rect?} The bounding box of the path, or null if the
-***REMOVED***     path is empty.
-***REMOVED***
+/**
+ * @return {goog.math.Rect?} The bounding box of the path, or null if the
+ *     path is empty.
+ */
 goog.graphics.ext.Path.prototype.getBoundingBox = function() {
   if (!this.bounds_ && !this.isEmpty()) {
     var minY;
@@ -140,4 +140,4 @@ goog.graphics.ext.Path.prototype.getBoundingBox = function() {
   }
 
   return this.bounds_;
-***REMOVED***
+};

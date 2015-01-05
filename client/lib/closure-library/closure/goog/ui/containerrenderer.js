@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for container renderers.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Base class for container renderers.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ContainerRenderer');
 
@@ -32,144 +32,144 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.Container}.  Can be used as-is, but
-***REMOVED*** subclasses of Container will probably want to use renderers specifically
-***REMOVED*** tailored for them by extending this class.
-***REMOVED*** @param {string=} opt_ariaRole Optional ARIA role used for the element.
-***REMOVED***
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.Container}.  Can be used as-is, but
+ * subclasses of Container will probably want to use renderers specifically
+ * tailored for them by extending this class.
+ * @param {string=} opt_ariaRole Optional ARIA role used for the element.
+ * @constructor
+ */
 goog.ui.ContainerRenderer = function(opt_ariaRole) {
   // By default, the ARIA role is unspecified.
- ***REMOVED*****REMOVED*** @private {string|undefined}***REMOVED***
+  /** @private {string|undefined} */
   this.ariaRole_ = opt_ariaRole;
-***REMOVED***
+};
 goog.addSingletonGetter(goog.ui.ContainerRenderer);
 
 
-***REMOVED***
-***REMOVED*** Constructs a new renderer and sets the CSS class that the renderer will use
-***REMOVED*** as the base CSS class to apply to all elements rendered by that renderer.
-***REMOVED*** An example to use this function using a menu is:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** var myCustomRenderer = goog.ui.ContainerRenderer.getCustomRenderer(
-***REMOVED***     goog.ui.MenuRenderer, 'my-special-menu');
-***REMOVED*** var newMenu = new goog.ui.Menu(opt_domHelper, myCustomRenderer);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** Your styles for the menu can now be:
-***REMOVED*** <pre>
-***REMOVED*** .my-special-menu { }
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** <em>instead</em> of
-***REMOVED*** <pre>
-***REMOVED*** .CSS_MY_SPECIAL_MENU .goog-menu { }
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** You would want to use this functionality when you want an instance of a
-***REMOVED*** component to have specific styles different than the other components of the
-***REMOVED*** same type in your application.  This avoids using descendant selectors to
-***REMOVED*** apply the specific styles to this component.
-***REMOVED***
-***REMOVED*** @param {Function} ctor The constructor of the renderer you want to create.
-***REMOVED*** @param {string} cssClassName The name of the CSS class for this renderer.
-***REMOVED*** @return {goog.ui.ContainerRenderer} An instance of the desired renderer with
-***REMOVED***     its getCssClass() method overridden to return the supplied custom CSS
-***REMOVED***     class name.
-***REMOVED***
+/**
+ * Constructs a new renderer and sets the CSS class that the renderer will use
+ * as the base CSS class to apply to all elements rendered by that renderer.
+ * An example to use this function using a menu is:
+ *
+ * <pre>
+ * var myCustomRenderer = goog.ui.ContainerRenderer.getCustomRenderer(
+ *     goog.ui.MenuRenderer, 'my-special-menu');
+ * var newMenu = new goog.ui.Menu(opt_domHelper, myCustomRenderer);
+ * </pre>
+ *
+ * Your styles for the menu can now be:
+ * <pre>
+ * .my-special-menu { }
+ * </pre>
+ *
+ * <em>instead</em> of
+ * <pre>
+ * .CSS_MY_SPECIAL_MENU .goog-menu { }
+ * </pre>
+ *
+ * You would want to use this functionality when you want an instance of a
+ * component to have specific styles different than the other components of the
+ * same type in your application.  This avoids using descendant selectors to
+ * apply the specific styles to this component.
+ *
+ * @param {Function} ctor The constructor of the renderer you want to create.
+ * @param {string} cssClassName The name of the CSS class for this renderer.
+ * @return {goog.ui.ContainerRenderer} An instance of the desired renderer with
+ *     its getCssClass() method overridden to return the supplied custom CSS
+ *     class name.
+ */
 goog.ui.ContainerRenderer.getCustomRenderer = function(ctor, cssClassName) {
   var renderer = new ctor();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns the CSS class to be applied to the root element of components
-  ***REMOVED*** rendered using this renderer.
-  ***REMOVED*** @return {string} Renderer-specific CSS class.
- ***REMOVED*****REMOVED***
+  /**
+   * Returns the CSS class to be applied to the root element of components
+   * rendered using this renderer.
+   * @return {string} Renderer-specific CSS class.
+   */
   renderer.getCssClass = function() {
     return cssClassName;
- ***REMOVED*****REMOVED***
+  };
 
   return renderer;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of containers rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of containers rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ContainerRenderer.CSS_CLASS = goog.getCssName('goog-container');
 
 
-***REMOVED***
-***REMOVED*** Returns the ARIA role to be applied to the container.
-***REMOVED*** See http://wiki/Main/ARIA for more info.
-***REMOVED*** @return {undefined|string} ARIA role.
-***REMOVED***
+/**
+ * Returns the ARIA role to be applied to the container.
+ * See http://wiki/Main/ARIA for more info.
+ * @return {undefined|string} ARIA role.
+ */
 goog.ui.ContainerRenderer.prototype.getAriaRole = function() {
   return this.ariaRole_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables or disables the tab index of the element.  Only elements with a
-***REMOVED*** valid tab index can receive focus.
-***REMOVED*** @param {Element} element Element whose tab index is to be changed.
-***REMOVED*** @param {boolean} enable Whether to add or remove the element's tab index.
-***REMOVED***
+/**
+ * Enables or disables the tab index of the element.  Only elements with a
+ * valid tab index can receive focus.
+ * @param {Element} element Element whose tab index is to be changed.
+ * @param {boolean} enable Whether to add or remove the element's tab index.
+ */
 goog.ui.ContainerRenderer.prototype.enableTabIndex = function(element, enable) {
   if (element) {
     element.tabIndex = enable ? 0 : -1;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns the container's root element.  The default
-***REMOVED*** simply creates a DIV and applies the renderer's own CSS class name to it.
-***REMOVED*** To be overridden in subclasses.
-***REMOVED*** @param {goog.ui.Container} container Container to render.
-***REMOVED*** @return {Element} Root element for the container.
-***REMOVED***
+/**
+ * Creates and returns the container's root element.  The default
+ * simply creates a DIV and applies the renderer's own CSS class name to it.
+ * To be overridden in subclasses.
+ * @param {goog.ui.Container} container Container to render.
+ * @return {Element} Root element for the container.
+ */
 goog.ui.ContainerRenderer.prototype.createDom = function(container) {
   return container.getDomHelper().createDom('div',
       this.getClassNames(container).join(' '));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the DOM element into which child components are to be rendered,
-***REMOVED*** or null if the container hasn't been rendered yet.
-***REMOVED*** @param {Element} element Root element of the container whose content element
-***REMOVED***     is to be returned.
-***REMOVED*** @return {Element} Element to contain child elements (null if none).
-***REMOVED***
+/**
+ * Returns the DOM element into which child components are to be rendered,
+ * or null if the container hasn't been rendered yet.
+ * @param {Element} element Root element of the container whose content element
+ *     is to be returned.
+ * @return {Element} Element to contain child elements (null if none).
+ */
 goog.ui.ContainerRenderer.prototype.getContentElement = function(element) {
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default implementation of {@code canDecorate***REMOVED*** returns true if the element
-***REMOVED*** is a DIV, false otherwise.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {boolean} Whether the renderer can decorate the element.
-***REMOVED***
+/**
+ * Default implementation of {@code canDecorate}; returns true if the element
+ * is a DIV, false otherwise.
+ * @param {Element} element Element to decorate.
+ * @return {boolean} Whether the renderer can decorate the element.
+ */
 goog.ui.ContainerRenderer.prototype.canDecorate = function(element) {
   return element.tagName == 'DIV';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default implementation of {@code decorate} for {@link goog.ui.Container}s.
-***REMOVED*** Decorates the element with the container, and attempts to decorate its child
-***REMOVED*** elements.  Returns the decorated element.
-***REMOVED*** @param {goog.ui.Container} container Container to decorate the element.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {!Element} Decorated element.
-***REMOVED***
+/**
+ * Default implementation of {@code decorate} for {@link goog.ui.Container}s.
+ * Decorates the element with the container, and attempts to decorate its child
+ * elements.  Returns the decorated element.
+ * @param {goog.ui.Container} container Container to decorate the element.
+ * @param {Element} element Element to decorate.
+ * @return {!Element} Decorated element.
+ */
 goog.ui.ContainerRenderer.prototype.decorate = function(container, element) {
   // Set the container's ID to the decorated element's DOM ID, if any.
   if (element.id) {
@@ -201,20 +201,20 @@ goog.ui.ContainerRenderer.prototype.decorate = function(container, element) {
   this.decorateChildren(container, this.getContentElement(element));
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the container's state based on the given CSS class name, encountered
-***REMOVED*** during decoration.  CSS class names that don't represent container states
-***REMOVED*** are ignored.  Considered protected; subclasses should override this method
-***REMOVED*** to support more states and CSS class names.
-***REMOVED*** @param {goog.ui.Container} container Container to update.
-***REMOVED*** @param {string} className CSS class name.
-***REMOVED*** @param {string} baseClass Base class name used as the root of state-specific
-***REMOVED***     class names (typically the renderer's own class name).
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets the container's state based on the given CSS class name, encountered
+ * during decoration.  CSS class names that don't represent container states
+ * are ignored.  Considered protected; subclasses should override this method
+ * to support more states and CSS class names.
+ * @param {goog.ui.Container} container Container to update.
+ * @param {string} className CSS class name.
+ * @param {string} baseClass Base class name used as the root of state-specific
+ *     class names (typically the renderer's own class name).
+ * @protected
+ */
 goog.ui.ContainerRenderer.prototype.setStateFromClassName = function(container,
     className, baseClass) {
   if (className == goog.getCssName(baseClass, 'disabled')) {
@@ -224,19 +224,19 @@ goog.ui.ContainerRenderer.prototype.setStateFromClassName = function(container,
   } else if (className == goog.getCssName(baseClass, 'vertical')) {
     container.setOrientation(goog.ui.Container.Orientation.VERTICAL);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a container and an element that may contain child elements, decorates
-***REMOVED*** the child elements, and adds the corresponding components to the container
-***REMOVED*** as child components.  Any non-element child nodes (e.g. empty text nodes
-***REMOVED*** introduced by line breaks in the HTML source) are removed from the element.
-***REMOVED*** @param {goog.ui.Container} container Container whose children are to be
-***REMOVED***     discovered.
-***REMOVED*** @param {Element} element Element whose children are to be decorated.
-***REMOVED*** @param {Element=} opt_firstChild the first child to be decorated.
-***REMOVED***
+/**
+ * Takes a container and an element that may contain child elements, decorates
+ * the child elements, and adds the corresponding components to the container
+ * as child components.  Any non-element child nodes (e.g. empty text nodes
+ * introduced by line breaks in the HTML source) are removed from the element.
+ * @param {goog.ui.Container} container Container whose children are to be
+ *     discovered.
+ * @param {Element} element Element whose children are to be decorated.
+ * @param {Element=} opt_firstChild the first child to be decorated.
+ */
 goog.ui.ContainerRenderer.prototype.decorateChildren = function(container,
     element, opt_firstChild) {
   if (element) {
@@ -247,17 +247,17 @@ goog.ui.ContainerRenderer.prototype.decorateChildren = function(container,
       next = node.nextSibling;
       if (node.nodeType == goog.dom.NodeType.ELEMENT) {
         // Decorate element node.
-        var child = this.getDecoratorForChild(***REMOVED*** @type {Element}***REMOVED***(node));
+        var child = this.getDecoratorForChild(/** @type {Element} */(node));
         if (child) {
           // addChild() may need to look at the element.
-          child.setElementInternal(***REMOVED*** @type {Element}***REMOVED***(node));
+          child.setElementInternal(/** @type {Element} */(node));
           // If the container is disabled, mark the child disabled too.  See
           // bug 1263729.  Note that this must precede the call to addChild().
           if (!container.isEnabled()) {
             child.setEnabled(false);
           }
           container.addChild(child);
-          child.decorate(***REMOVED*** @type {Element}***REMOVED***(node));
+          child.decorate(/** @type {Element} */(node));
         }
       } else if (!node.nodeValue || goog.string.trim(node.nodeValue) == '') {
         // Remove empty text node, otherwise madness ensues (e.g. controls that
@@ -267,31 +267,31 @@ goog.ui.ContainerRenderer.prototype.decorateChildren = function(container,
       node = next;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inspects the element, and creates an instance of {@link goog.ui.Control} or
-***REMOVED*** an appropriate subclass best suited to decorate it.  Returns the control (or
-***REMOVED*** null if no suitable class was found).  This default implementation uses the
-***REMOVED*** element's CSS class to find the appropriate control class to instantiate.
-***REMOVED*** May be overridden in subclasses.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {goog.ui.Control?} A new control suitable to decorate the element
-***REMOVED***     (null if none).
-***REMOVED***
+/**
+ * Inspects the element, and creates an instance of {@link goog.ui.Control} or
+ * an appropriate subclass best suited to decorate it.  Returns the control (or
+ * null if no suitable class was found).  This default implementation uses the
+ * element's CSS class to find the appropriate control class to instantiate.
+ * May be overridden in subclasses.
+ * @param {Element} element Element to decorate.
+ * @return {goog.ui.Control?} A new control suitable to decorate the element
+ *     (null if none).
+ */
 goog.ui.ContainerRenderer.prototype.getDecoratorForChild = function(element) {
-  return***REMOVED*****REMOVED*** @type {goog.ui.Control}***REMOVED*** (
+  return /** @type {goog.ui.Control} */ (
       goog.ui.registry.getDecorator(element));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the container's DOM when the container enters the document.
-***REMOVED*** Called from {@link goog.ui.Container#enterDocument}.
-***REMOVED*** @param {goog.ui.Container} container Container whose DOM is to be initialized
-***REMOVED***     as it enters the document.
-***REMOVED***
+/**
+ * Initializes the container's DOM when the container enters the document.
+ * Called from {@link goog.ui.Container#enterDocument}.
+ * @param {goog.ui.Container} container Container whose DOM is to be initialized
+ *     as it enters the document.
+ */
 goog.ui.ContainerRenderer.prototype.initializeDom = function(container) {
   var elem = container.getElement();
   goog.asserts.assert(elem, 'The container DOM element cannot be null.');
@@ -310,42 +310,42 @@ goog.ui.ContainerRenderer.prototype.initializeDom = function(container) {
   if (ariaRole) {
     goog.a11y.aria.setRole(elem, ariaRole);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the element within the container's DOM that should receive keyboard
-***REMOVED*** focus (null if none).  The default implementation returns the container's
-***REMOVED*** root element.
-***REMOVED*** @param {goog.ui.Container} container Container whose key event target is
-***REMOVED***     to be returned.
-***REMOVED*** @return {Element} Key event target (null if none).
-***REMOVED***
+/**
+ * Returns the element within the container's DOM that should receive keyboard
+ * focus (null if none).  The default implementation returns the container's
+ * root element.
+ * @param {goog.ui.Container} container Container whose key event target is
+ *     to be returned.
+ * @return {Element} Key event target (null if none).
+ */
 goog.ui.ContainerRenderer.prototype.getKeyEventTarget = function(container) {
   return container.getElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of containers
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of containers
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ */
 goog.ui.ContainerRenderer.prototype.getCssClass = function() {
   return goog.ui.ContainerRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns all CSS class names applicable to the given container, based on its
-***REMOVED*** state.  The array of class names returned includes the renderer's own CSS
-***REMOVED*** class, followed by a CSS class indicating the container's orientation,
-***REMOVED*** followed by any state-specific CSS classes.
-***REMOVED*** @param {goog.ui.Container} container Container whose CSS classes are to be
-***REMOVED***     returned.
-***REMOVED*** @return {!Array.<string>} Array of CSS class names applicable to the
-***REMOVED***     container.
-***REMOVED***
+/**
+ * Returns all CSS class names applicable to the given container, based on its
+ * state.  The array of class names returned includes the renderer's own CSS
+ * class, followed by a CSS class indicating the container's orientation,
+ * followed by any state-specific CSS classes.
+ * @param {goog.ui.Container} container Container whose CSS classes are to be
+ *     returned.
+ * @return {!Array.<string>} Array of CSS class names applicable to the
+ *     container.
+ */
 goog.ui.ContainerRenderer.prototype.getClassNames = function(container) {
   var baseClass = this.getCssClass();
   var isHorizontal =
@@ -360,15 +360,15 @@ goog.ui.ContainerRenderer.prototype.getClassNames = function(container) {
     classNames.push(goog.getCssName(baseClass, 'disabled'));
   }
   return classNames;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the default orientation of containers rendered or decorated by this
-***REMOVED*** renderer.  The base class implementation returns {@code VERTICAL}.
-***REMOVED*** @return {goog.ui.Container.Orientation} Default orientation for containers
-***REMOVED***     created or decorated by this renderer.
-***REMOVED***
+/**
+ * Returns the default orientation of containers rendered or decorated by this
+ * renderer.  The base class implementation returns {@code VERTICAL}.
+ * @return {goog.ui.Container.Orientation} Default orientation for containers
+ *     created or decorated by this renderer.
+ */
 goog.ui.ContainerRenderer.prototype.getDefaultOrientation = function() {
   return goog.ui.Container.Orientation.VERTICAL;
-***REMOVED***
+};

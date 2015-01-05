@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for working with ranges comprised of multiple
-***REMOVED*** sub-ranges.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED***
+/**
+ * @fileoverview Utilities for working with ranges comprised of multiple
+ * sub-ranges.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author jparent@google.com (Julie Parent)
+ */
 
 
 goog.provide('goog.dom.AbstractMultiRange');
@@ -29,18 +29,18 @@ goog.require('goog.dom.AbstractRange');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new multi range with no properties.  Do not use this
-***REMOVED*** constructor: use one of the goog.dom.Range.createFrom* methods instead.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.AbstractRange}
-***REMOVED***
+/**
+ * Creates a new multi range with no properties.  Do not use this
+ * constructor: use one of the goog.dom.Range.createFrom* methods instead.
+ * @constructor
+ * @extends {goog.dom.AbstractRange}
+ */
 goog.dom.AbstractMultiRange = function() {
-***REMOVED***
+};
 goog.inherits(goog.dom.AbstractMultiRange, goog.dom.AbstractRange);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.AbstractMultiRange.prototype.containsRange = function(
     otherRange, opt_allowPartial) {
   // TODO(user): This will incorrectly return false if two (or more) adjacent
@@ -55,10 +55,10 @@ goog.dom.AbstractMultiRange.prototype.containsRange = function(
       return range.containsRange(otherRange, opt_allowPartial);
     });
   });
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.AbstractMultiRange.prototype.insertNode = function(node, before) {
   if (before) {
     goog.dom.insertSiblingBefore(node, this.getStartNode());
@@ -66,12 +66,12 @@ goog.dom.AbstractMultiRange.prototype.insertNode = function(node, before) {
     goog.dom.insertSiblingAfter(node, this.getEndNode());
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.AbstractMultiRange.prototype.surroundWithNodes = function(startNode,
     endNode) {
   this.insertNode(startNode, true);
   this.insertNode(endNode, false);
-***REMOVED***
+};

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match the start of a tag.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match the start of a tag.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.StartTag');
 
@@ -25,22 +25,22 @@ goog.require('goog.dom.pattern.Tag');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches an opening tag.
-***REMOVED***
-***REMOVED*** @param {string|RegExp} tag Name of the tag.  Also will accept a regular
-***REMOVED***     expression to match against the tag name.
-***REMOVED*** @param {Object=} opt_attrs Optional map of attribute names to desired values.
-***REMOVED***     This pattern will only match when all attributes are present and match
-***REMOVED***     the string or regular expression value provided here.
-***REMOVED*** @param {Object=} opt_styles Optional map of CSS style names to desired
-***REMOVED***     values. This pattern will only match when all styles are present and
-***REMOVED***     match the string or regular expression value provided here.
-***REMOVED*** @param {Function=} opt_test Optional function that takes the element as a
-***REMOVED***     parameter and returns true if this pattern should match it.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.Tag}
-***REMOVED***
+/**
+ * Pattern object that matches an opening tag.
+ *
+ * @param {string|RegExp} tag Name of the tag.  Also will accept a regular
+ *     expression to match against the tag name.
+ * @param {Object=} opt_attrs Optional map of attribute names to desired values.
+ *     This pattern will only match when all attributes are present and match
+ *     the string or regular expression value provided here.
+ * @param {Object=} opt_styles Optional map of CSS style names to desired
+ *     values. This pattern will only match when all styles are present and
+ *     match the string or regular expression value provided here.
+ * @param {Function=} opt_test Optional function that takes the element as a
+ *     parameter and returns true if this pattern should match it.
+ * @constructor
+ * @extends {goog.dom.pattern.Tag}
+ */
 goog.dom.pattern.StartTag = function(tag, opt_attrs, opt_styles, opt_test) {
   goog.dom.pattern.Tag.call(
       this,
@@ -49,5 +49,5 @@ goog.dom.pattern.StartTag = function(tag, opt_attrs, opt_styles, opt_test) {
       opt_attrs,
       opt_styles,
       opt_test);
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.StartTag, goog.dom.pattern.Tag);

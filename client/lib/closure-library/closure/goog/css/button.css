@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Styling for buttons rendered by goog.ui.ButtonRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Styling for buttons rendered by goog.ui.ButtonRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 .goog-button {
   color: #036;
@@ -17,21 +17,21 @@
   background-color: #69c;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-button-disabled {
   border-color: #333;
   color: #333;
   background-color: #999;
 }
 
-/* State: hover.***REMOVED***
+/* State: hover. */
 .goog-button-hover {
   color: #369;
   border-color: #369;
   background-color: #9cf;
 }
 
-/* State: active.***REMOVED***
+/* State: active. */
 .goog-button-active {
   color: #69c;
   border-color: #69c;

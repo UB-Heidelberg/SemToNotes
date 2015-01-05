@@ -158,7 +158,7 @@ function createFakeRange(startNode, startOffset, opt_endNode, opt_endOffset) {
     getStartOffset: goog.functions.constant(startOffset),
     getEndNode: goog.functions.constant(opt_endNode),
     getEndOffset: goog.functions.constant(opt_endOffset)
- ***REMOVED*****REMOVED***
+  };
 }
 
 function testAssertRangeBetweenText0() {

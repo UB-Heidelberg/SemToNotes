@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for understanding the version of the browser.
-***REMOVED*** This is pulled out of product.js to ensure that only builds that need
-***REMOVED*** this functionality actually get it, without having to rely on the compiler
-***REMOVED*** to strip out unneeded pieces.
-***REMOVED***
-***REMOVED*** TODO(nnaze): Move to more appropriate filename/namespace.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Functions for understanding the version of the browser.
+ * This is pulled out of product.js to ensure that only builds that need
+ * this functionality actually get it, without having to rely on the compiler
+ * to strip out unneeded pieces.
+ *
+ * TODO(nnaze): Move to more appropriate filename/namespace.
+ *
+ */
 
 
 goog.provide('goog.userAgent.product.isVersion');
@@ -29,12 +29,12 @@ goog.provide('goog.userAgent.product.isVersion');
 goog.require('goog.userAgent.product');
 
 
-***REMOVED***
-***REMOVED*** @return {string} The string that describes the version number of the user
-***REMOVED***     agent product.  This is a string rather than a number because it may
-***REMOVED***     contain 'b', 'a', and so on.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {string} The string that describes the version number of the user
+ *     agent product.  This is a string rather than a number because it may
+ *     contain 'b', 'a', and so on.
+ * @private
+ */
 goog.userAgent.product.determineVersion_ = function() {
   // All browsers have different ways to detect the version and they all have
   // different naming schemes.
@@ -92,49 +92,49 @@ goog.userAgent.product.determineVersion_ = function() {
   }
 
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the first group of the given regex.
-***REMOVED*** @param {!RegExp} re Regular expression with at least one group.
-***REMOVED*** @return {string} Contents of the first group or an empty string if no match.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the first group of the given regex.
+ * @param {!RegExp} re Regular expression with at least one group.
+ * @return {string} Contents of the first group or an empty string if no match.
+ * @private
+ */
 goog.userAgent.product.getFirstRegExpGroup_ = function(re) {
   var arr = goog.userAgent.product.execRegExp_(re);
   return arr ? arr[1] : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Run regexp's exec() on the userAgent string.
-***REMOVED*** @param {!RegExp} re Regular expression.
-***REMOVED*** @return {Array} A result array, or null for no match.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Run regexp's exec() on the userAgent string.
+ * @param {!RegExp} re Regular expression.
+ * @return {Array} A result array, or null for no match.
+ * @private
+ */
 goog.userAgent.product.execRegExp_ = function(re) {
   return re.exec(goog.userAgent.getUserAgentString());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The version of the user agent. This is a string because it might contain
-***REMOVED*** 'b' (as in beta) as well as multiple dots.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The version of the user agent. This is a string because it might contain
+ * 'b' (as in beta) as well as multiple dots.
+ * @type {string}
+ */
 goog.userAgent.product.VERSION = goog.userAgent.product.determineVersion_();
 
 
-***REMOVED***
-***REMOVED*** Whether the user agent product version is higher or the same as the given
-***REMOVED*** version.
-***REMOVED***
-***REMOVED*** @param {string|number} version The version to check.
-***REMOVED*** @return {boolean} Whether the user agent product version is higher or the
-***REMOVED***     same as the given version.
-***REMOVED***
+/**
+ * Whether the user agent product version is higher or the same as the given
+ * version.
+ *
+ * @param {string|number} version The version to check.
+ * @return {boolean} Whether the user agent product version is higher or the
+ *     same as the given version.
+ */
 goog.userAgent.product.isVersion = function(version) {
   return goog.string.compareVersions(
       goog.userAgent.product.VERSION, version) >= 0;
-***REMOVED***
+};

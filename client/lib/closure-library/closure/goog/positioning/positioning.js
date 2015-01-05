@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Common positioning code.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Common positioning code.
+ *
+ */
 
 goog.provide('goog.positioning');
 goog.provide('goog.positioning.Corner');
@@ -33,15 +33,15 @@ goog.require('goog.style');
 goog.require('goog.style.bidi');
 
 
-***REMOVED***
-***REMOVED*** Enum for representing an element corner for positioning the popup.
-***REMOVED***
-***REMOVED*** The START constants map to LEFT if element directionality is left
-***REMOVED*** to right and RIGHT if the directionality is right to left.
-***REMOVED*** Likewise END maps to RIGHT or LEFT depending on the directionality.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for representing an element corner for positioning the popup.
+ *
+ * The START constants map to LEFT if element directionality is left
+ * to right and RIGHT if the directionality is right to left.
+ * Likewise END maps to RIGHT or LEFT depending on the directionality.
+ *
+ * @enum {number}
+ */
 goog.positioning.Corner = {
   TOP_LEFT: 0,
   TOP_RIGHT: 2,
@@ -51,68 +51,68 @@ goog.positioning.Corner = {
   TOP_END: 6,
   BOTTOM_START: 5,
   BOTTOM_END: 7
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enum for bits in the {@see goog.positioning.Corner) bitmap.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for bits in the {@see goog.positioning.Corner) bitmap.
+ *
+ * @enum {number}
+ */
 goog.positioning.CornerBit = {
   BOTTOM: 1,
   RIGHT: 2,
   FLIP_RTL: 4
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enum for representing position handling in cases where the element would be
-***REMOVED*** positioned outside the viewport.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for representing position handling in cases where the element would be
+ * positioned outside the viewport.
+ *
+ * @enum {number}
+ */
 goog.positioning.Overflow = {
- ***REMOVED*****REMOVED*** Ignore overflow***REMOVED***
+  /** Ignore overflow */
   IGNORE: 0,
 
- ***REMOVED*****REMOVED*** Try to fit horizontally in the viewport at all costs.***REMOVED***
+  /** Try to fit horizontally in the viewport at all costs. */
   ADJUST_X: 1,
 
- ***REMOVED*****REMOVED*** If the element can't fit horizontally, report positioning failure.***REMOVED***
+  /** If the element can't fit horizontally, report positioning failure. */
   FAIL_X: 2,
 
- ***REMOVED*****REMOVED*** Try to fit vertically in the viewport at all costs.***REMOVED***
+  /** Try to fit vertically in the viewport at all costs. */
   ADJUST_Y: 4,
 
- ***REMOVED*****REMOVED*** If the element can't fit vertically, report positioning failure.***REMOVED***
+  /** If the element can't fit vertically, report positioning failure. */
   FAIL_Y: 8,
 
- ***REMOVED*****REMOVED*** Resize the element's width to fit in the viewport.***REMOVED***
+  /** Resize the element's width to fit in the viewport. */
   RESIZE_WIDTH: 16,
 
- ***REMOVED*****REMOVED*** Resize the element's height to fit in the viewport.***REMOVED***
+  /** Resize the element's height to fit in the viewport. */
   RESIZE_HEIGHT: 32,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If the anchor goes off-screen in the x-direction, position the movable
-  ***REMOVED*** element off-screen. Otherwise, try to fit horizontally in the viewport.
- ***REMOVED*****REMOVED***
+  /**
+   * If the anchor goes off-screen in the x-direction, position the movable
+   * element off-screen. Otherwise, try to fit horizontally in the viewport.
+   */
   ADJUST_X_EXCEPT_OFFSCREEN: 64 | 1,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If the anchor goes off-screen in the y-direction, position the movable
-  ***REMOVED*** element off-screen. Otherwise, try to fit vertically in the viewport.
- ***REMOVED*****REMOVED***
+  /**
+   * If the anchor goes off-screen in the y-direction, position the movable
+   * element off-screen. Otherwise, try to fit vertically in the viewport.
+   */
   ADJUST_Y_EXCEPT_OFFSCREEN: 128 | 4
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enum for representing the outcome of a positioning call.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for representing the outcome of a positioning call.
+ *
+ * @enum {number}
+ */
 goog.positioning.OverflowStatus = {
   NONE: 0,
   ADJUSTED_X: 1,
@@ -124,13 +124,13 @@ goog.positioning.OverflowStatus = {
   FAILED_TOP: 64,
   FAILED_BOTTOM: 128,
   FAILED_OUTSIDE_VIEWPORT: 256
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shorthand to check if a status code contains any fail code.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Shorthand to check if a status code contains any fail code.
+ * @type {number}
+ */
 goog.positioning.OverflowStatus.FAILED =
     goog.positioning.OverflowStatus.FAILED_LEFT |
     goog.positioning.OverflowStatus.FAILED_RIGHT |
@@ -139,60 +139,60 @@ goog.positioning.OverflowStatus.FAILED =
     goog.positioning.OverflowStatus.FAILED_OUTSIDE_VIEWPORT;
 
 
-***REMOVED***
-***REMOVED*** Shorthand to check if horizontal positioning failed.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Shorthand to check if horizontal positioning failed.
+ * @type {number}
+ */
 goog.positioning.OverflowStatus.FAILED_HORIZONTAL =
     goog.positioning.OverflowStatus.FAILED_LEFT |
     goog.positioning.OverflowStatus.FAILED_RIGHT;
 
 
-***REMOVED***
-***REMOVED*** Shorthand to check if vertical positioning failed.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Shorthand to check if vertical positioning failed.
+ * @type {number}
+ */
 goog.positioning.OverflowStatus.FAILED_VERTICAL =
     goog.positioning.OverflowStatus.FAILED_TOP |
     goog.positioning.OverflowStatus.FAILED_BOTTOM;
 
 
-***REMOVED***
-***REMOVED*** Positions a movable element relative to an anchor element. The caller
-***REMOVED*** specifies the corners that should touch. This functions then moves the
-***REMOVED*** movable element accordingly.
-***REMOVED***
-***REMOVED*** @param {Element} anchorElement The element that is the anchor for where
-***REMOVED***    the movable element should position itself.
-***REMOVED*** @param {goog.positioning.Corner} anchorElementCorner The corner of the
-***REMOVED***     anchorElement for positioning the movable element.
-***REMOVED*** @param {Element} movableElement The element to move.
-***REMOVED*** @param {goog.positioning.Corner} movableElementCorner The corner of the
-***REMOVED***     movableElement that that should be positioned adjacent to the anchor
-***REMOVED***     element.
-***REMOVED*** @param {goog.math.Coordinate=} opt_offset An offset specified in pixels.
-***REMOVED***    After the normal positioning algorithm is applied, the offset is then
-***REMOVED***    applied. Positive coordinates move the popup closer to the center of the
-***REMOVED***    anchor element. Negative coordinates move the popup away from the center
-***REMOVED***    of the anchor element.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED***    After the normal positioning algorithm is applied and any offset, the
-***REMOVED***    margin is then applied. Positive coordinates move the popup away from the
-***REMOVED***    spot it was positioned towards its center. Negative coordinates move it
-***REMOVED***    towards the spot it was positioned away from its center.
-***REMOVED*** @param {?number=} opt_overflow Overflow handling mode. Defaults to IGNORE if
-***REMOVED***     not specified. Bitmap, {@see goog.positioning.Overflow}.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize The preferred size of the
-***REMOVED***     movableElement.
-***REMOVED*** @param {goog.math.Box=} opt_viewport Box object describing the dimensions of
-***REMOVED***     the viewport. The viewport is specified relative to offsetParent of
-***REMOVED***     {@code movableElement}. In other words, the viewport can be thought of as
-***REMOVED***     describing a "position: absolute" element contained in the offsetParent.
-***REMOVED***     It defaults to visible area of nearest scrollable ancestor of
-***REMOVED***     {@code movableElement} (see {@code goog.style.getVisibleRectForElement}).
-***REMOVED*** @return {goog.positioning.OverflowStatus} Status bitmap,
-***REMOVED***     {@see goog.positioning.OverflowStatus}.
-***REMOVED***
+/**
+ * Positions a movable element relative to an anchor element. The caller
+ * specifies the corners that should touch. This functions then moves the
+ * movable element accordingly.
+ *
+ * @param {Element} anchorElement The element that is the anchor for where
+ *    the movable element should position itself.
+ * @param {goog.positioning.Corner} anchorElementCorner The corner of the
+ *     anchorElement for positioning the movable element.
+ * @param {Element} movableElement The element to move.
+ * @param {goog.positioning.Corner} movableElementCorner The corner of the
+ *     movableElement that that should be positioned adjacent to the anchor
+ *     element.
+ * @param {goog.math.Coordinate=} opt_offset An offset specified in pixels.
+ *    After the normal positioning algorithm is applied, the offset is then
+ *    applied. Positive coordinates move the popup closer to the center of the
+ *    anchor element. Negative coordinates move the popup away from the center
+ *    of the anchor element.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ *    After the normal positioning algorithm is applied and any offset, the
+ *    margin is then applied. Positive coordinates move the popup away from the
+ *    spot it was positioned towards its center. Negative coordinates move it
+ *    towards the spot it was positioned away from its center.
+ * @param {?number=} opt_overflow Overflow handling mode. Defaults to IGNORE if
+ *     not specified. Bitmap, {@see goog.positioning.Overflow}.
+ * @param {goog.math.Size=} opt_preferredSize The preferred size of the
+ *     movableElement.
+ * @param {goog.math.Box=} opt_viewport Box object describing the dimensions of
+ *     the viewport. The viewport is specified relative to offsetParent of
+ *     {@code movableElement}. In other words, the viewport can be thought of as
+ *     describing a "position: absolute" element contained in the offsetParent.
+ *     It defaults to visible area of nearest scrollable ancestor of
+ *     {@code movableElement} (see {@code goog.style.getVisibleRectForElement}).
+ * @return {goog.positioning.OverflowStatus} Status bitmap,
+ *     {@see goog.positioning.OverflowStatus}.
+ */
 goog.positioning.positionAtAnchor = function(anchorElement,
                                              anchorElementCorner,
                                              movableElement,
@@ -234,9 +234,9 @@ goog.positioning.positionAtAnchor = function(anchorElement,
 
   // Apply offset, if specified
   if (opt_offset) {
-    absolutePos.x += (corner & goog.positioning.CornerBit.RIGHT ? -1 : 1)***REMOVED***
+    absolutePos.x += (corner & goog.positioning.CornerBit.RIGHT ? -1 : 1) *
         opt_offset.x;
-    absolutePos.y += (corner & goog.positioning.CornerBit.BOTTOM ? -1 : 1)***REMOVED***
+    absolutePos.y += (corner & goog.positioning.CornerBit.BOTTOM ? -1 : 1) *
         opt_offset.y;
   }
 
@@ -263,18 +263,18 @@ goog.positioning.positionAtAnchor = function(anchorElement,
                                                viewport,
                                                opt_overflow,
                                                opt_preferredSize);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates the page offset of the given element's
-***REMOVED*** offsetParent. This value can be used to translate any x- and
-***REMOVED*** y-offset relative to the page to an offset relative to the
-***REMOVED*** offsetParent, which can then be used directly with as position
-***REMOVED*** coordinate for {@code positionWithCoordinate}.
-***REMOVED*** @param {!Element} movableElement The element to calculate.
-***REMOVED*** @return {!goog.math.Coordinate} The page offset, may be (0, 0).
-***REMOVED***
+/**
+ * Calculates the page offset of the given element's
+ * offsetParent. This value can be used to translate any x- and
+ * y-offset relative to the page to an offset relative to the
+ * offsetParent, which can then be used directly with as position
+ * coordinate for {@code positionWithCoordinate}.
+ * @param {!Element} movableElement The element to calculate.
+ * @return {!goog.math.Coordinate} The page offset, may be (0, 0).
+ */
 goog.positioning.getOffsetParentPageOffset = function(movableElement) {
   // Ignore offset for the BODY element unless its position is non-static.
   // For cases where the offset parent is HTML rather than the BODY (such as in
@@ -300,19 +300,19 @@ goog.positioning.getOffsetParentPageOffset = function(movableElement) {
   }
 
   return movableParentTopLeft || new goog.math.Coordinate();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns intersection of the specified element and
-***REMOVED*** goog.style.getVisibleRectForElement for it.
-***REMOVED***
-***REMOVED*** @param {Element} el The target element.
-***REMOVED*** @return {!goog.math.Rect} Intersection of getVisibleRectForElement
-***REMOVED***     and the current bounding rectangle of the element.  If the
-***REMOVED***     intersection is empty, returns the bounding rectangle.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns intersection of the specified element and
+ * goog.style.getVisibleRectForElement for it.
+ *
+ * @param {Element} el The target element.
+ * @return {!goog.math.Rect} Intersection of getVisibleRectForElement
+ *     and the current bounding rectangle of the element.  If the
+ *     intersection is empty, returns the bounding rectangle.
+ * @private
+ */
 goog.positioning.getVisiblePart_ = function(el) {
   var rect = goog.style.getBounds(el);
   var visibleBox = goog.style.getVisibleRectForElement(el);
@@ -320,31 +320,31 @@ goog.positioning.getVisiblePart_ = function(el) {
     rect.intersection(goog.math.Rect.createFromBox(visibleBox));
   }
   return rect;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Positions the specified corner of the movable element at the
-***REMOVED*** specified coordinate.
-***REMOVED***
-***REMOVED*** @param {goog.math.Coordinate} absolutePos The coordinate to position the
-***REMOVED***     element at.
-***REMOVED*** @param {Element} movableElement The element to be positioned.
-***REMOVED*** @param {goog.positioning.Corner} movableElementCorner The corner of the
-***REMOVED***     movableElement that that should be positioned.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED***    After the normal positioning algorithm is applied and any offset, the
-***REMOVED***    margin is then applied. Positive coordinates move the popup away from the
-***REMOVED***    spot it was positioned towards its center. Negative coordinates move it
-***REMOVED***    towards the spot it was positioned away from its center.
-***REMOVED*** @param {goog.math.Box=} opt_viewport Box object describing the dimensions of
-***REMOVED***     the viewport. Required if opt_overflow is specified.
-***REMOVED*** @param {?number=} opt_overflow Overflow handling mode. Defaults to IGNORE if
-***REMOVED***     not specified, {@see goog.positioning.Overflow}.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize The preferred size of the
-***REMOVED***     movableElement. Defaults to the current size.
-***REMOVED*** @return {goog.positioning.OverflowStatus} Status bitmap.
-***REMOVED***
+/**
+ * Positions the specified corner of the movable element at the
+ * specified coordinate.
+ *
+ * @param {goog.math.Coordinate} absolutePos The coordinate to position the
+ *     element at.
+ * @param {Element} movableElement The element to be positioned.
+ * @param {goog.positioning.Corner} movableElementCorner The corner of the
+ *     movableElement that that should be positioned.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ *    After the normal positioning algorithm is applied and any offset, the
+ *    margin is then applied. Positive coordinates move the popup away from the
+ *    spot it was positioned towards its center. Negative coordinates move it
+ *    towards the spot it was positioned away from its center.
+ * @param {goog.math.Box=} opt_viewport Box object describing the dimensions of
+ *     the viewport. Required if opt_overflow is specified.
+ * @param {?number=} opt_overflow Overflow handling mode. Defaults to IGNORE if
+ *     not specified, {@see goog.positioning.Overflow}.
+ * @param {goog.math.Size=} opt_preferredSize The preferred size of the
+ *     movableElement. Defaults to the current size.
+ * @return {goog.positioning.OverflowStatus} Status bitmap.
+ */
 goog.positioning.positionAtCoordinate = function(absolutePos,
                                                  movableElement,
                                                  movableElementCorner,
@@ -392,25 +392,25 @@ goog.positioning.positionAtCoordinate = function(absolutePos,
   }
 
   return status;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adjusts the position and/or size of an element, identified by its position
-***REMOVED*** and size, to fit inside the viewport. If the position or size of the element
-***REMOVED*** is adjusted the pos or size objects, respectively, are modified.
-***REMOVED***
-***REMOVED*** @param {goog.math.Coordinate} pos Position of element, updated if the
-***REMOVED***     position is adjusted.
-***REMOVED*** @param {goog.math.Size} size Size of element, updated if the size is
-***REMOVED***     adjusted.
-***REMOVED*** @param {goog.math.Box} viewport Bounding box describing the viewport.
-***REMOVED*** @param {number} overflow Overflow handling mode,
-***REMOVED***     {@see goog.positioning.Overflow}.
-***REMOVED*** @return {goog.positioning.OverflowStatus} Status bitmap,
-***REMOVED***     {@see goog.positioning.OverflowStatus}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adjusts the position and/or size of an element, identified by its position
+ * and size, to fit inside the viewport. If the position or size of the element
+ * is adjusted the pos or size objects, respectively, are modified.
+ *
+ * @param {goog.math.Coordinate} pos Position of element, updated if the
+ *     position is adjusted.
+ * @param {goog.math.Size} size Size of element, updated if the size is
+ *     adjusted.
+ * @param {goog.math.Box} viewport Bounding box describing the viewport.
+ * @param {number} overflow Overflow handling mode,
+ *     {@see goog.positioning.Overflow}.
+ * @return {goog.positioning.OverflowStatus} Status bitmap,
+ *     {@see goog.positioning.OverflowStatus}.
+ * @private
+ */
 goog.positioning.adjustForViewport_ = function(pos, size, viewport, overflow) {
   var status = goog.positioning.OverflowStatus.NONE;
 
@@ -499,59 +499,59 @@ goog.positioning.adjustForViewport_ = function(pos, size, viewport, overflow) {
   }
 
   return status;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an absolute corner (top/bottom left/right) given an absolute
-***REMOVED*** or relative (top/bottom start/end) corner and the direction of an element.
-***REMOVED*** Absolute corners remain unchanged.
-***REMOVED*** @param {Element} element DOM element to test for RTL direction.
-***REMOVED*** @param {goog.positioning.Corner} corner The popup corner used for
-***REMOVED***     positioning.
-***REMOVED*** @return {goog.positioning.Corner} Effective corner.
-***REMOVED***
+/**
+ * Returns an absolute corner (top/bottom left/right) given an absolute
+ * or relative (top/bottom start/end) corner and the direction of an element.
+ * Absolute corners remain unchanged.
+ * @param {Element} element DOM element to test for RTL direction.
+ * @param {goog.positioning.Corner} corner The popup corner used for
+ *     positioning.
+ * @return {goog.positioning.Corner} Effective corner.
+ */
 goog.positioning.getEffectiveCorner = function(element, corner) {
-  return***REMOVED*****REMOVED*** @type {goog.positioning.Corner}***REMOVED*** (
+  return /** @type {goog.positioning.Corner} */ (
       (corner & goog.positioning.CornerBit.FLIP_RTL &&
           goog.style.isRightToLeft(element) ?
           corner ^ goog.positioning.CornerBit.RIGHT :
           corner
       ) & ~goog.positioning.CornerBit.FLIP_RTL);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the corner opposite the given one horizontally.
-***REMOVED*** @param {goog.positioning.Corner} corner The popup corner used to flip.
-***REMOVED*** @return {goog.positioning.Corner} The opposite corner horizontally.
-***REMOVED***
+/**
+ * Returns the corner opposite the given one horizontally.
+ * @param {goog.positioning.Corner} corner The popup corner used to flip.
+ * @return {goog.positioning.Corner} The opposite corner horizontally.
+ */
 goog.positioning.flipCornerHorizontal = function(corner) {
-  return***REMOVED*****REMOVED*** @type {goog.positioning.Corner}***REMOVED*** (corner ^
+  return /** @type {goog.positioning.Corner} */ (corner ^
       goog.positioning.CornerBit.RIGHT);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the corner opposite the given one vertically.
-***REMOVED*** @param {goog.positioning.Corner} corner The popup corner used to flip.
-***REMOVED*** @return {goog.positioning.Corner} The opposite corner vertically.
-***REMOVED***
+/**
+ * Returns the corner opposite the given one vertically.
+ * @param {goog.positioning.Corner} corner The popup corner used to flip.
+ * @return {goog.positioning.Corner} The opposite corner vertically.
+ */
 goog.positioning.flipCornerVertical = function(corner) {
-  return***REMOVED*****REMOVED*** @type {goog.positioning.Corner}***REMOVED*** (corner ^
+  return /** @type {goog.positioning.Corner} */ (corner ^
       goog.positioning.CornerBit.BOTTOM);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the corner opposite the given one horizontally and vertically.
-***REMOVED*** @param {goog.positioning.Corner} corner The popup corner used to flip.
-***REMOVED*** @return {goog.positioning.Corner} The opposite corner horizontally and
-***REMOVED***     vertically.
-***REMOVED***
+/**
+ * Returns the corner opposite the given one horizontally and vertically.
+ * @param {goog.positioning.Corner} corner The popup corner used to flip.
+ * @return {goog.positioning.Corner} The opposite corner horizontally and
+ *     vertically.
+ */
 goog.positioning.flipCorner = function(corner) {
-  return***REMOVED*****REMOVED*** @type {goog.positioning.Corner}***REMOVED*** (corner ^
+  return /** @type {goog.positioning.Corner} */ (corner ^
       goog.positioning.CornerBit.BOTTOM ^
       goog.positioning.CornerBit.RIGHT);
-***REMOVED***
+};
 

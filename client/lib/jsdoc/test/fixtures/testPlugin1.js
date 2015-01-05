@@ -1,4 +1,4 @@
-global.jsdocPluginsTest.plugin1 = {***REMOVED***
+global.jsdocPluginsTest.plugin1 = {};
 
 exports.handlers = {
     fileBegin: function() {
@@ -19,7 +19,7 @@ exports.handlers = {
     fileComplete: function() {
         global.jsdocPluginsTest.plugin1.fileComplete = true;
     }
-***REMOVED***
+};
 
 exports.defineTags = function(dictionary) {
     dictionary.defineTag("foo", {
@@ -28,4 +28,4 @@ exports.defineTags = function(dictionary) {
             doclet.foo = true;
         }
     });
-***REMOVED***
+};

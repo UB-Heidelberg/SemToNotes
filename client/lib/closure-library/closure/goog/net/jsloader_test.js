@@ -24,12 +24,12 @@ goog.require('goog.testing.jsunit');
 
 // Initialize the AsyncTestCase.
 var testCase = goog.testing.AsyncTestCase.createAndInstall(document.title);
-testCase.stepTimeout = 5***REMOVED*** 1000; // 5 seconds
+testCase.stepTimeout = 5 * 1000; // 5 seconds
 
 
 testCase.setUp = function() {
   goog.provide = goog.nullFunction;
-***REMOVED***
+};
 
 
 testCase.tearDown = function() {
@@ -41,7 +41,7 @@ testCase.tearDown = function() {
       goog.dom.removeNode(scripts[i]);
     }
   }
-***REMOVED***
+};
 
 
 // Sunny day scenario for load function.
@@ -126,12 +126,12 @@ function testLoadMany() {
     testCase.waitForAsync('testLoadMany');
     var testUrls2 = ['testdata/jsloader_test4.js'];
     goog.net.jsloader.loadMany(testUrls2);
- ***REMOVED*****REMOVED***
+  };
 
   window.test4Callback = function(msg) {
     testCase.continueTesting();
 
     // Check that the 1st test was already loaded.
     assertEquals('verification object', 'Test #1 loaded', window.test1);
- ***REMOVED*****REMOVED***
+  };
 }

@@ -1,4 +1,4 @@
-/*global beforeEach, describe, expect, it, spyOn, xdescribe***REMOVED***
+/*global beforeEach, describe, expect, it, spyOn, xdescribe */
 describe('jsdoc/src/astbuilder', function() {
     var astbuilder = require('jsdoc/src/astbuilder');
 

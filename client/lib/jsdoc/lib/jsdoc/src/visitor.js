@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @module jsdoc/src/visitor
-***REMOVED***
+/**
+ * @module jsdoc/src/visitor
+ */
 'use strict';
 
 // TODO: consider exporting more stuff so users can override it
@@ -14,7 +14,7 @@ var jsdoc = {
     util: {
         logger: require('jsdoc/util/logger')
     }
-***REMOVED***
+};
 var util = require('util');
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
@@ -39,19 +39,19 @@ function makeVarsFinisher(scopeDoclet) {
         if (scopeDoclet && e.doclet && e.doclet.alias) {
             scopeDoclet.meta.vars[e.code.name] = e.doclet.longname;
         }
-   ***REMOVED*****REMOVED***
+    };
 }
 
-***REMOVED***
-***REMOVED*** For function parameters that have inline documentation, create a function that will merge the
-***REMOVED*** inline documentation into the function's doclet. If the parameter is already documented in the
-***REMOVED*** function's doclet, the inline documentation will be ignored.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {module:jsdoc/src/parser.Parser} parser - The JSDoc parser.
-***REMOVED*** @return {function} A function that merges a parameter's inline documentation into the function's
-***REMOVED*** doclet.
-***REMOVED***
+/**
+ * For function parameters that have inline documentation, create a function that will merge the
+ * inline documentation into the function's doclet. If the parameter is already documented in the
+ * function's doclet, the inline documentation will be ignored.
+ *
+ * @private
+ * @param {module:jsdoc/src/parser.Parser} parser - The JSDoc parser.
+ * @return {function} A function that merges a parameter's inline documentation into the function's
+ * doclet.
+ */
 function makeInlineParamsFinisher(parser) {
     return function(e) {
         var documentedParams;
@@ -100,13 +100,13 @@ function makeInlineParamsFinisher(parser) {
 
             i++;
         }
-   ***REMOVED*****REMOVED***
+    };
 }
 
 // TODO: docs
 function SymbolFound(node, filename, extras) {
-  ***REMOVED***
-    extras = extras || {***REMOVED***
+    var self = this;
+    extras = extras || {};
 
     this.id = extras.id || node.nodeId;
     this.comment = extras.comment || getLeadingComment(node) || '@undocumented';
@@ -147,12 +147,12 @@ var Visitor = exports.Visitor = function(parser) {
         this.visitNodeComments,
         this.visitNode
     ];
-***REMOVED***
+};
 
 // TODO: docs
 Visitor.prototype.addAstNodeVisitor = function(visitor) {
     this._nodeVisitors.push(visitor);
-***REMOVED***
+};
 
 // TODO: docs
 Visitor.prototype.removeAstNodeVisitor = function(visitor) {
@@ -160,12 +160,12 @@ Visitor.prototype.removeAstNodeVisitor = function(visitor) {
     if (idx !== -1) {
         this._nodeVisitors.splice(idx, 1);
     }
-***REMOVED***
+};
 
 // TODO: docs
 Visitor.prototype.getAstNodeVisitors = function() {
     return this._nodeVisitors;
-***REMOVED***
+};
 
 // TODO: docs; visitor signature is (node, parser, filename)
 Visitor.prototype.visit = function(node, filename) {
@@ -184,18 +184,18 @@ Visitor.prototype.visit = function(node, filename) {
     }
 
     return true;
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** Verify that a block comment exists and that its leading delimiter does not contain three or more
-***REMOVED*** asterisks.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @memberof module:jsdoc/src/parser.Parser
-***REMOVED***
+/**
+ * Verify that a block comment exists and that its leading delimiter does not contain three or more
+ * asterisks.
+ *
+ * @private
+ * @memberof module:jsdoc/src/parser.Parser
+ */
 function isValidJsdoc(commentSrc) {
-    return commentSrc && commentSrc.indexOf('***REMOVED****') !== 0;
+    return commentSrc && commentSrc.indexOf('/***') !== 0;
 }
 
 // TODO: docs
@@ -254,7 +254,7 @@ Visitor.prototype.visitNodeComments = function(node, parser, filename) {
     }
 
     return true;
-***REMOVED***
+};
 
 // TODO: docs
 Visitor.prototype.visitNode = function(node, parser, filename) {
@@ -290,7 +290,7 @@ Visitor.prototype.visitNode = function(node, parser, filename) {
     }
 
     return true;
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: note that it's essential to call this function before you try to resolve names!
@@ -301,7 +301,7 @@ function trackVars(parser, node, e) {
     var doclet = parser.refs[enclosingScopeId];
 
     if (doclet) {
-        doclet.meta.vars = doclet.meta.vars || {***REMOVED***
+        doclet.meta.vars = doclet.meta.vars || {};
         doclet.meta.vars[e.code.name] = null;
         e.finishers.push( makeVarsFinisher(doclet) );
     }
@@ -319,7 +319,7 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
 
     var extras = {
         code: jsdoc.src.astnode.getInfo(node)
-   ***REMOVED*****REMOVED***
+    };
 
     switch (node.type) {
         // like: i = 0;
@@ -339,7 +339,7 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
         case Syntax.FunctionDeclaration:
             // falls through
 
-        // like: var foo = function() {***REMOVED***
+        // like: var foo = function() {};
         case Syntax.FunctionExpression:
             e = new SymbolFound(node, filename, extras);
 
@@ -350,7 +350,7 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
 
             break;
 
-        // like "bar" in: function foo(***REMOVED*** @type {string}***REMOVED*** bar) {}
+        // like "bar" in: function foo(/** @type {string} */ bar) {}
         // This is an extremely common type of node; we only care about function parameters with
         // inline type annotations. No need to fire events unless they're already commented.
         case Syntax.Identifier:
@@ -362,7 +362,7 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
 
             break;
 
-        // like "obj.prop" in:***REMOVED*****REMOVED*** @typedef {string}***REMOVED*** obj.prop;
+        // like "obj.prop" in: /** @typedef {string} */ obj.prop;
         // Closure Compiler uses this pattern extensively for enums.
         // No need to fire events for them unless they're already commented.
         case Syntax.MemberExpression:
@@ -372,14 +372,14 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
 
             break;
 
-        // like the object literal in: function Foo = Class.create(***REMOVED*** @lends Foo***REMOVED*** {});
+        // like the object literal in: function Foo = Class.create(/** @lends Foo */ {});
         case Syntax.ObjectExpression:
             e = new SymbolFound(node, filename, extras);
 
             break;
 
-        // like "bar: true" in: var foo = { bar: true***REMOVED*****REMOVED***
-        // like "get bar() {}" in: var foo = { get bar() {}***REMOVED*****REMOVED***
+        // like "bar: true" in: var foo = { bar: true };
+        // like "get bar() {}" in: var foo = { get bar() {} };
         case Syntax.Property:
             if ( node.kind !== ('get' || 'set') ) {
                 extras.finishers = [parser.resolveEnum];
@@ -427,8 +427,8 @@ Visitor.prototype.makeSymbolFoundEvent = function(node, parser, filename) {
     if (!e) {
         e = {
             finishers: []
-       ***REMOVED*****REMOVED***
+        };
     }
 
     return e;
-***REMOVED***
+};

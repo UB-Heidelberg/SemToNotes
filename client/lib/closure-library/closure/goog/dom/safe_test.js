@@ -24,7 +24,7 @@ goog.require('goog.testing.jsunit');
 function testSetInnerHtml() {
   var mockElement = {
     'innerHTML': 'blarg'
- ***REMOVED*****REMOVED***
+  };
   var html = '<script>somethingTrusted();<' + '/script>';
   var safeHtml = goog.html.testing.newSafeHtmlForTest(html);
   goog.dom.safe.setInnerHtml(mockElement, safeHtml);
@@ -38,7 +38,7 @@ function testDocumentWrite() {
     'write': function(html) {
       this['html'] = html;
     }
- ***REMOVED*****REMOVED***
+  };
   var html = '<script>somethingTrusted();<' + '/script>';
   var safeHtml = goog.html.testing.newSafeHtmlForTest(html);
   goog.dom.safe.documentWrite(mockDoc, safeHtml);
@@ -49,13 +49,13 @@ function testDocumentWrite() {
 function testSetLocationHref() {
   var mockLoc = {
     'href': 'blarg'
- ***REMOVED*****REMOVED***
+  };
   goog.dom.safe.setLocationHref(mockLoc, 'javascript:evil();');
   assertEquals('about:invalid#zClosurez', mockLoc.href);
 
   mockLoc = {
     'href': 'blarg'
- ***REMOVED*****REMOVED***
+  };
   var safeUrl = goog.html.SafeUrl.fromConstant(
       goog.string.Const.from('javascript:trusted();'));
   goog.dom.safe.setLocationHref(mockLoc, safeUrl);
@@ -66,13 +66,13 @@ function testSetLocationHref() {
 function testSetAnchorHref() {
   var mockAnchor = {
     'href': 'blarg'
- ***REMOVED*****REMOVED***
+  };
   goog.dom.safe.setAnchorHref(mockAnchor, 'javascript:evil();');
   assertEquals('about:invalid#zClosurez', mockAnchor.href);
 
   mockAnchor = {
     'href': 'blarg'
- ***REMOVED*****REMOVED***
+  };
   var safeUrl = goog.html.SafeUrl.fromConstant(
       goog.string.Const.from('javascript:trusted();'));
   goog.dom.safe.setAnchorHref(mockAnchor, safeUrl);

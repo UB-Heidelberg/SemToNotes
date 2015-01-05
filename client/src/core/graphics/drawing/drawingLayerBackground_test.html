@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.drawing.Mode');
   goog.require('xrx.engine');
@@ -80,7 +80,7 @@ function getDrawingCanvas(id, callback) {
     xrx.engine.CANVAS);
   canvasDrawing.setBackgroundImage(url, callback);
   return canvasDrawing;
-***REMOVED***
+};
 
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
@@ -88,7 +88,7 @@ function getDrawingSvg(id, callback) {
       xrx.engine.SVG);
   svgDrawing.setBackgroundImage(url, callback);
   return svgDrawing;
-***REMOVED***
+};
 
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
@@ -96,7 +96,7 @@ function getDrawingVml(id, callback) {
     xrx.engine.VML);
   vmlDrawing.setBackgroundImage(url, callback);
   return vmlDrawing;
-***REMOVED***
+};
 
 function test1Wheel() {
   if (!xrx.engine.isOldIE()) {
@@ -109,7 +109,7 @@ function test1Wheel() {
     var vmlDrawing = getDrawingVml('vmlWheel');
     vmlDrawing.registerWheel(vmlDrawing.getViewbox());
   }
-***REMOVED***
+};
 
 function test2DblClick() {
   if (!xrx.engine.isOldIE()) {
@@ -122,7 +122,7 @@ function test2DblClick() {
     var vmlDrawing = getDrawingVml('vmlDblClick');
     vmlDrawing.registerDblClick(vmlDrawing.getViewbox());
   }
-***REMOVED***
+};
 
 function test4Drag() {
   if (!xrx.engine.isOldIE()) {
@@ -135,7 +135,7 @@ function test4Drag() {
     var vmlDrawing = getDrawingVml('vmlDrag');
     vmlDrawing.registerDrag(vmlDrawing.getViewbox());
   }
-***REMOVED***
+};
 
 function test5Out() {
   if (!xrx.engine.isOldIE()) {
@@ -151,7 +151,7 @@ function test5Out() {
     vmlDrawing.registerDrag(vmlDrawing.getViewbox());
     vmlDrawing.registerOut(vmlDrawing.getViewbox());
   }
-***REMOVED***
+};
 
 function test6All() {
   if (!xrx.engine.isOldIE()) {
@@ -164,7 +164,7 @@ function test6All() {
     var vmlDrawing = getDrawingVml('vmlAll');
     vmlDrawing.registerEvents(xrx.drawing.Mode.VIEW);
   }
-***REMOVED***
+};
 
 </script>
 

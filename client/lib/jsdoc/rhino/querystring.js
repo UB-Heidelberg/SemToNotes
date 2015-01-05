@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED*** Adapted version of Node.js' `querystring` module.
-***REMOVED*** @module querystring
-***REMOVED*** @see http://nodejs.org/api/querystring.html
-***REMOVED*** @see https://github.com/joyent/node/blob/f105f2f2/lib/querystring.js
-***REMOVED*** @license MIT
-***REMOVED***
+/**
+ * Adapted version of Node.js' `querystring` module.
+ * @module querystring
+ * @see http://nodejs.org/api/querystring.html
+ * @see https://github.com/joyent/node/blob/f105f2f2/lib/querystring.js
+ * @license MIT
+ */
 'use strict';
 
 var QueryString = exports;
@@ -18,11 +18,11 @@ function hasOwnProp(obj, prop) {
 
 QueryString.unescape = function(s) {
   return decodeURIComponent(s);
-***REMOVED***
+};
 
 QueryString.escape = function(str) {
   return encodeURIComponent(str);
-***REMOVED***
+};
 
 var stringifyPrimitive = function(v) {
   switch (typeof v) {
@@ -38,7 +38,7 @@ var stringifyPrimitive = function(v) {
     default:
       return '';
   }
-***REMOVED***
+};
 
 QueryString.stringify = QueryString.encode = function(obj, sep, eq, name) {
   sep = sep || '&';
@@ -66,13 +66,13 @@ QueryString.stringify = QueryString.encode = function(obj, sep, eq, name) {
   }
   return QueryString.escape(stringifyPrimitive(name)) + eq +
          QueryString.escape(stringifyPrimitive(obj));
-***REMOVED***
+};
 
 // Parse a key=val string.
 QueryString.parse = QueryString.decode = function(qs, sep, eq, options) {
   sep = sep || '&';
   eq = eq || '=';
-  var obj = {***REMOVED***
+  var obj = {};
 
   if (typeof qs !== 'string' || qs.length === 0) {
     return obj;
@@ -118,4 +118,4 @@ QueryString.parse = QueryString.decode = function(qs, sep, eq, options) {
   }
 
   return obj;
-***REMOVED***
+};

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Testing utilities for DOM related tests.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Testing utilities for DOM related tests.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.testing.dom');
 
@@ -36,38 +36,38 @@ goog.require('goog.testing.asserts');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** @return {!Node} A DIV node with a unique ID identifying the
-***REMOVED***     {@code END_TAG_MARKER_}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {!Node} A DIV node with a unique ID identifying the
+ *     {@code END_TAG_MARKER_}.
+ * @private
+ */
 goog.testing.dom.createEndTagMarker_ = function() {
   var marker = goog.dom.createElement(goog.dom.TagName.DIV);
   marker.id = goog.getUid(marker);
   return marker;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A unique object to use as an end tag marker.
-***REMOVED*** @private {!Node}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * A unique object to use as an end tag marker.
+ * @private {!Node}
+ * @const
+ */
 goog.testing.dom.END_TAG_MARKER_ = goog.testing.dom.createEndTagMarker_();
 
 
-***REMOVED***
-***REMOVED*** Tests if the given iterator over nodes matches the given Array of node
-***REMOVED*** descriptors.  Throws an error if any match fails.
-***REMOVED*** @param {goog.iter.Iterator} it  An iterator over nodes.
-***REMOVED*** @param {Array.<Node|number|string>} array Array of node descriptors to match
-***REMOVED***     against.  Node descriptors can be any of the following:
-***REMOVED***         Node: Test if the two nodes are equal.
-***REMOVED***         number: Test node.nodeType == number.
-***REMOVED***         string starting with '#': Match the node's id with the text
-***REMOVED***             after "#".
-***REMOVED***         other string: Match the text node's contents.
-***REMOVED***
+/**
+ * Tests if the given iterator over nodes matches the given Array of node
+ * descriptors.  Throws an error if any match fails.
+ * @param {goog.iter.Iterator} it  An iterator over nodes.
+ * @param {Array.<Node|number|string>} array Array of node descriptors to match
+ *     against.  Node descriptors can be any of the following:
+ *         Node: Test if the two nodes are equal.
+ *         number: Test node.nodeType == number.
+ *         string starting with '#': Match the node's id with the text
+ *             after "#".
+ *         other string: Match the text node's contents.
+ */
 goog.testing.dom.assertNodesMatch = function(it, array) {
   var i = 0;
   goog.iter.forEach(it, function(node) {
@@ -100,25 +100,25 @@ goog.testing.dom.assertNodesMatch = function(it, array) {
   });
 
   assertEquals('Used entire match array', array.length, i);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exposes a node as a string.
-***REMOVED*** @param {Node} node A node.
-***REMOVED*** @return {string} A string representation of the node.
-***REMOVED***
+/**
+ * Exposes a node as a string.
+ * @param {Node} node A node.
+ * @return {string} A string representation of the node.
+ */
 goog.testing.dom.exposeNode = function(node) {
   return (node.tagName || node.nodeValue) + (node.id ? '#' + node.id : '') +
       ':"' + (node.innerHTML || '') + '"';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exposes the nodes of a range wrapper as a string.
-***REMOVED*** @param {goog.dom.AbstractRange} range A range.
-***REMOVED*** @return {string} A string representation of the range.
-***REMOVED***
+/**
+ * Exposes the nodes of a range wrapper as a string.
+ * @param {goog.dom.AbstractRange} range A range.
+ * @return {string} A string representation of the range.
+ */
 goog.testing.dom.exposeRange = function(range) {
   // This is deliberately not implemented as
   // goog.dom.AbstractRange.prototype.toString, because it is non-authoritative.
@@ -132,18 +132,18 @@ goog.testing.dom.exposeRange = function(range) {
          range.getStartOffset() + ' to ' +
          goog.testing.dom.exposeNode(range.getEndNode()) + ':' +
          range.getEndOffset();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the current user agent matches the specified string.  Returns
-***REMOVED*** false if the string does specify at least one user agent but does not match
-***REMOVED*** the running agent.
-***REMOVED*** @param {string} userAgents Space delimited string of user agents.
-***REMOVED*** @return {boolean} Whether the user agent was matched.  Also true if no user
-***REMOVED***     agent was listed in the expectation string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the current user agent matches the specified string.  Returns
+ * false if the string does specify at least one user agent but does not match
+ * the running agent.
+ * @param {string} userAgents Space delimited string of user agents.
+ * @return {boolean} Whether the user agent was matched.  Also true if no user
+ *     agent was listed in the expectation string.
+ * @private
+ */
 goog.testing.dom.checkUserAgents_ = function(userAgents) {
   if (goog.string.startsWith(userAgents, '!')) {
     if (goog.string.contains(userAgents, ' ')) {
@@ -165,30 +165,30 @@ goog.testing.dom.checkUserAgents_ = function(userAgents) {
   }
   // If we got here, there was a user agent listed but we didn't match it.
   return !hasUserAgent;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Map function that converts end tags to a specific object.
-***REMOVED*** @param {Node} node The node to map.
-***REMOVED*** @param {undefined} ignore Always undefined.
-***REMOVED*** @param {!goog.iter.Iterator.<Node>} iterator The iterator.
-***REMOVED*** @return {Node} The resulting iteration item.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Map function that converts end tags to a specific object.
+ * @param {Node} node The node to map.
+ * @param {undefined} ignore Always undefined.
+ * @param {!goog.iter.Iterator.<Node>} iterator The iterator.
+ * @return {Node} The resulting iteration item.
+ * @private
+ */
 goog.testing.dom.endTagMap_ = function(node, ignore, iterator) {
   return iterator.isEndTag() ? goog.testing.dom.END_TAG_MARKER_ : node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Check if the given node is important.  A node is important if it is a
-***REMOVED*** non-empty text node, a non-annotated element, or an element annotated to
-***REMOVED*** match on this user agent.
-***REMOVED*** @param {Node} node The node to test.
-***REMOVED*** @return {boolean} Whether this node should be included for iteration.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Check if the given node is important.  A node is important if it is a
+ * non-empty text node, a non-annotated element, or an element annotated to
+ * match on this user agent.
+ * @param {Node} node The node to test.
+ * @return {boolean} Whether this node should be included for iteration.
+ * @private
+ */
 goog.testing.dom.nodeFilter_ = function(node) {
   if (node.nodeType == goog.dom.NodeType.TEXT) {
     // If a node is part of a string of text nodes and it has spaces in it,
@@ -209,53 +209,53 @@ goog.testing.dom.nodeFilter_ = function(node) {
     return goog.testing.dom.checkUserAgents_(node.className);
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines the text to match from the given node, removing browser
-***REMOVED*** specification strings.
-***REMOVED*** @param {Node} node The node expected to match.
-***REMOVED*** @return {string} The text, stripped of browser specification strings.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines the text to match from the given node, removing browser
+ * specification strings.
+ * @param {Node} node The node expected to match.
+ * @return {string} The text, stripped of browser specification strings.
+ * @private
+ */
 goog.testing.dom.getExpectedText_ = function(node) {
   // Strip off the browser specifications.
   return node.nodeValue.match(/^(\[\[.+\]\])?(.*)/)[2];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Describes the given node.
-***REMOVED*** @param {Node} node The node to describe.
-***REMOVED*** @return {string} A description of the node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Describes the given node.
+ * @param {Node} node The node to describe.
+ * @return {string} A description of the node.
+ * @private
+ */
 goog.testing.dom.describeNode_ = function(node) {
   if (node.nodeType == goog.dom.NodeType.TEXT) {
     return '[Text: ' + node.nodeValue + ']';
   } else {
     return '<' + node.tagName + (node.id ? ' #' + node.id : '') + ' .../>';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the html in {@code actual} is substantially similar to
-***REMOVED*** htmlPattern.  This method tests for the same set of styles, for the same
-***REMOVED*** order of nodes, and the presence of attributes.  Breaking whitespace nodes
-***REMOVED*** are ignored.  Elements can be
-***REMOVED*** annotated with classnames corresponding to keys in goog.userAgent and will be
-***REMOVED*** expected to show up in that user agent and expected not to show up in
-***REMOVED*** others.
-***REMOVED*** @param {string} htmlPattern The pattern to match.
-***REMOVED*** @param {!Node} actual The element to check: its contents are matched
-***REMOVED***     against the HTML pattern.
-***REMOVED*** @param {boolean=} opt_strictAttributes If false, attributes that appear in
-***REMOVED***     htmlPattern must be in actual, but actual can have attributes not
-***REMOVED***     present in htmlPattern.  If true, htmlPattern and actual must have the
-***REMOVED***     same set of attributes.  Default is false.
-***REMOVED***
+/**
+ * Assert that the html in {@code actual} is substantially similar to
+ * htmlPattern.  This method tests for the same set of styles, for the same
+ * order of nodes, and the presence of attributes.  Breaking whitespace nodes
+ * are ignored.  Elements can be
+ * annotated with classnames corresponding to keys in goog.userAgent and will be
+ * expected to show up in that user agent and expected not to show up in
+ * others.
+ * @param {string} htmlPattern The pattern to match.
+ * @param {!Node} actual The element to check: its contents are matched
+ *     against the HTML pattern.
+ * @param {boolean=} opt_strictAttributes If false, attributes that appear in
+ *     htmlPattern must be in actual, but actual can have attributes not
+ *     present in htmlPattern.  If true, htmlPattern and actual must have the
+ *     same set of attributes.  Default is false.
+ */
 goog.testing.dom.assertHtmlContentsMatch = function(htmlPattern, actual,
     opt_strictAttributes) {
   var div = goog.dom.createDom(goog.dom.TagName.DIV);
@@ -277,15 +277,15 @@ goog.testing.dom.assertHtmlContentsMatch = function(htmlPattern, actual,
   var advanceActualNode = function() {
     // If the iterator has already been advanced, don't advance it again.
     if (!preIterated) {
-      actualNode =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (goog.iter.nextOrValue(actualIt, null));
+      actualNode = /** @type {Node} */ (goog.iter.nextOrValue(actualIt, null));
     }
     preIterated = false;
 
     // Advance the iterator so long as it is return end tags.
     while (actualNode == goog.testing.dom.END_TAG_MARKER_) {
-      actualNode =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (goog.iter.nextOrValue(actualIt, null));
+      actualNode = /** @type {Node} */ (goog.iter.nextOrValue(actualIt, null));
     }
- ***REMOVED*****REMOVED***
+  };
 
   // HACK(brenneman): IE has unique ideas about whitespace handling when setting
   // innerHTML. This results in elision of leading whitespace in the expected
@@ -301,7 +301,7 @@ goog.testing.dom.assertHtmlContentsMatch = function(htmlPattern, actual,
 
   var number = 0;
   goog.iter.forEach(expectedIt, function(expectedNode) {
-    expectedNode =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (expectedNode);
+    expectedNode = /** @type {Node} */ (expectedNode);
 
     advanceActualNode();
     assertNotNull('Finished actual HTML before finishing expected HTML at ' +
@@ -340,7 +340,7 @@ goog.testing.dom.assertHtmlContentsMatch = function(htmlPattern, actual,
       // Concatenate text nodes until we reach a non text node.
       var actualText = actualNode.nodeValue;
       preIterated = true;
-      while ((actualNode =***REMOVED*****REMOVED*** @type {Node}***REMOVED***
+      while ((actualNode = /** @type {Node} */
               (goog.iter.nextOrValue(actualIt, null))) &&
           actualNode.nodeType == goog.dom.NodeType.TEXT) {
         actualText += actualNode.nodeValue;
@@ -374,36 +374,36 @@ goog.testing.dom.assertHtmlContentsMatch = function(htmlPattern, actual,
   advanceActualNode();
   assertNull('Finished expected HTML before finishing actual HTML' +
       errorSuffix, goog.iter.nextOrValue(actualIt, null));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the html in {@code actual} is substantially similar to
-***REMOVED*** htmlPattern.  This method tests for the same set of styles, and for the same
-***REMOVED*** order of nodes.  Breaking whitespace nodes are ignored.  Elements can be
-***REMOVED*** annotated with classnames corresponding to keys in goog.userAgent and will be
-***REMOVED*** expected to show up in that user agent and expected not to show up in
-***REMOVED*** others.
-***REMOVED*** @param {string} htmlPattern The pattern to match.
-***REMOVED*** @param {string} actual The html to check.
-***REMOVED***
+/**
+ * Assert that the html in {@code actual} is substantially similar to
+ * htmlPattern.  This method tests for the same set of styles, and for the same
+ * order of nodes.  Breaking whitespace nodes are ignored.  Elements can be
+ * annotated with classnames corresponding to keys in goog.userAgent and will be
+ * expected to show up in that user agent and expected not to show up in
+ * others.
+ * @param {string} htmlPattern The pattern to match.
+ * @param {string} actual The html to check.
+ */
 goog.testing.dom.assertHtmlMatches = function(htmlPattern, actual) {
   var div = goog.dom.createDom(goog.dom.TagName.DIV);
   div.innerHTML = actual;
 
   goog.testing.dom.assertHtmlContentsMatch(htmlPattern, div);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the first text node descendant of root with the given content.  Note
-***REMOVED*** that this operates on a text node level, so if text nodes get split this
-***REMOVED*** may not match the user visible text.  Using normalize() may help here.
-***REMOVED*** @param {string|RegExp} textOrRegexp The text to find, or a regular
-***REMOVED***     expression to find a match of.
-***REMOVED*** @param {Element} root The element to search in.
-***REMOVED*** @return {Node} The first text node that matches, or null if none is found.
-***REMOVED***
+/**
+ * Finds the first text node descendant of root with the given content.  Note
+ * that this operates on a text node level, so if text nodes get split this
+ * may not match the user visible text.  Using normalize() may help here.
+ * @param {string|RegExp} textOrRegexp The text to find, or a regular
+ *     expression to find a match of.
+ * @param {Element} root The element to search in.
+ * @return {Node} The first text node that matches, or null if none is found.
+ */
 goog.testing.dom.findTextNode = function(textOrRegexp, root) {
   var it = new goog.dom.NodeIterator(root);
   var ret = goog.iter.nextOrValue(goog.iter.filter(it, function(node) {
@@ -417,40 +417,40 @@ goog.testing.dom.findTextNode = function(textOrRegexp, root) {
       return false;
     }
   }), null);
-  return***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (ret);
-***REMOVED***
+  return /** @type {Node} */ (ret);
+};
 
 
-***REMOVED***
-***REMOVED*** Assert the end points of a range.
-***REMOVED***
-***REMOVED*** Notice that "Are two ranges visually identical?" and "Do two ranges have
-***REMOVED*** the same endpoint?" are independent questions. Two visually identical ranges
-***REMOVED*** may have different endpoints. And two ranges with the same endpoints may
-***REMOVED*** be visually different.
-***REMOVED***
-***REMOVED*** @param {Node} start The expected start node.
-***REMOVED*** @param {number} startOffset The expected start offset.
-***REMOVED*** @param {Node} end The expected end node.
-***REMOVED*** @param {number} endOffset The expected end offset.
-***REMOVED*** @param {goog.dom.AbstractRange} range The actual range.
-***REMOVED***
+/**
+ * Assert the end points of a range.
+ *
+ * Notice that "Are two ranges visually identical?" and "Do two ranges have
+ * the same endpoint?" are independent questions. Two visually identical ranges
+ * may have different endpoints. And two ranges with the same endpoints may
+ * be visually different.
+ *
+ * @param {Node} start The expected start node.
+ * @param {number} startOffset The expected start offset.
+ * @param {Node} end The expected end node.
+ * @param {number} endOffset The expected end offset.
+ * @param {goog.dom.AbstractRange} range The actual range.
+ */
 goog.testing.dom.assertRangeEquals = function(start, startOffset, end,
     endOffset, range) {
   assertEquals('Unexpected start node', start, range.getStartNode());
   assertEquals('Unexpected end node', end, range.getEndNode());
   assertEquals('Unexpected start offset', startOffset, range.getStartOffset());
   assertEquals('Unexpected end offset', endOffset, range.getEndOffset());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the value of a DOM attribute in deterministic way.
-***REMOVED*** @param {!Node} node A node.
-***REMOVED*** @param {string} name Attribute name.
-***REMOVED*** @return {*} Attribute value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the value of a DOM attribute in deterministic way.
+ * @param {!Node} node A node.
+ * @param {string} name Attribute name.
+ * @return {*} Attribute value.
+ * @private
+ */
 goog.testing.dom.getAttributeValue_ = function(node, name) {
   // These hacks avoid nondetermistic results in the following cases:
   // IE7: document.createElement('input').height returns a random number.
@@ -465,21 +465,21 @@ goog.testing.dom.getAttributeValue_ = function(node, name) {
   return goog.isDef(node[name]) &&
       typeof node.getAttribute(name) != typeof node[name] ?
       node[name] : node.getAttribute(name);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the attributes of two Nodes are the same (ignoring any
-***REMOVED*** instances of the style attribute).
-***REMOVED*** @param {string} errorSuffix String to add to end of error messages.
-***REMOVED*** @param {!Element} expectedElem The element whose attributes we are expecting.
-***REMOVED*** @param {!Element} actualElem The element with the actual attributes.
-***REMOVED*** @param {boolean} strictAttributes If false, attributes that appear in
-***REMOVED***     expectedNode must also be in actualNode, but actualNode can have
-***REMOVED***     attributes not present in expectedNode.  If true, expectedNode and
-***REMOVED***     actualNode must have the same set of attributes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Assert that the attributes of two Nodes are the same (ignoring any
+ * instances of the style attribute).
+ * @param {string} errorSuffix String to add to end of error messages.
+ * @param {!Element} expectedElem The element whose attributes we are expecting.
+ * @param {!Element} actualElem The element with the actual attributes.
+ * @param {boolean} strictAttributes If false, attributes that appear in
+ *     expectedNode must also be in actualNode, but actualNode can have
+ *     attributes not present in expectedNode.  If true, expectedNode and
+ *     actualNode must have the same set of attributes.
+ * @private
+ */
 goog.testing.dom.assertAttributesEqual_ = function(errorSuffix,
     expectedElem, actualElem, strictAttributes) {
   if (strictAttributes) {
@@ -506,7 +506,7 @@ goog.testing.dom.assertAttributesEqual_ = function(errorSuffix,
 
     if (expectedName == 'id' && goog.userAgent.IE) {
       goog.testing.dom.compareIdAttributeForIe_(
-         ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (expectedValue), actualAttribute,
+          /** @type {string} */ (expectedValue), actualAttribute,
           strictAttributes, errorSuffix);
       continue;
     }
@@ -540,16 +540,16 @@ goog.testing.dom.assertAttributesEqual_ = function(errorSuffix,
           expectedAttributes[actualName]);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert the class attribute of actualElem is the same as the one in
-***REMOVED*** expectedElem, ignoring classes that are useragents.
-***REMOVED*** @param {!Element} expectedElem The DOM element whose class we expect.
-***REMOVED*** @param {!Element} actualElem The DOM element with the actual class.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Assert the class attribute of actualElem is the same as the one in
+ * expectedElem, ignoring classes that are useragents.
+ * @param {!Element} expectedElem The DOM element whose class we expect.
+ * @param {!Element} actualElem The DOM element with the actual class.
+ * @private
+ */
 goog.testing.dom.compareClassAttribute_ = function(expectedElem,
     actualElem) {
   var classes = goog.dom.classlist.get(expectedElem);
@@ -569,43 +569,43 @@ goog.testing.dom.compareClassAttribute_ = function(expectedElem,
       'Expected class was: ' + expectedClasses.join(' ') +
       ', but actual class was: ' + actualElem.className,
       expectedClasses, actualClasses);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set of attributes IE adds to elements randomly.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set of attributes IE adds to elements randomly.
+ * @type {Object}
+ * @private
+ */
 goog.testing.dom.BAD_IE_ATTRIBUTES_ = goog.object.createSet(
     'methods', 'CHECKED', 'dataFld', 'dataFormatAs', 'dataSrc');
 
 
-***REMOVED***
-***REMOVED*** Whether to ignore the attribute.
-***REMOVED*** @param {string} name Name of the attribute.
-***REMOVED*** @return {boolean} True if the attribute should be ignored.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to ignore the attribute.
+ * @param {string} name Name of the attribute.
+ * @return {boolean} True if the attribute should be ignored.
+ * @private
+ */
 goog.testing.dom.ignoreAttribute_ = function(name) {
   if (name == 'style' || name == 'class') {
     return true;
   }
   return goog.userAgent.IE && goog.testing.dom.BAD_IE_ATTRIBUTES_[name];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compare id attributes for IE.  In IE, if an element lacks an id attribute
-***REMOVED*** in the original HTML, the element object will still have such an attribute,
-***REMOVED*** but its value will be the empty string.
-***REMOVED*** @param {string} expectedValue The expected value of the id attribute.
-***REMOVED*** @param {Attr} actualAttribute The actual id attribute.
-***REMOVED*** @param {boolean} strictAttributes Whether strict attribute checking should be
-***REMOVED***     done.
-***REMOVED*** @param {string} errorSuffix String to append to error messages.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compare id attributes for IE.  In IE, if an element lacks an id attribute
+ * in the original HTML, the element object will still have such an attribute,
+ * but its value will be the empty string.
+ * @param {string} expectedValue The expected value of the id attribute.
+ * @param {Attr} actualAttribute The actual id attribute.
+ * @param {boolean} strictAttributes Whether strict attribute checking should be
+ *     done.
+ * @param {string} errorSuffix String to append to error messages.
+ * @private
+ */
 goog.testing.dom.compareIdAttributeForIe_ = function(expectedValue,
     actualAttribute, strictAttributes, errorSuffix) {
   if (expectedValue === '') {
@@ -621,4 +621,4 @@ goog.testing.dom.compareIdAttributeForIe_ = function(expectedValue,
     assertEquals('Expected attribute has a different value ' + errorSuffix,
         expectedValue, actualAttribute.value);
   }
-***REMOVED***
+};

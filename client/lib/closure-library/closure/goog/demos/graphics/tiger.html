@@ -21,15 +21,15 @@ goog.require('goog.graphics');
 function drawTiger() {
   var graphics = goog.graphics.createGraphics(600, 600);
 
-  var fills = {***REMOVED***
-  var strokes = {***REMOVED***
+  var fills = {};
+  var strokes = {};
 
   var segmentFunctions = {
     'z': goog.graphics.Path.prototype.close,
     'M': goog.graphics.Path.prototype.moveTo,
     'L': goog.graphics.Path.prototype.lineTo,
     'C': goog.graphics.Path.prototype.curveTo
- ***REMOVED*****REMOVED***
+  };
 
   function createPath(stroke, fill, paths) {
 

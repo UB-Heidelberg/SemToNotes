@@ -15,7 +15,7 @@
 goog.provide('goog.net.ChannelRequestTest');
 goog.setTestOnly('goog.net.ChannelRequestTest');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.functions');
 goog.require('goog.net.BrowserChannel');
 goog.require('goog.net.ChannelDebug');
@@ -33,22 +33,22 @@ var stubs;
 var xhrIo;
 
 
-***REMOVED***
-***REMOVED*** Time to wait for a network request to time out, before aborting.
-***REMOVED***
+/**
+ * Time to wait for a network request to time out, before aborting.
+ */
 var WATCHDOG_TIME = 2000;
 
 
-***REMOVED***
-***REMOVED*** Time to throttle readystatechange events.
-***REMOVED***
+/**
+ * Time to throttle readystatechange events.
+ */
 var THROTTLE_TIME = 500;
 
 
-***REMOVED***
-***REMOVED*** A really long time - used to make sure no more timeouts will fire.
-***REMOVED***
-var ALL_DAY_MS = 1000***REMOVED*** 60***REMOVED*** 60***REMOVED*** 24;
+/**
+ * A really long time - used to make sure no more timeouts will fire.
+ */
+var ALL_DAY_MS = 1000 * 60 * 60 * 24;
 
 
 function setUp() {
@@ -65,50 +65,50 @@ function tearDown() {
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a duck-type BrowserChannel that tracks the completed requests.
-***REMOVED*****REMOVED***
-***REMOVED***
+/**
+ * Constructs a duck-type BrowserChannel that tracks the completed requests.
+  * @constructor
+ */
 function MockBrowserChannel() {
-  this.reachabilityEvents = {***REMOVED***
+  this.reachabilityEvents = {};
   this.isClosed = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
   this.isActive = function() {
     return true;
- ***REMOVED*****REMOVED***
+  };
   this.shouldUseSecondaryDomains = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
   this.completedRequests = [];
   this.notifyServerReachabilityEvent = function(reachabilityType) {
     if (!this.reachabilityEvents[reachabilityType]) {
       this.reachabilityEvents[reachabilityType] = 0;
     }
     this.reachabilityEvents[reachabilityType]++;
- ***REMOVED*****REMOVED***
+  };
   this.onRequestComplete = function(request) {
     this.completedRequests.push(request);
- ***REMOVED*****REMOVED***
-  this.onRequestData = function(request, data) {***REMOVED***
+  };
+  this.onRequestData = function(request, data) {};
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a real ChannelRequest object, with some modifications for
-***REMOVED*** testability:
-***REMOVED*** <ul>
-***REMOVED*** <li>The BrowserChannel is a MockBrowserChannel.
-***REMOVED*** <li>The new watchdogTimeoutCallCount property tracks onWatchDogTimeout_()
-***REMOVED***     calls.
-***REMOVED*** <li>The timeout is set to WATCHDOG_TIME.
-***REMOVED*** </ul>
-***REMOVED***
+/**
+ * Creates a real ChannelRequest object, with some modifications for
+ * testability:
+ * <ul>
+ * <li>The BrowserChannel is a MockBrowserChannel.
+ * <li>The new watchdogTimeoutCallCount property tracks onWatchDogTimeout_()
+ *     calls.
+ * <li>The timeout is set to WATCHDOG_TIME.
+ * </ul>
+ */
 function createChannelRequest() {
   xhrIo = new goog.testing.net.XhrIo();
   xhrIo.abort = xhrIo.abort || function() {
     this.active_ = false;
- ***REMOVED*****REMOVED***
+  };
 
   // Install mock browser channel and no-op debug logger.
   mockBrowserChannel = new MockBrowserChannel();
@@ -119,7 +119,7 @@ function createChannelRequest() {
   // Install test XhrIo.
   mockBrowserChannel.createXhrIo = function() {
     return xhrIo;
- ***REMOVED*****REMOVED***
+  };
 
   // Install watchdogTimeoutCallCount.
   channelRequest.watchdogTimeoutCallCount = 0;
@@ -127,16 +127,16 @@ function createChannelRequest() {
   channelRequest.onWatchDogTimeout_ = function() {
     this.watchdogTimeoutCallCount++;
     return this.originalOnWatchDogTimeout();
- ***REMOVED*****REMOVED***
+  };
 
   channelRequest.setTimeout(WATCHDOG_TIME);
 }
 
 
-***REMOVED***
-***REMOVED*** Run through the lifecycle of a long lived request, checking that the right
-***REMOVED*** network events are reported.
-***REMOVED***
+/**
+ * Run through the lifecycle of a long lived request, checking that the right
+ * network events are reported.
+ */
 function testNetworkEvents() {
   createChannelRequest();
 
@@ -156,9 +156,9 @@ function testNetworkEvents() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test throttling of readystatechange events.
-***REMOVED***
+/**
+ * Test throttling of readystatechange events.
+ */
 function testNetworkEvents_throttleReadyStateChange() {
   createChannelRequest();
   channelRequest.setReadyStateChangeThrottle(THROTTLE_TIME);
@@ -198,10 +198,10 @@ function testNetworkEvents_throttleReadyStateChange() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that the request "completes" with an error when the timeout
-***REMOVED*** expires.
-***REMOVED***
+/**
+ * Make sure that the request "completes" with an error when the timeout
+ * expires.
+ */
 function testRequestTimeout() {
   createChannelRequest();
 

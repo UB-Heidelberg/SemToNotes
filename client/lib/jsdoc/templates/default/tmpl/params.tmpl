@@ -1,7 +1,7 @@
 <?js
     var params = obj;
 
-    /* sort subparams under their parent params (like opts.classname)***REMOVED***
+    /* sort subparams under their parent params (like opts.classname) */
     var parentParam = null;
     params.forEach(function(param, i) {
         if (!param) { return; }
@@ -16,7 +16,7 @@
         }
     });
 
-    /* determine if we need extra columns, "attributes" and "default"***REMOVED***
+    /* determine if we need extra columns, "attributes" and "default" */
     params.hasAttributes = false;
     params.hasDefault = false;
     params.hasName = false;
@@ -61,7 +61,7 @@
 
     <tbody>
     <?js
-      ***REMOVED***
+        var self = this;
         params.forEach(function(param) {
             if (!param) { return; }
     ?>

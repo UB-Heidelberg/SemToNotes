@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.geometry.Circle');
   goog.require('xrx.geometry.Path');
   goog.require('xrx.geometry.Rect');
@@ -26,7 +26,7 @@ function test1CircleContainsPoint() {
   assertFalse(circle.containsPoint([100,49]));
   assertTrue(circle.containsPoint([50,100]));
   assertFalse(circle.containsPoint([49,100]));
-***REMOVED***
+};
 
 function test2PolygonContainsPoint() {
   var polygon = new xrx.geometry.Path();
@@ -42,7 +42,7 @@ function test2PolygonContainsPoint() {
   assertFalse(polygon.containsPoint([31,15]));
   assertFalse(polygon.containsPoint([15,30]));
   assertFalse(polygon.containsPoint([15,31]));
-***REMOVED***
+};
 
 function test3RectContainsPoint() {
   var rect = new xrx.geometry.Rect();
@@ -58,7 +58,7 @@ function test3RectContainsPoint() {
   assertFalse(rect.containsPoint([31,15]));
   assertTrue(rect.containsPoint([15,30]));
   assertFalse(rect.containsPoint([15,31]));
-***REMOVED***
+};
 
 </script>
 

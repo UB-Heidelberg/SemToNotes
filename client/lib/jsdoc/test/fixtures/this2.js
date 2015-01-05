@@ -1,15 +1,15 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function TemplateBuilder(templateType) {
-   ***REMOVED*****REMOVED****REMOVED*** document me***REMOVED***
+    //** document me */
     //this.templateType = templateType;
 
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     this.Template = function() { // nested constructor of constructor TemplateFactory
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         this.render = function(data) {
-           ***REMOVED*****REMOVED*** document me***REMOVED***
+            /** document me */
             this.rendered = true;
         }
-   ***REMOVED*****REMOVED***
+    };
 
 }

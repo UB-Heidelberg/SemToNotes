@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This event monitor wraps the Page Visibility API.
-***REMOVED*** @see http://www.w3.org/TR/page-visibility/
-***REMOVED***
+/**
+ * @fileoverview This event monitor wraps the Page Visibility API.
+ * @see http://www.w3.org/TR/page-visibility/
+ */
 
 goog.provide('goog.labs.dom.PageVisibilityEvent');
 goog.provide('goog.labs.dom.PageVisibilityMonitor');
@@ -23,67 +23,67 @@ goog.provide('goog.labs.dom.PageVisibilityState');
 
 goog.require('goog.dom');
 goog.require('goog.dom.vendor');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.memoize');
 
 goog.scope(function() {
 var dom = goog.labs.dom;
 
 
-***REMOVED***
-***REMOVED*** The different visibility states.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The different visibility states.
+ * @enum {string}
+ */
 dom.PageVisibilityState = {
   HIDDEN: 'hidden',
   VISIBLE: 'visible',
   PRERENDER: 'prerender',
   UNLOADED: 'unloaded'
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This event handler allows you to catch page visibility change events.
-***REMOVED*** @param {!goog.dom.DomHelper=} opt_domHelper
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This event handler allows you to catch page visibility change events.
+ * @param {!goog.dom.DomHelper=} opt_domHelper
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 dom.PageVisibilityMonitor = function(opt_domHelper) {
   dom.PageVisibilityMonitor.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {!goog.dom.DomHelper}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {!goog.dom.DomHelper}
+   */
   this.domHelper_ = opt_domHelper || goog.dom.getDomHelper();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {?string}
+   */
   this.eventType_ = this.getBrowserEventType_();
 
   // Some browsers do not support visibilityChange and therefore we don't bother
   // setting up events.
   if (this.eventType_) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @private {goog.events.Key}
-   ***REMOVED*****REMOVED***
+    /**
+     * @private {goog.events.Key}
+     */
     this.eventKey_ = goog.events.listen(this.domHelper_.getDocument(),
         this.eventType_, goog.bind(this.handleChange_, this));
   }
-***REMOVED***
+};
 goog.inherits(dom.PageVisibilityMonitor, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The visibility change event type, or null if not supported.
-***REMOVED***     Memoized for performance.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {?string} The visibility change event type, or null if not supported.
+ *     Memoized for performance.
+ * @private
+ */
 dom.PageVisibilityMonitor.prototype.getBrowserEventType_ =
     goog.memoize(function() {
   var isSupported = this.isSupported();
@@ -99,11 +99,11 @@ dom.PageVisibilityMonitor.prototype.getBrowserEventType_ =
 });
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The browser-specific document.hidden property.  Memoized
-***REMOVED***     for performance.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {?string} The browser-specific document.hidden property.  Memoized
+ *     for performance.
+ * @private
+ */
 dom.PageVisibilityMonitor.prototype.getHiddenPropertyName_ = goog.memoize(
     function() {
       return goog.dom.vendor.getPrefixedPropertyName(
@@ -111,20 +111,20 @@ dom.PageVisibilityMonitor.prototype.getHiddenPropertyName_ = goog.memoize(
     });
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the visibility API is prefixed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {boolean} Whether the visibility API is prefixed.
+ * @private
+ */
 dom.PageVisibilityMonitor.prototype.isPrefixed_ = function() {
   return this.getHiddenPropertyName_() != 'hidden';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The browser-specific document.visibilityState property.
-***REMOVED***     Memoized for performance.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {?string} The browser-specific document.visibilityState property.
+ *     Memoized for performance.
+ * @private
+ */
 dom.PageVisibilityMonitor.prototype.getVisibilityStatePropertyName_ =
     goog.memoize(function() {
   return goog.dom.vendor.getPrefixedPropertyName(
@@ -132,80 +132,80 @@ dom.PageVisibilityMonitor.prototype.getVisibilityStatePropertyName_ =
 });
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the visibility API is supported.
-***REMOVED***
+/**
+ * @return {boolean} Whether the visibility API is supported.
+ */
 dom.PageVisibilityMonitor.prototype.isSupported = function() {
   return !!this.getHiddenPropertyName_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the page is visible.
-***REMOVED***
+/**
+ * @return {boolean} Whether the page is visible.
+ */
 dom.PageVisibilityMonitor.prototype.isHidden = function() {
   return !!this.domHelper_.getDocument()[this.getHiddenPropertyName_()];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?dom.PageVisibilityState} The page visibility state, or null if
-***REMOVED***     not supported.
-***REMOVED***
+/**
+ * @return {?dom.PageVisibilityState} The page visibility state, or null if
+ *     not supported.
+ */
 dom.PageVisibilityMonitor.prototype.getVisibilityState = function() {
   if (!this.isSupported()) {
     return null;
   }
   return this.domHelper_.getDocument()[this.getVisibilityStatePropertyName_()];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the events on the element.
-***REMOVED*** @param {goog.events.BrowserEvent} e The underlying browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the events on the element.
+ * @param {goog.events.BrowserEvent} e The underlying browser event.
+ * @private
+ */
 dom.PageVisibilityMonitor.prototype.handleChange_ = function(e) {
   var state = this.getVisibilityState();
   var visibilityEvent = new dom.PageVisibilityEvent(
-      this.isHidden(),***REMOVED*****REMOVED*** @type {dom.PageVisibilityState}***REMOVED*** (state));
+      this.isHidden(), /** @type {dom.PageVisibilityState} */ (state));
   this.dispatchEvent(visibilityEvent);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 dom.PageVisibilityMonitor.prototype.disposeInternal = function() {
   goog.events.unlistenByKey(this.eventKey_);
   dom.PageVisibilityMonitor.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A page visibility change event.
-***REMOVED*** @param {boolean} hidden Whether the page is hidden.
-***REMOVED*** @param {goog.labs.dom.PageVisibilityState} visibilityState A more detailed
-***REMOVED***     visibility state.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A page visibility change event.
+ * @param {boolean} hidden Whether the page is hidden.
+ * @param {goog.labs.dom.PageVisibilityState} visibilityState A more detailed
+ *     visibility state.
+ * @constructor
+ * @extends {goog.events.Event}
+ * @final
+ */
 dom.PageVisibilityEvent = function(hidden, visibilityState) {
   dom.PageVisibilityEvent.base(
       this, 'constructor', goog.events.EventType.VISIBILITYCHANGE);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the page is hidden.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the page is hidden.
+   * @type {boolean}
+   */
   this.hidden = hidden;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A more detailed visibility state.
-  ***REMOVED*** @type {dom.PageVisibilityState}
- ***REMOVED*****REMOVED***
+  /**
+   * A more detailed visibility state.
+   * @type {dom.PageVisibilityState}
+   */
   this.visibilityState = visibilityState;
-***REMOVED***
+};
 goog.inherits(dom.PageVisibilityEvent, goog.events.Event);
 
 });  // goog.scope

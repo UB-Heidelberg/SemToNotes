@@ -277,7 +277,7 @@ See the COPYING file for details.
       goog.dom.setTextContent(document.getElementById('tabpane1index'),
                               event.page.getTitle());
     }
-  ***REMOVED***tabPane, goog.ui.TabPane.Events.CHANGE, tabChanged);
+    goog.events.listen(tabPane, goog.ui.TabPane.Events.CHANGE, tabChanged);
 
     tabPane.setSelectedIndex(1);
 

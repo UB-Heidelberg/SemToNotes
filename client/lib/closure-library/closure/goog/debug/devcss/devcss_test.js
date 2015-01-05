@@ -191,8 +191,8 @@ function testReplaceIe6Selectors() {
 }
 
 /*
-***REMOVED*** TODO(user): Re-enable if we ever come up with a way to make imports
-***REMOVED*** work.
+ * TODO(user): Re-enable if we ever come up with a way to make imports
+ * work.
 function testDisableDuplicateStyleSheetImports() {
   var el1 = document.getElementById('devcss-test-importfixer-1');
   var el2 = document.getElementById('devcss-test-importfixer-2');

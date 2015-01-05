@@ -28,7 +28,7 @@ goog.inherits(NoObjectReusePriorityPool, goog.structs.PriorityPool);
 
 NoObjectReusePriorityPool.prototype.objectCanBeReused = function(obj) {
   return false;
-***REMOVED***
+};
 
 
 function testExceedMax1() {
@@ -38,12 +38,12 @@ function testExceedMax1() {
   var callback1 = function(obj) {
     assertNotNull(obj);
     getCount1++;
- ***REMOVED*****REMOVED***
+  };
 
   var getCount2 = 0;
   var callback2 = function(obj) {
     getCount2++;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);
   p.getObject(callback1);
@@ -64,12 +64,12 @@ function testExceedMax2() {
   var callback1 = function(obj) {
     assertNotNull(obj);
     getCount1++;
- ***REMOVED*****REMOVED***
+  };
 
   var getCount2 = 0;
   var callback2 = function(obj) {
     getCount2++;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -88,17 +88,17 @@ function testExceedMax3() {
   var obj1 = null;
   var callback1 = function(obj) {
     obj1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var obj2 = null;
   var callback2 = function(obj) {
     obj2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var obj3 = null;
   var callback3 = function(obj) {
     obj3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -117,12 +117,12 @@ function testExceedMax4() {
   var callback1 = function(obj) {
     assertNotNull(obj);
     getCount1++;
- ***REMOVED*****REMOVED***
+  };
 
   var getCount2 = 0;
   var callback2 = function(obj) {
     getCount2++;
- ***REMOVED*****REMOVED***
+  };
 
   for (var i = 0; i < 12; i++) {
     p.getObject(i < 10 ? callback1 : callback2);
@@ -139,7 +139,7 @@ function testReleaseAndGet1() {
   var o = null;
   var callback = function(obj) {
     o = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback);
   assertEquals(1, p.getCount());
@@ -158,7 +158,7 @@ function testReleaseAndGet2() {
   var o = null;
   var callback = function(obj) {
     o = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback);
   assertEquals(1, p.getCount());
@@ -176,19 +176,19 @@ function testReleaseAndGet3() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
-  var o4 = {***REMOVED***
+  var o4 = {};
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -212,19 +212,19 @@ function testReleaseAndGet4() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
-  var o4 = {***REMOVED***
+  var o4 = {};
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -246,20 +246,20 @@ function testIsInPool1() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
-  var o4 = {***REMOVED***
-  var o5 = {***REMOVED***
+  var o4 = {};
+  var o5 = {};
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -300,7 +300,7 @@ function testSetMin2() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
   p.getObject(callback1);
 
   assertEquals(1, p.getCount());
@@ -325,27 +325,27 @@ function testSetMax1() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o4 = null;
   var callback4 = function(obj) {
     o4 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o5 = null;
   var callback5 = function(obj) {
     o5 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -409,17 +409,17 @@ function testQueue1() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);
   p.getObject(callback2);
@@ -440,32 +440,32 @@ function testPriority1() {
   var o1 = null;
   var callback1 = function(obj) {
     o1 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o2 = null;
   var callback2 = function(obj) {
     o2 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o3 = null;
   var callback3 = function(obj) {
     o3 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o4 = null;
   var callback4 = function(obj) {
     o4 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o5 = null;
   var callback5 = function(obj) {
     o5 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   var o6 = null;
   var callback6 = function(obj) {
     o6 = obj;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback1);       // Initially seeded requests.
   p.getObject(callback2);
@@ -510,7 +510,7 @@ function testRateLimiting() {
   var callback = function(obj) {
     assertNotNull(obj);
     getCount++;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback);
   assertEquals(1, getCount);
@@ -552,7 +552,7 @@ function testRateLimitingWithChangingDelay() {
   var callback = function(obj) {
     assertNotNull(obj);
     getCount++;
- ***REMOVED*****REMOVED***
+  };
 
   p.getObject(callback);
   assertEquals(1, getCount);

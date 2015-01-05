@@ -10,10 +10,10 @@ See the COPYING file for details.
   <title>goog.history.Html5History Demo</title>
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.history.EventType');
     goog.require('goog.history.Html5History');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.Uri');
   </script>
   <style>
   .section {
@@ -60,7 +60,7 @@ See the COPYING file for details.
     if (h) {
       var cur = 'kittens';
 
-    ***REMOVED***h, goog.history.EventType.NAVIGATE, function(e) {
+      goog.events.listen(h, goog.history.EventType.NAVIGATE, function(e) {
         var token = e.token || 'kittens';
         var next = document.getElementById(token);
         if (next) {
@@ -74,7 +74,7 @@ See the COPYING file for details.
       h.setPathPrefix(new goog.Uri(document.location.href).getPath() + '/');
       h.setEnabled(true);
 
-    ***REMOVED***
+      goog.events.listen(
           document.getElementById('links'), 'click', function(e) {
         if (e.target.tagName == 'A') {
           h.setToken(e.target.getAttribute('token'), e.target.title);

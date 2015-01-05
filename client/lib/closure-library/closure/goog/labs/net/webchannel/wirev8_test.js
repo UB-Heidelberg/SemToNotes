@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.net.webChannel.WireV8.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.net.webChannel.WireV8.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.WireV8Test');
@@ -42,7 +42,7 @@ function testEncodeSimpleMessage() {
   var message = {
     a: 'a',
     b: 'b'
- ***REMOVED*****REMOVED***
+  };
   var buff = [];
   wireCodec.encodeMessage(message, buff, 'prefix_');
   assertEquals(2, buff.length);
@@ -58,7 +58,7 @@ function testEncodeComplexMessage() {
       x: 1,
       y: 2
     }
- ***REMOVED*****REMOVED***
+  };
   var buff = [];
   wireCodec.encodeMessage(message, buff, 'prefix_');
   assertEquals(2, buff.length);
@@ -71,18 +71,18 @@ function testEncodeComplexMessage() {
 function testEncodeMessageQueue() {
   var message1 = {
     a: 'a'
- ***REMOVED*****REMOVED***
+  };
   var queuedMessage1 = {
     map: message1,
     mapId: 3
- ***REMOVED*****REMOVED***
+  };
   var message2 = {
     b: 'b'
- ***REMOVED*****REMOVED***
+  };
   var queuedMessage2 = {
     map: message2,
     mapId: 4
- ***REMOVED*****REMOVED***
+  };
   var queue = [queuedMessage1, queuedMessage2];
   var result = wireCodec.encodeMessageQueue(queue, 2, null);
   assertEquals('count=2&ofs=3&req0_a=a&req1_b=b', result);

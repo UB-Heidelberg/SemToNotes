@@ -156,7 +156,7 @@ See the COPYING file for details.
     }
 
     function testsetSortableHeaderRowIndexAfterDecorateThrows() {
-      var func = function() { tableSorter.setSortableHeaderRowIndex(0);***REMOVED*****REMOVED***
+      var func = function() { tableSorter.setSortableHeaderRowIndex(0); };
       var msg = assertThrows('failFunc should throw.', func)['message']
       assertEquals('Component already rendered', msg);
     }

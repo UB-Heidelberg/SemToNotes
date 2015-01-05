@@ -82,7 +82,7 @@ function normalizeHtml(str) {
 
 // TODO(robbyw): We really need tests for (and code fixes for)
 // createRangeFromNodes in the following cases:
-***REMOVED****REMOVED****REMOVED*** BR boundary (before + after)
+// * BR boundary (before + after)
 
 function testCreateFromNodes() {
   var start = test1.firstChild;
@@ -577,12 +577,12 @@ function testCompareBrowserRangeEndpoints() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for a bug in IeRange.insertNode_ where if the node to be
-***REMOVED*** inserted was not an element (e.g. a text node), it would clone the node
-***REMOVED*** in the inserting process but return the original node instead of the newly
-***REMOVED*** created and inserted node.
-***REMOVED***
+/**
+ * Regression test for a bug in IeRange.insertNode_ where if the node to be
+ * inserted was not an element (e.g. a text node), it would clone the node
+ * in the inserting process but return the original node instead of the newly
+ * created and inserted node.
+ */
 function testInsertNodeNonElement() {
   dynamic.innerHTML = 'beforeafter';
   var range = goog.dom.browserrange.createRangeFromNodes(

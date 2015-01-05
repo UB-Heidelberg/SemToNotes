@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A palette control.  A palette is a grid that the user can
-***REMOVED*** highlight or select via the keyboard or the mouse.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @see ../demos/palette.html
-***REMOVED***
+/**
+ * @fileoverview A palette control.  A palette is a grid that the user can
+ * highlight or select via the keyboard or the mouse.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @see ../demos/palette.html
+ */
 
 goog.provide('goog.ui.Palette');
 
 goog.require('goog.array');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.math.Size');
 goog.require('goog.ui.Component');
@@ -35,85 +35,85 @@ goog.require('goog.ui.SelectionModel');
 
 
 
-***REMOVED***
-***REMOVED*** A palette is a grid of DOM nodes that the user can highlight or select via
-***REMOVED*** the keyboard or the mouse.  The selection state of the palette is controlled
-***REMOVED*** an ACTION event.  Event listeners may retrieve the selected item using the
-***REMOVED*** {@link #getSelectedItem} or {@link #getSelectedIndex} method.
-***REMOVED***
-***REMOVED*** Use this class as the base for components like color palettes or emoticon
-***REMOVED*** pickers.  Use {@link #setContent} to set/change the items in the palette
-***REMOVED*** after construction.  See palette.html demo for example usage.
-***REMOVED***
-***REMOVED*** @param {Array.<Node>} items Array of DOM nodes to be displayed as items
-***REMOVED***     in the palette grid (limited to one per cell).
-***REMOVED*** @param {goog.ui.PaletteRenderer=} opt_renderer Renderer used to render or
-***REMOVED***     decorate the palette; defaults to {@link goog.ui.PaletteRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED***
+/**
+ * A palette is a grid of DOM nodes that the user can highlight or select via
+ * the keyboard or the mouse.  The selection state of the palette is controlled
+ * an ACTION event.  Event listeners may retrieve the selected item using the
+ * {@link #getSelectedItem} or {@link #getSelectedIndex} method.
+ *
+ * Use this class as the base for components like color palettes or emoticon
+ * pickers.  Use {@link #setContent} to set/change the items in the palette
+ * after construction.  See palette.html demo for example usage.
+ *
+ * @param {Array.<Node>} items Array of DOM nodes to be displayed as items
+ *     in the palette grid (limited to one per cell).
+ * @param {goog.ui.PaletteRenderer=} opt_renderer Renderer used to render or
+ *     decorate the palette; defaults to {@link goog.ui.PaletteRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Control}
+ */
 goog.ui.Palette = function(items, opt_renderer, opt_domHelper) {
   goog.ui.Palette.base(this, 'constructor', items,
       opt_renderer || goog.ui.PaletteRenderer.getInstance(), opt_domHelper);
   this.setAutoStates(goog.ui.Component.State.CHECKED |
       goog.ui.Component.State.SELECTED | goog.ui.Component.State.OPENED, false);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A fake component for dispatching events on palette cell changes.
-  ***REMOVED*** @type {!goog.ui.Palette.CurrentCell_}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A fake component for dispatching events on palette cell changes.
+   * @type {!goog.ui.Palette.CurrentCell_}
+   * @private
+   */
   this.currentCellControl_ = new goog.ui.Palette.CurrentCell_();
   this.currentCellControl_.setParentEventTarget(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {number} The last highlighted index, or -1 if it never had one.
- ***REMOVED*****REMOVED***
+  /**
+   * @private {number} The last highlighted index, or -1 if it never had one.
+   */
   this.lastHighlightedIndex_ = -1;
-***REMOVED***
+};
 goog.inherits(goog.ui.Palette, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** Events fired by the palette object
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Events fired by the palette object
+ * @enum {string}
+ */
 goog.ui.Palette.EventType = {
   AFTER_HIGHLIGHT: goog.events.getUniqueId('afterhighlight')
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Palette dimensions (columns x rows).  If the number of rows is undefined,
-***REMOVED*** it is calculated on first use.
-***REMOVED*** @type {goog.math.Size}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Palette dimensions (columns x rows).  If the number of rows is undefined,
+ * it is calculated on first use.
+ * @type {goog.math.Size}
+ * @private
+ */
 goog.ui.Palette.prototype.size_ = null;
 
 
-***REMOVED***
-***REMOVED*** Index of the currently highlighted item (-1 if none).
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Index of the currently highlighted item (-1 if none).
+ * @type {number}
+ * @private
+ */
 goog.ui.Palette.prototype.highlightedIndex_ = -1;
 
 
-***REMOVED***
-***REMOVED*** Selection model controlling the palette's selection state.
-***REMOVED*** @type {goog.ui.SelectionModel}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Selection model controlling the palette's selection state.
+ * @type {goog.ui.SelectionModel}
+ * @private
+ */
 goog.ui.Palette.prototype.selectionModel_ = null;
 
 
 // goog.ui.Component / goog.ui.Control implementation.
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Palette.prototype.disposeInternal = function() {
   goog.ui.Palette.superClass_.disposeInternal.call(this);
 
@@ -125,19 +125,19 @@ goog.ui.Palette.prototype.disposeInternal = function() {
   this.size_ = null;
 
   this.currentCellControl_.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.Control#setContentInternal} by also updating the
-***REMOVED*** grid size and the selection model.  Considered protected.
-***REMOVED*** @param {goog.ui.ControlContent} content Array of DOM nodes to be displayed
-***REMOVED***     as items in the palette grid (one item per cell).
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.Control#setContentInternal} by also updating the
+ * grid size and the selection model.  Considered protected.
+ * @param {goog.ui.ControlContent} content Array of DOM nodes to be displayed
+ *     as items in the palette grid (one item per cell).
+ * @protected
+ * @override
+ */
 goog.ui.Palette.prototype.setContentInternal = function(content) {
-  var items =***REMOVED*****REMOVED*** @type {Array.<Node>}***REMOVED*** (content);
+  var items = /** @type {Array.<Node>} */ (content);
   goog.ui.Palette.superClass_.setContentInternal.call(this, items);
 
   // Adjust the palette size.
@@ -159,41 +159,41 @@ goog.ui.Palette.prototype.setContentInternal = function(content) {
 
   // In all cases, clear the highlight.
   this.highlightedIndex_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.Control#getCaption} to return the empty string,
-***REMOVED*** since palettes don't have text captions.
-***REMOVED*** @return {string} The empty string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.Control#getCaption} to return the empty string,
+ * since palettes don't have text captions.
+ * @return {string} The empty string.
+ * @override
+ */
 goog.ui.Palette.prototype.getCaption = function() {
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.Control#setCaption} to be a no-op, since palettes
-***REMOVED*** don't have text captions.
-***REMOVED*** @param {string} caption Ignored.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.Control#setCaption} to be a no-op, since palettes
+ * don't have text captions.
+ * @param {string} caption Ignored.
+ * @override
+ */
 goog.ui.Palette.prototype.setCaption = function(caption) {
   // Do nothing.
-***REMOVED***
+};
 
 
 // Palette event handling.
 
 
-***REMOVED***
-***REMOVED*** Handles mouseover events.  Overrides {@link goog.ui.Control#handleMouseOver}
-***REMOVED*** by determining which palette item (if any) was moused over, highlighting it,
-***REMOVED*** and un-highlighting any previously-highlighted item.
-***REMOVED*** @param {goog.events.BrowserEvent} e Mouse event to handle.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles mouseover events.  Overrides {@link goog.ui.Control#handleMouseOver}
+ * by determining which palette item (if any) was moused over, highlighting it,
+ * and un-highlighting any previously-highlighted item.
+ * @param {goog.events.BrowserEvent} e Mouse event to handle.
+ * @override
+ */
 goog.ui.Palette.prototype.handleMouseOver = function(e) {
   goog.ui.Palette.superClass_.handleMouseOver.call(this, e);
 
@@ -206,15 +206,15 @@ goog.ui.Palette.prototype.handleMouseOver = function(e) {
   if (item != this.getHighlightedItem()) {
     this.setHighlightedItem(item);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mousedown events.  Overrides {@link goog.ui.Control#handleMouseDown}
-***REMOVED*** by ensuring that the item on which the user moused down is highlighted.
-***REMOVED*** @param {goog.events.Event} e Mouse event to handle.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles mousedown events.  Overrides {@link goog.ui.Control#handleMouseDown}
+ * by ensuring that the item on which the user moused down is highlighted.
+ * @param {goog.events.Event} e Mouse event to handle.
+ * @override
+ */
 goog.ui.Palette.prototype.handleMouseDown = function(e) {
   goog.ui.Palette.superClass_.handleMouseDown.call(this, e);
 
@@ -226,17 +226,17 @@ goog.ui.Palette.prototype.handleMouseDown = function(e) {
       this.setHighlightedItem(item);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects the currently highlighted palette item (triggered by mouseup or by
-***REMOVED*** keyboard action).  Overrides {@link goog.ui.Control#performActionInternal}
-***REMOVED*** by selecting the highlighted item and dispatching an ACTION event.
-***REMOVED*** @param {goog.events.Event} e Mouse or key event that triggered the action.
-***REMOVED*** @return {boolean} True if the action was allowed to proceed, false otherwise.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Selects the currently highlighted palette item (triggered by mouseup or by
+ * keyboard action).  Overrides {@link goog.ui.Control#performActionInternal}
+ * by selecting the highlighted item and dispatching an ACTION event.
+ * @param {goog.events.Event} e Mouse or key event that triggered the action.
+ * @return {boolean} True if the action was allowed to proceed, false otherwise.
+ * @override
+ */
 goog.ui.Palette.prototype.performActionInternal = function(e) {
   var item = this.getHighlightedItem();
   if (item) {
@@ -244,21 +244,21 @@ goog.ui.Palette.prototype.performActionInternal = function(e) {
     return goog.ui.Palette.base(this, 'performActionInternal', e);
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles keyboard events dispatched while the palette has focus.  Moves the
-***REMOVED*** highlight on arrow keys, and selects the highlighted item on Enter or Space.
-***REMOVED*** Returns true if the event was handled, false otherwise.  In particular, if
-***REMOVED*** the user attempts to navigate out of the grid, the highlight isn't changed,
-***REMOVED*** and this method returns false; it is then up to the parent component to
-***REMOVED*** handle the event (e.g. by wrapping the highlight around).  Overrides {@link
-***REMOVED*** goog.ui.Control#handleKeyEvent}.
-***REMOVED*** @param {goog.events.KeyEvent} e Key event to handle.
-***REMOVED*** @return {boolean} True iff the key event was handled by the component.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles keyboard events dispatched while the palette has focus.  Moves the
+ * highlight on arrow keys, and selects the highlighted item on Enter or Space.
+ * Returns true if the event was handled, false otherwise.  In particular, if
+ * the user attempts to navigate out of the grid, the highlight isn't changed,
+ * and this method returns false; it is then up to the parent component to
+ * handle the event (e.g. by wrapping the highlight around).  Overrides {@link
+ * goog.ui.Control#handleKeyEvent}.
+ * @param {goog.events.KeyEvent} e Key event to handle.
+ * @return {boolean} True iff the key event was handled by the component.
+ * @override
+ */
 goog.ui.Palette.prototype.handleKeyEvent = function(e) {
   var items = this.getContent();
   var numItems = items ? items.length : 0;
@@ -336,90 +336,90 @@ goog.ui.Palette.prototype.handleKeyEvent = function(e) {
   }
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles selection change events dispatched by the selection model.
-***REMOVED*** @param {goog.events.Event} e Selection event to handle.
-***REMOVED***
+/**
+ * Handles selection change events dispatched by the selection model.
+ * @param {goog.events.Event} e Selection event to handle.
+ */
 goog.ui.Palette.prototype.handleSelectionChange = function(e) {
   // No-op in the base class.
-***REMOVED***
+};
 
 
 // Palette management.
 
 
-***REMOVED***
-***REMOVED*** Returns the size of the palette grid.
-***REMOVED*** @return {goog.math.Size} Palette size (columns x rows).
-***REMOVED***
+/**
+ * Returns the size of the palette grid.
+ * @return {goog.math.Size} Palette size (columns x rows).
+ */
 goog.ui.Palette.prototype.getSize = function() {
   return this.size_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the size of the palette grid to the given size.  Callers can either
-***REMOVED*** pass a single {@link goog.math.Size} or a pair of numbers (first the number
-***REMOVED*** of columns, then the number of rows) to this method.  In both cases, the
-***REMOVED*** number of rows is optional and will be calculated automatically if needed.
-***REMOVED*** It is an error to attempt to change the size of the palette after it has
-***REMOVED*** been rendered.
-***REMOVED*** @param {goog.math.Size|number} size Either a size object or the number of
-***REMOVED***     columns.
-***REMOVED*** @param {number=} opt_rows The number of rows (optional).
-***REMOVED***
+/**
+ * Sets the size of the palette grid to the given size.  Callers can either
+ * pass a single {@link goog.math.Size} or a pair of numbers (first the number
+ * of columns, then the number of rows) to this method.  In both cases, the
+ * number of rows is optional and will be calculated automatically if needed.
+ * It is an error to attempt to change the size of the palette after it has
+ * been rendered.
+ * @param {goog.math.Size|number} size Either a size object or the number of
+ *     columns.
+ * @param {number=} opt_rows The number of rows (optional).
+ */
 goog.ui.Palette.prototype.setSize = function(size, opt_rows) {
   if (this.getElement()) {
     throw Error(goog.ui.Component.Error.ALREADY_RENDERED);
   }
 
   this.size_ = goog.isNumber(size) ?
-      new goog.math.Size(size,***REMOVED*****REMOVED*** @type {number}***REMOVED*** (opt_rows)) : size;
+      new goog.math.Size(size, /** @type {number} */ (opt_rows)) : size;
 
   // Adjust size, if needed.
   this.adjustSize_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the 0-based index of the currently highlighted palette item, or -1
-***REMOVED*** if no item is highlighted.
-***REMOVED*** @return {number} Index of the highlighted item (-1 if none).
-***REMOVED***
+/**
+ * Returns the 0-based index of the currently highlighted palette item, or -1
+ * if no item is highlighted.
+ * @return {number} Index of the highlighted item (-1 if none).
+ */
 goog.ui.Palette.prototype.getHighlightedIndex = function() {
   return this.highlightedIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the currently highlighted palette item, or null if no item is
-***REMOVED*** highlighted.
-***REMOVED*** @return {Node} The highlighted item (undefined if none).
-***REMOVED***
+/**
+ * Returns the currently highlighted palette item, or null if no item is
+ * highlighted.
+ * @return {Node} The highlighted item (undefined if none).
+ */
 goog.ui.Palette.prototype.getHighlightedItem = function() {
   var items = this.getContent();
   return items && items[this.highlightedIndex_];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The highlighted cell.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {Element} The highlighted cell.
+ * @private
+ */
 goog.ui.Palette.prototype.getHighlightedCellElement_ = function() {
   return this.getRenderer().getCellForItem(this.getHighlightedItem());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Highlights the item at the given 0-based index, or removes the highlight
-***REMOVED*** if the argument is -1 or out of range.  Any previously-highlighted item
-***REMOVED*** will be un-highlighted.
-***REMOVED*** @param {number} index 0-based index of the item to highlight.
-***REMOVED***
+/**
+ * Highlights the item at the given 0-based index, or removes the highlight
+ * if the argument is -1 or out of range.  Any previously-highlighted item
+ * will be un-highlighted.
+ * @param {number} index 0-based index of the item to highlight.
+ */
 goog.ui.Palette.prototype.setHighlightedIndex = function(index) {
   if (index != this.highlightedIndex_) {
     this.highlightIndex_(this.highlightedIndex_, false);
@@ -428,75 +428,75 @@ goog.ui.Palette.prototype.setHighlightedIndex = function(index) {
     this.highlightIndex_(index, true);
     this.dispatchEvent(goog.ui.Palette.EventType.AFTER_HIGHLIGHT);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Highlights the given item, or removes the highlight if the argument is null
-***REMOVED*** or invalid.  Any previously-highlighted item will be un-highlighted.
-***REMOVED*** @param {Node|undefined} item Item to highlight.
-***REMOVED***
+/**
+ * Highlights the given item, or removes the highlight if the argument is null
+ * or invalid.  Any previously-highlighted item will be un-highlighted.
+ * @param {Node|undefined} item Item to highlight.
+ */
 goog.ui.Palette.prototype.setHighlightedItem = function(item) {
-  var items =***REMOVED*****REMOVED*** @type {Array.<Node>}***REMOVED*** (this.getContent());
+  var items = /** @type {Array.<Node>} */ (this.getContent());
   this.setHighlightedIndex(items ? goog.array.indexOf(items, item) : -1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the 0-based index of the currently selected palette item, or -1
-***REMOVED*** if no item is selected.
-***REMOVED*** @return {number} Index of the selected item (-1 if none).
-***REMOVED***
+/**
+ * Returns the 0-based index of the currently selected palette item, or -1
+ * if no item is selected.
+ * @return {number} Index of the selected item (-1 if none).
+ */
 goog.ui.Palette.prototype.getSelectedIndex = function() {
   return this.selectionModel_ ? this.selectionModel_.getSelectedIndex() : -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the currently selected palette item, or null if no item is selected.
-***REMOVED*** @return {Node} The selected item (null if none).
-***REMOVED***
+/**
+ * Returns the currently selected palette item, or null if no item is selected.
+ * @return {Node} The selected item (null if none).
+ */
 goog.ui.Palette.prototype.getSelectedItem = function() {
   return this.selectionModel_ ?
-     ***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (this.selectionModel_.getSelectedItem()) : null;
-***REMOVED***
+      /** @type {Node} */ (this.selectionModel_.getSelectedItem()) : null;
+};
 
 
-***REMOVED***
-***REMOVED*** Selects the item at the given 0-based index, or clears the selection
-***REMOVED*** if the argument is -1 or out of range.  Any previously-selected item
-***REMOVED*** will be deselected.
-***REMOVED*** @param {number} index 0-based index of the item to select.
-***REMOVED***
+/**
+ * Selects the item at the given 0-based index, or clears the selection
+ * if the argument is -1 or out of range.  Any previously-selected item
+ * will be deselected.
+ * @param {number} index 0-based index of the item to select.
+ */
 goog.ui.Palette.prototype.setSelectedIndex = function(index) {
   if (this.selectionModel_) {
     this.selectionModel_.setSelectedIndex(index);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects the given item, or clears the selection if the argument is null or
-***REMOVED*** invalid.  Any previously-selected item will be deselected.
-***REMOVED*** @param {Node} item Item to select.
-***REMOVED***
+/**
+ * Selects the given item, or clears the selection if the argument is null or
+ * invalid.  Any previously-selected item will be deselected.
+ * @param {Node} item Item to select.
+ */
 goog.ui.Palette.prototype.setSelectedItem = function(item) {
   if (this.selectionModel_) {
     this.selectionModel_.setSelectedItem(item);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Private helper; highlights or un-highlights the item at the given index
-***REMOVED*** based on the value of the Boolean argument.  This implementation simply
-***REMOVED*** applies highlight styling to the cell containing the item to be highighted.
-***REMOVED*** Does nothing if the palette hasn't been rendered yet.
-***REMOVED*** @param {number} index 0-based index of item to highlight or un-highlight.
-***REMOVED*** @param {boolean} highlight If true, the item is highlighted; otherwise it
-***REMOVED***     is un-highlighted.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private helper; highlights or un-highlights the item at the given index
+ * based on the value of the Boolean argument.  This implementation simply
+ * applies highlight styling to the cell containing the item to be highighted.
+ * Does nothing if the palette hasn't been rendered yet.
+ * @param {number} index 0-based index of item to highlight or un-highlight.
+ * @param {boolean} highlight If true, the item is highlighted; otherwise it
+ *     is un-highlighted.
+ * @private
+ */
 goog.ui.Palette.prototype.highlightIndex_ = function(index, highlight) {
   if (this.getElement()) {
     var items = this.getContent();
@@ -510,10 +510,10 @@ goog.ui.Palette.prototype.highlightIndex_ = function(index, highlight) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Palette.prototype.setHighlighted = function(highlight) {
   goog.ui.Palette.base(this, 'setHighlighted', highlight);
   if (highlight && this.highlightedIndex_ == -1) {
@@ -526,34 +526,34 @@ goog.ui.Palette.prototype.setHighlighted = function(highlight) {
   } else if (!highlight) {
     this.setHighlightedIndex(-1);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Private helper; selects or deselects the given item based on the value of
-***REMOVED*** the Boolean argument.  This implementation simply applies selection styling
-***REMOVED*** to the cell containing the item to be selected.  Does nothing if the palette
-***REMOVED*** hasn't been rendered yet.
-***REMOVED*** @param {Node} item Item to select or deselect.
-***REMOVED*** @param {boolean} select If true, the item is selected; otherwise it is
-***REMOVED***     deselected.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private helper; selects or deselects the given item based on the value of
+ * the Boolean argument.  This implementation simply applies selection styling
+ * to the cell containing the item to be selected.  Does nothing if the palette
+ * hasn't been rendered yet.
+ * @param {Node} item Item to select or deselect.
+ * @param {boolean} select If true, the item is selected; otherwise it is
+ *     deselected.
+ * @private
+ */
 goog.ui.Palette.prototype.selectItem_ = function(item, select) {
   if (this.getElement()) {
     this.getRenderer().selectCell(this, item, select);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates and updates the size of the palette based on any preset values
-***REMOVED*** and the number of palette items.  If there is no preset size, sets the
-***REMOVED*** palette size to the smallest square big enough to contain all items.  If
-***REMOVED*** there is a preset number of columns, increases the number of rows to hold
-***REMOVED*** all items if needed.  (If there are too many rows, does nothing.)
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculates and updates the size of the palette based on any preset values
+ * and the number of palette items.  If there is no preset size, sets the
+ * palette size to the smallest square big enough to contain all items.  If
+ * there is a preset number of columns, increases the number of rows to hold
+ * all items if needed.  (If there are too many rows, does nothing.)
+ * @private
+ */
 goog.ui.Palette.prototype.adjustSize_ = function() {
   var items = this.getContent();
   if (items) {
@@ -574,28 +574,28 @@ goog.ui.Palette.prototype.adjustSize_ = function() {
     // No items; set size to 0x0.
     this.size_ = new goog.math.Size(0, 0);
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A component to represent the currently highlighted cell.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A component to represent the currently highlighted cell.
+ * @constructor
+ * @extends {goog.ui.Control}
+ * @private
+ */
 goog.ui.Palette.CurrentCell_ = function() {
   goog.ui.Palette.CurrentCell_.base(this, 'constructor', null);
   this.setDispatchTransitionEvents(goog.ui.Component.State.HOVER, true);
-***REMOVED***
+};
 goog.inherits(goog.ui.Palette.CurrentCell_, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** @param {boolean} highlight Whether to highlight or unhighlight the component.
-***REMOVED*** @return {boolean} Whether it was successful.
-***REMOVED***
+/**
+ * @param {boolean} highlight Whether to highlight or unhighlight the component.
+ * @return {boolean} Whether it was successful.
+ */
 goog.ui.Palette.CurrentCell_.prototype.tryHighlight = function(highlight) {
   this.setHighlighted(highlight);
   return this.isHighlighted() == highlight;
-***REMOVED***
+};

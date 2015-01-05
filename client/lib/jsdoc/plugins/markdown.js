@@ -1,10 +1,10 @@
-/*global env: true***REMOVED***
-***REMOVED***
-***REMOVED*** @overview Translate doclet descriptions from MarkDown into HTML.
-***REMOVED*** @module plugins/markdown
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @author Ben Blank <ben.blank@gmail.com>
-***REMOVED***
+/*global env: true */
+/**
+ * @overview Translate doclet descriptions from MarkDown into HTML.
+ * @module plugins/markdown
+ * @author Michael Mathews <micmath@gmail.com>
+ * @author Ben Blank <ben.blank@gmail.com>
+ */
 'use strict';
 
 var conf = env.conf.markdown;
@@ -28,12 +28,12 @@ function shouldProcessString(tagName, text) {
     return shouldProcess;
 }
 
-***REMOVED***
-***REMOVED*** Process the markdown source in a doclet. The properties that should be
-***REMOVED*** processed are configurable, but always include "classdesc", "description",
-***REMOVED*** "params", "properties", and "returns".  Handled properties can be bare
-***REMOVED*** strings, objects, or arrays of objects.
-***REMOVED***
+/**
+ * Process the markdown source in a doclet. The properties that should be
+ * processed are configurable, but always include "classdesc", "description",
+ * "params", "properties", and "returns".  Handled properties can be bare
+ * strings, objects, or arrays of objects.
+ */
 function process(doclet) {
     tags.forEach(function(tag) {
         if ( !hasOwnProp.call(doclet, tag) ) {
@@ -45,7 +45,7 @@ function process(doclet) {
         }
         else if ( Array.isArray(doclet[tag]) ) {
             doclet[tag].forEach(function(value, index, original) {
-                var inner = {***REMOVED***
+                var inner = {};
                 inner[tag] = value;
                 process(inner);
                 original[index] = inner[tag];
@@ -72,11 +72,11 @@ defaultTags.forEach(function(tag) {
 });
 
 exports.handlers = {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Translate markdown syntax in a new doclet's description into HTML. Is run
-    ***REMOVED*** by JSDoc 3 whenever a "newDoclet" event fires.
-   ***REMOVED*****REMOVED***
+    /**
+     * Translate markdown syntax in a new doclet's description into HTML. Is run
+     * by JSDoc 3 whenever a "newDoclet" event fires.
+     */
     newDoclet: function(e) {
         process(e.doclet);
     }
-***REMOVED***
+};

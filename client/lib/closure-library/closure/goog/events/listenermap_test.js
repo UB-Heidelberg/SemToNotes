@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for listenermap.js.
-***REMOVED***
-***REMOVED*** Most of this class functionality is already tested by
-***REMOVED*** goog.events.EventTarget tests. This test file only provides tests
-***REMOVED*** for features that are not direct duplicates of tests in
-***REMOVED*** goog.events.EventTarget.
-***REMOVED***
+/**
+ * @fileoverview Tests for listenermap.js.
+ *
+ * Most of this class functionality is already tested by
+ * goog.events.EventTarget tests. This test file only provides tests
+ * for features that are not direct duplicates of tests in
+ * goog.events.EventTarget.
+ */
 
 goog.provide('goog.events.ListenerMapTest');
 goog.setTestOnly('goog.events.ListenerMapTest');
 
 goog.require('goog.dispose');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventId');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.ListenerMap');
@@ -33,9 +33,9 @@ goog.require('goog.testing.jsunit');
 
 
 var et, map;
-var handler1 = function() {***REMOVED***
-var handler2 = function() {***REMOVED***
-var handler3 = function() {***REMOVED***
+var handler1 = function() {};
+var handler2 = function() {};
+var handler3 = function() {};
 var CLICK_EVENT_ID = new goog.events.EventId(goog.events.getUniqueId('click'));
 
 

@@ -1,18 +1,18 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 
 /*
-***REMOVED*** Editor toolbar styles.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Editor toolbar styles.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
-/* Common base style for all icons.***REMOVED***
+/* Common base style for all icons. */
 .tr-icon {
   width: 16px;
   height: 16px;
@@ -24,19 +24,19 @@
   height: 14px;
 }
 
-/* Undo (redo when the chrome is right-to-left).***REMOVED***
+/* Undo (redo when the chrome is right-to-left). */
 .tr-undo,
 .goog-toolbar-button-rtl .tr-redo {
   background-position: 0;
 }
 
-/* Redo (undo when the chrome is right-to-left).***REMOVED***
+/* Redo (undo when the chrome is right-to-left). */
 .tr-redo,
 .goog-toolbar-button-rtl .tr-undo {
   background-position: -16px;
 }
 
-/* Font name.***REMOVED***
+/* Font name. */
 .tr-fontName .goog-toolbar-menu-button-caption {
   color: #246;
   width: 16ex;
@@ -44,7 +44,7 @@
   overflow: hidden;
 }
 
-/* Font size.***REMOVED***
+/* Font size. */
 .tr-fontSize .goog-toolbar-menu-button-caption {
   color: #246;
   width: 8ex;
@@ -52,97 +52,97 @@
   overflow: hidden;
 }
 
-/* Bold.***REMOVED***
+/* Bold. */
 .tr-bold {
   background-position: -32px;
 }
 
-/* Italic.***REMOVED***
+/* Italic. */
 .tr-italic {
   background-position: -48px;
 }
 
-/* Underline.***REMOVED***
+/* Underline. */
 .tr-underline {
   background-position: -64px;
 }
 
-/* Foreground color.***REMOVED***
+/* Foreground color. */
 .tr-foreColor {
   height: 14px;
   background-position: -80px;
 }
 
-/* Background color.***REMOVED***
+/* Background color. */
 .tr-backColor {
   height: 14px;
   background-position: -96px;
 }
 
-/* Link.***REMOVED***
+/* Link. */
 .tr-link {
   font-weight: bold;
   color: #009;
   text-decoration: underline;
 }
 
-/* Insert image.***REMOVED***
+/* Insert image. */
 .tr-image {
   background-position: -112px;
 }
 
-/* Insert drawing.***REMOVED***
+/* Insert drawing. */
 .tr-newDrawing {
   background-position: -592px;
 }
 
-/* Insert special character.***REMOVED***
+/* Insert special character. */
 .tr-spChar {
   font-weight: bold;
   color: #900;
 }
 
-/* Increase indent.***REMOVED***
+/* Increase indent. */
 .tr-indent {
   background-position: -128px;
 }
 
-/* Increase ident in right-to-left text mode, regardless of chrome direction.***REMOVED***
+/* Increase ident in right-to-left text mode, regardless of chrome direction. */
 .tr-rtl-mode .tr-indent {
   background-position: -400px;
 }
 
-/* Decrease indent.***REMOVED***
+/* Decrease indent. */
 .tr-outdent {
   background-position: -144px;
 }
 
-/* Decrease indent in right-to-left text mode, regardless of chrome direction.***REMOVED***
+/* Decrease indent in right-to-left text mode, regardless of chrome direction. */
 .tr-rtl-mode .tr-outdent {
   background-position: -416px;
 }
 
-/* Bullet (unordered) list.***REMOVED***
+/* Bullet (unordered) list. */
 .tr-insertUnorderedList {
   background-position: -160px;
 }
 
-/* Bullet list in right-to-left text mode, regardless of chrome direction.***REMOVED***
+/* Bullet list in right-to-left text mode, regardless of chrome direction. */
 .tr-rtl-mode .tr-insertUnorderedList {
   background-position: -432px;
 }
 
-/* Number (ordered) list.***REMOVED***
+/* Number (ordered) list. */
 .tr-insertOrderedList {
   background-position: -176px;
 }
 
-/* Number list in right-to-left text mode, regardless of chrome direction.***REMOVED***
+/* Number list in right-to-left text mode, regardless of chrome direction. */
 .tr-rtl-mode .tr-insertOrderedList {
   background-position: -448px;
 }
 
-/* Text alignment buttons.***REMOVED***
+/* Text alignment buttons. */
 .tr-justifyLeft {
   background-position: -192px;
 }
@@ -156,67 +156,67 @@
   background-position: -480px;
 }
 
-/* Blockquote.***REMOVED***
+/* Blockquote. */
 .tr-BLOCKQUOTE {
   background-position: -240px;
 }
 
-/* Blockquote in right-to-left text mode, regardless of chrome direction.***REMOVED***
+/* Blockquote in right-to-left text mode, regardless of chrome direction. */
 .tr-rtl-mode .tr-BLOCKQUOTE {
   background-position: -464px;
 }
 
-/* Remove formatting.***REMOVED***
+/* Remove formatting. */
 .tr-removeFormat {
   background-position: -256px;
 }
 
-/* Spellcheck.***REMOVED***
+/* Spellcheck. */
 .tr-spell {
   background-position: -272px;
 }
 
-/* Left-to-right text direction.***REMOVED***
+/* Left-to-right text direction. */
 .tr-ltr {
   background-position: -288px;
 }
 
-/* Right-to-left text direction.***REMOVED***
+/* Right-to-left text direction. */
 .tr-rtl {
   background-position: -304px;
 }
 
-/* Insert iGoogle module.***REMOVED***
+/* Insert iGoogle module. */
 .tr-insertModule {
   background-position: -496px;
 }
 
-/* Strike through text***REMOVED***
+/* Strike through text */
 .tr-strikeThrough {
   background-position: -544px;
 }
 
-/* Subscript***REMOVED***
+/* Subscript */
 .tr-subscript {
   background-position: -560px;
 }
 
-/* Superscript***REMOVED***
+/* Superscript */
 .tr-superscript {
   background-position: -576px;
 }
 
-/* Insert drawing.***REMOVED***
+/* Insert drawing. */
 .tr-equation {
   background-position: -608px;
 }
 
-/* Edit HTML.***REMOVED***
+/* Edit HTML. */
 .tr-editHtml {
   color: #009;
 }
 
-/* "Format block" menu.***REMOVED***
+/* "Format block" menu. */
 .tr-formatBlock .goog-toolbar-menu-button-caption {
   color: #246;
   width: 12ex;

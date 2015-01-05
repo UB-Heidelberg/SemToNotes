@@ -1,7 +1,7 @@
 <?js
     var props = obj;
 
-    /* sort subprops under their parent props (like opts.classname)***REMOVED***
+    /* sort subprops under their parent props (like opts.classname) */
     var parentProp = null;
     props.forEach(function(prop, i) {
         if (!prop) { return; }
@@ -16,7 +16,7 @@
         }
     });
 
-    /* determine if we need extra columns, "attributes" and "default"***REMOVED***
+    /* determine if we need extra columns, "attributes" and "default" */
     props.hasAttributes = false;
     props.hasDefault = false;
     props.hasName = false;
@@ -61,7 +61,7 @@
 
     <tbody>
     <?js
-      ***REMOVED***
+        var self = this;
         props.forEach(function(prop) {
             if (!prop) { return; }
     ?>

@@ -11,7 +11,7 @@ See the COPYING file for details.
 <title>Closure Unit Tests - goog.ui.PopupDatePicker</title>
 <script src="../base.js"></script>
 <script>
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.testing.jsunit');
   goog.require('goog.testing.recordFunction');
   goog.require('goog.ui.PopupDatePicker');
@@ -45,9 +45,9 @@ function testIsVisible() {
 function testFiresShowAndHideEvents() {
   var showHandler = goog.testing.recordFunction();
   var hideHandler = goog.testing.recordFunction();
-***REMOVED***popupDatePicker, goog.ui.PopupBase.EventType.SHOW,
+  goog.events.listen(popupDatePicker, goog.ui.PopupBase.EventType.SHOW,
       showHandler);
-***REMOVED***popupDatePicker, goog.ui.PopupBase.EventType.HIDE,
+  goog.events.listen(popupDatePicker, goog.ui.PopupBase.EventType.HIDE,
       hideHandler);
   popupDatePicker.createDom();
   popupDatePicker.render();

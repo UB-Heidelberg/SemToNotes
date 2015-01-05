@@ -13,24 +13,24 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Contains helper functions for performing locale-sensitive
-***REMOVED***     collation.
-***REMOVED***
+/**
+ * @fileoverview Contains helper functions for performing locale-sensitive
+ *     collation.
+ */
 
 
 goog.provide('goog.i18n.collation');
 
 
-***REMOVED***
-***REMOVED*** Returns the comparator for a locale. If a locale is not explicitly specified,
-***REMOVED*** a comparator for the user's locale will be returned. Note that if the browser
-***REMOVED*** does not support locale-sensitive string comparisons, the comparator returned
-***REMOVED*** will be a simple codepoint comparator.
-***REMOVED***
-***REMOVED*** @param {string=} opt_locale the locale that the comparator is used for.
-***REMOVED*** @return {function(string, string): number} The locale-specific comparator.
-***REMOVED***
+/**
+ * Returns the comparator for a locale. If a locale is not explicitly specified,
+ * a comparator for the user's locale will be returned. Note that if the browser
+ * does not support locale-sensitive string comparisons, the comparator returned
+ * will be a simple codepoint comparator.
+ *
+ * @param {string=} opt_locale the locale that the comparator is used for.
+ * @return {function(string, string): number} The locale-specific comparator.
+ */
 goog.i18n.collation.createComparator = function(opt_locale) {
   // See http://code.google.com/p/v8-i18n.
   if (goog.i18n.collation.hasNativeComparator()) {
@@ -39,20 +39,20 @@ goog.i18n.collation.createComparator = function(opt_locale) {
   } else {
     return function(arg1, arg2) {
       return arg1.localeCompare(arg2);
-   ***REMOVED*****REMOVED***
+    };
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if a locale-sensitive comparator is available for a locale. If
-***REMOVED*** a locale is not explicitly specified, the user's locale is used instead.
-***REMOVED***
-***REMOVED*** @param {string=} opt_locale The locale to be checked.
-***REMOVED*** @return {boolean} Whether there is a locale-sensitive comparator available
-***REMOVED***     for the locale.
-***REMOVED***
+/**
+ * Returns true if a locale-sensitive comparator is available for a locale. If
+ * a locale is not explicitly specified, the user's locale is used instead.
+ *
+ * @param {string=} opt_locale The locale to be checked.
+ * @return {boolean} Whether there is a locale-sensitive comparator available
+ *     for the locale.
+ */
 goog.i18n.collation.hasNativeComparator = function(opt_locale) {
   var intl = goog.global.Intl;
   return !!(intl && intl.Collator);
-***REMOVED***
+};

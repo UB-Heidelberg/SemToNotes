@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Event observer.
-***REMOVED***
-***REMOVED*** Provides an event observer that holds onto events that it handles.  This
-***REMOVED*** can be used in unit testing to verify an event target's events --
-***REMOVED*** that the order count, types, etc. are correct.
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED*** <pre>
-***REMOVED*** var observer = new goog.testing.events.EventObserver();
-***REMOVED*** var widget = new foo.Widget();
-***REMOVED*** goog.events.listen(widget, ['select', 'submit'], observer);
-***REMOVED*** // Simulate user action of 3 select events and 2 submit events.
-***REMOVED*** assertEquals(3, observer.getEvents('select').length);
-***REMOVED*** assertEquals(2, observer.getEvents('submit').length);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Event observer.
+ *
+ * Provides an event observer that holds onto events that it handles.  This
+ * can be used in unit testing to verify an event target's events --
+ * that the order count, types, etc. are correct.
+ *
+ * Example usage:
+ * <pre>
+ * var observer = new goog.testing.events.EventObserver();
+ * var widget = new foo.Widget();
+ * goog.events.listen(widget, ['select', 'submit'], observer);
+ * // Simulate user action of 3 select events and 2 submit events.
+ * assertEquals(3, observer.getEvents('select').length);
+ * assertEquals(2, observer.getEvents('submit').length);
+ * </pre>
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.testing.events.EventObserver');
 
@@ -38,42 +38,42 @@ goog.require('goog.array');
 
 
 
-***REMOVED***
-***REMOVED*** Event observer.  Implements a handleEvent interface so it may be used as
-***REMOVED*** a listener in listening functions and methods.
-***REMOVED*** @see goog.events.listen
-***REMOVED*** @see goog.events.EventHandler
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Event observer.  Implements a handleEvent interface so it may be used as
+ * a listener in listening functions and methods.
+ * @see goog.events.listen
+ * @see goog.events.EventHandler
+ * @constructor
+ * @final
+ */
 goog.testing.events.EventObserver = function() {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A list of events handled by the observer in order of handling, oldest to
-  ***REMOVED*** newest.
-  ***REMOVED*** @type {!Array.<!goog.events.Event>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A list of events handled by the observer in order of handling, oldest to
+   * newest.
+   * @type {!Array.<!goog.events.Event>}
+   * @private
+   */
   this.events_ = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an event and remembers it.  Event listening functions and methods
-***REMOVED*** will call this method when this observer is used as a listener.
-***REMOVED*** @see goog.events.listen
-***REMOVED*** @see goog.events.EventHandler
-***REMOVED*** @param {!goog.events.Event} e Event to handle.
-***REMOVED***
+/**
+ * Handles an event and remembers it.  Event listening functions and methods
+ * will call this method when this observer is used as a listener.
+ * @see goog.events.listen
+ * @see goog.events.EventHandler
+ * @param {!goog.events.Event} e Event to handle.
+ */
 goog.testing.events.EventObserver.prototype.handleEvent = function(e) {
   this.events_.push(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string=} opt_type If given, only return events of this type.
-***REMOVED*** @return {!Array.<!goog.events.Event>} The events handled, oldest to newest.
-***REMOVED***
+/**
+ * @param {string=} opt_type If given, only return events of this type.
+ * @return {!Array.<!goog.events.Event>} The events handled, oldest to newest.
+ */
 goog.testing.events.EventObserver.prototype.getEvents = function(opt_type) {
   var events = goog.array.clone(this.events_);
 
@@ -84,4 +84,4 @@ goog.testing.events.EventObserver.prototype.getEvents = function(opt_type) {
   }
 
   return events;
-***REMOVED***
+};

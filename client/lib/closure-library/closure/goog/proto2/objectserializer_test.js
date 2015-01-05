@@ -156,7 +156,7 @@ function testDeserializationOfUnknown() {
     2: '102',
     1000: 103,
     1001: 104
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -196,7 +196,7 @@ function testDeserializationRepeated() {
     44: ['he', 'llo'],
     46: [{ 47: [101] } , { 47: [102] }],
     48: [{ 1: 201 }, { 1: 202 }]
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -267,7 +267,7 @@ function testDeserialization() {
     16: { 17 : 113 },
     18: { 1 : 114 },
     21: proto2.TestAllTypes.NestedEnum.FOO
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -339,7 +339,7 @@ function testDeserialization() {
 function testDeserializationUnknownEnumValue() {
   var simplified = {
     21: 1001
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -354,7 +354,7 @@ function testDeserializationUnknownEnumValue() {
 function testDeserializationSymbolicEnumValue() {
   var simplified = {
     21: 'BAR'
- ***REMOVED*****REMOVED***
+  };
 
   propertyReplacer.set(goog.proto2.Serializer, 'DECODE_SYMBOLIC_ENUMS', true);
 
@@ -372,7 +372,7 @@ function testDeserializationSymbolicEnumValue() {
 function testDeserializationSymbolicEnumValueTurnedOff() {
   var simplified = {
     21: 'BAR'
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -385,7 +385,7 @@ function testDeserializationSymbolicEnumValueTurnedOff() {
 function testDeserializationUnknownSymbolicEnumValue() {
   var simplified = {
     21: 'BARRED'
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -404,14 +404,14 @@ function testDeserializationNumbersOrStrings() {
     51: 5100,
     52: [5200, 5201],
     53: [5300, 5301]
- ***REMOVED*****REMOVED***
+  };
 
   var simplifiedWithStrings = {
     50: '5000',
     51: '5100',
     52: ['5200', '5201'],
     53: ['5300', '5301']
- ***REMOVED*****REMOVED***
+  };
 
   var serializer = new goog.proto2.ObjectSerializer();
 
@@ -453,7 +453,7 @@ function testDeserializationConversionProhibited() {
 
   var simplified = {
     1: '1000'   // optionalInt32
- ***REMOVED*****REMOVED***
+  };
   var serializer = new goog.proto2.ObjectSerializer();
 
   assertThrows('Should have an assertion failure in deserialization',

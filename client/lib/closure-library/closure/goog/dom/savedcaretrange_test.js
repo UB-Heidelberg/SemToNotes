@@ -27,7 +27,7 @@ function setUp() {
 }
 
 
-***REMOVED*** @bug 1480638***REMOVED***
+/** @bug 1480638 */
 function testSavedCaretRangeDoesntChangeSelection() {
   // NOTE(nicksantos): We cannot detect this bug programatically. The only
   // way to detect it is to run this test manually and look at the selection
@@ -131,7 +131,7 @@ function testReversedSavedCaretRange() {
    assertEquals('Wrong start offset', 1, selection.getStartOffset());
    assertEquals('Wrong end offset', 2, selection.getEndOffset());
    }
- ***REMOVED*****REMOVED***
+   */
 
 function testRemoveContents()  {
   var def = goog.dom.getElement('def-4');
@@ -198,13 +198,13 @@ function testStartCaretIsAtEndOfParent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Clear the selection by re-parsing the DOM. Then restore the saved
-***REMOVED*** selection.
-***REMOVED*** @param {Node} parent The node containing the current selection.
-***REMOVED*** @param {goog.dom.SavedRange} saved The saved range.
-***REMOVED*** @return {goog.dom.AbstractRange} Restored range.
-***REMOVED***
+/**
+ * Clear the selection by re-parsing the DOM. Then restore the saved
+ * selection.
+ * @param {Node} parent The node containing the current selection.
+ * @param {goog.dom.SavedRange} saved The saved range.
+ * @return {goog.dom.AbstractRange} Restored range.
+ */
 function clearSelectionAndRestoreSaved(parent, saved) {
   goog.dom.Range.clearSelection();
   assertFalse(goog.dom.Range.hasSelection(window));

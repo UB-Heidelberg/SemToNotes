@@ -1,19 +1,19 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for menus created by goog.ui.SubMenuRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for menus created by goog.ui.SubMenuRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
-/* State: resting.***REMOVED***
-/* @noflip***REMOVED***
+/* State: resting. */
+/* @noflip */
 .goog-submenu-arrow {
   color: #000;
   left: auto;
@@ -23,8 +23,8 @@
   text-align: right;
 }
 
-/* BiDi override.***REMOVED***
-/* @noflip***REMOVED***
+/* BiDi override. */
+/* @noflip */
 .goog-menuitem-rtl .goog-submenu-arrow {
   text-align: left;
   left: 0;
@@ -32,7 +32,7 @@
   padding-left: 6px;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-menuitem-disabled .goog-submenu-arrow {
   color: #ccc;
 }

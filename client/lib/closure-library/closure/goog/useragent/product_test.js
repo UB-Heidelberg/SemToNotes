@@ -102,13 +102,13 @@ function assertBrowserAndVersion(userAgent, browser, version) {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {Array.<{
-***REMOVED***           ua: string,
-***REMOVED***           versions: Array.<{
-***REMOVED***             num: {string|number}, truth: boolean}>}>} userAgents
-***REMOVED*** @param {string} browser
-***REMOVED***
+/**
+ * @param {Array.<{
+ *           ua: string,
+ *           versions: Array.<{
+ *             num: {string|number}, truth: boolean}>}>} userAgents
+ * @param {string} browser
+ */
 function checkEachUserAgentDetected(userAgents, browser) {
   goog.array.forEach(userAgents, function(ua) {
     mockAgent.setUserAgentString(ua.ua);
@@ -152,7 +152,7 @@ function testInternetExplorer() {
 }
 
 function testOpera() {
-  var opera = {***REMOVED***
+  var opera = {};
   var userAgents = [
     {ua: 'Opera/9.80 (Windows NT 5.1; U; en) Presto/2.2.15 Version/10.01',
       versions: [

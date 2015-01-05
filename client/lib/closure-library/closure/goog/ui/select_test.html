@@ -42,11 +42,11 @@ function tearDown() {
   goog.dom.removeChildren(sandbox);
 }
 
-***REMOVED***
-***REMOVED*** Checks that the default caption passed in the constructor and in the setter
-***REMOVED*** is returned by getDefaultCaption, and acts as a default caption, i.e. is
-***REMOVED*** shown as a caption when no items are selected.
-***REMOVED***
+/**
+ * Checks that the default caption passed in the constructor and in the setter
+ * is returned by getDefaultCaption, and acts as a default caption, i.e. is
+ * shown as a caption when no items are selected.
+ */
 function testDefaultCaption() {
   select.render(sandbox);
   var item1 = new goog.ui.MenuItem("item 1");
@@ -98,9 +98,9 @@ function testAriaRoles() {
       goog.a11y.aria.getRole(item2.getElement()));
 }
 
-***REMOVED***
-***REMOVED*** Checks that the select control handles ACTION events from its items.
-***REMOVED***
+/**
+ * Checks that the select control handles ACTION events from its items.
+ */
 function testHandlesItemActions() {
   select.render(sandbox);
   var item1 = new goog.ui.MenuItem("item 1");
@@ -117,9 +117,9 @@ function testHandlesItemActions() {
   assertEquals(item2.getCaption(), select.getCaption());
 }
 
-***REMOVED***
-***REMOVED*** Tests goog.ui.Select.prototype.setValue.
-***REMOVED***
+/**
+ * Tests goog.ui.Select.prototype.setValue.
+ */
 function testSetValue() {
   select.render(sandbox);
   var item1 = new goog.ui.MenuItem("item 1", 1);
@@ -137,10 +137,10 @@ function testSetValue() {
   assertNull(select.getSelectedItem());
 }
 
-***REMOVED***
-***REMOVED*** Checks that the current selection is cleared when the selected item is
-***REMOVED*** removed.
-***REMOVED***
+/**
+ * Checks that the current selection is cleared when the selected item is
+ * removed.
+ */
 function testSelectionIsClearedWhenSelectedItemIsRemoved() {
   select.render(sandbox);
   var item1 = new goog.ui.MenuItem("item 1");
@@ -152,10 +152,10 @@ function testSelectionIsClearedWhenSelectedItemIsRemoved() {
   assertNull(select.getSelectedItem());
 }
 
-***REMOVED***
-***REMOVED*** Check that the select control is subscribed to its selection model events
-***REMOVED*** after being added, removed and added back again into the document.
-***REMOVED***
+/**
+ * Check that the select control is subscribed to its selection model events
+ * after being added, removed and added back again into the document.
+ */
 function testExitAndEnterDocument() {
   var component = new goog.ui.Component();
   component.render(sandbox);
@@ -189,7 +189,7 @@ function testSelectEventFiresForProgrammaticChange() {
   select.addItem(item2);
 
   var recordingHandler = new goog.testing.recordFunction();
-***REMOVED***
+  goog.events.listen(
       select, goog.ui.Component.EventType.CHANGE, recordingHandler);
 
   select.setSelectedItem(item2);
@@ -217,7 +217,7 @@ function testSelectEventFiresForUserInitiatedAction() {
   select.addItem(item2);
 
   var recordingHandler = new goog.testing.recordFunction();
-***REMOVED***
+  goog.events.listen(
       select, goog.ui.Component.EventType.CHANGE, recordingHandler);
 
   select.setOpen(true);
@@ -236,10 +236,10 @@ function testSelectEventFiresForUserInitiatedAction() {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks that if an item is selected before decorate is called, the selection
-***REMOVED*** is preserved after decorate.
-***REMOVED***
+/**
+ * Checks that if an item is selected before decorate is called, the selection
+ * is preserved after decorate.
+ */
 function testSetSelectedItemBeforeRender() {
   select.addItem(new goog.ui.MenuItem("item 1"));
   select.addItem(new goog.ui.MenuItem("item 2"));
@@ -252,10 +252,10 @@ function testSetSelectedItemBeforeRender() {
   assertEquals(2, select.getSelectedIndex());
 }
 
-***REMOVED***
-***REMOVED*** Checks that if a value is set before decorate is called, the value is
-***REMOVED*** preserved after decorate.
-***REMOVED***
+/**
+ * Checks that if a value is set before decorate is called, the value is
+ * preserved after decorate.
+ */
 function testSetValueBeforeRender() {
   select.addItem(new goog.ui.MenuItem("item 1", 1));
   select.addItem(new goog.ui.MenuItem("item 2", 2));

@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.style');
   goog.require('goog.userAgent');
   goog.require('xrx.drawing.Drawing');
@@ -57,19 +57,19 @@ function getDrawingCanvas(id) {
   var canvasDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(canvasDiv,
     xrx.engine.CANVAS);
-***REMOVED***
+};
 
 function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(svgDiv,
       xrx.engine.SVG);
-***REMOVED***
+};
 
 function getDrawingVml(id) {
   var vmlDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(vmlDiv,
       xrx.engine.VML);
-***REMOVED***
+};
 
 function test1drawing() {
   if (!xrx.engine.isOldIE()) {
@@ -97,7 +97,7 @@ function test1drawing() {
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).width);
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).height);
   }
-***REMOVED***
+};
 
 function test2setBackgroundImage() {
   var url = './drawing_test.png';
@@ -111,10 +111,10 @@ function test2setBackgroundImage() {
     var vmlDrawing = getDrawingVml('vmlBackgroundImage');
     vmlDrawing.setBackgroundImage(url);
   }
-***REMOVED***
+};
 
 function test3resize() {
-***REMOVED***
+};
 
 function test4addShapes() {
   if (!xrx.engine.isOldIE()) {
@@ -147,7 +147,7 @@ function test4addShapes() {
     vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
     vmlDrawing.draw();
   }
-***REMOVED***
+};
 
 </script>
 </body>

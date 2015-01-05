@@ -205,7 +205,7 @@ function testNonWhitelistFunctionsNotCalled() {
   Object.prototype.dontcallme = function() {
     called = true;
     return 'dontcallme was called despite being on the prototype';
- ***REMOVED*****REMOVED***
+  };
   try {
     run('<span dontcallme="I\'ll call you">Lorem Ipsum',
         '<span>Lorem Ipsum</span>',

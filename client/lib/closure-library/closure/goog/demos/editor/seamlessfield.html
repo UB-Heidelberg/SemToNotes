@@ -86,7 +86,7 @@ See the COPYING file for details.
   var myField = new goog.editor.SeamlessField('editMe');
 
   function makeFieldEditable() {
-  ***REMOVED***myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+    goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
         updateFieldContents);
 
     myField.makeEditable();

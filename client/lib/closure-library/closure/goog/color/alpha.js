@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities related to alpha/transparent colors and alpha color
-***REMOVED*** conversion.
-***REMOVED***
+/**
+ * @fileoverview Utilities related to alpha/transparent colors and alpha color
+ * conversion.
+ */
 
 goog.provide('goog.color.alpha');
 
 goog.require('goog.color');
 
 
-***REMOVED***
-***REMOVED*** Parses an alpha color out of a string.
-***REMOVED*** @param {string} str Color in some format.
-***REMOVED*** @return {{hex: string, type: string}} 'hex' is a string containing
-***REMOVED***     a hex representation of the color, and 'type' is a string
-***REMOVED***     containing the type of color format passed in ('hex', 'rgb', 'named').
-***REMOVED***
+/**
+ * Parses an alpha color out of a string.
+ * @param {string} str Color in some format.
+ * @return {{hex: string, type: string}} 'hex' is a string containing
+ *     a hex representation of the color, and 'type' is a string
+ *     containing the type of color format passed in ('hex', 'rgb', 'named').
+ */
 goog.color.alpha.parse = function(str) {
-  var result = {***REMOVED***
+  var result = {};
   str = String(str);
 
   var maybeHex = goog.color.prependHashIfNecessaryHelper(str);
@@ -54,26 +54,26 @@ goog.color.alpha.parse = function(str) {
     }
   }
   throw Error(str + ' is not a valid color string');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a hex representation of a color to RGBA.
-***REMOVED*** @param {string} hexColor Color to convert.
-***REMOVED*** @return {string} string of the form 'rgba(R,G,B,A)' which can be used in
-***REMOVED***    styles.
-***REMOVED***
+/**
+ * Converts a hex representation of a color to RGBA.
+ * @param {string} hexColor Color to convert.
+ * @return {string} string of the form 'rgba(R,G,B,A)' which can be used in
+ *    styles.
+ */
 goog.color.alpha.hexToRgbaStyle = function(hexColor) {
   return goog.color.alpha.rgbaStyle_(goog.color.alpha.hexToRgba(hexColor));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the hex color part of an alpha hex color. For example, from '#abcdef55'
-***REMOVED*** return '#abcdef'.
-***REMOVED*** @param {string} colorWithAlpha The alpha hex color to get the hex color from.
-***REMOVED*** @return {string} The hex color where the alpha part has been stripped off.
-***REMOVED***
+/**
+ * Gets the hex color part of an alpha hex color. For example, from '#abcdef55'
+ * return '#abcdef'.
+ * @param {string} colorWithAlpha The alpha hex color to get the hex color from.
+ * @return {string} The hex color where the alpha part has been stripped off.
+ */
 goog.color.alpha.extractHexColor = function(colorWithAlpha) {
   if (goog.color.alpha.isValidAlphaHexColor_(colorWithAlpha)) {
     var fullColor = goog.color.prependHashIfNecessaryHelper(colorWithAlpha);
@@ -82,15 +82,15 @@ goog.color.alpha.extractHexColor = function(colorWithAlpha) {
   } else {
     throw Error(colorWithAlpha + ' is not a valid 8-hex color string');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the alpha color part of an alpha hex color. For example, from
-***REMOVED*** '#abcdef55' return '55'. The result is guaranteed to be two characters long.
-***REMOVED*** @param {string} colorWithAlpha The alpha hex color to get the hex color from.
-***REMOVED*** @return {string} The hex color where the alpha part has been stripped off.
-***REMOVED***
+/**
+ * Gets the alpha color part of an alpha hex color. For example, from
+ * '#abcdef55' return '55'. The result is guaranteed to be two characters long.
+ * @param {string} colorWithAlpha The alpha hex color to get the hex color from.
+ * @return {string} The hex color where the alpha part has been stripped off.
+ */
 goog.color.alpha.extractAlpha = function(colorWithAlpha) {
   if (goog.color.alpha.isValidAlphaHexColor_(colorWithAlpha)) {
     var fullColor = goog.color.prependHashIfNecessaryHelper(colorWithAlpha);
@@ -99,24 +99,24 @@ goog.color.alpha.extractAlpha = function(colorWithAlpha) {
   } else {
     throw Error(colorWithAlpha + ' is not a valid 8-hex color string');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expression for extracting the digits in a hex color quadruplet.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for extracting the digits in a hex color quadruplet.
+ * @type {RegExp}
+ * @private
+ */
 goog.color.alpha.hexQuadrupletRe_ = /#(.)(.)(.)(.)/;
 
 
-***REMOVED***
-***REMOVED*** Normalize a hex representation of an alpha color.
-***REMOVED*** @param {string} hexColor an alpha hex color string.
-***REMOVED*** @return {string} hex color in the format '#rrggbbaa' with all lowercase
-***REMOVED***     literals.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Normalize a hex representation of an alpha color.
+ * @param {string} hexColor an alpha hex color string.
+ * @return {string} hex color in the format '#rrggbbaa' with all lowercase
+ *     literals.
+ * @private
+ */
 goog.color.alpha.normalizeAlphaHex_ = function(hexColor) {
   if (!goog.color.alpha.isValidAlphaHexColor_(hexColor)) {
     throw Error("'" + hexColor + "' is not a valid alpha hex color");
@@ -126,15 +126,15 @@ goog.color.alpha.normalizeAlphaHex_ = function(hexColor) {
         '#$1$1$2$2$3$3$4$4');
   }
   return hexColor.toLowerCase();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts an 8-hex representation of a color to RGBA.
-***REMOVED*** @param {string} hexColor Color to convert.
-***REMOVED*** @return {!Array} array containing [r, g, b, a]. r, g, b are ints between 0
-***REMOVED***     and 255, and a is a value between 0 and 1.
-***REMOVED***
+/**
+ * Converts an 8-hex representation of a color to RGBA.
+ * @param {string} hexColor Color to convert.
+ * @return {!Array} array containing [r, g, b, a]. r, g, b are ints between 0
+ *     and 255, and a is a value between 0 and 1.
+ */
 goog.color.alpha.hexToRgba = function(hexColor) {
   // TODO(user): Enhance code sharing with goog.color, for example by
   //     adding a goog.color.genericHexToRgb method.
@@ -145,19 +145,19 @@ goog.color.alpha.hexToRgba = function(hexColor) {
   var a = parseInt(hexColor.substr(7, 2), 16);
 
   return [r, g, b, a / 255];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA to hex representation.
-***REMOVED*** @param {number} r Amount of red, int between 0 and 255.
-***REMOVED*** @param {number} g Amount of green, int between 0 and 255.
-***REMOVED*** @param {number} b Amount of blue, int between 0 and 255.
-***REMOVED*** @param {number} a Amount of alpha, float between 0 and 1.
-***REMOVED*** @return {string} hex representation of the color.
-***REMOVED***
+/**
+ * Converts a color from RGBA to hex representation.
+ * @param {number} r Amount of red, int between 0 and 255.
+ * @param {number} g Amount of green, int between 0 and 255.
+ * @param {number} b Amount of blue, int between 0 and 255.
+ * @param {number} a Amount of alpha, float between 0 and 1.
+ * @return {string} hex representation of the color.
+ */
 goog.color.alpha.rgbaToHex = function(r, g, b, a) {
-  var intAlpha = Math.floor(a***REMOVED*** 255);
+  var intAlpha = Math.floor(a * 255);
   if (isNaN(intAlpha) || intAlpha < 0 || intAlpha > 255) {
     // TODO(user): The CSS spec says the value should be clamped.
     throw Error('"(' + r + ',' + g + ',' + b + ',' + a +
@@ -165,19 +165,19 @@ goog.color.alpha.rgbaToHex = function(r, g, b, a) {
   }
   var hexA = goog.color.prependZeroIfNecessaryHelper(intAlpha.toString(16));
   return goog.color.rgbToHex(r, g, b) + hexA;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from HSLA to hex representation.
-***REMOVED*** @param {number} h Amount of hue, int between 0 and 360.
-***REMOVED*** @param {number} s Amount of saturation, int between 0 and 100.
-***REMOVED*** @param {number} l Amount of lightness, int between 0 and 100.
-***REMOVED*** @param {number} a Amount of alpha, float between 0 and 1.
-***REMOVED*** @return {string} hex representation of the color.
-***REMOVED***
+/**
+ * Converts a color from HSLA to hex representation.
+ * @param {number} h Amount of hue, int between 0 and 360.
+ * @param {number} s Amount of saturation, int between 0 and 100.
+ * @param {number} l Amount of lightness, int between 0 and 100.
+ * @param {number} a Amount of alpha, float between 0 and 1.
+ * @return {string} hex representation of the color.
+ */
 goog.color.alpha.hslaToHex = function(h, s, l, a) {
-  var intAlpha = Math.floor(a***REMOVED*** 255);
+  var intAlpha = Math.floor(a * 255);
   if (isNaN(intAlpha) || intAlpha < 0 || intAlpha > 255) {
     // TODO(user): The CSS spec says the value should be clamped.
     throw Error('"(' + h + ',' + s + ',' + l + ',' + a +
@@ -185,28 +185,28 @@ goog.color.alpha.hslaToHex = function(h, s, l, a) {
   }
   var hexA = goog.color.prependZeroIfNecessaryHelper(intAlpha.toString(16));
   return goog.color.hslToHex(h, s / 100, l / 100) + hexA;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA to hex representation.
-***REMOVED*** @param {Array.<number>} rgba Array of [r, g, b, a], with r, g, b in [0, 255]
-***REMOVED***     and a in [0, 1].
-***REMOVED*** @return {string} hex representation of the color.
-***REMOVED***
+/**
+ * Converts a color from RGBA to hex representation.
+ * @param {Array.<number>} rgba Array of [r, g, b, a], with r, g, b in [0, 255]
+ *     and a in [0, 1].
+ * @return {string} hex representation of the color.
+ */
 goog.color.alpha.rgbaArrayToHex = function(rgba) {
   return goog.color.alpha.rgbaToHex(rgba[0], rgba[1], rgba[2], rgba[3]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA to an RGBA style string.
-***REMOVED*** @param {number} r Value of red, in [0, 255].
-***REMOVED*** @param {number} g Value of green, in [0, 255].
-***REMOVED*** @param {number} b Value of blue, in [0, 255].
-***REMOVED*** @param {number} a Value of alpha, in [0, 1].
-***REMOVED*** @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
-***REMOVED***
+/**
+ * Converts a color from RGBA to an RGBA style string.
+ * @param {number} r Value of red, in [0, 255].
+ * @param {number} g Value of green, in [0, 255].
+ * @param {number} b Value of blue, in [0, 255].
+ * @param {number} a Value of alpha, in [0, 1].
+ * @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
+ */
 goog.color.alpha.rgbaToRgbaStyle = function(r, g, b, a) {
   if (isNaN(r) || r < 0 || r > 255 ||
       isNaN(g) || g < 0 || g > 255 ||
@@ -216,168 +216,168 @@ goog.color.alpha.rgbaToRgbaStyle = function(r, g, b, a) {
         ')" is not a valid RGBA color');
   }
   return goog.color.alpha.rgbaStyle_([r, g, b, a]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA to an RGBA style string.
-***REMOVED*** @param {(Array.<number>|Float32Array)} rgba Array of [r, g, b, a],
-***REMOVED***     with r, g, b in [0, 255] and a in [0, 1].
-***REMOVED*** @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
-***REMOVED***
+/**
+ * Converts a color from RGBA to an RGBA style string.
+ * @param {(Array.<number>|Float32Array)} rgba Array of [r, g, b, a],
+ *     with r, g, b in [0, 255] and a in [0, 1].
+ * @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
+ */
 goog.color.alpha.rgbaArrayToRgbaStyle = function(rgba) {
   return goog.color.alpha.rgbaToRgbaStyle(rgba[0], rgba[1], rgba[2], rgba[3]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from HSLA to hex representation.
-***REMOVED*** @param {Array.<number>} hsla Array of [h, s, l, a], where h is an integer in
-***REMOVED***     [0, 360], s and l are integers in [0, 100], and a is in [0, 1].
-***REMOVED*** @return {string} hex representation of the color, such as '#af457eff'.
-***REMOVED***
+/**
+ * Converts a color from HSLA to hex representation.
+ * @param {Array.<number>} hsla Array of [h, s, l, a], where h is an integer in
+ *     [0, 360], s and l are integers in [0, 100], and a is in [0, 1].
+ * @return {string} hex representation of the color, such as '#af457eff'.
+ */
 goog.color.alpha.hslaArrayToHex = function(hsla) {
   return goog.color.alpha.hslaToHex(hsla[0], hsla[1], hsla[2], hsla[3]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from HSLA to an RGBA style string.
-***REMOVED*** @param {Array.<number>} hsla Array of [h, s, l, a], where h is and integer in
-***REMOVED***     [0, 360], s and l are integers in [0, 100], and a is in [0, 1].
-***REMOVED*** @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
-***REMOVED***
+/**
+ * Converts a color from HSLA to an RGBA style string.
+ * @param {Array.<number>} hsla Array of [h, s, l, a], where h is and integer in
+ *     [0, 360], s and l are integers in [0, 100], and a is in [0, 1].
+ * @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
+ */
 goog.color.alpha.hslaArrayToRgbaStyle = function(hsla) {
   return goog.color.alpha.hslaToRgbaStyle(hsla[0], hsla[1], hsla[2], hsla[3]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from HSLA to an RGBA style string.
-***REMOVED*** @param {number} h Amount of hue, int between 0 and 360.
-***REMOVED*** @param {number} s Amount of saturation, int between 0 and 100.
-***REMOVED*** @param {number} l Amount of lightness, int between 0 and 100.
-***REMOVED*** @param {number} a Amount of alpha, float between 0 and 1.
-***REMOVED*** @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
-***REMOVED***     styles.
-***REMOVED***
+/**
+ * Converts a color from HSLA to an RGBA style string.
+ * @param {number} h Amount of hue, int between 0 and 360.
+ * @param {number} s Amount of saturation, int between 0 and 100.
+ * @param {number} l Amount of lightness, int between 0 and 100.
+ * @param {number} a Amount of alpha, float between 0 and 1.
+ * @return {string} An 'rgba(r,g,b,a)' string ready for use in a CSS rule.
+ *     styles.
+ */
 goog.color.alpha.hslaToRgbaStyle = function(h, s, l, a) {
   return goog.color.alpha.rgbaStyle_(goog.color.alpha.hslaToRgba(h, s, l, a));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from HSLA color space to RGBA color space.
-***REMOVED*** @param {number} h Amount of hue, int between 0 and 360.
-***REMOVED*** @param {number} s Amount of saturation, int between 0 and 100.
-***REMOVED*** @param {number} l Amount of lightness, int between 0 and 100.
-***REMOVED*** @param {number} a Amount of alpha, float between 0 and 1.
-***REMOVED*** @return {!Array.<number>} [r, g, b, a] values for the color, where r, g, b
-***REMOVED***     are integers in [0, 255] and a is a float in [0, 1].
-***REMOVED***
+/**
+ * Converts a color from HSLA color space to RGBA color space.
+ * @param {number} h Amount of hue, int between 0 and 360.
+ * @param {number} s Amount of saturation, int between 0 and 100.
+ * @param {number} l Amount of lightness, int between 0 and 100.
+ * @param {number} a Amount of alpha, float between 0 and 1.
+ * @return {!Array.<number>} [r, g, b, a] values for the color, where r, g, b
+ *     are integers in [0, 255] and a is a float in [0, 1].
+ */
 goog.color.alpha.hslaToRgba = function(h, s, l, a) {
   return goog.color.hslToRgb(h, s / 100, l / 100).concat(a);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA color space to HSLA color space.
-***REMOVED*** Modified from {@link http://en.wikipedia.org/wiki/HLS_color_space}.
-***REMOVED*** @param {number} r Value of red, in [0, 255].
-***REMOVED*** @param {number} g Value of green, in [0, 255].
-***REMOVED*** @param {number} b Value of blue, in [0, 255].
-***REMOVED*** @param {number} a Value of alpha, in [0, 255].
-***REMOVED*** @return {!Array.<number>} [h, s, l, a] values for the color, with h an int in
-***REMOVED***     [0, 360] and s, l and a in [0, 1].
-***REMOVED***
+/**
+ * Converts a color from RGBA color space to HSLA color space.
+ * Modified from {@link http://en.wikipedia.org/wiki/HLS_color_space}.
+ * @param {number} r Value of red, in [0, 255].
+ * @param {number} g Value of green, in [0, 255].
+ * @param {number} b Value of blue, in [0, 255].
+ * @param {number} a Value of alpha, in [0, 255].
+ * @return {!Array.<number>} [h, s, l, a] values for the color, with h an int in
+ *     [0, 360] and s, l and a in [0, 1].
+ */
 goog.color.alpha.rgbaToHsla = function(r, g, b, a) {
   return goog.color.rgbToHsl(r, g, b).concat(a);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a color from RGBA color space to HSLA color space.
-***REMOVED*** @param {Array.<number>} rgba [r, g, b, a] values for the color, each in
-***REMOVED***     [0, 255].
-***REMOVED*** @return {!Array.<number>} [h, s, l, a] values for the color, with h in
-***REMOVED***     [0, 360] and s, l and a in [0, 1].
-***REMOVED***
+/**
+ * Converts a color from RGBA color space to HSLA color space.
+ * @param {Array.<number>} rgba [r, g, b, a] values for the color, each in
+ *     [0, 255].
+ * @return {!Array.<number>} [h, s, l, a] values for the color, with h in
+ *     [0, 360] and s, l and a in [0, 1].
+ */
 goog.color.alpha.rgbaArrayToHsla = function(rgba) {
   return goog.color.alpha.rgbaToHsla(rgba[0], rgba[1], rgba[2], rgba[3]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper for isValidAlphaHexColor_.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper for isValidAlphaHexColor_.
+ * @type {RegExp}
+ * @private
+ */
 goog.color.alpha.validAlphaHexColorRe_ = /^#(?:[0-9a-f]{4}){1,2}$/i;
 
 
-***REMOVED***
-***REMOVED*** Checks if a string is a valid alpha hex color.  We expect strings of the
-***REMOVED*** format #RRGGBBAA (ex: #1b3d5f5b) or #RGBA (ex: #3CAF == #33CCAAFF).
-***REMOVED*** @param {string} str String to check.
-***REMOVED*** @return {boolean} Whether the string is a valid alpha hex color.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks if a string is a valid alpha hex color.  We expect strings of the
+ * format #RRGGBBAA (ex: #1b3d5f5b) or #RGBA (ex: #3CAF == #33CCAAFF).
+ * @param {string} str String to check.
+ * @return {boolean} Whether the string is a valid alpha hex color.
+ * @private
+ */
 // TODO(user): Support percentages when goog.color also supports them.
 goog.color.alpha.isValidAlphaHexColor_ = function(str) {
   return goog.color.alpha.validAlphaHexColorRe_.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper for isNormalizedAlphaHexColor_.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper for isNormalizedAlphaHexColor_.
+ * @type {RegExp}
+ * @private
+ */
 goog.color.alpha.normalizedAlphaHexColorRe_ = /^#[0-9a-f]{8}$/;
 
 
-***REMOVED***
-***REMOVED*** Checks if a string is a normalized alpha hex color.
-***REMOVED*** We expect strings of the format #RRGGBBAA (ex: #1b3d5f5b)
-***REMOVED*** using only lowercase letters.
-***REMOVED*** @param {string} str String to check.
-***REMOVED*** @return {boolean} Whether the string is a normalized hex color.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks if a string is a normalized alpha hex color.
+ * We expect strings of the format #RRGGBBAA (ex: #1b3d5f5b)
+ * using only lowercase letters.
+ * @param {string} str String to check.
+ * @return {boolean} Whether the string is a normalized hex color.
+ * @private
+ */
 goog.color.alpha.isNormalizedAlphaHexColor_ = function(str) {
   return goog.color.alpha.normalizedAlphaHexColorRe_.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expression for matching and capturing RGBA style strings. Helper for
-***REMOVED*** isValidRgbaColor_.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for matching and capturing RGBA style strings. Helper for
+ * isValidRgbaColor_.
+ * @type {RegExp}
+ * @private
+ */
 goog.color.alpha.rgbaColorRe_ =
     /^(?:rgba)?\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2}),\s?(0|1|0\.\d{0,10})\)$/i;
 
 
-***REMOVED***
-***REMOVED*** Regular expression for matching and capturing HSLA style strings. Helper for
-***REMOVED*** isValidHslaColor_.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for matching and capturing HSLA style strings. Helper for
+ * isValidHslaColor_.
+ * @type {RegExp}
+ * @private
+ */
 goog.color.alpha.hslaColorRe_ =
     /^(?:hsla)\((0|[1-9]\d{0,2}),\s?(0|[1-9]\d{0,2})\%,\s?(0|[1-9]\d{0,2})\%,\s?(0|1|0\.\d{0,10})\)$/i;
 
 
-***REMOVED***
-***REMOVED*** Checks if a string is a valid rgba color.  We expect strings of the format
-***REMOVED*** '(r, g, b, a)', or 'rgba(r, g, b, a)', where r, g, b are ints in [0, 255]
-***REMOVED***     and a is a float in [0, 1].
-***REMOVED*** @param {string} str String to check.
-***REMOVED*** @return {!Array.<number>} the integers [r, g, b, a] for valid colors or the
-***REMOVED***     empty array for invalid colors.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks if a string is a valid rgba color.  We expect strings of the format
+ * '(r, g, b, a)', or 'rgba(r, g, b, a)', where r, g, b are ints in [0, 255]
+ *     and a is a float in [0, 1].
+ * @param {string} str String to check.
+ * @return {!Array.<number>} the integers [r, g, b, a] for valid colors or the
+ *     empty array for invalid colors.
+ * @private
+ */
 goog.color.alpha.isValidRgbaColor_ = function(str) {
   // Each component is separate (rather than using a repeater) so we can
   // capture the match. Also, we explicitly set each component to be either 0,
@@ -396,18 +396,18 @@ goog.color.alpha.isValidRgbaColor_ = function(str) {
     }
   }
   return [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if a string is a valid hsla color.  We expect strings of the format
-***REMOVED*** 'hsla(h, s, l, a)', where s in an int in [0, 360], s and l are percentages
-***REMOVED***     between 0 and 100 such as '50%' or '70%', and a is a float in [0, 1].
-***REMOVED*** @param {string} str String to check.
-***REMOVED*** @return {!Array.<number>} the integers [h, s, l, a] for valid colors or the
-***REMOVED***     empty array for invalid colors.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks if a string is a valid hsla color.  We expect strings of the format
+ * 'hsla(h, s, l, a)', where s in an int in [0, 360], s and l are percentages
+ *     between 0 and 100 such as '50%' or '70%', and a is a float in [0, 1].
+ * @param {string} str String to check.
+ * @return {!Array.<number>} the integers [h, s, l, a] for valid colors or the
+ *     empty array for invalid colors.
+ * @private
+ */
 goog.color.alpha.isValidHslaColor_ = function(str) {
   // Each component is separate (rather than using a repeater) so we can
   // capture the match. Also, we explicitly set each component to be either 0,
@@ -426,46 +426,46 @@ goog.color.alpha.isValidHslaColor_ = function(str) {
     }
   }
   return [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes an array of [r, g, b, a] and converts it into a string appropriate for
-***REMOVED*** CSS styles. The alpha channel value is rounded to 3 decimal places to make
-***REMOVED*** sure the produced string is not too long.
-***REMOVED*** @param {Array.<number>} rgba [r, g, b, a] with r, g, b in [0, 255] and a
-***REMOVED***     in [0, 1].
-***REMOVED*** @return {string} string of the form 'rgba(r,g,b,a)'.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Takes an array of [r, g, b, a] and converts it into a string appropriate for
+ * CSS styles. The alpha channel value is rounded to 3 decimal places to make
+ * sure the produced string is not too long.
+ * @param {Array.<number>} rgba [r, g, b, a] with r, g, b in [0, 255] and a
+ *     in [0, 1].
+ * @return {string} string of the form 'rgba(r,g,b,a)'.
+ * @private
+ */
 goog.color.alpha.rgbaStyle_ = function(rgba) {
   var roundedRgba = rgba.slice(0);
-  roundedRgba[3] = Math.round(rgba[3]***REMOVED*** 1000) / 1000;
+  roundedRgba[3] = Math.round(rgba[3] * 1000) / 1000;
   return 'rgba(' + roundedRgba.join(',') + ')';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts from h,s,v,a values to a hex string
-***REMOVED*** @param {number} h Hue, in [0, 1].
-***REMOVED*** @param {number} s Saturation, in [0, 1].
-***REMOVED*** @param {number} v Value, in [0, 255].
-***REMOVED*** @param {number} a Alpha, in [0, 1].
-***REMOVED*** @return {string} hex representation of the color.
-***REMOVED***
+/**
+ * Converts from h,s,v,a values to a hex string
+ * @param {number} h Hue, in [0, 1].
+ * @param {number} s Saturation, in [0, 1].
+ * @param {number} v Value, in [0, 255].
+ * @param {number} a Alpha, in [0, 1].
+ * @return {string} hex representation of the color.
+ */
 goog.color.alpha.hsvaToHex = function(h, s, v, a) {
-  var alpha = Math.floor(a***REMOVED*** 255);
+  var alpha = Math.floor(a * 255);
   return goog.color.hsvArrayToHex([h, s, v]) +
          goog.color.prependZeroIfNecessaryHelper(alpha.toString(16));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts from an HSVA array to a hex string
-***REMOVED*** @param {Array} hsva Array of [h, s, v, a] in
-***REMOVED***     [[0, 1], [0, 1], [0, 255], [0, 1]].
-***REMOVED*** @return {string} hex representation of the color.
-***REMOVED***
+/**
+ * Converts from an HSVA array to a hex string
+ * @param {Array} hsva Array of [h, s, v, a] in
+ *     [[0, 1], [0, 1], [0, 255], [0, 1]].
+ * @return {string} hex representation of the color.
+ */
 goog.color.alpha.hsvaArrayToHex = function(hsva) {
   return goog.color.alpha.hsvaToHex(hsva[0], hsva[1], hsva[2], hsva[3]);
-***REMOVED***
+};

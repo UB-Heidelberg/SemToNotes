@@ -13,12 +13,12 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED*** HTML tag filtering, and balancing.
-***REMOVED*** A more user-friendly API is exposed via {@code goog.labs.html.sanitizer}.
-***REMOVED*** @visibility {//visibility:private}
-***REMOVED***
+/**
+ * @fileoverview
+ * HTML tag filtering, and balancing.
+ * A more user-friendly API is exposed via {@code goog.labs.html.sanitizer}.
+ * @visibility {//visibility:private}
+ */
 
 
 goog.provide('goog.labs.html.scrubber');
@@ -29,27 +29,27 @@ goog.require('goog.labs.html.attributeRewriterPresubmitWorkaround');
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Replaces tags not on the white-list with empty text nodes, dropping all
-***REMOVED*** attributes, and drops other non-text nodes such as comments.
-***REMOVED***
-***REMOVED*** @param {!Object.<string, boolean>} tagWhitelist a set of lower-case tag names
-***REMOVED***    following the convention established by {@link goog.object.createSet}.
-***REMOVED*** @param {!Object.<string, Object.<string, goog.labs.html.AttributeRewriter>>}
-***REMOVED***        attrWhitelist
-***REMOVED***    maps lower-case tag names and the special string {@code "*"} to functions
-***REMOVED***    from decoded attribute values to sanitized values or {@code null} to
-***REMOVED***    indicate that the attribute is not allowed with that value.
-***REMOVED***
-***REMOVED***    For example, if {@code attrWhitelist['a']['href']} is defined then it
-***REMOVED***    is used to sanitize the value of the link's URL.
-***REMOVED***
-***REMOVED***    If {@code attrWhitelist['*']['id']} is defined, and
-***REMOVED***    {@code attrWhitelist['div']['id']} is not, then the former is used to
-***REMOVED***    sanitize any {@code id} attribute on a {@code <div>} element.
-***REMOVED*** @param {string} html a string of HTML
-***REMOVED*** @return {string} the input but with potentially dangerous tokens removed.
-***REMOVED***
+/**
+ * Replaces tags not on the white-list with empty text nodes, dropping all
+ * attributes, and drops other non-text nodes such as comments.
+ *
+ * @param {!Object.<string, boolean>} tagWhitelist a set of lower-case tag names
+ *    following the convention established by {@link goog.object.createSet}.
+ * @param {!Object.<string, Object.<string, goog.labs.html.AttributeRewriter>>}
+ *        attrWhitelist
+ *    maps lower-case tag names and the special string {@code "*"} to functions
+ *    from decoded attribute values to sanitized values or {@code null} to
+ *    indicate that the attribute is not allowed with that value.
+ *
+ *    For example, if {@code attrWhitelist['a']['href']} is defined then it
+ *    is used to sanitize the value of the link's URL.
+ *
+ *    If {@code attrWhitelist['*']['id']} is defined, and
+ *    {@code attrWhitelist['div']['id']} is not, then the former is used to
+ *    sanitize any {@code id} attribute on a {@code <div>} element.
+ * @param {string} html a string of HTML
+ * @return {string} the input but with potentially dangerous tokens removed.
+ */
 goog.labs.html.scrubber.scrub = function(tagWhitelist, attrWhitelist, html) {
   return goog.labs.html.scrubber.render_(
       goog.labs.html.scrubber.balance_(
@@ -57,102 +57,102 @@ goog.labs.html.scrubber.scrub = function(tagWhitelist, attrWhitelist, html) {
               tagWhitelist,
               attrWhitelist,
               goog.labs.html.scrubber.lex_(html))));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Balances tags in trusted HTML.
-***REMOVED*** @param {string} html a string of HTML
-***REMOVED*** @return {string} the input but with an end-tag for each non-void start tag
-***REMOVED***     and only for non-void start tags, and with start and end tags nesting
-***REMOVED***     properly.
-***REMOVED***
+/**
+ * Balances tags in trusted HTML.
+ * @param {string} html a string of HTML
+ * @return {string} the input but with an end-tag for each non-void start tag
+ *     and only for non-void start tags, and with start and end tags nesting
+ *     properly.
+ */
 goog.labs.html.scrubber.balance = function(html) {
   return goog.labs.html.scrubber.render_(
       goog.labs.html.scrubber.balance_(
           goog.labs.html.scrubber.lex_(html)));
-***REMOVED***
+};
 
 
-***REMOVED*** Character code constant for {@code '<'}.  @private***REMOVED***
+/** Character code constant for {@code '<'}.  @private */
 goog.labs.html.scrubber.CC_LT_ = '<'.charCodeAt(0);
 
 
-***REMOVED*** Character code constant for {@code '!'}.  @private***REMOVED***
+/** Character code constant for {@code '!'}.  @private */
 goog.labs.html.scrubber.CC_BANG_ = '!'.charCodeAt(0);
 
 
-***REMOVED*** Character code constant for {@code '/'}.  @private***REMOVED***
+/** Character code constant for {@code '/'}.  @private */
 goog.labs.html.scrubber.CC_SLASH_ = '/'.charCodeAt(0);
 
 
-***REMOVED*** Character code constant for {@code '?'}.  @private***REMOVED***
+/** Character code constant for {@code '?'}.  @private */
 goog.labs.html.scrubber.CC_QMARK_ = '?'.charCodeAt(0);
 
 
-***REMOVED***
-***REMOVED*** Matches content following a tag name or attribute value, and before the
-***REMOVED*** beginning of the next attribute value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matches content following a tag name or attribute value, and before the
+ * beginning of the next attribute value.
+ * @private
+ */
 goog.labs.html.scrubber.ATTR_VALUE_PRECEDER_ = '[^=>]+';
 
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 goog.labs.html.scrubber.UNQUOTED_ATTR_VALUE_ = '(?:[^"\'\\s>][^\\s>]*)';
 
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 goog.labs.html.scrubber.DOUBLE_QUOTED_ATTR_VALUE_ = '(?:"[^"]*"?)';
 
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 goog.labs.html.scrubber.SINGLE_QUOTED_ATTR_VALUE_ = "(?:'[^']*'?)";
 
 
-***REMOVED***
-***REMOVED*** Matches the equals-sign and any attribute value following it, but does not
-***REMOVED*** capture any {@code >} that would close the tag.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matches the equals-sign and any attribute value following it, but does not
+ * capture any {@code >} that would close the tag.
+ * @private
+ */
 goog.labs.html.scrubber.ATTR_VALUE_ = '=\\s*(?:' +
     goog.labs.html.scrubber.UNQUOTED_ATTR_VALUE_ +
     '|' + goog.labs.html.scrubber.DOUBLE_QUOTED_ATTR_VALUE_ +
     '|' + goog.labs.html.scrubber.SINGLE_QUOTED_ATTR_VALUE_ + ')?';
 
 
-***REMOVED***
-***REMOVED*** The body of a tag between the end of the name and the closing {@code >}
-***REMOVED*** if any.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The body of a tag between the end of the name and the closing {@code >}
+ * if any.
+ * @private
+ */
 goog.labs.html.scrubber.ATTRS_ =
     '(?:' + goog.labs.html.scrubber.ATTR_VALUE_PRECEDER_ +
     '|' + goog.labs.html.scrubber.ATTR_VALUE_ + ')*';
 
 
-***REMOVED***
-***REMOVED*** A character that continues a tag name as defined at
-***REMOVED*** http://www.w3.org/html/wg/drafts/html/master/syntax.html#tag-name-state
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A character that continues a tag name as defined at
+ * http://www.w3.org/html/wg/drafts/html/master/syntax.html#tag-name-state
+ * @private
+ */
 goog.labs.html.scrubber.TAG_NAME_CHAR_ = '[^\t\f\n />]';
 
 
-***REMOVED***
-***REMOVED*** Matches when the next character cannot continue a tag name.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matches when the next character cannot continue a tag name.
+ * @private
+ */
 goog.labs.html.scrubber.BREAK_ =
     '(?!' + goog.labs.html.scrubber.TAG_NAME_CHAR_ + ')';
 
 
-***REMOVED***
-***REMOVED*** Matches the open tag and body of a special element :
-***REMOVED*** one whose body cannot contain nested elements so uses special parsing rules.
-***REMOVED*** It does not include the end tag.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matches the open tag and body of a special element :
+ * one whose body cannot contain nested elements so uses special parsing rules.
+ * It does not include the end tag.
+ * @private
+ */
 goog.labs.html.scrubber.SPECIAL_ELEMENT_ = '<(?:' +
     // Special tag name.
     '(iframe|script|style|textarea|title|xmp)' +
@@ -172,38 +172,38 @@ goog.labs.html.scrubber.SPECIAL_ELEMENT_ = '<(?:' +
     ')';
 
 
-***REMOVED***
-***REMOVED*** Regexp pattern for an HTML tag.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regexp pattern for an HTML tag.
+ * @private
+ */
 goog.labs.html.scrubber.TAG_ =
     '<[/]?[a-z]' + goog.labs.html.scrubber.TAG_NAME_CHAR_ + '*' +
     goog.labs.html.scrubber.ATTRS_ + '>?';
 
 
-***REMOVED***
-***REMOVED*** Regexp pattern for an HTML text node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regexp pattern for an HTML text node.
+ * @private
+ */
 goog.labs.html.scrubber.TEXT_NODE_ = '(?:[^<]|<(?![a-z]|[?!/]))+';
 
 
-***REMOVED***
-***REMOVED*** Matches HTML comments including HTML 5 "bogus comments" of the form
-***REMOVED*** {@code <!...>} or {@code <?...>} or {@code </...>}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matches HTML comments including HTML 5 "bogus comments" of the form
+ * {@code <!...>} or {@code <?...>} or {@code </...>}.
+ * @private
+ */
 goog.labs.html.scrubber.COMMENT_ =
     '<!--(?:[^\\-]|-+(?![\\->]))*(?:-(?:->?)?)?' +
     '|<[!?/][^>]*>?';
 
 
-***REMOVED***
-***REMOVED*** Regexp pattern for an HTML token after a doctype.
-***REMOVED*** Special elements introduces a capturing group for use with a
-***REMOVED*** back-reference.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regexp pattern for an HTML token after a doctype.
+ * Special elements introduces a capturing group for use with a
+ * back-reference.
+ * @private
+ */
 goog.labs.html.scrubber.HTML_TOKENS_RE_ = new RegExp(
     '(?:' + goog.labs.html.scrubber.TEXT_NODE_ +
     '|' + goog.labs.html.scrubber.SPECIAL_ELEMENT_ +
@@ -212,63 +212,63 @@ goog.labs.html.scrubber.HTML_TOKENS_RE_ = new RegExp(
     'ig');
 
 
-***REMOVED***
-***REMOVED*** An HTML tag which captures the name in group 1,
-***REMOVED*** and any attributes in group 2.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An HTML tag which captures the name in group 1,
+ * and any attributes in group 2.
+ * @private
+ */
 goog.labs.html.scrubber.TAG_RE_ = new RegExp(
     '<[/]?([a-z]' + goog.labs.html.scrubber.TAG_NAME_CHAR_ + '*)' +
     '(' + goog.labs.html.scrubber.ATTRS_ + ')>?',
     'i');
 
 
-***REMOVED***
-***REMOVED*** A global matcher that separates attributes out of the tag body cruft.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A global matcher that separates attributes out of the tag body cruft.
+ * @private
+ */
 goog.labs.html.scrubber.ATTRS_RE_ = new RegExp(
     '[^=\\s]+\\s*(?:' + goog.labs.html.scrubber.ATTR_VALUE_ + ')?', 'ig');
 
 
-***REMOVED***
-***REMOVED*** Returns an array of HTML tokens including tags, text nodes and comments.
-***REMOVED*** "Special" elements, like {@code <script>...</script>} whose bodies cannot
-***REMOVED*** include nested elements, are returned as single tokens.
-***REMOVED***
-***REMOVED*** @param {string} html a string of HTML
-***REMOVED*** @return {!Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns an array of HTML tokens including tags, text nodes and comments.
+ * "Special" elements, like {@code <script>...</script>} whose bodies cannot
+ * include nested elements, are returned as single tokens.
+ *
+ * @param {string} html a string of HTML
+ * @return {!Array.<string>}
+ * @private
+ */
 goog.labs.html.scrubber.lex_ = function(html) {
   return ('' + html).match(goog.labs.html.scrubber.HTML_TOKENS_RE_) || [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces tags not on the white-list with empty text nodes, dropping all
-***REMOVED*** attributes, and drops other non-text nodes such as comments.
-***REMOVED***
-***REMOVED*** @param {!Object.<string, boolean>} tagWhitelist a set of lower-case tag names
-***REMOVED***    following the convention established by {@link goog.object.createSet}.
-***REMOVED*** @param {!Object.<string, Object.<string, goog.labs.html.AttributeRewriter>>
-***REMOVED***        } attrWhitelist
-***REMOVED***    maps lower-case tag names and the special string {@code "*"} to functions
-***REMOVED***    from decoded attribute values to sanitized values or {@code null} to
-***REMOVED***    indicate that the attribute is not allowed with that value.
-***REMOVED***
-***REMOVED***    For example, if {@code attrWhitelist['a']['href']} is defined then it is
-***REMOVED***    used to sanitize the value of the link's URL.
-***REMOVED***
-***REMOVED***    If {@code attrWhitelist['*']['id']} is defined, and
-***REMOVED***    {@code attrWhitelist['div']['id']} is not, then the former is used to
-***REMOVED***    sanitize any {@code id} attribute on a {@code <div>} element.
-***REMOVED*** @param {!Array.<string>} htmlTokens an array of HTML tokens as returned by
-***REMOVED***    {@link goog.labs.html.scrubber.lex_}.
-***REMOVED*** @return {!Array.<string>} the input array modified in place to have some
-***REMOVED***    tokens removed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces tags not on the white-list with empty text nodes, dropping all
+ * attributes, and drops other non-text nodes such as comments.
+ *
+ * @param {!Object.<string, boolean>} tagWhitelist a set of lower-case tag names
+ *    following the convention established by {@link goog.object.createSet}.
+ * @param {!Object.<string, Object.<string, goog.labs.html.AttributeRewriter>>
+ *        } attrWhitelist
+ *    maps lower-case tag names and the special string {@code "*"} to functions
+ *    from decoded attribute values to sanitized values or {@code null} to
+ *    indicate that the attribute is not allowed with that value.
+ *
+ *    For example, if {@code attrWhitelist['a']['href']} is defined then it is
+ *    used to sanitize the value of the link's URL.
+ *
+ *    If {@code attrWhitelist['*']['id']} is defined, and
+ *    {@code attrWhitelist['div']['id']} is not, then the former is used to
+ *    sanitize any {@code id} attribute on a {@code <div>} element.
+ * @param {!Array.<string>} htmlTokens an array of HTML tokens as returned by
+ *    {@link goog.labs.html.scrubber.lex_}.
+ * @return {!Array.<string>} the input array modified in place to have some
+ *    tokens removed.
+ * @private
+ */
 goog.labs.html.scrubber.filter_ = function(
     tagWhitelist, attrWhitelist, htmlTokens) {
   var genericAttrWhitelist = attrWhitelist['*'];
@@ -287,7 +287,7 @@ goog.labs.html.scrubber.filter_ = function(
       var attrs = '';
       if (!isCloseTag && tag[2]) {
         var tagSpecificAttrWhitelist =
-           ***REMOVED*****REMOVED*** @type {Object.<string, goog.labs.html.AttributeRewriter>}***REMOVED*** (
+            /** @type {Object.<string, goog.labs.html.AttributeRewriter>} */ (
             goog.labs.html.scrubber.readOwnProperty_(
                 attrWhitelist, lowerCaseTagName));
         if (genericAttrWhitelist || tagSpecificAttrWhitelist) {
@@ -318,27 +318,27 @@ goog.labs.html.scrubber.filter_ = function(
     }
   }
   return htmlTokens;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses attribute names and values out of a tag body and applies the attribute
-***REMOVED*** white-list to produce a tag body containing only safe attributes.
-***REMOVED***
-***REMOVED*** @param {string} attrsText the text of a tag between the end of the tag name
-***REMOVED***   and the beginning of the tag end marker, so {@code " foo bar='baz'"} for
-***REMOVED***   the tag {@code <tag foo bar='baz'/>}.
-***REMOVED*** @param {Object.<string, goog.labs.html.AttributeRewriter>}
-***REMOVED***   genericAttrWhitelist
-***REMOVED***   a whitelist of attribute transformations for attributes that are allowed
-***REMOVED***   on any element.
-***REMOVED*** @param {Object.<string, goog.labs.html.AttributeRewriter>}
-***REMOVED***   tagSpecificAttrWhitelist
-***REMOVED***   a whitelist of attribute transformations for attributes that are allowed
-***REMOVED***   on the element started by the tag whose body is {@code tagBody}.
-***REMOVED*** @return {string} a tag-body that consists only of safe attributes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses attribute names and values out of a tag body and applies the attribute
+ * white-list to produce a tag body containing only safe attributes.
+ *
+ * @param {string} attrsText the text of a tag between the end of the tag name
+ *   and the beginning of the tag end marker, so {@code " foo bar='baz'"} for
+ *   the tag {@code <tag foo bar='baz'/>}.
+ * @param {Object.<string, goog.labs.html.AttributeRewriter>}
+ *   genericAttrWhitelist
+ *   a whitelist of attribute transformations for attributes that are allowed
+ *   on any element.
+ * @param {Object.<string, goog.labs.html.AttributeRewriter>}
+ *   tagSpecificAttrWhitelist
+ *   a whitelist of attribute transformations for attributes that are allowed
+ *   on the element started by the tag whose body is {@code tagBody}.
+ * @return {string} a tag-body that consists only of safe attributes.
+ * @private
+ */
 goog.labs.html.scrubber.filterAttrs_ =
     function(attrsText, genericAttrWhitelist, tagSpecificAttrWhitelist) {
   var attrs = attrsText.match(goog.labs.html.scrubber.ATTRS_RE_);
@@ -356,7 +356,7 @@ goog.labs.html.scrubber.filterAttrs_ =
       name = value = attr;
     }
     name = name.toLowerCase();
-    var rewriter =***REMOVED*****REMOVED*** @type {?goog.labs.html.AttributeRewriter}***REMOVED*** (
+    var rewriter = /** @type {?goog.labs.html.AttributeRewriter} */ (
         tagSpecificAttrWhitelist &&
         goog.labs.html.scrubber.readOwnProperty_(
             tagSpecificAttrWhitelist, name) ||
@@ -366,7 +366,7 @@ goog.labs.html.scrubber.filterAttrs_ =
       var safeValue = rewriter(goog.string.unescapeEntities(value));
       if (safeValue != null) {
         if (safeValue.implementsGoogStringTypedString) {
-          safeValue =***REMOVED*****REMOVED*** @type {goog.string.TypedString}***REMOVED***
+          safeValue = /** @type {goog.string.TypedString} */
               (safeValue).getTypedStringValue();
         }
         safeValue = String(safeValue);
@@ -380,45 +380,45 @@ goog.labs.html.scrubber.filterAttrs_ =
     }
   }
   return safeAttrs;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!Object} o the object
-***REMOVED*** @param {!string} k a key into o
-***REMOVED*** @return {*}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {!Object} o the object
+ * @param {!string} k a key into o
+ * @return {*}
+ * @private
+ */
 goog.labs.html.scrubber.readOwnProperty_ = function(o, k) {
   return Object.prototype.hasOwnProperty.call(o, k) ? o[k] : undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** We limit the nesting limit of balanced HTML to a large but manageable number
-***REMOVED*** so that built-in browser limits aren't likely to kick in and undo all our
-***REMOVED*** matching of start and end tags.
-***REMOVED*** <br>
-***REMOVED*** This mitigates the HTML parsing equivalent of stack smashing attacks.
-***REMOVED*** <br>
-***REMOVED*** Otherwise, crafted inputs like
-***REMOVED*** {@code <p><p><p><p>...Ad nauseam...</p></p></p></p>} could exploit
-***REMOVED*** browser bugs, and/or undocumented nesting limit recovery code to misnest
-***REMOVED*** tags.
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * We limit the nesting limit of balanced HTML to a large but manageable number
+ * so that built-in browser limits aren't likely to kick in and undo all our
+ * matching of start and end tags.
+ * <br>
+ * This mitigates the HTML parsing equivalent of stack smashing attacks.
+ * <br>
+ * Otherwise, crafted inputs like
+ * {@code <p><p><p><p>...Ad nauseam...</p></p></p></p>} could exploit
+ * browser bugs, and/or undocumented nesting limit recovery code to misnest
+ * tags.
+ * @private
+ * @const
+ */
 goog.labs.html.scrubber.BALANCE_NESTING_LIMIT_ = 256;
 
 
-***REMOVED***
-***REMOVED*** Ensures that there are end-tags for all and only for non-void start tags.
-***REMOVED*** @param {Array.<string>} htmlTokens an array of HTML tokens as returned by
-***REMOVED***    {@link goog.labs.html.scrubber.lex}.
-***REMOVED*** @return {!Array.<string>} the input array modified in place to have some
-***REMOVED***    tokens removed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Ensures that there are end-tags for all and only for non-void start tags.
+ * @param {Array.<string>} htmlTokens an array of HTML tokens as returned by
+ *    {@link goog.labs.html.scrubber.lex}.
+ * @return {!Array.<string>} the input array modified in place to have some
+ *    tokens removed.
+ * @private
+ */
 goog.labs.html.scrubber.balance_ = function(htmlTokens) {
   var openElementStack = [];
   for (var i = 0, n = htmlTokens.length; i < n; ++i) {
@@ -525,16 +525,16 @@ goog.labs.html.scrubber.balance_ = function(htmlTokens) {
     }
   }
   return htmlTokens;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes HTML tokens and concatenates them into a string.
-***REMOVED*** @param {Array.<string>} htmlTokens an array of HTML tokens as returned by
-***REMOVED***    {@link goog.labs.html.scrubber.lex}.
-***REMOVED*** @return {string} a string of HTML.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Normalizes HTML tokens and concatenates them into a string.
+ * @param {Array.<string>} htmlTokens an array of HTML tokens as returned by
+ *    {@link goog.labs.html.scrubber.lex}.
+ * @return {string} a string of HTML.
+ * @private
+ */
 goog.labs.html.scrubber.render_ = function(htmlTokens) {
   for (var i = 0, n = htmlTokens.length; i < n; ++i) {
     var htmlToken = htmlTokens[i];
@@ -553,14 +553,14 @@ goog.labs.html.scrubber.render_ = function(htmlTokens) {
     }
   }
   return htmlTokens.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Groups of elements used to specify containment relationships.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Groups of elements used to specify containment relationships.
+ * @enum {number}
+ * @private
+ */
 goog.labs.html.scrubber.Group_ = {
   BLOCK_: (1 << 0),
   INLINE_: (1 << 1),
@@ -583,27 +583,27 @@ goog.labs.html.scrubber.Group_ = {
   TD_ELEMENT_: (1 << 18),
   COL_ELEMENT_: (1 << 19),
   CHARACTER_DATA_: (1 << 20)
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Element scopes limit where close tags can have effects.
-***REMOVED*** For example, a table cannot be implicitly closed by a {@code </p>} even if
-***REMOVED*** the table appears inside a {@code <p>} because the {@code <table>} element
-***REMOVED*** introduces a scope.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element scopes limit where close tags can have effects.
+ * For example, a table cannot be implicitly closed by a {@code </p>} even if
+ * the table appears inside a {@code <p>} because the {@code <table>} element
+ * introduces a scope.
+ *
+ * @enum {number}
+ * @private
+ */
 goog.labs.html.scrubber.Scope_ = {
   COMMON_: (1 << 0),
   BUTTON_: (1 << 1),
   LIST_ITEM_: (1 << 2),
   TABLE_: (1 << 3)
-***REMOVED***
+};
 
 
-***REMOVED*** @const @private***REMOVED***
+/** @const @private */
 goog.labs.html.scrubber.ALL_SCOPES_ =
     goog.labs.html.scrubber.Scope_.COMMON_ |
     goog.labs.html.scrubber.Scope_.BUTTON_ |
@@ -611,17 +611,17 @@ goog.labs.html.scrubber.ALL_SCOPES_ =
     goog.labs.html.scrubber.Scope_.TABLE_;
 
 
-***REMOVED***
-***REMOVED*** Picks which open HTML elements to close.
-***REMOVED***
-***REMOVED*** @param {string}         lowerCaseTagName The name of the tag.
-***REMOVED*** @param {boolean}        isCloseTag       True for a {@code </tagname>} tag.
-***REMOVED*** @param {Array.<string>} openElementStack The names of elements that have been
-***REMOVED***                                          opened and not subsequently closed.
-***REMOVED*** @return {number} the length of openElementStack after closing any tags that
-***REMOVED***               need to be closed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Picks which open HTML elements to close.
+ *
+ * @param {string}         lowerCaseTagName The name of the tag.
+ * @param {boolean}        isCloseTag       True for a {@code </tagname>} tag.
+ * @param {Array.<string>} openElementStack The names of elements that have been
+ *                                          opened and not subsequently closed.
+ * @return {number} the length of openElementStack after closing any tags that
+ *               need to be closed.
+ * @private
+ */
 goog.labs.html.scrubber.pickElementsToClose_ =
     function(lowerCaseTagName, isCloseTag, openElementStack) {
   var nOpenElements = openElementStack.length;
@@ -670,14 +670,14 @@ goog.labs.html.scrubber.pickElementsToClose_ =
     }
     return 0;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The groups into which the element falls.
-***REMOVED*** The default is an inline element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The groups into which the element falls.
+ * The default is an inline element.
+ * @private
+ */
 goog.labs.html.scrubber.ELEMENT_GROUPS_ = {
   'a': goog.labs.html.scrubber.Group_.INLINE_,
   'abbr': goog.labs.html.scrubber.Group_.INLINE_ |
@@ -848,14 +848,14 @@ goog.labs.html.scrubber.ELEMENT_GROUPS_ = {
   'wbr': goog.labs.html.scrubber.Group_.INLINE_ |
       goog.labs.html.scrubber.Group_.INLINE_MINUS_A_,
   'xmp': goog.labs.html.scrubber.Group_.BLOCK_
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The groups which the element can contain.
-***REMOVED*** Defaults to 0.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The groups which the element can contain.
+ * Defaults to 0.
+ * @private
+ */
 goog.labs.html.scrubber.ELEMENT_CONTENTS_ = {
   'a': goog.labs.html.scrubber.Group_.INLINE_MINUS_A_,
   'abbr': goog.labs.html.scrubber.Group_.INLINE_,
@@ -973,14 +973,14 @@ goog.labs.html.scrubber.ELEMENT_CONTENTS_ = {
   'ul': goog.labs.html.scrubber.Group_.LI_ELEMENT_,
   'var': goog.labs.html.scrubber.Group_.INLINE_,
   'xmp': goog.labs.html.scrubber.Group_.INLINE_
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The scopes in which an element falls.
-***REMOVED*** No property defaults to 0.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The scopes in which an element falls.
+ * No property defaults to 0.
+ * @private
+ */
 goog.labs.html.scrubber.ELEMENT_SCOPES_ = {
   'applet': goog.labs.html.scrubber.Scope_.COMMON_ |
       goog.labs.html.scrubber.Scope_.BUTTON_ |
@@ -1008,20 +1008,20 @@ goog.labs.html.scrubber.ELEMENT_SCOPES_ = {
       goog.labs.html.scrubber.Scope_.BUTTON_ |
       goog.labs.html.scrubber.Scope_.LIST_ITEM_,
   'ul': goog.labs.html.scrubber.Scope_.LIST_ITEM_
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Per-element, a child that can contain block content.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Per-element, a child that can contain block content.
+ * @private
+ */
 goog.labs.html.scrubber.BLOCK_CONTAINERS_ = {
   'dl': 'dd',
   'ol': 'li',
   'table': 'tr',
   'tr': 'td',
   'ul': 'li'
-***REMOVED***
+};
 
 
 goog.labs.html.attributeRewriterPresubmitWorkaround();

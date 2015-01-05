@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.Palette}s.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.Palette}s.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.PaletteRenderer');
 
@@ -37,81 +37,81 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.Palette}s.  Renders the palette as an
-***REMOVED*** HTML table wrapped in a DIV, with one palette item per cell:
-***REMOVED***
-***REMOVED***    <div class="goog-palette">
-***REMOVED***      <table class="goog-palette-table">
-***REMOVED***        <tbody class="goog-palette-body">
-***REMOVED***          <tr class="goog-palette-row">
-***REMOVED***            <td class="goog-palette-cell">...Item 0...</td>
-***REMOVED***            <td class="goog-palette-cell">...Item 1...</td>
-***REMOVED***            ...
-***REMOVED***          </tr>
-***REMOVED***          <tr class="goog-palette-row">
-***REMOVED***            ...
-***REMOVED***          </tr>
-***REMOVED***        </tbody>
-***REMOVED***      </table>
-***REMOVED***    </div>
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ControlRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.Palette}s.  Renders the palette as an
+ * HTML table wrapped in a DIV, with one palette item per cell:
+ *
+ *    <div class="goog-palette">
+ *      <table class="goog-palette-table">
+ *        <tbody class="goog-palette-body">
+ *          <tr class="goog-palette-row">
+ *            <td class="goog-palette-cell">...Item 0...</td>
+ *            <td class="goog-palette-cell">...Item 1...</td>
+ *            ...
+ *          </tr>
+ *          <tr class="goog-palette-row">
+ *            ...
+ *          </tr>
+ *        </tbody>
+ *      </table>
+ *    </div>
+ *
+ * @constructor
+ * @extends {goog.ui.ControlRenderer}
+ */
 goog.ui.PaletteRenderer = function() {
   goog.ui.ControlRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.PaletteRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.PaletteRenderer);
 
 
-***REMOVED***
-***REMOVED*** Globally unique ID sequence for cells rendered by this renderer class.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Globally unique ID sequence for cells rendered by this renderer class.
+ * @type {number}
+ * @private
+ */
 goog.ui.PaletteRenderer.cellId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.PaletteRenderer.CSS_CLASS = goog.getCssName('goog-palette');
 
 
-***REMOVED***
-***REMOVED*** Returns the palette items arranged in a table wrapped in a DIV, with the
-***REMOVED*** renderer's own CSS class and additional state-specific classes applied to
-***REMOVED*** it.
-***REMOVED*** @param {goog.ui.Control} palette goog.ui.Palette to render.
-***REMOVED*** @return {!Element} Root element for the palette.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the palette items arranged in a table wrapped in a DIV, with the
+ * renderer's own CSS class and additional state-specific classes applied to
+ * it.
+ * @param {goog.ui.Control} palette goog.ui.Palette to render.
+ * @return {!Element} Root element for the palette.
+ * @override
+ */
 goog.ui.PaletteRenderer.prototype.createDom = function(palette) {
   var classNames = this.getClassNames(palette);
   var element = palette.getDomHelper().createDom(
       goog.dom.TagName.DIV, classNames ? classNames.join(' ') : null,
-      this.createGrid(***REMOVED*** @type {Array.<Node>}***REMOVED***(palette.getContent()),
+      this.createGrid(/** @type {Array.<Node>} */(palette.getContent()),
           palette.getSize(), palette.getDomHelper()));
   goog.a11y.aria.setRole(element, goog.a11y.aria.Role.GRID);
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the given items in a table with {@code size.width} columns and
-***REMOVED*** {@code size.height} rows.  If the table is too big, empty cells will be
-***REMOVED*** created as needed.  If the table is too small, the items that don't fit
-***REMOVED*** will not be rendered.
-***REMOVED*** @param {Array.<Node>} items Palette items.
-***REMOVED*** @param {goog.math.Size} size Palette size (columns x rows); both dimensions
-***REMOVED***     must be specified as numbers.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for document interaction.
-***REMOVED*** @return {Element} Palette table element.
-***REMOVED***
+/**
+ * Returns the given items in a table with {@code size.width} columns and
+ * {@code size.height} rows.  If the table is too big, empty cells will be
+ * created as needed.  If the table is too small, the items that don't fit
+ * will not be rendered.
+ * @param {Array.<Node>} items Palette items.
+ * @param {goog.math.Size} size Palette size (columns x rows); both dimensions
+ *     must be specified as numbers.
+ * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
+ * @return {Element} Palette table element.
+ */
 goog.ui.PaletteRenderer.prototype.createGrid = function(items, size, dom) {
   var rows = [];
   for (var row = 0, index = 0; row < size.height; row++) {
@@ -124,15 +124,15 @@ goog.ui.PaletteRenderer.prototype.createGrid = function(items, size, dom) {
   }
 
   return this.createTable(rows, dom);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a table element (or equivalent) that wraps the given rows.
-***REMOVED*** @param {Array.<Element>} rows Array of row elements.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for document interaction.
-***REMOVED*** @return {!Element} Palette table element.
-***REMOVED***
+/**
+ * Returns a table element (or equivalent) that wraps the given rows.
+ * @param {Array.<Element>} rows Array of row elements.
+ * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
+ * @return {!Element} Palette table element.
+ */
 goog.ui.PaletteRenderer.prototype.createTable = function(rows, dom) {
   var table = dom.createDom(goog.dom.TagName.TABLE,
       goog.getCssName(this.getCssClass(), 'table'),
@@ -141,30 +141,30 @@ goog.ui.PaletteRenderer.prototype.createTable = function(rows, dom) {
   table.cellSpacing = 0;
   table.cellPadding = 0;
   return table;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a table row element (or equivalent) that wraps the given cells.
-***REMOVED*** @param {Array.<Element>} cells Array of cell elements.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for document interaction.
-***REMOVED*** @return {!Element} Row element.
-***REMOVED***
+/**
+ * Returns a table row element (or equivalent) that wraps the given cells.
+ * @param {Array.<Element>} cells Array of cell elements.
+ * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
+ * @return {!Element} Row element.
+ */
 goog.ui.PaletteRenderer.prototype.createRow = function(cells, dom) {
   var row = dom.createDom(goog.dom.TagName.TR,
       goog.getCssName(this.getCssClass(), 'row'), cells);
   goog.a11y.aria.setRole(row, goog.a11y.aria.Role.ROW);
   return row;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a table cell element (or equivalent) that wraps the given palette
-***REMOVED*** item (which must be a DOM node).
-***REMOVED*** @param {Node|string} node Palette item.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for document interaction.
-***REMOVED*** @return {!Element} Cell element.
-***REMOVED***
+/**
+ * Returns a table cell element (or equivalent) that wraps the given palette
+ * item (which must be a DOM node).
+ * @param {Node|string} node Palette item.
+ * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
+ * @return {!Element} Cell element.
+ */
 goog.ui.PaletteRenderer.prototype.createCell = function(node, dom) {
   var cell = dom.createDom(goog.dom.TagName.TD, {
     'class': goog.getCssName(this.getCssClass(), 'cell'),
@@ -183,69 +183,69 @@ goog.ui.PaletteRenderer.prototype.createCell = function(node, dom) {
     }
   }
   return cell;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Descends the DOM and tries to find an aria label for a grid cell
-***REMOVED*** from the first child with a label or title.
-***REMOVED*** @param {!Element} cell The cell.
-***REMOVED*** @return {string} The label to use.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Descends the DOM and tries to find an aria label for a grid cell
+ * from the first child with a label or title.
+ * @param {!Element} cell The cell.
+ * @return {string} The label to use.
+ * @private
+ */
 goog.ui.PaletteRenderer.prototype.findAriaLabelForCell_ = function(cell) {
   var iter = new goog.dom.NodeIterator(cell);
   var label = '';
   var node;
   while (!label && (node = goog.iter.nextOrValue(iter, null))) {
     if (node.nodeType == goog.dom.NodeType.ELEMENT) {
-      label = goog.a11y.aria.getLabel(***REMOVED*** @type {!Element}***REMOVED*** (node)) ||
+      label = goog.a11y.aria.getLabel(/** @type {!Element} */ (node)) ||
           node.title;
     }
   }
   return label;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#canDecorate} to always return false.
-***REMOVED*** @param {Element} element Ignored.
-***REMOVED*** @return {boolean} False, since palettes don't support the decorate flow (for
-***REMOVED***     now).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#canDecorate} to always return false.
+ * @param {Element} element Ignored.
+ * @return {boolean} False, since palettes don't support the decorate flow (for
+ *     now).
+ * @override
+ */
 goog.ui.PaletteRenderer.prototype.canDecorate = function(element) {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#decorate} to be a no-op, since
-***REMOVED*** palettes don't support the decorate flow (for now).
-***REMOVED*** @param {goog.ui.Control} palette Ignored.
-***REMOVED*** @param {Element} element Ignored.
-***REMOVED*** @return {null} Always null.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#decorate} to be a no-op, since
+ * palettes don't support the decorate flow (for now).
+ * @param {goog.ui.Control} palette Ignored.
+ * @param {Element} element Ignored.
+ * @return {null} Always null.
+ * @override
+ */
 goog.ui.PaletteRenderer.prototype.decorate = function(palette, element) {
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#setContent} for palettes.  Locates
-***REMOVED*** the HTML table representing the palette grid, and replaces the contents of
-***REMOVED*** each cell with a new element from the array of nodes passed as the second
-***REMOVED*** argument.  If the new content has too many items the table will have more
-***REMOVED*** rows added to fit, if there are less items than the table has cells, then the
-***REMOVED*** left over cells will be empty.
-***REMOVED*** @param {Element} element Root element of the palette control.
-***REMOVED*** @param {goog.ui.ControlContent} content Array of items to replace existing
-***REMOVED***     palette items.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#setContent} for palettes.  Locates
+ * the HTML table representing the palette grid, and replaces the contents of
+ * each cell with a new element from the array of nodes passed as the second
+ * argument.  If the new content has too many items the table will have more
+ * rows added to fit, if there are less items than the table has cells, then the
+ * left over cells will be empty.
+ * @param {Element} element Root element of the palette control.
+ * @param {goog.ui.ControlContent} content Array of items to replace existing
+ *     palette items.
+ * @override
+ */
 goog.ui.PaletteRenderer.prototype.setContent = function(element, content) {
-  var items =***REMOVED*****REMOVED*** @type {Array.<Node>}***REMOVED*** (content);
+  var items = /** @type {Array.<Node>} */ (content);
   if (element) {
     var tbody = goog.dom.getElementsByTagNameAndClass(goog.dom.TagName.TBODY,
         goog.getCssName(this.getCssClass(), 'body'), element)[0];
@@ -289,21 +289,21 @@ goog.ui.PaletteRenderer.prototype.setContent = function(element, content) {
     // Make sure the new contents are still unselectable.
     goog.style.setUnselectable(element, true, goog.userAgent.GECKO);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the item corresponding to the given node, or null if the node is
-***REMOVED*** neither a palette cell nor part of a palette item.
-***REMOVED*** @param {goog.ui.Palette} palette Palette in which to look for the item.
-***REMOVED*** @param {Node} node Node to look for.
-***REMOVED*** @return {Node} The corresponding palette item (null if not found).
-***REMOVED***
+/**
+ * Returns the item corresponding to the given node, or null if the node is
+ * neither a palette cell nor part of a palette item.
+ * @param {goog.ui.Palette} palette Palette in which to look for the item.
+ * @param {Node} node Node to look for.
+ * @return {Node} The corresponding palette item (null if not found).
+ */
 goog.ui.PaletteRenderer.prototype.getContainingItem = function(palette, node) {
   var root = palette.getElement();
   while (node && node.nodeType == goog.dom.NodeType.ELEMENT && node != root) {
     if (node.tagName == goog.dom.TagName.TD && goog.dom.classlist.contains(
-       ***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (node),
+        /** @type {!Element} */ (node),
         goog.getCssName(this.getCssClass(), 'cell'))) {
       return node.firstChild;
     }
@@ -311,17 +311,17 @@ goog.ui.PaletteRenderer.prototype.getContainingItem = function(palette, node) {
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the highlight styling of the palette cell containing the given node
-***REMOVED*** based on the value of the Boolean argument.
-***REMOVED*** @param {goog.ui.Palette} palette Palette containing the item.
-***REMOVED*** @param {Node} node Item whose cell is to be highlighted or un-highlighted.
-***REMOVED*** @param {boolean} highlight If true, the cell is highlighted; otherwise it is
-***REMOVED***     un-highlighted.
-***REMOVED***
+/**
+ * Updates the highlight styling of the palette cell containing the given node
+ * based on the value of the Boolean argument.
+ * @param {goog.ui.Palette} palette Palette containing the item.
+ * @param {Node} node Item whose cell is to be highlighted or un-highlighted.
+ * @param {boolean} highlight If true, the cell is highlighted; otherwise it is
+ *     un-highlighted.
+ */
 goog.ui.PaletteRenderer.prototype.highlightCell = function(palette,
                                                            node,
                                                            highlight) {
@@ -335,43 +335,43 @@ goog.ui.PaletteRenderer.prototype.highlightCell = function(palette,
     goog.a11y.aria.setState(palette.getElementStrict(),
         goog.a11y.aria.State.ACTIVEDESCENDANT, cell.id);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {Node} node Item whose cell is to be returned.
-***REMOVED*** @return {Element} The grid cell for the palette item.
-***REMOVED***
+/**
+ * @param {Node} node Item whose cell is to be returned.
+ * @return {Element} The grid cell for the palette item.
+ */
 goog.ui.PaletteRenderer.prototype.getCellForItem = function(node) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (node ? node.parentNode : null);
-***REMOVED***
+  return /** @type {Element} */ (node ? node.parentNode : null);
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the selection styling of the palette cell containing the given node
-***REMOVED*** based on the value of the Boolean argument.
-***REMOVED*** @param {goog.ui.Palette} palette Palette containing the item.
-***REMOVED*** @param {Node} node Item whose cell is to be selected or deselected.
-***REMOVED*** @param {boolean} select If true, the cell is selected; otherwise it is
-***REMOVED***     deselected.
-***REMOVED***
+/**
+ * Updates the selection styling of the palette cell containing the given node
+ * based on the value of the Boolean argument.
+ * @param {goog.ui.Palette} palette Palette containing the item.
+ * @param {Node} node Item whose cell is to be selected or deselected.
+ * @param {boolean} select If true, the cell is selected; otherwise it is
+ *     deselected.
+ */
 goog.ui.PaletteRenderer.prototype.selectCell = function(palette, node, select) {
   if (node) {
-    var cell =***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (node.parentNode);
+    var cell = /** @type {!Element} */ (node.parentNode);
     goog.dom.classlist.enable(cell,
         goog.getCssName(this.getCssClass(), 'cell-selected'),
         select);
     goog.a11y.aria.setState(cell, goog.a11y.aria.State.SELECTED, select);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of components
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of components
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.PaletteRenderer.prototype.getCssClass = function() {
   return goog.ui.PaletteRenderer.CSS_CLASS;
-***REMOVED***
+};

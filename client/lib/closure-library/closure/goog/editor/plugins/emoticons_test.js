@@ -15,7 +15,7 @@
 goog.provide('goog.editor.plugins.EmoticonsTest');
 goog.setTestOnly('goog.editor.plugins.EmoticonsTest');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.TagName');

@@ -58,7 +58,7 @@ See the COPYING file for details.
 <script>
   goog.require('goog.dom');
   goog.require('goog.dom.classlist');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.functions');
   goog.require('goog.positioning');
   goog.require('goog.positioning.Overflow');
@@ -93,7 +93,7 @@ goog.positioning.positionAtCoordinate = function(absolutePos, movableElement,
                                                  opt_margin, opt_overflow) {
   return oldPositionFn.call(null, absolutePos, movableElement,
       movableElementCorner, opt_margin, goog.positioning.Overflow.IGNORE);
-***REMOVED***
+};
 
 function setUp() {
   clonedMenuDom = goog.dom.getElement('demoMenu').cloneNode(true);
@@ -287,7 +287,7 @@ function testShowAndDismissSubMenu() {
   var subMenu = menu.getChildAt(1);
   subMenu.setHighlighted(true);
 
-***REMOVED***subMenu, [
+  goog.events.listen(subMenu, [
     goog.ui.Component.EventType.OPEN,
     goog.ui.Component.EventType.CLOSE
   ], handleEvent);
@@ -341,7 +341,7 @@ function testDismissWhenSubMenuNotVisible() {
   var subMenu = menu.getChildAt(1);
   subMenu.setHighlighted(true);
 
-***REMOVED***subMenu, [
+  goog.events.listen(subMenu, [
     goog.ui.Component.EventType.OPEN,
     goog.ui.Component.EventType.CLOSE
   ], handleEvent);
@@ -382,7 +382,7 @@ function testLazyInstantiateSubMenu() {
         lazyMenu = new goog.ui.Menu();
         lazyMenu.addItem(new goog.ui.MenuItem('foo'));
         lazyMenu.addItem(new goog.ui.MenuItem('bar'));
-        subMenu.setMenu(lazyMenu, /* opt_internal***REMOVED*** false);
+        subMenu.setMenu(lazyMenu, /* opt_internal */ false);
       });
 
   subMenu.showSubMenu();
@@ -452,12 +452,12 @@ function testReusableMenu() {
   assertTrue('Shared menu must be visible', sharedMenu.isVisible());
 }
 
-***REMOVED***
-***REMOVED*** If you remove a submenu in the interval between when a mouseover event
-***REMOVED*** is fired on it, and showSubMenu() is called, showSubMenu causes a null
-***REMOVED*** value to be dereferenced. This test validates that the fix for this works.
-***REMOVED*** (See bug 1823144).
-***REMOVED***
+/**
+ * If you remove a submenu in the interval between when a mouseover event
+ * is fired on it, and showSubMenu() is called, showSubMenu causes a null
+ * value to be dereferenced. This test validates that the fix for this works.
+ * (See bug 1823144).
+ */
 function testDeleteItemDuringSubmenuDisplayInterval() {
   mockClock = new goog.testing.MockClock(true);
 
@@ -492,7 +492,7 @@ function testSubmenuSelectable() {
     numClicks++;
   }
 
-***REMOVED***submenu, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(submenu, goog.ui.Component.EventType.ACTION,
       menuClickedFn);
   submenu.performActionInternal(null);
   submenu.performActionInternal(null);
@@ -506,9 +506,9 @@ function testSubmenuSelectable() {
       numClicks);
 }
 
-***REMOVED***
-***REMOVED*** Tests that entering a child menu cancels the dismiss timer for the submenu.
-***REMOVED***
+/**
+ * Tests that entering a child menu cancels the dismiss timer for the submenu.
+ */
 function testEnteringChildCancelsDismiss() {
   var submenu = new goog.ui.SubMenu('submenu');
   submenu.isInDocument = goog.functions.TRUE;
@@ -532,12 +532,12 @@ function testEnteringChildCancelsDismiss() {
   assertTrue(submenu.isHighlighted());
 }
 
-***REMOVED***
-***REMOVED*** Asserts that this sub menu renders in the right direction relative to
-***REMOVED*** the parent menu.
-***REMOVED*** @param {goog.ui.SubMenu} subMenu The sub menu.
-***REMOVED*** @param {boolean} left True for left-pointing, false for right-pointing.
-***REMOVED***
+/**
+ * Asserts that this sub menu renders in the right direction relative to
+ * the parent menu.
+ * @param {goog.ui.SubMenu} subMenu The sub menu.
+ * @param {boolean} left True for left-pointing, false for right-pointing.
+ */
 function assertRenderDirection(subMenu, left) {
   subMenu.getParent().setHighlighted(subMenu);
   subMenu.showSubMenu();
@@ -550,11 +550,11 @@ function assertRenderDirection(subMenu, left) {
       left, menuPosition.x < menuItemPosition.x);
 }
 
-***REMOVED***
-***REMOVED*** Asserts that this sub menu has a properly-oriented arrow.
-***REMOVED*** @param {goog.ui.SubMenu} subMenu The sub menu.
-***REMOVED*** @param {boolean} left True for left-pointing, false for right-pointing.
-***REMOVED***
+/**
+ * Asserts that this sub menu has a properly-oriented arrow.
+ * @param {goog.ui.SubMenu} subMenu The sub menu.
+ * @param {boolean} left True for left-pointing, false for right-pointing.
+ */
 function assertArrowDirection(subMenu, left) {
   assertEquals(
       left ? goog.ui.SubMenuRenderer.LEFT_ARROW_ :
@@ -562,11 +562,11 @@ function assertArrowDirection(subMenu, left) {
       getArrowElement(subMenu).innerHTML);
 }
 
-***REMOVED***
-***REMOVED*** Asserts that the arrow position is correct.
-***REMOVED*** @param {goog.ui.SubMenu} subMenu The sub menu.
-***REMOVED*** @param {boolean} leftAlign True for left-aligned, false for right-aligned.
-***REMOVED***
+/**
+ * Asserts that the arrow position is correct.
+ * @param {goog.ui.SubMenu} subMenu The sub menu.
+ * @param {boolean} leftAlign True for left-aligned, false for right-aligned.
+ */
 function assertArrowPosition(subMenu, left) {
   var arrow = getArrowElement(subMenu);
   var expectedLeft =
@@ -577,11 +577,11 @@ function assertArrowPosition(subMenu, left) {
              Math.abs(expectedLeft - actualLeft) < 5);
 }
 
-***REMOVED***
-***REMOVED*** Gets the arrow element of a sub menu.
-***REMOVED*** @param {goog.ui.SubMenu} subMenu The sub menu.
-***REMOVED*** @return {Element} The arrow.
-***REMOVED***
+/**
+ * Gets the arrow element of a sub menu.
+ * @param {goog.ui.SubMenu} subMenu The sub menu.
+ * @return {Element} The arrow.
+ */
 function getArrowElement(subMenu) {
   return subMenu.getContentElement().lastChild;
 }

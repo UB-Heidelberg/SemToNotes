@@ -1,11 +1,11 @@
 Klass('trackr.CookieManager',
 
-   ***REMOVED*****REMOVED*** @class
+    /** @class
         @alias trackr.CookieManager
         @param {object} kv
-  ***REMOVED*****REMOVED***
+    */
     function(kv) {
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         this.value = kv;
     }
 

@@ -40,7 +40,7 @@ assert.AssertionError = function AssertionError(options) {
   this.expected = options.expected;
   this.operator = options.operator;
   this.message = options.message || getMessage(this);
-***REMOVED***
+};
 
 // assert.AssertionError instanceof Error
 util.inherits(assert.AssertionError, Error);
@@ -114,7 +114,7 @@ assert.ok = ok;
 
 assert.equal = function equal(actual, expected, message) {
   if (actual != expected) fail(actual, expected, message, '==', assert.equal);
-***REMOVED***
+};
 
 // 6. The non-equality assertion tests for whether two objects are not equal
 // with != assert.notEqual(actual, expected, message_opt);
@@ -123,7 +123,7 @@ assert.notEqual = function notEqual(actual, expected, message) {
   if (actual == expected) {
     fail(actual, expected, message, '!=', assert.notEqual);
   }
-***REMOVED***
+};
 
 // 7. The equivalence assertion tests a deep equality relation.
 // assert.deepEqual(actual, expected, message_opt);
@@ -132,7 +132,7 @@ assert.deepEqual = function deepEqual(actual, expected, message) {
   if (!_deepEqual(actual, expected)) {
     fail(actual, expected, message, 'deepEqual', assert.deepEqual);
   }
-***REMOVED***
+};
 
 function _deepEqual(actual, expected) {
   // 7.1. All identical values are equivalent, as determined by ===.
@@ -233,7 +233,7 @@ assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
   if (_deepEqual(actual, expected)) {
     fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
   }
-***REMOVED***
+};
 
 // 9. The strict equality assertion tests strict equality, as determined by ===.
 // assert.strictEqual(actual, expected, message_opt);
@@ -242,7 +242,7 @@ assert.strictEqual = function strictEqual(actual, expected, message) {
   if (actual !== expected) {
     fail(actual, expected, message, '===', assert.strictEqual);
   }
-***REMOVED***
+};
 
 // 10. The strict non-equality assertion tests for strict inequality, as
 // determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
@@ -251,7 +251,7 @@ assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
   if (actual === expected) {
     fail(actual, expected, message, '!==', assert.notStrictEqual);
   }
-***REMOVED***
+};
 
 function expectedException(actual, expected) {
   if (!actual || !expected) {
@@ -305,11 +305,11 @@ function _throws(shouldThrow, block, expected, message) {
 
 assert.throws = function(block, /*optional*/error, /*optional*/message) {
   _throws.apply(this, [true].concat(pSlice.call(arguments)));
-***REMOVED***
+};
 
 // EXTENSION! This is annoying to write outside this module.
 assert.doesNotThrow = function(block, /*optional*/message) {
   _throws.apply(this, [false].concat(pSlice.call(arguments)));
-***REMOVED***
+};
 
-assert.ifError = function(err) { if (err) {throw err;}***REMOVED***
+assert.ifError = function(err) { if (err) {throw err;}};

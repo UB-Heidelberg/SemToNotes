@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 describe('jsdoc/opts/args', function() {
     var args = require('jsdoc/opts/args');
     var querystring = require('querystring');
@@ -184,7 +184,7 @@ describe('jsdoc/opts/args', function() {
                 bar: true,
                 baz: false,
                 qux: [1, -97]
-           ***REMOVED*****REMOVED***
+            };
             args.parse(['-q', querystring.stringify(obj)]);
             var r = args.get();
 

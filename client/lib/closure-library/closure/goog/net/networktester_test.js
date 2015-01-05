@@ -15,7 +15,7 @@
 goog.provide('goog.net.NetworkTesterTest');
 goog.setTestOnly('goog.net.NetworkTesterTest');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.net.NetworkTester');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.jsunit');
@@ -177,7 +177,7 @@ function testOffline() {
   var orgGetNavigatorOffline = goog.net.NetworkTester.getNavigatorOffline_;
   goog.net.NetworkTester.getNavigatorOffline_ = function() {
     return true;
- ***REMOVED*****REMOVED***
+  };
   try {
     assertFalse(tester.isRunning());
     tester.start();
@@ -202,18 +202,18 @@ function Handler() {
 
 Handler.prototype.callback = function(result) {
   this.events_.push(result);
-***REMOVED***
+};
 
 Handler.prototype.isEmpty = function() {
   return this.events_.length == 0;
-***REMOVED***
+};
 
 Handler.prototype.dequeue = function() {
   if (this.isEmpty()) {
     throw Error('Handler is empty');
   }
   return this.events_.shift();
-***REMOVED***
+};
 
 // override image constructor for test - can't use a real image due to
 // async load of images - have to simulate it

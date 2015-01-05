@@ -16,10 +16,10 @@ goog.provide('goog.fx.DraggerTest');
 goog.setTestOnly('goog.fx.DraggerTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.fx.Dragger');
 goog.require('goog.math.Rect');
 goog.require('goog.style.bidi');
@@ -86,7 +86,7 @@ function runStartDragTest(handleId, targetElement) {
   e.preventDefault();
   e.$replay();
 
-***REMOVED***dragger, goog.fx.Dragger.EventType.START, function() {
+  goog.events.listen(dragger, goog.fx.Dragger.EventType.START, function() {
     targetElement.style.display = 'block';
   });
 
@@ -119,9 +119,9 @@ function runStartDragTest(handleId, targetElement) {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1381317 Cancelling start drag didn't end the attempt to drag.
-***REMOVED***
+/**
+ * @bug 1381317 Cancelling start drag didn't end the attempt to drag.
+ */
 function testStartDrag_Cancel() {
   var dragger = new goog.fx.Dragger(target);
 
@@ -132,7 +132,7 @@ function testStartDrag_Cancel() {
   e.isMouseActionButton().$returns(true);
   e.$replay();
 
-***REMOVED***dragger, goog.fx.Dragger.EventType.START, function(e) {
+  goog.events.listen(dragger, goog.fx.Dragger.EventType.START, function(e) {
     // Cancel drag.
     e.preventDefault();
   });
@@ -151,9 +151,9 @@ function testStartDrag_Cancel() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that start drag happens on left mousedown.
-***REMOVED***
+/**
+ * Tests that start drag happens on left mousedown.
+ */
 function testStartDrag_LeftMouseDownOnly() {
   var dragger = new goog.fx.Dragger(target);
 
@@ -164,7 +164,7 @@ function testStartDrag_LeftMouseDownOnly() {
   e.isMouseActionButton().$returns(false);
   e.$replay();
 
-***REMOVED***dragger, goog.fx.Dragger.EventType.START, function(e) {
+  goog.events.listen(dragger, goog.fx.Dragger.EventType.START, function(e) {
     fail('No drag START event should have been dispatched');
   });
 
@@ -182,9 +182,9 @@ function testStartDrag_LeftMouseDownOnly() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that start drag happens on other event type than MOUSEDOWN.
-***REMOVED***
+/**
+ * Tests that start drag happens on other event type than MOUSEDOWN.
+ */
 function testStartDrag_MouseMove() {
   var dragger = new goog.fx.Dragger(target);
 
@@ -196,7 +196,7 @@ function testStartDrag_MouseMove() {
   e.$replay();
 
   var startDragFired = false;
-***REMOVED***dragger, goog.fx.Dragger.EventType.START, function(e) {
+  goog.events.listen(dragger, goog.fx.Dragger.EventType.START, function(e) {
     startDragFired = true;
   });
 
@@ -214,14 +214,14 @@ function testStartDrag_MouseMove() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1381317 Cancelling start drag didn't end the attempt to drag.
-***REMOVED***
+/**
+ * @bug 1381317 Cancelling start drag didn't end the attempt to drag.
+ */
 function testHandleMove_Cancel() {
   var dragger = new goog.fx.Dragger(target);
   dragger.setHysteresis(5);
 
-***REMOVED***dragger, goog.fx.Dragger.EventType.START, function(e) {
+  goog.events.listen(dragger, goog.fx.Dragger.EventType.START, function(e) {
     // Cancel drag.
     e.preventDefault();
   });
@@ -257,9 +257,9 @@ function testHandleMove_Cancel() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1714667 IE built in drag and drop handling stops dragging.
-***REMOVED***
+/**
+ * @bug 1714667 IE built in drag and drop handling stops dragging.
+ */
 function testIeDragStartCancelling() {
   // Testing only IE.
   if (!goog.userAgent.IE) {
@@ -305,14 +305,14 @@ function testIeDragStartCancelling() {
 }
 
 
-***REMOVED*** @bug 1680770***REMOVED***
+/** @bug 1680770 */
 function testOnWindowMouseOut() {
   // Test older Gecko browsers - FireFox 2.
   if (goog.userAgent.GECKO && !goog.userAgent.isVersionOrHigher('1.9a')) {
     var dragger = new goog.fx.Dragger(target);
 
     var dragCanceled = false;
-  ***REMOVED***dragger, goog.fx.Dragger.EventType.END, function(e) {
+    goog.events.listen(dragger, goog.fx.Dragger.EventType.END, function(e) {
       dragCanceled = e.dragCanceled;
     });
 
@@ -378,7 +378,7 @@ function testWindowBlur() {
     var dragger = new goog.fx.Dragger(target);
 
     var dragEnded = false;
-  ***REMOVED***dragger, goog.fx.Dragger.EventType.END, function(e) {
+    goog.events.listen(dragger, goog.fx.Dragger.EventType.END, function(e) {
       dragEnded = true;
     });
 
@@ -409,7 +409,7 @@ function testBlur() {
     var dragger = new goog.fx.Dragger(target);
 
     var dragEnded = false;
-  ***REMOVED***dragger, goog.fx.Dragger.EventType.END, function(e) {
+    goog.events.listen(dragger, goog.fx.Dragger.EventType.END, function(e) {
       dragEnded = true;
     });
 
@@ -432,7 +432,7 @@ function testBlur() {
     // Blur events do not bubble but the test event system does not emulate that
     // part so we add a capturing listener on the target and stops the
     // propagation at the target, preventing any event from bubbling.
-  ***REMOVED***document.body, goog.events.EventType.BLUR, function(e) {
+    goog.events.listen(document.body, goog.events.EventType.BLUR, function(e) {
       e.propagationStopped_ = true;
     }, true);
     goog.testing.events.fireBrowserEvent(e);

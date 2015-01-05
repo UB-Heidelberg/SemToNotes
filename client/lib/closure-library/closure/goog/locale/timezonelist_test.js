@@ -16,7 +16,7 @@ goog.provide('goog.locale.TimeZoneListTest');
 goog.setTestOnly('goog.locale.TimeZoneListTest');
 
 goog.require('goog.locale');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.locale.TimeZoneList');
 goog.require('goog.testing.jsunit');
 
@@ -41,7 +41,7 @@ function setUpPage() {
     'Pacific/Honolulu': 'Honolulu (Vereinigte Staaten)',
     'Etc/GMT+10': 'GMT-10:00',
     'America/Adak': 'Adak (Vereinigte Staaten)'
- ***REMOVED*****REMOVED***
+  };
   goog.locale.registerTimeZoneSelectedShortNames(
       TimeZoneSelectedShortNames__de_DE, 'de_DE');
 
@@ -54,7 +54,7 @@ function setUpPage() {
     'Pacific/Honolulu': 'GMT-10:00 Honolulu (Vereinigte Staaten)',
     'Etc/GMT+10': 'GMT-10:00',
     'America/Adak': 'GMT-10:00 Adak (Vereinigte Staaten)'
- ***REMOVED*****REMOVED***
+  };
   goog.locale.registerTimeZoneSelectedLongNames(
       TimeZoneSelectedLongNames__de_DE, 'de_DE');
 

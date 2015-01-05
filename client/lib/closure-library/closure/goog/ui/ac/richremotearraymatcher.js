@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class that retrieves rich autocomplete matches, represented as
-***REMOVED*** a structured list of lists, via an ajax call.  The first element of each
-***REMOVED*** sublist is the name of a client-side javascript function that converts the
-***REMOVED*** remaining sublist elements into rich rows.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class that retrieves rich autocomplete matches, represented as
+ * a structured list of lists, via an ajax call.  The first element of each
+ * sublist is the name of a client-side javascript function that converts the
+ * remaining sublist elements into rich rows.
+ *
+ */
 
 goog.provide('goog.ui.ac.RichRemoteArrayMatcher');
 
@@ -27,56 +27,56 @@ goog.require('goog.ui.ac.RemoteArrayMatcher');
 
 
 
-***REMOVED***
-***REMOVED*** An array matcher that requests rich matches via ajax and converts them into
-***REMOVED*** rich rows.
-***REMOVED*** @param {string} url The Uri which generates the auto complete matches.  The
-***REMOVED***     search term is passed to the server as the 'token' query param.
-***REMOVED*** @param {boolean=} opt_noSimilar If true, request that the server does not do
-***REMOVED***     similarity matches for the input token against the dictionary.
-***REMOVED***     The value is sent to the server as the 'use_similar' query param which is
-***REMOVED***     either "1" (opt_noSimilar==false) or "0" (opt_noSimilar==true).
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ac.RemoteArrayMatcher}
-***REMOVED***
+/**
+ * An array matcher that requests rich matches via ajax and converts them into
+ * rich rows.
+ * @param {string} url The Uri which generates the auto complete matches.  The
+ *     search term is passed to the server as the 'token' query param.
+ * @param {boolean=} opt_noSimilar If true, request that the server does not do
+ *     similarity matches for the input token against the dictionary.
+ *     The value is sent to the server as the 'use_similar' query param which is
+ *     either "1" (opt_noSimilar==false) or "0" (opt_noSimilar==true).
+ * @constructor
+ * @extends {goog.ui.ac.RemoteArrayMatcher}
+ */
 goog.ui.ac.RichRemoteArrayMatcher = function(url, opt_noSimilar) {
   goog.ui.ac.RemoteArrayMatcher.call(this, url, opt_noSimilar);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A function(rows) that is called before the array matches are returned.
-  ***REMOVED*** It runs client-side and filters the results given by the server before
-  ***REMOVED*** being rendered by the client.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A function(rows) that is called before the array matches are returned.
+   * It runs client-side and filters the results given by the server before
+   * being rendered by the client.
+   * @type {Function}
+   * @private
+   */
   this.rowFilter_ = null;
 
-***REMOVED***
+};
 goog.inherits(goog.ui.ac.RichRemoteArrayMatcher, goog.ui.ac.RemoteArrayMatcher);
 
 
-***REMOVED***
-***REMOVED*** Set the filter that is called before the array matches are returned.
-***REMOVED*** @param {Function} rowFilter A function(rows) that returns an array of rows as
-***REMOVED***     a subset of the rows input array.
-***REMOVED***
+/**
+ * Set the filter that is called before the array matches are returned.
+ * @param {Function} rowFilter A function(rows) that returns an array of rows as
+ *     a subset of the rows input array.
+ */
 goog.ui.ac.RichRemoteArrayMatcher.prototype.setRowFilter = function(rowFilter) {
   this.rowFilter_ = rowFilter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieve a set of matching rows from the server via ajax and convert them
-***REMOVED*** into rich rows.
-***REMOVED*** @param {string} token The text that should be matched; passed to the server
-***REMOVED***     as the 'token' query param.
-***REMOVED*** @param {number} maxMatches The maximum number of matches requested from the
-***REMOVED***     server; passed as the 'max_matches' query param. The server is
-***REMOVED***     responsible for limiting the number of matches that are returned.
-***REMOVED*** @param {Function} matchHandler Callback to execute on the result after
-***REMOVED***     matching.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Retrieve a set of matching rows from the server via ajax and convert them
+ * into rich rows.
+ * @param {string} token The text that should be matched; passed to the server
+ *     as the 'token' query param.
+ * @param {number} maxMatches The maximum number of matches requested from the
+ *     server; passed as the 'max_matches' query param. The server is
+ *     responsible for limiting the number of matches that are returned.
+ * @param {Function} matchHandler Callback to execute on the result after
+ *     matching.
+ * @override
+ */
 goog.ui.ac.RichRemoteArrayMatcher.prototype.requestMatchingRows =
     function(token, maxMatches, matchHandler) {
   // The RichRemoteArrayMatcher must map over the results and filter them
@@ -84,11 +84,11 @@ goog.ui.ac.RichRemoteArrayMatcher.prototype.requestMatchingRows =
   // myMatchHandler to RemoteArrayMatcher.requestMatchingRows which maps,
   // filters, and then calls matchHandler.
   var myMatchHandler = goog.bind(function(token, matches) {
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       var rows = [];
       for (var i = 0; i < matches.length; i++) {
-        var func = ***REMOVED*****REMOVED*** @type {!Function}***REMOVED***
+        var func =  /** @type {!Function} */
             (goog.json.unsafeParse(matches[i][0]));
         for (var j = 1; j < matches[i].length; j++) {
           var richRow = func(matches[i][j]);
@@ -98,14 +98,14 @@ goog.ui.ac.RichRemoteArrayMatcher.prototype.requestMatchingRows =
           if (typeof richRow.render == 'undefined') {
             richRow.render = function(node, token) {
               node.innerHTML = richRow.toString();
-           ***REMOVED*****REMOVED***
+            };
           }
 
           // If no select function was provided, set the text of the input.
           if (typeof richRow.select == 'undefined') {
             richRow.select = function(target) {
               target.value = richRow.toString();
-           ***REMOVED*****REMOVED***
+            };
           }
         }
       }
@@ -122,4 +122,4 @@ goog.ui.ac.RichRemoteArrayMatcher.prototype.requestMatchingRows =
   // Call the super's requestMatchingRows with myMatchHandler
   goog.ui.ac.RichRemoteArrayMatcher.superClass_
       .requestMatchingRows.call(this, token, maxMatches, myMatchHandler);
-***REMOVED***
+};

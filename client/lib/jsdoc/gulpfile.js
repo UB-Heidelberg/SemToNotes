@@ -1,4 +1,4 @@
-/*eslint max-nested-callbacks: 0***REMOVED***
+/*eslint max-nested-callbacks: 0 */
 'use strict';
 
 var eslint = require('gulp-eslint');
@@ -19,12 +19,12 @@ function execCb(cb, err, stdout, stderr) {
 var options = {
     coveragePaths: [
         '*.js',
-        'lib***REMOVED***/*.js',
+        'lib/**/*.js',
         'plugins/*.js'
     ],
     lintPaths: [
         '*.js',
-        'lib***REMOVED***/*.js',
+        'lib/**/*.js',
         'plugins/*.js',
         'templates/default/*.js',
         'templates/haruki/*.js'
@@ -40,7 +40,7 @@ var options = {
 
         return filepath;
     })()
-***REMOVED***
+};
 
 gulp.task('bump', function() {
     gulp.src('./package.json')

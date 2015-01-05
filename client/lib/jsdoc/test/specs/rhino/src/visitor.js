@@ -1,11 +1,11 @@
-/*global beforeEach: true, describe: true, expect: true, it: true***REMOVED***
+/*global beforeEach: true, describe: true, expect: true, it: true */
 describe('rhino/jsdoc/src/visitor', function() {
     var runtime = require('jsdoc/util/runtime');
     var jsdoc = {
         src: {
             visitor: require( runtime.getModulePath('jsdoc/src/visitor') )
         }
-   ***REMOVED*****REMOVED***
+    };
 
     it('should exist', function() {
         expect(jsdoc.src.visitor).toBeDefined();

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A map data structure that offers a convenient API to
-***REMOVED*** manipulate a key, value map. The key must be a string.
-***REMOVED***
-***REMOVED*** This implementation also ensure that you can use keys that would
-***REMOVED*** not be usable using a normal object literal {}. Some examples
-***REMOVED*** include __proto__ (all newer browsers), toString/hasOwnProperty (IE
-***REMOVED*** <= 8).
-***REMOVED***
+/**
+ * @fileoverview A map data structure that offers a convenient API to
+ * manipulate a key, value map. The key must be a string.
+ *
+ * This implementation also ensure that you can use keys that would
+ * not be usable using a normal object literal {}. Some examples
+ * include __proto__ (all newer browsers), toString/hasOwnProperty (IE
+ * <= 8).
+ */
 
 goog.provide('goog.labs.structs.Map');
 
@@ -31,72 +31,72 @@ goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new map.
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new map.
+ * @constructor
+ * @struct
+ * @final
+ */
 goog.labs.structs.Map = function() {
   // clear() initializes the map to the empty state.
   this.clear();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @type {function(this: Object, string): boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @type {function(this: Object, string): boolean}
+ * @private
+ */
 goog.labs.structs.Map.objectPropertyIsEnumerable_ =
     Object.prototype.propertyIsEnumerable;
 
 
-***REMOVED***
-***REMOVED*** @type {function(this: Object, string): boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @type {function(this: Object, string): boolean}
+ * @private
+ */
 goog.labs.structs.Map.objectHasOwnProperty_ =
     Object.prototype.hasOwnProperty;
 
 
-***REMOVED***
-***REMOVED*** Primary backing store of this map.
-***REMOVED*** @type {!Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Primary backing store of this map.
+ * @type {!Object}
+ * @private
+ */
 goog.labs.structs.Map.prototype.map_;
 
 
-***REMOVED***
-***REMOVED*** Secondary backing store for keys. The index corresponds to the
-***REMOVED*** index for secondaryStoreValues_.
-***REMOVED*** @type {!Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Secondary backing store for keys. The index corresponds to the
+ * index for secondaryStoreValues_.
+ * @type {!Array.<string>}
+ * @private
+ */
 goog.labs.structs.Map.prototype.secondaryStoreKeys_;
 
 
-***REMOVED***
-***REMOVED*** Secondary backing store for keys. The index corresponds to the
-***REMOVED*** index for secondaryStoreValues_.
-***REMOVED*** @type {!Array.<*>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Secondary backing store for keys. The index corresponds to the
+ * index for secondaryStoreValues_.
+ * @type {!Array.<*>}
+ * @private
+ */
 goog.labs.structs.Map.prototype.secondaryStoreValues_;
 
 
-***REMOVED***
-***REMOVED*** @private {number}
-***REMOVED***
+/**
+ * @private {number}
+ */
 goog.labs.structs.Map.prototype.count_;
 
 
-***REMOVED***
-***REMOVED*** Adds the (key, value) pair, overriding previous entry with the same
-***REMOVED*** key, if any.
-***REMOVED*** @param {string} key The key.
-***REMOVED*** @param {*} value The value.
-***REMOVED***
+/**
+ * Adds the (key, value) pair, overriding previous entry with the same
+ * key, if any.
+ * @param {string} key The key.
+ * @param {*} value The value.
+ */
 goog.labs.structs.Map.prototype.set = function(key, value) {
   this.assertKeyIsString_(key);
 
@@ -120,17 +120,17 @@ goog.labs.structs.Map.prototype.set = function(key, value) {
   }
 
   if (newKey) this.count_++;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the value for the given key.
-***REMOVED*** @param {string} key The key whose value we want to retrieve.
-***REMOVED*** @param {*=} opt_default The default value to return if the key does
-***REMOVED***     not exist in the map, default to undefined.
-***REMOVED*** @return {*} The value corresponding to the given key, or opt_default
-***REMOVED***     if the key does not exist in this map.
-***REMOVED***
+/**
+ * Gets the value for the given key.
+ * @param {string} key The key whose value we want to retrieve.
+ * @param {*=} opt_default The default value to return if the key does
+ *     not exist in the map, default to undefined.
+ * @return {*} The value corresponding to the given key, or opt_default
+ *     if the key does not exist in this map.
+ */
 goog.labs.structs.Map.prototype.get = function(key, opt_default) {
   this.assertKeyIsString_(key);
 
@@ -140,14 +140,14 @@ goog.labs.structs.Map.prototype.get = function(key, opt_default) {
 
   var index = goog.array.indexOf(this.secondaryStoreKeys_, key);
   return index >= 0 ? this.secondaryStoreValues_[index] : opt_default;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the map entry with the given key.
-***REMOVED*** @param {string} key The key to remove.
-***REMOVED*** @return {boolean} True if the entry is removed.
-***REMOVED***
+/**
+ * Removes the map entry with the given key.
+ * @param {string} key The key to remove.
+ * @return {boolean} True if the entry is removed.
+ */
 goog.labs.structs.Map.prototype.remove = function(key) {
   this.assertKeyIsString_(key);
 
@@ -165,67 +165,67 @@ goog.labs.structs.Map.prototype.remove = function(key) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the content of the map to this map. If a new entry uses a key
-***REMOVED*** that already exists in this map, the existing key is replaced.
-***REMOVED*** @param {!goog.labs.structs.Map} map The map to add.
-***REMOVED***
+/**
+ * Adds the content of the map to this map. If a new entry uses a key
+ * that already exists in this map, the existing key is replaced.
+ * @param {!goog.labs.structs.Map} map The map to add.
+ */
 goog.labs.structs.Map.prototype.addAll = function(map) {
   goog.array.forEach(map.getKeys(), function(key) {
     this.set(key, map.get(key));
   }, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if the map is empty.
-***REMOVED***
+/**
+ * @return {boolean} True if the map is empty.
+ */
 goog.labs.structs.Map.prototype.isEmpty = function() {
   return !this.count_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The number of the entries in this map.
-***REMOVED***
+/**
+ * @return {number} The number of the entries in this map.
+ */
 goog.labs.structs.Map.prototype.getCount = function() {
   return this.count_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} key The key to check.
-***REMOVED*** @return {boolean} True if the map contains the given key.
-***REMOVED***
+/**
+ * @param {string} key The key to check.
+ * @return {boolean} True if the map contains the given key.
+ */
 goog.labs.structs.Map.prototype.containsKey = function(key) {
   this.assertKeyIsString_(key);
   return this.hasKeyInPrimaryStore_(key) ||
       goog.array.contains(this.secondaryStoreKeys_, key);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the map contains the given value. The comparison is done
-***REMOVED*** using !== comparator. Also returns true if the passed value is NaN
-***REMOVED*** and a NaN value exists in the map.
-***REMOVED*** @param {*} value Value to check.
-***REMOVED*** @return {boolean} True if the map contains the given value.
-***REMOVED***
+/**
+ * Whether the map contains the given value. The comparison is done
+ * using !== comparator. Also returns true if the passed value is NaN
+ * and a NaN value exists in the map.
+ * @param {*} value Value to check.
+ * @return {boolean} True if the map contains the given value.
+ */
 goog.labs.structs.Map.prototype.containsValue = function(value) {
   var found = goog.object.some(this.map_, function(v, k) {
     return this.hasKeyInPrimaryStore_(k) &&
         goog.labs.object.is(v, value);
   }, this);
   return found || goog.array.contains(this.secondaryStoreValues_, value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Array.<string>} An array of all the keys contained in this map.
-***REMOVED***
+/**
+ * @return {!Array.<string>} An array of all the keys contained in this map.
+ */
 goog.labs.structs.Map.prototype.getKeys = function() {
   var keys;
   if (goog.labs.structs.Map.BrowserFeature.OBJECT_KEYS_SUPPORTED) {
@@ -241,13 +241,13 @@ goog.labs.structs.Map.prototype.getKeys = function() {
 
   goog.array.extend(keys, this.secondaryStoreKeys_);
   return keys;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Array.<*>} An array of all the values contained in this map.
-***REMOVED***     There may be duplicates.
-***REMOVED***
+/**
+ * @return {!Array.<*>} An array of all the values contained in this map.
+ *     There may be duplicates.
+ */
 goog.labs.structs.Map.prototype.getValues = function() {
   var values = [];
   var keys = this.getKeys();
@@ -255,13 +255,13 @@ goog.labs.structs.Map.prototype.getValues = function() {
     values.push(this.get(keys[i]));
   }
   return values;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Array.<Array>} An array of entries. Each entry is of the
-***REMOVED***     form [key, value]. Do not rely on consistent ordering of entries.
-***REMOVED***
+/**
+ * @return {!Array.<Array>} An array of entries. Each entry is of the
+ *     form [key, value]. Do not rely on consistent ordering of entries.
+ */
 goog.labs.structs.Map.prototype.getEntries = function() {
   var entries = [];
   var keys = this.getKeys();
@@ -270,38 +270,38 @@ goog.labs.structs.Map.prototype.getEntries = function() {
     entries.push([key, this.get(key)]);
   }
   return entries;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the map to the initial state.
-***REMOVED***
+/**
+ * Clears the map to the initial state.
+ */
 goog.labs.structs.Map.prototype.clear = function() {
   this.map_ = goog.labs.structs.Map.BrowserFeature.OBJECT_CREATE_SUPPORTED ?
-      Object.create(null) : {***REMOVED***
+      Object.create(null) : {};
   this.secondaryStoreKeys_ = [];
   this.secondaryStoreValues_ = [];
   this.count_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clones this map.
-***REMOVED*** @return {!goog.labs.structs.Map} The clone of this map.
-***REMOVED***
+/**
+ * Clones this map.
+ * @return {!goog.labs.structs.Map} The clone of this map.
+ */
 goog.labs.structs.Map.prototype.clone = function() {
   var map = new goog.labs.structs.Map();
   map.addAll(this);
   return map;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} key The key to check.
-***REMOVED*** @return {boolean} True if the given key has been added successfully
-***REMOVED***     to the primary store.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {string} key The key to check.
+ * @return {boolean} True if the given key has been added successfully
+ *     to the primary store.
+ * @private
+ */
 goog.labs.structs.Map.prototype.hasKeyInPrimaryStore_ = function(key) {
   // New browsers that support Object.create do not allow setting of
   // __proto__. In other browsers, hasOwnProperty will return true for
@@ -316,32 +316,32 @@ goog.labs.structs.Map.prototype.hasKeyInPrimaryStore_ = function(key) {
   }
 
   return goog.labs.structs.Map.objectHasOwnProperty_.call(this.map_, key);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given key is a string.
-***REMOVED*** @param {string} key The key to check.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Asserts that the given key is a string.
+ * @param {string} key The key to check.
+ * @private
+ */
 goog.labs.structs.Map.prototype.assertKeyIsString_ = function(key) {
   goog.asserts.assert(goog.isString(key), 'key must be a string.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Browser feature enum necessary for map.
-***REMOVED*** @enum {boolean}
-***REMOVED***
+/**
+ * Browser feature enum necessary for map.
+ * @enum {boolean}
+ */
 goog.labs.structs.Map.BrowserFeature = {
   // TODO(user): Replace with goog.userAgent detection.
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether Object.create method is supported.
- ***REMOVED*****REMOVED***
+  /**
+   * Whether Object.create method is supported.
+   */
   OBJECT_CREATE_SUPPORTED: !!Object.create,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether Object.keys method is supported.
- ***REMOVED*****REMOVED***
+  /**
+   * Whether Object.keys method is supported.
+   */
   OBJECT_KEYS_SUPPORTED: !!Object.keys
-***REMOVED***
+};

@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a text node
-***REMOVED*** implementation working on a binary XML model.
-***REMOVED***
+/**
+ * @fileoverview A class representing a text node
+ * implementation working on a binary XML model.
+ */
 
 goog.provide('xrx.node.TextB');
 
@@ -17,16 +17,16 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a binary text node.
-***REMOVED***
-***REMOVED*** @param {!xrx.node.Document}
-***REMOVED*** @param {!integer} 
-***REMOVED***
-***REMOVED***
+/**
+ * Creates a binary text node.
+ *
+ * @param {!xrx.node.Document}
+ * @param {!integer} 
+ * @constructor
+ */
 xrx.node.TextB = function(document, key) {
   goog.base(this, xrx.node.TEXT, document, key);
-***REMOVED***
+};
 goog.inherits(xrx.node.TextB, xrx.node.Binary);
 
 
@@ -36,7 +36,7 @@ xrx.node.TextB.prototype.getToken = function() {
 
   return new xrx.token.NotTag(this.getLabel(), this.getOffset(),
       this.getLength());
-***REMOVED***
+};
 
 
 
@@ -48,10 +48,10 @@ xrx.node.TextB.prototype.getLabel = function() {
   } else if (this.getRow().getType() === xrx.token.END_TAG) {
     var tmp = label.pop();
     label.push(tmp + .5);
-  } else {***REMOVED***
+  } else {};
 
   return label;
-***REMOVED***
+};
 
 
 
@@ -59,7 +59,7 @@ xrx.node.TextB.prototype.getOffset = function() {
   var row = this.getRow();
 
   return row.getOffset() + row.getLength1();
-***REMOVED***
+};
 
 
 
@@ -67,7 +67,7 @@ xrx.node.TextB.prototype.getLength = function() {
   var row = this.getRow();
 
   return row.getLength2() - row.getLength1();
-***REMOVED***
+};
 
 
 
@@ -155,16 +155,16 @@ xrx.node.TextB.prototype.getNodeFollowing = xrx.node.Text.prototype.getNodeFollo
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.TextB.prototype.getNodeFollowingSibling = function(test) {
   var stop = this.getIndex().getLabel(this.key_).clone();
   stop.parent();
 
   return this.find(test, xrx.node[this.impl_.Text].prototype.isPrecedingSiblingOf,
       false, stop);
-***REMOVED***
+};
 
 
 
@@ -174,7 +174,7 @@ xrx.node.TextB.prototype.getNodeParent = function(test) {
   if (test.matches(element)) nodeset.add(element);
 
   return nodeset;
-***REMOVED***
+};
 
 
 
@@ -186,11 +186,11 @@ xrx.node.TextB.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
 
 
 
-***REMOVED***
-***REMOVED*** @param {!xrx.xml.Label}
-***REMOVED***
+/**
+ * @param {!xrx.xml.Label}
+ */
 xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
-***REMOVED***
+  var self = this;
   var index = this.getDocument().getInstance().getIndex();
   index.iterSetKey(this.key_);
   var row = index.iterGetRow();
@@ -208,7 +208,7 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
       break;
     default:
       break;
-   ***REMOVED*****REMOVED***
+    };
 
     if (needTextNode && row.getLength1() !== row.getLength2()) {
       self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
@@ -218,15 +218,15 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
         self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
 
   } while (row = index.iterNext());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @param {!xrx.xml.Label}
-***REMOVED***
+/**
+ * @param {!xrx.xml.Label}
+ */
 xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
-***REMOVED***
+  var self = this;
   var index = this.getIndex();
   index.iterSetKey(this.key_);
   var row = index.iterGetRow();
@@ -248,17 +248,17 @@ xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
       break;
     default:
       break;
-   ***REMOVED*****REMOVED***
+    };
 
     if (type === xrx.token.END_TAG &&
         self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
 
   } while (row = index.iterPrevious());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.node.TextB.prototype.find = xrx.node.Node.prototype.find;

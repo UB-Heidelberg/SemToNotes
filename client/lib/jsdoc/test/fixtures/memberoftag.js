@@ -1,11 +1,11 @@
-***REMOVED*** @constructor
+/** @constructor
     @memberof mathlib
-***REMOVED***
+ */
 function Data() {
 
-   ***REMOVED*****REMOVED*** @member***REMOVED***
-    this.point = {***REMOVED***
+    /** @member */
+    this.point = {};
 }
 
-***REMOVED*** @namespace***REMOVED***
-mathlib = {Data: Data***REMOVED***
+/** @namespace */
+mathlib = {Data: Data};

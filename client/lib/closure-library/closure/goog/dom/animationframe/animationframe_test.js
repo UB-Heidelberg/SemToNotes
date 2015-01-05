@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for goog.dom.animationFrame.
-***REMOVED***
+/**
+ * @fileoverview Tests for goog.dom.animationFrame.
+ */
 
 goog.setTestOnly();
 
@@ -199,7 +199,7 @@ function testCreateTask_recurseTwoMethodsWithState() {
 }
 
 function testCreateTask_args() {
-  var context = {context: true***REMOVED***
+  var context = {context: true};
   var s = goog.dom.animationFrame.createTask({
     measure: function(state) {
       assertEquals(context, this);

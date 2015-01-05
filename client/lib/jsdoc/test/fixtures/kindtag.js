@@ -1,2 +1,2 @@
-***REMOVED*** @kind function***REMOVED***
+/** @kind function */
 var x;

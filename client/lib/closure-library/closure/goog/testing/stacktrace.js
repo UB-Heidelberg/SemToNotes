@@ -12,60 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tools for parsing and pretty printing error stack traces.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Tools for parsing and pretty printing error stack traces.
+ *
+ */
 
 goog.provide('goog.testing.stacktrace');
 goog.provide('goog.testing.stacktrace.Frame');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing one stack frame.
-***REMOVED*** @param {string} context Context object, empty in case of global functions or
-***REMOVED***     if the browser doesn't provide this information.
-***REMOVED*** @param {string} name Function name, empty in case of anonymous functions.
-***REMOVED*** @param {string} alias Alias of the function if available. For example the
-***REMOVED***     function name will be 'c' and the alias will be 'b' if the function is
-***REMOVED***     defined as <code>a.b = function c() {***REMOVED***</code>.
-***REMOVED*** @param {string} args Arguments of the function in parentheses if available.
-***REMOVED*** @param {string} path File path or URL including line number and optionally
-***REMOVED***     column number separated by colons.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class representing one stack frame.
+ * @param {string} context Context object, empty in case of global functions or
+ *     if the browser doesn't provide this information.
+ * @param {string} name Function name, empty in case of anonymous functions.
+ * @param {string} alias Alias of the function if available. For example the
+ *     function name will be 'c' and the alias will be 'b' if the function is
+ *     defined as <code>a.b = function c() {};</code>.
+ * @param {string} args Arguments of the function in parentheses if available.
+ * @param {string} path File path or URL including line number and optionally
+ *     column number separated by colons.
+ * @constructor
+ * @final
+ */
 goog.testing.stacktrace.Frame = function(context, name, alias, args, path) {
   this.context_ = context;
   this.name_ = name;
   this.alias_ = alias;
   this.args_ = args;
   this.path_ = path;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The function name or empty string if the function is
-***REMOVED***     anonymous and the object field which it's assigned to is unknown.
-***REMOVED***
+/**
+ * @return {string} The function name or empty string if the function is
+ *     anonymous and the object field which it's assigned to is unknown.
+ */
 goog.testing.stacktrace.Frame.prototype.getName = function() {
   return this.name_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the stack frame contains an anonymous function.
-***REMOVED***
+/**
+ * @return {boolean} Whether the stack frame contains an anonymous function.
+ */
 goog.testing.stacktrace.Frame.prototype.isAnonymous = function() {
   return !this.name_ || this.context_ == '[object Object]';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Brings one frame of the stack trace into a common format across browsers.
-***REMOVED*** @return {string} Pretty printed stack frame.
-***REMOVED***
+/**
+ * Brings one frame of the stack trace into a common format across browsers.
+ * @return {string} Pretty printed stack frame.
+ */
 goog.testing.stacktrace.Frame.prototype.toCanonicalString = function() {
   var htmlEscape = goog.testing.stacktrace.htmlEscape_;
   var deobfuscate = goog.testing.stacktrace.maybeDeobfuscateFunctionName_;
@@ -91,85 +91,85 @@ goog.testing.stacktrace.Frame.prototype.toCanonicalString = function() {
     }
   }
   return canonical.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Maximum number of steps while the call chain is followed.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum number of steps while the call chain is followed.
+ * @type {number}
+ * @private
+ */
 goog.testing.stacktrace.MAX_DEPTH_ = 20;
 
 
-***REMOVED***
-***REMOVED*** Maximum length of a string that can be matched with a RegExp on
-***REMOVED*** Firefox 3x. Exceeding this approximate length will cause string.match
-***REMOVED*** to exceed Firefox's stack quota. This situation can be encountered
-***REMOVED*** when goog.globalEval is invoked with a long argument; such as
-***REMOVED*** when loading a module.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum length of a string that can be matched with a RegExp on
+ * Firefox 3x. Exceeding this approximate length will cause string.match
+ * to exceed Firefox's stack quota. This situation can be encountered
+ * when goog.globalEval is invoked with a long argument; such as
+ * when loading a module.
+ * @type {number}
+ * @private
+ */
 goog.testing.stacktrace.MAX_FIREFOX_FRAMESTRING_LENGTH_ = 500000;
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for JavaScript identifiers. We don't support Unicode
-***REMOVED*** identifiers defined in ECMAScript v3.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for JavaScript identifiers. We don't support Unicode
+ * identifiers defined in ECMAScript v3.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.IDENTIFIER_PATTERN_ = '[a-zA-Z_$][\\w$]*';
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for function name alias in the Chrome stack trace.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for function name alias in the Chrome stack trace.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.CHROME_ALIAS_PATTERN_ =
     '(?: \\[as (' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ + ')\\])?';
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for function names and constructor calls in the Chrome stack
-***REMOVED*** trace.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for function names and constructor calls in the Chrome stack
+ * trace.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.CHROME_FUNCTION_NAME_PATTERN_ =
     '(?:new )?(?:' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ +
     '|<anonymous>)';
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for function call in the Chrome stack trace.
-***REMOVED*** Creates 3 submatches with context object (optional), function name and
-***REMOVED*** function alias (optional).
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for function call in the Chrome stack trace.
+ * Creates 3 submatches with context object (optional), function name and
+ * function alias (optional).
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.CHROME_FUNCTION_CALL_PATTERN_ =
     ' (?:(.*?)\\.)?(' + goog.testing.stacktrace.CHROME_FUNCTION_NAME_PATTERN_ +
     ')' + goog.testing.stacktrace.CHROME_ALIAS_PATTERN_;
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for an URL + position inside the file.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for an URL + position inside the file.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.URL_PATTERN_ =
     '((?:http|https|file)://[^\\s)]+|javascript:.*)';
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for an URL + line number + column number in Chrome.
-***REMOVED*** The URL is either in submatch 1 or submatch 2.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for an URL + line number + column number in Chrome.
+ * The URL is either in submatch 1 or submatch 2.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.CHROME_URL_PATTERN_ = ' (?:' +
     '\\(unknown source\\)' + '|' +
     '\\(native\\)' + '|' +
@@ -177,44 +177,44 @@ goog.testing.stacktrace.CHROME_URL_PATTERN_ = ' (?:' +
     goog.testing.stacktrace.URL_PATTERN_ + ')';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for parsing one stack frame in Chrome.
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for parsing one stack frame in Chrome.
+ * @type {!RegExp}
+ * @private
+ */
 goog.testing.stacktrace.CHROME_STACK_FRAME_REGEXP_ = new RegExp('^    at' +
     '(?:' + goog.testing.stacktrace.CHROME_FUNCTION_CALL_PATTERN_ + ')?' +
     goog.testing.stacktrace.CHROME_URL_PATTERN_ + '$');
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for function call in the Firefox stack trace.
-***REMOVED*** Creates 2 submatches with function name (optional) and arguments.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for function call in the Firefox stack trace.
+ * Creates 2 submatches with function name (optional) and arguments.
+ * @type {string}
+ * @private
+ */
 goog.testing.stacktrace.FIREFOX_FUNCTION_CALL_PATTERN_ =
     '(' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ + ')?' +
     '(\\(.*\\))?@';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for parsing one stack frame in Firefox.
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for parsing one stack frame in Firefox.
+ * @type {!RegExp}
+ * @private
+ */
 goog.testing.stacktrace.FIREFOX_STACK_FRAME_REGEXP_ = new RegExp('^' +
     goog.testing.stacktrace.FIREFOX_FUNCTION_CALL_PATTERN_ +
     '(?::0|' + goog.testing.stacktrace.URL_PATTERN_ + ')$');
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for an anonymous function call in an Opera stack frame.
-***REMOVED*** Creates 2 (optional) submatches: the context object and function name.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for an anonymous function call in an Opera stack frame.
+ * Creates 2 (optional) submatches: the context object and function name.
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.testing.stacktrace.OPERA_ANONYMOUS_FUNCTION_NAME_PATTERN_ =
     '<anonymous function(?:\\: ' +
     '(?:(' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ +
@@ -222,71 +222,71 @@ goog.testing.stacktrace.OPERA_ANONYMOUS_FUNCTION_NAME_PATTERN_ =
     '(' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ + '))?>';
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for a function call in an Opera stack frame.
-***REMOVED*** Creates 4 (optional) submatches: the function name (if not anonymous),
-***REMOVED*** the aliased context object and function name (if anonymous), and the
-***REMOVED*** function call arguments.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for a function call in an Opera stack frame.
+ * Creates 4 (optional) submatches: the function name (if not anonymous),
+ * the aliased context object and function name (if anonymous), and the
+ * function call arguments.
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.testing.stacktrace.OPERA_FUNCTION_CALL_PATTERN_ =
     '(?:(?:(' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ + ')|' +
     goog.testing.stacktrace.OPERA_ANONYMOUS_FUNCTION_NAME_PATTERN_ +
     ')(\\(.*\\)))?@';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for parsing on stack frame in Opera 11.68+
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for parsing on stack frame in Opera 11.68+
+ * @type {!RegExp}
+ * @const
+ * @private
+ */
 goog.testing.stacktrace.OPERA_STACK_FRAME_REGEXP_ = new RegExp('^' +
     goog.testing.stacktrace.OPERA_FUNCTION_CALL_PATTERN_ +
     goog.testing.stacktrace.URL_PATTERN_ + '?$');
 
 
-***REMOVED***
-***REMOVED*** Regular expression for finding the function name in its source.
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for finding the function name in its source.
+ * @type {!RegExp}
+ * @private
+ */
 goog.testing.stacktrace.FUNCTION_SOURCE_REGEXP_ = new RegExp(
     '^function (' + goog.testing.stacktrace.IDENTIFIER_PATTERN_ + ')');
 
 
-***REMOVED***
-***REMOVED*** RegExp pattern for function call in a IE stack trace. This expression allows
-***REMOVED*** for identifiers like 'Anonymous function', 'eval code', and 'Global code'.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * RegExp pattern for function call in a IE stack trace. This expression allows
+ * for identifiers like 'Anonymous function', 'eval code', and 'Global code'.
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.testing.stacktrace.IE_FUNCTION_CALL_PATTERN_ = '(' +
     goog.testing.stacktrace.IDENTIFIER_PATTERN_ + '(?:\\s+\\w+)*)';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for parsing a stack frame in IE.
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for parsing a stack frame in IE.
+ * @type {!RegExp}
+ * @const
+ * @private
+ */
 goog.testing.stacktrace.IE_STACK_FRAME_REGEXP_ = new RegExp('^   at ' +
     goog.testing.stacktrace.IE_FUNCTION_CALL_PATTERN_ +
     '\\s*\\((eval code:[^)]*|' + goog.testing.stacktrace.URL_PATTERN_ +
     ')\\)?$');
 
 
-***REMOVED***
-***REMOVED*** Creates a stack trace by following the call chain. Based on
-***REMOVED*** {@link goog.debug.getStacktrace}.
-***REMOVED*** @return {!Array.<!goog.testing.stacktrace.Frame>} Stack frames.
-***REMOVED*** @private
-***REMOVED*** @suppress {es5Strict}
-***REMOVED***
+/**
+ * Creates a stack trace by following the call chain. Based on
+ * {@link goog.debug.getStacktrace}.
+ * @return {!Array.<!goog.testing.stacktrace.Frame>} Stack frames.
+ * @private
+ * @suppress {es5Strict}
+ */
 goog.testing.stacktrace.followCallChain_ = function() {
   var frames = [];
   var fn = arguments.callee.caller;
@@ -326,7 +326,7 @@ goog.testing.stacktrace.followCallChain_ = function() {
     frames.push(new goog.testing.stacktrace.Frame('', functionName, '', args,
         ''));
 
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       fn = fn.caller;
     } catch (e) {
@@ -336,16 +336,16 @@ goog.testing.stacktrace.followCallChain_ = function() {
   }
 
   return frames;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses one stack frame.
-***REMOVED*** @param {string} frameStr The stack frame as string.
-***REMOVED*** @return {goog.testing.stacktrace.Frame} Stack frame object or null if the
-***REMOVED***     parsing failed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses one stack frame.
+ * @param {string} frameStr The stack frame as string.
+ * @return {goog.testing.stacktrace.Frame} Stack frame object or null if the
+ *     parsing failed.
+ * @private
+ */
 goog.testing.stacktrace.parseStackFrame_ = function(frameStr) {
   var m = frameStr.match(goog.testing.stacktrace.CHROME_STACK_FRAME_REGEXP_);
   if (m) {
@@ -377,15 +377,15 @@ goog.testing.stacktrace.parseStackFrame_ = function(frameStr) {
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a long firefox stack frame.
-***REMOVED*** @param {string} frameStr The stack frame as string.
-***REMOVED*** @return {!goog.testing.stacktrace.Frame} Stack frame object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses a long firefox stack frame.
+ * @param {string} frameStr The stack frame as string.
+ * @return {!goog.testing.stacktrace.Frame} Stack frame object.
+ * @private
+ */
 goog.testing.stacktrace.parseLongFirefoxFrame_ = function(frameStr) {
   var firstParen = frameStr.indexOf('(');
   var lastAmpersand = frameStr.lastIndexOf('@');
@@ -404,71 +404,71 @@ goog.testing.stacktrace.parseLongFirefoxFrame_ = function(frameStr) {
     args = frameStr.substring(firstParen, lastAmpersand);
   }
   return new goog.testing.stacktrace.Frame('', functionName, '', args, loc);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Function to deobfuscate function names.
-***REMOVED*** @type {function(string): string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Function to deobfuscate function names.
+ * @type {function(string): string}
+ * @private
+ */
 goog.testing.stacktrace.deobfuscateFunctionName_;
 
 
-***REMOVED***
-***REMOVED*** Sets function to deobfuscate function names.
-***REMOVED*** @param {function(string): string} fn function to deobfuscate function names.
-***REMOVED***
+/**
+ * Sets function to deobfuscate function names.
+ * @param {function(string): string} fn function to deobfuscate function names.
+ */
 goog.testing.stacktrace.setDeobfuscateFunctionName = function(fn) {
   goog.testing.stacktrace.deobfuscateFunctionName_ = fn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deobfuscates a compiled function name with the function passed to
-***REMOVED*** {@link #setDeobfuscateFunctionName}. Returns the original function name if
-***REMOVED*** the deobfuscator hasn't been set.
-***REMOVED*** @param {string} name The function name to deobfuscate.
-***REMOVED*** @return {string} The deobfuscated function name.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Deobfuscates a compiled function name with the function passed to
+ * {@link #setDeobfuscateFunctionName}. Returns the original function name if
+ * the deobfuscator hasn't been set.
+ * @param {string} name The function name to deobfuscate.
+ * @return {string} The deobfuscated function name.
+ * @private
+ */
 goog.testing.stacktrace.maybeDeobfuscateFunctionName_ = function(name) {
   return goog.testing.stacktrace.deobfuscateFunctionName_ ?
       goog.testing.stacktrace.deobfuscateFunctionName_(name) : name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the Closure Inspector is active.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {boolean} Whether the Closure Inspector is active.
+ * @private
+ */
 goog.testing.stacktrace.isClosureInspectorActive_ = function() {
   return Boolean(goog.global['CLOSURE_INSPECTOR___'] &&
       goog.global['CLOSURE_INSPECTOR___']['supportsJSUnit']);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Escapes the special character in HTML.
-***REMOVED*** @param {string} text Plain text.
-***REMOVED*** @return {string} Escaped text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Escapes the special character in HTML.
+ * @param {string} text Plain text.
+ * @return {string} Escaped text.
+ * @private
+ */
 goog.testing.stacktrace.htmlEscape_ = function(text) {
   return text.replace(/&/g, '&amp;').
              replace(/</g, '&lt;').
              replace(/>/g, '&gt;').
              replace(/"/g, '&quot;');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts the stack frames into canonical format. Chops the beginning and the
-***REMOVED*** end of it which come from the testing environment, not from the test itself.
-***REMOVED*** @param {!Array.<goog.testing.stacktrace.Frame>} frames The frames.
-***REMOVED*** @return {string} Canonical, pretty printed stack trace.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts the stack frames into canonical format. Chops the beginning and the
+ * end of it which come from the testing environment, not from the test itself.
+ * @param {!Array.<goog.testing.stacktrace.Frame>} frames The frames.
+ * @return {string} Canonical, pretty printed stack trace.
+ * @private
+ */
 goog.testing.stacktrace.framesToString_ = function(frames) {
   // Removes the anonymous calls from the end of the stack trace (they come
   // from testrunner.js, testcase.js and asserts.js), so the stack trace will
@@ -500,16 +500,16 @@ goog.testing.stacktrace.framesToString_ = function(frames) {
     canonical.push('\n');
   }
   return canonical.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the browser's native stack trace.
-***REMOVED*** @param {string} stack Stack trace.
-***REMOVED*** @return {!Array.<goog.testing.stacktrace.Frame>} Stack frames. The
-***REMOVED***     unrecognized frames will be nulled out.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses the browser's native stack trace.
+ * @param {string} stack Stack trace.
+ * @return {!Array.<goog.testing.stacktrace.Frame>} Stack frames. The
+ *     unrecognized frames will be nulled out.
+ * @private
+ */
 goog.testing.stacktrace.parse_ = function(stack) {
   var lines = stack.replace(/\s*$/, '').split('\n');
   var frames = [];
@@ -517,25 +517,25 @@ goog.testing.stacktrace.parse_ = function(stack) {
     frames.push(goog.testing.stacktrace.parseStackFrame_(lines[i]));
   }
   return frames;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Brings the stack trace into a common format across browsers.
-***REMOVED*** @param {string} stack Browser-specific stack trace.
-***REMOVED*** @return {string} Same stack trace in common format.
-***REMOVED***
+/**
+ * Brings the stack trace into a common format across browsers.
+ * @param {string} stack Browser-specific stack trace.
+ * @return {string} Same stack trace in common format.
+ */
 goog.testing.stacktrace.canonicalize = function(stack) {
   var frames = goog.testing.stacktrace.parse_(stack);
   return goog.testing.stacktrace.framesToString_(frames);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the native stack trace.
-***REMOVED*** @return {string|!Array.<!CallSite>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the native stack trace.
+ * @return {string|!Array.<!CallSite>}
+ * @private
+ */
 goog.testing.stacktrace.getNativeStack_ = function() {
   var tmpError = new Error();
   if (tmpError.stack) {
@@ -552,13 +552,13 @@ goog.testing.stacktrace.getNativeStack_ = function() {
     return e.stack;
   }
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the native stack trace if available otherwise follows the call chain.
-***REMOVED*** @return {string} The stack trace in canonical format.
-***REMOVED***
+/**
+ * Gets the native stack trace if available otherwise follows the call chain.
+ * @return {string} The stack trace in canonical format.
+ */
 goog.testing.stacktrace.get = function() {
   var stack = goog.testing.stacktrace.getNativeStack_();
   var frames;
@@ -570,17 +570,17 @@ goog.testing.stacktrace.get = function() {
     frames = goog.testing.stacktrace.parse_(stack);
   }
   return goog.testing.stacktrace.framesToString_(frames);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts an array of CallSite (elements of a stack trace in V8) to an array
-***REMOVED*** of Frames.
-***REMOVED*** @param {!Array.<!CallSite>} stack The stack as an array of CallSites.
-***REMOVED*** @return {!Array.<!goog.testing.stacktrace.Frame>} The stack as an array of
-***REMOVED***     Frames.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts an array of CallSite (elements of a stack trace in V8) to an array
+ * of Frames.
+ * @param {!Array.<!CallSite>} stack The stack as an array of CallSites.
+ * @return {!Array.<!goog.testing.stacktrace.Frame>} The stack as an array of
+ *     Frames.
+ * @private
+ */
 goog.testing.stacktrace.callSitesToFrames_ = function(stack) {
   var frames = [];
   for (var i = 0; i < stack.length; i++) {
@@ -593,7 +593,7 @@ goog.testing.stacktrace.callSitesToFrames_ = function(stack) {
         new goog.testing.stacktrace.Frame('', functionName, '', '', path));
   }
   return frames;
-***REMOVED***
+};
 
 
 goog.exportSymbol('setDeobfuscateFunctionName',

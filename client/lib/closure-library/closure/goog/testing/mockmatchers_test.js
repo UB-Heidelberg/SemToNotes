@@ -24,8 +24,8 @@ goog.require('goog.testing.mockmatchers.ArgumentMatcher');
 var matchers = goog.testing.mockmatchers;
 
 // Simple classes to test the InstanceOf matcher.
-var foo = function() {***REMOVED***
-var bar = function() {***REMOVED***
+var foo = function() {};
+var bar = function() {};
 
 // Simple class to test adding error messages to
 // MockExpectation objects
@@ -37,12 +37,12 @@ var mockExpect = null;
 
 MockMock.prototype.addErrorMessage = function(msg) {
   this.errorMessages.push(msg);
-***REMOVED***
+};
 
 
 MockMock.prototype.getErrorMessageCount = function() {
   return this.errorMessages.length;
-***REMOVED***
+};
 
 
 function setUp() {
@@ -313,11 +313,11 @@ function testFlexibleArrayMatcher() {
 
   // Create an argument verifier that returns a consistent value.
   var verifyValue = true;
-  var argVerifier = function() {***REMOVED***
+  var argVerifier = function() {};
   goog.inherits(argVerifier, matchers.ArgumentMatcher);
   argVerifier.prototype.matches = function(arg) {
     return verifyValue;
- ***REMOVED*****REMOVED***
+  };
 
   // Test that the arguments are always verified when the verifier returns
   // true.
@@ -358,16 +358,16 @@ function testFlexibleArrayMatcher() {
 }
 
 
-***REMOVED***
-***REMOVED*** Utility method for checking for an ObjectEquals match failure.  Checks that
-***REMOVED*** the expected error message was included in the error messages appended to
-***REMOVED*** the expectation object.
-***REMOVED*** @param {goog.testing.mockmatchers.ArgumentMatcher.ObjectEquals} matcher
-***REMOVED***     The matcher to test against.
-***REMOVED*** @param {Object} matchObject The object to compare.
-***REMOVED*** @param {string=} opt_errorMsg The deep object comparison failure message
-***REMOVED***     to check for.
-***REMOVED***
+/**
+ * Utility method for checking for an ObjectEquals match failure.  Checks that
+ * the expected error message was included in the error messages appended to
+ * the expectation object.
+ * @param {goog.testing.mockmatchers.ArgumentMatcher.ObjectEquals} matcher
+ *     The matcher to test against.
+ * @param {Object} matchObject The object to compare.
+ * @param {string=} opt_errorMsg The deep object comparison failure message
+ *     to check for.
+ */
 function expectObjectEqualsFailure(matcher, matchObject, opt_errorMsg) {
   mockExpect.errorMessages = [];
   assertFalse(matcher.matches(matchObject, mockExpect));

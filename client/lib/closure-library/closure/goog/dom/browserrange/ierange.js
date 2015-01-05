@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the IE browser specific range wrapper.
-***REMOVED***
-***REMOVED*** DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ojan@google.com (Ojan Vafai)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED***
+/**
+ * @fileoverview Definition of the IE browser specific range wrapper.
+ *
+ * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ojan@google.com (Ojan Vafai)
+ * @author jparent@google.com (Julie Parent)
+ */
 
 
 goog.provide('goog.dom.browserrange.IeRange');
@@ -36,48 +36,48 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** The constructor for IE specific browser ranges.
-***REMOVED*** @param {TextRange} range The range object.
-***REMOVED*** @param {Document} doc The document the range exists in.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.browserrange.AbstractRange}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The constructor for IE specific browser ranges.
+ * @param {TextRange} range The range object.
+ * @param {Document} doc The document the range exists in.
+ * @constructor
+ * @extends {goog.dom.browserrange.AbstractRange}
+ * @final
+ */
 goog.dom.browserrange.IeRange = function(range, doc) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The browser range object this class wraps.
-  ***REMOVED*** @type {TextRange}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The browser range object this class wraps.
+   * @type {TextRange}
+   * @private
+   */
   this.range_ = range;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The document the range exists in.
-  ***REMOVED*** @type {Document}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The document the range exists in.
+   * @type {Document}
+   * @private
+   */
   this.doc_ = doc;
-***REMOVED***
+};
 goog.inherits(goog.dom.browserrange.IeRange,
     goog.dom.browserrange.AbstractRange);
 
 
-***REMOVED***
-***REMOVED*** Logging object.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logging object.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.dom.browserrange.IeRange.logger_ =
     goog.log.getLogger('goog.dom.browserrange.IeRange');
 
 
-***REMOVED***
-***REMOVED*** Returns a browser range spanning the given node's contents.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @return {!TextRange} A browser range spanning the node's contents.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a browser range spanning the given node's contents.
+ * @param {Node} node The node to select.
+ * @return {!TextRange} A browser range spanning the node's contents.
+ * @private
+ */
 goog.dom.browserrange.IeRange.getBrowserRangeForNode_ = function(node) {
   var nodeRange = goog.dom.getOwnerDocument(node).body.createTextRange();
   if (node.nodeType == goog.dom.NodeType.ELEMENT) {
@@ -122,18 +122,18 @@ goog.dom.browserrange.IeRange.getBrowserRangeForNode_ = function(node) {
   }
 
   return nodeRange;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a browser range spanning the given nodes.
-***REMOVED*** @param {Node} startNode The node to start with.
-***REMOVED*** @param {number} startOffset The offset within the start node.
-***REMOVED*** @param {Node} endNode The node to end with.
-***REMOVED*** @param {number} endOffset The offset within the end node.
-***REMOVED*** @return {!TextRange} A browser range spanning the node's contents.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a browser range spanning the given nodes.
+ * @param {Node} startNode The node to start with.
+ * @param {number} startOffset The offset within the start node.
+ * @param {Node} endNode The node to end with.
+ * @param {number} endOffset The offset within the end node.
+ * @return {!TextRange} A browser range spanning the node's contents.
+ * @private
+ */
 goog.dom.browserrange.IeRange.getBrowserRangeForNodes_ = function(startNode,
     startOffset, endNode, endOffset) {
   // Create a range starting at the correct start position.
@@ -194,14 +194,14 @@ goog.dom.browserrange.IeRange.getBrowserRangeForNodes_ = function(startNode,
   // Merge and return.
   leftRange.setEndPoint('EndToEnd', rightRange);
   return leftRange;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a range object that selects the given node's text.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @return {!goog.dom.browserrange.IeRange} An IE range wrapper object.
-***REMOVED***
+/**
+ * Create a range object that selects the given node's text.
+ * @param {Node} node The node to select.
+ * @return {!goog.dom.browserrange.IeRange} An IE range wrapper object.
+ */
 goog.dom.browserrange.IeRange.createFromNodeContents = function(node) {
   var range = new goog.dom.browserrange.IeRange(
       goog.dom.browserrange.IeRange.getBrowserRangeForNode_(node),
@@ -235,17 +235,17 @@ goog.dom.browserrange.IeRange.createFromNodeContents = function(node) {
     range.parentNode_ = node;
   }
   return range;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static method that returns the proper type of browser range.
-***REMOVED*** @param {Node} startNode The node to start with.
-***REMOVED*** @param {number} startOffset The offset within the start node.
-***REMOVED*** @param {Node} endNode The node to end with.
-***REMOVED*** @param {number} endOffset The offset within the end node.
-***REMOVED*** @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
-***REMOVED***
+/**
+ * Static method that returns the proper type of browser range.
+ * @param {Node} startNode The node to start with.
+ * @param {number} startOffset The offset within the start node.
+ * @param {Node} endNode The node to end with.
+ * @param {number} endOffset The offset within the end node.
+ * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
+ */
 goog.dom.browserrange.IeRange.createFromNodes = function(startNode,
     startOffset, endNode, endOffset) {
   var range = new goog.dom.browserrange.IeRange(
@@ -257,57 +257,57 @@ goog.dom.browserrange.IeRange.createFromNodes = function(startNode,
   range.endNode_ = endNode;
   range.endOffset_ = endOffset;
   return range;
-***REMOVED***
+};
 
 
 // Even though goog.dom.TextRange does similar caching to below, keeping these
 // caches allows for better performance in the get*Offset methods.
 
 
-***REMOVED***
-***REMOVED*** Lazy cache of the node containing the entire selection.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy cache of the node containing the entire selection.
+ * @type {Node}
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.parentNode_ = null;
 
 
-***REMOVED***
-***REMOVED*** Lazy cache of the node containing the start of the selection.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy cache of the node containing the start of the selection.
+ * @type {Node}
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.startNode_ = null;
 
 
-***REMOVED***
-***REMOVED*** Lazy cache of the node containing the end of the selection.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy cache of the node containing the end of the selection.
+ * @type {Node}
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.endNode_ = null;
 
 
-***REMOVED***
-***REMOVED*** Lazy cache of the offset in startNode_ where this range starts.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy cache of the offset in startNode_ where this range starts.
+ * @type {number}
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.startOffset_ = -1;
 
 
-***REMOVED***
-***REMOVED*** Lazy cache of the offset in endNode_ where this range ends.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy cache of the offset in endNode_ where this range ends.
+ * @type {number}
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.endOffset_ = -1;
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.dom.browserrange.IeRange} A clone of this range.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {!goog.dom.browserrange.IeRange} A clone of this range.
+ * @override
+ */
 goog.dom.browserrange.IeRange.prototype.clone = function() {
   var range = new goog.dom.browserrange.IeRange(
       this.range_.duplicate(), this.doc_);
@@ -315,26 +315,26 @@ goog.dom.browserrange.IeRange.prototype.clone = function() {
   range.startNode_ = this.startNode_;
   range.endNode_ = this.endNode_;
   return range;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getBrowserRange = function() {
   return this.range_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the cached values for containers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears the cached values for containers.
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.clearCachedValues_ = function() {
   this.parentNode_ = this.startNode_ = this.endNode_ = null;
   this.startOffset_ = this.endOffset_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getContainer = function() {
   if (!this.parentNode_) {
     var selectText = this.range_.text;
@@ -395,16 +395,16 @@ goog.dom.browserrange.IeRange.prototype.getContainer = function() {
   }
 
   return this.parentNode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method to find the deepest parent for this range, starting
-***REMOVED*** the search from {@code node}, which must contain the range.
-***REMOVED*** @param {Node} node The node to start the search from.
-***REMOVED*** @return {Node} The deepest parent for this range.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper method to find the deepest parent for this range, starting
+ * the search from {@code node}, which must contain the range.
+ * @param {Node} node The node to start the search from.
+ * @return {Node} The deepest parent for this range.
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.findDeepestContainer_ = function(node) {
   var childNodes = node.childNodes;
   for (var i = 0, len = childNodes.length; i < len; i++) {
@@ -442,10 +442,10 @@ goog.dom.browserrange.IeRange.prototype.findDeepestContainer_ = function(node) {
   }
 
   return node;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getStartNode = function() {
   if (!this.startNode_) {
     this.startNode_ = this.getEndpointNode_(goog.dom.RangeEndpoint.START);
@@ -454,10 +454,10 @@ goog.dom.browserrange.IeRange.prototype.getStartNode = function() {
     }
   }
   return this.startNode_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getStartOffset = function() {
   if (this.startOffset_ < 0) {
     this.startOffset_ = this.getOffset_(goog.dom.RangeEndpoint.START);
@@ -466,10 +466,10 @@ goog.dom.browserrange.IeRange.prototype.getStartOffset = function() {
     }
   }
   return this.startOffset_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getEndNode = function() {
   if (this.isCollapsed()) {
     return this.getStartNode();
@@ -478,10 +478,10 @@ goog.dom.browserrange.IeRange.prototype.getEndNode = function() {
     this.endNode_ = this.getEndpointNode_(goog.dom.RangeEndpoint.END);
   }
   return this.endNode_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getEndOffset = function() {
   if (this.isCollapsed()) {
     return this.getStartOffset();
@@ -493,10 +493,10 @@ goog.dom.browserrange.IeRange.prototype.getEndOffset = function() {
     }
   }
   return this.endOffset_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.compareBrowserRangeEndpoints = function(
     range, thisEndpoint, otherEndpoint) {
   return this.range_.compareEndPoints(
@@ -504,20 +504,20 @@ goog.dom.browserrange.IeRange.prototype.compareBrowserRangeEndpoints = function(
       'To' +
       (otherEndpoint == goog.dom.RangeEndpoint.START ? 'Start' : 'End'),
       range);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Recurses to find the correct node for the given endpoint.
-***REMOVED*** @param {goog.dom.RangeEndpoint} endpoint The endpoint to get the node for.
-***REMOVED*** @param {Node=} opt_node Optional node to start the search from.
-***REMOVED*** @return {Node} The deepest node containing the endpoint.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Recurses to find the correct node for the given endpoint.
+ * @param {goog.dom.RangeEndpoint} endpoint The endpoint to get the node for.
+ * @param {Node=} opt_node Optional node to start the search from.
+ * @return {Node} The deepest node containing the endpoint.
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.getEndpointNode_ = function(endpoint,
     opt_node) {
 
- ***REMOVED*****REMOVED*** @type {Node}***REMOVED***
+  /** @type {Node} */
   var node = opt_node || this.getContainer();
 
   // If we're at a leaf in the DOM, we're done.
@@ -600,24 +600,24 @@ goog.dom.browserrange.IeRange.prototype.getEndpointNode_ = function(endpoint,
   // None of the children of this node overlapped the selection, that means
   // the selection starts/ends in this node directly.
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compares one endpoint of this range with the endpoint of a node.
-***REMOVED*** For internal methods, we should prefer this method to containsNode.
-***REMOVED*** containsNode has a lot of false negatives when we're dealing with
-***REMOVED*** {@code <br>} tags.
-***REMOVED***
-***REMOVED*** @param {Node} node The node to compare against.
-***REMOVED*** @param {goog.dom.RangeEndpoint} thisEndpoint The endpoint of this range
-***REMOVED***     to compare with.
-***REMOVED*** @param {goog.dom.RangeEndpoint} otherEndpoint The endpoint of the node
-***REMOVED***     to compare with.
-***REMOVED*** @return {number} 0 if the endpoints are equal, negative if this range
-***REMOVED***     endpoint comes before the other node endpoint, and positive otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compares one endpoint of this range with the endpoint of a node.
+ * For internal methods, we should prefer this method to containsNode.
+ * containsNode has a lot of false negatives when we're dealing with
+ * {@code <br>} tags.
+ *
+ * @param {Node} node The node to compare against.
+ * @param {goog.dom.RangeEndpoint} thisEndpoint The endpoint of this range
+ *     to compare with.
+ * @param {goog.dom.RangeEndpoint} otherEndpoint The endpoint of the node
+ *     to compare with.
+ * @return {number} 0 if the endpoints are equal, negative if this range
+ *     endpoint comes before the other node endpoint, and positive otherwise.
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.compareNodeEndpoints_ =
     function(node, thisEndpoint, otherEndpoint) {
   return this.range_.compareEndPoints(
@@ -626,17 +626,17 @@ goog.dom.browserrange.IeRange.prototype.compareNodeEndpoints_ =
       (otherEndpoint == goog.dom.RangeEndpoint.START ? 'Start' : 'End'),
       goog.dom.browserrange.createRangeFromNodeContents(node).
           getBrowserRange());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the offset into the start/end container.
-***REMOVED*** @param {goog.dom.RangeEndpoint} endpoint The endpoint to get the offset for.
-***REMOVED*** @param {Node=} opt_container The container to get the offset relative to.
-***REMOVED***     Defaults to the value returned by getStartNode/getEndNode.
-***REMOVED*** @return {number} The offset.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the offset into the start/end container.
+ * @param {goog.dom.RangeEndpoint} endpoint The endpoint to get the offset for.
+ * @param {Node=} opt_container The container to get the offset relative to.
+ *     Defaults to the value returned by getStartNode/getEndNode.
+ * @return {number} The offset.
+ * @private
+ */
 goog.dom.browserrange.IeRange.prototype.getOffset_ = function(endpoint,
     opt_container) {
   var isStartEndpoint = endpoint == goog.dom.RangeEndpoint.START;
@@ -683,69 +683,69 @@ goog.dom.browserrange.IeRange.prototype.getOffset_ = function(endpoint,
     var rangeLength = range.text.length;
     return isStartEndpoint ? container.length - rangeLength : rangeLength;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the text of the given node.  Uses IE specific properties.
-***REMOVED*** @param {Node} node The node to retrieve the text of.
-***REMOVED*** @return {string} The node's text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the text of the given node.  Uses IE specific properties.
+ * @param {Node} node The node to retrieve the text of.
+ * @return {string} The node's text.
+ * @private
+ */
 goog.dom.browserrange.IeRange.getNodeText_ = function(node) {
   return node.nodeType == goog.dom.NodeType.TEXT ?
          node.nodeValue : node.innerText;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests whether this range is valid (i.e. whether its endpoints are still in
-***REMOVED*** the document).  A range becomes invalid when, after this object was created,
-***REMOVED*** either one or both of its endpoints are removed from the document.  Use of
-***REMOVED*** an invalid range can lead to runtime errors, particularly in IE.
-***REMOVED*** @return {boolean} Whether the range is valid.
-***REMOVED***
+/**
+ * Tests whether this range is valid (i.e. whether its endpoints are still in
+ * the document).  A range becomes invalid when, after this object was created,
+ * either one or both of its endpoints are removed from the document.  Use of
+ * an invalid range can lead to runtime errors, particularly in IE.
+ * @return {boolean} Whether the range is valid.
+ */
 goog.dom.browserrange.IeRange.prototype.isRangeInDocument = function() {
   var range = this.doc_.body.createTextRange();
   range.moveToElementText(this.doc_.body);
 
   return this.containsRange(
       new goog.dom.browserrange.IeRange(range, this.doc_), true);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.isCollapsed = function() {
   // Note(user) : The earlier implementation used (range.text == ''), but this
   // fails when (range.htmlText == '<br>')
   // Alternative: this.range_.htmlText == '';
   return this.range_.compareEndPoints('StartToEnd', this.range_) == 0;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getText = function() {
   return this.range_.text;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.getValidHtml = function() {
   return this.range_.htmlText;
-***REMOVED***
+};
 
 
 // SELECTION MODIFICATION
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.select = function(opt_reverse) {
   // IE doesn't support programmatic reversed selections.
   this.range_.select();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.removeContents = function() {
   // NOTE: Sometimes htmlText is non-empty, but the range is actually empty.
   // TODO(gboyer): The htmlText check is probably unnecessary, but I left it in
@@ -783,7 +783,7 @@ goog.dom.browserrange.IeRange.prototype.removeContents = function() {
     // the other browsers.
     var newStartNode = this.getStartNode();
     var newStartOffset = this.getStartOffset();
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       var sibling = startNode.nextSibling;
       if (startNode == endNode && startNode.parentNode &&
@@ -802,30 +802,30 @@ goog.dom.browserrange.IeRange.prototype.removeContents = function() {
       // IE throws errors on orphaned nodes.
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {TextRange} range The range to get a dom helper for.
-***REMOVED*** @return {!goog.dom.DomHelper} A dom helper for the document the range
-***REMOVED***     resides in.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {TextRange} range The range to get a dom helper for.
+ * @return {!goog.dom.DomHelper} A dom helper for the document the range
+ *     resides in.
+ * @private
+ */
 goog.dom.browserrange.IeRange.getDomHelper_ = function(range) {
   return goog.dom.getDomHelper(range.parentElement());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Pastes the given element into the given range, returning the resulting
-***REMOVED*** element.
-***REMOVED*** @param {TextRange} range The range to paste into.
-***REMOVED*** @param {Element} element The node to insert a copy of.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper object for the document
-***REMOVED***     the range resides in.
-***REMOVED*** @return {Element} The resulting copy of element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Pastes the given element into the given range, returning the resulting
+ * element.
+ * @param {TextRange} range The range to paste into.
+ * @param {Element} element The node to insert a copy of.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper object for the document
+ *     the range resides in.
+ * @return {Element} The resulting copy of element.
+ * @private
+ */
 goog.dom.browserrange.IeRange.pasteElement_ = function(range, element,
     opt_domHelper) {
   opt_domHelper = opt_domHelper || goog.dom.browserrange.IeRange.getDomHelper_(
@@ -855,10 +855,10 @@ goog.dom.browserrange.IeRange.pasteElement_ = function(range, element,
   }
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.surroundContents = function(element) {
   // Make sure the element is detached from the document.
   goog.dom.removeNode(element);
@@ -875,18 +875,18 @@ goog.dom.browserrange.IeRange.prototype.surroundContents = function(element) {
   this.clearCachedValues_();
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal handler for inserting a node.
-***REMOVED*** @param {TextRange} clone A clone of this range's browser range object.
-***REMOVED*** @param {Node} node The node to insert.
-***REMOVED*** @param {boolean} before Whether to insert the node before or after the range.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use.
-***REMOVED*** @return {Node} The resulting copy of node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal handler for inserting a node.
+ * @param {TextRange} clone A clone of this range's browser range object.
+ * @param {Node} node The node to insert.
+ * @param {boolean} before Whether to insert the node before or after the range.
+ * @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use.
+ * @return {Node} The resulting copy of node.
+ * @private
+ */
 goog.dom.browserrange.IeRange.insertNode_ = function(clone, node,
     before, opt_domHelper) {
   // Get a DOM helper.
@@ -902,7 +902,7 @@ goog.dom.browserrange.IeRange.insertNode_ = function(clone, node,
 
   clone.collapse(before);
   node = goog.dom.browserrange.IeRange.pasteElement_(clone,
-     ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (node), opt_domHelper);
+      /** @type {Element} */ (node), opt_domHelper);
 
   // If we didn't want an element, unwrap the element and return the node.
   if (isNonElement) {
@@ -915,19 +915,19 @@ goog.dom.browserrange.IeRange.insertNode_ = function(clone, node,
   }
 
   return node;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.insertNode = function(node, before) {
   var output = goog.dom.browserrange.IeRange.insertNode_(
       this.range_.duplicate(), node, before);
   this.clearCachedValues_();
   return output;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.surroundWithNodes = function(
     startNode, endNode) {
   var clone1 = this.range_.duplicate();
@@ -936,10 +936,10 @@ goog.dom.browserrange.IeRange.prototype.surroundWithNodes = function(
   goog.dom.browserrange.IeRange.insertNode_(clone2, endNode, false);
 
   this.clearCachedValues_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.IeRange.prototype.collapse = function(toStart) {
   this.range_.collapse(toStart);
 
@@ -950,4 +950,4 @@ goog.dom.browserrange.IeRange.prototype.collapse = function(toStart) {
     this.startNode_ = this.endNode_;
     this.startOffset_ = this.endOffset_;
   }
-***REMOVED***
+};

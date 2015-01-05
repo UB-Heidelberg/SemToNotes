@@ -261,15 +261,15 @@ function testHsvToHex() {
 }
 
 
-***REMOVED***
-***REMOVED*** This helper method compares two RGB colors, checking that each color
-***REMOVED*** component is the same.
-***REMOVED*** @param {Array.<number>} rgb1 Color represented by a 3-element array with
-***REMOVED***     red, green, and blue values respectively, in the range [0, 255].
-***REMOVED*** @param {Array.<number>} rgb2 Color represented by a 3-element array with
-***REMOVED***     red, green, and blue values respectively, in the range [0, 255].
-***REMOVED*** @return {boolean} True if the colors are the same, false otherwise.
-***REMOVED***
+/**
+ * This helper method compares two RGB colors, checking that each color
+ * component is the same.
+ * @param {Array.<number>} rgb1 Color represented by a 3-element array with
+ *     red, green, and blue values respectively, in the range [0, 255].
+ * @param {Array.<number>} rgb2 Color represented by a 3-element array with
+ *     red, green, and blue values respectively, in the range [0, 255].
+ * @return {boolean} True if the colors are the same, false otherwise.
+ */
 function rgbColorsAreEqual(rgb1, rgb2) {
   return (rgb1[0] == rgb2[0] &&
           rgb1[1] == rgb2[1] &&
@@ -277,12 +277,12 @@ function rgbColorsAreEqual(rgb1, rgb2) {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.blend().  Test cases include:
-***REMOVED*** blending arbitrary colors with factors of 0 and 1, blending the same colors
-***REMOVED*** using arbitrary factors, blending different colors of varying factors,
-***REMOVED*** and blending colors using factors outside the expected range.
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.blend().  Test cases include:
+ * blending arbitrary colors with factors of 0 and 1, blending the same colors
+ * using arbitrary factors, blending different colors of varying factors,
+ * and blending colors using factors outside the expected range.
+ */
 function testColorBlend() {
   // Define some RGB colors for our tests.
   var black = [0, 0, 0];
@@ -297,47 +297,47 @@ function testColorBlend() {
   // Blend arbitrary colors, using 0 and 1 for factors. Using 0 should return
   // the first color, while using 1 should return the second color.
   var redWithNoGreen = goog.color.blend(red, green, 1);
-  assertTrue('red + 0***REMOVED*** green = red',
+  assertTrue('red + 0 * green = red',
              rgbColorsAreEqual(red, redWithNoGreen));
   var whiteWithAllBlue = goog.color.blend(white, blue, 0);
-  assertTrue('white + 1***REMOVED*** blue = blue',
+  assertTrue('white + 1 * blue = blue',
              rgbColorsAreEqual(blue, whiteWithAllBlue));
 
   // Blend the same colors using arbitrary factors. This should return the
   // same colors.
   var greenWithGreen = goog.color.blend(green, green, .25);
-  assertTrue('green + .25***REMOVED*** green = green',
+  assertTrue('green + .25 * green = green',
              rgbColorsAreEqual(green, greenWithGreen));
 
   // Blend different colors using varying factors.
   var blackWithWhite = goog.color.blend(black, white, .5);
-  assertTrue('black + .5***REMOVED*** white = gray',
+  assertTrue('black + .5 * white = gray',
              rgbColorsAreEqual(gray, blackWithWhite));
   var redAndBlue = goog.color.blend(red, blue, .5);
-  assertTrue('red + .5***REMOVED*** blue = purple',
+  assertTrue('red + .5 * blue = purple',
              rgbColorsAreEqual(purple, redAndBlue));
   var lightGreen = goog.color.blend(green, white, .75);
-  assertTrue('green + .25***REMOVED*** white = a lighter shade of white',
+  assertTrue('green + .25 * white = a lighter shade of white',
              lightGreen[0] > 0 &&
              lightGreen[1] == 255 &&
              lightGreen[2] > 0);
 
   // Blend arbitrary colors using factors outside the expected range.
   var noGreenAllPurple = goog.color.blend(green, purple, -0.5);
-  assertTrue('green***REMOVED*** -0.5 + purple = purple.',
+  assertTrue('green * -0.5 + purple = purple.',
              rgbColorsAreEqual(purple, noGreenAllPurple));
   var allBlueNoYellow = goog.color.blend(blue, yellow, 1.37);
-  assertTrue('blue***REMOVED*** 1.37 + yellow = blue.',
+  assertTrue('blue * 1.37 + yellow = blue.',
              rgbColorsAreEqual(blue, allBlueNoYellow));
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.darken(). Test cases
-***REMOVED*** include darkening black with arbitrary factors, edge cases (using 0 and 1),
-***REMOVED*** darkening colors using various factors, and darkening colors using factors
-***REMOVED*** outside the expected range.
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.darken(). Test cases
+ * include darkening black with arbitrary factors, edge cases (using 0 and 1),
+ * darkening colors using various factors, and darkening colors using factors
+ * outside the expected range.
+ */
 function testColorDarken() {
   // Define some RGB colors
   var black = [0, 0, 0];
@@ -391,12 +391,12 @@ function testColorDarken() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.lighten(). Test cases
-***REMOVED*** include lightening white with arbitrary factors, edge cases (using 0 and 1),
-***REMOVED*** lightening colors using various factors, and lightening colors using factors
-***REMOVED*** outside the expected range.
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.lighten(). Test cases
+ * include lightening white with arbitrary factors, edge cases (using 0 and 1),
+ * lightening colors using various factors, and lightening colors using factors
+ * outside the expected range.
+ */
 function testColorLighten() {
   // Define some RGB colors
   var black = [0, 0, 0];
@@ -449,9 +449,9 @@ function testColorLighten() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.hslDistance().
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.hslDistance().
+ */
 function testHslDistance() {
   // Define some HSL colors
   var aliceBlueHsl = goog.color.rgbToHsl(240, 248, 255);
@@ -485,9 +485,9 @@ function testHslDistance() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.yiqBrightness_().
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.yiqBrightness_().
+ */
 function testYiqBrightness() {
   var white = [255, 255, 255];
   var black = [0, 0, 0];
@@ -513,15 +513,15 @@ function testYiqBrightness() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.yiqBrightnessDiff_().
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.yiqBrightnessDiff_().
+ */
 function testYiqBrightnessDiff() {
   var colors = {
     'deeppink': [255, 20, 147],
     'indigo': [75, 0, 130],
     'saddlebrown': [139, 69, 19]
- ***REMOVED*****REMOVED***
+  };
 
   var diffs = new Object();
   for (name1 in colors) {
@@ -554,15 +554,15 @@ function testYiqBrightnessDiff() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.colorDiff_().
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.colorDiff_().
+ */
 function testColorDiff() {
   var colors = {
     'mediumblue': [0, 0, 205],
     'oldlace': [253, 245, 230],
     'orchid': [218, 112, 214]
- ***REMOVED*****REMOVED***
+  };
 
   var diffs = new Object();
   for (name1 in colors) {
@@ -595,9 +595,9 @@ function testColorDiff() {
 }
 
 
-***REMOVED***
-***REMOVED*** This method runs unit tests against goog.color.highContrast().
-***REMOVED***
+/**
+ * This method runs unit tests against goog.color.highContrast().
+ */
 function testHighContrast() {
   white = [255, 255, 255];
   black = [0, 0, 0];
@@ -621,13 +621,13 @@ function testHighContrast() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function for color conversion functions between two colorspaces.
-***REMOVED*** @param {Function} funcOne Function that converts from 1st colorspace to 2nd
-***REMOVED*** @param {Function} funcTwo Function that converts from 2nd colorspace to 2nd
-***REMOVED*** @param {Array.<number>} color The color array passed to funcOne
-***REMOVED*** @param {number} DELTA Margin of error for each element in color
-***REMOVED***
+/**
+ * Helper function for color conversion functions between two colorspaces.
+ * @param {Function} funcOne Function that converts from 1st colorspace to 2nd
+ * @param {Function} funcTwo Function that converts from 2nd colorspace to 2nd
+ * @param {Array.<number>} color The color array passed to funcOne
+ * @param {number} DELTA Margin of error for each element in color
+ */
 function colorConversionTestHelper(funcOne, funcTwo, color, DELTA) {
 
   var temp = funcOne(color);
@@ -650,14 +650,14 @@ function colorConversionTestHelper(funcOne, funcTwo, color, DELTA) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks equivalence between two colors' respective values.  Accepts +- delta
-***REMOVED*** for each pair of values
-***REMOVED*** @param {string} Str
-***REMOVED*** @param {Array.<number>} expected
-***REMOVED*** @param {Array.<number>} actual
-***REMOVED*** @param {number} delta Margin of error for each element in color array
-***REMOVED***
+/**
+ * Checks equivalence between two colors' respective values.  Accepts +- delta
+ * for each pair of values
+ * @param {string} Str
+ * @param {Array.<number>} expected
+ * @param {Array.<number>} actual
+ * @param {number} delta Margin of error for each element in color array
+ */
 function assertColorFuzzyEquals(str, expected, actual, delta) {
   assertTrue(str + ' Expected: ' + expected + '  and got: ' + actual +
                  ' w/ delta: ' + delta,

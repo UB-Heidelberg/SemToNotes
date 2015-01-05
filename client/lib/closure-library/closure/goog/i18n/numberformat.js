@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Number format/parse library with locale support.
-***REMOVED***
+/**
+ * @fileoverview Number format/parse library with locale support.
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for locale number format functions
-***REMOVED***
+/**
+ * Namespace for locale number format functions
+ */
 goog.provide('goog.i18n.NumberFormat');
 goog.provide('goog.i18n.NumberFormat.CurrencyStyle');
 goog.provide('goog.i18n.NumberFormat.Format');
@@ -32,17 +32,17 @@ goog.require('goog.math');
 
 
 
-***REMOVED***
-***REMOVED*** Constructor of NumberFormat.
-***REMOVED*** @param {number|string} pattern The number that indicates a predefined
-***REMOVED***     number format pattern.
-***REMOVED*** @param {string=} opt_currency Optional international currency
-***REMOVED***     code. This determines the currency code/symbol used in format/parse. If
-***REMOVED***     not given, the currency code for current locale will be used.
-***REMOVED*** @param {number=} opt_currencyStyle currency style, value defined in
-***REMOVED***        goog.i18n.NumberFormat.CurrencyStyle.
-***REMOVED***
-***REMOVED***
+/**
+ * Constructor of NumberFormat.
+ * @param {number|string} pattern The number that indicates a predefined
+ *     number format pattern.
+ * @param {string=} opt_currency Optional international currency
+ *     code. This determines the currency code/symbol used in format/parse. If
+ *     not given, the currency code for current locale will be used.
+ * @param {number=} opt_currencyStyle currency style, value defined in
+ *        goog.i18n.NumberFormat.CurrencyStyle.
+ * @constructor
+ */
 goog.i18n.NumberFormat = function(pattern, opt_currency, opt_currencyStyle) {
   this.intlCurrencyCode_ = opt_currency ||
       goog.i18n.NumberFormatSymbols.DEF_CURRENCY_CODE;
@@ -58,11 +58,11 @@ goog.i18n.NumberFormat = function(pattern, opt_currency, opt_currencyStyle) {
   this.minExponentDigits_ = 0;
   this.useSignForPositiveExponent_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to show trailing zeros in the fraction when significantDigits_ is
-  ***REMOVED*** positive.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to show trailing zeros in the fraction when significantDigits_ is
+   * positive.
+   * @private {boolean}
+   */
   this.showTrailingZeros_ = false;
 
   this.positivePrefix_ = '';
@@ -77,12 +77,12 @@ goog.i18n.NumberFormat = function(pattern, opt_currency, opt_currencyStyle) {
   this.useExponentialNotation_ = false;
   this.compactStyle_ = goog.i18n.NumberFormat.CompactStyle.NONE;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number to base the formatting on when using compact styles, or null
-  ***REMOVED*** if formatting should not be based on another number.
-  ***REMOVED*** @type {?number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The number to base the formatting on when using compact styles, or null
+   * if formatting should not be based on another number.
+   * @type {?number}
+   * @private
+   */
   this.baseFormattingNumber_ = null;
 
   if (typeof pattern == 'number') {
@@ -90,13 +90,13 @@ goog.i18n.NumberFormat = function(pattern, opt_currency, opt_currencyStyle) {
   } else {
     this.applyPattern_(pattern);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Standard number formatting patterns.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Standard number formatting patterns.
+ * @enum {number}
+ */
 goog.i18n.NumberFormat.Format = {
   DECIMAL: 1,
   SCIENTIFIC: 2,
@@ -104,63 +104,63 @@ goog.i18n.NumberFormat.Format = {
   CURRENCY: 4,
   COMPACT_SHORT: 5,
   COMPACT_LONG: 6
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Currency styles.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Currency styles.
+ * @enum {number}
+ */
 goog.i18n.NumberFormat.CurrencyStyle = {
   LOCAL: 0,     // currency style as it is used in its circulating country.
   PORTABLE: 1,  // currency style that differentiate it from other popular ones.
   GLOBAL: 2     // currency style that is unique among all currencies.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compacting styles.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Compacting styles.
+ * @enum {number}
+ */
 goog.i18n.NumberFormat.CompactStyle = {
   NONE: 0,  // Don't compact.
   SHORT: 1, // Short compact form, such as 1.2B.
   LONG: 2  // Long compact form, such as 1.2 billion.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If the usage of Ascii digits should be enforced.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If the usage of Ascii digits should be enforced.
+ * @type {boolean}
+ * @private
+ */
 goog.i18n.NumberFormat.enforceAsciiDigits_ = false;
 
 
-***REMOVED***
-***REMOVED*** Set if the usage of Ascii digits in formatting should be enforced.
-***REMOVED*** @param {boolean} doEnforce Boolean value about if Ascii digits should be
-***REMOVED***     enforced.
-***REMOVED***
+/**
+ * Set if the usage of Ascii digits in formatting should be enforced.
+ * @param {boolean} doEnforce Boolean value about if Ascii digits should be
+ *     enforced.
+ */
 goog.i18n.NumberFormat.setEnforceAsciiDigits = function(doEnforce) {
   goog.i18n.NumberFormat.enforceAsciiDigits_ = doEnforce;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return if Ascii digits is enforced.
-***REMOVED*** @return {boolean} If Ascii digits is enforced.
-***REMOVED***
+/**
+ * Return if Ascii digits is enforced.
+ * @return {boolean} If Ascii digits is enforced.
+ */
 goog.i18n.NumberFormat.isEnforceAsciiDigits = function() {
   return goog.i18n.NumberFormat.enforceAsciiDigits_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets minimum number of fraction digits.
-***REMOVED*** @param {number} min the minimum.
-***REMOVED*** @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
-***REMOVED***
+/**
+ * Sets minimum number of fraction digits.
+ * @param {number} min the minimum.
+ * @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
+ */
 goog.i18n.NumberFormat.prototype.setMinimumFractionDigits = function(min) {
   if (this.significantDigits_ > 0 && min > 0) {
     throw Error(
@@ -168,25 +168,25 @@ goog.i18n.NumberFormat.prototype.setMinimumFractionDigits = function(min) {
   }
   this.minimumFractionDigits_ = min;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets maximum number of fraction digits.
-***REMOVED*** @param {number} max the maximum.
-***REMOVED*** @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
-***REMOVED***
+/**
+ * Sets maximum number of fraction digits.
+ * @param {number} max the maximum.
+ * @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
+ */
 goog.i18n.NumberFormat.prototype.setMaximumFractionDigits = function(max) {
   this.maximumFractionDigits_ = max;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets number of significant digits to show. Only fractions will be rounded.
-***REMOVED*** @param {number} number The number of significant digits to include.
-***REMOVED*** @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
-***REMOVED***
+/**
+ * Sets number of significant digits to show. Only fractions will be rounded.
+ * @param {number} number The number of significant digits to include.
+ * @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
+ */
 goog.i18n.NumberFormat.prototype.setSignificantDigits = function(number) {
   if (this.minimumFractionDigits_ > 0 && number >= 0) {
     throw Error(
@@ -194,74 +194,74 @@ goog.i18n.NumberFormat.prototype.setSignificantDigits = function(number) {
   }
   this.significantDigits_ = number;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets number of significant digits to show. Only fractions will be rounded.
-***REMOVED*** @return {number} The number of significant digits to include.
-***REMOVED***
+/**
+ * Gets number of significant digits to show. Only fractions will be rounded.
+ * @return {number} The number of significant digits to include.
+ */
 goog.i18n.NumberFormat.prototype.getSignificantDigits = function() {
   return this.significantDigits_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether trailing fraction zeros should be shown when significantDigits_
-***REMOVED*** is positive. If this is true and significantDigits_ is 2, 1 will be formatted
-***REMOVED*** as '1.0'.
-***REMOVED*** @param {boolean} showTrailingZeros Whether trailing zeros should be shown.
-***REMOVED*** @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
-***REMOVED***
+/**
+ * Sets whether trailing fraction zeros should be shown when significantDigits_
+ * is positive. If this is true and significantDigits_ is 2, 1 will be formatted
+ * as '1.0'.
+ * @param {boolean} showTrailingZeros Whether trailing zeros should be shown.
+ * @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
+ */
 goog.i18n.NumberFormat.prototype.setShowTrailingZeros =
     function(showTrailingZeros) {
   this.showTrailingZeros_ = showTrailingZeros;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a number to base the formatting on when compact style formatting is
-***REMOVED*** used. If this is null, the formatting should be based only on the number to
-***REMOVED*** be formatting.
-***REMOVED***
-***REMOVED*** This base formatting number can be used to format the target number as
-***REMOVED*** another number would be formatted. For example, 100,000 is normally formatted
-***REMOVED*** as "100K" in the COMPACT_SHORT format. To instead format it as '0.1M', the
-***REMOVED*** base number could be set to 1,000,000 in order to force all numbers to be
-***REMOVED*** formatted in millions. Similarly, 1,000,000,000 would normally be formatted
-***REMOVED*** as '1B' and setting the base formatting number to 1,000,000, would cause it
-***REMOVED*** to be formatted instead as '1,000M'.
-***REMOVED***
-***REMOVED*** @param {?number} baseFormattingNumber The number to base formatting on, or
-***REMOVED*** null if formatting should not be based on another number.
-***REMOVED*** @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
-***REMOVED***
+/**
+ * Sets a number to base the formatting on when compact style formatting is
+ * used. If this is null, the formatting should be based only on the number to
+ * be formatting.
+ *
+ * This base formatting number can be used to format the target number as
+ * another number would be formatted. For example, 100,000 is normally formatted
+ * as "100K" in the COMPACT_SHORT format. To instead format it as '0.1M', the
+ * base number could be set to 1,000,000 in order to force all numbers to be
+ * formatted in millions. Similarly, 1,000,000,000 would normally be formatted
+ * as '1B' and setting the base formatting number to 1,000,000, would cause it
+ * to be formatted instead as '1,000M'.
+ *
+ * @param {?number} baseFormattingNumber The number to base formatting on, or
+ * null if formatting should not be based on another number.
+ * @return {!goog.i18n.NumberFormat} Reference to this NumberFormat object.
+ */
 goog.i18n.NumberFormat.prototype.setBaseFormatting =
     function(baseFormattingNumber) {
   goog.asserts.assert(goog.isNull(baseFormattingNumber) ||
       isFinite(baseFormattingNumber));
   this.baseFormattingNumber_ = baseFormattingNumber;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the number on which compact formatting is currently based, or null if
-***REMOVED*** no such number is set. See setBaseFormatting() for more information.
-***REMOVED*** @return {?number}
-***REMOVED***
+/**
+ * Gets the number on which compact formatting is currently based, or null if
+ * no such number is set. See setBaseFormatting() for more information.
+ * @return {?number}
+ */
 goog.i18n.NumberFormat.prototype.getBaseFormatting = function() {
   return this.baseFormattingNumber_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Apply provided pattern, result are stored in member variables.
-***REMOVED***
-***REMOVED*** @param {string} pattern String pattern being applied.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Apply provided pattern, result are stored in member variables.
+ *
+ * @param {string} pattern String pattern being applied.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.applyPattern_ = function(pattern) {
   this.pattern_ = pattern.replace(/ /g, '\u00a0');
   var pos = [0];
@@ -284,15 +284,15 @@ goog.i18n.NumberFormat.prototype.applyPattern_ = function(pattern) {
     this.negativePrefix_ = this.positivePrefix_ + this.negativePrefix_;
     this.negativeSuffix_ += this.positiveSuffix_;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Apply a predefined pattern to NumberFormat object.
-***REMOVED*** @param {number} patternType The number that indicates a predefined number
-***REMOVED***     format pattern.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Apply a predefined pattern to NumberFormat object.
+ * @param {number} patternType The number that indicates a predefined number
+ *     format pattern.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.applyStandardPattern_ = function(patternType) {
   switch (patternType) {
     case goog.i18n.NumberFormat.Format.DECIMAL:
@@ -318,37 +318,37 @@ goog.i18n.NumberFormat.prototype.applyStandardPattern_ = function(patternType) {
     default:
       throw Error('Unsupported pattern type.');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Apply a predefined pattern for shorthand formats.
-***REMOVED*** @param {goog.i18n.NumberFormat.CompactStyle} style the compact style to
-***REMOVED***     set defaults for.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Apply a predefined pattern for shorthand formats.
+ * @param {goog.i18n.NumberFormat.CompactStyle} style the compact style to
+ *     set defaults for.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.applyCompactStyle_ = function(style) {
   this.compactStyle_ = style;
   this.applyPattern_(goog.i18n.NumberFormatSymbols.DECIMAL_PATTERN);
   this.setMinimumFractionDigits(0);
   this.setMaximumFractionDigits(2);
   this.setSignificantDigits(2);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses text string to produce a Number.
-***REMOVED***
-***REMOVED*** This method attempts to parse text starting from position "opt_pos" if it
-***REMOVED*** is given. Otherwise the parse will start from the beginning of the text.
-***REMOVED*** When opt_pos presents, opt_pos will be updated to the character next to where
-***REMOVED*** parsing stops after the call. If an error occurs, opt_pos won't be updated.
-***REMOVED***
-***REMOVED*** @param {string} text The string to be parsed.
-***REMOVED*** @param {Array.<number>=} opt_pos Position to pass in and get back.
-***REMOVED*** @return {number} Parsed number. This throws an error if the text cannot be
-***REMOVED***     parsed.
-***REMOVED***
+/**
+ * Parses text string to produce a Number.
+ *
+ * This method attempts to parse text starting from position "opt_pos" if it
+ * is given. Otherwise the parse will start from the beginning of the text.
+ * When opt_pos presents, opt_pos will be updated to the character next to where
+ * parsing stops after the call. If an error occurs, opt_pos won't be updated.
+ *
+ * @param {string} text The string to be parsed.
+ * @param {Array.<number>=} opt_pos Position to pass in and get back.
+ * @return {number} Parsed number. This throws an error if the text cannot be
+ *     parsed.
+ */
 goog.i18n.NumberFormat.prototype.parse = function(text, opt_pos) {
   var pos = opt_pos || [0];
 
@@ -402,19 +402,19 @@ goog.i18n.NumberFormat.prototype.parse = function(text, opt_pos) {
   }
 
   return gotNegative ? -ret : ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This function will parse a "localized" text into a Number. It needs to
-***REMOVED*** handle locale specific decimal, grouping, exponent and digits.
-***REMOVED***
-***REMOVED*** @param {string} text The text that need to be parsed.
-***REMOVED*** @param {Array.<number>} pos  In/out parsing position. In case of failure,
-***REMOVED***    pos value won't be changed.
-***REMOVED*** @return {number} Number value, or NaN if nothing can be parsed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * This function will parse a "localized" text into a Number. It needs to
+ * handle locale specific decimal, grouping, exponent and digits.
+ *
+ * @param {string} text The text that need to be parsed.
+ * @param {Array.<number>} pos  In/out parsing position. In case of failure,
+ *    pos value won't be changed.
+ * @return {number} Number value, or NaN if nothing can be parsed.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.parseNumber_ = function(text, pos) {
   var sawDecimal = false;
   var sawExponent = false;
@@ -482,15 +482,15 @@ goog.i18n.NumberFormat.prototype.parseNumber_ = function(text, pos) {
     }
   }
   return parseFloat(normalizedText) / scale;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a Number to produce a string.
-***REMOVED***
-***REMOVED*** @param {number} number The Number to be formatted.
-***REMOVED*** @return {string} The formatted number string.
-***REMOVED***
+/**
+ * Formats a Number to produce a string.
+ *
+ * @param {number} number The Number to be formatted.
+ * @return {string} The formatted number string.
+ */
 goog.i18n.NumberFormat.prototype.format = function(number) {
   if (isNaN(number)) {
     return goog.i18n.NumberFormatSymbols.NAN;
@@ -515,9 +515,9 @@ goog.i18n.NumberFormat.prototype.format = function(number) {
     parts.push(goog.i18n.NumberFormatSymbols.INFINITY);
   } else {
     // convert number to non-negative value
-    number***REMOVED***= isNegative ? -1 : 1;
+    number *= isNegative ? -1 : 1;
 
-    number***REMOVED***= this.multiplier_;
+    number *= this.multiplier_;
     this.useExponentialNotation_ ?
         this.subformatExponential_(number, parts) :
         this.subformatFixed_(number, this.minimumIntegerDigits_, parts);
@@ -527,47 +527,47 @@ goog.i18n.NumberFormat.prototype.format = function(number) {
   parts.push(unit.suffix);
 
   return parts.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Round a number into an integer and fractional part
-***REMOVED*** based on the rounding rules for this NumberFormat.
-***REMOVED*** @param {number} number The number to round.
-***REMOVED*** @return {{intValue: number, fracValue: number}} The integer and fractional
-***REMOVED***     part after rounding.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Round a number into an integer and fractional part
+ * based on the rounding rules for this NumberFormat.
+ * @param {number} number The number to round.
+ * @return {{intValue: number, fracValue: number}} The integer and fractional
+ *     part after rounding.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.roundNumber_ = function(number) {
   var power = Math.pow(10, this.maximumFractionDigits_);
   var shiftedNumber = this.significantDigits_ <= 0 ?
-      Math.round(number***REMOVED*** power) :
+      Math.round(number * power) :
       Math.floor(this.roundToSignificantDigits_(
-          number***REMOVED*** power,
+          number * power,
           this.significantDigits_,
           this.maximumFractionDigits_));
 
   var intValue, fracValue;
   if (isFinite(shiftedNumber)) {
     intValue = Math.floor(shiftedNumber / power);
-    fracValue = Math.floor(shiftedNumber - intValue***REMOVED*** power);
+    fracValue = Math.floor(shiftedNumber - intValue * power);
   } else {
     intValue = number;
     fracValue = 0;
   }
-  return {intValue: intValue, fracValue: fracValue***REMOVED***
-***REMOVED***
+  return {intValue: intValue, fracValue: fracValue};
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a Number in fraction format.
-***REMOVED***
-***REMOVED*** @param {number} number
-***REMOVED*** @param {number} minIntDigits Minimum integer digits.
-***REMOVED*** @param {Array} parts This array holds the pieces of formatted string.
-***REMOVED***     This function will add its formatted pieces to the array.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats a Number in fraction format.
+ *
+ * @param {number} number
+ * @param {number} minIntDigits Minimum integer digits.
+ * @param {Array} parts This array holds the pieces of formatted string.
+ *     This function will add its formatted pieces to the array.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.subformatFixed_ =
     function(number, minIntDigits, parts) {
   if (this.minimumFractionDigits_ > this.maximumFractionDigits_) {
@@ -603,7 +603,7 @@ goog.i18n.NumberFormat.prototype.subformatFixed_ =
   var decimal = goog.i18n.NumberFormatSymbols.DECIMAL_SEP;
   var grouping = goog.i18n.NumberFormatSymbols.GROUP_SEP;
   var zeroCode = goog.i18n.NumberFormat.enforceAsciiDigits_ ?
-                 48  /* ascii '0'***REMOVED*** :
+                 48  /* ascii '0' */ :
                  goog.i18n.NumberFormatSymbols.ZERO_DIGIT.charCodeAt(0);
   var digitLen = intPart.length;
 
@@ -613,7 +613,7 @@ goog.i18n.NumberFormat.prototype.subformatFixed_ =
     }
 
     for (var i = 0; i < digitLen; i++) {
-      parts.push(String.fromCharCode(zeroCode + intPart.charAt(i)***REMOVED*** 1));
+      parts.push(String.fromCharCode(zeroCode + intPart.charAt(i) * 1));
 
       if (digitLen - i > 1 && this.groupingSize_ > 0 &&
           ((digitLen - i) % this.groupingSize_ == 1)) {
@@ -639,19 +639,19 @@ goog.i18n.NumberFormat.prototype.subformatFixed_ =
   }
 
   for (var i = 1; i < fracLen; i++) {
-    parts.push(String.fromCharCode(zeroCode + fracPart.charAt(i)***REMOVED*** 1));
+    parts.push(String.fromCharCode(zeroCode + fracPart.charAt(i) * 1));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats exponent part of a Number.
-***REMOVED***
-***REMOVED*** @param {number} exponent Exponential value.
-***REMOVED*** @param {Array.<string>} parts The array that holds the pieces of formatted
-***REMOVED***     string. This function will append more formatted pieces to the array.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats exponent part of a Number.
+ *
+ * @param {number} exponent Exponential value.
+ * @param {Array.<string>} parts The array that holds the pieces of formatted
+ *     string. This function will append more formatted pieces to the array.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.addExponentPart_ = function(exponent, parts) {
   parts.push(goog.i18n.NumberFormatSymbols.EXP_SYMBOL);
 
@@ -669,17 +669,17 @@ goog.i18n.NumberFormat.prototype.addExponentPart_ = function(exponent, parts) {
     parts.push(zeroChar);
   }
   parts.push(exponentDigits);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats Number in exponential format.
-***REMOVED***
-***REMOVED*** @param {number} number Value need to be formated.
-***REMOVED*** @param {Array.<string>} parts The array that holds the pieces of formatted
-***REMOVED***     string. This function will append more formatted pieces to the array.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats Number in exponential format.
+ *
+ * @param {number} number Value need to be formated.
+ * @param {Array.<string>} parts The array that holds the pieces of formatted
+ *     string. This function will append more formatted pieces to the array.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.subformatExponential_ =
     function(number, parts) {
   if (number == 0.0) {
@@ -700,7 +700,7 @@ goog.i18n.NumberFormat.prototype.subformatExponential_ =
     // exponent we have here is off by one from what we expect;
     // it is for the format 0.MMMMMx10^n.
     while ((exponent % this.maximumIntegerDigits_) != 0) {
-      number***REMOVED***= 10;
+      number *= 10;
       exponent--;
     }
     minIntDigits = 1;
@@ -711,22 +711,22 @@ goog.i18n.NumberFormat.prototype.subformatExponential_ =
       number /= 10;
     } else {
       exponent -= this.minimumIntegerDigits_ - 1;
-      number***REMOVED***= Math.pow(10, this.minimumIntegerDigits_ - 1);
+      number *= Math.pow(10, this.minimumIntegerDigits_ - 1);
     }
   }
   this.subformatFixed_(number, minIntDigits, parts);
   this.addExponentPart_(exponent, parts);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the digit value of current character. The character could be either
-***REMOVED*** '0' to '9', or a locale specific digit.
-***REMOVED***
-***REMOVED*** @param {string} ch Character that represents a digit.
-***REMOVED*** @return {number} The digit value, or -1 on error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the digit value of current character. The character could be either
+ * '0' to '9', or a locale specific digit.
+ *
+ * @param {string} ch Character that represents a digit.
+ * @return {number} The digit value, or -1 on error.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.getDigit_ = function(ch) {
   var code = ch.charCodeAt(0);
   // between '0' to '9'
@@ -736,119 +736,119 @@ goog.i18n.NumberFormat.prototype.getDigit_ = function(ch) {
     var zeroCode = goog.i18n.NumberFormatSymbols.ZERO_DIGIT.charCodeAt(0);
     return zeroCode <= code && code < zeroCode + 10 ? code - zeroCode : -1;
   }
-***REMOVED***
+};
 
 
 // ----------------------------------------------------------------------
 // CONSTANTS
 // ----------------------------------------------------------------------
 // Constants for characters used in programmatic (unlocalized) patterns.
-***REMOVED***
-***REMOVED*** A zero digit character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A zero digit character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_ZERO_DIGIT_ = '0';
 
 
-***REMOVED***
-***REMOVED*** A grouping separator character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A grouping separator character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_GROUPING_SEPARATOR_ = ',';
 
 
-***REMOVED***
-***REMOVED*** A decimal separator character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A decimal separator character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_DECIMAL_SEPARATOR_ = '.';
 
 
-***REMOVED***
-***REMOVED*** A per mille character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A per mille character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_PER_MILLE_ = '\u2030';
 
 
-***REMOVED***
-***REMOVED*** A percent character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A percent character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_PERCENT_ = '%';
 
 
-***REMOVED***
-***REMOVED*** A digit character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A digit character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_DIGIT_ = '#';
 
 
-***REMOVED***
-***REMOVED*** A separator character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A separator character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_SEPARATOR_ = ';';
 
 
-***REMOVED***
-***REMOVED*** An exponent character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An exponent character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_EXPONENT_ = 'E';
 
 
-***REMOVED***
-***REMOVED*** An plus character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An plus character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_PLUS_ = '+';
 
 
-***REMOVED***
-***REMOVED*** A minus character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A minus character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_MINUS_ = '-';
 
 
-***REMOVED***
-***REMOVED*** A quote character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A quote character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.PATTERN_CURRENCY_SIGN_ = '\u00A4';
 
 
-***REMOVED***
-***REMOVED*** A quote character.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A quote character.
+ * @type {string}
+ * @private
+ */
 goog.i18n.NumberFormat.QUOTE_ = '\'';
 
 
-***REMOVED***
-***REMOVED*** Parses affix part of pattern.
-***REMOVED***
-***REMOVED*** @param {string} pattern Pattern string that need to be parsed.
-***REMOVED*** @param {Array.<number>} pos One element position array to set and receive
-***REMOVED***     parsing position.
-***REMOVED***
-***REMOVED*** @return {string} Affix received from parsing.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses affix part of pattern.
+ *
+ * @param {string} pattern Pattern string that need to be parsed.
+ * @param {Array.<number>} pos One element position array to set and receive
+ *     parsing position.
+ *
+ * @return {string} Affix received from parsing.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.parseAffix_ = function(pattern, pos) {
   var affix = '';
   var inQuote = false;
@@ -923,17 +923,17 @@ goog.i18n.NumberFormat.prototype.parseAffix_ = function(pattern, pos) {
   }
 
   return affix;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the trunk part of a pattern.
-***REMOVED***
-***REMOVED*** @param {string} pattern Pattern string that need to be parsed.
-***REMOVED*** @param {Array.<number>} pos One element position array to set and receive
-***REMOVED***     parsing position.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses the trunk part of a pattern.
+ *
+ * @param {string} pattern Pattern string that need to be parsed.
+ * @param {Array.<number>} pos One element position array to set and receive
+ *     parsing position.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.parseTrunk_ = function(pattern, pos) {
   var decimalPos = -1;
   var digitLeftCount = 0;
@@ -1055,35 +1055,35 @@ goog.i18n.NumberFormat.prototype.parseTrunk_ = function(pattern, pos) {
   this.groupingSize_ = Math.max(0, groupingCount);
   this.decimalSeparatorAlwaysShown_ = decimalPos == 0 ||
                                       decimalPos == totalDigits;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alias for the compact format 'unit' object.
-***REMOVED*** @typedef {{
-***REMOVED***     prefix: string,
-***REMOVED***     suffix: string,
-***REMOVED***     divisorBase: number
-***REMOVED*** }}
-***REMOVED***
+/**
+ * Alias for the compact format 'unit' object.
+ * @typedef {{
+ *     prefix: string,
+ *     suffix: string,
+ *     divisorBase: number
+ * }}
+ */
 goog.i18n.NumberFormat.CompactNumberUnit;
 
 
-***REMOVED***
-***REMOVED*** The empty unit, corresponding to a base of 0.
-***REMOVED*** @private {!goog.i18n.NumberFormat.CompactNumberUnit}
-***REMOVED***
-goog.i18n.NumberFormat.NULL_UNIT_ = { prefix: '', suffix: '', divisorBase: 0***REMOVED*****REMOVED***
+/**
+ * The empty unit, corresponding to a base of 0.
+ * @private {!goog.i18n.NumberFormat.CompactNumberUnit}
+ */
+goog.i18n.NumberFormat.NULL_UNIT_ = { prefix: '', suffix: '', divisorBase: 0 };
 
 
-***REMOVED***
-***REMOVED*** Get compact unit for a certain number of digits
-***REMOVED***
-***REMOVED*** @param {number} base The number of digits to get the unit for.
-***REMOVED*** @param {string} plurality The plurality of the number.
-***REMOVED*** @return {!goog.i18n.NumberFormat.CompactNumberUnit} The compact unit.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get compact unit for a certain number of digits
+ *
+ * @param {number} base The number of digits to get the unit for.
+ * @param {string} plurality The plurality of the number.
+ * @return {!goog.i18n.NumberFormat.CompactNumberUnit} The compact unit.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.getUnitFor_ = function(base, plurality) {
   var table = this.compactStyle_ == goog.i18n.NumberFormat.CompactStyle.SHORT ?
       goog.i18n.CompactNumberFormatSymbols.COMPACT_DECIMAL_SHORT_PATTERN :
@@ -1112,21 +1112,21 @@ goog.i18n.NumberFormat.prototype.getUnitFor_ = function(base, plurality) {
       prefix: parts[1],
       suffix: parts[3],
       divisorBase: base - (parts[2].length - 1)
-   ***REMOVED*****REMOVED***
+    };
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the compact unit divisor, accounting for rounding of the quantity.
-***REMOVED***
-***REMOVED*** @param {number} formattingNumber The number to base the formatting on. The
-***REMOVED***     unit will be calculated from this number.
-***REMOVED*** @param {number} pluralityNumber The number to use for calculating the
-***REMOVED***     plurality.
-***REMOVED*** @return {!goog.i18n.NumberFormat.CompactNumberUnit} The unit after rounding.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the compact unit divisor, accounting for rounding of the quantity.
+ *
+ * @param {number} formattingNumber The number to base the formatting on. The
+ *     unit will be calculated from this number.
+ * @param {number} pluralityNumber The number to use for calculating the
+ *     plurality.
+ * @return {!goog.i18n.NumberFormat.CompactNumberUnit} The unit after rounding.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.getUnitAfterRounding_ =
     function(formattingNumber, pluralityNumber) {
   if (this.compactStyle_ == goog.i18n.NumberFormat.CompactStyle.NONE) {
@@ -1154,34 +1154,34 @@ goog.i18n.NumberFormat.prototype.getUnitAfterRounding_ =
   return this.getUnitFor_(
       initialDivisor + this.intLog10_(formattingRounded.intValue),
       finalPlurality);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the integer base 10 logarithm of a number.
-***REMOVED***
-***REMOVED*** @param {number} number The number to log.
-***REMOVED*** @return {number} The lowest integer n such that 10^n >= number.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the integer base 10 logarithm of a number.
+ *
+ * @param {number} number The number to log.
+ * @return {number} The lowest integer n such that 10^n >= number.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.intLog10_ = function(number) {
   // Turns out Math.log(1000000)/Math.LN10 is strictly less than 6.
   var i = 0;
   while ((number /= 10) >= 1) i++;
   return i;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Round to a certain number of significant digits.
-***REMOVED***
-***REMOVED*** @param {number} number The number to round.
-***REMOVED*** @param {number} significantDigits The number of significant digits
-***REMOVED***     to round to.
-***REMOVED*** @param {number} scale Treat number as fixed point times 10^scale.
-***REMOVED*** @return {number} The rounded number.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Round to a certain number of significant digits.
+ *
+ * @param {number} number The number to round.
+ * @param {number} significantDigits The number of significant digits
+ *     to round to.
+ * @param {number} scale Treat number as fixed point times 10^scale.
+ * @return {number} The rounded number.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.roundToSignificantDigits_ =
     function(number, significantDigits, scale) {
   if (!number)
@@ -1193,35 +1193,35 @@ goog.i18n.NumberFormat.prototype.roundToSignificantDigits_ =
   // Only round fraction, not (potentially shifted) integers.
   if (magnitude < -scale) {
     var point = Math.pow(10, scale);
-    return Math.round(number / point)***REMOVED*** point;
+    return Math.round(number / point) * point;
   }
 
   var power = Math.pow(10, magnitude);
-  var shifted = Math.round(number***REMOVED*** power);
+  var shifted = Math.round(number * power);
   return shifted / power;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the plural form of a number.
-***REMOVED*** @param {number} quantity The quantity to find plurality of.
-***REMOVED*** @return {string} One of 'zero', 'one', 'two', 'few', 'many', 'other'.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the plural form of a number.
+ * @param {number} quantity The quantity to find plurality of.
+ * @return {string} One of 'zero', 'one', 'two', 'few', 'many', 'other'.
+ * @private
+ */
 goog.i18n.NumberFormat.prototype.pluralForm_ = function(quantity) {
-  /* TODO: Implement***REMOVED***
+  /* TODO: Implement */
   return 'other';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the currency symbol comes before the value ($12) or after (12$)
-***REMOVED*** Handy for applications that need to have separate UI fields for the currency
-***REMOVED*** value and symbol, especially for input: Price: [USD] [123.45]
-***REMOVED*** The currency symbol might be a combo box, or a label.
-***REMOVED***
-***REMOVED*** @return {boolean} true if currency is before value.
-***REMOVED***
+/**
+ * Checks if the currency symbol comes before the value ($12) or after (12$)
+ * Handy for applications that need to have separate UI fields for the currency
+ * value and symbol, especially for input: Price: [USD] [123.45]
+ * The currency symbol might be a combo box, or a label.
+ *
+ * @return {boolean} true if currency is before value.
+ */
 goog.i18n.NumberFormat.prototype.isCurrencyCodeBeforeValue = function() {
   var posCurrSymbol = this.pattern_.indexOf('\u00A4'); // '¤' Currency sign
   var posPound = this.pattern_.indexOf('#');
@@ -1242,4 +1242,4 @@ goog.i18n.NumberFormat.prototype.isCurrencyCodeBeforeValue = function() {
   // No need to test, it is guaranteed that both these symbols exist.
   // If not, we have bigger problems than this.
   return posCurrSymbol < posCurrValue;
-***REMOVED***
+};

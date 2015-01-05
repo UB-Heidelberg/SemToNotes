@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A combo box control that allows user input with
-***REMOVED*** auto-suggestion from a limited set of options.
-***REMOVED***
-***REMOVED*** @see ../demos/combobox.html
-***REMOVED***
+/**
+ * @fileoverview A combo box control that allows user input with
+ * auto-suggestion from a limited set of options.
+ *
+ * @see ../demos/combobox.html
+ */
 
 goog.provide('goog.ui.ComboBox');
 goog.provide('goog.ui.ComboBoxItem');
@@ -26,7 +26,7 @@ goog.require('goog.Timer');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.KeyHandler');
@@ -46,16 +46,16 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A ComboBox control.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED*** @param {goog.ui.Menu=} opt_menu Optional menu component.
-***REMOVED***     This menu is disposed of by this control.
-***REMOVED*** @param {goog.ui.LabelInput=} opt_labelInput Optional label input.
-***REMOVED***     This label input is disposed of by this control.
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
-***REMOVED***
+/**
+ * A ComboBox control.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @param {goog.ui.Menu=} opt_menu Optional menu component.
+ *     This menu is disposed of by this control.
+ * @param {goog.ui.LabelInput=} opt_labelInput Optional label input.
+ *     This label input is disposed of by this control.
+ * @extends {goog.ui.Component}
+ * @constructor
+ */
 goog.ui.ComboBox = function(opt_domHelper, opt_menu, opt_labelInput) {
   goog.ui.Component.call(this, opt_domHelper);
 
@@ -65,145 +65,145 @@ goog.ui.ComboBox = function(opt_domHelper, opt_menu, opt_labelInput) {
   // TODO(user): Allow lazy creation of menus/menu items
   this.menu_ = opt_menu || new goog.ui.Menu(this.getDomHelper());
   this.setupMenu_();
-***REMOVED***
+};
 goog.inherits(goog.ui.ComboBox, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** Number of milliseconds to wait before dismissing combobox after blur.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Number of milliseconds to wait before dismissing combobox after blur.
+ * @type {number}
+ */
 goog.ui.ComboBox.BLUR_DISMISS_TIMER_MS = 250;
 
 
-***REMOVED***
-***REMOVED*** A logger to help debugging of combo box behavior.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A logger to help debugging of combo box behavior.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.ui.ComboBox.prototype.logger_ =
     goog.log.getLogger('goog.ui.ComboBox');
 
 
-***REMOVED***
-***REMOVED*** Whether the combo box is enabled.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the combo box is enabled.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ComboBox.prototype.enabled_;
 
 
-***REMOVED***
-***REMOVED*** Keyboard event handler to manage key events dispatched by the input element.
-***REMOVED*** @type {goog.events.KeyHandler}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Keyboard event handler to manage key events dispatched by the input element.
+ * @type {goog.events.KeyHandler}
+ * @private
+ */
 goog.ui.ComboBox.prototype.keyHandler_;
 
 
-***REMOVED***
-***REMOVED*** Input handler to take care of firing events when the user inputs text in
-***REMOVED*** the input.
-***REMOVED*** @type {goog.events.InputHandler?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Input handler to take care of firing events when the user inputs text in
+ * the input.
+ * @type {goog.events.InputHandler?}
+ * @private
+ */
 goog.ui.ComboBox.prototype.inputHandler_ = null;
 
 
-***REMOVED***
-***REMOVED*** The last input token.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The last input token.
+ * @type {?string}
+ * @private
+ */
 goog.ui.ComboBox.prototype.lastToken_ = null;
 
 
-***REMOVED***
-***REMOVED*** A LabelInput control that manages the focus/blur state of the input box.
-***REMOVED*** @type {goog.ui.LabelInput?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A LabelInput control that manages the focus/blur state of the input box.
+ * @type {goog.ui.LabelInput?}
+ * @private
+ */
 goog.ui.ComboBox.prototype.labelInput_ = null;
 
 
-***REMOVED***
-***REMOVED*** Drop down menu for the combo box.  Will be created at construction time.
-***REMOVED*** @type {goog.ui.Menu?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Drop down menu for the combo box.  Will be created at construction time.
+ * @type {goog.ui.Menu?}
+ * @private
+ */
 goog.ui.ComboBox.prototype.menu_ = null;
 
 
-***REMOVED***
-***REMOVED*** The cached visible count.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The cached visible count.
+ * @type {number}
+ * @private
+ */
 goog.ui.ComboBox.prototype.visibleCount_ = -1;
 
 
-***REMOVED***
-***REMOVED*** The input element.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The input element.
+ * @type {Element}
+ * @private
+ */
 goog.ui.ComboBox.prototype.input_ = null;
 
 
-***REMOVED***
-***REMOVED*** The match function.  The first argument for the match function will be
-***REMOVED*** a MenuItem's caption and the second will be the token to evaluate.
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The match function.  The first argument for the match function will be
+ * a MenuItem's caption and the second will be the token to evaluate.
+ * @type {Function}
+ * @private
+ */
 goog.ui.ComboBox.prototype.matchFunction_ = goog.string.startsWith;
 
 
-***REMOVED***
-***REMOVED*** Element used as the combo boxes button.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element used as the combo boxes button.
+ * @type {Element}
+ * @private
+ */
 goog.ui.ComboBox.prototype.button_ = null;
 
 
-***REMOVED***
-***REMOVED*** Default text content for the input box when it is unchanged and unfocussed.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Default text content for the input box when it is unchanged and unfocussed.
+ * @type {string}
+ * @private
+ */
 goog.ui.ComboBox.prototype.defaultText_ = '';
 
 
-***REMOVED***
-***REMOVED*** Name for the input box created
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Name for the input box created
+ * @type {string}
+ * @private
+ */
 goog.ui.ComboBox.prototype.fieldName_ = '';
 
 
-***REMOVED***
-***REMOVED*** Timer identifier for delaying the dismissal of the combo menu.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Timer identifier for delaying the dismissal of the combo menu.
+ * @type {?number}
+ * @private
+ */
 goog.ui.ComboBox.prototype.dismissTimer_ = null;
 
 
-***REMOVED***
-***REMOVED*** True if the unicode inverted triangle should be displayed in the dropdown
-***REMOVED*** button. Defaults to false.
-***REMOVED*** @type {boolean} useDropdownArrow
-***REMOVED*** @private
-***REMOVED***
+/**
+ * True if the unicode inverted triangle should be displayed in the dropdown
+ * button. Defaults to false.
+ * @type {boolean} useDropdownArrow
+ * @private
+ */
 goog.ui.ComboBox.prototype.useDropdownArrow_ = false;
 
 
-***REMOVED***
-***REMOVED*** Create the DOM objects needed for the combo box.  A span and text input.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Create the DOM objects needed for the combo box.  A span and text input.
+ * @override
+ */
 goog.ui.ComboBox.prototype.createDom = function() {
   this.input_ = this.getDomHelper().createDom(
       'input', {name: this.fieldName_, type: 'text', autocomplete: 'off'});
@@ -213,7 +213,7 @@ goog.ui.ComboBox.prototype.createDom = function() {
       goog.getCssName('goog-combobox'), this.input_, this.button_));
   if (this.useDropdownArrow_) {
     goog.dom.setTextContent(this.button_, '\u25BC');
-    goog.style.setUnselectable(this.button_, true /* unselectable***REMOVED***);
+    goog.style.setUnselectable(this.button_, true /* unselectable */);
   }
   this.input_.setAttribute('label', this.defaultText_);
   this.labelInput_.decorate(this.input_);
@@ -221,32 +221,32 @@ goog.ui.ComboBox.prototype.createDom = function() {
   if (!this.menu_.isInDocument()) {
     this.addChild(this.menu_, true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables/Disables the combo box.
-***REMOVED*** @param {boolean} enabled Whether to enable (true) or disable (false) the
-***REMOVED***     combo box.
-***REMOVED***
+/**
+ * Enables/Disables the combo box.
+ * @param {boolean} enabled Whether to enable (true) or disable (false) the
+ *     combo box.
+ */
 goog.ui.ComboBox.prototype.setEnabled = function(enabled) {
   this.enabled_ = enabled;
   this.labelInput_.setEnabled(enabled);
   goog.dom.classlist.enable(
       goog.asserts.assert(this.getElement()),
       goog.getCssName('goog-combobox-disabled'), !enabled);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the menu item is enabled.
-***REMOVED***
+/**
+ * @return {boolean} Whether the menu item is enabled.
+ */
 goog.ui.ComboBox.prototype.isEnabled = function() {
   return this.enabled_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ComboBox.prototype.enterDocument = function() {
   goog.ui.ComboBox.superClass_.enterDocument.call(this);
 
@@ -269,30 +269,30 @@ goog.ui.ComboBox.prototype.enterDocument = function() {
 
   handler.listen(this.menu_,
       goog.ui.Component.EventType.ACTION, this.onMenuSelected_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ComboBox.prototype.exitDocument = function() {
   this.keyHandler_.dispose();
   delete this.keyHandler_;
   this.inputHandler_.dispose();
   this.inputHandler_ = null;
   goog.ui.ComboBox.superClass_.exitDocument.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Combo box currently can't decorate elements.
-***REMOVED*** @return {boolean} The value false.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Combo box currently can't decorate elements.
+ * @return {boolean} The value false.
+ * @override
+ */
 goog.ui.ComboBox.prototype.canDecorate = function() {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ComboBox.prototype.disposeInternal = function() {
   goog.ui.ComboBox.superClass_.disposeInternal.call(this);
 
@@ -305,125 +305,125 @@ goog.ui.ComboBox.prototype.disposeInternal = function() {
   this.menu_ = null;
   this.input_ = null;
   this.button_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dismisses the menu and resets the value of the edit field.
-***REMOVED***
+/**
+ * Dismisses the menu and resets the value of the edit field.
+ */
 goog.ui.ComboBox.prototype.dismiss = function() {
   this.clearDismissTimer_();
   this.hideMenu_();
   this.menu_.setHighlightedIndex(-1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a new menu item at the end of the menu.
-***REMOVED*** @param {goog.ui.MenuItem} item Menu item to add to the menu.
-***REMOVED***
+/**
+ * Adds a new menu item at the end of the menu.
+ * @param {goog.ui.MenuItem} item Menu item to add to the menu.
+ */
 goog.ui.ComboBox.prototype.addItem = function(item) {
   this.menu_.addChild(item, true);
   this.visibleCount_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a new menu item at a specific index in the menu.
-***REMOVED*** @param {goog.ui.MenuItem} item Menu item to add to the menu.
-***REMOVED*** @param {number} n Index at which to insert the menu item.
-***REMOVED***
+/**
+ * Adds a new menu item at a specific index in the menu.
+ * @param {goog.ui.MenuItem} item Menu item to add to the menu.
+ * @param {number} n Index at which to insert the menu item.
+ */
 goog.ui.ComboBox.prototype.addItemAt = function(item, n) {
   this.menu_.addChildAt(item, n, true);
   this.visibleCount_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an item from the menu and disposes it.
-***REMOVED*** @param {goog.ui.MenuItem} item The menu item to remove.
-***REMOVED***
+/**
+ * Removes an item from the menu and disposes it.
+ * @param {goog.ui.MenuItem} item The menu item to remove.
+ */
 goog.ui.ComboBox.prototype.removeItem = function(item) {
   var child = this.menu_.removeChild(item, true);
   if (child) {
     child.dispose();
     this.visibleCount_ = -1;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Remove all of the items from the ComboBox menu
-***REMOVED***
+/**
+ * Remove all of the items from the ComboBox menu
+ */
 goog.ui.ComboBox.prototype.removeAllItems = function() {
   for (var i = this.getItemCount() - 1; i >= 0; --i) {
     this.removeItem(this.getItemAt(i));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a menu item at a given index in the menu.
-***REMOVED*** @param {number} n Index of item.
-***REMOVED***
+/**
+ * Removes a menu item at a given index in the menu.
+ * @param {number} n Index of item.
+ */
 goog.ui.ComboBox.prototype.removeItemAt = function(n) {
   var child = this.menu_.removeChildAt(n, true);
   if (child) {
     child.dispose();
     this.visibleCount_ = -1;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a reference to the menu item at a given index.
-***REMOVED*** @param {number} n Index of menu item.
-***REMOVED*** @return {goog.ui.MenuItem?} Reference to the menu item.
-***REMOVED***
+/**
+ * Returns a reference to the menu item at a given index.
+ * @param {number} n Index of menu item.
+ * @return {goog.ui.MenuItem?} Reference to the menu item.
+ */
 goog.ui.ComboBox.prototype.getItemAt = function(n) {
-  return***REMOVED*****REMOVED*** @type {goog.ui.MenuItem?}***REMOVED***(this.menu_.getChildAt(n));
-***REMOVED***
+  return /** @type {goog.ui.MenuItem?} */(this.menu_.getChildAt(n));
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of items in the list, including non-visible items,
-***REMOVED*** such as separators.
-***REMOVED*** @return {number} Number of items in the menu for this combobox.
-***REMOVED***
+/**
+ * Returns the number of items in the list, including non-visible items,
+ * such as separators.
+ * @return {number} Number of items in the menu for this combobox.
+ */
 goog.ui.ComboBox.prototype.getItemCount = function() {
   return this.menu_.getChildCount();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.Menu} The menu that pops up.
-***REMOVED***
+/**
+ * @return {goog.ui.Menu} The menu that pops up.
+ */
 goog.ui.ComboBox.prototype.getMenu = function() {
   return this.menu_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The input element.
-***REMOVED***
+/**
+ * @return {Element} The input element.
+ */
 goog.ui.ComboBox.prototype.getInputElement = function() {
   return this.input_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.LabelInput} A LabelInput control that manages the
-***REMOVED***     focus/blur state of the input box.
-***REMOVED***
+/**
+ * @return {goog.ui.LabelInput} A LabelInput control that manages the
+ *     focus/blur state of the input box.
+ */
 goog.ui.ComboBox.prototype.getLabelInput = function() {
   return this.labelInput_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The number of visible items in the menu.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {number} The number of visible items in the menu.
+ * @private
+ */
 goog.ui.ComboBox.prototype.getNumberOfVisibleItems_ = function() {
   if (this.visibleCount_ == -1) {
     var count = 0;
@@ -439,136 +439,136 @@ goog.ui.ComboBox.prototype.getNumberOfVisibleItems_ = function() {
   goog.log.info(this.logger_,
       'getNumberOfVisibleItems() - ' + this.visibleCount_);
   return this.visibleCount_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the match function to be used when filtering the combo box menu.
-***REMOVED*** @param {Function} matchFunction The match function to be used when filtering
-***REMOVED***     the combo box menu.
-***REMOVED***
+/**
+ * Sets the match function to be used when filtering the combo box menu.
+ * @param {Function} matchFunction The match function to be used when filtering
+ *     the combo box menu.
+ */
 goog.ui.ComboBox.prototype.setMatchFunction = function(matchFunction) {
   this.matchFunction_ = matchFunction;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Function} The match function for the combox box.
-***REMOVED***
+/**
+ * @return {Function} The match function for the combox box.
+ */
 goog.ui.ComboBox.prototype.getMatchFunction = function() {
   return this.matchFunction_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the default text for the combo box.
-***REMOVED*** @param {string} text The default text for the combo box.
-***REMOVED***
+/**
+ * Sets the default text for the combo box.
+ * @param {string} text The default text for the combo box.
+ */
 goog.ui.ComboBox.prototype.setDefaultText = function(text) {
   this.defaultText_ = text;
   if (this.labelInput_) {
     this.labelInput_.setLabel(this.defaultText_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} text The default text for the combox box.
-***REMOVED***
+/**
+ * @return {string} text The default text for the combox box.
+ */
 goog.ui.ComboBox.prototype.getDefaultText = function() {
   return this.defaultText_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the field name for the combo box.
-***REMOVED*** @param {string} fieldName The field name for the combo box.
-***REMOVED***
+/**
+ * Sets the field name for the combo box.
+ * @param {string} fieldName The field name for the combo box.
+ */
 goog.ui.ComboBox.prototype.setFieldName = function(fieldName) {
   this.fieldName_ = fieldName;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The field name for the combo box.
-***REMOVED***
+/**
+ * @return {string} The field name for the combo box.
+ */
 goog.ui.ComboBox.prototype.getFieldName = function() {
   return this.fieldName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set to true if a unicode inverted triangle should be displayed in the
-***REMOVED*** dropdown button.
-***REMOVED*** This option defaults to false for backwards compatibility.
-***REMOVED*** @param {boolean} useDropdownArrow True to use the dropdown arrow.
-***REMOVED***
+/**
+ * Set to true if a unicode inverted triangle should be displayed in the
+ * dropdown button.
+ * This option defaults to false for backwards compatibility.
+ * @param {boolean} useDropdownArrow True to use the dropdown arrow.
+ */
 goog.ui.ComboBox.prototype.setUseDropdownArrow = function(useDropdownArrow) {
   this.useDropdownArrow_ = !!useDropdownArrow;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the current value of the combo box.
-***REMOVED*** @param {string} value The new value.
-***REMOVED***
+/**
+ * Sets the current value of the combo box.
+ * @param {string} value The new value.
+ */
 goog.ui.ComboBox.prototype.setValue = function(value) {
   goog.log.info(this.logger_, 'setValue() - ' + value);
   if (this.labelInput_.getValue() != value) {
     this.labelInput_.setValue(value);
     this.handleInputChange_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The current value of the combo box.
-***REMOVED***
+/**
+ * @return {string} The current value of the combo box.
+ */
 goog.ui.ComboBox.prototype.getValue = function() {
   return this.labelInput_.getValue();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} HTML escaped token.
-***REMOVED***
+/**
+ * @return {string} HTML escaped token.
+ */
 goog.ui.ComboBox.prototype.getToken = function() {
   // TODO(user): Remove HTML escaping and fix the existing calls.
   return goog.string.htmlEscape(this.getTokenText_());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The token for the current cursor position in the
-***REMOVED***     input box, when multi-input is disabled it will be the full input value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {string} The token for the current cursor position in the
+ *     input box, when multi-input is disabled it will be the full input value.
+ * @private
+ */
 goog.ui.ComboBox.prototype.getTokenText_ = function() {
   // TODO(user): Implement multi-input such that getToken returns a substring
   // of the whole input delimited by commas.
   return goog.string.trim(this.labelInput_.getValue().toLowerCase());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 goog.ui.ComboBox.prototype.setupMenu_ = function() {
   var sm = this.menu_;
   sm.setVisible(false);
   sm.setAllowAutoFocus(false);
   sm.setAllowHighlightDisabled(true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shows the menu if it isn't already showing.  Also positions the menu
-***REMOVED*** correctly, resets the menu item visibilities and highlights the relevent
-***REMOVED*** item.
-***REMOVED*** @param {boolean} showAll Whether to show all items, with the first matching
-***REMOVED***     item highlighted.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Shows the menu if it isn't already showing.  Also positions the menu
+ * correctly, resets the menu item visibilities and highlights the relevent
+ * item.
+ * @param {boolean} showAll Whether to show all items, with the first matching
+ *     item highlighted.
+ * @private
+ */
 goog.ui.ComboBox.prototype.maybeShowMenu_ = function(showAll) {
   var isVisible = this.menu_.isVisible();
   var numVisibleItems = this.getNumberOfVisibleItems_();
@@ -593,13 +593,13 @@ goog.ui.ComboBox.prototype.maybeShowMenu_ = function(showAll) {
   }
 
   this.positionMenu();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Positions the menu.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Positions the menu.
+ * @protected
+ */
 goog.ui.ComboBox.prototype.positionMenu = function() {
   if (this.menu_ && this.menu_.isVisible()) {
     var position = new goog.positioning.MenuAnchoredPosition(this.getElement(),
@@ -607,55 +607,55 @@ goog.ui.ComboBox.prototype.positionMenu = function() {
     position.reposition(this.menu_.getElement(),
         goog.positioning.Corner.TOP_START);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show the menu and add an active class to the combo box's element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Show the menu and add an active class to the combo box's element.
+ * @private
+ */
 goog.ui.ComboBox.prototype.showMenu_ = function() {
   this.menu_.setVisible(true);
   goog.dom.classlist.add(
       goog.asserts.assert(this.getElement()),
       goog.getCssName('goog-combobox-active'));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hide the menu and remove the active class from the combo box's element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Hide the menu and remove the active class from the combo box's element.
+ * @private
+ */
 goog.ui.ComboBox.prototype.hideMenu_ = function() {
   this.menu_.setVisible(false);
   goog.dom.classlist.remove(
       goog.asserts.assert(this.getElement()),
       goog.getCssName('goog-combobox-active'));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the dismiss timer if it's active.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears the dismiss timer if it's active.
+ * @private
+ */
 goog.ui.ComboBox.prototype.clearDismissTimer_ = function() {
   if (this.dismissTimer_) {
     goog.Timer.clear(this.dismissTimer_);
     this.dismissTimer_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Event handler for when the combo box area has been clicked.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Event handler for when the combo box area has been clicked.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.ui.ComboBox.prototype.onComboMouseDown_ = function(e) {
   // We only want this event on the element itself or the input or the button.
   if (this.enabled_ &&
       (e.target == this.getElement() || e.target == this.input_ ||
-       goog.dom.contains(this.button_,***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.target)))) {
+       goog.dom.contains(this.button_, /** @type {Node} */ (e.target)))) {
     if (this.menu_.isVisible()) {
       goog.log.fine(this.logger_, 'Menu is visible, dismissing');
       this.dismiss();
@@ -674,31 +674,31 @@ goog.ui.ComboBox.prototype.onComboMouseDown_ = function(e) {
   }
   // Stop the event from propagating outside of the combo box
   e.stopPropagation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Event handler for when the document is clicked.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Event handler for when the document is clicked.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.ui.ComboBox.prototype.onDocClicked_ = function(e) {
   if (!goog.dom.contains(
-      this.menu_.getElement(),***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.target))) {
+      this.menu_.getElement(), /** @type {Node} */ (e.target))) {
     goog.log.info(this.logger_, 'onDocClicked_() - dismissing immediately');
     this.dismiss();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle the menu's select event.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handle the menu's select event.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.ui.ComboBox.prototype.onMenuSelected_ = function(e) {
   goog.log.info(this.logger_, 'onMenuSelected_()');
-  var item =***REMOVED*****REMOVED*** @type {!goog.ui.MenuItem}***REMOVED*** (e.target);
+  var item = /** @type {!goog.ui.MenuItem} */ (e.target);
   // Stop propagation of the original event and redispatch to allow the menu
   // select to be cancelled at this level. i.e. if a menu item should cause
   // some behavior such as a user prompt instead of assigning the caption as
@@ -715,30 +715,30 @@ goog.ui.ComboBox.prototype.onMenuSelected_ = function(e) {
     this.dismiss();
   }
   e.stopPropagation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Event handler for when the input box looses focus -- hide the menu
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Event handler for when the input box looses focus -- hide the menu
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.ui.ComboBox.prototype.onInputBlur_ = function(e) {
   goog.log.info(this.logger_, 'onInputBlur_() - delayed dismiss');
   this.clearDismissTimer_();
   this.dismissTimer_ = goog.Timer.callOnce(
       this.dismiss, goog.ui.ComboBox.BLUR_DISMISS_TIMER_MS, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles keyboard events from the input box.  Returns true if the combo box
-***REMOVED*** was able to handle the event, false otherwise.
-***REMOVED*** @param {goog.events.KeyEvent} e Key event to handle.
-***REMOVED*** @return {boolean} Whether the event was handled by the combo box.
-***REMOVED*** @protected
-***REMOVED*** @suppress {visibility} performActionInternal
-***REMOVED***
+/**
+ * Handles keyboard events from the input box.  Returns true if the combo box
+ * was able to handle the event, false otherwise.
+ * @param {goog.events.KeyEvent} e Key event to handle.
+ * @return {boolean} Whether the event was handled by the combo box.
+ * @protected
+ * @suppress {visibility} performActionInternal
+ */
 goog.ui.ComboBox.prototype.handleKeyEvent = function(e) {
   var isMenuVisible = this.menu_.isVisible();
 
@@ -787,27 +787,27 @@ goog.ui.ComboBox.prototype.handleKeyEvent = function(e) {
   }
 
   return handled;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the content of the input box changing.
-***REMOVED*** @param {goog.events.Event} e The INPUT event to handle.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the content of the input box changing.
+ * @param {goog.events.Event} e The INPUT event to handle.
+ * @private
+ */
 goog.ui.ComboBox.prototype.onInputEvent_ = function(e) {
   // If the key event is text-modifying, update the menu.
   goog.log.fine(this.logger_,
       'Key is modifying: ' + this.labelInput_.getValue());
   this.handleInputChange_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the content of the input box changing, either because of user
-***REMOVED*** interaction or programmatic changes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the content of the input box changing, either because of user
+ * interaction or programmatic changes.
+ * @private
+ */
 goog.ui.ComboBox.prototype.handleInputChange_ = function() {
   var token = this.getTokenText_();
   this.setItemVisibilityFromToken_(token);
@@ -824,14 +824,14 @@ goog.ui.ComboBox.prototype.handleInputChange_ = function() {
   }
   this.lastToken_ = token;
   this.dispatchEvent(goog.ui.Component.EventType.CHANGE);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Loops through all menu items setting their visibility according to a token.
-***REMOVED*** @param {string} token The token.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Loops through all menu items setting their visibility according to a token.
+ * @param {string} token The token.
+ * @private
+ */
 goog.ui.ComboBox.prototype.setItemVisibilityFromToken_ = function(token) {
   goog.log.info(this.logger_, 'setItemVisibilityFromToken_() - ' + token);
   var isVisibleItem = false;
@@ -868,14 +868,14 @@ goog.ui.ComboBox.prototype.setItemVisibilityFromToken_ = function(token) {
   }
 
   this.visibleCount_ = count;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Highlights the first token that matches the given token.
-***REMOVED*** @param {string} token The token.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Highlights the first token that matches the given token.
+ * @param {string} token The token.
+ * @private
+ */
 goog.ui.ComboBox.prototype.setItemHighlightFromToken_ = function(token) {
   goog.log.info(this.logger_, 'setItemHighlightFromToken_() - ' + token);
 
@@ -896,38 +896,38 @@ goog.ui.ComboBox.prototype.setItemHighlightFromToken_ = function(token) {
     }
   }
   this.menu_.setHighlightedIndex(-1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the item has an isSticky method and the method returns true.
-***REMOVED*** @param {goog.ui.MenuItem} item The item.
-***REMOVED*** @return {boolean} Whether the item has an isSticky method and the method
-***REMOVED***     returns true.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns true if the item has an isSticky method and the method returns true.
+ * @param {goog.ui.MenuItem} item The item.
+ * @return {boolean} Whether the item has an isSticky method and the method
+ *     returns true.
+ * @private
+ */
 goog.ui.ComboBox.prototype.isItemSticky_ = function(item) {
   return typeof item.isSticky == 'function' && item.isSticky();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class for combo box items.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to
-***REMOVED***     display as the content of the item (use to add icons or styling to
-***REMOVED***     menus).
-***REMOVED*** @param {Object=} opt_data Identifying data for the menu item.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional dom helper used for dom
-***REMOVED***     interactions.
-***REMOVED*** @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuItem}
-***REMOVED***
+/**
+ * Class for combo box items.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to
+ *     display as the content of the item (use to add icons or styling to
+ *     menus).
+ * @param {Object=} opt_data Identifying data for the menu item.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional dom helper used for dom
+ *     interactions.
+ * @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
+ * @constructor
+ * @extends {goog.ui.MenuItem}
+ */
 goog.ui.ComboBoxItem = function(content, opt_data, opt_domHelper,
     opt_renderer) {
   goog.ui.MenuItem.call(this, content, opt_data, opt_domHelper, opt_renderer);
-***REMOVED***
+};
 goog.inherits(goog.ui.ComboBoxItem, goog.ui.MenuItem);
 
 
@@ -939,36 +939,36 @@ goog.ui.registry.setDecoratorByClassName(goog.getCssName('goog-combobox-item'),
     });
 
 
-***REMOVED***
-***REMOVED*** Whether the menu item is sticky, non-sticky items will be hidden as the
-***REMOVED*** user types.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the menu item is sticky, non-sticky items will be hidden as the
+ * user types.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ComboBoxItem.prototype.isSticky_ = false;
 
 
-***REMOVED***
-***REMOVED*** Sets the menu item to be sticky or not sticky.
-***REMOVED*** @param {boolean} sticky Whether the menu item should be sticky.
-***REMOVED***
+/**
+ * Sets the menu item to be sticky or not sticky.
+ * @param {boolean} sticky Whether the menu item should be sticky.
+ */
 goog.ui.ComboBoxItem.prototype.setSticky = function(sticky) {
   this.isSticky_ = sticky;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the menu item is sticky.
-***REMOVED***
+/**
+ * @return {boolean} Whether the menu item is sticky.
+ */
 goog.ui.ComboBoxItem.prototype.isSticky = function() {
   return this.isSticky_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the format for a menu item based on a token, bolding the token.
-***REMOVED*** @param {string} token The token.
-***REMOVED***
+/**
+ * Sets the format for a menu item based on a token, bolding the token.
+ * @param {string} token The token.
+ */
 goog.ui.ComboBoxItem.prototype.setFormatFromToken = function(token) {
   if (this.isEnabled()) {
     var caption = this.getCaption();
@@ -982,4 +982,4 @@ goog.ui.ComboBoxItem.prototype.setFormatFromToken = function(token) {
       ]);
     }
   }
-***REMOVED***
+};

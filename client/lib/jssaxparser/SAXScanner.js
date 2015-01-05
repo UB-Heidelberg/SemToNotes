@@ -1,4 +1,4 @@
-/*global window, AttributesImpl, SAXParseException, SAXParser***REMOVED***
+/*global window, AttributesImpl, SAXParseException, SAXParser */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -40,7 +40,7 @@ This is the private API for SAX parsing
 */
 (function () { // Begin namespace
 
-/* Scanner states***REMOVED***
+/* Scanner states */
 var STATE_XML_DECL                  =  0;
 var STATE_PROLOG                    =  1;
 var STATE_EXT_ENT                   =  2;
@@ -54,7 +54,7 @@ var XML_VERSION = /^1\.\d+$/;
 var ENCODING = /^[A-Za-z]([A-Za-z0-9._]|-)*$/;
 var STANDALONE = /^yes$|^no$/;
 
-/* XML Name regular expressions***REMOVED***
+/* XML Name regular expressions */
 // Should disallow independent high or low surrogates or inversed surrogate pairs and also have option to reject private use characters; but strict mode will need to check for sequence of 2 characters if a surrogate is found
 var NAME_START_CHAR = ":A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u0200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\ud800-\udbff\udc00-\udfff"; // The last two ranges are for surrogates that comprise #x10000-#xEFFFF; // Fix: Need to remove surrogate pairs here and handle elsewhere; also must deal with surrogates in entities
 var NOT_START_CHAR = new RegExp("[^" + NAME_START_CHAR + "]");
@@ -81,8 +81,8 @@ var NOT_A_CHAR_ERROR_CB = function () {
         return this.saxEvents.fatalError("invalid XML character, high surrogate, decimal code number '"+temp_ch.charCodeAt(0)+"' not immediately followed by a low surrogate", this);
     }
     return this.saxEvents.fatalError("invalid XML character, decimal code number '"+this.reader.peek().charCodeAt(0)+"'", this);
-***REMOVED***
-var NOT_A_CHAR_CB_OBJ = {pattern:NOT_A_CHAR, cb:NOT_A_CHAR_ERROR_CB***REMOVED***
+};
+var NOT_A_CHAR_CB_OBJ = {pattern:NOT_A_CHAR, cb:NOT_A_CHAR_ERROR_CB};
 
 var WS_CHARS = '\\t\\n\\r ';
 var WS_CHAR = '['+WS_CHARS+']'; // \s is too inclusive
@@ -97,7 +97,7 @@ var XML_DECL_BEGIN_FALSE = new RegExp("^xml("+WS_CHAR+'|\\?)', 'i');
 var NOT_REPLACED_ENTITIES = /^amp$|^lt$|^gt$|^quot$/;
 var APOS_ENTITY = /^apos$/;
 var CHAR_REF_ESCAPED = /^"$|^'$/;
-var charRefEscaped = {***REMOVED***
+var charRefEscaped = {};
 charRefEscaped["'"] = "&apos;";
 charRefEscaped['"'] = "&quot;";
 
@@ -109,21 +109,21 @@ function EndOfInputException() {}
 
 EndOfInputException.prototype.toString = function() {
     return "EndOfInputException";
-***REMOVED***
+};
 
 function EntityNotReplacedException(entityName) {
     this.entityName = entityName;
 }
 EntityNotReplacedException.prototype.toString = function() {
     return "EntityNotReplacedException";
-***REMOVED***
+};
 
 function InternalEntityNotFoundException(entityName) {
     this.entityName = entityName;
 }
 InternalEntityNotFoundException.prototype.toString = function() {
     return "InternalEntityNotFoundException";
-***REMOVED***
+};
 InternalEntityNotFoundException.prototype = new SAXParseException();
 InternalEntityNotFoundException.constructor = InternalEntityNotFoundException;
 
@@ -143,7 +143,7 @@ function Sax_QName(prefix, localName) {
 }
 Sax_QName.prototype.equals = function(qName) {
     return this.qName === qName.qName;
-***REMOVED***
+};
 
 /*
 Class for storing publicId and systemId
@@ -154,7 +154,7 @@ function ExternalId() {
 }
 ExternalId.prototype.toString = function() {
     return "ExternalId";
-***REMOVED***
+};
 
 function SAXScanner(saxParser, saxEvents) {
     this.saxParser = saxParser;
@@ -163,22 +163,22 @@ function SAXScanner(saxParser, saxEvents) {
 }
 SAXScanner.prototype.toString = function() {
     return "SAXScanner";
-***REMOVED***
+};
 
 SAXScanner.prototype.init = function() {
     this.state = STATE_XML_DECL;
     this.elementsStack = [];
     this.namespaceSupport.reset();
-    /* map between entity names and values***REMOVED***
-    this.entities = {***REMOVED***
+    /* map between entity names and values */
+    this.entities = {};
     /* map between parameter entity names and values
-            the parameter entites are used inside the DTD***REMOVED***
-    this.parameterEntities = {***REMOVED***
-    /* map between external entity names and URIs***REMOVED*****REMOVED***
-    this.externalEntities = {***REMOVED***
-    /* in order to check for recursion inside entities***REMOVED***
+            the parameter entites are used inside the DTD */
+    this.parameterEntities = {};
+    /* map between external entity names and URIs  */
+    this.externalEntities = {};
+    /* in order to check for recursion inside entities */
     this.currentEntities = [];
-    /* on each depth, a relative base URI, empty if no xml:base found, is recorded***REMOVED***
+    /* on each depth, a relative base URI, empty if no xml:base found, is recorded */
     this.relativeBaseUris = [];
 }
 
@@ -208,7 +208,7 @@ SAXScanner.prototype.parse = function(reader) { // We implement our own for now,
             throw e;
         }
     }
-***REMOVED***
+};
 
 
 /*
@@ -239,7 +239,7 @@ SAXScanner.prototype.startParsing = function() {
             }
         }
     }
-***REMOVED***
+};
 
 /*
 used for integration with codemirror
@@ -269,7 +269,7 @@ SAXScanner.prototype.next = function() {
             this.scanText();
         }
     }
-***REMOVED***
+};
 
 
 
@@ -377,7 +377,7 @@ SAXScanner.prototype.scanMarkup = function() {
             this.saxEvents.fatalError("only one document element is allowed", this);
         }
     }
-***REMOVED***
+};
 
 //  what I understand from there : http://www.w3.org/TR/REC-xml/#dt-chardata is that & is allowed
 // in character data only if it is an entity reference
@@ -416,7 +416,7 @@ SAXScanner.prototype.scanText = function() {
     } else {
         this.saxEvents.characters(content, 0, content.length);
     }
-***REMOVED***
+};
 
 // 14]   	CharData ::= [^<&]* - ([^<&]* ']]>' [^<&]*)
 SAXScanner.prototype.scanCharData = function() {
@@ -429,7 +429,7 @@ SAXScanner.prototype.scanCharData = function() {
         content +=  "]" + this.reader.nextCharRegExp(this.CHAR_DATA_REGEXP, NOT_A_CHAR_CB_OBJ);
     }
     return content;
-***REMOVED***
+};
 
 
 SAXScanner.prototype.getRelativeBaseUri = function() {
@@ -439,12 +439,12 @@ SAXScanner.prototype.getRelativeBaseUri = function() {
         returned += this.relativeBaseUris[i];
     }
     return returned;
-***REMOVED***
+};
 
 /*
  entity is replaced and its replacement is parsed, see http://www.w3.org/TR/REC-xml/#included
  entityName is used for SAX compliance with resolveEntity and recursion detection
-***REMOVED***
+ */
 SAXScanner.prototype.includeEntity = function(entityName, replacement) {
     //if it is an externalId, have to include the external content
     if (replacement instanceof ExternalId) {
@@ -476,12 +476,12 @@ SAXScanner.prototype.includeEntity = function(entityName, replacement) {
         }
         this.includeText(replacement);
     }
-***REMOVED***
+};
 
 SAXScanner.prototype.includeText = function(replacement) {
     // entity is replaced and its replacement is parsed, see http://www.w3.org/TR/REC-xml/#included
     this.reader.unread(replacement);
-***REMOVED***
+};
 
 /*
 current char is after '&'
@@ -494,7 +494,7 @@ SAXScanner.prototype.scanRef = function() {
     } else {
         this.scanEntityRef();
     }
-***REMOVED***
+};
 
 
 // [15] Comment ::= '<!--' ((Char - '-') | ('-' (Char - '-')))* '-->'
@@ -520,14 +520,14 @@ SAXScanner.prototype.scanComment = function() {
         // can be a doctype
         return false;
     }
-***REMOVED***
+};
 
 
 SAXScanner.prototype.setEncoding = function (encoding) {
     if (this.saxParser.contentHandler.locator) {
         this.saxParser.contentHandler.locator.setEncoding(this.encoding || encoding); // Higher priority is given to any encoding set on an InputSource (passed in during parse())
     }
-***REMOVED***
+};
 
 SAXScanner.prototype.setXMLVersion = function (version) {
    if (version) {
@@ -541,7 +541,7 @@ SAXScanner.prototype.setXMLVersion = function (version) {
             this.saxParser.contentHandler.locator.setXMLVersion(version);
         }
     }
-***REMOVED***
+};
 
 SAXScanner.prototype.scanXMLDeclOrTextDeclAttribute = function (allowableAtts, allowableValues, requireWS) {
     if (this.reader.equals("?")) {
@@ -583,7 +583,7 @@ SAXScanner.prototype.scanXMLDeclOrTextDeclAttribute = function (allowableAtts, a
         return this.saxEvents.fatalError("invalid declaration attribute, must contain = between name and value", this);
     }
     return [attName, attValue];
-***REMOVED***
+};
 
 /*
  [23] XMLDecl ::= '<?xml' VersionInfo EncodingDecl? SDDecl? S? '?>'
@@ -595,7 +595,7 @@ SAXScanner.prototype.scanXMLDeclOrTextDeclAttribute = function (allowableAtts, a
  [77] TextDecl ::= '<?xml' VersionInfo? EncodingDecl S? '?>'
  current character is "<", at return current char is exceptionally after ">" because parsing is just starting, so first character must stay the
 first character of document
-***REMOVED***
+ */
 SAXScanner.prototype.scanXMLDeclOrTextDecl = function() {
     // Fix: need to have conditions to trigger STATE_EXT_ENT somehow
     // allow scanning of text declaration/external XML entity?
@@ -670,7 +670,7 @@ SAXScanner.prototype.scanXMLDeclOrTextDecl = function() {
         }
         return false;
     }
-***REMOVED***
+};
 
 
 // [16] PI ::= '<?' PITarget (S (Char* - (Char* '?>' Char*)))? '?>'
@@ -694,7 +694,7 @@ SAXScanner.prototype.scanPI = function() {
     }
     this.saxEvents.processingInstruction(piName, piData);
     return true;
-***REMOVED***
+};
 
 
 SAXScanner.prototype.loadExternalDtd = function(externalId) {
@@ -747,7 +747,7 @@ SAXScanner.prototype.scanDoctypeDecl = function() {
     } else {
         return this.saxEvents.fatalError("invalid doctype declaration, must be &lt;!DOCTYPE", this);
     }
-***REMOVED***
+};
 
 /*
 [30]   	extSubset	   ::=   	 TextDecl? extSubsetDecl
@@ -772,7 +772,7 @@ SAXScanner.prototype.scanExtSubset = function(extSubset) {
         }
         this.reader = oldReader;
     }
-***REMOVED***
+};
 
 //[75]   	ExternalID	   ::=   	'SYSTEM' S  SystemLiteral
 //			| 'PUBLIC' S PubidLiteral S SystemLiteral
@@ -793,7 +793,7 @@ SAXScanner.prototype.scanExternalId = function(externalId) {
         return true;
     }
     return false;
-***REMOVED***
+};
 
 //current char should be the quote
 //[11]   	SystemLiteral	   ::=   	('"' [^"]* '"') | ("'" [^']* "'")
@@ -802,7 +802,7 @@ SAXScanner.prototype.scanSystemLiteral = function(externalId) {
         return this.saxEvents.fatalError("invalid sytem Id declaration, should begin with a quote", this);
     }
     return this.reader.quoteContent();
-***REMOVED***
+};
 
 //current char should be the quote
 //[12]   	PubidLiteral	   ::=   	'"' PubidChar* '"' | "'" (PubidChar - "'")* "'"
@@ -812,7 +812,7 @@ SAXScanner.prototype.scanPubIdLiteral = function(externalId) {
         return this.saxEvents.fatalError("invalid Public Id declaration, should begin with a quote", this);
     }
     return this.reader.quoteContent();
-***REMOVED***
+};
 
 /*
 Parameter entity references are recognized anywhere in the DTD (internal and external subsets and external parameter entities),
@@ -847,7 +847,7 @@ SAXScanner.prototype.includeParameterEntity = function() {
     } else {
         this.includeText(" " + replacement + " ");
     }
-***REMOVED***
+};
 
 /*
 actual char is non whitespace char after '['
@@ -882,7 +882,7 @@ SAXScanner.prototype.scanDoctypeDeclIntSubset = function() {
     } else {
         this.saxEvents.fatalError("invalid character in internal subset of doctype declaration : [" + this.reader.peek() + "]", this);
     }
-***REMOVED***
+};
 
 /*
 [70]   	EntityDecl	   ::=   	 GEDecl  | PEDecl
@@ -955,7 +955,7 @@ SAXScanner.prototype.scanEntityDecl = function() {
         return true;
     }
     return false;
-***REMOVED***
+};
 /*
 false is OK
 */
@@ -978,7 +978,7 @@ SAXScanner.prototype.isEntityReferencingItself = function(entityName, entityValu
     } else {
         return false;
     }
-***REMOVED***
+};
 
 /*
 [9]   	EntityValue	   ::=   	'"' ([^%&"] | PEReference | Reference)* '"'
@@ -1020,7 +1020,7 @@ SAXScanner.prototype.scanEntityValue = function() {
     } else {
         return this.saxEvents.error("invalid entity value declaration, must begin with a quote", this);
     }
-***REMOVED***
+};
 
 /*
 [69]   	PEReference	   ::=   	'%' Name ';'
@@ -1046,7 +1046,7 @@ SAXScanner.prototype.scanPeRef = function(entityName) {
             throw e;
         }
     }
-***REMOVED***
+};
 
 /*
 [45]   	elementdecl	   ::=   	'<!ELEMENT' S  Name  S  contentspec  S? '>'
@@ -1068,7 +1068,7 @@ SAXScanner.prototype.scanElementDecl = function() {
         return true;
     }
     return false;
-***REMOVED***
+};
 
 /*
 does not remove whitespace as "|" is a valid name character
@@ -1082,7 +1082,7 @@ SAXScanner.prototype.scanContentModelDecl = function() {
         model += this.reader.nextCharRegExp(regexp);
     }
     return model.replace(new RegExp(WS_CHAR + "+", "g"), " ");
-***REMOVED***
+};
 
 
 /*
@@ -1106,7 +1106,7 @@ SAXScanner.prototype.scanAttlistDecl = function() {
         return true;
     }
     return false;
-***REMOVED***
+};
 
 /*
 [53]   	AttDef	   ::=   	S Name S AttType S DefaultDecl
@@ -1150,7 +1150,7 @@ SAXScanner.prototype.scanAttDef = function(eName) {
         }
     }
     this.saxEvents.attributeDecl(eName, aName, type, mode, attValue);
-***REMOVED***
+};
 
 /*
 [54]   	AttType	   ::=   	 StringType | TokenizedType | EnumeratedType
@@ -1217,7 +1217,7 @@ SAXScanner.prototype.scanAttType = function() {
         }
     }
     return type;
-***REMOVED***
+};
 
 /*
 [82]   	NotationDecl	   ::=   	'<!NOTATION' S  Name  S (ExternalID | PublicID) S? '>'
@@ -1246,7 +1246,7 @@ SAXScanner.prototype.scanNotationDecl = function() {
         return true;
     }
     return false;
-***REMOVED***
+};
 
 /*
 if called from an element parsing defaultPrefix would be ""
@@ -1275,7 +1275,7 @@ SAXScanner.prototype.scanQName = function(defaultPrefix) {
     }
     this.reader.skipWhiteSpaces();
     return new Sax_QName(defaultPrefix, localName);
-***REMOVED***
+};
 
 SAXScanner.prototype.scanElement = function() {
     var qName = this.scanQName("");
@@ -1307,7 +1307,7 @@ SAXScanner.prototype.scanElement = function() {
         this.saxEvents.endElement(namespaceURI, qName.localName, qName.qName);
     }
     return true;
-***REMOVED***
+};
 
 SAXScanner.prototype.scanAttributes = function(qName) {
     var atts = this.saxParser.getAttributesInstance();
@@ -1340,7 +1340,7 @@ SAXScanner.prototype.scanAttributes = function(qName) {
     }
     this.relativeBaseUris.push(baseUriAddition);
     return atts;
-***REMOVED***
+};
 
 SAXScanner.prototype.scanAttribute = function(qName, atts) {
     this.reader.skipWhiteSpaces();
@@ -1369,7 +1369,7 @@ SAXScanner.prototype.scanAttribute = function(qName, atts) {
             this.saxEvents.fatalError("invalid attribute, must contain = between name and value", this);
         }
     }
-***REMOVED***
+};
 
 // [10] AttValue ::= '"' ([^<&"] | Reference)* '"' | "'" ([^<&'] | Reference)* "'"
 SAXScanner.prototype.scanAttValue = function() {
@@ -1430,7 +1430,7 @@ SAXScanner.prototype.scanAttValue = function() {
     } else {
         return this.saxEvents.fatalError("invalid attribute value declaration, must begin with a quote", this);
     }
-***REMOVED***
+};
 
 // [18]   	CDSect	   ::=   	 CDStart  CData  CDEnd
 // [19]   	CDStart	   ::=   	'<![CDATA['
@@ -1459,7 +1459,7 @@ SAXScanner.prototype.scanCData = function() {
     } else {
         return false;
     }
-***REMOVED***
+};
 
 // [66] CharRef ::= '&#' [0-9]+ ';' | '&#x' [0-9a-fA-F]+ ';'
 // current ch is char after "&#",  returned current char is after ";"
@@ -1498,7 +1498,7 @@ SAXScanner.prototype.scanCharRef = function() {
         }
     }
     return replacement;
-***REMOVED***
+};
 
 /*
 [68]  EntityRef ::= '&' Name ';'
@@ -1538,7 +1538,7 @@ SAXScanner.prototype.scanEntityRef = function() {
             throw e;
         }
     }
-***REMOVED***
+};
 
 // [42] ETag ::= '</' Name S? '>'
 SAXScanner.prototype.scanEndingTag = function() {
@@ -1563,7 +1563,7 @@ SAXScanner.prototype.scanEndingTag = function() {
         this.reader.matchChar(">");
         return this.saxEvents.fatalError("invalid ending markup : [" + qName.qName + "], markup name does not match current one : [" + currentElement + "]", this);
     }
-***REMOVED***
+};
 
 
 SAXScanner.prototype.endMarkup = function(namespaceURI, qName) {
@@ -1572,7 +1572,7 @@ SAXScanner.prototype.endMarkup = function(namespaceURI, qName) {
         this.saxEvents.endPrefixMapping(i);
     }
     this.relativeBaseUris.pop();
-***REMOVED***
+};
 
 /*
 [4]   	NameStartChar	   ::=   	":" | [A-Z] | "_" | [a-z] | [#xC0-#xD6] | [#xD8-#xF6] | [#xF8-#x2FF] | [#x370-#x37D] | [#x37F-#x1FFF] | [#x200C-#x200D] | [#x2070-#x218F] | [#x2C00-#x2FEF] | [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] | [#x10000-#xEFFFF]
@@ -1585,7 +1585,7 @@ SAXScanner.prototype.scanName = function() {
         return "";
     }
     return this.reader.nextCharRegExp(NOT_START_OR_END_CHAR);
-***REMOVED***
+};
 
 
 this.SAXScanner = SAXScanner;

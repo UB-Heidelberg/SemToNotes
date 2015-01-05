@@ -29,11 +29,11 @@ function setUpPage() {
 
 var REPLACER = function(k, v) {
   return !!k ? v + 'd' : v;
-***REMOVED***
+};
 
 var REVIVER = function(k, v) {
   return !!k ? v.substring(0, v.length - 1) : v;
-***REMOVED***
+};
 
 // Just sanity check parsing and stringifying.
 // Thorough tests are in json_test.html.

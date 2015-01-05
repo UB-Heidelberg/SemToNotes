@@ -1,6 +1,6 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 describe("jsdoc/config", function() {
-    var jsdoc = {config: require('jsdoc/config')***REMOVED*****REMOVED***
+    var jsdoc = {config: require('jsdoc/config') };
 
     it("should exist", function() {
         expect(jsdoc.config).toBeDefined();

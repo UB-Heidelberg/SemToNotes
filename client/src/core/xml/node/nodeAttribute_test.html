@@ -15,8 +15,8 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.mvc.Instance');
- ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.token.Tokens');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.NameTest');
@@ -51,7 +51,7 @@ function test01basic() {
 
   assertEquals(32, aS.getOffset());
   assertEquals(9, aS.getLength());
-***REMOVED***
+};
 
 
 
@@ -87,7 +87,7 @@ function test01nameFunctions() {
   assertEquals('x:b', aS2.getName());
   assertEquals('http://example.org/y', aS1.getNamespaceUri('xmlns:y'));
   assertEquals('http://example.org/x', aS2.getNamespaceUri('xmlns:x'));
-***REMOVED***
+};
 
 function test02identityFunctions() {
   var xml = '<a a="v">1<b/></a>';
@@ -118,7 +118,7 @@ function test02identityFunctions() {
   assertEquals(true, eS2.isAfter(aS));
   assertEquals(true, eS1.isBefore(aS));
   assertEquals(true, aS.isAttributeOf(eS1));
-***REMOVED***
+};
 
 function test03contentFunctions() {
   var xml = '<a attr1="v1" attr2="v2"/>';
@@ -148,7 +148,7 @@ function test03contentFunctions() {
   assertEquals('attr2="v2"', aS2.getXml());
   assertEquals('v1', aS1.getStringValue());
   assertEquals('v2', aS2.getStringValue());
-***REMOVED***
+};
 
 function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
@@ -188,7 +188,7 @@ function axisTest(key, func, expected) {
   assertEquals(expected.element, test.element.getLength());
   assertEquals(expected.text, test.text.getLength());
   assertEquals(expected.attribute, test.attribute.getLength());  
-***REMOVED***
+};
 
 
 function test04nodeFunctions() {
@@ -217,7 +217,7 @@ function test04nodeFunctions() {
   // preceding sibling
   axisTest(5, 'getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 
-***REMOVED***
+};
 
 function test05attributeFunction() {
   var xml = '<a><b xmlns="http://example.org" attr1="v1" attr2="v2"/></a>';
@@ -242,7 +242,7 @@ function test05attributeFunction() {
 
   assertEquals(0, eS0.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
   assertEquals(2, eS1.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
-***REMOVED***
+};
 
 </script>
 </body>

@@ -1,23 +1,23 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for buttons created by goog.ui.ColorMenuButtonRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for buttons created by goog.ui.ColorMenuButtonRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
-/* Color indicator.***REMOVED***
+/* Color indicator. */
 .goog-color-menu-button-indicator {
   border-bottom: 4px solid #f0f0f0;
 }
 
-/* Thinner padding for color picker buttons, to leave room for the indicator.***REMOVED***
+/* Thinner padding for color picker buttons, to leave room for the indicator. */
 .goog-color-menu-button .goog-menu-button-inner-box,
 .goog-toolbar-color-menu-button .goog-toolbar-menu-button-inner-box {
   padding-top: 2px !important;

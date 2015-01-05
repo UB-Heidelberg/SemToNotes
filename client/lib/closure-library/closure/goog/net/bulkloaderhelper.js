@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Helper class to load a list of URIs in bulk. All URIs
-***REMOVED*** must be a successfully loaded in order for the entire load to be considered
-***REMOVED*** a success.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Helper class to load a list of URIs in bulk. All URIs
+ * must be a successfully loaded in order for the entire load to be considered
+ * a success.
+ *
+ */
 
 goog.provide('goog.net.BulkLoaderHelper');
 
@@ -26,85 +26,85 @@ goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** Helper class used to load multiple URIs.
-***REMOVED*** @param {Array.<string|goog.Uri>} uris The URIs to load.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Helper class used to load multiple URIs.
+ * @param {Array.<string|goog.Uri>} uris The URIs to load.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.net.BulkLoaderHelper = function(uris) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The URIs to load.
-  ***REMOVED*** @type {Array.<string|goog.Uri>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The URIs to load.
+   * @type {Array.<string|goog.Uri>}
+   * @private
+   */
   this.uris_ = uris;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The response from the XHR's.
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The response from the XHR's.
+   * @type {Array.<string>}
+   * @private
+   */
   this.responseTexts_ = [];
-***REMOVED***
+};
 goog.inherits(goog.net.BulkLoaderHelper, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** A logger.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A logger.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.net.BulkLoaderHelper.prototype.logger_ =
     goog.log.getLogger('goog.net.BulkLoaderHelper');
 
 
-***REMOVED***
-***REMOVED*** Gets the URI by id.
-***REMOVED*** @param {number} id The id.
-***REMOVED*** @return {string|goog.Uri} The URI specified by the id.
-***REMOVED***
+/**
+ * Gets the URI by id.
+ * @param {number} id The id.
+ * @return {string|goog.Uri} The URI specified by the id.
+ */
 goog.net.BulkLoaderHelper.prototype.getUri = function(id) {
   return this.uris_[id];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the URIs.
-***REMOVED*** @return {Array.<string|goog.Uri>} The URIs.
-***REMOVED***
+/**
+ * Gets the URIs.
+ * @return {Array.<string|goog.Uri>} The URIs.
+ */
 goog.net.BulkLoaderHelper.prototype.getUris = function() {
   return this.uris_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the response texts.
-***REMOVED*** @return {Array.<string>} The response texts.
-***REMOVED***
+/**
+ * Gets the response texts.
+ * @return {Array.<string>} The response texts.
+ */
 goog.net.BulkLoaderHelper.prototype.getResponseTexts = function() {
   return this.responseTexts_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the response text by id.
-***REMOVED*** @param {number} id The id.
-***REMOVED*** @param {string} responseText The response texts.
-***REMOVED***
+/**
+ * Sets the response text by id.
+ * @param {number} id The id.
+ * @param {string} responseText The response texts.
+ */
 goog.net.BulkLoaderHelper.prototype.setResponseText = function(
     id, responseText) {
   this.responseTexts_[id] = responseText;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the load of the URIs is complete.
-***REMOVED*** @return {boolean} TRUE iff the load is complete.
-***REMOVED***
+/**
+ * Determines if the load of the URIs is complete.
+ * @return {boolean} TRUE iff the load is complete.
+ */
 goog.net.BulkLoaderHelper.prototype.isLoadComplete = function() {
   var responseTexts = this.responseTexts_;
   if (responseTexts.length == this.uris_.length) {
@@ -116,13 +116,13 @@ goog.net.BulkLoaderHelper.prototype.isLoadComplete = function() {
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.BulkLoaderHelper.prototype.disposeInternal = function() {
   goog.net.BulkLoaderHelper.superClass_.disposeInternal.call(this);
 
   this.uris_ = null;
   this.responseTexts_ = null;
-***REMOVED***
+};

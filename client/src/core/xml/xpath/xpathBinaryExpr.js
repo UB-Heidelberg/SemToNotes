@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing operations on binary expressions.
-***REMOVED***
+/**
+ * @fileoverview A class representing operations on binary expressions.
+ */
 
 goog.provide('xrx.xpath.BinaryExpr');
 
@@ -11,25 +11,25 @@ goog.require('xrx.node');
 
 
 xrx.xpath.BinaryExpr = function(op, left, right) {
-  var opCast =***REMOVED*****REMOVED*** @type {!xrx.xpath.BinaryExpr.Op_}***REMOVED*** (op);
+  var opCast = /** @type {!xrx.xpath.BinaryExpr.Op_} */ (op);
   xrx.xpath.Expr.call(this, opCast.dataType_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {!xrx.xpath.BinaryExpr.Op_}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {!xrx.xpath.BinaryExpr.Op_}
+   */
   this.op_ = opCast;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {!xrx.xpath.Expr}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {!xrx.xpath.Expr}
+   */
   this.left_ = left;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {!xrx.xpath.Expr}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {!xrx.xpath.Expr}
+   */
   this.right_ = right;
 
   this.setNeedContextPosition(left.doesNeedContextPosition() ||
@@ -53,22 +53,22 @@ xrx.xpath.BinaryExpr = function(op, left, right) {
         valueExpr: left});
     }
   }
-***REMOVED***
+};
 goog.inherits(xrx.xpath.BinaryExpr, xrx.xpath.Expr);
 
 
-***REMOVED***
-***REMOVED*** Performs comparison between the left hand side and the right hand side.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {function((string|number|boolean), (string|number|boolean))}
-***REMOVED***        comp A comparison function that takes two parameters.
-***REMOVED*** @param {!xrx.xpath.Expr} lhs The left hand side of the expression.
-***REMOVED*** @param {!xrx.xpath.Expr} rhs The right hand side of the expression.
-***REMOVED*** @param {!xrx.xpath.Context} ctx The context to perform the comparison in.
-***REMOVED*** @param {boolean=} opt_equChk Whether the comparison checks for equality.
-***REMOVED*** @return {boolean} True if comp returns true, false otherwise.
-***REMOVED***
+/**
+ * Performs comparison between the left hand side and the right hand side.
+ *
+ * @private
+ * @param {function((string|number|boolean), (string|number|boolean))}
+ *        comp A comparison function that takes two parameters.
+ * @param {!xrx.xpath.Expr} lhs The left hand side of the expression.
+ * @param {!xrx.xpath.Expr} rhs The right hand side of the expression.
+ * @param {!xrx.xpath.Context} ctx The context to perform the comparison in.
+ * @param {boolean=} opt_equChk Whether the comparison checks for equality.
+ * @return {boolean} True if comp returns true, false otherwise.
+ */
 xrx.xpath.BinaryExpr.compare_ = function(comp, lhs, rhs, ctx, opt_equChk) {
   var left = lhs.evaluate(ctx);
   var right = rhs.evaluate(ctx);
@@ -112,7 +112,7 @@ xrx.xpath.BinaryExpr.compare_ = function(comp, lhs, rhs, ctx, opt_equChk) {
           throw Error('Illegal primitive type for comparison.');
       }
       if (comp(stringValue,
-         ***REMOVED*****REMOVED*** @type {(string|number|boolean)}***REMOVED*** (primitive))) {
+          /** @type {(string|number|boolean)} */ (primitive))) {
         return true;
       }
     }
@@ -128,137 +128,137 @@ xrx.xpath.BinaryExpr.compare_ = function(comp, lhs, rhs, ctx, opt_equChk) {
     return comp(left, right);
   }
   return comp(+left, +right);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @return {(boolean|number)} The boolean or number result.
-***REMOVED***
+/**
+ * @override
+ * @return {(boolean|number)} The boolean or number result.
+ */
 xrx.xpath.BinaryExpr.prototype.evaluate = function(ctx) {
   return this.op_.evaluate_(this.left_, this.right_, ctx);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.BinaryExpr.prototype.toString = function() {
   var text = 'Binary Expression: ' + this.op_;
   text += xrx.xpath.Expr.indent(this.left_);
   text += xrx.xpath.Expr.indent(this.right_);
   return text;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A binary operator.
-***REMOVED***
-***REMOVED*** @param {string} opString The operator string.
-***REMOVED*** @param {number} precedence The precedence when evaluated.
-***REMOVED*** @param {!xrx.xpath.DataType} dataType The dataType to return when evaluated.
-***REMOVED*** @param {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
-***REMOVED***         evaluate An evaluation function.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A binary operator.
+ *
+ * @param {string} opString The operator string.
+ * @param {number} precedence The precedence when evaluated.
+ * @param {!xrx.xpath.DataType} dataType The dataType to return when evaluated.
+ * @param {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
+ *         evaluate An evaluation function.
+ * @constructor
+ * @private
+ */
 xrx.xpath.BinaryExpr.Op_ = function(opString, precedence, dataType, evaluate) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {string}
+   */
   this.opString_ = opString;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {number}
+   */
   this.precedence_ = precedence;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {!xrx.xpath.DataType}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {!xrx.xpath.DataType}
+   */
   this.dataType_ = dataType;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
- ***REMOVED*****REMOVED***
+  /**
+   * @private
+   * @type {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
+   */
   this.evaluate_ = evaluate;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the precedence for the operator.
-***REMOVED***
-***REMOVED*** @return {number} The precedence.
-***REMOVED***
+/**
+ * Returns the precedence for the operator.
+ *
+ * @return {number} The precedence.
+ */
 xrx.xpath.BinaryExpr.Op_.prototype.getPrecedence = function() {
   return this.precedence_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.BinaryExpr.Op_.prototype.toString = function() {
   return this.opString_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A mapping from operator strings to operator objects.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @type {!Object.<string, !xrx.xpath.BinaryExpr.Op>}
-***REMOVED***
-xrx.xpath.BinaryExpr.stringToOpMap_ = {***REMOVED***
+/**
+ * A mapping from operator strings to operator objects.
+ *
+ * @private
+ * @type {!Object.<string, !xrx.xpath.BinaryExpr.Op>}
+ */
+xrx.xpath.BinaryExpr.stringToOpMap_ = {};
 
 
-***REMOVED***
-***REMOVED*** Creates a binary operator.
-***REMOVED***
-***REMOVED*** @param {string} opString The operator string.
-***REMOVED*** @param {number} precedence The precedence when evaluated.
-***REMOVED*** @param {!xrx.xpath.DataType} dataType The dataType to return when evaluated.
-***REMOVED*** @param {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
-***REMOVED***         evaluate An evaluation function.
-***REMOVED*** @return {!xrx.xpath.BinaryExpr.Op} A binary expression operator.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a binary operator.
+ *
+ * @param {string} opString The operator string.
+ * @param {number} precedence The precedence when evaluated.
+ * @param {!xrx.xpath.DataType} dataType The dataType to return when evaluated.
+ * @param {function(!xrx.xpath.Expr, !xrx.xpath.Expr, !xrx.xpath.Context)}
+ *         evaluate An evaluation function.
+ * @return {!xrx.xpath.BinaryExpr.Op} A binary expression operator.
+ * @private
+ */
 xrx.xpath.BinaryExpr.createOp_ = function(opString, precedence, dataType,
     evaluate) {
   if (opString in xrx.xpath.BinaryExpr.stringToOpMap_) {
     throw new Error('Binary operator already created: ' + opString);
   }
   // The upcast and then downcast for the JSCompiler.
-  var op =***REMOVED*****REMOVED*** @type {!Object}***REMOVED*** (new xrx.xpath.BinaryExpr.Op_(
+  var op = /** @type {!Object} */ (new xrx.xpath.BinaryExpr.Op_(
       opString, precedence, dataType, evaluate));
-  op =***REMOVED*****REMOVED*** @type {!xrx.xpath.BinaryExpr.Op}***REMOVED*** (op);
+  op = /** @type {!xrx.xpath.BinaryExpr.Op} */ (op);
   xrx.xpath.BinaryExpr.stringToOpMap_[op.toString()] = op;
   return op;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the operator with this opString or null if none.
-***REMOVED***
-***REMOVED*** @param {string} opString The opString.
-***REMOVED*** @return {!xrx.xpath.BinaryExpr.Op} The operator.
-***REMOVED***
+/**
+ * Returns the operator with this opString or null if none.
+ *
+ * @param {string} opString The opString.
+ * @return {!xrx.xpath.BinaryExpr.Op} The operator.
+ */
 xrx.xpath.BinaryExpr.getOp = function(opString) {
   return xrx.xpath.BinaryExpr.stringToOpMap_[opString] || null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Binary operator enumeration.
-***REMOVED***
-***REMOVED*** @enum {{getPrecedence: function(): number}}
-***REMOVED***
+/**
+ * Binary operator enumeration.
+ *
+ * @enum {{getPrecedence: function(): number}}
+ */
 xrx.xpath.BinaryExpr.Op = {
   DIV: xrx.xpath.BinaryExpr.createOp_('div', 6, xrx.xpath.DataType.NUMBER,
       function(left, right, ctx) {
@@ -270,7 +270,7 @@ xrx.xpath.BinaryExpr.Op = {
       }),
   MULT: xrx.xpath.BinaryExpr.createOp_('*', 6, xrx.xpath.DataType.NUMBER,
       function(left, right, ctx) {
-        return left.asNumber(ctx)***REMOVED*** right.asNumber(ctx);
+        return left.asNumber(ctx) * right.asNumber(ctx);
       }),
   PLUS: xrx.xpath.BinaryExpr.createOp_('+', 5, xrx.xpath.DataType.NUMBER,
       function(left, right, ctx) {
@@ -319,4 +319,4 @@ xrx.xpath.BinaryExpr.Op = {
       function(left, right, ctx) {
         return left.asBool(ctx) || right.asBool(ctx);
       })
-***REMOVED***
+};

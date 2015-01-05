@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview VML class representing a stylable element.
-***REMOVED***
+/**
+ * @fileoverview VML class representing a stylable element.
+ */
 
 goog.provide('xrx.vml.Stylable');
 
@@ -10,91 +10,91 @@ goog.require('xrx.vml.Element');
 
 
 
-***REMOVED***
-***REMOVED*** VML class representing a stylable element.
-***REMOVED*** @param {Object} raphael A Raphael object.
-***REMOVED*** @param {xrx.geometry.Geometry} geometry A geometry object.
-***REMOVED***
-***REMOVED*** @extends {xrx.vml.Element}
-***REMOVED***
+/**
+ * VML class representing a stylable element.
+ * @param {Object} raphael A Raphael object.
+ * @param {xrx.geometry.Geometry} geometry A geometry object.
+ * @constructor
+ * @extends {xrx.vml.Element}
+ */
 xrx.vml.Stylable = function(raphael, geometry) {
 
   goog.base(this, raphael);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the geometry of the stylable element.
-  ***REMOVED*** @type {xrx.geometry.Geometry}
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the geometry of the stylable element.
+   * @type {xrx.geometry.Geometry}
+   */
   this.geometry_ = geometry;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the stroke style.
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the stroke style.
+   */
   this.stroke_ = {
     color: 'black',
     width: 1
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the fill style.
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the fill style.
+   */
   this.fill_ = {
     color: '',
     opacity: 0
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
 
 
 
-***REMOVED***
-***REMOVED*** Returns the geometry object of the stylable element.
-***REMOVED*** @return {xrx.geometry.Geometry} The geometry object.
-***REMOVED***
+/**
+ * Returns the geometry object of the stylable element.
+ * @return {xrx.geometry.Geometry} The geometry object.
+ */
 xrx.vml.Stylable.prototype.getGeometry = function() {
   return this.geometry_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke width of the stylable element.
-***REMOVED*** @param {number} width The stroke width.
-***REMOVED***
+/**
+ * Sets the stroke width of the stylable element.
+ * @param {number} width The stroke width.
+ */
 xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
   this.stroke_.width = width;
   this.raphael_.attr({'stroke-width': width});
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke color of the stylable element.
-***REMOVED*** @param {string} color The stroke color.
-***REMOVED***
+/**
+ * Sets the stroke color of the stylable element.
+ * @param {string} color The stroke color.
+ */
 xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
   this.stroke_.color = color;
   this.raphael_.attr({'stroke': color});
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill color of the stylable element.
-***REMOVED*** @param {string} color The fill color.
-***REMOVED***
+/**
+ * Sets the fill color of the stylable element.
+ * @param {string} color The fill color.
+ */
 xrx.vml.Stylable.prototype.setFillColor = function(color) {
   this.fill_.color = color;
   this.raphael_.attr({'fill': color});
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill opacity of the stylable element.
-***REMOVED*** @param {string} factor The fill opacity.
-***REMOVED***
+/**
+ * Sets the fill opacity of the stylable element.
+ * @param {string} factor The fill opacity.
+ */
 xrx.vml.Stylable.prototype.setFillOpacity = function(factor) {
   this.fill_.opacity = factor;
   this.raphael_.attr({'fill-opacity': factor});
-***REMOVED***
+};

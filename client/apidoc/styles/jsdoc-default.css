@@ -265,12 +265,12 @@ h6
 }
 
 .prettyprint.linenums li.selected,
-.prettyprint.linenums li.selected***REMOVED***
+.prettyprint.linenums li.selected *
 {
   background-color: lightyellow;
 }
 
-.prettyprint.linenums li***REMOVED***
+.prettyprint.linenums li *
 {
   -webkit-user-select: text;
   -moz-user-select: text;

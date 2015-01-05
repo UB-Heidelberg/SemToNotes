@@ -21,35 +21,35 @@ goog.require('goog.promise.Resolver');
 
 
 
-***REMOVED***
-***REMOVED*** Alias for the {@code goog.Promise} class. Closure Promises were developed
-***REMOVED*** under the temporary namespace {@code goog.labs.Promise}. This alias will be
-***REMOVED*** removed once existing users have had a chance to migrate to the new name.
-***REMOVED***
-***REMOVED*** @see goog.Promise
-***REMOVED***
-***REMOVED*** @deprecated Use goog.Promise instead.
-***REMOVED*** @param {function(
-***REMOVED***             this:RESOLVER_CONTEXT,
-***REMOVED***             function((TYPE|IThenable.<TYPE>|Thenable)),
-***REMOVED***             function(*)): void} resolver
-***REMOVED*** @param {RESOLVER_CONTEXT=} opt_context
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED*** @implements {goog.Thenable.<TYPE>}
-***REMOVED*** @template TYPE,RESOLVER_CONTEXT
-***REMOVED***
+/**
+ * Alias for the {@code goog.Promise} class. Closure Promises were developed
+ * under the temporary namespace {@code goog.labs.Promise}. This alias will be
+ * removed once existing users have had a chance to migrate to the new name.
+ *
+ * @see goog.Promise
+ *
+ * @deprecated Use goog.Promise instead.
+ * @param {function(
+ *             this:RESOLVER_CONTEXT,
+ *             function((TYPE|IThenable.<TYPE>|Thenable)),
+ *             function(*)): void} resolver
+ * @param {RESOLVER_CONTEXT=} opt_context
+ * @constructor
+ * @struct
+ * @final
+ * @implements {goog.Thenable.<TYPE>}
+ * @template TYPE,RESOLVER_CONTEXT
+ */
 goog.labs.Promise = goog.Promise;
 
 
 
-***REMOVED***
-***REMOVED*** Alias for the {@code goog.promise.Resolver} interface. This alias will be
-***REMOVED*** removed once existing users have had a chance to migrate to the new name.
-***REMOVED***
-***REMOVED*** @deprecated Use goog.promise.Resolver instead.
-***REMOVED*** @interface
-***REMOVED*** @template TYPE
-***REMOVED***
+/**
+ * Alias for the {@code goog.promise.Resolver} interface. This alias will be
+ * removed once existing users have had a chance to migrate to the new name.
+ *
+ * @deprecated Use goog.promise.Resolver instead.
+ * @interface
+ * @template TYPE
+ */
 goog.labs.Resolver = goog.promise.Resolver;

@@ -25,34 +25,34 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A static class providing functions for lexical tests.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A static class providing functions for lexical tests.
+ */
 
 goog.provide('xrx.xml.Lexer');
 
 
 
-***REMOVED***
-***REMOVED*** A static class providing functions for lexical tests according to the
-***REMOVED*** &lt;a href="http://www.w3.org/TR/REC-xml/">Extensible Markup Language (XML)&lt;/a>.
-***REMOVED*** Like the {@link xrx.xml.Stream} class, this class assumes a well-formed and
-***REMOVED*** normalized XML input. Make sure that the XML input is parsed
-***REMOVED*** with {@link xrx.xml.Parser} beforehand.
-***REMOVED***
-***REMOVED***
-xrx.xml.Lexer = function() {***REMOVED***
+/**
+ * A static class providing functions for lexical tests according to the
+ * &lt;a href="http://www.w3.org/TR/REC-xml/">Extensible Markup Language (XML)&lt;/a>.
+ * Like the {@link xrx.xml.Stream} class, this class assumes a well-formed and
+ * normalized XML input. Make sure that the XML input is parsed
+ * with {@link xrx.xml.Parser} beforehand.
+ * @constructor
+ */
+xrx.xml.Lexer = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at a CDStart token.
-***REMOVED*** &lt;br>[19] CDStart ::= '&amp;lt;![CDATA['
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at a CDStart token.
+ * &lt;br>[19] CDStart ::= '&amp;lt;![CDATA['
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atCDStart = function(reader, opt_reverse) {
   return opt_reverse ?
       reader.peek(-1) === 'A' &amp;&amp; reader.peek(-2) === 'T' &amp;&amp;
@@ -63,105 +63,105 @@ xrx.xml.Lexer.atCDStart = function(reader, opt_reverse) {
       reader.peek(3) === 'C' &amp;&amp; reader.peek(4) === 'D' &amp;&amp;
       reader.peek(5) === 'A' &amp;&amp; reader.peek(6) === 'T' &amp;&amp;
       reader.peek(7) === 'A' &amp;&amp; reader.peek(8) === '[';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at a CDEnd token.
-***REMOVED*** &lt;li>[21] CDEnd   ::= ']]'&amp;gt;
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at a CDEnd token.
+ * &lt;li>[21] CDEnd   ::= ']]'&amp;gt;
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atCDEnd = function(reader, opt_reverse) {
   return opt_reverse ? reader.peek(-1) === ']' &amp;&amp; reader.peek(-2) === ']' :
       reader.peek(1) === ']' &amp;&amp; reader.peek(2) === '>';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at the start of a comment token.
-***REMOVED*** &lt;br>[15] Comment ::= '&amp;lt;!--' ((Char - '-') | ('-' (Char - '-')))* '--'&amp;gt;
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at the start of a comment token.
+ * &lt;br>[15] Comment ::= '&amp;lt;!--' ((Char - '-') | ('-' (Char - '-')))* '--'&amp;gt;
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atCommentStart = function(reader, opt_reverse) {
   return opt_reverse ? reader.peek(-1) === '-' : reader.peek(1) === '!' &amp;&amp;
       reader.peek(2) === '-' &amp;&amp; reader.peek(3) === '-';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at the end of a comment token.
-***REMOVED*** &lt;br>[15] Comment ::= '&amp;lt;!--' ((Char - '-') | ('-' (Char - '-')))* '--'&amp;gt;
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at the end of a comment token.
+ * &lt;br>[15] Comment ::= '&amp;lt;!--' ((Char - '-') | ('-' (Char - '-')))* '--'&amp;gt;
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atCommentEnd = function(reader, opt_reverse) {
   return opt_reverse ? reader.peek(-1) === '-' : reader.peek(1) === '-';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at an end-tag token.
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at an end-tag token.
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atEndTag = function(reader) {
   return reader.peek(1) === '/';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at the start of a processing instruction
-***REMOVED*** token.
-***REMOVED*** &lt;br>[16] PI ::= '&lt;?' PITarget (S (Char* - (Char* '?>' Char*)))? '?>'
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at the start of a processing instruction
+ * token.
+ * &lt;br>[16] PI ::= '&lt;?' PITarget (S (Char* - (Char* '?>' Char*)))? '?>'
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atPIStart = function(reader, opt_reverse) {
   return opt_reverse ? reader.peek(-1) === '&lt;' : reader.peek(1) === '?';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at the end of a processing instruction
-***REMOVED*** token.
-***REMOVED*** &lt;br>[16] PI ::= '&lt;?' PITarget (S (Char* - (Char* '?>' Char*)))? '?>'
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @param {boolean} opt_reverse Whether to test in forward direction
-***REMOVED***     (false|undefined) or in backward direction (true).
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at the end of a processing instruction
+ * token.
+ * &lt;br>[16] PI ::= '&lt;?' PITarget (S (Char* - (Char* '?>' Char*)))? '?>'
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @param {boolean} opt_reverse Whether to test in forward direction
+ *     (false|undefined) or in backward direction (true).
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atPIEnd = function(reader, opt_reverse) {
   return opt_reverse ? reader.peek(-1) === '?' : reader.peek(1) === '>';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the reader is located at an XML declaration token.
-***REMOVED*** @param {xrx.xml.Reader} reader The XML reader.
-***REMOVED*** @return {boolean} Located or not.
-***REMOVED***
+/**
+ * Whether the reader is located at an XML declaration token.
+ * @param {xrx.xml.Reader} reader The XML reader.
+ * @return {boolean} Located or not.
+ */
 xrx.xml.Lexer.atXmlDecl = function(reader) {
   return reader.peek(1) === '?' &amp;&amp; reader.peek(2) === 'x' &amp;&amp;
       reader.peek(3) === 'm' &amp;&amp; reader.peek(4) === 'l' &amp;&amp;
       reader.peek(5) === ' ';
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

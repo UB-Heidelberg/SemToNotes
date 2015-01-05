@@ -25,21 +25,21 @@ var asyncify = exports._asyncify = function(func) {
                 callback(e);
             });
         }
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};
 
-***REMOVED***
-***REMOVED*** Returns everything on a path except for the last item
-***REMOVED*** e.g. if the path was 'path/to/something', the return value would be 'path/to'
-***REMOVED***
+/**
+ * Returns everything on a path except for the last item
+ * e.g. if the path was 'path/to/something', the return value would be 'path/to'
+ */
 exports.dirname = function(_path) {
     var f = new java.io.File(_path);
     return String(f.getParent());
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED***  Returns the last item on a path
-***REMOVED***
+/**
+ *  Returns the last item on a path
+ */
 exports.basename = function(_path, ext) {
     var f = new java.io.File(_path);
     var p = f.getParentFile();
@@ -51,7 +51,7 @@ exports.basename = function(_path, ext) {
         }
     }
     return base;
-***REMOVED***
+};
 
 exports.existsSync = function(_path) {
    var f = new java.io.File(_path);
@@ -66,7 +66,7 @@ exports.existsSync = function(_path) {
         return false;
     }
     return true;
-***REMOVED***
+};
 
 exports.exists = asyncify(exports.existsSync);
 
@@ -104,7 +104,7 @@ function normalizeArray(parts, allowAboveRoot) {
 
 exports.extname = function(path) {
   return splitPath(path)[3];
-***REMOVED***
+};
 
 if (isWindows) {
     // Regex to split a windows path into three parts: [*, device, slash,
@@ -129,7 +129,7 @@ if (isWindows) {
           basename = result2[2],
           ext = result2[3];
       return [device, dir, basename, ext];
-   ***REMOVED*****REMOVED***
+    };
 
     // path.resolve([from ...], to)
     // windows version
@@ -207,7 +207,7 @@ if (isWindows) {
 
       return (resolvedDevice + (resolvedAbsolute ? '\\' : '') + resolvedTail) ||
              '.';
-   ***REMOVED*****REMOVED***
+    };
 
     // windows version
     exports.normalize = function(_path) {
@@ -231,7 +231,7 @@ if (isWindows) {
       }
 
       return device + (isAbsolute ? '\\' : '') + tail;
-   ***REMOVED*****REMOVED***
+    };
 
     //windows version
     exports.join = function() {
@@ -250,7 +250,7 @@ if (isWindows) {
       }
 
       return exports.normalize(joined);
-   ***REMOVED*****REMOVED***
+    };
 
     // path.relative(from, to)
     // it will solve the relative path from 'from' to 'to', for instance:
@@ -313,7 +313,7 @@ if (isWindows) {
       outputParts = outputParts.concat(toParts.slice(samePartsLength));
 
       return outputParts.join('\\');
-   ***REMOVED*****REMOVED***
+    };
 } else {
     // Split a filename into [root, dir, basename, ext], unix version
     // 'root' is just a slash, or nothing.
@@ -321,7 +321,7 @@ if (isWindows) {
         /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
     var splitPath = function(filename) {
       return splitPathRe.exec(filename).slice(1);
-   ***REMOVED*****REMOVED***
+    };
 
     // path.resolve([from ...], to)
     // posix version
@@ -350,7 +350,7 @@ if (isWindows) {
       }), !resolvedAbsolute).join('/');
 
       return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-   ***REMOVED*****REMOVED***
+    };
 
     // path.normalize(_path)
     // posix version
@@ -371,7 +371,7 @@ if (isWindows) {
       }
 
       return (isAbsolute ? '/' : '') + _path;
-   ***REMOVED*****REMOVED***
+    };
 
     // posix version
     exports.join = function() {
@@ -379,7 +379,7 @@ if (isWindows) {
       return exports.normalize(_paths.filter(function(p, index) {
         return p && typeof p === 'string';
       }).join('/'));
-   ***REMOVED*****REMOVED***
+    };
 
     // path.relative(from, to)
     // posix version
@@ -428,5 +428,5 @@ if (isWindows) {
       outputParts = outputParts.concat(toParts.slice(samePartsLength));
 
       return outputParts.join('/');
-   ***REMOVED*****REMOVED***
+    };
 }

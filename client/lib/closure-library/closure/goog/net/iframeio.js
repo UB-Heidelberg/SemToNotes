@@ -12,137 +12,137 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class for managing requests via iFrames.  Supports a number of
-***REMOVED*** methods of transfer.
-***REMOVED***
-***REMOVED*** Gets and Posts can be performed and the resultant page read in as text,
-***REMOVED*** JSON, or from the HTML DOM.
-***REMOVED***
-***REMOVED*** Using an iframe causes the throbber to spin, this is good for providing
-***REMOVED*** feedback to the user that an action has occurred.
-***REMOVED***
-***REMOVED*** Requests do not affect the history stack, see goog.History if you require
-***REMOVED*** this behavior.
-***REMOVED***
-***REMOVED*** The responseText and responseJson methods assume the response is plain,
-***REMOVED*** text.  You can access the Iframe's DOM through responseXml if you need
-***REMOVED*** access to the raw HTML.
-***REMOVED***
-***REMOVED*** Tested:
-***REMOVED***    + FF2.0 (Win Linux)
-***REMOVED***    + IE6, IE7
-***REMOVED***    + Opera 9.1,
-***REMOVED***    + Chrome
-***REMOVED***    - Opera 8.5 fails because of no textContent and buggy innerText support
-***REMOVED***
-***REMOVED*** NOTE: Safari doesn't fire the onload handler when loading plain text files
-***REMOVED***
-***REMOVED*** This has been tested with Drip in IE to ensure memory usage is as constant
-***REMOVED*** as possible. When making making thousands of requests, memory usage stays
-***REMOVED*** constant for a while but then starts increasing (<500k for 2000
-***REMOVED*** requests) -- this hasn't yet been tracked down yet, though it is cleared up
-***REMOVED*** after a refresh.
-***REMOVED***
-***REMOVED***
-***REMOVED*** BACKGROUND FILE UPLOAD:
-***REMOVED*** By posting an arbitrary form through an IframeIo object, it is possible to
-***REMOVED*** implement background file uploads.  Here's how to do it:
-***REMOVED***
-***REMOVED*** - Create a form:
-***REMOVED***   <pre>
-***REMOVED***   &lt;form id="form" enctype="multipart/form-data" method="POST"&gt;
-***REMOVED***      &lt;input name="userfile" type="file" /&gt;
-***REMOVED***   &lt;/form&gt;
-***REMOVED***   </pre>
-***REMOVED***
-***REMOVED*** - Have the user click the file input
-***REMOVED*** - Create an IframeIo instance
-***REMOVED***   <pre>
-***REMOVED***   var io = new goog.net.IframeIo;
-***REMOVED*** ***REMOVED***io, goog.net.EventType.COMPLETE,
-***REMOVED***       function() { alert('Sent'); });
-***REMOVED***   io.sendFromForm(document.getElementById('form'));
-***REMOVED***   </pre>
-***REMOVED***
-***REMOVED***
-***REMOVED*** INCREMENTAL LOADING:
-***REMOVED*** Gmail sends down multiple script blocks which get executed as they are
-***REMOVED*** received by the client. This allows incremental rendering of the thread
-***REMOVED*** list and conversations.
-***REMOVED***
-***REMOVED*** This requires collaboration with the server that is sending the requested
-***REMOVED*** page back.  To set incremental loading up, you should:
-***REMOVED***
-***REMOVED*** A) In the application code there should be an externed reference to
-***REMOVED*** <code>handleIncrementalData()</code>.  e.g.
-***REMOVED*** goog.exportSymbol('GG_iframeFn', goog.net.IframeIo.handleIncrementalData);
-***REMOVED***
-***REMOVED*** B) The response page should them call this method directly, an example
-***REMOVED*** response would look something like this:
-***REMOVED*** <pre>
-***REMOVED***   &lt;html&gt;
-***REMOVED***   &lt;head&gt;
-***REMOVED***     &lt;meta content="text/html;charset=UTF-8" http-equiv="content-type"&gt;
-***REMOVED***   &lt;/head&gt;
-***REMOVED***   &lt;body&gt;
-***REMOVED***     &lt;script&gt;
-***REMOVED***       D = top.P ? function(d) { top.GG_iframeFn(window, d) } : function() {***REMOVED***
-***REMOVED***     &lt;/script&gt;
-***REMOVED***
-***REMOVED***     &lt;script&gt;D([1, 2, 3, 4, 5]);&lt;/script&gt;
-***REMOVED***     &lt;script&gt;D([6, 7, 8, 9, 10]);&lt;/script&gt;
-***REMOVED***     &lt;script&gt;D([11, 12, 13, 14, 15]);&lt;/script&gt;
-***REMOVED***   &lt;/body&gt;
-***REMOVED***   &lt;/html&gt;
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** Your application should then listen, on the IframeIo instance, to the event
-***REMOVED*** goog.net.EventType.INCREMENTAL_DATA.  The event object contains a
-***REMOVED*** 'data' member which is the content from the D() calls above.
-***REMOVED***
-***REMOVED*** NOTE: There can be problems if you save a reference to the data object in IE.
-***REMOVED*** If you save an array, and the iframe is dispose, then the array looses its
-***REMOVED*** prototype and thus array methods like .join().  You can get around this by
-***REMOVED*** creating arrays using the parent window's Array constructor, or you can
-***REMOVED*** clone the array.
-***REMOVED***
-***REMOVED***
-***REMOVED*** EVENT MODEL:
-***REMOVED*** The various send methods work asynchronously. You can be notified about
-***REMOVED*** the current status of the request (completed, success or error) by
-***REMOVED*** listening for events on the IframeIo object itself. The following events
-***REMOVED*** will be sent:
-***REMOVED*** - goog.net.EventType.COMPLETE: when the request is completed
-***REMOVED***   (either sucessfully or unsuccessfully). You can find out about the result
-***REMOVED***   using the isSuccess() and getLastError
-***REMOVED***   methods.
-***REMOVED*** - goog.net.EventType.SUCCESS</code>: when the request was completed
-***REMOVED***   successfully
-***REMOVED*** - goog.net.EventType.ERROR: when the request failed
-***REMOVED*** - goog.net.EventType.ABORT: when the request has been aborted
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED*** var io = new goog.net.IframeIo();
-***REMOVED*** goog.events.listen(io, goog.net.EventType.COMPLETE,
-***REMOVED***   function() { alert('request complete'); });
-***REMOVED*** io.sendFromForm(...);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class for managing requests via iFrames.  Supports a number of
+ * methods of transfer.
+ *
+ * Gets and Posts can be performed and the resultant page read in as text,
+ * JSON, or from the HTML DOM.
+ *
+ * Using an iframe causes the throbber to spin, this is good for providing
+ * feedback to the user that an action has occurred.
+ *
+ * Requests do not affect the history stack, see goog.History if you require
+ * this behavior.
+ *
+ * The responseText and responseJson methods assume the response is plain,
+ * text.  You can access the Iframe's DOM through responseXml if you need
+ * access to the raw HTML.
+ *
+ * Tested:
+ *    + FF2.0 (Win Linux)
+ *    + IE6, IE7
+ *    + Opera 9.1,
+ *    + Chrome
+ *    - Opera 8.5 fails because of no textContent and buggy innerText support
+ *
+ * NOTE: Safari doesn't fire the onload handler when loading plain text files
+ *
+ * This has been tested with Drip in IE to ensure memory usage is as constant
+ * as possible. When making making thousands of requests, memory usage stays
+ * constant for a while but then starts increasing (<500k for 2000
+ * requests) -- this hasn't yet been tracked down yet, though it is cleared up
+ * after a refresh.
+ *
+ *
+ * BACKGROUND FILE UPLOAD:
+ * By posting an arbitrary form through an IframeIo object, it is possible to
+ * implement background file uploads.  Here's how to do it:
+ *
+ * - Create a form:
+ *   <pre>
+ *   &lt;form id="form" enctype="multipart/form-data" method="POST"&gt;
+ *      &lt;input name="userfile" type="file" /&gt;
+ *   &lt;/form&gt;
+ *   </pre>
+ *
+ * - Have the user click the file input
+ * - Create an IframeIo instance
+ *   <pre>
+ *   var io = new goog.net.IframeIo;
+ *   goog.events.listen(io, goog.net.EventType.COMPLETE,
+ *       function() { alert('Sent'); });
+ *   io.sendFromForm(document.getElementById('form'));
+ *   </pre>
+ *
+ *
+ * INCREMENTAL LOADING:
+ * Gmail sends down multiple script blocks which get executed as they are
+ * received by the client. This allows incremental rendering of the thread
+ * list and conversations.
+ *
+ * This requires collaboration with the server that is sending the requested
+ * page back.  To set incremental loading up, you should:
+ *
+ * A) In the application code there should be an externed reference to
+ * <code>handleIncrementalData()</code>.  e.g.
+ * goog.exportSymbol('GG_iframeFn', goog.net.IframeIo.handleIncrementalData);
+ *
+ * B) The response page should them call this method directly, an example
+ * response would look something like this:
+ * <pre>
+ *   &lt;html&gt;
+ *   &lt;head&gt;
+ *     &lt;meta content="text/html;charset=UTF-8" http-equiv="content-type"&gt;
+ *   &lt;/head&gt;
+ *   &lt;body&gt;
+ *     &lt;script&gt;
+ *       D = top.P ? function(d) { top.GG_iframeFn(window, d) } : function() {};
+ *     &lt;/script&gt;
+ *
+ *     &lt;script&gt;D([1, 2, 3, 4, 5]);&lt;/script&gt;
+ *     &lt;script&gt;D([6, 7, 8, 9, 10]);&lt;/script&gt;
+ *     &lt;script&gt;D([11, 12, 13, 14, 15]);&lt;/script&gt;
+ *   &lt;/body&gt;
+ *   &lt;/html&gt;
+ * </pre>
+ *
+ * Your application should then listen, on the IframeIo instance, to the event
+ * goog.net.EventType.INCREMENTAL_DATA.  The event object contains a
+ * 'data' member which is the content from the D() calls above.
+ *
+ * NOTE: There can be problems if you save a reference to the data object in IE.
+ * If you save an array, and the iframe is dispose, then the array looses its
+ * prototype and thus array methods like .join().  You can get around this by
+ * creating arrays using the parent window's Array constructor, or you can
+ * clone the array.
+ *
+ *
+ * EVENT MODEL:
+ * The various send methods work asynchronously. You can be notified about
+ * the current status of the request (completed, success or error) by
+ * listening for events on the IframeIo object itself. The following events
+ * will be sent:
+ * - goog.net.EventType.COMPLETE: when the request is completed
+ *   (either sucessfully or unsuccessfully). You can find out about the result
+ *   using the isSuccess() and getLastError
+ *   methods.
+ * - goog.net.EventType.SUCCESS</code>: when the request was completed
+ *   successfully
+ * - goog.net.EventType.ERROR: when the request failed
+ * - goog.net.EventType.ABORT: when the request has been aborted
+ *
+ * Example:
+ * <pre>
+ * var io = new goog.net.IframeIo();
+ * goog.events.listen(io, goog.net.EventType.COMPLETE,
+ *   function() { alert('request complete'); });
+ * io.sendFromForm(...);
+ * </pre>
+ *
+ */
 
 goog.provide('goog.net.IframeIo');
 goog.provide('goog.net.IframeIo.IncrementalDataEvent');
 
 goog.require('goog.Timer');
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.debug');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.json');
 goog.require('goog.log');
 goog.require('goog.net.ErrorCode');
@@ -154,27 +154,27 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Class for managing requests via iFrames.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Class for managing requests via iFrames.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.net.IframeIo = function() {
   goog.net.IframeIo.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Name for this IframeIo and frame
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Name for this IframeIo and frame
+   * @type {string}
+   * @private
+   */
   this.name_ = goog.net.IframeIo.getNextName_();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of iframes that have been finished with.  We need them to be
-  ***REMOVED*** disposed async, so we don't confuse the browser (see below).
-  ***REMOVED*** @type {Array.<Element>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An array of iframes that have been finished with.  We need them to be
+   * disposed async, so we don't confuse the browser (see below).
+   * @type {Array.<Element>}
+   * @private
+   */
   this.iframesForDisposal_ = [];
 
   // Create a lookup from names to instances of IframeIo.  This is a helper
@@ -183,111 +183,111 @@ goog.net.IframeIo = function() {
   // incremental scripts etc.
   goog.net.IframeIo.instances_[this.name_] = this;
 
-***REMOVED***
+};
 goog.inherits(goog.net.IframeIo, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Object used as a map to lookup instances of IframeIo objects by name.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.net.IframeIo.instances_ = {***REMOVED***
+/**
+ * Object used as a map to lookup instances of IframeIo objects by name.
+ * @type {Object}
+ * @private
+ */
+goog.net.IframeIo.instances_ = {};
 
 
-***REMOVED***
-***REMOVED*** Prefix for frame names
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Prefix for frame names
+ * @type {string}
+ */
 goog.net.IframeIo.FRAME_NAME_PREFIX = 'closure_frame';
 
 
-***REMOVED***
-***REMOVED*** Suffix that is added to inner frames used for sending requests in non-IE
-***REMOVED*** browsers
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Suffix that is added to inner frames used for sending requests in non-IE
+ * browsers
+ * @type {string}
+ */
 goog.net.IframeIo.INNER_FRAME_SUFFIX = '_inner';
 
 
-***REMOVED***
-***REMOVED*** The number of milliseconds after a request is completed to dispose the
-***REMOVED*** iframes.  This can be done lazily so we wait long enough for any processing
-***REMOVED*** that occurred as a result of the response to finish.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of milliseconds after a request is completed to dispose the
+ * iframes.  This can be done lazily so we wait long enough for any processing
+ * that occurred as a result of the response to finish.
+ * @type {number}
+ */
 goog.net.IframeIo.IFRAME_DISPOSE_DELAY_MS = 2000;
 
 
-***REMOVED***
-***REMOVED*** Counter used when creating iframes
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Counter used when creating iframes
+ * @type {number}
+ * @private
+ */
 goog.net.IframeIo.counter_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Form element to post to.
-***REMOVED*** @type {HTMLFormElement}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Form element to post to.
+ * @type {HTMLFormElement}
+ * @private
+ */
 goog.net.IframeIo.form_;
 
 
-***REMOVED***
-***REMOVED*** Static send that creates a short lived instance of IframeIo to send the
-***REMOVED*** request.
-***REMOVED*** @param {goog.Uri|string} uri Uri of the request, it is up the caller to
-***REMOVED***     manage query string params.
-***REMOVED*** @param {Function=} opt_callback Event handler for when request is completed.
-***REMOVED*** @param {string=} opt_method Default is GET, POST uses a form to submit the
-***REMOVED***     request.
-***REMOVED*** @param {boolean=} opt_noCache Append a timestamp to the request to avoid
-***REMOVED***     caching.
-***REMOVED*** @param {Object|goog.structs.Map=} opt_data Map of key-value pairs that
-***REMOVED***     will be posted to the server via the iframe's form.
-***REMOVED***
+/**
+ * Static send that creates a short lived instance of IframeIo to send the
+ * request.
+ * @param {goog.Uri|string} uri Uri of the request, it is up the caller to
+ *     manage query string params.
+ * @param {Function=} opt_callback Event handler for when request is completed.
+ * @param {string=} opt_method Default is GET, POST uses a form to submit the
+ *     request.
+ * @param {boolean=} opt_noCache Append a timestamp to the request to avoid
+ *     caching.
+ * @param {Object|goog.structs.Map=} opt_data Map of key-value pairs that
+ *     will be posted to the server via the iframe's form.
+ */
 goog.net.IframeIo.send = function(
     uri, opt_callback, opt_method, opt_noCache, opt_data) {
 
   var io = new goog.net.IframeIo();
-***REMOVED***io, goog.net.EventType.READY, io.dispose, false, io);
+  goog.events.listen(io, goog.net.EventType.READY, io.dispose, false, io);
   if (opt_callback) {
-  ***REMOVED***io, goog.net.EventType.COMPLETE, opt_callback);
+    goog.events.listen(io, goog.net.EventType.COMPLETE, opt_callback);
   }
   io.send(uri, opt_method, opt_noCache, opt_data);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Find an iframe by name (assumes the context is goog.global since that is
-***REMOVED*** where IframeIo's iframes are kept).
-***REMOVED*** @param {string} fname The name to find.
-***REMOVED*** @return {HTMLIFrameElement} The iframe element with that name.
-***REMOVED***
+/**
+ * Find an iframe by name (assumes the context is goog.global since that is
+ * where IframeIo's iframes are kept).
+ * @param {string} fname The name to find.
+ * @return {HTMLIFrameElement} The iframe element with that name.
+ */
 goog.net.IframeIo.getIframeByName = function(fname) {
   return window.frames[fname];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Find an instance of the IframeIo object by name.
-***REMOVED*** @param {string} fname The name to find.
-***REMOVED*** @return {goog.net.IframeIo} The instance of IframeIo.
-***REMOVED***
+/**
+ * Find an instance of the IframeIo object by name.
+ * @param {string} fname The name to find.
+ * @return {goog.net.IframeIo} The instance of IframeIo.
+ */
 goog.net.IframeIo.getInstanceByName = function(fname) {
   return goog.net.IframeIo.instances_[fname];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles incremental data and routes it to the correct iframeIo instance.
-***REMOVED*** The HTML page requested by the IframeIo instance should contain script blocks
-***REMOVED*** that call an externed reference to this method.
-***REMOVED*** @param {Window} win The window object.
-***REMOVED*** @param {Object} data The data object.
-***REMOVED***
+/**
+ * Handles incremental data and routes it to the correct iframeIo instance.
+ * The HTML page requested by the IframeIo instance should contain script blocks
+ * that call an externed reference to this method.
+ * @param {Window} win The window object.
+ * @param {Object} data The data object.
+ */
 goog.net.IframeIo.handleIncrementalData = function(win, data) {
   // If this is the inner-frame, then we need to use the parent instead.
   var iframeName = goog.string.endsWith(win.name,
@@ -302,28 +302,28 @@ goog.net.IframeIo.handleIncrementalData = function(win, data) {
     goog.log.info(logger,
         'Incremental iframe data routed for unknown iframe');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The next iframe name.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {string} The next iframe name.
+ * @private
+ */
 goog.net.IframeIo.getNextName_ = function() {
   return goog.net.IframeIo.FRAME_NAME_PREFIX + goog.net.IframeIo.counter_++;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a static form, one for all instances of IframeIo since IE6 leaks form
-***REMOVED*** nodes that are created/removed from the document.
-***REMOVED*** @return {!HTMLFormElement} The static form.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets a static form, one for all instances of IframeIo since IE6 leaks form
+ * nodes that are created/removed from the document.
+ * @return {!HTMLFormElement} The static form.
+ * @private
+ */
 goog.net.IframeIo.getForm_ = function() {
   if (!goog.net.IframeIo.form_) {
     goog.net.IframeIo.form_ =
-       ***REMOVED*****REMOVED*** @type {HTMLFormElement}***REMOVED***(goog.dom.createDom('form'));
+        /** @type {HTMLFormElement} */(goog.dom.createDom('form'));
     goog.net.IframeIo.form_.acceptCharset = 'utf-8';
 
     // Hide the form and move it off screen
@@ -337,15 +337,15 @@ goog.net.IframeIo.getForm_ = function() {
     goog.dom.getDocument().body.appendChild(goog.net.IframeIo.form_);
   }
   return goog.net.IframeIo.form_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the key value pairs from a map like data structure to a form
-***REMOVED*** @param {HTMLFormElement} form The form to add to.
-***REMOVED*** @param {Object|goog.structs.Map|goog.Uri.QueryData} data The data to add.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds the key value pairs from a map like data structure to a form
+ * @param {HTMLFormElement} form The form to add to.
+ * @param {Object|goog.structs.Map|goog.Uri.QueryData} data The data to add.
+ * @private
+ */
 goog.net.IframeIo.addFormInputs_ = function(form, data) {
   var helper = goog.dom.getDomHelper(form);
   goog.structs.forEach(data, function(value, key) {
@@ -353,180 +353,180 @@ goog.net.IframeIo.addFormInputs_ = function(form, data) {
         {'type': 'hidden', 'name': key, 'value': value});
     form.appendChild(inp);
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether we can use readyState to monitor iframe loading.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {boolean} Whether we can use readyState to monitor iframe loading.
+ * @private
+ */
 goog.net.IframeIo.useIeReadyStateCodePath_ = function() {
   // ReadyState is only available on iframes up to IE10.
   return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('11');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reference to a logger for the IframeIo objects
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reference to a logger for the IframeIo objects
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.net.IframeIo.prototype.logger_ =
     goog.log.getLogger('goog.net.IframeIo');
 
 
-***REMOVED***
-***REMOVED*** Reference to form element that gets reused for requests to the iframe.
-***REMOVED*** @type {HTMLFormElement}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reference to form element that gets reused for requests to the iframe.
+ * @type {HTMLFormElement}
+ * @private
+ */
 goog.net.IframeIo.prototype.form_ = null;
 
 
-***REMOVED***
-***REMOVED*** Reference to the iframe being used for the current request, or null if no
-***REMOVED*** request is currently active.
-***REMOVED*** @type {HTMLIFrameElement}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reference to the iframe being used for the current request, or null if no
+ * request is currently active.
+ * @type {HTMLIFrameElement}
+ * @private
+ */
 goog.net.IframeIo.prototype.iframe_ = null;
 
 
-***REMOVED***
-***REMOVED*** Name of the iframe being used for the current request, or null if no
-***REMOVED*** request is currently active.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Name of the iframe being used for the current request, or null if no
+ * request is currently active.
+ * @type {?string}
+ * @private
+ */
 goog.net.IframeIo.prototype.iframeName_ = null;
 
 
-***REMOVED***
-***REMOVED*** Next id so that iframe names are unique.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Next id so that iframe names are unique.
+ * @type {number}
+ * @private
+ */
 goog.net.IframeIo.prototype.nextIframeId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Whether the object is currently active with a request.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the object is currently active with a request.
+ * @type {boolean}
+ * @private
+ */
 goog.net.IframeIo.prototype.active_ = false;
 
 
-***REMOVED***
-***REMOVED*** Whether the last request is complete.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the last request is complete.
+ * @type {boolean}
+ * @private
+ */
 goog.net.IframeIo.prototype.complete_ = false;
 
 
-***REMOVED***
-***REMOVED*** Whether the last request was a success.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the last request was a success.
+ * @type {boolean}
+ * @private
+ */
 goog.net.IframeIo.prototype.success_ = false;
 
 
-***REMOVED***
-***REMOVED*** The URI for the last request.
-***REMOVED*** @type {goog.Uri}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The URI for the last request.
+ * @type {goog.Uri}
+ * @private
+ */
 goog.net.IframeIo.prototype.lastUri_ = null;
 
 
-***REMOVED***
-***REMOVED*** The text content of the last request.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The text content of the last request.
+ * @type {?string}
+ * @private
+ */
 goog.net.IframeIo.prototype.lastContent_ = null;
 
 
-***REMOVED***
-***REMOVED*** Last error code
-***REMOVED*** @type {goog.net.ErrorCode}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last error code
+ * @type {goog.net.ErrorCode}
+ * @private
+ */
 goog.net.IframeIo.prototype.lastErrorCode_ = goog.net.ErrorCode.NO_ERROR;
 
 
-***REMOVED***
-***REMOVED*** Number of milliseconds after which an incomplete request will be aborted and
-***REMOVED*** a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no timeout is set.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Number of milliseconds after which an incomplete request will be aborted and
+ * a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no timeout is set.
+ * @type {number}
+ * @private
+ */
 goog.net.IframeIo.prototype.timeoutInterval_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Window timeout ID used to cancel the timeout event handler if the request
-***REMOVED*** completes successfully.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Window timeout ID used to cancel the timeout event handler if the request
+ * completes successfully.
+ * @type {?number}
+ * @private
+ */
 goog.net.IframeIo.prototype.timeoutId_ = null;
 
 
-***REMOVED***
-***REMOVED*** Window timeout ID used to detect when firefox silently fails.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Window timeout ID used to detect when firefox silently fails.
+ * @type {?number}
+ * @private
+ */
 goog.net.IframeIo.prototype.firefoxSilentErrorTimeout_ = null;
 
 
-***REMOVED***
-***REMOVED*** Window timeout ID used by the timer that disposes the iframes.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Window timeout ID used by the timer that disposes the iframes.
+ * @type {?number}
+ * @private
+ */
 goog.net.IframeIo.prototype.iframeDisposalTimer_ = null;
 
 
-***REMOVED***
-***REMOVED*** This is used to ensure that we don't handle errors twice for the same error.
-***REMOVED*** We can reach the {@link #handleError_} method twice in IE if the form is
-***REMOVED*** submitted while IE is offline and the URL is not available.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * This is used to ensure that we don't handle errors twice for the same error.
+ * We can reach the {@link #handleError_} method twice in IE if the form is
+ * submitted while IE is offline and the URL is not available.
+ * @type {boolean}
+ * @private
+ */
 goog.net.IframeIo.prototype.errorHandled_;
 
 
-***REMOVED***
-***REMOVED*** Whether to suppress the listeners that determine when the iframe loads.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to suppress the listeners that determine when the iframe loads.
+ * @type {boolean}
+ * @private
+ */
 goog.net.IframeIo.prototype.ignoreResponse_ = false;
 
 
-***REMOVED***
-***REMOVED*** Sends a request via an iframe.
-***REMOVED***
-***REMOVED*** A HTML form is used and submitted to the iframe, this simplifies the
-***REMOVED*** difference between GET and POST requests. The iframe needs to be created and
-***REMOVED*** destroyed for each request otherwise the request will contribute to the
-***REMOVED*** history stack.
-***REMOVED***
-***REMOVED*** sendFromForm does some clever trickery (thanks jlim) in non-IE browsers to
-***REMOVED*** stop a history entry being added for POST requests.
-***REMOVED***
-***REMOVED*** @param {goog.Uri|string} uri Uri of the request.
-***REMOVED*** @param {string=} opt_method Default is GET, POST uses a form to submit the
-***REMOVED***     request.
-***REMOVED*** @param {boolean=} opt_noCache Append a timestamp to the request to avoid
-***REMOVED***     caching.
-***REMOVED*** @param {Object|goog.structs.Map=} opt_data Map of key-value pairs.
-***REMOVED***
+/**
+ * Sends a request via an iframe.
+ *
+ * A HTML form is used and submitted to the iframe, this simplifies the
+ * difference between GET and POST requests. The iframe needs to be created and
+ * destroyed for each request otherwise the request will contribute to the
+ * history stack.
+ *
+ * sendFromForm does some clever trickery (thanks jlim) in non-IE browsers to
+ * stop a history entry being added for POST requests.
+ *
+ * @param {goog.Uri|string} uri Uri of the request.
+ * @param {string=} opt_method Default is GET, POST uses a form to submit the
+ *     request.
+ * @param {boolean=} opt_noCache Append a timestamp to the request to avoid
+ *     caching.
+ * @param {Object|goog.structs.Map=} opt_data Map of key-value pairs.
+ */
 goog.net.IframeIo.prototype.send = function(
     uri, opt_method, opt_noCache, opt_data) {
 
@@ -566,31 +566,31 @@ goog.net.IframeIo.prototype.send = function(
 
   this.sendFormInternal_();
   this.clearForm_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends the data stored in an existing form to the server. The HTTP method
-***REMOVED*** should be specified on the form, the action can also be specified but can
-***REMOVED*** be overridden by the optional URI param.
-***REMOVED***
-***REMOVED*** This can be used in conjunction will a file-upload input to upload a file in
-***REMOVED*** the background without affecting history.
-***REMOVED***
-***REMOVED*** Example form:
-***REMOVED*** <pre>
-***REMOVED***   &lt;form action="/server/" enctype="multipart/form-data" method="POST"&gt;
-***REMOVED***     &lt;input name="userfile" type="file"&gt;
-***REMOVED***   &lt;/form&gt;
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {HTMLFormElement} form Form element used to send the request to the
-***REMOVED***     server.
-***REMOVED*** @param {string=} opt_uri Uri to set for the destination of the request, by
-***REMOVED***     default the uri will come from the form.
-***REMOVED*** @param {boolean=} opt_noCache Append a timestamp to the request to avoid
-***REMOVED***     caching.
-***REMOVED***
+/**
+ * Sends the data stored in an existing form to the server. The HTTP method
+ * should be specified on the form, the action can also be specified but can
+ * be overridden by the optional URI param.
+ *
+ * This can be used in conjunction will a file-upload input to upload a file in
+ * the background without affecting history.
+ *
+ * Example form:
+ * <pre>
+ *   &lt;form action="/server/" enctype="multipart/form-data" method="POST"&gt;
+ *     &lt;input name="userfile" type="file"&gt;
+ *   &lt;/form&gt;
+ * </pre>
+ *
+ * @param {HTMLFormElement} form Form element used to send the request to the
+ *     server.
+ * @param {string=} opt_uri Uri to set for the destination of the request, by
+ *     default the uri will come from the form.
+ * @param {boolean=} opt_noCache Append a timestamp to the request to avoid
+ *     caching.
+ */
 goog.net.IframeIo.prototype.sendFromForm = function(form, opt_uri,
     opt_noCache) {
   if (this.active_) {
@@ -608,14 +608,14 @@ goog.net.IframeIo.prototype.sendFromForm = function(form, opt_uri,
   this.form_ = form;
   this.form_.action = uri.toString();
   this.sendFormInternal_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Abort the current Iframe request
-***REMOVED*** @param {goog.net.ErrorCode=} opt_failureCode Optional error code to use -
-***REMOVED***     defaults to ABORT.
-***REMOVED***
+/**
+ * Abort the current Iframe request
+ * @param {goog.net.ErrorCode=} opt_failureCode Optional error code to use -
+ *     defaults to ABORT.
+ */
 goog.net.IframeIo.prototype.abort = function(opt_failureCode) {
   if (this.active_) {
     goog.log.info(this.logger_, 'Request aborted');
@@ -629,10 +629,10 @@ goog.net.IframeIo.prototype.abort = function(opt_failureCode) {
 
     this.makeReady_();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.IframeIo.prototype.disposeInternal = function() {
   goog.log.fine(this.logger_, 'Disposing iframeIo instance');
 
@@ -661,182 +661,182 @@ goog.net.IframeIo.prototype.disposeInternal = function() {
   this.lastErrorCode_ = goog.net.ErrorCode.NO_ERROR;
 
   delete goog.net.IframeIo.instances_[this.name_];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if transfer is complete.
-***REMOVED***
+/**
+ * @return {boolean} True if transfer is complete.
+ */
 goog.net.IframeIo.prototype.isComplete = function() {
   return this.complete_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if transfer was successful.
-***REMOVED***
+/**
+ * @return {boolean} True if transfer was successful.
+ */
 goog.net.IframeIo.prototype.isSuccess = function() {
   return this.success_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if a transfer is in progress.
-***REMOVED***
+/**
+ * @return {boolean} True if a transfer is in progress.
+ */
 goog.net.IframeIo.prototype.isActive = function() {
   return this.active_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the last response text (i.e. the text content of the iframe).
-***REMOVED*** Assumes plain text!
-***REMOVED*** @return {?string} Result from the server.
-***REMOVED***
+/**
+ * Returns the last response text (i.e. the text content of the iframe).
+ * Assumes plain text!
+ * @return {?string} Result from the server.
+ */
 goog.net.IframeIo.prototype.getResponseText = function() {
   return this.lastContent_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the last response html (i.e. the innerHtml of the iframe).
-***REMOVED*** @return {?string} Result from the server.
-***REMOVED***
+/**
+ * Returns the last response html (i.e. the innerHtml of the iframe).
+ * @return {?string} Result from the server.
+ */
 goog.net.IframeIo.prototype.getResponseHtml = function() {
   return this.lastContentHtml_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the content as JSON. This is a safe parse and may throw an error
-***REMOVED*** if the response is malformed.
-***REMOVED*** Use goog.json.unsafeparse(this.getResponseText()) if you are sure of the
-***REMOVED*** state of the returned content.
-***REMOVED*** @return {Object} The parsed content.
-***REMOVED***
+/**
+ * Parses the content as JSON. This is a safe parse and may throw an error
+ * if the response is malformed.
+ * Use goog.json.unsafeparse(this.getResponseText()) if you are sure of the
+ * state of the returned content.
+ * @return {Object} The parsed content.
+ */
 goog.net.IframeIo.prototype.getResponseJson = function() {
   return goog.json.parse(this.lastContent_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the document object from the last request.  Not truely XML, but
-***REMOVED*** used to mirror the XhrIo interface.
-***REMOVED*** @return {HTMLDocument} The document object from the last request.
-***REMOVED***
+/**
+ * Returns the document object from the last request.  Not truely XML, but
+ * used to mirror the XhrIo interface.
+ * @return {HTMLDocument} The document object from the last request.
+ */
 goog.net.IframeIo.prototype.getResponseXml = function() {
   if (!this.iframe_) return null;
 
   return this.getContentDocument_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the uri of the last request.
-***REMOVED*** @return {goog.Uri} Uri of last request.
-***REMOVED***
+/**
+ * Get the uri of the last request.
+ * @return {goog.Uri} Uri of last request.
+ */
 goog.net.IframeIo.prototype.getLastUri = function() {
   return this.lastUri_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last error code.
-***REMOVED*** @return {goog.net.ErrorCode} Last error code.
-***REMOVED***
+/**
+ * Gets the last error code.
+ * @return {goog.net.ErrorCode} Last error code.
+ */
 goog.net.IframeIo.prototype.getLastErrorCode = function() {
   return this.lastErrorCode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last error message.
-***REMOVED*** @return {string} Last error message.
-***REMOVED***
+/**
+ * Gets the last error message.
+ * @return {string} Last error message.
+ */
 goog.net.IframeIo.prototype.getLastError = function() {
   return goog.net.ErrorCode.getDebugMessage(this.lastErrorCode_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last custom error.
-***REMOVED*** @return {Object} Last custom error.
-***REMOVED***
+/**
+ * Gets the last custom error.
+ * @return {Object} Last custom error.
+ */
 goog.net.IframeIo.prototype.getLastCustomError = function() {
   return this.lastCustomError_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the callback function used to check if a loaded IFrame is in an error
-***REMOVED*** state.
-***REMOVED*** @param {Function} fn Callback that expects a document object as it's single
-***REMOVED***     argument.
-***REMOVED***
+/**
+ * Sets the callback function used to check if a loaded IFrame is in an error
+ * state.
+ * @param {Function} fn Callback that expects a document object as it's single
+ *     argument.
+ */
 goog.net.IframeIo.prototype.setErrorChecker = function(fn) {
   this.errorChecker_ = fn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the callback function used to check if a loaded IFrame is in an error
-***REMOVED*** state.
-***REMOVED*** @return {Function} A callback that expects a document object as it's single
-***REMOVED***     argument.
-***REMOVED***
+/**
+ * Gets the callback function used to check if a loaded IFrame is in an error
+ * state.
+ * @return {Function} A callback that expects a document object as it's single
+ *     argument.
+ */
 goog.net.IframeIo.prototype.getErrorChecker = function() {
   return this.errorChecker_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of milliseconds after which an incomplete request will be
-***REMOVED*** aborted, or 0 if no timeout is set.
-***REMOVED*** @return {number} Timeout interval in milliseconds.
-***REMOVED***
+/**
+ * Returns the number of milliseconds after which an incomplete request will be
+ * aborted, or 0 if no timeout is set.
+ * @return {number} Timeout interval in milliseconds.
+ */
 goog.net.IframeIo.prototype.getTimeoutInterval = function() {
   return this.timeoutInterval_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the number of milliseconds after which an incomplete request will be
-***REMOVED*** aborted and a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no
-***REMOVED*** timeout is set.
-***REMOVED*** @param {number} ms Timeout interval in milliseconds; 0 means none.
-***REMOVED***
+/**
+ * Sets the number of milliseconds after which an incomplete request will be
+ * aborted and a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no
+ * timeout is set.
+ * @param {number} ms Timeout interval in milliseconds; 0 means none.
+ */
 goog.net.IframeIo.prototype.setTimeoutInterval = function(ms) {
   // TODO (pupius) - never used - doesn't look like timeouts were implemented
   this.timeoutInterval_ = Math.max(0, ms);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the server response is being ignored.
-***REMOVED***
+/**
+ * @return {boolean} Whether the server response is being ignored.
+ */
 goog.net.IframeIo.prototype.isIgnoringResponse = function() {
   return this.ignoreResponse_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether to ignore the response from the server by not adding any event
-***REMOVED*** handlers to fire when the iframe loads. This is necessary when using IframeIo
-***REMOVED*** to submit to a server on another domain, to avoid same-origin violations when
-***REMOVED*** trying to access the response. If this is set to true, the IframeIo instance
-***REMOVED*** will be a single-use instance that is only usable for one request.  It will
-***REMOVED*** only clean up its resources (iframes and forms) when it is disposed.
-***REMOVED*** @param {boolean} ignore Whether to ignore the server response.
-***REMOVED***
+/**
+ * Sets whether to ignore the response from the server by not adding any event
+ * handlers to fire when the iframe loads. This is necessary when using IframeIo
+ * to submit to a server on another domain, to avoid same-origin violations when
+ * trying to access the response. If this is set to true, the IframeIo instance
+ * will be a single-use instance that is only usable for one request.  It will
+ * only clean up its resources (iframes and forms) when it is disposed.
+ * @param {boolean} ignore Whether to ignore the server response.
+ */
 goog.net.IframeIo.prototype.setIgnoreResponse = function(ignore) {
   this.ignoreResponse_ = ignore;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Submits the internal form to the iframe.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Submits the internal form to the iframe.
+ * @private
+ */
 goog.net.IframeIo.prototype.sendFormInternal_ = function() {
   this.active_ = true;
   this.complete_ = false;
@@ -854,11 +854,11 @@ goog.net.IframeIo.prototype.sendFormInternal_ = function() {
     this.form_.target = this.iframeName_ || '';
     this.appendIframe_();
     if (!this.ignoreResponse_) {
-    ***REMOVED***this.iframe_, goog.events.EventType.READYSTATECHANGE,
+      goog.events.listen(this.iframe_, goog.events.EventType.READYSTATECHANGE,
           this.onIeReadyStateChange_, false, this);
     }
 
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       this.errorHandled_ = false;
       this.form_.submit();
@@ -911,7 +911,7 @@ goog.net.IframeIo.prototype.sendFormInternal_ = function() {
 
     // Listen for the iframe's load
     if (!this.ignoreResponse_) {
-    ***REMOVED***doc.getElementById(innerFrameName),
+      goog.events.listen(doc.getElementById(innerFrameName),
           goog.events.EventType.LOAD, this.onIframeLoaded_, false, this);
     }
 
@@ -967,7 +967,7 @@ goog.net.IframeIo.prototype.sendFormInternal_ = function() {
 
     goog.log.fine(this.logger_, 'Submitting form');
 
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       this.errorHandled_ = false;
       clone.submit();
@@ -999,21 +999,21 @@ goog.net.IframeIo.prototype.sendFormInternal_ = function() {
       this.handleError_(goog.net.ErrorCode.FILE_NOT_FOUND);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the load event of the iframe for IE, determines if the request was
-***REMOVED*** successful or not, handles clean up and dispatching of appropriate events.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the load event of the iframe for IE, determines if the request was
+ * successful or not, handles clean up and dispatching of appropriate events.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.net.IframeIo.prototype.onIeReadyStateChange_ = function(e) {
   if (this.iframe_.readyState == 'complete') {
     goog.events.unlisten(this.iframe_, goog.events.EventType.READYSTATECHANGE,
         this.onIeReadyStateChange_, false, this);
     var doc;
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       doc = goog.dom.getFrameContentDocument(this.iframe_);
 
@@ -1027,16 +1027,16 @@ goog.net.IframeIo.prototype.onIeReadyStateChange_ = function(e) {
       this.handleError_(goog.net.ErrorCode.ACCESS_DENIED);
       return;
     }
-    this.handleLoad_(***REMOVED*** @type {HTMLDocument}***REMOVED***(doc));
+    this.handleLoad_(/** @type {HTMLDocument} */(doc));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the load event of the iframe for non-IE browsers.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the load event of the iframe for non-IE browsers.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.net.IframeIo.prototype.onIframeLoaded_ = function(e) {
   // In Opera, the default "about:blank" page of iframes fires an onload
   // event that we'd like to ignore.
@@ -1051,14 +1051,14 @@ goog.net.IframeIo.prototype.onIframeLoaded_ = function(e) {
   } catch (ex) {
     this.handleError_(goog.net.ErrorCode.ACCESS_DENIED);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles generic post-load
-***REMOVED*** @param {HTMLDocument} contentDocument The frame's document.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles generic post-load
+ * @param {HTMLDocument} contentDocument The frame's document.
+ * @private
+ */
 goog.net.IframeIo.prototype.handleLoad_ = function(contentDocument) {
   goog.log.fine(this.logger_, 'Iframe loaded');
 
@@ -1070,7 +1070,7 @@ goog.net.IframeIo.prototype.handleLoad_ = function(contentDocument) {
   // Try to get the innerHTML.  If this fails then it can be an access denied
   // error or the document may just not have a body, typical case is if there
   // is an IE's default 404.
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     var body = contentDocument.body;
     this.lastContent_ = body.textContent || body.innerText;
@@ -1108,16 +1108,16 @@ goog.net.IframeIo.prototype.handleLoad_ = function(contentDocument) {
 
     this.makeReady_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles errors.
-***REMOVED*** @param {goog.net.ErrorCode} errorCode Error code.
-***REMOVED*** @param {Object=} opt_customError If error is CUSTOM_ERROR, this is the
-***REMOVED***     client-provided custom error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles errors.
+ * @param {goog.net.ErrorCode} errorCode Error code.
+ * @param {Object=} opt_customError If error is CUSTOM_ERROR, this is the
+ *     client-provided custom error.
+ * @private
+ */
 goog.net.IframeIo.prototype.handleError_ = function(errorCode,
                                                     opt_customError) {
   if (!this.errorHandled_) {
@@ -1135,52 +1135,52 @@ goog.net.IframeIo.prototype.handleError_ = function(errorCode,
 
     this.errorHandled_ = true;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches an event indicating that the IframeIo instance has received a data
-***REMOVED*** packet via incremental loading.  The event object has a 'data' member.
-***REMOVED*** @param {Object} data Data.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches an event indicating that the IframeIo instance has received a data
+ * packet via incremental loading.  The event object has a 'data' member.
+ * @param {Object} data Data.
+ * @private
+ */
 goog.net.IframeIo.prototype.handleIncrementalData_ = function(data) {
   this.dispatchEvent(new goog.net.IframeIo.IncrementalDataEvent(data));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finalizes the request, schedules the iframe for disposal, and maybe disposes
-***REMOVED*** the form.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finalizes the request, schedules the iframe for disposal, and maybe disposes
+ * the form.
+ * @private
+ */
 goog.net.IframeIo.prototype.makeReady_ = function() {
   goog.log.info(this.logger_, 'Ready for new requests');
   var iframe = this.iframe_;
   this.scheduleIframeDisposal_();
   this.disposeForm_();
   this.dispatchEvent(goog.net.EventType.READY);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iframe to be used with a request.  We use a new iframe for each
-***REMOVED*** request so that requests don't create history entries.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates an iframe to be used with a request.  We use a new iframe for each
+ * request so that requests don't create history entries.
+ * @private
+ */
 goog.net.IframeIo.prototype.createIframe_ = function() {
   goog.log.fine(this.logger_, 'Creating iframe');
 
   this.iframeName_ = this.name_ + '_' + (this.nextIframeId_++).toString(36);
 
-  var iframeAttributes = {'name': this.iframeName_, 'id': this.iframeName_***REMOVED***
+  var iframeAttributes = {'name': this.iframeName_, 'id': this.iframeName_};
   // Setting the source to javascript:"" is a fix to remove IE6 mixed content
   // warnings when being used in an https page.
   if (goog.userAgent.IE && goog.userAgent.VERSION < 7) {
     iframeAttributes.src = 'javascript:""';
   }
 
-  this.iframe_ =***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED***(
+  this.iframe_ = /** @type {HTMLIFrameElement} */(
       goog.dom.getDomHelper(this.form_).createDom('iframe', iframeAttributes));
 
   var s = this.iframe_.style;
@@ -1198,26 +1198,26 @@ goog.net.IframeIo.prototype.createIframe_ = function() {
   } else {
     s.marginTop = s.marginLeft = '-10px';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends the Iframe to the document body.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Appends the Iframe to the document body.
+ * @private
+ */
 goog.net.IframeIo.prototype.appendIframe_ = function() {
   goog.dom.getDomHelper(this.form_).getDocument().body.appendChild(
       this.iframe_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules an iframe for disposal, async.  We can't remove the iframes in the
-***REMOVED*** same execution context as the response, otherwise some versions of Firefox
-***REMOVED*** will not detect that the response has correctly finished and the loading bar
-***REMOVED*** will stay active forever.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules an iframe for disposal, async.  We can't remove the iframes in the
+ * same execution context as the response, otherwise some versions of Firefox
+ * will not detect that the response has correctly finished and the loading bar
+ * will stay active forever.
+ * @private
+ */
 goog.net.IframeIo.prototype.scheduleIframeDisposal_ = function() {
   var iframe = this.iframe_;
 
@@ -1255,13 +1255,13 @@ goog.net.IframeIo.prototype.scheduleIframeDisposal_ = function() {
   // Nullify reference
   this.iframe_ = null;
   this.iframeName_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disposes any iframes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Disposes any iframes.
+ * @private
+ */
 goog.net.IframeIo.prototype.disposeIframes_ = function() {
   if (this.iframeDisposalTimer_) {
     // Clear the timer
@@ -1274,68 +1274,68 @@ goog.net.IframeIo.prototype.disposeIframes_ = function() {
     goog.log.info(this.logger_, 'Disposing iframe');
     goog.dom.removeNode(iframe);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes all the child nodes from the static form so it can be reused again.
-***REMOVED*** This should happen right after sending a request. Otherwise, there can be
-***REMOVED*** issues when another iframe uses this form right after the first iframe.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes all the child nodes from the static form so it can be reused again.
+ * This should happen right after sending a request. Otherwise, there can be
+ * issues when another iframe uses this form right after the first iframe.
+ * @private
+ */
 goog.net.IframeIo.prototype.clearForm_ = function() {
   if (this.form_ && this.form_ == goog.net.IframeIo.form_) {
     goog.dom.removeChildren(this.form_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disposes of the Form.  Since IE6 leaks form nodes, this just cleans up the
-***REMOVED*** DOM and nullifies the instances reference so the form can be used for another
-***REMOVED*** request.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Disposes of the Form.  Since IE6 leaks form nodes, this just cleans up the
+ * DOM and nullifies the instances reference so the form can be used for another
+ * request.
+ * @private
+ */
 goog.net.IframeIo.prototype.disposeForm_ = function() {
   this.clearForm_();
   this.form_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {HTMLDocument} The appropriate content document.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {HTMLDocument} The appropriate content document.
+ * @private
+ */
 goog.net.IframeIo.prototype.getContentDocument_ = function() {
   if (this.iframe_) {
-    return***REMOVED*****REMOVED*** @type {HTMLDocument}***REMOVED***(goog.dom.getFrameContentDocument(
+    return /** @type {HTMLDocument} */(goog.dom.getFrameContentDocument(
         this.getRequestIframe()));
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {HTMLIFrameElement} The appropriate iframe to use for requests
-***REMOVED***     (created in sendForm_).
-***REMOVED***
+/**
+ * @return {HTMLIFrameElement} The appropriate iframe to use for requests
+ *     (created in sendForm_).
+ */
 goog.net.IframeIo.prototype.getRequestIframe = function() {
   if (this.iframe_) {
-    return***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED***(
+    return /** @type {HTMLIFrameElement} */(
         goog.net.IframeIo.useIeReadyStateCodePath_() ?
             this.iframe_ :
             goog.dom.getFrameContentDocument(this.iframe_).getElementById(
                 this.iframeName_ + goog.net.IframeIo.INNER_FRAME_SUFFIX));
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests for a silent failure by firefox that can occur when the connection is
-***REMOVED*** reset by the server or is made to an illegal URL.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests for a silent failure by firefox that can occur when the connection is
+ * reset by the server or is made to an illegal URL.
+ * @private
+ */
 goog.net.IframeIo.prototype.testForFirefoxSilentError_ = function() {
   if (this.active_) {
     var doc = this.getContentDocument_();
@@ -1363,24 +1363,24 @@ goog.net.IframeIo.prototype.testForFirefoxSilentError_ = function() {
     this.firefoxSilentErrorTimeout_ =
         goog.Timer.callOnce(this.testForFirefoxSilentError_, 250, this);
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class for representing incremental data events.
-***REMOVED*** @param {Object} data The data associated with the event.
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for representing incremental data events.
+ * @param {Object} data The data associated with the event.
+ * @extends {goog.events.Event}
+ * @constructor
+ * @final
+ */
 goog.net.IframeIo.IncrementalDataEvent = function(data) {
   goog.events.Event.call(this, goog.net.EventType.INCREMENTAL_DATA);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The data associated with the event.
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * The data associated with the event.
+   * @type {Object}
+   */
   this.data = data;
-***REMOVED***
+};
 goog.inherits(goog.net.IframeIo.IncrementalDataEvent, goog.events.Event);

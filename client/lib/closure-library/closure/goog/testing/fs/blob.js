@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock blob object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Mock blob object.
+ *
+ */
 
 goog.provide('goog.testing.fs.Blob');
 
@@ -23,49 +23,49 @@ goog.require('goog.crypt.base64');
 
 
 
-***REMOVED***
-***REMOVED*** A mock Blob object. The data is stored as a string.
-***REMOVED***
-***REMOVED*** @param {string=} opt_data The string data encapsulated by the blob.
-***REMOVED*** @param {string=} opt_type The mime type of the blob.
-***REMOVED***
-***REMOVED***
+/**
+ * A mock Blob object. The data is stored as a string.
+ *
+ * @param {string=} opt_data The string data encapsulated by the blob.
+ * @param {string=} opt_type The mime type of the blob.
+ * @constructor
+ */
 goog.testing.fs.Blob = function(opt_data, opt_type) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @see http://www.w3.org/TR/FileAPI/#dfn-type
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * @see http://www.w3.org/TR/FileAPI/#dfn-type
+   * @type {string}
+   */
   this.type = opt_type || '';
 
   this.setDataInternal(opt_data || '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The string data encapsulated by the blob.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The string data encapsulated by the blob.
+ * @type {string}
+ * @private
+ */
 goog.testing.fs.Blob.prototype.data_;
 
 
-***REMOVED***
-***REMOVED*** @see http://www.w3.org/TR/FileAPI/#dfn-size
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * @see http://www.w3.org/TR/FileAPI/#dfn-size
+ * @type {number}
+ */
 goog.testing.fs.Blob.prototype.size;
 
 
-***REMOVED***
-***REMOVED*** Creates a blob with bytes of a blob ranging from the optional start
-***REMOVED*** parameter up to but not including the optional end parameter, and with a type
-***REMOVED*** attribute that is the value of the optional contentType parameter.
-***REMOVED*** @see http://www.w3.org/TR/FileAPI/#dfn-slice
-***REMOVED*** @param {number=} opt_start The start byte offset.
-***REMOVED*** @param {number=} opt_end The end point of a slice.
-***REMOVED*** @param {string=} opt_contentType The type of the resulting Blob.
-***REMOVED*** @return {!goog.testing.fs.Blob} The result blob of the slice operation.
-***REMOVED***
+/**
+ * Creates a blob with bytes of a blob ranging from the optional start
+ * parameter up to but not including the optional end parameter, and with a type
+ * attribute that is the value of the optional contentType parameter.
+ * @see http://www.w3.org/TR/FileAPI/#dfn-slice
+ * @param {number=} opt_start The start byte offset.
+ * @param {number=} opt_end The end point of a slice.
+ * @param {string=} opt_contentType The type of the resulting Blob.
+ * @return {!goog.testing.fs.Blob} The result blob of the slice operation.
+ */
 goog.testing.fs.Blob.prototype.slice = function(
     opt_start, opt_end, opt_contentType) {
   var relativeStart;
@@ -88,48 +88,48 @@ goog.testing.fs.Blob.prototype.slice = function(
   return new goog.testing.fs.Blob(
       this.data_.substr(relativeStart, span),
       opt_contentType);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The string data encapsulated by the blob.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} The string data encapsulated by the blob.
+ * @override
+ */
 goog.testing.fs.Blob.prototype.toString = function() {
   return this.data_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!ArrayBuffer} The string data encapsulated by the blob as an
-***REMOVED***     ArrayBuffer.
-***REMOVED***
+/**
+ * @return {!ArrayBuffer} The string data encapsulated by the blob as an
+ *     ArrayBuffer.
+ */
 goog.testing.fs.Blob.prototype.toArrayBuffer = function() {
-  var buf = new ArrayBuffer(this.data_.length***REMOVED*** 2);
+  var buf = new ArrayBuffer(this.data_.length * 2);
   var arr = new Uint16Array(buf);
   for (var i = 0; i < this.data_.length; i++) {
     arr[i] = this.data_.charCodeAt(i);
   }
   return buf;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The string data encapsulated by the blob as a data: URI.
-***REMOVED***
+/**
+ * @return {string} The string data encapsulated by the blob as a data: URI.
+ */
 goog.testing.fs.Blob.prototype.toDataUrl = function() {
   return 'data:' + this.type + ';base64,' +
       goog.crypt.base64.encodeString(this.data_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the internal contents of the blob. This should only be called by other
-***REMOVED*** functions inside the {@code goog.testing.fs} namespace.
-***REMOVED***
-***REMOVED*** @param {string} data The data for this Blob.
-***REMOVED***
+/**
+ * Sets the internal contents of the blob. This should only be called by other
+ * functions inside the {@code goog.testing.fs} namespace.
+ *
+ * @param {string} data The data for this Blob.
+ */
 goog.testing.fs.Blob.prototype.setDataInternal = function(data) {
   this.data_ = data;
   this.size = data.length;
-***REMOVED***
+};

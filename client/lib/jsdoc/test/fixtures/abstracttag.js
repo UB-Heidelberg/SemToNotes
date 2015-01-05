@@ -1,17 +1,17 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Thingy() {
 
-   ***REMOVED*****REMOVED*** @abstract***REMOVED***
+    /** @abstract */
     this.pez = 2;
 
 }
 
 // same as...
 
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function OtherThingy() {
 
-   ***REMOVED*****REMOVED*** @virtual***REMOVED***
+    /** @virtual */
     this.pez = 2;
 
 }

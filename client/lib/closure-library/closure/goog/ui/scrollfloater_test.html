@@ -46,8 +46,8 @@ See the COPYING file for details.
     scrollFloater.decorate(floater);
 
     var floatWasCalled = false;
-    var callRecorder = function() { floatWasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***
+    var callRecorder = function() { floatWasCalled = true; };
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.FLOAT, callRecorder);
     scrollFloater.float_(goog.ui.ScrollFloater.FloatMode_.TOP);
     assertTrue('FLOAT event was called', floatWasCalled);
@@ -55,8 +55,8 @@ See the COPYING file for details.
     assertFalse('Should not be pinned', scrollFloater.isPinned());
 
     var dockWasCalled = false;
-    callRecorder = function() { dockWasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***
+    callRecorder = function() { dockWasCalled = true; };
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.DOCK, callRecorder);
     scrollFloater.dock_();
     assertTrue('DOCK event was called', dockWasCalled);
@@ -64,8 +64,8 @@ See the COPYING file for details.
     assertFalse('Should not be pinned', scrollFloater.isPinned());
 
     var pinWasCalled = false;
-    callRecorder = function() { pinWasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***
+    callRecorder = function() { pinWasCalled = true; };
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.PIN, callRecorder);
     scrollFloater.pin_();
     assertTrue('PIN event was called', pinWasCalled);
@@ -81,16 +81,16 @@ See the COPYING file for details.
     scrollFloater.decorate(floater);
 
     // Event handler that returns false to cancel the event.
-    var eventCanceller = function() { return false;***REMOVED*****REMOVED***
+    var eventCanceller = function() { return false; };
 
     // Have eventCanceller handle the FLOAT event and verify cancellation.
-  ***REMOVED***
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.FLOAT, eventCanceller);
     scrollFloater.float_(goog.ui.ScrollFloater.FloatMode_.TOP);
     assertFalse('Should not be floating', scrollFloater.isFloating());
 
     // Have eventCanceller handle the PIN event and verify cancellation.
-  ***REMOVED***
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.PIN, eventCanceller);
     scrollFloater.dock_();
     assertFalse('Should not be pinned', scrollFloater.isPinned());
@@ -101,7 +101,7 @@ See the COPYING file for details.
     scrollFloater.float_(goog.ui.ScrollFloater.FloatMode_.TOP);
 
     // Have eventCanceller handle the DOCK event and verify cancellation.
-  ***REMOVED***
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.DOCK, eventCanceller);
     scrollFloater.dock_();
     assertTrue('Should still be floating', scrollFloater.isFloating());
@@ -117,11 +117,11 @@ See the COPYING file for details.
     // Event handler that sets the font size of the scrollfloater to 20px.
     var updateStyle = function(e) {
         goog.style.setStyle(e.target.getElement(), 'font-size', '20px');
-   ***REMOVED*****REMOVED***
+    };
 
     // Set the current font size to 10px.
     goog.style.setStyle(scrollFloater.getElement(), 'font-size', '10px');
-  ***REMOVED***
+    goog.events.listen(
         scrollFloater, goog.ui.ScrollFloater.EventType.FLOAT, updateStyle);
     scrollFloater.float_(goog.ui.ScrollFloater.FloatMode_.BOTTOM);
 

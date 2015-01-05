@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Testing utilities for editor specific DOM related tests.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Testing utilities for editor specific DOM related tests.
+ *
+ */
 
 goog.provide('goog.testing.editor.dom');
 
@@ -27,72 +27,72 @@ goog.require('goog.string');
 goog.require('goog.testing.asserts');
 
 
-***REMOVED***
-***REMOVED*** Returns the previous (in document order) node from the given node that is a
-***REMOVED*** non-empty text node, or null if none is found or opt_stopAt is not an
-***REMOVED*** ancestor of node. Note that if the given node has children, the search will
-***REMOVED*** start from the end tag of the node, meaning all its descendants will be
-***REMOVED*** included in the search, unless opt_skipDescendants is true.
-***REMOVED*** @param {Node} node Node to start searching from.
-***REMOVED*** @param {Node=} opt_stopAt Node to stop searching at (search will be
-***REMOVED***     restricted to this node's subtree), defaults to the body of the document
-***REMOVED***     containing node.
-***REMOVED*** @param {boolean=} opt_skipDescendants Whether to skip searching the given
-***REMOVED***     node's descentants.
-***REMOVED*** @return {Text} The previous (in document order) node from the given node
-***REMOVED***     that is a non-empty text node, or null if none is found.
-***REMOVED***
+/**
+ * Returns the previous (in document order) node from the given node that is a
+ * non-empty text node, or null if none is found or opt_stopAt is not an
+ * ancestor of node. Note that if the given node has children, the search will
+ * start from the end tag of the node, meaning all its descendants will be
+ * included in the search, unless opt_skipDescendants is true.
+ * @param {Node} node Node to start searching from.
+ * @param {Node=} opt_stopAt Node to stop searching at (search will be
+ *     restricted to this node's subtree), defaults to the body of the document
+ *     containing node.
+ * @param {boolean=} opt_skipDescendants Whether to skip searching the given
+ *     node's descentants.
+ * @return {Text} The previous (in document order) node from the given node
+ *     that is a non-empty text node, or null if none is found.
+ */
 goog.testing.editor.dom.getPreviousNonEmptyTextNode = function(
     node, opt_stopAt, opt_skipDescendants) {
   return goog.testing.editor.dom.getPreviousNextNonEmptyTextNodeHelper_(
       node, opt_stopAt, opt_skipDescendants, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the next (in document order) node from the given node that is a
-***REMOVED*** non-empty text node, or null if none is found or opt_stopAt is not an
-***REMOVED*** ancestor of node. Note that if the given node has children, the search will
-***REMOVED*** start from the start tag of the node, meaning all its descendants will be
-***REMOVED*** included in the search, unless opt_skipDescendants is true.
-***REMOVED*** @param {Node} node Node to start searching from.
-***REMOVED*** @param {Node=} opt_stopAt Node to stop searching at (search will be
-***REMOVED***     restricted to this node's subtree), defaults to the body of the document
-***REMOVED***     containing node.
-***REMOVED*** @param {boolean=} opt_skipDescendants Whether to skip searching the given
-***REMOVED***     node's descentants.
-***REMOVED*** @return {Text} The next (in document order) node from the given node that
-***REMOVED***     is a non-empty text node, or null if none is found or opt_stopAt is not
-***REMOVED***     an ancestor of node.
-***REMOVED***
+/**
+ * Returns the next (in document order) node from the given node that is a
+ * non-empty text node, or null if none is found or opt_stopAt is not an
+ * ancestor of node. Note that if the given node has children, the search will
+ * start from the start tag of the node, meaning all its descendants will be
+ * included in the search, unless opt_skipDescendants is true.
+ * @param {Node} node Node to start searching from.
+ * @param {Node=} opt_stopAt Node to stop searching at (search will be
+ *     restricted to this node's subtree), defaults to the body of the document
+ *     containing node.
+ * @param {boolean=} opt_skipDescendants Whether to skip searching the given
+ *     node's descentants.
+ * @return {Text} The next (in document order) node from the given node that
+ *     is a non-empty text node, or null if none is found or opt_stopAt is not
+ *     an ancestor of node.
+ */
 goog.testing.editor.dom.getNextNonEmptyTextNode = function(
     node, opt_stopAt, opt_skipDescendants) {
   return goog.testing.editor.dom.getPreviousNextNonEmptyTextNodeHelper_(
       node, opt_stopAt, opt_skipDescendants, false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper that returns the previous or next (in document order) node from the
-***REMOVED*** given node that is a non-empty text node, or null if none is found or
-***REMOVED*** opt_stopAt is not an ancestor of node. Note that if the given node has
-***REMOVED*** children, the search will start from the end or start tag of the node
-***REMOVED*** (depending on whether it's searching for the previous or next node), meaning
-***REMOVED*** all its descendants will be included in the search, unless
-***REMOVED*** opt_skipDescendants is true.
-***REMOVED*** @param {Node} node Node to start searching from.
-***REMOVED*** @param {Node=} opt_stopAt Node to stop searching at (search will be
-***REMOVED***     restricted to this node's subtree), defaults to the body of the document
-***REMOVED***     containing node.
-***REMOVED*** @param {boolean=} opt_skipDescendants Whether to skip searching the given
-***REMOVED***   node's descentants.
-***REMOVED*** @param {boolean=} opt_isPrevious Whether to search for the previous non-empty
-***REMOVED***     text node instead of the next one.
-***REMOVED*** @return {Text} The next (in document order) node from the given node that
-***REMOVED***     is a non-empty text node, or null if none is found or opt_stopAt is not
-***REMOVED***     an ancestor of node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper that returns the previous or next (in document order) node from the
+ * given node that is a non-empty text node, or null if none is found or
+ * opt_stopAt is not an ancestor of node. Note that if the given node has
+ * children, the search will start from the end or start tag of the node
+ * (depending on whether it's searching for the previous or next node), meaning
+ * all its descendants will be included in the search, unless
+ * opt_skipDescendants is true.
+ * @param {Node} node Node to start searching from.
+ * @param {Node=} opt_stopAt Node to stop searching at (search will be
+ *     restricted to this node's subtree), defaults to the body of the document
+ *     containing node.
+ * @param {boolean=} opt_skipDescendants Whether to skip searching the given
+ *   node's descentants.
+ * @param {boolean=} opt_isPrevious Whether to search for the previous non-empty
+ *     text node instead of the next one.
+ * @return {Text} The next (in document order) node from the given node that
+ *     is a non-empty text node, or null if none is found or opt_stopAt is not
+ *     an ancestor of node.
+ * @private
+ */
 goog.testing.editor.dom.getPreviousNextNonEmptyTextNodeHelper_ = function(
     node, opt_stopAt, opt_skipDescendants, opt_isPrevious) {
   opt_stopAt = opt_stopAt || node.ownerDocument.body;
@@ -135,37 +135,37 @@ goog.testing.editor.dom.getPreviousNextNonEmptyTextNodeHelper_ = function(
   var filter = goog.iter.filter(iter,
                                 goog.testing.editor.dom.isNonEmptyTextNode_);
   try {
-    return***REMOVED*****REMOVED*** @type {Text}***REMOVED*** (filter.next());
+    return /** @type {Text} */ (filter.next());
   } catch (e) { // No next item is available so return null.
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the given node is a non-empty text node.
-***REMOVED*** @param {Node} node Node to be checked.
-***REMOVED*** @return {boolean} Whether the given node is a non-empty text node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns whether the given node is a non-empty text node.
+ * @param {Node} node Node to be checked.
+ * @return {boolean} Whether the given node is a non-empty text node.
+ * @private
+ */
 goog.testing.editor.dom.isNonEmptyTextNode_ = function(node) {
   return !!node && node.nodeType == goog.dom.NodeType.TEXT && node.length > 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the depth of the given node relative to the given parent node, or -1
-***REMOVED*** if the given node is not a descendant of the given parent node. E.g. if
-***REMOVED*** node == parentNode returns 0, if node.parentNode == parentNode returns 1,
-***REMOVED*** etc.
-***REMOVED*** @param {Node} node Node whose depth to get.
-***REMOVED*** @param {Node} parentNode Node relative to which the depth should be
-***REMOVED***     calculated.
-***REMOVED*** @return {number} The depth of the given node relative to the given parent
-***REMOVED***     node, or -1 if the given node is not a descendant of the given parent
-***REMOVED***     node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the depth of the given node relative to the given parent node, or -1
+ * if the given node is not a descendant of the given parent node. E.g. if
+ * node == parentNode returns 0, if node.parentNode == parentNode returns 1,
+ * etc.
+ * @param {Node} node Node whose depth to get.
+ * @param {Node} parentNode Node relative to which the depth should be
+ *     calculated.
+ * @return {number} The depth of the given node relative to the given parent
+ *     node, or -1 if the given node is not a descendant of the given parent
+ *     node.
+ * @private
+ */
 goog.testing.editor.dom.getRelativeDepth_ = function(node, parentNode) {
   var depth = 0;
   while (node) {
@@ -176,25 +176,25 @@ goog.testing.editor.dom.getRelativeDepth_ = function(node, parentNode) {
     depth++;
   }
   return -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the range is surrounded by the given strings. This is useful
-***REMOVED*** because different browsers can place the range endpoints inside different
-***REMOVED*** nodes even when visually the range looks the same. Also, there may be empty
-***REMOVED*** text nodes in the way (again depending on the browser) making it difficult to
-***REMOVED*** use assertRangeEquals.
-***REMOVED*** @param {string} before String that should occur immediately before the start
-***REMOVED***     point of the range. If this is the empty string, assert will only succeed
-***REMOVED***     if there is no text before the start point of the range.
-***REMOVED*** @param {string} after String that should occur immediately after the end
-***REMOVED***     point of the range. If this is the empty string, assert will only succeed
-***REMOVED***     if there is no text after the end point of the range.
-***REMOVED*** @param {goog.dom.AbstractRange} range The range to be tested.
-***REMOVED*** @param {Node=} opt_stopAt Node to stop searching at (search will be
-***REMOVED***     restricted to this node's subtree).
-***REMOVED***
+/**
+ * Assert that the range is surrounded by the given strings. This is useful
+ * because different browsers can place the range endpoints inside different
+ * nodes even when visually the range looks the same. Also, there may be empty
+ * text nodes in the way (again depending on the browser) making it difficult to
+ * use assertRangeEquals.
+ * @param {string} before String that should occur immediately before the start
+ *     point of the range. If this is the empty string, assert will only succeed
+ *     if there is no text before the start point of the range.
+ * @param {string} after String that should occur immediately after the end
+ *     point of the range. If this is the empty string, assert will only succeed
+ *     if there is no text after the end point of the range.
+ * @param {goog.dom.AbstractRange} range The range to be tested.
+ * @param {Node=} opt_stopAt Node to stop searching at (search will be
+ *     restricted to this node's subtree).
+ */
 goog.testing.editor.dom.assertRangeBetweenText = function(before,
                                                           after,
                                                           range,
@@ -210,7 +210,7 @@ goog.testing.editor.dom.assertRangeBetweenText = function(before,
     assertTrue('Expected <' + before + '> before range but found <' +
                previousText + '>',
                goog.string.endsWith(
-                  ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (previousText), before));
+                   /** @type {string} */ (previousText), before));
   }
   var nextText =
       goog.testing.editor.dom.getTextFollowingRange_(range, false, opt_stopAt);
@@ -223,25 +223,25 @@ goog.testing.editor.dom.assertRangeBetweenText = function(before,
     assertTrue('Expected <' + after + '> after range but found <' +
                nextText + '>',
                goog.string.startsWith(
-                  ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (nextText), after));
+                   /** @type {string} */ (nextText), after));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the text that follows the given range, where the term "follows" means
-***REMOVED*** "comes immediately before the start of the range" if isBefore is true, and
-***REMOVED*** "comes immediately after the end of the range" if isBefore is false, or null
-***REMOVED*** if no non-empty text node is found.
-***REMOVED*** @param {goog.dom.AbstractRange} range The range to search from.
-***REMOVED*** @param {boolean} isBefore Whether to search before the range instead of
-***REMOVED***     after it.
-***REMOVED*** @param {Node=} opt_stopAt Node to stop searching at (search will be
-***REMOVED***     restricted to this node's subtree).
-***REMOVED*** @return {?string} The text that follows the given range, or null if no
-***REMOVED***     non-empty text node is found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the text that follows the given range, where the term "follows" means
+ * "comes immediately before the start of the range" if isBefore is true, and
+ * "comes immediately after the end of the range" if isBefore is false, or null
+ * if no non-empty text node is found.
+ * @param {goog.dom.AbstractRange} range The range to search from.
+ * @param {boolean} isBefore Whether to search before the range instead of
+ *     after it.
+ * @param {Node=} opt_stopAt Node to stop searching at (search will be
+ *     restricted to this node's subtree).
+ * @return {?string} The text that follows the given range, or null if no
+ *     non-empty text node is found.
+ * @private
+ */
 goog.testing.editor.dom.getTextFollowingRange_ = function(range,
                                                           isBefore,
                                                           opt_stopAt) {
@@ -290,4 +290,4 @@ goog.testing.editor.dom.getTextFollowingRange_ = function(range,
       return followingTextNode && followingTextNode.nodeValue;
     }
   }
-***REMOVED***
+};

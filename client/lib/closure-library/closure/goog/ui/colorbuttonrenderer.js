@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.ColorButton}s.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.ColorButton}s.
+ *
+ */
 
 goog.provide('goog.ui.ColorButtonRenderer');
 
@@ -26,50 +26,50 @@ goog.require('goog.ui.ColorMenuButtonRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Renderer for {@link goog.ui.ColorButton}s.
-***REMOVED*** Uses {@link goog.ui.ColorMenuButton}s but disables the dropdown.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ColorMenuButtonRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Renderer for {@link goog.ui.ColorButton}s.
+ * Uses {@link goog.ui.ColorMenuButton}s but disables the dropdown.
+ *
+ * @constructor
+ * @extends {goog.ui.ColorMenuButtonRenderer}
+ * @final
+ */
 goog.ui.ColorButtonRenderer = function() {
   goog.ui.ColorButtonRenderer.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @override
- ***REMOVED*****REMOVED***
+  /**
+   * @override
+   */
   // TODO(user): enable disabling the dropdown in goog.ui.ColorMenuButton
   this.createDropdown = goog.functions.NULL;
 
-***REMOVED***
+};
 goog.inherits(goog.ui.ColorButtonRenderer, goog.ui.ColorMenuButtonRenderer);
 goog.addSingletonGetter(goog.ui.ColorButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer. Additionally, applies class to the button's caption.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer. Additionally, applies class to the button's caption.
+ * @type {string}
+ */
 goog.ui.ColorButtonRenderer.CSS_CLASS = goog.getCssName('goog-color-button');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ColorButtonRenderer.prototype.createCaption = function(content, dom) {
   var caption = goog.ui.ColorButtonRenderer.base(
       this, 'createCaption', content, dom);
   goog.asserts.assert(caption);
   goog.dom.classlist.add(caption, goog.ui.ColorButtonRenderer.CSS_CLASS);
   return caption;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ColorButtonRenderer.prototype.initializeDom = function(button) {
   goog.ui.ColorButtonRenderer.base(this, 'initializeDom', button);
   goog.dom.classlist.add(
       goog.asserts.assert(button.getElement()),
       goog.ui.ColorButtonRenderer.CSS_CLASS);
-***REMOVED***
+};

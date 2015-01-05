@@ -1,17 +1,17 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: attila@google.com (Attila Bodis)***REMOVED***
-/* Author: eae@google.com (Emil A. Eklund)***REMOVED***
+/* Author: attila@google.com (Attila Bodis) */
+/* Author: eae@google.com (Emil A. Eklund) */
 
 
 /*
-***REMOVED*** Styles used by goog.ui.TabRenderer.
-***REMOVED***
+ * Styles used by goog.ui.TabRenderer.
+ */
 .goog-tab {
   position: relative;
   padding: 4px 8px;
@@ -51,17 +51,17 @@
   border-left: 0;
 }
 
-/* State: Hover***REMOVED***
+/* State: Hover */
 .goog-tab-hover {
   background: #eee;
 }
 
-/* State: Disabled***REMOVED***
+/* State: Disabled */
 .goog-tab-disabled {
   color: #666;
 }
 
-/* State: Selected***REMOVED***
+/* State: Selected */
 .goog-tab-selected {
   color: #000;
   background: #fff;
@@ -76,10 +76,10 @@
   border-bottom: 1px solid #6b90da !important;
 }
 /*
-***REMOVED*** Shift selected tabs 1px towards the contents (and compensate via margin and
-***REMOVED*** padding) to visually merge the borders of the tab with the borders of the
-***REMOVED*** content area.
-***REMOVED***
+ * Shift selected tabs 1px towards the contents (and compensate via margin and
+ * padding) to visually merge the borders of the tab with the borders of the
+ * content area.
+ */
 .goog-tab-bar-top .goog-tab-selected {
   top: 1px;
   margin-top: 0;

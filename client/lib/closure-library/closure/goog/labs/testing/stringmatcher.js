@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the built-in string matchers like containsString,
-***REMOVED***     startsWith, endsWith, etc.
-***REMOVED***
+/**
+ * @fileoverview Provides the built-in string matchers like containsString,
+ *     startsWith, endsWith, etc.
+ */
 
 
 goog.provide('goog.labs.testing.ContainsStringMatcher');
@@ -34,275 +34,275 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** The ContainsString matcher.
-***REMOVED***
-***REMOVED*** @param {string} value The expected string.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The ContainsString matcher.
+ *
+ * @param {string} value The expected string.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.ContainsStringMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string contains the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string contains the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.ContainsStringMatcher.prototype.matches =
     function(actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.contains(actualValue, this.value_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.ContainsStringMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' does not contain ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The EndsWith matcher.
-***REMOVED***
-***REMOVED*** @param {string} value The expected string.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The EndsWith matcher.
+ *
+ * @param {string} value The expected string.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.EndsWithMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string ends with the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string ends with the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.EndsWithMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.endsWith(actualValue, this.value_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.EndsWithMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' does not end with ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The EqualToIgnoringWhitespace matcher.
-***REMOVED***
-***REMOVED*** @param {string} value The expected string.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The EqualToIgnoringWhitespace matcher.
+ *
+ * @param {string} value The expected string.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.EqualToIgnoringWhitespaceMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string contains the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string contains the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.EqualToIgnoringWhitespaceMatcher.prototype.matches =
     function(actualValue) {
   goog.asserts.assertString(actualValue);
   var string1 = goog.string.collapseWhitespace(actualValue);
 
   return goog.string.caseInsensitiveCompare(this.value_, string1) === 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.EqualToIgnoringWhitespaceMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' is not equal(ignoring whitespace) to ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The Equals matcher.
-***REMOVED***
-***REMOVED*** @param {string} value The expected string.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The Equals matcher.
+ *
+ * @param {string} value The expected string.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.EqualsMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string is equal to the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string is equal to the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.EqualsMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertString(actualValue);
   return this.value_ === actualValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.EqualsMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' is not equal to ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The MatchesRegex matcher.
-***REMOVED***
-***REMOVED*** @param {!RegExp} regex The expected regex.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The MatchesRegex matcher.
+ *
+ * @param {!RegExp} regex The expected regex.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.RegexMatcher = function(regex) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!RegExp}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!RegExp}
+   * @private
+   */
   this.regex_ = regex;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string is equal to the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string is equal to the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.RegexMatcher.prototype.matches = function(
     actualValue) {
   goog.asserts.assertString(actualValue);
   return this.regex_.test(actualValue);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.RegexMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' does not match ' + this.regex_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The StartsWith matcher.
-***REMOVED***
-***REMOVED*** @param {string} value The expected string.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The StartsWith matcher.
+ *
+ * @param {string} value The expected string.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.StartsWithMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string starts with the expected string.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string starts with the expected string.
+ *
+ * @override
+ */
 goog.labs.testing.StartsWithMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertString(actualValue);
   return goog.string.startsWith(actualValue, this.value_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.StartsWithMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' does not start with ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The StringContainsInOrdermatcher.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} values The expected string values.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The StringContainsInOrdermatcher.
+ *
+ * @param {Array.<string>} values The expected string values.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.StringContainsInOrderMatcher = function(values) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {Array.<string>}
+   * @private
+   */
   this.values_ = values;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input string contains, in order, the expected array of strings.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input string contains, in order, the expected array of strings.
+ *
+ * @override
+ */
 goog.labs.testing.StringContainsInOrderMatcher.prototype.matches =
     function(actualValue) {
   goog.asserts.assertString(actualValue);
@@ -315,102 +315,102 @@ goog.labs.testing.StringContainsInOrderMatcher.prototype.matches =
     previousIndex = currentIndex;
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.StringContainsInOrderMatcher.prototype.describe =
     function(actualValue) {
   return actualValue + ' does not contain the expected values in order.';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Matches a string containing the given string.
-***REMOVED***
-***REMOVED*** @param {string} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.ContainsStringMatcher} A
-***REMOVED***     ContainsStringMatcher.
-***REMOVED***
+/**
+ * Matches a string containing the given string.
+ *
+ * @param {string} value The expected value.
+ *
+ * @return {!goog.labs.testing.ContainsStringMatcher} A
+ *     ContainsStringMatcher.
+ */
 function containsString(value) {
   return new goog.labs.testing.ContainsStringMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string that ends with the given string.
-***REMOVED***
-***REMOVED*** @param {string} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.EndsWithMatcher} A
-***REMOVED***     EndsWithMatcher.
-***REMOVED***
+/**
+ * Matches a string that ends with the given string.
+ *
+ * @param {string} value The expected value.
+ *
+ * @return {!goog.labs.testing.EndsWithMatcher} A
+ *     EndsWithMatcher.
+ */
 function endsWith(value) {
   return new goog.labs.testing.EndsWithMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string that equals (ignoring whitespace) the given string.
-***REMOVED***
-***REMOVED*** @param {string} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.EqualToIgnoringWhitespaceMatcher} A
-***REMOVED***     EqualToIgnoringWhitespaceMatcher.
-***REMOVED***
+/**
+ * Matches a string that equals (ignoring whitespace) the given string.
+ *
+ * @param {string} value The expected value.
+ *
+ * @return {!goog.labs.testing.EqualToIgnoringWhitespaceMatcher} A
+ *     EqualToIgnoringWhitespaceMatcher.
+ */
 function equalToIgnoringWhitespace(value) {
   return new goog.labs.testing.EqualToIgnoringWhitespaceMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string that equals the given string.
-***REMOVED***
-***REMOVED*** @param {string} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.EqualsMatcher} A EqualsMatcher.
-***REMOVED***
+/**
+ * Matches a string that equals the given string.
+ *
+ * @param {string} value The expected value.
+ *
+ * @return {!goog.labs.testing.EqualsMatcher} A EqualsMatcher.
+ */
 function equals(value) {
   return new goog.labs.testing.EqualsMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string against a regular expression.
-***REMOVED***
-***REMOVED*** @param {!RegExp} regex The expected regex.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.RegexMatcher} A RegexMatcher.
-***REMOVED***
+/**
+ * Matches a string against a regular expression.
+ *
+ * @param {!RegExp} regex The expected regex.
+ *
+ * @return {!goog.labs.testing.RegexMatcher} A RegexMatcher.
+ */
 function matchesRegex(regex) {
   return new goog.labs.testing.RegexMatcher(regex);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string that starts with the given string.
-***REMOVED***
-***REMOVED*** @param {string} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.StartsWithMatcher} A
-***REMOVED***     StartsWithMatcher.
-***REMOVED***
+/**
+ * Matches a string that starts with the given string.
+ *
+ * @param {string} value The expected value.
+ *
+ * @return {!goog.labs.testing.StartsWithMatcher} A
+ *     StartsWithMatcher.
+ */
 function startsWith(value) {
   return new goog.labs.testing.StartsWithMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** Matches a string that contains the given strings in order.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} values The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.StringContainsInOrderMatcher} A
-***REMOVED***     StringContainsInOrderMatcher.
-***REMOVED***
+/**
+ * Matches a string that contains the given strings in order.
+ *
+ * @param {Array.<string>} values The expected value.
+ *
+ * @return {!goog.labs.testing.StringContainsInOrderMatcher} A
+ *     StringContainsInOrderMatcher.
+ */
 function stringContainsInOrder(values) {
   return new goog.labs.testing.StringContainsInOrderMatcher(values);
 }

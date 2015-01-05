@@ -123,7 +123,7 @@ function testBenchmarking() {
   function makeString(n) {
     var str = [];
     for (var i = 0; i < n; i++) {
-      str.push(String.fromCharCode(Math.round(Math.random()***REMOVED*** 500)));
+      str.push(String.fromCharCode(Math.round(Math.random() * 500)));
     }
     return str.join('');
   }
@@ -274,7 +274,7 @@ var byteArrays = {
   125: 1393578269,
   126: -810682545,
   127: -635515639
-***REMOVED***
+};
 
 var testCase;
 if (G_testRunner) {

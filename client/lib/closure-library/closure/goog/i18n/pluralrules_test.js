@@ -19,7 +19,7 @@ goog.require('goog.i18n.pluralRules');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED*** @suppress {missingRequire}***REMOVED***
+/** @suppress {missingRequire} */
 var Keyword = goog.i18n.pluralRules.Keyword;
 
 function testSimpleSelectEn() {

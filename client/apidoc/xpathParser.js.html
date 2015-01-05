@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A recursive descent Parser.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A recursive descent Parser.
+ */
 
 goog.provide('xrx.xpath.Parser');
 
@@ -48,28 +48,28 @@ goog.require('xrx.xpath.UnionExpr');
 
 
 
-***REMOVED***
-***REMOVED*** The recursive descent parser.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.Lexer} lexer The lexer.
-***REMOVED*** @param {function(string): ?string} nsResolver Namespace resolver.
-***REMOVED***
+/**
+ * The recursive descent parser.
+ *
+ * @constructor
+ * @param {!xrx.xpath.Lexer} lexer The lexer.
+ * @param {function(string): ?string} nsResolver Namespace resolver.
+ */
 xrx.xpath.Parser = function(lexer) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {!xrx.xpath.Lexer}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {!xrx.xpath.Lexer}
+   */
   this.lexer_ = lexer;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Apply recursive descent parsing on the input to construct an
-***REMOVED*** abstract syntax tree.
-***REMOVED***
-***REMOVED*** @return {!xrx.xpath.Expr} The root of the constructed tree.
-***REMOVED***
+/**
+ * Apply recursive descent parsing on the input to construct an
+ * abstract syntax tree.
+ *
+ * @return {!xrx.xpath.Expr} The root of the constructed tree.
+ */
 xrx.xpath.Parser.prototype.parseExpr = function() {
   var expr, stack = [];
   while (true) {
@@ -95,60 +95,60 @@ xrx.xpath.Parser.prototype.parseExpr = function() {
   }
   while (stack.length) {
     expr = new xrx.xpath.BinaryExpr(stack.pop(), stack.pop(),
-       ***REMOVED*****REMOVED*** @type {!xrx.xpath.Expr}***REMOVED*** (expr));
+        /** @type {!xrx.xpath.Expr} */ (expr));
   }
-  return***REMOVED*****REMOVED*** @type {!xrx.xpath.Expr}***REMOVED*** (expr);
-***REMOVED***
+  return /** @type {!xrx.xpath.Expr} */ (expr);
+};
 
 
-***REMOVED***
-***REMOVED*** Checks that the lexer is not empty,
-***REMOVED***     displays the given error message if it is.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} msg The error message to display.
-***REMOVED***
+/**
+ * Checks that the lexer is not empty,
+ *     displays the given error message if it is.
+ *
+ * @private
+ * @param {string} msg The error message to display.
+ */
 xrx.xpath.Parser.prototype.checkNotEmpty_ = function(msg) {
   if (this.lexer_.empty()) {
     throw Error(msg);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks that the next token of the error message is the expected token.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} expected The expected token.
-***REMOVED***
+/**
+ * Checks that the next token of the error message is the expected token.
+ *
+ * @private
+ * @param {string} expected The expected token.
+ */
 xrx.xpath.Parser.prototype.checkNextEquals_ = function(expected) {
   var got = this.lexer_.next();
   if (got != expected) {
     throw Error('Bad token, expected: ' + expected + ' got: ' + got);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks that the next token of the error message is not the given token.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} token The token.
-***REMOVED***
+/**
+ * Checks that the next token of the error message is not the given token.
+ *
+ * @private
+ * @param {string} token The token.
+ */
 xrx.xpath.Parser.prototype.checkNextNotEquals_ = function(token) {
   var next = this.lexer_.next();
   if (next != token) {
     throw Error('Bad token: ' + next);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the input as a FilterExpr.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {xrx.xpath.Expr} The root of the constructed tree.
-***REMOVED***
+/**
+ * Attempts to parse the input as a FilterExpr.
+ *
+ * @private
+ * @return {xrx.xpath.Expr} The root of the constructed tree.
+ */
 xrx.xpath.Parser.prototype.parseFilterExpr_ = function() {
   var expr;
   var token = this.lexer_.peek();
@@ -182,15 +182,15 @@ xrx.xpath.Parser.prototype.parseFilterExpr_ = function() {
   }
   var predicates = new xrx.xpath.Predicates(this.parsePredicates_());
   return new xrx.xpath.FilterExpr(expr, predicates);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses FunctionCall.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.FunctionCall} The parsed expression.
-***REMOVED***
+/**
+ * Parses FunctionCall.
+ *
+ * @private
+ * @return {!xrx.xpath.FunctionCall} The parsed expression.
+ */
 xrx.xpath.Parser.prototype.parseFunctionCall_ = function() {
   var funcName = this.lexer_.next();
   var func = xrx.xpath.FunctionCall.getFunc(funcName);
@@ -209,15 +209,15 @@ xrx.xpath.Parser.prototype.parseFunctionCall_ = function() {
   this.checkNextNotEquals_(')');
 
   return new xrx.xpath.FunctionCall(func, args);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the input to construct a KindTest.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.KindTest} The KindTest constructed.
-***REMOVED***
+/**
+ * Parses the input to construct a KindTest.
+ *
+ * @private
+ * @return {!xrx.xpath.KindTest} The KindTest constructed.
+ */
 xrx.xpath.Parser.prototype.parseKindTest_ = function() {
   var typeName = this.lexer_.next();
   if (!xrx.xpath.KindTest.isValidType(typeName)) {
@@ -234,30 +234,30 @@ xrx.xpath.Parser.prototype.parseKindTest_ = function() {
   this.checkNotEmpty_('Bad nodetype');
   this.checkNextNotEquals_(')');
   return new xrx.xpath.KindTest(typeName, literal);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the input to construct a Literal.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.Literal} The Literal constructed.
-***REMOVED***
+/**
+ * Parses the input to construct a Literal.
+ *
+ * @private
+ * @return {!xrx.xpath.Literal} The Literal constructed.
+ */
 xrx.xpath.Parser.prototype.parseLiteral_ = function() {
   var token = this.lexer_.next();
   if (token.length &lt; 2) {
     throw Error('Unclosed literal string');
   }
   return new xrx.xpath.Literal(token);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the input to construct a NameTest.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.NameTest} The NameTest constructed.
-***REMOVED***
+/**
+ * Parses the input to construct a NameTest.
+ *
+ * @private
+ * @return {!xrx.xpath.NameTest} The NameTest constructed.
+ */
 xrx.xpath.Parser.prototype.parseNameTest_ = function() {
   var name = this.lexer_.next();
 
@@ -274,26 +274,26 @@ xrx.xpath.Parser.prototype.parseNameTest_ = function() {
     name = name.substr(colonIndex + 1);
     return new xrx.xpath.NameTest(name, namespaceUri);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the input to construct a Number.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.Number} The Number constructed.
-***REMOVED***
+/**
+ * Parses the input to construct a Number.
+ *
+ * @private
+ * @return {!xrx.xpath.Number} The Number constructed.
+ */
 xrx.xpath.Parser.prototype.parseNumber_ = function() {
   return new xrx.xpath.Number(+this.lexer_.next());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the input as a PathExpr.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.Expr} The root of the constructed tree.
-***REMOVED***
+/**
+ * Attempts to parse the input as a PathExpr.
+ *
+ * @private
+ * @return {!xrx.xpath.Expr} The root of the constructed tree.
+ */
 xrx.xpath.Parser.prototype.parsePathExpr_ = function() {
   var op, expr;
   var steps = [];
@@ -333,16 +333,16 @@ xrx.xpath.Parser.prototype.parsePathExpr_ = function() {
     steps.push(expr);
   }
   return new xrx.xpath.PathExpr(filterExpr, steps);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses Step.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} op The op for this step.
-***REMOVED*** @return {!xrx.xpath.Step} The parsed expression.
-***REMOVED***
+/**
+ * Parses Step.
+ *
+ * @private
+ * @param {string} op The op for this step.
+ * @return {!xrx.xpath.Step} The parsed expression.
+ */
 xrx.xpath.Parser.prototype.parseStep_ = function(op) {
   var test, step, token, predicates;
   if (op != '/' &amp;&amp; op != '//') {
@@ -405,15 +405,15 @@ xrx.xpath.Parser.prototype.parseStep_ = function(op) {
         axis.isReverse());
     return step || new xrx.xpath.Step(axis, test, predicates, op == '//');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses and returns the predicates from the this.lexer_.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!Array.&lt;!xrx.xpath.Expr>} An array of the predicates.
-***REMOVED***
+/**
+ * Parses and returns the predicates from the this.lexer_.
+ *
+ * @private
+ * @return {!Array.&lt;!xrx.xpath.Expr>} An array of the predicates.
+ */
 xrx.xpath.Parser.prototype.parsePredicates_ = function() {
   var predicates = [];
   while (this.lexer_.peek() == '[') {
@@ -425,16 +425,16 @@ xrx.xpath.Parser.prototype.parsePredicates_ = function() {
     this.checkNextEquals_(']');
   }
   return predicates;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the input as a unary expression with
-***REMOVED*** recursive descent parsing.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.Expr} The root of the constructed tree.
-***REMOVED***
+/**
+ * Attempts to parse the input as a unary expression with
+ * recursive descent parsing.
+ *
+ * @private
+ * @return {!xrx.xpath.Expr} The root of the constructed tree.
+ */
 xrx.xpath.Parser.prototype.parseUnaryExpr_ = function() {
   if (this.lexer_.peek() == '-') {
     this.lexer_.next();
@@ -442,16 +442,16 @@ xrx.xpath.Parser.prototype.parseUnaryExpr_ = function() {
   } else {
     return this.parseUnionExpr_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the input as a union expression with
-***REMOVED*** recursive descent parsing.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {!xrx.xpath.Expr} The root of the constructed tree.
-***REMOVED***
+/**
+ * Attempts to parse the input as a union expression with
+ * recursive descent parsing.
+ *
+ * @private
+ * @return {!xrx.xpath.Expr} The root of the constructed tree.
+ */
 xrx.xpath.Parser.prototype.parseUnionExpr_ = function() {
   var expr = this.parsePathExpr_();
   if (!(this.lexer_.peek() == '|')) {
@@ -464,7 +464,7 @@ xrx.xpath.Parser.prototype.parseUnionExpr_ = function() {
   }
   this.lexer_.back();
   return new xrx.xpath.UnionExpr(paths);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

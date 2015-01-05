@@ -15,7 +15,7 @@
 goog.provide('goog.labs.dom.PageVisibilityMonitorTest');
 goog.setTestOnly('goog.labs.dom.PageVisibilityMonitorTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.labs.dom.PageVisibilityMonitor');
 goog.require('goog.testing.PropertyReplacer');
@@ -45,7 +45,7 @@ function testNoVisibilitySupport() {
   var listener = goog.testing.recordFunction();
   vh = new goog.labs.dom.PageVisibilityMonitor();
 
-***REMOVED***vh, 'visibilitychange', listener);
+  goog.events.listen(vh, 'visibilitychange', listener);
 
   var e = new goog.testing.events.Event('visibilitychange');
   e.target = window.document;
@@ -60,7 +60,7 @@ function testListener() {
   var listener = goog.testing.recordFunction();
   vh = new goog.labs.dom.PageVisibilityMonitor();
 
-***REMOVED***vh, 'visibilitychange', listener);
+  goog.events.listen(vh, 'visibilitychange', listener);
 
   var e = new goog.testing.events.Event('visibilitychange');
   e.target = window.document;
@@ -77,7 +77,7 @@ function testListenerForWebKit() {
   var listener = goog.testing.recordFunction();
   vh = new goog.labs.dom.PageVisibilityMonitor();
 
-***REMOVED***vh, 'visibilitychange', listener);
+  goog.events.listen(vh, 'visibilitychange', listener);
 
   var e = new goog.testing.events.Event('webkitvisibilitychange');
   e.target = window.document;

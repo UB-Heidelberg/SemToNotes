@@ -19,10 +19,10 @@ goog.require('goog.events.Listenable');
 goog.require('goog.testing.jsunit');
 
 function testIsImplementedBy() {
-  var ListenableClass = function() {***REMOVED***
+  var ListenableClass = function() {};
   goog.events.Listenable.addImplementation(ListenableClass);
 
-  var NonListenableClass = function() {***REMOVED***
+  var NonListenableClass = function() {};
 
   assertTrue(goog.events.Listenable.isImplementedBy(new ListenableClass()));
   assertFalse(goog.events.Listenable.isImplementedBy(new NonListenableClass()));

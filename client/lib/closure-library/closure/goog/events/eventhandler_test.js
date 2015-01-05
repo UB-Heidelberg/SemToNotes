@@ -15,7 +15,7 @@
 goog.provide('goog.events.EventHandlerTest');
 goog.setTestOnly('goog.events.EventHandlerTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
 goog.require('goog.testing.jsunit');
@@ -38,7 +38,7 @@ function tearDown() {
 function testEventHandlerClearsListeners() {
   function tmp() {}
 
-***REMOVED***a, 'click', tmp);
+  goog.events.listen(a, 'click', tmp);
 
   assertEquals(1, goog.events.getListeners(a, 'click', false).length);
 
@@ -199,7 +199,7 @@ function testListenUnlistenWithObjectHandler() {
   eh = new goog.events.EventHandler();
   var handlerObj = {
     handleEvent: goog.testing.recordFunction()
- ***REMOVED*****REMOVED***
+  };
   eh.listen(target, 'click', handlerObj);
 
   target.dispatchEvent('click');
@@ -221,7 +221,7 @@ function testListenOnceWithObjectHandler() {
   eh = new goog.events.EventHandler();
   var handlerObj = {
     handleEvent: goog.testing.recordFunction()
- ***REMOVED*****REMOVED***
+  };
   eh.listenOnce(target, 'click', handlerObj);
 
   target.dispatchEvent('click');

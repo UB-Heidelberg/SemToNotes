@@ -15,9 +15,9 @@
 goog.provide('goog.labs.testing.decoratorMatcherTest');
 goog.setTestOnly('goog.labs.testing.decoratorMatcherTest');
 
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.AnythingMatcher');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.GreaterThanMatcher');
 goog.require('goog.labs.testing.MatcherError');
 goog.require('goog.labs.testing.assertThat');

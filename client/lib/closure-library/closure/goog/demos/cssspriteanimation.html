@@ -10,7 +10,7 @@ See the COPYING file for details.
 <title>CssSpriteAnimation demo</title>
 <script type="text/javascript" src="../base.js"></script>
 <script type="text/javascript">
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.fx.Animation');
   goog.require('goog.fx.CssSpriteAnimation');
   goog.require('goog.math.Box');
@@ -63,7 +63,7 @@ sa.play();
 
 var el2 = document.getElementById('test2');
 var sa2 = new goog.fx.CssSpriteAnimation(el2, size,
-    new goog.math.Box(132, 11, 132 + 11***REMOVED*** 8, 0), 1200);
+    new goog.math.Box(132, 11, 132 + 11 * 8, 0), 1200);
 sa2.play();
 
 var el3 = document.getElementById('test3');

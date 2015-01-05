@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Plugin that enables table editing.
-***REMOVED***
-***REMOVED*** @see ../../demos/editor/tableeditor.html
-***REMOVED***
+/**
+ * @fileoverview Plugin that enables table editing.
+ *
+ * @see ../../demos/editor/tableeditor.html
+ */
 
 goog.provide('goog.editor.plugins.TableEditor');
 
@@ -31,46 +31,46 @@ goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin that adds support for table creation and editing commands.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin that adds support for table creation and editing commands.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.TableEditor = function() {
   goog.editor.plugins.TableEditor.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The array of functions that decide whether a table element could be
-  ***REMOVED*** editable by the user or not.
-  ***REMOVED*** @type {Array.<function(Element):boolean>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The array of functions that decide whether a table element could be
+   * editable by the user or not.
+   * @type {Array.<function(Element):boolean>}
+   * @private
+   */
   this.isTableEditableFunctions_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The pre-bound function that decides whether a table element could be
-  ***REMOVED*** editable by the user or not overall.
-  ***REMOVED*** @type {function(Node):boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The pre-bound function that decides whether a table element could be
+   * editable by the user or not overall.
+   * @type {function(Node):boolean}
+   * @private
+   */
   this.isUserEditableTableBound_ = goog.bind(this.isUserEditableTable_, this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.TableEditor, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 // TODO(user): remove this once there's a sensible default
 // implementation in the base Plugin.
 goog.editor.plugins.TableEditor.prototype.getTrogClassId = function() {
   return String(goog.getUid(this.constructor));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Commands supported by goog.editor.plugins.TableEditor.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands supported by goog.editor.plugins.TableEditor.
+ * @enum {string}
+ */
 goog.editor.plugins.TableEditor.COMMAND = {
   TABLE: '+table',
   INSERT_ROW_AFTER: '+insertRowAfter',
@@ -82,35 +82,35 @@ goog.editor.plugins.TableEditor.COMMAND = {
   SPLIT_CELL: '+splitCell',
   MERGE_CELLS: '+mergeCells',
   REMOVE_TABLE: '+removeTable'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inverse map of execCommand strings to
-***REMOVED*** {@link goog.editor.plugins.TableEditor.COMMAND} constants. Used to
-***REMOVED*** determine whether a string corresponds to a command this plugin handles
-***REMOVED*** in O(1) time.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Inverse map of execCommand strings to
+ * {@link goog.editor.plugins.TableEditor.COMMAND} constants. Used to
+ * determine whether a string corresponds to a command this plugin handles
+ * in O(1) time.
+ * @type {Object}
+ * @private
+ */
 goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_ =
     goog.object.transpose(goog.editor.plugins.TableEditor.COMMAND);
 
 
-***REMOVED***
-***REMOVED*** Whether the string corresponds to a command this plugin handles.
-***REMOVED*** @param {string} command Command string to check.
-***REMOVED*** @return {boolean} Whether the string corresponds to a command
-***REMOVED***     this plugin handles.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Whether the string corresponds to a command this plugin handles.
+ * @param {string} command Command string to check.
+ * @return {boolean} Whether the string corresponds to a command
+ *     this plugin handles.
+ * @override
+ */
 goog.editor.plugins.TableEditor.prototype.isSupportedCommand =
     function(command) {
   return command in goog.editor.plugins.TableEditor.SUPPORTED_COMMANDS_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TableEditor.prototype.enable = function(fieldObject) {
   goog.editor.plugins.TableEditor.base(this, 'enable', fieldObject);
 
@@ -121,52 +121,52 @@ goog.editor.plugins.TableEditor.prototype.enable = function(fieldObject) {
     var doc = this.getFieldDomHelper().getDocument();
     doc.execCommand('enableObjectResizing', false, 'true');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the currently selected table.
-***REMOVED*** @return {Element?} The table in which the current selection is
-***REMOVED***     contained, or null if there isn't such a table.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the currently selected table.
+ * @return {Element?} The table in which the current selection is
+ *     contained, or null if there isn't such a table.
+ * @private
+ */
 goog.editor.plugins.TableEditor.prototype.getCurrentTable_ = function() {
   var selectedElement = this.getFieldObject().getRange().getContainer();
   return this.getAncestorTable_(selectedElement);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the first user-editable table element in the input node's ancestors.
-***REMOVED*** @param {Node?} node The node to start with.
-***REMOVED*** @return {Element?} The table element that is closest ancestor of the node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds the first user-editable table element in the input node's ancestors.
+ * @param {Node?} node The node to start with.
+ * @return {Element?} The table element that is closest ancestor of the node.
+ * @private
+ */
 goog.editor.plugins.TableEditor.prototype.getAncestorTable_ = function(node) {
   var ancestor = goog.dom.getAncestor(node, this.isUserEditableTableBound_,
       true);
   if (goog.editor.node.isEditable(ancestor)) {
-    return***REMOVED*****REMOVED*** @type {Element?}***REMOVED***(ancestor);
+    return /** @type {Element?} */(ancestor);
   } else {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the current value of a given command. Currently this plugin
-***REMOVED*** only returns a value for goog.editor.plugins.TableEditor.COMMAND.TABLE.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the current value of a given command. Currently this plugin
+ * only returns a value for goog.editor.plugins.TableEditor.COMMAND.TABLE.
+ * @override
+ */
 goog.editor.plugins.TableEditor.prototype.queryCommandValue =
     function(command) {
   if (command == goog.editor.plugins.TableEditor.COMMAND.TABLE) {
     return !!this.getCurrentTable_();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
     command, opt_arg) {
   var result = null;
@@ -180,7 +180,7 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
       return null;
     }
     // Create the table.
-    var tableProps = opt_arg || {width: 4, height: 2***REMOVED***
+    var tableProps = opt_arg || {width: 4, height: 2};
     var doc = this.getFieldDomHelper().getDocument();
     var table = goog.editor.Table.createDomTable(
         doc, tableProps.width, tableProps.height);
@@ -277,15 +277,15 @@ goog.editor.plugins.TableEditor.prototype.execCommandInternal = function(
     range.select();
   }
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether the element is a table editable by the user.
-***REMOVED*** @param {Node} element The element in question.
-***REMOVED*** @return {boolean} Whether the element is a table editable by the user.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks whether the element is a table editable by the user.
+ * @param {Node} element The element in question.
+ * @return {boolean} Whether the element is a table editable by the user.
+ * @private
+ */
 goog.editor.plugins.TableEditor.prototype.isUserEditableTable_ =
     function(element) {
   // Default implementation.
@@ -295,32 +295,32 @@ goog.editor.plugins.TableEditor.prototype.isUserEditableTable_ =
 
   // Check for extra user-editable filters.
   return goog.array.every(this.isTableEditableFunctions_, function(func) {
-    return func(***REMOVED*** @type {Element}***REMOVED*** (element));
+    return func(/** @type {Element} */ (element));
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a function to filter out non-user-editable tables.
-***REMOVED*** @param {function(Element):boolean} func A function to decide whether the
-***REMOVED***   table element could be editable by the user or not.
-***REMOVED***
+/**
+ * Adds a function to filter out non-user-editable tables.
+ * @param {function(Element):boolean} func A function to decide whether the
+ *   table element could be editable by the user or not.
+ */
 goog.editor.plugins.TableEditor.prototype.addIsTableEditableFunction =
     function(func) {
   goog.array.insert(this.isTableEditableFunctions_, func);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class representing the selected cell objects within a single  table.
-***REMOVED*** @param {goog.dom.AbstractRange} range Selected range from which to calculate
-***REMOVED***     selected cells.
-***REMOVED*** @param {function(Element):Element?} getParentTableFunction A function that
-***REMOVED***     finds the user-editable table from a given element.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Class representing the selected cell objects within a single  table.
+ * @param {goog.dom.AbstractRange} range Selected range from which to calculate
+ *     selected cells.
+ * @param {function(Element):Element?} getParentTableFunction A function that
+ *     finds the user-editable table from a given element.
+ * @constructor
+ * @private
+ */
 goog.editor.plugins.TableEditor.CellSelection_ =
     function(range, getParentTableFunction) {
   this.cells_ = [];
@@ -338,7 +338,7 @@ goog.editor.plugins.TableEditor.CellSelection_ =
     return selectionContainer == node ||
         selectionContainer.parentNode == node ||
         range.containsNode(node, false);
- ***REMOVED*****REMOVED***
+  };
 
   var parentTableElement = selectionContainer &&
       getParentTableFunction(selectionContainer);
@@ -373,74 +373,74 @@ goog.editor.plugins.TableEditor.CellSelection_ =
     }
   }
   this.parentTable_ = parentTable;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the EditableTable object of which this selection's cells are a
-***REMOVED*** subset.
-***REMOVED*** @return {!goog.editor.Table} the table.
-***REMOVED***
+/**
+ * Returns the EditableTable object of which this selection's cells are a
+ * subset.
+ * @return {!goog.editor.Table} the table.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getTable =
     function() {
   return this.parentTable_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the row index of the uppermost cell in this selection.
-***REMOVED*** @return {number} The row index.
-***REMOVED***
+/**
+ * Returns the row index of the uppermost cell in this selection.
+ * @return {number} The row index.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstRowIndex =
     function() {
   return this.firstRowIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the row index of the lowermost cell in this selection.
-***REMOVED*** @return {number} The row index.
-***REMOVED***
+/**
+ * Returns the row index of the lowermost cell in this selection.
+ * @return {number} The row index.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastRowIndex =
     function() {
   return this.lastRowIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the column index of the farthest left cell in this selection.
-***REMOVED*** @return {number} The column index.
-***REMOVED***
+/**
+ * Returns the column index of the farthest left cell in this selection.
+ * @return {number} The column index.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getFirstColumnIndex =
     function() {
   return this.firstColIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the column index of the farthest right cell in this selection.
-***REMOVED*** @return {number} The column index.
-***REMOVED***
+/**
+ * Returns the column index of the farthest right cell in this selection.
+ * @return {number} The column index.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getLastColumnIndex =
     function() {
   return this.lastColIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the cells in this selection.
-***REMOVED*** @return {!Array.<Element>} Cells in this selection.
-***REMOVED***
+/**
+ * Returns the cells in this selection.
+ * @return {!Array.<Element>} Cells in this selection.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.getCells = function() {
   return this.cells_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a boolean value indicating whether or not the cells in this
-***REMOVED*** selection form a rectangle.
-***REMOVED*** @return {boolean} Whether the selection forms a rectangle.
-***REMOVED***
+/**
+ * Returns a boolean value indicating whether or not the cells in this
+ * selection form a rectangle.
+ * @return {boolean} Whether the selection forms a rectangle.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle =
     function() {
   // TODO(user): check for missing cells. Right now this returns
@@ -455,19 +455,19 @@ goog.editor.plugins.TableEditor.CellSelection_.prototype.isRectangle =
            this.lastRowIndex_ > lastCell.endRow ||
            this.firstColIndex_ < firstCell.startCol ||
            this.lastColIndex_ > lastCell.endCol);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a boolean value indicating whether or not there is exactly
-***REMOVED*** one cell in this selection. Note that this may not be the same as checking
-***REMOVED*** whether getCells().length == 1; if there is a single cell with
-***REMOVED*** rowSpan/colSpan set it will appear multiple times.
-***REMOVED*** @return {boolean} Whether there is exatly one cell in this selection.
-***REMOVED***
+/**
+ * Returns a boolean value indicating whether or not there is exactly
+ * one cell in this selection. Note that this may not be the same as checking
+ * whether getCells().length == 1; if there is a single cell with
+ * rowSpan/colSpan set it will appear multiple times.
+ * @return {boolean} Whether there is exatly one cell in this selection.
+ */
 goog.editor.plugins.TableEditor.CellSelection_.prototype.containsSingleCell =
     function() {
   var cellCount = this.cells_.length;
   return cellCount > 0 &&
       (this.cells_[0] == this.cells_[cellCount - 1]);
-***REMOVED***
+};

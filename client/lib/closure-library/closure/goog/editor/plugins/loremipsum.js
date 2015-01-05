@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A plugin that fills the field with lorem ipsum text when it's
-***REMOVED*** empty and does not have the focus. Applies to both editable and uneditable
-***REMOVED*** fields.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A plugin that fills the field with lorem ipsum text when it's
+ * empty and does not have the focus. Applies to both editable and uneditable
+ * fields.
+ *
+ */
 
 goog.provide('goog.editor.plugins.LoremIpsum');
 
@@ -30,63 +30,63 @@ goog.require('goog.functions');
 
 
 
-***REMOVED***
-***REMOVED*** A plugin that manages lorem ipsum state of editable fields.
-***REMOVED*** @param {string} message The lorem ipsum message.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A plugin that manages lorem ipsum state of editable fields.
+ * @param {string} message The lorem ipsum message.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.LoremIpsum = function(message) {
   goog.editor.Plugin.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The lorem ipsum message.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The lorem ipsum message.
+   * @type {string}
+   * @private
+   */
   this.message_ = message;
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.LoremIpsum, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LoremIpsum.prototype.getTrogClassId =
     goog.functions.constant('LoremIpsum');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LoremIpsum.prototype.activeOnUneditableFields =
     goog.functions.TRUE;
 
 
-***REMOVED***
-***REMOVED*** Whether the field is currently filled with lorem ipsum text.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the field is currently filled with lorem ipsum text.
+ * @type {boolean}
+ * @private
+ */
 goog.editor.plugins.LoremIpsum.prototype.usingLorem_ = false;
 
 
-***REMOVED***
-***REMOVED*** Handles queryCommandValue.
-***REMOVED*** @param {string} command The command to query.
-***REMOVED*** @return {boolean} The result.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles queryCommandValue.
+ * @param {string} command The command to query.
+ * @return {boolean} The result.
+ * @override
+ */
 goog.editor.plugins.LoremIpsum.prototype.queryCommandValue = function(command) {
   return command == goog.editor.Command.USING_LOREM && this.usingLorem_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles execCommand.
-***REMOVED*** @param {string} command The command to execute.
-***REMOVED***     Should be CLEAR_LOREM or UPDATE_LOREM.
-***REMOVED*** @param {*=} opt_placeCursor Whether to place the cursor in the field
-***REMOVED***     after clearing lorem. Should be a boolean.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles execCommand.
+ * @param {string} command The command to execute.
+ *     Should be CLEAR_LOREM or UPDATE_LOREM.
+ * @param {*=} opt_placeCursor Whether to place the cursor in the field
+ *     after clearing lorem. Should be a boolean.
+ * @override
+ */
 goog.editor.plugins.LoremIpsum.prototype.execCommand = function(command,
     opt_placeCursor) {
   if (command == goog.editor.Command.CLEAR_LOREM) {
@@ -94,22 +94,22 @@ goog.editor.plugins.LoremIpsum.prototype.execCommand = function(command,
   } else if (command == goog.editor.Command.UPDATE_LOREM) {
     this.updateLorem_();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LoremIpsum.prototype.isSupportedCommand =
     function(command) {
   return command == goog.editor.Command.CLEAR_LOREM ||
       command == goog.editor.Command.UPDATE_LOREM ||
       command == goog.editor.Command.USING_LOREM;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the lorem ipsum text in a goog.editor.Field if needed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set the lorem ipsum text in a goog.editor.Field if needed.
+ * @private
+ */
 goog.editor.plugins.LoremIpsum.prototype.updateLorem_ = function() {
   // Try to apply lorem ipsum if:
   // 1) We have lorem ipsum text
@@ -140,20 +140,20 @@ goog.editor.plugins.LoremIpsum.prototype.updateLorem_ = function() {
       fieldObj.setHtml(true, this.message_, true);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clear an EditableField's lorem ipsum and put in initial text if needed.
-***REMOVED***
-***REMOVED*** If using click-to-edit mode (where Trogedit manages whether the field
-***REMOVED*** is editable), this works for both editable and uneditable fields.
-***REMOVED***
-***REMOVED*** TODO(user): Is this really necessary? See TODO below.
-***REMOVED*** @param {boolean=} opt_placeCursor Whether to place the cursor in the field
-***REMOVED***     after clearing lorem.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clear an EditableField's lorem ipsum and put in initial text if needed.
+ *
+ * If using click-to-edit mode (where Trogedit manages whether the field
+ * is editable), this works for both editable and uneditable fields.
+ *
+ * TODO(user): Is this really necessary? See TODO below.
+ * @param {boolean=} opt_placeCursor Whether to place the cursor in the field
+ *     after clearing lorem.
+ * @private
+ */
 goog.editor.plugins.LoremIpsum.prototype.clearLorem_ = function(
     opt_placeCursor) {
   // Don't mess with lorem state when a dialog is open as that screws
@@ -186,4 +186,4 @@ goog.editor.plugins.LoremIpsum.prototype.clearLorem_ = function(
       }
     }
   }
-***REMOVED***
+};

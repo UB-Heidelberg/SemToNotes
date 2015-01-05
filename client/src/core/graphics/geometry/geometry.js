@@ -1,12 +1,12 @@
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.geometry');
 
 
 
-xrx.geometry = function() {***REMOVED***
+xrx.geometry = function() {};
 
 
 
@@ -14,7 +14,7 @@ xrx.geometry.addCoordsX = function(coords, value) {
   for (var i = 0, len = coords.length; i < len; i++) {
     coords[i][0] += value;
   }
-***REMOVED***
+};
 
 
 
@@ -22,7 +22,7 @@ xrx.geometry.addCoordsY = function(coords, value) {
   for (var i = 0, len = coords.length; i < len; i++) {
     coords[i][1] += value;
   }
-***REMOVED***
+};
 
 
 
@@ -36,7 +36,7 @@ xrx.geometry.getBBox = function(coords) {
     y2: coords[0][1],
     width: 0,
     height: 0
- ***REMOVED*****REMOVED***
+  };
 
   for (var i = 1, len = coords.length; i < len; i++) {
     x = coords[i][0];
@@ -51,4 +51,4 @@ xrx.geometry.getBBox = function(coords) {
   bbox.height = bbox.y2 - bbox.y;
 
   return bbox;
-***REMOVED***
+};

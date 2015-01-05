@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Client positioning class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Client positioning class.
+ *
+ */
 
 goog.provide('goog.positioning.ClientPosition');
 
@@ -29,43 +29,43 @@ goog.require('goog.style');
 
 
 
-***REMOVED***
-***REMOVED*** Encapsulates a popup position where the popup is positioned relative to the
-***REMOVED*** window (client) coordinates. This calculates the correct position to
-***REMOVED*** use even if the element is relatively positioned to some other element. This
-***REMOVED*** is for trying to position an element at the spot of the mouse cursor in
-***REMOVED*** a MOUSEMOVE event. Just use the event.clientX and event.clientY as the
-***REMOVED*** parameters.
-***REMOVED***
-***REMOVED*** @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
-***REMOVED*** @param {number=} opt_arg2 Top position.
-***REMOVED***
-***REMOVED*** @extends {goog.positioning.AbstractPosition}
-***REMOVED***
+/**
+ * Encapsulates a popup position where the popup is positioned relative to the
+ * window (client) coordinates. This calculates the correct position to
+ * use even if the element is relatively positioned to some other element. This
+ * is for trying to position an element at the spot of the mouse cursor in
+ * a MOUSEMOVE event. Just use the event.clientX and event.clientY as the
+ * parameters.
+ *
+ * @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
+ * @param {number=} opt_arg2 Top position.
+ * @constructor
+ * @extends {goog.positioning.AbstractPosition}
+ */
 goog.positioning.ClientPosition = function(arg1, opt_arg2) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Coordinate to position popup at.
-  ***REMOVED*** @type {goog.math.Coordinate}
- ***REMOVED*****REMOVED***
+  /**
+   * Coordinate to position popup at.
+   * @type {goog.math.Coordinate}
+   */
   this.coordinate = arg1 instanceof goog.math.Coordinate ? arg1 :
-      new goog.math.Coordinate(***REMOVED*** @type {number}***REMOVED*** (arg1), opt_arg2);
-***REMOVED***
+      new goog.math.Coordinate(/** @type {number} */ (arg1), opt_arg2);
+};
 goog.inherits(goog.positioning.ClientPosition,
               goog.positioning.AbstractPosition);
 
 
-***REMOVED***
-***REMOVED*** Repositions the popup according to the current state
-***REMOVED***
-***REMOVED*** @param {Element} movableElement The DOM element of the popup.
-***REMOVED*** @param {goog.positioning.Corner} movableElementCorner The corner of
-***REMOVED***     the popup element that that should be positioned adjacent to
-***REMOVED***     the anchorElement.  One of the goog.positioning.Corner
-***REMOVED***     constants.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize Preferred size of the element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Repositions the popup according to the current state
+ *
+ * @param {Element} movableElement The DOM element of the popup.
+ * @param {goog.positioning.Corner} movableElementCorner The corner of
+ *     the popup element that that should be positioned adjacent to
+ *     the anchorElement.  One of the goog.positioning.Corner
+ *     constants.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @param {goog.math.Size=} opt_preferredSize Preferred size of the element.
+ * @override
+ */
 goog.positioning.ClientPosition.prototype.reposition = function(
     movableElement, movableElementCorner, opt_margin, opt_preferredSize) {
   goog.asserts.assert(movableElement);
@@ -85,4 +85,4 @@ goog.positioning.ClientPosition.prototype.reposition = function(
   goog.positioning.positionAtCoordinate(
       new goog.math.Coordinate(x, y), movableElement, movableElementCorner,
       opt_margin, null, null, opt_preferredSize);
-***REMOVED***
+};

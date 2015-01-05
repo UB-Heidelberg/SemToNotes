@@ -1,8 +1,8 @@
-***REMOVED***
+/**
     @overview Demonstrate how to modify the source code before the parser sees it.
     @module plugins/commentConvert
     @author Michael Mathews <micmath@gmail.com>
-***REMOVED***
+ */
 'use strict';
 
 exports.handlers = {
@@ -14,8 +14,8 @@ exports.handlers = {
     ///
     beforeParse: function(e) {
         e.source = e.source.replace(/(\n[ \t]*\/\/\/[^\n]*)+/g, function($) {
-            var replacement = '\n***REMOVED***' + $.replace(/^[ \t]*\/\/\//mg, '').replace(/(\n$|$)/, '*/$1');
+            var replacement = '\n/**' + $.replace(/^[ \t]*\/\/\//mg, '').replace(/(\n$|$)/, '*/$1');
             return  replacement;
         });
     }
-***REMOVED***
+};

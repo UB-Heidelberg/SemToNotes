@@ -13,7 +13,7 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Menu');
@@ -32,7 +32,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/menuitem.css">
   <link rel="stylesheet" href="../css/menuseparator.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -42,7 +42,7 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Format" icon.***REMOVED***
+    /* "Format" icon. */
     .format-icon {
       background-position: -64px;
     }
@@ -176,7 +176,7 @@ See the COPYING file for details.
       var btn = new goog.ui.MenuButton(menuNames[i], menu);
       btn.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
       menubar.addChild(btn, true);
-    ***REMOVED***btn, EVENTS, logEvent);
+      goog.events.listen(btn, EVENTS, logEvent);
     }
     menubar.render(goog.dom.getElement('menuBarProgrammatic'));
   }

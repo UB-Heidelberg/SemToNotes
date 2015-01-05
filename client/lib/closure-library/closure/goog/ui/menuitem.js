@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class for representing items in menus.
-***REMOVED*** @see goog.ui.Menu
-***REMOVED***
-***REMOVED*** @see ../demos/menuitem.html
-***REMOVED***
+/**
+ * @fileoverview A class for representing items in menus.
+ * @see goog.ui.Menu
+ *
+ * @see ../demos/menuitem.html
+ */
 
 goog.provide('goog.ui.MenuItem');
 
@@ -34,89 +34,89 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing an item in a menu.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to
-***REMOVED***     display as the content of the item (use to add icons or styling to
-***REMOVED***     menus).
-***REMOVED*** @param {*=} opt_model Data/model associated with the menu item.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
-***REMOVED***     document interactions.
-***REMOVED*** @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED***
+/**
+ * Class representing an item in a menu.
+ *
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to
+ *     display as the content of the item (use to add icons or styling to
+ *     menus).
+ * @param {*=} opt_model Data/model associated with the menu item.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
+ *     document interactions.
+ * @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
+ * @constructor
+ * @extends {goog.ui.Control}
+ */
 goog.ui.MenuItem = function(content, opt_model, opt_domHelper, opt_renderer) {
   goog.ui.Control.call(this, content, opt_renderer ||
       goog.ui.MenuItemRenderer.getInstance(), opt_domHelper);
   this.setValue(opt_model);
-***REMOVED***
+};
 goog.inherits(goog.ui.MenuItem, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** The access key for this menu item. This key allows the user to quickly
-***REMOVED*** trigger this item's action with they keyboard. For example, setting the
-***REMOVED*** mnenomic key to 70 (F), when the user opens the menu and hits "F," the
-***REMOVED*** menu item is triggered.
-***REMOVED***
-***REMOVED*** @type {goog.events.KeyCodes}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The access key for this menu item. This key allows the user to quickly
+ * trigger this item's action with they keyboard. For example, setting the
+ * mnenomic key to 70 (F), when the user opens the menu and hits "F," the
+ * menu item is triggered.
+ *
+ * @type {goog.events.KeyCodes}
+ * @private
+ */
 goog.ui.MenuItem.mnemonicKey_;
 
 
-***REMOVED***
-***REMOVED*** The class set on an element that contains a parenthetical mnemonic key hint.
-***REMOVED*** Parenthetical hints are added to items in which the mnemonic key is not found
-***REMOVED*** within the menu item's caption itself. For example, if you have a menu item
-***REMOVED*** with the caption "Record," but its mnemonic key is "I", the caption displayed
-***REMOVED*** in the menu will appear as "Record (I)".
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The class set on an element that contains a parenthetical mnemonic key hint.
+ * Parenthetical hints are added to items in which the mnemonic key is not found
+ * within the menu item's caption itself. For example, if you have a menu item
+ * with the caption "Record," but its mnemonic key is "I", the caption displayed
+ * in the menu will appear as "Record (I)".
+ *
+ * @type {string}
+ * @private
+ */
 goog.ui.MenuItem.MNEMONIC_WRAPPER_CLASS_ =
     goog.getCssName('goog-menuitem-mnemonic-separator');
 
 
-***REMOVED***
-***REMOVED*** The class set on an element that contains a keyboard accelerator hint.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The class set on an element that contains a keyboard accelerator hint.
+ * @type {string}
+ */
 goog.ui.MenuItem.ACCELERATOR_CLASS = goog.getCssName('goog-menuitem-accel');
 
 
 // goog.ui.Component and goog.ui.Control implementation.
 
 
-***REMOVED***
-***REMOVED*** Returns the value associated with the menu item.  The default implementation
-***REMOVED*** returns the model object associated with the item (if any), or its caption.
-***REMOVED*** @return {*} Value associated with the menu item, if any, or its caption.
-***REMOVED***
+/**
+ * Returns the value associated with the menu item.  The default implementation
+ * returns the model object associated with the item (if any), or its caption.
+ * @return {*} Value associated with the menu item, if any, or its caption.
+ */
 goog.ui.MenuItem.prototype.getValue = function() {
   var model = this.getModel();
   return model != null ? model : this.getCaption();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value associated with the menu item.  The default implementation
-***REMOVED*** stores the value as the model of the menu item.
-***REMOVED*** @param {*} value Value to be associated with the menu item.
-***REMOVED***
+/**
+ * Sets the value associated with the menu item.  The default implementation
+ * stores the value as the model of the menu item.
+ * @param {*} value Value to be associated with the menu item.
+ */
 goog.ui.MenuItem.prototype.setValue = function(value) {
   this.setModel(value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the menu item to be selectable or not.  Set to true for menu items
-***REMOVED*** that represent selectable options.
-***REMOVED*** @param {boolean} selectable Whether the menu item is selectable.
-***REMOVED***
+/**
+ * Sets the menu item to be selectable or not.  Set to true for menu items
+ * that represent selectable options.
+ * @param {boolean} selectable Whether the menu item is selectable.
+ */
 goog.ui.MenuItem.prototype.setSelectable = function(selectable) {
   this.setSupportedState(goog.ui.Component.State.SELECTED, selectable);
   if (this.isChecked() && !selectable) {
@@ -127,14 +127,14 @@ goog.ui.MenuItem.prototype.setSelectable = function(selectable) {
   if (element) {
     this.getRenderer().setSelectable(this, element, selectable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the menu item to be checkable or not.  Set to true for menu items
-***REMOVED*** that represent checkable options.
-***REMOVED*** @param {boolean} checkable Whether the menu item is checkable.
-***REMOVED***
+/**
+ * Sets the menu item to be checkable or not.  Set to true for menu items
+ * that represent checkable options.
+ * @param {boolean} checkable Whether the menu item is checkable.
+ */
 goog.ui.MenuItem.prototype.setCheckable = function(checkable) {
   this.setSupportedState(goog.ui.Component.State.CHECKED, checkable);
 
@@ -142,13 +142,13 @@ goog.ui.MenuItem.prototype.setCheckable = function(checkable) {
   if (element) {
     this.getRenderer().setCheckable(this, element, checkable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the text caption of the component while ignoring accelerators.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the text caption of the component while ignoring accelerators.
+ * @override
+ */
 goog.ui.MenuItem.prototype.getCaption = function() {
   var content = this.getContent();
   if (goog.isArray(content)) {
@@ -156,9 +156,9 @@ goog.ui.MenuItem.prototype.getCaption = function() {
     var mnemonicWrapClass = goog.ui.MenuItem.MNEMONIC_WRAPPER_CLASS_;
     var caption = goog.array.map(content, function(node) {
       if (goog.dom.isElement(node) &&
-          (goog.dom.classlist.contains(***REMOVED*** @type {!Element}***REMOVED*** (node),
+          (goog.dom.classlist.contains(/** @type {!Element} */ (node),
               acceleratorClass) ||
-          goog.dom.classlist.contains(***REMOVED*** @type {!Element}***REMOVED*** (node),
+          goog.dom.classlist.contains(/** @type {!Element} */ (node),
               mnemonicWrapClass))) {
         return '';
       } else {
@@ -168,19 +168,19 @@ goog.ui.MenuItem.prototype.getCaption = function() {
     return goog.string.collapseBreakingSpaces(caption);
   }
   return goog.ui.MenuItem.superClass_.getCaption.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The keyboard accelerator text, or null if the menu item
-***REMOVED***     doesn't have one.
-***REMOVED***
+/**
+ * @return {?string} The keyboard accelerator text, or null if the menu item
+ *     doesn't have one.
+ */
 goog.ui.MenuItem.prototype.getAccelerator = function() {
   var dom = this.getDomHelper();
   var content = this.getContent();
   if (goog.isArray(content)) {
     var acceleratorEl = goog.array.find(content, function(e) {
-      return goog.dom.classlist.contains(***REMOVED*** @type {!Element}***REMOVED*** (e),
+      return goog.dom.classlist.contains(/** @type {!Element} */ (e),
           goog.ui.MenuItem.ACCELERATOR_CLASS);
     });
     if (acceleratorEl) {
@@ -188,12 +188,12 @@ goog.ui.MenuItem.prototype.getAccelerator = function() {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.MenuItem.prototype.handleMouseUp = function(e) {
-  var parentMenu =***REMOVED*****REMOVED*** @type {goog.ui.Menu}***REMOVED*** (this.getParent());
+  var parentMenu = /** @type {goog.ui.Menu} */ (this.getParent());
 
   if (parentMenu) {
     var oldCoords = parentMenu.openingCoords;
@@ -214,37 +214,37 @@ goog.ui.MenuItem.prototype.handleMouseUp = function(e) {
   }
 
   goog.ui.MenuItem.base(this, 'handleMouseUp', e);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.MenuItem.prototype.handleKeyEventInternal = function(e) {
   if (e.keyCode == this.getMnemonic() && this.performActionInternal(e)) {
     return true;
   } else {
     return goog.ui.MenuItem.base(this, 'handleKeyEventInternal', e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the mnemonic key code. The mnemonic is the key associated with this
-***REMOVED*** action.
-***REMOVED*** @param {goog.events.KeyCodes} key The key code.
-***REMOVED***
+/**
+ * Sets the mnemonic key code. The mnemonic is the key associated with this
+ * action.
+ * @param {goog.events.KeyCodes} key The key code.
+ */
 goog.ui.MenuItem.prototype.setMnemonic = function(key) {
   this.mnemonicKey_ = key;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the mnemonic key code. The mnemonic is the key associated with this
-***REMOVED*** action.
-***REMOVED*** @return {goog.events.KeyCodes} The key code of the mnemonic key.
-***REMOVED***
+/**
+ * Gets the mnemonic key code. The mnemonic is the key associated with this
+ * action.
+ * @return {goog.events.KeyCodes} The key code of the mnemonic key.
+ */
 goog.ui.MenuItem.prototype.getMnemonic = function() {
   return this.mnemonicKey_;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for goog.ui.MenuItems.
@@ -255,18 +255,18 @@ goog.ui.registry.setDecoratorByClassName(goog.ui.MenuItemRenderer.CSS_CLASS,
     });
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.ui.MenuItem.prototype.createDom = function() {
   goog.ui.MenuItem.base(this, 'createDom');
   this.getRenderer().correctAriaRole(this, this.getElement());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.ui.MenuItem.prototype.getPreferredAriaRole = function() {
   if (this.isSupportedState(goog.ui.Component.State.CHECKED)) {
     return goog.a11y.aria.Role.MENU_ITEM_CHECKBOX;
@@ -275,4 +275,4 @@ goog.ui.MenuItem.prototype.getPreferredAriaRole = function() {
     return goog.a11y.aria.Role.MENU_ITEM_RADIO;
   }
   return goog.ui.MenuItem.base(this, 'getPreferredAriaRole');
-***REMOVED***
+};

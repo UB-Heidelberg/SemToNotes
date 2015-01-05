@@ -12,44 +12,44 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class that can be used to determine when multiple iframes have
-***REMOVED*** been loaded. Refactored from static APIs in IframeLoadMonitor.
-***REMOVED***
+/**
+ * @fileoverview Class that can be used to determine when multiple iframes have
+ * been loaded. Refactored from static APIs in IframeLoadMonitor.
+ */
 goog.provide('goog.net.MultiIframeLoadMonitor');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.IframeLoadMonitor');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a wrapper around IframeLoadMonitor, to allow the caller to wait for
-***REMOVED*** multiple iframes to load.
-***REMOVED***
-***REMOVED*** @param {Array.<HTMLIFrameElement>} iframes Array of iframe elements to
-***REMOVED***     wait until they are loaded.
-***REMOVED*** @param {function():void} callback The callback to invoke once the frames have
-***REMOVED***     loaded.
-***REMOVED*** @param {boolean=} opt_hasContent true if the monitor should wait until the
-***REMOVED***     iframes have content (body.firstChild != null).
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Provides a wrapper around IframeLoadMonitor, to allow the caller to wait for
+ * multiple iframes to load.
+ *
+ * @param {Array.<HTMLIFrameElement>} iframes Array of iframe elements to
+ *     wait until they are loaded.
+ * @param {function():void} callback The callback to invoke once the frames have
+ *     loaded.
+ * @param {boolean=} opt_hasContent true if the monitor should wait until the
+ *     iframes have content (body.firstChild != null).
+ * @constructor
+ * @final
+ */
 goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of IframeLoadMonitors we use to track the loaded status of any
-  ***REMOVED*** currently unloaded iframes.
-  ***REMOVED*** @type {Array.<goog.net.IframeLoadMonitor>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array of IframeLoadMonitors we use to track the loaded status of any
+   * currently unloaded iframes.
+   * @type {Array.<goog.net.IframeLoadMonitor>}
+   * @private
+   */
   this.pendingIframeLoadMonitors_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Callback which is invoked when all of the iframes are loaded.
-  ***REMOVED*** @type {function():void}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Callback which is invoked when all of the iframes are loaded.
+   * @type {function():void}
+   * @private
+   */
   this.callback_ = callback;
 
   for (var i = 0; i < iframes.length; i++) {
@@ -63,7 +63,7 @@ goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
       // loaded, and track this monitor so we can dispose later as
       // required.
       this.pendingIframeLoadMonitors_.push(iframeLoadMonitor);
-    ***REMOVED***
+      goog.events.listen(
           iframeLoadMonitor, goog.net.IframeLoadMonitor.LOAD_EVENT, this);
     }
   }
@@ -71,13 +71,13 @@ goog.net.MultiIframeLoadMonitor = function(iframes, callback, opt_hasContent) {
     // All frames were already loaded
     this.callback_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a pending iframe load monitor load event.
-***REMOVED*** @param {goog.events.Event} e The goog.net.IframeLoadMonitor.LOAD_EVENT event.
-***REMOVED***
+/**
+ * Handles a pending iframe load monitor load event.
+ * @param {goog.events.Event} e The goog.net.IframeLoadMonitor.LOAD_EVENT event.
+ */
 goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function(e) {
   var iframeLoadMonitor = e.target;
   // iframeLoadMonitor is now loaded, remove it from the array of
@@ -99,20 +99,20 @@ goog.net.MultiIframeLoadMonitor.prototype.handleEvent = function(e) {
   if (!this.pendingIframeLoadMonitors_.length) {
     this.callback_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stops monitoring the iframes, cleaning up any associated resources. In
-***REMOVED*** general, the object cleans up its own resources before invoking the
-***REMOVED*** callback, so this API should only be used if the caller wants to stop the
-***REMOVED*** monitoring before the iframes are loaded (for example, if the caller is
-***REMOVED*** implementing a timeout).
-***REMOVED***
+/**
+ * Stops monitoring the iframes, cleaning up any associated resources. In
+ * general, the object cleans up its own resources before invoking the
+ * callback, so this API should only be used if the caller wants to stop the
+ * monitoring before the iframes are loaded (for example, if the caller is
+ * implementing a timeout).
+ */
 goog.net.MultiIframeLoadMonitor.prototype.stopMonitoring = function() {
   for (var i = 0; i < this.pendingIframeLoadMonitors_.length; i++) {
     this.pendingIframeLoadMonitors_[i].dispose();
   }
   this.pendingIframeLoadMonitors_.length = 0;
-***REMOVED***
+};
 

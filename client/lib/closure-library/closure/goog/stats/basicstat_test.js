@@ -69,7 +69,7 @@ function testConstantIncrementPerSlot() {
 
     var msg = goog.string.format(
         'now=%d i=%d newMin=%d newMax=%d', now, i, newMin, newMax);
-    assertEquals(msg, 2000***REMOVED*** (i + 1), stat.get(now));
+    assertEquals(msg, 2000 * (i + 1), stat.get(now));
     assertEquals(msg, newMax, stat.getMax(now));
     assertEquals(msg, newMin, stat.getMin(now));
 
@@ -78,13 +78,13 @@ function testConstantIncrementPerSlot() {
 
   // The next increment should cause old data to fall off.
   stat.incBy(1, now);
-  assertEquals(2000***REMOVED*** 49 + 1, stat.get(now));
+  assertEquals(2000 * 49 + 1, stat.get(now));
   assertEquals(1, stat.getMin(now));
   assertEquals(1049, stat.getMax(now));
 
   now += 20; // drop off another bucket
   stat.incBy(1, now);
-  assertEquals(2000***REMOVED*** 48 + 2, stat.get(now));
+  assertEquals(2000 * 48 + 2, stat.get(now));
   assertEquals(1, stat.getMin(now));
   assertEquals(1049, stat.getMax(now));
 }
@@ -110,8 +110,8 @@ function testFuzzy() {
   // test over 5 simulated seconds (2 for IE, due to timeouts)
   var simulationDuration = goog.userAgent.IE ? 2000 : 5000;
   for (var now = 1000; now < simulationDuration; ) {
-    var count = Math.floor(rand.random()***REMOVED*** 2147483648);
-    var delay = Math.floor(rand.random()***REMOVED*** 25);
+    var count = Math.floor(rand.random() * 2147483648);
+    var delay = Math.floor(rand.random() * 25);
     for (var i = 0; i <= delay; ++i) {
       var time = now + i;
       var msg = goog.string.format('now=%d eventCount=%d', time, eventCount);
@@ -130,24 +130,24 @@ function testFuzzy() {
 
 
 
-***REMOVED***
-***REMOVED*** A horribly inefficient implementation of BasicStat that stores
-***REMOVED*** every event in an array and dynamically filters to perform
-***REMOVED*** aggregations.
-***REMOVED***
-***REMOVED***
+/**
+ * A horribly inefficient implementation of BasicStat that stores
+ * every event in an array and dynamically filters to perform
+ * aggregations.
+ * @constructor
+ */
 var PerfectlySlowStat = function(interval) {
   this.interval_ = interval;
   this.slotSize_ = Math.floor(interval / goog.stats.BasicStat.NUM_SLOTS_);
   this.events_ = [];
-***REMOVED***
+};
 
 PerfectlySlowStat.prototype.incBy = function(amt, now) {
   this.events_.push({'time': now, 'count': amt});
-***REMOVED***
+};
 
 PerfectlySlowStat.prototype.getStats = function(now) {
-  var end = Math.floor(now / this.slotSize_)***REMOVED*** this.slotSize_ + this.slotSize_;
+  var end = Math.floor(now / this.slotSize_) * this.slotSize_ + this.slotSize_;
   var start = end - this.interval_;
   var events = goog.array.filter(this.events_,
       function(e) { return e.time >= start });
@@ -161,5 +161,5 @@ PerfectlySlowStat.prototype.getStats = function(now) {
     'max': goog.array.reduce(events,
         function(max, e) { return Math.max(max, e.count); },
         Number.MIN_VALUE)
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};

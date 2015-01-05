@@ -18,7 +18,7 @@ goog.setTestOnly('goog.crypt.BlobHasherTest');
 goog.require('goog.crypt');
 goog.require('goog.crypt.BlobHasher');
 goog.require('goog.crypt.Md5');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.jsunit');
 
@@ -30,17 +30,17 @@ var fsSliceBlobMock = function(blob, start, opt_end) {
     opt_end = blob.size;
   }
   return blob.slice(start, opt_end);
-***REMOVED***
+};
 
 // Mock out the Blob using a string.
 BlobMock = function(string) {
   this.data = string;
   this.size = this.data.length;
-***REMOVED***
+};
 
 BlobMock.prototype.slice = function(start, end) {
   return new BlobMock(this.data.substr(start, end - start));
-***REMOVED***
+};
 
 
 // Mock out the FileReader to have control over the flow.
@@ -52,7 +52,7 @@ FileReaderMock = function() {
   this.onload = null;
   this.onabort = null;
   this.onerror = null;
-***REMOVED***
+};
 
 FileReaderMock.prototype.EMPTY = 0;
 FileReaderMock.prototype.LOADING = 1;
@@ -64,21 +64,21 @@ FileReaderMock.prototype.mockLoad = function() {
   if (this.onload) {
     this.onload.call();
   }
-***REMOVED***
+};
 
 FileReaderMock.prototype.abort = function() {
   this.readyState = this.DONE;
   if (this.onabort) {
     this.onabort.call();
   }
-***REMOVED***
+};
 
 FileReaderMock.prototype.mockError = function() {
   this.readyState = this.DONE;
   if (this.onerror) {
     this.onerror.call();
   }
-***REMOVED***
+};
 
 FileReaderMock.prototype.readAsArrayBuffer = function(blobMock) {
   this.readyState = this.LOADING;
@@ -86,11 +86,11 @@ FileReaderMock.prototype.readAsArrayBuffer = function(blobMock) {
   for (var i = 0; i < blobMock.size; ++i) {
     this.array_[i] = blobMock.data.charCodeAt(i);
   }
-***REMOVED***
+};
 
 FileReaderMock.prototype.isLoading = function() {
   return this.readyState == this.LOADING;
-***REMOVED***
+};
 
 var stubs = new goog.testing.PropertyReplacer();
 function setUp() {
@@ -103,15 +103,15 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Makes the blobHasher read chunks from the blob and hash it. The number of
-***REMOVED*** reads shall not exceed a pre-determined number (typically blob size / chunk
-***REMOVED*** size) for computing hash. This function fails fast (after maxReads is
-***REMOVED*** reached), assuming that the hasher failed to generate hashes. This prevents
-***REMOVED*** the test suite from going into infinite loop.
-***REMOVED*** @param {!goog.crypt.BlobHasher} blobHasher Hasher in action.
-***REMOVED*** @param {number} maxReads Max number of read attempts.
-***REMOVED***
+/**
+ * Makes the blobHasher read chunks from the blob and hash it. The number of
+ * reads shall not exceed a pre-determined number (typically blob size / chunk
+ * size) for computing hash. This function fails fast (after maxReads is
+ * reached), assuming that the hasher failed to generate hashes. This prevents
+ * the test suite from going into infinite loop.
+ * @param {!goog.crypt.BlobHasher} blobHasher Hasher in action.
+ * @param {number} maxReads Max number of read attempts.
+ */
 function readFromBlob(blobHasher, maxReads) {
   var counter = 0;
   while (blobHasher.fileReader_ && blobHasher.fileReader_.isLoading() &&
@@ -165,11 +165,11 @@ function testNormalFlow() {
   var startedEvents = 0;
   var progressEvents = 0;
   var completeEvents = 0;
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.STARTED,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.STARTED,
                      function() { ++startedEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.PROGRESS,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.PROGRESS,
                      function() { ++progressEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() { ++completeEvents; });
   blobHasher.hash(blob);
   assertEquals(1, startedEvents);
@@ -207,11 +207,11 @@ function testAbortsAndErrors() {
   var abortEvents = 0;
   var errorEvents = 0;
   var completeEvents = 0;
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
                      function() { ++abortEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.ERROR,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.ERROR,
                      function() { ++errorEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() { ++completeEvents; });
 
   // Immediate abort.
@@ -268,9 +268,9 @@ function testBasicThrottling() {
   var blob = new BlobMock('The quick brown fox jumps over the lazy dog');
   var throttledEvents = 0;
   var completeEvents = 0;
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
                      function() { ++throttledEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() { ++completeEvents; });
 
   // Start a throttled hash. No chunks should be processed yet.
@@ -321,9 +321,9 @@ function testLengthZeroThrottling() {
   var blobHasher = new goog.crypt.BlobHasher(hashFn);
   var throttledEvents = 0;
   var completeEvents = 0;
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
                      function() { ++throttledEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() { ++completeEvents; });
 
   // Test throttling with length 0 blob.
@@ -348,13 +348,13 @@ function testAbortsAndErrorsWhileThrottling() {
   var errorEvents = 0;
   var throttledEvents = 0;
   var completeEvents = 0;
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.ABORT,
                      function() { ++abortEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.ERROR,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.ERROR,
                      function() { ++errorEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.THROTTLED,
                      function() { ++throttledEvents; });
-***REMOVED***blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
+  goog.events.listen(blobHasher, goog.crypt.BlobHasher.EventType.COMPLETE,
                      function() { ++completeEvents; });
 
   // Test that processing cannot be continued after abort.

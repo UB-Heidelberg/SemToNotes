@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Datastructure: Trie.
-***REMOVED***
-***REMOVED***
-***REMOVED*** This file provides the implementation of a trie data structure.  A trie is a
-***REMOVED*** data structure that stores key/value pairs in a prefix tree.  See:
-***REMOVED***     http://en.wikipedia.org/wiki/Trie
-***REMOVED***
+/**
+ * @fileoverview Datastructure: Trie.
+ *
+ *
+ * This file provides the implementation of a trie data structure.  A trie is a
+ * data structure that stores key/value pairs in a prefix tree.  See:
+ *     http://en.wikipedia.org/wiki/Trie
+ */
 
 
 goog.provide('goog.structs.Trie');
@@ -29,67 +29,67 @@ goog.require('goog.structs');
 
 
 
-***REMOVED***
-***REMOVED*** Class for a Trie datastructure.  Trie data structures are made out of trees
-***REMOVED*** of Trie classes.
-***REMOVED***
-***REMOVED*** @param {goog.structs.Trie.<VALUE>|Object.<string, VALUE>=} opt_trie Optional
-***REMOVED***     goog.structs.Trie or Object to initialize trie with.
-***REMOVED***
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Class for a Trie datastructure.  Trie data structures are made out of trees
+ * of Trie classes.
+ *
+ * @param {goog.structs.Trie.<VALUE>|Object.<string, VALUE>=} opt_trie Optional
+ *     goog.structs.Trie or Object to initialize trie with.
+ * @constructor
+ * @template VALUE
+ */
 goog.structs.Trie = function(opt_trie) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This trie's value.  For the base trie, this will be the value of the
-  ***REMOVED*** empty key, if defined.
-  ***REMOVED*** @private {VALUE}
- ***REMOVED*****REMOVED***
+  /**
+   * This trie's value.  For the base trie, this will be the value of the
+   * empty key, if defined.
+   * @private {VALUE}
+   */
   this.value_ = undefined;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This trie's child nodes.
-  ***REMOVED*** @private {!Object.<!goog.structs.Trie.<VALUE>>}
- ***REMOVED*****REMOVED***
-  this.childNodes_ = {***REMOVED***
+  /**
+   * This trie's child nodes.
+   * @private {!Object.<!goog.structs.Trie.<VALUE>>}
+   */
+  this.childNodes_ = {};
 
   if (opt_trie) {
     this.setAll(opt_trie);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the given key/value pair in the trie.  O(L), where L is the length
-***REMOVED*** of the key.
-***REMOVED*** @param {string} key The key.
-***REMOVED*** @param {VALUE} value The value.
-***REMOVED***
+/**
+ * Sets the given key/value pair in the trie.  O(L), where L is the length
+ * of the key.
+ * @param {string} key The key.
+ * @param {VALUE} value The value.
+ */
 goog.structs.Trie.prototype.set = function(key, value) {
   this.setOrAdd_(key, value, false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the given key/value pair in the trie.  Throw an exception if the key
-***REMOVED*** already exists in the trie.  O(L), where L is the length of the key.
-***REMOVED*** @param {string} key The key.
-***REMOVED*** @param {VALUE} value The value.
-***REMOVED***
+/**
+ * Adds the given key/value pair in the trie.  Throw an exception if the key
+ * already exists in the trie.  O(L), where L is the length of the key.
+ * @param {string} key The key.
+ * @param {VALUE} value The value.
+ */
 goog.structs.Trie.prototype.add = function(key, value) {
   this.setOrAdd_(key, value, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for set and add.  Adds the given key/value pair to
-***REMOVED*** the trie, or, if the key already exists, sets the value of the key. If
-***REMOVED*** opt_add is true, then throws an exception if the key already has a value in
-***REMOVED*** the trie.  O(L), where L is the length of the key.
-***REMOVED*** @param {string} key The key.
-***REMOVED*** @param {VALUE} value The value.
-***REMOVED*** @param {boolean=} opt_add Throw exception if key is already in the trie.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function for set and add.  Adds the given key/value pair to
+ * the trie, or, if the key already exists, sets the value of the key. If
+ * opt_add is true, then throws an exception if the key already has a value in
+ * the trie.  O(L), where L is the length of the key.
+ * @param {string} key The key.
+ * @param {VALUE} value The value.
+ * @param {boolean=} opt_add Throw exception if key is already in the trie.
+ * @private
+ */
 goog.structs.Trie.prototype.setOrAdd_ = function(key, value, opt_add) {
   var node = this;
   for (var characterPosition = 0; characterPosition < key.length;
@@ -105,15 +105,15 @@ goog.structs.Trie.prototype.setOrAdd_ = function(key, value, opt_add) {
   } else {
     node.value_ = value;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds multiple key/value pairs from another goog.structs.Trie or Object.
-***REMOVED*** O(N) where N is the number of nodes in the trie.
-***REMOVED*** @param {!Object.<string, VALUE>|!goog.structs.Trie.<VALUE>} trie Object
-***REMOVED***     containing the data to add.
-***REMOVED***
+/**
+ * Adds multiple key/value pairs from another goog.structs.Trie or Object.
+ * O(N) where N is the number of nodes in the trie.
+ * @param {!Object.<string, VALUE>|!goog.structs.Trie.<VALUE>} trie Object
+ *     containing the data to add.
+ */
 goog.structs.Trie.prototype.setAll = function(trie) {
   var keys = goog.structs.getKeys(trie);
   var values = goog.structs.getValues(trie);
@@ -121,16 +121,16 @@ goog.structs.Trie.prototype.setAll = function(trie) {
   for (var i = 0; i < keys.length; i++) {
     this.set(keys[i], values[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Traverse along the given path, returns the child node at ending.
-***REMOVED*** Returns undefined if node for the path doesn't exist.
-***REMOVED*** @param {string} path The path to traverse.
-***REMOVED*** @return {!goog.structs.Trie.<VALUE>|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Traverse along the given path, returns the child node at ending.
+ * Returns undefined if node for the path doesn't exist.
+ * @param {string} path The path to traverse.
+ * @return {!goog.structs.Trie.<VALUE>|undefined}
+ * @private
+ */
 goog.structs.Trie.prototype.getChildNode_ = function(path) {
   var node = this;
   for (var characterPosition = 0; characterPosition < path.length;
@@ -142,37 +142,37 @@ goog.structs.Trie.prototype.getChildNode_ = function(path) {
     }
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieves a value from the trie given a key.  O(L), where L is the length of
-***REMOVED*** the key.
-***REMOVED*** @param {string} key The key to retrieve from the trie.
-***REMOVED*** @return {VALUE|undefined} The value of the key in the trie, or undefined if
-***REMOVED***     the trie does not contain this key.
-***REMOVED***
+/**
+ * Retrieves a value from the trie given a key.  O(L), where L is the length of
+ * the key.
+ * @param {string} key The key to retrieve from the trie.
+ * @return {VALUE|undefined} The value of the key in the trie, or undefined if
+ *     the trie does not contain this key.
+ */
 goog.structs.Trie.prototype.get = function(key) {
   var node = this.getChildNode_(key);
   return node ? node.value_ : undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieves all values from the trie that correspond to prefixes of the given
-***REMOVED*** input key. O(L), where L is the length of the key.
-***REMOVED***
-***REMOVED*** @param {string} key The key to use for lookup. The given key as well as all
-***REMOVED***     prefixes of the key are retrieved.
-***REMOVED*** @param {?number=} opt_keyStartIndex Optional position in key to start lookup
-***REMOVED***     from. Defaults to 0 if not specified.
-***REMOVED*** @return {!Object.<string, VALUE>} Map of end index of matching prefixes and
-***REMOVED***     corresponding values. Empty if no match found.
-***REMOVED***
+/**
+ * Retrieves all values from the trie that correspond to prefixes of the given
+ * input key. O(L), where L is the length of the key.
+ *
+ * @param {string} key The key to use for lookup. The given key as well as all
+ *     prefixes of the key are retrieved.
+ * @param {?number=} opt_keyStartIndex Optional position in key to start lookup
+ *     from. Defaults to 0 if not specified.
+ * @return {!Object.<string, VALUE>} Map of end index of matching prefixes and
+ *     corresponding values. Empty if no match found.
+ */
 goog.structs.Trie.prototype.getKeyAndPrefixes = function(key,
                                                          opt_keyStartIndex) {
   var node = this;
-  var matches = {***REMOVED***
+  var matches = {};
   var characterPosition = opt_keyStartIndex || 0;
 
   if (node.value_ !== undefined) {
@@ -191,27 +191,27 @@ goog.structs.Trie.prototype.getKeyAndPrefixes = function(key,
   }
 
   return matches;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the values of the trie.  Not returned in any reliable order.  O(N) where
-***REMOVED*** N is the number of nodes in the trie.  Calls getValuesInternal_.
-***REMOVED*** @return {!Array.<VALUE>} The values in the trie.
-***REMOVED***
+/**
+ * Gets the values of the trie.  Not returned in any reliable order.  O(N) where
+ * N is the number of nodes in the trie.  Calls getValuesInternal_.
+ * @return {!Array.<VALUE>} The values in the trie.
+ */
 goog.structs.Trie.prototype.getValues = function() {
   var allValues = [];
   this.getValuesInternal_(allValues);
   return allValues;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the values of the trie.  Not returned in any reliable order.  O(N) where
-***REMOVED*** N is the number of nodes in the trie.  Builds the values as it goes.
-***REMOVED*** @param {!Array.<VALUE>} allValues Array to place values into.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the values of the trie.  Not returned in any reliable order.  O(N) where
+ * N is the number of nodes in the trie.  Builds the values as it goes.
+ * @param {!Array.<VALUE>} allValues Array to place values into.
+ * @private
+ */
 goog.structs.Trie.prototype.getValuesInternal_ = function(allValues) {
   if (this.value_ !== undefined) {
     allValues.push(this.value_);
@@ -219,15 +219,15 @@ goog.structs.Trie.prototype.getValuesInternal_ = function(allValues) {
   for (var childNode in this.childNodes_) {
     this.childNodes_[childNode].getValuesInternal_(allValues);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the keys of the trie.  Not returned in any reliable order.  O(N) where
-***REMOVED*** N is the number of nodes in the trie (or prefix subtree).
-***REMOVED*** @param {string=} opt_prefix Find only keys with this optional prefix.
-***REMOVED*** @return {!Array.<string>} The keys in the trie.
-***REMOVED***
+/**
+ * Gets the keys of the trie.  Not returned in any reliable order.  O(N) where
+ * N is the number of nodes in the trie (or prefix subtree).
+ * @param {string=} opt_prefix Find only keys with this optional prefix.
+ * @return {!Array.<string>} The keys in the trie.
+ */
 goog.structs.Trie.prototype.getKeys = function(opt_prefix) {
   var allKeys = [];
   if (opt_prefix) {
@@ -247,16 +247,16 @@ goog.structs.Trie.prototype.getKeys = function(opt_prefix) {
     this.getKeysInternal_('', allKeys);
   }
   return allKeys;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Private method to get keys from the trie.  Builds the keys as it goes.
-***REMOVED*** @param {string} keySoFar The partial key (prefix) traversed so far.
-***REMOVED*** @param {!Array.<string>} allKeys The partially built array of keys seen so
-***REMOVED***     far.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private method to get keys from the trie.  Builds the keys as it goes.
+ * @param {string} keySoFar The partial key (prefix) traversed so far.
+ * @param {!Array.<string>} allKeys The partially built array of keys seen so
+ *     far.
+ * @private
+ */
 goog.structs.Trie.prototype.getKeysInternal_ = function(keySoFar, allKeys) {
   if (this.value_ !== undefined) {
     allKeys.push(keySoFar);
@@ -264,41 +264,41 @@ goog.structs.Trie.prototype.getKeysInternal_ = function(keySoFar, allKeys) {
   for (var childNode in this.childNodes_) {
     this.childNodes_[childNode].getKeysInternal_(keySoFar + childNode, allKeys);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks to see if a certain key is in the trie.  O(L), where L is the length
-***REMOVED*** of the key.
-***REMOVED*** @param {string} key A key that may be in the trie.
-***REMOVED*** @return {boolean} Whether the trie contains key.
-***REMOVED***
+/**
+ * Checks to see if a certain key is in the trie.  O(L), where L is the length
+ * of the key.
+ * @param {string} key A key that may be in the trie.
+ * @return {boolean} Whether the trie contains key.
+ */
 goog.structs.Trie.prototype.containsKey = function(key) {
   return this.get(key) !== undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks to see if a certain prefix is in the trie. O(L), where L is the length
-***REMOVED*** of the prefix.
-***REMOVED*** @param {string} prefix A prefix that may be in the trie.
-***REMOVED*** @return {boolean} Whether any key of the trie has the prefix.
-***REMOVED***
+/**
+ * Checks to see if a certain prefix is in the trie. O(L), where L is the length
+ * of the prefix.
+ * @param {string} prefix A prefix that may be in the trie.
+ * @return {boolean} Whether any key of the trie has the prefix.
+ */
 goog.structs.Trie.prototype.containsPrefix = function(prefix) {
   // Empty string is any key's prefix.
   if (prefix.length == 0) {
     return !this.isEmpty();
   }
   return !!this.getChildNode_(prefix);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks to see if a certain value is in the trie.  Worst case is O(N) where
-***REMOVED*** N is the number of nodes in the trie.
-***REMOVED*** @param {!VALUE} value A value that may be in the trie.
-***REMOVED*** @return {boolean} Whether the trie contains the value.
-***REMOVED***
+/**
+ * Checks to see if a certain value is in the trie.  Worst case is O(N) where
+ * N is the number of nodes in the trie.
+ * @param {!VALUE} value A value that may be in the trie.
+ * @return {boolean} Whether the trie contains the value.
+ */
 goog.structs.Trie.prototype.containsValue = function(value) {
   if (this.value_ === value) {
     return true;
@@ -309,24 +309,24 @@ goog.structs.Trie.prototype.containsValue = function(value) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Completely empties a trie of all keys and values.  ~O(1)
-***REMOVED***
+/**
+ * Completely empties a trie of all keys and values.  ~O(1)
+ */
 goog.structs.Trie.prototype.clear = function() {
-  this.childNodes_ = {***REMOVED***
+  this.childNodes_ = {};
   this.value_ = undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a key from the trie or throws an exception if the key is not in the
-***REMOVED*** trie.  O(L), where L is the length of the key.
-***REMOVED*** @param {string} key A key that should be removed from the trie.
-***REMOVED*** @return {!VALUE} The value whose key was removed.
-***REMOVED***
+/**
+ * Removes a key from the trie or throws an exception if the key is not in the
+ * trie.  O(L), where L is the length of the key.
+ * @param {string} key A key that should be removed from the trie.
+ * @return {!VALUE} The value whose key was removed.
+ */
 goog.structs.Trie.prototype.remove = function(key) {
   var node = this;
   var parents = [];
@@ -360,36 +360,36 @@ goog.structs.Trie.prototype.remove = function(key) {
     }
   }
   return oldValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clones a trie and returns a new trie.  O(N), where N is the number of nodes
-***REMOVED*** in the trie.
-***REMOVED*** @return {!goog.structs.Trie.<VALUE>} A new goog.structs.Trie with the same
-***REMOVED***     key value pairs.
-***REMOVED***
+/**
+ * Clones a trie and returns a new trie.  O(N), where N is the number of nodes
+ * in the trie.
+ * @return {!goog.structs.Trie.<VALUE>} A new goog.structs.Trie with the same
+ *     key value pairs.
+ */
 goog.structs.Trie.prototype.clone = function() {
   return new goog.structs.Trie(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of key value pairs in the trie.  O(N), where N is the
-***REMOVED*** number of nodes in the trie.
-***REMOVED*** TODO: This could be optimized by storing a weight (count below) in every
-***REMOVED*** node.
-***REMOVED*** @return {number} The number of pairs.
-***REMOVED***
+/**
+ * Returns the number of key value pairs in the trie.  O(N), where N is the
+ * number of nodes in the trie.
+ * TODO: This could be optimized by storing a weight (count below) in every
+ * node.
+ * @return {number} The number of pairs.
+ */
 goog.structs.Trie.prototype.getCount = function() {
   return goog.structs.getCount(this.getValues());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if this trie contains no elements.  ~O(1).
-***REMOVED*** @return {boolean} True iff this trie contains no elements.
-***REMOVED***
+/**
+ * Returns true if this trie contains no elements.  ~O(1).
+ * @return {boolean} True iff this trie contains no elements.
+ */
 goog.structs.Trie.prototype.isEmpty = function() {
   return this.value_ === undefined && goog.object.isEmpty(this.childNodes_);
-***REMOVED***
+};

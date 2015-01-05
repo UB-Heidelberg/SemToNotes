@@ -1,8 +1,8 @@
-***REMOVED***
+/**
 * @constructor
 */
 function Collection() {
 
-   ***REMOVED*****REMOVED*** @readonly***REMOVED***
+    /** @readonly */
     this.length = 0;
 }

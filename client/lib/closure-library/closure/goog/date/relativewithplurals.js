@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Code to make goog.date.relative plurals-aware.
-***REMOVED***
+/**
+ * @fileoverview Code to make goog.date.relative plurals-aware.
+ */
 
 goog.provide('goog.date.relativeWithPlurals');
 
@@ -23,20 +23,20 @@ goog.require('goog.date.relative.Unit');
 goog.require('goog.i18n.MessageFormat');
 
 
-***REMOVED***
-***REMOVED*** Gets a localized relative date string for a given delta and unit.
-***REMOVED*** @param {number} delta Number of minutes/hours/days.
-***REMOVED*** @param {boolean} future Whether the delta is in the future.
-***REMOVED*** @param {goog.date.relative.Unit} unit The units the delta is in.
-***REMOVED*** @return {string} The message.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets a localized relative date string for a given delta and unit.
+ * @param {number} delta Number of minutes/hours/days.
+ * @param {boolean} future Whether the delta is in the future.
+ * @param {goog.date.relative.Unit} unit The units the delta is in.
+ * @return {string} The message.
+ * @private
+ */
 goog.date.relativeWithPlurals.formatTimeDelta_ =
     function(delta, future, unit) {
   if (!future && unit == goog.date.relative.Unit.MINUTES) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating how many minutes ago something happened.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating how many minutes ago something happened.
+     */
     var MSG_MINUTES_AGO_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {# minutes ago}' +
@@ -47,9 +47,9 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
         format({'NUM': delta});
 
   } else if (future && unit == goog.date.relative.Unit.MINUTES) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating in how many minutes something happens.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating in how many minutes something happens.
+     */
     var MSG_IN_MINUTES_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {in # minutes}' +
@@ -60,9 +60,9 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
         format({'NUM': delta});
 
   } else if (!future && unit == goog.date.relative.Unit.HOURS) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating how many hours ago something happened.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating how many hours ago something happened.
+     */
     var MSG_HOURS_AGO_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {# hours ago}' +
@@ -73,9 +73,9 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
         format({'NUM': delta});
 
   } else if (future && unit == goog.date.relative.Unit.HOURS) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating in how many hours something happens.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating in how many hours something happens.
+     */
     var MSG_IN_HOURS_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {in # hours}' +
@@ -86,9 +86,9 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
         format({'NUM': delta});
 
   } else if (!future && unit == goog.date.relative.Unit.DAYS) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating how many days ago something happened.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating how many days ago something happened.
+     */
     var MSG_DAYS_AGO_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {# days ago}' +
@@ -99,9 +99,9 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
         format({'NUM': delta});
 
   } else if (future && unit == goog.date.relative.Unit.DAYS) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Relative date indicating in how many days something happens.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Relative date indicating in how many days something happens.
+     */
     var MSG_IN_DAYS_ICU =
         goog.getMsg('{NUM, plural, ' +
             '=0 {in # days}' +
@@ -114,7 +114,7 @@ goog.date.relativeWithPlurals.formatTimeDelta_ =
   } else {
     return '';
   }
-***REMOVED***
+};
 
 goog.date.relative.setTimeDeltaFormatter(
     goog.date.relativeWithPlurals.formatTimeDelta_);

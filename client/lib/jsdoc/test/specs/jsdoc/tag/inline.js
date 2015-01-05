@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 'use strict';
 
 describe('jsdoc/tag/inline', function() {
@@ -6,7 +6,7 @@ describe('jsdoc/tag/inline', function() {
         tag: {
             inline: require('jsdoc/tag/inline')
         }
-   ***REMOVED*****REMOVED***
+    };
 
     it('should exist', function() {
         expect(jsdoc.tag.inline).toBeDefined();
@@ -198,7 +198,7 @@ describe('jsdoc/tag/inline', function() {
     // largely covered by the replaceInlineTag tests
     describe('replaceInlineTags', function() {
         it('should work with an empty replacer object', function() {
-            var replacers = {***REMOVED***
+            var replacers = {};
             var text = 'some {@foo text} to parse';
 
             var result = jsdoc.tag.inline.replaceInlineTags(text, replacers);
@@ -213,7 +213,7 @@ describe('jsdoc/tag/inline', function() {
                     expect(tagInfo.text).toBe('text');
                     return string.replace(tagInfo.completeTag, 'stuff');
                 }
-           ***REMOVED*****REMOVED***
+            };
 
             var result = jsdoc.tag.inline.replaceInlineTags(text, replacers);
             expect(result.newString).toBe('some stuff with {@bar multiple} tags');
@@ -233,7 +233,7 @@ describe('jsdoc/tag/inline', function() {
                     expect(tagInfo.text).toBe('multiple');
                     return string.replace(tagInfo.completeTag, 'awesome');
                 }
-           ***REMOVED*****REMOVED***
+            };
 
             var result = jsdoc.tag.inline.replaceInlineTags(text, replacers);
             expect(result.newString).toBe('some stuff with awesome tags');

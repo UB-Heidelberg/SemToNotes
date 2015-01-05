@@ -25,26 +25,26 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview 
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview 
+ */
 
 goog.provide('xrx.mvc.Namespace');
 
 
 
-***REMOVED***
+goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.xpath');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.Namespace = function(element) {
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.mvc.Namespace, xrx.mvc.ComponentModel);
 
 
@@ -53,7 +53,7 @@ xrx.mvc.Namespace.prototype.mvcRecalculate = function() {
   var prefix = goog.dom.dataset.get(this.element_, 'xrxPrefix');
   var uri = goog.dom.dataset.get(this.element_, 'xrxUri');
   xrx.xpath.declareNamespace(prefix, uri);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

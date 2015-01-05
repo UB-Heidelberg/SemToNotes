@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("@exports tag", function() {
 
     describe("object literals", function() {

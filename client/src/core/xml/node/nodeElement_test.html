@@ -14,9 +14,9 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.mvc.Instance');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.token.Tokens');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.NameTest');
   goog.require('xrx.xpath.KindTest');
@@ -54,7 +54,7 @@ function test01identityFunctions() {
   assertEquals(true, e4.isSameAs(e5));
   assertEquals(true, e6.isAfter(e5));
   assertEquals(true, e4.isBefore(e6));
-***REMOVED***
+};
 
 function test02nameFunctions() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
@@ -112,7 +112,7 @@ function test02nameFunctions() {
 
   assertEquals(namespaceUriS1, 'http://example.org/y');
   assertEquals(namespaceUriS2, 'http://example.org/x');  
-***REMOVED***
+};
 
 function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
@@ -143,7 +143,7 @@ function test03contentFunctions() {
   assertEquals('<b>2</b>', e5.getXml());
   assertEquals('1234', e4.getStringValue());
   assertEquals('2', e5.getStringValue());
-***REMOVED***
+};
 
 function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
@@ -182,7 +182,7 @@ function axisTest(key, func, expected) {
   assertEquals(expected.element, testS.element.getLength());
   assertEquals(expected.text, testS.text.getLength());
   assertEquals(expected.attribute, testS.attribute.getLength());
-***REMOVED***
+};
 
 function test04nodeFunctions() {
 
@@ -210,7 +210,7 @@ function test04nodeFunctions() {
   // preceding sibling
   //axisTest(8, 'getNodePrecedingSibling', { node: 6, element: 3, text: 3, attribute: 0 });
 
-***REMOVED***
+};
 
 function test05attributeFunction() {
   var xml = '<a><b xmlns="http://example.org" attr1="v1" attr2="v2"/></a>';
@@ -224,7 +224,7 @@ function test05attributeFunction() {
 
   assertEquals(0, e0.getNodeAttribute(new xrx.xpath.KindTest('attribute')).getLength());
   assertEquals(2, e1.getNodeAttribute(new xrx.xpath.KindTest('attribute')).getLength());
-***REMOVED***
+};
 
 </script>
 </body>

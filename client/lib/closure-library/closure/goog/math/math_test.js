@@ -83,15 +83,15 @@ function testNearlyEquals() {
 }
 
 function testStandardAngleInRadians() {
-  assertRoughlyEquals(0, goog.math.standardAngleInRadians(2***REMOVED*** Math.PI), 1e-10);
+  assertRoughlyEquals(0, goog.math.standardAngleInRadians(2 * Math.PI), 1e-10);
   assertRoughlyEquals(
       Math.PI, goog.math.standardAngleInRadians(Math.PI), 1e-10);
   assertRoughlyEquals(
-      Math.PI, goog.math.standardAngleInRadians(-1***REMOVED*** Math.PI), 1e-10);
+      Math.PI, goog.math.standardAngleInRadians(-1 * Math.PI), 1e-10);
   assertRoughlyEquals(
-      Math.PI / 2, goog.math.standardAngleInRadians(-1.5***REMOVED*** Math.PI), 1e-10);
+      Math.PI / 2, goog.math.standardAngleInRadians(-1.5 * Math.PI), 1e-10);
   assertRoughlyEquals(
-      Math.PI, goog.math.standardAngleInRadians(5***REMOVED*** Math.PI), 1e-10);
+      Math.PI, goog.math.standardAngleInRadians(5 * Math.PI), 1e-10);
   assertEquals(0.01, goog.math.standardAngleInRadians(0.01));
   assertEquals(0, goog.math.standardAngleInRadians(0));
 }
@@ -188,12 +188,12 @@ function testLongestCommonSubsequenceWithCustomComparator() {
 
   var compareFn = function(a, b) {
     return a.field == b.field;
- ***REMOVED*****REMOVED***
+  };
 
-  var a1 = {field: 'a1', field2: 'hello'***REMOVED***
-  var a2 = {field: 'a2', field2: 33***REMOVED***
-  var a3 = {field: 'a3'***REMOVED***
-  var a4 = {field: 'a3'***REMOVED***
+  var a1 = {field: 'a1', field2: 'hello'};
+  var a2 = {field: 'a2', field2: 33};
+  var a3 = {field: 'a3'};
+  var a4 = {field: 'a3'};
 
   assertArrayEquals([a1, a2], func([a1, a2, a3], [a3, a1, a2], compareFn));
   assertArrayEquals([a1, a3], func([a1, a3], [a1, a4], compareFn));
@@ -206,7 +206,7 @@ function testLongestCommonSubsequenceWithCustomCollector() {
 
   var collectorFn = function(a, b) {
     return b;
- ***REMOVED*****REMOVED***
+  };
 
   assertArrayEquals([1, 2, 4, 6, 7],
       func([1, 0, 2, 3, 8, 4, 9, 5], [8, 1, 2, 4, 3, 6, 4, 5],
@@ -296,7 +296,7 @@ function testLog10Floor() {
   for (var i = -30; i <= 30; i++) {
     assertEquals(i, goog.math.log10Floor(parseFloat('1e' + i)));
     assertEquals(i - 1,
-        goog.math.log10Floor(parseFloat('1e' + i)***REMOVED*** oneMinusEpsilon));
+        goog.math.log10Floor(parseFloat('1e' + i) * oneMinusEpsilon));
   }
   assertEquals(-Infinity, goog.math.log10Floor(0));
   assertTrue(isNaN(goog.math.log10Floor(-1)));

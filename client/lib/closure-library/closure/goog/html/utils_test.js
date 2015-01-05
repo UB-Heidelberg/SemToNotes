@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.util.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.util.
+ */
 
 goog.provide('goog.html.UtilsTest');
 
@@ -96,15 +96,15 @@ function testInteresting() {
 }
 
 
-***REMOVED***
-***REMOVED*** Constructs the HTML of an element from the given tag and content.
-***REMOVED*** @param {goog.dom.TagName} tag The HTML tagName for the element.
-***REMOVED*** @param {string} content The content.
-***REMOVED*** @param {number=} opt_copies Optional number of copies to make.
-***REMOVED*** @param {number=} opt_tabIndex Optional tabIndex to give the element.
-***REMOVED*** @param {string=} opt_id Optional id to give the element.
-***REMOVED*** @return {string} The HTML of an element from the given tag and content.
-***REMOVED***
+/**
+ * Constructs the HTML of an element from the given tag and content.
+ * @param {goog.dom.TagName} tag The HTML tagName for the element.
+ * @param {string} content The content.
+ * @param {number=} opt_copies Optional number of copies to make.
+ * @param {number=} opt_tabIndex Optional tabIndex to give the element.
+ * @param {string=} opt_id Optional id to give the element.
+ * @return {string} The HTML of an element from the given tag and content.
+ */
 function makeHtml_(tag, content, opt_copies, opt_tabIndex, opt_id) {
   var html = ['<' + tag, '>' + content + '</' + tag + '>'];
   if (goog.isNumber(opt_tabIndex)) {

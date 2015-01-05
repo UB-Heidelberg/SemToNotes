@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A function call expression.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A function call expression.
+ */
 
 goog.provide('xrx.xpath.FunctionCall');
 
@@ -45,14 +45,14 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** A function call expression.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {xrx.xpath.Expr}
-***REMOVED*** @param {!xrx.xpath.FunctionCall.BuiltInFunc} func Function.
-***REMOVED*** @param {!Array.&lt;!xrx.xpath.Expr>} args Arguments to the function.
-***REMOVED***
+/**
+ * A function call expression.
+ *
+ * @constructor
+ * @extends {xrx.xpath.Expr}
+ * @param {!xrx.xpath.FunctionCall.BuiltInFunc} func Function.
+ * @param {!Array.&lt;!xrx.xpath.Expr>} args Arguments to the function.
+ */
 xrx.xpath.FunctionCall = function(func, args) {
   // Check the provided arguments match the function parameters.
   if (args.length &lt; func.minArgs) {
@@ -73,16 +73,16 @@ xrx.xpath.FunctionCall = function(func, args) {
   }
   xrx.xpath.Expr.call(this, func.returnType);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!xrx.xpath.FunctionCall.BuiltInFunc}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!xrx.xpath.FunctionCall.BuiltInFunc}
+   * @private
+   */
   this.func_ = func;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!Array.&lt;!xrx.xpath.Expr>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!Array.&lt;!xrx.xpath.Expr>}
+   * @private
+   */
   this.args_ = args;
 
   this.setNeedContextPosition(func.needContextPosition_ ||
@@ -95,23 +95,23 @@ xrx.xpath.FunctionCall = function(func, args) {
       goog.array.some(args, function(arg) {
         return arg.doesNeedContextNode();
       }));
-***REMOVED***
+};
 goog.inherits(xrx.xpath.FunctionCall, xrx.xpath.Expr);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.FunctionCall.prototype.evaluate = function(ctx) {
   var result = this.func_.evaluate.apply(null,
       goog.array.concat(ctx, this.args_));
-  return***REMOVED*****REMOVED*** @type {!(string|boolean|number|xrx.xpath.NodeSet)}***REMOVED*** (result);
-***REMOVED***
+  return /** @type {!(string|boolean|number|xrx.xpath.NodeSet)} */ (result);
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.FunctionCall.prototype.toString = function() {
   var text = 'Function: ' + this.func_;
   if (this.args_.length) {
@@ -121,39 +121,39 @@ xrx.xpath.FunctionCall.prototype.toString = function() {
     text += xrx.xpath.Expr.indent(args);
   }
   return text;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A mapping from function names to Func objects.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @type {!Object.&lt;string, !xrx.xpath.FunctionCall.BuiltInFunc>}
-***REMOVED***
-xrx.xpath.FunctionCall.nameToFuncMap_ = {***REMOVED***
+/**
+ * A mapping from function names to Func objects.
+ *
+ * @private
+ * @type {!Object.&lt;string, !xrx.xpath.FunctionCall.BuiltInFunc>}
+ */
+xrx.xpath.FunctionCall.nameToFuncMap_ = {};
 
 
-***REMOVED***
-***REMOVED*** Constructs a Func and maps its name to it.
-***REMOVED***
-***REMOVED*** @param {string} name Name of the function.
-***REMOVED*** @param {xrx.xpath.DataType} returnType Datatype of the function return value.
-***REMOVED*** @param {boolean} needContextPosition Whether the function needs a context
-***REMOVED***     position.
-***REMOVED*** @param {boolean} needContextNodeWithoutArgs Whether the function needs a
-***REMOVED***     context node when not given arguments.
-***REMOVED*** @param {boolean} needContextNodeWithArgs Whether the function needs a context
-***REMOVED***     node when the function is given arguments.
-***REMOVED*** @param {function(!xrx.xpath.Context, ...[!xrx.xpath.Expr]):*} evaluate
-***REMOVED***     Evaluates the function in a context with any number of expression
-***REMOVED***     arguments.
-***REMOVED*** @param {number} minArgs Minimum number of arguments accepted by the function.
-***REMOVED*** @param {?number=} opt_maxArgs Maximum number of arguments accepted by the
-***REMOVED***     function; null means there is no max; defaults to minArgs.
-***REMOVED*** @param {boolean=} opt_nodesetsRequired Whether the args must be nodesets.
-***REMOVED*** @return {!xrx.xpath.FunctionCall.BuiltInFunc} The function created.
-***REMOVED***
+/**
+ * Constructs a Func and maps its name to it.
+ *
+ * @param {string} name Name of the function.
+ * @param {xrx.xpath.DataType} returnType Datatype of the function return value.
+ * @param {boolean} needContextPosition Whether the function needs a context
+ *     position.
+ * @param {boolean} needContextNodeWithoutArgs Whether the function needs a
+ *     context node when not given arguments.
+ * @param {boolean} needContextNodeWithArgs Whether the function needs a context
+ *     node when the function is given arguments.
+ * @param {function(!xrx.xpath.Context, ...[!xrx.xpath.Expr]):*} evaluate
+ *     Evaluates the function in a context with any number of expression
+ *     arguments.
+ * @param {number} minArgs Minimum number of arguments accepted by the function.
+ * @param {?number=} opt_maxArgs Maximum number of arguments accepted by the
+ *     function; null means there is no max; defaults to minArgs.
+ * @param {boolean=} opt_nodesetsRequired Whether the args must be nodesets.
+ * @return {!xrx.xpath.FunctionCall.BuiltInFunc} The function created.
+ */
 xrx.xpath.FunctionCall.createFunc = function(name, returnType,
     needContextPosition, needContextNodeWithoutArgs, needContextNodeWithArgs,
     evaluate, minArgs, opt_maxArgs, opt_nodesetsRequired) {
@@ -163,31 +163,31 @@ xrx.xpath.FunctionCall.createFunc = function(name, returnType,
   var func = new xrx.xpath.Function(name, returnType,
       needContextPosition, needContextNodeWithoutArgs, needContextNodeWithArgs,
       evaluate, minArgs, opt_maxArgs, opt_nodesetsRequired);
-  func =***REMOVED*****REMOVED*** @type {!xrx.xpath.FunctionCall.BuiltInFunc}***REMOVED*** (func);
+  func = /** @type {!xrx.xpath.FunctionCall.BuiltInFunc} */ (func);
   xrx.xpath.FunctionCall.nameToFuncMap_[name] = func;
   return func;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the function object for this name.
-***REMOVED***
-***REMOVED*** @param {string} name The function's name.
-***REMOVED*** @return {xrx.xpath.FunctionCall.BuiltInFunc} The function object.
-***REMOVED***
+/**
+ * Returns the function object for this name.
+ *
+ * @param {string} name The function's name.
+ * @return {xrx.xpath.FunctionCall.BuiltInFunc} The function object.
+ */
 xrx.xpath.FunctionCall.getFunc = function(name) {
   return xrx.xpath.FunctionCall.nameToFuncMap_[name] || null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An XPath function enumeration.
-***REMOVED***
-***REMOVED*** &lt;p>A list of XPath 1.0 functions:
-***REMOVED*** http://www.w3.org/TR/xpath/#corelib
-***REMOVED***
-***REMOVED*** @enum {!Object}
-***REMOVED***
+/**
+ * An XPath function enumeration.
+ *
+ * &lt;p>A list of XPath 1.0 functions:
+ * http://www.w3.org/TR/xpath/#corelib
+ *
+ * @enum {!Object}
+ */
 xrx.xpath.FunctionCall.BuiltInFunc = {
   BOOLEAN: xrx.xpath.FunctionCall.createFunc('boolean',
       xrx.xpath.DataType.BOOLEAN, false, false, false,
@@ -417,7 +417,7 @@ xrx.xpath.FunctionCall.BuiltInFunc = {
       function(ctx) {
         return true;
       }, 0)
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

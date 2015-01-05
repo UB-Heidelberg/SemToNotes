@@ -18,21 +18,21 @@ goog.require('goog.events.Event');
 
 
 
-***REMOVED***
-***REMOVED*** Event fired when equation changes.
-***REMOVED***
-***REMOVED*** @param {boolean} isValid Whether the equation is valid.
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Event fired when equation changes.
+ * @constructor
+ * @param {boolean} isValid Whether the equation is valid.
+ * @extends {goog.events.Event}
+ * @final
+ */
 goog.ui.equation.ChangeEvent = function(isValid) {
   goog.events.Event.call(this, 'change');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether equation is valid.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether equation is valid.
+   * @type {boolean}
+   */
   this.isValid = isValid;
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.ChangeEvent, goog.events.Event);
 

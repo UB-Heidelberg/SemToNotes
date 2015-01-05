@@ -56,7 +56,7 @@ function execCommand() {
   // deleteCursorSelection_.
   var splitPoint = goog.dom.getElement('split-point');
   var position = goog.userAgent.IE ?
-      splitPoint : {node: splitPoint.nextSibling, offset: 0***REMOVED***
+      splitPoint : {node: splitPoint.nextSibling, offset: 0};
   if (!goog.userAgent.IE) {
     goog.dom.removeNode(splitPoint);
     goog.dom.Range.createCaret(position.node, 0).select();

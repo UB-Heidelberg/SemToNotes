@@ -59,8 +59,8 @@ Author: attila@google.com (Attila Bodis)
 
     function testMenuItemConstructor() {
       var model = 'Hello';
-      var fakeDom = {***REMOVED***
-      var fakeRenderer = {***REMOVED***
+      var fakeDom = {};
+      var fakeRenderer = {};
 
       var menuItem = new goog.ui.MenuItem('Item', model, fakeDom, fakeRenderer);
       assertEquals('Content must have expected value', 'Item',
@@ -526,7 +526,7 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('Item must be checked', item.isChecked());
     }
 
-   ***REMOVED*****REMOVED*** @bug 1463524***REMOVED***
+    /** @bug 1463524 */
     function testHandleMouseUp() {
       var COORDS_1 = new goog.math.Coordinate(1, 1);
       var COORDS_2 = new goog.math.Coordinate(2, 2);
@@ -536,7 +536,7 @@ Author: attila@google.com (Attila Bodis)
       item.performActionInternal = function() {
         actionPerformed = true;
         return true;
-     ***REMOVED*****REMOVED***
+      };
       item.render(sandbox);
 
       // Scenario 1: item has no parent.

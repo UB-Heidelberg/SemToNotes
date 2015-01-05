@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Detects the Adobe Reader PDF browser plugin.
-***REMOVED***
-***REMOVED*** @author chrisn@google.com (Chris Nokleberg)
-***REMOVED*** @see ../demos/useragent.html
-***REMOVED***
+/**
+ * @fileoverview Detects the Adobe Reader PDF browser plugin.
+ *
+ * @author chrisn@google.com (Chris Nokleberg)
+ * @see ../demos/useragent.html
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.userAgent.adobeReader');
 
 goog.require('goog.string');
@@ -30,14 +30,14 @@ goog.require('goog.userAgent');
   var version = '';
   if (goog.userAgent.IE) {
     var detectOnIe = function(classId) {
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         new ActiveXObject(classId);
         return true;
       } catch (ex) {
         return false;
       }
-   ***REMOVED*****REMOVED***
+    };
     if (detectOnIe('AcroPDF.PDF.1')) {
       version = '7';
     } else if (detectOnIe('PDF.PdfCtrl.6')) {
@@ -59,31 +59,31 @@ goog.require('goog.userAgent');
     }
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we detect the user has the Adobe Reader browser plugin installed.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we detect the user has the Adobe Reader browser plugin installed.
+   * @type {boolean}
+   */
   goog.userAgent.adobeReader.HAS_READER = !!version;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The version of the installed Adobe Reader plugin. Versions after 7
-  ***REMOVED*** will all be reported as '7'.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The version of the installed Adobe Reader plugin. Versions after 7
+   * will all be reported as '7'.
+   * @type {string}
+   */
   goog.userAgent.adobeReader.VERSION = version;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** On certain combinations of platform/browser/plugin, a print dialog
-  ***REMOVED*** can be shown for PDF files without a download dialog or making the
-  ***REMOVED*** PDF visible to the user, by loading the PDF into a hidden iframe.
-  ***REMOVED***
-  ***REMOVED*** Currently this variable is true if Adobe Reader version 6 or later
-  ***REMOVED*** is detected on Windows.
-  ***REMOVED***
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * On certain combinations of platform/browser/plugin, a print dialog
+   * can be shown for PDF files without a download dialog or making the
+   * PDF visible to the user, by loading the PDF into a hidden iframe.
+   *
+   * Currently this variable is true if Adobe Reader version 6 or later
+   * is detected on Windows.
+   *
+   * @type {boolean}
+   */
   goog.userAgent.adobeReader.SILENT_PRINT = goog.userAgent.WINDOWS &&
       goog.string.compareVersions(version, '6') >= 0;
 

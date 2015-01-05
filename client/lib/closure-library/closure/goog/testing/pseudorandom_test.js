@@ -26,14 +26,14 @@ function runFairnessTest(sides, rolls, chiSquareLimit) {
   }
   // Roll the dice many times and count the results.
   for (var i = 0; i < rolls; ++i) {
-    ++counts[Math.floor(Math.random()***REMOVED*** sides)];
+    ++counts[Math.floor(Math.random() * sides)];
   }
   // If the dice is fair, we expect a uniform distribution.
   var expected = rolls / sides;
   // Pearson's chi-square test for a distribution fit.
   var chiSquare = 0;
   for (var i = 0; i < sides; ++i) {
-    chiSquare += (counts[i] - expected)***REMOVED*** (counts[i] - expected) / expected;
+    chiSquare += (counts[i] - expected) * (counts[i] - expected) / expected;
   }
   assert('Chi-square test for a distribution fit failed',
       chiSquare < chiSquareLimit);

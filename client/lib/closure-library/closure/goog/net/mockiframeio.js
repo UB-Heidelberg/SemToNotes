@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock of IframeIo for unit testing.
-***REMOVED***
+/**
+ * @fileoverview Mock of IframeIo for unit testing.
+ */
 
 goog.provide('goog.net.MockIFrameIo');
 goog.require('goog.events.EventTarget');
@@ -25,87 +25,87 @@ goog.require('goog.net.IframeIo');
 
 
 
-***REMOVED***
-***REMOVED*** Mock implenetation of goog.net.IframeIo. This doesn't provide a mock
-***REMOVED*** implementation for all cases, but it's not too hard to add them as needed.
-***REMOVED*** @param {goog.testing.TestQueue} testQueue Test queue for inserting test
-***REMOVED***     events.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Mock implenetation of goog.net.IframeIo. This doesn't provide a mock
+ * implementation for all cases, but it's not too hard to add them as needed.
+ * @param {goog.testing.TestQueue} testQueue Test queue for inserting test
+ *     events.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.net.MockIFrameIo = function(testQueue) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Queue of events write to
-  ***REMOVED*** @type {goog.testing.TestQueue}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Queue of events write to
+   * @type {goog.testing.TestQueue}
+   * @private
+   */
   this.testQueue_ = testQueue;
 
-***REMOVED***
+};
 goog.inherits(goog.net.MockIFrameIo, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Whether MockIFrameIo is active.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether MockIFrameIo is active.
+ * @type {boolean}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.active_ = false;
 
 
-***REMOVED***
-***REMOVED*** Last content.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last content.
+ * @type {string}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.lastContent_ = '';
 
 
-***REMOVED***
-***REMOVED*** Last error code.
-***REMOVED*** @type {goog.net.ErrorCode}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last error code.
+ * @type {goog.net.ErrorCode}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.lastErrorCode_ = goog.net.ErrorCode.NO_ERROR;
 
 
-***REMOVED***
-***REMOVED*** Last error message.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last error message.
+ * @type {string}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.lastError_ = '';
 
 
-***REMOVED***
-***REMOVED*** Last custom error.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last custom error.
+ * @type {Object}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.lastCustomError_ = null;
 
 
-***REMOVED***
-***REMOVED*** Last URI.
-***REMOVED*** @type {goog.Uri}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Last URI.
+ * @type {goog.Uri}
+ * @private
+ */
 goog.net.MockIFrameIo.prototype.lastUri_ = null;
 
 
-***REMOVED***
-***REMOVED*** Simulates the iframe send.
-***REMOVED***
-***REMOVED*** @param {goog.Uri|string} uri Uri of the request.
-***REMOVED*** @param {string=} opt_method Default is GET, POST uses a form to submit the
-***REMOVED***     request.
-***REMOVED*** @param {boolean=} opt_noCache Append a timestamp to the request to avoid
-***REMOVED***     caching.
-***REMOVED*** @param {Object|goog.structs.Map=} opt_data Map of key-value pairs.
-***REMOVED***
+/**
+ * Simulates the iframe send.
+ *
+ * @param {goog.Uri|string} uri Uri of the request.
+ * @param {string=} opt_method Default is GET, POST uses a form to submit the
+ *     request.
+ * @param {boolean=} opt_noCache Append a timestamp to the request to avoid
+ *     caching.
+ * @param {Object|goog.structs.Map=} opt_data Map of key-value pairs.
+ */
 goog.net.MockIFrameIo.prototype.send = function(uri, opt_method, opt_noCache,
                                                 opt_data) {
   if (this.active_) {
@@ -115,17 +115,17 @@ goog.net.MockIFrameIo.prototype.send = function(uri, opt_method, opt_noCache,
   this.testQueue_.enqueue(['s', uri, opt_method, opt_noCache, opt_data]);
   this.complete_ = false;
   this.active_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simulates the iframe send from a form.
-***REMOVED*** @param {Element} form Form element used to send the request to the server.
-***REMOVED*** @param {string=} opt_uri Uri to set for the destination of the request, by
-***REMOVED***     default the uri will come from the form.
-***REMOVED*** @param {boolean=} opt_noCache Append a timestamp to the request to avoid
-***REMOVED***     caching.
-***REMOVED***
+/**
+ * Simulates the iframe send from a form.
+ * @param {Element} form Form element used to send the request to the server.
+ * @param {string=} opt_uri Uri to set for the destination of the request, by
+ *     default the uri will come from the form.
+ * @param {boolean=} opt_noCache Append a timestamp to the request to avoid
+ *     caching.
+ */
 goog.net.MockIFrameIo.prototype.sendFromForm = function(form, opt_uri,
     opt_noCache) {
   if (this.active_) {
@@ -135,14 +135,14 @@ goog.net.MockIFrameIo.prototype.sendFromForm = function(form, opt_uri,
   this.testQueue_.enqueue(['s', form, opt_uri, opt_noCache]);
   this.complete_ = false;
   this.active_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simulates aborting the current Iframe request.
-***REMOVED*** @param {goog.net.ErrorCode=} opt_failureCode Optional error code to use -
-***REMOVED***     defaults to ABORT.
-***REMOVED***
+/**
+ * Simulates aborting the current Iframe request.
+ * @param {goog.net.ErrorCode=} opt_failureCode Optional error code to use -
+ *     defaults to ABORT.
+ */
 goog.net.MockIFrameIo.prototype.abort = function(opt_failureCode) {
   if (this.active_) {
     this.testQueue_.enqueue(['a', opt_failureCode]);
@@ -153,23 +153,23 @@ goog.net.MockIFrameIo.prototype.abort = function(opt_failureCode) {
     this.dispatchEvent(goog.net.EventType.ABORT);
     this.simulateReady();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simulates receive of incremental data.
-***REMOVED*** @param {Object} data Data.
-***REMOVED***
+/**
+ * Simulates receive of incremental data.
+ * @param {Object} data Data.
+ */
 goog.net.MockIFrameIo.prototype.simulateIncrementalData = function(data) {
   this.dispatchEvent(new goog.net.IframeIo.IncrementalDataEvent(data));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simulates the iframe is done.
-***REMOVED*** @param {goog.net.ErrorCode} errorCode The error code for any error that
-***REMOVED***     should be simulated.
-***REMOVED***
+/**
+ * Simulates the iframe is done.
+ * @param {goog.net.ErrorCode} errorCode The error code for any error that
+ *     should be simulated.
+ */
 goog.net.MockIFrameIo.prototype.simulateDone = function(errorCode) {
   if (errorCode) {
     this.success_ = false;
@@ -183,138 +183,138 @@ goog.net.MockIFrameIo.prototype.simulateDone = function(errorCode) {
   }
   this.complete_ = true;
   this.dispatchEvent(goog.net.EventType.COMPLETE);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simulates the IFrame is ready for the next request.
-***REMOVED***
+/**
+ * Simulates the IFrame is ready for the next request.
+ */
 goog.net.MockIFrameIo.prototype.simulateReady = function() {
   this.dispatchEvent(goog.net.EventType.READY);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if transfer is complete.
-***REMOVED***
+/**
+ * @return {boolean} True if transfer is complete.
+ */
 goog.net.MockIFrameIo.prototype.isComplete = function() {
   return this.complete_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if transfer was successful.
-***REMOVED***
+/**
+ * @return {boolean} True if transfer was successful.
+ */
 goog.net.MockIFrameIo.prototype.isSuccess = function() {
   return this.success_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if a transfer is in progress.
-***REMOVED***
+/**
+ * @return {boolean} True if a transfer is in progress.
+ */
 goog.net.MockIFrameIo.prototype.isActive = function() {
   return this.active_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the last response text (i.e. the text content of the iframe).
-***REMOVED*** Assumes plain text!
-***REMOVED*** @return {string} Result from the server.
-***REMOVED***
+/**
+ * Returns the last response text (i.e. the text content of the iframe).
+ * Assumes plain text!
+ * @return {string} Result from the server.
+ */
 goog.net.MockIFrameIo.prototype.getResponseText = function() {
   return this.lastContent_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the content as JSON. This is a safe parse and may throw an error
-***REMOVED*** if the response is malformed.
-***REMOVED*** @return {Object} The parsed content.
-***REMOVED***
+/**
+ * Parses the content as JSON. This is a safe parse and may throw an error
+ * if the response is malformed.
+ * @return {Object} The parsed content.
+ */
 goog.net.MockIFrameIo.prototype.getResponseJson = function() {
   return goog.json.parse(this.lastContent_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the uri of the last request.
-***REMOVED*** @return {goog.Uri} Uri of last request.
-***REMOVED***
+/**
+ * Get the uri of the last request.
+ * @return {goog.Uri} Uri of last request.
+ */
 goog.net.MockIFrameIo.prototype.getLastUri = function() {
   return this.lastUri_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last error code.
-***REMOVED*** @return {goog.net.ErrorCode} Last error code.
-***REMOVED***
+/**
+ * Gets the last error code.
+ * @return {goog.net.ErrorCode} Last error code.
+ */
 goog.net.MockIFrameIo.prototype.getLastErrorCode = function() {
   return this.lastErrorCode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last error message.
-***REMOVED*** @return {string} Last error message.
-***REMOVED***
+/**
+ * Gets the last error message.
+ * @return {string} Last error message.
+ */
 goog.net.MockIFrameIo.prototype.getLastError = function() {
   return goog.net.ErrorCode.getDebugMessage(this.lastErrorCode_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the last custom error.
-***REMOVED*** @return {Object} Last custom error.
-***REMOVED***
+/**
+ * Gets the last custom error.
+ * @return {Object} Last custom error.
+ */
 goog.net.MockIFrameIo.prototype.getLastCustomError = function() {
   return this.lastCustomError_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the callback function used to check if a loaded IFrame is in an error
-***REMOVED*** state.
-***REMOVED*** @param {Function} fn Callback that expects a document object as it's single
-***REMOVED***     argument.
-***REMOVED***
+/**
+ * Sets the callback function used to check if a loaded IFrame is in an error
+ * state.
+ * @param {Function} fn Callback that expects a document object as it's single
+ *     argument.
+ */
 goog.net.MockIFrameIo.prototype.setErrorChecker = function(fn) {
   this.errorChecker_ = fn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the callback function used to check if a loaded IFrame is in an error
-***REMOVED*** state.
-***REMOVED*** @return {Function} A callback that expects a document object as it's single
-***REMOVED***     argument.
-***REMOVED***
+/**
+ * Gets the callback function used to check if a loaded IFrame is in an error
+ * state.
+ * @return {Function} A callback that expects a document object as it's single
+ *     argument.
+ */
 goog.net.MockIFrameIo.prototype.getErrorChecker = function() {
   return this.errorChecker_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of milliseconds after which an incomplete request will be
-***REMOVED*** aborted, or 0 if no timeout is set.
-***REMOVED*** @return {number} Timeout interval in milliseconds.
-***REMOVED***
+/**
+ * Returns the number of milliseconds after which an incomplete request will be
+ * aborted, or 0 if no timeout is set.
+ * @return {number} Timeout interval in milliseconds.
+ */
 goog.net.MockIFrameIo.prototype.getTimeoutInterval = function() {
   return this.timeoutInterval_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the number of milliseconds after which an incomplete request will be
-***REMOVED*** aborted and a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no
-***REMOVED*** timeout is set.
-***REMOVED*** @param {number} ms Timeout interval in milliseconds; 0 means none.
-***REMOVED***
+/**
+ * Sets the number of milliseconds after which an incomplete request will be
+ * aborted and a {@link goog.net.EventType.TIMEOUT} event raised; 0 means no
+ * timeout is set.
+ * @param {number} ms Timeout interval in milliseconds; 0 means none.
+ */
 goog.net.MockIFrameIo.prototype.setTimeoutInterval = function(ms) {
   // TODO (pupius) - never used - doesn't look like timeouts were implemented
   this.timeoutInterval_ = Math.max(0, ms);
-***REMOVED***
+};
 
 

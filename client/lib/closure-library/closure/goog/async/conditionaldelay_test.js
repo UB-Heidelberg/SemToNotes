@@ -41,10 +41,10 @@ function setUp() {
   delay = new goog.async.ConditionalDelay(callback);
   delay.onSuccess = function() {
     onSuccessCalled = true;
- ***REMOVED*****REMOVED***
+  };
   delay.onFailure = function() {
     onFailureCalled = true;
- ***REMOVED*****REMOVED***
+  };
 }
 
 
@@ -209,7 +209,7 @@ function testInfiniteDelay() {
 
 function testCallbackScope() {
   var callbackCalled = false;
-  var scopeObject = {***REMOVED***
+  var scopeObject = {};
   function internalCallback() {
     assertEquals(this, scopeObject);
     callbackCalled = true;

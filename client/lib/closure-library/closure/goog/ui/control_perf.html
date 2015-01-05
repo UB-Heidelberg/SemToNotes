@@ -130,16 +130,16 @@ Author:  attila@google.com (Attila Bodis)
           'Render ' + SAMPLES_PER_RUN + ' controls (default)');
       cleanUpAfterRenderTest();
       assertEquals('The expected number of controls must have been rendered',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(), renderIndex);
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(), renderIndex);
     }
 
     function testDecorate() {
-      setUpDecorateTest(SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples());
+      setUpDecorateTest(SAMPLES_PER_RUN * table.getTimer().getNumSamples());
       table.run(goog.partial(decorateControls, SAMPLES_PER_RUN, true),
           'Decorate ' + SAMPLES_PER_RUN + ' controls (default)');
       cleanUpAfterDecorateTest();
       assertEquals('The expected number of controls must have been decorated',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(), decorateIndex);
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(), decorateIndex);
       assertNull('All controls must have been decorated', elementToDecorate);
     }
 
@@ -149,16 +149,16 @@ Author:  attila@google.com (Attila Bodis)
           'Render ' + SAMPLES_PER_RUN + ' controls (no BiDi auto-detect)');
       cleanUpAfterRenderTest();
       assertEquals('The expected number of controls must have been rendered',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(), renderIndex);
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(), renderIndex);
     }
 
     function testDecorateNoBiDiAutoDetect() {
-      setUpDecorateTest(SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples());
+      setUpDecorateTest(SAMPLES_PER_RUN * table.getTimer().getNumSamples());
       table.run(goog.partial(decorateControls, SAMPLES_PER_RUN, false),
           'Decorate ' + SAMPLES_PER_RUN + ' controls (no BiDi auto-detect)');
       cleanUpAfterDecorateTest();
       assertEquals('The expected number of controls must have been decorated',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(), decorateIndex);
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(), decorateIndex);
       assertNull('All controls must have been decorated', elementToDecorate);
     }
   </script>

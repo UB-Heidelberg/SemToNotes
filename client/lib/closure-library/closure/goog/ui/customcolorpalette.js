@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A color palette with a button for adding additional colors
-***REMOVED*** manually.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A color palette with a button for adding additional colors
+ * manually.
+ *
+ */
 
 goog.provide('goog.ui.CustomColorPalette');
 
@@ -28,35 +28,35 @@ goog.require('goog.ui.Component');
 
 
 
-***REMOVED***
-***REMOVED*** A custom color palette is a grid of color swatches and a button that allows
-***REMOVED*** the user to add additional colors to the palette
-***REMOVED***
-***REMOVED*** @param {Array.<string>} initColors Array of initial colors to populate the
-***REMOVED***     palette with.
-***REMOVED*** @param {goog.ui.PaletteRenderer=} opt_renderer Renderer used to render or
-***REMOVED***     decorate the palette; defaults to {@link goog.ui.PaletteRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ColorPalette}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A custom color palette is a grid of color swatches and a button that allows
+ * the user to add additional colors to the palette
+ *
+ * @param {Array.<string>} initColors Array of initial colors to populate the
+ *     palette with.
+ * @param {goog.ui.PaletteRenderer=} opt_renderer Renderer used to render or
+ *     decorate the palette; defaults to {@link goog.ui.PaletteRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.ColorPalette}
+ * @final
+ */
 goog.ui.CustomColorPalette = function(initColors, opt_renderer, opt_domHelper) {
   goog.ui.ColorPalette.call(this, initColors, opt_renderer, opt_domHelper);
   this.setSupportedState(goog.ui.Component.State.OPENED, true);
-***REMOVED***
+};
 goog.inherits(goog.ui.CustomColorPalette, goog.ui.ColorPalette);
 
 
-***REMOVED***
-***REMOVED*** Returns an array of DOM nodes for each color, and an additional cell with a
-***REMOVED*** '+'.
-***REMOVED*** @return {!Array.<Node>} Array of div elements.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns an array of DOM nodes for each color, and an additional cell with a
+ * '+'.
+ * @return {!Array.<Node>} Array of div elements.
+ * @override
+ */
 goog.ui.CustomColorPalette.prototype.createColorNodes = function() {
- ***REMOVED*****REMOVED*** @desc Hover caption for the button that allows the user to add a color.***REMOVED***
+  /** @desc Hover caption for the button that allows the user to add a color. */
   var MSG_CLOSURE_CUSTOM_COLOR_BUTTON = goog.getMsg('Add a color');
 
   var nl = goog.ui.CustomColorPalette.base(this, 'createColorNodes');
@@ -65,16 +65,16 @@ goog.ui.CustomColorPalette.prototype.createColorNodes = function() {
     'title': MSG_CLOSURE_CUSTOM_COLOR_BUTTON
   }, '+'));
   return nl;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @param {goog.events.Event} e Mouse or key event that triggered the action.
-***REMOVED*** @return {boolean} True if the action was allowed to proceed, false otherwise.
-***REMOVED***
+/**
+ * @override
+ * @param {goog.events.Event} e Mouse or key event that triggered the action.
+ * @return {boolean} True if the action was allowed to proceed, false otherwise.
+ */
 goog.ui.CustomColorPalette.prototype.performActionInternal = function(e) {
-  var item =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.getHighlightedItem());
+  var item = /** @type {Element} */ (this.getHighlightedItem());
   if (item) {
     if (goog.dom.classlist.contains(
         item, goog.getCssName('goog-palette-customcolor'))) {
@@ -87,15 +87,15 @@ goog.ui.CustomColorPalette.prototype.performActionInternal = function(e) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prompts the user to enter a custom color.  Currently uses a window.prompt
-***REMOVED*** but could be updated to use a dialog box with a WheelColorPalette.
-***REMOVED***
+/**
+ * Prompts the user to enter a custom color.  Currently uses a window.prompt
+ * but could be updated to use a dialog box with a WheelColorPalette.
+ */
 goog.ui.CustomColorPalette.prototype.promptForCustomColor = function() {
- ***REMOVED*****REMOVED*** @desc Default custom color dialog.***REMOVED***
+  /** @desc Default custom color dialog. */
   var MSG_CLOSURE_CUSTOM_COLOR_PROMPT = goog.getMsg(
       'Input custom color, i.e. pink, #F00, #D015FF or rgb(100, 50, 25)');
 
@@ -117,11 +117,11 @@ goog.ui.CustomColorPalette.prototype.promptForCustomColor = function() {
   }
 
   var color;
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     color = goog.color.parse(response).hex;
   } catch (er) {
-   ***REMOVED*****REMOVED*** @desc Alert message sent when the input string is not a valid color.***REMOVED***
+    /** @desc Alert message sent when the input string is not a valid color. */
     var MSG_CLOSURE_CUSTOM_COLOR_INVALID_INPUT = goog.getMsg(
         'ERROR: "{$color}" is not a valid color.', {'color': response});
     alert(MSG_CLOSURE_CUSTOM_COLOR_INVALID_INPUT);
@@ -137,4 +137,4 @@ goog.ui.CustomColorPalette.prototype.promptForCustomColor = function() {
   // Set the selected color to the new color and notify listeners of the action.
   this.setSelectedColor(color);
   this.dispatchEvent(goog.ui.Component.EventType.ACTION);
-***REMOVED***
+};

@@ -12,84 +12,84 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the base goog.ui.Control and goog.ui.ControlRenderer
-***REMOVED*** for media types, as well as a media model consistent with the Yahoo Media RSS
-***REMOVED*** specification {@link http://search.yahoo.com/mrss/}.
-***REMOVED***
-***REMOVED*** The goog.ui.media.* package is basically a set of goog.ui.ControlRenderers
-***REMOVED*** subclasses (such as goog.ui.media.Youtube, goog.ui.media.Picasa, etc) that
-***REMOVED*** should all work with the same goog.ui.Control (goog.ui.media.Media) logic.
-***REMOVED***
-***REMOVED*** This design guarantees that all different types of medias will behave alike
-***REMOVED*** (in a base level) but will look different.
-***REMOVED***
-***REMOVED*** In MVC terms, {@link goog.ui.media.Media} is the Controller,
-***REMOVED*** {@link goog.ui.media.MediaRenderer} + CSS definitions are the View and
-***REMOVED*** {@code goog.ui.media.MediaModel} is the data Model. Typically,
-***REMOVED*** MediaRenderer will be subclassed to provide media specific renderers.
-***REMOVED*** MediaRenderer subclasses are also responsible for defining the data model.
-***REMOVED***
-***REMOVED*** This design is strongly patterned after:
-***REMOVED*** http://go/closure_control_subclassing
-***REMOVED***
-***REMOVED*** goog.ui.media.MediaRenderer handles the basic common ways to display media,
-***REMOVED*** such as displaying tooltips, frames, minimize/maximize buttons, play buttons,
-***REMOVED*** etc. Its subclasses are responsible for rendering media specific DOM
-***REMOVED*** structures, like youtube flash players, picasa albums, etc.
-***REMOVED***
-***REMOVED*** goog.ui.media.Media handles the Control of Medias, by listening to events
-***REMOVED*** and firing the appropriate actions. It knows about the existence of captions,
-***REMOVED*** minimize/maximize buttons, and takes all the actions needed to change states,
-***REMOVED*** including delegating the UI actions to MediaRenderers.
-***REMOVED***
-***REMOVED*** Although MediaRenderer is a base class designed to be subclassed, it can
-***REMOVED*** be used by itself:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED***   var renderer = new goog.ui.media.MediaRenderer();
-***REMOVED***   var control = new goog.ui.media.Media('hello world', renderer);
-***REMOVED***   var control.render(goog.dom.getElement('mediaHolder'));
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** It requires a few CSS rules to be defined, which you should use to control
-***REMOVED*** how the component is displayed. {@link goog.ui.ControlRenderer}s is very CSS
-***REMOVED*** intensive, which separates the UI structure (the HTML DOM elements, which is
-***REMOVED*** created by the {@code goog.ui.media.MediaRenderer}) from the UI view (which
-***REMOVED*** nodes are visible, which aren't, where they are positioned. These are defined
-***REMOVED*** on the CSS rules for each state). A few examples of CSS selectors that needs
-***REMOVED*** to be defined are:
-***REMOVED***
-***REMOVED*** <ul>
-***REMOVED***   <li>.goog-ui-media
-***REMOVED***   <li>.goog-ui-media-hover
-***REMOVED***   <li>.goog-ui-media-selected
-***REMOVED*** </ul>
-***REMOVED***
-***REMOVED*** If you want to have different custom renderers CSS namespaces (eg. you may
-***REMOVED*** want to show a small thumbnail, or you may want to hide the caption, etc),
-***REMOVED*** you can do so by using:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED***   var renderer = goog.ui.ControlRenderer.getCustomRenderer(
-***REMOVED***       goog.ui.media.MediaRenderer, 'my-custom-namespace');
-***REMOVED***   var media = new goog.ui.media.Media('', renderer);
-***REMOVED***   media.render(goog.dom.getElement('parent'));
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** Which will allow you to set your own .my-custom-namespace-hover,
-***REMOVED*** .my-custom-namespace-selected CSS selectors.
-***REMOVED***
-***REMOVED*** NOTE(user): it seems like an overkill to subclass goog.ui.Control instead of
-***REMOVED*** using a factory, but we wanted to make sure we had more control over the
-***REMOVED*** events for future media implementations. Since we intent to use it in many
-***REMOVED*** different places, it makes sense to have a more flexible design that lets us
-***REMOVED*** control the inner workings of goog.ui.Control.
-***REMOVED***
-***REMOVED*** TODO(user): implement, as needed, the Media specific state changes UI, such
-***REMOVED*** as minimize/maximize buttons, expand/close buttons, etc.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides the base goog.ui.Control and goog.ui.ControlRenderer
+ * for media types, as well as a media model consistent with the Yahoo Media RSS
+ * specification {@link http://search.yahoo.com/mrss/}.
+ *
+ * The goog.ui.media.* package is basically a set of goog.ui.ControlRenderers
+ * subclasses (such as goog.ui.media.Youtube, goog.ui.media.Picasa, etc) that
+ * should all work with the same goog.ui.Control (goog.ui.media.Media) logic.
+ *
+ * This design guarantees that all different types of medias will behave alike
+ * (in a base level) but will look different.
+ *
+ * In MVC terms, {@link goog.ui.media.Media} is the Controller,
+ * {@link goog.ui.media.MediaRenderer} + CSS definitions are the View and
+ * {@code goog.ui.media.MediaModel} is the data Model. Typically,
+ * MediaRenderer will be subclassed to provide media specific renderers.
+ * MediaRenderer subclasses are also responsible for defining the data model.
+ *
+ * This design is strongly patterned after:
+ * http://go/closure_control_subclassing
+ *
+ * goog.ui.media.MediaRenderer handles the basic common ways to display media,
+ * such as displaying tooltips, frames, minimize/maximize buttons, play buttons,
+ * etc. Its subclasses are responsible for rendering media specific DOM
+ * structures, like youtube flash players, picasa albums, etc.
+ *
+ * goog.ui.media.Media handles the Control of Medias, by listening to events
+ * and firing the appropriate actions. It knows about the existence of captions,
+ * minimize/maximize buttons, and takes all the actions needed to change states,
+ * including delegating the UI actions to MediaRenderers.
+ *
+ * Although MediaRenderer is a base class designed to be subclassed, it can
+ * be used by itself:
+ *
+ * <pre>
+ *   var renderer = new goog.ui.media.MediaRenderer();
+ *   var control = new goog.ui.media.Media('hello world', renderer);
+ *   var control.render(goog.dom.getElement('mediaHolder'));
+ * </pre>
+ *
+ * It requires a few CSS rules to be defined, which you should use to control
+ * how the component is displayed. {@link goog.ui.ControlRenderer}s is very CSS
+ * intensive, which separates the UI structure (the HTML DOM elements, which is
+ * created by the {@code goog.ui.media.MediaRenderer}) from the UI view (which
+ * nodes are visible, which aren't, where they are positioned. These are defined
+ * on the CSS rules for each state). A few examples of CSS selectors that needs
+ * to be defined are:
+ *
+ * <ul>
+ *   <li>.goog-ui-media
+ *   <li>.goog-ui-media-hover
+ *   <li>.goog-ui-media-selected
+ * </ul>
+ *
+ * If you want to have different custom renderers CSS namespaces (eg. you may
+ * want to show a small thumbnail, or you may want to hide the caption, etc),
+ * you can do so by using:
+ *
+ * <pre>
+ *   var renderer = goog.ui.ControlRenderer.getCustomRenderer(
+ *       goog.ui.media.MediaRenderer, 'my-custom-namespace');
+ *   var media = new goog.ui.media.Media('', renderer);
+ *   media.render(goog.dom.getElement('parent'));
+ * </pre>
+ *
+ * Which will allow you to set your own .my-custom-namespace-hover,
+ * .my-custom-namespace-selected CSS selectors.
+ *
+ * NOTE(user): it seems like an overkill to subclass goog.ui.Control instead of
+ * using a factory, but we wanted to make sure we had more control over the
+ * events for future media implementations. Since we intent to use it in many
+ * different places, it makes sense to have a more flexible design that lets us
+ * control the inner workings of goog.ui.Control.
+ *
+ * TODO(user): implement, as needed, the Media specific state changes UI, such
+ * as minimize/maximize buttons, expand/close buttons, etc.
+ *
+ */
 
 goog.provide('goog.ui.media.Media');
 goog.provide('goog.ui.media.MediaRenderer');
@@ -101,19 +101,19 @@ goog.require('goog.ui.ControlRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Provides the control mechanism of media types.
-***REMOVED***
-***REMOVED*** @param {goog.ui.media.MediaModel} dataModel The data model to be used by the
-***REMOVED***     renderer.
-***REMOVED*** @param {goog.ui.ControlRenderer=} opt_renderer Renderer used to render or
-***REMOVED***     decorate the component; defaults to {@link goog.ui.ControlRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Provides the control mechanism of media types.
+ *
+ * @param {goog.ui.media.MediaModel} dataModel The data model to be used by the
+ *     renderer.
+ * @param {goog.ui.ControlRenderer=} opt_renderer Renderer used to render or
+ *     decorate the component; defaults to {@link goog.ui.ControlRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Control}
+ * @final
+ */
 goog.ui.media.Media = function(dataModel, opt_renderer, opt_domHelper) {
   goog.ui.Control.call(this, null, opt_renderer, opt_domHelper);
 
@@ -129,75 +129,75 @@ goog.ui.media.Media = function(dataModel, opt_renderer, opt_domHelper) {
   // Media items don't use RTL styles, so avoid accessing computed styles to
   // figure out if the control is RTL.
   this.setRightToLeft(false);
-***REMOVED***
+};
 goog.inherits(goog.ui.media.Media, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** The media data model used on the renderer.
-***REMOVED***
-***REMOVED*** @type {goog.ui.media.MediaModel}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The media data model used on the renderer.
+ *
+ * @type {goog.ui.media.MediaModel}
+ * @private
+ */
 goog.ui.media.Media.prototype.dataModel_;
 
 
-***REMOVED***
-***REMOVED*** Sets the media model to be used on the renderer.
-***REMOVED*** @param {goog.ui.media.MediaModel} dataModel The media model the renderer
-***REMOVED***     should use.
-***REMOVED***
+/**
+ * Sets the media model to be used on the renderer.
+ * @param {goog.ui.media.MediaModel} dataModel The media model the renderer
+ *     should use.
+ */
 goog.ui.media.Media.prototype.setDataModel = function(dataModel) {
   this.dataModel_ = dataModel;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the media model renderer is using.
-***REMOVED*** @return {goog.ui.media.MediaModel} The media model being used.
-***REMOVED***
+/**
+ * Gets the media model renderer is using.
+ * @return {goog.ui.media.MediaModel} The media model being used.
+ */
 goog.ui.media.Media.prototype.getDataModel = function() {
   return this.dataModel_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Base class of all media renderers. Provides the common renderer functionality
-***REMOVED*** of medias.
-***REMOVED***
-***REMOVED*** The current common functionality shared by Medias is to have an outer frame
-***REMOVED*** that gets highlighted on mouse hover.
-***REMOVED***
-***REMOVED*** TODO(user): implement more common UI behavior, as needed.
-***REMOVED***
-***REMOVED*** NOTE(user): I am not enjoying how the subclasses are changing their state
-***REMOVED*** through setState() ... maybe provide abstract methods like
-***REMOVED*** goog.ui.media.MediaRenderer.prototype.preview = goog.abstractMethod;
-***REMOVED*** goog.ui.media.MediaRenderer.prototype.play = goog.abstractMethod;
-***REMOVED*** goog.ui.media.MediaRenderer.prototype.minimize = goog.abstractMethod;
-***REMOVED*** goog.ui.media.MediaRenderer.prototype.maximize = goog.abstractMethod;
-***REMOVED*** and call them on this parent class setState ?
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ControlRenderer}
-***REMOVED***
+/**
+ * Base class of all media renderers. Provides the common renderer functionality
+ * of medias.
+ *
+ * The current common functionality shared by Medias is to have an outer frame
+ * that gets highlighted on mouse hover.
+ *
+ * TODO(user): implement more common UI behavior, as needed.
+ *
+ * NOTE(user): I am not enjoying how the subclasses are changing their state
+ * through setState() ... maybe provide abstract methods like
+ * goog.ui.media.MediaRenderer.prototype.preview = goog.abstractMethod;
+ * goog.ui.media.MediaRenderer.prototype.play = goog.abstractMethod;
+ * goog.ui.media.MediaRenderer.prototype.minimize = goog.abstractMethod;
+ * goog.ui.media.MediaRenderer.prototype.maximize = goog.abstractMethod;
+ * and call them on this parent class setState ?
+ *
+ * @constructor
+ * @extends {goog.ui.ControlRenderer}
+ */
 goog.ui.media.MediaRenderer = function() {
   goog.ui.ControlRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.media.MediaRenderer, goog.ui.ControlRenderer);
 
 
-***REMOVED***
-***REMOVED*** Builds the common DOM structure of medias. Builds an outer div, and appends
-***REMOVED*** a child div with the {@code goog.ui.Control.getContent} content. Marks the
-***REMOVED*** caption with a {@code this.getClassClass()} + '-caption' css flag, so that
-***REMOVED*** specific renderers can hide/show the caption as desired.
-***REMOVED***
-***REMOVED*** @param {goog.ui.Control} control The control instance.
-***REMOVED*** @return {!Element} The DOM structure that represents control.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Builds the common DOM structure of medias. Builds an outer div, and appends
+ * a child div with the {@code goog.ui.Control.getContent} content. Marks the
+ * caption with a {@code this.getClassClass()} + '-caption' css flag, so that
+ * specific renderers can hide/show the caption as desired.
+ *
+ * @param {goog.ui.Control} control The control instance.
+ * @return {!Element} The DOM structure that represents control.
+ * @override
+ */
 goog.ui.media.MediaRenderer.prototype.createDom = function(control) {
   var domHelper = control.getDomHelper();
   var div = domHelper.createElement('div');
@@ -255,25 +255,25 @@ goog.ui.media.MediaRenderer.prototype.createDom = function(control) {
 
   this.setState(
       control,
-     ***REMOVED*****REMOVED*** @type {goog.ui.Component.State}***REMOVED*** (control.getState()),
+      /** @type {goog.ui.Component.State} */ (control.getState()),
       true);
 
   return div;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a renamable CSS class name for a numbered thumbnail. The default
-***REMOVED*** implementation generates the class names goog-ui-media-thumbnail0,
-***REMOVED*** goog-ui-media-thumbnail1, and the generic goog-ui-media-thumbnailn.
-***REMOVED*** Subclasses can override this method when their media requires additional
-***REMOVED*** specific class names (Applications are supposed to know how many thumbnails
-***REMOVED*** media will have).
-***REMOVED***
-***REMOVED*** @param {number} index The thumbnail index.
-***REMOVED*** @return {string} CSS class name.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns a renamable CSS class name for a numbered thumbnail. The default
+ * implementation generates the class names goog-ui-media-thumbnail0,
+ * goog-ui-media-thumbnail1, and the generic goog-ui-media-thumbnailn.
+ * Subclasses can override this method when their media requires additional
+ * specific class names (Applications are supposed to know how many thumbnails
+ * media will have).
+ *
+ * @param {number} index The thumbnail index.
+ * @return {string} CSS class name.
+ * @protected
+ */
 goog.ui.media.MediaRenderer.prototype.getThumbnailCssName = function(index) {
   switch (index) {
     case 0: return goog.getCssName(this.getCssClass(), 'thumbnail0');
@@ -283,4 +283,4 @@ goog.ui.media.MediaRenderer.prototype.getThumbnailCssName = function(index) {
     case 4: return goog.getCssName(this.getCssClass(), 'thumbnail4');
     default: return goog.getCssName(this.getCssClass(), 'thumbnailn');
   }
-***REMOVED***
+};

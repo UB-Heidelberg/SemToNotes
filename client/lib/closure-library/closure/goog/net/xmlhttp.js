@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Low level handling of XMLHttpRequest.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author dbk@google.com (David Barrett-Kahn)
-***REMOVED***
+/**
+ * @fileoverview Low level handling of XMLHttpRequest.
+ * @author arv@google.com (Erik Arvidsson)
+ * @author dbk@google.com (David Barrett-Kahn)
+ */
 
 goog.provide('goog.net.DefaultXmlHttpFactory');
 goog.provide('goog.net.XmlHttp');
@@ -29,145 +29,145 @@ goog.require('goog.net.WrapperXmlHttpFactory');
 goog.require('goog.net.XmlHttpFactory');
 
 
-***REMOVED***
-***REMOVED*** Static class for creating XMLHttpRequest objects.
-***REMOVED*** @return {!goog.net.XhrLike.OrNative} A new XMLHttpRequest object.
-***REMOVED***
+/**
+ * Static class for creating XMLHttpRequest objects.
+ * @return {!goog.net.XhrLike.OrNative} A new XMLHttpRequest object.
+ */
 goog.net.XmlHttp = function() {
   return goog.net.XmlHttp.factory_.createInstance();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
-***REMOVED***     true bypasses the ActiveX probing code.
-***REMOVED*** NOTE(user): Due to the way JSCompiler works, this define***REMOVED***will not* strip
-***REMOVED*** out the ActiveX probing code from binaries.  To achieve this, use
-***REMOVED*** {@code goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR} instead.
-***REMOVED*** TODO(user): Collapse both defines.
-***REMOVED***
+/**
+ * @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
+ *     true bypasses the ActiveX probing code.
+ * NOTE(user): Due to the way JSCompiler works, this define *will not* strip
+ * out the ActiveX probing code from binaries.  To achieve this, use
+ * {@code goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR} instead.
+ * TODO(user): Collapse both defines.
+ */
 goog.define('goog.net.XmlHttp.ASSUME_NATIVE_XHR', false);
 
 
-***REMOVED*** @const***REMOVED***
-goog.net.XmlHttpDefines = {***REMOVED***
+/** @const */
+goog.net.XmlHttpDefines = {};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
-***REMOVED***     true eliminates the ActiveX probing code.
-***REMOVED***
+/**
+ * @define {boolean} Whether to assume XMLHttpRequest exists. Setting this to
+ *     true eliminates the ActiveX probing code.
+ */
 goog.define('goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR', false);
 
 
-***REMOVED***
-***REMOVED*** Gets the options to use with the XMLHttpRequest objects obtained using
-***REMOVED*** the static methods.
-***REMOVED*** @return {Object} The options.
-***REMOVED***
+/**
+ * Gets the options to use with the XMLHttpRequest objects obtained using
+ * the static methods.
+ * @return {Object} The options.
+ */
 goog.net.XmlHttp.getOptions = function() {
   return goog.net.XmlHttp.factory_.getOptions();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Type of options that an XmlHttp object can have.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Type of options that an XmlHttp object can have.
+ * @enum {number}
+ */
 goog.net.XmlHttp.OptionType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether a goog.nullFunction should be used to clear the onreadystatechange
-  ***REMOVED*** handler instead of null.
- ***REMOVED*****REMOVED***
+  /**
+   * Whether a goog.nullFunction should be used to clear the onreadystatechange
+   * handler instead of null.
+   */
   USE_NULL_FUNCTION: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** NOTE(user): In IE if send() errors on a***REMOVED***local* request the readystate
-  ***REMOVED*** is still changed to COMPLETE.  We need to ignore it and allow the
-  ***REMOVED*** try/catch around send() to pick up the error.
- ***REMOVED*****REMOVED***
+  /**
+   * NOTE(user): In IE if send() errors on a *local* request the readystate
+   * is still changed to COMPLETE.  We need to ignore it and allow the
+   * try/catch around send() to pick up the error.
+   */
   LOCAL_REQUEST_ERROR: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Status constants for XMLHTTP, matches:
-***REMOVED*** http://msdn.microsoft.com/library/default.asp?url=/library/
-***REMOVED***   en-us/xmlsdk/html/0e6a34e4-f90c-489d-acff-cb44242fafc6.asp
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Status constants for XMLHTTP, matches:
+ * http://msdn.microsoft.com/library/default.asp?url=/library/
+ *   en-us/xmlsdk/html/0e6a34e4-f90c-489d-acff-cb44242fafc6.asp
+ * @enum {number}
+ */
 goog.net.XmlHttp.ReadyState = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Constant for when xmlhttprequest.readyState is uninitialized
- ***REMOVED*****REMOVED***
+  /**
+   * Constant for when xmlhttprequest.readyState is uninitialized
+   */
   UNINITIALIZED: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Constant for when xmlhttprequest.readyState is loading.
- ***REMOVED*****REMOVED***
+  /**
+   * Constant for when xmlhttprequest.readyState is loading.
+   */
   LOADING: 1,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Constant for when xmlhttprequest.readyState is loaded.
- ***REMOVED*****REMOVED***
+  /**
+   * Constant for when xmlhttprequest.readyState is loaded.
+   */
   LOADED: 2,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Constant for when xmlhttprequest.readyState is in an interactive state.
- ***REMOVED*****REMOVED***
+  /**
+   * Constant for when xmlhttprequest.readyState is in an interactive state.
+   */
   INTERACTIVE: 3,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Constant for when xmlhttprequest.readyState is completed
- ***REMOVED*****REMOVED***
+  /**
+   * Constant for when xmlhttprequest.readyState is completed
+   */
   COMPLETE: 4
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The global factory instance for creating XMLHttpRequest objects.
-***REMOVED*** @type {goog.net.XmlHttpFactory}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The global factory instance for creating XMLHttpRequest objects.
+ * @type {goog.net.XmlHttpFactory}
+ * @private
+ */
 goog.net.XmlHttp.factory_;
 
 
-***REMOVED***
-***REMOVED*** Sets the factories for creating XMLHttpRequest objects and their options.
-***REMOVED*** @param {Function} factory The factory for XMLHttpRequest objects.
-***REMOVED*** @param {Function} optionsFactory The factory for options.
-***REMOVED*** @deprecated Use setGlobalFactory instead.
-***REMOVED***
+/**
+ * Sets the factories for creating XMLHttpRequest objects and their options.
+ * @param {Function} factory The factory for XMLHttpRequest objects.
+ * @param {Function} optionsFactory The factory for options.
+ * @deprecated Use setGlobalFactory instead.
+ */
 goog.net.XmlHttp.setFactory = function(factory, optionsFactory) {
   goog.net.XmlHttp.setGlobalFactory(new goog.net.WrapperXmlHttpFactory(
       goog.asserts.assert(factory),
       goog.asserts.assert(optionsFactory)));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the global factory object.
-***REMOVED*** @param {!goog.net.XmlHttpFactory} factory New global factory object.
-***REMOVED***
+/**
+ * Sets the global factory object.
+ * @param {!goog.net.XmlHttpFactory} factory New global factory object.
+ */
 goog.net.XmlHttp.setGlobalFactory = function(factory) {
   goog.net.XmlHttp.factory_ = factory;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Default factory to use when creating xhr objects.  You probably shouldn't be
-***REMOVED*** instantiating this directly, but rather using it via goog.net.XmlHttp.
-***REMOVED*** @extends {goog.net.XmlHttpFactory}
-***REMOVED***
-***REMOVED***
+/**
+ * Default factory to use when creating xhr objects.  You probably shouldn't be
+ * instantiating this directly, but rather using it via goog.net.XmlHttp.
+ * @extends {goog.net.XmlHttpFactory}
+ * @constructor
+ */
 goog.net.DefaultXmlHttpFactory = function() {
   goog.net.XmlHttpFactory.call(this);
-***REMOVED***
+};
 goog.inherits(goog.net.DefaultXmlHttpFactory, goog.net.XmlHttpFactory);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.DefaultXmlHttpFactory.prototype.createInstance = function() {
   var progId = this.getProgId_();
   if (progId) {
@@ -175,34 +175,34 @@ goog.net.DefaultXmlHttpFactory.prototype.createInstance = function() {
   } else {
     return new XMLHttpRequest();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.DefaultXmlHttpFactory.prototype.internalGetOptions = function() {
   var progId = this.getProgId_();
-  var options = {***REMOVED***
+  var options = {};
   if (progId) {
     options[goog.net.XmlHttp.OptionType.USE_NULL_FUNCTION] = true;
     options[goog.net.XmlHttp.OptionType.LOCAL_REQUEST_ERROR] = true;
   }
   return options;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The ActiveX PROG ID string to use to create xhr's in IE. Lazily initialized.
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The ActiveX PROG ID string to use to create xhr's in IE. Lazily initialized.
+ * @type {string|undefined}
+ * @private
+ */
 goog.net.DefaultXmlHttpFactory.prototype.ieProgId_;
 
 
-***REMOVED***
-***REMOVED*** Initialize the private state used by other functions.
-***REMOVED*** @return {string} The ActiveX PROG ID string to use to create xhr's in IE.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initialize the private state used by other functions.
+ * @return {string} The ActiveX PROG ID string to use to create xhr's in IE.
+ * @private
+ */
 goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
   if (goog.net.XmlHttp.ASSUME_NATIVE_XHR ||
       goog.net.XmlHttpDefines.ASSUME_NATIVE_XHR) {
@@ -221,7 +221,7 @@ goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
                            'MSXML2.XMLHTTP', 'Microsoft.XMLHTTP'];
     for (var i = 0; i < ACTIVE_X_IDENTS.length; i++) {
       var candidate = ACTIVE_X_IDENTS[i];
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         new ActiveXObject(candidate);
         // NOTE(user): cannot assign progid and return candidate in one line
@@ -238,8 +238,8 @@ goog.net.DefaultXmlHttpFactory.prototype.getProgId_ = function() {
                 ' or MSXML might not be installed');
   }
 
-  return***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.ieProgId_);
-***REMOVED***
+  return /** @type {string} */ (this.ieProgId_);
+};
 
 
 //Set the global factory to an instance of the default factory.

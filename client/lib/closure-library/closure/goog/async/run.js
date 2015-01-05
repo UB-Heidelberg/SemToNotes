@@ -19,14 +19,14 @@ goog.require('goog.async.throwException');
 goog.require('goog.testing.watchers');
 
 
-***REMOVED***
-***REMOVED*** Fires the provided callback just before the current callstack unwinds, or as
-***REMOVED*** soon as possible after the current JS execution context.
-***REMOVED*** @param {function(this:THIS)} callback
-***REMOVED*** @param {THIS=} opt_context Object to use as the "this value" when calling
-***REMOVED***     the provided function.
-***REMOVED*** @template THIS
-***REMOVED***
+/**
+ * Fires the provided callback just before the current callstack unwinds, or as
+ * soon as possible after the current JS execution context.
+ * @param {function(this:THIS)} callback
+ * @param {THIS=} opt_context Object to use as the "this value" when calling
+ *     the provided function.
+ * @template THIS
+ */
 goog.async.run = function(callback, opt_context) {
   if (!goog.async.run.workQueueScheduled_) {
     // Nothing is currently scheduled, schedule it now.
@@ -36,26 +36,26 @@ goog.async.run = function(callback, opt_context) {
 
   goog.async.run.workQueue_.push(
       new goog.async.run.WorkItem_(callback, opt_context));
-***REMOVED***
+};
 
 
-***REMOVED*** @private {boolean}***REMOVED***
+/** @private {boolean} */
 goog.async.run.workQueueScheduled_ = false;
 
 
-***REMOVED*** @private {!Array.<!goog.async.run.WorkItem_>}***REMOVED***
+/** @private {!Array.<!goog.async.run.WorkItem_>} */
 goog.async.run.workQueue_ = [];
 
 
 if (goog.DEBUG) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Reset the event queue.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Reset the event queue.
+   * @private
+   */
   goog.async.run.resetQueue_ = function() {
     goog.async.run.workQueueScheduled_ = false;
     goog.async.run.workQueue_ = [];
- ***REMOVED*****REMOVED***
+  };
 
   // If there is a clock implemenation in use for testing
   // and it is reset, reset the queue.
@@ -63,11 +63,11 @@ if (goog.DEBUG) {
 }
 
 
-***REMOVED***
-***REMOVED*** Run any pending goog.async.run work items. This function is not intended
-***REMOVED*** for general use, but for use by entry point handlers to run items ahead of
-***REMOVED*** goog.async.nextTick.
-***REMOVED***
+/**
+ * Run any pending goog.async.run work items. This function is not intended
+ * for general use, but for use by entry point handlers to run items ahead of
+ * goog.async.nextTick.
+ */
 goog.async.run.processWorkQueue = function() {
   // NOTE: additional work queue items may be pushed while processing.
   while (goog.async.run.workQueue_.length) {
@@ -86,20 +86,20 @@ goog.async.run.processWorkQueue = function() {
 
   // There are no more work items, reset the work queue.
   goog.async.run.workQueueScheduled_ = false;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED*** @private
-***REMOVED***
-***REMOVED*** @param {function()} fn
-***REMOVED*** @param {Object|null|undefined} scope
-***REMOVED***
+/**
+ * @constructor
+ * @final
+ * @struct
+ * @private
+ *
+ * @param {function()} fn
+ * @param {Object|null|undefined} scope
+ */
 goog.async.run.WorkItem_ = function(fn, scope) {
- ***REMOVED*****REMOVED*** @const***REMOVED*** this.fn = fn;
- ***REMOVED*****REMOVED*** @const***REMOVED*** this.scope = scope;
-***REMOVED***
+  /** @const */ this.fn = fn;
+  /** @const */ this.scope = scope;
+};

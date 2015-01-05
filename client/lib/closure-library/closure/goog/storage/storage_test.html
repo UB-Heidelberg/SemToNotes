@@ -54,7 +54,7 @@ function testMechanismCommunication() {
 function testMechanismFailsGracefullyOnInvalidValue() {
   var mechanism = {
     get: goog.functions.error('Invalid value')
- ***REMOVED*****REMOVED***
+  };
   var storage = new goog.storage.Storage(mechanism);
   assertUndefined(storage.get('foobar'));
 }

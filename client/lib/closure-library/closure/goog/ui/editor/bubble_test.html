@@ -20,7 +20,7 @@ See the COPYING file for details.
   goog.require('goog.dom');
   goog.require('goog.dom.TagName');
   goog.require('goog.events.BrowserEvent');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events.EventType');
   goog.require('goog.events.KeyCodes');
   goog.require('goog.string');
   goog.require('goog.style');
@@ -54,7 +54,7 @@ function setUpPage() {
     window.moveTo(0, 0);
     window.resizeTo(640, 480);
   }
-***REMOVED***
+};
 
 function setUp() {
   testHelper = new goog.testing.editor.TestHelper(fieldDiv);
@@ -79,14 +79,14 @@ function tearDown() {
   testHelper.tearDownEditableElement();
 }
 
-***REMOVED***
-***REMOVED*** This is a helper function for setting up the target element with a
-***REMOVED*** given direction.
-***REMOVED***
-***REMOVED*** @param {string} dir The direction of the target element, 'ltr' or 'rtl'.
-***REMOVED*** @param {boolean=} opt_preferTopPosition Whether to prefer placing the bubble
-***REMOVED***     above the element instead of below it.  Defaults to preferring below.
-***REMOVED***
+/**
+ * This is a helper function for setting up the target element with a
+ * given direction.
+ *
+ * @param {string} dir The direction of the target element, 'ltr' or 'rtl'.
+ * @param {boolean=} opt_preferTopPosition Whether to prefer placing the bubble
+ *     above the element instead of below it.  Defaults to preferring below.
+ */
 function prepareTargetWithGivenDirection(dir, opt_preferTopPosition) {
   goog.style.setStyle(document.body, 'direction', dir);
 
@@ -99,14 +99,14 @@ function prepareTargetWithGivenDirection(dir, opt_preferTopPosition) {
   }, opt_preferTopPosition);
 }
 
-***REMOVED***
-***REMOVED*** This is a helper function for getting the expected position of the bubble.
-***REMOVED*** (align to the right or the left of the target element).  Align left by
-***REMOVED*** default and align right if opt_alignRight is true. The expected Y is
-***REMOVED*** unaffected by alignment.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_alignRight Sets the expected alignment to be right.
-***REMOVED***
+/**
+ * This is a helper function for getting the expected position of the bubble.
+ * (align to the right or the left of the target element).  Align left by
+ * default and align right if opt_alignRight is true. The expected Y is
+ * unaffected by alignment.
+ *
+ * @param {boolean=} opt_alignRight Sets the expected alignment to be right.
+ */
 function getExpectedBubblePositionWithGivenAlignment(opt_alignRight) {
   var targetPosition = goog.style.getFramedPageOffset(link, window);
   var targetWidth = link.offsetWidth;
@@ -119,7 +119,7 @@ function getExpectedBubblePositionWithGivenAlignment(opt_alignRight) {
   return {
     x: expectedBubbleX,
     y: expectedBubbleY
- ***REMOVED*****REMOVED***
+  };
 }
 
 function testCreateBubbleWithLinkPanel() {
@@ -136,7 +136,7 @@ function testCloseBubble() {
   testCreateBubbleWithLinkPanel();
 
   var count = 0;
-***REMOVED***bubble, goog.ui.Component.EventType.HIDE, function() {
+  goog.events.listen(bubble, goog.ui.Component.EventType.HIDE, function() {
     count++;
   });
 
@@ -151,7 +151,7 @@ function testCloseBox() {
   testCreateBubbleWithLinkPanel();
 
   var count = 0;
-***REMOVED***bubble, goog.ui.Component.EventType.HIDE, function() {
+  goog.events.listen(bubble, goog.ui.Component.EventType.HIDE, function() {
     count++;
   });
 
@@ -170,7 +170,7 @@ function testViewPortSizeMonitorEvent() {
   var numCalled = 0;
   bubble.reposition = function() {
     numCalled++;
- ***REMOVED*****REMOVED***
+  };
 
   assertNotUndefined('viewPortSizeMonitor_ should not be undefined',
       bubble.viewPortSizeMonitor_);
@@ -189,7 +189,7 @@ function testBubblePositionPreferTop() {
     assertEquals(goog.positioning.Corner.BOTTOM_START, bubbleCorner);
 
     return goog.positioning.OverflowStatus.NONE;
- ***REMOVED*****REMOVED***
+  };
   prepareTargetWithGivenDirection('ltr', true);
   assertTrue(called);
 }
@@ -230,11 +230,11 @@ function testBubblePositionRightAligned() {
   assertEquals(expectedPos.y, pos.y);
 }
 
-***REMOVED***
-***REMOVED*** Test for bug 1955511, the bubble should align to the right side
-***REMOVED*** of the target element when the bubble is RTL, regardless of the
-***REMOVED*** target element's directionality.
-***REMOVED***
+/**
+ * Test for bug 1955511, the bubble should align to the right side
+ * of the target element when the bubble is RTL, regardless of the
+ * target element's directionality.
+ */
 function testBubblePositionLeftToRight() {
   goog.style.setStyle(bubble.bubbleContainer_, 'direction', 'ltr');
   prepareTargetWithGivenDirection('rtl');
@@ -245,11 +245,11 @@ function testBubblePositionLeftToRight() {
   assertEquals(expectedPos.y, pos.y);
 }
 
-***REMOVED***
-***REMOVED*** Test for bug 1955511, the bubble should align to the left side
-***REMOVED*** of the target element when the bubble is LTR, regardless of the
-***REMOVED*** target element's directionality.
-***REMOVED***
+/**
+ * Test for bug 1955511, the bubble should align to the left side
+ * of the target element when the bubble is LTR, regardless of the
+ * target element's directionality.
+ */
 function testBubblePositionRightToLeft() {
   goog.style.setStyle(bubble.bubbleContainer_, 'direction', 'rtl');
   prepareTargetWithGivenDirection('ltr');

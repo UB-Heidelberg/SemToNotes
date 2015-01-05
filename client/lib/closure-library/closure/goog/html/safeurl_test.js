@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.SafeUrl and its builders.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.SafeUrl and its builders.
+ */
 
 goog.provide('goog.html.safeUrlTest');
 
@@ -44,12 +44,12 @@ function testSafeUrl() {
 }
 
 
-***REMOVED*** @suppress {checkTypes}***REMOVED***
+/** @suppress {checkTypes} */
 function testUnwrap() {
-  var evil = {***REMOVED***
+  var evil = {};
   evil.safeUrlValueWithSecurityContract_googHtmlSecurityPrivate_ =
       '<script>evil()</script';
-  evil.SAFE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {***REMOVED***
+  evil.SAFE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {};
 
   var exception = assertThrows(function() {
     goog.html.SafeUrl.unwrap(evil);
@@ -58,10 +58,10 @@ function testUnwrap() {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that url passes through sanitization unchanged.
-***REMOVED*** @param {string|!goog.string.TypedString} url The URL to sanitize.
-***REMOVED***
+/**
+ * Assert that url passes through sanitization unchanged.
+ * @param {string|!goog.string.TypedString} url The URL to sanitize.
+ */
 function assertGoodUrl(url) {
   var expected = url;
   if (url.implementsGoogStringTypedString) {
@@ -73,10 +73,10 @@ function assertGoodUrl(url) {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that url fails sanitization.
-***REMOVED*** @param {string|!goog.string.TypedString} url The URL to sanitize.
-***REMOVED***
+/**
+ * Assert that url fails sanitization.
+ * @param {string|!goog.string.TypedString} url The URL to sanitize.
+ */
 function assertBadUrl(url) {
   assertEquals(
       goog.html.SafeUrl.INNOCUOUS_STRING,
@@ -131,14 +131,14 @@ function testSafeUrlSanitize_validatesUrl() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that goog.html.SafeUrl.unwrap returns the expected string when the
-***REMOVED*** SafeUrl has been constructed by passing the given url to
-***REMOVED*** goog.html.SafeUrl.sanitize.
-***REMOVED*** @param {string} url The string to pass to goog.html.SafeUrl.sanitize.
-***REMOVED*** @param {string} expected The string representation that
-***REMOVED***         goog.html.SafeUrl.unwrap should return.
-***REMOVED***
+/**
+ * Asserts that goog.html.SafeUrl.unwrap returns the expected string when the
+ * SafeUrl has been constructed by passing the given url to
+ * goog.html.SafeUrl.sanitize.
+ * @param {string} url The string to pass to goog.html.SafeUrl.sanitize.
+ * @param {string} expected The string representation that
+ *         goog.html.SafeUrl.unwrap should return.
+ */
 function assertSanitizeEncodesTo(url, expected) {
   var safeUrl = goog.html.SafeUrl.sanitize(url);
   var actual = goog.html.SafeUrl.unwrap(safeUrl);

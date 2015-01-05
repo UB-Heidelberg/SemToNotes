@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the AttachableMenu class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of the AttachableMenu class.
+ *
+ */
 
 goog.provide('goog.ui.AttachableMenu');
 
@@ -36,125 +36,125 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** An implementation of a menu that can attach itself to DOM element that
-***REMOVED*** are annotated appropriately.
-***REMOVED***
-***REMOVED*** The following attributes are used by the AttachableMenu
-***REMOVED***
-***REMOVED*** menu-item - Should be set on DOM elements that function as items in the
-***REMOVED*** menu that can be selected.
-***REMOVED*** classNameSelected - A class that will be added to the element's class names
-***REMOVED*** when the item is selected via keyboard or mouse.
-***REMOVED***
-***REMOVED*** @param {Element=} opt_element A DOM element for the popup.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuBase}
-***REMOVED*** @deprecated Use goog.ui.PopupMenu.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * An implementation of a menu that can attach itself to DOM element that
+ * are annotated appropriately.
+ *
+ * The following attributes are used by the AttachableMenu
+ *
+ * menu-item - Should be set on DOM elements that function as items in the
+ * menu that can be selected.
+ * classNameSelected - A class that will be added to the element's class names
+ * when the item is selected via keyboard or mouse.
+ *
+ * @param {Element=} opt_element A DOM element for the popup.
+ * @constructor
+ * @extends {goog.ui.MenuBase}
+ * @deprecated Use goog.ui.PopupMenu.
+ * @final
+ */
 goog.ui.AttachableMenu = function(opt_element) {
   goog.ui.MenuBase.call(this, opt_element);
-***REMOVED***
+};
 goog.inherits(goog.ui.AttachableMenu, goog.ui.MenuBase);
 
 
-***REMOVED***
-***REMOVED*** The currently selected element (mouse was moved over it or keyboard arrows)
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The currently selected element (mouse was moved over it or keyboard arrows)
+ * @type {Element}
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.selectedElement_ = null;
 
 
-***REMOVED***
-***REMOVED*** Class name to append to a menu item's class when it's selected
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Class name to append to a menu item's class when it's selected
+ * @type {string}
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.itemClassName_ = 'menu-item';
 
 
-***REMOVED***
-***REMOVED*** Class name to append to a menu item's class when it's selected
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Class name to append to a menu item's class when it's selected
+ * @type {string}
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.selectedItemClassName_ = 'menu-item-selected';
 
 
-***REMOVED***
-***REMOVED*** Keep track of when the last key was pressed so that a keydown-scroll doesn't
-***REMOVED*** trigger a mouseover event
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Keep track of when the last key was pressed so that a keydown-scroll doesn't
+ * trigger a mouseover event
+ * @type {number}
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.lastKeyDown_ = goog.now();
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.AttachableMenu.prototype.disposeInternal = function() {
   goog.ui.AttachableMenu.superClass_.disposeInternal.call(this);
   this.selectedElement_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the class name to use for menu items
-***REMOVED***
-***REMOVED*** @return {string} The class name to use for items.
-***REMOVED***
+/**
+ * Sets the class name to use for menu items
+ *
+ * @return {string} The class name to use for items.
+ */
 goog.ui.AttachableMenu.prototype.getItemClassName = function() {
   return this.itemClassName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the class name to use for menu items
-***REMOVED***
-***REMOVED*** @param {string} name The class name to use for items.
-***REMOVED***
+/**
+ * Sets the class name to use for menu items
+ *
+ * @param {string} name The class name to use for items.
+ */
 goog.ui.AttachableMenu.prototype.setItemClassName = function(name) {
   this.itemClassName_ = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the class name to use for selected menu items
-***REMOVED*** todo(user) - reevaluate if we can simulate pseudo classes in IE
-***REMOVED***
-***REMOVED*** @return {string} The class name to use for selected items.
-***REMOVED***
+/**
+ * Sets the class name to use for selected menu items
+ * todo(user) - reevaluate if we can simulate pseudo classes in IE
+ *
+ * @return {string} The class name to use for selected items.
+ */
 goog.ui.AttachableMenu.prototype.getSelectedItemClassName = function() {
   return this.selectedItemClassName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the class name to use for selected menu items
-***REMOVED*** todo(user) - reevaluate if we can simulate pseudo classes in IE
-***REMOVED***
-***REMOVED*** @param {string} name The class name to use for selected items.
-***REMOVED***
+/**
+ * Sets the class name to use for selected menu items
+ * todo(user) - reevaluate if we can simulate pseudo classes in IE
+ *
+ * @param {string} name The class name to use for selected items.
+ */
 goog.ui.AttachableMenu.prototype.setSelectedItemClassName = function(name) {
   this.selectedItemClassName_ = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the selected item
-***REMOVED***
-***REMOVED*** @return {Element} The item selected or null if no item is selected.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the selected item
+ *
+ * @return {Element} The item selected or null if no item is selected.
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.getSelectedItem = function() {
   return this.selectedElement_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.AttachableMenu.prototype.setSelectedItem = function(obj) {
-  var elt =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (obj);
+  var elt = /** @type {Element} */ (obj);
   if (this.selectedElement_) {
     goog.dom.classlist.remove(this.selectedElement_,
         this.selectedItemClassName_);
@@ -191,26 +191,26 @@ goog.ui.AttachableMenu.prototype.setSelectedItem = function(obj) {
     // Clear off activedescendant to reflect no selection.
     goog.a11y.aria.setState(el, goog.a11y.aria.State.ACTIVEDESCENDANT, '');
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.AttachableMenu.prototype.showPopupElement = function() {
   // The scroll position cannot be set for hidden (display: none) elements in
   // gecko browsers.
-  var el =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.getElement());
+  var el = /** @type {Element} */ (this.getElement());
   goog.style.setElementShown(el, true);
   el.scrollTop = 0;
   el.style.visibility = 'visible';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called after the menu is shown.
-***REMOVED*** @protected
-***REMOVED*** @suppress {underscore|visibility}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Called after the menu is shown.
+ * @protected
+ * @suppress {underscore|visibility}
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onShow_ = function() {
   goog.ui.AttachableMenu.superClass_.onShow_.call(this);
 
@@ -221,16 +221,16 @@ goog.ui.AttachableMenu.prototype.onShow_ = function() {
   var el = this.getElement();
   goog.userAgent.IE ? el.firstChild.focus() :
       el.focus();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the next or previous item. Used for up/down arrows.
-***REMOVED***
-***REMOVED*** @param {boolean} prev True to go to the previous element instead of next.
-***REMOVED*** @return {Element} The next or previous element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the next or previous item. Used for up/down arrows.
+ *
+ * @param {boolean} prev True to go to the previous element instead of next.
+ * @return {Element} The next or previous element.
+ * @protected
+ */
 goog.ui.AttachableMenu.prototype.getNextPrevItem = function(prev) {
   // first find the index of the next element
   var elements = this.getElement().getElementsByTagName('*');
@@ -255,7 +255,7 @@ goog.ui.AttachableMenu.prototype.getNextPrevItem = function(prev) {
   // menu item
   for (var i = 0; i < elementCount; i++) {
     var multiplier = prev ? -1 : 1;
-    var nextIndex = index + (multiplier***REMOVED*** i) % elementCount;
+    var nextIndex = index + (multiplier * i) % elementCount;
 
     // if overflowed/underflowed, wrap around
     if (nextIndex < 0) {
@@ -269,17 +269,17 @@ goog.ui.AttachableMenu.prototype.getNextPrevItem = function(prev) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mouse over handler for the menu.
-***REMOVED*** @param {goog.events.Event} e The event object.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Mouse over handler for the menu.
+ * @param {goog.events.Event} e The event object.
+ * @protected
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onMouseOver = function(e) {
-  var eltItem = this.getAncestorMenuItem_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var eltItem = this.getAncestorMenuItem_(/** @type {Element} */ (e.target));
   if (eltItem == null) {
     return;
   }
@@ -288,17 +288,17 @@ goog.ui.AttachableMenu.prototype.onMouseOver = function(e) {
   if (goog.now() - this.lastKeyDown_ > goog.ui.PopupBase.DEBOUNCE_DELAY_MS) {
     this.setSelectedItem(eltItem);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mouse out handler for the menu.
-***REMOVED*** @param {goog.events.Event} e The event object.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Mouse out handler for the menu.
+ * @param {goog.events.Event} e The event object.
+ * @protected
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onMouseOut = function(e) {
-  var eltItem = this.getAncestorMenuItem_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var eltItem = this.getAncestorMenuItem_(/** @type {Element} */ (e.target));
   if (eltItem == null) {
     return;
   }
@@ -307,40 +307,40 @@ goog.ui.AttachableMenu.prototype.onMouseOut = function(e) {
   if (goog.now() - this.lastKeyDown_ > goog.ui.PopupBase.DEBOUNCE_DELAY_MS) {
     this.setSelectedItem(null);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mouse down handler for the menu. Prevents default to avoid text selection.
-***REMOVED*** @param {!goog.events.Event} e The event object.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Mouse down handler for the menu. Prevents default to avoid text selection.
+ * @param {!goog.events.Event} e The event object.
+ * @protected
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onMouseDown = goog.events.Event.preventDefault;
 
 
-***REMOVED***
-***REMOVED*** Mouse up handler for the menu.
-***REMOVED*** @param {goog.events.Event} e The event object.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Mouse up handler for the menu.
+ * @param {goog.events.Event} e The event object.
+ * @protected
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onMouseUp = function(e) {
-  var eltItem = this.getAncestorMenuItem_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var eltItem = this.getAncestorMenuItem_(/** @type {Element} */ (e.target));
   if (eltItem == null) {
     return;
   }
   this.setVisible(false);
   this.onItemSelected_(eltItem);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Key down handler for the menu.
-***REMOVED*** @param {goog.events.KeyEvent} e The event object.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Key down handler for the menu.
+ * @param {goog.events.KeyEvent} e The event object.
+ * @protected
+ * @override
+ */
 goog.ui.AttachableMenu.prototype.onKeyDown = function(e) {
   switch (e.keyCode) {
     case goog.events.KeyCodes.DOWN:
@@ -376,19 +376,19 @@ goog.ui.AttachableMenu.prototype.onKeyDown = function(e) {
   e.stopPropagation();
 
   this.dispatchEvent(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Find an item that has the given prefix and select it.
-***REMOVED***
-***REMOVED*** @param {string} prefix The entered prefix, so far.
-***REMOVED*** @param {number=} opt_direction 1 to search forward from the selection
-***REMOVED***     (default), -1 to search backward (e.g. to go to the previous match).
-***REMOVED*** @param {boolean=} opt_skip True if should skip the current selection,
-***REMOVED***     unless no other item has the given prefix.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Find an item that has the given prefix and select it.
+ *
+ * @param {string} prefix The entered prefix, so far.
+ * @param {number=} opt_direction 1 to search forward from the selection
+ *     (default), -1 to search backward (e.g. to go to the previous match).
+ * @param {boolean=} opt_skip True if should skip the current selection,
+ *     unless no other item has the given prefix.
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.selectByName_ =
     function(prefix, opt_direction, opt_skip) {
   var elements = this.getElement().getElementsByTagName('*');
@@ -428,39 +428,39 @@ goog.ui.AttachableMenu.prototype.selectByName_ =
   if (this.selectedElement_ != elements[index]) {
     this.setSelectedItem(elements[index]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatch an ITEM_ACTION event when an item is selected
-***REMOVED*** @param {Object=} opt_item Item selected.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatch an ITEM_ACTION event when an item is selected
+ * @param {Object=} opt_item Item selected.
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.onItemSelected_ = function(opt_item) {
   this.dispatchEvent(new goog.ui.ItemEvent(goog.ui.MenuBase.Events.ITEM_ACTION,
       this, opt_item || this.selectedElement_));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the specified element is a menu item.
-***REMOVED*** @param {Element} elt The element to find a menu item ancestor of.
-***REMOVED*** @return {boolean} Whether the specified element is a menu item.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns whether the specified element is a menu item.
+ * @param {Element} elt The element to find a menu item ancestor of.
+ * @return {boolean} Whether the specified element is a menu item.
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.isMenuItem_ = function(elt) {
   return !!elt && goog.dom.classlist.contains(elt, this.itemClassName_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the menu-item scoping the specified element, or null if there is
-***REMOVED*** none.
-***REMOVED*** @param {Element|undefined} elt The element to find a menu item ancestor of.
-***REMOVED*** @return {Element} The menu-item scoping the specified element, or null if
-***REMOVED***     there is none.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the menu-item scoping the specified element, or null if there is
+ * none.
+ * @param {Element|undefined} elt The element to find a menu item ancestor of.
+ * @return {Element} The menu-item scoping the specified element, or null if
+ *     there is none.
+ * @private
+ */
 goog.ui.AttachableMenu.prototype.getAncestorMenuItem_ = function(elt) {
   if (elt) {
     var ownerDocumentBody = goog.dom.getOwnerDocument(elt).body;
@@ -468,8 +468,8 @@ goog.ui.AttachableMenu.prototype.getAncestorMenuItem_ = function(elt) {
       if (this.isMenuItem_(elt)) {
         return elt;
       }
-      elt =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (elt.parentNode);
+      elt = /** @type {Element} */ (elt.parentNode);
     }
   }
   return null;
-***REMOVED***
+};

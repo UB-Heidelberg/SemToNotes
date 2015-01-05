@@ -25,72 +25,72 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview Super-class representing a shape.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Super-class representing a shape.
+ */
 
 goog.provide('xrx.shape.Shape');
 
 
 
-***REMOVED***
-***REMOVED*** Super-class representing a shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * Super-class representing a shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.shape.Shape = function(drawing) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent drawing object.
-  ***REMOVED*** @type {xrx.drawing.Drawing}
- ***REMOVED*****REMOVED***
+  /**
+   * The parent drawing object.
+   * @type {xrx.drawing.Drawing}
+   */
   this.drawing_ = drawing;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Pointer to the underlying engine rendering shape.
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * Pointer to the underlying engine rendering shape.
+   * @type {Object}
+   */
   this.engineShape_;
 
   this.create_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the parent drawing object.
-***REMOVED*** @return {xrx.drawing.Drawing} The parent drawing object.
-***REMOVED***
+/**
+ * Returns the parent drawing object.
+ * @return {xrx.drawing.Drawing} The parent drawing object.
+ */
 xrx.shape.Shape.prototype.getDrawing = function() {
   return this.drawing_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the underlying engine rendering shape.
-***REMOVED*** @return {Object} The rendering shape.
-***REMOVED***
+/**
+ * Returns the underlying engine rendering shape.
+ * @return {Object} The rendering shape.
+ */
 xrx.shape.Shape.prototype.getEngineShape = function() {
   return this.engineShape_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates of the shape.
-***REMOVED*** @return {Array.&lt;Array.&lt;number>>} The coordinates.
-***REMOVED***
+/**
+ * Returns the coordinates of the shape.
+ * @return {Array.&lt;Array.&lt;number>>} The coordinates.
+ */
 xrx.shape.Shape.prototype.getCoords = function() {
   return this.engineShape_.getCoords();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns a copy of the shape's coordinate object.
-***REMOVED*** @return {Array.&lt;Array.&lt;number>>} A new coordinate object.
-***REMOVED***
+/**
+ * Returns a copy of the shape's coordinate object.
+ * @return {Array.&lt;Array.&lt;number>>} A new coordinate object.
+ */
 xrx.shape.Shape.prototype.getCoordsCopy = function() {
   var coords = this.engineShape_.getCoords();
   var len = coords.length;
@@ -102,76 +102,76 @@ xrx.shape.Shape.prototype.getCoordsCopy = function() {
     newCoords[i][1] = coords[i][1];
   }
   return newCoords;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the shape's coordinates.
-***REMOVED*** @param {Array.&lt;Array.&lt;number>>} The new coordinates.
-***REMOVED***
+/**
+ * Sets the shape's coordinates.
+ * @param {Array.&lt;Array.&lt;number>>} The new coordinates.
+ */
 xrx.shape.Shape.prototype.setCoords = function(coords) {
   this.engineShape_.setCoords(coords);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Changes one point of the coordinates at a position.
-***REMOVED*** @param {number} pos The position.
-***REMOVED*** @param {Array.&lt;number>} The new point.
-***REMOVED***
+/**
+ * Changes one point of the coordinates at a position.
+ * @param {number} pos The position.
+ * @param {Array.&lt;number>} The new point.
+ */
 xrx.shape.Shape.prototype.setCoordAt = function(pos, coord) {
   this.engineShape_.setCoordAt(pos, coord);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill-color of the shape.
-***REMOVED*** @param {string} color The color.
-***REMOVED***
+/**
+ * Sets the fill-color of the shape.
+ * @param {string} color The color.
+ */
 xrx.shape.Shape.prototype.setFillColor = function(color) {
   this.engineShape_.setFillColor(color);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill-opacity of the shape.
-***REMOVED*** @param {number} factor The opacity factor.
-***REMOVED***
+/**
+ * Sets the fill-opacity of the shape.
+ * @param {number} factor The opacity factor.
+ */
 xrx.shape.Shape.prototype.setFillOpacity = function(factor) {
   this.engineShape_.setFillOpacity(factor);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke-width of the shape.
-***REMOVED*** @param {number} width The new width.
-***REMOVED***
+/**
+ * Sets the stroke-width of the shape.
+ * @param {number} width The new width.
+ */
 xrx.shape.Shape.prototype.setStrokeWidth = function(width) {
   this.engineShape_.setStrokeWidth(width);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke-color of the shape.
-***REMOVED*** @param {string} color The new color.
-***REMOVED***
+/**
+ * Sets the stroke-color of the shape.
+ * @param {string} color The new color.
+ */
 xrx.shape.Shape.prototype.setStrokeColor = function(color) {
   this.engineShape_.setStrokeColor(color);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns an array of vertex dragging elements according to the number of 
-***REMOVED*** vertexes of the shape.
-***REMOVED*** @return {xrx.shape.VertexDragger} The vertex draggin elements.
-***REMOVED***
+/**
+ * Returns an array of vertex dragging elements according to the number of 
+ * vertexes of the shape.
+ * @return {xrx.shape.VertexDragger} The vertex draggin elements.
+ */
 xrx.shape.Shape.prototype.getVertexDraggers = function() {
   var coords = this.getCoords();
   var draggers = [];
@@ -184,20 +184,20 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
   }
 
   return draggers;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.shape.Shape.prototype.create_ = function() {
   var primitiveShape = this.drawing_.getGraphics()[this.engineClass_];
   this.engineShape_ = primitiveShape.create(this.drawing_.getCanvas());
   this.engineShape_.setStrokeColor('#47D1FF');
   this.engineShape_.setStrokeWidth(3.);
   this.engineShape_.setFillOpacity(0.);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

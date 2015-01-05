@@ -77,27 +77,27 @@ See the COPYING file for details.
 
         dom_.appendChild(node, typeNode);
         dom_.appendChild(node, nameNode);
-     ***REMOVED*****REMOVED***
+      };
 
       item.select = function(target) {
         target.value = item.name;
         wikipedia.src = item.url;
-     ***REMOVED*****REMOVED***
+      };
 
       return item;
-   ***REMOVED*****REMOVED***
+    };
 
     var apple = function(item) {
       return makeRichRow_(item, "Apple", "apple");
-   ***REMOVED*****REMOVED***
+    };
 
     var citrus = function(item) {
       return makeRichRow_(item, "Citrus", "citrus");
-   ***REMOVED*****REMOVED***
+    };
 
     var berry = function(item) {
       return makeRichRow_(item, "Berry", "berry");
-   ***REMOVED*****REMOVED***
+    };
 
     var input = document.getElementById("txtInput");
     var wikipedia = document.getElementById("wikipedia");
@@ -112,25 +112,25 @@ See the COPYING file for details.
       } else {
         ac.setRowFilter();
       }
-   ***REMOVED*****REMOVED***
+    };
 
     // Set the autocomplete"s standard highlighting
     var setHighlighting = function() {
       var checkbox = document.getElementById("setHighlighting");
       ac.setUseStandardHighlighting(checkbox.checked);
-   ***REMOVED*****REMOVED***
+    };
 
     // Do not include berries in the search results
     var filterOutBerries = function(rows) {
-      var filterFunction = function(item) { return item.type != "Berry";***REMOVED*****REMOVED***
+      var filterFunction = function(item) { return item.type != "Berry"; };
       return goog.array.filter(rows, filterFunction);
-   ***REMOVED*****REMOVED***
+    };
 
     // When the page loads, make sure to set the filter appropriately
     window.onload = function() {
       setFilter();
       setHighlighting();
-   ***REMOVED*****REMOVED***
+    };
 
   </script>
 </body>

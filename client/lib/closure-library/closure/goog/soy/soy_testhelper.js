@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides test helpers for Soy tests.
-***REMOVED***
+/**
+ * @fileoverview Provides test helpers for Soy tests.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.soy.testHelper');
 goog.setTestOnly('goog.soy.testHelper');
 
@@ -30,17 +30,17 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Instantiable subclass of SanitizedContent.
-***REMOVED***
-***REMOVED*** This is a spoof for sanitized content that isn't robust enough to get
-***REMOVED*** through Soy's escaping functions but is good enough for the checks here.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {string} content The text.
-***REMOVED*** @param {goog.soy.data.SanitizedContentKind} kind The kind of safe content.
-***REMOVED*** @extends {goog.soy.data.SanitizedContent}
-***REMOVED***
+/**
+ * Instantiable subclass of SanitizedContent.
+ *
+ * This is a spoof for sanitized content that isn't robust enough to get
+ * through Soy's escaping functions but is good enough for the checks here.
+ *
+ * @constructor
+ * @param {string} content The text.
+ * @param {goog.soy.data.SanitizedContentKind} kind The kind of safe content.
+ * @extends {goog.soy.data.SanitizedContent}
+ */
 function SanitizedContentSubclass(content, kind) {
   // IMPORTANT! No superclass chaining to avoid exception being thrown.
   this.content = content;
@@ -59,21 +59,21 @@ function makeSanitizedContent(content, kind) {
 // Fake Soy-generated template functions.
 //
 
-var example = {***REMOVED***
+var example = {};
 
 
 example.textNodeTemplate = function(opt_data, opt_sb, opt_injectedData) {
   assertNotNull(opt_data);
   assertNotUndefined(opt_data);
   return goog.string.htmlEscape(opt_data.name);
-***REMOVED***
+};
 
 
 example.singleRootTemplate = function(opt_data, opt_sb, opt_injectedData) {
   assertNotNull(opt_data);
   assertNotUndefined(opt_data);
   return '<span>' + goog.string.htmlEscape(opt_data.name) + '</span>';
-***REMOVED***
+};
 
 
 example.multiRootTemplate = function(opt_data, opt_sb, opt_injectedData) {
@@ -81,7 +81,7 @@ example.multiRootTemplate = function(opt_data, opt_sb, opt_injectedData) {
   assertNotUndefined(opt_data);
   return '<div>Hello</div><div>' + goog.string.htmlEscape(opt_data.name) +
       '</div>';
-***REMOVED***
+};
 
 
 example.injectedDataTemplate = function(opt_data, opt_sb, opt_injectedData) {
@@ -89,14 +89,14 @@ example.injectedDataTemplate = function(opt_data, opt_sb, opt_injectedData) {
   assertNotUndefined(opt_data);
   return goog.string.htmlEscape(opt_data.name) +
       goog.string.htmlEscape(opt_injectedData.name);
-***REMOVED***
+};
 
 
 example.noDataTemplate = function(opt_data, opt_sb, opt_injectedData) {
   assertNotNull(opt_data);
   assertNotUndefined(opt_data);
   return '<div>Hello</div>';
-***REMOVED***
+};
 
 
 example.sanitizedHtmlTemplate = function(opt_data, opt_sb, opt_injectedData) {
@@ -105,28 +105,28 @@ example.sanitizedHtmlTemplate = function(opt_data, opt_sb, opt_injectedData) {
       goog.soy.data.SanitizedContentKind.HTML);
   sanitized.contentDir = goog.i18n.bidi.Dir.LTR;
   return sanitized;
-***REMOVED***
+};
 
 
 example.sanitizedHtmlAttributesTemplate =
     function(opt_data, opt_sb, opt_injectedData) {
   return makeSanitizedContent('foo="bar"',
       goog.soy.data.SanitizedContentKind.ATTRIBUTES);
-***REMOVED***
+};
 
 
 example.sanitizedCssTemplate =
     function(opt_data, opt_sb, opt_injectedData) {
   return makeSanitizedContent('display:none',
       goog.soy.data.SanitizedContentKind.CSS);
-***REMOVED***
+};
 
 
 example.unsanitizedTextTemplate =
     function(opt_data, opt_sb, opt_injectedData) {
   return makeSanitizedContent('I <3 Puppies & Kittens',
       goog.soy.data.SanitizedContentKind.TEXT);
-***REMOVED***
+};
 
 
 example.templateSpoofingSanitizedContentString =
@@ -136,17 +136,17 @@ example.templateSpoofingSanitizedContentString =
       // object.  For example, in Javascript, consider ({}) == '[Object object]'
       // is true.
       goog.soy.data.SanitizedContentKind.HTML.toString());
-***REMOVED***
+};
 
 
 example.tableRowTemplate = function(opt_data, opt_sb, opt_injectedData) {
   return '<tr><td></td></tr>';
-***REMOVED***
+};
 
 
 example.colGroupTemplateCaps = function(opt_data, opt_sb, opt_injectedData) {
   return '<COLGROUP></COLGROUP>';
-***REMOVED***
+};
 
 
 //
@@ -154,11 +154,11 @@ example.colGroupTemplateCaps = function(opt_data, opt_sb, opt_injectedData) {
 //
 
 
-***REMOVED***
-***REMOVED*** Retrieves the content of document fragment as HTML.
-***REMOVED*** @param {Node} fragment The document fragment.
-***REMOVED*** @return {string} Content of the document fragment as HTML.
-***REMOVED***
+/**
+ * Retrieves the content of document fragment as HTML.
+ * @param {Node} fragment The document fragment.
+ * @return {string} Content of the document fragment as HTML.
+ */
 function fragmentToHtml(fragment) {
   var testDiv = goog.dom.createElement(goog.dom.TagName.DIV);
   testDiv.appendChild(fragment);
@@ -166,11 +166,11 @@ function fragmentToHtml(fragment) {
 }
 
 
-***REMOVED***
-***REMOVED*** Retrieves the content of an element as HTML.
-***REMOVED*** @param {Element} elem The element.
-***REMOVED*** @return {string} Content of the element as HTML.
-***REMOVED***
+/**
+ * Retrieves the content of an element as HTML.
+ * @param {Element} elem The element.
+ * @return {string} Content of the element as HTML.
+ */
 function elementToInnerHtml(elem) {
   var innerHtml = elem.innerHTML;
   if (goog.userAgent.IE) {

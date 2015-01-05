@@ -1,21 +1,21 @@
 // used to test jsdoc/augments module directly
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @classdesc Base class
-***REMOVED***
+/**
+ * @constructor
+ * @classdesc Base class
+ */
 var Base = function() {
-   ***REMOVED*****REMOVED*** member***REMOVED***
+    /** member */
     this.test1 = "base";
-   ***REMOVED*****REMOVED*** another member***REMOVED***
+    /** another member */
     this.test2 = null;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends Base
-***REMOVED*** @classdesc Extension of Base
-***REMOVED***
+/**
+ * @constructor
+ * @extends Base
+ * @classdesc Extension of Base
+ */
 var Derived = function() {
     this.test1 = "derived";
-***REMOVED***
+};

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the built-in dictionary matcher methods like
-***REMOVED***     hasEntry, hasEntries, hasKey, hasValue, etc.
-***REMOVED***
+/**
+ * @fileoverview Provides the built-in dictionary matcher methods like
+ *     hasEntry, hasEntries, hasKey, hasValue, etc.
+ */
 
 
 
@@ -32,48 +32,48 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** The HasEntries matcher.
-***REMOVED***
-***REMOVED*** @param {!Object} entries The entries to check in the object.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The HasEntries matcher.
+ *
+ * @param {!Object} entries The entries to check in the object.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.HasEntriesMatcher = function(entries) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {Object}
+   * @private
+   */
   this.entries_ = entries;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if an object has particular entries.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if an object has particular entries.
+ *
+ * @override
+ */
 goog.labs.testing.HasEntriesMatcher.prototype.matches =
     function(actualObject) {
   goog.asserts.assertObject(actualObject, 'Expected an Object');
-  var object =***REMOVED*****REMOVED*** @type {!Object}***REMOVED***(actualObject);
+  var object = /** @type {!Object} */(actualObject);
   return goog.object.every(this.entries_, function(value, key) {
     return goog.object.containsKey(object, key) &&
            object[key] === value;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.HasEntriesMatcher.prototype.describe =
     function(actualObject) {
   goog.asserts.assertObject(actualObject, 'Expected an Object');
-  var object =***REMOVED*****REMOVED*** @type {!Object}***REMOVED***(actualObject);
+  var object = /** @type {!Object} */(actualObject);
   var errorString = 'Input object did not contain the following entries:\n';
   goog.object.forEach(this.entries_, function(value, key) {
     if (!goog.object.containsKey(object, key) ||
@@ -82,51 +82,51 @@ goog.labs.testing.HasEntriesMatcher.prototype.describe =
     }
   });
   return errorString;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The HasEntry matcher.
-***REMOVED***
-***REMOVED*** @param {string} key The key for the entry.
-***REMOVED*** @param {*} value The value for the key.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The HasEntry matcher.
+ *
+ * @param {string} key The key for the entry.
+ * @param {*} value The value for the key.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.HasEntryMatcher = function(key, value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.key_ = key;
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {*}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {*}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if an object has a particular entry.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if an object has a particular entry.
+ *
+ * @override
+ */
 goog.labs.testing.HasEntryMatcher.prototype.matches =
     function(actualObject) {
   goog.asserts.assertObject(actualObject);
   return goog.object.containsKey(actualObject, this.key_) &&
          actualObject[this.key_] === this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.HasEntryMatcher.prototype.describe =
     function(actualObject) {
   goog.asserts.assertObject(actualObject);
@@ -137,138 +137,138 @@ goog.labs.testing.HasEntryMatcher.prototype.describe =
     errorMsg = 'Value for key did not match value: ' + this.value_;
   }
   return errorMsg;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The HasKey matcher.
-***REMOVED***
-***REMOVED*** @param {string} key The key to check in the object.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The HasKey matcher.
+ *
+ * @param {string} key The key to check in the object.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.HasKeyMatcher = function(key) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {string}
+   * @private
+   */
   this.key_ = key;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if an object has a key.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if an object has a key.
+ *
+ * @override
+ */
 goog.labs.testing.HasKeyMatcher.prototype.matches =
     function(actualObject) {
   goog.asserts.assertObject(actualObject);
   return goog.object.containsKey(actualObject, this.key_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.HasKeyMatcher.prototype.describe =
     function(actualObject) {
   goog.asserts.assertObject(actualObject);
   return 'Input object did not contain the key: ' + this.key_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The HasValue matcher.
-***REMOVED***
-***REMOVED*** @param {*} value The value to check in the object.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The HasValue matcher.
+ *
+ * @param {*} value The value to check in the object.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.HasValueMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {*}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {*}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if an object contains a value
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if an object contains a value
+ *
+ * @override
+ */
 goog.labs.testing.HasValueMatcher.prototype.matches =
     function(actualObject) {
   goog.asserts.assertObject(actualObject, 'Expected an Object');
-  var object =***REMOVED*****REMOVED*** @type {!Object}***REMOVED***(actualObject);
+  var object = /** @type {!Object} */(actualObject);
   return goog.object.containsValue(object, this.value_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.HasValueMatcher.prototype.describe =
     function(actualObject) {
   return 'Input object did not contain the value: ' + this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gives a matcher that asserts an object contains all the given key-value pairs
-***REMOVED*** in the input object.
-***REMOVED***
-***REMOVED*** @param {!Object} entries The entries to check for presence in the object.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.HasEntriesMatcher} A HasEntriesMatcher.
-***REMOVED***
+/**
+ * Gives a matcher that asserts an object contains all the given key-value pairs
+ * in the input object.
+ *
+ * @param {!Object} entries The entries to check for presence in the object.
+ *
+ * @return {!goog.labs.testing.HasEntriesMatcher} A HasEntriesMatcher.
+ */
 function hasEntries(entries) {
   return new goog.labs.testing.HasEntriesMatcher(entries);
 }
 
 
-***REMOVED***
-***REMOVED*** Gives a matcher that asserts an object contains the given key-value pair.
-***REMOVED***
-***REMOVED*** @param {string} key The key to check for presence in the object.
-***REMOVED*** @param {*} value The value to check for presence in the object.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.HasEntryMatcher} A HasEntryMatcher.
-***REMOVED***
+/**
+ * Gives a matcher that asserts an object contains the given key-value pair.
+ *
+ * @param {string} key The key to check for presence in the object.
+ * @param {*} value The value to check for presence in the object.
+ *
+ * @return {!goog.labs.testing.HasEntryMatcher} A HasEntryMatcher.
+ */
 function hasEntry(key, value) {
   return new goog.labs.testing.HasEntryMatcher(key, value);
 }
 
 
-***REMOVED***
-***REMOVED*** Gives a matcher that asserts an object contains the given key.
-***REMOVED***
-***REMOVED*** @param {string} key The key to check for presence in the object.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.HasKeyMatcher} A HasKeyMatcher.
-***REMOVED***
+/**
+ * Gives a matcher that asserts an object contains the given key.
+ *
+ * @param {string} key The key to check for presence in the object.
+ *
+ * @return {!goog.labs.testing.HasKeyMatcher} A HasKeyMatcher.
+ */
 function hasKey(key) {
   return new goog.labs.testing.HasKeyMatcher(key);
 }
 
 
-***REMOVED***
-***REMOVED*** Gives a matcher that asserts an object contains the given value.
-***REMOVED***
-***REMOVED*** @param {*} value The value to check for presence in the object.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.HasValueMatcher} A HasValueMatcher.
-***REMOVED***
+/**
+ * Gives a matcher that asserts an object contains the given value.
+ *
+ * @param {*} value The value to check for presence in the object.
+ *
+ * @return {!goog.labs.testing.HasValueMatcher} A HasValueMatcher.
+ */
 function hasValue(value) {
   return new goog.labs.testing.HasValueMatcher(value);
 }

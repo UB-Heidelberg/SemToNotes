@@ -12,58 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract cryptographic hash interface.
-***REMOVED***
-***REMOVED*** See goog.crypt.Sha1 and goog.crypt.Md5 for sample implementations.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Abstract cryptographic hash interface.
+ *
+ * See goog.crypt.Sha1 and goog.crypt.Md5 for sample implementations.
+ *
+ */
 
 goog.provide('goog.crypt.Hash');
 
 
 
-***REMOVED***
-***REMOVED*** Create a cryptographic hash instance.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Create a cryptographic hash instance.
+ *
+ * @constructor
+ * @struct
+ */
 goog.crypt.Hash = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The block size for the hasher.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The block size for the hasher.
+   * @type {number}
+   */
   this.blockSize = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the internal accumulator.
-***REMOVED***
+/**
+ * Resets the internal accumulator.
+ */
 goog.crypt.Hash.prototype.reset = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Adds a byte array (array with values in [0-255] range) or a string (might
-***REMOVED*** only contain 8-bit, i.e., Latin1 characters) to the internal accumulator.
-***REMOVED***
-***REMOVED*** Many hash functions operate on blocks of data and implement optimizations
-***REMOVED*** when a full chunk of data is readily available. Hence it is often preferable
-***REMOVED*** to provide large chunks of data (a kilobyte or more) than to repeatedly
-***REMOVED*** call the update method with few tens of bytes. If this is not possible, or
-***REMOVED*** not feasible, it might be good to provide data in multiplies of hash block
-***REMOVED*** size (often 64 bytes). Please see the implementation and performance tests
-***REMOVED*** of your favourite hash.
-***REMOVED***
-***REMOVED*** @param {Array.<number>|Uint8Array|string} bytes Data used for the update.
-***REMOVED*** @param {number=} opt_length Number of bytes to use.
-***REMOVED***
+/**
+ * Adds a byte array (array with values in [0-255] range) or a string (might
+ * only contain 8-bit, i.e., Latin1 characters) to the internal accumulator.
+ *
+ * Many hash functions operate on blocks of data and implement optimizations
+ * when a full chunk of data is readily available. Hence it is often preferable
+ * to provide large chunks of data (a kilobyte or more) than to repeatedly
+ * call the update method with few tens of bytes. If this is not possible, or
+ * not feasible, it might be good to provide data in multiplies of hash block
+ * size (often 64 bytes). Please see the implementation and performance tests
+ * of your favourite hash.
+ *
+ * @param {Array.<number>|Uint8Array|string} bytes Data used for the update.
+ * @param {number=} opt_length Number of bytes to use.
+ */
 goog.crypt.Hash.prototype.update = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {!Array.<number>} The finalized hash computed
-***REMOVED***     from the internal accumulator.
-***REMOVED***
+/**
+ * @return {!Array.<number>} The finalized hash computed
+ *     from the internal accumulator.
+ */
 goog.crypt.Hash.prototype.digest = goog.abstractMethod;

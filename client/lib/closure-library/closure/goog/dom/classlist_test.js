@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared code for classlist_test.html.
-***REMOVED***
+/**
+ * @fileoverview Shared code for classlist_test.html.
+ */
 
 goog.provide('goog.dom.classlist_test');
 goog.setTestOnly('goog.dom.classlist_test');
@@ -195,7 +195,7 @@ function testEnableAllRemove() {
   elem.className = 'foo bar baz';
 
   // Test removing some classes (some not present).
-  goog.dom.classlist.enableAll(elem, ['a', 'bar'], false /* enable***REMOVED***);
+  goog.dom.classlist.enableAll(elem, ['a', 'bar'], false /* enable */);
   assertTrue(goog.dom.classlist.contains(elem, 'foo'));
   assertFalse(goog.dom.classlist.contains(elem, 'bar'));
   assertTrue(goog.dom.classlist.contains(elem, 'baz'));
@@ -207,7 +207,7 @@ function testEnableAllAdd() {
   elem.className = 'foo bar';
 
   // Test adding some classes (some duplicate).
-  goog.dom.classlist.enableAll(elem, ['a', 'bar', 'baz'], true /* enable***REMOVED***);
+  goog.dom.classlist.enableAll(elem, ['a', 'bar', 'baz'], true /* enable */);
   assertTrue(goog.dom.classlist.contains(elem, 'foo'));
   assertTrue(goog.dom.classlist.contains(elem, 'bar'));
   assertTrue(goog.dom.classlist.contains(elem, 'baz'));

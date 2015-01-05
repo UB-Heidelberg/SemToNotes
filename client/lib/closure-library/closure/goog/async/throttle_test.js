@@ -24,7 +24,7 @@ function testThrottle() {
   var callBackCount = 0;
   var callBackFunction = function() {
     callBackCount++;
- ***REMOVED*****REMOVED***
+  };
 
   var throttle = new goog.async.Throttle(callBackFunction, 100);
   assertEquals(0, callBackCount);

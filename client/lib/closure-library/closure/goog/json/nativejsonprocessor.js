@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines a class for parsing JSON using the browser's built in
-***REMOVED*** JSON library.
-***REMOVED***
+/**
+ * @fileoverview Defines a class for parsing JSON using the browser's built in
+ * JSON library.
+ */
 
 goog.provide('goog.json.NativeJsonProcessor');
 
@@ -26,49 +26,49 @@ goog.require('goog.json.Processor');
 
 
 
-***REMOVED***
-***REMOVED*** A class that parses and stringifies JSON using the browser's built-in JSON
-***REMOVED*** library, if it is avaliable.
-***REMOVED***
-***REMOVED*** Note that the native JSON api has subtle differences across browsers, so
-***REMOVED*** use this implementation with care.  See json_test#assertSerialize
-***REMOVED*** for details on the differences from goog.json.
-***REMOVED***
-***REMOVED*** This implementation is signficantly faster than goog.json, at least on
-***REMOVED*** Chrome.  See json_perf.html for a perf test showing the difference.
-***REMOVED***
-***REMOVED*** @param {?goog.json.Replacer=} opt_replacer An optional replacer to use during
-***REMOVED***     serialization.
-***REMOVED*** @param {?goog.json.Reviver=} opt_reviver An optional reviver to use during
-***REMOVED***     parsing.
-***REMOVED***
-***REMOVED*** @implements {goog.json.Processor}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A class that parses and stringifies JSON using the browser's built-in JSON
+ * library, if it is avaliable.
+ *
+ * Note that the native JSON api has subtle differences across browsers, so
+ * use this implementation with care.  See json_test#assertSerialize
+ * for details on the differences from goog.json.
+ *
+ * This implementation is signficantly faster than goog.json, at least on
+ * Chrome.  See json_perf.html for a perf test showing the difference.
+ *
+ * @param {?goog.json.Replacer=} opt_replacer An optional replacer to use during
+ *     serialization.
+ * @param {?goog.json.Reviver=} opt_reviver An optional reviver to use during
+ *     parsing.
+ * @constructor
+ * @implements {goog.json.Processor}
+ * @final
+ */
 goog.json.NativeJsonProcessor = function(opt_replacer, opt_reviver) {
   goog.asserts.assert(goog.isDef(goog.global['JSON']), 'JSON not defined');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {goog.json.Replacer|null|undefined}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {goog.json.Replacer|null|undefined}
+   * @private
+   */
   this.replacer_ = opt_replacer;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {goog.json.Reviver|null|undefined}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {goog.json.Reviver|null|undefined}
+   * @private
+   */
   this.reviver_ = opt_reviver;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.NativeJsonProcessor.prototype.stringify = function(object) {
   return goog.global['JSON'].stringify(object, this.replacer_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.NativeJsonProcessor.prototype.parse = function(s) {
   return goog.global['JSON'].parse(s, this.reviver_);
-***REMOVED***
+};

@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Class implements an output control.
-***REMOVED***
+/**
+ * @fileoverview Class implements an output control.
+ */
 
 goog.provide('xrx.output');
 
@@ -15,36 +15,36 @@ xrx.output = function(element) {
 
 
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.output, xrx.mvc.ComponentView);
 
 
 
-xrx.output.prototype.createDom = function() {***REMOVED***
+xrx.output.prototype.createDom = function() {};
 
 
 
-xrx.output.prototype.eventBeforeChange = function() {***REMOVED***
+xrx.output.prototype.eventBeforeChange = function() {};
 
 
 
-xrx.output.prototype.eventFocus = function() {***REMOVED***
+xrx.output.prototype.eventFocus = function() {};
 
 
 
-xrx.output.prototype.getValue = function() {***REMOVED***
+xrx.output.prototype.getValue = function() {};
 
 
 
-xrx.output.prototype.setFocus = function() {***REMOVED***
+xrx.output.prototype.setFocus = function() {};
 
 
 
 xrx.output.prototype.setValue = function(value) {
 
   goog.dom.setTextContent(this.getElement(), value);
-***REMOVED***
+};
 
 
 
@@ -52,4 +52,4 @@ xrx.output.prototype.mvcRefresh = function() {
   var value = this.getNode().getStringValue();
 
   this.setValue(value);
-***REMOVED***
+};

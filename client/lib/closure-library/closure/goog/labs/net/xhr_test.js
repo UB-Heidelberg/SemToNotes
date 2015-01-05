@@ -57,11 +57,11 @@ function setupStubXMLHttpRequest() {
       this.readyState = 4;
       if (this.onreadystatechange) this.onreadystatechange();
     }
- ***REMOVED*****REMOVED***
+  };
 
   goog.net.XmlHttp = function() {
     return stubXhr;
- ***REMOVED*****REMOVED***
+  };
   for (var x in originalXmlHttp) {
     goog.net.XmlHttp[x] = originalXmlHttp[x];
   }
@@ -75,7 +75,7 @@ var originalXmlHttp = goog.net.XmlHttp;
 var mockClock;
 
 var testCase = new goog.testing.AsyncTestCase(document.title);
-testCase.stepTimeout = 5***REMOVED*** 1000;
+testCase.stepTimeout = 5 * 1000;
 
 testCase.autoDiscoverTests();
 
@@ -85,7 +85,7 @@ testCase.tearDown = function() {
     mockClock = null;
   }
   goog.net.XmlHttp = originalXmlHttp;
-***REMOVED***
+};
 
 G_testRunner.initialize(testCase);
 
@@ -103,7 +103,7 @@ function testSimpleRequest() {
     assertEquals('Just some data.', xhr.responseText);
     assertEquals(200, xhr.status);
     testCase.continueTesting();
-  }, fail /* opt_onRejected***REMOVED***);
+  }, fail /* opt_onRejected */);
 }
 
 function testGetText() {
@@ -113,7 +113,7 @@ function testGetText() {
   xhr.get('testdata/xhr_test_text.data').then(function(responseText) {
     assertEquals('Just some data.', responseText);
     testCase.continueTesting();
-  }, fail /* opt_onRejected***REMOVED***);
+  }, fail /* opt_onRejected */);
 }
 
 function testGetTextWithJson() {
@@ -123,7 +123,7 @@ function testGetTextWithJson() {
   xhr.get('testdata/xhr_test_json.data').then(function(responseText) {
     assertEquals('while(1);\n{"stat":"ok","count":12345}\n', responseText);
     testCase.continueTesting();
-  }, fail /* opt_onRejected***REMOVED***);
+  }, fail /* opt_onRejected */);
 }
 
 function testPostText() {
@@ -135,7 +135,7 @@ function testPostText() {
         // No good way to test post-data gets transported.
         assertEquals('Just some data.', responseText);
         testCase.continueTesting();
-      }, fail /* opt_onRejected***REMOVED***);
+      }, fail /* opt_onRejected */);
 }
 
 function testGetJson() {
@@ -147,7 +147,7 @@ function testGetJson() {
         assertEquals('ok', responseObj['stat']);
         assertEquals(12345, responseObj['count']);
         testCase.continueTesting();
-      }, fail /* opt_onRejected***REMOVED***);
+      }, fail /* opt_onRejected */);
 }
 
 function testSerialRequests() {
@@ -162,7 +162,7 @@ function testSerialRequests() {
         assertEquals('ok', responseObj['stat']);
         assertEquals(12345, responseObj['count']);
         testCase.continueTesting();
-      }, fail /* opt_onRejected***REMOVED***);
+      }, fail /* opt_onRejected */);
 }
 
 function testBadUrlDetectedAsError() {
@@ -170,7 +170,7 @@ function testBadUrlDetectedAsError() {
 
   testCase.waitForAsync('badUrl');
   xhr.getJson('unknown-file.dat').then(
-      fail /* opt_onFulfilled***REMOVED***,
+      fail /* opt_onFulfilled */,
       function(err) {
         assertTrue(
             'Error should be an HTTP error', err instanceof xhr.HttpError);
@@ -183,7 +183,7 @@ function testBadUrlDetectedAsError() {
 function testBadOriginTriggersOnErrorHandler() {
   testCase.waitForAsync('badOrigin');
   xhr.get('http://www.google.com').then(
-      fail /* opt_onFulfilled***REMOVED***,
+      fail /* opt_onFulfilled */,
       function(err) {
         // In IE this will be a goog.labs.net.xhr.Error since it is thrown
         //  when calling xhr.open(), other browsers will raise an HttpError.
@@ -198,7 +198,7 @@ function testAbortRequest() {
 
   testCase.waitForAsync('abortRequest');
   var promise = xhr.send('GET', 'test-url', null).then(
-      fail /* opt_onFulfilled***REMOVED***,
+      fail /* opt_onFulfilled */,
       function(error, result) {
         assertTrue(error instanceof goog.Promise.CancellationError);
         testCase.continueTesting();
@@ -216,7 +216,7 @@ function testSendNoOptions() {
   xhr.send('GET', 'test-url', null).then(function(xhr) {
     called = true;
     assertEquals('Objects should be equal', xhr, stubXhr);
-  }, fail /* opt_onRejected***REMOVED***);
+  }, fail /* opt_onRejected */);
 
   assertTrue('XHR should have been sent', stubXhr.sent);
   assertFalse('Callback should not yet have been called', called);
@@ -232,7 +232,7 @@ function testSendNoOptions() {
 function testSendPostSetsDefaultHeader() {
   var stubXhr = setupStubXMLHttpRequest();
   xhr.send('POST', 'test-url', null).
-      then(undefined /* opt_onResolved***REMOVED***, fail /* opt_onRejected***REMOVED***);
+      then(undefined /* opt_onResolved */, fail /* opt_onRejected */);
 
   stubXhr.load(200);
   mockClock.tick();
@@ -247,7 +247,7 @@ function testSendPostHeaders() {
   var stubXhr = setupStubXMLHttpRequest();
   xhr.send('POST', 'test-url', null, {
     headers: {'Content-Type': 'text/plain', 'X-Made-Up': 'FooBar'}
-  }).then(undefined /* opt_onResolved***REMOVED***, fail /* opt_onRejected***REMOVED***);
+  }).then(undefined /* opt_onResolved */, fail /* opt_onRejected */);
 
   stubXhr.load(200);
   mockClock.tick();
@@ -261,7 +261,7 @@ function testSendPostHeaders() {
 function testSendWithCredentials() {
   var stubXhr = setupStubXMLHttpRequest();
   xhr.send('POST', 'test-url', null, {withCredentials: true}).
-      then(undefined /* opt_onResolved***REMOVED***, fail /* opt_onRejected***REMOVED***);
+      then(undefined /* opt_onResolved */, fail /* opt_onRejected */);
 
   stubXhr.load(200);
   mockClock.tick();
@@ -273,7 +273,7 @@ function testSendWithCredentials() {
 function testSendWithMimeType() {
   var stubXhr = setupStubXMLHttpRequest();
   xhr.send('POST', 'test-url', null, {mimeType: 'text/plain'}).
-      then(undefined /* opt_onResolved***REMOVED***, fail /* opt_onRejected***REMOVED***);
+      then(undefined /* opt_onResolved */, fail /* opt_onRejected */);
 
   stubXhr.load(200);
   mockClock.tick();
@@ -286,8 +286,8 @@ function testSendWithHttpError() {
   var stubXhr = setupStubXMLHttpRequest();
   var err;
   xhr.send('POST', 'test-url', null).then(
-      fail /* opt_onResolved***REMOVED***,
-      function(error) { err = error; } /* opt_onRejected***REMOVED***);
+      fail /* opt_onResolved */,
+      function(error) { err = error; } /* opt_onRejected */);
 
   stubXhr.load(500);
   mockClock.tick();
@@ -307,7 +307,7 @@ function testSendWithTimeoutNotHit() {
   var stubXhr = setupStubXMLHttpRequest();
   var err;
   xhr.send('POST', 'test-url', null, {timeoutMs: 1500}).
-      then(undefined /* opt_onResolved***REMOVED***, fail /* opt_onRejected***REMOVED***);
+      then(undefined /* opt_onResolved */, fail /* opt_onRejected */);
   assertTrue(mockClock.getTimeoutsMade() > 0);
   mockClock.tick(1400);
   stubXhr.load(200);
@@ -320,8 +320,8 @@ function testSendWithTimeoutHit() {
   var stubXhr = setupStubXMLHttpRequest();
   var err;
   xhr.send('POST', 'test-url', null, {timeoutMs: 50}).then(
-      fail /* opt_onResolved***REMOVED***,
-      function(error) { err = error; } /* opt_onRejected***REMOVED***);
+      fail /* opt_onResolved */,
+      function(error) { err = error; } /* opt_onRejected */);
   assertTrue(mockClock.getTimeoutsMade() > 0);
   mockClock.tick(50);
   assertTrue('XHR should have been sent', stubXhr.sent);
@@ -333,7 +333,7 @@ function testCancelRequest() {
   var stubXhr = setupStubXMLHttpRequest();
   var err;
   var promise = xhr.send('GET', 'test-url', null, {timeoutMs: 50}).then(
-      fail /* opt_onResolved***REMOVED***,
+      fail /* opt_onResolved */,
       function(error) {
         err = error;
         if (error instanceof goog.Promise.CancellationError) {
@@ -354,7 +354,7 @@ function testGetJson() {
   var responseData;
   xhr.getJson('test-url').then(function(responseObj) {
     responseData = responseObj;
-  }, fail /* opt_onRejected***REMOVED***);
+  }, fail /* opt_onRejected */);
 
   stubXhr.responseText = '{"a": 1, "b": 2}';
   stubXhr.load(200);
@@ -368,7 +368,7 @@ function testGetJsonWithXssiPrefix() {
   var responseData;
   xhr.getJson('test-url', {xssiPrefix: 'while(1);\n'}).then(
       function(responseObj) { responseData = responseObj; },
-      fail /* opt_onRejected***REMOVED***);
+      fail /* opt_onRejected */);
 
   stubXhr.responseText = 'while(1);\n{"a": 1, "b": 2}';
   stubXhr.load(200);
@@ -381,11 +381,11 @@ function testSendWithClientException() {
   var stubXhr = setupStubXMLHttpRequest();
   stubXhr.send = function(data) {
     throw new Error('CORS XHR with file:// schemas not allowed.');
- ***REMOVED*****REMOVED***
+  };
   var err;
   xhr.send('POST', 'file://test-url', null).then(
-      fail /* opt_onResolved***REMOVED***,
-      function(error) { err = error; } /* opt_onRejected***REMOVED***);
+      fail /* opt_onResolved */,
+      function(error) { err = error; } /* opt_onRejected */);
 
   stubXhr.load(0);
   mockClock.tick();

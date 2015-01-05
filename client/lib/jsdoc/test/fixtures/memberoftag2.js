@@ -1,10 +1,10 @@
 create(
     'Observable',
     {
-       ***REMOVED*****REMOVED*** @memberof Observable***REMOVED***
+        /** @memberof Observable */
         cache: [],
 
-       ***REMOVED*****REMOVED*** @memberof Observable.prototype***REMOVED***
+        /** @memberof Observable.prototype */
         publish: function(msg) {}
     }
 );

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A palette of symbols.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A palette of symbols.
+ *
+ */
 
 goog.provide('goog.ui.equation.SymbolPalette');
 
@@ -24,14 +24,14 @@ goog.require('goog.ui.equation.Palette');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new symbols palette.
-***REMOVED*** @param {goog.ui.equation.PaletteManager} paletteManager The
-***REMOVED***     manager of the palette.
-***REMOVED*** @extends {goog.ui.equation.Palette}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new symbols palette.
+ * @param {goog.ui.equation.PaletteManager} paletteManager The
+ *     manager of the palette.
+ * @extends {goog.ui.equation.Palette}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.SymbolPalette = function(paletteManager) {
   goog.ui.equation.Palette.call(this, paletteManager,
       goog.ui.equation.Palette.Type.SYMBOL,
@@ -71,5 +71,5 @@ goog.ui.equation.SymbolPalette = function(paletteManager) {
        '\\diamond']);
 
   this.setSize(new goog.math.Size(7, 5));
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.SymbolPalette, goog.ui.equation.Palette);

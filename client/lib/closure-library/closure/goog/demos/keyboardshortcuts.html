@@ -103,7 +103,7 @@ See the COPYING file for details.
     shortcutHandler.registerShortcut('HOME', goog.events.KeyCodes.HOME);
     shortcutHandler.registerShortcut('ENTER', goog.events.KeyCodes.ENTER);
 
-  ***REMOVED***
+    goog.events.listen(
         shortcutHandler,
         goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
         showTriggered);

@@ -79,11 +79,11 @@ See the COPYING file for details.
   </p>
   <script>
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Get the seconds from a document element.
-    ***REMOVED*** @param {string} id The id of the element
-    ***REMOVED*** @return {number}
-   ***REMOVED*****REMOVED***
+    /**
+     * Get the seconds from a document element.
+     * @param {string} id The id of the element
+     * @return {number}
+     */
     var getSeconds = function (id) {
       var time = Number(goog.dom.getElement(id).value);
       if (isNaN(time)) {
@@ -92,27 +92,27 @@ See the COPYING file for details.
       } else {
         return time;
       }
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Convert seconds to ms.
-    ***REMOVED*** @param {number} seconds The time in Seconds
-    ***REMOVED*** @return {number}
-   ***REMOVED*****REMOVED***
+    /**
+     * Convert seconds to ms.
+     * @param {number} seconds The time in Seconds
+     * @return {number}
+     */
     var inMs = function (seconds) {
-      return seconds***REMOVED*** 1000;
-   ***REMOVED*****REMOVED***
+      return seconds * 1000;
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Delay.
-   ***REMOVED*****REMOVED***
+    /**
+     * Delay.
+     */
 
     var delay = null;
     var delayStatus = goog.dom.getElement('delayStatus');
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Start the delay, on the button press.
-   ***REMOVED*****REMOVED***
+    /**
+     * Start the delay, on the button press.
+     */
     var doDelay = function() {
       if (delay) {
         goog.dom.setTextContent(delayStatus, 'Delay already set.');
@@ -127,31 +127,31 @@ See the COPYING file for details.
       delay.start();
       goog.dom.setTextContent(delayStatus,
                               'Delay for: ' + seconds + ' seconds.');
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Reset the delay.
-   ***REMOVED*****REMOVED***
+    /**
+     * Reset the delay.
+     */
     var doReset = function(){
       if (!delay) {
         return;
       }
       goog.dom.setTextContent(delayStatus, 'Delay Restarted.');
       delay.start();
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Callback, after some delay.
-   ***REMOVED*****REMOVED***
+    /**
+     * Callback, after some delay.
+     */
     var delayedAction = function() {
       goog.dom.setTextContent(delayStatus, 'Action called.');
       delay.dispose();
       delay = null;
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Throttle.
-   ***REMOVED*****REMOVED***
+    /**
+     * Throttle.
+     */
 
     var throttle = null;
     var throttleCount = 0;
@@ -159,9 +159,9 @@ See the COPYING file for details.
     var throttleHits = goog.dom.getElement('throttleHits');
     var throttleStatus = goog.dom.getElement('throttleStatus');
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Start a Throttle.
-   ***REMOVED*****REMOVED***
+    /**
+     * Start a Throttle.
+     */
     var doThrottleStart = function() {
       var seconds = getSeconds('throttleSeconds');
       if (!goog.isNumber(seconds)) {
@@ -178,11 +178,11 @@ See the COPYING file for details.
       // Reset the hits and the count.
       goog.dom.setTextContent(throttleHits, throttleFireCount);
       goog.dom.setTextContent(throttleStatus, throttleCount);
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Do the throttle action, this can be called as often as desired.
-   ***REMOVED*****REMOVED***
+    /**
+     * Do the throttle action, this can be called as often as desired.
+     */
     var doThrottle = function(){
       if (throttle) {
         // Fire the throttle, this will only actually 'fire' no more than
@@ -190,26 +190,26 @@ See the COPYING file for details.
         throttle.fire();
         goog.dom.setTextContent(throttleHits, ++throttleFireCount);
       }
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Throttle Action Callback.
-   ***REMOVED*****REMOVED***
+    /**
+     * Throttle Action Callback.
+     */
     var throttleAction = function() {
       goog.dom.setTextContent(throttleStatus, ++throttleCount);
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Timer.
-   ***REMOVED*****REMOVED***
+    /**
+     * Timer.
+     */
 
     var timer = null;
     var timerStatus = goog.dom.getElement('timerStatus');
     var tickCount = 0;
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Start a timer.
-   ***REMOVED*****REMOVED***
+    /**
+     * Start a timer.
+     */
     var doTimerStart = function() {
       var seconds = getSeconds('timerSeconds');
       if (!goog.isNumber(seconds)) {
@@ -223,42 +223,42 @@ See the COPYING file for details.
       // listen for the TICK event.
       timer = new goog.Timer(inMs(seconds));
       timer.start();
-    ***REMOVED***timer, goog.Timer.TICK, tickAction);
-   ***REMOVED*****REMOVED***
+      goog.events.listen(timer, goog.Timer.TICK, tickAction);
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Stop the Timer.
-   ***REMOVED*****REMOVED***
+    /**
+     * Stop the Timer.
+     */
     var doTimerStop = function() {
       if (timer) {
         timer.stop();
        }
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Reset the Timer.
-   ***REMOVED*****REMOVED***
+    /**
+     * Reset the Timer.
+     */
     var doTimerRestart = function() {
       if (timer) {
         timer.start();
       }
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tick callback, called whenever the Timer sends a TICK event.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tick callback, called whenever the Timer sends a TICK event.
+     */
     var tickAction = function() {
       tickCount++;
       goog.dom.setTextContent(timerStatus, 'Got tick: ' + tickCount);
-   ***REMOVED*****REMOVED***
+    };
 
     var doOnceTimer = null;
     var doOnceStatus = goog.dom.getElement('doOnceStatus');
 
     /*
-    ***REMOVED*** Do some action once, optional delay.  Can not be restarted, like Delay,
-    ***REMOVED*** only cleared.
-   ***REMOVED*****REMOVED***
+     * Do some action once, optional delay.  Can not be restarted, like Delay,
+     * only cleared.
+     */
     var doOnce = function() {
       if (doOnceTimer) {
         // Timer already set, do not reset it.
@@ -274,17 +274,17 @@ See the COPYING file for details.
           goog.dom.setTextContent(doOnceStatus, 'Action called.');
           doOnceTimer = null;
           }, inMs(seconds));
-   ***REMOVED*****REMOVED***
+    };
 
     /*
-    ***REMOVED*** Clear the doOnce, do not do the action.
-   ***REMOVED*****REMOVED***
+     * Clear the doOnce, do not do the action.
+     */
     var doOnceClear = function() {
       goog.Timer.clear(doOnceTimer);
       doOnceTimer = null;
       goog.dom.setTextContent(doOnceStatus,
                               'Timer cleared, action not called.');
-   ***REMOVED*****REMOVED***
+    };
 
   </script>
 </body>

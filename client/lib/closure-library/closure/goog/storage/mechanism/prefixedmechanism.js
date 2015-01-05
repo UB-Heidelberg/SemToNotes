@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Wraps an iterable storage mechanism and creates artificial
-***REMOVED*** namespaces using a prefix in the global namespace.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Wraps an iterable storage mechanism and creates artificial
+ * namespaces using a prefix in the global namespace.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.PrefixedMechanism');
 
@@ -25,74 +25,74 @@ goog.require('goog.storage.mechanism.IterableMechanism');
 
 
 
-***REMOVED***
-***REMOVED*** Wraps an iterable storage mechanism and creates artificial namespaces.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.IterableMechanism} mechanism Underlying
-***REMOVED***     iterable storage mechanism.
-***REMOVED*** @param {string} prefix Prefix for creating an artificial namespace.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.IterableMechanism}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wraps an iterable storage mechanism and creates artificial namespaces.
+ *
+ * @param {!goog.storage.mechanism.IterableMechanism} mechanism Underlying
+ *     iterable storage mechanism.
+ * @param {string} prefix Prefix for creating an artificial namespace.
+ * @constructor
+ * @extends {goog.storage.mechanism.IterableMechanism}
+ * @final
+ */
 goog.storage.mechanism.PrefixedMechanism = function(mechanism, prefix) {
   goog.storage.mechanism.PrefixedMechanism.base(this, 'constructor');
   this.mechanism_ = mechanism;
   this.prefix_ = prefix + '::';
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.PrefixedMechanism,
               goog.storage.mechanism.IterableMechanism);
 
 
-***REMOVED***
-***REMOVED*** The mechanism to be prefixed.
-***REMOVED***
-***REMOVED*** @type {goog.storage.mechanism.IterableMechanism}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The mechanism to be prefixed.
+ *
+ * @type {goog.storage.mechanism.IterableMechanism}
+ * @private
+ */
 goog.storage.mechanism.PrefixedMechanism.prototype.mechanism_ = null;
 
 
-***REMOVED***
-***REMOVED*** The prefix for creating artificial namespaces.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The prefix for creating artificial namespaces.
+ *
+ * @type {string}
+ * @private
+ */
 goog.storage.mechanism.PrefixedMechanism.prototype.prefix_ = '';
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.PrefixedMechanism.prototype.set = function(key, value) {
   this.mechanism_.set(this.prefix_ + key, value);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.PrefixedMechanism.prototype.get = function(key) {
   return this.mechanism_.get(this.prefix_ + key);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.PrefixedMechanism.prototype.remove = function(key) {
   this.mechanism_.remove(this.prefix_ + key);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.PrefixedMechanism.prototype.__iterator__ = function(
     opt_keys) {
   var subIter = this.mechanism_.__iterator__(true);
   var selfObj = this;
   var newIter = new goog.iter.Iterator();
   newIter.next = function() {
-    var key =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (subIter.next());
+    var key = /** @type {string} */ (subIter.next());
     while (key.substr(0, selfObj.prefix_.length) != selfObj.prefix_) {
-      key =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (subIter.next());
+      key = /** @type {string} */ (subIter.next());
     }
     return opt_keys ? key.substr(selfObj.prefix_.length) :
                       selfObj.mechanism_.get(key);
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};

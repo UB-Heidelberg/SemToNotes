@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Client viewport positioning class.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robert Walker)
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Client viewport positioning class.
+ *
+ * @author robbyw@google.com (Robert Walker)
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.positioning.ViewportClientPosition');
 
@@ -28,52 +28,52 @@ goog.require('goog.positioning.ClientPosition');
 
 
 
-***REMOVED***
-***REMOVED*** Encapsulates a popup position where the popup is positioned relative to the
-***REMOVED*** window (client) coordinates, and made to stay within the viewport.
-***REMOVED***
-***REMOVED*** @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
-***REMOVED*** @param {number=} opt_arg2 Top position if arg1 is a number representing the
-***REMOVED***     left position, ignored otherwise.
-***REMOVED***
-***REMOVED*** @extends {goog.positioning.ClientPosition}
-***REMOVED***
+/**
+ * Encapsulates a popup position where the popup is positioned relative to the
+ * window (client) coordinates, and made to stay within the viewport.
+ *
+ * @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
+ * @param {number=} opt_arg2 Top position if arg1 is a number representing the
+ *     left position, ignored otherwise.
+ * @constructor
+ * @extends {goog.positioning.ClientPosition}
+ */
 goog.positioning.ViewportClientPosition = function(arg1, opt_arg2) {
   goog.positioning.ClientPosition.call(this, arg1, opt_arg2);
-***REMOVED***
+};
 goog.inherits(goog.positioning.ViewportClientPosition,
               goog.positioning.ClientPosition);
 
 
-***REMOVED***
-***REMOVED*** The last-resort overflow strategy, if the popup fails to fit.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The last-resort overflow strategy, if the popup fails to fit.
+ * @type {number}
+ * @private
+ */
 goog.positioning.ViewportClientPosition.prototype.lastResortOverflow_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Set the last-resort overflow strategy, if the popup fails to fit.
-***REMOVED*** @param {number} overflow A bitmask of goog.positioning.Overflow strategies.
-***REMOVED***
+/**
+ * Set the last-resort overflow strategy, if the popup fails to fit.
+ * @param {number} overflow A bitmask of goog.positioning.Overflow strategies.
+ */
 goog.positioning.ViewportClientPosition.prototype.setLastResortOverflow =
     function(overflow) {
   this.lastResortOverflow_ = overflow;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Repositions the popup according to the current state.
-***REMOVED***
-***REMOVED*** @param {Element} element The DOM element of the popup.
-***REMOVED*** @param {goog.positioning.Corner} popupCorner The corner of the popup
-***REMOVED***     element that that should be positioned adjacent to the anchorElement.
-***REMOVED***     One of the goog.positioning.Corner constants.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize Preferred size fo the element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Repositions the popup according to the current state.
+ *
+ * @param {Element} element The DOM element of the popup.
+ * @param {goog.positioning.Corner} popupCorner The corner of the popup
+ *     element that that should be positioned adjacent to the anchorElement.
+ *     One of the goog.positioning.Corner constants.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @param {goog.math.Size=} opt_preferredSize Preferred size fo the element.
+ * @override
+ */
 goog.positioning.ViewportClientPosition.prototype.reposition = function(
     element, popupCorner, opt_margin, opt_preferredSize) {
   var viewportElt = goog.style.getClientViewportElement(element);
@@ -118,4 +118,4 @@ goog.positioning.ViewportClientPosition.prototype.reposition = function(
   goog.positioning.positionAtCoordinate(
       clientPos, element, popupCorner, opt_margin, viewport,
       this.lastResortOverflow_, opt_preferredSize);
-***REMOVED***
+};

@@ -61,7 +61,7 @@ knowledge of the CeCILL license and that you accept its terms.
           Look up an attribute's value by XML qualified (prefixed) name.
  java.lang.String 	getValue(java.lang.String uri, java.lang.String localName)
           Look up an attribute's value by Namespace name.
-***REMOVED***
+ */
 
 // Private helpers for AttributesImpl (private static treated as private instance below)
 function _getIndexByQName(qName) {
@@ -136,7 +136,7 @@ function AttributesImpl(atts) {
 }
 AttributesImpl.prototype.toString = function() {
     return "AttributesImpl";
-***REMOVED***
+};
 
 // INTERFACE: Attributes: http://www.saxproject.org/apidoc/org/xml/sax/Attributes.html
 AttributesImpl.prototype.getIndex = function(arg1, arg2) {
@@ -145,20 +145,20 @@ AttributesImpl.prototype.getIndex = function(arg1, arg2) {
     } else {
         return _getIndexByURI.call(this, arg1, arg2);
     }
-***REMOVED***
+};
 AttributesImpl.prototype.getLength = function() {
     return this.attsArray.length;
-***REMOVED***
+};
 //in order not to parse qname several times, add that convenience method
 AttributesImpl.prototype.getPrefix = function(index) {
     return this.attsArray[index].prefix;
-***REMOVED***
+};
 AttributesImpl.prototype.getLocalName = function(index) {
     return this.attsArray[index].localName;
-***REMOVED***
+};
 AttributesImpl.prototype.getQName = function(index) {
     return this.attsArray[index].qName;
-***REMOVED***
+};
 //not supported
 AttributesImpl.prototype.getType = function(arg1, arg2) { // Should allow 1-2 arguments of different types: idnex or qName or uri+localName
     // Besides CDATA (default when not supported), could return "ID", "IDREF", "IDREFS", "NMTOKEN", "NMTOKENS", "ENTITY", "ENTITIES", or "NOTATION" (always in upper case).
@@ -186,10 +186,10 @@ AttributesImpl.prototype.getType = function(arg1, arg2) { // Should allow 1-2 ar
         }
     }
     return "CDATA";
-***REMOVED***
+};
 AttributesImpl.prototype.getURI = function(index) {
     return this.attsArray[index].namespaceURI;
-***REMOVED***
+};
 AttributesImpl.prototype.getValue = function(arg1, arg2) {
     if (arg2 === undefined) {
         if (typeof arg1 === "string") {
@@ -200,18 +200,18 @@ AttributesImpl.prototype.getValue = function(arg1, arg2) {
     } else {
         return _getValueByURI.call(this, arg1, arg2);
     }
-***REMOVED***
+};
 // Other AttributesImpl methods
 AttributesImpl.prototype.addAttribute = function (uri, localName, qName, type, value) {
     var prefix = _getPrefix.call(this, localName, qName);
     this.addPrefixedAttribute(uri, prefix, localName, qName, type, value);
-***REMOVED***
+};
 AttributesImpl.prototype.clear = function () {
     this.attsArray = [];
-***REMOVED***
+};
 AttributesImpl.prototype.removeAttribute = function (index) {
     this.attsArray.splice(index, 1);
-***REMOVED***
+};
 
 AttributesImpl.prototype.addAttributeAtIndex = function (index, uri, localName, qName, type, value) {
     var prefix = _getPrefix.call(this, localName, qName);
@@ -220,7 +220,7 @@ AttributesImpl.prototype.addAttributeAtIndex = function (index, uri, localName, 
     } else {        
         this.attsArray.splice(index, 0, new Sax_Attribute(uri, prefix, localName, qName, type, value));
     }
-***REMOVED***
+};
 
 AttributesImpl.prototype.setAttribute = function (index, uri, localName, qName, type, value) {
     this.setURI(index, uri);
@@ -228,17 +228,17 @@ AttributesImpl.prototype.setAttribute = function (index, uri, localName, qName, 
     this.setQName(index, qName);
     this.setType(index, type);
     this.setValue(index, value);
-***REMOVED***
+};
 
 AttributesImpl.prototype.setAttributes = function (atts) {
     for (var i = 0 ; i < atts.getLength() ; i ++) {
         this.addPrefixedAttribute(atts.getURI(i), atts.getPrefix(i), atts.getLocalName(i), atts.getType(i), atts.getValue(i));
     }
-***REMOVED***
+};
 
 AttributesImpl.prototype.setLocalName = function (index, localName) {
     this.attsArray[index].localName = localName;
-***REMOVED***
+};
 AttributesImpl.prototype.setQName = function (index, qName) {
     var att = this.attsArray[index];
     att.qName = qName;
@@ -250,21 +250,21 @@ AttributesImpl.prototype.setQName = function (index, qName) {
         att.prefix = null;
         att.localName = qName;
     }
-***REMOVED***
+};
 AttributesImpl.prototype.setType = function (index, type) {
     this.attsArray[index].type = type;
-***REMOVED***
+};
 AttributesImpl.prototype.setURI = function (index, uri) {
     this.attsArray[index].namespaceURI = uri;
-***REMOVED***
+};
 AttributesImpl.prototype.setValue = function (index, value) {
     this.attsArray[index].value = value;
-***REMOVED***
+};
 // CUSTOM CONVENIENCE METHODS
 //in order not to parse qname several times
 AttributesImpl.prototype.addPrefixedAttribute = function (uri, prefix, localName, qName, type, value) {
     this.attsArray.push(new Sax_Attribute(uri, prefix, localName, qName, type, value));
-***REMOVED***
+};
 
 /*
 Attributes2Impl()
@@ -287,7 +287,7 @@ function Attributes2Impl (atts) {
 
 Attributes2Impl.prototype.toString = function() {
     return "Attributes2Impl";
-***REMOVED***
+};
 
 Attributes2Impl.prototype = new AttributesImpl();
 
@@ -324,12 +324,12 @@ function _getIndex(arg1, arg2) {
 Attributes2Impl.prototype.isDeclared = function (indexOrQNameOrURI, localName) {
     var index = _getIndex(indexOrQNameOrURI, localName);
     return this.attsArray[index].declared;
-***REMOVED***
+};
 
 Attributes2Impl.prototype.isSpecified = function (indexOrQNameOrURI, localName) {
     var index = _getIndex(indexOrQNameOrURI, localName);
     return this.attsArray[index].specified;
-***REMOVED***
+};
 
 // Other Attributes2Impl methods
 /*
@@ -343,7 +343,7 @@ void 	removeAttribute(int index)
           Assign a value to the "declared" flag of a specific attribute.
  void 	setSpecified(int index, boolean value)
           Assign a value to the "specified" flag of a specific attribute.
-***REMOVED****/
+ **/
 Attributes2Impl.prototype.addAttribute = function (uri, localName, qName, type, value) {
     var prefix = _getPrefix.call(this, localName, qName);
     this.addPrefixedAttribute(uri, prefix, localName, qName, type, value);
@@ -352,17 +352,17 @@ Attributes2Impl.prototype.addAttribute = function (uri, localName, qName, type, 
     //by default declared is false, and specified is true
     this.setDeclared(index, false);
     this.setSpecified(index, true);
-***REMOVED***
+};
 
 Attributes2Impl.prototype.setAttributes = function (atts) {
     
-***REMOVED***
+};
 Attributes2Impl.prototype.setDeclared = function (index, value) {
     this.attsArray[index].declared = value;
-***REMOVED***
+};
 Attributes2Impl.prototype.setSpecified = function (index, value) {
     this.attsArray[index].specified = value;
-***REMOVED***
+};
 
 this.AttributesImpl = AttributesImpl;
 this.Attributes2Impl = Attributes2Impl;

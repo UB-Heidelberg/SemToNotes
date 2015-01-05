@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The central node of a {@link goog.messaging.PortNetwork}. The
-***REMOVED*** operator is responsible for providing the two-way communication channels (via
-***REMOVED*** {@link MessageChannel}s) between each pair of nodes in the network that need
-***REMOVED*** to communicate with one another. Each network should have one and only one
-***REMOVED*** operator.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview The central node of a {@link goog.messaging.PortNetwork}. The
+ * operator is responsible for providing the two-way communication channels (via
+ * {@link MessageChannel}s) between each pair of nodes in the network that need
+ * to communicate with one another. Each network should have one and only one
+ * operator.
+ *
+ */
 
 goog.provide('goog.messaging.PortOperator');
 
@@ -32,98 +32,98 @@ goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** The central node of a PortNetwork.
-***REMOVED***
-***REMOVED*** @param {string} name The name of this node.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @implements {goog.messaging.PortNetwork}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The central node of a PortNetwork.
+ *
+ * @param {string} name The name of this node.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @implements {goog.messaging.PortNetwork}
+ * @final
+ */
 goog.messaging.PortOperator = function(name) {
   goog.messaging.PortOperator.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The collection of channels for communicating with other contexts in the
-  ***REMOVED*** network. These are the channels that are returned to the user, as opposed
-  ***REMOVED*** to the channels used for internal network communication. This is lazily
-  ***REMOVED*** populated as the user requests communication with other contexts, or other
-  ***REMOVED*** contexts request communication with the operator.
-  ***REMOVED***
-  ***REMOVED*** @type {!Object.<!goog.messaging.PortChannel>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.connections_ = {***REMOVED***
+  /**
+   * The collection of channels for communicating with other contexts in the
+   * network. These are the channels that are returned to the user, as opposed
+   * to the channels used for internal network communication. This is lazily
+   * populated as the user requests communication with other contexts, or other
+   * contexts request communication with the operator.
+   *
+   * @type {!Object.<!goog.messaging.PortChannel>}
+   * @private
+   */
+  this.connections_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The collection of channels for internal network communication with other
-  ***REMOVED*** contexts. This is not lazily populated, and always contains entries for
-  ***REMOVED*** each member of the network.
-  ***REMOVED***
-  ***REMOVED*** @type {!Object.<!goog.messaging.MessageChannel>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.switchboard_ = {***REMOVED***
+  /**
+   * The collection of channels for internal network communication with other
+   * contexts. This is not lazily populated, and always contains entries for
+   * each member of the network.
+   *
+   * @type {!Object.<!goog.messaging.MessageChannel>}
+   * @private
+   */
+  this.switchboard_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The name of the operator context.
-  ***REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The name of the operator context.
+   *
+   * @type {string}
+   * @private
+   */
   this.name_ = name;
-***REMOVED***
+};
 goog.inherits(goog.messaging.PortOperator, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** The logger for PortOperator.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The logger for PortOperator.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.messaging.PortOperator.prototype.logger_ =
     goog.log.getLogger('goog.messaging.PortOperator');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.PortOperator.prototype.dial = function(name) {
   this.connectSelfToPort_(name);
   return this.connections_[name];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a caller to the network with the given name. This port should have no
-***REMOVED*** services registered on it. It will be disposed along with the PortOperator.
-***REMOVED***
-***REMOVED*** @param {string} name The name of the port to add.
-***REMOVED*** @param {!goog.messaging.MessageChannel} port The port to add. Must be either
-***REMOVED***     a {@link goog.messaging.PortChannel} or a decorator wrapping a
-***REMOVED***     PortChannel; in particular, it must be able to send and receive
-***REMOVED***     {@link MessagePort}s.
-***REMOVED***
+/**
+ * Adds a caller to the network with the given name. This port should have no
+ * services registered on it. It will be disposed along with the PortOperator.
+ *
+ * @param {string} name The name of the port to add.
+ * @param {!goog.messaging.MessageChannel} port The port to add. Must be either
+ *     a {@link goog.messaging.PortChannel} or a decorator wrapping a
+ *     PortChannel; in particular, it must be able to send and receive
+ *     {@link MessagePort}s.
+ */
 goog.messaging.PortOperator.prototype.addPort = function(name, port) {
   this.switchboard_[name] = port;
   port.registerService(goog.messaging.PortNetwork.REQUEST_CONNECTION_SERVICE,
                        goog.bind(this.requestConnection_, this, name));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Connects two contexts by creating a {@link MessageChannel} and sending one
-***REMOVED*** end to one context and the other end to the other. Called when we receive a
-***REMOVED*** request from a caller to connect it to another context (including potentially
-***REMOVED*** the operator).
-***REMOVED***
-***REMOVED*** @param {string} sourceName The name of the context requesting the connection.
-***REMOVED*** @param {!Object|string} message The name of the context to which
-***REMOVED***     the connection is requested.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Connects two contexts by creating a {@link MessageChannel} and sending one
+ * end to one context and the other end to the other. Called when we receive a
+ * request from a caller to connect it to another context (including potentially
+ * the operator).
+ *
+ * @param {string} sourceName The name of the context requesting the connection.
+ * @param {!Object|string} message The name of the context to which
+ *     the connection is requested.
+ * @private
+ */
 goog.messaging.PortOperator.prototype.requestConnection_ = function(
     sourceName, message) {
-  var requestedName =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (message);
+  var requestedName = /** @type {string} */ (message);
   if (requestedName == this.name_) {
     this.connectSelfToPort_(sourceName);
     return;
@@ -153,17 +153,17 @@ goog.messaging.PortOperator.prototype.requestConnection_ = function(
     'name': sourceName,
     'port': messageChannel.port2
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Connects together the operator and a caller by creating a
-***REMOVED*** {@link MessageChannel} and sending one end to the remote context.
-***REMOVED***
-***REMOVED*** @param {string} contextName The name of the context to which to connect the
-***REMOVED***     operator.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Connects together the operator and a caller by creating a
+ * {@link MessageChannel} and sending one end to the remote context.
+ *
+ * @param {string} contextName The name of the context to which to connect the
+ *     operator.
+ * @private
+ */
 goog.messaging.PortOperator.prototype.connectSelfToPort_ = function(
     contextName) {
   if (contextName in this.connections_) {
@@ -185,14 +185,14 @@ goog.messaging.PortOperator.prototype.connectSelfToPort_ = function(
   messageChannel.port2.start();
   this.connections_[contextName] =
       new goog.messaging.PortChannel(messageChannel.port2);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.PortOperator.prototype.disposeInternal = function() {
   goog.object.forEach(this.switchboard_, goog.dispose);
   goog.object.forEach(this.connections_, goog.dispose);
   delete this.switchboard_;
   delete this.connections_;
   goog.messaging.PortOperator.base(this, 'disposeInternal');
-***REMOVED***
+};

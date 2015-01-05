@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the built-in number matchers like lessThan,
-***REMOVED*** greaterThan, etc.
-***REMOVED***
+/**
+ * @fileoverview Provides the built-in number matchers like lessThan,
+ * greaterThan, etc.
+ */
 
 
 goog.provide('goog.labs.testing.CloseToMatcher');
@@ -31,316 +31,316 @@ goog.require('goog.labs.testing.Matcher');
 
 
 
-***REMOVED***
-***REMOVED*** The GreaterThan matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The GreaterThan matcher.
+ *
+ * @param {number} value The value to compare.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.GreaterThanMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input value is greater than the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input value is greater than the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.GreaterThanMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue > this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.GreaterThanMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not greater than ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The lessThan matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The lessThan matcher.
+ *
+ * @param {number} value The value to compare.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.LessThanMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the input value is less than the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if the input value is less than the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.LessThanMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue < this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.LessThanMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not less than ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The GreaterThanEqualTo matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The GreaterThanEqualTo matcher.
+ *
+ * @param {number} value The value to compare.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.GreaterThanEqualToMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the input value is greater than equal to the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if the input value is greater than equal to the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.GreaterThanEqualToMatcher.prototype.matches =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue >= this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.GreaterThanEqualToMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not greater than equal to ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The LessThanEqualTo matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The LessThanEqualTo matcher.
+ *
+ * @param {number} value The value to compare.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.LessThanEqualToMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the input value is less than or equal to the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if the input value is less than or equal to the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.LessThanEqualToMatcher.prototype.matches =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue <= this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.LessThanEqualToMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not less than equal to ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The EqualTo matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The EqualTo matcher.
+ *
+ * @param {number} value The value to compare.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.EqualToMatcher = function(value) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the input value is equal to the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if the input value is equal to the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.EqualToMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue === this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.EqualToMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not equal to ' + this.value_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The CloseTo matcher.
-***REMOVED***
-***REMOVED*** @param {number} value The value to compare.
-***REMOVED*** @param {number} range The range to check within.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.testing.Matcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The CloseTo matcher.
+ *
+ * @param {number} value The value to compare.
+ * @param {number} range The range to check within.
+ *
+ * @constructor
+ * @struct
+ * @implements {goog.labs.testing.Matcher}
+ * @final
+ */
 goog.labs.testing.CloseToMatcher = function(value, range) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.range_ = range;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if input value is within a certain range of the expected value.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Determines if input value is within a certain range of the expected value.
+ *
+ * @override
+ */
 goog.labs.testing.CloseToMatcher.prototype.matches = function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return Math.abs(this.value_ - actualValue) < this.range_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.labs.testing.CloseToMatcher.prototype.describe =
     function(actualValue) {
   goog.asserts.assertNumber(actualValue);
   return actualValue + ' is not close to(' + this.range_ + ') ' + this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.GreaterThanMatcher} A GreaterThanMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ *
+ * @return {!goog.labs.testing.GreaterThanMatcher} A GreaterThanMatcher.
+ */
 function greaterThan(value) {
   return new goog.labs.testing.GreaterThanMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.GreaterThanEqualToMatcher} A
-***REMOVED***     GreaterThanEqualToMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ *
+ * @return {!goog.labs.testing.GreaterThanEqualToMatcher} A
+ *     GreaterThanEqualToMatcher.
+ */
 function greaterThanEqualTo(value) {
   return new goog.labs.testing.GreaterThanEqualToMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.LessThanMatcher} A LessThanMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ *
+ * @return {!goog.labs.testing.LessThanMatcher} A LessThanMatcher.
+ */
 function lessThan(value) {
   return new goog.labs.testing.LessThanMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.LessThanEqualToMatcher} A LessThanEqualToMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ *
+ * @return {!goog.labs.testing.LessThanEqualToMatcher} A LessThanEqualToMatcher.
+ */
 function lessThanEqualTo(value) {
   return new goog.labs.testing.LessThanEqualToMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.EqualToMatcher} An EqualToMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ *
+ * @return {!goog.labs.testing.EqualToMatcher} An EqualToMatcher.
+ */
 function equalTo(value) {
   return new goog.labs.testing.EqualToMatcher(value);
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} value The expected value.
-***REMOVED*** @param {number} range The maximum allowed difference from the expected value.
-***REMOVED***
-***REMOVED*** @return {!goog.labs.testing.CloseToMatcher} A CloseToMatcher.
-***REMOVED***
+/**
+ * @param {number} value The expected value.
+ * @param {number} range The maximum allowed difference from the expected value.
+ *
+ * @return {!goog.labs.testing.CloseToMatcher} A CloseToMatcher.
+ */
 function closeTo(value, range) {
   return new goog.labs.testing.CloseToMatcher(value, range);
 }

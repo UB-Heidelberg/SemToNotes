@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for goog.module.ModuleLoader.
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview Tests for goog.module.ModuleLoader.
+ * @author nicksantos@google.com (Nick Santos)
+ */
 
 goog.provide('goog.module.ModuleLoaderTest');
 
@@ -45,7 +45,7 @@ var moduleManager = null;
 var stubs = new goog.testing.PropertyReplacer();
 
 var testCase = goog.testing.AsyncTestCase.createAndInstall(document.title);
-testCase.stepTimeout = 5***REMOVED*** 1000; // 5 seconds
+testCase.stepTimeout = 5 * 1000; // 5 seconds
 
 var EventType = goog.module.ModuleLoader.EventType;
 var observer;
@@ -62,7 +62,7 @@ testCase.setUp = function() {
   moduleLoader = new goog.module.ModuleLoader();
   observer = new goog.testing.events.EventObserver();
 
-***REMOVED***
+  goog.events.listen(
       moduleLoader, goog.object.getValues(EventType), observer);
 
   moduleManager.setLoader(moduleLoader);
@@ -78,7 +78,7 @@ testCase.setUp = function() {
   assertNotLoaded('modA');
   assertNotLoaded('modB');
   assertFalse(modA1Loaded);
-***REMOVED***
+};
 
 testCase.tearDown = function() {
   stubs.reset();
@@ -98,7 +98,7 @@ testCase.tearDown = function() {
       goog.dom.removeNode(scripts[i]);
     }
   }
-***REMOVED***
+};
 
 function testLoadModuleA() {
   testCase.waitForAsync('wait for module A load');
@@ -224,8 +224,8 @@ function testModuleLoaderRecursesTooDeep(opt_numModules) {
   // failed, it would move onto modB, and then start over, repeating until it
   // ran out of stack.
   var numModules = opt_numModules || 1;
-  var uris = {***REMOVED***
-  var deps = {***REMOVED***
+  var uris = {};
+  var deps = {};
   var mods = [];
   for (var num = 0; num < numModules; num++) {
     var modName = 'mod' + num;
@@ -248,7 +248,7 @@ function testModuleLoaderRecursesTooDeep(opt_numModules) {
     return {
        open: goog.functions.error('mock error'),
        abort: goog.nullFunction
-   ***REMOVED*****REMOVED***
+    };
   });
   goog.object.extend(goog.net.XmlHttp, oldXmlHttp);
 
@@ -257,7 +257,7 @@ function testModuleLoaderRecursesTooDeep(opt_numModules) {
   var errorHandler = function(ignored, modId) {
     errorCount++;
     errorIds.push(modId);
- ***REMOVED*****REMOVED***
+  };
   moduleManager.registerCallback(
       goog.module.ModuleManager.CallbackType.ERROR,
       errorHandler);
@@ -299,7 +299,7 @@ function testErrback() {
   var errorHandler = function() {
     testCase.continueTesting();
     assertNotLoaded('modA');
- ***REMOVED*****REMOVED***
+  };
   moduleManager.registerCallback(
       goog.module.ModuleManager.CallbackType.ERROR,
       errorHandler);
@@ -408,14 +408,14 @@ function testLoadErrorCallbackExecutedWhenPrefetchFails() {
     return {
        open: goog.functions.error('mock error'),
        abort: goog.nullFunction
-   ***REMOVED*****REMOVED***
+    };
   });
   goog.object.extend(goog.net.XmlHttp, oldXmlHttp);
 
   var errorCount = 0;
   var errorHandler = function() {
     errorCount++;
- ***REMOVED*****REMOVED***
+  };
   moduleManager.registerCallback(
       goog.module.ModuleManager.CallbackType.ERROR,
       errorHandler);

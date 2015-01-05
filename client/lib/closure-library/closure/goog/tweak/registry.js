@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition for goog.tweak.Registry.
-***REMOVED*** Most clients should not use this class directly, but instead use the API
-***REMOVED*** defined in tweak.js. One possible use case for directly using TweakRegistry
-***REMOVED*** is to register tweaks that are not known at compile time.
-***REMOVED***
-***REMOVED*** @author agrieve@google.com (Andrew Grieve)
-***REMOVED***
+/**
+ * @fileoverview Definition for goog.tweak.Registry.
+ * Most clients should not use this class directly, but instead use the API
+ * defined in tweak.js. One possible use case for directly using TweakRegistry
+ * is to register tweaks that are not known at compile time.
+ *
+ * @author agrieve@google.com (Andrew Grieve)
+ */
 
 goog.provide('goog.tweak.Registry');
 
@@ -32,73 +32,73 @@ goog.require('goog.uri.utils');
 
 
 
-***REMOVED***
-***REMOVED*** Singleton that manages all tweaks. This should be instantiated only from
-***REMOVED*** goog.tweak.getRegistry().
-***REMOVED*** @param {string} queryParams Value of window.location.search.
-***REMOVED*** @param {!Object.<string|number|boolean>} compilerOverrides Default value
-***REMOVED***     overrides set by the compiler.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Singleton that manages all tweaks. This should be instantiated only from
+ * goog.tweak.getRegistry().
+ * @param {string} queryParams Value of window.location.search.
+ * @param {!Object.<string|number|boolean>} compilerOverrides Default value
+ *     overrides set by the compiler.
+ * @constructor
+ * @final
+ */
 goog.tweak.Registry = function(queryParams, compilerOverrides) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A map of entry id -> entry object
-  ***REMOVED*** @type {!Object.<!goog.tweak.BaseEntry>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.entryMap_ = {***REMOVED***
+  /**
+   * A map of entry id -> entry object
+   * @type {!Object.<!goog.tweak.BaseEntry>}
+   * @private
+   */
+  this.entryMap_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The map of query params to use when initializing entry settings.
-  ***REMOVED*** @type {!Object.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The map of query params to use when initializing entry settings.
+   * @type {!Object.<string>}
+   * @private
+   */
   this.parsedQueryParams_ = goog.tweak.Registry.parseQueryParams(queryParams);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** List of callbacks to call when a new entry is registered.
-  ***REMOVED*** @type {!Array.<!Function>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * List of callbacks to call when a new entry is registered.
+   * @type {!Array.<!Function>}
+   * @private
+   */
   this.onRegisterListeners_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A map of entry ID -> default value override for overrides set by the
-  ***REMOVED*** compiler.
-  ***REMOVED*** @type {!Object.<string|number|boolean>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A map of entry ID -> default value override for overrides set by the
+   * compiler.
+   * @type {!Object.<string|number|boolean>}
+   * @private
+   */
   this.compilerDefaultValueOverrides_ = compilerOverrides;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A map of entry ID -> default value override for overrides set by
-  ***REMOVED*** goog.tweak.overrideDefaultValue().
-  ***REMOVED*** @type {!Object.<string|number|boolean>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.defaultValueOverrides_ = {***REMOVED***
-***REMOVED***
+  /**
+   * A map of entry ID -> default value override for overrides set by
+   * goog.tweak.overrideDefaultValue().
+   * @type {!Object.<string|number|boolean>}
+   * @private
+   */
+  this.defaultValueOverrides_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** The logger for this class.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The logger for this class.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.tweak.Registry.prototype.logger_ =
     goog.log.getLogger('goog.tweak.Registry');
 
 
-***REMOVED***
-***REMOVED*** Simple parser for query params. Makes all keys lower-case.
-***REMOVED*** @param {string} queryParams The part of the url between the ? and the #.
-***REMOVED*** @return {!Object.<string>} map of key->value.
-***REMOVED***
+/**
+ * Simple parser for query params. Makes all keys lower-case.
+ * @param {string} queryParams The part of the url between the ? and the #.
+ * @return {!Object.<string>} map of key->value.
+ */
 goog.tweak.Registry.parseQueryParams = function(queryParams) {
   // Strip off the leading ? and split on &.
   var parts = queryParams.substr(1).split('&');
-  var ret = {***REMOVED***
+  var ret = {};
 
   for (var i = 0, il = parts.length; i < il; ++i) {
     var entry = parts[i].split('=');
@@ -108,13 +108,13 @@ goog.tweak.Registry.parseQueryParams = function(queryParams) {
     }
   }
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the given tweak setting/action.
-***REMOVED*** @param {goog.tweak.BaseEntry} entry The entry.
-***REMOVED***
+/**
+ * Registers the given tweak setting/action.
+ * @param {goog.tweak.BaseEntry} entry The entry.
+ */
 goog.tweak.Registry.prototype.register = function(entry) {
   var id = entry.getId();
   var oldBaseEntry = this.entryMap_[id];
@@ -151,89 +151,89 @@ goog.tweak.Registry.prototype.register = function(entry) {
   for (var i = 0, callback; callback = this.onRegisterListeners_[i]; ++i) {
     callback(entry);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a callback to be called whenever a new tweak is added.
-***REMOVED*** @param {!Function} func The callback.
-***REMOVED***
+/**
+ * Adds a callback to be called whenever a new tweak is added.
+ * @param {!Function} func The callback.
+ */
 goog.tweak.Registry.prototype.addOnRegisterListener = function(func) {
   this.onRegisterListeners_.push(func);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} id The unique string that identifies this entry.
-***REMOVED*** @return {boolean} Whether a tweak with the given ID is registered.
-***REMOVED***
+/**
+ * @param {string} id The unique string that identifies this entry.
+ * @return {boolean} Whether a tweak with the given ID is registered.
+ */
 goog.tweak.Registry.prototype.hasEntry = function(id) {
   return id in this.entryMap_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the BaseEntry with the given ID. Asserts if it does not exists.
-***REMOVED*** @param {string} id The unique string that identifies this entry.
-***REMOVED*** @return {!goog.tweak.BaseEntry} The entry.
-***REMOVED***
+/**
+ * Returns the BaseEntry with the given ID. Asserts if it does not exists.
+ * @param {string} id The unique string that identifies this entry.
+ * @return {!goog.tweak.BaseEntry} The entry.
+ */
 goog.tweak.Registry.prototype.getEntry = function(id) {
   var ret = this.entryMap_[id];
   goog.asserts.assert(ret, 'Tweak not registered: %s', id);
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the boolean setting with the given ID. Asserts if the ID does not
-***REMOVED*** refer to a registered entry or if it refers to one of the wrong type.
-***REMOVED*** @param {string} id The unique string that identifies this entry.
-***REMOVED*** @return {!goog.tweak.BooleanSetting} The entry.
-***REMOVED***
+/**
+ * Returns the boolean setting with the given ID. Asserts if the ID does not
+ * refer to a registered entry or if it refers to one of the wrong type.
+ * @param {string} id The unique string that identifies this entry.
+ * @return {!goog.tweak.BooleanSetting} The entry.
+ */
 goog.tweak.Registry.prototype.getBooleanSetting = function(id) {
   var entry = this.getEntry(id);
   goog.asserts.assertInstanceof(entry, goog.tweak.BooleanSetting,
       'getBooleanSetting called on wrong type of BaseSetting');
-  return***REMOVED*****REMOVED*** @type {!goog.tweak.BooleanSetting}***REMOVED*** (entry);
-***REMOVED***
+  return /** @type {!goog.tweak.BooleanSetting} */ (entry);
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the string setting with the given ID. Asserts if the ID does not
-***REMOVED*** refer to a registered entry or if it refers to one of the wrong type.
-***REMOVED*** @param {string} id The unique string that identifies this entry.
-***REMOVED*** @return {!goog.tweak.StringSetting} The entry.
-***REMOVED***
+/**
+ * Returns the string setting with the given ID. Asserts if the ID does not
+ * refer to a registered entry or if it refers to one of the wrong type.
+ * @param {string} id The unique string that identifies this entry.
+ * @return {!goog.tweak.StringSetting} The entry.
+ */
 goog.tweak.Registry.prototype.getStringSetting = function(id) {
   var entry = this.getEntry(id);
   goog.asserts.assertInstanceof(entry, goog.tweak.StringSetting,
       'getStringSetting called on wrong type of BaseSetting');
-  return***REMOVED*****REMOVED*** @type {!goog.tweak.StringSetting}***REMOVED*** (entry);
-***REMOVED***
+  return /** @type {!goog.tweak.StringSetting} */ (entry);
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the numeric setting with the given ID. Asserts if the ID does not
-***REMOVED*** refer to a registered entry or if it refers to one of the wrong type.
-***REMOVED*** @param {string} id The unique string that identifies this entry.
-***REMOVED*** @return {!goog.tweak.NumericSetting} The entry.
-***REMOVED***
+/**
+ * Returns the numeric setting with the given ID. Asserts if the ID does not
+ * refer to a registered entry or if it refers to one of the wrong type.
+ * @param {string} id The unique string that identifies this entry.
+ * @return {!goog.tweak.NumericSetting} The entry.
+ */
 goog.tweak.Registry.prototype.getNumericSetting = function(id) {
   var entry = this.getEntry(id);
   goog.asserts.assertInstanceof(entry, goog.tweak.NumericSetting,
       'getNumericSetting called on wrong type of BaseSetting');
-  return***REMOVED*****REMOVED*** @type {!goog.tweak.NumericSetting}***REMOVED*** (entry);
-***REMOVED***
+  return /** @type {!goog.tweak.NumericSetting} */ (entry);
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns an array of all BaseSetting objects with an associted
-***REMOVED*** query parameter.
-***REMOVED*** @param {boolean} excludeChildEntries Exclude BooleanInGroupSettings.
-***REMOVED*** @param {boolean} excludeNonSettings Exclude entries that are not subclasses
-***REMOVED***     of BaseSetting.
-***REMOVED*** @return {!Array.<!goog.tweak.BaseSetting>} The settings.
-***REMOVED***
+/**
+ * Creates and returns an array of all BaseSetting objects with an associted
+ * query parameter.
+ * @param {boolean} excludeChildEntries Exclude BooleanInGroupSettings.
+ * @param {boolean} excludeNonSettings Exclude entries that are not subclasses
+ *     of BaseSetting.
+ * @return {!Array.<!goog.tweak.BaseSetting>} The settings.
+ */
 goog.tweak.Registry.prototype.extractEntries =
     function(excludeChildEntries, excludeNonSettings) {
   var entries = [];
@@ -249,22 +249,22 @@ goog.tweak.Registry.prototype.extractEntries =
     entries.push(entry);
   }
   return entries;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the query part of the URL that will apply all set tweaks.
-***REMOVED*** @param {string=} opt_existingSearchStr The part of the url between the ? and
-***REMOVED***     the #. Uses window.location.search if not given.
-***REMOVED*** @return {string} The query string.
-***REMOVED***
+/**
+ * Returns the query part of the URL that will apply all set tweaks.
+ * @param {string=} opt_existingSearchStr The part of the url between the ? and
+ *     the #. Uses window.location.search if not given.
+ * @return {string} The query string.
+ */
 goog.tweak.Registry.prototype.makeUrlQuery =
     function(opt_existingSearchStr) {
   var existingParams = opt_existingSearchStr == undefined ?
       window.location.search : opt_existingSearchStr;
 
-  var sortedEntries = this.extractEntries(true /* excludeChildEntries***REMOVED***,
-                                          true /* excludeNonSettings***REMOVED***);
+  var sortedEntries = this.extractEntries(true /* excludeChildEntries */,
+                                          true /* excludeNonSettings */);
   // Sort the params so that the urlQuery has stable ordering.
   sortedEntries.sort(function(a, b) {
     return goog.array.defaultCompare(a.getParamName(), b.getParamName());
@@ -282,7 +282,7 @@ goog.tweak.Registry.prototype.makeUrlQuery =
     // to their non-default values and also maintain non-tweak related query
     // parameters.
     existingParams = goog.uri.utils.removeParam(existingParams,
-        encodeURIComponent(***REMOVED*** @type {string}***REMOVED*** (entry.getParamName())));
+        encodeURIComponent(/** @type {string} */ (entry.getParamName())));
   }
 
   var tweakParams = goog.uri.utils.buildQueryData(keysAndValues);
@@ -291,21 +291,21 @@ goog.tweak.Registry.prototype.makeUrlQuery =
   return !tweakParams ? existingParams :
       existingParams ? existingParams + '&' + tweakParams :
       '?' + tweakParams;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a default value to use for the given tweak instead of the one passed
-***REMOVED*** to the register* function. This function must be called before the tweak is
-***REMOVED*** registered.
-***REMOVED*** @param {string} id The unique string that identifies the entry.
-***REMOVED*** @param {string|number|boolean} value The replacement value to be used as the
-***REMOVED***     default value for the setting.
-***REMOVED***
+/**
+ * Sets a default value to use for the given tweak instead of the one passed
+ * to the register* function. This function must be called before the tweak is
+ * registered.
+ * @param {string} id The unique string that identifies the entry.
+ * @param {string|number|boolean} value The replacement value to be used as the
+ *     default value for the setting.
+ */
 goog.tweak.Registry.prototype.overrideDefaultValue = function(id, value) {
   goog.asserts.assert(!this.hasEntry(id),
       'goog.tweak.overrideDefaultValue must be called before the tweak is ' +
       'registered. Tweak: %s', id);
   this.defaultValueOverrides_[id] = value;
-***REMOVED***
+};
 

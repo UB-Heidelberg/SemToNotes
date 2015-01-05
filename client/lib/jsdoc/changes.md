@@ -46,7 +46,7 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 ## 3.2.0 (May 2013)
 
 ### Major changes
-+ JSDoc can now parse any valid [Google Closure Compiler type expression](https://developers.google.com/closure/compiler/docs/js-for-compiler#types).***REMOVED****Note**: As a result of this change, JSDoc quits if a file contains an invalid type expression. To prevent JSDoc from quitting, run JSDoc with the `--lenient` (`-l`) command-line option. (Multiple issues)
++ JSDoc can now parse any valid [Google Closure Compiler type expression](https://developers.google.com/closure/compiler/docs/js-for-compiler#types). **Note**: As a result of this change, JSDoc quits if a file contains an invalid type expression. To prevent JSDoc from quitting, run JSDoc with the `--lenient` (`-l`) command-line option. (Multiple issues)
 + You can now use the new `@listens` tag to indicate that a symbol listens for an event. (#273)
 
 ### Enhancements
@@ -57,7 +57,7 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 + The `@typedef` tag no longer requires a name when used with a Closure Compiler-style type definition. For example, the following type definition will automatically get the name `Foo.Bar`:
 
     ```javascript
-       ***REMOVED*****REMOVED*** @typedef {string}***REMOVED***
+        /** @typedef {string} */
         Foo.Bar;
     ```
 
@@ -70,7 +70,7 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 
     (#152)
 + The `console.log` function now behaves the same way as on Node.js. In addition, the functions `console.info`, `console.error`, `console.warn`, and `console.trace` have been implemented. (#298)
-+ You can now use npm to install JSDoc globally by running `npm install -g`.***REMOVED****Note**: JSDoc will still run under Mozilla Rhino, not Node.js. (#374)
++ You can now use npm to install JSDoc globally by running `npm install -g`. **Note**: JSDoc will still run under Mozilla Rhino, not Node.js. (#374)
 + The `jsVersion` configuration property has been removed. (#390)
 
 ### Bug fixes
@@ -120,31 +120,31 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 + You can now use the new `@callback` tag to provide information about a callback function's signature. To document a callback function, create a standalone JSDoc comment, as shown in the following example:
 
     ```javascript
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @class
-   ***REMOVED*****REMOVED***
+    /**
+     * @class
+     */
     function MyClass() {}
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Send a request.
-    ***REMOVED***
-    ***REMOVED*** @param {MyClass~responseCb} cb - Called after a response is received.
-   ***REMOVED*****REMOVED***
+    /**
+     * Send a request.
+     *
+     * @param {MyClass~responseCb} cb - Called after a response is received.
+     */
     MyClass.prototype.sendRequest = function(cb) {
         // code
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Callback for sending a request.
-    ***REMOVED***
-    ***REMOVED*** @callback MyClass~responseCb
-    ***REMOVED*** @param {?string} error - Information about the error.
-    ***REMOVED*** @param {?string} response - Body of the response.
-   ***REMOVED*****REMOVED***
+    /**
+     * Callback for sending a request.
+     *
+     * @callback MyClass~responseCb
+     * @param {?string} error - Information about the error.
+     * @param {?string} response - Body of the response.
+     */
     ```
 + The inline link tag, `{@link}`, has been improved:
     + You can now use a space as the delimiter between the link target and link text.
-    + In your `conf.json` file, you can now enable the option `templates.cleverLinks` to display code links in a monospace font and URL links in plain text. You can also enable the option `templates.monospaceLinks` to display all links in a monospace font.***REMOVED****Note**: JSDoc templates must be updated to respect these options.
+    + In your `conf.json` file, you can now enable the option `templates.cleverLinks` to display code links in a monospace font and URL links in plain text. You can also enable the option `templates.monospaceLinks` to display all links in a monospace font. **Note**: JSDoc templates must be updated to respect these options.
     + You can now use the new inline tags `{@linkplain}`, which forces a plain-text link, and `{@linkcode}`, which forces a monospace link. These tags always override the settings in your `conf.json` file. (#250)
 + JSDoc now provides a `-l/--lenient` option that tells JSDoc to continue running if it encounters a non-fatal error. (Multiple issues)
 + A template's `publish.js` file should now assign its `publish` function to `exports.publish`, rather than defining a global `publish` function. The global `publish` function is deprecated and may not be supported in future versions. JSDoc's built-in templates reflect this change. (#166)
@@ -153,7 +153,7 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 + Updated or replaced numerous third-party modules. (Multiple commits)
 + Reorganized the JSDoc codebase in preparation for future enhancements. (Multiple commits)
 + JSDoc now embeds a version of Mozilla Rhino that recognizes Node.js packages, including `package.json` files. (Multiple commits)
-+ Node.js' `npm` utility can now install JSDoc from its GitHub repository.***REMOVED****Note**: JSDoc is not currently compatible with Node.js. However, this change allows JSDoc to be installed as a dependency of a Node.js project. In this version, global installation with `npm` is not supported. (Multiple commits)
++ Node.js' `npm` utility can now install JSDoc from its GitHub repository. **Note**: JSDoc is not currently compatible with Node.js. However, this change allows JSDoc to be installed as a dependency of a Node.js project. In this version, global installation with `npm` is not supported. (Multiple commits)
 
 ### Enhancements
 + If a `README.md` file is passed to JSDoc, its contents will be included on the `index.html` page of the generated documentation. (#128)
@@ -163,7 +163,7 @@ This file describes notable changes in each version of JSDoc 3. To download a sp
 + On Windows, `jsdoc.cmd` now provides the same options as the `jsdoc` shell script. (#127)
 + JSDoc now provides `setTimeout()`, `clearTimeout()`, `setInterval()`, and `clearInterval()` functions. (Multiple commits)
 + JSDoc no longer provides a global `exit()` function. Use `process.exit()` instead. (1228a8f7)
-+ JSDoc now includes additional shims for Node.js' built-in modules.***REMOVED****Note**: Many of these shims implement only the functions that JSDoc uses, and they may not be consistent with Node.js' behavior in edge cases. (Multiple commits)
++ JSDoc now includes additional shims for Node.js' built-in modules. **Note**: Many of these shims implement only the functions that JSDoc uses, and they may not be consistent with Node.js' behavior in edge cases. (Multiple commits)
 + JSDoc now provides a `-v/--version` option to display information about the current version. (#303)
 + When running tests, you can now use the `--nocolor` option to disable colored output. On Windows, colored output is always disabled. (e17601fe, 8bc33541)
 

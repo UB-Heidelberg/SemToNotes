@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A static class to parse and normalize 
-***REMOVED***     stringified XML instances.
-***REMOVED***
+/**
+ * @fileoverview A static class to parse and normalize 
+ *     stringified XML instances.
+ */
 
 goog.provide('xrx.xml.Parser');
 
@@ -12,48 +12,48 @@ goog.require('xrx.xml.Serialize');
 
 
 
-***REMOVED***
-***REMOVED*** A static class to parse and normalize stringified XML
-***REMOVED*** instances.
-***REMOVED***
-***REMOVED***
+/**
+ * A static class to parse and normalize stringified XML
+ * instances.
+ * @constructor
+ */
 xrx.xml.Parser = function() {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {DefaultHandler2}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {DefaultHandler2}
+   * @private
+   */
   this.contentHandler_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {XMLReader}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {XMLReader}
+   * @private
+   */
   this.saxParser_;
 
   this.initSax_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.xml.Parser.prototype.initSax_ = function() {
   this.contentHandler_ = new DefaultHandler2();
   this.saxParser_ = XMLReaderFactory.createXMLReader();
   this.saxParser_.setHandler(this.contentHandler_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Normalize a stringified XML instance. Whitespace and Document
-***REMOVED*** Type Declarations (DTD) are removed.
-***REMOVED*** @return {string} The normalized XML instance string.
-***REMOVED***
+/**
+ * Normalize a stringified XML instance. Whitespace and Document
+ * Type Declarations (DTD) are removed.
+ * @return {string} The normalized XML instance string.
+ */
 xrx.xml.Parser.prototype.normalize = function(xml) {
-***REMOVED***
+  var self = this;
   var idx = -2;
   var namespaces = [];
   var normalized = '';
@@ -62,29 +62,29 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
 
   var completeStartTag = function() {
     if (lastToken === xrx.token.START_TAG) normalized += '>';
- ***REMOVED*****REMOVED***
+  };
 
   this.contentHandler_.characters = function(ch, start, length) {
     completeStartTag();
     normalized += ch;
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
   this.contentHandler_.comment = function(ch, start, length) {
     completeStartTag();
     normalized += xrx.xml.Serialize.comment(ch);
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
   this.contentHandler_.endCDATA = function() {
     normalized += ']]>';
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
-  this.contentHandler_.endDocument = function() {***REMOVED*** // do nothing
+  this.contentHandler_.endDocument = function() {}; // do nothing
 
   this.contentHandler_.endDTD = function() { // do nothing
     /*
@@ -93,8 +93,8 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     str = reader.s.substring(0, reader.nextIdx - 1);
     str = str.substr(str.indexOf('<!DOCTYPE'));
     normalized += str;
-  ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    */
+  };
 
   this.contentHandler_.endElement = function(uri, localName, qName) {
     if (self.saxParser_.saxScanner.reader.reader.nextIdx === idx) {
@@ -106,33 +106,33 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
     } else {
       normalized += xrx.xml.Serialize.endTag(qName);
     }
- ***REMOVED*****REMOVED***
+  };
 
-  this.contentHandler_.endEntity = function() {***REMOVED*** // do nothing
+  this.contentHandler_.endEntity = function() {}; // do nothing
 
-  this.contentHandler_.endPrefixMapping = function(prefix) {***REMOVED*** // do nothing
+  this.contentHandler_.endPrefixMapping = function(prefix) {}; // do nothing
 
   this.contentHandler_.ignorableWhitespace = function(ch, start, length) {
     completeStartTag();
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
   this.contentHandler_.processingInstruction = function(target, data) {
     completeStartTag();
     normalized += xrx.xml.Serialize.processingInstruction(target, data);
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
-  this.contentHandler_.skippedEntity = function(name) {***REMOVED*** // do nothing
+  this.contentHandler_.skippedEntity = function(name) {}; // do nothing
 
   this.contentHandler_.startCDATA = function() {
     completeStartTag();
     normalized += '<![CDATA[';
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
- ***REMOVED*****REMOVED***
+  };
 
   this.contentHandler_.startDocument = function() {
     reader = self.saxParser_.saxScanner.reader.reader;
@@ -144,9 +144,9 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
         reader.s[5] === ' ') {
       normalized += reader.s.substring(0, reader.s.indexOf('?>') + 2);
     }
- ***REMOVED*****REMOVED***
+  };
 
-  this.contentHandler_.startDTD = function(name, publicId, systemId) {***REMOVED*** // do nothing
+  this.contentHandler_.startDTD = function(name, publicId, systemId) {}; // do nothing
 
   this.contentHandler_.startElement = function(uri, localName, qName, atts) {
     var n = "";
@@ -160,23 +160,23 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
       var prefix = namespaces[i].prefix;
       prefix === '' ? prefix += 'xmlns' : prefix = 'xmlns:' + prefix;
       n += xrx.xml.Serialize.namespace(prefix, namespaces[i].uri);
-   ***REMOVED*****REMOVED***
+    };
     namespaces = [];
     for (var i = 0; i < arr.length; i++) {
       a += xrx.xml.Serialize.attribute(arr[i].qName, arr[i].value);
-   ***REMOVED*****REMOVED***
+    };
 
     normalized += xrx.xml.Serialize.startEmptyTag(qName, n, a);
     lastToken = xrx.token.START_TAG;
- ***REMOVED*****REMOVED***
+  };
 
-  this.contentHandler_.startEntity = function() {***REMOVED*** // do nothing
+  this.contentHandler_.startEntity = function() {}; // do nothing
 
   this.contentHandler_.startPrefixMapping = function(prefix, uri) {
     namespaces.push({ prefix: prefix, uri: uri });
- ***REMOVED*****REMOVED***
+  };
 
   this.saxParser_.parseString(xml);
 
   return normalized;
-***REMOVED***
+};

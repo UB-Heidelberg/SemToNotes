@@ -21,12 +21,12 @@ goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
 
 
-***REMOVED*** Fake element.***REMOVED***
+/** Fake element. */
 var element;
 
 
 function setUp() {
-  element = {'style': {}***REMOVED***
+  element = {'style': {}};
 }
 
 function getTransitionStyle(element) {

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides data persistence using IE userData mechanism.
-***REMOVED*** UserData uses proprietary Element.addBehavior(), Element.load(),
-***REMOVED*** Element.save(), and Element.XMLDocument() methods, see:
-***REMOVED*** http://msdn.microsoft.com/en-us/library/ms531424(v=vs.85).aspx.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides data persistence using IE userData mechanism.
+ * UserData uses proprietary Element.addBehavior(), Element.load(),
+ * Element.save(), and Element.XMLDocument() methods, see:
+ * http://msdn.microsoft.com/en-us/library/ms531424(v=vs.85).aspx.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.IEUserData');
 
@@ -32,16 +32,16 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a storage mechanism using IE userData.
-***REMOVED***
-***REMOVED*** @param {string} storageKey The key (store name) to store the data under.
-***REMOVED*** @param {string=} opt_storageNodeId The ID of the associated HTML element,
-***REMOVED***     one will be created if not provided.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.IterableMechanism}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Provides a storage mechanism using IE userData.
+ *
+ * @param {string} storageKey The key (store name) to store the data under.
+ * @param {string=} opt_storageNodeId The ID of the associated HTML element,
+ *     one will be created if not provided.
+ * @constructor
+ * @extends {goog.storage.mechanism.IterableMechanism}
+ * @final
+ */
 goog.storage.mechanism.IEUserData = function(storageKey, opt_storageNodeId) {
   goog.storage.mechanism.IEUserData.base(this, 'constructor');
 
@@ -52,7 +52,7 @@ goog.storage.mechanism.IEUserData = function(storageKey, opt_storageNodeId) {
     if (!goog.storage.mechanism.IEUserData.storageMap_) {
       goog.storage.mechanism.IEUserData.storageMap_ = new goog.structs.Map();
     }
-    this.storageNode_ =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (
+    this.storageNode_ = /** @type {Element} */ (
         goog.storage.mechanism.IEUserData.storageMap_.get(storageKey));
     if (!this.storageNode_) {
       if (opt_storageNodeId) {
@@ -68,7 +68,7 @@ goog.storage.mechanism.IEUserData = function(storageKey, opt_storageNodeId) {
     }
     this.storageKey_ = storageKey;
 
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       // Availability check.
       this.loadNode_();
@@ -76,18 +76,18 @@ goog.storage.mechanism.IEUserData = function(storageKey, opt_storageNodeId) {
       this.storageNode_ = null;
     }
   }
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.IEUserData,
               goog.storage.mechanism.IterableMechanism);
 
 
-***REMOVED***
-***REMOVED*** Encoding map for characters which are not encoded by encodeURIComponent().
-***REMOVED*** See encodeKey_ documentation for encoding details.
-***REMOVED***
-***REMOVED*** @type {!Object}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Encoding map for characters which are not encoded by encodeURIComponent().
+ * See encodeKey_ documentation for encoding details.
+ *
+ * @type {!Object}
+ * @const
+ */
 goog.storage.mechanism.IEUserData.ENCODE_MAP = {
   '.': '.2E',
   '!': '.21',
@@ -97,88 +97,88 @@ goog.storage.mechanism.IEUserData.ENCODE_MAP = {
   '(': '.28',
   ')': '.29',
   '%': '.'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Global storageKey to storageNode map, so we save on reloading the storage.
-***REMOVED***
-***REMOVED*** @type {goog.structs.Map}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Global storageKey to storageNode map, so we save on reloading the storage.
+ *
+ * @type {goog.structs.Map}
+ * @private
+ */
 goog.storage.mechanism.IEUserData.storageMap_ = null;
 
 
-***REMOVED***
-***REMOVED*** The document element used for storing data.
-***REMOVED***
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The document element used for storing data.
+ *
+ * @type {Element}
+ * @private
+ */
 goog.storage.mechanism.IEUserData.prototype.storageNode_ = null;
 
 
-***REMOVED***
-***REMOVED*** The key to store the data under.
-***REMOVED***
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key to store the data under.
+ *
+ * @type {?string}
+ * @private
+ */
 goog.storage.mechanism.IEUserData.prototype.storageKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** Encodes anything other than [-a-zA-Z0-9_] using a dot followed by hex,
-***REMOVED*** and prefixes with underscore to form a valid and safe HTML attribute name.
-***REMOVED***
-***REMOVED*** We use URI encoding to do the initial heavy lifting, then escape the
-***REMOVED*** remaining characters that we can't use. Since a valid attribute name can't
-***REMOVED*** contain the percent sign (%), we use a dot (.) as an escape character.
-***REMOVED***
-***REMOVED*** @param {string} key The key to be encoded.
-***REMOVED*** @return {string} The encoded key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Encodes anything other than [-a-zA-Z0-9_] using a dot followed by hex,
+ * and prefixes with underscore to form a valid and safe HTML attribute name.
+ *
+ * We use URI encoding to do the initial heavy lifting, then escape the
+ * remaining characters that we can't use. Since a valid attribute name can't
+ * contain the percent sign (%), we use a dot (.) as an escape character.
+ *
+ * @param {string} key The key to be encoded.
+ * @return {string} The encoded key.
+ * @private
+ */
 goog.storage.mechanism.IEUserData.encodeKey_ = function(key) {
-  // encodeURIComponent leaves - _ . ! ~***REMOVED*** ' ( ) unencoded.
+  // encodeURIComponent leaves - _ . ! ~ * ' ( ) unencoded.
   return '_' + encodeURIComponent(key).replace(/[.!~*'()%]/g, function(c) {
     return goog.storage.mechanism.IEUserData.ENCODE_MAP[c];
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decodes a dot-encoded and character-prefixed key.
-***REMOVED*** See encodeKey_ documentation for encoding details.
-***REMOVED***
-***REMOVED*** @param {string} key The key to be decoded.
-***REMOVED*** @return {string} The decoded key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Decodes a dot-encoded and character-prefixed key.
+ * See encodeKey_ documentation for encoding details.
+ *
+ * @param {string} key The key to be decoded.
+ * @return {string} The decoded key.
+ * @private
+ */
 goog.storage.mechanism.IEUserData.decodeKey_ = function(key) {
   return decodeURIComponent(key.replace(/\./g, '%')).substr(1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether or not the mechanism is available.
-***REMOVED***
-***REMOVED*** @return {boolean} True if the mechanism is available.
-***REMOVED***
+/**
+ * Determines whether or not the mechanism is available.
+ *
+ * @return {boolean} True if the mechanism is available.
+ */
 goog.storage.mechanism.IEUserData.prototype.isAvailable = function() {
   return !!this.storageNode_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.set = function(key, value) {
   this.storageNode_.setAttribute(
       goog.storage.mechanism.IEUserData.encodeKey_(key), value);
   this.saveNode_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.get = function(key) {
   // According to Microsoft, values can be strings, numbers or booleans. Since
   // we only save strings, any other type is a storage error. If we returned
@@ -191,24 +191,24 @@ goog.storage.mechanism.IEUserData.prototype.get = function(key) {
     throw goog.storage.mechanism.ErrorCode.INVALID_VALUE;
   }
   return value;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.remove = function(key) {
   this.storageNode_.removeAttribute(
       goog.storage.mechanism.IEUserData.encodeKey_(key));
   this.saveNode_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.getCount = function() {
   return this.getNode_().attributes.length;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.__iterator__ = function(opt_keys) {
   var i = 0;
   var attributes = this.getNode_().attributes;
@@ -227,39 +227,39 @@ goog.storage.mechanism.IEUserData.prototype.__iterator__ = function(opt_keys) {
       throw goog.storage.mechanism.ErrorCode.INVALID_VALUE;
     }
     return value;
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.IEUserData.prototype.clear = function() {
   var node = this.getNode_();
   for (var left = node.attributes.length; left > 0; left--) {
     node.removeAttribute(node.attributes[left - 1].nodeName);
   }
   this.saveNode_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Loads the underlying storage node to the state we saved it to before.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Loads the underlying storage node to the state we saved it to before.
+ *
+ * @private
+ */
 goog.storage.mechanism.IEUserData.prototype.loadNode_ = function() {
   // This is a special IE-only method on Elements letting us persist data.
   this.storageNode_['load'](this.storageKey_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Saves the underlying storage node.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Saves the underlying storage node.
+ *
+ * @private
+ */
 goog.storage.mechanism.IEUserData.prototype.saveNode_ = function() {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     // This is a special IE-only method on Elements letting us persist data.
     // Do not try to assign this.storageNode_['save'] to a variable, it does
@@ -268,17 +268,17 @@ goog.storage.mechanism.IEUserData.prototype.saveNode_ = function() {
   } catch (e) {
     throw goog.storage.mechanism.ErrorCode.QUOTA_EXCEEDED;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the storage node.
-***REMOVED***
-***REMOVED*** @return {!Element} Storage DOM Element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the storage node.
+ *
+ * @return {!Element} Storage DOM Element.
+ * @private
+ */
 goog.storage.mechanism.IEUserData.prototype.getNode_ = function() {
   // This is a special IE-only property letting us browse persistent data.
-  var doc =***REMOVED*****REMOVED*** @type {Document}***REMOVED*** (this.storageNode_['XMLDocument']);
+  var doc = /** @type {Document} */ (this.storageNode_['XMLDocument']);
   return doc.documentElement;
-***REMOVED***
+};

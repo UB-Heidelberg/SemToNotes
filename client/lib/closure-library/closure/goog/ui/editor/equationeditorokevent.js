@@ -19,32 +19,32 @@ goog.require('goog.ui.editor.AbstractDialog');
 
 
 
-***REMOVED***
-***REMOVED*** OK event object for the equation editor dialog.
-***REMOVED*** @param {string} equationHtml html containing the equation to put in the
-***REMOVED***     editable field.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * OK event object for the equation editor dialog.
+ * @param {string} equationHtml html containing the equation to put in the
+ *     editable field.
+ * @constructor
+ * @extends {goog.events.Event}
+ * @final
+ */
 goog.ui.editor.EquationEditorOkEvent = function(equationHtml) {
   this.equationHtml = equationHtml;
-***REMOVED***
+};
 goog.inherits(goog.ui.editor.EquationEditorOkEvent,
     goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Event type.
-***REMOVED*** @type {goog.ui.editor.AbstractDialog.EventType}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Event type.
+ * @type {goog.ui.editor.AbstractDialog.EventType}
+ * @override
+ */
 goog.ui.editor.EquationEditorOkEvent.prototype.type =
     goog.ui.editor.AbstractDialog.EventType.OK;
 
 
-***REMOVED***
-***REMOVED*** HTML containing the equation to put in the editable field.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * HTML containing the equation to put in the editable field.
+ * @type {string}
+ */
 goog.ui.editor.EquationEditorOkEvent.prototype.equationHtml;

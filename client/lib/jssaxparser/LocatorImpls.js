@@ -66,7 +66,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 (function () { // Begin namespace
 
-/* Supporting classes***REMOVED*****REMOVED***
+/* Supporting classes  */
 // NOT USED YET (Sax class should set, though only use Locator2 API if http://xml.org/sax/features/use-locator2 feature is set on the parser)
 
 /*
@@ -100,18 +100,18 @@ function LocatorImpl (locator) {
 */
 LocatorImpl.prototype.getColumnNumber = function () {
     return this.columnNumber;
-***REMOVED***
+};
 LocatorImpl.prototype.getLineNumber = function () {
     return this.lineNumber;
-***REMOVED***
+};
 LocatorImpl.prototype.getPublicId = function () {
     return this.publicId;
-***REMOVED***
+};
 LocatorImpl.prototype.getSystemId = function () {
     return this.systemId;
-***REMOVED***
+};
 
-/* From Java API (not an interface, but useful part of class)***REMOVED***
+/* From Java API (not an interface, but useful part of class) */
 /*
   void 	setColumnNumber(int columnNumber)
           Set the column number for this locator (1-based).
@@ -121,19 +121,19 @@ LocatorImpl.prototype.getSystemId = function () {
           Set the public identifier for this locator.
  void 	setSystemId(java.lang.String systemId)
           Set the system identifier for this locator.
-***REMOVED****/
+ **/
 LocatorImpl.prototype.setColumnNumber = function (columnNumber) {
     this.columnNumber = columnNumber;
-***REMOVED***
+};
 LocatorImpl.prototype.setLineNumber = function (lineNumber) {
     this.lineNumber = lineNumber;
-***REMOVED***
+};
 LocatorImpl.prototype.setPublicId = function (publicId) {
     this.publicId = publicId;
-***REMOVED***
+};
 LocatorImpl.prototype.setSystemId = function (systemId) {
     this.systemId = systemId;
-***REMOVED***
+};
 
 /*
 public Locator2Impl()
@@ -142,7 +142,7 @@ public Locator2Impl(Locator locator)
     Copy an existing Locator or Locator2 object. If the object implements Locator2, values of the encoding and versionstrings are copied, otherwise they set to null.
 Parameters:
     locator - The existing Locator object.
-***REMOVED****/
+ **/
 function Locator2Impl (locator) {
     if (locator) {
         LocatorImpl.call(this, locator); // 'columnNumber', 'lineNumber', 'publicId', 'systemId'
@@ -158,30 +158,30 @@ Locator2Impl.prototype = new LocatorImpl();
           Returns the name of the character encoding for the entity.
  java.lang.String 	getXMLVersion()
           Returns the version of XML used for the entity.
-***REMOVED****/
+ **/
 Locator2Impl.prototype.getEncoding = function () {
     return this.encoding;
-***REMOVED***
+};
 Locator2Impl.prototype.getXMLVersion = function () {
     return this.version;
-***REMOVED***
+};
 
-/* From Java API (not an interface, but useful part of class)***REMOVED***
+/* From Java API (not an interface, but useful part of class) */
 /*
  void 	setEncoding(java.lang.String encoding)
           Assigns the current value of the encoding property.
  void 	setXMLVersion(java.lang.String version)
           Assigns the current value of the version property.
-***REMOVED****/
+ **/
 Locator2Impl.prototype.setEncoding = function (encoding) {
     this.encoding = encoding;
     // A DOM version cannot set the xmlEncoding property on the document in the contentHandler as it is read-only
-***REMOVED***
+};
 Locator2Impl.prototype.setXMLVersion = function (version) {
     this.version = version;
     // A DOM version may wish to set the xmlVersion property on the document in the contentHandler (could use getContentHandler())
     // the standAlone property on the contentHandler document (also related to the XML Declaration) may be set after determining the value from a call to the contentHandler's getFeature('http://xml.org/sax/features/is-standalone')
-***REMOVED***
+};
 
 
 // Could put on org.xml.sax.helpers.

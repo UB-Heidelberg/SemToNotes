@@ -1,37 +1,37 @@
-***REMOVED*** @module M1***REMOVED***
+/** @module M1 */
 
-***REMOVED***
-***REMOVED*** The differnet kind of mouse buttons.
-***REMOVED***
-***REMOVED*** @summary Blah blah
-***REMOVED*** @readonly
-***REMOVED*** @enum {string} 
-***REMOVED***
+/**
+ * The differnet kind of mouse buttons.
+ *
+ * @summary Blah blah
+ * @readonly
+ * @enum {string} 
+ */
 exports.MouseButtons = {
 	Left: "Left",
 	Middle: "Middle",
 	Right: "Right"
-***REMOVED***
+};
 
-***REMOVED***
- ***REMOVED*** @typedef ClickProperties
- ***REMOVED*** @type {object}
- ***REMOVED*** @property {MouseButtons} Button - Which mouse button is clicking.
-***REMOVED*****REMOVED***
+/**
+  * @typedef ClickProperties
+  * @type {object}
+  * @property {MouseButtons} Button - Which mouse button is clicking.
+  */
 
-***REMOVED***
- ***REMOVED*** Virtual comment function
- ***REMOVED***
- ***REMOVED*** @function VirtualComment
- ***REMOVED*** @static
- ***REMOVED*** @param {string} comment - comment
- ***REMOVED*** 
-***REMOVED*****REMOVED***
+/**
+  * Virtual comment function
+  *
+  * @function VirtualComment
+  * @static
+  * @param {string} comment - comment
+  * 
+  */
 
-***REMOVED***
-***REMOVED*** Virtual comment function 2
-***REMOVED*** @function VirtualComment2
-***REMOVED*** @instance 
-***REMOVED*** @param {string} comment - comment
-***REMOVED***
+/**
+ * Virtual comment function 2
+ * @function VirtualComment2
+ * @instance 
+ * @param {string} comment - comment
+ */
 

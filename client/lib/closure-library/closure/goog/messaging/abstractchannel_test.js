@@ -50,7 +50,7 @@ function testDeliverString() {
       'foo',
       asyncMockControl.asyncAssertEquals(
           'should pass string to service', 'bar'),
-      false /* opt_json***REMOVED***);
+      false /* opt_json */);
   channel.deliver('foo', 'bar');
 }
 
@@ -59,7 +59,7 @@ function testDeliverDeserializedString() {
       'foo',
       asyncMockControl.asyncAssertEquals(
           'should pass string to service', '{"bar":"baz"}'),
-      false /* opt_json***REMOVED***);
+      false /* opt_json */);
   channel.deliver('foo', {bar: 'baz'});
 }
 
@@ -68,7 +68,7 @@ function testDeliverObject() {
       'foo',
       asyncMockControl.asyncAssertEquals(
           'should pass string to service', {bar: 'baz'}),
-      true /* opt_json***REMOVED***);
+      true /* opt_json */);
   channel.deliver('foo', {bar: 'baz'});
 }
 
@@ -77,6 +77,6 @@ function testDeliverSerializedObject() {
       'foo',
       asyncMockControl.asyncAssertEquals(
           'should pass string to service', {bar: 'baz'}),
-      true /* opt_json***REMOVED***);
+      true /* opt_json */);
   channel.deliver('foo', '{"bar":"baz"}');
 }

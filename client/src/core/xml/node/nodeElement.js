@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class providing functions that can be
-***REMOVED*** shared by element node implementations.
-***REMOVED***
+/**
+ * @fileoverview A class providing functions that can be
+ * shared by element node implementations.
+ */
 
 goog.provide('xrx.node.Element');
 
@@ -11,34 +11,34 @@ goog.require('xrx.xpath.KindTest');
 
 
 
-***REMOVED*** 
-***REMOVED*** A class providing functions that can be
-***REMOVED*** shared by element node implementations.
-***REMOVED***
-xrx.node.Element = function() {***REMOVED***
+/** 
+ * A class providing functions that can be
+ * shared by element node implementations.
+ */
+xrx.node.Element = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Indicates whether two nodes are the same.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to test against.
-***REMOVED*** @return {boolean} Whether the nodes are the same.
-***REMOVED***
+/**
+ * Indicates whether two nodes are the same.
+ *
+ * @param {!xrx.node} node The node to test against.
+ * @return {boolean} Whether the nodes are the same.
+ */
 xrx.node.Element.prototype.isSameAs = function(node) {
   return this.getType() === node.getType() && 
       this.getLabel().sameAs(node.getLabel());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Indicates whether a node appears before another node
-***REMOVED*** in document order.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.node} node The node to test against.
-***REMOVED*** @return {boolean}
-***REMOVED***
+/**
+ * Indicates whether a node appears before another node
+ * in document order.
+ * 
+ * @param {!xrx.node} node The node to test against.
+ * @return {boolean}
+ */
 xrx.node.Element.prototype.isBefore = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
@@ -46,17 +46,17 @@ xrx.node.Element.prototype.isBefore = function(node) {
   return selfLabel.isBefore(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() < node.getType() );
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Indicates whether a node appears after another node
-***REMOVED*** in document order.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to test against.
-***REMOVED*** @return {boolean}
-***REMOVED***
+/**
+ * Indicates whether a node appears after another node
+ * in document order.
+ *
+ * @param {!xrx.node} node The node to test against.
+ * @return {boolean}
+ */
 xrx.node.Element.prototype.isAfter = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
@@ -64,37 +64,37 @@ xrx.node.Element.prototype.isAfter = function(node) {
   return selfLabel.isAfter(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() > node.getType() );
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isAncestorOf = function(node) {
   return this.getLabel().isAncestorOf(node.getLabel());
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isAttributeOf = function(node) {
   return false;
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isChildOf = function(node) {
   return this.getLabel().isChildOf(node.getLabel());
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isDescendantOf = function(node) {
   return this.getLabel().isDescendantOf(node.getLabel());
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isFollowingOf = function(node) {
   return this.isAfter(node) && !this.getLabel().isDescendantOf(node.getLabel());
-***REMOVED***
+};
 
 
 
@@ -105,19 +105,19 @@ xrx.node.Element.prototype.isFollowingSiblingOf = function(node) {
   return selfLabel.isFollowingSiblingOf(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) && 
           this.getType() > node.getType() );
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isParentOf = function(node) {
   return this.getLabel().isParentOf(node.getLabel());
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.isPrecedingOf = function(node) {
   return this.isBefore(node) && !this.getLabel().isAncestorOf(node.getLabel());
-***REMOVED***
+};
 
 
 
@@ -128,14 +128,14 @@ xrx.node.Element.prototype.isPrecedingSiblingOf = function(node) {
   return selfLabel.isPrecedingSiblingOf(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) && 
           this.getType() < node.getType() );
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.getAttributes = function() {
   var kindTest = new xrx.xpath.KindTest('attribute');
   return this.getNodeAttribute(kindTest);
-***REMOVED***
+};
 
 
 
@@ -147,14 +147,14 @@ xrx.node.Element.prototype.getNodeAncestor = function(test) {
   if (test.getName() === 'node') 
       nodeset.unshift(new xrx.node[this.impl_.Document](this.instance_));
   return nodeset;
-***REMOVED***
+};
 
 
 
 xrx.node.Element.prototype.getNodeChild = function(test) {
   return this.find(test, xrx.node[this.impl_.Element].prototype.isParentOf, false,
       this.getLabel());
-***REMOVED***
+};
 
 
 
@@ -162,7 +162,7 @@ xrx.node.Element.prototype.getNodeDescendant = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isAncestorOf, false,
       this.getLabel());
-***REMOVED***
+};
 
 
 
@@ -170,7 +170,7 @@ xrx.node.Element.prototype.getNodeFollowing = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isPrecedingOf, false,
       new xrx.xml.Label());
-***REMOVED***
+};
 
 
 
@@ -180,7 +180,7 @@ xrx.node.Element.prototype.getNodeFollowingSibling = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isPrecedingSiblingOf,
       false, stop);
-***REMOVED***
+};
 
 
 
@@ -189,7 +189,7 @@ xrx.node.Element.prototype.getNodeParent = function(test) {
   stop.parent();
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isChildOf, true, stop);
-***REMOVED***
+};
 
 
 
@@ -202,7 +202,7 @@ xrx.node.Element.prototype.getNodePreceding = function(test) {
       nodeset.unshift(new xrx.node[this.impl_.Document](this.instance_));
 
   return nodeset;
-***REMOVED***
+};
 
 
 
@@ -212,4 +212,4 @@ xrx.node.Element.prototype.getNodePrecedingSibling = function(test) {
 
   return this.find(test, xrx.node[this.impl_.Element].prototype.isFollowingSiblingOf, true,
       stop);
-***REMOVED***
+};

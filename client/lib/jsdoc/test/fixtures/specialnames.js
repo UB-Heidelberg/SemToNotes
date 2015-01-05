@@ -1,2 +1,2 @@
-***REMOVED*** document me***REMOVED***
+/** document me */
 var hasOwnProperty = Object.prototype.hasOwnProperty;

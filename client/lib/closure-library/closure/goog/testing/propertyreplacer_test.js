@@ -22,7 +22,7 @@ goog.require('goog.testing.jsunit');
 // Test PropertyReplacer with JavaScript objects.
 function testSetJsProperties() {
   var stubs = new goog.testing.PropertyReplacer();
-  var x = {a: 1, b: undefined***REMOVED***
+  var x = {a: 1, b: undefined};
 
   // Setting simple values.
   stubs.set(x, 'num', 1);
@@ -56,7 +56,7 @@ function testSetJsProperties() {
 
   // Setting a constructor and a prototype method.
   stubs.set(x, 'Class', function(num) { this.num = num; });
-  stubs.set(x.Class.prototype, 'triple', function() { return this.num***REMOVED*** 3; });
+  stubs.set(x.Class.prototype, 'triple', function() { return this.num * 3; });
   assertEquals('prototype method', 12, (new x.Class(4)).triple());
 
   // Cleaning up with UnsetAll() twice. The second run should have no effect.
@@ -76,8 +76,8 @@ function testSetJsProperties() {
 // Test removing JavaScript object properties.
 function testRemoveJsProperties() {
   var stubs = new goog.testing.PropertyReplacer();
-  var orig = {'a': 1, 'b': undefined***REMOVED***
-  var x = {'a': 1, 'b': undefined***REMOVED***
+  var orig = {'a': 1, 'b': undefined};
+  var x = {'a': 1, 'b': undefined};
 
   stubs.remove(x, 'a');
   assertFalse('x.a removed', 'a' in x);
@@ -113,8 +113,8 @@ function testPrototype() {
   var stubs = new goog.testing.PropertyReplacer();
 
   // Simple inheritance.
-  var a = {a: 0***REMOVED***
-  function B() {***REMOVED***
+  var a = {a: 0};
+  function B() {};
   B.prototype = a;
   var b = new B();
 
@@ -125,10 +125,10 @@ function testPrototype() {
   assertEquals('b.a == 0', 0, b['a']);
 
   // Inheritance with goog.inherits.
-  var c = {a: 0***REMOVED***
-  function C() {***REMOVED***
+  var c = {a: 0};
+  function C() {};
   C.prototype = c;
-  function D() {***REMOVED***
+  function D() {};
   goog.inherits(D, C);
   var d = new D();
 
@@ -181,7 +181,7 @@ function testHasKey() {
   assertFalse('{}.a', f({}, 'a'));
   assertTrue('{a:0}.a', f({a: 0}, 'a'));
 
-  function C() {***REMOVED***
+  function C() {};
   C.prototype.a = 0;
   assertFalse('C.prototype.a set, is C.a own?', f(C, 'a'));
   assertTrue('C.prototype.a', f(C.prototype, 'a'));
@@ -213,16 +213,16 @@ function testHasKey() {
   assertFalse('Math, invalid key', f(Math, 'no such key'));
   assertTrue('Math.random', f(Math, 'random'));
 
-  function Parent() {***REMOVED***
+  function Parent() {};
   Parent.prototype.a = 0;
-  function Child() {***REMOVED***
+  function Child() {};
   goog.inherits(Child, Parent);
   assertFalse('goog.inherits, parent prototype', f(new Child, 'a'));
   Child.prototype.a = 1;
   assertFalse('goog.inherits, child prototype', f(new Child, 'a'));
 
-  function OverwrittenProto() {***REMOVED***
-  OverwrittenProto.prototype = {a: 0***REMOVED***
+  function OverwrittenProto() {};
+  OverwrittenProto.prototype = {a: 0};
   assertFalse(f(new OverwrittenProto, 'a'));
 }
 
@@ -281,11 +281,11 @@ function testReplace() {
   var stubs = new goog.testing.PropertyReplacer();
   function C() {
     this.a = 1;
- ***REMOVED*****REMOVED***
+  };
   C.prototype.b = 1;
   C.prototype.toString = function() {
     return 'obj';
- ***REMOVED*****REMOVED***
+  };
   var obj = new C();
 
   stubs.replace(obj, 'a', 2);
@@ -311,7 +311,7 @@ function testReplace() {
 
 // Tests altering complete namespace paths.
 function testSetPath() {
-  goog.global.a = {b: {}***REMOVED***
+  goog.global.a = {b: {}};
   var stubs = new goog.testing.PropertyReplacer();
 
   stubs.setPath('a.b.c.d', 1);
@@ -338,8 +338,8 @@ function testSetPath() {
 
 // Tests altering paths with functions in them.
 function testSetPathWithFunction() {
-  var f = function() {***REMOVED***
-  goog.global.a = {b: f***REMOVED***
+  var f = function() {};
+  goog.global.a = {b: f};
   var stubs = new goog.testing.PropertyReplacer();
 
   stubs.setPath('a.b.c', 1);
@@ -355,7 +355,7 @@ function testSetPathWithFunction() {
 
   var invalidSetPath = function() {
     stubs.setPath('a.prototype.e', 3);
- ***REMOVED*****REMOVED***
+  };
   assertThrows('setting the prototype of a non-function', invalidSetPath);
 
   stubs.reset();

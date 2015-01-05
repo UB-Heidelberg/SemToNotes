@@ -65,8 +65,8 @@ function testGoogProvidedTypes() {
   delete goog.debug.reflect.typeMap_;
 
   goog.provide('x.a');
-  x.a = function() {***REMOVED***
-  x.a.b = function() {***REMOVED***
+  x.a = function() {};
+  x.a.b = function() {};
 
   assertEquals('Object', typeOf(x));
   assertEquals('x.a', typeOf(new x.a));

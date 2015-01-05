@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview Engine base class.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Engine base class.
+ */
 
 goog.provide('xrx.engine');
 
@@ -37,45 +37,45 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Engine base class.
-***REMOVED***
-***REMOVED***
-xrx.engine = function() {***REMOVED***
+/**
+ * Engine base class.
+ * @constructor
+ */
+xrx.engine = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** &lt;a href="http://www.w3.org/TR/2014/CR-2dcontext-20140821/">The 2D Canvas rendering engine.&lt;/a>
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * &lt;a href="http://www.w3.org/TR/2014/CR-2dcontext-20140821/">The 2D Canvas rendering engine.&lt;/a>
+ * @enum {string}
+ */
 xrx.engine.CANVAS = 'canvas';
 
 
 
-***REMOVED***
-***REMOVED*** &lt;a href="http://www.w3.org/TR/SVG/">The SVG rendering engine.&lt;/a>
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * &lt;a href="http://www.w3.org/TR/SVG/">The SVG rendering engine.&lt;/a>
+ * @enum {string}
+ */
 xrx.engine.SVG = 'svg';
 
 
 
-***REMOVED***
-***REMOVED*** &lt;a href="http://www.w3.org/TR/NOTE-VML">The VML rendering engine.&lt;/a>
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * &lt;a href="http://www.w3.org/TR/NOTE-VML">The VML rendering engine.&lt;/a>
+ * @enum {string}
+ */
 xrx.engine.VML = 'vml';
 
 
 
-***REMOVED***
-***REMOVED*** Returns whether the current agent is an old Internet Explorer,
-***REMOVED*** that is IE 7 or IE 8
-***REMOVED***
+/**
+ * Returns whether the current agent is an old Internet Explorer,
+ * that is IE 7 or IE 8
+ */
 xrx.engine.isOldIE = function() {
   return goog.userAgent.IE &amp;&amp; !goog.userAgent.isVersionOrHigher(9)
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

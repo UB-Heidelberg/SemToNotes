@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview VML super class.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview VML super class.
+ */
 
 goog.provide('xrx.vml.Element');
 
@@ -37,39 +37,39 @@ goog.require('xrx.vml');
 
 
 
-***REMOVED***
-***REMOVED*** VML super class.
-***REMOVED*** @param {Object} raphael A Raphael object.
-***REMOVED***
-***REMOVED***
+/**
+ * VML super class.
+ * @param {Object} raphael A Raphael object.
+ * @constructor
+ */
 xrx.vml.Element = function(raphael) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The Raphael object.
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * The Raphael object.
+   * @type {Object}
+   */
   this.raphael_ = raphael;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the Raphael object.
-***REMOVED*** @return {Object} The Raphael object.
-***REMOVED***
+/**
+ * Returns the Raphael object.
+ * @return {Object} The Raphael object.
+ */
 xrx.vml.Element.prototype.getRaphael = function() {
   return this.raphael_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the HTML element held by the Raphael object.
-***REMOVED*** @return {Element} The HTML element.
-***REMOVED***
+/**
+ * Returns the HTML element held by the Raphael object.
+ * @return {Element} The HTML element.
+ */
 xrx.vml.Element.prototype.getElement = function() {
   return this.raphael_.canvas || this.raphael_.node;
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides functions to parse and manipulate email addresses.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides functions to parse and manipulate email addresses.
+ *
+ */
 
 goog.provide('goog.format.EmailAddress');
 
@@ -23,174 +23,174 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Formats an email address string for display, and allows for extraction of
-***REMOVED*** the individual components of the address.
-***REMOVED*** @param {string=} opt_address The email address.
-***REMOVED*** @param {string=} opt_name The name associated with the email address.
-***REMOVED***
-***REMOVED***
+/**
+ * Formats an email address string for display, and allows for extraction of
+ * the individual components of the address.
+ * @param {string=} opt_address The email address.
+ * @param {string=} opt_name The name associated with the email address.
+ * @constructor
+ */
 goog.format.EmailAddress = function(opt_address, opt_name) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The name or personal string associated with the address.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The name or personal string associated with the address.
+   * @type {string}
+   * @private
+   */
   this.name_ = opt_name || '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The email address.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @protected
- ***REMOVED*****REMOVED***
+  /**
+   * The email address.
+   * @type {string}
+   * @protected
+   */
   this.address = opt_address || '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Match string for opening tokens.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Match string for opening tokens.
+ * @type {string}
+ * @private
+ */
 goog.format.EmailAddress.OPENERS_ = '"<([';
 
 
-***REMOVED***
-***REMOVED*** Match string for closing tokens.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Match string for closing tokens.
+ * @type {string}
+ * @private
+ */
 goog.format.EmailAddress.CLOSERS_ = '">)]';
 
 
-***REMOVED***
-***REMOVED*** A RegExp to check special characters to be quoted.  Used in cleanAddress().
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A RegExp to check special characters to be quoted.  Used in cleanAddress().
+ * @type {RegExp}
+ * @private
+ */
 goog.format.EmailAddress.SPECIAL_CHARS_RE_ = /[()<>@,;:\\\".\[\]]/;
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match all double quotes.  Used in cleanAddress().
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A RegExp to match all double quotes.  Used in cleanAddress().
+ * @type {RegExp}
+ * @private
+ */
 goog.format.EmailAddress.ALL_DOUBLE_QUOTES_ = /\"/g;
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match escaped double quotes.  Used in parse().
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A RegExp to match escaped double quotes.  Used in parse().
+ * @type {RegExp}
+ * @private
+ */
 goog.format.EmailAddress.ESCAPED_DOUBLE_QUOTES_ = /\\\"/g;
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match all backslashes.  Used in cleanAddress().
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A RegExp to match all backslashes.  Used in cleanAddress().
+ * @type {RegExp}
+ * @private
+ */
 goog.format.EmailAddress.ALL_BACKSLASHES_ = /\\/g;
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match escaped backslashes.  Used in parse().
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A RegExp to match escaped backslashes.  Used in parse().
+ * @type {RegExp}
+ * @private
+ */
 goog.format.EmailAddress.ESCAPED_BACKSLASHES_ = /\\\\/g;
 
 
-***REMOVED***
-***REMOVED*** A string representing the RegExp for the local part of an email address.
-***REMOVED*** @private {string}
-***REMOVED***
+/**
+ * A string representing the RegExp for the local part of an email address.
+ * @private {string}
+ */
 goog.format.EmailAddress.LOCAL_PART_REGEXP_STR_ =
     '[+a-zA-Z0-9_.!#$%&\'*\\/=?^`{|}~-]+';
 
 
-***REMOVED***
-***REMOVED*** A string representing the RegExp for the domain part of an email address.
-***REMOVED*** @private {string}
-***REMOVED***
+/**
+ * A string representing the RegExp for the domain part of an email address.
+ * @private {string}
+ */
 goog.format.EmailAddress.DOMAIN_PART_REGEXP_STR_ =
     '([a-zA-Z0-9-]+\\.)+[a-zA-Z0-9]{2,63}';
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match the local part of an email address.
-***REMOVED*** @private {!RegExp}
-***REMOVED***
+/**
+ * A RegExp to match the local part of an email address.
+ * @private {!RegExp}
+ */
 goog.format.EmailAddress.LOCAL_PART_ =
     new RegExp('^' + goog.format.EmailAddress.LOCAL_PART_REGEXP_STR_ + '$');
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match the domain part of an email address.
-***REMOVED*** @private {!RegExp}
-***REMOVED***
+/**
+ * A RegExp to match the domain part of an email address.
+ * @private {!RegExp}
+ */
 goog.format.EmailAddress.DOMAIN_PART_ =
     new RegExp('^' + goog.format.EmailAddress.DOMAIN_PART_REGEXP_STR_ + '$');
 
 
-***REMOVED***
-***REMOVED*** A RegExp to match an email address.
-***REMOVED*** @private {!RegExp}
-***REMOVED***
+/**
+ * A RegExp to match an email address.
+ * @private {!RegExp}
+ */
 goog.format.EmailAddress.EMAIL_ADDRESS_ =
     new RegExp('^' + goog.format.EmailAddress.LOCAL_PART_REGEXP_STR_ + '@' +
         goog.format.EmailAddress.DOMAIN_PART_REGEXP_STR_ + '$');
 
 
-***REMOVED***
-***REMOVED*** Get the name associated with the email address.
-***REMOVED*** @return {string} The name or personal portion of the address.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Get the name associated with the email address.
+ * @return {string} The name or personal portion of the address.
+ * @final
+ */
 goog.format.EmailAddress.prototype.getName = function() {
   return this.name_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the email address.
-***REMOVED*** @return {string} The email address.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Get the email address.
+ * @return {string} The email address.
+ * @final
+ */
 goog.format.EmailAddress.prototype.getAddress = function() {
   return this.address;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the name associated with the email address.
-***REMOVED*** @param {string} name The name to associate.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Set the name associated with the email address.
+ * @param {string} name The name to associate.
+ * @final
+ */
 goog.format.EmailAddress.prototype.setName = function(name) {
   this.name_ = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the email address.
-***REMOVED*** @param {string} address The email address.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Set the email address.
+ * @param {string} address The email address.
+ * @final
+ */
 goog.format.EmailAddress.prototype.setAddress = function(address) {
   this.address = address;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the address in a standard format:
-***REMOVED***  - remove extra spaces.
-***REMOVED***  - Surround name with quotes if it contains special characters.
-***REMOVED*** @return {string} The cleaned address.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Return the address in a standard format:
+ *  - remove extra spaces.
+ *  - Surround name with quotes if it contains special characters.
+ * @return {string} The cleaned address.
+ * @override
+ */
 goog.format.EmailAddress.prototype.toString = function() {
   var name = this.getName();
 
@@ -212,73 +212,73 @@ goog.format.EmailAddress.prototype.toString = function() {
     return name;
   }
   return name + ' <' + this.address + '>';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines is the current object is a valid email address.
-***REMOVED*** @return {boolean} Whether the email address is valid.
-***REMOVED***
+/**
+ * Determines is the current object is a valid email address.
+ * @return {boolean} Whether the email address is valid.
+ */
 goog.format.EmailAddress.prototype.isValid = function() {
   return goog.format.EmailAddress.isValidAddrSpec(this.address);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the provided string is a valid email address. Supports both
-***REMOVED*** simple email addresses (address specs) and addresses that contain display
-***REMOVED*** names.
-***REMOVED*** @param {string} str The email address to check.
-***REMOVED*** @return {boolean} Whether the provided string is a valid address.
-***REMOVED***
+/**
+ * Checks if the provided string is a valid email address. Supports both
+ * simple email addresses (address specs) and addresses that contain display
+ * names.
+ * @param {string} str The email address to check.
+ * @return {boolean} Whether the provided string is a valid address.
+ */
 goog.format.EmailAddress.isValidAddress = function(str) {
   return goog.format.EmailAddress.parse(str).isValid();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the provided string is a valid address spec (local@domain.com).
-***REMOVED*** @param {string} str The email address to check.
-***REMOVED*** @return {boolean} Whether the provided string is a valid address spec.
-***REMOVED***
+/**
+ * Checks if the provided string is a valid address spec (local@domain.com).
+ * @param {string} str The email address to check.
+ * @return {boolean} Whether the provided string is a valid address spec.
+ */
 goog.format.EmailAddress.isValidAddrSpec = function(str) {
   // This is a fairly naive implementation, but it covers 99% of use cases.
   // For more details, see http://en.wikipedia.org/wiki/Email_address#Syntax
   return goog.format.EmailAddress.EMAIL_ADDRESS_.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the provided string is a valid local part (part before the '@') of
-***REMOVED*** an email address.
-***REMOVED*** @param {string} str The local part to check.
-***REMOVED*** @return {boolean} Whether the provided string is a valid local part.
-***REMOVED***
+/**
+ * Checks if the provided string is a valid local part (part before the '@') of
+ * an email address.
+ * @param {string} str The local part to check.
+ * @return {boolean} Whether the provided string is a valid local part.
+ */
 goog.format.EmailAddress.isValidLocalPartSpec = function(str) {
   return goog.format.EmailAddress.LOCAL_PART_.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the provided string is a valid domain part (part after the '@') of
-***REMOVED*** an email address.
-***REMOVED*** @param {string} str The domain part to check.
-***REMOVED*** @return {boolean} Whether the provided string is a valid domain part.
-***REMOVED***
+/**
+ * Checks if the provided string is a valid domain part (part after the '@') of
+ * an email address.
+ * @param {string} str The domain part to check.
+ * @return {boolean} Whether the provided string is a valid domain part.
+ */
 goog.format.EmailAddress.isValidDomainPartSpec = function(str) {
   return goog.format.EmailAddress.DOMAIN_PART_.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses an email address of the form "name" &lt;address&gt; ("name" is
-***REMOVED*** optional) into an email address.
-***REMOVED*** @param {string} addr The address string.
-***REMOVED*** @param {function(new: goog.format.EmailAddress, string=,string=)} ctor
-***REMOVED***     EmailAddress constructor to instantiate the output address.
-***REMOVED*** @return {!goog.format.EmailAddress} The parsed address.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Parses an email address of the form "name" &lt;address&gt; ("name" is
+ * optional) into an email address.
+ * @param {string} addr The address string.
+ * @param {function(new: goog.format.EmailAddress, string=,string=)} ctor
+ *     EmailAddress constructor to instantiate the output address.
+ * @return {!goog.format.EmailAddress} The parsed address.
+ * @protected
+ */
 goog.format.EmailAddress.parseInternal = function(addr, ctor) {
   // TODO(ecattell): Strip bidi markers.
   var name = '';
@@ -308,29 +308,29 @@ goog.format.EmailAddress.parseInternal = function(addr, ctor) {
   name = name.replace(goog.format.EmailAddress.ESCAPED_BACKSLASHES_, '\\');
   address = goog.string.collapseWhitespace(address);
   return new ctor(address, name);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses an email address of the form "name" &lt;address&gt; into
-***REMOVED*** an email address.
-***REMOVED*** @param {string} addr The address string.
-***REMOVED*** @return {!goog.format.EmailAddress} The parsed address.
-***REMOVED***
+/**
+ * Parses an email address of the form "name" &lt;address&gt; into
+ * an email address.
+ * @param {string} addr The address string.
+ * @return {!goog.format.EmailAddress} The parsed address.
+ */
 goog.format.EmailAddress.parse = function(addr) {
   return goog.format.EmailAddress.parseInternal(
       addr, goog.format.EmailAddress);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse a string containing email addresses of the form
-***REMOVED*** "name" &lt;address&gt; into an array of email addresses.
-***REMOVED*** @param {string} str The address list.
-***REMOVED*** @param {function(string)} parser The parser to employ.
-***REMOVED*** @return {!Array.<!goog.format.EmailAddress>} The parsed emails.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Parse a string containing email addresses of the form
+ * "name" &lt;address&gt; into an array of email addresses.
+ * @param {string} str The address list.
+ * @param {function(string)} parser The parser to employ.
+ * @return {!Array.<!goog.format.EmailAddress>} The parsed emails.
+ * @protected
+ */
 goog.format.EmailAddress.parseListInternal = function(str, parser) {
   var result = [];
   var email = '';
@@ -361,28 +361,28 @@ goog.format.EmailAddress.parseListInternal = function(str, parser) {
     result.push(parser(email));
   }
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a string containing email addresses of the form
-***REMOVED*** "name" &lt;address&gt; into an array of email addresses.
-***REMOVED*** @param {string} str The address list.
-***REMOVED*** @return {!Array.<!goog.format.EmailAddress>} The parsed emails.
-***REMOVED***
+/**
+ * Parses a string containing email addresses of the form
+ * "name" &lt;address&gt; into an array of email addresses.
+ * @param {string} str The address list.
+ * @return {!Array.<!goog.format.EmailAddress>} The parsed emails.
+ */
 goog.format.EmailAddress.parseList = function(str) {
   return goog.format.EmailAddress.parseListInternal(
       str, goog.format.EmailAddress.parse);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the next token from a position in an address string.
-***REMOVED*** @param {string} str the string.
-***REMOVED*** @param {number} pos the position.
-***REMOVED*** @return {string} the token.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the next token from a position in an address string.
+ * @param {string} str the string.
+ * @param {number} pos the position.
+ * @return {string} the token.
+ * @private
+ */
 goog.format.EmailAddress.getToken_ = function(str, pos) {
   var ch = str.charAt(pos);
   var p = goog.format.EmailAddress.OPENERS_.indexOf(ch);
@@ -406,17 +406,17 @@ goog.format.EmailAddress.getToken_ = function(str, pos) {
   }
   var token = (endPos >= 0) ? str.substring(pos, endPos + 1) : ch;
   return token;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the character in the current position is an escaped double quote
-***REMOVED*** ( \" ).
-***REMOVED*** @param {string} str the string.
-***REMOVED*** @param {number} pos the position.
-***REMOVED*** @return {boolean} true if the char is escaped double quote.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks if the character in the current position is an escaped double quote
+ * ( \" ).
+ * @param {string} str the string.
+ * @param {number} pos the position.
+ * @return {boolean} true if the char is escaped double quote.
+ * @private
+ */
 goog.format.EmailAddress.isEscapedDlQuote_ = function(str, pos) {
   if (str.charAt(pos) != '"') {
     return false;
@@ -426,4 +426,4 @@ goog.format.EmailAddress.isEscapedDlQuote_ = function(str, pos) {
     slashCount++;
   }
   return ((slashCount % 2) != 0);
-***REMOVED***
+};

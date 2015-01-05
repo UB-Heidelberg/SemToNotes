@@ -13,55 +13,55 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Represents a stroke object for goog.graphics.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Represents a stroke object for goog.graphics.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 goog.provide('goog.graphics.Stroke');
 
 
 
-***REMOVED***
-***REMOVED*** Creates an immutable stroke object.
-***REMOVED***
-***REMOVED*** @param {number|string} width The width of the stroke.
-***REMOVED*** @param {string} color The color of the stroke.
-***REMOVED***
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
+/**
+ * Creates an immutable stroke object.
+ *
+ * @param {number|string} width The width of the stroke.
+ * @param {string} color The color of the stroke.
+ * @constructor
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
 goog.graphics.Stroke = function(width, color) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The width of the stroke.
-  ***REMOVED*** @type {number|string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The width of the stroke.
+   * @type {number|string}
+   * @private
+   */
   this.width_ = width;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The color with which to fill.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The color with which to fill.
+   * @type {string}
+   * @private
+   */
   this.color_ = color;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number|string} The width of this stroke.
-***REMOVED***
+/**
+ * @return {number|string} The width of this stroke.
+ */
 goog.graphics.Stroke.prototype.getWidth = function() {
   return this.width_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The color of this stroke.
-***REMOVED***
+/**
+ * @return {string} The color of this stroke.
+ */
 goog.graphics.Stroke.prototype.getColor = function() {
   return this.color_;
-***REMOVED***
+};

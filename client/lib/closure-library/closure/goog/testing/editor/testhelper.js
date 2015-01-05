@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class that allows for simple text editing tests.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Class that allows for simple text editing tests.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.testing.editor.TestHelper');
 
@@ -30,52 +30,52 @@ goog.require('goog.testing.dom');
 
 
 
-***REMOVED***
-***REMOVED*** Create a new test controller.
-***REMOVED*** @param {Element} root The root editable element.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Create a new test controller.
+ * @param {Element} root The root editable element.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.testing.editor.TestHelper = function(root) {
   if (!root) {
     throw Error('Null root');
   }
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Convenience variable for root DOM element.
-  ***REMOVED*** @type {!Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Convenience variable for root DOM element.
+   * @type {!Element}
+   * @private
+   */
   this.root_ = root;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The starting HTML of the editable element.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The starting HTML of the editable element.
+   * @type {string}
+   * @private
+   */
   this.savedHtml_ = '';
-***REMOVED***
+};
 goog.inherits(goog.testing.editor.TestHelper, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Selects a new root element.
-***REMOVED*** @param {Element} root The root editable element.
-***REMOVED***
+/**
+ * Selects a new root element.
+ * @param {Element} root The root editable element.
+ */
 goog.testing.editor.TestHelper.prototype.setRoot = function(root) {
   if (!root) {
     throw Error('Null root');
   }
   this.root_ = root;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Make the root element editable.  Alse saves its HTML to be restored
-***REMOVED*** in tearDown.
-***REMOVED***
+/**
+ * Make the root element editable.  Alse saves its HTML to be restored
+ * in tearDown.
+ */
 goog.testing.editor.TestHelper.prototype.setUpEditableElement = function() {
   this.savedHtml_ = this.root_.innerHTML;
   if (goog.editor.BrowserFeature.HAS_CONTENT_EDITABLE) {
@@ -84,16 +84,16 @@ goog.testing.editor.TestHelper.prototype.setUpEditableElement = function() {
     this.root_.ownerDocument.designMode = 'on';
   }
   this.root_.setAttribute('g_editable', 'true');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset the element previously initialized, restoring its HTML and making it
-***REMOVED*** non editable.
-***REMOVED*** @suppress {accessControls} Private state of
-***REMOVED***     {@link goog.editor.plugins.AbstractBubblePlugin} is accessed for test
-***REMOVED***     purposes.
-***REMOVED***
+/**
+ * Reset the element previously initialized, restoring its HTML and making it
+ * non editable.
+ * @suppress {accessControls} Private state of
+ *     {@link goog.editor.plugins.AbstractBubblePlugin} is accessed for test
+ *     purposes.
+ */
 goog.testing.editor.TestHelper.prototype.tearDownEditableElement = function() {
   if (goog.editor.BrowserFeature.HAS_CONTENT_EDITABLE) {
     this.root_.contentEditable = false;
@@ -110,50 +110,50 @@ goog.testing.editor.TestHelper.prototype.tearDownEditableElement = function() {
       goog.editor.plugins.AbstractBubblePlugin.bubbleMap_[key].dispose();
     }
     // Ensure we get a new bubble for each test.
-    goog.editor.plugins.AbstractBubblePlugin.bubbleMap_ = {***REMOVED***
+    goog.editor.plugins.AbstractBubblePlugin.bubbleMap_ = {};
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the html in 'root' is substantially similar to htmlPattern.
-***REMOVED*** This method tests for the same set of styles, and for the same order of
-***REMOVED*** nodes.  Breaking whitespace nodes are ignored.  Elements can be annotated
-***REMOVED*** with classnames corresponding to keys in goog.userAgent and will be
-***REMOVED*** expected to show up in that user agent and expected not to show up in
-***REMOVED*** others.
-***REMOVED*** @param {string} htmlPattern The pattern to match.
-***REMOVED***
+/**
+ * Assert that the html in 'root' is substantially similar to htmlPattern.
+ * This method tests for the same set of styles, and for the same order of
+ * nodes.  Breaking whitespace nodes are ignored.  Elements can be annotated
+ * with classnames corresponding to keys in goog.userAgent and will be
+ * expected to show up in that user agent and expected not to show up in
+ * others.
+ * @param {string} htmlPattern The pattern to match.
+ */
 goog.testing.editor.TestHelper.prototype.assertHtmlMatches = function(
     htmlPattern) {
   goog.testing.dom.assertHtmlContentsMatch(htmlPattern, this.root_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the first text node descendant of root with the given content.
-***REMOVED*** @param {string|RegExp} textOrRegexp The text to find, or a regular
-***REMOVED***     expression to find a match of.
-***REMOVED*** @return {Node} The first text node that matches, or null if none is found.
-***REMOVED***
+/**
+ * Finds the first text node descendant of root with the given content.
+ * @param {string|RegExp} textOrRegexp The text to find, or a regular
+ *     expression to find a match of.
+ * @return {Node} The first text node that matches, or null if none is found.
+ */
 goog.testing.editor.TestHelper.prototype.findTextNode = function(textOrRegexp) {
   return goog.testing.dom.findTextNode(textOrRegexp, this.root_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Select from the given from offset in the given from node to the given
-***REMOVED*** to offset in the optionally given to node. If nodes are passed in, uses them,
-***REMOVED*** otherwise uses findTextNode to find the nodes to select. Selects a caret
-***REMOVED*** if opt_to and opt_toOffset are not given.
-***REMOVED*** @param {Node|string} from Node or text of the node to start the selection at.
-***REMOVED*** @param {number} fromOffset Offset within the above node to start the
-***REMOVED***     selection at.
-***REMOVED*** @param {Node|string=} opt_to Node or text of the node to end the selection
-***REMOVED***     at.
-***REMOVED*** @param {number=} opt_toOffset Offset within the above node to end the
-***REMOVED***     selection at.
-***REMOVED***
+/**
+ * Select from the given from offset in the given from node to the given
+ * to offset in the optionally given to node. If nodes are passed in, uses them,
+ * otherwise uses findTextNode to find the nodes to select. Selects a caret
+ * if opt_to and opt_toOffset are not given.
+ * @param {Node|string} from Node or text of the node to start the selection at.
+ * @param {number} fromOffset Offset within the above node to start the
+ *     selection at.
+ * @param {Node|string=} opt_to Node or text of the node to end the selection
+ *     at.
+ * @param {number=} opt_toOffset Offset within the above node to end the
+ *     selection at.
+ */
 goog.testing.editor.TestHelper.prototype.select = function(from, fromOffset,
     opt_to, opt_toOffset) {
   var end;
@@ -167,14 +167,14 @@ goog.testing.editor.TestHelper.prototype.select = function(from, fromOffset,
   }
 
   goog.dom.Range.createFromNodes(start, startOffset, end, endOffset).select();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.editor.TestHelper.prototype.disposeInternal = function() {
   if (goog.editor.node.isEditableContainer(this.root_)) {
     this.tearDownEditableElement();
   }
   delete this.root_;
   goog.testing.editor.TestHelper.base(this, 'disposeInternal');
-***REMOVED***
+};

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the GcDiagnostics class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of the GcDiagnostics class.
+ *
+ */
 
 goog.provide('goog.debug.GcDiagnostics');
 
@@ -25,27 +25,27 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Class used for singleton goog.debug.GcDiagnostics.  Used to hook into
-***REMOVED*** the L2 ActiveX controller to profile garbage collection information in IE.
-***REMOVED*** Can be used in combination with tracers (goog.debug.Trace), to provide object
-***REMOVED*** allocation counts from within the tracers or used alone by invoking start and
-***REMOVED*** stop.
-***REMOVED***
-***REMOVED*** See http://go/l2binary for the install.
-***REMOVED*** TODO(user): Move the L2 installer somewhere more general.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
-goog.debug.GcDiagnostics_ = function() {***REMOVED***
+/**
+ * Class used for singleton goog.debug.GcDiagnostics.  Used to hook into
+ * the L2 ActiveX controller to profile garbage collection information in IE.
+ * Can be used in combination with tracers (goog.debug.Trace), to provide object
+ * allocation counts from within the tracers or used alone by invoking start and
+ * stop.
+ *
+ * See http://go/l2binary for the install.
+ * TODO(user): Move the L2 installer somewhere more general.
+ * @constructor
+ * @private
+ */
+goog.debug.GcDiagnostics_ = function() {};
 
 
-***REMOVED***
-***REMOVED*** Install the GcDiagnostics tool.
-***REMOVED***
+/**
+ * Install the GcDiagnostics tool.
+ */
 goog.debug.GcDiagnostics_.prototype.install = function() {
   if (goog.userAgent.IE) {
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       var l2Helper = new ActiveXObject('L2.NativeHelper');
 
@@ -53,7 +53,7 @@ goog.debug.GcDiagnostics_.prototype.install = function() {
       if (goog.debug.Trace_) {
         goog.debug.Trace_.now = function() {
           return l2Helper['getMilliSeconds']();
-       ***REMOVED*****REMOVED***
+        };
       }
 
       if (l2Helper['gcTracer']) {
@@ -70,22 +70,22 @@ goog.debug.GcDiagnostics_.prototype.install = function() {
       goog.log.info(this.logger_, 'Failed to install L2 native helper: ' + e);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logger for the gcDiagnotics
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger for the gcDiagnotics
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.debug.GcDiagnostics_.prototype.logger_ =
     goog.log.getLogger('goog.debug.GcDiagnostics');
 
 
-***REMOVED***
-***REMOVED*** Starts recording garbage collection information.  If a trace is already in
-***REMOVED*** progress, it is ended.
-***REMOVED***
+/**
+ * Starts recording garbage collection information.  If a trace is already in
+ * progress, it is ended.
+ */
 goog.debug.GcDiagnostics_.prototype.start = function() {
   if (this.gcTracer_) {
     if (this.gcTracer_['isTracing']()) {
@@ -93,14 +93,14 @@ goog.debug.GcDiagnostics_.prototype.start = function() {
     }
     this.gcTracer_['startGcTracing']();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stops recording garbage collection information.  Logs details on the garbage
-***REMOVED*** collections that occurred between start and stop.  If tracers are in use,
-***REMOVED*** adds comments where each GC occurs.
-***REMOVED***
+/**
+ * Stops recording garbage collection information.  Logs details on the garbage
+ * collections that occurred between start and stop.  If tracers are in use,
+ * adds comments where each GC occurs.
+ */
 goog.debug.GcDiagnostics_.prototype.stop = function() {
   if (this.gcTracer_ && this.gcTracer_['isTracing']()) {
     var gcTracer = this.gcTracer_;
@@ -116,7 +116,7 @@ goog.debug.GcDiagnostics_.prototype.stop = function() {
       var msStart = trace['gcStartTime'];
       var msElapsed = trace['gcElapsedTime'];
 
-      var msRounded = Math.round(msElapsed***REMOVED*** 10) / 10;
+      var msRounded = Math.round(msElapsed * 10) / 10;
       var s = 'GC ' + i + ': ' + msRounded + ' ms, ' +
           'numVValAlloc=' + trace['numVValAlloc'] + ', ' +
           'numVarAlloc=' + trace['numVarAlloc'] + ', ' +
@@ -133,11 +133,11 @@ goog.debug.GcDiagnostics_.prototype.stop = function() {
     goog.log.info(this.logger_, 'Total GC time was ' + totalTime + ' ms.');
     goog.log.info(this.logger_, '*********GC TRACE*********');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Singleton GcDiagnostics object
-***REMOVED*** @type {goog.debug.GcDiagnostics_}
-***REMOVED***
+/**
+ * Singleton GcDiagnostics object
+ * @type {goog.debug.GcDiagnostics_}
+ */
 goog.debug.GcDiagnostics = new goog.debug.GcDiagnostics_();

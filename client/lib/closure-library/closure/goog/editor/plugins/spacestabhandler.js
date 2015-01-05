@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Editor plugin to handle tab keys not in lists to add 4 spaces.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ajp@google.com (Andy Perelson)
-***REMOVED***
+/**
+ * @fileoverview Editor plugin to handle tab keys not in lists to add 4 spaces.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ajp@google.com (Andy Perelson)
+ */
 
 goog.provide('goog.editor.plugins.SpacesTabHandler');
 
@@ -28,26 +28,26 @@ goog.require('goog.editor.range');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to handle tab keys when not in lists to add 4 spaces.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractTabHandler}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin to handle tab keys when not in lists to add 4 spaces.
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractTabHandler}
+ * @final
+ */
 goog.editor.plugins.SpacesTabHandler = function() {
   goog.editor.plugins.AbstractTabHandler.call(this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.SpacesTabHandler,
     goog.editor.plugins.AbstractTabHandler);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.SpacesTabHandler.prototype.getTrogClassId = function() {
   return 'SpacesTabHandler';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.SpacesTabHandler.prototype.handleTabKey = function(e) {
   var dh = this.getFieldDomHelper();
   var range = this.getFieldObject().getRange();
@@ -90,5 +90,5 @@ goog.editor.plugins.SpacesTabHandler.prototype.handleTabKey = function(e) {
   }
 
   return false;
-***REMOVED***
+};
 

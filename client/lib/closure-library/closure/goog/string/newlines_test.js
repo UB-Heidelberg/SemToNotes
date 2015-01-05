@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.string.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.string.
+ */
 
 goog.provide('goog.string.newlinesTest');
 
@@ -26,11 +26,11 @@ goog.setTestOnly('goog.string.newlinesTest');
 // test for goog.string.splitLines
 function testSplitLines() {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @param {!Array.<string>} expected
-  ***REMOVED*** @param {string} string
-  ***REMOVED*** @param {boolean=} opt_keepNewlines
- ***REMOVED*****REMOVED***
+  /**
+   * @param {!Array.<string>} expected
+   * @param {string} string
+   * @param {boolean=} opt_keepNewlines
+   */
   function assertSplitLines(expected, string, opt_keepNewlines) {
     var keepNewlines = opt_keepNewlines || false;
     var lines = goog.string.newlines.splitLines(string, keepNewlines);

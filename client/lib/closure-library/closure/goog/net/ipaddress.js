@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file contains classes to handle IPv4 and IPv6 addresses.
-***REMOVED*** This implementation is mostly based on Google's project:
-***REMOVED*** http://code.google.com/p/ipaddr-py/.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview This file contains classes to handle IPv4 and IPv6 addresses.
+ * This implementation is mostly based on Google's project:
+ * http://code.google.com/p/ipaddr-py/.
+ *
+ */
 
 goog.provide('goog.net.IpAddress');
 goog.provide('goog.net.Ipv4Address');
@@ -30,89 +30,89 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract class defining an IP Address.
-***REMOVED***
-***REMOVED*** Please use goog.net.IpAddress static methods or
-***REMOVED*** goog.net.Ipv4Address/Ipv6Address classes.
-***REMOVED***
-***REMOVED*** @param {!goog.math.Integer} address The Ip Address.
-***REMOVED*** @param {number} version The version number (4, 6).
-***REMOVED***
-***REMOVED***
+/**
+ * Abstract class defining an IP Address.
+ *
+ * Please use goog.net.IpAddress static methods or
+ * goog.net.Ipv4Address/Ipv6Address classes.
+ *
+ * @param {!goog.math.Integer} address The Ip Address.
+ * @param {number} version The version number (4, 6).
+ * @constructor
+ */
 goog.net.IpAddress = function(address, version) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The IP Address.
-  ***REMOVED*** @type {!goog.math.Integer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The IP Address.
+   * @type {!goog.math.Integer}
+   * @private
+   */
   this.ip_ = address;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The IP Address version.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The IP Address version.
+   * @type {number}
+   * @private
+   */
   this.version_ = version;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The IPAddress, as string.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The IPAddress, as string.
+   * @type {string}
+   * @private
+   */
   this.ipStr_ = '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The IP Address version.
-***REMOVED***
+/**
+ * @return {number} The IP Address version.
+ */
 goog.net.IpAddress.prototype.getVersion = function() {
   return this.version_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!goog.net.IpAddress} other The other IP Address.
-***REMOVED*** @return {boolean} true if the IP Addresses are equal.
-***REMOVED***
+/**
+ * @param {!goog.net.IpAddress} other The other IP Address.
+ * @return {boolean} true if the IP Addresses are equal.
+ */
 goog.net.IpAddress.prototype.equals = function(other) {
   return (this.version_ == other.getVersion() &&
           this.ip_.equals(other.toInteger()));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.math.Integer} The IP Address, as an Integer.
-***REMOVED***
+/**
+ * @return {goog.math.Integer} The IP Address, as an Integer.
+ */
 goog.net.IpAddress.prototype.toInteger = function() {
-  return***REMOVED*****REMOVED*** @type {goog.math.Integer}***REMOVED*** (goog.object.clone(this.ip_));
-***REMOVED***
+  return /** @type {goog.math.Integer} */ (goog.object.clone(this.ip_));
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The IP Address, as an URI string following RFC 3986.
-***REMOVED***
+/**
+ * @return {string} The IP Address, as an URI string following RFC 3986.
+ */
 goog.net.IpAddress.prototype.toUriString = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {string} The IP Address, as a string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} The IP Address, as a string.
+ * @override
+ */
 goog.net.IpAddress.prototype.toString = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Parses an IP Address in a string.
-***REMOVED*** If the string is malformed, the function will simply return null
-***REMOVED*** instead of raising an exception.
-***REMOVED***
-***REMOVED*** @param {string} address The IP Address.
-***REMOVED*** @see {goog.net.Ipv4Address}
-***REMOVED*** @see {goog.net.Ipv6Address}
-***REMOVED*** @return {goog.net.IpAddress} The IP Address or null.
-***REMOVED***
+/**
+ * Parses an IP Address in a string.
+ * If the string is malformed, the function will simply return null
+ * instead of raising an exception.
+ *
+ * @param {string} address The IP Address.
+ * @see {goog.net.Ipv4Address}
+ * @see {goog.net.Ipv6Address}
+ * @return {goog.net.IpAddress} The IP Address or null.
+ */
 goog.net.IpAddress.fromString = function(address) {
   try {
     if (address.indexOf(':') != -1) {
@@ -126,20 +126,20 @@ goog.net.IpAddress.fromString = function(address) {
     // the exception, espcially if it's used to validate an user input.
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tries to parse a string represented as a host portion of an URI.
-***REMOVED*** See RFC 3986 for more details on IPv6 addresses inside URI.
-***REMOVED*** If the string is malformed, the function will simply return null
-***REMOVED*** instead of raising an exception.
-***REMOVED***
-***REMOVED*** @param {string} address A RFC 3986 encoded IP address.
-***REMOVED*** @see {goog.net.Ipv4Address}
-***REMOVED*** @see {goog.net.Ipv6Address}
-***REMOVED*** @return {goog.net.IpAddress} The IP Address.
-***REMOVED***
+/**
+ * Tries to parse a string represented as a host portion of an URI.
+ * See RFC 3986 for more details on IPv6 addresses inside URI.
+ * If the string is malformed, the function will simply return null
+ * instead of raising an exception.
+ *
+ * @param {string} address A RFC 3986 encoded IP address.
+ * @see {goog.net.Ipv4Address}
+ * @see {goog.net.Ipv6Address}
+ * @return {goog.net.IpAddress} The IP Address.
+ */
 goog.net.IpAddress.fromUriString = function(address) {
   try {
     if (goog.string.startsWith(address, '[') &&
@@ -155,20 +155,20 @@ goog.net.IpAddress.fromUriString = function(address) {
     // the exception, espcially if it's used to validate an user input.
     return null;
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Takes a string or a number and returns a IPv4 Address.
-***REMOVED***
-***REMOVED*** This constructor accepts strings and instance of goog.math.Integer.
-***REMOVED*** If you pass a goog.math.Integer, make sure that its sign is set to positive.
-***REMOVED*** @param {(string|!goog.math.Integer)} address The address to store.
-***REMOVED*** @extends {goog.net.IpAddress}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Takes a string or a number and returns a IPv4 Address.
+ *
+ * This constructor accepts strings and instance of goog.math.Integer.
+ * If you pass a goog.math.Integer, make sure that its sign is set to positive.
+ * @param {(string|!goog.math.Integer)} address The address to store.
+ * @extends {goog.net.IpAddress}
+ * @constructor
+ * @final
+ */
 goog.net.Ipv4Address = function(address) {
   var ip = goog.math.Integer.ZERO;
   if (address instanceof goog.math.Integer) {
@@ -201,41 +201,41 @@ goog.net.Ipv4Address = function(address) {
     }
   }
   goog.net.Ipv4Address.base(
-      this, 'constructor',***REMOVED*****REMOVED*** @type {!goog.math.Integer}***REMOVED*** (ip), 4);
-***REMOVED***
+      this, 'constructor', /** @type {!goog.math.Integer} */ (ip), 4);
+};
 goog.inherits(goog.net.Ipv4Address, goog.net.IpAddress);
 
 
-***REMOVED***
-***REMOVED*** Regular expression matching all the allowed chars for IPv4.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Regular expression matching all the allowed chars for IPv4.
+ * @type {RegExp}
+ * @private
+ * @const
+ */
 goog.net.Ipv4Address.REGEX_ = /^[0-9.]*$/;
 
 
-***REMOVED***
-***REMOVED*** The Maximum length for a netmask (aka, the number of bits for IPv4).
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The Maximum length for a netmask (aka, the number of bits for IPv4).
+ * @type {number}
+ * @const
+ */
 goog.net.Ipv4Address.MAX_NETMASK_LENGTH = 32;
 
 
-***REMOVED***
-***REMOVED*** The Maximum address possible for IPv4.
-***REMOVED*** @type {goog.math.Integer}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The Maximum address possible for IPv4.
+ * @type {goog.math.Integer}
+ * @private
+ * @const
+ */
 goog.net.Ipv4Address.MAX_ADDRESS_ = goog.math.Integer.ONE.shiftLeft(
     goog.net.Ipv4Address.MAX_NETMASK_LENGTH).subtract(goog.math.Integer.ONE);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.net.Ipv4Address.prototype.toString = function() {
   if (this.ipStr_) {
     return this.ipStr_;
@@ -251,28 +251,28 @@ goog.net.Ipv4Address.prototype.toString = function() {
   this.ipStr_ = octets.join('.');
 
   return this.ipStr_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.net.Ipv4Address.prototype.toUriString = function() {
   return this.toString();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Takes a string or a number and returns an IPv6 Address.
-***REMOVED***
-***REMOVED*** This constructor accepts strings and instance of goog.math.Integer.
-***REMOVED*** If you pass a goog.math.Integer, make sure that its sign is set to positive.
-***REMOVED*** @param {(string|!goog.math.Integer)} address The address to store.
-***REMOVED***
-***REMOVED*** @extends {goog.net.IpAddress}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Takes a string or a number and returns an IPv6 Address.
+ *
+ * This constructor accepts strings and instance of goog.math.Integer.
+ * If you pass a goog.math.Integer, make sure that its sign is set to positive.
+ * @param {(string|!goog.math.Integer)} address The address to store.
+ * @constructor
+ * @extends {goog.net.IpAddress}
+ * @final
+ */
 goog.net.Ipv6Address = function(address) {
   var ip = goog.math.Integer.ZERO;
   if (address instanceof goog.math.Integer) {
@@ -324,50 +324,50 @@ goog.net.Ipv6Address = function(address) {
     }
   }
   goog.net.Ipv6Address.base(
-      this, 'constructor',***REMOVED*****REMOVED*** @type {!goog.math.Integer}***REMOVED*** (ip), 6);
-***REMOVED***
+      this, 'constructor', /** @type {!goog.math.Integer} */ (ip), 6);
+};
 goog.inherits(goog.net.Ipv6Address, goog.net.IpAddress);
 
 
-***REMOVED***
-***REMOVED*** Regular expression matching all allowed chars for an IPv6.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Regular expression matching all allowed chars for an IPv6.
+ * @type {RegExp}
+ * @private
+ * @const
+ */
 goog.net.Ipv6Address.REGEX_ = /^([a-fA-F0-9]*:){2}[a-fA-F0-9:.]*$/;
 
 
-***REMOVED***
-***REMOVED*** The Maximum length for a netmask (aka, the number of bits for IPv6).
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The Maximum length for a netmask (aka, the number of bits for IPv6).
+ * @type {number}
+ * @const
+ */
 goog.net.Ipv6Address.MAX_NETMASK_LENGTH = 128;
 
 
-***REMOVED***
-***REMOVED*** The maximum value of a hextet.
-***REMOVED*** @type {goog.math.Integer}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The maximum value of a hextet.
+ * @type {goog.math.Integer}
+ * @private
+ * @const
+ */
 goog.net.Ipv6Address.MAX_HEXTET_VALUE_ = goog.math.Integer.fromInt(65535);
 
 
-***REMOVED***
-***REMOVED*** The Maximum address possible for IPv6.
-***REMOVED*** @type {goog.math.Integer}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The Maximum address possible for IPv6.
+ * @type {goog.math.Integer}
+ * @private
+ * @const
+ */
 goog.net.Ipv6Address.MAX_ADDRESS_ = goog.math.Integer.ONE.shiftLeft(
     goog.net.Ipv6Address.MAX_NETMASK_LENGTH).subtract(goog.math.Integer.ONE);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.net.Ipv6Address.prototype.toString = function() {
   if (this.ipStr_) {
     return this.ipStr_;
@@ -385,24 +385,24 @@ goog.net.Ipv6Address.prototype.toString = function() {
   outputArr = goog.net.Ipv6Address.compress_(outputArr);
   this.ipStr_ = outputArr.join(':');
   return this.ipStr_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.net.Ipv6Address.prototype.toUriString = function() {
   return '[' + this.toString() + ']';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This method is in charge of expanding/exploding an IPv6 string from its
-***REMOVED*** compressed form.
-***REMOVED*** @private
-***REMOVED*** @param {!Array.<string>} address An IPv6 address split around '::'.
-***REMOVED*** @return {!Array.<string>} The expanded version of the IPv6.
-***REMOVED***
+/**
+ * This method is in charge of expanding/exploding an IPv6 string from its
+ * compressed form.
+ * @private
+ * @param {!Array.<string>} address An IPv6 address split around '::'.
+ * @return {!Array.<string>} The expanded version of the IPv6.
+ */
 goog.net.Ipv6Address.explode_ = function(address) {
   var basePart = address[0].split(':');
   var secondPart = address[1].split(':');
@@ -427,15 +427,15 @@ goog.net.Ipv6Address.explode_ = function(address) {
   goog.array.extend(basePart, secondPart);
 
   return basePart;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This method is in charge of compressing an expanded IPv6 array of hextets.
-***REMOVED*** @private
-***REMOVED*** @param {!Array.<string>} hextets The array of hextet.
-***REMOVED*** @return {!Array.<string>} The compressed version of this array.
-***REMOVED***
+/**
+ * This method is in charge of compressing an expanded IPv6 array of hextets.
+ * @private
+ * @param {!Array.<string>} hextets The array of hextet.
+ * @return {!Array.<string>} The compressed version of this array.
+ */
 goog.net.Ipv6Address.compress_ = function(hextets) {
   var bestStart = -1;
   var start = -1;
@@ -468,17 +468,17 @@ goog.net.Ipv6Address.compress_ = function(hextets) {
     }
   }
   return hextets;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This method will convert an IPv4 to a list of 2 hextets.
-***REMOVED***
-***REMOVED*** For instance, 1.2.3.4 will be converted to ['0102', '0304'].
-***REMOVED*** @private
-***REMOVED*** @param {string} quads An IPv4 as a string.
-***REMOVED*** @return {!Array.<string>} A list of 2 hextets.
-***REMOVED***
+/**
+ * This method will convert an IPv4 to a list of 2 hextets.
+ *
+ * For instance, 1.2.3.4 will be converted to ['0102', '0304'].
+ * @private
+ * @param {string} quads An IPv4 as a string.
+ * @return {!Array.<string>} A list of 2 hextets.
+ */
 goog.net.Ipv6Address.dottedQuadtoHextets_ = function(quads) {
   var ip4 = new goog.net.Ipv4Address(quads).toInteger();
   var bits = ip4.getBitsUnsigned(0);
@@ -488,23 +488,23 @@ goog.net.Ipv6Address.dottedQuadtoHextets_ = function(quads) {
   hextets.push((bits & 0xffff).toString(16));
 
   return hextets;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} true if the IPv6 contains a mapped IPv4.
-***REMOVED***
+/**
+ * @return {boolean} true if the IPv6 contains a mapped IPv4.
+ */
 goog.net.Ipv6Address.prototype.isMappedIpv4Address = function() {
   return (this.ip_.getBitsUnsigned(3) == 0 &&
           this.ip_.getBitsUnsigned(2) == 0 &&
           this.ip_.getBitsUnsigned(1) == 0xffff);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Will return the mapped IPv4 address in this IPv6 address.
-***REMOVED*** @return {goog.net.Ipv4Address} an IPv4 or null.
-***REMOVED***
+/**
+ * Will return the mapped IPv4 address in this IPv6 address.
+ * @return {goog.net.Ipv4Address} an IPv4 or null.
+ */
 goog.net.Ipv6Address.prototype.getMappedIpv4Address = function() {
   if (!this.isMappedIpv4Address()) {
     return null;
@@ -512,4 +512,4 @@ goog.net.Ipv6Address.prototype.getMappedIpv4Address = function() {
 
   var newIpv4 = new goog.math.Integer([this.ip_.getBitsUnsigned(0)], 0);
   return new goog.net.Ipv4Address(newIpv4);
-***REMOVED***
+};

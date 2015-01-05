@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Implementation of PBKDF2 in JavaScript.
-***REMOVED*** @see http://en.wikipedia.org/wiki/PBKDF2
-***REMOVED***
-***REMOVED*** Currently we only support HMAC-SHA1 as the underlying hash function. To add a
-***REMOVED*** new hash function, add a static method similar to deriveKeyFromPasswordSha1()
-***REMOVED*** and implement the specific computeBlockCallback() using the hash function.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED***   var key = pbkdf2.deriveKeySha1(
-***REMOVED***       stringToByteArray('password'), stringToByteArray('salt'), 1000, 128);
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Implementation of PBKDF2 in JavaScript.
+ * @see http://en.wikipedia.org/wiki/PBKDF2
+ *
+ * Currently we only support HMAC-SHA1 as the underlying hash function. To add a
+ * new hash function, add a static method similar to deriveKeyFromPasswordSha1()
+ * and implement the specific computeBlockCallback() using the hash function.
+ *
+ * Usage:
+ *   var key = pbkdf2.deriveKeySha1(
+ *       stringToByteArray('password'), stringToByteArray('salt'), 1000, 128);
+ *
+ */
 
 goog.provide('goog.crypt.pbkdf2');
 
@@ -34,27 +34,27 @@ goog.require('goog.crypt.Hmac');
 goog.require('goog.crypt.Sha1');
 
 
-***REMOVED***
-***REMOVED*** Derives key from password using PBKDF2-SHA1
-***REMOVED*** @param {!Array.<number>} password Byte array representation of the password
-***REMOVED***     from which the key is derived.
-***REMOVED*** @param {!Array.<number>} initialSalt Byte array representation of the salt.
-***REMOVED*** @param {number} iterations Number of interations when computing the key.
-***REMOVED*** @param {number} keyLength Length of the output key in bits.
-***REMOVED***     Must be multiple of 8.
-***REMOVED*** @return {!Array.<number>} Byte array representation of the output key.
-***REMOVED***
+/**
+ * Derives key from password using PBKDF2-SHA1
+ * @param {!Array.<number>} password Byte array representation of the password
+ *     from which the key is derived.
+ * @param {!Array.<number>} initialSalt Byte array representation of the salt.
+ * @param {number} iterations Number of interations when computing the key.
+ * @param {number} keyLength Length of the output key in bits.
+ *     Must be multiple of 8.
+ * @return {!Array.<number>} Byte array representation of the output key.
+ */
 goog.crypt.pbkdf2.deriveKeySha1 = function(
     password, initialSalt, iterations, keyLength) {
   // Length of the HMAC-SHA1 output in bits.
   var HASH_LENGTH = 160;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Compute each block of the key using HMAC-SHA1.
-  ***REMOVED*** @param {!Array.<number>} index Byte array representation of the index of
-  ***REMOVED***     the block to be computed.
-  ***REMOVED*** @return {!Array.<number>} Byte array representation of the output block.
- ***REMOVED*****REMOVED***
+  /**
+   * Compute each block of the key using HMAC-SHA1.
+   * @param {!Array.<number>} index Byte array representation of the index of
+   *     the block to be computed.
+   * @return {!Array.<number>} Byte array representation of the output block.
+   */
   var computeBlock = function(index) {
     // Initialize the result to be array of 0 such that its xor with the first
     // block would be the first block.
@@ -69,24 +69,24 @@ goog.crypt.pbkdf2.deriveKeySha1 = function(
       result = goog.crypt.xorByteArray(result, salt);
     }
     return result;
- ***REMOVED*****REMOVED***
+  };
 
   return goog.crypt.pbkdf2.deriveKeyFromPassword_(
       computeBlock, HASH_LENGTH, keyLength);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compute each block of the key using PBKDF2.
-***REMOVED*** @param {Function} computeBlock Function to compute each block of the output
-***REMOVED***     key.
-***REMOVED*** @param {number} hashLength Length of each block in bits. This is determined
-***REMOVED***     by the specific hash function used. Must be multiple of 8.
-***REMOVED*** @param {number} keyLength Length of the output key in bits.
-***REMOVED***     Must be multiple of 8.
-***REMOVED*** @return {!Array.<number>} Byte array representation of the output key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compute each block of the key using PBKDF2.
+ * @param {Function} computeBlock Function to compute each block of the output
+ *     key.
+ * @param {number} hashLength Length of each block in bits. This is determined
+ *     by the specific hash function used. Must be multiple of 8.
+ * @param {number} keyLength Length of the output key in bits.
+ *     Must be multiple of 8.
+ * @return {!Array.<number>} Byte array representation of the output key.
+ * @private
+ */
 goog.crypt.pbkdf2.deriveKeyFromPassword_ =
     function(computeBlock, hashLength, keyLength) {
   goog.asserts.assert(keyLength % 8 == 0, 'invalid output key length');
@@ -103,20 +103,20 @@ goog.crypt.pbkdf2.deriveKeyFromPassword_ =
   // Trim the last block if needed.
   var lastBlockSize = keyLength % hashLength;
   if (lastBlockSize != 0) {
-    var desiredBytes = ((numBlocks - 1)***REMOVED*** hashLength + lastBlockSize) / 8;
+    var desiredBytes = ((numBlocks - 1) * hashLength + lastBlockSize) / 8;
     result.splice(desiredBytes, (hashLength - lastBlockSize) / 8);
   }
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts an integer number to a 32-bit big endian byte array.
-***REMOVED*** @param {number} n Integer number to be converted.
-***REMOVED*** @return {!Array.<number>} Byte Array representation of the 32-bit big endian
-***REMOVED***     encoding of n.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts an integer number to a 32-bit big endian byte array.
+ * @param {number} n Integer number to be converted.
+ * @return {!Array.<number>} Byte Array representation of the 32-bit big endian
+ *     encoding of n.
+ * @private
+ */
 goog.crypt.pbkdf2.integerToByteArray_ = function(n) {
   var result = new Array(4);
   result[0] = n >> 24 & 0xFF;
@@ -124,4 +124,4 @@ goog.crypt.pbkdf2.integerToByteArray_ = function(n) {
   result[2] = n >> 8 & 0xFF;
   result[3] = n & 0xFF;
   return result;
-***REMOVED***
+};

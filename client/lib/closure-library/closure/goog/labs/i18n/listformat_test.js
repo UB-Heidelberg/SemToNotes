@@ -35,19 +35,19 @@ function testListFormatterArrayDirect() {
   assertEquals(
       'One',
       fmt.format(['One'])
-***REMOVED***
+  );
   assertEquals(
       'One and Two',
       fmt.format(['One', 'Two'])
-***REMOVED***
+  );
   assertEquals(
       'One, Two, and Three',
       fmt.format(['One', 'Two', 'Three'])
-***REMOVED***
+  );
   assertEquals(
       'One, Two, Three, Four, Five, and Six',
       fmt.format(['One', 'Two', 'Three', 'Four', 'Five', 'Six'])
-***REMOVED***
+  );
 }
 
 function testListFormatterArrayIndirect() {
@@ -76,19 +76,19 @@ function testListFormatterFrench() {
   assertEquals(
       'One',
       fmt.format(['One'])
-***REMOVED***
+  );
   assertEquals(
       'One et Two',
       fmt.format(['One', 'Two'])
-***REMOVED***
+  );
   assertEquals(
       'One, Two et Three',
       fmt.format(['One', 'Two', 'Three'])
-***REMOVED***
+  );
   assertEquals(
       'One, Two, Three, Four, Five et Six',
       fmt.format(['One', 'Two', 'Three', 'Four', 'Five', 'Six'])
-***REMOVED***
+  );
 
   goog.labs.i18n.ListFormatSymbols = goog.labs.i18n.ListFormatSymbols_en;
 }
@@ -121,7 +121,7 @@ function testVariousObjectTypes() {
   assertEquals(
       'One, black,white, 42, true, and Five',
       fmt.format(['One', arrayObject, 42, booleanObject, 'Five'])
-***REMOVED***
+  );
 }
 
 function testListGendersNeutral() {

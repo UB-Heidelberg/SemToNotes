@@ -431,8 +431,8 @@ function testGetAfterSetWithLazyDeserializer() {
   // erroneously called when get$Value is called after set$Value.
   var message = new proto2.TestAllTypes();
 
-  var fakeDeserializer = {***REMOVED*** // stub with no methods defined; fails hard
-  message.initializeForLazyDeserializer(fakeDeserializer, {} /* data***REMOVED***);
+  var fakeDeserializer = {}; // stub with no methods defined; fails hard
+  message.initializeForLazyDeserializer(fakeDeserializer, {} /* data */);
   message.setOptionalBool(true);
   assertEquals(true, message.getOptionalBool());
 }
@@ -442,9 +442,9 @@ function testHasOnLazyDeserializer() {
   // deserializer.
   var message = new proto2.TestAllTypes();
 
-  var fakeDeserializer = {***REMOVED*** // stub with no methods defined; fails hard
+  var fakeDeserializer = {}; // stub with no methods defined; fails hard
   message.initializeForLazyDeserializer(fakeDeserializer,
-      {13: false} /* data***REMOVED***);
+      {13: false} /* data */);
   assertEquals(true, message.hasOptionalBool());
 }
 
@@ -453,8 +453,8 @@ function testHasOnLazyDeserializerWithNulls() {
   // deserializer.
   var message = new proto2.TestAllTypes();
 
-  var fakeDeserializer = {***REMOVED*** // stub with no methods defined; fails hard
+  var fakeDeserializer = {}; // stub with no methods defined; fails hard
   message.initializeForLazyDeserializer(fakeDeserializer,
-      {13: null} /* data***REMOVED***);
+      {13: null} /* data */);
   assertEquals(false, message.hasOptionalBool());
 }

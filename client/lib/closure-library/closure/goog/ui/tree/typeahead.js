@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the typeahead functionality for the tree class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides the typeahead functionality for the tree class.
+ *
+ */
 
 goog.provide('goog.ui.tree.TypeAhead');
 goog.provide('goog.ui.tree.TypeAhead.Offset');
@@ -27,83 +27,83 @@ goog.require('goog.structs.Trie');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a TypeAhead object.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a TypeAhead object.
+ * @constructor
+ * @final
+ */
 goog.ui.tree.TypeAhead = function() {
   this.nodeMap_ = new goog.structs.Trie();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Map of tree nodes to allow for quick access by characters in the label text.
-***REMOVED*** @type {goog.structs.Trie}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Map of tree nodes to allow for quick access by characters in the label text.
+ * @type {goog.structs.Trie}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.nodeMap_;
 
 
-***REMOVED***
-***REMOVED*** Buffer for storing typeahead characters.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Buffer for storing typeahead characters.
+ * @type {string}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.buffer_ = '';
 
 
-***REMOVED***
-***REMOVED*** Matching labels from the latest typeahead search.
-***REMOVED*** @type {Array.<string>?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matching labels from the latest typeahead search.
+ * @type {Array.<string>?}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.matchingLabels_ = null;
 
 
-***REMOVED***
-***REMOVED*** Matching nodes from the latest typeahead search. Used when more than
-***REMOVED*** one node is present with the same label text.
-***REMOVED*** @type {Array.<goog.ui.tree.BaseNode>?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Matching nodes from the latest typeahead search. Used when more than
+ * one node is present with the same label text.
+ * @type {Array.<goog.ui.tree.BaseNode>?}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.matchingNodes_ = null;
 
 
-***REMOVED***
-***REMOVED*** Specifies the current index of the label from the latest typeahead search.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Specifies the current index of the label from the latest typeahead search.
+ * @type {number}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.matchingLabelIndex_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Specifies the index into matching nodes when more than one node is found
-***REMOVED*** with the same label.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Specifies the index into matching nodes when more than one node is found
+ * with the same label.
+ * @type {number}
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.matchingNodeIndex_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Enum for offset values that are used for ctrl-key navigation among the
-***REMOVED*** multiple matches of a given typeahead buffer.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for offset values that are used for ctrl-key navigation among the
+ * multiple matches of a given typeahead buffer.
+ *
+ * @enum {number}
+ */
 goog.ui.tree.TypeAhead.Offset = {
   DOWN: 1,
   UP: -1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles navigation keys.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @return {boolean} The handled value.
-***REMOVED***
+/**
+ * Handles navigation keys.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @return {boolean} The handled value.
+ */
 goog.ui.tree.TypeAhead.prototype.handleNavigation = function(e) {
   var handled = false;
 
@@ -142,15 +142,15 @@ goog.ui.tree.TypeAhead.prototype.handleNavigation = function(e) {
   }
 
   return handled;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the character presses.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***    Expected event type is goog.events.KeyHandler.EventType.KEY.
-***REMOVED*** @return {boolean} The handled value.
-***REMOVED***
+/**
+ * Handles the character presses.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ *    Expected event type is goog.events.KeyHandler.EventType.KEY.
+ * @return {boolean} The handled value.
+ */
 goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function(e) {
   var handled = false;
 
@@ -166,16 +166,16 @@ goog.ui.tree.TypeAhead.prototype.handleTypeAheadChar = function(e) {
   }
 
   return handled;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds or updates the given node in the nodemap. The label text is used as a
-***REMOVED*** key and the node id is used as a value. In the case that the key already
-***REMOVED*** exists, such as when more than one node exists with the same label, then this
-***REMOVED*** function creates an array to hold the multiple nodes.
-***REMOVED*** @param {goog.ui.tree.BaseNode} node Node to be added or updated.
-***REMOVED***
+/**
+ * Adds or updates the given node in the nodemap. The label text is used as a
+ * key and the node id is used as a value. In the case that the key already
+ * exists, such as when more than one node exists with the same label, then this
+ * function creates an array to hold the multiple nodes.
+ * @param {goog.ui.tree.BaseNode} node Node to be added or updated.
+ */
 goog.ui.tree.TypeAhead.prototype.setNodeInMap = function(node) {
   var labelText = node.getText();
   if (labelText && !goog.string.isEmptySafe(labelText)) {
@@ -192,19 +192,19 @@ goog.ui.tree.TypeAhead.prototype.setNodeInMap = function(node) {
       this.nodeMap_.set(labelText, nodeList);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the given node from the nodemap.
-***REMOVED*** @param {goog.ui.tree.BaseNode} node Node to be removed.
-***REMOVED***
+/**
+ * Removes the given node from the nodemap.
+ * @param {goog.ui.tree.BaseNode} node Node to be removed.
+ */
 goog.ui.tree.TypeAhead.prototype.removeNodeFromMap = function(node) {
   var labelText = node.getText();
   if (labelText && !goog.string.isEmptySafe(labelText)) {
     labelText = labelText.toLowerCase();
 
-    var nodeList =***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (this.nodeMap_.get(labelText));
+    var nodeList = /** @type {Array} */ (this.nodeMap_.get(labelText));
     if (nodeList) {
       // Remove the node from the array.
       goog.array.remove(nodeList, node);
@@ -213,15 +213,15 @@ goog.ui.tree.TypeAhead.prototype.removeNodeFromMap = function(node) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Select the first matching node for the given typeahead.
-***REMOVED*** @param {string} typeAhead Typeahead characters to match.
-***REMOVED*** @return {boolean} True iff a node is found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Select the first matching node for the given typeahead.
+ * @param {string} typeAhead Typeahead characters to match.
+ * @return {boolean} True iff a node is found.
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function(typeAhead) {
   var handled = false;
   var labels = this.nodeMap_.getKeys(typeAhead);
@@ -231,7 +231,7 @@ goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function(typeAhead) {
     this.matchingNodeIndex_ = 0;
     this.matchingLabelIndex_ = 0;
 
-    var nodes =***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (this.nodeMap_.get(labels[0]));
+    var nodes = /** @type {Array} */ (this.nodeMap_.get(labels[0]));
     if ((handled = this.selectMatchingNode_(nodes))) {
       this.matchingLabels_ = labels;
     }
@@ -239,15 +239,15 @@ goog.ui.tree.TypeAhead.prototype.jumpToLabel_ = function(typeAhead) {
 
   // TODO(user): beep when no node is found
   return handled;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Select the next or previous node based on the offset.
-***REMOVED*** @param {goog.ui.tree.TypeAhead.Offset} offset DOWN or UP.
-***REMOVED*** @return {boolean} Whether a node is found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Select the next or previous node based on the offset.
+ * @param {goog.ui.tree.TypeAhead.Offset} offset DOWN or UP.
+ * @return {boolean} Whether a node is found.
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
   var handled = false;
   var labels = this.matchingLabels_;
@@ -275,7 +275,7 @@ goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
       }
 
       if (labels.length > this.matchingLabelIndex_) {
-        nodes =***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (this.nodeMap_.get(
+        nodes = /** @type {Array} */ (this.nodeMap_.get(
             labels[this.matchingLabelIndex_]));
       }
 
@@ -295,16 +295,16 @@ goog.ui.tree.TypeAhead.prototype.jumpTo_ = function(offset) {
 
   // TODO(user): beep when no node is found
   return handled;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Given a nodes array reveals and selects the node while using node index.
-***REMOVED*** @param {Array.<goog.ui.tree.BaseNode>?} nodes Nodes array to select the
-***REMOVED***    node from.
-***REMOVED*** @return {boolean} Whether a matching node was found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Given a nodes array reveals and selects the node while using node index.
+ * @param {Array.<goog.ui.tree.BaseNode>?} nodes Nodes array to select the
+ *    node from.
+ * @return {boolean} Whether a matching node was found.
+ * @private
+ */
 goog.ui.tree.TypeAhead.prototype.selectMatchingNode_ = function(nodes) {
   var node;
 
@@ -322,12 +322,12 @@ goog.ui.tree.TypeAhead.prototype.selectMatchingNode_ = function(nodes) {
   }
 
   return !!node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the typeahead buffer.
-***REMOVED***
+/**
+ * Clears the typeahead buffer.
+ */
 goog.ui.tree.TypeAhead.prototype.clear = function() {
   this.buffer_ = '';
-***REMOVED***
+};

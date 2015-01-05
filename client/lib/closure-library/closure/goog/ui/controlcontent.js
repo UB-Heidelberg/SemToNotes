@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Type declaration for control content.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview Type declaration for control content.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ */
 goog.provide('goog.ui.ControlContent');
 
 
-***REMOVED***
-***REMOVED*** Type declaration for text caption or DOM structure to be used as the content
-***REMOVED*** of {@link goog.ui.Control}s.
-***REMOVED*** @typedef {string|Node|Array.<Node>|NodeList}
-***REMOVED***
+/**
+ * Type declaration for text caption or DOM structure to be used as the content
+ * of {@link goog.ui.Control}s.
+ * @typedef {string|Node|Array.<Node>|NodeList}
+ */
 goog.ui.ControlContent;

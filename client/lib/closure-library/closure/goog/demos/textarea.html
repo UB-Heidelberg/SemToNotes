@@ -11,8 +11,8 @@
     <script src="../base.js"></script>
     <script>
       goog.require('goog.dom');
-     ***REMOVED*****REMOVED***
-     ***REMOVED*****REMOVED***
+      goog.require('goog.events');
+      goog.require('goog.events.EventType');
       goog.require('goog.ui.Control');
       goog.require('goog.ui.ControlRenderer');
       goog.require('goog.ui.Textarea');
@@ -93,7 +93,7 @@
     // Create the first programmatically.
     var t1 = new goog.ui.Textarea('Hi there, I am a programmatic textarea.');
     t1.render(goog.dom.getElement('t1'));
-  ***REMOVED***goog.dom.getElement('t1_enable'),
+    goog.events.listen(goog.dom.getElement('t1_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           t1.setEnabled(e.target.checked);
@@ -103,7 +103,7 @@
     // Create the second by decorating an element.
     var t2 = new goog.ui.Textarea();
     t2.decorate(goog.dom.getElement('t2'));
-  ***REMOVED***goog.dom.getElement('t2_enable'),
+    goog.events.listen(goog.dom.getElement('t2_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           t2.setEnabled(e.target.checked);
@@ -114,7 +114,7 @@
     var minHeight = 200;
     t3.setMinHeight(minHeight);
     t3.decorate(goog.dom.getElement('t3'));
-  ***REMOVED***goog.dom.getElement('t3_toggle'),
+    goog.events.listen(goog.dom.getElement('t3_toggle'),
         goog.events.EventType.CLICK,
         function(e) {
           t3.setMinHeight(t3.getMinHeight() ? null : minHeight);

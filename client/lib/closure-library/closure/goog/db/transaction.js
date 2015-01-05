@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Wrapper for an IndexedDB transaction.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Wrapper for an IndexedDB transaction.
+ *
+ */
 
 
 goog.provide('goog.db.Transaction');
@@ -29,76 +29,76 @@ goog.require('goog.events.EventTarget');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new transaction. Transactions contain methods for accessing object
-***REMOVED*** stores and are created from the database object. Should not be created
-***REMOVED*** directly, open a database and call createTransaction on it.
-***REMOVED*** @see goog.db.IndexedDb#createTransaction
-***REMOVED***
-***REMOVED*** @param {!IDBTransaction} tx IndexedDB transaction to back this wrapper.
-***REMOVED*** @param {!goog.db.IndexedDb} db The database that this transaction modifies.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new transaction. Transactions contain methods for accessing object
+ * stores and are created from the database object. Should not be created
+ * directly, open a database and call createTransaction on it.
+ * @see goog.db.IndexedDb#createTransaction
+ *
+ * @param {!IDBTransaction} tx IndexedDB transaction to back this wrapper.
+ * @param {!goog.db.IndexedDb} db The database that this transaction modifies.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.db.Transaction = function(tx, db) {
   goog.db.Transaction.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Underlying IndexedDB transaction object.
-  ***REMOVED***
-  ***REMOVED*** @type {!IDBTransaction}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Underlying IndexedDB transaction object.
+   *
+   * @type {!IDBTransaction}
+   * @private
+   */
   this.tx_ = tx;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The database that this transaction modifies.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.db.IndexedDb}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The database that this transaction modifies.
+   *
+   * @type {!goog.db.IndexedDb}
+   * @private
+   */
   this.db_ = db;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event handler for this transaction.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.events.EventHandler.<!goog.db.Transaction>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Event handler for this transaction.
+   *
+   * @type {!goog.events.EventHandler.<!goog.db.Transaction>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   // TODO(user): remove these casts once the externs file is updated to
   // correctly reflect that IDBTransaction extends EventTarget
   this.eventHandler_.listen(
-     ***REMOVED*****REMOVED*** @type {EventTarget}***REMOVED*** (this.tx_),
+      /** @type {EventTarget} */ (this.tx_),
       'complete',
       goog.bind(
           this.dispatchEvent,
           this,
           goog.db.Transaction.EventTypes.COMPLETE));
   this.eventHandler_.listen(
-     ***REMOVED*****REMOVED*** @type {EventTarget}***REMOVED*** (this.tx_),
+      /** @type {EventTarget} */ (this.tx_),
       'abort',
       goog.bind(
           this.dispatchEvent,
           this,
           goog.db.Transaction.EventTypes.ABORT));
   this.eventHandler_.listen(
-     ***REMOVED*****REMOVED*** @type {EventTarget}***REMOVED*** (this.tx_),
+      /** @type {EventTarget} */ (this.tx_),
       'error',
       this.dispatchError_);
-***REMOVED***
+};
 goog.inherits(goog.db.Transaction, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Dispatches an error event based on the given event, wrapping the error
-***REMOVED*** if necessary.
-***REMOVED***
-***REMOVED*** @param {Event} ev The error event given to the underlying IDBTransaction.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches an error event based on the given event, wrapping the error
+ * if necessary.
+ *
+ * @param {Event} ev The error event given to the underlying IDBTransaction.
+ * @private
+ */
 goog.db.Transaction.prototype.dispatchError_ = function(ev) {
   if (ev.target instanceof goog.db.Error) {
     this.dispatchEvent({
@@ -109,66 +109,66 @@ goog.db.Transaction.prototype.dispatchError_ = function(ev) {
     this.dispatchEvent({
       type: goog.db.Transaction.EventTypes.ERROR,
       target: goog.db.Error.fromRequest(
-         ***REMOVED*****REMOVED*** @type {!IDBRequest}***REMOVED*** (ev.target), 'in transaction')
+          /** @type {!IDBRequest} */ (ev.target), 'in transaction')
     });
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Event types the Transaction can dispatch. COMPLETE events are dispatched
-***REMOVED*** when the transaction is committed. If a transaction is aborted it dispatches
-***REMOVED*** both an ABORT event and an ERROR event with the ABORT_ERR code. Error events
-***REMOVED*** are dispatched on any error.
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event types the Transaction can dispatch. COMPLETE events are dispatched
+ * when the transaction is committed. If a transaction is aborted it dispatches
+ * both an ABORT event and an ERROR event with the ABORT_ERR code. Error events
+ * are dispatched on any error.
+ *
+ * @enum {string}
+ */
 goog.db.Transaction.EventTypes = {
   COMPLETE: 'complete',
   ABORT: 'abort',
   ERROR: 'error'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.db.Transaction.TransactionMode} The transaction's mode.
-***REMOVED***
+/**
+ * @return {goog.db.Transaction.TransactionMode} The transaction's mode.
+ */
 goog.db.Transaction.prototype.getMode = function() {
-  return***REMOVED*****REMOVED*** @type {goog.db.Transaction.TransactionMode}***REMOVED*** (this.tx_.mode);
-***REMOVED***
+  return /** @type {goog.db.Transaction.TransactionMode} */ (this.tx_.mode);
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.db.IndexedDb} The database that this transaction modifies.
-***REMOVED***
+/**
+ * @return {!goog.db.IndexedDb} The database that this transaction modifies.
+ */
 goog.db.Transaction.prototype.getDatabase = function() {
   return this.db_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opens an object store to do operations on in this transaction. The requested
-***REMOVED*** object store must be one that is in this transaction's scope.
-***REMOVED*** @see goog.db.IndexedDb#createTransaction
-***REMOVED***
-***REMOVED*** @param {string} name The name of the requested object store.
-***REMOVED*** @return {!goog.db.ObjectStore} The wrapped object store.
-***REMOVED*** @throws {goog.db.Error} In case of error getting the object store.
-***REMOVED***
+/**
+ * Opens an object store to do operations on in this transaction. The requested
+ * object store must be one that is in this transaction's scope.
+ * @see goog.db.IndexedDb#createTransaction
+ *
+ * @param {string} name The name of the requested object store.
+ * @return {!goog.db.ObjectStore} The wrapped object store.
+ * @throws {goog.db.Error} In case of error getting the object store.
+ */
 goog.db.Transaction.prototype.objectStore = function(name) {
   try {
     return new goog.db.ObjectStore(this.tx_.objectStore(name));
   } catch (ex) {
     throw goog.db.Error.fromException(ex, 'getting object store ' + name);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.async.Deferred} A deferred that will fire once the
-***REMOVED***     transaction is complete. It fires the errback chain if an error occurs
-***REMOVED***     in the transaction, or if it is aborted.
-***REMOVED***
+/**
+ * @return {!goog.async.Deferred} A deferred that will fire once the
+ *     transaction is complete. It fires the errback chain if an error occurs
+ *     in the transaction, or if it is aborted.
+ */
 goog.db.Transaction.prototype.wait = function() {
   var d = new goog.async.Deferred();
   goog.events.listenOnce(
@@ -187,33 +187,33 @@ goog.db.Transaction.prototype.wait = function() {
   return d.addCallback(function() {
     return db;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Aborts this transaction. No pending operations will be applied to the
-***REMOVED*** database. Dispatches an ABORT event.
-***REMOVED***
+/**
+ * Aborts this transaction. No pending operations will be applied to the
+ * database. Dispatches an ABORT event.
+ */
 goog.db.Transaction.prototype.abort = function() {
   this.tx_.abort();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.db.Transaction.prototype.disposeInternal = function() {
   goog.db.Transaction.base(this, 'disposeInternal');
   this.eventHandler_.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The three possible transaction modes.
-***REMOVED*** @see http://www.w3.org/TR/IndexedDB/#idl-def-IDBTransaction
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The three possible transaction modes.
+ * @see http://www.w3.org/TR/IndexedDB/#idl-def-IDBTransaction
+ *
+ * @enum {string}
+ */
 goog.db.Transaction.TransactionMode = {
   READ_ONLY: 'readonly',
   READ_WRITE: 'readwrite',
   VERSION_CHANGE: 'versionchange'
-***REMOVED***
+};

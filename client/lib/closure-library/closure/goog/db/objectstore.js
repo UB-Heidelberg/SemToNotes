@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Wrapper for an IndexedDB object store.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Wrapper for an IndexedDB object store.
+ *
+ */
 
 
 goog.provide('goog.db.ObjectStore');
@@ -25,57 +25,57 @@ goog.require('goog.db.Cursor');
 goog.require('goog.db.Error');
 goog.require('goog.db.Index');
 goog.require('goog.debug');
-***REMOVED***
+goog.require('goog.events');
 
 
 
-***REMOVED***
-***REMOVED*** Creates an IDBObjectStore wrapper object. Object stores have methods for
-***REMOVED*** storing and retrieving records, and are accessed through a transaction
-***REMOVED*** object. They also have methods for creating indexes associated with the
-***REMOVED*** object store. They can only be created when setting the version of the
-***REMOVED*** database. Should not be created directly, access object stores through
-***REMOVED*** transactions.
-***REMOVED*** @see goog.db.IndexedDb#setVersion
-***REMOVED*** @see goog.db.Transaction#objectStore
-***REMOVED***
-***REMOVED*** @param {!IDBObjectStore} store The backing IndexedDb object.
-***REMOVED***
-***REMOVED***
-***REMOVED*** TODO(user): revisit msg in exception and errors in this class. In newer
-***REMOVED***     Chrome (v22+) the error/request come with a DOM error string that is
-***REMOVED***     already very descriptive.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates an IDBObjectStore wrapper object. Object stores have methods for
+ * storing and retrieving records, and are accessed through a transaction
+ * object. They also have methods for creating indexes associated with the
+ * object store. They can only be created when setting the version of the
+ * database. Should not be created directly, access object stores through
+ * transactions.
+ * @see goog.db.IndexedDb#setVersion
+ * @see goog.db.Transaction#objectStore
+ *
+ * @param {!IDBObjectStore} store The backing IndexedDb object.
+ * @constructor
+ *
+ * TODO(user): revisit msg in exception and errors in this class. In newer
+ *     Chrome (v22+) the error/request come with a DOM error string that is
+ *     already very descriptive.
+ * @final
+ */
 goog.db.ObjectStore = function(store) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Underlying IndexedDB object store object.
-  ***REMOVED***
-  ***REMOVED*** @type {!IDBObjectStore}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Underlying IndexedDB object store object.
+   *
+   * @type {!IDBObjectStore}
+   * @private
+   */
   this.store_ = store;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The name of the object store.
-***REMOVED***
+/**
+ * @return {string} The name of the object store.
+ */
 goog.db.ObjectStore.prototype.getName = function() {
   return this.store_.name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for put and add.
-***REMOVED***
-***REMOVED*** @param {string} fn Function name to call on the object store.
-***REMOVED*** @param {string} msg Message to give to the error.
-***REMOVED*** @param {*} value Value to insert into the object store.
-***REMOVED*** @param {IDBKeyType=} opt_key The key to use.
-***REMOVED*** @return {!goog.async.Deferred} The resulting deferred request.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function for put and add.
+ *
+ * @param {string} fn Function name to call on the object store.
+ * @param {string} msg Message to give to the error.
+ * @param {*} value Value to insert into the object store.
+ * @param {IDBKeyType=} opt_key The key to use.
+ * @return {!goog.async.Deferred} The resulting deferred request.
+ * @private
+ */
 goog.db.ObjectStore.prototype.insert_ = function(fn, msg, value, opt_key) {
   // TODO(user): refactor wrapping an IndexedDB request in a Deferred by
   // creating a higher-level abstraction for it (mostly affects here and
@@ -100,64 +100,64 @@ goog.db.ObjectStore.prototype.insert_ = function(fn, msg, value, opt_key) {
   }
   request.onsuccess = function(ev) {
     d.callback();
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+  var self = this;
   request.onerror = function(ev) {
     msg += goog.debug.deepExpose(value);
     if (opt_key) {
       msg += ', with key ' + goog.debug.deepExpose(opt_key);
     }
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
- ***REMOVED*****REMOVED***
+  };
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an object to the object store. Replaces existing objects with the
-***REMOVED*** same key.
-***REMOVED***
-***REMOVED*** @param {*} value The value to put.
-***REMOVED*** @param {IDBKeyType=} opt_key The key to use. Cannot be used if the
-***REMOVED***     keyPath was specified for the object store. If the keyPath was not
-***REMOVED***     specified but autoIncrement was not enabled, it must be used.
-***REMOVED*** @return {!goog.async.Deferred} The deferred put request.
-***REMOVED***
+/**
+ * Adds an object to the object store. Replaces existing objects with the
+ * same key.
+ *
+ * @param {*} value The value to put.
+ * @param {IDBKeyType=} opt_key The key to use. Cannot be used if the
+ *     keyPath was specified for the object store. If the keyPath was not
+ *     specified but autoIncrement was not enabled, it must be used.
+ * @return {!goog.async.Deferred} The deferred put request.
+ */
 goog.db.ObjectStore.prototype.put = function(value, opt_key) {
   return this.insert_(
       'put',
       'putting into ' + this.getName() + ' with value',
       value,
       opt_key);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an object to the object store. Requires that there is no object with
-***REMOVED*** the same key already present.
-***REMOVED***
-***REMOVED*** @param {*} value The value to add.
-***REMOVED*** @param {IDBKeyType=} opt_key The key to use. Cannot be used if the
-***REMOVED***     keyPath was specified for the object store. If the keyPath was not
-***REMOVED***     specified but autoIncrement was not enabled, it must be used.
-***REMOVED*** @return {!goog.async.Deferred} The deferred add request.
-***REMOVED***
+/**
+ * Adds an object to the object store. Requires that there is no object with
+ * the same key already present.
+ *
+ * @param {*} value The value to add.
+ * @param {IDBKeyType=} opt_key The key to use. Cannot be used if the
+ *     keyPath was specified for the object store. If the keyPath was not
+ *     specified but autoIncrement was not enabled, it must be used.
+ * @return {!goog.async.Deferred} The deferred add request.
+ */
 goog.db.ObjectStore.prototype.add = function(value, opt_key) {
   return this.insert_(
       'add',
       'adding into ' + this.getName() + ' with value ',
       value,
       opt_key);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an object from the store. No-op if there is no object present with
-***REMOVED*** the given key.
-***REMOVED***
-***REMOVED*** @param {IDBKeyType} key The key to remove objects under.
-***REMOVED*** @return {!goog.async.Deferred} The deferred remove request.
-***REMOVED***
+/**
+ * Removes an object from the store. No-op if there is no object present with
+ * the given key.
+ *
+ * @param {IDBKeyType} key The key to remove objects under.
+ * @return {!goog.async.Deferred} The deferred remove request.
+ */
 goog.db.ObjectStore.prototype.remove = function(key) {
   var d = new goog.async.Deferred();
   var request;
@@ -171,24 +171,24 @@ goog.db.ObjectStore.prototype.remove = function(key) {
   }
   request.onsuccess = function(ev) {
     d.callback();
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+  var self = this;
   request.onerror = function(ev) {
     var msg = 'removing from ' + self.getName() + ' with key ' +
         goog.debug.deepExpose(key);
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
- ***REMOVED*****REMOVED***
+  };
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets an object from the store. If no object is present with that key
-***REMOVED*** the result is {@code undefined}.
-***REMOVED***
-***REMOVED*** @param {IDBKeyType} key The key to look up.
-***REMOVED*** @return {!goog.async.Deferred} The deferred get request.
-***REMOVED***
+/**
+ * Gets an object from the store. If no object is present with that key
+ * the result is {@code undefined}.
+ *
+ * @param {IDBKeyType} key The key to look up.
+ * @return {!goog.async.Deferred} The deferred get request.
+ */
 goog.db.ObjectStore.prototype.get = function(key) {
   var d = new goog.async.Deferred();
   var request;
@@ -202,26 +202,26 @@ goog.db.ObjectStore.prototype.get = function(key) {
   }
   request.onsuccess = function(ev) {
     d.callback(ev.target.result);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+  var self = this;
   request.onerror = function(ev) {
     var msg = 'getting from ' + self.getName() + ' with key ' +
         goog.debug.deepExpose(key);
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
- ***REMOVED*****REMOVED***
+  };
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets all objects from the store and returns them as an array.
-***REMOVED***
-***REMOVED*** @param {!goog.db.KeyRange=} opt_range The key range. If undefined iterates
-***REMOVED***     over the whole object store.
-***REMOVED*** @param {!goog.db.Cursor.Direction=} opt_direction The direction. If undefined
-***REMOVED***     moves in a forward direction with duplicates.
-***REMOVED*** @return {!goog.async.Deferred} The deferred getAll request.
-***REMOVED***
+/**
+ * Gets all objects from the store and returns them as an array.
+ *
+ * @param {!goog.db.KeyRange=} opt_range The key range. If undefined iterates
+ *     over the whole object store.
+ * @param {!goog.db.Cursor.Direction=} opt_direction The direction. If undefined
+ *     moves in a forward direction with duplicates.
+ * @return {!goog.async.Deferred} The deferred getAll request.
+ */
 goog.db.ObjectStore.prototype.getAll = function(opt_range, opt_direction) {
   var d = new goog.async.Deferred();
   var cursor;
@@ -251,48 +251,48 @@ goog.db.ObjectStore.prototype.getAll = function(opt_range, opt_direction) {
     }
   });
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opens a cursor over the specified key range. Returns a cursor object which is
-***REMOVED*** able to iterate over the given range.
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED***
-***REMOVED*** <code>
-***REMOVED***  var cursor = objectStore.openCursor(goog.db.Range.bound('a', 'c'));
-***REMOVED***
-***REMOVED***  var key = goog.events.listen(
-***REMOVED***      cursor, goog.db.Cursor.EventType.NEW_DATA, function() {
-***REMOVED***    // Do something with data.
-***REMOVED***    cursor.next();
-***REMOVED***  });
-***REMOVED***
-***REMOVED***  goog.events.listenOnce(
-***REMOVED***      cursor, goog.db.Cursor.EventType.COMPLETE, function() {
-***REMOVED***    // Clean up listener, and perform a finishing operation on the data.
-***REMOVED***    goog.events.unlistenByKey(key);
-***REMOVED***  });
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** @param {!goog.db.KeyRange=} opt_range The key range. If undefined iterates
-***REMOVED***     over the whole object store.
-***REMOVED*** @param {!goog.db.Cursor.Direction=} opt_direction The direction. If undefined
-***REMOVED***     moves in a forward direction with duplicates.
-***REMOVED*** @return {!goog.db.Cursor} The cursor.
-***REMOVED*** @throws {goog.db.Error} If there was a problem opening the cursor.
-***REMOVED***
+/**
+ * Opens a cursor over the specified key range. Returns a cursor object which is
+ * able to iterate over the given range.
+ *
+ * Example usage:
+ *
+ * <code>
+ *  var cursor = objectStore.openCursor(goog.db.Range.bound('a', 'c'));
+ *
+ *  var key = goog.events.listen(
+ *      cursor, goog.db.Cursor.EventType.NEW_DATA, function() {
+ *    // Do something with data.
+ *    cursor.next();
+ *  });
+ *
+ *  goog.events.listenOnce(
+ *      cursor, goog.db.Cursor.EventType.COMPLETE, function() {
+ *    // Clean up listener, and perform a finishing operation on the data.
+ *    goog.events.unlistenByKey(key);
+ *  });
+ * </code>
+ *
+ * @param {!goog.db.KeyRange=} opt_range The key range. If undefined iterates
+ *     over the whole object store.
+ * @param {!goog.db.Cursor.Direction=} opt_direction The direction. If undefined
+ *     moves in a forward direction with duplicates.
+ * @return {!goog.db.Cursor} The cursor.
+ * @throws {goog.db.Error} If there was a problem opening the cursor.
+ */
 goog.db.ObjectStore.prototype.openCursor = function(opt_range, opt_direction) {
   return goog.db.Cursor.openCursor(this.store_, opt_range, opt_direction);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes all objects from the store.
-***REMOVED***
-***REMOVED*** @return {!goog.async.Deferred} The deferred clear request.
-***REMOVED***
+/**
+ * Deletes all objects from the store.
+ *
+ * @return {!goog.async.Deferred} The deferred clear request.
+ */
 goog.db.ObjectStore.prototype.clear = function() {
   var msg = 'clearing store ' + this.getName();
   var d = new goog.async.Deferred();
@@ -305,27 +305,27 @@ goog.db.ObjectStore.prototype.clear = function() {
   }
   request.onsuccess = function(ev) {
     d.callback();
- ***REMOVED*****REMOVED***
+  };
   request.onerror = function(ev) {
     d.errback(goog.db.Error.fromRequest(ev.target, msg));
- ***REMOVED*****REMOVED***
+  };
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an index in this object store. Can only be called inside the callback
-***REMOVED*** for the Deferred returned from goog.db.IndexedDb#setVersion.
-***REMOVED***
-***REMOVED*** @param {string} name Name of the index to create.
-***REMOVED*** @param {string} keyPath Attribute to index on.
-***REMOVED*** @param {!Object=} opt_parameters Optional parameters object. The only
-***REMOVED***     available option is unique, which defaults to false. If unique is true,
-***REMOVED***     the index will enforce that there is only ever one object in the object
-***REMOVED***     store for each unique value it indexes on.
-***REMOVED*** @return {!goog.db.Index} The newly created, wrapped index.
-***REMOVED*** @throws {goog.db.Error} In case of an error creating the index.
-***REMOVED***
+/**
+ * Creates an index in this object store. Can only be called inside the callback
+ * for the Deferred returned from goog.db.IndexedDb#setVersion.
+ *
+ * @param {string} name Name of the index to create.
+ * @param {string} keyPath Attribute to index on.
+ * @param {!Object=} opt_parameters Optional parameters object. The only
+ *     available option is unique, which defaults to false. If unique is true,
+ *     the index will enforce that there is only ever one object in the object
+ *     store for each unique value it indexes on.
+ * @return {!goog.db.Index} The newly created, wrapped index.
+ * @throws {goog.db.Error} In case of an error creating the index.
+ */
 goog.db.ObjectStore.prototype.createIndex = function(
     name, keyPath, opt_parameters) {
   try {
@@ -335,16 +335,16 @@ goog.db.ObjectStore.prototype.createIndex = function(
     var msg = 'creating new index ' + name + ' with key path ' + keyPath;
     throw goog.db.Error.fromException(ex, msg);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets an index.
-***REMOVED***
-***REMOVED*** @param {string} name Name of the index to fetch.
-***REMOVED*** @return {!goog.db.Index} The requested wrapped index.
-***REMOVED*** @throws {goog.db.Error} In case of an error getting the index.
-***REMOVED***
+/**
+ * Gets an index.
+ *
+ * @param {string} name Name of the index to fetch.
+ * @return {!goog.db.Index} The requested wrapped index.
+ * @throws {goog.db.Error} In case of an error getting the index.
+ */
 goog.db.ObjectStore.prototype.getIndex = function(name) {
   try {
     return new goog.db.Index(this.store_.index(name));
@@ -352,16 +352,16 @@ goog.db.ObjectStore.prototype.getIndex = function(name) {
     var msg = 'getting index ' + name;
     throw goog.db.Error.fromException(ex, msg);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes an index from the object store. Can only be called inside the
-***REMOVED*** callback for the Deferred returned from goog.db.IndexedDb#setVersion.
-***REMOVED***
-***REMOVED*** @param {string} name Name of the index to delete.
-***REMOVED*** @throws {goog.db.Error} In case of an error deleting the index.
-***REMOVED***
+/**
+ * Deletes an index from the object store. Can only be called inside the
+ * callback for the Deferred returned from goog.db.IndexedDb#setVersion.
+ *
+ * @param {string} name Name of the index to delete.
+ * @throws {goog.db.Error} In case of an error deleting the index.
+ */
 goog.db.ObjectStore.prototype.deleteIndex = function(name) {
   try {
     this.store_.deleteIndex(name);
@@ -369,16 +369,16 @@ goog.db.ObjectStore.prototype.deleteIndex = function(name) {
     var msg = 'deleting index ' + name;
     throw goog.db.Error.fromException(ex, msg);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets number of records within a key range.
-***REMOVED***
-***REMOVED*** @param {!goog.db.KeyRange=} opt_range The key range. If undefined, this will
-***REMOVED***     count all records in the object store.
-***REMOVED*** @return {!goog.async.Deferred} The deferred number of records.
-***REMOVED***
+/**
+ * Gets number of records within a key range.
+ *
+ * @param {!goog.db.KeyRange=} opt_range The key range. If undefined, this will
+ *     count all records in the object store.
+ * @return {!goog.async.Deferred} The deferred number of records.
+ */
 goog.db.ObjectStore.prototype.count = function(opt_range) {
   var request;
   var d = new goog.async.Deferred();
@@ -391,10 +391,10 @@ goog.db.ObjectStore.prototype.count = function(opt_range) {
   }
   request.onsuccess = function(ev) {
     d.callback(ev.target.result);
- ***REMOVED*****REMOVED***
+  };
   request.onerror = function(ev) {
     d.errback(goog.db.Error.fromRequest(ev.target, this.getName()));
- ***REMOVED*****REMOVED***
+  };
   return d;
-***REMOVED***
+};
 

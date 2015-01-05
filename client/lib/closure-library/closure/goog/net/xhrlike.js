@@ -16,109 +16,109 @@ goog.provide('goog.net.XhrLike');
 
 
 
-***REMOVED***
-***REMOVED*** Interface for the common parts of XMLHttpRequest.
-***REMOVED***
-***REMOVED*** Mostly copied from externs/w3c_xml.js.
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/
-***REMOVED***
-goog.net.XhrLike = function() {***REMOVED***
+/**
+ * Interface for the common parts of XMLHttpRequest.
+ *
+ * Mostly copied from externs/w3c_xml.js.
+ *
+ * @interface
+ * @see http://www.w3.org/TR/XMLHttpRequest/
+ */
+goog.net.XhrLike = function() {};
 
 
-***REMOVED***
-***REMOVED*** Typedef that refers to either native or custom-implemented XHR objects.
-***REMOVED*** @typedef {!goog.net.XhrLike|!XMLHttpRequest}
-***REMOVED***
+/**
+ * Typedef that refers to either native or custom-implemented XHR objects.
+ * @typedef {!goog.net.XhrLike|!XMLHttpRequest}
+ */
 goog.net.XhrLike.OrNative;
 
 
-***REMOVED***
-***REMOVED*** @type {function()|null|undefined}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#handler-xhr-onreadystatechange
-***REMOVED***
+/**
+ * @type {function()|null|undefined}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#handler-xhr-onreadystatechange
+ */
 goog.net.XhrLike.prototype.onreadystatechange;
 
 
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-responsetext-attribute
-***REMOVED***
+/**
+ * @type {string}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-responsetext-attribute
+ */
 goog.net.XhrLike.prototype.responseText;
 
 
-***REMOVED***
-***REMOVED*** @type {Document}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-responsexml-attribute
-***REMOVED***
+/**
+ * @type {Document}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-responsexml-attribute
+ */
 goog.net.XhrLike.prototype.responseXML;
 
 
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#readystate
-***REMOVED***
+/**
+ * @type {number}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#readystate
+ */
 goog.net.XhrLike.prototype.readyState;
 
 
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#status
-***REMOVED***
+/**
+ * @type {number}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#status
+ */
 goog.net.XhrLike.prototype.status;
 
 
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#statustext
-***REMOVED***
+/**
+ * @type {string}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#statustext
+ */
 goog.net.XhrLike.prototype.statusText;
 
 
-***REMOVED***
-***REMOVED*** @param {string} method
-***REMOVED*** @param {string} url
-***REMOVED*** @param {?boolean=} opt_async
-***REMOVED*** @param {?string=} opt_user
-***REMOVED*** @param {?string=} opt_password
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-open()-method
-***REMOVED***
+/**
+ * @param {string} method
+ * @param {string} url
+ * @param {?boolean=} opt_async
+ * @param {?string=} opt_user
+ * @param {?string=} opt_password
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-open()-method
+ */
 goog.net.XhrLike.prototype.open = function(method, url, opt_async, opt_user,
-    opt_password) {***REMOVED***
+    opt_password) {};
 
 
-***REMOVED***
-***REMOVED*** @param {ArrayBuffer|ArrayBufferView|Blob|Document|FormData|string=} opt_data
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-send()-method
-***REMOVED***
-goog.net.XhrLike.prototype.send = function(opt_data) {***REMOVED***
+/**
+ * @param {ArrayBuffer|ArrayBufferView|Blob|Document|FormData|string=} opt_data
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-send()-method
+ */
+goog.net.XhrLike.prototype.send = function(opt_data) {};
 
 
-***REMOVED***
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-abort()-method
-***REMOVED***
-goog.net.XhrLike.prototype.abort = function() {***REMOVED***
+/**
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-abort()-method
+ */
+goog.net.XhrLike.prototype.abort = function() {};
 
 
-***REMOVED***
-***REMOVED*** @param {string} header
-***REMOVED*** @param {string} value
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader()-method
-***REMOVED***
-goog.net.XhrLike.prototype.setRequestHeader = function(header, value) {***REMOVED***
+/**
+ * @param {string} header
+ * @param {string} value
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-setrequestheader()-method
+ */
+goog.net.XhrLike.prototype.setRequestHeader = function(header, value) {};
 
 
-***REMOVED***
-***REMOVED*** @param {string} header
-***REMOVED*** @return {string}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-getresponseheader()-method
-***REMOVED***
-goog.net.XhrLike.prototype.getResponseHeader = function(header) {***REMOVED***
+/**
+ * @param {string} header
+ * @return {string}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-getresponseheader()-method
+ */
+goog.net.XhrLike.prototype.getResponseHeader = function(header) {};
 
 
-***REMOVED***
-***REMOVED*** @return {string}
-***REMOVED*** @see http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders()-method
-***REMOVED***
-goog.net.XhrLike.prototype.getAllResponseHeaders = function() {***REMOVED***
+/**
+ * @return {string}
+ * @see http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders()-method
+ */
+goog.net.XhrLike.prototype.getAllResponseHeaders = function() {};

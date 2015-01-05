@@ -12,85 +12,85 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Helper class for creating stubs for testing.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Helper class for creating stubs for testing.
+ *
+ */
 
 goog.provide('goog.testing.PropertyReplacer');
 
-***REMOVED*** @suppress {extraRequire} Needed for some tests to compile.***REMOVED***
+/** @suppress {extraRequire} Needed for some tests to compile. */
 goog.require('goog.testing.ObjectPropertyString');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Helper class for stubbing out variables and object properties for unit tests.
-***REMOVED*** This class can change the value of some variables before running the test
-***REMOVED*** cases, and to reset them in the tearDown phase.
-***REMOVED*** See googletest.StubOutForTesting as an analogy in Python:
-***REMOVED*** http://protobuf.googlecode.com/svn/trunk/python/stubout.py
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED*** <pre>var stubs = new goog.testing.PropertyReplacer();
-***REMOVED***
-***REMOVED*** function setUp() {
-***REMOVED***   // Mock functions used in all test cases.
-***REMOVED***   stubs.set(Math, 'random', function() {
-***REMOVED***     return 4;  // Chosen by fair dice roll. Guaranteed to be random.
-***REMOVED***   });
-***REMOVED*** }
-***REMOVED***
-***REMOVED*** function tearDown() {
-***REMOVED***   stubs.reset();
-***REMOVED*** }
-***REMOVED***
-***REMOVED*** function testThreeDice() {
-***REMOVED***   // Mock a constant used only in this test case.
-***REMOVED***   stubs.set(goog.global, 'DICE_COUNT', 3);
-***REMOVED***   assertEquals(12, rollAllDice());
-***REMOVED*** }</pre>
-***REMOVED***
-***REMOVED*** Constraints on altered objects:
-***REMOVED*** <ul>
-***REMOVED***   <li>DOM subclasses aren't supported.
-***REMOVED***   <li>The value of the objects' constructor property must either be equal to
-***REMOVED***       the real constructor or kept untouched.
-***REMOVED*** </ul>
-***REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Helper class for stubbing out variables and object properties for unit tests.
+ * This class can change the value of some variables before running the test
+ * cases, and to reset them in the tearDown phase.
+ * See googletest.StubOutForTesting as an analogy in Python:
+ * http://protobuf.googlecode.com/svn/trunk/python/stubout.py
+ *
+ * Example usage:
+ * <pre>var stubs = new goog.testing.PropertyReplacer();
+ *
+ * function setUp() {
+ *   // Mock functions used in all test cases.
+ *   stubs.set(Math, 'random', function() {
+ *     return 4;  // Chosen by fair dice roll. Guaranteed to be random.
+ *   });
+ * }
+ *
+ * function tearDown() {
+ *   stubs.reset();
+ * }
+ *
+ * function testThreeDice() {
+ *   // Mock a constant used only in this test case.
+ *   stubs.set(goog.global, 'DICE_COUNT', 3);
+ *   assertEquals(12, rollAllDice());
+ * }</pre>
+ *
+ * Constraints on altered objects:
+ * <ul>
+ *   <li>DOM subclasses aren't supported.
+ *   <li>The value of the objects' constructor property must either be equal to
+ *       the real constructor or kept untouched.
+ * </ul>
+ *
+ * @constructor
+ * @final
+ */
 goog.testing.PropertyReplacer = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Stores the values changed by the set() method in chronological order.
-  ***REMOVED*** Its items are objects with 3 fields: 'object', 'key', 'value'. The
-  ***REMOVED*** original value for the given key in the given object is stored under the
-  ***REMOVED*** 'value' key.
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Stores the values changed by the set() method in chronological order.
+   * Its items are objects with 3 fields: 'object', 'key', 'value'. The
+   * original value for the given key in the given object is stored under the
+   * 'value' key.
+   * @type {Array.<Object>}
+   * @private
+   */
   this.original_ = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates that a key didn't exist before having been set by the set() method.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.testing.PropertyReplacer.NO_SUCH_KEY_ = {***REMOVED***
+/**
+ * Indicates that a key didn't exist before having been set by the set() method.
+ * @type {Object}
+ * @private
+ */
+goog.testing.PropertyReplacer.NO_SUCH_KEY_ = {};
 
 
-***REMOVED***
-***REMOVED*** Tells if the given key exists in the object. Ignores inherited fields.
-***REMOVED*** @param {Object|Function} obj The JavaScript or native object or function
-***REMOVED***     whose key is to be checked.
-***REMOVED*** @param {string} key The key to check.
-***REMOVED*** @return {boolean} Whether the object has the key as own key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tells if the given key exists in the object. Ignores inherited fields.
+ * @param {Object|Function} obj The JavaScript or native object or function
+ *     whose key is to be checked.
+ * @param {string} key The key to check.
+ * @return {boolean} Whether the object has the key as own key.
+ * @private
+ */
 goog.testing.PropertyReplacer.hasKey_ = function(obj, key) {
   if (!(key in obj)) {
     return false;
@@ -121,16 +121,16 @@ goog.testing.PropertyReplacer.hasKey_ = function(obj, key) {
     return true;
   }
   return !(key in obj.constructor.prototype);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes a key from an object. Sets it to undefined or empty string if the
-***REMOVED*** delete failed.
-***REMOVED*** @param {Object|Function} obj The object or function to delete a key from.
-***REMOVED*** @param {string} key The key to delete.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Deletes a key from an object. Sets it to undefined or empty string if the
+ * delete failed.
+ * @param {Object|Function} obj The object or function to delete a key from.
+ * @param {string} key The key to delete.
+ * @private
+ */
 goog.testing.PropertyReplacer.deleteKey_ = function(obj, key) {
   try {
     delete obj[key];
@@ -149,37 +149,37 @@ goog.testing.PropertyReplacer.deleteKey_ = function(obj, key) {
     // so undefined will become 'undefined'.
     obj[key] = '';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds or changes a value in an object while saving its original state.
-***REMOVED*** @param {Object|Function} obj The JavaScript or native object or function to
-***REMOVED***     alter. See the constraints in the class description.
-***REMOVED*** @param {string} key The key to change the value for.
-***REMOVED*** @param {*} value The new value to set.
-***REMOVED***
+/**
+ * Adds or changes a value in an object while saving its original state.
+ * @param {Object|Function} obj The JavaScript or native object or function to
+ *     alter. See the constraints in the class description.
+ * @param {string} key The key to change the value for.
+ * @param {*} value The new value to set.
+ */
 goog.testing.PropertyReplacer.prototype.set = function(obj, key, value) {
   var origValue = goog.testing.PropertyReplacer.hasKey_(obj, key) ? obj[key] :
                   goog.testing.PropertyReplacer.NO_SUCH_KEY_;
   this.original_.push({object: obj, key: key, value: origValue});
   obj[key] = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Changes an existing value in an object to another one of the same type while
-***REMOVED*** saving its original state. The advantage of {@code replace} over {@link #set}
-***REMOVED*** is that {@code replace} protects against typos and erroneously passing tests
-***REMOVED*** after some members have been renamed during a refactoring.
-***REMOVED*** @param {Object|Function} obj The JavaScript or native object or function to
-***REMOVED***     alter. See the constraints in the class description.
-***REMOVED*** @param {string} key The key to change the value for. It has to be present
-***REMOVED***     either in {@code obj} or in its prototype chain.
-***REMOVED*** @param {*} value The new value to set. It has to have the same type as the
-***REMOVED***     original value. The types are compared with {@link goog.typeOf}.
-***REMOVED*** @throws {Error} In case of missing key or type mismatch.
-***REMOVED***
+/**
+ * Changes an existing value in an object to another one of the same type while
+ * saving its original state. The advantage of {@code replace} over {@link #set}
+ * is that {@code replace} protects against typos and erroneously passing tests
+ * after some members have been renamed during a refactoring.
+ * @param {Object|Function} obj The JavaScript or native object or function to
+ *     alter. See the constraints in the class description.
+ * @param {string} key The key to change the value for. It has to be present
+ *     either in {@code obj} or in its prototype chain.
+ * @param {*} value The new value to set. It has to have the same type as the
+ *     original value. The types are compared with {@link goog.typeOf}.
+ * @throws {Error} In case of missing key or type mismatch.
+ */
 goog.testing.PropertyReplacer.prototype.replace = function(obj, key, value) {
   if (!(key in obj)) {
     throw Error('Cannot replace missing property "' + key + '" in ' + obj);
@@ -189,15 +189,15 @@ goog.testing.PropertyReplacer.prototype.replace = function(obj, key, value) {
         ' with a value of different type');
   }
   this.set(obj, key, value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds an object structure for the provided namespace path.  Doesn't
-***REMOVED*** overwrite those prefixes of the path that are already objects or functions.
-***REMOVED*** @param {string} path The path to create or alter, e.g. 'goog.ui.Menu'.
-***REMOVED*** @param {*} value The value to set.
-***REMOVED***
+/**
+ * Builds an object structure for the provided namespace path.  Doesn't
+ * overwrite those prefixes of the path that are already objects or functions.
+ * @param {string} path The path to create or alter, e.g. 'goog.ui.Menu'.
+ * @param {*} value The value to set.
+ */
 goog.testing.PropertyReplacer.prototype.setPath = function(path, value) {
   var parts = path.split('.');
   var obj = goog.global;
@@ -212,26 +212,26 @@ goog.testing.PropertyReplacer.prototype.setPath = function(path, value) {
     obj = obj[part];
   }
   this.set(obj, parts[parts.length - 1], value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes the key from the object while saving its original value.
-***REMOVED*** @param {Object|Function} obj The JavaScript or native object or function to
-***REMOVED***     alter. See the constraints in the class description.
-***REMOVED*** @param {string} key The key to delete.
-***REMOVED***
+/**
+ * Deletes the key from the object while saving its original value.
+ * @param {Object|Function} obj The JavaScript or native object or function to
+ *     alter. See the constraints in the class description.
+ * @param {string} key The key to delete.
+ */
 goog.testing.PropertyReplacer.prototype.remove = function(obj, key) {
   if (goog.testing.PropertyReplacer.hasKey_(obj, key)) {
     this.original_.push({object: obj, key: key, value: obj[key]});
     goog.testing.PropertyReplacer.deleteKey_(obj, key);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets all changes made by goog.testing.PropertyReplacer.prototype.set.
-***REMOVED***
+/**
+ * Resets all changes made by goog.testing.PropertyReplacer.prototype.set.
+ */
 goog.testing.PropertyReplacer.prototype.reset = function() {
   for (var i = this.original_.length - 1; i >= 0; i--) {
     var original = this.original_[i];
@@ -243,4 +243,4 @@ goog.testing.PropertyReplacer.prototype.reset = function() {
     delete this.original_[i];
   }
   this.original_.length = 0;
-***REMOVED***
+};

@@ -1,4 +1,4 @@
-/*global describe: true, env: true, expect: true, it: true, jasmine: true, spyOn: true***REMOVED***
+/*global describe: true, env: true, expect: true, it: true, jasmine: true, spyOn: true */
 describe("@param tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/paramtag.js'),
         find = docSet.getByLongname('find')[0],

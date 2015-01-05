@@ -12,53 +12,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Message/plural format library with locale support.
-***REMOVED***
-***REMOVED*** Message format grammar:
-***REMOVED***
-***REMOVED*** messageFormatPattern := string ( "{" messageFormatElement "}" string )*
-***REMOVED*** messageFormatElement := argumentIndex [ "," elementFormat ]
-***REMOVED*** elementFormat := "plural" "," pluralStyle
-***REMOVED***                  | "selectordinal" "," ordinalStyle
-***REMOVED***                  | "select" "," selectStyle
-***REMOVED*** pluralStyle :=  pluralFormatPattern
-***REMOVED*** ordinalStyle :=  selectFormatPattern
-***REMOVED*** selectStyle :=  selectFormatPattern
-***REMOVED*** pluralFormatPattern := [ "offset" ":" offsetIndex ] pluralForms*
-***REMOVED*** selectFormatPattern := pluralForms*
-***REMOVED*** pluralForms := stringKey "{" ( "{" messageFormatElement "}"|string )* "}"
-***REMOVED***
-***REMOVED*** This is a subset of the ICU MessageFormatSyntax:
-***REMOVED***   http://userguide.icu-project.org/formatparse/messages
-***REMOVED*** See also http://go/plurals and http://go/ordinals for internal details.
-***REMOVED***
-***REMOVED***
-***REMOVED*** Message example:
-***REMOVED***
-***REMOVED*** I see {NUM_PEOPLE, plural, offset:1
-***REMOVED***         =0 {no one at all}
-***REMOVED***         =1 {{WHO}}
-***REMOVED***         one {{WHO} and one other person}
-***REMOVED***         other {{WHO} and # other people}}
-***REMOVED*** in {PLACE}.
-***REMOVED***
-***REMOVED*** Calling format({'NUM_PEOPLE': 2, 'WHO': 'Mark', 'PLACE': 'Athens'}) would
-***REMOVED*** produce "I see Mark and one other person in Athens." as output.
-***REMOVED***
-***REMOVED*** OR:
-***REMOVED***
-***REMOVED*** {NUM_FLOOR, selectordinal,
-***REMOVED***   one {Take the elevator to the #st floor.}
-***REMOVED***   two {Take the elevator to the #nd floor.}
-***REMOVED***   few {Take the elevator to the #rd floor.}
-***REMOVED***   other {Take the elevator to the #th floor.}}
-***REMOVED***
-***REMOVED*** Calling format({'NUM_FLOOR': 22}) would produce
-***REMOVED*** "Take the elevator to the 22nd floor".
-***REMOVED***
-***REMOVED*** See messageformat_test.html for more examples.
-***REMOVED***
+/**
+ * @fileoverview Message/plural format library with locale support.
+ *
+ * Message format grammar:
+ *
+ * messageFormatPattern := string ( "{" messageFormatElement "}" string )*
+ * messageFormatElement := argumentIndex [ "," elementFormat ]
+ * elementFormat := "plural" "," pluralStyle
+ *                  | "selectordinal" "," ordinalStyle
+ *                  | "select" "," selectStyle
+ * pluralStyle :=  pluralFormatPattern
+ * ordinalStyle :=  selectFormatPattern
+ * selectStyle :=  selectFormatPattern
+ * pluralFormatPattern := [ "offset" ":" offsetIndex ] pluralForms*
+ * selectFormatPattern := pluralForms*
+ * pluralForms := stringKey "{" ( "{" messageFormatElement "}"|string )* "}"
+ *
+ * This is a subset of the ICU MessageFormatSyntax:
+ *   http://userguide.icu-project.org/formatparse/messages
+ * See also http://go/plurals and http://go/ordinals for internal details.
+ *
+ *
+ * Message example:
+ *
+ * I see {NUM_PEOPLE, plural, offset:1
+ *         =0 {no one at all}
+ *         =1 {{WHO}}
+ *         one {{WHO} and one other person}
+ *         other {{WHO} and # other people}}
+ * in {PLACE}.
+ *
+ * Calling format({'NUM_PEOPLE': 2, 'WHO': 'Mark', 'PLACE': 'Athens'}) would
+ * produce "I see Mark and one other person in Athens." as output.
+ *
+ * OR:
+ *
+ * {NUM_FLOOR, selectordinal,
+ *   one {Take the elevator to the #st floor.}
+ *   two {Take the elevator to the #nd floor.}
+ *   few {Take the elevator to the #rd floor.}
+ *   other {Take the elevator to the #th floor.}}
+ *
+ * Calling format({'NUM_FLOOR': 22}) would produce
+ * "Take the elevator to the 22nd floor".
+ *
+ * See messageformat_test.html for more examples.
+ */
 
 goog.provide('goog.i18n.MessageFormat');
 
@@ -69,68 +69,68 @@ goog.require('goog.i18n.pluralRules');
 
 
 
-***REMOVED***
-***REMOVED*** Constructor of MessageFormat.
-***REMOVED*** @param {string} pattern The pattern we parse and apply positional parameters
-***REMOVED***     to.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructor of MessageFormat.
+ * @param {string} pattern The pattern we parse and apply positional parameters
+ *     to.
+ * @constructor
+ * @final
+ */
 goog.i18n.MessageFormat = function(pattern) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** All encountered literals during parse stage. Indices tell us the order of
-  ***REMOVED*** replacement.
-  ***REMOVED*** @type {!Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * All encountered literals during parse stage. Indices tell us the order of
+   * replacement.
+   * @type {!Array.<string>}
+   * @private
+   */
   this.literals_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Input pattern gets parsed into objects for faster formatting.
-  ***REMOVED*** @type {!Array.<!Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Input pattern gets parsed into objects for faster formatting.
+   * @type {!Array.<!Object>}
+   * @private
+   */
   this.parsedPattern_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Locale aware number formatter.
-  ***REMOVED*** @type {goog.i18n.NumberFormat}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Locale aware number formatter.
+   * @type {goog.i18n.NumberFormat}
+   * @private
+   */
   this.numberFormatter_ = new goog.i18n.NumberFormat(
       goog.i18n.NumberFormat.Format.DECIMAL);
 
   this.parsePattern_(pattern);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Literal strings, including '', are replaced with \uFDDF_x_ for
-***REMOVED*** parsing purposes, and recovered during format phase.
-***REMOVED*** \uFDDF is a Unicode nonprinting character, not expected to be found in the
-***REMOVED*** typical message.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Literal strings, including '', are replaced with \uFDDF_x_ for
+ * parsing purposes, and recovered during format phase.
+ * \uFDDF is a Unicode nonprinting character, not expected to be found in the
+ * typical message.
+ * @type {string}
+ * @private
+ */
 goog.i18n.MessageFormat.LITERAL_PLACEHOLDER_ = '\uFDDF_';
 
 
-***REMOVED***
-***REMOVED*** Marks a string and block during parsing.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Marks a string and block during parsing.
+ * @enum {number}
+ * @private
+ */
 goog.i18n.MessageFormat.Element_ = {
   STRING: 0,
   BLOCK: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Block type.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Block type.
+ * @enum {number}
+ * @private
+ */
 goog.i18n.MessageFormat.BlockType_ = {
   PLURAL: 0,
   ORDINAL: 1,
@@ -138,79 +138,79 @@ goog.i18n.MessageFormat.BlockType_ = {
   SIMPLE: 3,
   STRING: 4,
   UNKNOWN: 5
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mandatory option in both select and plural form.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Mandatory option in both select and plural form.
+ * @type {string}
+ * @private
+ */
 goog.i18n.MessageFormat.OTHER_ = 'other';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for looking for string literals.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for looking for string literals.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.MessageFormat.REGEX_LITERAL_ = new RegExp("'([{}#].*?)'", 'g');
 
 
-***REMOVED***
-***REMOVED*** Regular expression for looking for '' in the message.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for looking for '' in the message.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.MessageFormat.REGEX_DOUBLE_APOSTROPHE_ = new RegExp("''", 'g');
 
 
-***REMOVED***
-***REMOVED*** Formats a message, treating '#' with special meaning representing
-***REMOVED*** the number (plural_variable - offset).
-***REMOVED*** @param {!Object} namedParameters Parameters that either
-***REMOVED***     influence the formatting or are used as actual data.
-***REMOVED***     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
-***REMOVED***     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
-***REMOVED***     1st parameter could mean 5 people, which could influence plural format,
-***REMOVED***     and 2nd parameter is just a data to be printed out in proper position.
-***REMOVED*** @return {string} Formatted message.
-***REMOVED***
+/**
+ * Formats a message, treating '#' with special meaning representing
+ * the number (plural_variable - offset).
+ * @param {!Object} namedParameters Parameters that either
+ *     influence the formatting or are used as actual data.
+ *     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
+ *     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
+ *     1st parameter could mean 5 people, which could influence plural format,
+ *     and 2nd parameter is just a data to be printed out in proper position.
+ * @return {string} Formatted message.
+ */
 goog.i18n.MessageFormat.prototype.format = function(namedParameters) {
   return this.format_(namedParameters, false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a message, treating '#' as literary character.
-***REMOVED*** @param {!Object} namedParameters Parameters that either
-***REMOVED***     influence the formatting or are used as actual data.
-***REMOVED***     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
-***REMOVED***     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
-***REMOVED***     1st parameter could mean 5 people, which could influence plural format,
-***REMOVED***     and 2nd parameter is just a data to be printed out in proper position.
-***REMOVED*** @return {string} Formatted message.
-***REMOVED***
+/**
+ * Formats a message, treating '#' as literary character.
+ * @param {!Object} namedParameters Parameters that either
+ *     influence the formatting or are used as actual data.
+ *     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
+ *     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
+ *     1st parameter could mean 5 people, which could influence plural format,
+ *     and 2nd parameter is just a data to be printed out in proper position.
+ * @return {string} Formatted message.
+ */
 goog.i18n.MessageFormat.prototype.formatIgnoringPound =
     function(namedParameters) {
   return this.format_(namedParameters, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a message.
-***REMOVED*** @param {!Object} namedParameters Parameters that either
-***REMOVED***     influence the formatting or are used as actual data.
-***REMOVED***     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
-***REMOVED***     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
-***REMOVED***     1st parameter could mean 5 people, which could influence plural format,
-***REMOVED***     and 2nd parameter is just a data to be printed out in proper position.
-***REMOVED*** @param {boolean} ignorePound If true, treat '#' in plural messages as a
-***REMOVED***     literary character, else treat it as an ICU syntax character, resolving
-***REMOVED***     to the number (plural_variable - offset).
-***REMOVED*** @return {string} Formatted message.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats a message.
+ * @param {!Object} namedParameters Parameters that either
+ *     influence the formatting or are used as actual data.
+ *     I.e. in call to fmt.format({'NUM_PEOPLE': 5, 'NAME': 'Angela'}),
+ *     object {'NUM_PEOPLE': 5, 'NAME': 'Angela'} holds positional parameters.
+ *     1st parameter could mean 5 people, which could influence plural format,
+ *     and 2nd parameter is just a data to be printed out in proper position.
+ * @param {boolean} ignorePound If true, treat '#' in plural messages as a
+ *     literary character, else treat it as an ICU syntax character, resolving
+ *     to the number (plural_variable - offset).
+ * @return {string} Formatted message.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.format_ =
     function(namedParameters, ignorePound) {
   if (this.parsedPattern_.length == 0) {
@@ -231,21 +231,21 @@ goog.i18n.MessageFormat.prototype.format_ =
   }
 
   return message;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses generic block and returns a formatted string.
-***REMOVED*** @param {!Array.<!Object>} parsedPattern Holds parsed tree.
-***REMOVED*** @param {!Object} namedParameters Parameters that either influence
-***REMOVED***     the formatting or are used as actual data.
-***REMOVED*** @param {boolean} ignorePound If true, treat '#' in plural messages as a
-***REMOVED***     literary character, else treat it as an ICU syntax character, resolving
-***REMOVED***     to the number (plural_variable - offset).
-***REMOVED*** @param {!Array.<!string>} result Each formatting stage appends its product
-***REMOVED***     to the result.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses generic block and returns a formatted string.
+ * @param {!Array.<!Object>} parsedPattern Holds parsed tree.
+ * @param {!Object} namedParameters Parameters that either influence
+ *     the formatting or are used as actual data.
+ * @param {boolean} ignorePound If true, treat '#' in plural messages as a
+ *     literary character, else treat it as an ICU syntax character, resolving
+ *     to the number (plural_variable - offset).
+ * @param {!Array.<!string>} result Each formatting stage appends its product
+ *     to the result.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.formatBlock_ = function(
     parsedPattern, namedParameters, ignorePound, result) {
   for (var i = 0; i < parsedPattern.length; i++) {
@@ -281,17 +281,17 @@ goog.i18n.MessageFormat.prototype.formatBlock_ = function(
         goog.asserts.fail('Unrecognized block type.');
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats simple placeholder.
-***REMOVED*** @param {!Object} parsedPattern JSON object containing placeholder info.
-***REMOVED*** @param {!Object} namedParameters Parameters that are used as actual data.
-***REMOVED*** @param {!Array.<!string>} result Each formatting stage appends its product
-***REMOVED***     to the result.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats simple placeholder.
+ * @param {!Object} parsedPattern JSON object containing placeholder info.
+ * @param {!Object} namedParameters Parameters that are used as actual data.
+ * @param {!Array.<!string>} result Each formatting stage appends its product
+ *     to the result.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.formatSimplePlaceholder_ = function(
     parsedPattern, namedParameters, result) {
   var value = namedParameters[parsedPattern];
@@ -304,21 +304,21 @@ goog.i18n.MessageFormat.prototype.formatSimplePlaceholder_ = function(
   // will break formatter. Insert a placeholder and replace at the end.
   this.literals_.push(value);
   result.push(this.buildPlaceholder_(this.literals_));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats select block. Only one option is selected.
-***REMOVED*** @param {!Object} parsedPattern JSON object containing select block info.
-***REMOVED*** @param {!Object} namedParameters Parameters that either influence
-***REMOVED***     the formatting or are used as actual data.
-***REMOVED*** @param {boolean} ignorePound If true, treat '#' in plural messages as a
-***REMOVED***     literary character, else treat it as an ICU syntax character, resolving
-***REMOVED***     to the number (plural_variable - offset).
-***REMOVED*** @param {!Array.<!string>} result Each formatting stage appends its product
-***REMOVED***     to the result.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats select block. Only one option is selected.
+ * @param {!Object} parsedPattern JSON object containing select block info.
+ * @param {!Object} namedParameters Parameters that either influence
+ *     the formatting or are used as actual data.
+ * @param {boolean} ignorePound If true, treat '#' in plural messages as a
+ *     literary character, else treat it as an ICU syntax character, resolving
+ *     to the number (plural_variable - offset).
+ * @param {!Array.<!string>} result Each formatting stage appends its product
+ *     to the result.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.formatSelectBlock_ = function(
     parsedPattern, namedParameters, ignorePound, result) {
   var argumentIndex = parsedPattern.argumentIndex;
@@ -335,25 +335,25 @@ goog.i18n.MessageFormat.prototype.formatSelectBlock_ = function(
   }
 
   this.formatBlock_(option, namedParameters, ignorePound, result);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats plural or selectordinal block. Only one option is selected and all #
-***REMOVED*** are replaced.
-***REMOVED*** @param {!Object} parsedPattern JSON object containing plural block info.
-***REMOVED*** @param {!Object} namedParameters Parameters that either influence
-***REMOVED***     the formatting or are used as actual data.
-***REMOVED*** @param {!function(number, number=):string} pluralSelector  A select function
-***REMOVED***     from goog.i18n.pluralRules or goog.i18n.ordinalRules which determines
-***REMOVED***     which plural/ordinal form to use based on the input number's cardinality.
-***REMOVED*** @param {boolean} ignorePound If true, treat '#' in plural messages as a
-***REMOVED***     literary character, else treat it as an ICU syntax character, resolving
-***REMOVED***     to the number (plural_variable - offset).
-***REMOVED*** @param {!Array.<!string>} result Each formatting stage appends its product
-***REMOVED***     to the result.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats plural or selectordinal block. Only one option is selected and all #
+ * are replaced.
+ * @param {!Object} parsedPattern JSON object containing plural block info.
+ * @param {!Object} namedParameters Parameters that either influence
+ *     the formatting or are used as actual data.
+ * @param {!function(number, number=):string} pluralSelector  A select function
+ *     from goog.i18n.pluralRules or goog.i18n.ordinalRules which determines
+ *     which plural/ordinal form to use based on the input number's cardinality.
+ * @param {boolean} ignorePound If true, treat '#' in plural messages as a
+ *     literary character, else treat it as an ICU syntax character, resolving
+ *     to the number (plural_variable - offset).
+ * @param {!Array.<!string>} result Each formatting stage appends its product
+ *     to the result.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.formatPluralOrdinalBlock_ = function(
     parsedPattern, namedParameters, pluralSelector, ignorePound, result) {
   var argumentIndex = parsedPattern.argumentIndex;
@@ -402,34 +402,34 @@ goog.i18n.MessageFormat.prototype.formatPluralOrdinalBlock_ = function(
     var localeAwareDiff = this.numberFormatter_.format(diff);
     result.push(plural.replace(/#/g, localeAwareDiff));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses input pattern into an array, for faster reformatting with
-***REMOVED*** different input parameters.
-***REMOVED*** Parsing is locale independent.
-***REMOVED*** @param {string} pattern MessageFormat pattern to parse.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses input pattern into an array, for faster reformatting with
+ * different input parameters.
+ * Parsing is locale independent.
+ * @param {string} pattern MessageFormat pattern to parse.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parsePattern_ = function(pattern) {
   if (pattern) {
     pattern = this.insertPlaceholders_(pattern);
 
     this.parsedPattern_ = this.parseBlock_(pattern);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces string literals with literal placeholders.
-***REMOVED*** Literals are string of the form '}...', '{...' and '#...' where ... is
-***REMOVED*** set of characters not containing '
-***REMOVED*** Builds a dictionary so we can recover literals during format phase.
-***REMOVED*** @param {string} pattern Pattern to clean up.
-***REMOVED*** @return {string} Pattern with literals replaced with placeholders.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces string literals with literal placeholders.
+ * Literals are string of the form '}...', '{...' and '#...' where ... is
+ * set of characters not containing '
+ * Builds a dictionary so we can recover literals during format phase.
+ * @param {string} pattern Pattern to clean up.
+ * @return {string} Pattern with literals replaced with placeholders.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.insertPlaceholders_ = function(pattern) {
   var literals = this.literals_;
   var buildPlaceholder = goog.bind(this.buildPlaceholder_, this);
@@ -451,15 +451,15 @@ goog.i18n.MessageFormat.prototype.insertPlaceholders_ = function(pattern) {
       });
 
   return pattern;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Breaks pattern into strings and top level {...} blocks.
-***REMOVED*** @param {string} pattern (sub)Pattern to be broken.
-***REMOVED*** @return {!Array.<Object>} Each item is {type, value}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Breaks pattern into strings and top level {...} blocks.
+ * @param {string} pattern (sub)Pattern to be broken.
+ * @return {!Array.<Object>} Each item is {type, value}.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.extractParts_ = function(pattern) {
   var prevPos = 0;
   var inBlock = false;
@@ -479,7 +479,7 @@ goog.i18n.MessageFormat.prototype.extractParts_ = function(pattern) {
 
       if (braceStack.length == 0) {
         // End of the block.
-        var part = {***REMOVED***
+        var part = {};
         part.type = goog.i18n.MessageFormat.Element_.BLOCK;
         part.value = pattern.substring(prevPos, pos);
         results.push(part);
@@ -515,43 +515,43 @@ goog.i18n.MessageFormat.prototype.extractParts_ = function(pattern) {
   }
 
   return results;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A regular expression to parse the plural block, extracting the argument
-***REMOVED*** index and offset (if any).
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A regular expression to parse the plural block, extracting the argument
+ * index and offset (if any).
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.MessageFormat.PLURAL_BLOCK_RE_ =
     /^\s*(\w+)\s*,\s*plural\s*,(?:\s*offset:(\d+))?/;
 
 
-***REMOVED***
-***REMOVED*** A regular expression to parse the ordinal block, extracting the argument
-***REMOVED*** index.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A regular expression to parse the ordinal block, extracting the argument
+ * index.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.MessageFormat.ORDINAL_BLOCK_RE_ = /^\s*(\w+)\s*,\s*selectordinal\s*,/;
 
 
-***REMOVED***
-***REMOVED*** A regular expression to parse the select block, extracting the argument
-***REMOVED*** index.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A regular expression to parse the select block, extracting the argument
+ * index.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.MessageFormat.SELECT_BLOCK_RE_ = /^\s*(\w+)\s*,\s*select\s*,/;
 
 
-***REMOVED***
-***REMOVED*** Detects which type of a block is the pattern.
-***REMOVED*** @param {string} pattern Content of the block.
-***REMOVED*** @return {goog.i18n.MessageFormat.BlockType_} One of the block types.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Detects which type of a block is the pattern.
+ * @param {string} pattern Content of the block.
+ * @return {goog.i18n.MessageFormat.BlockType_} One of the block types.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parseBlockType_ = function(pattern) {
   if (goog.i18n.MessageFormat.PLURAL_BLOCK_RE_.test(pattern)) {
     return goog.i18n.MessageFormat.BlockType_.PLURAL;
@@ -570,20 +570,20 @@ goog.i18n.MessageFormat.prototype.parseBlockType_ = function(pattern) {
   }
 
   return goog.i18n.MessageFormat.BlockType_.UNKNOWN;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses generic block.
-***REMOVED*** @param {string} pattern Content of the block to parse.
-***REMOVED*** @return {!Array.<!Object>} Subblocks marked as strings, select...
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses generic block.
+ * @param {string} pattern Content of the block to parse.
+ * @return {!Array.<!Object>} Subblocks marked as strings, select...
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parseBlock_ = function(pattern) {
   var result = [];
   var parts = this.extractParts_(pattern);
   for (var i = 0; i < parts.length; i++) {
-    var block = {***REMOVED***
+    var block = {};
     if (goog.i18n.MessageFormat.Element_.STRING == parts[i].type) {
       block.type = goog.i18n.MessageFormat.BlockType_.STRING;
       block.value = parts[i].value;
@@ -617,15 +617,15 @@ goog.i18n.MessageFormat.prototype.parseBlock_ = function(pattern) {
   }
 
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a select type of a block and produces JSON object for it.
-***REMOVED*** @param {string} pattern Subpattern that needs to be parsed as select pattern.
-***REMOVED*** @return {!Object} Object with select block info.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses a select type of a block and produces JSON object for it.
+ * @param {string} pattern Subpattern that needs to be parsed as select pattern.
+ * @return {!Object} Object with select block info.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parseSelectBlock_ = function(pattern) {
   var argumentIndex = '';
   var replaceRegex = goog.i18n.MessageFormat.SELECT_BLOCK_RE_;
@@ -633,7 +633,7 @@ goog.i18n.MessageFormat.prototype.parseSelectBlock_ = function(pattern) {
     argumentIndex = name;
     return '';
   });
-  var result = {***REMOVED***
+  var result = {};
   result.argumentIndex = argumentIndex;
 
   var parts = this.extractParts_(pattern);
@@ -659,15 +659,15 @@ goog.i18n.MessageFormat.prototype.parseSelectBlock_ = function(pattern) {
   goog.asserts.assertArray(result[goog.i18n.MessageFormat.OTHER_],
                            'Missing other key in select statement.');
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a plural type of a block and produces JSON object for it.
-***REMOVED*** @param {string} pattern Subpattern that needs to be parsed as plural pattern.
-***REMOVED*** @return {!Object} Object with select block info.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses a plural type of a block and produces JSON object for it.
+ * @param {string} pattern Subpattern that needs to be parsed as plural pattern.
+ * @return {!Object} Object with select block info.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parsePluralBlock_ = function(pattern) {
   var argumentIndex = '';
   var argumentOffset = 0;
@@ -680,7 +680,7 @@ goog.i18n.MessageFormat.prototype.parsePluralBlock_ = function(pattern) {
     return '';
   });
 
-  var result = {***REMOVED***
+  var result = {};
   result.argumentIndex = argumentIndex;
   result.argumentOffset = argumentOffset;
 
@@ -708,24 +708,24 @@ goog.i18n.MessageFormat.prototype.parsePluralBlock_ = function(pattern) {
                            'Missing other key in plural statement.');
 
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses an ordinal type of a block and produces JSON object for it.
-***REMOVED*** For example the input string:
-***REMOVED***  '{FOO, selectordinal, one {Message A}other {Message B}}'
-***REMOVED*** Should result in the output object:
-***REMOVED*** {
-***REMOVED***   argumentIndex: 'FOO',
-***REMOVED***   argumentOffest: 0,
-***REMOVED***   one: [ { type: 4, value: 'Message A' } ],
-***REMOVED***   other: [ { type: 4, value: 'Message B' } ]
-***REMOVED*** }
-***REMOVED*** @param {string} pattern Subpattern that needs to be parsed as plural pattern.
-***REMOVED*** @return {!Object} Object with select block info.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses an ordinal type of a block and produces JSON object for it.
+ * For example the input string:
+ *  '{FOO, selectordinal, one {Message A}other {Message B}}'
+ * Should result in the output object:
+ * {
+ *   argumentIndex: 'FOO',
+ *   argumentOffest: 0,
+ *   one: [ { type: 4, value: 'Message A' } ],
+ *   other: [ { type: 4, value: 'Message B' } ]
+ * }
+ * @param {string} pattern Subpattern that needs to be parsed as plural pattern.
+ * @return {!Object} Object with select block info.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.parseOrdinalBlock_ = function(pattern) {
   var argumentIndex = '';
   var replaceRegex = goog.i18n.MessageFormat.ORDINAL_BLOCK_RE_;
@@ -734,7 +734,7 @@ goog.i18n.MessageFormat.prototype.parseOrdinalBlock_ = function(pattern) {
     return '';
   });
 
-  var result = {***REMOVED***
+  var result = {};
   result.argumentIndex = argumentIndex;
   result.argumentOffset = 0;
 
@@ -762,18 +762,18 @@ goog.i18n.MessageFormat.prototype.parseOrdinalBlock_ = function(pattern) {
                            'Missing other key in selectordinal statement.');
 
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds a placeholder from the last index of the array.
-***REMOVED*** @param {!Array} literals All literals encountered during parse.
-***REMOVED*** @return {string} \uFDDF_ + last index + _.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Builds a placeholder from the last index of the array.
+ * @param {!Array} literals All literals encountered during parse.
+ * @return {string} \uFDDF_ + last index + _.
+ * @private
+ */
 goog.i18n.MessageFormat.prototype.buildPlaceholder_ = function(literals) {
   goog.asserts.assert(literals.length > 0, 'Literal array is empty.');
 
   var index = (literals.length - 1).toString(10);
   return goog.i18n.MessageFormat.LITERAL_PLACEHOLDER_ + index + '_';
-***REMOVED***
+};

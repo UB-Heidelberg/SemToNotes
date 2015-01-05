@@ -1,42 +1,42 @@
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.mvc');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
-xrx.mvc =  {***REMOVED***
+/**
+ * @constructor
+ */
+xrx.mvc =  {};
 
 
 
-***REMOVED*** @const***REMOVED*** xrx.mvc.MODEL = 'model';
+/** @const */ xrx.mvc.MODEL = 'model';
 
 
 
-***REMOVED*** @const***REMOVED*** xrx.mvc.VIEW = 'view';
+/** @const */ xrx.mvc.VIEW = 'view';
 
 
 
-***REMOVED***
-***REMOVED*** Stack of model components.
-***REMOVED***
-xrx.mvc[xrx.mvc.MODEL] = {***REMOVED***
+/**
+ * Stack of model components.
+ */
+xrx.mvc[xrx.mvc.MODEL] = {};
 
 
 
-***REMOVED***
-***REMOVED*** Stack of view components.
-***REMOVED***
-xrx.mvc[xrx.mvc.VIEW] = {***REMOVED***
+/**
+ * Stack of view components.
+ */
+xrx.mvc[xrx.mvc.VIEW] = {};
 
 
 
@@ -44,70 +44,70 @@ xrx.mvc.registerComponent = function(htmlClassName, componentClass) {
   if (xrx.mvc.Components[htmlClassName] !== undefined) throw Error('Component <' + htmlClassName +
       '> already registered.');
   xrx.mvc.Components[htmlClassName] = componentClass;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.addComponent_ = function(id, component, mv) {
   xrx.mvc[mv][id] = component;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Add a model component to the MVC stack.
-***REMOVED***
+/**
+ * Add a model component to the MVC stack.
+ */
 xrx.mvc.addModelComponent = function(id, component) {
   xrx.mvc.addComponent_(id, component, xrx.mvc.MODEL);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Add a view component to the MVC stack.
-***REMOVED***
+/**
+ * Add a view component to the MVC stack.
+ */
 xrx.mvc.addViewComponent = function(id, component) {
   xrx.mvc.addComponent_(id, component, xrx.mvc.VIEW);
-***REMOVED***
+};
 
 
 
 xrx.mvc.getComponent = function(id) {
   return xrx.mvc[xrx.mvc.MODEL][id] ||
       xrx.mvc[xrx.mvc.VIEW][id];
-***REMOVED***
+};
 
 
 
 xrx.mvc.getModelComponent = function(id) {
   return xrx.mvc[xrx.mvc.MODEL][id];
-***REMOVED***
+};
 
 
 
 xrx.mvc.getViewComponent = function(id) {
   return xrx.mvc[xrx.mvc.VIEW][id];
-***REMOVED***
+};
 
 
 
 xrx.mvc.getModelComponents = function() {
   return xrx.mvc[xrx.mvc.MODEL];
-***REMOVED***
+};
 
 
 
 xrx.mvc.getViewComponents = function() {
   return xrx.mvc[xrx.mvc.VIEW];
-***REMOVED***
+};
 
 
 xrx.mvc.hasComponent = function(id) {
   return !!xrx.mvc.getComponent(id);
-***REMOVED***
+};
 
 
 
@@ -117,7 +117,7 @@ xrx.mvc.removeModelComponent = function(id) {
     component.mvcRemove();
     goog.object.remove(xrx.mvc[xrx.mvc.MODEL], id);
   }
-***REMOVED***
+};
 
 
 
@@ -126,7 +126,7 @@ xrx.mvc.removeModelComponents = function(parent) {
     if (goog.dom.contains(parent, component.getElement()))
         if (parent !== component.getElement()) xrx.mvc.removeModelComponent(id);
   }, this);
-***REMOVED***
+};
 
 
 
@@ -136,7 +136,7 @@ xrx.mvc.removeViewComponent = function(id) {
     component.mvcRemove();
     goog.object.remove(xrx.mvc[xrx.mvc.VIEW], id);
   }
-***REMOVED***
+};
 
 
 
@@ -148,7 +148,7 @@ xrx.mvc.removeViewComponents = function(parent) {
       }
     }
   }, this);
-***REMOVED***
+};
 
 
 
@@ -162,4 +162,4 @@ xrx.mvc.getInstanceDefault = function() {
     }
   }
   return instance;
-***REMOVED***
+};

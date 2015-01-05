@@ -13,15 +13,15 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility to attempt native JSON processing, falling back to
-***REMOVED***     goog.json if not available.
-***REMOVED***
-***REMOVED***     This is intended as a drop-in for current users of goog.json who want
-***REMOVED***     to take advantage of native JSON if present.
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Utility to attempt native JSON processing, falling back to
+ *     goog.json if not available.
+ *
+ *     This is intended as a drop-in for current users of goog.json who want
+ *     to take advantage of native JSON if present.
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.json.hybrid');
 
@@ -29,12 +29,12 @@ goog.require('goog.asserts');
 goog.require('goog.json');
 
 
-***REMOVED***
-***REMOVED*** Attempts to serialize the JSON string natively, falling back to
-***REMOVED*** {@code goog.json.serialize} if unsuccessful.
-***REMOVED*** @param {!Object} obj JavaScript object to serialize to JSON.
-***REMOVED*** @return {string} Resulting JSON string.
-***REMOVED***
+/**
+ * Attempts to serialize the JSON string natively, falling back to
+ * {@code goog.json.serialize} if unsuccessful.
+ * @param {!Object} obj JavaScript object to serialize to JSON.
+ * @return {string} Resulting JSON string.
+ */
 goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON ?
     goog.global['JSON']['stringify'] :
     function(obj) {
@@ -48,18 +48,18 @@ goog.json.hybrid.stringify = goog.json.USE_NATIVE_JSON ?
       }
 
       return goog.json.serialize(obj);
-   ***REMOVED*****REMOVED***
+    };
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the JSON string natively, falling back to
-***REMOVED*** the supplied {@code fallbackParser} if unsuccessful.
-***REMOVED*** @param {string} jsonString JSON string to parse.
-***REMOVED*** @param {function(string):Object} fallbackParser Fallback JSON parser used
-***REMOVED***     if native
-***REMOVED*** @return {!Object} Resulting JSON object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to parse the JSON string natively, falling back to
+ * the supplied {@code fallbackParser} if unsuccessful.
+ * @param {string} jsonString JSON string to parse.
+ * @param {function(string):Object} fallbackParser Fallback JSON parser used
+ *     if native
+ * @return {!Object} Resulting JSON object.
+ * @private
+ */
 goog.json.hybrid.parse_ = function(jsonString, fallbackParser) {
   if (goog.global.JSON) {
     try {
@@ -74,30 +74,30 @@ goog.json.hybrid.parse_ = function(jsonString, fallbackParser) {
   var obj = fallbackParser(jsonString);
   goog.asserts.assert(obj);
   return obj;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the JSON string natively, falling back to
-***REMOVED*** {@code goog.json.parse} if unsuccessful.
-***REMOVED*** @param {string} jsonString JSON string to parse.
-***REMOVED*** @return {!Object} Resulting JSON object.
-***REMOVED***
+/**
+ * Attempts to parse the JSON string natively, falling back to
+ * {@code goog.json.parse} if unsuccessful.
+ * @param {string} jsonString JSON string to parse.
+ * @return {!Object} Resulting JSON object.
+ */
 goog.json.hybrid.parse = goog.json.USE_NATIVE_JSON ?
     goog.global['JSON']['parse'] :
     function(jsonString) {
       return goog.json.hybrid.parse_(jsonString, goog.json.parse);
-   ***REMOVED*****REMOVED***
+    };
 
 
-***REMOVED***
-***REMOVED*** Attempts to parse the JSON string natively, falling back to
-***REMOVED*** {@code goog.json.unsafeParse} if unsuccessful.
-***REMOVED*** @param {string} jsonString JSON string to parse.
-***REMOVED*** @return {!Object} Resulting JSON object.
-***REMOVED***
+/**
+ * Attempts to parse the JSON string natively, falling back to
+ * {@code goog.json.unsafeParse} if unsuccessful.
+ * @param {string} jsonString JSON string to parse.
+ * @return {!Object} Resulting JSON object.
+ */
 goog.json.hybrid.unsafeParse = goog.json.USE_NATIVE_JSON ?
     goog.global['JSON']['parse'] :
     function(jsonString) {
       return goog.json.hybrid.parse_(jsonString, goog.json.unsafeParse);
-   ***REMOVED*****REMOVED***
+    };

@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Trogedit unit tests for goog.editor.SeamlessField.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED*** @suppress {missingProperties} There are many mocks in this unit test,
-***REMOVED***     and the mocks don't fit well in the type system.
-***REMOVED***
+/**
+ * @fileoverview Trogedit unit tests for goog.editor.SeamlessField.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ * @suppress {missingProperties} There are many mocks in this unit test,
+ *     and the mocks don't fit well in the type system.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.editor.seamlessfield_test');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.Range');
 goog.require('goog.editor.BrowserFeature');
 goog.require('goog.editor.Field');
 goog.require('goog.editor.SeamlessField');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.style');
 goog.require('goog.testing.MockClock');
@@ -211,7 +211,7 @@ function testDispatchIframeResizedForBodyHeight() {
       var bodyHeight = blendedField.getIframeBodyHeightGecko_();
       blendedField.getIframeBodyHeightGecko_ = function() {
         return bodyHeight + 1;
-     ***REMOVED*****REMOVED***
+      };
       blendedField.sizeIframeToBodyHeightGecko_();
       assertTrue('Iframe resize must be dispatched for Body', resizeCalled);
     } finally {
@@ -243,12 +243,12 @@ function testDispatchBlur() {
     var mockRange = new goog.testing.MockRange();
     blendedField.getRange = function() {
       return mockRange;
-   ***REMOVED*****REMOVED***
+    };
     goog.dom.Range.clearSelection = function(opt_window) {
       clearSelection(opt_window);
       cleared = true;
       clearedWindow = opt_window;
-   ***REMOVED*****REMOVED***
+    };
     var clock = new goog.testing.MockClock(true);
 
     mockRange.collapse(true);
@@ -284,7 +284,7 @@ function testSetMinHeight() {
       var normalHeight = goog.style.getSize(iframe).height;
 
       var delayedChangeCalled = false;
-    ***REMOVED***field, goog.editor.Field.EventType.DELAYEDCHANGE,
+      goog.events.listen(field, goog.editor.Field.EventType.DELAYEDCHANGE,
           function() {
             delayedChangeCalled = true;
           });
@@ -311,9 +311,9 @@ function testSetMinHeight() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 1649967 This code used to throw a Javascript error.
-***REMOVED***
+/**
+ * @bug 1649967 This code used to throw a Javascript error.
+ */
 function testSetMinHeightWithNoIframe() {
   if (goog.editor.BrowserFeature.HAS_CONTENT_EDITABLE) {
     try {
@@ -369,7 +369,7 @@ function testManipulateDom() {
   var clock = new goog.testing.MockClock(true);
 
   var delayedChangeCalled = 0;
-***REMOVED***editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
       function() {
         delayedChangeCalled++;
       });
@@ -434,14 +434,14 @@ function createSeamlessIframe() {
 }
 
 
-***REMOVED***
-***REMOVED*** Initialize a new editable field for the field id 'field', with the given
-***REMOVED*** innerHTML and styles.
-***REMOVED***
-***REMOVED*** @param {string} innerHTML html for the field contents.
-***REMOVED*** @param {Object} styles Key-value pairs for styles on the field.
-***REMOVED*** @return {goog.editor.SeamlessField} The field.
-***REMOVED***
+/**
+ * Initialize a new editable field for the field id 'field', with the given
+ * innerHTML and styles.
+ *
+ * @param {string} innerHTML html for the field contents.
+ * @param {Object} styles Key-value pairs for styles on the field.
+ * @return {goog.editor.SeamlessField} The field.
+ */
 function initSeamlessField(innerHTML, styles) {
   var field = new goog.editor.SeamlessField('field');
   fieldElem.innerHTML = innerHTML;
@@ -450,15 +450,15 @@ function initSeamlessField(innerHTML, styles) {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that the original field element for the given goog.editor.Field has
-***REMOVED*** the same size before and after attaching the given iframe. If this is not
-***REMOVED*** true, then the field will fidget while we're initializing the field,
-***REMOVED*** and that's not what we want.
-***REMOVED***
-***REMOVED*** @param {goog.editor.Field} fieldObj The field.
-***REMOVED*** @param {HTMLIFrameElement} iframe The iframe.
-***REMOVED***
+/**
+ * Make sure that the original field element for the given goog.editor.Field has
+ * the same size before and after attaching the given iframe. If this is not
+ * true, then the field will fidget while we're initializing the field,
+ * and that's not what we want.
+ *
+ * @param {goog.editor.Field} fieldObj The field.
+ * @param {HTMLIFrameElement} iframe The iframe.
+ */
 function assertAttachSeamlessIframeSizesCorrectly(fieldObj, iframe) {
   var size = goog.style.getSize(fieldObj.getOriginalElement());
   fieldObj.attachIframe(iframe);

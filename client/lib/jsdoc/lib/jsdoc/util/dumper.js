@@ -1,10 +1,10 @@
-/*global Set***REMOVED***
-***REMOVED***
-***REMOVED*** Recursively print out all names and values in a data structure.
-***REMOVED*** @module jsdoc/util/dumper
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/*global Set */
+/**
+ * Recursively print out all names and values in a data structure.
+ * @module jsdoc/util/dumper
+ * @author Michael Mathews <micmath@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 'use strict';
 
 var util = require('util');
@@ -26,7 +26,7 @@ ObjectWalker.prototype.seen = function(object) {
         result = object.hasBeenSeenByWalkerDumper;
     }
     return result;
-***REMOVED***
+};
 
 ObjectWalker.prototype.markAsSeen = function(object) {
     if (setDefined) {
@@ -35,7 +35,7 @@ ObjectWalker.prototype.markAsSeen = function(object) {
         object.hasBeenSeenByWalkerDumper = true;
         this.seenItems.push(object);
     }
-***REMOVED***
+};
 
 ObjectWalker.prototype.cleanSeenFlag = function() {
     if (setDefined) {
@@ -45,21 +45,21 @@ ObjectWalker.prototype.cleanSeenFlag = function() {
             delete object.hasBeenSeenByWalkerDumper;
         });
     }
-***REMOVED***
+};
 
 // some objects are unwalkable, like Java native objects
 ObjectWalker.prototype.isUnwalkable = function(o) {
     return (o && typeof o === 'object' && typeof o.constructor === 'undefined');
-***REMOVED***
+};
 
 ObjectWalker.prototype.isFunction = function(o) {
     return (o && typeof o === 'function' || o instanceof Function);
-***REMOVED***
+};
 
 ObjectWalker.prototype.isObject = function(o) {
     return o && o instanceof Object ||
         (o && typeof o.constructor !== 'undefined' && o.constructor.name === 'Object');
-***REMOVED***
+};
 
 ObjectWalker.prototype.checkCircularRefs = function(o, func) {
     if ( this.seen(o) ) {
@@ -69,12 +69,12 @@ ObjectWalker.prototype.checkCircularRefs = function(o, func) {
         this.markAsSeen(o);
         return func(o);
     }
-***REMOVED***
+};
 
 ObjectWalker.prototype.walk = function(o) {
     var result;
 
-  ***REMOVED***
+    var self = this;
 
     if ( this.isUnwalkable(o) ) {
         result = '<Object>';
@@ -99,14 +99,14 @@ ObjectWalker.prototype.walk = function(o) {
         result = '<Date ' + o.toUTCString() + '>';
     }
     else if ( util.isError(o) ) {
-        result = { message: o.message***REMOVED*****REMOVED***
+        result = { message: o.message };
     }
     else if ( this.isFunction(o) ) {
         result = '<Function' + (o.name ? ' ' + o.name : '') + '>';
     }
     else if ( this.isObject(o) && o !== null ) {
         result = this.checkCircularRefs(o, function(obj) {
-            var newObj = {***REMOVED***
+            var newObj = {};
             Object.keys(obj).forEach(function(key) {
                 if (!setDefined && key === 'hasBeenSeenByWalkerDumper') { return; }
                 newObj[key] = self.walk(obj[key]);
@@ -121,15 +121,15 @@ ObjectWalker.prototype.walk = function(o) {
     }
 
     return result;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** @param {*} object
-***REMOVED***
+/**
+ * @param {*} object
+ */
 exports.dump = function(object) {
     var walker = new ObjectWalker();
     var result = JSON.stringify(walker.walk(object), null, 4);
     walker.cleanSeenFlag();
 
     return result;
-***REMOVED***
+};

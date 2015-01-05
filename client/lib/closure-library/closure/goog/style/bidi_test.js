@@ -65,7 +65,7 @@ function testSetScrollOffsetRtl() {
     goog.style.bidi.setScrollOffset(scrollElm, pixels);
     assertEquals(originalDistance + pixels,
         goog.style.getRelativePosition(scrolledElm, document.body).x);
- ***REMOVED*****REMOVED***
+  };
   scrollAndAssert(0);
   scrollAndAssert(50);
   scrollAndAssert(100);
@@ -83,7 +83,7 @@ function testSetScrollOffsetLtr() {
     goog.style.bidi.setScrollOffset(scrollElm, pixels);
     assertEquals(originalDistance - pixels,
         goog.style.getRelativePosition(scrolledElm, document.body).x);
- ***REMOVED*****REMOVED***
+  };
   scrollAndAssert(0);
   scrollAndAssert(50);
   scrollAndAssert(100);

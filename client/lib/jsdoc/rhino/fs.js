@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** Partial Rhino shim for Node.js' `fs` module.
-***REMOVED*** @see http://nodejs.org/api/fs.html
-***REMOVED***
+/**
+ * Partial Rhino shim for Node.js' `fs` module.
+ * @see http://nodejs.org/api/fs.html
+ */
 'use strict';
 
 var path = require('path');
@@ -33,7 +33,7 @@ exports.readFileSync = function readFileSync(filename, encoding) {
     encoding = checkEncoding(encoding, 'fs.readFile[Sync]');
 
     return readFile(filename, encoding);
-***REMOVED***
+};
 exports.readFile = asyncify(exports.readFileSync);
 
 // in node 0.8, path.exists() and path.existsSync() moved to the "fs" module
@@ -57,8 +57,8 @@ var statSync = exports.statSync = function statSync(_path) {
             // java.io.File resolves symlinks
             return false;
         }
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};
 exports.stat = asyncify(statSync);
 
 // java.io.File resolves symlinks, so we can alias `lstat` to `stat`
@@ -80,7 +80,7 @@ var readdirSync = exports.readdirSync = function readdirSync(_path) {
         });
 
     return files;
-***REMOVED***
+};
 exports.readdir = asyncify(readdirSync);
 
 // JSDoc extension to `fs` module
@@ -92,12 +92,12 @@ var toDir = exports.toDir = function toDir(_path) {
     } else {
         return path.dirname(_path);
     }
-***REMOVED***
+};
 
 var mkdirSync = exports.mkdirSync = function mkdirSync(_path) {
     var dir_path = toDir(_path);
     ( new java.io.File(dir_path) ).mkdir();
-***REMOVED***
+};
 exports.mkdir = asyncify(mkdirSync);
 
 // JSDoc extension to `fs` module
@@ -107,7 +107,7 @@ exports.mkPath = function mkPath(_path) {
     }
 
     ( new java.io.File(path.resolve(global.env.pwd, _path)) ).mkdirs();
-***REMOVED***
+};
 
 // JSDoc extension to `fs` module
 exports.copyFileSync = function copyFileSync(inFile, outDir, fileName) {
@@ -130,7 +130,7 @@ exports.copyFileSync = function copyFileSync(inFile, outDir, fileName) {
 
     bos.close();
     bis.close();
-***REMOVED***
+};
 exports.copyFile = asyncify(exports.copyFileSync);
 
 exports.writeFileSync = function writeFileSync(filename, data, encoding) {
@@ -141,7 +141,7 @@ exports.writeFileSync = function writeFileSync(filename, data, encoding) {
             new java.io.FileOutputStream(filename),
             encoding
         )
-  ***REMOVED***
+    );
 
     try {
         out.write(data);
@@ -150,15 +150,15 @@ exports.writeFileSync = function writeFileSync(filename, data, encoding) {
         out.flush();
         out.close();
     }
-***REMOVED***
+};
 exports.writeFile = asyncify(exports.writeFileSync);
 
 exports.rmdirSync = function rmdirSync(_path) {
     throw new Error('not implemented');
-***REMOVED***
+};
 exports.rmdir = asyncify(exports.rmdirSync);
 
 exports.unlinkSync = function unlinkSync(_path) {
     throw new Error('not implemented');
-***REMOVED***
+};
 exports.unlink = asyncify(exports.unlinkSync);

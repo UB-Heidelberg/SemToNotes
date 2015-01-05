@@ -16,8 +16,8 @@ See the COPYING file for details.
   goog.require('goog.a11y.aria');
   goog.require('goog.a11y.aria.Role');
   goog.require('goog.a11y.aria.State');
- ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
+  goog.require('goog.events.EventType');
   goog.require('goog.html.SafeHtml');
   goog.require('goog.html.testing');
   goog.require('goog.fx.css3');
@@ -83,7 +83,7 @@ See the COPYING file for details.
     dialog.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
     var dialogElement = dialog.getElement();
     var focusCounter = 0;
-  ***REMOVED***dialogElement, 'focus', function() {
+    goog.events.listen(dialogElement, 'focus', function() {
       focusCounter++;
     });
     iframeInput.focus();
@@ -113,20 +113,20 @@ See the COPYING file for details.
     assertFalse(goog.style.isElementShown(dialog.getTitleCloseElement()));
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Helper that clicks the first button in the dialog and checks if that
-  ***REMOVED*** results in a goog.ui.Dialog.EventType.SELECT being dispatched.
-  ***REMOVED*** @param {boolean} disableButton Whether to disable the button being
-  ***REMOVED***     tested.
-  ***REMOVED*** @return {boolean} Whether a goog.ui.Dialog.EventType.SELECT was dispatched.
- ***REMOVED*****REMOVED***
+  /**
+   * Helper that clicks the first button in the dialog and checks if that
+   * results in a goog.ui.Dialog.EventType.SELECT being dispatched.
+   * @param {boolean} disableButton Whether to disable the button being
+   *     tested.
+   * @return {boolean} Whether a goog.ui.Dialog.EventType.SELECT was dispatched.
+   */
   function checkSelectDispatchedOnButtonClick(disableButton) {
     var aButton = dialog.getButtonElement().getElementsByTagName('BUTTON')[0];
     assertNotEquals(aButton, null);
     aButton.disabled = disableButton;
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
     goog.testing.events.fireClickSequence(aButton);
     return wasCalled;
   }
@@ -147,8 +147,8 @@ See the COPYING file for details.
     var okButton = dialog.getButtonElement().getElementsByTagName('BUTTON')[1];
     assertNotEquals(okButton, null);
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
     // Test that event is not dispatched when default button is disabled.
     okButton.disabled = true;
     goog.testing.events.fireKeySequence(dialog.getElement(),
@@ -166,7 +166,7 @@ See the COPYING file for details.
     okButton.focus();
 
     var callRecorder = goog.testing.recordFunction();
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
 
     okButton.disabled = true;
     goog.testing.events.fireKeySequence(okButton, goog.events.KeyCodes.ENTER);
@@ -199,8 +199,8 @@ See the COPYING file for details.
     var wasCalled = false;
     var callRecorder = function() {
       wasCalled = true;
-   ***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
 
     // Enter does not fire on the enabled form element.
     goog.testing.events.fireKeySequence(formElement,
@@ -222,8 +222,8 @@ See the COPYING file for details.
     var wasCalled = false;
     var callRecorder = function() {
       wasCalled = true;
-   ***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
 
     // Escape does not fire on the enabled select box.
     goog.testing.events.fireKeySequence(select,
@@ -270,7 +270,7 @@ See the COPYING file for details.
       wasCalled = true;
     }
     var element = goog.dom.getElement('button');
-  ***REMOVED***element, goog.events.EventType.KEYPRESS, called);
+    goog.events.listen(element, goog.events.EventType.KEYPRESS, called);
     // Listen for 'Enter' on the button.
     // This tests using a dialog with no ButtonSet that has been set. Uses
     // a custom button.  The callback should be called with no exception thrown.
@@ -292,7 +292,7 @@ See the COPYING file for details.
       call = true;
     }
     var element = document.getElementById("linkel");
-  ***REMOVED***element, goog.events.EventType.KEYDOWN, called);
+    goog.events.listen(element, goog.events.EventType.KEYDOWN, called);
     goog.testing.events.fireKeySequence(element, goog.events.KeyCodes.ENTER);
 
     assertTrue('Should have gotten event on the link', call);
@@ -307,15 +307,15 @@ See the COPYING file for details.
 
     var preventDefaulter = function(e) {
       e.preventDefault();
-   ***REMOVED*****REMOVED***
+    };
 
-  ***REMOVED***
+    goog.events.listen(
         dialog, goog.ui.Dialog.EventType.SELECT, preventDefaulter);
-  ***REMOVED***
+    goog.events.listen(
         document.body, goog.events.EventType.KEYPRESS, function() {
           keypressCount++;
         });
-  ***REMOVED***
+    goog.events.listen(
         document.body, goog.events.EventType.KEYDOWN, function() {
           keydownCount++;
         });
@@ -347,18 +347,18 @@ See the COPYING file for details.
 
   function testEnterKeyHandledInKeypress() {
     var inKeyPress = false;
-  ***REMOVED***
+    goog.events.listen(
         document.body, goog.events.EventType.KEYPRESS,
         function() {
           inKeyPress = true;
-        }, true /* capture***REMOVED***);
-  ***REMOVED***
+        }, true /* capture */);
+    goog.events.listen(
         document.body, goog.events.EventType.KEYPRESS,
         function() {
           inKeyPress = false;
-        }, false /* !capture***REMOVED***);
+        }, false /* !capture */);
     var selectCalled = false;
-  ***REMOVED***
+    goog.events.listen(
         dialog, goog.ui.Dialog.EventType.SELECT, function() {
           selectCalled = true;
           assertTrue(
@@ -375,9 +375,9 @@ See the COPYING file for details.
     dialog.setupBackwardTabWrap = goog.testing.recordFunction();
     shiftTabRecorder = goog.testing.recordFunction();
 
-  ***REMOVED***
+    goog.events.listen(
         dialog.getElement(), goog.events.EventType.KEYDOWN, shiftTabRecorder);
-    var shiftProperties = { shiftKey: true***REMOVED*****REMOVED***
+    var shiftProperties = { shiftKey: true };
     goog.testing.events.fireKeySequence(
         dialog.getElement(), goog.events.KeyCodes.TAB, shiftProperties);
 
@@ -392,16 +392,16 @@ See the COPYING file for details.
     var aSpan = document.createElement('SPAN');
     aButton.appendChild(aSpan);
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT, callRecorder);
     goog.testing.events.fireClickSequence(aSpan);
     assertTrue(wasCalled);
   }
 
   function testAfterHideEvent() {
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.AFTER_HIDE,
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.AFTER_HIDE,
         callRecorder);
     dialog.setVisible(false);
     assertTrue(wasCalled);
@@ -410,8 +410,8 @@ See the COPYING file for details.
   function testAfterShowEvent() {
     dialog.setVisible(false);
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.AFTER_SHOW,
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.AFTER_SHOW,
         callRecorder);
     dialog.setVisible(true);
     assertTrue(wasCalled);
@@ -531,7 +531,7 @@ See the COPYING file for details.
   function testIframeMask() {
     // generate a new dialog
     dialog.dispose();
-    dialog = new goog.ui.Dialog(null, true /* iframe mask***REMOVED***);
+    dialog = new goog.ui.Dialog(null, true /* iframe mask */);
     dialog.setVisible(true);
 
     var iframes =
@@ -544,7 +544,7 @@ See the COPYING file for details.
   function testNonModalDialog() {
     // generate a new dialog
     dialog.dispose();
-    dialog = new goog.ui.Dialog(null, true /* iframe mask***REMOVED***);
+    dialog = new goog.ui.Dialog(null, true /* iframe mask */);
     dialog.setModal(false);
     assertAriaHidden(false);
     dialog.setVisible(true);
@@ -559,7 +559,7 @@ See the COPYING file for details.
 
   function testSwapModalForOpenDialog() {
     dialog.dispose();
-    dialog = new goog.ui.Dialog(null, true /* iframe mask***REMOVED***);
+    dialog = new goog.ui.Dialog(null, true /* iframe mask */);
     assertAriaHidden(false);
     dialog.setVisible(true);
     assertAriaHidden(true);
@@ -588,11 +588,11 @@ See the COPYING file for details.
         goog.style.isElementShown(dialog.getBackgroundElement()));
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Assert that the dialog has buttons with the given keys in the correct
-  ***REMOVED*** order.
-  ***REMOVED*** @param {Array.<string>} keys An array of button keys.
- ***REMOVED*****REMOVED***
+  /**
+   * Assert that the dialog has buttons with the given keys in the correct
+   * order.
+   * @param {Array.<string>} keys An array of button keys.
+   */
   function assertButtons(keys) {
     var buttons = dialog.getElement().getElementsByTagName(
         goog.dom.TagName.BUTTON);
@@ -606,8 +606,8 @@ See the COPYING file for details.
   function testButtonSetOkFiresDialogEventOnEscape() {
     dialog.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
     var wasCalled = false;
-    var callRecorder = function() { wasCalled = true;***REMOVED*****REMOVED***
-  ***REMOVED***dialog, goog.ui.Dialog.EventType.SELECT,
+    var callRecorder = function() { wasCalled = true; };
+    goog.events.listen(dialog, goog.ui.Dialog.EventType.SELECT,
         callRecorder);
     goog.testing.events.fireKeySequence(
         dialog.getElement(), goog.events.KeyCodes.ESC);
@@ -762,7 +762,7 @@ See the COPYING file for details.
 
   function testDisposingVisibleDialogWithTransitionsDoesNotThrowException() {
     var transition = goog.fx.css3.fadeIn(dialog.getElement(),
-        0.1 /* duration***REMOVED***);
+        0.1 /* duration */);
 
     dialog.setTransition(transition, transition, transition, transition);
     dialog.setVisible(true);

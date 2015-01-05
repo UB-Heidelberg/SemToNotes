@@ -13,99 +13,99 @@
 // limitations under the License.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a set of test functions that use
-***REMOVED*** asynchronous functions that cannot be meaningfully mocked.
-***REMOVED***
-***REMOVED*** To create a Google-compatable JsUnit test using this test case, put the
-***REMOVED*** following snippet in your test:
-***REMOVED***
-***REMOVED***   var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
-***REMOVED***
-***REMOVED*** To make the test runner wait for your asynchronous behaviour, use:
-***REMOVED***
-***REMOVED***   asyncTestCase.waitForAsync('Waiting for xhr to respond');
-***REMOVED***
-***REMOVED*** The next test will not start until the following call is made, or a
-***REMOVED*** timeout occurs:
-***REMOVED***
-***REMOVED***   asyncTestCase.continueTesting();
-***REMOVED***
-***REMOVED*** There does NOT need to be a 1:1 mapping of waitForAsync calls and
-***REMOVED*** continueTesting calls. The next test will be run after a single call to
-***REMOVED*** continueTesting is made, as long as there is no subsequent call to
-***REMOVED*** waitForAsync in the same thread.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED***   // Returning here would cause the next test to be run.
-***REMOVED***   asyncTestCase.waitForAsync('description 1');
-***REMOVED***   // Returning here would***REMOVED***not* cause the next test to be run.
-***REMOVED***   // Only effect of additional waitForAsync() calls is an updated
-***REMOVED***   // description in the case of a timeout.
-***REMOVED***   asyncTestCase.waitForAsync('updated description');
-***REMOVED***   asyncTestCase.continueTesting();
-***REMOVED***   // Returning here would cause the next test to be run.
-***REMOVED***   asyncTestCase.waitForAsync('just kidding, still running.');
-***REMOVED***   // Returning here would***REMOVED***not* cause the next test to be run.
-***REMOVED***
-***REMOVED*** The test runner can also be made to wait for more than one asynchronous
-***REMOVED*** event with:
-***REMOVED***
-***REMOVED***   asyncTestCase.waitForSignals(n);
-***REMOVED***
-***REMOVED*** The next test will not start until asyncTestCase.signal() is called n times,
-***REMOVED*** or the test step timeout is exceeded.
-***REMOVED***
-***REMOVED*** This class supports asynchronous behaviour in all test functions except for
-***REMOVED*** tearDownPage. If such support is needed, it can be added.
-***REMOVED***
-***REMOVED*** Example Usage:
-***REMOVED***
-***REMOVED***   var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
-***REMOVED***   // Optionally, set a longer-than-normal step timeout.
-***REMOVED***   asyncTestCase.stepTimeout = 30***REMOVED*** 1000;
-***REMOVED***
-***REMOVED***   function testSetTimeout() {
-***REMOVED***     var step = 0;
-***REMOVED***     function stepCallback() {
-***REMOVED***       step++;
-***REMOVED***       switch (step) {
-***REMOVED***         case 1:
-***REMOVED***           var startTime = goog.now();
-***REMOVED***           asyncTestCase.waitForAsync('step 1');
-***REMOVED***           window.setTimeout(stepCallback, 100);
-***REMOVED***           break;
-***REMOVED***         case 2:
-***REMOVED***           assertTrue('Timeout fired too soon',
-***REMOVED***               goog.now() - startTime >= 100);
-***REMOVED***           asyncTestCase.waitForAsync('step 2');
-***REMOVED***           window.setTimeout(stepCallback, 100);
-***REMOVED***           break;
-***REMOVED***         case 3:
-***REMOVED***           assertTrue('Timeout fired too soon',
-***REMOVED***               goog.now() - startTime >= 200);
-***REMOVED***           asyncTestCase.continueTesting();
-***REMOVED***           break;
-***REMOVED***         default:
-***REMOVED***           fail('Unexpected call to stepCallback');
-***REMOVED***       }
-***REMOVED***     }
-***REMOVED***     stepCallback();
-***REMOVED***   }
-***REMOVED***
-***REMOVED*** Known Issues:
-***REMOVED***   IE7 Exceptions:
-***REMOVED***     As the failingtest.html will show, it appears as though ie7 does not
-***REMOVED***     propagate an exception past a function called using the func.call()
-***REMOVED***     syntax. This causes case 3 of the failing tests (exceptions) to show up
-***REMOVED***     as timeouts in IE.
-***REMOVED***   window.onerror:
-***REMOVED***     This seems to catch errors only in ff2/ff3. It does not work in Safari or
-***REMOVED***     IE7. The consequence of this is that exceptions that would have been
-***REMOVED***     caught by window.onerror show up as timeouts.
-***REMOVED***
-***REMOVED*** @author agrieve@google.com (Andrew Grieve)
-***REMOVED***
+/**
+ * @fileoverview A class representing a set of test functions that use
+ * asynchronous functions that cannot be meaningfully mocked.
+ *
+ * To create a Google-compatable JsUnit test using this test case, put the
+ * following snippet in your test:
+ *
+ *   var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
+ *
+ * To make the test runner wait for your asynchronous behaviour, use:
+ *
+ *   asyncTestCase.waitForAsync('Waiting for xhr to respond');
+ *
+ * The next test will not start until the following call is made, or a
+ * timeout occurs:
+ *
+ *   asyncTestCase.continueTesting();
+ *
+ * There does NOT need to be a 1:1 mapping of waitForAsync calls and
+ * continueTesting calls. The next test will be run after a single call to
+ * continueTesting is made, as long as there is no subsequent call to
+ * waitForAsync in the same thread.
+ *
+ * Example:
+ *   // Returning here would cause the next test to be run.
+ *   asyncTestCase.waitForAsync('description 1');
+ *   // Returning here would *not* cause the next test to be run.
+ *   // Only effect of additional waitForAsync() calls is an updated
+ *   // description in the case of a timeout.
+ *   asyncTestCase.waitForAsync('updated description');
+ *   asyncTestCase.continueTesting();
+ *   // Returning here would cause the next test to be run.
+ *   asyncTestCase.waitForAsync('just kidding, still running.');
+ *   // Returning here would *not* cause the next test to be run.
+ *
+ * The test runner can also be made to wait for more than one asynchronous
+ * event with:
+ *
+ *   asyncTestCase.waitForSignals(n);
+ *
+ * The next test will not start until asyncTestCase.signal() is called n times,
+ * or the test step timeout is exceeded.
+ *
+ * This class supports asynchronous behaviour in all test functions except for
+ * tearDownPage. If such support is needed, it can be added.
+ *
+ * Example Usage:
+ *
+ *   var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
+ *   // Optionally, set a longer-than-normal step timeout.
+ *   asyncTestCase.stepTimeout = 30 * 1000;
+ *
+ *   function testSetTimeout() {
+ *     var step = 0;
+ *     function stepCallback() {
+ *       step++;
+ *       switch (step) {
+ *         case 1:
+ *           var startTime = goog.now();
+ *           asyncTestCase.waitForAsync('step 1');
+ *           window.setTimeout(stepCallback, 100);
+ *           break;
+ *         case 2:
+ *           assertTrue('Timeout fired too soon',
+ *               goog.now() - startTime >= 100);
+ *           asyncTestCase.waitForAsync('step 2');
+ *           window.setTimeout(stepCallback, 100);
+ *           break;
+ *         case 3:
+ *           assertTrue('Timeout fired too soon',
+ *               goog.now() - startTime >= 200);
+ *           asyncTestCase.continueTesting();
+ *           break;
+ *         default:
+ *           fail('Unexpected call to stepCallback');
+ *       }
+ *     }
+ *     stepCallback();
+ *   }
+ *
+ * Known Issues:
+ *   IE7 Exceptions:
+ *     As the failingtest.html will show, it appears as though ie7 does not
+ *     propagate an exception past a function called using the func.call()
+ *     syntax. This causes case 3 of the failing tests (exceptions) to show up
+ *     as timeouts in IE.
+ *   window.onerror:
+ *     This seems to catch errors only in ff2/ff3. It does not work in Safari or
+ *     IE7. The consequence of this is that exceptions that would have been
+ *     caught by window.onerror show up as timeouts.
+ *
+ * @author agrieve@google.com (Andrew Grieve)
+ */
 
 goog.provide('goog.testing.AsyncTestCase');
 goog.provide('goog.testing.AsyncTestCase.ControlBreakingException');
@@ -116,251 +116,251 @@ goog.require('goog.testing.asserts');
 
 
 
-***REMOVED***
-***REMOVED*** A test case that is capable of running tests the contain asynchronous logic.
-***REMOVED*** @param {string=} opt_name A descriptive name for the test case.
-***REMOVED*** @extends {goog.testing.TestCase}
-***REMOVED***
-***REMOVED***
+/**
+ * A test case that is capable of running tests the contain asynchronous logic.
+ * @param {string=} opt_name A descriptive name for the test case.
+ * @extends {goog.testing.TestCase}
+ * @constructor
+ */
 goog.testing.AsyncTestCase = function(opt_name) {
   goog.testing.TestCase.call(this, opt_name);
-***REMOVED***
+};
 goog.inherits(goog.testing.AsyncTestCase, goog.testing.TestCase);
 
 
-***REMOVED***
-***REMOVED*** Represents result of top stack function call.
-***REMOVED*** @typedef {{controlBreakingExceptionThrown: boolean, message: string}}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Represents result of top stack function call.
+ * @typedef {{controlBreakingExceptionThrown: boolean, message: string}}
+ * @private
+ */
 goog.testing.AsyncTestCase.TopStackFuncResult_;
 
 
 
-***REMOVED***
-***REMOVED*** An exception class used solely for control flow.
-***REMOVED*** @param {string=} opt_message Error message.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * An exception class used solely for control flow.
+ * @param {string=} opt_message Error message.
+ * @constructor
+ * @final
+ */
 goog.testing.AsyncTestCase.ControlBreakingException = function(opt_message) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The exception message.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The exception message.
+   * @type {string}
+   */
   this.message = opt_message || '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return value for .toString().
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Return value for .toString().
+ * @type {string}
+ */
 goog.testing.AsyncTestCase.ControlBreakingException.TO_STRING =
     '[AsyncTestCase.ControlBreakingException]';
 
 
-***REMOVED***
-***REMOVED*** Marks this object as a ControlBreakingException
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Marks this object as a ControlBreakingException
+ * @type {boolean}
+ */
 goog.testing.AsyncTestCase.ControlBreakingException.prototype.
     isControlBreakingException = true;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.AsyncTestCase.ControlBreakingException.prototype.toString =
     function() {
   // This shows up in the console when the exception is not caught.
   return goog.testing.AsyncTestCase.ControlBreakingException.TO_STRING;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** How long to wait for a single step of a test to complete in milliseconds.
-***REMOVED*** A step starts when a call to waitForAsync() is made.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * How long to wait for a single step of a test to complete in milliseconds.
+ * A step starts when a call to waitForAsync() is made.
+ * @type {number}
+ */
 goog.testing.AsyncTestCase.prototype.stepTimeout = 1000;
 
 
-***REMOVED***
-***REMOVED*** How long to wait after a failed test before moving onto the next one.
-***REMOVED*** The purpose of this is to allow any pending async callbacks from the failing
-***REMOVED*** test to finish up and not cause the next test to fail.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * How long to wait after a failed test before moving onto the next one.
+ * The purpose of this is to allow any pending async callbacks from the failing
+ * test to finish up and not cause the next test to fail.
+ * @type {number}
+ */
 goog.testing.AsyncTestCase.prototype.timeToSleepAfterFailure = 500;
 
 
-***REMOVED***
-***REMOVED*** Turn on extra logging to help debug failing async. tests.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Turn on extra logging to help debug failing async. tests.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.enableDebugLogs_ = false;
 
 
-***REMOVED***
-***REMOVED*** A reference to the original asserts.js assert_() function.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A reference to the original asserts.js assert_() function.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.origAssert_;
 
 
-***REMOVED***
-***REMOVED*** A reference to the original asserts.js fail() function.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A reference to the original asserts.js fail() function.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.origFail_;
 
 
-***REMOVED***
-***REMOVED*** A reference to the original window.onerror function.
-***REMOVED*** @type {Function|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A reference to the original window.onerror function.
+ * @type {Function|undefined}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.origOnError_;
 
 
-***REMOVED***
-***REMOVED*** The stage of the test we are currently on.
-***REMOVED*** @type {Function|undefined}}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The stage of the test we are currently on.
+ * @type {Function|undefined}}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.curStepFunc_;
 
 
-***REMOVED***
-***REMOVED*** The name of the stage of the test we are currently on.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the stage of the test we are currently on.
+ * @type {string}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.curStepName_ = '';
 
 
-***REMOVED***
-***REMOVED*** The stage of the test we should run next.
-***REMOVED*** @type {Function|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The stage of the test we should run next.
+ * @type {Function|undefined}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.nextStepFunc;
 
 
-***REMOVED***
-***REMOVED*** The name of the stage of the test we should run next.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the stage of the test we should run next.
+ * @type {string}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.nextStepName_ = '';
 
 
-***REMOVED***
-***REMOVED*** The handle to the current setTimeout timer.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The handle to the current setTimeout timer.
+ * @type {number}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.timeoutHandle_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Marks if the cleanUp() function has been called for the currently running
-***REMOVED*** test.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Marks if the cleanUp() function has been called for the currently running
+ * test.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.cleanedUp_ = false;
 
 
-***REMOVED***
-***REMOVED*** The currently active test.
-***REMOVED*** @type {goog.testing.TestCase.Test|undefined}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * The currently active test.
+ * @type {goog.testing.TestCase.Test|undefined}
+ * @protected
+ */
 goog.testing.AsyncTestCase.prototype.activeTest;
 
 
-***REMOVED***
-***REMOVED*** A flag to prevent recursive exception handling.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A flag to prevent recursive exception handling.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.inException_ = false;
 
 
-***REMOVED***
-***REMOVED*** Flag used to determine if we can move to the next step in the testing loop.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag used to determine if we can move to the next step in the testing loop.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.isReady_ = true;
 
 
-***REMOVED***
-***REMOVED*** Number of signals to wait for before continuing testing when waitForSignals
-***REMOVED*** is used.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Number of signals to wait for before continuing testing when waitForSignals
+ * is used.
+ * @type {number}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.expectedSignalCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Number of signals received.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Number of signals received.
+ * @type {number}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.receivedSignalCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Flag that tells us if there is a function in the call stack that will make
-***REMOVED*** a call to pump_().
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag that tells us if there is a function in the call stack that will make
+ * a call to pump_().
+ * @type {boolean}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.returnWillPump_ = false;
 
 
-***REMOVED***
-***REMOVED*** The number of times we have thrown a ControlBreakingException so that we
-***REMOVED*** know not to complain in our window.onerror handler. In Webkit, window.onerror
-***REMOVED*** is not supported, and so this counter will keep going up but we won't care
-***REMOVED*** about it.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The number of times we have thrown a ControlBreakingException so that we
+ * know not to complain in our window.onerror handler. In Webkit, window.onerror
+ * is not supported, and so this counter will keep going up but we won't care
+ * about it.
+ * @type {number}
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.numControlExceptionsExpected_ = 0;
 
 
-***REMOVED***
-***REMOVED*** The current step name.
-***REMOVED*** @return {!string} Step name.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * The current step name.
+ * @return {!string} Step name.
+ * @protected
+ */
 goog.testing.AsyncTestCase.prototype.getCurrentStepName = function() {
   return this.curStepName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Preferred way of creating an AsyncTestCase. Creates one and initializes it
-***REMOVED*** with the G_testRunner.
-***REMOVED*** @param {string=} opt_name A descriptive name for the test case.
-***REMOVED*** @return {!goog.testing.AsyncTestCase} The created AsyncTestCase.
-***REMOVED***
+/**
+ * Preferred way of creating an AsyncTestCase. Creates one and initializes it
+ * with the G_testRunner.
+ * @param {string=} opt_name A descriptive name for the test case.
+ * @return {!goog.testing.AsyncTestCase} The created AsyncTestCase.
+ */
 goog.testing.AsyncTestCase.createAndInstall = function(opt_name) {
   var asyncTestCase = new goog.testing.AsyncTestCase(opt_name);
   goog.testing.TestCase.initializeTestRunner(asyncTestCase);
   return asyncTestCase;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Informs the testcase not to continue to the next step in the test cycle
-***REMOVED*** until continueTesting is called.
-***REMOVED*** @param {string=} opt_name A description of what we are waiting for.
-***REMOVED***
+/**
+ * Informs the testcase not to continue to the next step in the test cycle
+ * until continueTesting is called.
+ * @param {string=} opt_name A description of what we are waiting for.
+ */
 goog.testing.AsyncTestCase.prototype.waitForAsync = function(opt_name) {
   this.isReady_ = false;
   this.curStepName_ = opt_name || this.curStepName_;
@@ -368,25 +368,25 @@ goog.testing.AsyncTestCase.prototype.waitForAsync = function(opt_name) {
   // Reset the timer that tracks if the async test takes too long.
   this.stopTimeoutTimer_();
   this.startTimeoutTimer_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Continue with the next step in the test cycle.
-***REMOVED***
+/**
+ * Continue with the next step in the test cycle.
+ */
 goog.testing.AsyncTestCase.prototype.continueTesting = function() {
   if (this.receivedSignalCount_ < this.expectedSignalCount_) {
     var remaining = this.expectedSignalCount_ - this.receivedSignalCount_;
     throw Error('Still waiting for ' + remaining + ' signals.');
   }
   this.endCurrentStep_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Ends the current test step and queues the next test step to run.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Ends the current test step and queues the next test step to run.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.endCurrentStep_ = function() {
   if (!this.isReady_) {
     // We are a potential entry point, so we pump.
@@ -396,46 +396,46 @@ goog.testing.AsyncTestCase.prototype.endCurrentStep_ = function() {
     // waitForAsync() again before we continue.
     this.timeout(goog.bind(this.pump_, this, null), 0);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Informs the testcase not to continue to the next step in the test cycle
-***REMOVED*** until signal is called the specified number of times. Within a test, this
-***REMOVED*** function behaves additively if called multiple times; the number of signals
-***REMOVED*** to wait for will be the sum of all expected number of signals this function
-***REMOVED*** was called with.
-***REMOVED*** @param {number} times The number of signals to receive before
-***REMOVED***    continuing testing.
-***REMOVED*** @param {string=} opt_name A description of what we are waiting for.
-***REMOVED***
+/**
+ * Informs the testcase not to continue to the next step in the test cycle
+ * until signal is called the specified number of times. Within a test, this
+ * function behaves additively if called multiple times; the number of signals
+ * to wait for will be the sum of all expected number of signals this function
+ * was called with.
+ * @param {number} times The number of signals to receive before
+ *    continuing testing.
+ * @param {string=} opt_name A description of what we are waiting for.
+ */
 goog.testing.AsyncTestCase.prototype.waitForSignals =
     function(times, opt_name) {
   this.expectedSignalCount_ += times;
   if (this.receivedSignalCount_ < this.expectedSignalCount_) {
     this.waitForAsync(opt_name);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Signals once to continue with the test. If this is the last signal that the
-***REMOVED*** test was waiting on, call continueTesting.
-***REMOVED***
+/**
+ * Signals once to continue with the test. If this is the last signal that the
+ * test was waiting on, call continueTesting.
+ */
 goog.testing.AsyncTestCase.prototype.signal = function() {
   if (++this.receivedSignalCount_ === this.expectedSignalCount_ &&
       this.expectedSignalCount_ > 0) {
     this.endCurrentStep_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an exception thrown by a test.
-***REMOVED*** @param {*=} opt_e The exception object associated with the failure
-***REMOVED***     or a string.
-***REMOVED*** @throws Always throws a ControlBreakingException.
-***REMOVED***
+/**
+ * Handles an exception thrown by a test.
+ * @param {*=} opt_e The exception object associated with the failure
+ *     or a string.
+ * @throws Always throws a ControlBreakingException.
+ */
 goog.testing.AsyncTestCase.prototype.doAsyncError = function(opt_e) {
   // If we've caught an exception that we threw, then just pass it along. This
   // can happen if doAsyncError() was called from a call to assert and then
@@ -487,14 +487,14 @@ goog.testing.AsyncTestCase.prototype.doAsyncError = function(opt_e) {
     message = opt_e.message;
   }
   throw new goog.testing.AsyncTestCase.ControlBreakingException(message);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets up the test page and then waits until the test case has been marked
-***REMOVED*** as ready before executing the tests.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets up the test page and then waits until the test case has been marked
+ * as ready before executing the tests.
+ * @override
+ */
 goog.testing.AsyncTestCase.prototype.runTests = function() {
   this.hookAssert_();
   this.hookOnError_();
@@ -502,62 +502,62 @@ goog.testing.AsyncTestCase.prototype.runTests = function() {
   this.setNextStep_(this.doSetUpPage_, 'setUpPage');
   // We are an entry point, so we pump.
   this.pump_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the tests.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Starts the tests.
+ * @override
+ */
 goog.testing.AsyncTestCase.prototype.cycleTests = function() {
   // We are an entry point, so we pump.
   this.saveMessage('Start');
   this.setNextStep_(this.doIteration_, 'doIteration');
   this.pump_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finalizes the test case, called when the tests have finished executing.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Finalizes the test case, called when the tests have finished executing.
+ * @override
+ */
 goog.testing.AsyncTestCase.prototype.finalize = function() {
   this.unhookAll_();
   this.setNextStep_(null, 'finalized');
   goog.testing.AsyncTestCase.superClass_.finalize.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables verbose logging of what is happening inside of the AsyncTestCase.
-***REMOVED***
+/**
+ * Enables verbose logging of what is happening inside of the AsyncTestCase.
+ */
 goog.testing.AsyncTestCase.prototype.enableDebugLogging = function() {
   this.enableDebugLogs_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the given debug message to the console (when enabled).
-***REMOVED*** @param {string} message The message to log.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logs the given debug message to the console (when enabled).
+ * @param {string} message The message to log.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.dbgLog_ = function(message) {
   if (this.enableDebugLogs_) {
     this.log('AsyncTestCase - ' + message);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wraps doAsyncError() for when we are sure that the test runner has no user
-***REMOVED*** code above it in the stack.
-***REMOVED*** @param {string|Error=} opt_e The exception object associated with the
-***REMOVED***     failure or a string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Wraps doAsyncError() for when we are sure that the test runner has no user
+ * code above it in the stack.
+ * @param {string|Error=} opt_e The exception object associated with the
+ *     failure or a string.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doTopOfStackAsyncError_ =
     function(opt_e) {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     this.doAsyncError(opt_e);
   } catch (e) {
@@ -571,14 +571,14 @@ goog.testing.AsyncTestCase.prototype.doTopOfStackAsyncError_ =
       throw e;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the tearDown function, catching any errors, and then moves on to
-***REMOVED*** the next step in the testing cycle.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calls the tearDown function, catching any errors, and then moves on to
+ * the next step in the testing cycle.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doAsyncErrorTearDown_ = function() {
   if (this.inException_) {
     // We get here if tearDown is throwing the error.
@@ -611,50 +611,50 @@ goog.testing.AsyncTestCase.prototype.doAsyncErrorTearDown_ = function() {
       this.tearDown();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces the asserts.js assert_() and fail() functions with a wrappers to
-***REMOVED*** catch the exceptions.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces the asserts.js assert_() and fail() functions with a wrappers to
+ * catch the exceptions.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.hookAssert_ = function() {
   if (!this.origAssert_) {
     this.origAssert_ = _assert;
     this.origFail_ = fail;
-  ***REMOVED***
+    var self = this;
     _assert = function() {
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         self.origAssert_.apply(this, arguments);
       } catch (e) {
         self.dbgLog_('Wrapping failed assert()');
         self.doAsyncError(e);
       }
-   ***REMOVED*****REMOVED***
+    };
     fail = function() {
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         self.origFail_.apply(this, arguments);
       } catch (e) {
         self.dbgLog_('Wrapping fail()');
         self.doAsyncError(e);
       }
-   ***REMOVED*****REMOVED***
+    };
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a window.onerror handler for catching exceptions that happen in async
-***REMOVED*** callbacks. Note that as of Safari 3.1, Safari does not support this.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets a window.onerror handler for catching exceptions that happen in async
+ * callbacks. Note that as of Safari 3.1, Safari does not support this.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.hookOnError_ = function() {
   if (!this.origOnError_) {
     this.origOnError_ = window.onerror;
-  ***REMOVED***
+    var self = this;
     window.onerror = function(error, url, line) {
       // Ignore exceptions that we threw on purpose.
       var cbe =
@@ -674,15 +674,15 @@ goog.testing.AsyncTestCase.prototype.hookOnError_ = function() {
         // Tell the browser to complain about the error.
         return false;
       }
-   ***REMOVED*****REMOVED***
+    };
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unhooks window.onerror and _assert.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Unhooks window.onerror and _assert.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.unhookAll_ = function() {
   if (this.origOnError_) {
     window.onerror = this.origOnError_;
@@ -692,14 +692,14 @@ goog.testing.AsyncTestCase.prototype.unhookAll_ = function() {
     fail = this.origFail_;
     this.origFail_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables the timeout timer. This timer fires unless continueTesting is
-***REMOVED*** called.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Enables the timeout timer. This timer fires unless continueTesting is
+ * called.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.startTimeoutTimer_ = function() {
   if (!this.timeoutHandle_ && this.stepTimeout > 0) {
     this.timeoutHandle_ = this.timeout(goog.bind(function() {
@@ -711,75 +711,75 @@ goog.testing.AsyncTestCase.prototype.startTimeoutTimer_ = function() {
     }, this, null), this.stepTimeout);
     this.dbgLog_('Started timeout timer with id ' + this.timeoutHandle_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disables the timeout timer.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Disables the timeout timer.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.stopTimeoutTimer_ = function() {
   if (this.timeoutHandle_) {
     this.dbgLog_('Clearing timeout timer with id ' + this.timeoutHandle_);
     this.clearTimeout(this.timeoutHandle_);
     this.timeoutHandle_ = 0;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the next function to call in our sequence of async callbacks.
-***REMOVED*** @param {Function} func The function that executes the next step.
-***REMOVED*** @param {string} name A description of the next step.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the next function to call in our sequence of async callbacks.
+ * @param {Function} func The function that executes the next step.
+ * @param {string} name A description of the next step.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.setNextStep_ = function(func, name) {
   this.nextStepFunc_ = func && goog.bind(func, this);
   this.nextStepName_ = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the given function, redirecting any exceptions to doAsyncError.
-***REMOVED*** @param {Function} func The function to call.
-***REMOVED*** @return {!goog.testing.AsyncTestCase.TopStackFuncResult_} Returns a
-***REMOVED*** TopStackFuncResult_.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calls the given function, redirecting any exceptions to doAsyncError.
+ * @param {Function} func The function to call.
+ * @return {!goog.testing.AsyncTestCase.TopStackFuncResult_} Returns a
+ * TopStackFuncResult_.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.callTopOfStackFunc_ = function(func) {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     func.call(this);
-    return {controlBreakingExceptionThrown: false, message: ''***REMOVED***
+    return {controlBreakingExceptionThrown: false, message: ''};
   } catch (e) {
     this.dbgLog_('Caught exception in callTopOfStackFunc_');
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       this.doAsyncError(e);
-      return {controlBreakingExceptionThrown: false, message: ''***REMOVED***
+      return {controlBreakingExceptionThrown: false, message: ''};
     } catch (e2) {
       if (!e2.isControlBreakingException) {
         throw e2;
       }
-      return {controlBreakingExceptionThrown: true, message: e2.message***REMOVED***
+      return {controlBreakingExceptionThrown: true, message: e2.message};
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the next callback when the isReady_ flag is true.
-***REMOVED*** @param {Function=} opt_doFirst A function to call before pumping.
-***REMOVED*** @private
-***REMOVED*** @throws Throws a ControlBreakingException if there were any failing steps.
-***REMOVED***
+/**
+ * Calls the next callback when the isReady_ flag is true.
+ * @param {Function=} opt_doFirst A function to call before pumping.
+ * @private
+ * @throws Throws a ControlBreakingException if there were any failing steps.
+ */
 goog.testing.AsyncTestCase.prototype.pump_ = function(opt_doFirst) {
   // If this function is already above us in the call-stack, then we should
   // return rather than pumping in order to minimize call-stack depth.
   if (!this.returnWillPump_) {
     this.setBatchTime(this.now());
     this.returnWillPump_ = true;
-    var topFuncResult = {***REMOVED***
+    var topFuncResult = {};
 
     if (opt_doFirst) {
       topFuncResult = this.callTopOfStackFunc_(opt_doFirst);
@@ -798,7 +798,7 @@ goog.testing.AsyncTestCase.prototype.pump_ = function(opt_doFirst) {
 
       this.dbgLog_('Performing step: ' + this.curStepName_);
       topFuncResult =
-          this.callTopOfStackFunc_(***REMOVED*** @type {Function}***REMOVED***(this.curStepFunc_));
+          this.callTopOfStackFunc_(/** @type {Function} */(this.curStepFunc_));
 
       // If the max run time is exceeded call this function again async so as
       // not to block the browser.
@@ -806,7 +806,7 @@ goog.testing.AsyncTestCase.prototype.pump_ = function(opt_doFirst) {
       if (delta > goog.testing.TestCase.maxRunTime &&
           !topFuncResult.controlBreakingExceptionThrown) {
         this.saveMessage('Breaking async');
-      ***REMOVED***
+        var self = this;
         this.timeout(function() { self.pump_(); }, 100);
         break;
       }
@@ -815,24 +815,24 @@ goog.testing.AsyncTestCase.prototype.pump_ = function(opt_doFirst) {
   } else if (opt_doFirst) {
     opt_doFirst.call(this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets up the test page and then waits untill the test case has been marked
-***REMOVED*** as ready before executing the tests.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets up the test page and then waits untill the test case has been marked
+ * as ready before executing the tests.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doSetUpPage_ = function() {
   this.setNextStep_(this.execute, 'TestCase.execute');
   this.setUpPage();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Step 1: Move to the next test.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Step 1: Move to the next test.
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doIteration_ = function() {
   this.expectedSignalCount_ = 0;
   this.receivedSignalCount_ = 0;
@@ -850,47 +850,47 @@ goog.testing.AsyncTestCase.prototype.doIteration_ = function() {
     // All tests done.
     this.finalize();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Step 2: Call setUp().
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Step 2: Call setUp().
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doSetUp_ = function() {
   this.log('Running test: ' + this.activeTest.name);
   this.cleanedUp_ = false;
   this.setNextStep_(this.doExecute_, this.activeTest.name);
   this.setUp();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Step 3: Call test.execute().
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Step 3: Call test.execute().
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doExecute_ = function() {
   this.setNextStep_(this.doTearDown_, 'tearDown');
   this.activeTest.execute();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Step 4: Call tearDown().
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Step 4: Call tearDown().
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doTearDown_ = function() {
   this.cleanedUp_ = true;
   this.setNextStep_(this.doNext_, 'doNext');
   this.tearDown();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Step 5: Call doSuccess()
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Step 5: Call doSuccess()
+ * @private
+ */
 goog.testing.AsyncTestCase.prototype.doNext_ = function() {
   this.setNextStep_(this.doIteration_, 'doIteration');
-  this.doSuccess(***REMOVED*** @type {goog.testing.TestCase.Test}***REMOVED***(this.activeTest));
-***REMOVED***
+  this.doSuccess(/** @type {goog.testing.TestCase.Test} */(this.activeTest));
+};

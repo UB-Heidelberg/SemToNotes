@@ -15,20 +15,20 @@
 goog.provide('goog.net.XhrManagerTest');
 goog.setTestOnly('goog.net.XhrManagerTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.EventType');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.net.XhrManager');
 goog.require('goog.testing.jsunit');
 goog.require('goog.testing.net.XhrIoPool');
 goog.require('goog.testing.recordFunction');
 
 
-***REMOVED*** @type {goog.net.XhrManager}***REMOVED***
+/** @type {goog.net.XhrManager} */
 var xhrManager;
 
 
-***REMOVED*** @type {goog.testing.net.XhrIo}***REMOVED***
+/** @type {goog.testing.net.XhrIo} */
 var xhrIo;
 
 
@@ -107,12 +107,12 @@ function testNonDefaultResponseType() {
   });
   goog.events.listenOnce(xhrManager, goog.net.EventType.READY, callback);
   xhrManager.send('test2', '/test2',
-      undefined /* opt_method***REMOVED***,
-      undefined /* opt_content***REMOVED***,
-      undefined /* opt_headers***REMOVED***,
-      undefined /* opt_priority***REMOVED***,
-      undefined /* opt_callback***REMOVED***,
-      undefined /* opt_maxRetries***REMOVED***,
+      undefined /* opt_method */,
+      undefined /* opt_content */,
+      undefined /* opt_headers */,
+      undefined /* opt_priority */,
+      undefined /* opt_callback */,
+      undefined /* opt_maxRetries */,
       goog.net.XhrIo.ResponseType.ARRAY_BUFFER);
   assertEquals(1, callback.getCallCount());
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.TrustedResourceUrl and its builders.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.TrustedResourceUrl and its builders.
+ */
 
 goog.provide('goog.html.trustedResourceUrlTest');
 
@@ -45,12 +45,12 @@ function testTrustedResourceUrl() {
 }
 
 
-***REMOVED*** @suppress {checkTypes}***REMOVED***
+/** @suppress {checkTypes} */
 function testUnwrap() {
-  var evil = {***REMOVED***
+  var evil = {};
   evil.trustedResourceUrlValueWithSecurityContract_googHtmlSecurityPrivate_ =
       '<script>evil()</script';
-  evil.TRUSTED_RESOURCE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {***REMOVED***
+  evil.TRUSTED_RESOURCE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {};
 
   var exception = assertThrows(function() {
     goog.html.TrustedResourceUrl.unwrap(evil);

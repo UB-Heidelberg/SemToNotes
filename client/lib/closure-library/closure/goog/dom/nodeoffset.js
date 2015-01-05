@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Object to store the offset from one node to another in a way
-***REMOVED*** that works on any similar DOM structure regardless of whether it is the same
-***REMOVED*** actual nodes.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Object to store the offset from one node to another in a way
+ * that works on any similar DOM structure regardless of whether it is the same
+ * actual nodes.
+ *
+ */
 
 goog.provide('goog.dom.NodeOffset');
 
@@ -26,30 +26,30 @@ goog.require('goog.dom.TagName');
 
 
 
-***REMOVED***
-***REMOVED*** Object to store the offset from one node to another in a way that works on
-***REMOVED*** any similar DOM structure regardless of whether it is the same actual nodes.
-***REMOVED*** @param {Node} node The node to get the offset for.
-***REMOVED*** @param {Node} baseNode The node to calculate the offset from.
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Object to store the offset from one node to another in a way that works on
+ * any similar DOM structure regardless of whether it is the same actual nodes.
+ * @param {Node} node The node to get the offset for.
+ * @param {Node} baseNode The node to calculate the offset from.
+ * @extends {goog.Disposable}
+ * @constructor
+ * @final
+ */
 goog.dom.NodeOffset = function(node, baseNode) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A stack of childNode offsets.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A stack of childNode offsets.
+   * @type {Array.<number>}
+   * @private
+   */
   this.offsetStack_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A stack of childNode names.
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A stack of childNode names.
+   * @type {Array.<string>}
+   * @private
+   */
   this.nameStack_ = [];
 
   while (node && node.nodeName != goog.dom.TagName.BODY && node != baseNode) {
@@ -65,14 +65,14 @@ goog.dom.NodeOffset = function(node, baseNode) {
 
     node = node.parentNode;
   }
-***REMOVED***
+};
 goog.inherits(goog.dom.NodeOffset, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** @return {string} A string representation of this object.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} A string representation of this object.
+ * @override
+ */
 goog.dom.NodeOffset.prototype.toString = function() {
   var strs = [];
   var name;
@@ -80,17 +80,17 @@ goog.dom.NodeOffset.prototype.toString = function() {
     strs.push(this.offsetStack_[i] + ',' + name);
   }
   return strs.join('\n');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Walk the dom and find the node relative to baseNode.  Returns null on
-***REMOVED*** failure.
-***REMOVED*** @param {Node} baseNode The node to start walking from.  Should be equivalent
-***REMOVED***     to the node passed in to the constructor, in that it should have the
-***REMOVED***     same contents.
-***REMOVED*** @return {Node} The node relative to baseNode, or null on failure.
-***REMOVED***
+/**
+ * Walk the dom and find the node relative to baseNode.  Returns null on
+ * failure.
+ * @param {Node} baseNode The node to start walking from.  Should be equivalent
+ *     to the node passed in to the constructor, in that it should have the
+ *     same contents.
+ * @return {Node} The node relative to baseNode, or null on failure.
+ */
 goog.dom.NodeOffset.prototype.findTargetNode = function(baseNode) {
   var name;
   var curNode = baseNode;
@@ -103,11 +103,11 @@ goog.dom.NodeOffset.prototype.findTargetNode = function(baseNode) {
     }
   }
   return curNode;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.NodeOffset.prototype.disposeInternal = function() {
   delete this.offsetStack_;
   delete this.nameStack_;
-***REMOVED***
+};

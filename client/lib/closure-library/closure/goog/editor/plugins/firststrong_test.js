@@ -51,7 +51,7 @@ function setUp() {
     if (command == goog.editor.Command.DIR_LTR ||
         command == goog.editor.Command.DIR_RTL)
       triggeredCommand = command;
- ***REMOVED*****REMOVED***
+  };
 }
 
 function tearDown() {
@@ -145,9 +145,9 @@ function testFirstStrongCharacterWithInnerDiv_LTR() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression for {@link http://b/7549696}
-***REMOVED***
+/**
+ * Regression for {@link http://b/7549696}
+ */
 function testFirstStrongCharacterInNewLine_RTL() {
   field.setHtml(false, '<div><b id="cur">English<br>1</b></div>');
   goog.dom.Range.createCaret(dom.$('cur'), 2).select();
@@ -327,9 +327,9 @@ function testNotFirstStrongCharacterInBR_LTR() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression for {@link http://b/7530985}
-***REMOVED***
+/**
+ * Regression for {@link http://b/7530985}
+ */
 function testFirstStrongCharacterWithPreviousBlockSibling_RTL() {
   field.setHtml(false, '<div>Te<div>xt</div>1<b id="cur">2</b>3</div>');
   goog.editor.range.placeCursorNextTo(dom.$('cur'), true);
@@ -364,7 +364,7 @@ function testFirstStrongCharacterWithFollowingBlockSibling_RTL() {
 function testFirstStrongCharacterFromIME_RTL() {
   field.setHtml(false, '<div id="text">123.7 3121, </div>');
   field.focusAndPlaceCursorAtStart();
-  var attributes = {***REMOVED***
+  var attributes = {};
   attributes[goog.editor.plugins.FirstStrong.INPUT_ATTRIBUTE] = 'אבג';
   goog.testing.events.fireNonAsciiKeySequence(fieldElement, 0, 0, attributes);
   if (goog.userAgent.IE) {
@@ -379,7 +379,7 @@ function testFirstStrongCharacterFromIME_RTL() {
 function testFirstCharacterFromIME_LTR() {
   field.setHtml(false, '<div dir="rtl" id="text"> 1234 </div>');
   field.focusAndPlaceCursorAtStart();
-  var attributes = {***REMOVED***
+  var attributes = {};
   attributes[goog.editor.plugins.FirstStrong.INPUT_ATTRIBUTE] = 'ABC';
   goog.testing.events.fireNonAsciiKeySequence(fieldElement, 0, 0, attributes);
   if (goog.userAgent.IE) {

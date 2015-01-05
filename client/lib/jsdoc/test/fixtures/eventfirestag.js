@@ -1,30 +1,30 @@
-***REMOVED***
-***REMOVED*** @class
-***REMOVED***
+/**
+ * @class
+ */
 var Hurl = function () {
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Throw a snowball.
-***REMOVED***
-***REMOVED*** @fires Hurl#snowball
-***REMOVED*** @fires Hurl#event:brick
-***REMOVED***
+/**
+ * Throw a snowball.
+ *
+ * @fires Hurl#snowball
+ * @fires Hurl#event:brick
+ */
 Hurl.prototype.snowball = function () {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @event Hurl#snowball
-   ***REMOVED*****REMOVED***
+    /**
+     * @event Hurl#snowball
+     */
     this.emit('snowball', {});
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Throw a football match.
-***REMOVED***
-***REMOVED*** @emits Hurl#footballMatch
-***REMOVED***
+/**
+ * Throw a football match.
+ *
+ * @emits Hurl#footballMatch
+ */
 Hurl.prototype.footballMatch = function () {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @event Hurl#footballMatch
-   ***REMOVED*****REMOVED***
+    /**
+     * @event Hurl#footballMatch
+     */
     this.emit('footballMatch', {});
-***REMOVED***
+};

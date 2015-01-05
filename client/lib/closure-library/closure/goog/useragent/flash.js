@@ -12,46 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Flash detection.
-***REMOVED*** @see ../demos/useragent.html
-***REMOVED***
+/**
+ * @fileoverview Flash detection.
+ * @see ../demos/useragent.html
+ */
 
 goog.provide('goog.userAgent.flash');
 
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether we know at compile-time that the browser doesn't
-***REMOVED*** have flash.
-***REMOVED***
+/**
+ * @define {boolean} Whether we know at compile-time that the browser doesn't
+ * have flash.
+ */
 goog.define('goog.userAgent.flash.ASSUME_NO_FLASH', false);
 
 
-***REMOVED***
-***REMOVED*** Whether we can detect that the browser has flash
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether we can detect that the browser has flash
+ * @type {boolean}
+ * @private
+ */
 goog.userAgent.flash.detectedFlash_ = false;
 
 
-***REMOVED***
-***REMOVED*** Full version information of flash installed, in form 7.0.61
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Full version information of flash installed, in form 7.0.61
+ * @type {string}
+ * @private
+ */
 goog.userAgent.flash.detectedFlashVersion_ = '';
 
 
-***REMOVED***
-***REMOVED*** Initializer for goog.userAgent.flash
-***REMOVED***
-***REMOVED*** This is a named function so that it can be stripped via the jscompiler if
-***REMOVED*** goog.userAgent.flash.ASSUME_NO_FLASH is true.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializer for goog.userAgent.flash
+ *
+ * This is a named function so that it can be stripped via the jscompiler if
+ * goog.userAgent.flash.ASSUME_NO_FLASH is true.
+ * @private
+ */
 goog.userAgent.flash.init_ = function() {
   if (navigator.plugins && navigator.plugins.length) {
     var plugin = navigator.plugins['Shockwave Flash'];
@@ -77,7 +77,7 @@ goog.userAgent.flash.init_ = function() {
     }
 
   } else {
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       // Try 7 first, since we know we can use GetVariable with it
       var ax = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.7');
@@ -86,14 +86,14 @@ goog.userAgent.flash.init_ = function() {
           goog.userAgent.flash.getVersion_(ax.GetVariable('$version'));
     } catch (e) {
       // Try 6 next, some versions are known to crash with GetVariable calls
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         var ax = new ActiveXObject('ShockwaveFlash.ShockwaveFlash.6');
         goog.userAgent.flash.detectedFlash_ = true;
         // First public version of Flash 6
         goog.userAgent.flash.detectedFlashVersion_ = '6.0.21';
       } catch (e2) {
-       ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+        /** @preserveTry */
         try {
           // Try the default activeX
           var ax = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
@@ -106,15 +106,15 @@ goog.userAgent.flash.init_ = function() {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Derived from Apple's suggested sniffer.
-***REMOVED*** @param {string} desc e.g. Shockwave Flash 7.0 r61.
-***REMOVED*** @return {string} 7.0.61.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Derived from Apple's suggested sniffer.
+ * @param {string} desc e.g. Shockwave Flash 7.0 r61.
+ * @return {string} 7.0.61.
+ * @private
+ */
 goog.userAgent.flash.getVersion_ = function(desc) {
   var matches = desc.match(/[\d]+/g);
   if (!matches) {
@@ -122,7 +122,7 @@ goog.userAgent.flash.getVersion_ = function(desc) {
   }
   matches.length = 3;  // To standardize IE vs FF
   return matches.join('.');
-***REMOVED***
+};
 
 
 if (!goog.userAgent.flash.ASSUME_NO_FLASH) {
@@ -130,27 +130,27 @@ if (!goog.userAgent.flash.ASSUME_NO_FLASH) {
 }
 
 
-***REMOVED***
-***REMOVED*** Whether we can detect that the browser has flash
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether we can detect that the browser has flash
+ * @type {boolean}
+ */
 goog.userAgent.flash.HAS_FLASH = goog.userAgent.flash.detectedFlash_;
 
 
-***REMOVED***
-***REMOVED*** Full version information of flash installed, in form 7.0.61
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Full version information of flash installed, in form 7.0.61
+ * @type {string}
+ */
 goog.userAgent.flash.VERSION = goog.userAgent.flash.detectedFlashVersion_;
 
 
-***REMOVED***
-***REMOVED*** Whether the installed flash version is as new or newer than a given version.
-***REMOVED*** @param {string} version The version to check.
-***REMOVED*** @return {boolean} Whether the installed flash version is as new or newer
-***REMOVED***     than a given version.
-***REMOVED***
+/**
+ * Whether the installed flash version is as new or newer than a given version.
+ * @param {string} version The version to check.
+ * @return {boolean} Whether the installed flash version is as new or newer
+ *     than a given version.
+ */
 goog.userAgent.flash.isVersion = function(version) {
   return goog.string.compareVersions(goog.userAgent.flash.VERSION,
                                      version) >= 0;
-***REMOVED***
+};

@@ -1,35 +1,35 @@
-***REMOVED***
-***REMOVED*** Inline type info only.
-***REMOVED***
-function dispense(***REMOVED*** @type {string}***REMOVED*** candy) {}
+/**
+ * Inline type info only.
+ */
+function dispense(/** @type {string} */ candy) {}
 
-***REMOVED***
-***REMOVED*** Inline type info that conflicts with `@param` tag.
-***REMOVED***
-***REMOVED*** @class
-***REMOVED*** @param {number} candyId - The candy's identifier.
-***REMOVED***
-function Dispenser(***REMOVED*** @type {string}***REMOVED*** candyId) {}
+/**
+ * Inline type info that conflicts with `@param` tag.
+ *
+ * @class
+ * @param {number} candyId - The candy's identifier.
+ */
+function Dispenser(/** @type {string} */ candyId) {}
 
-***REMOVED***
-***REMOVED*** Inline type info for leading param only.
-***REMOVED***
-***REMOVED*** @param {string} item
-***REMOVED***
-function restock(***REMOVED*** @type {Dispenser}***REMOVED*** dispenser, item) {}
+/**
+ * Inline type info for leading param only.
+ *
+ * @param {string} item
+ */
+function restock(/** @type {Dispenser} */ dispenser, item) {}
 
-***REMOVED***
-***REMOVED*** Inline type info for trailing param only.
-***REMOVED***
-***REMOVED*** @param {Dispenser} dispenser
-***REMOVED***
-function clean(dispenser,***REMOVED*****REMOVED*** @type {string}***REMOVED*** cleaner) {}
+/**
+ * Inline type info for trailing param only.
+ *
+ * @param {Dispenser} dispenser
+ */
+function clean(dispenser, /** @type {string} */ cleaner) {}
 
-***REMOVED***
-***REMOVED*** Inline type info for inner param only.
-***REMOVED***
-***REMOVED*** @param {Dispenser} dispenser
-***REMOVED*** @param {number} shade
-***REMOVED*** @param {string} brand
-***REMOVED***
-function paint(dispenser,***REMOVED*****REMOVED*** @type {Color}***REMOVED*** color, shade, brand) {}
+/**
+ * Inline type info for inner param only.
+ *
+ * @param {Dispenser} dispenser
+ * @param {number} shade
+ * @param {string} brand
+ */
+function paint(dispenser, /** @type {Color} */ color, shade, brand) {}

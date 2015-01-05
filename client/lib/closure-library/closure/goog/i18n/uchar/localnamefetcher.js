@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Object which fetches Unicode codepoint names that are locally
-***REMOVED*** stored in a bundled database. Currently, only invisible characters are
-***REMOVED*** covered by this database. See the goog.i18n.uChar.RemoteNameFetcher class for
-***REMOVED*** a remote database option.
-***REMOVED***
+/**
+ * @fileoverview Object which fetches Unicode codepoint names that are locally
+ * stored in a bundled database. Currently, only invisible characters are
+ * covered by this database. See the goog.i18n.uChar.RemoteNameFetcher class for
+ * a remote database option.
+ */
 
 goog.provide('goog.i18n.uChar.LocalNameFetcher');
 
@@ -27,35 +27,35 @@ goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** Builds the NameFetcherLocal object. This is a simple object which retrieves
-***REMOVED*** character names from a local bundled database. This database only covers
-***REMOVED*** invisible characters. See the goog.i18n.uChar class for more details.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {goog.i18n.uChar.NameFetcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Builds the NameFetcherLocal object. This is a simple object which retrieves
+ * character names from a local bundled database. This database only covers
+ * invisible characters. See the goog.i18n.uChar class for more details.
+ *
+ * @constructor
+ * @implements {goog.i18n.uChar.NameFetcher}
+ * @final
+ */
 goog.i18n.uChar.LocalNameFetcher = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A reference to the LocalNameFetcher logger.
-***REMOVED***
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A reference to the LocalNameFetcher logger.
+ *
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.i18n.uChar.LocalNameFetcher.logger_ =
     goog.log.getLogger('goog.i18n.uChar.LocalNameFetcher');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.i18n.uChar.LocalNameFetcher.prototype.prefetch = function(character) {
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.i18n.uChar.LocalNameFetcher.prototype.getName = function(character,
     callback) {
   var localName = goog.i18n.uChar.toName(character);
@@ -64,11 +64,11 @@ goog.i18n.uChar.LocalNameFetcher.prototype.getName = function(character,
         warning('No local name defined for character ' + character);
   }
   callback(localName);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.i18n.uChar.LocalNameFetcher.prototype.isNameAvailable = function(
     character) {
   return !!goog.i18n.uChar.toName(character);
-***REMOVED***
+};

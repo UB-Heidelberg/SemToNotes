@@ -1,39 +1,39 @@
-***REMOVED***
-***REMOVED*** Parse the command line arguments.
-***REMOVED*** @module jsdoc/opts/argparser
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/**
+ * Parse the command line arguments.
+ * @module jsdoc/opts/argparser
+ * @author Michael Mathews <micmath@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 'use strict';
 
 var _ = require('underscore');
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
-***REMOVED***
-***REMOVED*** Create an instance of the parser.
-***REMOVED*** @classdesc A parser to interpret the key-value pairs entered on the command line.
-***REMOVED***
-***REMOVED***
+/**
+ * Create an instance of the parser.
+ * @classdesc A parser to interpret the key-value pairs entered on the command line.
+ * @constructor
+ */
 var ArgParser = function() {
     this._options = [];
-    this._shortNameIndex = {***REMOVED***
-    this._longNameIndex = {***REMOVED***
-***REMOVED***
+    this._shortNameIndex = {};
+    this._longNameIndex = {};
+};
 
 ArgParser.prototype._getOptionByShortName = function(name) {
     if (hasOwnProp.call(this._shortNameIndex, name)) {
         return this._options[this._shortNameIndex[name]];
     }
     return null;
-***REMOVED***
+};
 
 ArgParser.prototype._getOptionByLongName = function(name) {
     if (hasOwnProp.call(this._longNameIndex, name)) {
         return this._options[this._longNameIndex[name]];
     }
     return null;
-***REMOVED***
+};
 
 ArgParser.prototype._addOption = function(option) {
     var currentIndex;
@@ -52,21 +52,21 @@ ArgParser.prototype._addOption = function(option) {
     }
 
     return this;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Provide information about a legal option.
-***REMOVED*** @param {character} shortName The short name of the option, entered like: -T.
-***REMOVED*** @param {string}    longName The equivalent long name of the option, entered like: --test.
-***REMOVED*** @param {boolean}   hasValue Does this option require a value? Like: -t templatename
-***REMOVED*** @param {string}    helpText A brief description of the option.
-***REMOVED*** @param {boolean}   [canHaveMultiple=false] Set to `true` if the option can be provided more than once.
-***REMOVED*** @param {function}  [coercer] A function to coerce the given value to a specific type.
-***REMOVED*** @return {this}
-***REMOVED*** @example
-***REMOVED*** myParser.addOption('t', 'template', true, 'The path to the template.');
-***REMOVED*** myParser.addOption('h', 'help', false, 'Show the help message.');
-***REMOVED***
+/**
+ * Provide information about a legal option.
+ * @param {character} shortName The short name of the option, entered like: -T.
+ * @param {string}    longName The equivalent long name of the option, entered like: --test.
+ * @param {boolean}   hasValue Does this option require a value? Like: -t templatename
+ * @param {string}    helpText A brief description of the option.
+ * @param {boolean}   [canHaveMultiple=false] Set to `true` if the option can be provided more than once.
+ * @param {function}  [coercer] A function to coerce the given value to a specific type.
+ * @return {this}
+ * @example
+ * myParser.addOption('t', 'template', true, 'The path to the template.');
+ * myParser.addOption('h', 'help', false, 'Show the help message.');
+ */
 ArgParser.prototype.addOption = function(shortName, longName, hasValue, helpText, canHaveMultiple, coercer) {
     var option = {
         shortName: shortName,
@@ -75,31 +75,31 @@ ArgParser.prototype.addOption = function(shortName, longName, hasValue, helpText
         helpText: helpText,
         canHaveMultiple: (canHaveMultiple || false),
         coercer: coercer
-   ***REMOVED*****REMOVED***
+    };
 
     return this._addOption(option);
-***REMOVED***
+};
 
 // TODO: refactor addOption to accept objects, then get rid of this method
-***REMOVED***
-***REMOVED*** Provide information about an option that should not cause an error if present, but that is always
-***REMOVED*** ignored (for example, an option that was used in previous versions but is no longer supported).
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} shortName - The short name of the option with a leading hyphen (for example,
-***REMOVED*** `-v`).
-***REMOVED*** @param {string} longName - The long name of the option with two leading hyphens (for example,
-***REMOVED*** `--version`).
-***REMOVED***
+/**
+ * Provide information about an option that should not cause an error if present, but that is always
+ * ignored (for example, an option that was used in previous versions but is no longer supported).
+ *
+ * @private
+ * @param {string} shortName - The short name of the option with a leading hyphen (for example,
+ * `-v`).
+ * @param {string} longName - The long name of the option with two leading hyphens (for example,
+ * `--version`).
+ */
 ArgParser.prototype.addIgnoredOption = function(shortName, longName) {
     var option = {
         shortName: shortName,
         longName: longName,
         ignore: true
-   ***REMOVED*****REMOVED***
+    };
 
     return this._addOption(option);
-***REMOVED***
+};
 
 function padding(length) {
     return new Array(length + 1).join(' ');
@@ -148,7 +148,7 @@ function formatHelpInfo(options) {
     var maxNameLength = findMaxLength(options.names);
     var maxDescriptionLength = findMaxLength(options.descriptions);
 
-    var wrapDescriptionAt = maxLength - (MARGIN_LENGTH***REMOVED*** 3) - maxNameLength;
+    var wrapDescriptionAt = maxLength - (MARGIN_LENGTH * 3) - maxNameLength;
     // build the string for each option
     options.names.forEach(function(name, i) {
         var result;
@@ -166,7 +166,7 @@ function formatHelpInfo(options) {
         result += concatWithMaxLength(words, wrapDescriptionAt);
         // if there's anything left, keep going until we've consumed the description
         while (words.length) {
-            partialDescription = padding( maxNameLength + (MARGIN_LENGTH***REMOVED*** 2) );
+            partialDescription = padding( maxNameLength + (MARGIN_LENGTH * 2) );
             partialDescription += concatWithMaxLength(words, wrapDescriptionAt);
             result += '\n' + partialDescription;
         }
@@ -177,15 +177,15 @@ function formatHelpInfo(options) {
     return results;
 }
 
-***REMOVED***
-***REMOVED*** Generate a summary of all the options with corresponding help text.
-***REMOVED*** @returns {string}
-***REMOVED***
+/**
+ * Generate a summary of all the options with corresponding help text.
+ * @returns {string}
+ */
 ArgParser.prototype.help = function() {
     var options = {
         names: [],
         descriptions: []
-   ***REMOVED*****REMOVED***
+    };
 
     this._options.forEach(function(option) {
         var name = '';
@@ -212,17 +212,17 @@ ArgParser.prototype.help = function() {
     });
 
     return 'Options:\n' + formatHelpInfo(options).join('\n');
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get the options.
-***REMOVED*** @param {Array.<string>} args An array, like ['-x', 'hello']
-***REMOVED*** @param {Object} [defaults={}] An optional collection of default values.
-***REMOVED*** @returns {Object} The keys will be the longNames, or the shortName if no longName is defined for
-***REMOVED*** that option. The values will be the values provided, or `true` if the option accepts no value.
-***REMOVED***
+/**
+ * Get the options.
+ * @param {Array.<string>} args An array, like ['-x', 'hello']
+ * @param {Object} [defaults={}] An optional collection of default values.
+ * @returns {Object} The keys will be the longNames, or the shortName if no longName is defined for
+ * that option. The values will be the values provided, or `true` if the option accepts no value.
+ */
 ArgParser.prototype.parse = function(args, defaults) {
-    var result = defaults && _.defaults({}, defaults) || {***REMOVED***
+    var result = defaults && _.defaults({}, defaults) || {};
 
     result._ = [];
     for (var i = 0, leni = args.length; i < leni; i++) {
@@ -296,6 +296,6 @@ ArgParser.prototype.parse = function(args, defaults) {
     }
 
     return result;
-***REMOVED***
+};
 
 module.exports = ArgParser;

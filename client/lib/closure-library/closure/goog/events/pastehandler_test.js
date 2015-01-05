@@ -16,10 +16,10 @@ goog.provide('goog.events.PasteHandlerTest');
 goog.setTestOnly('goog.events.PasteHandlerTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.PasteHandler');
 goog.require('goog.testing.MockClock');
@@ -43,7 +43,7 @@ function setUp() {
   mockUserAgent = new goog.testing.MockUserAgent();
   handler = new goog.events.PasteHandler(textarea);
   pasted = false;
-***REMOVED***handler, goog.events.PasteHandler.EventType.PASTE,
+  goog.events.listen(handler, goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
       });
@@ -69,7 +69,7 @@ function testDispatchingPasteEventSupportedByAFewBrowsersWork() {
   var handlerThatSupportsPasteEvents =
       new goog.events.PasteHandler(textarea);
   // user clicks on the textarea and give it focus
-***REMOVED***handlerThatSupportsPasteEvents,
+  goog.events.listen(handlerThatSupportsPasteEvents,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
@@ -287,7 +287,7 @@ function testMacRightClickPasteRequiresCtrlBecauseItHasOneButton() {
   goog.userAgent.MAC = true;
   var handler = new goog.events.PasteHandler(textarea);
   // user clicks on the textarea and give it focus
-***REMOVED***handler,
+  goog.events.listen(handler,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
@@ -310,7 +310,7 @@ function testOperaMacFiresKeyCode17WhenAppleKeyPressedButDoesNotFireKeyDown() {
   goog.userAgent.MAC = true;
   var handler = new goog.events.PasteHandler(textarea);
   // user clicks on the textarea and give it focus
-***REMOVED***handler,
+  goog.events.listen(handler,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
@@ -333,7 +333,7 @@ function testScriptingDoesntTriggerPasteEvents() {
       new goog.events.PasteHandler(textarea);
   pasted = false;
   // user clicks on the textarea and give it focus
-***REMOVED***handlerUsedToListenForScriptingChanges,
+  goog.events.listen(handlerUsedToListenForScriptingChanges,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
@@ -353,13 +353,13 @@ function testAfterPaste() {
   var handlerThatSupportsPasteEvents =
       new goog.events.PasteHandler(textarea);
   pasted = false;
-***REMOVED***handlerThatSupportsPasteEvents,
+  goog.events.listen(handlerThatSupportsPasteEvents,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
       });
   var afterPasteFired = false;
-***REMOVED***handlerThatSupportsPasteEvents,
+  goog.events.listen(handlerThatSupportsPasteEvents,
       goog.events.PasteHandler.EventType.AFTER_PASTE,
       function() {
         afterPasteFired = true;
@@ -384,13 +384,13 @@ function testAfterPasteNotFiredIfDelayTooLong() {
   var handlerThatSupportsPasteEvents =
       new goog.events.PasteHandler(textarea);
   pasted = false;
-***REMOVED***handlerThatSupportsPasteEvents,
+  goog.events.listen(handlerThatSupportsPasteEvents,
       goog.events.PasteHandler.EventType.PASTE,
       function() {
         pasted = true;
       });
   var afterPasteFired = false;
-***REMOVED***handlerThatSupportsPasteEvents,
+  goog.events.listen(handlerThatSupportsPasteEvents,
       goog.events.PasteHandler.EventType.AFTER_PASTE,
       function() {
         afterPasteFired = true;

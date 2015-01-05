@@ -1,17 +1,17 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: attila@google.com (Attila Bodis)***REMOVED***
-/* Author: eae@google.com (Emil A. Eklund)***REMOVED***
+/* Author: attila@google.com (Attila Bodis) */
+/* Author: eae@google.com (Emil A. Eklund) */
 
 
 /*
-***REMOVED*** Styles used by goog.ui.TabBarRenderer.
-***REMOVED***
+ * Styles used by goog.ui.TabBarRenderer.
+ */
 .goog-tab-bar {
   margin: 0;
   border: 0;
@@ -38,10 +38,10 @@
 
 
 /*
-***REMOVED*** IE6-only hacks to fix the gap between the floated tabs and the content.
-***REMOVED*** IE7 and later will ignore these.
-***REMOVED***
-/* @if user.agent ie6***REMOVED***
+ * IE6-only hacks to fix the gap between the floated tabs and the content.
+ * IE7 and later will ignore these.
+ */
+/* @if user.agent ie6 */
 * html .goog-tab-bar-start {
   margin-right: -3px;
 }
@@ -49,4 +49,4 @@
 * html .goog-tab-bar-end {
   margin-left: -3px;
 }
-/* @endif***REMOVED***
+/* @endif */

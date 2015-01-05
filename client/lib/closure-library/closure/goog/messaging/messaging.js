@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for manipulating message channels.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Functions for manipulating message channels.
+ *
+ */
 
 goog.provide('goog.messaging');
 
 goog.require('goog.messaging.MessageChannel');
 
 
-***REMOVED***
-***REMOVED*** Creates a bidirectional pipe between two message channels.
-***REMOVED***
-***REMOVED*** @param {goog.messaging.MessageChannel} channel1 The first channel.
-***REMOVED*** @param {goog.messaging.MessageChannel} channel2 The second channel.
-***REMOVED***
+/**
+ * Creates a bidirectional pipe between two message channels.
+ *
+ * @param {goog.messaging.MessageChannel} channel1 The first channel.
+ * @param {goog.messaging.MessageChannel} channel2 The second channel.
+ */
 goog.messaging.pipe = function(channel1, channel2) {
   channel1.registerDefaultService(goog.bind(channel2.send, channel2));
   channel2.registerDefaultService(goog.bind(channel1.send, channel1));
-***REMOVED***
+};

@@ -1,14 +1,14 @@
-***REMOVED***
-***REMOVED*** @type {string|Array<string>}
-***REMOVED***
+/**
+ * @type {string|Array<string>}
+ */
 var foo;
 
-***REMOVED***
-***REMOVED*** @type integer
-***REMOVED***
+/**
+ * @type integer
+ */
 var bar = +(new Date()).getTime();
 
-***REMOVED***
-***REMOVED*** @type {!Array.<number>}
-***REMOVED***
+/**
+ * @type {!Array.<number>}
+ */
 var baz = [1, 2, 3];

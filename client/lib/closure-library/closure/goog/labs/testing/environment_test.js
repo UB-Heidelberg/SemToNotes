@@ -35,7 +35,7 @@ function setUp() {
   // Temporarily override the initializeTestRunner method to avoid installing
   // our "test" TestCase.
   var initFn = goog.testing.TestCase.initializeTestRunner;
-  goog.testing.TestCase.initializeTestRunner = function() {***REMOVED***
+  goog.testing.TestCase.initializeTestRunner = function() {};
   testCase = new goog.labs.testing.EnvironmentTestCase_();
   goog.testing.TestCase.initializeTestRunner = initFn;
 

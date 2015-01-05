@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared unit tests for styles.
-***REMOVED***
+/**
+ * @fileoverview Shared unit tests for styles.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.style_test');
 
 goog.require('goog.array');
@@ -97,7 +97,7 @@ function testSetStyleMap() {
     'background-color': 'blue',
     'font-size': '100px',
     textAlign: 'center'
- ***REMOVED*****REMOVED***
+  };
 
   goog.style.setStyle(el, styles);
 
@@ -105,7 +105,7 @@ function testSetStyleMap() {
     backgroundColor: 'blue',
     fontSize: '100px',
     textAlign: 'center'
- ***REMOVED*****REMOVED***
+  };
 
   goog.object.forEach(answers, function(value, style) {
     assertEquals('Should be ' + value, value, el.style[style]);
@@ -387,7 +387,7 @@ function testGetClientPositionOfOrphanElement() {
 }
 
 function testGetClientPositionEvent() {
-  var mockEvent = {***REMOVED***
+  var mockEvent = {};
   mockEvent.clientX = 100;
   mockEvent.clientY = 200;
   var pos = goog.style.getClientPosition(mockEvent);
@@ -396,7 +396,7 @@ function testGetClientPositionEvent() {
 }
 
 function testGetClientPositionTouchEvent() {
-  var mockTouchEvent = {***REMOVED***
+  var mockTouchEvent = {};
 
   mockTouchEvent.targetTouches = [{}];
   mockTouchEvent.targetTouches[0].clientX = 100;
@@ -413,7 +413,7 @@ function testGetClientPositionTouchEvent() {
 
 function testGetClientPositionAbstractedTouchEvent() {
   var e = new goog.events.BrowserEvent();
-  e.event_ = {***REMOVED***
+  e.event_ = {};
   e.event_.touches = [{}];
   e.event_.touches[0].clientX = 100;
   e.event_.touches[0].clientY = 200;
@@ -1465,20 +1465,20 @@ function testGetLengthUnits() {
 
 function testParseStyleAttribute() {
   var css = 'left: 0px; text-align: center';
-  var expected = {'left': '0px', 'textAlign': 'center'***REMOVED***
+  var expected = {'left': '0px', 'textAlign': 'center'};
 
   assertObjectEquals(expected, goog.style.parseStyleAttribute(css));
 }
 
 function testToStyleAttribute() {
-  var object = {'left': '0px', 'textAlign': 'center'***REMOVED***
+  var object = {'left': '0px', 'textAlign': 'center'};
   var expected = 'left:0px;text-align:center;';
 
   assertEquals(expected, goog.style.toStyleAttribute(object));
 }
 
 function testStyleAttributePassthrough() {
-  var object = {'left': '0px', 'textAlign': 'center'***REMOVED***
+  var object = {'left': '0px', 'textAlign': 'center'};
 
   assertObjectEquals(object,
       goog.style.parseStyleAttribute(goog.style.toStyleAttribute(object)));
@@ -1521,19 +1521,19 @@ function testGetOpacity() {
     style: {
       opacity: '0.3'
     }
- ***REMOVED*****REMOVED***
+  };
 
   var el2 = {
     style: {
       MozOpacity: '0.1'
     }
- ***REMOVED*****REMOVED***
+  };
 
   var el3 = {
     style: {
       filter: 'some:other,filter;alpha(opacity=25.5);alpha(more=100);'
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals(0.3, goog.style.getOpacity(el1));
   assertEquals(0.1, goog.style.getOpacity(el2));
@@ -1557,7 +1557,7 @@ function testGetOpacity() {
 
   var el4 = {
     style: {}
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals('', goog.style.getOpacity(el4));
   assertEquals('', goog.style.getOpacity($('test-opacity')));
@@ -1568,21 +1568,21 @@ function testSetOpacity() {
     style: {
       opacity: '0.3'
     }
- ***REMOVED*****REMOVED***
+  };
   goog.style.setOpacity(el1, 0.8);
 
   var el2 = {
     style: {
       MozOpacity: '0.1'
     }
- ***REMOVED*****REMOVED***
+  };
   goog.style.setOpacity(el2, 0.5);
 
   var el3 = {
     style: {
       filter: 'alpha(opacity=25)'
     }
- ***REMOVED*****REMOVED***
+  };
   goog.style.setOpacity(el3, 0.1);
 
   assertEquals(0.8, Number(el1.style.opacity));
@@ -1673,10 +1673,10 @@ function testFramedPageOffset() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the coordinate is approximately equal to the given
-***REMOVED*** x and y coordinates, give or take delta.
-***REMOVED***
+/**
+ * Asserts that the coordinate is approximately equal to the given
+ * x and y coordinates, give or take delta.
+ */
 function assertCoordinateApprox(x, y, delta, coord) {
   assertTrue('Expected x: ' + x + ', actual x: ' + coord.x,
       coord.x >= x - delta && coord.x <= x + delta);
@@ -1775,7 +1775,7 @@ function testGetVisibleRectForElement() {
   assertEquals(winScroll.y + winSize.height, visible.bottom);
 
   // Move the container element to outside of the viewpoert.
-  goog.style.setPosition(container, 8, winScroll.y + winSize.height***REMOVED*** 2);
+  goog.style.setPosition(container, 8, winScroll.y + winSize.height * 2);
   visible = goog.style.getVisibleRectForElement(el);
   assertNull(visible);
 
@@ -1933,8 +1933,8 @@ function testGetVisibleRectForElementInsideNestedScrollableArea() {
   dom.append(container2, el);
 
   container.style.position = 'absolute';
-  goog.style.setPosition(container, 100 /* left***REMOVED***, 500 /* top***REMOVED***);
-  goog.style.setSize(container, 300 /* width***REMOVED***, 300 /* height***REMOVED***);
+  goog.style.setPosition(container, 100 /* left */, 500 /* top */);
+  goog.style.setSize(container, 300 /* width */, 300 /* height */);
 
   container2.style.overflow = 'hidden';
   container2.style.position = 'relative';
@@ -2145,20 +2145,20 @@ function testGetsTranslation() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test browser detection for a user agent configuration.
-***REMOVED*** @param {Array.<number>} expectedAgents Array of expected userAgents.
-***REMOVED*** @param {string} uaString User agent string.
-***REMOVED*** @param {string=} opt_product Navigator product string.
-***REMOVED*** @param {string=} opt_vendor Navigator vendor string.
-***REMOVED***
+/**
+ * Test browser detection for a user agent configuration.
+ * @param {Array.<number>} expectedAgents Array of expected userAgents.
+ * @param {string} uaString User agent string.
+ * @param {string=} opt_product Navigator product string.
+ * @param {string=} opt_vendor Navigator vendor string.
+ */
 function assertUserAgent(expectedAgents, uaString, opt_product, opt_vendor) {
 
   var mockNavigator = {
     'userAgent': uaString,
     'product': opt_product,
     'vendor': opt_vendor
- ***REMOVED*****REMOVED***
+  };
 
   mockUserAgent.setNavigator(mockNavigator);
   mockUserAgent.setUserAgentString(uaString);
@@ -2178,16 +2178,16 @@ function assertUserAgent(expectedAgents, uaString, opt_product, opt_vendor) {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Webkit.
+ */
 function testGetVendorStyleNameWebkit() {
   var mockElement = {
     'style': {
       'WebkitTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
   assertEquals('-webkit-transform-origin',
@@ -2195,17 +2195,17 @@ function testGetVendorStyleNameWebkit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Webkit.
+ */
 function testGetVendorStyleNameWebkitNoPrefix() {
   var mockElement = {
     'style': {
       'WebkitTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
   assertEquals(
@@ -2214,16 +2214,16 @@ function testGetVendorStyleNameWebkitNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Gecko.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Gecko.
+ */
 function testGetVendorStyleNameGecko() {
   var mockElement = {
     'style': {
       'MozTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
   assertEquals('-moz-transform-origin',
@@ -2231,17 +2231,17 @@ function testGetVendorStyleNameGecko() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Gecko.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Gecko.
+ */
 function testGetVendorStyleNameGeckoNoPrefix() {
   var mockElement = {
     'style': {
       'MozTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
   assertEquals(
@@ -2250,16 +2250,16 @@ function testGetVendorStyleNameGeckoNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for IE.
+ */
 function testGetVendorStyleNameIE() {
   var mockElement = {
     'style': {
       'msTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
   assertEquals('-ms-transform-origin',
@@ -2267,17 +2267,17 @@ function testGetVendorStyleNameIE() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for IE.
+ */
 function testGetVendorStyleNameIENoPrefix() {
   var mockElement = {
     'style': {
       'msTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
   assertEquals(
@@ -2286,16 +2286,16 @@ function testGetVendorStyleNameIENoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Opera.
+ */
 function testGetVendorStyleNameOpera() {
   var mockElement = {
     'style': {
       'OTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');
   assertEquals('-o-transform-origin',
@@ -2303,17 +2303,17 @@ function testGetVendorStyleNameOpera() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Opera.
+ */
 function testGetVendorStyleNameOperaNoPrefix() {
   var mockElement = {
     'style': {
       'OTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');
   assertEquals(
@@ -2322,16 +2322,16 @@ function testGetVendorStyleNameOperaNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Webkit.
+ */
 function testGetVendorJsStyleNameWebkit() {
   var mockElement = {
     'style': {
       'WebkitTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
   assertEquals('WebkitTransformOrigin',
@@ -2339,17 +2339,17 @@ function testGetVendorJsStyleNameWebkit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Webkit.
+ */
 function testGetVendorJsStyleNameWebkitNoPrefix() {
   var mockElement = {
     'style': {
       'WebkitTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
   assertEquals(
@@ -2358,16 +2358,16 @@ function testGetVendorJsStyleNameWebkitNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Gecko.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Gecko.
+ */
 function testGetVendorJsStyleNameGecko() {
   var mockElement = {
     'style': {
       'MozTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
   assertEquals('MozTransformOrigin',
@@ -2375,17 +2375,17 @@ function testGetVendorJsStyleNameGecko() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Gecko.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Gecko.
+ */
 function testGetVendorJsStyleNameGeckoNoPrefix() {
   var mockElement = {
     'style': {
       'MozTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
   assertEquals(
@@ -2394,16 +2394,16 @@ function testGetVendorJsStyleNameGeckoNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for IE.
+ */
 function testGetVendorJsStyleNameIE() {
   var mockElement = {
     'style': {
       'msTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
   assertEquals('msTransformOrigin',
@@ -2411,17 +2411,17 @@ function testGetVendorJsStyleNameIE() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for IE.
+ */
 function testGetVendorJsStyleNameIENoPrefix() {
   var mockElement = {
     'style': {
       'msTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
   assertEquals(
@@ -2430,16 +2430,16 @@ function testGetVendorJsStyleNameIENoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** with a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * with a vendor prefix for Opera.
+ */
 function testGetVendorJsStyleNameOpera() {
   var mockElement = {
     'style': {
       'OTransformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');
   assertEquals('OTransformOrigin',
@@ -2447,17 +2447,17 @@ function testGetVendorJsStyleNameOpera() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the proper vendor style name for a CSS property
-***REMOVED*** when it exists without a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the proper vendor style name for a CSS property
+ * when it exists without a vendor prefix for Opera.
+ */
 function testGetVendorJsStyleNameOperaNoPrefix() {
   var mockElement = {
     'style': {
       'OTransformOrigin': '',
       'transformOrigin': ''
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');
   assertEquals(
@@ -2466,16 +2466,16 @@ function testGetVendorJsStyleNameOperaNoPrefix() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the setting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the setting a style name for a CSS property
+ * with a vendor prefix for Webkit.
+ */
 function testSetVendorStyleWebkit() {
   var mockElement = {
     'style': {
       'WebkitTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
@@ -2484,16 +2484,16 @@ function testSetVendorStyleWebkit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the setting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Mozilla.
-***REMOVED***
+/**
+ * Test for the setting a style name for a CSS property
+ * with a vendor prefix for Mozilla.
+ */
 function testSetVendorStyleGecko() {
   var mockElement = {
     'style': {
       'MozTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
@@ -2502,16 +2502,16 @@ function testSetVendorStyleGecko() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the setting a style name for a CSS property
-***REMOVED*** with a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the setting a style name for a CSS property
+ * with a vendor prefix for IE.
+ */
 function testSetVendorStyleIE() {
   var mockElement = {
     'style': {
       'msTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
@@ -2520,16 +2520,16 @@ function testSetVendorStyleIE() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the setting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the setting a style name for a CSS property
+ * with a vendor prefix for Opera.
+ */
 function testSetVendorStyleOpera() {
   var mockElement = {
     'style': {
       'OTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');
@@ -2538,16 +2538,16 @@ function testSetVendorStyleOpera() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the getting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Webkit.
-***REMOVED***
+/**
+ * Test for the getting a style name for a CSS property
+ * with a vendor prefix for Webkit.
+ */
 function testGetVendorStyleWebkit() {
   var mockElement = {
     'style': {
       'WebkitTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.WEBKIT], 'WebKit');
@@ -2556,16 +2556,16 @@ function testGetVendorStyleWebkit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the getting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Mozilla.
-***REMOVED***
+/**
+ * Test for the getting a style name for a CSS property
+ * with a vendor prefix for Mozilla.
+ */
 function testGetVendorStyleGecko() {
   var mockElement = {
     'style': {
       'MozTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.GECKO], 'Gecko', 'Gecko');
@@ -2574,16 +2574,16 @@ function testGetVendorStyleGecko() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the getting a style name for a CSS property
-***REMOVED*** with a vendor prefix for IE.
-***REMOVED***
+/**
+ * Test for the getting a style name for a CSS property
+ * with a vendor prefix for IE.
+ */
 function testGetVendorStyleIE() {
   var mockElement = {
     'style': {
       'msTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.IE], 'MSIE');
@@ -2592,16 +2592,16 @@ function testGetVendorStyleIE() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test for the getting a style name for a CSS property
-***REMOVED*** with a vendor prefix for Opera.
-***REMOVED***
+/**
+ * Test for the getting a style name for a CSS property
+ * with a vendor prefix for Opera.
+ */
 function testGetVendorStyleOpera() {
   var mockElement = {
     'style': {
       'OTransform': ''
     }
- ***REMOVED*****REMOVED***
+  };
   var styleValue = 'translate3d(0,0,0)';
 
   assertUserAgent([goog.userAgentTestUtil.UserAgents.OPERA], 'Opera');

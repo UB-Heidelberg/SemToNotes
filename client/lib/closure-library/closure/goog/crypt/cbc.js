@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Implementation of CBC mode for block ciphers.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation
-***REMOVED***     #Cipher-block_chaining_.28CBC.29. for description.
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Implementation of CBC mode for block ciphers.  See
+ *     http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation
+ *     #Cipher-block_chaining_.28CBC.29. for description.
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.crypt.Cbc');
 
@@ -28,45 +28,45 @@ goog.require('goog.crypt');
 
 
 
-***REMOVED***
-***REMOVED*** Implements the CBC mode for block ciphers. See
-***REMOVED*** http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation
-***REMOVED*** #Cipher-block_chaining_.28CBC.29
-***REMOVED***
-***REMOVED*** @param {!goog.crypt.BlockCipher} cipher The block cipher to use.
-***REMOVED*** @param {number=} opt_blockSize The block size of the cipher in bytes.
-***REMOVED***     Defaults to 16 bytes.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Implements the CBC mode for block ciphers. See
+ * http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation
+ * #Cipher-block_chaining_.28CBC.29
+ *
+ * @param {!goog.crypt.BlockCipher} cipher The block cipher to use.
+ * @param {number=} opt_blockSize The block size of the cipher in bytes.
+ *     Defaults to 16 bytes.
+ * @constructor
+ * @final
+ * @struct
+ */
 goog.crypt.Cbc = function(cipher, opt_blockSize) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Block cipher.
-  ***REMOVED*** @type {!goog.crypt.BlockCipher}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Block cipher.
+   * @type {!goog.crypt.BlockCipher}
+   * @private
+   */
   this.cipher_ = cipher;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Block size in bytes.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Block size in bytes.
+   * @type {number}
+   * @private
+   */
   this.blockSize_ = opt_blockSize || 16;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Encrypt a message.
-***REMOVED***
-***REMOVED*** @param {!Array.<number>} plainText Message to encrypt. An array of bytes.
-***REMOVED***     The length should be a multiple of the block size.
-***REMOVED*** @param {!Array.<number>} initialVector Initial vector for the CBC mode.
-***REMOVED***     An array of bytes with the same length as the block size.
-***REMOVED*** @return {!Array.<number>} Encrypted message.
-***REMOVED***
+/**
+ * Encrypt a message.
+ *
+ * @param {!Array.<number>} plainText Message to encrypt. An array of bytes.
+ *     The length should be a multiple of the block size.
+ * @param {!Array.<number>} initialVector Initial vector for the CBC mode.
+ *     An array of bytes with the same length as the block size.
+ * @return {!Array.<number>} Encrypted message.
+ */
 goog.crypt.Cbc.prototype.encrypt = function(plainText, initialVector) {
 
   goog.asserts.assert(
@@ -102,18 +102,18 @@ goog.crypt.Cbc.prototype.encrypt = function(plainText, initialVector) {
   }
 
   return cipherText;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decrypt a message.
-***REMOVED***
-***REMOVED*** @param {!Array.<number>} cipherText Message to decrypt. An array of bytes.
-***REMOVED***     The length should be a multiple of the block size.
-***REMOVED*** @param {!Array.<number>} initialVector Initial vector for the CBC mode.
-***REMOVED***     An array of bytes with the same length as the block size.
-***REMOVED*** @return {!Array.<number>} Decrypted message.
-***REMOVED***
+/**
+ * Decrypt a message.
+ *
+ * @param {!Array.<number>} cipherText Message to decrypt. An array of bytes.
+ *     The length should be a multiple of the block size.
+ * @param {!Array.<number>} initialVector Initial vector for the CBC mode.
+ *     An array of bytes with the same length as the block size.
+ * @return {!Array.<number>} Decrypted message.
+ */
 goog.crypt.Cbc.prototype.decrypt = function(cipherText, initialVector) {
 
   goog.asserts.assert(
@@ -150,4 +150,4 @@ goog.crypt.Cbc.prototype.decrypt = function(cipherText, initialVector) {
   }
 
   return plainText;
-***REMOVED***
+};

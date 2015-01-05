@@ -12,39 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview tmpnetwork.js contains some temporary networking functions
-***REMOVED*** for browserchannel which will be moved at a later date.
-***REMOVED***
+/**
+ * @fileoverview tmpnetwork.js contains some temporary networking functions
+ * for browserchannel which will be moved at a later date.
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for BrowserChannel
-***REMOVED***
+/**
+ * Namespace for BrowserChannel
+ */
 goog.provide('goog.net.tmpnetwork');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.net.ChannelDebug');
 
 
-***REMOVED***
-***REMOVED*** Default timeout to allow for google.com pings.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Default timeout to allow for google.com pings.
+ * @type {number}
+ */
 goog.net.tmpnetwork.GOOGLECOM_TIMEOUT = 10000;
 
 
-***REMOVED***
-***REMOVED*** Pings the network to check if an error is a server error or user's network
-***REMOVED*** error.
-***REMOVED***
-***REMOVED*** @param {Function} callback The function to call back with results.
-***REMOVED*** @param {goog.Uri?=} opt_imageUri The URI of an image to use for the network
-***REMOVED***     test. You***REMOVED***must* provide an image URI; the default behavior is provided
-***REMOVED***     for compatibility with existing code, but the search team does not want
-***REMOVED***     people using images served off of google.com for this purpose. The
-***REMOVED***     default will go away when all usages have been changed.
-***REMOVED***
+/**
+ * Pings the network to check if an error is a server error or user's network
+ * error.
+ *
+ * @param {Function} callback The function to call back with results.
+ * @param {goog.Uri?=} opt_imageUri The URI of an image to use for the network
+ *     test. You *must* provide an image URI; the default behavior is provided
+ *     for compatibility with existing code, but the search team does not want
+ *     people using images served off of google.com for this purpose. The
+ *     default will go away when all usages have been changed.
+ */
 goog.net.tmpnetwork.testGoogleCom = function(callback, opt_imageUri) {
   // We need to add a 'rand' to make sure the response is not fulfilled
   // by browser cache.
@@ -55,18 +55,18 @@ goog.net.tmpnetwork.testGoogleCom = function(callback, opt_imageUri) {
   }
   goog.net.tmpnetwork.testLoadImage(uri.toString(),
       goog.net.tmpnetwork.GOOGLECOM_TIMEOUT, callback);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test loading the given image, retrying if necessary.
-***REMOVED*** @param {string} url URL to the iamge.
-***REMOVED*** @param {number} timeout Milliseconds before giving up.
-***REMOVED*** @param {Function} callback Function to call with results.
-***REMOVED*** @param {number} retries The number of times to retry.
-***REMOVED*** @param {number=} opt_pauseBetweenRetriesMS Optional number of milliseconds
-***REMOVED***     between retries - defaults to 0.
-***REMOVED***
+/**
+ * Test loading the given image, retrying if necessary.
+ * @param {string} url URL to the iamge.
+ * @param {number} timeout Milliseconds before giving up.
+ * @param {Function} callback Function to call with results.
+ * @param {number} retries The number of times to retry.
+ * @param {number=} opt_pauseBetweenRetriesMS Optional number of milliseconds
+ *     between retries - defaults to 0.
+ */
 goog.net.tmpnetwork.testLoadImageWithRetries = function(url, timeout, callback,
     retries, opt_pauseBetweenRetriesMS) {
   var channelDebug = new goog.net.ChannelDebug();
@@ -90,15 +90,15 @@ goog.net.tmpnetwork.testLoadImageWithRetries = function(url, timeout, callback,
       }, pauseBetweenRetries);
     }
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test loading the given image.
-***REMOVED*** @param {string} url URL to the iamge.
-***REMOVED*** @param {number} timeout Milliseconds before giving up.
-***REMOVED*** @param {Function} callback Function to call with results.
-***REMOVED***
+/**
+ * Test loading the given image.
+ * @param {string} url URL to the iamge.
+ * @param {number} timeout Milliseconds before giving up.
+ * @param {Function} callback Function to call with results.
+ */
 goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
   var channelDebug = new goog.net.ChannelDebug();
   channelDebug.debug('TestLoadImage: loading ' + url);
@@ -111,7 +111,7 @@ goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
     } catch (e) {
       channelDebug.dumpException(e);
     }
- ***REMOVED*****REMOVED***
+  };
   img.onerror = function() {
     try {
       channelDebug.debug('TestLoadImage: error');
@@ -120,7 +120,7 @@ goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
     } catch (e) {
       channelDebug.dumpException(e);
     }
- ***REMOVED*****REMOVED***
+  };
   img.onabort = function() {
     try {
       channelDebug.debug('TestLoadImage: abort');
@@ -129,7 +129,7 @@ goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
     } catch (e) {
       channelDebug.dumpException(e);
     }
- ***REMOVED*****REMOVED***
+  };
   img.ontimeout = function() {
     try {
       channelDebug.debug('TestLoadImage: timeout');
@@ -138,7 +138,7 @@ goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
     } catch (e) {
       channelDebug.dumpException(e);
     }
- ***REMOVED*****REMOVED***
+  };
 
   goog.global.setTimeout(function() {
     if (img.ontimeout) {
@@ -146,14 +146,14 @@ goog.net.tmpnetwork.testLoadImage = function(url, timeout, callback) {
     }
   }, timeout);
   img.src = url;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clear handlers to avoid memory leaks.
-***REMOVED*** @param {Image} img The image to clear handlers from.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clear handlers to avoid memory leaks.
+ * @param {Image} img The image to clear handlers from.
+ * @private
+ */
 goog.net.tmpnetwork.clearImageCallbacks_ = function(img) {
   // NOTE(user): Nullified individually to avoid compiler warnings
   // (BUG 658126)
@@ -161,4 +161,4 @@ goog.net.tmpnetwork.clearImageCallbacks_ = function(img) {
   img.onerror = null;
   img.onabort = null;
   img.ontimeout = null;
-***REMOVED***
+};

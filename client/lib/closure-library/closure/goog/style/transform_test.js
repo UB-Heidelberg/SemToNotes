@@ -22,18 +22,18 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.product.isVersion');
 
 
-***REMOVED***
-***REMOVED*** Element being transformed.
-***REMOVED*** @type {Element}
-***REMOVED***
+/**
+ * Element being transformed.
+ * @type {Element}
+ */
 var element;
 
 
-***REMOVED***
-***REMOVED*** Sets a transform translation and asserts the translation was applied.
-***REMOVED*** @param {number} x The horizontal translation
-***REMOVED*** @param {number} y The vertical translation
-***REMOVED***
+/**
+ * Sets a transform translation and asserts the translation was applied.
+ * @param {number} x The horizontal translation
+ * @param {number} y The vertical translation
+ */
 var setAndAssertTranslation = function(x, y) {
   if (goog.userAgent.GECKO) {
     // Mozilla does not support CSSMatrix.
@@ -48,7 +48,7 @@ var setAndAssertTranslation = function(x, y) {
     assertEquals(x, translation.x);
     assertEquals(y, translation.y);
   }
-***REMOVED***
+};
 
 function setUp() {
   element = goog.dom.createElement('div');

@@ -15,10 +15,10 @@
 goog.provide('goog.events.FileDropHandlerTest');
 goog.setTestOnly('goog.events.FileDropHandlerTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.FileDropHandler');
 goog.require('goog.testing.jsunit');
 
@@ -35,7 +35,7 @@ function setUp() {
   handler = new goog.events.FileDropHandler(textarea);
   dnd = false;
   files = null;
-***REMOVED***handler, goog.events.FileDropHandler.EventType.DROP,
+  goog.events.listen(handler, goog.events.FileDropHandler.EventType.DROP,
       function(e) {
         dnd = true;
         files =
@@ -52,7 +52,7 @@ function tearDown() {
 function testOneFile() {
   var preventDefault = false;
   var expectedfiles = [{ fileName: 'file1.jpg' }];
-  var dt = { types: ['Files'], files: expectedfiles***REMOVED*****REMOVED***
+  var dt = { types: ['Files'], files: expectedfiles };
 
   // Assert that default actions are prevented on dragenter.
   textarea.dispatchEvent(new goog.events.BrowserEvent({
@@ -91,7 +91,7 @@ function testOneFile() {
 function testMultipleFiles() {
   var preventDefault = false;
   var expectedfiles = [{ fileName: 'file1.jpg' }, { fileName: 'file2.jpg' }];
-  var dt = { types: ['Files', 'text'], files: expectedfiles***REMOVED*****REMOVED***
+  var dt = { types: ['Files', 'text'], files: expectedfiles };
 
   // Assert that default actions are prevented on dragenter.
   textarea.dispatchEvent(new goog.events.BrowserEvent({
@@ -130,7 +130,7 @@ function testMultipleFiles() {
 
 function testNoFiles() {
   var preventDefault = false;
-  var dt = { types: ['text']***REMOVED*****REMOVED***
+  var dt = { types: ['text'] };
 
   // Assert that default actions are not prevented on dragenter.
   textarea.dispatchEvent(new goog.events.BrowserEvent({
@@ -200,7 +200,7 @@ function testDragEnter() {
 
 function testPreventDropOutside() {
   var preventDefault = false;
-  var dt = { types: ['Files'], files: [{ fileName: 'file1.jpg' }]***REMOVED*****REMOVED***
+  var dt = { types: ['Files'], files: [{ fileName: 'file1.jpg' }] };
 
   // Assert that default actions are not prevented on dragenter on the
   // document outside the text area.

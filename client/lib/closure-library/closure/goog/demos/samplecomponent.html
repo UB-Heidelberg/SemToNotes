@@ -31,12 +31,12 @@ See the COPYING file for details.
 
       var t = new goog.Timer(2000);
       var value = 0;
-    ***REMOVED***t, goog.Timer.TICK, function (e) {
+      goog.events.listen(t, goog.Timer.TICK, function (e) {
           box3.setLabelText((++value).toString());
       });
       t.start();
     }
-  ***REMOVED***window, goog.events.EventType.LOAD, initPage);
+    goog.events.listen(window, goog.events.EventType.LOAD, initPage);
   </script>
 
   <link rel="stylesheet" href="css/demo.css">

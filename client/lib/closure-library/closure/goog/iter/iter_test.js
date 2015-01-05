@@ -31,7 +31,7 @@ ArrayIterator.prototype.next = function() {
     throw goog.iter.StopIteration;
   }
   return this.array_[this.current_++];
-***REMOVED***
+};
 
 function testForEach() {
   var s = '';
@@ -171,7 +171,7 @@ function testMap() {
   var iter2 = goog.iter.map(iter, function(val, index, iter3) {
     assertEquals(iter, iter3);
     assertEquals('index should be undefined', 'undefined', typeof index);
-    return val***REMOVED*** val;
+    return val * val;
   });
   assertEquals('0149', goog.iter.join(iter2, ''));
 }
@@ -190,7 +190,7 @@ function testReduce2() {
   assertEquals(
       24, // 4!
       goog.iter.reduce(iter, function(val, el) {
-        return val***REMOVED*** el;
+        return val * el;
       }, 1));
 }
 
@@ -372,7 +372,7 @@ function testToIterator() {
     next: function() {
       throw goog.iter.StopIteration;
     }
- ***REMOVED*****REMOVED***
+  };
   var obj = {
     __iterator__: function(opt_keys) {
       assertFalse(
@@ -380,7 +380,7 @@ function testToIterator() {
           opt_keys);
       return iterLikeObject;
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals('Should return the return value of __iterator_(false)',
                iterLikeObject, goog.iter.toIterator(obj));
@@ -391,7 +391,7 @@ function testToIterator() {
   assertEquals('01234', goog.iter.join(iter, ''));
 
   // Array like
-  var arrayLike = {'0': 0, '1': 1, '2': 2, length: 3***REMOVED***
+  var arrayLike = {'0': 0, '1': 1, '2': 2, length: 3};
   iter = goog.iter.toIterator(arrayLike);
   assertEquals('012', goog.iter.join(iter, ''));
 
@@ -550,7 +550,7 @@ function testCountFloat() {
 }
 
 function testRepeat() {
-  var obj = {foo: 'bar'***REMOVED***
+  var obj = {foo: 'bar'};
   var iter = goog.iter.repeat(obj);
   assertEquals(obj, iter.next());
   assertEquals(obj, iter.next());
@@ -675,7 +675,7 @@ function testGroupByNoKeyFunc() {
 }
 
 function testGroupByKeyFunc() {
-  var keyFunc = function(x) { return x.toLowerCase();***REMOVED*****REMOVED***
+  var keyFunc = function(x) { return x.toLowerCase(); };
   var iter = goog.iter.groupBy('AaAABBbbBCccddDD'.split(''), keyFunc);
   assertArrayEquals(['a', ['A', 'a', 'A', 'A']], iter.next());
   assertArrayEquals(['b', ['B', 'B', 'b', 'b', 'B']], iter.next());
@@ -699,7 +699,7 @@ function testStarMapExtraArgs() {
     assertEquals('undef should be undefined', 'undefined', typeof undef);
     assertTrue(iterator instanceof goog.iter.Iterator);
     return parseInt(string, radix);
- ***REMOVED*****REMOVED***
+  };
   var iter = goog.iter.starMap([['42', 10], ['0xFF', 16], ['101', 2]], func);
   assertEquals(42, iter.next());
   assertEquals(255, iter.next());

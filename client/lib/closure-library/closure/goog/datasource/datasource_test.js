@@ -31,7 +31,7 @@ function setUp() {
   xmlDs = new goog.ds.XmlDataSource(doc.documentElement, null, null);
 
   var jsObj = {node: {'@value': 5, '#text': 'some data', name: 'bob',
-    age: 35, alive: true, aliases: ['bobbo', 'robbo']}***REMOVED***
+    age: 35, alive: true, aliases: ['bobbo', 'robbo']}};
   jsDs = new goog.ds.JsDataSource(jsObj, 'JSDS', null);
 }
 
@@ -101,9 +101,9 @@ function testDataManager() {
 }
 
 
-***REMOVED***
-***REMOVED*** Constructs an array of data nodes from a javascript array.
-***REMOVED***
+/**
+ * Constructs an array of data nodes from a javascript array.
+ */
 function createDataNodesArrayFromJs(jsObj) {
   var jsds = new goog.ds.JsDataSource(jsObj, 'MYJSDS', null);
   var dataNodes = jsds.getChildNodes();

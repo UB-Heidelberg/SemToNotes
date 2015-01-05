@@ -16,7 +16,7 @@ Author: attila@google.com (Attila Bodis)
   <script>
     goog.require('goog.dom');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.events.BrowserEvent.MouseButton');
     goog.require('goog.events.KeyCodes');
     goog.require('goog.object');
@@ -42,32 +42,32 @@ Author: attila@google.com (Attila Bodis)
     var control;
 
     var ALL_EVENTS = goog.object.getValues(goog.ui.Component.EventType);
-    var events = {***REMOVED***
+    var events = {};
     var expectedFailures = new goog.testing.ExpectedFailures();
     var sandbox = document.getElementById('sandbox');
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A dummy renderer, for testing purposes.
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @extends {goog.ui.ControlRenderer}
-   ***REMOVED*****REMOVED***
+    /**
+     * A dummy renderer, for testing purposes.
+     * @constructor
+     * @extends {goog.ui.ControlRenderer}
+     */
     function TestRenderer() {
       goog.ui.ControlRenderer.call(this);
     }
     goog.inherits(TestRenderer, goog.ui.ControlRenderer);
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Initializes the testcase prior to execution.
-   ***REMOVED*****REMOVED***
+    /**
+     * Initializes the testcase prior to execution.
+     */
     function setUp() {
       control = new goog.ui.Control('Hello');
       control.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-    ***REMOVED***control, ALL_EVENTS, countEvent);
+      goog.events.listen(control, ALL_EVENTS, countEvent);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Cleans up after executing the testcase.
-   ***REMOVED*****REMOVED***
+    /**
+     * Cleans up after executing the testcase.
+     */
     function tearDown() {
       control.dispose();
       expectedFailures.handleTearDown();
@@ -75,23 +75,23 @@ Author: attila@google.com (Attila Bodis)
       resetEventCount();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Resets the global counter for events dispatched by test objects.
-   ***REMOVED*****REMOVED***
+    /**
+     * Resets the global counter for events dispatched by test objects.
+     */
     function resetEventCount() {
       goog.object.clear(events);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Increments the global counter for events of this type.
-    ***REMOVED*** @param {goog.events.Event} e Event to count.
-   ***REMOVED*****REMOVED***
+    /**
+     * Increments the global counter for events of this type.
+     * @param {goog.events.Event} e Event to count.
+     */
     function countEvent(e) {
       var type = e.type;
       var target = e.target;
 
       if (!events[target]) {
-        events[target] = {***REMOVED***
+        events[target] = {};
       }
 
       if (events[target][type]) {
@@ -101,44 +101,44 @@ Author: attila@google.com (Attila Bodis)
       }
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Returns the number of times test objects dispatched events of the given
-    ***REMOVED*** type since the global counter was last reset.
-    ***REMOVED*** @param {goog.ui.Control} target Event target.
-    ***REMOVED*** @param {string} type Event type.
-    ***REMOVED*** @return {number} Number of events of this type.
-   ***REMOVED*****REMOVED***
+    /**
+     * Returns the number of times test objects dispatched events of the given
+     * type since the global counter was last reset.
+     * @param {goog.ui.Control} target Event target.
+     * @param {string} type Event type.
+     * @return {number} Number of events of this type.
+     */
     function getEventCount(target, type) {
       return events[target] && events[target][type] || 0;
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Returns true if no events were dispatched since the last reset.
-    ***REMOVED*** @return {boolean} Whether no events have been dispatched since the last
-    ***REMOVED***     reset.
-   ***REMOVED*****REMOVED***
+    /**
+     * Returns true if no events were dispatched since the last reset.
+     * @return {boolean} Whether no events have been dispatched since the last
+     *     reset.
+     */
     function noEventsDispatched() {
       return !events || goog.object.isEmpty(events);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Returns the number of event listeners created by the control.
-    ***REMOVED*** @param {goog.ui.Control} control Control whose event listers are to be
-    ***REMOVED***     counted.
-    ***REMOVED*** @return {number} Number of event listeners.
-   ***REMOVED*****REMOVED***
+    /**
+     * Returns the number of event listeners created by the control.
+     * @param {goog.ui.Control} control Control whose event listers are to be
+     *     counted.
+     * @return {number} Number of event listeners.
+     */
     function getListenerCount(control) {
       return control.googUiComponentHandler_ ?
           goog.object.getCount(control.getHandler().keys_) : 0;
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Simulates a mousedown event on the given element, including focusing it.
-    ***REMOVED*** @param {Element} element Element on which to simulate mousedown.
-    ***REMOVED*** @param {goog.events.BrowserEvent.MouseButton=} opt_button Mouse button;
-    ***REMOVED***     defaults to {@code goog.events.BrowserEvent.MouseButton.LEFT}.
-    ***REMOVED*** @return {boolean} Whether the event was allowed to proceed.
-   ***REMOVED*****REMOVED***
+    /**
+     * Simulates a mousedown event on the given element, including focusing it.
+     * @param {Element} element Element on which to simulate mousedown.
+     * @param {goog.events.BrowserEvent.MouseButton=} opt_button Mouse button;
+     *     defaults to {@code goog.events.BrowserEvent.MouseButton.LEFT}.
+     * @return {boolean} Whether the event was allowed to proceed.
+     */
     function fireMouseDownAndFocus(element, opt_button) {
       var result = goog.testing.events.fireMouseDownEvent(element, opt_button);
       if (result) {
@@ -149,17 +149,17 @@ Author: attila@google.com (Attila Bodis)
     }
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on Mac Safari 3.x.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on Mac Safari 3.x.
+     */
     function isMacSafari3() {
       return goog.userAgent.WEBKIT && goog.userAgent.MAC &&
           !goog.userAgent.isVersionOrHigher('527');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests the {@link goog.ui.Control} constructor.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests the {@link goog.ui.Control} constructor.
+     */
     function testConstructor() {
       assertNotNull('Constructed control must not be null', control);
       assertEquals('Content must have expected value', 'Hello',
@@ -171,7 +171,7 @@ Author: attila@google.com (Attila Bodis)
       var content = goog.dom.createDom('div', null, 'Hello',
           goog.dom.createDom('b', null, 'World'));
       var testRenderer = new TestRenderer();
-      var fakeDomHelper = {***REMOVED***
+      var fakeDomHelper = {};
       var foo = new goog.ui.Control(content, testRenderer, fakeDomHelper);
       assertNotNull('Constructed object must not be null', foo);
       assertEquals('Content must have expected value', content,
@@ -183,9 +183,9 @@ Author: attila@google.com (Attila Bodis)
       foo.dispose();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getHandler}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getHandler}.
+     */
     function testGetHandler() {
       assertUndefined('Event handler must be undefined before getHandler() ' +
           'is called', control.googUiComponentHandler_);
@@ -195,17 +195,17 @@ Author: attila@google.com (Attila Bodis)
           handler, control.getHandler());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isHandleMouseEvents}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isHandleMouseEvents}.
+     */
     function testIsHandleMouseEvents() {
       assertTrue('Controls must handle their own mouse events by default',
           control.isHandleMouseEvents());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setHandleMouseEvents}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setHandleMouseEvents}.
+     */
     function testSetHandleMouseEvents() {
       assertTrue('Control must handle its own mouse events by default',
           control.isHandleMouseEvents());
@@ -226,9 +226,9 @@ Author: attila@google.com (Attila Bodis)
           control.isHandleMouseEvents());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getKeyEventTarget}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getKeyEventTarget}.
+     */
     function testGetKeyEventTarget() {
       assertNull('Key event target of control without DOM must be null',
           control.getKeyEventTarget());
@@ -237,9 +237,9 @@ Author: attila@google.com (Attila Bodis)
           control.getElement(), control.getKeyEventTarget());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getKeyHandler}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getKeyHandler}.
+     */
     function testGetKeyHandler() {
       assertUndefined('Key handler must be undefined before getKeyHandler() ' +
           'is called', control.keyHandler_);
@@ -249,18 +249,18 @@ Author: attila@google.com (Attila Bodis)
           'again', keyHandler, control.getKeyHandler());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getRenderer}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getRenderer}.
+     */
     function testGetRenderer() {
       assertEquals('Renderer must be the default registered renderer',
           goog.ui.registry.getDefaultRenderer(goog.ui.Control),
           control.getRenderer());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setRenderer}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setRenderer}.
+     */
     function testSetRenderer() {
       control.createDom();
       assertNotNull('Control must have a DOM', control.getElement());
@@ -289,18 +289,18 @@ Author: attila@google.com (Attila Bodis)
           });
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getExtraClassNames}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getExtraClassNames}.
+     */
     function testGetExtraClassNames() {
       assertNull('Control must not have any extra class names by default',
           control.getExtraClassNames());
     }
 
-   ***REMOVED*****REMOVED***
-     ***REMOVED*** Tests {@link goog.ui.Control#addExtraClassName} and
-     ***REMOVED*** {@link goog.ui.Control#removeExtraClassName}.
-    ***REMOVED*****REMOVED***
+    /**
+      * Tests {@link goog.ui.Control#addExtraClassName} and
+      * {@link goog.ui.Control#removeExtraClassName}.
+      */
     function testAddRemoveClassName() {
       assertNull('Control must not have any extra class names by default',
           control.getExtraClassNames());
@@ -357,9 +357,9 @@ Author: attila@google.com (Attila Bodis)
           goog.dom.classlist.get(control.getElement()));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#enableClassName}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#enableClassName}.
+     */
     function testEnableClassName() {
       assertNull('Control must not have any extra class names by default',
           control.getExtraClassNames());
@@ -389,9 +389,9 @@ Author: attila@google.com (Attila Bodis)
           control.getExtraClassNames());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#createDom}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#createDom}.
+     */
     function testCreateDom() {
       assertNull('Control must not have a DOM by default',
           control.getElement());
@@ -417,9 +417,9 @@ Author: attila@google.com (Attila Bodis)
           control.getElement().style.display == 'none');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getContentElement}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getContentElement}.
+     */
     function testGetContentElement() {
       assertNull('Unrendered control must not have a content element',
           control.getContentElement());
@@ -428,16 +428,16 @@ Author: attila@google.com (Attila Bodis)
           control.getElement(), control.getContentElement());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#canDecorate}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#canDecorate}.
+     */
     function testCanDecorate() {
       assertTrue(control.canDecorate(goog.dom.createElement('div')));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#decorateInternal}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#decorateInternal}.
+     */
     function testDecorateInternal() {
       sandbox.innerHTML = '<div id="foo">Hello, <b>World</b>!</div>';
       var foo = goog.dom.getElement('foo');
@@ -450,10 +450,10 @@ Author: attila@google.com (Attila Bodis)
           control.getElement().style.display != 'none');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#decorateInternal} with a control that
-    ***REMOVED*** allows text selection.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#decorateInternal} with a control that
+     * allows text selection.
+     */
     function testDecorateInternalForSelectableControl() {
       sandbox.innerHTML = '<div id="foo">Hello, <b>World</b>!</div>';
       var foo = goog.dom.getElement('foo');
@@ -466,9 +466,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('Control must be visible', control.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#decorateInternal} with a hidden element.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#decorateInternal} with a hidden element.
+     */
     function testDecorateInternalForHiddenElement() {
       sandbox.innerHTML = '<div id="foo" style="display:none">Hello!</div>';
       var foo = goog.dom.getElement('foo');
@@ -480,9 +480,9 @@ Author: attila@google.com (Attila Bodis)
       assertFalse('Control must be hidden', control.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#enterDocument}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#enterDocument}.
+     */
     function testEnterDocument() {
       control.render(sandbox);
       assertTrue('Control must be in the document', control.isInDocument());
@@ -498,10 +498,10 @@ Author: attila@google.com (Attila Bodis)
           control.getKeyHandler().element_);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#enterDocument} for a control that doesn't
-    ***REMOVED*** handle mouse events.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#enterDocument} for a control that doesn't
+     * handle mouse events.
+     */
     function testEnterDocumentForControlWithoutMouseHandling() {
       control.setHandleMouseEvents(false);
       control.render(sandbox);
@@ -513,10 +513,10 @@ Author: attila@google.com (Attila Bodis)
           control.getKeyHandler().element_);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#enterDocument} for a control that isn't
-    ***REMOVED*** focusable.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#enterDocument} for a control that isn't
+     * focusable.
+     */
     function testEnterDocumentForNonFocusableControl() {
       control.setSupportedState(goog.ui.Component.State.FOCUSED, false);
       control.render(sandbox);
@@ -532,10 +532,10 @@ Author: attila@google.com (Attila Bodis)
           control.keyHandler_);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#enterDocument} for a control that doesn't
-    ***REMOVED*** need to do any event handling.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#enterDocument} for a control that doesn't
+     * need to do any event handling.
+     */
     function testEnterDocumentForControlWithoutEventHandlers() {
       control.setHandleMouseEvents(false);
       control.setSupportedState(goog.ui.Component.State.FOCUSED, false);
@@ -549,9 +549,9 @@ Author: attila@google.com (Attila Bodis)
           control.keyHandler_);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#exitDocument}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#exitDocument}.
+     */
     function testExitDocument() {
       control.render(sandbox);
       assertTrue('Control must be in the document', control.isInDocument());
@@ -585,9 +585,9 @@ Author: attila@google.com (Attila Bodis)
           goog.dom.isFocusableTabIndex(control.getKeyEventTarget()));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#dispose}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#dispose}.
+     */
     function testDispose() {
       control.render(sandbox);
       var handler = control.getHandler();
@@ -610,9 +610,9 @@ Author: attila@google.com (Attila Bodis)
           control.getExtraClassNames());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getContent}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getContent}.
+     */
     function testGetContent() {
       assertNull('Empty control must have null content',
           (new goog.ui.Control(null)).getContent());
@@ -624,9 +624,9 @@ Author: attila@google.com (Attila Bodis)
     }
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getContent}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getContent}.
+     */
     function testGetContentForDecoratedControl() {
       sandbox.innerHTML =
           '<div id="empty"></div>\n' +
@@ -661,9 +661,9 @@ Author: attila@google.com (Attila Bodis)
       nodelist.dispose();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setContent}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setContent}.
+     */
     function testSetContent() {
       control.setContent('Bye');
       assertEquals('Unrendered control control must have expected contents',
@@ -686,9 +686,9 @@ Author: attila@google.com (Attila Bodis)
           '<div><span>Hello</span></div>World', control.getElement().innerHTML);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setContentInternal}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setContentInternal}.
+     */
     function testSetContentInternal() {
       control.render(sandbox);
       assertEquals('Control must have expected content after rendering',
@@ -700,9 +700,9 @@ Author: attila@google.com (Attila Bodis)
           control.getElement().innerHTML);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getCaption}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getCaption}.
+     */
     function testGetCaption() {
       assertEquals('Empty control\'s caption must be empty string', '',
           (new goog.ui.Control(null)).getCaption());
@@ -726,18 +726,18 @@ Author: attila@google.com (Attila Bodis)
           control.getCaption());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setCaption}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setCaption}.
+     */
     function testSetCaption() {
       control.setCaption('Hello, world!');
       assertEquals('Control must have a string caption "Hello, world!"',
           'Hello, world!', control.getCaption());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setRightToLeft}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setRightToLeft}.
+     */
     function testSetRightToLeft() {
       control.createDom();
       assertFalse('Control\'s element must not have right-to-left class',
@@ -755,17 +755,17 @@ Author: attila@google.com (Attila Bodis)
           });
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isAllowTextSelection}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isAllowTextSelection}.
+     */
     function testIsAllowTextSelection() {
       assertFalse('Controls must not allow text selection by default',
           control.isAllowTextSelection());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setAllowTextSelection}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setAllowTextSelection}.
+     */
     function testSetAllowTextSelection() {
       assertFalse('Controls must not allow text selection by default',
           control.isAllowTextSelection());
@@ -788,16 +788,16 @@ Author: attila@google.com (Attila Bodis)
           control.isAllowTextSelection());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isVisible}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isVisible}.
+     */
     function testIsVisible() {
       assertTrue('Controls must be visible by default', control.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} before it is rendered.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} before it is rendered.
+     */
     function testSetVisible() {
       assertFalse('setVisible(true) must return false if already visible',
           control.setVisible(true));
@@ -816,9 +816,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('Control must be visible', control.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} after it is rendered.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} after it is rendered.
+     */
     function testSetVisibleForRenderedControl() {
       control.render(sandbox);
       assertTrue('No events must have been dispatched during rendering',
@@ -847,10 +847,10 @@ Author: attila@google.com (Attila Bodis)
           control.getElement().style.display != 'none');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} for disabled non-focusable
-    ***REMOVED*** controls.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} for disabled non-focusable
+     * controls.
+     */
     function testSetVisibleForDisabledNonFocusableControl() {
       // Hidden, disabled, non-focusable control becoming visible.
       control.setEnabled(false);
@@ -875,9 +875,9 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.BLUR));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} for disabled focusable controls.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} for disabled focusable controls.
+     */
     function testSetVisibleForDisabledFocusableControl() {
       // Hidden, disabled, focusable control becoming visible.
       control.setEnabled(false);
@@ -902,10 +902,10 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.BLUR));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} for enabled non-focusable
-    ***REMOVED*** controls.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} for enabled non-focusable
+     * controls.
+     */
     function testSetVisibleForEnabledNonFocusableControl() {
       // Hidden, enabled, non-focusable control becoming visible.
       control.setEnabled(true);
@@ -933,9 +933,9 @@ Author: attila@google.com (Attila Bodis)
       }
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setVisible} for enabled focusable controls.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setVisible} for enabled focusable controls.
+     */
     function testSetVisibleForEnabledFocusableControl() {
       // Hidden, enabled, focusable control becoming visible.
       control.setEnabled(true);
@@ -990,16 +990,16 @@ Author: attila@google.com (Attila Bodis)
       }
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isEnabled}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isEnabled}.
+     */
     function testIsEnabled() {
       assertTrue('Controls must be enabled by default', control.isEnabled());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setEnabled}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setEnabled}.
+     */
     function testSetEnabled() {
       control.render(sandbox);
       control.setHighlighted(true);
@@ -1037,13 +1037,13 @@ Author: attila@google.com (Attila Bodis)
       assertFalse('Control must not be focused', control.isFocused());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setEnabled} when the control has a parent.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setEnabled} when the control has a parent.
+     */
     function testSetEnabledWithParent() {
       var child = new goog.ui.Control(null);
       child.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-      control.addChild(child, true /* opt_render***REMOVED***);
+      control.addChild(child, true /* opt_render */);
       control.setEnabled(false);
 
       resetEventCount();
@@ -1083,17 +1083,17 @@ Author: attila@google.com (Attila Bodis)
       child.dispose();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isHighlighted}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isHighlighted}.
+     */
     function testIsHighlighted() {
       assertFalse('Controls must not be highlighted by default',
           control.isHighlighted());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setHighlighted}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setHighlighted}.
+     */
     function testSetHighlighted() {
       control.setSupportedState(goog.ui.Component.State.HOVER, false);
 
@@ -1129,16 +1129,16 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.HIGHLIGHT));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isActive}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isActive}.
+     */
     function testIsActive() {
       assertFalse('Controls must not be active by default', control.isActive());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setActive}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setActive}.
+     */
     function testSetActive() {
       control.setSupportedState(goog.ui.Component.State.ACTIVE, false);
 
@@ -1167,11 +1167,11 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.DEACTIVATE));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests disposing the control from an action event handler.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests disposing the control from an action event handler.
+     */
     function testDisposeOnAction() {
-    ***REMOVED***control, goog.ui.Component.EventType.ACTION,
+      goog.events.listen(control, goog.ui.Component.EventType.ACTION,
           function(e) {
             control.dispose();
           });
@@ -1183,17 +1183,17 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('Control should have been disposed of', control.isDisposed());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isSelected}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isSelected}.
+     */
     function testIsSelected() {
       assertFalse('Controls must not be selected by default',
           control.isSelected());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setSelected}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setSelected}.
+     */
     function testSetSelected() {
       control.setSupportedState(goog.ui.Component.State.SELECTED, false);
 
@@ -1229,17 +1229,17 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.SELECT));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isChecked}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isChecked}.
+     */
     function testIsChecked() {
       assertFalse('Controls must not be checked by default',
           control.isChecked());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setChecked}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setChecked}.
+     */
     function testSetChecked() {
       control.setSupportedState(goog.ui.Component.State.CHECKED, false);
 
@@ -1275,17 +1275,17 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.CHECK));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isFocused}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isFocused}.
+     */
     function testIsFocused() {
       assertFalse('Controls must not be focused by default',
           control.isFocused());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setFocused}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setFocused}.
+     */
     function testSetFocused() {
       control.setSupportedState(goog.ui.Component.State.FOCUSED, false);
 
@@ -1321,16 +1321,16 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.FOCUS));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isOpen}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isOpen}.
+     */
     function testIsOpen() {
       assertFalse('Controls must not be open by default', control.isOpen());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setOpen}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setOpen}.
+     */
     function testSetOpen() {
       control.setSupportedState(goog.ui.Component.State.OPENED, false);
 
@@ -1366,17 +1366,17 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.OPEN));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#getState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#getState}.
+     */
     function testGetState() {
       assertEquals('Controls must be in the default state', 0x00,
           control.getState());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#hasState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#hasState}.
+     */
     function testHasState() {
       assertFalse('Control must not be disabled',
           control.hasState(goog.ui.Component.State.DISABLED));
@@ -1394,9 +1394,9 @@ Author: attila@google.com (Attila Bodis)
           control.hasState(goog.ui.Component.State.OPEN));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setState}.
+     */
     function testSetState() {
       control.createDom();
       control.setSupportedState(goog.ui.Component.State.ACTIVE, false);
@@ -1427,9 +1427,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('No events must have been dispatched', noEventsDispatched());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setStateInternal}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setStateInternal}.
+     */
     function testSetStateInternal() {
       control.setStateInternal(0x00);
       assertEquals('State should be 0x00', 0x00, control.getState());
@@ -1437,9 +1437,9 @@ Author: attila@google.com (Attila Bodis)
       assertEquals('State should be 0x17', 0x17, control.getState());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isSupportedState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isSupportedState}.
+     */
     function testIsSupportedState() {
       assertTrue('Control must support DISABLED',
           control.isSupportedState(goog.ui.Component.State.DISABLED));
@@ -1457,9 +1457,9 @@ Author: attila@google.com (Attila Bodis)
           control.isSupportedState(goog.ui.Component.State.OPENED));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setSupportedState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setSupportedState}.
+     */
     function testSetSupportedState() {
       control.setSupportedState(goog.ui.Component.State.HOVER, true);
       assertTrue('Control must still support HOVER',
@@ -1491,9 +1491,9 @@ Author: attila@google.com (Attila Bodis)
     }
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isAutoState}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isAutoState}.
+     */
     function testIsAutoState() {
       assertTrue('Control must have DISABLED as an auto-state',
           control.isAutoState(goog.ui.Component.State.DISABLED));
@@ -1514,9 +1514,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('No events must have been dispatched', noEventsDispatched());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setAutoStates}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setAutoStates}.
+     */
     function testSetAutoStates() {
       control.setAutoStates(goog.ui.Component.State.HOVER, false);
       assertFalse('Control must not have HOVER as an auto-state',
@@ -1538,9 +1538,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('No events must have been dispatched', noEventsDispatched());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isDispatchTransitionEvents}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isDispatchTransitionEvents}.
+     */
     function testIsDispatchTransitionEvents() {
       assertTrue('Control must dispatch DISABLED transition events',
           control.isDispatchTransitionEvents(goog.ui.Component.State.DISABLED));
@@ -1561,9 +1561,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('No events must have been dispatched', noEventsDispatched());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#setDispatchTransitionEvents}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#setDispatchTransitionEvents}.
+     */
     function testSetDispatchTransitionEvents() {
       control.setDispatchTransitionEvents(goog.ui.Component.State.HOVER, false);
       assertFalse('Control must not dispatch HOVER transition events',
@@ -1578,9 +1578,9 @@ Author: attila@google.com (Attila Bodis)
       assertTrue('No events must have been dispatched', noEventsDispatched());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#isTransitionAllowed}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#isTransitionAllowed}.
+     */
     function testIsTransitionAllowed() {
       assertTrue('Control must support the HOVER state',
           control.isSupportedState(goog.ui.Component.State.HOVER));
@@ -1633,14 +1633,14 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.ENABLE));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#handleKeyEvent}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#handleKeyEvent}.
+     */
     function testHandleKeyEvent() {
       control.render();
       control.isVisible = control.isEnabled = function() {
         return true;
-     ***REMOVED*****REMOVED***
+      };
 
 
       goog.testing.events.fireKeySequence(
@@ -1656,9 +1656,9 @@ Author: attila@google.com (Attila Bodis)
     }
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#performActionInternal}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#performActionInternal}.
+     */
     function testPerformActionInternal() {
       assertFalse('Control must not be checked', control.isChecked());
       assertFalse('Control must not be selected', control.isSelected());
@@ -1705,9 +1705,9 @@ Author: attila@google.com (Attila Bodis)
           getEventCount(control, goog.ui.Component.EventType.ACTION));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#handleMouseOver}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#handleMouseOver}.
+     */
     function testHandleMouseOver() {
       control.setContent(goog.dom.createDom('span', {id: 'caption'}, 'Hello'));
       control.render(sandbox);
@@ -1787,9 +1787,9 @@ Author: attila@google.com (Attila Bodis)
       resetEventCount();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#handleMouseOut}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#handleMouseOut}.
+     */
     function testHandleMouseOut() {
       control.setContent(goog.dom.createDom('span', {id: 'caption'}, 'Hello'));
       control.setHighlighted(true);
@@ -2040,9 +2040,9 @@ Author: attila@google.com (Attila Bodis)
     //}
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Tests {@link goog.ui.Control#handleMouseUp}.
-   ***REMOVED*****REMOVED***
+    /**
+     * Tests {@link goog.ui.Control#handleMouseUp}.
+     */
     function testHandleMouseUp() {
       control.setActive(true);
 
@@ -2051,7 +2051,7 @@ Author: attila@google.com (Attila Bodis)
       control.performActionInternal = function() {
         actionPerformed = true;
         return true;
-     ***REMOVED*****REMOVED***
+      };
 
       resetEventCount();
 
@@ -2106,7 +2106,7 @@ Author: attila@google.com (Attila Bodis)
       control.performActionInternal = function() {
         actionPerformed = true;
         return false;
-     ***REMOVED*****REMOVED***
+      };
       goog.testing.events.fireMouseUpEvent(element);
       assertTrue('Control must highlight on mouseup, even if no action is ' +
           'performed', control.isHighlighted());
@@ -2119,7 +2119,7 @@ Author: attila@google.com (Attila Bodis)
       control.performActionInternal = function() {
         actionPerformed = true;
         return true;
-     ***REMOVED*****REMOVED***
+      };
 
       // Scenario 5:  ACTIVE is not an auto-state.
       control.setAutoStates(goog.ui.Component.State.ACTIVE, false);

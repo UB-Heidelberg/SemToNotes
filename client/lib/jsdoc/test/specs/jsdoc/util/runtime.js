@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, xit: true***REMOVED***
+/*global describe: true, expect: true, it: true, xit: true */
 describe("jsdoc/util/runtime", function() {
     var runtime = require('jsdoc/util/runtime');
     var isRhino;

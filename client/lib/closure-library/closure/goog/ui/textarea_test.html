@@ -15,7 +15,7 @@ See the COPYING file for details.
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.style');
@@ -33,7 +33,7 @@ See the COPYING file for details.
   </script>
   <style>
     textarea {
-      height: 25px; /* Need to force an initial height < our minHeight.***REMOVED***
+      height: 25px; /* Need to force an initial height < our minHeight. */
       width: 150px;
       padding: 2px;
       margin: 0;
@@ -69,24 +69,24 @@ See the COPYING file for details.
       goog.dom.removeChildren(sandbox);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on Mac Safari 3.x.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on Mac Safari 3.x.
+     */
     function isMacSafari3() {
       return goog.userAgent.WEBKIT && goog.userAgent.MAC &&
           !goog.userAgent.isVersionOrHigher('527');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on Linux Firefox 3.6.3.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on Linux Firefox 3.6.3.
+     */
     function isLinuxFirefox() {
       return goog.userAgent.product.FIREFOX && goog.userAgent.LINUX;
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on Firefox 3.0.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on Firefox 3.0.
+     */
     function isFirefox3() {
       return goog.userAgent.GECKO &&
           !goog.userAgent.isVersionOrHigher('1.9.1');
@@ -99,7 +99,7 @@ See the COPYING file for details.
 
       var fakeDomHelper = {
         'getDocument': function() { return true; }
-     ***REMOVED*****REMOVED***
+      };
       var testTextarea = new goog.ui.Textarea('Hello',
           goog.ui.TextareaRenderer.getInstance(), fakeDomHelper);
       assertEquals('Content must have expected content', 'Hello',
@@ -154,7 +154,7 @@ See the COPYING file for details.
 
     function testBasicTextareaBehavior() {
       var observer = new goog.testing.events.EventObserver();
-    ***REMOVED***textarea, goog.ui.Textarea.EventType.RESIZE, observer);
+      goog.events.listen(textarea, goog.ui.Textarea.EventType.RESIZE, observer);
       textarea.render(sandbox);
       var el = textarea.getElement();
       var heightBefore = textarea.getHeight_();

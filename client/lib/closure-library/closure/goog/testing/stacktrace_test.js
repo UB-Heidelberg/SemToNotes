@@ -137,7 +137,7 @@ function testParseStackFrameInOpera() {
       '', 'foo', '', '()', 'file:///foo:42');
   assertObjectEquals('object literal function', expected, frame);
 
-  // var c = {***REMOVED*** c.foo = function() { throw Error() }
+  // var c = {}; c.foo = function() { throw Error() }
   frameString = '<anonymous function: c.foo>()@file:///foo:42';
   frame = goog.testing.stacktrace.parseStackFrame_(frameString);
   expected = new goog.testing.stacktrace.Frame(
@@ -231,13 +231,13 @@ function testFramesToString() {
 function testFollowCallChain() {
   var func = function(var_args) {
     return goog.testing.stacktrace.followCallChain_();
- ***REMOVED*****REMOVED***
+  };
 
   // Created a fake type with a toString method.
-  function LocalType() {***REMOVED***
+  function LocalType() {};
   LocalType.prototype.toString = function() {
     return 'sg';
- ***REMOVED*****REMOVED***
+  };
 
   // Create a mock with no expectations.
   var mock = new goog.testing.StrictMock(LocalType);
@@ -339,7 +339,7 @@ function testGetStackFrameWithV8CallSites() {
       getFileName: goog.functions.constant(fileName),
       getLineNumber: goog.functions.constant(lineNumber),
       getColumnNumber: goog.functions.constant(colNumber)
-   ***REMOVED*****REMOVED***
+    };
   }
 
   // Mock the goog.testing.stacktrace.getStack_ function, which normally

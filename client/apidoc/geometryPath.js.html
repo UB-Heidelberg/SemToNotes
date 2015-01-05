@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.geometry.Path');
 
@@ -37,13 +37,13 @@ goog.require('xrx.geometry');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.geometry.Path = function() {
 
   this.coords = [];
-***REMOVED***
+};
 
 
 
@@ -60,12 +60,12 @@ xrx.geometry.Path.prototype.containsPoint = function(point) {
     xj = coords[j][0], yj = coords[j][1];
 
     intersect = ((yi > y) != (yj > y))
-        &amp;&amp; (x &lt; (xj - xi)***REMOVED*** (y - yi) / (yj - yi) + xi);
+        &amp;&amp; (x &lt; (xj - xi) * (y - yi) / (yj - yi) + xi);
     if (intersect) inside = !inside;
   }
 
   return inside;
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

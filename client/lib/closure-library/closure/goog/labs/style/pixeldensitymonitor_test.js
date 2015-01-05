@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for goog.labs.style.PixelDensityMonitor.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Tests for goog.labs.style.PixelDensityMonitor.
+ *
+ */
 
 goog.provide('goog.labs.style.PixelDensityMonitorTest');
 goog.setTestOnly('goog.labs.style.PixelDensityMonitorTest');
 
 goog.require('goog.array');
-***REMOVED***
-***REMOVED***
+goog.require('goog.dom.DomHelper');
+goog.require('goog.events');
 goog.require('goog.labs.style.PixelDensityMonitor');
 goog.require('goog.testing.MockControl');
 goog.require('goog.testing.jsunit');
@@ -49,7 +49,7 @@ function tearDown() {
 function setUpMonitor(initialRatio, hasMatchMedia) {
   fakeWindow = {
     devicePixelRatio: initialRatio
- ***REMOVED*****REMOVED***
+  };
 
   if (hasMatchMedia) {
     // Every call to matchMedia should return a new media query list with its
@@ -71,10 +71,10 @@ function setUpMonitor(initialRatio, hasMatchMedia) {
         getListenerCount: function() {
           return listeners.length;
         }
-     ***REMOVED*****REMOVED***
+      };
       mediaQueryLists.push(newList);
       return newList;
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var domHelper = mockControl.createStrictMock(goog.dom.DomHelper);
@@ -82,7 +82,7 @@ function setUpMonitor(initialRatio, hasMatchMedia) {
   mockControl.$replayAll();
 
   monitor = new goog.labs.style.PixelDensityMonitor(domHelper);
-***REMOVED***monitor,
+  goog.events.listen(monitor,
       goog.labs.style.PixelDensityMonitor.EventType.CHANGE, recordFunction);
 }
 

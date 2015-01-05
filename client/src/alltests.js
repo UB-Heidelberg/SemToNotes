@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview An array of all JSUnit test files.
-***REMOVED***
+/**
+ * @fileoverview An array of all JSUnit test files.
+ */
 
 var _allTests = [
   // core :: graphics :: drawing

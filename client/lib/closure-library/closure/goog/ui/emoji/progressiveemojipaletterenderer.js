@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Progressive Emoji Palette renderer implementation.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Progressive Emoji Palette renderer implementation.
+ *
+ */
 
 goog.provide('goog.ui.emoji.ProgressiveEmojiPaletteRenderer');
 
@@ -24,27 +24,27 @@ goog.require('goog.ui.emoji.EmojiPaletteRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Progressively renders an emoji palette. The progressive renderer tries to
-***REMOVED*** use img tags instead of background-image for sprited emoji, since most
-***REMOVED*** browsers render img tags progressively (i.e., as the data comes in), while
-***REMOVED*** only very new browsers render background-image progressively.
-***REMOVED***
-***REMOVED*** @param {string} defaultImgUrl Url of the img that should be used to fill up
-***REMOVED***     the cells in the emoji table, to prevent jittering. Will be stretched
-***REMOVED***     to the emoji cell size. A good image is a transparent dot.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.emoji.EmojiPaletteRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Progressively renders an emoji palette. The progressive renderer tries to
+ * use img tags instead of background-image for sprited emoji, since most
+ * browsers render img tags progressively (i.e., as the data comes in), while
+ * only very new browsers render background-image progressively.
+ *
+ * @param {string} defaultImgUrl Url of the img that should be used to fill up
+ *     the cells in the emoji table, to prevent jittering. Will be stretched
+ *     to the emoji cell size. A good image is a transparent dot.
+ * @constructor
+ * @extends {goog.ui.emoji.EmojiPaletteRenderer}
+ * @final
+ */
 goog.ui.emoji.ProgressiveEmojiPaletteRenderer = function(defaultImgUrl) {
   goog.ui.emoji.EmojiPaletteRenderer.call(this, defaultImgUrl);
-***REMOVED***
+};
 goog.inherits(goog.ui.emoji.ProgressiveEmojiPaletteRenderer,
               goog.ui.emoji.EmojiPaletteRenderer);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
     buildElementFromSpriteMetadata = function(dom, spriteInfo, displayUrl) {
   var width = spriteInfo.getWidthCssValue();
@@ -53,7 +53,7 @@ goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
   var y = spriteInfo.getYOffsetCssValue();
   // Need this extra div for proper vertical centering.
   var inner = dom.createDom('img', {'src': displayUrl});
-  var el =***REMOVED*****REMOVED*** @type {HTMLDivElement}***REMOVED*** (dom.createDom('div',
+  var el = /** @type {HTMLDivElement} */ (dom.createDom('div',
       goog.getCssName('goog-palette-cell-extra'), inner));
   goog.style.setStyle(el, {
     'width': width,
@@ -68,10 +68,10 @@ goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
   });
 
   return el;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
     updateAnimatedPaletteItem = function(item, animatedImg) {
   // Just to be safe, we check for the existence of the img element within this
@@ -80,7 +80,7 @@ goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
   var el = item.firstChild;
   while (el) {
     if ('IMG' == el.tagName) {
-      img =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (el);
+      img = /** @type {Element} */ (el);
       break;
     }
     el = el.firstChild;
@@ -96,4 +96,4 @@ goog.ui.emoji.ProgressiveEmojiPaletteRenderer.prototype.
     'top': 0
   });
   img.src = animatedImg.src;
-***REMOVED***
+};

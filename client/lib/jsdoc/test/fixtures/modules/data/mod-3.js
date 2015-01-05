@@ -1,21 +1,21 @@
-***REMOVED***
+/**
     My test module.
     @module my/module
-***REMOVED***
+ */
 define(function() {
 
-   ***REMOVED*****REMOVED***
+    /**
         @undocumented
         @alias module:my/module
-   ***REMOVED*****REMOVED***
+     */
     var mod = {
 
-       ***REMOVED*****REMOVED*** Document a property.***REMOVED***
+        /** Document a property. */
         myProperty: "foo",
 
-       ***REMOVED*****REMOVED*** Document a method.***REMOVED***
+        /** Document a method. */
         myMethod: function() {}
-   ***REMOVED*****REMOVED***
+    };
 
     return mod;
 });

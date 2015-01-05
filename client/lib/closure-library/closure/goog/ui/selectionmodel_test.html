@@ -35,29 +35,29 @@ function tearDown() {
 }
 
 /*
-***REMOVED*** Checks that the selection model returns the correct item count.
-***REMOVED***
+ * Checks that the selection model returns the correct item count.
+ */
 function testGetItemCount() {
   assertEquals(items.length, selectionModel.getItemCount());
 }
 
 /*
-***REMOVED*** Checks that the correct first element is returned by the selection model.
-***REMOVED***
+ * Checks that the correct first element is returned by the selection model.
+ */
 function testGetFirst() {
   assertEquals(items[0], selectionModel.getFirst());
 }
 
 /*
-***REMOVED*** Checks that the correct last element is returned by the selection model.
-***REMOVED***
+ * Checks that the correct last element is returned by the selection model.
+ */
 function testGetLast() {
   assertEquals(items[items.length - 1], selectionModel.getLast());
 }
 
 /*
-***REMOVED*** Tests the behavior of goog.ui.SelectionModel.getItemAt(index).
-***REMOVED***
+ * Tests the behavior of goog.ui.SelectionModel.getItemAt(index).
+ */
 function testGetItemAt() {
   goog.array.forEach(items,
       function(item, i) {
@@ -66,8 +66,8 @@ function testGetItemAt() {
 }
 
 /*
-***REMOVED*** Checks that an item can be correctly added to the selection model.
-***REMOVED***
+ * Checks that an item can be correctly added to the selection model.
+ */
 function testAddItem() {
   assertEquals(items.length, selectionModel.getItemCount());
 
@@ -78,8 +78,8 @@ function testAddItem() {
 }
 
 /*
-***REMOVED*** Checks that an item can be added to the selection model at a specific index.
-***REMOVED***
+ * Checks that an item can be added to the selection model at a specific index.
+ */
 function testAddItemAt() {
   assertEquals(items.length, selectionModel.getItemCount());
 
@@ -97,8 +97,8 @@ function testAddItemAt() {
 }
 
 /*
-***REMOVED*** Checks that multiple items can be correctly added to the selection model.
-***REMOVED***
+ * Checks that multiple items can be correctly added to the selection model.
+ */
 function testAddItems() {
   assertEquals(items.length, selectionModel.getItemCount());
 
@@ -111,8 +111,8 @@ function testAddItems() {
 }
 
 /*
-***REMOVED*** Checks that all elements can be removed from the selection model.
-***REMOVED***
+ * Checks that all elements can be removed from the selection model.
+ */
 function testClear() {
   assertArrayEquals(items, selectionModel.getItems());
 
@@ -122,15 +122,15 @@ function testClear() {
 }
 
 /*
-***REMOVED*** Checks that all items can be obtained from the selection model.
-***REMOVED***
+ * Checks that all items can be obtained from the selection model.
+ */
 function testGetItems() {
   assertArrayEquals(items, selectionModel.getItems());
-***REMOVED***
+};
 
 /*
-***REMOVED*** Checks that an item's index can be found in the selection model.
-***REMOVED***
+ * Checks that an item's index can be found in the selection model.
+ */
 function testIndexOfItem() {
   goog.array.forEach(items,
       function(item, i) {
@@ -139,8 +139,8 @@ function testIndexOfItem() {
 }
 
 /*
-***REMOVED*** Checks that an item can be removed from the selection model.
-***REMOVED***
+ * Checks that an item can be removed from the selection model.
+ */
 function testRemoveItem() {
   assertEquals(items.length, selectionModel.getItemCount());
 
@@ -154,9 +154,9 @@ function testRemoveItem() {
 }
 
 /*
-***REMOVED*** Checks that an item at a particular index can be removed from the selection
-***REMOVED*** model.
-***REMOVED***
+ * Checks that an item at a particular index can be removed from the selection
+ * model.
+ */
 function testRemoveItemAt() {
   assertEquals(items.length, selectionModel.getItemCount());
 
@@ -173,8 +173,8 @@ function testRemoveItemAt() {
 }
 
 /*
-***REMOVED*** Checks that item selection at a particular index works.
-***REMOVED***
+ * Checks that item selection at a particular index works.
+ */
 function testSelectedIndex() {
   // Default selected index is -1
   assertEquals(-1, selectionModel.getSelectedIndex());
@@ -186,8 +186,8 @@ function testSelectedIndex() {
 }
 
 /*
-***REMOVED*** Checks that items can be selected in the selection model.
-***REMOVED***
+ * Checks that items can be selected in the selection model.
+ */
 function testSelectedItem() {
   assertNull(selectionModel.getSelectedItem());
 
@@ -199,8 +199,8 @@ function testSelectedItem() {
 }
 
 /*
-***REMOVED*** Checks that an installed handler is called on selection change.
-***REMOVED***
+ * Checks that an installed handler is called on selection change.
+ */
 function testSelectionHandler() {
   var myRecordFunction = new goog.testing.recordFunction();
 

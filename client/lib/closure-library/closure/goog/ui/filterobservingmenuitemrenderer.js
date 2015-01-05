@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Menu item observing the filter text in a
-***REMOVED*** {@link goog.ui.FilteredMenu}. The observer method is called when the filter
-***REMOVED*** text changes and allows the menu item to update its content and state based
-***REMOVED*** on the filter.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Menu item observing the filter text in a
+ * {@link goog.ui.FilteredMenu}. The observer method is called when the filter
+ * text changes and allows the menu item to update its content and state based
+ * on the filter.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.ui.FilterObservingMenuItemRenderer');
 
@@ -27,37 +27,37 @@ goog.require('goog.ui.MenuItemRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.FilterObservingMenuItem}s. Each item has
-***REMOVED*** the following structure:
-***REMOVED***    <div class="goog-filterobsmenuitem"><div>...(content)...</div></div>
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuItemRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.FilterObservingMenuItem}s. Each item has
+ * the following structure:
+ *    <div class="goog-filterobsmenuitem"><div>...(content)...</div></div>
+ *
+ * @constructor
+ * @extends {goog.ui.MenuItemRenderer}
+ * @final
+ */
 goog.ui.FilterObservingMenuItemRenderer = function() {
   goog.ui.MenuItemRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.FilterObservingMenuItemRenderer,
               goog.ui.MenuItemRenderer);
 goog.addSingletonGetter(goog.ui.FilterObservingMenuItemRenderer);
 
 
-***REMOVED***
-***REMOVED*** CSS class name the renderer applies to menu item elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS class name the renderer applies to menu item elements.
+ * @type {string}
+ */
 goog.ui.FilterObservingMenuItemRenderer.CSS_CLASS =
     goog.getCssName('goog-filterobsmenuitem');
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to menu items rendered using this
-***REMOVED*** renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to menu items rendered using this
+ * renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.FilterObservingMenuItemRenderer.prototype.getCssClass = function() {
   return goog.ui.FilterObservingMenuItemRenderer.CSS_CLASS;
-***REMOVED***
+};

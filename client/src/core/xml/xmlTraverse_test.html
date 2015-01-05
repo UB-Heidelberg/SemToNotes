@@ -48,21 +48,21 @@ function test01forward() {
     11: [1,5],
     12: [1,6],
     13: [1]
- ***REMOVED*****REMOVED***
+  };
   var labels = [];
   var traverse = new xrx.xml.Traverse(xml);
 
   traverse.rowStartTag = function(label) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   // test forward
   traverse.forward();
@@ -83,7 +83,7 @@ function test01forward() {
   assertTrue(new xrx.xml.Label(test[12]).sameAs(labels[12]));
   assertTrue(new xrx.xml.Label(test[13]).sameAs(labels[13]));
 
-***REMOVED***
+};
 
 function test02backward() {
   // Backward is only useful for the parent, ancestor and preceding-sibling axes
@@ -110,21 +110,21 @@ function test02backward() {
     6:  [1,2],
     7:  [1,1],
     8:  [1]
- ***REMOVED*****REMOVED***
+  };
   var labels = [];
   var traverse = new xrx.xml.Traverse(xml);
 
   traverse.rowStartTag = function(label, offset, length) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label, offset, length) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label, offset, length) {
     labels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   // test backward
   traverse.backward(new xrx.token.EndTag(new xrx.xml.Label([1,3,3]), 66, 6));
@@ -138,7 +138,7 @@ function test02backward() {
   assertTrue(new xrx.xml.Label(test[6]).sameAs(labels[6]));
   assertTrue(new xrx.xml.Label(test[7]).sameAs(labels[7]));
   assertTrue(new xrx.xml.Label(test[8]).sameAs(labels[8]));
-***REMOVED***
+};
 
 function test03offsetStartTag() {
   var xml = '<test><a></a></test>';
@@ -146,21 +146,21 @@ function test03offsetStartTag() {
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label) {
     endLabels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward(new xrx.token.StartTag(new xrx.xml.Label([1, 1]), 5, 3));
 
   assertEquals(2, endLabels.length);
   assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1, 1])));
   assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1])));
-***REMOVED***
+};
 
 function test04offsetStartEmptyTag() {
   var xml = '<test><a></a><b/><c></c></test>';
@@ -168,14 +168,14 @@ function test04offsetStartEmptyTag() {
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label) {
     endLabels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward(new xrx.token.StartEmptyTag(new xrx.xml.Label([1, 1]), 5, 3));
 
@@ -183,7 +183,7 @@ function test04offsetStartEmptyTag() {
   assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1,1])));
   assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1,3])));
   assertTrue(endLabels[2].sameAs(new xrx.xml.Label([1])));
-***REMOVED***
+};
 
 function test05offsetEmptyTag() {
   var xml = '<test><a/></test>';
@@ -191,20 +191,20 @@ function test05offsetEmptyTag() {
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label) {
     endLabels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward(new xrx.token.EmptyTag(new xrx.xml.Label([1, 1]), 5, 4));
 
   assertEquals(1, endLabels.length);
   assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1])));
-***REMOVED***
+};
 
 function test06offsetEndTag() {
   var xml = '<test><a></a></test>';
@@ -212,21 +212,21 @@ function test06offsetEndTag() {
   var endLabels = [];
 
   traverse.rowStartTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label) {
     endLabels.push(label);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label) {
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward(new xrx.token.EndTag(new xrx.xml.Label([1,1]), 9, 4));
 
   assertEquals(2, endLabels.length);
   assertTrue(endLabels[0].sameAs(new xrx.xml.Label([1,1])));
   assertTrue(endLabels[1].sameAs(new xrx.xml.Label([1])));
-***REMOVED***
+};
 
 function test07features() {
   var xml = '<test attr1="v1" attr2="v2"' + 
@@ -244,30 +244,30 @@ function test07features() {
   var nsPrefixes = [];
   var nsUris = [];
 
-  traverse.rowStartTag = function() {***REMOVED***
-  traverse.rowEndTag = function() {***REMOVED***
-  traverse.rowEmptyTag = function() {***REMOVED***
+  traverse.rowStartTag = function() {};
+  traverse.rowEndTag = function() {};
+  traverse.rowEmptyTag = function() {};
   traverse.eventTagName = function(label) {
     tagNames.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventAttribute = function(label) {
     attributes.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventAttrName = function(label) {
     attrNames.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventAttrValue = function(label) {
     attrValues.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventNamespace = function(label) {
     namespaces.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventNsPrefix = function(label) {
     nsPrefixes.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   traverse.eventNsUri = function(label) {
     nsUris.push(label.clone());
- ***REMOVED*****REMOVED***
+  };
   
   traverse.forward();
   traverse.backward();
@@ -293,7 +293,7 @@ function test07features() {
 
   assertTrue(nsUris[0].sameAs(new xrx.xml.Label([1, 1])));
   assertTrue(nsUris[1].sameAs(new xrx.xml.Label([1, 2])));
-***REMOVED***
+};
 
 </script>
 </body>

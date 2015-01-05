@@ -77,7 +77,7 @@ See the COPYING file for details.
   myField.registerPlugin(new goog.demos.editor.HelloWorldDialogPlugin());
 
   // Watch for field changes, to display below.
-***REMOVED***myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
       updateFieldContents);
 
   myField.makeEditable();

@@ -1,23 +1,23 @@
-***REMOVED***
-***REMOVED*** Traversal utilities for ASTs that are compatible with the Mozilla Parser API. Adapted from
-***REMOVED*** [Acorn](http://marijnhaverbeke.nl/acorn/).
-***REMOVED***
-***REMOVED*** @module jsdoc/src/walker
-***REMOVED*** @license MIT
-***REMOVED***
+/**
+ * Traversal utilities for ASTs that are compatible with the Mozilla Parser API. Adapted from
+ * [Acorn](http://marijnhaverbeke.nl/acorn/).
+ *
+ * @module jsdoc/src/walker
+ * @license MIT
+ */
 'use strict';
 
 var astnode = require('jsdoc/src/astnode');
 var doclet = require('jsdoc/doclet');
 var Syntax = require('jsdoc/src/syntax').Syntax;
 
-***REMOVED***
-***REMOVED*** Check whether an AST node creates a new scope.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {Object} node - The AST node to check.
-***REMOVED*** @return {Boolean} Set to `true` if the node creates a new scope, or `false` in all other cases.
-***REMOVED***
+/**
+ * Check whether an AST node creates a new scope.
+ *
+ * @private
+ * @param {Object} node - The AST node to check.
+ * @return {Boolean} Set to `true` if the node creates a new scope, or `false` in all other cases.
+ */
 function isScopeNode(node) {
     // TODO: handle blocks with "let" declarations
     return node && typeof node === 'object' && (node.type === Syntax.CatchClause ||
@@ -40,7 +40,7 @@ function moveComments(source, target) {
 function leafNode(node, parent, state, cb) {}
 
 // TODO: docs
-var walkers = exports.walkers = {***REMOVED***
+var walkers = exports.walkers = {};
 
 walkers[Syntax.ArrayExpression] = function arrayExpression(node, parent, state, cb) {
     for (var i = 0, l = node.elements.length; i < l; i++) {
@@ -49,7 +49,7 @@ walkers[Syntax.ArrayExpression] = function arrayExpression(node, parent, state, 
             cb(e, node, state);
         }
     }
-***REMOVED***
+};
 
 // TODO: verify correctness
 walkers[Syntax.ArrayPattern] = function arrayPattern(node, parent, state, cb) {
@@ -60,7 +60,7 @@ walkers[Syntax.ArrayPattern] = function arrayPattern(node, parent, state, cb) {
             cb(e, node, state);
         }
     }
-***REMOVED***
+};
 
 walkers[Syntax.ArrowFunctionExpression] =
     function arrowFunctionExpression(node, parent, state, cb) {
@@ -85,23 +85,23 @@ walkers[Syntax.ArrowFunctionExpression] =
     if (node.rest) {
         cb(node.rest, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.AssignmentExpression] = function assignmentExpression(node, parent, state, cb) {
     cb(node.left, node, state);
     cb(node.right, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.BinaryExpression] = function binaryExpression(node, parent, state, cb) {
     cb(node.left, node, state);
     cb(node.right, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.BlockStatement] = function blockStatement(node, parent, state, cb) {
     for (var i = 0, l = node.body.length; i < l; i++) {
         cb(node.body[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.BreakStatement] = leafNode;
 
@@ -115,7 +115,7 @@ walkers[Syntax.CallExpression] = function callExpression(node, parent, state, cb
             cb(node.arguments[i], node, state);
         }
     }
-***REMOVED***
+};
 
 walkers[Syntax.CatchClause] = leafNode;
 
@@ -133,7 +133,7 @@ walkers[Syntax.ClassDeclaration] = function classDeclaration(node, parent, state
     if (node.body) {
         cb(node.body, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ClassExpression] = walkers[Syntax.ClassDeclaration];
 
@@ -152,13 +152,13 @@ walkers[Syntax.ComprehensionExpression] =
     for (var i = 0, l = node.blocks.length; i < l; i++) {
         cb(node.blocks[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ConditionalExpression] = function conditionalExpression(node, parent, state, cb) {
     cb(node.test, node, state);
     cb(node.consequent, node, state);
     cb(node.alternate, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.ContinueStatement] = leafNode;
 
@@ -167,7 +167,7 @@ walkers[Syntax.DebuggerStatement] = leafNode;
 walkers[Syntax.DoWhileStatement] = function doWhileStatement(node, parent, state, cb) {
     cb(node.test, node, state);
     cb(node.body, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.EmptyStatement] = leafNode;
 
@@ -192,7 +192,7 @@ walkers[Syntax.ExportDeclaration] = function exportDeclaration(node, parent, sta
     if (node.source) {
         cb(node.source, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ExportSpecifier] = function exportSpecifier(node, parent, state, cb) {
     if (node.id) {
@@ -202,17 +202,17 @@ walkers[Syntax.ExportSpecifier] = function exportSpecifier(node, parent, state, 
     if (node.name) {
         cb(node.name, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ExpressionStatement] = function expressionStatement(node, parent, state, cb) {
     cb(node.expression, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.ForInStatement] = function forInStatement(node, parent, state, cb) {
     cb(node.left, node, state);
     cb(node.right, node, state);
     cb(node.body, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.ForOfStatement] = walkers[Syntax.ForInStatement];
 
@@ -230,7 +230,7 @@ walkers[Syntax.ForStatement] = function forStatement(node, parent, state, cb) {
     }
 
     cb(node.body, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.FunctionDeclaration] = walkers[Syntax.ArrowFunctionExpression];
 
@@ -244,7 +244,7 @@ walkers[Syntax.IfStatement] = function ifStatement(node, parent, state, cb) {
     if (node.alternate) {
         cb(node.alternate, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ImportDeclaration] = function importDeclaration(node, parent, state, cb) {
     var i;
@@ -259,13 +259,13 @@ walkers[Syntax.ImportDeclaration] = function importDeclaration(node, parent, sta
     if (node.source) {
         cb(node.source, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ImportSpecifier] = walkers[Syntax.ExportSpecifier];
 
 walkers[Syntax.LabeledStatement] = function labeledStatement(node, parent, state, cb) {
     cb(node.body, node, state);
-***REMOVED***
+};
 
 // TODO: add scope info??
 walkers[Syntax.LetStatement] = function letStatement(node, parent, state, cb) {
@@ -278,7 +278,7 @@ walkers[Syntax.LetStatement] = function letStatement(node, parent, state, cb) {
     }
 
     cb(node.body, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.Literal] = leafNode;
 
@@ -289,7 +289,7 @@ walkers[Syntax.MemberExpression] = function memberExpression(node, parent, state
     if (node.property) {
         cb(node.property, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.MethodDefinition] = function methodDefinition(node, parent, state, cb) {
     if (node.key) {
@@ -299,7 +299,7 @@ walkers[Syntax.MethodDefinition] = function methodDefinition(node, parent, state
     if (node.value) {
         cb(node.value, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ModuleDeclaration] = function moduleDeclaration(node, parent, state, cb) {
     if (node.id) {
@@ -313,7 +313,7 @@ walkers[Syntax.ModuleDeclaration] = function moduleDeclaration(node, parent, sta
     if (node.body) {
         cb(node.body, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.NewExpression] = walkers[Syntax.CallExpression];
 
@@ -321,7 +321,7 @@ walkers[Syntax.ObjectExpression] = function objectExpression(node, parent, state
     for (var i = 0, l = node.properties.length; i < l; i++) {
         cb(node.properties[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.ObjectPattern] = walkers[Syntax.ObjectExpression];
 
@@ -332,25 +332,25 @@ walkers[Syntax.Property] = function property(node, parent, state, cb) {
     moveComments(node.key, node);
 
     cb(node.value, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.ReturnStatement] = function returnStatement(node, parent, state, cb) {
     if (node.argument) {
         cb(node.argument, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.SequenceExpression] = function sequenceExpression(node, parent, state, cb) {
     for (var i = 0, l = node.expressions.length; i < l; i++) {
         cb(node.expressions[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.SpreadElement] = function spreadElement(node, parent, state, cb) {
     if (node.argument) {
         cb(node.argument, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.SwitchCase] = function switchCase(node, parent, state, cb) {
     if (node.test) {
@@ -360,7 +360,7 @@ walkers[Syntax.SwitchCase] = function switchCase(node, parent, state, cb) {
     for (var i = 0, l = node.consequent.length; i < l; i++) {
         cb(node.consequent[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.SwitchStatement] = function switchStatement(node, parent, state, cb) {
     cb(node.discriminant, node, state);
@@ -368,7 +368,7 @@ walkers[Syntax.SwitchStatement] = function switchStatement(node, parent, state, 
     for (var i = 0, l = node.cases.length; i < l; i++) {
         cb(node.cases[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.TaggedTemplateExpression] =
     function taggedTemplateExpression(node, parent, state, cb) {
@@ -378,7 +378,7 @@ walkers[Syntax.TaggedTemplateExpression] =
     if (node.quasi) {
         cb(node.quasi, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.TemplateElement] = leafNode;
 
@@ -397,13 +397,13 @@ walkers[Syntax.TemplateLiteral] = function templateLiteral(node, parent, state, 
             cb(node.expressions[i], node, state);
         }
     }
-***REMOVED***
+};
 
 walkers[Syntax.ThisExpression] = leafNode;
 
 walkers[Syntax.ThrowStatement] = function throwStatement(node, parent, state, cb) {
     cb(node.argument, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.TryStatement] = function tryStatement(node, parent, state, cb) {
     var i;
@@ -428,11 +428,11 @@ walkers[Syntax.TryStatement] = function tryStatement(node, parent, state, cb) {
     if (node.finalizer) {
         cb(node.finalizer, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.UnaryExpression] = function unaryExpression(node, parent, state, cb) {
     cb(node.argument, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.UpdateExpression] = walkers[Syntax.UnaryExpression];
 
@@ -443,7 +443,7 @@ walkers[Syntax.VariableDeclaration] = function variableDeclaration(node, parent,
     for (var i = 0, l = node.declarations.length; i < l; i++) {
         cb(node.declarations[i], node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.VariableDeclarator] = function variableDeclarator(node, parent, state, cb) {
     cb(node.id, node, state);
@@ -451,30 +451,30 @@ walkers[Syntax.VariableDeclarator] = function variableDeclarator(node, parent, s
     if (node.init) {
         cb(node.init, node, state);
     }
-***REMOVED***
+};
 
 walkers[Syntax.WhileStatement] = walkers[Syntax.DoWhileStatement];
 
 walkers[Syntax.WithStatement] = function withStatement(node, parent, state, cb) {
     cb(node.object, node, state);
     cb(node.body, node, state);
-***REMOVED***
+};
 
 walkers[Syntax.YieldExpression] = function(node, parent, state, cb) {
     if (node.argument) {
         cb(node.argument, node, state);
     }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Create a walker that can traverse an AST that is consistent with the Mozilla Parser API.
-***REMOVED***
-***REMOVED*** @todo docs
-***REMOVED*** @memberof module:jsdoc/src/walker
-***REMOVED***
+/**
+ * Create a walker that can traverse an AST that is consistent with the Mozilla Parser API.
+ *
+ * @todo docs
+ * @memberof module:jsdoc/src/walker
+ */
 var Walker = exports.Walker = function(walkerFuncs) {
     this._walkers = walkerFuncs || walkers;
-***REMOVED***
+};
 
 // TODO: docs
 Walker.prototype._recurse = function(filename, ast) {
@@ -483,7 +483,7 @@ Walker.prototype._recurse = function(filename, ast) {
         filename: filename,
         nodes: [],
         scopes: []
-   ***REMOVED*****REMOVED***
+    };
     var walkers = this._walkers;
 
     function cb(node, parent, state) {
@@ -519,7 +519,7 @@ Walker.prototype._recurse = function(filename, ast) {
     cb(ast, null, state);
 
     return state;
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: allow visitor.visit to prevent traversal of child nodes
@@ -534,4 +534,4 @@ Walker.prototype.recurse = function(filename, ast, visitor) {
     }
 
     return ast;
-***REMOVED***
+};

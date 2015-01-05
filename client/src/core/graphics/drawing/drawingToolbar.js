@@ -1,16 +1,16 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class offering a tool-bar for a drawing canvas.
-***REMOVED***
+/**
+ * @fileoverview A class offering a tool-bar for a drawing canvas.
+ */
 
 goog.provide('xrx.drawing.Toolbar');
 goog.provide('xrx.drawing.ToolbarButton');
 goog.provide('xrx.drawing.ToolbarOption');
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.style');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventTarget');
@@ -18,12 +18,12 @@ goog.require('xrx.mvc');
 
 
 
-***REMOVED***
-***REMOVED*** A class offering a tool-bar for a drawing canvas.
-***REMOVED*** @param {DOMElement} element The element used to install the tool-bar.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class offering a tool-bar for a drawing canvas.
+ * @param {DOMElement} element The element used to install the tool-bar.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.drawing.Toolbar = function(element, drawing) {
 
   this.element_ = element;
@@ -31,7 +31,7 @@ xrx.drawing.Toolbar = function(element, drawing) {
   this.drawing_ = drawing;
 
   this.create_();
-***REMOVED***
+};
 
 
 
@@ -39,7 +39,7 @@ xrx.drawing.Toolbar.prototype.setSelectedDefault = function() {
   var span = goog.dom.getFirstElementChild(this.element_);
   var img = goog.dom.getFirstElementChild(span);
   xrx.drawing.ToolbarToggle.setSelected(img);
-***REMOVED***
+};
 
 
 
@@ -66,15 +66,15 @@ xrx.drawing.Toolbar.prototype.handleClick = function(e) {
 
     if (numSelected === 0) this.setSelectedDefault();
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.drawing.Toolbar.prototype.create_ = function() {
-***REMOVED***
+  var self = this;
   var tool = self.drawing_.getLayerTool();
   var viewbox = self.drawing_.getViewbox();
 
@@ -82,25 +82,25 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   goog.style.setStyle(this.element_, 'z-index', '999');
 
   var registerButtonClick = function(button, handler, handle) {
-  ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
+    goog.events.listen(button, goog.events.EventType.CLICK, function(e) {
       e.preventDefault();
       e.stopPropagation();
       handler[handle]();
       self.drawing_.draw();
     }, false, handler);
- ***REMOVED*****REMOVED***
+  };
 
   var registerToggleClick = function(button, handler, handle, arg) {
-  ***REMOVED***button, goog.events.EventType.CLICK, function(e) {
+    goog.events.listen(button, goog.events.EventType.CLICK, function(e) {
       e.preventDefault();
       e.stopPropagation();
       var isSelected = goog.dom.classes.has(e.target, 'xrx-ui-state-selected');
       !isSelected ? handler[handle]() : handler[handle](arg);
     }, false, handler);
- ***REMOVED*****REMOVED***
+  };
 
   // register events
-***REMOVED***this.element_, goog.events.EventType.CLICK, function(e) {
+  goog.events.listen(this.element_, goog.events.EventType.CLICK, function(e) {
       self.handleClick(e);
   }, true);
 
@@ -155,11 +155,11 @@ xrx.drawing.Toolbar.prototype.create_ = function() {
   this.setSelectedDefault();
 
   return this.element_;
-***REMOVED***
+};
 
 
 
-xrx.drawing.ToolbarButton = function() {***REMOVED***
+xrx.drawing.ToolbarButton = function() {};
 
 
 
@@ -170,14 +170,14 @@ xrx.drawing.ToolbarButton.className = 'xrx-canvas-toolbar-button';
 xrx.drawing.ToolbarButton.handleMouseOver = function(e) {
   goog.dom.classes.addRemove(e.target, 'xrx-ui-state-mouseout',
       'xrx-ui-state-mouseover');
-***REMOVED***
+};
 
 
 
 xrx.drawing.ToolbarButton.handleMouseOut = function(e) {
   goog.dom.classes.addRemove(e.target, 'xrx-ui-state-mouseover',
       'xrx-ui-state-mouseout');
-***REMOVED***
+};
 
 
 
@@ -192,21 +192,21 @@ xrx.drawing.ToolbarButton.create = function(imageUrl, tooltip) {
 
   goog.dom.append(wrapper, img);
 
-***REMOVED***wrapper, goog.events.EventType.MOUSEOVER,
+  goog.events.listen(wrapper, goog.events.EventType.MOUSEOVER,
       function(e) {
         xrx.drawing.ToolbarButton.handleMouseOver(e);
   });
-***REMOVED***wrapper, goog.events.EventType.MOUSEOUT,
+  goog.events.listen(wrapper, goog.events.EventType.MOUSEOUT,
       function(e) {
         xrx.drawing.ToolbarButton.handleMouseOut(e);
   });
 
   return wrapper;
-***REMOVED***
+};
 
 
 
-xrx.drawing.ToolbarToggle = function() {***REMOVED***
+xrx.drawing.ToolbarToggle = function() {};
 
 
 
@@ -220,7 +220,7 @@ xrx.drawing.ToolbarToggle.setSelected = function(element, opt_flag) {
   } else {
     goog.dom.classes.add(element, 'xrx-ui-state-selected');
   }
-***REMOVED***
+};
 
 
 
@@ -243,13 +243,13 @@ xrx.drawing.ToolbarToggle.create = function(imageUrl, tooltip) {
 
   goog.dom.append(wrapper, img);
 
-***REMOVED***wrapper, goog.events.EventType.MOUSEOVER,
+  goog.events.listen(wrapper, goog.events.EventType.MOUSEOVER,
       function(e) {
         e.preventDefault();
         e.stopPropagation();
         xrx.drawing.ToolbarToggle.handleMouseOver(e);
   });
-***REMOVED***wrapper, goog.events.EventType.MOUSEOUT,
+  goog.events.listen(wrapper, goog.events.EventType.MOUSEOUT,
       function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -257,4 +257,4 @@ xrx.drawing.ToolbarToggle.create = function(imageUrl, tooltip) {
   });
 
   return wrapper;
-***REMOVED***
+};

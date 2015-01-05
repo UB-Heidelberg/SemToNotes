@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared code for classes_test.html & classes_quirks_test.html.
-***REMOVED***
+/**
+ * @fileoverview Shared code for classes_test.html & classes_quirks_test.html.
+ */
 
 goog.provide('goog.dom.classes_test');
 goog.setTestOnly('goog.dom.classes_test');

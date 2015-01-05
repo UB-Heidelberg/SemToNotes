@@ -12,42 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for detecting user's time zone.
-***REMOVED*** This work is based on Charlie Luo and Hong Yan's time zone detection work
-***REMOVED*** for CBG.
-***REMOVED***
+/**
+ * @fileoverview Functions for detecting user's time zone.
+ * This work is based on Charlie Luo and Hong Yan's time zone detection work
+ * for CBG.
+ */
 goog.provide('goog.locale.timeZoneDetection');
 
 goog.require('goog.locale');
 goog.require('goog.locale.TimeZoneFingerprint');
 
 
-***REMOVED***
-***REMOVED*** Array of time instances for checking the time zone offset.
-***REMOVED*** @type {Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array of time instances for checking the time zone offset.
+ * @type {Array.<number>}
+ * @private
+ */
 goog.locale.timeZoneDetection.TZ_POKE_POINTS_ = [
   1109635200, 1128902400, 1130657000, 1143333000, 1143806400, 1145000000,
   1146380000, 1152489600, 1159800000, 1159500000, 1162095000, 1162075000,
   1162105500];
 
 
-***REMOVED***
-***REMOVED*** Calculates time zone fingerprint by poking time zone offsets for 13
-***REMOVED*** preselected time points.
-***REMOVED*** See {@link goog.locale.timeZoneDetection.TZ_POKE_POINTS_}
-***REMOVED*** @param {Date} date Date for calculating the fingerprint.
-***REMOVED*** @return {number} Fingerprint of user's time zone setting.
-***REMOVED***
+/**
+ * Calculates time zone fingerprint by poking time zone offsets for 13
+ * preselected time points.
+ * See {@link goog.locale.timeZoneDetection.TZ_POKE_POINTS_}
+ * @param {Date} date Date for calculating the fingerprint.
+ * @return {number} Fingerprint of user's time zone setting.
+ */
 goog.locale.timeZoneDetection.getFingerprint = function(date) {
   var hash = 0;
   var stdOffset;
   var isComplex = false;
   for (var i = 0;
        i < goog.locale.timeZoneDetection.TZ_POKE_POINTS_.length; i++) {
-    date.setTime(goog.locale.timeZoneDetection.TZ_POKE_POINTS_[i]***REMOVED*** 1000);
+    date.setTime(goog.locale.timeZoneDetection.TZ_POKE_POINTS_[i] * 1000);
     var offset = date.getTimezoneOffset() / 30 + 48;
     if (i == 0) {
       stdOffset = offset;
@@ -56,18 +56,18 @@ goog.locale.timeZoneDetection.getFingerprint = function(date) {
     }
     hash = (hash << 2) ^ offset;
   }
-  return isComplex ? hash :***REMOVED*****REMOVED*** @type {number}***REMOVED*** (stdOffset);
-***REMOVED***
+  return isComplex ? hash : /** @type {number} */ (stdOffset);
+};
 
 
-***REMOVED***
-***REMOVED*** Detects browser's time zone setting. If user's country is known, a better
-***REMOVED*** time zone choice could be guessed.
-***REMOVED*** @param {string=} opt_country Two-letter ISO 3166 country code.
-***REMOVED*** @param {Date=} opt_date Date for calculating the fingerprint. Defaults to the
-***REMOVED***     current date.
-***REMOVED*** @return {string} Time zone ID of best guess.
-***REMOVED***
+/**
+ * Detects browser's time zone setting. If user's country is known, a better
+ * time zone choice could be guessed.
+ * @param {string=} opt_country Two-letter ISO 3166 country code.
+ * @param {Date=} opt_date Date for calculating the fingerprint. Defaults to the
+ *     current date.
+ * @return {string} Time zone ID of best guess.
+ */
 goog.locale.timeZoneDetection.detectTimeZone = function(opt_country, opt_date) {
   var date = opt_date || new Date();
   var fingerprint = goog.locale.timeZoneDetection.getFingerprint(date);
@@ -86,19 +86,19 @@ goog.locale.timeZoneDetection.detectTimeZone = function(opt_country, opt_date) {
     return timeZoneList[0].substring(3);
   }
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an array of time zones that are consistent with user's platform
-***REMOVED*** setting. If user's country is given, only the time zone for that country is
-***REMOVED*** returned.
-***REMOVED*** @param {string=} opt_country 2 letter ISO 3166 country code. Helps in making
-***REMOVED***     a better guess for user's time zone.
-***REMOVED*** @param {Date=} opt_date Date for retrieving timezone list. Defaults to the
-***REMOVED***     current date.
-***REMOVED*** @return {!Array.<string>} Array of time zone IDs.
-***REMOVED***
+/**
+ * Returns an array of time zones that are consistent with user's platform
+ * setting. If user's country is given, only the time zone for that country is
+ * returned.
+ * @param {string=} opt_country 2 letter ISO 3166 country code. Helps in making
+ *     a better guess for user's time zone.
+ * @param {Date=} opt_date Date for retrieving timezone list. Defaults to the
+ *     current date.
+ * @return {!Array.<string>} Array of time zone IDs.
+ */
 goog.locale.timeZoneDetection.getTimeZoneList = function(opt_country,
     opt_date) {
   var date = opt_date || new Date();
@@ -114,4 +114,4 @@ goog.locale.timeZoneDetection.getTimeZoneList = function(opt_country,
     }
   }
   return chosenList;
-***REMOVED***
+};

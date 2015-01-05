@@ -1,41 +1,41 @@
-***REMOVED***
-***REMOVED*** The Overload Helper plugin automatically adds a signature-like string to the longnames of
-***REMOVED*** overloaded functions and methods. In JSDoc, this string is known as a _variation_. (The longnames
-***REMOVED*** of overloaded constructor functions are _not_ updated, so that JSDoc can identify the class'
-***REMOVED*** members correctly.)
-***REMOVED***
-***REMOVED*** Using this plugin allows you to link to overloaded functions without manually adding `@variation`
-***REMOVED*** tags to your documentation.
-***REMOVED***
-***REMOVED*** For example, suppose your code includes a function named `foo` that you can call in the
-***REMOVED*** following ways:
-***REMOVED***
-***REMOVED*** + `foo()`
-***REMOVED*** + `foo(bar)`
-***REMOVED*** + `foo(bar, baz)` (where `baz` is repeatable)
-***REMOVED***
-***REMOVED*** This plugin assigns the following variations and longnames to each version of `foo`:
-***REMOVED***
-***REMOVED*** + `foo()` gets the variation `()` and the longname `foo()`.
-***REMOVED*** + `foo(bar)` gets the variation `(bar)` and the longname `foo(bar)`.
-***REMOVED*** + `foo(bar, baz)` (where `baz` is repeatable) gets the variation `(bar, ...baz)` and the longname
-***REMOVED*** `foo(bar, ...baz)`.
-***REMOVED***
-***REMOVED*** You can then link to these functions with `{@link foo()}`, `{@link foo(bar)}`, and
-***REMOVED*** `{@link foo(bar, ...baz)`. Note that the variation is based on the names of the function
-***REMOVED*** parameters, _not_ their types.
-***REMOVED***
-***REMOVED*** If you prefer to manually assign variations to certain functions, you can still do so with the
-***REMOVED*** `@variation` tag. This plugin will not change these variations or add more variations for that
-***REMOVED*** function, as long as the variations you've defined result in unique longnames.
-***REMOVED***
-***REMOVED*** If an overloaded function includes multiple signatures with the same parameter names, the plugin
-***REMOVED*** will assign numeric variations instead, starting at `(1)` and counting upwards.
-***REMOVED***
-***REMOVED*** @module plugins/overloadHelper
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED*** @license Apache License 2.0
-***REMOVED***
+/**
+ * The Overload Helper plugin automatically adds a signature-like string to the longnames of
+ * overloaded functions and methods. In JSDoc, this string is known as a _variation_. (The longnames
+ * of overloaded constructor functions are _not_ updated, so that JSDoc can identify the class'
+ * members correctly.)
+ *
+ * Using this plugin allows you to link to overloaded functions without manually adding `@variation`
+ * tags to your documentation.
+ *
+ * For example, suppose your code includes a function named `foo` that you can call in the
+ * following ways:
+ *
+ * + `foo()`
+ * + `foo(bar)`
+ * + `foo(bar, baz)` (where `baz` is repeatable)
+ *
+ * This plugin assigns the following variations and longnames to each version of `foo`:
+ *
+ * + `foo()` gets the variation `()` and the longname `foo()`.
+ * + `foo(bar)` gets the variation `(bar)` and the longname `foo(bar)`.
+ * + `foo(bar, baz)` (where `baz` is repeatable) gets the variation `(bar, ...baz)` and the longname
+ * `foo(bar, ...baz)`.
+ *
+ * You can then link to these functions with `{@link foo()}`, `{@link foo(bar)}`, and
+ * `{@link foo(bar, ...baz)`. Note that the variation is based on the names of the function
+ * parameters, _not_ their types.
+ *
+ * If you prefer to manually assign variations to certain functions, you can still do so with the
+ * `@variation` tag. This plugin will not change these variations or add more variations for that
+ * function, as long as the variations you've defined result in unique longnames.
+ *
+ * If an overloaded function includes multiple signatures with the same parameter names, the plugin
+ * will assign numeric variations instead, starting at `(1)` and counting upwards.
+ *
+ * @module plugins/overloadHelper
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ * @license Apache License 2.0
+ */
 'use strict';
 
 // lookup table of function doclets by longname
@@ -77,7 +77,7 @@ function getParamVariation(doclet) {
 
 function getUniqueVariations(doclets) {
     var counter = 0;
-    var variations = {***REMOVED***
+    var variations = {};
     var docletKeys = Object.keys(doclets);
 
     function getUniqueNumbers() {
@@ -133,10 +133,10 @@ function ensureUniqueLongname(newDoclet) {
     var doclets = {
         oldDoclet: functionDoclets[newDoclet.longname],
         newDoclet: newDoclet
-   ***REMOVED*****REMOVED***
+    };
     var docletKeys = Object.keys(doclets);
     var oldDocletLongname;
-    var variations = {***REMOVED***
+    var variations = {};
 
     if (doclets.oldDoclet) {
         oldDocletLongname = doclets.oldDoclet.longname;
@@ -170,7 +170,7 @@ function ensureUniqueLongname(newDoclet) {
 
 exports.handlers = {
     parseBegin: function() {
-        functionDoclets = {***REMOVED***
+        functionDoclets = {};
     },
 
     newDoclet: function(e) {
@@ -182,4 +182,4 @@ exports.handlers = {
     parseComplete: function() {
         functionDoclets = null;
     }
-***REMOVED***
+};

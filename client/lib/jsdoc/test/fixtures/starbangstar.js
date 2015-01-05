@@ -7,6 +7,6 @@
 */
 
 /*!*********************************
-***REMOVED*** This should be ignored by JSDoc
-***REMOVED*** @var x
-***REMOVED***
+ * This should be ignored by JSDoc
+ * @var x
+ */

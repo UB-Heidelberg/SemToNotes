@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for SHA-2 cryptographic hash.
-***REMOVED***
-***REMOVED*** Variable names follow the notation in FIPS PUB 180-3:
-***REMOVED*** http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf.
-***REMOVED***
-***REMOVED*** Some code similar to SHA1 are borrowed from sha1.js written by mschilder@.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Base class for SHA-2 cryptographic hash.
+ *
+ * Variable names follow the notation in FIPS PUB 180-3:
+ * http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf.
+ *
+ * Some code similar to SHA1 are borrowed from sha1.js written by mschilder@.
+ *
+ */
 
 goog.provide('goog.crypt.Sha2');
 
@@ -30,67 +30,67 @@ goog.require('goog.crypt.Hash');
 
 
 
-***REMOVED***
-***REMOVED*** SHA-2 cryptographic hash constructor.
-***REMOVED*** This constructor should not be used directly to create the object. Rather,
-***REMOVED*** one should use the constructor of the sub-classes.
-***REMOVED*** @param {number} numHashBlocks The size of output in 16-byte blocks.
-***REMOVED*** @param {Array.<number>} initHashBlocks The hash-specific initialization
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Hash}
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * SHA-2 cryptographic hash constructor.
+ * This constructor should not be used directly to create the object. Rather,
+ * one should use the constructor of the sub-classes.
+ * @param {number} numHashBlocks The size of output in 16-byte blocks.
+ * @param {Array.<number>} initHashBlocks The hash-specific initialization
+ * @constructor
+ * @extends {goog.crypt.Hash}
+ * @struct
+ */
 goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
   goog.crypt.Sha2.base(this, 'constructor');
 
   this.blockSize = goog.crypt.Sha2.BLOCKSIZE_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A chunk holding the currently processed message bytes. Once the chunk has
-  ***REMOVED*** 64 bytes, we feed it into computeChunk_ function and reset this.chunk_.
-  ***REMOVED*** @private {!Array.<number>|Uint8Array}
- ***REMOVED*****REMOVED***
+  /**
+   * A chunk holding the currently processed message bytes. Once the chunk has
+   * 64 bytes, we feed it into computeChunk_ function and reset this.chunk_.
+   * @private {!Array.<number>|Uint8Array}
+   */
   this.chunk_ = goog.global['Uint8Array'] ?
       new Uint8Array(this.blockSize) : new Array(this.blockSize);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Current number of bytes in this.chunk_.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Current number of bytes in this.chunk_.
+   * @private {number}
+   */
   this.inChunk_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Total number of bytes in currently processed message.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Total number of bytes in currently processed message.
+   * @private {number}
+   */
   this.total_ = 0;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Holds the previous values of accumulated hash a-h in the computeChunk_
-  ***REMOVED*** function.
-  ***REMOVED*** @private {!Array.<number>|Int32Array}
- ***REMOVED*****REMOVED***
+  /**
+   * Holds the previous values of accumulated hash a-h in the computeChunk_
+   * function.
+   * @private {!Array.<number>|Int32Array}
+   */
   this.hash_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of output hash blocks (each block is 4 bytes long).
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The number of output hash blocks (each block is 4 bytes long).
+   * @private {number}
+   */
   this.numHashBlocks_ = numHashBlocks;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {Array.<number>} initHashBlocks
- ***REMOVED*****REMOVED***
+  /**
+   * @private {Array.<number>} initHashBlocks
+   */
   this.initHashBlocks_ = initHashBlocks;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Temporary array used in chunk computation.  Allocate here as a
-  ***REMOVED*** member rather than as a local within computeChunk_() as a
-  ***REMOVED*** performance optimization to reduce the number of allocations and
-  ***REMOVED*** reduce garbage collection.
-  ***REMOVED*** @private {!Int32Array|!Array.<number>}
- ***REMOVED*****REMOVED***
+  /**
+   * Temporary array used in chunk computation.  Allocate here as a
+   * member rather than as a local within computeChunk_() as a
+   * performance optimization to reduce the number of allocations and
+   * reduce garbage collection.
+   * @private {!Int32Array|!Array.<number>}
+   */
   this.w_ = goog.global['Int32Array'] ? new Int32Array(64) : new Array(64);
 
   if (!goog.isDef(goog.crypt.Sha2.Kx_)) {
@@ -105,39 +105,39 @@ goog.crypt.Sha2 = function(numHashBlocks, initHashBlocks) {
   }
 
   this.reset();
-***REMOVED***
+};
 goog.inherits(goog.crypt.Sha2, goog.crypt.Hash);
 
 
-***REMOVED***
-***REMOVED*** The block size
-***REMOVED*** @private <number>
-***REMOVED***
+/**
+ * The block size
+ * @private <number>
+ */
 goog.crypt.Sha2.BLOCKSIZE_ = 512 / 8;
 
 
-***REMOVED***
-***REMOVED*** Contains data needed to pad messages less than BLOCK_SIZE_ bytes.
-***REMOVED*** @private {!Array.<number>}
-***REMOVED***
+/**
+ * Contains data needed to pad messages less than BLOCK_SIZE_ bytes.
+ * @private {!Array.<number>}
+ */
 goog.crypt.Sha2.PADDING_ = goog.array.concat(128,
     goog.array.repeat(0, goog.crypt.Sha2.BLOCKSIZE_ - 1));
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha2.prototype.reset = function() {
   this.inChunk_ = 0;
   this.total_ = 0;
   this.hash_ = goog.global['Int32Array'] ?
       new Int32Array(this.initHashBlocks_) :
       goog.array.clone(this.initHashBlocks_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to compute the hashes for a given 512-bit message chunk.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function to compute the hashes for a given 512-bit message chunk.
+ * @private
+ */
 goog.crypt.Sha2.prototype.computeChunk_ = function() {
   var chunk = this.chunk_;
   goog.asserts.assert(chunk.length == this.blockSize);
@@ -152,7 +152,7 @@ goog.crypt.Sha2.prototype.computeChunk_ = function() {
                  (chunk[offset + 1] << 16) |
                  (chunk[offset + 2] << 8) |
                  (chunk[offset + 3]);
-    offset = index***REMOVED*** 4;
+    offset = index * 4;
   }
 
   // Extend the w[] array to be the number of rounds.
@@ -219,10 +219,10 @@ goog.crypt.Sha2.prototype.computeChunk_ = function() {
   this.hash_[5] = (this.hash_[5] + f) | 0;
   this.hash_[6] = (this.hash_[6] + g) | 0;
   this.hash_[7] = (this.hash_[7] + h) | 0;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha2.prototype.update = function(message, opt_length) {
   if (!goog.isDef(opt_length)) {
     opt_length = message.length;
@@ -266,13 +266,13 @@ goog.crypt.Sha2.prototype.update = function(message, opt_length) {
 
   // Record total message bytes we have processed so far.
   this.total_ += opt_length;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha2.prototype.digest = function() {
   var digest = [];
-  var totalBits = this.total_***REMOVED*** 8;
+  var totalBits = this.total_ * 8;
 
   // Append pad 0x80 0x00*.
   if (this.inChunk_ < 56) {
@@ -297,14 +297,14 @@ goog.crypt.Sha2.prototype.digest = function() {
     }
   }
   return digest;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constants used in SHA-2.
-***REMOVED*** @const
-***REMOVED*** @private {!Array.<number>}
-***REMOVED***
+/**
+ * Constants used in SHA-2.
+ * @const
+ * @private {!Array.<number>}
+ */
 goog.crypt.Sha2.K_ = [
   0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
   0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -325,14 +325,14 @@ goog.crypt.Sha2.K_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Sha2.K as an Int32Array if this JS supports typed arrays; otherwise,
-***REMOVED*** the same array as Sha2.K.
-***REMOVED***
-***REMOVED*** The compiler cannot remove an Int32Array, even if it is not needed
-***REMOVED*** (There are certain cases where creating an Int32Array is not
-***REMOVED*** side-effect free).  Instead, the first time we construct a Sha2
-***REMOVED*** instance, we convert or assign Sha2.K as appropriate.
-***REMOVED*** @private {!undefined|Array.<number>|Int32Array}
-***REMOVED***
+/**
+ * Sha2.K as an Int32Array if this JS supports typed arrays; otherwise,
+ * the same array as Sha2.K.
+ *
+ * The compiler cannot remove an Int32Array, even if it is not needed
+ * (There are certain cases where creating an Int32Array is not
+ * side-effect free).  Instead, the first time we construct a Sha2
+ * instance, we convert or assign Sha2.K as appropriate.
+ * @private {!undefined|Array.<number>|Int32Array}
+ */
 goog.crypt.Sha2.Kx_;

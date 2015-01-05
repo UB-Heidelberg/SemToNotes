@@ -5,10 +5,10 @@
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.EventHandler');
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.engine');
 </script>
@@ -49,7 +49,7 @@ function test1RegisterUnregister() {
 
   drawing.unregisterAll();
   assertEquals(0, handler.getListenerCount());
-***REMOVED***
+};
 
 </script>
 

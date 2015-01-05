@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Commands that the editor can execute.
-***REMOVED*** @see ../demos/editor/editor.html
-***REMOVED***
+/**
+ * @fileoverview Commands that the editor can execute.
+ * @see ../demos/editor/editor.html
+ */
 goog.provide('goog.editor.Command');
 
 
-***REMOVED***
-***REMOVED*** Commands that the editor can excute via execCommand or queryCommandValue.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands that the editor can excute via execCommand or queryCommandValue.
+ * @enum {string}
+ */
 goog.editor.Command = {
   // Prepend all the strings of built in execCommands with a plus to ensure
   // that there's no conflict if a client wants to use the
@@ -73,4 +73,4 @@ goog.editor.Command = {
 
   // Modal editor commands (usually dialogs).
   MODAL_LINK_EDITOR: 'link'
-***REMOVED***
+};

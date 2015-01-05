@@ -1,10 +1,10 @@
-***REMOVED*** document me***REMOVED***
+/** document me */
 const GREEN = 1,
       RED   = 0;
 
-***REMOVED*** document me***REMOVED***
-var validate = function(){***REMOVED***
+/** document me */
+var validate = function(){};
 
 var i,
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     results;

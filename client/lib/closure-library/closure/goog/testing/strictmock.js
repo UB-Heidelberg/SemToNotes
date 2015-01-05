@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file defines a strict mock implementation.
-***REMOVED***
+/**
+ * @fileoverview This file defines a strict mock implementation.
+ */
 
 goog.provide('goog.testing.StrictMock');
 
@@ -23,44 +23,44 @@ goog.require('goog.testing.Mock');
 
 
 
-***REMOVED***
-***REMOVED*** This is a mock that verifies that methods are called in the order that they
-***REMOVED*** are specified during the recording phase. Since it verifies order, it
-***REMOVED*** follows 'fail fast' semantics. If it detects a deviation from the
-***REMOVED*** expectations, it will throw an exception and not wait for verify to be
-***REMOVED*** called.
-***REMOVED*** @param {Object|Function} objectToMock The object that should be mocked, or
-***REMOVED***    the constructor of an object to mock.
-***REMOVED*** @param {boolean=} opt_mockStaticMethods An optional argument denoting that
-***REMOVED***     a mock should be constructed from the static functions of a class.
-***REMOVED*** @param {boolean=} opt_createProxy An optional argument denoting that
-***REMOVED***     a proxy for the target mock should be created.
-***REMOVED***
-***REMOVED*** @extends {goog.testing.Mock}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This is a mock that verifies that methods are called in the order that they
+ * are specified during the recording phase. Since it verifies order, it
+ * follows 'fail fast' semantics. If it detects a deviation from the
+ * expectations, it will throw an exception and not wait for verify to be
+ * called.
+ * @param {Object|Function} objectToMock The object that should be mocked, or
+ *    the constructor of an object to mock.
+ * @param {boolean=} opt_mockStaticMethods An optional argument denoting that
+ *     a mock should be constructed from the static functions of a class.
+ * @param {boolean=} opt_createProxy An optional argument denoting that
+ *     a proxy for the target mock should be created.
+ * @constructor
+ * @extends {goog.testing.Mock}
+ * @final
+ */
 goog.testing.StrictMock = function(objectToMock, opt_mockStaticMethods,
     opt_createProxy) {
   goog.testing.Mock.call(this, objectToMock, opt_mockStaticMethods,
       opt_createProxy);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of MockExpectations.
-  ***REMOVED*** @type {Array.<goog.testing.MockExpectation>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An array of MockExpectations.
+   * @type {Array.<goog.testing.MockExpectation>}
+   * @private
+   */
   this.$expectations_ = [];
-***REMOVED***
+};
 goog.inherits(goog.testing.StrictMock, goog.testing.Mock);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.StrictMock.prototype.$recordExpectation = function() {
   this.$expectations_.push(this.$pendingExpectation);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.StrictMock.prototype.$recordCall = function(name, args) {
   if (this.$expectations_.length == 0) {
     this.$throwCallException(name, args);
@@ -98,18 +98,18 @@ goog.testing.StrictMock.prototype.$recordCall = function(name, args) {
   }
 
   return this.$do(currentExpectation, args);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.StrictMock.prototype.$reset = function() {
   goog.testing.StrictMock.superClass_.$reset.call(this);
 
   goog.array.clear(this.$expectations_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.StrictMock.prototype.$verify = function() {
   goog.testing.StrictMock.superClass_.$verify.call(this);
 
@@ -125,6 +125,6 @@ goog.testing.StrictMock.prototype.$verify = function() {
       this.$expectations_.shift();
     }
   }
-***REMOVED***
+};
 
 

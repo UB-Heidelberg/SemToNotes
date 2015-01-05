@@ -1,8 +1,8 @@
-***REMOVED*** @member***REMOVED***
+/** @member */
 var x;
 
-***REMOVED*** @var foobar***REMOVED***
-***REMOVED*** @var {string} baz***REMOVED***
+/** @var foobar */
+/** @var {string} baz */
 
-***REMOVED*** @member {Object}***REMOVED***
+/** @member {Object} */
 var y;

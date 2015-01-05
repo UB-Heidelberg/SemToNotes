@@ -1,8 +1,8 @@
 (function() {
 
-   ***REMOVED*****REMOVED*** @alias ns.Myclass#***REMOVED***
+    /** @alias ns.Myclass# */
     var x = {
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         myProperty: 'foo'
     }
 

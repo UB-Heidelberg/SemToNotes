@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The default renderer for a goog.dom.DimensionPicker.  A
-***REMOVED*** dimension picker allows the user to visually select a row and column count.
-***REMOVED*** It looks like a palette but in order to minimize DOM load it is rendered.
-***REMOVED*** using CSS background tiling instead of as a grid of nodes.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author abefettig@google.com (Abe Fettig)
-***REMOVED***
+/**
+ * @fileoverview The default renderer for a goog.dom.DimensionPicker.  A
+ * dimension picker allows the user to visually select a row and column count.
+ * It looks like a palette but in order to minimize DOM load it is rendered.
+ * using CSS background tiling instead of as a grid of nodes.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author abefettig@google.com (Abe Fettig)
+ */
 
 goog.provide('goog.ui.DimensionPickerRenderer');
 
@@ -35,101 +35,101 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.DimensionPicker}s.  Renders the
-***REMOVED*** palette as two divs, one with the un-highlighted background, and one with the
-***REMOVED*** highlighted background.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ControlRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.DimensionPicker}s.  Renders the
+ * palette as two divs, one with the un-highlighted background, and one with the
+ * highlighted background.
+ *
+ * @constructor
+ * @extends {goog.ui.ControlRenderer}
+ */
 goog.ui.DimensionPickerRenderer = function() {
   goog.ui.ControlRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.DimensionPickerRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.DimensionPickerRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.DimensionPickerRenderer.CSS_CLASS =
     goog.getCssName('goog-dimension-picker');
 
 
-***REMOVED***
-***REMOVED*** Return the underlying div for the given outer element.
-***REMOVED*** @param {Element} element The root element.
-***REMOVED*** @return {Element} The underlying div.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the underlying div for the given outer element.
+ * @param {Element} element The root element.
+ * @return {Element} The underlying div.
+ * @private
+ */
 goog.ui.DimensionPickerRenderer.prototype.getUnderlyingDiv_ = function(
     element) {
   return element.firstChild.childNodes[1];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the highlight div for the given outer element.
-***REMOVED*** @param {Element} element The root element.
-***REMOVED*** @return {Element} The highlight div.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the highlight div for the given outer element.
+ * @param {Element} element The root element.
+ * @return {Element} The highlight div.
+ * @private
+ */
 goog.ui.DimensionPickerRenderer.prototype.getHighlightDiv_ = function(
     element) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (element.firstChild.lastChild);
-***REMOVED***
+  return /** @type {Element} */ (element.firstChild.lastChild);
+};
 
 
-***REMOVED***
-***REMOVED*** Return the status message div for the given outer element.
-***REMOVED*** @param {Element} element The root element.
-***REMOVED*** @return {Element} The status message div.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the status message div for the given outer element.
+ * @param {Element} element The root element.
+ * @return {Element} The status message div.
+ * @private
+ */
 goog.ui.DimensionPickerRenderer.prototype.getStatusDiv_ = function(
     element) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (element.lastChild);
-***REMOVED***
+  return /** @type {Element} */ (element.lastChild);
+};
 
 
-***REMOVED***
-***REMOVED*** Return the invisible mouse catching div for the given outer element.
-***REMOVED*** @param {Element} element The root element.
-***REMOVED*** @return {Element} The invisible mouse catching div.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the invisible mouse catching div for the given outer element.
+ * @param {Element} element The root element.
+ * @return {Element} The invisible mouse catching div.
+ * @private
+ */
 goog.ui.DimensionPickerRenderer.prototype.getMouseCatcher_ = function(
     element) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (element.firstChild.firstChild);
-***REMOVED***
+  return /** @type {Element} */ (element.firstChild.firstChild);
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#canDecorate} to allow decorating
-***REMOVED*** empty DIVs only.
-***REMOVED*** @param {Element} element The element to check.
-***REMOVED*** @return {boolean} Whether if the element is an empty div.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#canDecorate} to allow decorating
+ * empty DIVs only.
+ * @param {Element} element The element to check.
+ * @return {boolean} Whether if the element is an empty div.
+ * @override
+ */
 goog.ui.DimensionPickerRenderer.prototype.canDecorate = function(
     element) {
   return element.tagName == goog.dom.TagName.DIV && !element.firstChild;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#decorate} to decorate empty DIVs.
-***REMOVED*** @param {goog.ui.Control} control goog.ui.DimensionPicker to decorate.
-***REMOVED*** @param {Element} element The element to decorate.
-***REMOVED*** @return {Element} The decorated element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#decorate} to decorate empty DIVs.
+ * @param {goog.ui.Control} control goog.ui.DimensionPicker to decorate.
+ * @param {Element} element The element to decorate.
+ * @return {Element} The decorated element.
+ * @override
+ */
 goog.ui.DimensionPickerRenderer.prototype.decorate = function(control,
     element) {
-  var palette =***REMOVED*****REMOVED*** @type {goog.ui.DimensionPicker}***REMOVED*** (control);
+  var palette = /** @type {goog.ui.DimensionPicker} */ (control);
   goog.ui.DimensionPickerRenderer.superClass_.decorate.call(this,
       palette, element);
 
@@ -137,14 +137,14 @@ goog.ui.DimensionPickerRenderer.prototype.decorate = function(control,
   this.updateSize(palette, element);
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Scales various elements in order to update the palette's size.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The palette object.
-***REMOVED*** @param {Element} element The element to set the style of.
-***REMOVED***
+/**
+ * Scales various elements in order to update the palette's size.
+ * @param {goog.ui.DimensionPicker} palette The palette object.
+ * @param {Element} element The element to set the style of.
+ */
 goog.ui.DimensionPickerRenderer.prototype.updateSize =
     function(palette, element) {
   var size = palette.getSize();
@@ -158,15 +158,15 @@ goog.ui.DimensionPickerRenderer.prototype.updateSize =
   if (palette.isRightToLeft()) {
     this.adjustParentDirection_(palette, element);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the appropriate content elements to the given outer DIV.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The palette object.
-***REMOVED*** @param {Element} element The element to decorate.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds the appropriate content elements to the given outer DIV.
+ * @param {goog.ui.DimensionPicker} palette The palette object.
+ * @param {Element} element The element to decorate.
+ * @private
+ */
 goog.ui.DimensionPickerRenderer.prototype.addElementContents_ = function(
     palette, element) {
   // First we create a single div containing three stacked divs.  The bottom div
@@ -192,17 +192,17 @@ goog.ui.DimensionPickerRenderer.prototype.addElementContents_ = function(
   // Lastly we add a div to store the text version of the current state.
   element.appendChild(palette.getDomHelper().createDom(goog.dom.TagName.DIV,
       goog.getCssName(this.getCssClass(), 'status')));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a div and adds the appropriate contents to it.
-***REMOVED*** @param {goog.ui.Control} control Picker to render.
-***REMOVED*** @return {!Element} Root element for the palette.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Creates a div and adds the appropriate contents to it.
+ * @param {goog.ui.Control} control Picker to render.
+ * @return {!Element} Root element for the palette.
+ * @override
+ */
 goog.ui.DimensionPickerRenderer.prototype.createDom = function(control) {
-  var palette =***REMOVED*****REMOVED*** @type {goog.ui.DimensionPicker}***REMOVED*** (control);
+  var palette = /** @type {goog.ui.DimensionPicker} */ (control);
   var classNames = this.getClassNames(palette);
   var element = palette.getDomHelper().createDom(goog.dom.TagName.DIV, {
     'class' : classNames ? classNames.join(' ') : ''
@@ -210,19 +210,19 @@ goog.ui.DimensionPickerRenderer.prototype.createDom = function(control) {
   this.addElementContents_(palette, element);
   this.updateSize(palette, element);
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the control's DOM when the control enters the document.  Called
-***REMOVED*** from {@link goog.ui.Control#enterDocument}.
-***REMOVED*** @param {goog.ui.Control} control Palette whose DOM is to be
-***REMOVED***     initialized as it enters the document.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Initializes the control's DOM when the control enters the document.  Called
+ * from {@link goog.ui.Control#enterDocument}.
+ * @param {goog.ui.Control} control Palette whose DOM is to be
+ *     initialized as it enters the document.
+ * @override
+ */
 goog.ui.DimensionPickerRenderer.prototype.initializeDom = function(
     control) {
-  var palette =***REMOVED*****REMOVED*** @type {goog.ui.DimensionPicker}***REMOVED*** (control);
+  var palette = /** @type {goog.ui.DimensionPicker} */ (control);
   goog.ui.DimensionPickerRenderer.superClass_.initializeDom.call(this, palette);
 
   // Make the displayed highlighted size match the dimension picker's value.
@@ -231,51 +231,51 @@ goog.ui.DimensionPickerRenderer.prototype.initializeDom = function(
       highlightedSize.width, highlightedSize.height);
 
   this.positionMouseCatcher(palette);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the element to listen for mouse move events on.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The palette to listen on.
-***REMOVED*** @return {Element} The element to listen for mouse move events on.
-***REMOVED***
+/**
+ * Get the element to listen for mouse move events on.
+ * @param {goog.ui.DimensionPicker} palette The palette to listen on.
+ * @return {Element} The element to listen for mouse move events on.
+ */
 goog.ui.DimensionPickerRenderer.prototype.getMouseMoveElement = function(
     palette) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (palette.getElement().firstChild);
-***REMOVED***
+  return /** @type {Element} */ (palette.getElement().firstChild);
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the x offset in to the grid for the given mouse x position.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The table size palette.
-***REMOVED*** @param {number} x The mouse event x position.
-***REMOVED*** @return {number} The x offset in to the grid.
-***REMOVED***
+/**
+ * Returns the x offset in to the grid for the given mouse x position.
+ * @param {goog.ui.DimensionPicker} palette The table size palette.
+ * @param {number} x The mouse event x position.
+ * @return {number} The x offset in to the grid.
+ */
 goog.ui.DimensionPickerRenderer.prototype.getGridOffsetX = function(
     palette, x) {
   // TODO(robbyw): Don't rely on magic 18 - measure each palette's em size.
   return Math.min(palette.maxColumns, Math.ceil(x / 18));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the y offset in to the grid for the given mouse y position.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The table size palette.
-***REMOVED*** @param {number} y The mouse event y position.
-***REMOVED*** @return {number} The y offset in to the grid.
-***REMOVED***
+/**
+ * Returns the y offset in to the grid for the given mouse y position.
+ * @param {goog.ui.DimensionPicker} palette The table size palette.
+ * @param {number} y The mouse event y position.
+ * @return {number} The y offset in to the grid.
+ */
 goog.ui.DimensionPickerRenderer.prototype.getGridOffsetY = function(
     palette, y) {
   return Math.min(palette.maxRows, Math.ceil(y / 18));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the highlighted size. Does nothing if the palette hasn't been rendered.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The table size palette.
-***REMOVED*** @param {number} columns The number of columns to highlight.
-***REMOVED*** @param {number} rows The number of rows to highlight.
-***REMOVED***
+/**
+ * Sets the highlighted size. Does nothing if the palette hasn't been rendered.
+ * @param {goog.ui.DimensionPicker} palette The table size palette.
+ * @param {number} columns The number of columns to highlight.
+ * @param {number} rows The number of rows to highlight.
+ */
 goog.ui.DimensionPickerRenderer.prototype.setHighlightedSize = function(
     palette, columns, rows) {
   var element = palette.getElement();
@@ -296,10 +296,10 @@ goog.ui.DimensionPickerRenderer.prototype.setHighlightedSize = function(
   }
 
   // Update the aria label.
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc The dimension of the columns and rows currently selected in the
-  ***REMOVED*** dimension picker, as text that can be spoken by a screen reader.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc The dimension of the columns and rows currently selected in the
+   * dimension picker, as text that can be spoken by a screen reader.
+   */
   var MSG_DIMENSION_PICKER_HIGHLIGHTED_DIMENSIONS = goog.getMsg(
       '{$numCols} by {$numRows}',
       {'numCols': columns, 'numRows': rows});
@@ -309,15 +309,15 @@ goog.ui.DimensionPickerRenderer.prototype.setHighlightedSize = function(
   // Update the size text.
   goog.dom.setTextContent(this.getStatusDiv_(element),
       goog.i18n.bidi.enforceLtrInText(columns + ' x ' + rows));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Position the mouse catcher such that it receives mouse events past the
-***REMOVED*** selectedsize up to the maximum size.  Takes care to not introduce scrollbars.
-***REMOVED*** Should be called on enter document and when the window changes size.
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The table size palette.
-***REMOVED***
+/**
+ * Position the mouse catcher such that it receives mouse events past the
+ * selectedsize up to the maximum size.  Takes care to not introduce scrollbars.
+ * Should be called on enter document and when the window changes size.
+ * @param {goog.ui.DimensionPicker} palette The table size palette.
+ */
 goog.ui.DimensionPickerRenderer.prototype.positionMouseCatcher = function(
     palette) {
   var mouseCatcher = this.getMouseCatcher_(palette.getElement());
@@ -357,31 +357,31 @@ goog.ui.DimensionPickerRenderer.prototype.positionMouseCatcher = function(
   if (palette.isRightToLeft()) {
     mouseCatcher.style.right = '0';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of components
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of components
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.DimensionPickerRenderer.prototype.getCssClass = function() {
   return goog.ui.DimensionPickerRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This function adjusts the positioning from 'left' and 'top' to 'right' and
-***REMOVED*** 'top' as appropriate for RTL control.  This is so when the dimensionpicker
-***REMOVED*** grow in width, the containing element grow to the left instead of right.
-***REMOVED*** This won't be necessary if goog.ui.SubMenu rendering code would position RTL
-***REMOVED*** control with 'right' and 'top'.
-***REMOVED*** @private
-***REMOVED***
-***REMOVED*** @param {goog.ui.DimensionPicker} palette The palette object.
-***REMOVED*** @param {Element} element The palette's element.
-***REMOVED***
+/**
+ * This function adjusts the positioning from 'left' and 'top' to 'right' and
+ * 'top' as appropriate for RTL control.  This is so when the dimensionpicker
+ * grow in width, the containing element grow to the left instead of right.
+ * This won't be necessary if goog.ui.SubMenu rendering code would position RTL
+ * control with 'right' and 'top'.
+ * @private
+ *
+ * @param {goog.ui.DimensionPicker} palette The palette object.
+ * @param {Element} element The palette's element.
+ */
 goog.ui.DimensionPickerRenderer.prototype.adjustParentDirection_ =
     function(palette, element) {
   var parent = palette.getParent();
@@ -413,4 +413,4 @@ goog.ui.DimensionPickerRenderer.prototype.adjustParentDirection_ =
   } else {
     goog.style.setStyle(element, 'right', '0px');
   }
-***REMOVED***
+};

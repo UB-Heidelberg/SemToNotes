@@ -15,7 +15,7 @@
 goog.provide('goog.events.OnlineHandlerTest');
 goog.setTestOnly('goog.events.OnlineHandlerTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventHandler');
@@ -36,12 +36,12 @@ function listenToEvents(oh) {
   onlineCount = 0;
   offlineCount = 0;
 
-***REMOVED***oh, goog.net.NetworkStatusMonitor.EventType.ONLINE,
+  goog.events.listen(oh, goog.net.NetworkStatusMonitor.EventType.ONLINE,
                      function(e) {
                        assertTrue(oh.isOnline());
                        onlineCount++;
                      });
-***REMOVED***oh, goog.net.NetworkStatusMonitor.EventType.OFFLINE,
+  goog.events.listen(oh, goog.net.NetworkStatusMonitor.EventType.OFFLINE,
                      function(e) {
                        assertFalse(oh.isOnline());
                        offlineCount++;

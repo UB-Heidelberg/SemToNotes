@@ -1,18 +1,18 @@
-***REMOVED*** @namespace***REMOVED***
-var chat = {***REMOVED***
+/** @namespace */
+var chat = {};
 
-***REMOVED***
+/**
     @namespace
-***REMOVED***
-chat["#channel"] = {***REMOVED***
+ */
+chat["#channel"] = {};
 
-***REMOVED***
+/**
     @member
     @type {boolean}
     @defaultvalue
-***REMOVED***
+ */
 chat["#channel"].open = true;
 
-***REMOVED***
+/**
     @event chat."#channel"."op:announce-motd"
-***REMOVED***
+ */

@@ -1,18 +1,18 @@
 (function () {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Creates a new test object.
-    ***REMOVED*** @alias Test
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    /**
+     * Creates a new test object.
+     * @alias Test
+     * @constructor
+     */
     var Test = function(testName) {
-       ***REMOVED*****REMOVED*** Document me.***REMOVED***
+        /** Document me. */
         this.name = testName;
     }
 
-   ***REMOVED*****REMOVED*** Document me.***REMOVED***
+    /** Document me. */
     Test.prototype.run = function(message) {
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** Document me.***REMOVED***
+    /** Document me. */
     Test.counter = 1;
 })();

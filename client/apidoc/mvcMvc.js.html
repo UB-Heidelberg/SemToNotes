@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview The MVC main class.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview The MVC main class.
+ */
 
 goog.provide('xrx.mvc.Mvc');
 
@@ -48,23 +48,23 @@ goog.require('xrx.widget.Widgets');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
-xrx.mvc.Mvc = function() {***REMOVED***
+/**
+ * @constructor
+ */
+xrx.mvc.Mvc = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.Mvc.idGenerator = goog.ui.IdGenerator.getInstance();
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.Mvc.installComponents = function(opt_context) {
   var elements;
   var element;
@@ -77,15 +77,15 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
       if (!xrx.mvc.hasComponent(element.id)) new xrx.mvc.Components[key](element);
     }
   });
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.Mvc.installInstances_ = function(opt_context) {
-***REMOVED***
+  var self = this;
   var elements = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
   var requests = [];
   var instances = [];
@@ -114,17 +114,17 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
 
   if (requests.length === 0) {
     xrx.mvc.Mvc.installComponents(opt_context);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.mvc.Mvc.install = function(opt_context) {
   xrx.mvc.Mvc.installInstances_(opt_context);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

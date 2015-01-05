@@ -1,4 +1,4 @@
-/*global beforeEach, describe, expect, it, jasmine***REMOVED***
+/*global beforeEach, describe, expect, it, jasmine */
 describe('@type tag inline with function parameters', function() {
     var info;
 
@@ -24,7 +24,7 @@ describe('@type tag inline with function parameters', function() {
     it('When a function parameter has an inline @type tag, the parameter type is documented',
         function() {
         var dispense = docSet.getByLongname('dispense')[0];
-        info[0] = { name: 'candy', typeName: 'string'***REMOVED*****REMOVED***
+        info[0] = { name: 'candy', typeName: 'string' };
 
         checkParams(dispense, info);
     });
@@ -32,7 +32,7 @@ describe('@type tag inline with function parameters', function() {
     it('When a function parameter has a standard JSDoc comment and an inline @type tag, the docs ' +
         'reflect the standard JSDoc comment', function() {
         var Dispenser = docSet.getByLongname('Dispenser')[0];
-        info[0] = { name: 'candyId', typeName: 'number', description: 'The candy\'s identifier.'***REMOVED*****REMOVED***
+        info[0] = { name: 'candyId', typeName: 'number', description: 'The candy\'s identifier.' };
 
         checkParams(Dispenser, info);
     });
@@ -41,8 +41,8 @@ describe('@type tag inline with function parameters', function() {
         'with an inline @type tag, the function parameters are documented in the correct order',
         function() {
         var restock = docSet.getByLongname('restock')[0];
-        info[0] = { name: 'dispenser', typeName: 'Dispenser'***REMOVED*****REMOVED***
-        info[1] = { name: 'item', typeName: 'string'***REMOVED*****REMOVED***
+        info[0] = { name: 'dispenser', typeName: 'Dispenser' };
+        info[1] = { name: 'item', typeName: 'string' };
 
         checkParams(restock, info);
     });
@@ -51,8 +51,8 @@ describe('@type tag inline with function parameters', function() {
         'with an inline @type tag, the function parameters are documented in the correct order',
         function() {
         var clean = docSet.getByLongname('clean')[0];
-        info[0] = { name: 'dispenser', typeName: 'Dispenser'***REMOVED*****REMOVED***
-        info[1] = { name: 'cleaner', typeName: 'string'***REMOVED*****REMOVED***
+        info[0] = { name: 'dispenser', typeName: 'Dispenser' };
+        info[1] = { name: 'cleaner', typeName: 'string' };
 
         checkParams(clean, info);
     });
@@ -61,10 +61,10 @@ describe('@type tag inline with function parameters', function() {
         'with an inline @type tag, the function parameters are documented in the correct order',
         function() {
         var paint = docSet.getByLongname('paint')[0];
-        info[0] = { name: 'dispenser', typeName: 'Dispenser'***REMOVED*****REMOVED***
-        info[1] = { name: 'color', typeName: 'Color'***REMOVED*****REMOVED***
-        info[2] = { name: 'shade', typeName: 'number'***REMOVED*****REMOVED***
-        info[3] = { name: 'brand', typeName: 'string'***REMOVED*****REMOVED***
+        info[0] = { name: 'dispenser', typeName: 'Dispenser' };
+        info[1] = { name: 'color', typeName: 'Color' };
+        info[2] = { name: 'shade', typeName: 'number' };
+        info[3] = { name: 'brand', typeName: 'string' };
 
         checkParams(paint, info);
     });

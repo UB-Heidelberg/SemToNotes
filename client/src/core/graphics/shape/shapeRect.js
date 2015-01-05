@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview Classes representing a modifiable and creatable
-***REMOVED***     rectangle shape.
-***REMOVED***
+/**
+ * @fileoverview Classes representing a modifiable and creatable
+ *     rectangle shape.
+ */
 
 goog.provide('xrx.shape.Rect');
 goog.provide('xrx.shape.RectCreate');
@@ -16,45 +16,45 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a rectangle shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing a rectangle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.shape.Rect = function(drawing) {
 
   goog.base(this, drawing);
-***REMOVED***
+};
 goog.inherits(xrx.shape.Rect, xrx.shape.Shape);
 
 
 
-***REMOVED***
-***REMOVED*** The engine class used to render this shape.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The engine class used to render this shape.
+ * @type {string}
+ * @const
+ */
 xrx.shape.Rect.prototype.engineClass_ = 'Polygon';
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new rectangle shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
+/**
+ * Creates a new rectangle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ */
 xrx.shape.Rect.create = function(drawing) {
   var rect = new xrx.shape.Rect(drawing);
   rect.setCoords([[0,0],[0,0],[0,0],[0,0]]);
   return rect;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Function makes sure that the underlying polygon rendering class
-***REMOVED*** stays a rectangle.
-***REMOVED*** @param {number} position The nth vertex currently modified.
-***REMOVED***
+/**
+ * Function makes sure that the underlying polygon rendering class
+ * stays a rectangle.
+ * @param {number} position The nth vertex currently modified.
+ */
 xrx.shape.Rect.prototype.setAffineCoords = function(position) {
   var coords = this.getCoords();
   if (position === 0 || position === 2) {
@@ -69,76 +69,76 @@ xrx.shape.Rect.prototype.setAffineCoords = function(position) {
     coords[2][1] = coords[3][1];
   }
   return coords;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new instance of a modifiable rectangle shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
+/**
+ * Creates a new instance of a modifiable rectangle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ */
 xrx.shape.Rect.prototype.createModify = function() {
   return xrx.shape.RectModify.create(this);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a modifiable rectangle shape.
-***REMOVED***
-***REMOVED***
-xrx.shape.RectModify = function() {***REMOVED***
+/**
+ * A class representing a modifiable rectangle shape.
+ * @constructor
+ */
+xrx.shape.RectModify = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new modifiable rectangle shape.
-***REMOVED*** @param {xrx.shape.Polygon} polygon The related rectangle shape.
-***REMOVED***
+/**
+ * Creates a new modifiable rectangle shape.
+ * @param {xrx.shape.Polygon} polygon The related rectangle shape.
+ */
 xrx.shape.RectModify.create = xrx.shape.PolygonModify.create;
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a creatable rectangle shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing a creatable rectangle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.shape.RectCreate = function(drawing) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent drawing object.
-  ***REMOVED*** @type {xrx.drawing.Drawing}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The parent drawing object.
+   * @type {xrx.drawing.Drawing}
+   * @private
+   */
   this.drawing_ = drawing;
 
   this.rect_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of vertexes the user has created so far.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of vertexes the user has created so far.
+   * @type {number}
+   * @private
+   */
   this.count_ = 0;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates of the rectangle currently created.
-***REMOVED*** @return Array.<Array.<number>> The coordinates.
-***REMOVED***
+/**
+ * Returns the coordinates of the rectangle currently created.
+ * @return Array.<Array.<number>> The coordinates.
+ */
 xrx.shape.RectCreate.prototype.getCoords = function() {
   return this.rect_.getCoords();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles click events for a creatable rectangle shape.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles click events for a creatable rectangle shape.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.shape.RectCreate.prototype.handleClick = function(e) {
   var vertex;
   var shape;
@@ -189,7 +189,7 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
 
     if (this.handleValueChanged) this.handleValueChanged();
   }
-***REMOVED***
+};
 
 
 

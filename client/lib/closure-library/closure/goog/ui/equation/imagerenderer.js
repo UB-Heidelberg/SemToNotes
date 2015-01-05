@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for rendering the equation images.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Functions for rendering the equation images.
+ *
+ */
 
 goog.provide('goog.ui.equation.ImageRenderer');
 
@@ -26,81 +26,81 @@ goog.require('goog.string');
 goog.require('goog.uri.utils');
 
 
-***REMOVED***
-***REMOVED*** The server name which renders the equations.
-***REMOVED*** We use https as equations may be embedded in https pages
-***REMOVED*** and using https prevents mixed content warnings. Note that
-***REMOVED*** https equations work only on google.com domains.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The server name which renders the equations.
+ * We use https as equations may be embedded in https pages
+ * and using https prevents mixed content warnings. Note that
+ * https equations work only on google.com domains.
+ * @type {string}
+ * @private
+ */
 goog.ui.equation.ImageRenderer.SERVER_NAME_ =
     'https://www.google.com';
 
 
-***REMOVED***
-***REMOVED*** The longest equation which may be displayed, in characters.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The longest equation which may be displayed, in characters.
+ * @type {number}
+ */
 goog.ui.equation.ImageRenderer.MAX_EQUATION_LENGTH = 200;
 
 
-***REMOVED***
-***REMOVED*** Class to put on our equations IMG elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Class to put on our equations IMG elements.
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.EE_IMG_CLASS = 'ee_img';
 
 
-***REMOVED***
-***REMOVED*** Non-standard to put on our equations IMG elements. Useful when classes need
-***REMOVED*** to be scrubbed from the user-generated HTML, but non-standard attributes
-***REMOVED*** can be white-listed.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Non-standard to put on our equations IMG elements. Useful when classes need
+ * to be scrubbed from the user-generated HTML, but non-standard attributes
+ * can be white-listed.
+ *
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.EE_IMG_ATTR = 'eeimg';
 
 
-***REMOVED***
-***REMOVED*** Vertical alignment for the equations IMG elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Vertical alignment for the equations IMG elements.
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.EE_IMG_VERTICAL_ALIGN = 'middle';
 
 
-***REMOVED***
-***REMOVED*** The default background color as used in the img url, which is fully
-***REMOVED*** transparent white.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The default background color as used in the img url, which is fully
+ * transparent white.
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.BACKGROUND_COLOR = 'FFFFFF00';
 
 
-***REMOVED***
-***REMOVED*** The default foreground color as used in the img url, which is black.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The default foreground color as used in the img url, which is black.
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.FOREGROUND_COLOR = '000000';
 
 
-***REMOVED***
-***REMOVED*** Class to put on IMG elements to keep the resize property bubble from
-***REMOVED*** appearing. This is different from PLACEHOLDER_IMG_CLASS because it's
-***REMOVED*** reasonable in some cases to be able to resize a placeholder (which should
-***REMOVED*** be reflected when the placeholder is replaced with the other content).
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Class to put on IMG elements to keep the resize property bubble from
+ * appearing. This is different from PLACEHOLDER_IMG_CLASS because it's
+ * reasonable in some cases to be able to resize a placeholder (which should
+ * be reflected when the placeholder is replaced with the other content).
+ * @type {string}
+ */
 goog.ui.equation.ImageRenderer.NO_RESIZE_IMG_CLASS =
     goog.getCssName('tr_noresize');
 
 
-***REMOVED***
-***REMOVED*** Returns the equation image src url given the equation.
-***REMOVED*** @param {string} equation The equation.
-***REMOVED*** @return {string} The equation image src url (empty string in case the
-***REMOVED***   equation was empty).
-***REMOVED***
+/**
+ * Returns the equation image src url given the equation.
+ * @param {string} equation The equation.
+ * @return {string} The equation image src url (empty string in case the
+ *   equation was empty).
+ */
 goog.ui.equation.ImageRenderer.getImageUrl = function(equation) {
   if (!equation) {
     return '';
@@ -115,25 +115,25 @@ goog.ui.equation.ImageRenderer.getImageUrl = function(equation) {
       '&chl=' +
       encodeURIComponent(equation);
   return url;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the equation string src for given image url.
-***REMOVED*** @param {string} imageUrl The image url.
-***REMOVED*** @return {string?} The equation string, null if imageUrl cannot be parsed.
-***REMOVED***
+/**
+ * Returns the equation string src for given image url.
+ * @param {string} imageUrl The image url.
+ * @return {string?} The equation string, null if imageUrl cannot be parsed.
+ */
 goog.ui.equation.ImageRenderer.getEquationFromImageUrl = function(imageUrl) {
   return goog.uri.utils.getParamValue(imageUrl, 'chl');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the equation string from the given equation IMG node. Returns empty
-***REMOVED*** string if the src attribute of the is not a valid equation url.
-***REMOVED*** @param {Element} equationNode The equation IMG element.
-***REMOVED*** @return {string} The equation string.
-***REMOVED***
+/**
+ * Gets the equation string from the given equation IMG node. Returns empty
+ * string if the src attribute of the is not a valid equation url.
+ * @param {Element} equationNode The equation IMG element.
+ * @return {string} The equation string.
+ */
 goog.ui.equation.ImageRenderer.getEquationFromImage = function(equationNode) {
   var url = equationNode.getAttribute('src');
   if (!url) {
@@ -142,14 +142,14 @@ goog.ui.equation.ImageRenderer.getEquationFromImage = function(equationNode) {
   }
   return goog.ui.equation.ImageRenderer.getEquationFromImageUrl(
       url) || '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether given node is an equation element.
-***REMOVED*** @param {Node} node The node to check, must be an Element.
-***REMOVED*** @return {boolean} Whether given node is an equation element.
-***REMOVED***
+/**
+ * Checks whether given node is an equation element.
+ * @param {Node} node The node to check, must be an Element.
+ * @return {boolean} Whether given node is an equation element.
+ */
 goog.ui.equation.ImageRenderer.isEquationElement = function(node) {
   var elem = goog.asserts.assertElement(node);
   return elem.nodeName == goog.dom.TagName.IMG &&
@@ -157,14 +157,14 @@ goog.ui.equation.ImageRenderer.isEquationElement = function(node) {
       goog.ui.equation.ImageRenderer.EE_IMG_ATTR) ||
           goog.dom.classlist.contains(elem,
               goog.ui.equation.ImageRenderer.EE_IMG_CLASS));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the html for the html image tag for the given equation.
-***REMOVED*** @param {string} equation The equation.
-***REMOVED*** @return {string} The html code to embed in the document.
-***REMOVED***
+/**
+ * Returns the html for the html image tag for the given equation.
+ * @param {string} equation The equation.
+ * @return {string} The html code to embed in the document.
+ */
 goog.ui.equation.ImageRenderer.getHtml = function(equation) {
   var imageSrc =
       goog.ui.equation.ImageRenderer.getImageUrl(equation);
@@ -178,15 +178,15 @@ goog.ui.equation.ImageRenderer.getHtml = function(equation) {
       '" ' + goog.ui.equation.ImageRenderer.EE_IMG_ATTR + '="1" ' +
       'style="vertical-align: ' +
       goog.ui.equation.ImageRenderer.EE_IMG_VERTICAL_ALIGN + '">';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether equation is too long to be displayed.
-***REMOVED*** @param {string} equation The equation to test.
-***REMOVED*** @return {boolean} Whether the equation is too long.
-***REMOVED***
+/**
+ * Checks whether equation is too long to be displayed.
+ * @param {string} equation The equation to test.
+ * @return {boolean} Whether the equation is too long.
+ */
 goog.ui.equation.ImageRenderer.isEquationTooLong = function(equation) {
   return equation.length >
       goog.ui.equation.ImageRenderer.MAX_EQUATION_LENGTH;
-***REMOVED***
+};

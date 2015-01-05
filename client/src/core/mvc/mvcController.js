@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing the controller of
-***REMOVED***    a model-view-controller.
-***REMOVED***
+/**
+ * @fileoverview A class representing the controller of
+ *    a model-view-controller.
+ */
 
 goog.provide('xrx.mvc.Controller');
 
@@ -17,7 +17,7 @@ goog.require('xrx.xml.Update');
 
 
 
-xrx.mvc.Controller = function() {***REMOVED***
+xrx.mvc.Controller = function() {};
 
 
 
@@ -55,7 +55,7 @@ xrx.mvc.Controller.updateNode = function(control, opt_node, update) {
     throw Error('Value update not supported for this node-type.');
     break;
   }
-***REMOVED***
+};
 
 
 
@@ -79,7 +79,7 @@ xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
     throw Error('Insert operation not supported for this token-type.');
     break;
   }
-***REMOVED***
+};
 
 
 
@@ -95,7 +95,7 @@ xrx.mvc.Controller.removeNode = function(control, opt_node) {
     throw Error('Remove operation not supported for this token-type.');
     break;
   }
-***REMOVED***
+};
 
 
 
@@ -104,7 +104,7 @@ xrx.mvc.Controller.replaceNotTag = function(control, node, token, update) {
   var diff = xrx.xml.Update.replaceNotTag(instance, token, update);
   xrx.index.Rebuild.replaceNotTag(instance.getIndex(), token, diff);
   xrx.mvc.Controller.mvcRefresh(control, node);
-***REMOVED***
+};
 
 
 
@@ -115,7 +115,7 @@ xrx.mvc.Controller.replaceAttrValue = function(control, node, token, update) {
   xrx.index.Rebuild.replaceAttrValue(instance.getIndex(), token, diff);
   xrx.mvc.Controller.mvcRefresh(control, node);
   return diff;
-***REMOVED***
+};
 
 
 
@@ -129,7 +129,7 @@ xrx.mvc.Controller.insertNotTag = function(control, token, offset, update) {
       tok, diff);
 
   xrx.mvc.Controller.mvcRefresh(control, diff, update);
-***REMOVED***
+};
 
 
 
@@ -143,7 +143,7 @@ xrx.mvc.Controller.reduceNotTag = function(control, token, offset, length) {
   //    tok, diff);
 
   xrx.mvc.Controller.mvcRefresh(control, diff, '');
-***REMOVED***
+};
 
 
 
@@ -152,7 +152,7 @@ xrx.mvc.Controller.insertEmptyTag = function(control, node, notTag, offset, empt
   xrx.index.Rebuild.insertEmptyTag(node.getInstance().getIndex(), notTag, offset, diff);
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
-***REMOVED***
+};
 
 
 
@@ -161,7 +161,7 @@ xrx.mvc.Controller.insertFragment = function(control, node, notTag, offset, xml)
   xrx.index.Rebuild.insertFragment(node.getInstance().getIndex(), node.getInstance().xml());
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
-***REMOVED***
+};
 
 
 
@@ -170,7 +170,7 @@ xrx.mvc.Controller.removeEmptyTag = function(control, node, token) {
   xrx.index.Rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
-***REMOVED***
+};
 
 
 
@@ -183,39 +183,39 @@ xrx.mvc.Controller.removeStartEndTag = function(control, token1, token2) {
   //    token1, diff);
 
   xrx.mvc.Controller.mvcRefresh(control);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Recalculates all model components affected by the update.
-***REMOVED***
+/**
+ * Recalculates all model components affected by the update.
+ */
 xrx.mvc.Controller.mvcRecalculate = function() {
   var contr;
   for (var c in xrx.mvc.getModelComponents()) {
     contr = xrx.mvc.getModelComponent(c);
     if (contr.mvcRecalculate) contr.mvcRecalculate();
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
   if (xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.UPDATE) return;
   var repeat = control.getRepeat();
   if (repeat) {
     repeat.mvcRefresh();
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
   var component;
   var nIter;
@@ -232,14 +232,14 @@ xrx.mvc.Controller.mvcRefreshStaticView_ = function(control, node) {
       component.mvcRefresh();
     }
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Refreshes all view components affected by the update.
-***REMOVED***
+/**
+ * Refreshes all view components affected by the update.
+ */
 xrx.mvc.Controller.mvcRefresh = function(control, node) {
   xrx.mvc.Controller.mvcRefreshDynamicView_(control);
   xrx.mvc.Controller.mvcRefreshStaticView_(control, node);
-***REMOVED***
+};

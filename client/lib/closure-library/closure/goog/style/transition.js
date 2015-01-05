@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility methods to deal with CSS3 transitions
-***REMOVED*** programmatically.
-***REMOVED***
+/**
+ * @fileoverview Utility methods to deal with CSS3 transitions
+ * programmatically.
+ */
 
 goog.provide('goog.style.transition');
 goog.provide('goog.style.transition.Css3Property');
@@ -30,31 +30,31 @@ goog.require('goog.style');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** A typedef to represent a CSS3 transition property. Duration and delay
-***REMOVED*** are both in seconds. Timing is CSS3 timing function string, such as
-***REMOVED*** 'easein', 'linear'.
-***REMOVED***
-***REMOVED*** Alternatively, specifying string in the form of '[property] [duration]
-***REMOVED*** [timing] [delay]' as specified in CSS3 transition is fine too.
-***REMOVED***
-***REMOVED*** @typedef { {
-***REMOVED***   property: string,
-***REMOVED***   duration: number,
-***REMOVED***   timing: string,
-***REMOVED***   delay: number
-***REMOVED*** } | string }
-***REMOVED***
+/**
+ * A typedef to represent a CSS3 transition property. Duration and delay
+ * are both in seconds. Timing is CSS3 timing function string, such as
+ * 'easein', 'linear'.
+ *
+ * Alternatively, specifying string in the form of '[property] [duration]
+ * [timing] [delay]' as specified in CSS3 transition is fine too.
+ *
+ * @typedef { {
+ *   property: string,
+ *   duration: number,
+ *   timing: string,
+ *   delay: number
+ * } | string }
+ */
 goog.style.transition.Css3Property;
 
 
-***REMOVED***
-***REMOVED*** Sets the element CSS3 transition to properties.
-***REMOVED*** @param {Element} element The element to set transition on.
-***REMOVED*** @param {goog.style.transition.Css3Property|
-***REMOVED***     Array.<goog.style.transition.Css3Property>} properties A single CSS3
-***REMOVED***     transition property or array of properties.
-***REMOVED***
+/**
+ * Sets the element CSS3 transition to properties.
+ * @param {Element} element The element to set transition on.
+ * @param {goog.style.transition.Css3Property|
+ *     Array.<goog.style.transition.Css3Property>} properties A single CSS3
+ *     transition property or array of properties.
+ */
 goog.style.transition.set = function(element, properties) {
   if (!goog.isArray(properties)) {
     properties = [properties];
@@ -78,21 +78,21 @@ goog.style.transition.set = function(element, properties) {
         }
       });
   goog.style.transition.setPropertyValue_(element, values.join(','));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes any programmatically-added CSS3 transition in the given element.
-***REMOVED*** @param {Element} element The element to remove transition from.
-***REMOVED***
+/**
+ * Removes any programmatically-added CSS3 transition in the given element.
+ * @param {Element} element The element to remove transition from.
+ */
 goog.style.transition.removeAll = function(element) {
   goog.style.transition.setPropertyValue_(element, '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether CSS3 transition is supported.
-***REMOVED***
+/**
+ * @return {boolean} Whether CSS3 transition is supported.
+ */
 goog.style.transition.isSupported = goog.functions.cacheReturnValue(function() {
   // Since IE would allow any attribute, we need to explicitly check the
   // browser version here instead.
@@ -106,26 +106,26 @@ goog.style.transition.isSupported = goog.functions.cacheReturnValue(function() {
   var el = document.createElement('div');
   var transition = 'opacity 1s linear';
   var vendorPrefix = goog.dom.vendor.getVendorPrefix();
-  var style = {'transition': transition***REMOVED***
+  var style = {'transition': transition};
   if (vendorPrefix) {
     style[vendorPrefix + '-transition'] = transition;
   }
   goog.dom.safe.setInnerHtml(el,
       goog.html.SafeHtml.create('div', {'style': style}));
 
-  var testElement =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (el.firstChild);
+  var testElement = /** @type {Element} */ (el.firstChild);
   goog.asserts.assert(testElement.nodeType == Node.ELEMENT_NODE);
 
   return goog.style.getStyle(testElement, 'transition') != '';
 });
 
 
-***REMOVED***
-***REMOVED*** Sets CSS3 transition property value to the given value.
-***REMOVED*** @param {Element} element The element to set transition on.
-***REMOVED*** @param {string} transitionValue The CSS3 transition property value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets CSS3 transition property value to the given value.
+ * @param {Element} element The element to set transition on.
+ * @param {string} transitionValue The CSS3 transition property value.
+ * @private
+ */
 goog.style.transition.setPropertyValue_ = function(element, transitionValue) {
   goog.style.setStyle(element, 'transition', transitionValue);
-***REMOVED***
+};

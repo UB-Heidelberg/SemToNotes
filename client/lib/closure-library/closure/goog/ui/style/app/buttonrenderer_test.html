@@ -93,11 +93,11 @@ See the COPYING file for details.
     }
 
     /*
-    ***REMOVED*** This test demonstrates what happens when you put whitespace in a
-    ***REMOVED*** decorated button's content, and the decorated element 'hasBoxStructure'.
-    ***REMOVED*** Note that this behavior is different than when the element does not
-    ***REMOVED*** have box structure. Should this be fixed?
-   ***REMOVED*****REMOVED***
+     * This test demonstrates what happens when you put whitespace in a
+     * decorated button's content, and the decorated element 'hasBoxStructure'.
+     * Note that this behavior is different than when the element does not
+     * have box structure. Should this be fixed?
+     */
     function testDecoratedButtonBoxWithSpaceInContent() {
       button.decorate(goog.dom.getElement('button-box-with-space-in-content'));
       goog.testing.ui.style.assertStructureMatchesReference(button.getElement(),

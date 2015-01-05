@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class for representing menu headers.
-***REMOVED*** @see goog.ui.Menu
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A class for representing menu headers.
+ * @see goog.ui.Menu
+ *
+ */
 
 goog.provide('goog.ui.MenuHeader');
 
@@ -27,17 +27,17 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a menu header.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to
-***REMOVED***     display as the content of the item (use to add icons or styling to
-***REMOVED***     menus).
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
-***REMOVED***     document interactions.
-***REMOVED*** @param {goog.ui.MenuHeaderRenderer=} opt_renderer Optional renderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED***
+/**
+ * Class representing a menu header.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to
+ *     display as the content of the item (use to add icons or styling to
+ *     menus).
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
+ *     document interactions.
+ * @param {goog.ui.MenuHeaderRenderer=} opt_renderer Optional renderer.
+ * @constructor
+ * @extends {goog.ui.Control}
+ */
 goog.ui.MenuHeader = function(content, opt_domHelper, opt_renderer) {
   goog.ui.Control.call(this, content, opt_renderer ||
       goog.ui.MenuHeaderRenderer.getInstance(), opt_domHelper);
@@ -49,7 +49,7 @@ goog.ui.MenuHeader = function(content, opt_domHelper, opt_renderer) {
 
   // Headers are always considered disabled.
   this.setStateInternal(goog.ui.Component.State.DISABLED);
-***REMOVED***
+};
 goog.inherits(goog.ui.MenuHeader, goog.ui.Control);
 
 

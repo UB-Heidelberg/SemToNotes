@@ -10,7 +10,7 @@ See the COPYING file for details.
   <title>goog.fx.dom</title>
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.fx');
     goog.require('goog.fx.dom');
   </script>
@@ -75,11 +75,11 @@ See the COPYING file for details.
 
     var el = document.getElementById('test1');
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Enables all buttons then disposes of the animation.
-    ***REMOVED*** @param {!goog.events.Event} e goog.fx.Transition.EventType.END event with
-    ***REMOVED***     the goog.fx.Animation object in its target.
-   ***REMOVED*****REMOVED***
+    /**
+     * Enables all buttons then disposes of the animation.
+     * @param {!goog.events.Event} e goog.fx.Transition.EventType.END event with
+     *     the goog.fx.Animation object in its target.
+     */
     function enableButtons(e) {
       for (var i = 0; i <= 15; i++) {
         document.getElementById('but' + i).disabled = false;
@@ -98,9 +98,9 @@ See the COPYING file for details.
       var y = el.offsetTop;
       var anim = new goog.fx.dom.Slide(el, [x, y], [a, b], duration,
           goog.fx.easing.easeOut);
-    ***REMOVED***anim, goog.fx.Transition.EventType.BEGIN,
+      goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN,
           disableButtons);
-    ***REMOVED***anim, goog.fx.Transition.EventType.END, enableButtons);
+      goog.events.listen(anim, goog.fx.Transition.EventType.END, enableButtons);
       anim.play();
     }
 
@@ -109,33 +109,33 @@ See the COPYING file for details.
       var h = el.offsetHeight;
       var anim = new goog.fx.dom.Resize(el, [w, h], [a, b], duration,
           goog.fx.easing.easeOut);
-    ***REMOVED***anim, goog.fx.Transition.EventType.BEGIN,
+      goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN,
           disableButtons);
-    ***REMOVED***anim, goog.fx.Transition.EventType.END, enableButtons);
+      goog.events.listen(anim, goog.fx.Transition.EventType.END, enableButtons);
       anim.play();
     }
 
     function fadeout() {
       var anim = new goog.fx.dom.FadeOutAndHide(el, duration);
-    ***REMOVED***anim, goog.fx.Transition.EventType.BEGIN,
+      goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN,
           disableButtons);
-    ***REMOVED***anim, goog.fx.Transition.EventType.END, enableButtons);
+      goog.events.listen(anim, goog.fx.Transition.EventType.END, enableButtons);
       anim.play();
     }
 
     function fadein() {
       var anim = new goog.fx.dom.FadeInAndShow(el, duration);
-    ***REMOVED***anim, goog.fx.Transition.EventType.BEGIN,
+      goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN,
           disableButtons);
-    ***REMOVED***anim, goog.fx.Transition.EventType.END, enableButtons);
+      goog.events.listen(anim, goog.fx.Transition.EventType.END, enableButtons);
       anim.play();
     }
 
     function color(r, g, b) {
       var anim = new goog.fx.dom.BgColorTransform(el, col, [r, g, b], duration);
-    ***REMOVED***anim, goog.fx.Transition.EventType.BEGIN,
+      goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN,
           disableButtons);
-    ***REMOVED***anim, goog.fx.Transition.EventType.END, function(e) {
+      goog.events.listen(anim, goog.fx.Transition.EventType.END, function(e) {
         col = [e.x, e.y, e.z];
         enableButtons();
       });

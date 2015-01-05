@@ -17,8 +17,8 @@ goog.setTestOnly('goog.testing.eventsTest');
 
 goog.require('goog.array');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.math.Coordinate');
 goog.require('goog.string');
@@ -70,7 +70,7 @@ function setUp() {
   firedKeyCodes = [];
 
   for (var key in goog.events.EventType) {
-  ***REMOVED***root, goog.events.EventType[key], function(e) {
+    goog.events.listen(root, goog.events.EventType[key], function(e) {
       firedEventTypes.push(e.type);
       var coord = new goog.math.Coordinate(e.clientX, e.clientY);
       firedEventCoordinates.push(coord);
@@ -88,27 +88,27 @@ function setUp() {
     parentCapture: 0,
     childCapture: 0,
     childBubble: 0
- ***REMOVED*****REMOVED***
+  };
   // Event listeners for the capture/bubble test.
-***REMOVED***parentEl, goog.events.EventType.CLICK,
+  goog.events.listen(parentEl, goog.events.EventType.CLICK,
       function(e) {
         eventCount.parentCapture++;
         assertEquals(parentEl, e.currentTarget);
         assertEquals(childEl, e.target);
       }, true);
-***REMOVED***childEl, goog.events.EventType.CLICK,
+  goog.events.listen(childEl, goog.events.EventType.CLICK,
       function(e) {
         eventCount.childCapture++;
         assertEquals(childEl, e.currentTarget);
         assertEquals(childEl, e.target);
       }, true);
-***REMOVED***childEl, goog.events.EventType.CLICK,
+  goog.events.listen(childEl, goog.events.EventType.CLICK,
       function(e) {
         eventCount.childBubble++;
         assertEquals(childEl, e.currentTarget);
         assertEquals(childEl, e.target);
       });
-***REMOVED***parentEl, goog.events.EventType.CLICK,
+  goog.events.listen(parentEl, goog.events.EventType.CLICK,
       function(e) {
         eventCount.parentBubble++;
         assertEquals(parentEl, e.currentTarget);
@@ -128,7 +128,7 @@ function tearDownPage() {
                 {'id': type, 'type': 'checkbox'}),
             type,
             goog.dom.createDom('br')));
-  ***REMOVED***testButton, type, function(e) {
+    goog.events.listen(testButton, type, function(e) {
       if (goog.dom.getElement(e.type).checked) {
         e.preventDefault();
       }
@@ -506,7 +506,7 @@ function testCaptureBubble_simple() {
 }
 
 function testCaptureBubble_preventDefault() {
-***REMOVED***childEl, goog.events.EventType.CLICK,
+  goog.events.listen(childEl, goog.events.EventType.CLICK,
       function(e) {
         e.preventDefault();
       });
@@ -520,10 +520,10 @@ function testCaptureBubble_preventDefault() {
 }
 
 function testCaptureBubble_stopPropagationParentCapture() {
-***REMOVED***parentEl, goog.events.EventType.CLICK,
+  goog.events.listen(parentEl, goog.events.EventType.CLICK,
       function(e) {
         e.stopPropagation();
-      }, true /* capture***REMOVED***);
+      }, true /* capture */);
   assertTrue(goog.testing.events.fireClickEvent(childEl));
   assertObjectEquals({
     parentCapture: 1,
@@ -534,10 +534,10 @@ function testCaptureBubble_stopPropagationParentCapture() {
 }
 
 function testCaptureBubble_stopPropagationChildCapture() {
-***REMOVED***childEl, goog.events.EventType.CLICK,
+  goog.events.listen(childEl, goog.events.EventType.CLICK,
       function(e) {
         e.stopPropagation();
-      }, true /* capture***REMOVED***);
+      }, true /* capture */);
   assertTrue(goog.testing.events.fireClickEvent(childEl));
   assertObjectEquals({
     parentCapture: 1,
@@ -548,7 +548,7 @@ function testCaptureBubble_stopPropagationChildCapture() {
 }
 
 function testCaptureBubble_stopPropagationChildBubble() {
-***REMOVED***childEl, goog.events.EventType.CLICK,
+  goog.events.listen(childEl, goog.events.EventType.CLICK,
       function(e) {
         e.stopPropagation();
       });
@@ -562,7 +562,7 @@ function testCaptureBubble_stopPropagationChildBubble() {
 }
 
 function testCaptureBubble_stopPropagationParentBubble() {
-***REMOVED***parentEl, goog.events.EventType.CLICK,
+  goog.events.listen(parentEl, goog.events.EventType.CLICK,
       function(e) {
         e.stopPropagation();
       });
@@ -576,7 +576,7 @@ function testCaptureBubble_stopPropagationParentBubble() {
 }
 
 function testMixinListenable() {
-  var obj = {***REMOVED***
+  var obj = {};
   obj.doFoo = goog.testing.recordFunction();
 
   goog.testing.events.mixinListenable(obj);
@@ -585,7 +585,7 @@ function testMixinListenable() {
   assertEquals(1, obj.doFoo.getCallCount());
 
   var handler = goog.testing.recordFunction();
-***REMOVED***obj, 'test', handler);
+  goog.events.listen(obj, 'test', handler);
   obj.dispatchEvent('test');
   assertEquals(1, handler.getCallCount());
   assertEquals(obj, handler.getLastCall().getArgument(0).target);
@@ -594,33 +594,33 @@ function testMixinListenable() {
   obj.dispatchEvent('test');
   assertEquals(1, handler.getCallCount());
 
-***REMOVED***obj, 'test', handler);
+  goog.events.listen(obj, 'test', handler);
   obj.dispose();
   obj.dispatchEvent('test');
   assertEquals(1, handler.getCallCount());
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that the list of events given was fired, in that order.
-***REMOVED***
+/**
+ * Assert that the list of events given was fired, in that order.
+ */
 function assertEventTypes(list) {
   assertArrayEquals(list, firedEventTypes);
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that the list of event coordinates given was caught, in that order.
-***REMOVED***
+/**
+ * Assert that the list of event coordinates given was caught, in that order.
+ */
 function assertCoordinates(list) {
   assertArrayEquals(list, firedEventCoordinates);
   assertArrayEquals(list, firedScreenCoordinates);
 }
 
 
-***REMOVED*** Prevent default the event of the given type on the root element.***REMOVED***
+/** Prevent default the event of the given type on the root element. */
 function preventDefaultEventType(type) {
-***REMOVED***root, type, preventDefault);
+  goog.events.listen(root, type, preventDefault);
 }
 
 function preventDefault(e) {

@@ -11,7 +11,7 @@
 <script type="text/javascript" src="../../../../lib/jssaxparser/DefaultHandlers.js"></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
 </script>
@@ -28,7 +28,7 @@ xrx.xpath.declareNamespace('xrx', 'http://www.monasterium.net/NS/xrx');
 
 function test01declareNamespace() {
 
-***REMOVED***
+};
 
 function test02declareFunction() {
 
@@ -45,7 +45,7 @@ function test02declareFunction() {
       }, 
       1, // min number of arguments required for the XPath function
       2 // max number of arguments allowed for the XPath function
-    ***REMOVED***
+      );
   xrx.xpath.declareFunction(funcHelloWorld);
   
   // function called with one parameter
@@ -62,7 +62,7 @@ function test02declareFunction() {
   var result2 = xrx.xpath.evaluate('xrx:echo(//e/@type)', node, null,
       xrx.xpath.XPathResultType.STRING_TYPE);
   assertEquals('attrValue', result2.stringValue);
-***REMOVED***
+};
 
 </script>
 </body>

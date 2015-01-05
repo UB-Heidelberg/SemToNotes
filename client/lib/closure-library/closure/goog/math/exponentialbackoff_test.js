@@ -42,15 +42,15 @@ function testInitialState() {
 function testBackoff() {
   var backoff = createBackoff();
   backoff.backoff();
-  assertValueAndCount(2 /* value***REMOVED***, 1 /* count***REMOVED***, backoff);
+  assertValueAndCount(2 /* value */, 1 /* count */, backoff);
   backoff.backoff();
-  assertValueAndCount(4 /* value***REMOVED***, 2 /* count***REMOVED***, backoff);
+  assertValueAndCount(4 /* value */, 2 /* count */, backoff);
   backoff.backoff();
-  assertValueAndCount(8 /* value***REMOVED***, 3 /* count***REMOVED***, backoff);
+  assertValueAndCount(8 /* value */, 3 /* count */, backoff);
   backoff.backoff();
-  assertValueAndCount(MAX_VALUE, 4 /* count***REMOVED***, backoff);
+  assertValueAndCount(MAX_VALUE, 4 /* count */, backoff);
   backoff.backoff();
-  assertValueAndCount(MAX_VALUE, 5 /* count***REMOVED***, backoff);
+  assertValueAndCount(MAX_VALUE, 5 /* count */, backoff);
 }
 
 
@@ -58,6 +58,6 @@ function testReset() {
   var backoff = createBackoff();
   backoff.backoff();
   backoff.reset();
-  assertValueAndCount(INITIAL_VALUE, 0 /* count***REMOVED***, backoff);
+  assertValueAndCount(INITIAL_VALUE, 0 /* count */, backoff);
 
 }

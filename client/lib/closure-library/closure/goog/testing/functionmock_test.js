@@ -44,13 +44,13 @@ function testMockFunctionCallOrdering() {
     var callFunction = function() {
       goog.array.forEach(actual_args, function(arg) { mockFunction(arg); });
       mockFunction.$verify();
-   ***REMOVED*****REMOVED***
+    };
     if (success) {
       callFunction();
     } else {
       assertThrows(callFunction);
     }
- ***REMOVED*****REMOVED***
+  };
 
   var doTest = function(strict_ok, loose_ok, expected_args, actual_args) {
     doOneTest(goog.testing.createFunctionMock(), strict_ok,
@@ -61,7 +61,7 @@ function testMockFunctionCallOrdering() {
               strict_ok, expected_args, actual_args);
     doOneTest(goog.testing.createFunctionMock('name', goog.testing.Mock.LOOSE),
               loose_ok, expected_args, actual_args);
- ***REMOVED*****REMOVED***
+  };
 
   doTest(true, true, [1, 2], [1, 2]);
   doTest(false, true, [1, 2], [2, 1]);
@@ -146,7 +146,7 @@ function testFunctionMockWorksWhenPassedAsACallback() {
     invoke: function(args) {
       return this.callback(args);
     }
- ***REMOVED*****REMOVED***
+  };
 
   var mockFunction = goog.testing.createFunctionMock();
   mockFunction('bar').$returns('baz');
@@ -303,11 +303,11 @@ function testGlobalFunctionMockCallOrdering() {
 
 //----- Functions for goog.testing.MethodMock to mock
 
-var mynamespace = {***REMOVED***
+var mynamespace = {};
 
 mynamespace.myMethod = function() {
   return 'I should be mocked.';
-***REMOVED***
+};
 
 function testMocksMethod() {
   mockMethod = goog.testing.createMethodMock(mynamespace, 'myMethod');
@@ -373,31 +373,31 @@ function testMethodMockCallOrdering() {
 
 //----- Functions for goog.testing.createConstructorMock to mock
 
-var constructornamespace = {***REMOVED***
+var constructornamespace = {};
 
 constructornamespace.MyConstructor = function() {
-***REMOVED***
+};
 
 constructornamespace.MyConstructor.prototype.myMethod = function() {
   return 'I should be mocked.';
-***REMOVED***
+};
 
 constructornamespace.MyConstructorWithArgument = function(argument) {
   this.argument_ = argument;
-***REMOVED***
+};
 
 constructornamespace.MyConstructorWithArgument.prototype.myMethod = function() {
   return this.argument_;
-***REMOVED***
+};
 
 constructornamespace.MyConstructorWithClassMembers = function() {
-***REMOVED***
+};
 
 constructornamespace.MyConstructorWithClassMembers.CONSTANT = 42;
 
 constructornamespace.MyConstructorWithClassMembers.classMethod = function() {
   return 'class method return value';
-***REMOVED***
+};
 
 function testConstructorMock() {
   var mockObject =
@@ -435,9 +435,9 @@ function testConstructorMockWithArgument() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that class members are copied to the mock constructor.
-***REMOVED***
+/**
+ * Test that class members are copied to the mock constructor.
+ */
 function testConstructorMockWithClassMembers() {
   var mockConstructor = goog.testing.createConstructorMock(
       constructornamespace, 'MyConstructorWithClassMembers');
@@ -448,7 +448,7 @@ function testConstructorMockWithClassMembers() {
 }
 
 function testConstructorMockCallOrdering() {
-  var instance = {***REMOVED***
+  var instance = {};
 
   goog.testing.createConstructorMock(constructornamespace,
                                      'MyConstructorWithArgument');

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Error classes for the IndexedDB wrapper.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Error classes for the IndexedDB wrapper.
+ *
+ */
 
 
 goog.provide('goog.db.Error');
@@ -27,88 +27,88 @@ goog.require('goog.debug.Error');
 
 
 
-***REMOVED***
-***REMOVED*** A database error. Since the stack trace can be unhelpful in an asynchronous
-***REMOVED*** context, the error provides a message about where it was produced.
-***REMOVED***
-***REMOVED*** @param {number|!DOMError} error The DOMError instance returned by the
-***REMOVED***     browser for Chrome22+, or an error code for previous versions.
-***REMOVED*** @param {string} context A description of where the error occured.
-***REMOVED*** @param {string=} opt_message Additional message.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A database error. Since the stack trace can be unhelpful in an asynchronous
+ * context, the error provides a message about where it was produced.
+ *
+ * @param {number|!DOMError} error The DOMError instance returned by the
+ *     browser for Chrome22+, or an error code for previous versions.
+ * @param {string} context A description of where the error occured.
+ * @param {string=} opt_message Additional message.
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ */
 goog.db.Error = function(error, context, opt_message) {
   var errorCode = null;
   var internalError = null;
   if (goog.isNumber(error)) {
     errorCode = error;
-    internalError = {name: goog.db.Error.getName(errorCode)***REMOVED***
+    internalError = {name: goog.db.Error.getName(errorCode)};
   } else {
     internalError = error;
     errorCode = goog.db.Error.getCode(error.name);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The code for this error.
-  ***REMOVED***
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The code for this error.
+   *
+   * @type {number}
+   */
   this.code = errorCode;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The DOMException as returned by the browser.
-  ***REMOVED***
-  ***REMOVED*** @type {!DOMError}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.error_ =***REMOVED*****REMOVED*** @type {!DOMError}***REMOVED*** (internalError);
+  /**
+   * The DOMException as returned by the browser.
+   *
+   * @type {!DOMError}
+   * @private
+   */
+  this.error_ = /** @type {!DOMError} */ (internalError);
 
   var msg = 'Error ' + context + ': ' + this.getName();
   if (opt_message) {
     msg += ', ' + opt_message;
   }
   goog.db.Error.base(this, 'constructor', msg);
-***REMOVED***
+};
 goog.inherits(goog.db.Error, goog.debug.Error);
 
 
-***REMOVED***
-***REMOVED*** @return {string} The name of the error.
-***REMOVED***
+/**
+ * @return {string} The name of the error.
+ */
 goog.db.Error.prototype.getName = function()  {
   return this.error_.name;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A specific kind of database error. If a Version Change is unable to proceed
-***REMOVED*** due to other open database connections, it will block and this error will be
-***REMOVED*** thrown.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A specific kind of database error. If a Version Change is unable to proceed
+ * due to other open database connections, it will block and this error will be
+ * thrown.
+ *
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ */
 goog.db.Error.VersionChangeBlockedError = function() {
   goog.db.Error.VersionChangeBlockedError.base(
       this, 'constructor', 'Version change blocked');
-***REMOVED***
+};
 goog.inherits(goog.db.Error.VersionChangeBlockedError, goog.debug.Error);
 
 
-***REMOVED***
-***REMOVED*** Synthetic error codes for database errors, for use when IndexedDB
-***REMOVED*** support is not available. This numbering differs in practice
-***REMOVED*** from the browser implementations, but it is not meant to be reliable:
-***REMOVED*** this object merely ensures that goog.db.Error is loadable on platforms
-***REMOVED*** that do not support IndexedDB.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Synthetic error codes for database errors, for use when IndexedDB
+ * support is not available. This numbering differs in practice
+ * from the browser implementations, but it is not meant to be reliable:
+ * this object merely ensures that goog.db.Error is loadable on platforms
+ * that do not support IndexedDB.
+ *
+ * @enum {number}
+ * @private
+ */
 goog.db.Error.DatabaseErrorCode_ = {
   UNKNOWN_ERR: 1,
   NON_TRANSIENT_ERR: 2,
@@ -124,15 +124,15 @@ goog.db.Error.DatabaseErrorCode_ = {
   QUOTA_ERR: 11,
   INVALID_ACCESS_ERR: 12,
   INVALID_STATE_ERR: 13
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Error codes for database errors.
-***REMOVED*** @see http://www.w3.org/TR/IndexedDB/#idl-def-IDBDatabaseException
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Error codes for database errors.
+ * @see http://www.w3.org/TR/IndexedDB/#idl-def-IDBDatabaseException
+ *
+ * @enum {number}
+ */
 goog.db.Error.ErrorCode = {
   UNKNOWN_ERR: (goog.global.IDBDatabaseException ||
       goog.global.webkitIDBDatabaseException ||
@@ -171,15 +171,15 @@ goog.db.Error.ErrorCode = {
       goog.db.Error.DatabaseErrorCode_).INVALID_ACCESS_ERR,
   INVALID_STATE_ERR: (goog.global.DOMException ||
       goog.db.Error.DatabaseErrorCode_).INVALID_STATE_ERR
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Translates an error code into a more useful message.
-***REMOVED***
-***REMOVED*** @param {number} code Error code.
-***REMOVED*** @return {string} A debug message.
-***REMOVED***
+/**
+ * Translates an error code into a more useful message.
+ *
+ * @param {number} code Error code.
+ * @return {string} A debug message.
+ */
 goog.db.Error.getMessage = function(code) {
   switch (code) {
     case goog.db.Error.ErrorCode.UNKNOWN_ERR:
@@ -211,14 +211,14 @@ goog.db.Error.getMessage = function(code) {
     default:
       return 'Unrecognized exception with code ' + code;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Names of all possible errors as returned from the browser.
-***REMOVED*** @see http://www.w3.org/TR/IndexedDB/#exceptions
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Names of all possible errors as returned from the browser.
+ * @see http://www.w3.org/TR/IndexedDB/#exceptions
+ * @enum {string}
+ */
 goog.db.Error.ErrorName = {
   ABORT_ERR: 'AbortError',
   CONSTRAINT_ERR: 'ConstraintError',
@@ -234,16 +234,16 @@ goog.db.Error.ErrorName = {
   TRANSACTION_INACTIVE_ERR: 'TransactionInactiveError',
   UNKNOWN_ERR: 'UnknownError',
   VERSION_ERR: 'VersionError'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Translates an error name to an error code. This is purely kept for backwards
-***REMOVED*** compatibility with Chrome21.
-***REMOVED***
-***REMOVED*** @param {string} name The name of the erorr.
-***REMOVED*** @return {number} The error code corresponding to the error.
-***REMOVED***
+/**
+ * Translates an error name to an error code. This is purely kept for backwards
+ * compatibility with Chrome21.
+ *
+ * @param {string} name The name of the erorr.
+ * @return {number} The error code corresponding to the error.
+ */
 goog.db.Error.getCode = function(name) {
   switch (name) {
     case goog.db.Error.ErrorName.UNKNOWN_ERR:
@@ -271,17 +271,17 @@ goog.db.Error.getCode = function(name) {
     default:
       return goog.db.Error.ErrorCode.UNKNOWN_ERR;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts an error code used by the old spec, to an error name used by the
-***REMOVED*** latest spec.
-***REMOVED*** @see http://www.w3.org/TR/IndexedDB/#exceptions
-***REMOVED***
-***REMOVED*** @param {!goog.db.Error.ErrorCode|number} code The error code to convert.
-***REMOVED*** @return {!goog.db.Error.ErrorName} The corresponding name of the error.
-***REMOVED***
+/**
+ * Converts an error code used by the old spec, to an error name used by the
+ * latest spec.
+ * @see http://www.w3.org/TR/IndexedDB/#exceptions
+ *
+ * @param {!goog.db.Error.ErrorCode|number} code The error code to convert.
+ * @return {!goog.db.Error.ErrorName} The corresponding name of the error.
+ */
 goog.db.Error.getName = function(code) {
   switch (code) {
     case goog.db.Error.ErrorCode.UNKNOWN_ERR:
@@ -309,17 +309,17 @@ goog.db.Error.getName = function(code) {
     default:
       return goog.db.Error.ErrorName.UNKNOWN_ERR;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constructs an goog.db.Error instance from an IDBRequest. This abstraction is
-***REMOVED*** necessary to provide backwards compatibility with Chrome21.
-***REMOVED***
-***REMOVED*** @param {!IDBRequest} request The request that failed.
-***REMOVED*** @param {string} message The error message to add to err if it's wrapped.
-***REMOVED*** @return {!goog.db.Error} The error that caused the failure.
-***REMOVED***
+/**
+ * Constructs an goog.db.Error instance from an IDBRequest. This abstraction is
+ * necessary to provide backwards compatibility with Chrome21.
+ *
+ * @param {!IDBRequest} request The request that failed.
+ * @param {string} message The error message to add to err if it's wrapped.
+ * @return {!goog.db.Error} The error that caused the failure.
+ */
 goog.db.Error.fromRequest = function(request, message) {
   if ('error' in request) {
     // Chrome 21 and before.
@@ -328,37 +328,37 @@ goog.db.Error.fromRequest = function(request, message) {
     // Chrome 22+.
     var errorName = goog.db.Error.getName(request.errorCode);
     return new goog.db.Error(
-       ***REMOVED*****REMOVED***@type {!DOMError}***REMOVED*** ({name: errorName}), message);
+        /**@type {!DOMError} */ ({name: errorName}), message);
   } else {
-    return new goog.db.Error(***REMOVED*** @type {!DOMError}***REMOVED*** (
+    return new goog.db.Error(/** @type {!DOMError} */ (
         {name: goog.db.Error.ErrorName.UNKNOWN_ERR}), message);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constructs an goog.db.Error instance from an DOMException. This abstraction
-***REMOVED*** is necessary to provide backwards compatibility with Chrome21.
-***REMOVED***
-***REMOVED*** @param {!IDBDatabaseException} ex The exception that was thrown.
-***REMOVED*** @param {string} message The error message to add to err if it's wrapped.
-***REMOVED*** @return {!goog.db.Error} The error that caused the failure.
-***REMOVED*** @suppress {invalidCasts} The cast from IDBDatabaseException to DOMError
-***REMOVED***     is invalid and will not compile.
-***REMOVED***
+/**
+ * Constructs an goog.db.Error instance from an DOMException. This abstraction
+ * is necessary to provide backwards compatibility with Chrome21.
+ *
+ * @param {!IDBDatabaseException} ex The exception that was thrown.
+ * @param {string} message The error message to add to err if it's wrapped.
+ * @return {!goog.db.Error} The error that caused the failure.
+ * @suppress {invalidCasts} The cast from IDBDatabaseException to DOMError
+ *     is invalid and will not compile.
+ */
 goog.db.Error.fromException = function(ex, message) {
   if ('name' in ex) {
     // Chrome 22+.
     var errorMessage = message + ': ' + ex.message;
-    return new goog.db.Error(***REMOVED*** @type {!DOMError}***REMOVED*** (ex), errorMessage);
+    return new goog.db.Error(/** @type {!DOMError} */ (ex), errorMessage);
   } else if ('code' in ex) {
     // Chrome 21 and before.
     var errorName = goog.db.Error.getName(ex.code);
     var errorMessage = message + ': ' + ex.message;
     return new goog.db.Error(
-       ***REMOVED*****REMOVED*** @type {!DOMError}***REMOVED*** ({name: errorName}), errorMessage);
+        /** @type {!DOMError} */ ({name: errorName}), errorMessage);
   } else {
-    return new goog.db.Error(***REMOVED*** @type {!DOMError}***REMOVED*** (
+    return new goog.db.Error(/** @type {!DOMError} */ (
         {name: goog.db.Error.ErrorName.UNKNOWN_ERR}), message);
   }
-***REMOVED***
+};

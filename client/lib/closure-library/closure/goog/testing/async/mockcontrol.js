@@ -12,36 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A wrapper for MockControl that provides mocks and assertions
-***REMOVED*** for testing asynchronous code. All assertions will only be verified when
-***REMOVED*** $verifyAll is called on the wrapped MockControl.
-***REMOVED***
-***REMOVED*** This class is meant primarily for testing code that exposes asynchronous APIs
-***REMOVED*** without being truly asynchronous (using asynchronous primitives like browser
-***REMOVED*** events or timeouts). This is often the case when true asynchronous
-***REMOVED*** depedencies have been mocked out. This means that it doesn't rely on
-***REMOVED*** AsyncTestCase or DeferredTestCase, although it can be used with those as
-***REMOVED*** well.
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** var mockControl = new goog.testing.MockControl();
-***REMOVED*** var asyncMockControl = new goog.testing.async.MockControl(mockControl);
-***REMOVED***
-***REMOVED*** myAsyncObject.onSuccess(asyncMockControl.asyncAssertEquals(
-***REMOVED***     'callback should run and pass the correct value',
-***REMOVED***     'http://someurl.com');
-***REMOVED*** asyncMockControl.assertDeferredEquals(
-***REMOVED***     'deferred object should be resolved with the correct value',
-***REMOVED***     'http://someurl.com',
-***REMOVED***     myAsyncObject.getDeferredUrl());
-***REMOVED*** asyncMockControl.run();
-***REMOVED*** mockControl.$verifyAll();
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A wrapper for MockControl that provides mocks and assertions
+ * for testing asynchronous code. All assertions will only be verified when
+ * $verifyAll is called on the wrapped MockControl.
+ *
+ * This class is meant primarily for testing code that exposes asynchronous APIs
+ * without being truly asynchronous (using asynchronous primitives like browser
+ * events or timeouts). This is often the case when true asynchronous
+ * depedencies have been mocked out. This means that it doesn't rely on
+ * AsyncTestCase or DeferredTestCase, although it can be used with those as
+ * well.
+ *
+ * Example usage:
+ *
+ * <pre>
+ * var mockControl = new goog.testing.MockControl();
+ * var asyncMockControl = new goog.testing.async.MockControl(mockControl);
+ *
+ * myAsyncObject.onSuccess(asyncMockControl.asyncAssertEquals(
+ *     'callback should run and pass the correct value',
+ *     'http://someurl.com');
+ * asyncMockControl.assertDeferredEquals(
+ *     'deferred object should be resolved with the correct value',
+ *     'http://someurl.com',
+ *     myAsyncObject.getDeferredUrl());
+ * asyncMockControl.run();
+ * mockControl.$verifyAll();
+ * </pre>
+ *
+ */
 
 
 goog.provide('goog.testing.async.MockControl');
@@ -54,36 +54,36 @@ goog.require('goog.testing.mockmatchers.IgnoreArgument');
 
 
 
-***REMOVED***
-***REMOVED*** Provides asynchronous mocks and assertions controlled by a parent
-***REMOVED*** MockControl.
-***REMOVED***
-***REMOVED*** @param {goog.testing.MockControl} mockControl The parent MockControl.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Provides asynchronous mocks and assertions controlled by a parent
+ * MockControl.
+ *
+ * @param {goog.testing.MockControl} mockControl The parent MockControl.
+ * @constructor
+ * @final
+ */
 goog.testing.async.MockControl = function(mockControl) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent MockControl.
-  ***REMOVED*** @type {goog.testing.MockControl}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The parent MockControl.
+   * @type {goog.testing.MockControl}
+   * @private
+   */
   this.mockControl_ = mockControl;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a function that will assert that it will be called, and run the given
-***REMOVED*** callback when it is.
-***REMOVED***
-***REMOVED*** @param {string} name The name of the callback mock.
-***REMOVED*** @param {function(...[*]) :***REMOVED***} callback The wrapped callback. This will be
-***REMOVED***     called when the returned function is called.
-***REMOVED*** @param {Object=} opt_selfObj The object which this should point to when the
-***REMOVED***     callback is run.
-***REMOVED*** @return {!Function} The mock callback.
-***REMOVED*** @suppress {missingProperties} Mocks do not fit in the type system well.
-***REMOVED***
+/**
+ * Returns a function that will assert that it will be called, and run the given
+ * callback when it is.
+ *
+ * @param {string} name The name of the callback mock.
+ * @param {function(...[*]) : *} callback The wrapped callback. This will be
+ *     called when the returned function is called.
+ * @param {Object=} opt_selfObj The object which this should point to when the
+ *     callback is run.
+ * @return {!Function} The mock callback.
+ * @suppress {missingProperties} Mocks do not fit in the type system well.
+ */
 goog.testing.async.MockControl.prototype.createCallbackMock = function(
     name, callback, opt_selfObj) {
   goog.asserts.assert(
@@ -93,8 +93,8 @@ goog.testing.async.MockControl.prototype.createCallbackMock = function(
   var ignored = new goog.testing.mockmatchers.IgnoreArgument();
 
   // Use everyone's favorite "double-cast" trick to subvert the type system.
-  var obj =***REMOVED*****REMOVED*** @type {Object}***REMOVED*** (this.mockControl_.createFunctionMock(name));
-  var fn =***REMOVED*****REMOVED*** @type {Function}***REMOVED*** (obj);
+  var obj = /** @type {Object} */ (this.mockControl_.createFunctionMock(name));
+  var fn = /** @type {Function} */ (obj);
 
   fn(ignored).$does(function(args) {
     if (opt_selfObj) {
@@ -103,19 +103,19 @@ goog.testing.async.MockControl.prototype.createCallbackMock = function(
     return callback.apply(this, args);
   });
   fn.$replay();
-  return function() { return fn(arguments);***REMOVED*****REMOVED***
-***REMOVED***
+  return function() { return fn(arguments); };
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a function that will assert that its arguments are equal to the
-***REMOVED*** arguments given to asyncAssertEquals. In addition, the function also asserts
-***REMOVED*** that it will be called.
-***REMOVED***
-***REMOVED*** @param {string} message A message to print if the arguments are wrong.
-***REMOVED*** @param {...*} var_args The arguments to assert.
-***REMOVED*** @return {function(...[*]) : void} The mock callback.
-***REMOVED***
+/**
+ * Returns a function that will assert that its arguments are equal to the
+ * arguments given to asyncAssertEquals. In addition, the function also asserts
+ * that it will be called.
+ *
+ * @param {string} message A message to print if the arguments are wrong.
+ * @param {...*} var_args The arguments to assert.
+ * @return {function(...[*]) : void} The mock callback.
+ */
 goog.testing.async.MockControl.prototype.asyncAssertEquals = function(
     message, var_args) {
   var expectedArgs = Array.prototype.slice.call(arguments, 1);
@@ -123,34 +123,34 @@ goog.testing.async.MockControl.prototype.asyncAssertEquals = function(
     assertObjectEquals(
         message, expectedArgs, Array.prototype.slice.call(arguments));
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that a deferred object will have an error and call its errback
-***REMOVED*** function.
-***REMOVED*** @param {goog.async.Deferred} deferred The deferred object.
-***REMOVED*** @param {function() : void} fn A function wrapping the code in which the error
-***REMOVED***     will occur.
-***REMOVED***
+/**
+ * Asserts that a deferred object will have an error and call its errback
+ * function.
+ * @param {goog.async.Deferred} deferred The deferred object.
+ * @param {function() : void} fn A function wrapping the code in which the error
+ *     will occur.
+ */
 goog.testing.async.MockControl.prototype.assertDeferredError = function(
     deferred, fn) {
   deferred.addErrback(this.createCallbackMock(
       'assertDeferredError', function() {}));
   goog.testing.asserts.callWithoutLogging(fn);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that a deferred object will call its callback with the given value.
-***REMOVED***
-***REMOVED*** @param {string} message A message to print if the arguments are wrong.
-***REMOVED*** @param {goog.async.Deferred|*} expected The expected value. If this is a
-***REMOVED***     deferred object, then the expected value is the deferred value.
-***REMOVED*** @param {goog.async.Deferred|*} actual The actual value. If this is a deferred
-***REMOVED***     object, then the actual value is the deferred value. Either this or
-***REMOVED***     'expected' must be deferred.
-***REMOVED***
+/**
+ * Asserts that a deferred object will call its callback with the given value.
+ *
+ * @param {string} message A message to print if the arguments are wrong.
+ * @param {goog.async.Deferred|*} expected The expected value. If this is a
+ *     deferred object, then the expected value is the deferred value.
+ * @param {goog.async.Deferred|*} actual The actual value. If this is a deferred
+ *     object, then the actual value is the deferred value. Either this or
+ *     'expected' must be deferred.
+ */
 goog.testing.async.MockControl.prototype.assertDeferredEquals = function(
     message, expected, actual) {
   if (expected instanceof goog.async.Deferred &&
@@ -172,4 +172,4 @@ goog.testing.async.MockControl.prototype.assertDeferredEquals = function(
   } else {
     throw Error('Either expected or actual must be deferred');
   }
-***REMOVED***
+};

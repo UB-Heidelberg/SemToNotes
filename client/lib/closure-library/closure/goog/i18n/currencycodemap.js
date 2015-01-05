@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Currency code map.
-***REMOVED***
+/**
+ * @fileoverview Currency code map.
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for locale number format functions
-***REMOVED***
+/**
+ * Namespace for locale number format functions
+ */
 goog.provide('goog.i18n.currencyCodeMap');
 goog.provide('goog.i18n.currencyCodeMapTier2');
 
 
-***REMOVED***
-***REMOVED*** The mapping of currency symbol through intl currency code.
-***REMOVED*** The source of information is mostly from wikipedia and CLDR. Since there is
-***REMOVED*** no authoritive source, items are judged by personal perception.
+/**
+ * The mapping of currency symbol through intl currency code.
+ * The source of information is mostly from wikipedia and CLDR. Since there is
+ * no authoritive source, items are judged by personal perception.
 
-***REMOVED*** If an application need currency support that available in tier2, it
-***REMOVED*** should extend currencyCodeMap to include tier2 data by doing this:
-***REMOVED***     goog.object.extend(goog.i18n.currencyCodeMap,
-***REMOVED***                        goog.i18n.currencyCodeMapTier2);
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED*** @const
-***REMOVED***
+ * If an application need currency support that available in tier2, it
+ * should extend currencyCodeMap to include tier2 data by doing this:
+ *     goog.object.extend(goog.i18n.currencyCodeMap,
+ *                        goog.i18n.currencyCodeMapTier2);
+ *
+ * @type {Object}
+ * @const
+ */
 goog.i18n.currencyCodeMap = {
   'AED': '\u062F\u002e\u0625',
   'ARS': '$',
@@ -98,16 +98,16 @@ goog.i18n.currencyCodeMap = {
   'XCD': '$',
   'YER': 'YER',
   'ZAR': 'R'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This group of currency data is unlikely to be used. In case they are,
-***REMOVED*** program need to merge it into goog.locale.CurrencyCodeMap.
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * This group of currency data is unlikely to be used. In case they are,
+ * program need to merge it into goog.locale.CurrencyCodeMap.
+ *
+ * @type {Object}
+ * @const
+ */
 goog.i18n.currencyCodeMapTier2 = {
   'AFN': '\u060b',
   'ALL': 'Lek',
@@ -207,4 +207,4 @@ goog.i18n.currencyCodeMapTier2 = {
   'XPF': 'F',
   'ZMK': 'ZK',
   'ZWD': '$'
-***REMOVED***
+};

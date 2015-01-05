@@ -218,7 +218,7 @@ function mockSetCookie(var_args) {
     var result;
     cookies.setCookie_ = function(arg) {
       result = arg;
-   ***REMOVED*****REMOVED***
+    };
     cookies.set.apply(cookies, arguments);
     return result;
   } finally {

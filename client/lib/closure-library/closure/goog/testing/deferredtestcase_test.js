@@ -28,7 +28,7 @@ var testTestCase;
 var runner;
 
 // Optionally, set a longer-than-usual step timeout.
-deferredTestCase.stepTimeout = 15***REMOVED*** 1000; // 15 seconds
+deferredTestCase.stepTimeout = 15 * 1000; // 15 seconds
 
 // This is the sample code in deferredtestcase.js
 function testDeferredCallbacks() {

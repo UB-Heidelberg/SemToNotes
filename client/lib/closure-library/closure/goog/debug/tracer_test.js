@@ -47,6 +47,6 @@ function testPerf() {
     goog.debug.Trace.stopTracer(t2);
     goog.debug.Trace.stopTracer(t);
   }
-  count***REMOVED***= 4;
+  count *= 4;
   var end = goog.now();
 }

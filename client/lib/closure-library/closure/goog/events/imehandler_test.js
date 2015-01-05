@@ -17,7 +17,7 @@ goog.setTestOnly('goog.events.ImeHandlerTest');
 
 goog.require('goog.array');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.ImeHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.object');
@@ -44,7 +44,7 @@ function initImeHandler() {
       (goog.userAgent.WEBKIT && goog.userAgent.isVersionOrHigher(532));
   imeHandler = new goog.events.ImeHandler(sandbox);
   eventsFired = [];
-***REMOVED***
+  goog.events.listen(
       imeHandler,
       goog.object.getValues(goog.events.ImeHandler.EventType),
       function(e) {
@@ -72,11 +72,11 @@ function tearDownPage() {
   }
 
   var last10Events = [];
-***REMOVED***
+  goog.events.listen(
       imeHandler,
       goog.object.getValues(goog.events.ImeHandler.EventType),
       unshiftEvent);
-***REMOVED***
+  goog.events.listen(
       sandbox,
       ['keydown', 'textInput'],
       unshiftEvent);
@@ -127,12 +127,12 @@ function testHandleKeyDown_GeckoCompositionEvents() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that our IME functions can dispatch IME events to the input handler
-***REMOVED*** in the expected order on Chrome. jsUnitFarm does not have Linux Chrome or
-***REMOVED*** Mac Chrome. So, we manually change the platform and run this test three
-***REMOVED*** times.
-***REMOVED***
+/**
+ * Verifies that our IME functions can dispatch IME events to the input handler
+ * in the expected order on Chrome. jsUnitFarm does not have Linux Chrome or
+ * Mac Chrome. So, we manually change the platform and run this test three
+ * times.
+ */
 function testChromeCompositionEventsLinux() {
   runChromeCompositionEvents('LINUX');
 }
@@ -166,9 +166,9 @@ function runChromeCompositionEvents(platform) {
 }
 
 
-***REMOVED***
-***REMOVED*** Ensures that the IME mode turn on/off correctly.
-***REMOVED***
+/**
+ * Ensures that the IME mode turn on/off correctly.
+ */
 function testHandlerKeyDownForIme_imeOnOff() {
   setUserAgent('IE');
   initImeHandler();
@@ -195,10 +195,10 @@ function testHandlerKeyDownForIme_imeOnOff() {
 }
 
 
-***REMOVED***
-***REMOVED*** Ensures that IME mode turns off when keyup events which are involved
-***REMOVED*** in commiting IME text occurred in Safari.
-***REMOVED***
+/**
+ * Ensures that IME mode turns off when keyup events which are involved
+ * in commiting IME text occurred in Safari.
+ */
 function testHandleKeyUpForSafari() {
   setUserAgent('WEBKIT');
   setVersion(531);
@@ -212,11 +212,11 @@ function testHandleKeyUpForSafari() {
 }
 
 
-***REMOVED***
-***REMOVED*** SCIM on Linux will fire WIN_IME keycodes for random characters.
-***REMOVED*** Fortunately, all Linux-based browsers use composition events.
-***REMOVED*** This test just verifies that we ignore the WIN_IME keycodes.
-***REMOVED***
+/**
+ * SCIM on Linux will fire WIN_IME keycodes for random characters.
+ * Fortunately, all Linux-based browsers use composition events.
+ * This test just verifies that we ignore the WIN_IME keycodes.
+ */
 function testScimFiresWinImeKeycodesGeckoLinux() {
   setUserAgent('GECKO');
   assertScimInputIgnored();
@@ -254,7 +254,7 @@ function setUserAgent(userAgent) {
 
 function setVersion(version) {
   goog.userAgent.VERSION = version;
-  goog.userAgent.isVersionOrHigherCache_ = {***REMOVED***
+  goog.userAgent.isVersionOrHigherCache_ = {};
 }
 
 function assertImeMode() {

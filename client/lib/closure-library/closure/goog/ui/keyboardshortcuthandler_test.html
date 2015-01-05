@@ -54,11 +54,11 @@ See the COPYING file for details.
     var mockClock;
     var stubs = new goog.testing.PropertyReplacer();
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Fires a keypress on the target div.
-    ***REMOVED*** @return {boolean} The returnValue of the sequence: false if
-    ***REMOVED***     preventDefault() was called on any of the events, true otherwise.
-   ***REMOVED*****REMOVED***
+    /**
+     * Fires a keypress on the target div.
+     * @return {boolean} The returnValue of the sequence: false if
+     *     preventDefault() was called on any of the events, true otherwise.
+     */
     function fire(keycode, opt_extraProperties, opt_element) {
       return goog.testing.events.fireKeySequence(
           opt_element || targetDiv, keycode, opt_extraProperties);
@@ -81,12 +81,12 @@ See the COPYING file for details.
       // shortcutFired(shortcut identifier).
       listener = new goog.testing.StrictMock(
           {shortcutFired: goog.nullFunction});
-    ***REMOVED***
+      goog.events.listen(
           handler,
           goog.ui.KeyboardShortcutHandler.EventType.SHORTCUT_TRIGGERED,
           function (event) { listener.shortcutFired(event.identifier); });
 
-       // Set up a fake clock, because keyboard shortcuts***REMOVED***are* time
+       // Set up a fake clock, because keyboard shortcuts *are* time
        // sensitive.
        mockClock = new goog.testing.MockClock(true);
     }
@@ -316,7 +316,7 @@ See the COPYING file for details.
           KeyCodes.SEMICOLON, Modifiers.SHIFT,
           KeyCodes.Q, Modifiers.NONE,
           KeyCodes.NUM_ONE, Modifiers.SHIFT);
-      var shiftProperties = { shiftKey: true***REMOVED*****REMOVED***
+      var shiftProperties = { shiftKey: true };
       fire(KeyCodes.SEMICOLON, shiftProperties);
       fire(KeyCodes.Q);
       fire(KeyCodes.NUM_ONE, shiftProperties);
@@ -360,7 +360,7 @@ See the COPYING file for details.
 
 
       // quit vi
-      var shiftProperties = { shiftKey: true***REMOVED*****REMOVED***
+      var shiftProperties = { shiftKey: true };
       fire(KeyCodes.SEMICOLON, shiftProperties);
       fire(KeyCodes.Q);
       fire(KeyCodes.NUM_ONE, shiftProperties);
@@ -438,10 +438,10 @@ See the COPYING file for details.
                                                 Modifiers.CTRL, KeyCodes.C]));
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Registers a slew of keyboard shortcuts to test each primary category
-    ***REMOVED*** of shortcuts.
-   ***REMOVED*****REMOVED***
+    /**
+     * Registers a slew of keyboard shortcuts to test each primary category
+     * of shortcuts.
+     */
     function registerEnterSpaceXF1AltY() {
       // Enter and space are specially handled keys.
       handler.registerShortcut('enter', KeyCodes.ENTER);
@@ -454,10 +454,10 @@ See the COPYING file for details.
       handler.registerShortcut('withAlt', 'alt+y');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Fires enter, space, X, F1, and Alt-Y keys on a widget.
-    ***REMOVED*** @param {Element} target The element on which to fire the events.
-   ***REMOVED*****REMOVED***
+    /**
+     * Fires enter, space, X, F1, and Alt-Y keys on a widget.
+     * @param {Element} target The element on which to fire the events.
+     */
     function fireEnterSpaceXF1AltY(target) {
       fire(KeyCodes.ENTER, undefined, target);
       fire(KeyCodes.SPACE, undefined, target);
@@ -490,12 +490,12 @@ See the COPYING file for details.
       listener.$verify();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Checks that the shortcuts are fired on each target.
-    ***REMOVED*** @param {Array.<string>} shortcuts A list of shortcut identifiers.
-    ***REMOVED*** @param {Array.<string>} targets A list of element IDs.
-    ***REMOVED*** @param {function(Element)} fireEvents Function that fires events.
-   ***REMOVED*****REMOVED***
+    /**
+     * Checks that the shortcuts are fired on each target.
+     * @param {Array.<string>} shortcuts A list of shortcut identifiers.
+     * @param {Array.<string>} targets A list of element IDs.
+     * @param {function(Element)} fireEvents Function that fires events.
+     */
     function expectShortcutsOnTargets(shortcuts, targets, fireEvents) {
       for (var i = 0, ii = targets.length; i < ii; i++) {
         for (var j = 0, jj = shortcuts.length; j < jj; j++) {

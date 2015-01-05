@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Context information about nodes in their node-set.
-***REMOVED***
+/**
+ * @fileoverview Context information about nodes in their node-set.
+ */
 
 goog.provide('xrx.xpath.NodeSet');
 
@@ -9,82 +9,82 @@ goog.require('xrx.node');
 
 
 
-***REMOVED***
-***REMOVED*** A set of nodes sorted by their prefix order in the document.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * A set of nodes sorted by their prefix order in the document.
+ *
+ * @constructor
+ */
 xrx.xpath.NodeSet = function() {
   // In violation of standard Closure practice, we initialize properties to
   // immutable constants in the constructor instead of on the prototype,
   // because we have empirically measured better performance by doing so.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A pointer to the first node in the linked list.
-  ***REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
- ***REMOVED*****REMOVED***
+  /**
+   * A pointer to the first node in the linked list.
+   *
+   * @private
+   * @type {xrx.xpath.NodeSet.Entry_}
+   */
   this.first_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A pointer to the last node in the linked list.
-  ***REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
- ***REMOVED*****REMOVED***
+  /**
+   * A pointer to the last node in the linked list.
+   *
+   * @private
+   * @type {xrx.xpath.NodeSet.Entry_}
+   */
   this.last_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Length of the linked list.
-  ***REMOVED***
-  ***REMOVED*** @private
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Length of the linked list.
+   *
+   * @private
+   * @type {number}
+   */
   this.length_ = 0;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A entry for a node in a linked list
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to be added.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A entry for a node in a linked list
+ *
+ * @param {!xrx.node} node The node to be added.
+ * @constructor
+ * @private
+ */
 xrx.xpath.NodeSet.Entry_ = function(node) {
   // In violation of standard Closure practice, we initialize properties to
   // immutable constants in the constructor instead of on the prototype,
   // because we have empirically measured better performance by doing so.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!xrx.node}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!xrx.node}
+   */
   this.node = node;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.xpath.NodeSet.Entry_}
+   */
   this.prev = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.xpath.NodeSet.Entry_}
+   */
   this.next = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Merges two node-sets, removing duplicates. This function may modify both
-***REMOVED*** node-sets, and will return a reference to one of the two.
-***REMOVED***
-***REMOVED*** <p> Note: We assume that the two node-sets are already sorted in DOM order.
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.NodeSet} a The first node-set.
-***REMOVED*** @param {!xrx.xpath.NodeSet} b The second node-set.
-***REMOVED*** @return {!xrx.xpath.NodeSet} The merged node-set.
-***REMOVED***
+/**
+ * Merges two node-sets, removing duplicates. This function may modify both
+ * node-sets, and will return a reference to one of the two.
+ *
+ * <p> Note: We assume that the two node-sets are already sorted in DOM order.
+ *
+ * @param {!xrx.xpath.NodeSet} a The first node-set.
+ * @param {!xrx.xpath.NodeSet} b The second node-set.
+ * @return {!xrx.xpath.NodeSet} The merged node-set.
+ */
 xrx.xpath.NodeSet.merge = function(a, b) {
   if (!a.first_) {
     return b;
@@ -128,14 +128,14 @@ xrx.xpath.NodeSet.merge = function(a, b) {
   merged.last_ = tail;
   merged.length_ = length;
   return merged;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prepends a node to this node-set.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to be added.
-***REMOVED***
+/**
+ * Prepends a node to this node-set.
+ *
+ * @param {!xrx.node} node The node to be added.
+ */
 xrx.xpath.NodeSet.prototype.unshift = function(node) {
   var entry = new xrx.xpath.NodeSet.Entry_(node);
   entry.next = this.first_;
@@ -146,14 +146,14 @@ xrx.xpath.NodeSet.prototype.unshift = function(node) {
   }
   this.first_ = entry;
   this.length_++;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a node to this node-set.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to be added.
-***REMOVED***
+/**
+ * Adds a node to this node-set.
+ *
+ * @param {!xrx.node} node The node to be added.
+ */
 xrx.xpath.NodeSet.prototype.add = function(node) {
   var entry = new xrx.xpath.NodeSet.Entry_(node);
   entry.prev = this.last_;
@@ -164,16 +164,16 @@ xrx.xpath.NodeSet.prototype.add = function(node) {
   }
   this.last_ = entry;
   this.length_++;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the first node of the node-set.
-***REMOVED***
-***REMOVED*** @return {?xrx.node} The first node of the nodeset
+/**
+ * Returns the first node of the node-set.
+ *
+ * @return {?xrx.node} The first node of the nodeset
                                      if the nodeset is non-empty;
-***REMOVED***     otherwise null.
-***REMOVED***
+ *     otherwise null.
+ */
 xrx.xpath.NodeSet.prototype.getFirst = function() {
   var first = this.first_;
   if (first) {
@@ -181,97 +181,97 @@ xrx.xpath.NodeSet.prototype.getFirst = function() {
   } else {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the length of this node-set.
-***REMOVED***
-***REMOVED*** @return {number} The length of the node-set.
-***REMOVED***
+/**
+ * Return the length of this node-set.
+ *
+ * @return {number} The length of the node-set.
+ */
 xrx.xpath.NodeSet.prototype.getLength = function() {
   return this.length_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the string representation of this node-set.
-***REMOVED***
-***REMOVED*** @return {string} The string representation of this node-set.
-***REMOVED***
+/**
+ * Returns the string representation of this node-set.
+ *
+ * @return {string} The string representation of this node-set.
+ */
 xrx.xpath.NodeSet.prototype.string = function() {
   var node = this.getFirst();
   return node ? node.getValueAsString() : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number representation of this node-set.
-***REMOVED***
-***REMOVED*** @return {number} The number representation of this node-set.
-***REMOVED***
+/**
+ * Returns the number representation of this node-set.
+ *
+ * @return {number} The number representation of this node-set.
+ */
 xrx.xpath.NodeSet.prototype.number = function() {
   return +this.string();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an iterator over this nodeset. Once this iterator is made, DO NOT
-***REMOVED***     add to this nodeset until the iterator is done.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_reverse Whether to iterate right to left or vice versa.
-***REMOVED*** @return {!xrx.xpath.NodeSet.Iterator} An iterator over the nodes.
-***REMOVED***
+/**
+ * Returns an iterator over this nodeset. Once this iterator is made, DO NOT
+ *     add to this nodeset until the iterator is done.
+ *
+ * @param {boolean=} opt_reverse Whether to iterate right to left or vice versa.
+ * @return {!xrx.xpath.NodeSet.Iterator} An iterator over the nodes.
+ */
 xrx.xpath.NodeSet.prototype.iterator = function(opt_reverse) {
   return new xrx.xpath.NodeSet.Iterator(this, !!opt_reverse);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** An iterator over the nodes of this nodeset.
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.NodeSet} nodeset The nodeset to be iterated over.
-***REMOVED*** @param {boolean} reverse Whether to iterate in ascending or descending
-***REMOVED***     order.
-***REMOVED***
-***REMOVED***
+/**
+ * An iterator over the nodes of this nodeset.
+ *
+ * @param {!xrx.xpath.NodeSet} nodeset The nodeset to be iterated over.
+ * @param {boolean} reverse Whether to iterate in ascending or descending
+ *     order.
+ * @constructor
+ */
 xrx.xpath.NodeSet.Iterator = function(nodeset, reverse) {
   // In violation of standard Closure practice, we initialize properties to
   // immutable constants in the constructor instead of on the prototype,
   // because we have empirically measured better performance by doing so.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!xrx.xpath.NodeSet}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!xrx.xpath.NodeSet}
+   * @private
+   */
   this.nodeset_ = nodeset;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {boolean}
+   * @private
+   */
   this.reverse_ = reverse;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.xpath.NodeSet.Entry_}
+   * @private
+   */
   this.current_ = reverse ? nodeset.last_ : nodeset.first_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.xpath.NodeSet.Entry_}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.xpath.NodeSet.Entry_}
+   * @private
+   */
   this.lastReturned_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the next value of the iteration or null if passes the end.
-***REMOVED***
-***REMOVED*** @return {?xrx.node} The next node from this iterator.
-***REMOVED***
+/**
+ * Returns the next value of the iteration or null if passes the end.
+ *
+ * @return {?xrx.node} The next node from this iterator.
+ */
 xrx.xpath.NodeSet.Iterator.prototype.next = function() {
   var current = this.current_;
   if (current == null) {
@@ -285,12 +285,12 @@ xrx.xpath.NodeSet.Iterator.prototype.next = function() {
     }
     return lastReturned.node;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes the last node that was returned from this iterator.
-***REMOVED***
+/**
+ * Deletes the last node that was returned from this iterator.
+ */
 xrx.xpath.NodeSet.Iterator.prototype.remove = function() {
   var nodeset = this.nodeset_;
   var entry = this.lastReturned_;
@@ -315,4 +315,4 @@ xrx.xpath.NodeSet.Iterator.prototype.remove = function() {
   }
   nodeset.length_--;
   this.lastReturned_ = null;
-***REMOVED***
+};

@@ -84,7 +84,7 @@ function testGetCount() {
   goog.array.remove(arr, 'd');
   assertEquals('count, should be 3', 3, goog.structs.getCount(arr));
 
-  var obj = {a: 0, b: 1, c: 2***REMOVED***
+  var obj = {a: 0, b: 1, c: 2};
   assertEquals('count, should be 3', 3, goog.structs.getCount(obj));
   obj.d = 3;
   assertEquals('count, should be 4', 4, goog.structs.getCount(obj));
@@ -123,7 +123,7 @@ function testGetValues() {
   var arr = ['a', 'b', 'c', 'd'];
   assertEquals('abcd', goog.structs.getValues(arr).join(''));
 
-  var obj = {a: 0, b: 1, c: 2, d: 3***REMOVED***
+  var obj = {a: 0, b: 1, c: 2, d: 3};
   assertEquals('0123', goog.structs.getValues(obj).join(''));
 
   var s = 'abc';
@@ -150,7 +150,7 @@ function testGetKeys() {
   var arr = ['a', 'b', 'c', 'd'];
   assertEquals('0123', goog.structs.getKeys(arr).join(''));
 
-  var obj = {a: 0, b: 1, c: 2, d: 3***REMOVED***
+  var obj = {a: 0, b: 1, c: 2, d: 3};
   assertEquals('abcd', goog.structs.getKeys(obj).join(''));
 
   var s = 'abc';
@@ -178,7 +178,7 @@ function testContains() {
   assertFalse(
       "contains, Should not contain 'e'", goog.structs.contains(arr, 'e'));
 
-  var obj = {a: 0, b: 1, c: 2, d: 3***REMOVED***
+  var obj = {a: 0, b: 1, c: 2, d: 3};
   assertTrue("contains, Should contain '0'", goog.structs.contains(obj, 0));
   assertFalse(
       "contains, Should not contain '4'", goog.structs.contains(obj, 4));
@@ -213,7 +213,7 @@ function testClear() {
   assertFalse(
       "cleared so it should not contain 'a'", goog.structs.contains(arr, 'a'));
 
-  var obj = {a: 0, b: 1, c: 2, d: 3***REMOVED***
+  var obj = {a: 0, b: 1, c: 2, d: 3};
   goog.structs.clear(obj);
   assertTrue('cleared so it should be empty', goog.structs.isEmpty(obj));
   assertFalse(
@@ -241,21 +241,21 @@ function testClear() {
 // Map
 
 function testMap() {
-  var RV = {***REMOVED***
+  var RV = {};
   var obj = {
     map: function(g) {
       assertEquals(f, g);
       assertEquals(this, obj);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.map(obj, f));
 }
 
 function testMap2() {
-  var THIS_OBJ = {***REMOVED***
-  var RV = {***REMOVED***
+  var THIS_OBJ = {};
+  var RV = {};
   var obj = {
     map: function(g, obj2) {
       assertEquals(f, g);
@@ -263,7 +263,7 @@ function testMap2() {
       assertEquals(THIS_OBJ, obj2);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.map(obj, f, THIS_OBJ));
 }
@@ -273,19 +273,19 @@ function testMapArrayLike() {
   function f(v, i, col2) {
     assertEquals(col, col2);
     assertEquals('number', typeof i);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f));
 }
 
 function testMapArrayLike2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = [0, 1, 2];
   function f(v, i, col2) {
     assertEquals(col, col2);
     assertEquals('number', typeof i);
     assertEquals(THIS_OBJ, this);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f, THIS_OBJ));
 }
@@ -297,20 +297,20 @@ function testMapString() {
     // so we cannot use assertEquals because it uses ===.
     assertTrue(col == col2);
     assertEquals('number', typeof i);
-    return Number(v)***REMOVED*** Number(v);
+    return Number(v) * Number(v);
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f));
 }
 
 function testMapString2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = '012';
   function f(v, i, col2) {
     // for some reason the strings are equal but identical???
     assertEquals(String(col), String(col2));
     assertEquals('number', typeof i);
     assertEquals(THIS_OBJ, this);
-    return Number(v)***REMOVED*** Number(v);
+    return Number(v) * Number(v);
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f, THIS_OBJ));
 }
@@ -320,19 +320,19 @@ function testMapMap() {
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('string', typeof key);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertObjectEquals({a: 0, b: 1, c: 4}, goog.structs.map(col, f));
 }
 
 function testMapMap2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Map({a: 0, b: 1, c: 2});
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('string', typeof key);
     assertEquals(THIS_OBJ, this);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertObjectEquals({a: 0, b: 1, c: 4}, goog.structs.map(col, f, THIS_OBJ));
 }
@@ -342,19 +342,19 @@ function testMapSet() {
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('undefined', typeof key);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f));
 }
 
 function testMapSet2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Set([0, 1, 2]);
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('undefined', typeof key);
     assertEquals(THIS_OBJ, this);
-    return v***REMOVED*** v;
+    return v * v;
   }
   assertArrayEquals([0, 1, 4], goog.structs.map(col, f, THIS_OBJ));
 }
@@ -370,7 +370,7 @@ function testMapNodeList() {
 }
 
 function testMapNodeList2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = getAll();
   function f(v, i, col2) {
     assertEquals(col, col2);
@@ -384,21 +384,21 @@ function testMapNodeList2() {
 // Filter
 
 function testFilter() {
-  var RV = {***REMOVED***
+  var RV = {};
   var obj = {
     filter: function(g) {
       assertEquals(f, g);
       assertEquals(this, obj);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.filter(obj, f));
 }
 
 function testFilter2() {
-  var THIS_OBJ = {***REMOVED***
-  var RV = {***REMOVED***
+  var THIS_OBJ = {};
+  var RV = {};
   var obj = {
     filter: function(g, obj2) {
       assertEquals(f, g);
@@ -406,7 +406,7 @@ function testFilter2() {
       assertEquals(THIS_OBJ, obj2);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.filter(obj, f, THIS_OBJ));
 }
@@ -422,7 +422,7 @@ function testFilterArrayLike() {
 }
 
 function testFilterArrayLike2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = [0, 1, 2];
   function f(v, i, col2) {
     assertEquals(col, col2);
@@ -445,7 +445,7 @@ function testFilterString() {
 }
 
 function testFilterString2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = '012';
   function f(v, i, col2) {
     // for some reason the strings are equal but identical???
@@ -468,7 +468,7 @@ function testFilterMap() {
 }
 
 function testFilterMap2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Map({a: 0, b: 1, c: 2});
   function f(v, key, col2) {
     assertEquals(col, col2);
@@ -490,7 +490,7 @@ function testFilterSet() {
 }
 
 function testFilterSet2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Set([0, 1, 2]);
   function f(v, key, col2) {
     assertEquals(col, col2);
@@ -513,7 +513,7 @@ function testFilterNodeList() {
 }
 
 function testFilterNodeList2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = getAll();
   function f(v, i, col2) {
     assertEquals(col, col2);
@@ -528,21 +528,21 @@ function testFilterNodeList2() {
 // Some
 
 function testSome() {
-  var RV = {***REMOVED***
+  var RV = {};
   var obj = {
     some: function(g) {
       assertEquals(f, g);
       assertEquals(this, obj);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.some(obj, f));
 }
 
 function testSome2() {
-  var THIS_OBJ = {***REMOVED***
-  var RV = {***REMOVED***
+  var THIS_OBJ = {};
+  var RV = {};
   var obj = {
     some: function(g, obj2) {
       assertEquals(f, g);
@@ -550,7 +550,7 @@ function testSome2() {
       assertEquals(THIS_OBJ, obj2);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.some(obj, f, THIS_OBJ));
 }
@@ -569,7 +569,7 @@ function testSomeArrayLike() {
 }
 
 function testSomeArrayLike2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = 0;
   var col = [0, 1, 2];
   function f(v, i, col2) {
@@ -598,7 +598,7 @@ function testSomeString() {
 }
 
 function testSomeString2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = 0;
   var col = '012';
   function f(v, i, col2) {
@@ -627,7 +627,7 @@ function testSomeMap() {
 }
 
 function testSomeMap2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = 0;
   var col = new goog.structs.Map({a: 0, b: 1, c: 2});
   function f(v, key, col2) {
@@ -655,7 +655,7 @@ function testSomeSet() {
 }
 
 function testSomeSet2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = 0;
   var col = new goog.structs.Set([0, 1, 2]);
   function f(v, key, col2) {
@@ -683,7 +683,7 @@ function testSomeNodeList() {
 }
 
 function testSomeNodeList2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var tagName = 'P';
   var col = getAll();
   function f(v, i, col2) {
@@ -700,21 +700,21 @@ function testSomeNodeList2() {
 // Every
 
 function testEvery() {
-  var RV = {***REMOVED***
+  var RV = {};
   var obj = {
     every: function(g) {
       assertEquals(f, g);
       assertEquals(this, obj);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.every(obj, f));
 }
 
 function testEvery2() {
-  var THIS_OBJ = {***REMOVED***
-  var RV = {***REMOVED***
+  var THIS_OBJ = {};
+  var RV = {};
   var obj = {
     every: function(g, obj2) {
       assertEquals(f, g);
@@ -722,7 +722,7 @@ function testEvery2() {
       assertEquals(THIS_OBJ, obj2);
       return RV;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   assertEquals(RV, goog.structs.every(obj, f, THIS_OBJ));
 }
@@ -741,7 +741,7 @@ function testEveryArrayLike() {
 }
 
 function testEveryArrayLike2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = -1;
   var col = [0, 1, 2];
   function f(v, i, col2) {
@@ -770,7 +770,7 @@ function testEveryString() {
 }
 
 function testEveryString2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = -1;
   var col = '012';
   function f(v, i, col2) {
@@ -799,7 +799,7 @@ function testEveryMap() {
 }
 
 function testEveryMap2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = -1;
   var col = new goog.structs.Map({a: 0, b: 1, c: 2});
   function f(v, key, col2) {
@@ -827,7 +827,7 @@ function testEverySet() {
 }
 
 function testEverySet2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var limit = -1;
   var col = new goog.structs.Set([0, 1, 2]);
   function f(v, key, col2) {
@@ -855,7 +855,7 @@ function testEveryNodeList() {
 }
 
 function testEveryNodeList2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var nodeType = 1; // ELEMENT
   var col = getAll();
   function f(v, i, col2) {
@@ -879,7 +879,7 @@ function testForEach() {
       assertEquals(this, obj);
       called = true;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   goog.structs.forEach(obj, f);
   assertTrue(called);
@@ -887,7 +887,7 @@ function testForEach() {
 
 function testForEach2() {
   var called = false;
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var obj = {
     forEach: function(g, obj2) {
       assertEquals(f, g);
@@ -895,7 +895,7 @@ function testForEach2() {
       assertEquals(THIS_OBJ, obj2);
       called = true;
     }
- ***REMOVED*****REMOVED***
+  };
   function f() {}
   goog.structs.forEach(obj, f, THIS_OBJ);
   assertTrue(called);
@@ -907,21 +907,21 @@ function testForEachArrayLike() {
   function f(v, i, col2) {
     assertEquals(col, col2);
     assertEquals('number', typeof i);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
   }
   goog.structs.forEach(col, f);
   assertArrayEquals([0, 1, 4], values);
 }
 
 function testForEachArrayLike2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = [0, 1, 2];
   var values = [];
   function f(v, i, col2) {
     assertEquals(col, col2);
     assertEquals('number', typeof i);
     assertEquals(THIS_OBJ, this);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
   }
   goog.structs.forEach(col, f, THIS_OBJ);
   assertArrayEquals([0, 1, 4], values);
@@ -934,14 +934,14 @@ function testForEachString() {
     // for some reason the strings are equal but identical???
     assertEquals(String(col), String(col2));
     assertEquals('number', typeof i);
-    values.push(Number(v)***REMOVED*** Number(v));
+    values.push(Number(v) * Number(v));
   }
   goog.structs.forEach(col, f);
   assertArrayEquals([0, 1, 4], values);
 }
 
 function testForEachString2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = '012';
   var values = [];
   function f(v, i, col2) {
@@ -949,7 +949,7 @@ function testForEachString2() {
     assertEquals(String(col), String(col2));
     assertEquals('number', typeof i);
     assertEquals(THIS_OBJ, this);
-    values.push(Number(v)***REMOVED*** Number(v));
+    values.push(Number(v) * Number(v));
   }
   goog.structs.forEach(col, f, THIS_OBJ);
   assertArrayEquals([0, 1, 4], values);
@@ -962,7 +962,7 @@ function testForEachMap() {
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('string', typeof key);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
     keys.push(key);
   }
   goog.structs.forEach(col, f);
@@ -971,7 +971,7 @@ function testForEachMap() {
 }
 
 function testForEachMap2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Map({a: 0, b: 1, c: 2});
   var values = [];
   var keys = [];
@@ -979,7 +979,7 @@ function testForEachMap2() {
     assertEquals(col, col2);
     assertEquals('string', typeof key);
     assertEquals(THIS_OBJ, this);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
     keys.push(key);
   }
   goog.structs.forEach(col, f, THIS_OBJ);
@@ -993,21 +993,21 @@ function testForEachSet() {
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('undefined', typeof key);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
   }
   goog.structs.forEach(col, f);
   assertArrayEquals([0, 1, 4], values);
 }
 
 function testForEachSet2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var col = new goog.structs.Set([0, 1, 2]);
   var values = [];
   function f(v, key, col2) {
     assertEquals(col, col2);
     assertEquals('undefined', typeof key);
     assertEquals(THIS_OBJ, this);
-    values.push(v***REMOVED*** v);
+    values.push(v * v);
   }
   goog.structs.forEach(col, f, THIS_OBJ);
   assertArrayEquals([0, 1, 4], values);
@@ -1026,7 +1026,7 @@ function testForEachNodeList() {
 }
 
 function testForEachNodeList2() {
-  var THIS_OBJ = {***REMOVED***
+  var THIS_OBJ = {};
   var values = [];
   var col = getAll();
   function f(v, i, col2) {

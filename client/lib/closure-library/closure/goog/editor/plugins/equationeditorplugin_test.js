@@ -16,7 +16,7 @@ goog.provide('goog.editor.plugins.EquationEditorPluginTest');
 goog.setTestOnly('goog.editor.plugins.EquationEditorPluginTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.TagName');
 goog.require('goog.editor.plugins.EquationEditorPlugin');
 goog.require('goog.testing.MockControl');
@@ -57,11 +57,11 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Sets up expectations for testing when the OK event fires: the field is
-***REMOVED*** focused, the image is inserted.
-***REMOVED*** @param {string} imageUrl Url of the image being inserted.
-***REMOVED***
+/**
+ * Sets up expectations for testing when the OK event fires: the field is
+ * focused, the image is inserted.
+ * @param {string} imageUrl Url of the image being inserted.
+ */
 function setUpTestOk(imageUrl) {
   mockField.focus().$times(1);
   var tempImage = goog.dom.createDom(goog.dom.TagName.IMG, {src: imageUrl});
@@ -86,9 +86,9 @@ function setUpTestOk(imageUrl) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the OK event fires the editable field is properly updated.
-***REMOVED***
+/**
+ * Tests that when the OK event fires the editable field is properly updated.
+ */
 function testOk() {
   setUpTestOk(IMG_URL);
   mockField.dispatchBeforeChange().$times(1);

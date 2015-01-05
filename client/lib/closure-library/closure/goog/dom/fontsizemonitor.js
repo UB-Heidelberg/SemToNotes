@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class that can be used to listen to font size changes.
-***REMOVED***
+/**
+ * @fileoverview A class that can be used to listen to font size changes.
+ */
 
 goog.provide('goog.dom.FontSizeMonitor');
 goog.provide('goog.dom.FontSizeMonitor.EventType');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.userAgent');
 
 
@@ -30,34 +30,34 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** This class can be used to monitor changes in font size.  Instances will
-***REMOVED*** dispatch a {@code goog.dom.FontSizeMonitor.EventType.CHANGE} event.
-***REMOVED*** Example usage:
-***REMOVED*** <pre>
-***REMOVED*** var fms = new goog.dom.FontSizeMonitor();
-***REMOVED*** goog.events.listen(fms, goog.dom.FontSizeMonitor.EventType.CHANGE,
-***REMOVED***     function(e) {
-***REMOVED***       alert('Font size was changed');
-***REMOVED***     });
-***REMOVED*** </pre>
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper object that is used to
-***REMOVED***     determine where to insert the DOM nodes used to determine when the font
-***REMOVED***     size changes.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class can be used to monitor changes in font size.  Instances will
+ * dispatch a {@code goog.dom.FontSizeMonitor.EventType.CHANGE} event.
+ * Example usage:
+ * <pre>
+ * var fms = new goog.dom.FontSizeMonitor();
+ * goog.events.listen(fms, goog.dom.FontSizeMonitor.EventType.CHANGE,
+ *     function(e) {
+ *       alert('Font size was changed');
+ *     });
+ * </pre>
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper object that is used to
+ *     determine where to insert the DOM nodes used to determine when the font
+ *     size changes.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.dom.FontSizeMonitor = function(opt_domHelper) {
   goog.events.EventTarget.call(this);
 
   var dom = opt_domHelper || goog.dom.getDomHelper();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Offscreen iframe which we use to detect resize events.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Offscreen iframe which we use to detect resize events.
+   * @type {Element}
+   * @private
+   */
   this.sizeElement_ = dom.createDom(
       // The size of the iframe is expressed in em, which are font size relative
       // which will cause the iframe to be resized when the font size changes.
@@ -71,15 +71,15 @@ goog.dom.FontSizeMonitor = function(opt_domHelper) {
   var p = dom.getDocument().body;
   p.insertBefore(this.sizeElement_, p.firstChild);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The object that we listen to resize events on.
-  ***REMOVED*** @type {Element|Window}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The object that we listen to resize events on.
+   * @type {Element|Window}
+   * @private
+   */
   var resizeTarget = this.resizeTarget_ =
       goog.userAgent.IE ? this.sizeElement_ :
           goog.dom.getFrameContentWindow(
-             ***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED*** (this.sizeElement_));
+              /** @type {HTMLIFrameElement} */ (this.sizeElement_));
 
   // We need to open and close the document to get Firefox 2 to work.  We must
   // not do this for IE in case we are using HTTPS since accessing the document
@@ -92,39 +92,39 @@ goog.dom.FontSizeMonitor = function(opt_domHelper) {
   }
 
   // Listen to resize event on the window inside the iframe.
-***REMOVED***resizeTarget, goog.events.EventType.RESIZE,
+  goog.events.listen(resizeTarget, goog.events.EventType.RESIZE,
                      this.handleResize_, false, this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Last measured width of the iframe element.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Last measured width of the iframe element.
+   * @type {number}
+   * @private
+   */
   this.lastWidth_ = this.sizeElement_.offsetWidth;
-***REMOVED***
+};
 goog.inherits(goog.dom.FontSizeMonitor, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** The event types that the FontSizeMonitor fires.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The event types that the FontSizeMonitor fires.
+ * @enum {string}
+ */
 goog.dom.FontSizeMonitor.EventType = {
   // TODO(arv): Change value to 'change' after updating the callers.
   CHANGE: 'fontsizechange'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constant for the change event.
-***REMOVED*** @type {string}
-***REMOVED*** @deprecated Use {@code goog.dom.FontSizeMonitor.EventType.CHANGE} instead.
-***REMOVED***
+/**
+ * Constant for the change event.
+ * @type {string}
+ * @deprecated Use {@code goog.dom.FontSizeMonitor.EventType.CHANGE} instead.
+ */
 goog.dom.FontSizeMonitor.CHANGE_EVENT =
     goog.dom.FontSizeMonitor.EventType.CHANGE;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.FontSizeMonitor.prototype.disposeInternal = function() {
   goog.dom.FontSizeMonitor.superClass_.disposeInternal.call(this);
 
@@ -138,15 +138,15 @@ goog.dom.FontSizeMonitor.prototype.disposeInternal = function() {
     goog.dom.removeNode(this.sizeElement_);
   }
   delete this.sizeElement_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the onresize event of the iframe and dispatches a change event in
-***REMOVED*** case its size really changed.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the onresize event of the iframe and dispatches a change event in
+ * case its size really changed.
+ * @param {goog.events.BrowserEvent} e The event object.
+ * @private
+ */
 goog.dom.FontSizeMonitor.prototype.handleResize_ = function(e) {
   // Only dispatch the event if the size really changed.  Some newer browsers do
   // not really change the font-size,  instead they zoom the whole page.  This
@@ -157,4 +157,4 @@ goog.dom.FontSizeMonitor.prototype.handleResize_ = function(e) {
     this.lastWidth_ = currentWidth;
     this.dispatchEvent(goog.dom.FontSizeMonitor.EventType.CHANGE);
   }
-***REMOVED***
+};

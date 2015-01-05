@@ -530,7 +530,7 @@ function testDateTime() {
 }
 
 
-***REMOVED*** @bug 10075434***REMOVED***
+/** @bug 10075434 */
 function testParseDateWithOverflow() {
 
   // We force the initial day of month to 30 so that it will always cause an
@@ -585,7 +585,7 @@ function testParseDateWithOverflow() {
 }
 
 
-***REMOVED*** @bug 9901750***REMOVED***
+/** @bug 9901750 */
 function testStandaloneMonthPattern() {
   goog.i18n.DateTimeSymbols = goog.i18n.DateTimeSymbols_pl;
   var date1 = new goog.date.Date(2006, 7 - 1);
@@ -612,7 +612,7 @@ function testStandaloneMonthPattern() {
       'LLLL yyyy': goog.i18n.DateTimeSymbols.STANDALONEMONTHS,
       'MMM yyyy': goog.i18n.DateTimeSymbols.SHORTMONTHS,
       'LLL yyyy': goog.i18n.DateTimeSymbols.STANDALONESHORTMONTHS
-   ***REMOVED*****REMOVED***
+    };
 
     for (var format in tests) {
       var parser = new goog.i18n.DateTimeParse(format);

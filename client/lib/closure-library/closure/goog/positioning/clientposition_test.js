@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** Tests for {@code goog.positioning.ClientPosition}
-***REMOVED***
+/**
+ * Tests for {@code goog.positioning.ClientPosition}
+ */
 
 goog.provide('goog.positioning.clientPositionTest');
 goog.setTestOnly('goog.positioning.clientPositionTest');
@@ -25,12 +25,12 @@ goog.require('goog.style');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Prefabricated popup element for convenient. This is created during
-***REMOVED*** setUp and is not attached to the document at the beginning of the
-***REMOVED*** test.
-***REMOVED*** @type {Element}
-***REMOVED***
+/**
+ * Prefabricated popup element for convenient. This is created during
+ * setUp and is not attached to the document at the beginning of the
+ * test.
+ * @type {Element}
+ */
 var popupElement;
 var testArea;
 var POPUP_HEIGHT = 100;

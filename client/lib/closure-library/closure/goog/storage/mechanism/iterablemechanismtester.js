@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for the iterable storage mechanism interface.
-***REMOVED***
-***REMOVED*** These tests should be included in tests of any class extending
-***REMOVED*** goog.storage.mechanism.IterableMechanism.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for the iterable storage mechanism interface.
+ *
+ * These tests should be included in tests of any class extending
+ * goog.storage.mechanism.IterableMechanism.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.iterableMechanismTester');
 

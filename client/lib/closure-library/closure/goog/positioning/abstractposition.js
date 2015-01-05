@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract base class for positioning implementations.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Abstract base class for positioning implementations.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.positioning.AbstractPosition');
 
@@ -26,23 +26,23 @@ goog.require('goog.positioning.Corner');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract position object. Encapsulates position and overflow handling.
-***REMOVED***
-***REMOVED***
-***REMOVED***
-goog.positioning.AbstractPosition = function() {***REMOVED***
+/**
+ * Abstract position object. Encapsulates position and overflow handling.
+ *
+ * @constructor
+ */
+goog.positioning.AbstractPosition = function() {};
 
 
-***REMOVED***
-***REMOVED*** Repositions the element. Abstract method, should be overloaded.
-***REMOVED***
-***REMOVED*** @param {Element} movableElement Element to position.
-***REMOVED*** @param {goog.positioning.Corner} corner Corner of the movable element that
-***REMOVED***     should be positioned adjacent to the anchored element.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize PreferredSize of the
-***REMOVED***     movableElement.
-***REMOVED***
+/**
+ * Repositions the element. Abstract method, should be overloaded.
+ *
+ * @param {Element} movableElement Element to position.
+ * @param {goog.positioning.Corner} corner Corner of the movable element that
+ *     should be positioned adjacent to the anchored element.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @param {goog.math.Size=} opt_preferredSize PreferredSize of the
+ *     movableElement.
+ */
 goog.positioning.AbstractPosition.prototype.reposition =
-    function(movableElement, corner, opt_margin, opt_preferredSize) {***REMOVED*****REMOVED***
+    function(movableElement, corner, opt_margin, opt_preferredSize) { };

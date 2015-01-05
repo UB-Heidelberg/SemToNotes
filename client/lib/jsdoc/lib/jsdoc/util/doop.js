@@ -1,7 +1,7 @@
-***REMOVED***
+/**
     Deep clone a simple object.
     @private
-***REMOVED***
+ */
 'use strict';
 
 function doop(o) {

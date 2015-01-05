@@ -47,8 +47,8 @@ See the COPYING file for details.
 
   var st = new Something();
 
-***REMOVED***st, 'synth', func1, true);
-***REMOVED***st, 'synth', func2, false);
+  goog.events.listen(st, 'synth', func1, true);
+  goog.events.listen(st, 'synth', func2, false);
 
 
   alert('Response = ' + st.DoSomething() + '\nShould be true');

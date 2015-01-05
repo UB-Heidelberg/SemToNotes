@@ -1,38 +1,38 @@
-***REMOVED***
-***REMOVED*** Logging tools for JSDoc.
-***REMOVED***
-***REMOVED*** Log messages are printed to the console based on the current logging level. By default, messages
-***REMOVED*** at level `{@link module:jsdoc/util/logger.LEVELS.ERROR}` or above are logged; all other messages
-***REMOVED*** are ignored.
-***REMOVED***
-***REMOVED*** In addition, the module object emits an event whenever a logger method is called, regardless of
-***REMOVED*** the current logging level. The event's name is the string `logger:` followed by the logger's name
-***REMOVED*** (for example, `logger:error`). The event handler receives an array of arguments that were passed
-***REMOVED*** to the logger method.
-***REMOVED***
-***REMOVED*** Each logger method accepts a `message` parameter that may contain zero or more placeholders. Each
-***REMOVED*** placeholder is replaced by the corresponding argument following the message. If the placeholder
-***REMOVED*** does not have a corresponding argument, the placeholder is not replaced.
-***REMOVED***
-***REMOVED*** The following placeholders are supported:
-***REMOVED***
-***REMOVED*** + `%s`: String.
-***REMOVED*** + `%d`: Number.
-***REMOVED*** + `%j`: JSON.
-***REMOVED***
-***REMOVED*** @module jsdoc/util/logger
-***REMOVED*** @extends module:events.EventEmitter
-***REMOVED*** @example
-***REMOVED*** var logger = require('jsdoc/util/logger');
-***REMOVED***
-***REMOVED*** var data = {
-***REMOVED***   foo: 'bar'
-***REMOVED******REMOVED*****REMOVED***
-***REMOVED*** var name = 'baz';
-***REMOVED***
-***REMOVED*** logger.warn('%j %s', data, name);  // prints '{"foo":"bar"} baz'
-***REMOVED*** @see http://nodejs.org/api/util.html#util_util_format_format
-***REMOVED***
+/**
+ * Logging tools for JSDoc.
+ *
+ * Log messages are printed to the console based on the current logging level. By default, messages
+ * at level `{@link module:jsdoc/util/logger.LEVELS.ERROR}` or above are logged; all other messages
+ * are ignored.
+ *
+ * In addition, the module object emits an event whenever a logger method is called, regardless of
+ * the current logging level. The event's name is the string `logger:` followed by the logger's name
+ * (for example, `logger:error`). The event handler receives an array of arguments that were passed
+ * to the logger method.
+ *
+ * Each logger method accepts a `message` parameter that may contain zero or more placeholders. Each
+ * placeholder is replaced by the corresponding argument following the message. If the placeholder
+ * does not have a corresponding argument, the placeholder is not replaced.
+ *
+ * The following placeholders are supported:
+ *
+ * + `%s`: String.
+ * + `%d`: Number.
+ * + `%j`: JSON.
+ *
+ * @module jsdoc/util/logger
+ * @extends module:events.EventEmitter
+ * @example
+ * var logger = require('jsdoc/util/logger');
+ *
+ * var data = {
+ *   foo: 'bar'
+ * };
+ * var name = 'baz';
+ *
+ * logger.warn('%j %s', data, name);  // prints '{"foo":"bar"} baz'
+ * @see http://nodejs.org/api/util.html#util_util_format_format
+ */
 'use strict';
 
 var runtime = require('jsdoc/util/runtime');
@@ -43,47 +43,47 @@ util.inherits(Logger, require('events').EventEmitter);
 
 var logger = module.exports = new Logger();
 
-***REMOVED***
-***REMOVED*** Logging levels for the JSDoc logger. The default logging level is
-***REMOVED*** {@link module:jsdoc/util/logger.LEVELS.ERROR}.
-***REMOVED***
-***REMOVED*** @enum
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Logging levels for the JSDoc logger. The default logging level is
+ * {@link module:jsdoc/util/logger.LEVELS.ERROR}.
+ *
+ * @enum
+ * @type {number}
+ */
 var LEVELS = logger.LEVELS = {
-   ***REMOVED*****REMOVED*** Do not log any messages.***REMOVED***
+    /** Do not log any messages. */
     SILENT: 0,
-   ***REMOVED*****REMOVED*** Log fatal errors that prevent JSDoc from running.***REMOVED***
+    /** Log fatal errors that prevent JSDoc from running. */
     FATAL: 10,
-   ***REMOVED*****REMOVED*** Log all errors, including errors from which JSDoc can recover.***REMOVED***
+    /** Log all errors, including errors from which JSDoc can recover. */
     ERROR: 20,
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Log the following messages:
-    ***REMOVED***
-    ***REMOVED*** + Warnings
-    ***REMOVED*** + Errors
-   ***REMOVED*****REMOVED***
+    /**
+     * Log the following messages:
+     *
+     * + Warnings
+     * + Errors
+     */
     WARN: 30,
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Log the following messages:
-    ***REMOVED***
-    ***REMOVED*** + Informational messages
-    ***REMOVED*** + Warnings
-    ***REMOVED*** + Errors
-   ***REMOVED*****REMOVED***
+    /**
+     * Log the following messages:
+     *
+     * + Informational messages
+     * + Warnings
+     * + Errors
+     */
     INFO: 40,
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Log the following messages:
-    ***REMOVED***
-    ***REMOVED*** + Debugging messages
-    ***REMOVED*** + Informational messages
-    ***REMOVED*** + Warnings
-    ***REMOVED*** + Errors
-   ***REMOVED*****REMOVED***
+    /**
+     * Log the following messages:
+     *
+     * + Debugging messages
+     * + Informational messages
+     * + Warnings
+     * + Errors
+     */
     DEBUG: 50,
-   ***REMOVED*****REMOVED*** Log all messages.***REMOVED***
+    /** Log all messages. */
     VERBOSE: 1000
-***REMOVED***
+};
 
 var DEFAULT_LEVEL = LEVELS.WARN;
 var logLevel = DEFAULT_LEVEL;
@@ -93,7 +93,7 @@ var PREFIXES = {
     ERROR: 'ERROR: ',
     FATAL: 'FATAL: ',
     WARN: 'WARNING: '
-***REMOVED***
+};
 
 // Add a prefix to a log message if necessary.
 function addPrefix(args, prefix) {
@@ -126,7 +126,7 @@ function wrapLogFunction(name, func) {
 
         args.unshift(eventName);
         logger.emit.apply(logger, args);
-   ***REMOVED*****REMOVED***
+    };
 }
 
 // Print a message to STDOUT without a terminating newline.
@@ -136,97 +136,97 @@ function printToStdout() {
     process.stdout.write( util.format.apply(util, args) );
 }
 
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.DEBUG}.
-***REMOVED***
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.DEBUG}.
+ *
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.debug = wrapLogFunction('debug', console.info);
-***REMOVED***
-***REMOVED*** Print a string at log level {@link module:jsdoc/util/logger.LEVELS.DEBUG}. The string is not
-***REMOVED*** terminated by a newline.
-***REMOVED***
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Print a string at log level {@link module:jsdoc/util/logger.LEVELS.DEBUG}. The string is not
+ * terminated by a newline.
+ *
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.printDebug = wrapLogFunction('debug', printToStdout);
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.ERROR}.
-***REMOVED***
-***REMOVED*** @name module:jsdoc/util/logger.error
-***REMOVED*** @function
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.ERROR}.
+ *
+ * @name module:jsdoc/util/logger.error
+ * @function
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.error = wrapLogFunction('error', console.error);
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.FATAL}.
-***REMOVED***
-***REMOVED*** @name module:jsdoc/util/logger.error
-***REMOVED*** @function
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.FATAL}.
+ *
+ * @name module:jsdoc/util/logger.error
+ * @function
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.fatal = wrapLogFunction('fatal', console.error);
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.INFO}.
-***REMOVED***
-***REMOVED*** @name module:jsdoc/util/logger.info
-***REMOVED*** @function
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.INFO}.
+ *
+ * @name module:jsdoc/util/logger.info
+ * @function
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.info = wrapLogFunction('info', console.info);
-***REMOVED***
-***REMOVED*** Print a string at log level {@link module:jsdoc/util/logger.LEVELS.INFO}. The string is not
-***REMOVED*** terminated by a newline.
-***REMOVED***
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Print a string at log level {@link module:jsdoc/util/logger.LEVELS.INFO}. The string is not
+ * terminated by a newline.
+ *
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.printInfo = wrapLogFunction('info', printToStdout);
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.VERBOSE}.
-***REMOVED***
-***REMOVED*** @name module:jsdoc/util/logger.verbose
-***REMOVED*** @function
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.VERBOSE}.
+ *
+ * @name module:jsdoc/util/logger.verbose
+ * @function
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.verbose = wrapLogFunction('verbose', console.info);
-***REMOVED***
-***REMOVED*** Print a string at log level {@link module:jsdoc/util/logger.LEVELS.VERBOSE}. The string is not
-***REMOVED*** terminated by a newline.
-***REMOVED***
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Print a string at log level {@link module:jsdoc/util/logger.LEVELS.VERBOSE}. The string is not
+ * terminated by a newline.
+ *
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.printVerbose = wrapLogFunction('verbose', printToStdout);
-***REMOVED***
-***REMOVED*** Log a message at log level {@link module:jsdoc/util/logger.LEVELS.WARN}.
-***REMOVED***
-***REMOVED*** @name module:jsdoc/util/logger.warn
-***REMOVED*** @function
-***REMOVED*** @param {string} message - The message to log.
-***REMOVED*** @param {...*=} values - The values that will replace the message's placeholders.
-***REMOVED***
+/**
+ * Log a message at log level {@link module:jsdoc/util/logger.LEVELS.WARN}.
+ *
+ * @name module:jsdoc/util/logger.warn
+ * @function
+ * @param {string} message - The message to log.
+ * @param {...*=} values - The values that will replace the message's placeholders.
+ */
 logger.warn = wrapLogFunction('warn', console.warn);
 
-***REMOVED***
-***REMOVED*** Set the log level.
-***REMOVED***
-***REMOVED*** @param {module:jsdoc/util/logger.LEVELS} level - The log level to use.
-***REMOVED***
+/**
+ * Set the log level.
+ *
+ * @param {module:jsdoc/util/logger.LEVELS} level - The log level to use.
+ */
 logger.setLevel = function setLevel(level) {
     logLevel = (level !== undefined) ? level : DEFAULT_LEVEL;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get the current log level.
-***REMOVED***
-***REMOVED*** @return {module:jsdoc/util/logger.LEVELS} The current log level.
-***REMOVED***
+/**
+ * Get the current log level.
+ *
+ * @return {module:jsdoc/util/logger.LEVELS} The current log level.
+ */
 logger.getLevel = function getLevel() {
     return logLevel;
-***REMOVED***
+};

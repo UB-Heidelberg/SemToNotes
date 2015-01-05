@@ -35,7 +35,7 @@ function setUp() {
         });
     document.body.appendChild(div);
     return div;
- ***REMOVED*****REMOVED***
+  };
 
   div1 = createDiv('#EEE');
   div2 = createDiv('#F00');
@@ -58,7 +58,7 @@ function testIsVisible() {
              goog.testing.style.isVisible(div1));
 
   // Tests with hidden element
-  goog.style.setElementShown(div1, false /* display***REMOVED***);
+  goog.style.setElementShown(div1, false /* display */);
   assertFalse('The div should be detected as not visible.',
               goog.testing.style.isVisible(div1));
 }

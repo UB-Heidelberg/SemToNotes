@@ -25,9 +25,9 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the MockStorage interface.
-***REMOVED***
+/**
+ * Tests the MockStorage interface.
+ */
 function testMockStorage() {
   assertEquals(0, instance.length);
 

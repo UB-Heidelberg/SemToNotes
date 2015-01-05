@@ -16,7 +16,7 @@ See the COPYING file for details.
 <script>
   goog.require('goog.dom');
   goog.require('goog.events.EventTarget');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events.EventType');
   goog.require('goog.fx.Transition');
   goog.require('goog.fx.Transition.EventType');
   goog.require('goog.fx.css3');
@@ -220,7 +220,7 @@ function testShowWithNoElementThrowsException() {
 
 function testShowEventFiredWithNoTransition() {
   var showHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.SHOW, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.SHOW, function() {
     showHandlerCalled = true;
   });
 
@@ -230,7 +230,7 @@ function testShowEventFiredWithNoTransition() {
 
 function testHideEventFiredWithNoTransition() {
   var hideHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     hideHandlerCalled = true;
   });
 
@@ -243,7 +243,7 @@ function testOnShowTransition() {
   var mockTransition = new MockTransition();
 
   var showHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.SHOW, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.SHOW, function() {
     showHandlerCalled = true;
   });
 
@@ -260,7 +260,7 @@ function testOnHideTransition() {
   var mockTransition = new MockTransition();
 
   var hideHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     hideHandlerCalled = true;
   });
 
@@ -479,14 +479,14 @@ function testOnDocumentBlurShouldHideBubbleWithDelay() {
   goog.dom.removeNode(focusDiv);
 }
 
-***REMOVED***
-***REMOVED*** @implements {goog.fx.Transition}
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * @implements {goog.fx.Transition}
+ * @extends {goog.events.EventTarget}
+ */
 var MockTransition = function() {
   MockTransition.base(this, 'constructor');
   this.wasPlayed = false;
-***REMOVED***
+};
 goog.inherits(MockTransition, goog.events.EventTarget);
 
 

@@ -12,157 +12,157 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Character counter widget implementation.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/charcounter.html
-***REMOVED***
+/**
+ * @fileoverview Character counter widget implementation.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/charcounter.html
+ */
 
 goog.provide('goog.ui.CharCounter');
 goog.provide('goog.ui.CharCounter.Display');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.InputHandler');
 
 
 
-***REMOVED***
-***REMOVED*** CharCounter widget. Counts the number of characters in a input field or a
-***REMOVED*** text box and displays the number of additional characters that may be
-***REMOVED*** entered before the maximum length is reached.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @param {HTMLInputElement|HTMLTextAreaElement} elInput Input or text area
-***REMOVED***     element to count the number of characters in.
-***REMOVED*** @param {Element} elCount HTML element to display the remaining number of
-***REMOVED***     characters in. You can pass in null for this if you don't want to expose
-***REMOVED***     the number of chars remaining.
-***REMOVED*** @param {number} maxLength The maximum length.
-***REMOVED*** @param {goog.ui.CharCounter.Display=} opt_displayMode Display mode for this
-***REMOVED***     char counter. Defaults to {@link goog.ui.CharCounter.Display.REMAINING}.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * CharCounter widget. Counts the number of characters in a input field or a
+ * text box and displays the number of additional characters that may be
+ * entered before the maximum length is reached.
+ *
+ * @extends {goog.events.EventTarget}
+ * @param {HTMLInputElement|HTMLTextAreaElement} elInput Input or text area
+ *     element to count the number of characters in.
+ * @param {Element} elCount HTML element to display the remaining number of
+ *     characters in. You can pass in null for this if you don't want to expose
+ *     the number of chars remaining.
+ * @param {number} maxLength The maximum length.
+ * @param {goog.ui.CharCounter.Display=} opt_displayMode Display mode for this
+ *     char counter. Defaults to {@link goog.ui.CharCounter.Display.REMAINING}.
+ * @constructor
+ * @final
+ */
 goog.ui.CharCounter = function(elInput, elCount, maxLength, opt_displayMode) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Input or text area element to count the number of characters in.
-  ***REMOVED*** @type {HTMLInputElement|HTMLTextAreaElement}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Input or text area element to count the number of characters in.
+   * @type {HTMLInputElement|HTMLTextAreaElement}
+   * @private
+   */
   this.elInput_ = elInput;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** HTML element to display the remaining number of characters in.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * HTML element to display the remaining number of characters in.
+   * @type {Element}
+   * @private
+   */
   this.elCount_ = elCount;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The maximum length.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The maximum length.
+   * @type {number}
+   * @private
+   */
   this.maxLength_ = maxLength;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The display mode for this char counter.
-  ***REMOVED*** @type {!goog.ui.CharCounter.Display}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The display mode for this char counter.
+   * @type {!goog.ui.CharCounter.Display}
+   * @private
+   */
   this.display_ = opt_displayMode || goog.ui.CharCounter.Display.REMAINING;
 
   elInput.removeAttribute('maxlength');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The input handler that provides the input event.
-  ***REMOVED*** @type {goog.events.InputHandler}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The input handler that provides the input event.
+   * @type {goog.events.InputHandler}
+   * @private
+   */
   this.inputHandler_ = new goog.events.InputHandler(elInput);
 
-***REMOVED***this.inputHandler_,
+  goog.events.listen(this.inputHandler_,
       goog.events.InputHandler.EventType.INPUT, this.onChange_, false, this);
 
   this.checkLength();
-***REMOVED***
+};
 goog.inherits(goog.ui.CharCounter, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Display mode for the char counter.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Display mode for the char counter.
+ * @enum {number}
+ */
 goog.ui.CharCounter.Display = {
- ***REMOVED*****REMOVED*** Widget displays the number of characters remaining (the default).***REMOVED***
+  /** Widget displays the number of characters remaining (the default). */
   REMAINING: 0,
- ***REMOVED*****REMOVED*** Widget displays the number of characters entered.***REMOVED***
+  /** Widget displays the number of characters entered. */
   INCREMENTAL: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the maximum length.
-***REMOVED***
-***REMOVED*** @param {number} maxLength The maximum length.
-***REMOVED***
+/**
+ * Sets the maximum length.
+ *
+ * @param {number} maxLength The maximum length.
+ */
 goog.ui.CharCounter.prototype.setMaxLength = function(maxLength) {
   this.maxLength_ = maxLength;
   this.checkLength();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the maximum length.
-***REMOVED***
-***REMOVED*** @return {number} The maximum length.
-***REMOVED***
+/**
+ * Returns the maximum length.
+ *
+ * @return {number} The maximum length.
+ */
 goog.ui.CharCounter.prototype.getMaxLength = function() {
   return this.maxLength_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the display mode.
-***REMOVED***
-***REMOVED*** @param {!goog.ui.CharCounter.Display} displayMode The display mode.
-***REMOVED***
+/**
+ * Sets the display mode.
+ *
+ * @param {!goog.ui.CharCounter.Display} displayMode The display mode.
+ */
 goog.ui.CharCounter.prototype.setDisplayMode = function(displayMode) {
   this.display_ = displayMode;
   this.checkLength();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the display mode.
-***REMOVED***
-***REMOVED*** @return {!goog.ui.CharCounter.Display} The display mode.
-***REMOVED***
+/**
+ * Returns the display mode.
+ *
+ * @return {!goog.ui.CharCounter.Display} The display mode.
+ */
 goog.ui.CharCounter.prototype.getDisplayMode = function() {
   return this.display_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Change event handler for input field.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Change event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Change event handler for input field.
+ *
+ * @param {goog.events.BrowserEvent} event Change event.
+ * @private
+ */
 goog.ui.CharCounter.prototype.onChange_ = function(event) {
   this.checkLength();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks length of text in input field and updates the counter. Truncates text
-***REMOVED*** if the maximum lengths is exceeded.
-***REMOVED***
+/**
+ * Checks length of text in input field and updates the counter. Truncates text
+ * if the maximum lengths is exceeded.
+ */
 goog.ui.CharCounter.prototype.checkLength = function() {
   var count = this.elInput_.value.length;
 
@@ -187,13 +187,13 @@ goog.ui.CharCounter.prototype.checkLength = function() {
         this.elCount_,
         String(incremental ? count : this.maxLength_ - count));
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.CharCounter.prototype.disposeInternal = function() {
   goog.ui.CharCounter.superClass_.disposeInternal.call(this);
   delete this.elInput_;
   this.inputHandler_.dispose();
   this.inputHandler_ = null;
-***REMOVED***
+};

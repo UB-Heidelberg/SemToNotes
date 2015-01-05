@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A simple plugin that inserts 'Hello World!' on command. This
-***REMOVED*** plugin is intended to be an example of a very simple plugin for plugin
-***REMOVED*** developers.
-***REMOVED***
-***REMOVED*** @author gak@google.com (Gregory Kick)
-***REMOVED*** @see helloworld.html
-***REMOVED***
+/**
+ * @fileoverview A simple plugin that inserts 'Hello World!' on command. This
+ * plugin is intended to be an example of a very simple plugin for plugin
+ * developers.
+ *
+ * @author gak@google.com (Gregory Kick)
+ * @see helloworld.html
+ */
 
 goog.provide('goog.demos.editor.HelloWorld');
 
@@ -29,48 +29,48 @@ goog.require('goog.editor.Plugin');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to insert 'Hello World!' into an editable field.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin to insert 'Hello World!' into an editable field.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.demos.editor.HelloWorld = function() {
   goog.editor.Plugin.call(this);
-***REMOVED***
+};
 goog.inherits(goog.demos.editor.HelloWorld, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.demos.editor.HelloWorld.prototype.getTrogClassId = function() {
   return 'HelloWorld';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Commands implemented by this plugin.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands implemented by this plugin.
+ * @enum {string}
+ */
 goog.demos.editor.HelloWorld.COMMAND = {
   HELLO_WORLD: '+helloWorld'
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.demos.editor.HelloWorld.prototype.isSupportedCommand = function(
     command) {
   return command == goog.demos.editor.HelloWorld.COMMAND.HELLO_WORLD;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Executes a command. Does not fire any BEFORECHANGE, CHANGE, or
-***REMOVED*** SELECTIONCHANGE events (these are handled by the super class implementation
-***REMOVED*** of {@code execCommand}.
-***REMOVED*** @param {string} command Command to execute.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Executes a command. Does not fire any BEFORECHANGE, CHANGE, or
+ * SELECTIONCHANGE events (these are handled by the super class implementation
+ * of {@code execCommand}.
+ * @param {string} command Command to execute.
+ * @override
+ * @protected
+ */
 goog.demos.editor.HelloWorld.prototype.execCommandInternal = function(
     command) {
   var domHelper = this.getFieldObject().getEditableDomHelper();
@@ -79,4 +79,4 @@ goog.demos.editor.HelloWorld.prototype.execCommandInternal = function(
   var newNode =
       domHelper.createDom(goog.dom.TagName.SPAN, null, 'Hello World!');
   range.insertNode(newNode, false);
-***REMOVED***
+};

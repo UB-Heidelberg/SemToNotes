@@ -1,6 +1,6 @@
 (function() {
 
-   ***REMOVED*****REMOVED*** @alias <global>.log***REMOVED***
+    /** @alias <global>.log */
     var log = function() {
     }
 

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A toggle button control.  Extends {@link goog.ui.Button} by
-***REMOVED*** providing checkbox-like semantics.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview A toggle button control.  Extends {@link goog.ui.Button} by
+ * providing checkbox-like semantics.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ToggleButton');
 
@@ -28,25 +28,25 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** A toggle button, with checkbox-like semantics.  Rendered using
-***REMOVED*** {@link goog.ui.CustomButtonRenderer} by default, though any
-***REMOVED*** {@link goog.ui.ButtonRenderer} would work.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or existing DOM
-***REMOVED***     structure to display as the button's caption.
-***REMOVED*** @param {goog.ui.ButtonRenderer=} opt_renderer Renderer used to render or
-***REMOVED***     decorate the button; defaults to {@link goog.ui.CustomButtonRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Button}
-***REMOVED***
+/**
+ * A toggle button, with checkbox-like semantics.  Rendered using
+ * {@link goog.ui.CustomButtonRenderer} by default, though any
+ * {@link goog.ui.ButtonRenderer} would work.
+ *
+ * @param {goog.ui.ControlContent} content Text caption or existing DOM
+ *     structure to display as the button's caption.
+ * @param {goog.ui.ButtonRenderer=} opt_renderer Renderer used to render or
+ *     decorate the button; defaults to {@link goog.ui.CustomButtonRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Button}
+ */
 goog.ui.ToggleButton = function(content, opt_renderer, opt_domHelper) {
   goog.ui.Button.call(this, content, opt_renderer ||
       goog.ui.CustomButtonRenderer.getInstance(), opt_domHelper);
   this.setSupportedState(goog.ui.Component.State.CHECKED, true);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToggleButton, goog.ui.Button);
 
 

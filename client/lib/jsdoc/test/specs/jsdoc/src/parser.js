@@ -1,6 +1,6 @@
-/*global beforeEach, describe, expect, it, jasmine, spyOn, xit***REMOVED***
+/*global beforeEach, describe, expect, it, jasmine, spyOn, xit */
 describe("jsdoc/src/parser", function() {
-    var jsdoc = { src: { parser: require('jsdoc/src/parser') }***REMOVED*****REMOVED***
+    var jsdoc = { src: { parser: require('jsdoc/src/parser') } };
 
     it("should exist", function() {
         expect(jsdoc.src.parser).toBeDefined();
@@ -34,9 +34,9 @@ describe("jsdoc/src/parser", function() {
         });
 
         it('should accept an astBuilder, visitor, and walker as arguments', function() {
-            var astBuilder = {***REMOVED***
-            var visitor = {***REMOVED***
-            var walker = {***REMOVED***
+            var astBuilder = {};
+            var visitor = {};
+            var walker = {};
 
             var myParser = new jsdoc.src.parser.Parser(astBuilder, visitor, walker);
 
@@ -89,7 +89,7 @@ describe("jsdoc/src/parser", function() {
 
             it("should fire 'parseBegin' events before it parses any files", function() {
                 var spy = jasmine.createSpy(),
-                    sourceFiles = ["javascript:***REMOVED*** @name foo***REMOVED***"];
+                    sourceFiles = ["javascript:/** @name foo */"];
 
                 parser.on("parseBegin", spy).parse(sourceFiles);
                 expect(spy).toHaveBeenCalled();
@@ -97,7 +97,7 @@ describe("jsdoc/src/parser", function() {
             });
 
             it("should allow 'parseBegin' handlers to modify the list of source files", function() {
-                var sourceCode = "javascript:***REMOVED*** @name foo***REMOVED***",
+                var sourceCode = "javascript:/** @name foo */",
                     newFiles = ["[[replaced]]"],
                     evt;
 
@@ -112,10 +112,10 @@ describe("jsdoc/src/parser", function() {
 
             it("should fire 'jsdocCommentFound' events when parsing source containing jsdoc comments", function() {
                 var spy = jasmine.createSpy(),
-                    sourceCode = ['javascript:***REMOVED*** @name bar***REMOVED***'];
+                    sourceCode = ['javascript:/** @name bar */'];
                 parser.on('jsdocCommentFound', spy).parse(sourceCode);
                 expect(spy).toHaveBeenCalled();
-                expect(spy.mostRecentCall.args[0].comment).toEqual("***REMOVED*** @name bar***REMOVED***");
+                expect(spy.mostRecentCall.args[0].comment).toEqual("/** @name bar */");
             });
 
             it("should fire 'symbolFound' events when parsing source containing named symbols", function() {
@@ -135,7 +135,7 @@ describe("jsdoc/src/parser", function() {
             it('should allow "newDoclet" handlers to modify doclets', function() {
                 var results;
 
-                var sourceCode = 'javascript:***REMOVED*** @class***REMOVED***function Foo() {}';
+                var sourceCode = 'javascript:/** @class */function Foo() {}';
 
                 function handler(e) {
                     var doop = require('jsdoc/util/doop');
@@ -155,14 +155,14 @@ describe("jsdoc/src/parser", function() {
 
                 var args;
 
-                var sourceCode = ['javascript:***REMOVED*** foo***REMOVED***var foo;'];
+                var sourceCode = ['javascript:/** foo */var foo;'];
                 var visitor = {
                     visitNode: function(node, e, parser, sourceName) {
                         if (e && e.code && !args) {
                             args = Array.prototype.slice.call(arguments);
                         }
                     }
-               ***REMOVED*****REMOVED***
+                };
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.addAstNodeVisitor(visitor);
@@ -193,14 +193,14 @@ describe("jsdoc/src/parser", function() {
             it('should reflect changes made by AST node visitors', function() {
                 var doclet;
 
-                var sourceCode = ['javascript:***REMOVED*** foo***REMOVED***var foo;'];
+                var sourceCode = ['javascript:/** foo */var foo;'];
                 var visitor = {
                     visitNode: function(node, e, parser, sourceName) {
                         if (e && e.code && e.code.name === 'foo') {
                             e.code.name = 'bar';
                         }
                     }
-               ***REMOVED*****REMOVED***
+                };
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.addAstNodeVisitor(visitor);
@@ -218,7 +218,7 @@ describe("jsdoc/src/parser", function() {
                 var eventObject;
 
                 var spy = jasmine.createSpy(),
-                    sourceCode = ['javascript:***REMOVED*** @class***REMOVED***function Foo() {}'];
+                    sourceCode = ['javascript:/** @class */function Foo() {}'];
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.on('parseComplete', spy).parse(sourceCode);
@@ -269,7 +269,7 @@ describe("jsdoc/src/parser", function() {
                         'lib/jsdoc/src/parser.js'), 'utf8' ),
                     parse = function() {
                         parser.parse(parserSrc);
-                   ***REMOVED*****REMOVED***
+                    };
 
                 expect(parse).not.toThrow();
             });
@@ -279,7 +279,7 @@ describe("jsdoc/src/parser", function() {
                     parser.parse(parserSrc);
                 }
 
-                var parserSrc = 'javascript:#!/usr/bin/env node\n***REMOVED*** class***REMOVED***function Foo() {}';
+                var parserSrc = 'javascript:#!/usr/bin/env node\n/** class */function Foo() {}';
 
                 expect(parse).not.toThrow();
             });
@@ -314,8 +314,8 @@ describe("jsdoc/src/parser", function() {
 
             it("should reflect comment changes made by 'jsdocCommentFound' handlers", function() {
                 // we test both POSIX and Windows line endings
-                var source = "javascript:***REMOVED***\n***REMOVED*** replaceme\r\n***REMOVED*** @module foo\n***REMOVED***\n\n" +
-                    "***REMOVED***\n***REMOVED*** replaceme\n***REMOVED***\nvar bar;";
+                var source = "javascript:/**\n * replaceme\r\n * @module foo\n */\n\n" +
+                    "/**\n * replaceme\n */\nvar bar;";
 
                 parser.on('jsdocCommentFound', function(e) {
                     e.comment = e.comment.replace('replaceme', 'REPLACED!');

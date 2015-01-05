@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Code for managing series of undo-redo actions in the form of
-***REMOVED*** {@link goog.editor.plugins.UndoRedoState}s.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Code for managing series of undo-redo actions in the form of
+ * {@link goog.editor.plugins.UndoRedoState}s.
+ *
+ */
 
 
 goog.provide('goog.editor.plugins.UndoRedoManager');
@@ -27,115 +27,115 @@ goog.require('goog.events.EventTarget');
 
 
 
-***REMOVED***
-***REMOVED*** Manages undo and redo operations through a series of {@code UndoRedoState}s
-***REMOVED*** maintained on undo and redo stacks.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Manages undo and redo operations through a series of {@code UndoRedoState}s
+ * maintained on undo and redo stacks.
+ *
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.editor.plugins.UndoRedoManager = function() {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The maximum number of states on the undo stack at any time. Used to limit
-  ***REMOVED*** the memory footprint of the undo-redo stack.
-  ***REMOVED*** TODO(user) have a separate memory size based limit.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The maximum number of states on the undo stack at any time. Used to limit
+   * the memory footprint of the undo-redo stack.
+   * TODO(user) have a separate memory size based limit.
+   * @type {number}
+   * @private
+   */
   this.maxUndoDepth_ = 100;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The undo stack.
-  ***REMOVED*** @type {Array.<goog.editor.plugins.UndoRedoState>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The undo stack.
+   * @type {Array.<goog.editor.plugins.UndoRedoState>}
+   * @private
+   */
   this.undoStack_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The redo stack.
-  ***REMOVED*** @type {Array.<goog.editor.plugins.UndoRedoState>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The redo stack.
+   * @type {Array.<goog.editor.plugins.UndoRedoState>}
+   * @private
+   */
   this.redoStack_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A queue of pending undo or redo actions. Stored as objects with two
-  ***REMOVED*** properties: func and state. The func property stores the undo or redo
-  ***REMOVED*** function to be called, the state property stores the state that method
-  ***REMOVED*** came from.
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A queue of pending undo or redo actions. Stored as objects with two
+   * properties: func and state. The func property stores the undo or redo
+   * function to be called, the state property stores the state that method
+   * came from.
+   * @type {Array.<Object>}
+   * @private
+   */
   this.pendingActions_ = [];
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.UndoRedoManager, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Event types for the events dispatched by undo-redo manager.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event types for the events dispatched by undo-redo manager.
+ * @enum {string}
+ */
 goog.editor.plugins.UndoRedoManager.EventType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Signifies that he undo or redo stack transitioned between 0 and 1 states,
-  ***REMOVED*** meaning that the ability to peform undo or redo operations has changed.
- ***REMOVED*****REMOVED***
+  /**
+   * Signifies that he undo or redo stack transitioned between 0 and 1 states,
+   * meaning that the ability to peform undo or redo operations has changed.
+   */
   STATE_CHANGE: 'state_change',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Signifies that a state was just added to the undo stack. Events of this
-  ***REMOVED*** type will have a {@code state} property whose value is the state that
-  ***REMOVED*** was just added.
- ***REMOVED*****REMOVED***
+  /**
+   * Signifies that a state was just added to the undo stack. Events of this
+   * type will have a {@code state} property whose value is the state that
+   * was just added.
+   */
   STATE_ADDED: 'state_added',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Signifies that the undo method of a state is about to be called.
-  ***REMOVED*** Events of this type will have a {@code state} property whose value is the
-  ***REMOVED*** state whose undo action is about to be performed. If the event is cancelled
-  ***REMOVED*** the action does not proceed, but the state will still transition between
-  ***REMOVED*** stacks.
- ***REMOVED*****REMOVED***
+  /**
+   * Signifies that the undo method of a state is about to be called.
+   * Events of this type will have a {@code state} property whose value is the
+   * state whose undo action is about to be performed. If the event is cancelled
+   * the action does not proceed, but the state will still transition between
+   * stacks.
+   */
   BEFORE_UNDO: 'before_undo',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Signifies that the redo method of a state is about to be called.
-  ***REMOVED*** Events of this type will have a {@code state} property whose value is the
-  ***REMOVED*** state whose redo action is about to be performed. If the event is cancelled
-  ***REMOVED*** the action does not proceed, but the state will still transition between
-  ***REMOVED*** stacks.
- ***REMOVED*****REMOVED***
+  /**
+   * Signifies that the redo method of a state is about to be called.
+   * Events of this type will have a {@code state} property whose value is the
+   * state whose redo action is about to be performed. If the event is cancelled
+   * the action does not proceed, but the state will still transition between
+   * stacks.
+   */
   BEFORE_REDO: 'before_redo'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The key for the listener for the completion of the asynchronous state whose
-***REMOVED*** undo or redo action is in progress. Null if no action is in progress.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key for the listener for the completion of the asynchronous state whose
+ * undo or redo action is in progress. Null if no action is in progress.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.inProgressActionKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** Set the max undo stack depth (not the real memory usage).
-***REMOVED*** @param {number} depth Depth of the stack.
-***REMOVED***
+/**
+ * Set the max undo stack depth (not the real memory usage).
+ * @param {number} depth Depth of the stack.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.setMaxUndoDepth =
     function(depth) {
   this.maxUndoDepth_ = depth;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Add state to the undo stack. This clears the redo stack.
-***REMOVED***
-***REMOVED*** @param {goog.editor.plugins.UndoRedoState} state The state to add to the undo
-***REMOVED***     stack.
-***REMOVED***
+/**
+ * Add state to the undo stack. This clears the redo stack.
+ *
+ * @param {goog.editor.plugins.UndoRedoState} state The state to add to the undo
+ *     stack.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.addState = function(state) {
   // TODO: is the state.equals check necessary?
   if (this.undoStack_.length == 0 ||
@@ -159,68 +159,68 @@ goog.editor.plugins.UndoRedoManager.prototype.addState = function(state) {
       this.dispatchStateChange_();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches a STATE_CHANGE event with this manager as the target.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches a STATE_CHANGE event with this manager as the target.
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.dispatchStateChange_ =
     function() {
   this.dispatchEvent(
       goog.editor.plugins.UndoRedoManager.EventType.STATE_CHANGE);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs the undo operation of the state at the top of the undo stack, moving
-***REMOVED*** that state to the top of the redo stack. If the undo stack is empty, does
-***REMOVED*** nothing.
-***REMOVED***
+/**
+ * Performs the undo operation of the state at the top of the undo stack, moving
+ * that state to the top of the redo stack. If the undo stack is empty, does
+ * nothing.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.undo = function() {
   this.shiftState_(this.undoStack_, this.redoStack_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs the redo operation of the state at the top of the redo stack, moving
-***REMOVED*** that state to the top of the undo stack. If redo undo stack is empty, does
-***REMOVED*** nothing.
-***REMOVED***
+/**
+ * Performs the redo operation of the state at the top of the redo stack, moving
+ * that state to the top of the undo stack. If redo undo stack is empty, does
+ * nothing.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.redo = function() {
   this.shiftState_(this.redoStack_, this.undoStack_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Wether the undo stack has items on it, i.e., if it is
-***REMOVED***     possible to perform an undo operation.
-***REMOVED***
+/**
+ * @return {boolean} Wether the undo stack has items on it, i.e., if it is
+ *     possible to perform an undo operation.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.hasUndoState = function() {
   return this.undoStack_.length > 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Wether the redo stack has items on it, i.e., if it is
-***REMOVED***     possible to perform a redo operation.
-***REMOVED***
+/**
+ * @return {boolean} Wether the redo stack has items on it, i.e., if it is
+ *     possible to perform a redo operation.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.hasRedoState = function() {
   return this.redoStack_.length > 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Move a state from one stack to the other, performing the appropriate undo
-***REMOVED*** or redo action.
-***REMOVED***
-***REMOVED*** @param {Array.<goog.editor.plugins.UndoRedoState>} fromStack Stack to move
-***REMOVED***     the state from.
-***REMOVED*** @param {Array.<goog.editor.plugins.UndoRedoState>} toStack Stack to move
-***REMOVED***     the state to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Move a state from one stack to the other, performing the appropriate undo
+ * or redo action.
+ *
+ * @param {Array.<goog.editor.plugins.UndoRedoState>} fromStack Stack to move
+ *     the state from.
+ * @param {Array.<goog.editor.plugins.UndoRedoState>} toStack Stack to move
+ *     the state to.
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.shiftState_ = function(
     fromStack, toStack) {
   if (fromStack.length) {
@@ -243,32 +243,32 @@ goog.editor.plugins.UndoRedoManager.prototype.shiftState_ = function(
       this.dispatchStateChange_();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an action to the queue of pending undo or redo actions. If no actions
-***REMOVED*** are pending, immediately performs the action.
-***REMOVED***
-***REMOVED*** @param {Object} action An undo or redo action. Stored as an object with two
-***REMOVED***     properties: func and state. The func property stores the undo or redo
-***REMOVED***     function to be called, the state property stores the state that method
-***REMOVED***     came from.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds an action to the queue of pending undo or redo actions. If no actions
+ * are pending, immediately performs the action.
+ *
+ * @param {Object} action An undo or redo action. Stored as an object with two
+ *     properties: func and state. The func property stores the undo or redo
+ *     function to be called, the state property stores the state that method
+ *     came from.
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.addAction_ = function(action) {
   this.pendingActions_.push(action);
   if (this.pendingActions_.length == 1) {
     this.doAction_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Executes the action at the front of the pending actions queue. If an action
-***REMOVED*** is already in progress or the queue is empty, does nothing.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Executes the action at the front of the pending actions queue. If an action
+ * is already in progress or the queue is empty, does nothing.
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.doAction_ = function() {
   if (this.inProgressActionKey_ || this.pendingActions_.length == 0) {
     return;
@@ -279,7 +279,7 @@ goog.editor.plugins.UndoRedoManager.prototype.doAction_ = function() {
   var e = {
     type: action.type,
     state: action.state
- ***REMOVED*****REMOVED***
+  };
 
   if (this.dispatchEvent(e)) {
     if (action.state.isAsynchronous()) {
@@ -292,46 +292,46 @@ goog.editor.plugins.UndoRedoManager.prototype.doAction_ = function() {
       this.doAction_();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finishes processing the current in progress action, starting the next queued
-***REMOVED*** action if one exists.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finishes processing the current in progress action, starting the next queued
+ * action if one exists.
+ * @private
+ */
 goog.editor.plugins.UndoRedoManager.prototype.finishAction_ = function() {
-  goog.events.unlistenByKey(***REMOVED*** @type {number}***REMOVED*** (this.inProgressActionKey_));
+  goog.events.unlistenByKey(/** @type {number} */ (this.inProgressActionKey_));
   this.inProgressActionKey_ = null;
   this.doAction_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the undo and redo stacks.
-***REMOVED***
+/**
+ * Clears the undo and redo stacks.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.clearHistory = function() {
   if (this.undoStack_.length > 0 || this.redoStack_.length > 0) {
     this.undoStack_.length = 0;
     this.redoStack_.length = 0;
     this.dispatchStateChange_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.editor.plugins.UndoRedoState|undefined} The state at the top of
-***REMOVED***     the undo stack without removing it from the stack.
-***REMOVED***
+/**
+ * @return {goog.editor.plugins.UndoRedoState|undefined} The state at the top of
+ *     the undo stack without removing it from the stack.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.undoPeek = function() {
   return this.undoStack_[this.undoStack_.length - 1];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.editor.plugins.UndoRedoState|undefined} The state at the top of
-***REMOVED***     the redo stack without removing it from the stack.
-***REMOVED***
+/**
+ * @return {goog.editor.plugins.UndoRedoState|undefined} The state at the top of
+ *     the redo stack without removing it from the stack.
+ */
 goog.editor.plugins.UndoRedoManager.prototype.redoPeek = function() {
   return this.redoStack_[this.redoStack_.length - 1];
-***REMOVED***
+};

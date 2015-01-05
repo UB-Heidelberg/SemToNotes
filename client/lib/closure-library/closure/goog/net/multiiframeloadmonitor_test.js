@@ -27,7 +27,7 @@ var TEST_FRAME_SRCS = ['iframeloadmonitor_test_frame.html',
 
 // Create a new test case.
 var iframeLoaderTestCase = new goog.testing.AsyncTestCase(document.title);
-iframeLoaderTestCase.stepTimeout = 4***REMOVED*** 1000;
+iframeLoaderTestCase.stepTimeout = 4 * 1000;
 
 // How many multpile frames finished loading
 iframeLoaderTestCase.multipleComplete_ = 0;
@@ -36,10 +36,10 @@ iframeLoaderTestCase.numMonitors = 0;
 iframeLoaderTestCase.disposeCalled = 0;
 
 
-***REMOVED***
-***REMOVED*** Sets up the test environment, adds tests and sets up the worker pools.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Sets up the test environment, adds tests and sets up the worker pools.
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.setUpPage = function() {
   this.log('Setting tests up');
   iframeLoaderTestCase.waitForAsync('loading iframes');
@@ -74,45 +74,45 @@ iframeLoaderTestCase.setUpPage = function() {
   frame4.src = TEST_FRAME_SRCS[2];
 
 
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback for the multiple frame load test case
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Callback for the multiple frame load test case
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.multipleCallback = function() {
   this.log('multiple frames finished loading');
   this.multipleComplete_++;
   this.multipleCompleteNoContent_ = true;
   this.callbacksComplete();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback for the multiple frame with content load test case
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Callback for the multiple frame with content load test case
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.multipleContentCallback = function() {
   this.log('multiple frames with content finished loading');
   this.multipleComplete_++;
   this.multipleCompleteContent_ = true;
   this.callbacksComplete();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if all the load callbacks are done
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Checks if all the load callbacks are done
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.callbacksComplete = function() {
   if (this.multipleComplete_ == 2) {
     iframeLoaderTestCase.continueTesting();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** Tests the results.***REMOVED***
+/** Tests the results. */
 iframeLoaderTestCase.addNewTest('testResults', function() {
   this.log('getting test results');
   assertTrue(this.multipleCompleteNoContent_);
@@ -130,14 +130,14 @@ iframeLoaderTestCase.fakeLoadMonitor = function() {
       isLoaded: function() { return false; },
       dispose: function() { that.disposeCalled++; },
       attachEvent: function() {}
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    };
+  };
   goog.net.IframeLoadMonitor.LOAD_EVENT = 'ifload';
-***REMOVED***
+};
 
 iframeLoaderTestCase.unfakeLoadMonitor = function() {
   goog.net.IframeLoadMonitor = this.loadMonitorConstructor;
-***REMOVED***
+};
 
 iframeLoaderTestCase.addNewTest('stopMonitoring', function() {
   // create two unloaded frames, make sure that load monitors are loaded
@@ -158,5 +158,5 @@ iframeLoaderTestCase.addNewTest('stopMonitoring', function() {
 });
 
 
-***REMOVED*** Standalone Closure Test Runner.***REMOVED***
+/** Standalone Closure Test Runner. */
 G_testRunner.initialize(iframeLoaderTestCase);

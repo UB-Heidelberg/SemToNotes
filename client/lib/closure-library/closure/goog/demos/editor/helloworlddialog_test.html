@@ -17,7 +17,7 @@ See the COPYING file for details.
 <script>
   goog.require('goog.demos.editor.HelloWorldDialog');
   goog.require('goog.demos.editor.HelloWorldDialog.OkEvent');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.events.EventHandler');
   goog.require('goog.testing.LooseMock');
   goog.require('goog.testing.events');
@@ -43,9 +43,9 @@ See the COPYING file for details.
     dialog.dispose();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Creates and shows the dialog to be tested.
- ***REMOVED*****REMOVED***
+  /**
+   * Creates and shows the dialog to be tested.
+   */
   function createAndShow() {
     dialog = new goog.demos.editor.HelloWorldDialog(new goog.dom.DomHelper());
     dialog.addEventListener(goog.ui.editor.AbstractDialog.EventType.OK,
@@ -53,12 +53,12 @@ See the COPYING file for details.
     dialog.show();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Sets up the mock event handler to expect an OK event with the given
-  ***REMOVED*** message.
-  ***REMOVED*** @param {string} message Hello world message the OK event is expected to
-  ***REMOVED***     carry.
- ***REMOVED*****REMOVED***
+  /**
+   * Sets up the mock event handler to expect an OK event with the given
+   * message.
+   * @param {string} message Hello world message the OK event is expected to
+   *     carry.
+   */
   function expectOk(message) {
     mockOkHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
         function(arg) {
@@ -67,10 +67,10 @@ See the COPYING file for details.
         }));
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when you show the dialog, the input field has the correct
-  ***REMOVED*** sample text in it.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when you show the dialog, the input field has the correct
+   * sample text in it.
+   */
   function testShow() {
     mockOkHandler.$replay();
     createAndShow();
@@ -81,9 +81,9 @@ See the COPYING file for details.
     mockOkHandler.$verify();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that clicking OK dispatches an event carying the entered message.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that clicking OK dispatches an event carying the entered message.
+   */
   function testOk() {
     expectOk(CUSTOM_MESSAGE);
     mockOkHandler.$replay();

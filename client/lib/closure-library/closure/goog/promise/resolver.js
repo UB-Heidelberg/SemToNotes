@@ -16,33 +16,33 @@ goog.provide('goog.promise.Resolver');
 
 
 
-***REMOVED***
-***REMOVED*** Resolver interface for promises. The resolver is a convenience interface that
-***REMOVED*** bundles the promise and its associated resolve and reject functions together,
-***REMOVED*** for cases where the resolver needs to be persisted internally.
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED*** @template TYPE
-***REMOVED***
-goog.promise.Resolver = function() {***REMOVED***
+/**
+ * Resolver interface for promises. The resolver is a convenience interface that
+ * bundles the promise and its associated resolve and reject functions together,
+ * for cases where the resolver needs to be persisted internally.
+ *
+ * @interface
+ * @template TYPE
+ */
+goog.promise.Resolver = function() {};
 
 
-***REMOVED***
-***REMOVED*** The promise that created this resolver.
-***REMOVED*** @const {!goog.Promise.<TYPE>}
-***REMOVED***
+/**
+ * The promise that created this resolver.
+ * @const {!goog.Promise.<TYPE>}
+ */
 goog.promise.Resolver.prototype.promise;
 
 
-***REMOVED***
-***REMOVED*** Resolves this resolver with the specified value.
-***REMOVED*** @const {function((TYPE|goog.Promise.<TYPE>|Thenable))}
-***REMOVED***
+/**
+ * Resolves this resolver with the specified value.
+ * @const {function((TYPE|goog.Promise.<TYPE>|Thenable))}
+ */
 goog.promise.Resolver.prototype.resolve;
 
 
-***REMOVED***
-***REMOVED*** Rejects this resolver with the specified reason.
-***REMOVED*** @const {function(*): void}
-***REMOVED***
+/**
+ * Rejects this resolver with the specified reason.
+ * @const {function(*): void}
+ */
 goog.promise.Resolver.prototype.reject;

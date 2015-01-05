@@ -12,7 +12,7 @@ See the COPYING file for details.
 <script type="text/javascript">
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.xpc.CrossPageChannel');
 
 </script>
@@ -22,10 +22,10 @@ var channel;
 var logEl;
 
 
-***REMOVED***
-***REMOVED*** Writes a message to the log.
-***REMOVED*** @param {string} msg The message text.
-***REMOVED***
+/**
+ * Writes a message to the log.
+ * @param {string} msg The message text.
+ */
 function log(msg) {
   logEl || (logEl = goog.dom.getElement('log'));
 

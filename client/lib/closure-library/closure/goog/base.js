@@ -12,107 +12,107 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Bootstrap for the Google JS Library (Closure).
-***REMOVED***
-***REMOVED*** In uncompiled mode base.js will write out Closure's deps file, unless the
-***REMOVED*** global <code>CLOSURE_NO_DEPS</code> is set to true.  This allows projects to
-***REMOVED*** include their own deps file(s) from different locations.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @provideGoog
-***REMOVED***
+/**
+ * @fileoverview Bootstrap for the Google JS Library (Closure).
+ *
+ * In uncompiled mode base.js will write out Closure's deps file, unless the
+ * global <code>CLOSURE_NO_DEPS</code> is set to true.  This allows projects to
+ * include their own deps file(s) from different locations.
+ *
+ *
+ * @provideGoog
+ */
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Overridden to true by the compiler when --closure_pass
-***REMOVED***     or --mark_as_compiled is specified.
-***REMOVED***
+/**
+ * @define {boolean} Overridden to true by the compiler when --closure_pass
+ *     or --mark_as_compiled is specified.
+ */
 var COMPILED = false;
 
 
-***REMOVED***
-***REMOVED*** Base namespace for the Closure library.  Checks to see goog is already
-***REMOVED*** defined in the current scope before assigning to prevent clobbering if
-***REMOVED*** base.js is loaded more than once.
-***REMOVED***
-***REMOVED*** @const
-***REMOVED***
-var goog = goog || {***REMOVED***
+/**
+ * Base namespace for the Closure library.  Checks to see goog is already
+ * defined in the current scope before assigning to prevent clobbering if
+ * base.js is loaded more than once.
+ *
+ * @const
+ */
+var goog = goog || {};
 
 
-***REMOVED***
-***REMOVED*** Reference to the global context.  In most cases this will be 'window'.
-***REMOVED***
+/**
+ * Reference to the global context.  In most cases this will be 'window'.
+ */
 goog.global = this;
 
 
-***REMOVED***
-***REMOVED*** A hook for overriding the define values in uncompiled mode.
-***REMOVED***
-***REMOVED*** In uncompiled mode, {@code CLOSURE_UNCOMPILED_DEFINES} may be defined before
-***REMOVED*** loading base.js.  If a key is defined in {@code CLOSURE_UNCOMPILED_DEFINES},
-***REMOVED*** {@code goog.define} will use the value instead of the default value.  This
-***REMOVED*** allows flags to be overwritten without compilation (this is normally
-***REMOVED*** accomplished with the compiler's "define" flag).
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***   var CLOSURE_UNCOMPILED_DEFINES = {'goog.DEBUG': false***REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @type {Object.<string, (string|number|boolean)>|undefined}
-***REMOVED***
+/**
+ * A hook for overriding the define values in uncompiled mode.
+ *
+ * In uncompiled mode, {@code CLOSURE_UNCOMPILED_DEFINES} may be defined before
+ * loading base.js.  If a key is defined in {@code CLOSURE_UNCOMPILED_DEFINES},
+ * {@code goog.define} will use the value instead of the default value.  This
+ * allows flags to be overwritten without compilation (this is normally
+ * accomplished with the compiler's "define" flag).
+ *
+ * Example:
+ * <pre>
+ *   var CLOSURE_UNCOMPILED_DEFINES = {'goog.DEBUG': false};
+ * </pre>
+ *
+ * @type {Object.<string, (string|number|boolean)>|undefined}
+ */
 goog.global.CLOSURE_UNCOMPILED_DEFINES;
 
 
-***REMOVED***
-***REMOVED*** A hook for overriding the define values in uncompiled or compiled mode,
-***REMOVED*** like CLOSURE_UNCOMPILED_DEFINES but effective in compiled code.  In
-***REMOVED*** uncompiled code CLOSURE_UNCOMPILED_DEFINES takes precedence.
-***REMOVED***
-***REMOVED*** Also unlike CLOSURE_UNCOMPILED_DEFINES the values must be number, boolean or
-***REMOVED*** string literals or the compiler will emit an error.
-***REMOVED***
-***REMOVED*** While any @define value may be set, only those set with goog.define will be
-***REMOVED*** effective for uncompiled code.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***   var CLOSURE_DEFINES = {'goog.DEBUG': false***REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @type {Object.<string, (string|number|boolean)>|undefined}
-***REMOVED***
+/**
+ * A hook for overriding the define values in uncompiled or compiled mode,
+ * like CLOSURE_UNCOMPILED_DEFINES but effective in compiled code.  In
+ * uncompiled code CLOSURE_UNCOMPILED_DEFINES takes precedence.
+ *
+ * Also unlike CLOSURE_UNCOMPILED_DEFINES the values must be number, boolean or
+ * string literals or the compiler will emit an error.
+ *
+ * While any @define value may be set, only those set with goog.define will be
+ * effective for uncompiled code.
+ *
+ * Example:
+ * <pre>
+ *   var CLOSURE_DEFINES = {'goog.DEBUG': false};
+ * </pre>
+ *
+ * @type {Object.<string, (string|number|boolean)>|undefined}
+ */
 goog.global.CLOSURE_DEFINES;
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is not undefined.
-***REMOVED*** WARNING: Do not use this to test if an object has a property. Use the in
-***REMOVED*** operator instead.
-***REMOVED***
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is defined.
-***REMOVED***
+/**
+ * Returns true if the specified value is not undefined.
+ * WARNING: Do not use this to test if an object has a property. Use the in
+ * operator instead.
+ *
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is defined.
+ */
 goog.isDef = function(val) {
   // void 0 always evaluates to undefined and hence we do not need to depend on
   // the definition of the global variable named 'undefined'.
   return val !== void 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds an object structure for the provided namespace path, ensuring that
-***REMOVED*** names that already exist are not overwritten. For example:
-***REMOVED*** "a.b.c" -> a = {***REMOVED***a.b={***REMOVED***a.b.c={***REMOVED***
-***REMOVED*** Used by goog.provide and goog.exportSymbol.
-***REMOVED*** @param {string} name name of the object that this file defines.
-***REMOVED*** @param {*=} opt_object the object to expose at the end of the path.
-***REMOVED*** @param {Object=} opt_objectToExportTo The object to add the path to; default
-***REMOVED***     is |goog.global|.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Builds an object structure for the provided namespace path, ensuring that
+ * names that already exist are not overwritten. For example:
+ * "a.b.c" -> a = {};a.b={};a.b.c={};
+ * Used by goog.provide and goog.exportSymbol.
+ * @param {string} name name of the object that this file defines.
+ * @param {*=} opt_object the object to expose at the end of the path.
+ * @param {Object=} opt_objectToExportTo The object to add the path to; default
+ *     is |goog.global|.
+ * @private
+ */
 goog.exportPath_ = function(name, opt_object, opt_objectToExportTo) {
   var parts = name.split('.');
   var cur = opt_objectToExportTo || goog.global;
@@ -137,22 +137,22 @@ goog.exportPath_ = function(name, opt_object, opt_objectToExportTo) {
     } else if (cur[part]) {
       cur = cur[part];
     } else {
-      cur = cur[part] = {***REMOVED***
+      cur = cur[part] = {};
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Defines a named value. In uncompiled mode, the value is retreived from
-***REMOVED*** CLOSURE_DEFINES or CLOSURE_UNCOMPILED_DEFINES if the object is defined and
-***REMOVED*** has the property specified, and otherwise used the defined defaultValue.
-***REMOVED*** When compiled, the default can be overridden using compiler command-line
-***REMOVED*** options.
-***REMOVED***
-***REMOVED*** @param {string} name The distinguished name to provide.
-***REMOVED*** @param {string|number|boolean} defaultValue
-***REMOVED***
+/**
+ * Defines a named value. In uncompiled mode, the value is retreived from
+ * CLOSURE_DEFINES or CLOSURE_UNCOMPILED_DEFINES if the object is defined and
+ * has the property specified, and otherwise used the defined defaultValue.
+ * When compiled, the default can be overridden using compiler command-line
+ * options.
+ *
+ * @param {string} name The distinguished name to provide.
+ * @param {string|number|boolean} defaultValue
+ */
 goog.define = function(name, defaultValue) {
   var value = defaultValue;
   if (!COMPILED) {
@@ -167,76 +167,76 @@ goog.define = function(name, defaultValue) {
     }
   }
   goog.exportPath_(name, value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} DEBUG is provided as a convenience so that debugging code
-***REMOVED*** that should not be included in a production js_binary can be easily stripped
-***REMOVED*** by specifying --define goog.DEBUG=false to the JSCompiler. For example, most
-***REMOVED*** toString() methods should be declared inside an "if (goog.DEBUG)" conditional
-***REMOVED*** because they are generally used for debugging purposes and it is difficult
-***REMOVED*** for the JSCompiler to statically determine whether they are used.
-***REMOVED***
+/**
+ * @define {boolean} DEBUG is provided as a convenience so that debugging code
+ * that should not be included in a production js_binary can be easily stripped
+ * by specifying --define goog.DEBUG=false to the JSCompiler. For example, most
+ * toString() methods should be declared inside an "if (goog.DEBUG)" conditional
+ * because they are generally used for debugging purposes and it is difficult
+ * for the JSCompiler to statically determine whether they are used.
+ */
 goog.DEBUG = true;
 
 
-***REMOVED***
-***REMOVED*** @define {string} LOCALE defines the locale being used for compilation. It is
-***REMOVED*** used to select locale specific data to be compiled in js binary. BUILD rule
-***REMOVED*** can specify this value by "--define goog.LOCALE=<locale_name>" as JSCompiler
-***REMOVED*** option.
-***REMOVED***
-***REMOVED*** Take into account that the locale code format is important. You should use
-***REMOVED*** the canonical Unicode format with hyphen as a delimiter. Language must be
-***REMOVED*** lowercase, Language Script - Capitalized, Region - UPPERCASE.
-***REMOVED*** There are few examples: pt-BR, en, en-US, sr-Latin-BO, zh-Hans-CN.
-***REMOVED***
-***REMOVED*** See more info about locale codes here:
-***REMOVED*** http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers
-***REMOVED***
-***REMOVED*** For language codes you should use values defined by ISO 693-1. See it here
-***REMOVED*** http://www.w3.org/WAI/ER/IG/ert/iso639.htm. There is only one exception from
-***REMOVED*** this rule: the Hebrew language. For legacy reasons the old code (iw) should
-***REMOVED*** be used instead of the new code (he), see http://wiki/Main/IIISynonyms.
-***REMOVED***
+/**
+ * @define {string} LOCALE defines the locale being used for compilation. It is
+ * used to select locale specific data to be compiled in js binary. BUILD rule
+ * can specify this value by "--define goog.LOCALE=<locale_name>" as JSCompiler
+ * option.
+ *
+ * Take into account that the locale code format is important. You should use
+ * the canonical Unicode format with hyphen as a delimiter. Language must be
+ * lowercase, Language Script - Capitalized, Region - UPPERCASE.
+ * There are few examples: pt-BR, en, en-US, sr-Latin-BO, zh-Hans-CN.
+ *
+ * See more info about locale codes here:
+ * http://www.unicode.org/reports/tr35/#Unicode_Language_and_Locale_Identifiers
+ *
+ * For language codes you should use values defined by ISO 693-1. See it here
+ * http://www.w3.org/WAI/ER/IG/ert/iso639.htm. There is only one exception from
+ * this rule: the Hebrew language. For legacy reasons the old code (iw) should
+ * be used instead of the new code (he), see http://wiki/Main/IIISynonyms.
+ */
 goog.define('goog.LOCALE', 'en');  // default to en
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether this code is running on trusted sites.
-***REMOVED***
-***REMOVED*** On untrusted sites, several native functions can be defined or overridden by
-***REMOVED*** external libraries like Prototype, Datejs, and JQuery and setting this flag
-***REMOVED*** to false forces closure to use its own implementations when possible.
-***REMOVED***
-***REMOVED*** If your JavaScript can be loaded by a third party site and you are wary about
-***REMOVED*** relying on non-standard implementations, specify
-***REMOVED*** "--define goog.TRUSTED_SITE=false" to the JSCompiler.
-***REMOVED***
+/**
+ * @define {boolean} Whether this code is running on trusted sites.
+ *
+ * On untrusted sites, several native functions can be defined or overridden by
+ * external libraries like Prototype, Datejs, and JQuery and setting this flag
+ * to false forces closure to use its own implementations when possible.
+ *
+ * If your JavaScript can be loaded by a third party site and you are wary about
+ * relying on non-standard implementations, specify
+ * "--define goog.TRUSTED_SITE=false" to the JSCompiler.
+ */
 goog.define('goog.TRUSTED_SITE', true);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether a project is expected to be running in strict mode.
-***REMOVED***
-***REMOVED*** This define can be used to trigger alternate implementations compatible with
-***REMOVED*** running in EcmaScript Strict mode or warn about unavailable functionality.
-***REMOVED*** See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
-***REMOVED***
+/**
+ * @define {boolean} Whether a project is expected to be running in strict mode.
+ *
+ * This define can be used to trigger alternate implementations compatible with
+ * running in EcmaScript Strict mode or warn about unavailable functionality.
+ * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope/Strict_mode
+ */
 goog.define('goog.STRICT_MODE_COMPATIBLE', false);
 
 
-***REMOVED***
-***REMOVED*** Creates object stubs for a namespace.  The presence of one or more
-***REMOVED*** goog.provide() calls indicate that the file defines the given
-***REMOVED*** objects/namespaces.  Provided objects must not be null or undefined.
-***REMOVED*** Build tools also scan for provide/require statements
-***REMOVED*** to discern dependencies, build dependency files (see deps.js), etc.
-***REMOVED*** @see goog.require
-***REMOVED*** @param {string} name Namespace provided by this file in the form
-***REMOVED***     "goog.package.part".
-***REMOVED***
+/**
+ * Creates object stubs for a namespace.  The presence of one or more
+ * goog.provide() calls indicate that the file defines the given
+ * objects/namespaces.  Provided objects must not be null or undefined.
+ * Build tools also scan for provide/require statements
+ * to discern dependencies, build dependency files (see deps.js), etc.
+ * @see goog.require
+ * @param {string} name Namespace provided by this file in the form
+ *     "goog.package.part".
+ */
 goog.provide = function(name) {
   if (!COMPILED) {
     // Ensure that the same namespace isn't provided twice. This is intended
@@ -259,85 +259,85 @@ goog.provide = function(name) {
   }
 
   goog.exportPath_(name);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Marks that the current file should only be used for testing, and never for
-***REMOVED*** live code in production.
-***REMOVED***
-***REMOVED*** In the case of unit tests, the message may optionally be an exact namespace
-***REMOVED*** for the test (e.g. 'goog.stringTest'). The linter will then ignore the extra
-***REMOVED*** provide (if not explicitly defined in the code).
-***REMOVED***
-***REMOVED*** @param {string=} opt_message Optional message to add to the error that's
-***REMOVED***     raised when used in production code.
-***REMOVED***
+/**
+ * Marks that the current file should only be used for testing, and never for
+ * live code in production.
+ *
+ * In the case of unit tests, the message may optionally be an exact namespace
+ * for the test (e.g. 'goog.stringTest'). The linter will then ignore the extra
+ * provide (if not explicitly defined in the code).
+ *
+ * @param {string=} opt_message Optional message to add to the error that's
+ *     raised when used in production code.
+ */
 goog.setTestOnly = function(opt_message) {
   if (COMPILED && !goog.DEBUG) {
     opt_message = opt_message || '';
     throw Error('Importing test-only code into non-debug environment' +
                 (opt_message ? ': ' + opt_message : '.'));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Forward declares a symbol. This is an indication to the compiler that the
-***REMOVED*** symbol may be used in the source yet is not required and may not be provided
-***REMOVED*** in compilation.
-***REMOVED***
-***REMOVED*** The most common usage of forward declaration is code that takes a type as a
-***REMOVED*** function parameter but does not need to require it. By forward declaring
-***REMOVED*** instead of requiring, no hard dependency is made, and (if not required
-***REMOVED*** elsewhere) the namespace may never be required and thus, not be pulled
-***REMOVED*** into the JavaScript binary. If it is required elsewhere, it will be type
-***REMOVED*** checked as normal.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {string} name The namespace to forward declare in the form of
-***REMOVED***     "goog.package.part".
-***REMOVED***
-goog.forwardDeclare = function(name) {***REMOVED***
+/**
+ * Forward declares a symbol. This is an indication to the compiler that the
+ * symbol may be used in the source yet is not required and may not be provided
+ * in compilation.
+ *
+ * The most common usage of forward declaration is code that takes a type as a
+ * function parameter but does not need to require it. By forward declaring
+ * instead of requiring, no hard dependency is made, and (if not required
+ * elsewhere) the namespace may never be required and thus, not be pulled
+ * into the JavaScript binary. If it is required elsewhere, it will be type
+ * checked as normal.
+ *
+ *
+ * @param {string} name The namespace to forward declare in the form of
+ *     "goog.package.part".
+ */
+goog.forwardDeclare = function(name) {};
 
 
 if (!COMPILED) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Check if the given name has been goog.provided. This will return false for
-  ***REMOVED*** names that are available only as implicit namespaces.
-  ***REMOVED*** @param {string} name name of the object to look for.
-  ***REMOVED*** @return {boolean} Whether the name has been provided.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Check if the given name has been goog.provided. This will return false for
+   * names that are available only as implicit namespaces.
+   * @param {string} name name of the object to look for.
+   * @return {boolean} Whether the name has been provided.
+   * @private
+   */
   goog.isProvided_ = function(name) {
     return !goog.implicitNamespaces_[name] &&
         goog.isDefAndNotNull(goog.getObjectByName(name));
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Namespaces implicitly defined by goog.provide. For example,
-  ***REMOVED*** goog.provide('goog.events.Event') implicitly declares that 'goog' and
-  ***REMOVED*** 'goog.events' must be namespaces.
-  ***REMOVED***
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  goog.implicitNamespaces_ = {***REMOVED***
+  /**
+   * Namespaces implicitly defined by goog.provide. For example,
+   * goog.provide('goog.events.Event') implicitly declares that 'goog' and
+   * 'goog.events' must be namespaces.
+   *
+   * @type {Object}
+   * @private
+   */
+  goog.implicitNamespaces_ = {};
 }
 
 
-***REMOVED***
-***REMOVED*** Returns an object based on its fully qualified external name.  The object
-***REMOVED*** is not found if null or undefined.  If you are using a compilation pass that
-***REMOVED*** renames property names beware that using this function will not find renamed
-***REMOVED*** properties.
-***REMOVED***
-***REMOVED*** @param {string} name The fully qualified name.
-***REMOVED*** @param {Object=} opt_obj The object within which to look; default is
-***REMOVED***     |goog.global|.
-***REMOVED*** @return {?} The value (object or primitive) or, if not found, null.
-***REMOVED***
+/**
+ * Returns an object based on its fully qualified external name.  The object
+ * is not found if null or undefined.  If you are using a compilation pass that
+ * renames property names beware that using this function will not find renamed
+ * properties.
+ *
+ * @param {string} name The fully qualified name.
+ * @param {Object=} opt_obj The object within which to look; default is
+ *     |goog.global|.
+ * @return {?} The value (object or primitive) or, if not found, null.
+ */
 goog.getObjectByName = function(name, opt_obj) {
   var parts = name.split('.');
   var cur = opt_obj || goog.global;
@@ -349,33 +349,33 @@ goog.getObjectByName = function(name, opt_obj) {
     }
   }
   return cur;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Globalizes a whole namespace, such as goog or goog.lang.
-***REMOVED***
-***REMOVED*** @param {Object} obj The namespace to globalize.
-***REMOVED*** @param {Object=} opt_global The object to add the properties to.
-***REMOVED*** @deprecated Properties may be explicitly exported to the global scope, but
-***REMOVED***     this should no longer be done in bulk.
-***REMOVED***
+/**
+ * Globalizes a whole namespace, such as goog or goog.lang.
+ *
+ * @param {Object} obj The namespace to globalize.
+ * @param {Object=} opt_global The object to add the properties to.
+ * @deprecated Properties may be explicitly exported to the global scope, but
+ *     this should no longer be done in bulk.
+ */
 goog.globalize = function(obj, opt_global) {
   var global = opt_global || goog.global;
   for (var x in obj) {
     global[x] = obj[x];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a dependency from a file to the files it requires.
-***REMOVED*** @param {string} relPath The path to the js file.
-***REMOVED*** @param {Array} provides An array of strings with the names of the objects
-***REMOVED***                         this file provides.
-***REMOVED*** @param {Array} requires An array of strings with the names of the objects
-***REMOVED***                         this file requires.
-***REMOVED***
+/**
+ * Adds a dependency from a file to the files it requires.
+ * @param {string} relPath The path to the js file.
+ * @param {Array} provides An array of strings with the names of the objects
+ *                         this file provides.
+ * @param {Array} requires An array of strings with the names of the objects
+ *                         this file requires.
+ */
 goog.addDependency = function(relPath, provides, requires) {
   if (goog.DEPENDENCIES_ENABLED) {
     var provide, require;
@@ -384,18 +384,18 @@ goog.addDependency = function(relPath, provides, requires) {
     for (var i = 0; provide = provides[i]; i++) {
       deps.nameToPath[provide] = path;
       if (!(path in deps.pathToNames)) {
-        deps.pathToNames[path] = {***REMOVED***
+        deps.pathToNames[path] = {};
       }
       deps.pathToNames[path][provide] = true;
     }
     for (var j = 0; require = requires[j]; j++) {
       if (!(path in deps.requires)) {
-        deps.requires[path] = {***REMOVED***
+        deps.requires[path] = {};
       }
       deps.requires[path][require] = true;
     }
   }
-***REMOVED***
+};
 
 
 
@@ -418,27 +418,27 @@ goog.addDependency = function(relPath, provides, requires) {
 // for example). See bootstrap/ for more information.
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to enable the debug loader.
-***REMOVED***
-***REMOVED*** If enabled, a call to goog.require() will attempt to load the namespace by
-***REMOVED*** appending a script tag to the DOM (if the namespace has been registered).
-***REMOVED***
-***REMOVED*** If disabled, goog.require() will simply assert that the namespace has been
-***REMOVED*** provided (and depend on the fact that some outside tool correctly ordered
-***REMOVED*** the script).
-***REMOVED***
+/**
+ * @define {boolean} Whether to enable the debug loader.
+ *
+ * If enabled, a call to goog.require() will attempt to load the namespace by
+ * appending a script tag to the DOM (if the namespace has been registered).
+ *
+ * If disabled, goog.require() will simply assert that the namespace has been
+ * provided (and depend on the fact that some outside tool correctly ordered
+ * the script).
+ */
 goog.define('goog.ENABLE_DEBUG_LOADER', true);
 
 
-***REMOVED***
-***REMOVED*** Implements a system for the dynamic resolution of dependencies that works in
-***REMOVED*** parallel with the BUILD system. Note that all calls to goog.require will be
-***REMOVED*** stripped by the JSCompiler when the --closure_pass option is used.
-***REMOVED*** @see goog.provide
-***REMOVED*** @param {string} name Namespace to include (as was given in goog.provide()) in
-***REMOVED***     the form "goog.package.part".
-***REMOVED***
+/**
+ * Implements a system for the dynamic resolution of dependencies that works in
+ * parallel with the BUILD system. Note that all calls to goog.require will be
+ * stripped by the JSCompiler when the --closure_pass option is used.
+ * @see goog.provide
+ * @param {string} name Namespace to include (as was given in goog.provide()) in
+ *     the form "goog.package.part".
+ */
 goog.require = function(name) {
 
   // If the object already exists we do not need do do anything.
@@ -470,88 +470,88 @@ goog.require = function(name) {
       throw Error(errorMessage);
 
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Path for included scripts.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Path for included scripts.
+ * @type {string}
+ */
 goog.basePath = '';
 
 
-***REMOVED***
-***REMOVED*** A hook for overriding the base path.
-***REMOVED*** @type {string|undefined}
-***REMOVED***
+/**
+ * A hook for overriding the base path.
+ * @type {string|undefined}
+ */
 goog.global.CLOSURE_BASE_PATH;
 
 
-***REMOVED***
-***REMOVED*** Whether to write out Closure's deps file. By default, the deps are written.
-***REMOVED*** @type {boolean|undefined}
-***REMOVED***
+/**
+ * Whether to write out Closure's deps file. By default, the deps are written.
+ * @type {boolean|undefined}
+ */
 goog.global.CLOSURE_NO_DEPS;
 
 
-***REMOVED***
-***REMOVED*** A function to import a single script. This is meant to be overridden when
-***REMOVED*** Closure is being run in non-HTML contexts, such as web workers. It's defined
-***REMOVED*** in the global scope so that it can be set before base.js is loaded, which
-***REMOVED*** allows deps.js to be imported properly.
-***REMOVED***
-***REMOVED*** The function is passed the script source, which is a relative URI. It should
-***REMOVED*** return true if the script was imported, false otherwise.
-***REMOVED*** @type {(function(string): boolean)|undefined}
-***REMOVED***
+/**
+ * A function to import a single script. This is meant to be overridden when
+ * Closure is being run in non-HTML contexts, such as web workers. It's defined
+ * in the global scope so that it can be set before base.js is loaded, which
+ * allows deps.js to be imported properly.
+ *
+ * The function is passed the script source, which is a relative URI. It should
+ * return true if the script was imported, false otherwise.
+ * @type {(function(string): boolean)|undefined}
+ */
 goog.global.CLOSURE_IMPORT_SCRIPT;
 
 
-***REMOVED***
-***REMOVED*** Null function used for default values of callbacks, etc.
-***REMOVED*** @return {void} Nothing.
-***REMOVED***
-goog.nullFunction = function() {***REMOVED***
+/**
+ * Null function used for default values of callbacks, etc.
+ * @return {void} Nothing.
+ */
+goog.nullFunction = function() {};
 
 
-***REMOVED***
-***REMOVED*** The identity function. Returns its first argument.
-***REMOVED***
-***REMOVED*** @param {*=} opt_returnValue The single value that will be returned.
-***REMOVED*** @param {...*} var_args Optional trailing arguments. These are ignored.
-***REMOVED*** @return {?} The first argument. We can't know the type -- just pass it along
-***REMOVED***      without type.
-***REMOVED*** @deprecated Use goog.functions.identity instead.
-***REMOVED***
+/**
+ * The identity function. Returns its first argument.
+ *
+ * @param {*=} opt_returnValue The single value that will be returned.
+ * @param {...*} var_args Optional trailing arguments. These are ignored.
+ * @return {?} The first argument. We can't know the type -- just pass it along
+ *      without type.
+ * @deprecated Use goog.functions.identity instead.
+ */
 goog.identityFunction = function(opt_returnValue, var_args) {
   return opt_returnValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** When defining a class Foo with an abstract method bar(), you can do:
-***REMOVED*** Foo.prototype.bar = goog.abstractMethod
-***REMOVED***
-***REMOVED*** Now if a subclass of Foo fails to override bar(), an error will be thrown
-***REMOVED*** when bar() is invoked.
-***REMOVED***
-***REMOVED*** Note: This does not take the name of the function to override as an argument
-***REMOVED*** because that would make it more difficult to obfuscate our JavaScript code.
-***REMOVED***
-***REMOVED*** @type {!Function}
-***REMOVED*** @throws {Error} when invoked to indicate the method should be overridden.
-***REMOVED***
+/**
+ * When defining a class Foo with an abstract method bar(), you can do:
+ * Foo.prototype.bar = goog.abstractMethod
+ *
+ * Now if a subclass of Foo fails to override bar(), an error will be thrown
+ * when bar() is invoked.
+ *
+ * Note: This does not take the name of the function to override as an argument
+ * because that would make it more difficult to obfuscate our JavaScript code.
+ *
+ * @type {!Function}
+ * @throws {Error} when invoked to indicate the method should be overridden.
+ */
 goog.abstractMethod = function() {
   throw Error('unimplemented abstract method');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a {@code getInstance} static method that always returns the same
-***REMOVED*** instance object.
-***REMOVED*** @param {!Function} ctor The constructor for the class to add the static
-***REMOVED***     method to.
-***REMOVED***
+/**
+ * Adds a {@code getInstance} static method that always returns the same
+ * instance object.
+ * @param {!Function} ctor The constructor for the class to add the static
+ *     method to.
+ */
 goog.addSingletonGetter = function(ctor) {
   ctor.getInstance = function() {
     if (ctor.instance_) {
@@ -562,43 +562,43 @@ goog.addSingletonGetter = function(ctor) {
       goog.instantiatedSingletons_[goog.instantiatedSingletons_.length] = ctor;
     }
     return ctor.instance_ = new ctor;
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** All singleton classes that have been instantiated, for testing. Don't read
-***REMOVED*** it directly, use the {@code goog.testing.singleton} module. The compiler
-***REMOVED*** removes this variable if unused.
-***REMOVED*** @type {!Array.<!Function>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * All singleton classes that have been instantiated, for testing. Don't read
+ * it directly, use the {@code goog.testing.singleton} module. The compiler
+ * removes this variable if unused.
+ * @type {!Array.<!Function>}
+ * @private
+ */
 goog.instantiatedSingletons_ = [];
 
 
-***REMOVED***
-***REMOVED*** True if goog.dependencies_ is available.
-***REMOVED*** @const {boolean}
-***REMOVED***
+/**
+ * True if goog.dependencies_ is available.
+ * @const {boolean}
+ */
 goog.DEPENDENCIES_ENABLED = !COMPILED && goog.ENABLE_DEBUG_LOADER;
 
 
 if (goog.DEPENDENCIES_ENABLED) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object used to keep track of urls that have already been added. This record
-  ***REMOVED*** allows the prevention of circular dependencies.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  goog.included_ = {***REMOVED***
+  /**
+   * Object used to keep track of urls that have already been added. This record
+   * allows the prevention of circular dependencies.
+   * @type {Object}
+   * @private
+   */
+  goog.included_ = {};
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This object is used to keep track of dependencies and other data that is
-  ***REMOVED*** used for loading scripts.
-  ***REMOVED*** @private
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * This object is used to keep track of dependencies and other data that is
+   * used for loading scripts.
+   * @private
+   * @type {Object}
+   */
   goog.dependencies_ = {
     pathToNames: {}, // 1 to many
     nameToPath: {}, // 1 to 1
@@ -606,25 +606,25 @@ if (goog.DEPENDENCIES_ENABLED) {
     // Used when resolving dependencies to prevent us from visiting file twice.
     visited: {},
     written: {} // Used to keep track of script files we have written.
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tries to detect whether is in the context of an HTML document.
-  ***REMOVED*** @return {boolean} True if it looks like HTML document.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tries to detect whether is in the context of an HTML document.
+   * @return {boolean} True if it looks like HTML document.
+   * @private
+   */
   goog.inHtmlDocument_ = function() {
     var doc = goog.global.document;
     return typeof doc != 'undefined' &&
            'write' in doc;  // XULDocument misses write.
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tries to detect the base path of base.js script that bootstraps Closure.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tries to detect the base path of base.js script that bootstraps Closure.
+   * @private
+   */
   goog.findBasePath_ = function() {
     if (goog.global.CLOSURE_BASE_PATH) {
       goog.basePath = goog.global.CLOSURE_BASE_PATH;
@@ -645,32 +645,32 @@ if (goog.DEPENDENCIES_ENABLED) {
         return;
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Imports a script if, and only if, that script hasn't already been imported.
-  ***REMOVED*** (Must be called at execution time)
-  ***REMOVED*** @param {string} src Script source.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Imports a script if, and only if, that script hasn't already been imported.
+   * (Must be called at execution time)
+   * @param {string} src Script source.
+   * @private
+   */
   goog.importScript_ = function(src) {
     var importScript = goog.global.CLOSURE_IMPORT_SCRIPT ||
         goog.writeScriptTag_;
     if (!goog.dependencies_.written[src] && importScript(src)) {
       goog.dependencies_.written[src] = true;
     }
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The default implementation of the import function. Writes a script tag to
-  ***REMOVED*** import the script.
-  ***REMOVED***
-  ***REMOVED*** @param {string} src The script source.
-  ***REMOVED*** @return {boolean} True if the script was imported, false otherwise.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The default implementation of the import function. Writes a script tag to
+   * import the script.
+   *
+   * @param {string} src The script source.
+   * @return {boolean} True if the script was imported, false otherwise.
+   * @private
+   */
   goog.writeScriptTag_ = function(src) {
     if (goog.inHtmlDocument_()) {
       var doc = goog.global.document;
@@ -697,18 +697,18 @@ if (goog.DEPENDENCIES_ENABLED) {
     } else {
       return false;
     }
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Resolves dependencies based on the dependencies added using addDependency
-  ***REMOVED*** and calls importScript_ in the correct order.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Resolves dependencies based on the dependencies added using addDependency
+   * and calls importScript_ in the correct order.
+   * @private
+   */
   goog.writeScripts_ = function() {
     // The scripts we need to write this time.
     var scripts = [];
-    var seenScript = {***REMOVED***
+    var seenScript = {};
     var deps = goog.dependencies_;
 
     function visitNode(path) {
@@ -761,23 +761,23 @@ if (goog.DEPENDENCIES_ENABLED) {
         throw Error('Undefined script input');
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Looks at the dependency rules and tries to determine the script file that
-  ***REMOVED*** fulfills a particular rule.
-  ***REMOVED*** @param {string} rule In the form goog.namespace.Class or project.script.
-  ***REMOVED*** @return {?string} Url corresponding to the rule, or null.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Looks at the dependency rules and tries to determine the script file that
+   * fulfills a particular rule.
+   * @param {string} rule In the form goog.namespace.Class or project.script.
+   * @return {?string} Url corresponding to the rule, or null.
+   * @private
+   */
   goog.getPathFromDeps_ = function(rule) {
     if (rule in goog.dependencies_.nameToPath) {
       return goog.dependencies_.nameToPath[rule];
     } else {
       return null;
     }
- ***REMOVED*****REMOVED***
+  };
 
   goog.findBasePath_();
 
@@ -794,12 +794,12 @@ if (goog.DEPENDENCIES_ENABLED) {
 //==============================================================================
 
 
-***REMOVED***
-***REMOVED*** This is a "fixed" version of the typeof operator.  It differs from the typeof
-***REMOVED*** operator in such a way that null returns 'null' and arrays return 'array'.
-***REMOVED*** @param {*} value The value to get the type of.
-***REMOVED*** @return {string} The name of the type.
-***REMOVED***
+/**
+ * This is a "fixed" version of the typeof operator.  It differs from the typeof
+ * operator in such a way that null returns 'null' and arrays return 'array'.
+ * @param {*} value The value to get the type of.
+ * @return {string} The name of the type.
+ */
 goog.typeOf = function(value) {
   var s = typeof value;
   if (s == 'object') {
@@ -819,7 +819,7 @@ goog.typeOf = function(value) {
       //   value, the compiler requires the value be cast to type Object,
       //   even though the ECMA spec explicitly allows it.
       var className = Object.prototype.toString.call(
-         ***REMOVED*****REMOVED*** @type {Object}***REMOVED*** (value));
+          /** @type {Object} */ (value));
       // In Firefox 3.6, attempting to access iframe window objects' length
       // property throws an NS_ERROR_FAILURE, so we need to special-case it
       // here.
@@ -890,129 +890,129 @@ goog.typeOf = function(value) {
     return 'object';
   }
   return s;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is null.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is null.
-***REMOVED***
+/**
+ * Returns true if the specified value is null.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is null.
+ */
 goog.isNull = function(val) {
   return val === null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is defined and not null.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is defined and not null.
-***REMOVED***
+/**
+ * Returns true if the specified value is defined and not null.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is defined and not null.
+ */
 goog.isDefAndNotNull = function(val) {
   // Note that undefined == null.
   return val != null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is an array.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is an array.
-***REMOVED***
+/**
+ * Returns true if the specified value is an array.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is an array.
+ */
 goog.isArray = function(val) {
   return goog.typeOf(val) == 'array';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the object looks like an array. To qualify as array like
-***REMOVED*** the value needs to be either a NodeList or an object with a Number length
-***REMOVED*** property.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is an array.
-***REMOVED***
+/**
+ * Returns true if the object looks like an array. To qualify as array like
+ * the value needs to be either a NodeList or an object with a Number length
+ * property.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is an array.
+ */
 goog.isArrayLike = function(val) {
   var type = goog.typeOf(val);
   return type == 'array' || type == 'object' && typeof val.length == 'number';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the object looks like a Date. To qualify as Date-like the
-***REMOVED*** value needs to be an object and have a getFullYear() function.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is a like a Date.
-***REMOVED***
+/**
+ * Returns true if the object looks like a Date. To qualify as Date-like the
+ * value needs to be an object and have a getFullYear() function.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is a like a Date.
+ */
 goog.isDateLike = function(val) {
   return goog.isObject(val) && typeof val.getFullYear == 'function';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is a string.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is a string.
-***REMOVED***
+/**
+ * Returns true if the specified value is a string.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is a string.
+ */
 goog.isString = function(val) {
   return typeof val == 'string';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is a boolean.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is boolean.
-***REMOVED***
+/**
+ * Returns true if the specified value is a boolean.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is boolean.
+ */
 goog.isBoolean = function(val) {
   return typeof val == 'boolean';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is a number.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is a number.
-***REMOVED***
+/**
+ * Returns true if the specified value is a number.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is a number.
+ */
 goog.isNumber = function(val) {
   return typeof val == 'number';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is a function.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is a function.
-***REMOVED***
+/**
+ * Returns true if the specified value is a function.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is a function.
+ */
 goog.isFunction = function(val) {
   return goog.typeOf(val) == 'function';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the specified value is an object.  This includes arrays and
-***REMOVED*** functions.
-***REMOVED*** @param {?} val Variable to test.
-***REMOVED*** @return {boolean} Whether variable is an object.
-***REMOVED***
+/**
+ * Returns true if the specified value is an object.  This includes arrays and
+ * functions.
+ * @param {?} val Variable to test.
+ * @return {boolean} Whether variable is an object.
+ */
 goog.isObject = function(val) {
   var type = typeof val;
   return type == 'object' && val != null || type == 'function';
   // return Object(val) === val also works, but is slower, especially if val is
   // not an object.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a unique ID for an object. This mutates the object so that further calls
-***REMOVED*** with the same object as a parameter returns the same value. The unique ID is
-***REMOVED*** guaranteed to be unique across the current session amongst objects that are
-***REMOVED*** passed into {@code getUid}. There is no guarantee that the ID is unique or
-***REMOVED*** consistent across sessions. It is unsafe to generate unique ID for function
-***REMOVED*** prototypes.
-***REMOVED***
-***REMOVED*** @param {Object} obj The object to get the unique ID for.
-***REMOVED*** @return {number} The unique ID for the object.
-***REMOVED***
+/**
+ * Gets a unique ID for an object. This mutates the object so that further calls
+ * with the same object as a parameter returns the same value. The unique ID is
+ * guaranteed to be unique across the current session amongst objects that are
+ * passed into {@code getUid}. There is no guarantee that the ID is unique or
+ * consistent across sessions. It is unsafe to generate unique ID for function
+ * prototypes.
+ *
+ * @param {Object} obj The object to get the unique ID for.
+ * @return {number} The unique ID for the object.
+ */
 goog.getUid = function(obj) {
   // TODO(arv): Make the type stricter, do not accept null.
 
@@ -1021,28 +1021,28 @@ goog.getUid = function(obj) {
   // and SubClass.prototype will be the same.
   return obj[goog.UID_PROPERTY_] ||
       (obj[goog.UID_PROPERTY_] = ++goog.uidCounter_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the given object is alreay assigned a unique ID.
-***REMOVED***
-***REMOVED*** This does not modify the object.
-***REMOVED***
-***REMOVED*** @param {Object} obj The object to check.
-***REMOVED*** @return {boolean} Whether there an assigned unique id for the object.
-***REMOVED***
+/**
+ * Whether the given object is alreay assigned a unique ID.
+ *
+ * This does not modify the object.
+ *
+ * @param {Object} obj The object to check.
+ * @return {boolean} Whether there an assigned unique id for the object.
+ */
 goog.hasUid = function(obj) {
   return !!obj[goog.UID_PROPERTY_];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the unique ID from an object. This is useful if the object was
-***REMOVED*** previously mutated using {@code goog.getUid} in which case the mutation is
-***REMOVED*** undone.
-***REMOVED*** @param {Object} obj The object to remove the unique ID field from.
-***REMOVED***
+/**
+ * Removes the unique ID from an object. This is useful if the object was
+ * previously mutated using {@code goog.getUid} in which case the mutation is
+ * undone.
+ * @param {Object} obj The object to remove the unique ID field from.
+ */
 goog.removeUid = function(obj) {
   // TODO(arv): Make the type stricter, do not accept null.
 
@@ -1051,71 +1051,71 @@ goog.removeUid = function(obj) {
   if ('removeAttribute' in obj) {
     obj.removeAttribute(goog.UID_PROPERTY_);
   }
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     delete obj[goog.UID_PROPERTY_];
   } catch (ex) {
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Name for unique ID property. Initialized in a way to help avoid collisions
-***REMOVED*** with other closure JavaScript on the same page.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
-goog.UID_PROPERTY_ = 'closure_uid_' + ((Math.random()***REMOVED*** 1e9) >>> 0);
+/**
+ * Name for unique ID property. Initialized in a way to help avoid collisions
+ * with other closure JavaScript on the same page.
+ * @type {string}
+ * @private
+ */
+goog.UID_PROPERTY_ = 'closure_uid_' + ((Math.random() * 1e9) >>> 0);
 
 
-***REMOVED***
-***REMOVED*** Counter for UID.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Counter for UID.
+ * @type {number}
+ * @private
+ */
 goog.uidCounter_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Adds a hash code field to an object. The hash code is unique for the
-***REMOVED*** given object.
-***REMOVED*** @param {Object} obj The object to get the hash code for.
-***REMOVED*** @return {number} The hash code for the object.
-***REMOVED*** @deprecated Use goog.getUid instead.
-***REMOVED***
+/**
+ * Adds a hash code field to an object. The hash code is unique for the
+ * given object.
+ * @param {Object} obj The object to get the hash code for.
+ * @return {number} The hash code for the object.
+ * @deprecated Use goog.getUid instead.
+ */
 goog.getHashCode = goog.getUid;
 
 
-***REMOVED***
-***REMOVED*** Removes the hash code field from an object.
-***REMOVED*** @param {Object} obj The object to remove the field from.
-***REMOVED*** @deprecated Use goog.removeUid instead.
-***REMOVED***
+/**
+ * Removes the hash code field from an object.
+ * @param {Object} obj The object to remove the field from.
+ * @deprecated Use goog.removeUid instead.
+ */
 goog.removeHashCode = goog.removeUid;
 
 
-***REMOVED***
-***REMOVED*** Clones a value. The input may be an Object, Array, or basic type. Objects and
-***REMOVED*** arrays will be cloned recursively.
-***REMOVED***
-***REMOVED*** WARNINGS:
-***REMOVED*** <code>goog.cloneObject</code> does not detect reference loops. Objects that
-***REMOVED*** refer to themselves will cause infinite recursion.
-***REMOVED***
-***REMOVED*** <code>goog.cloneObject</code> is unaware of unique identifiers, and copies
-***REMOVED*** UIDs created by <code>getUid</code> into cloned results.
-***REMOVED***
-***REMOVED*** @param {*} obj The value to clone.
-***REMOVED*** @return {*} A clone of the input value.
-***REMOVED*** @deprecated goog.cloneObject is unsafe. Prefer the goog.object methods.
-***REMOVED***
+/**
+ * Clones a value. The input may be an Object, Array, or basic type. Objects and
+ * arrays will be cloned recursively.
+ *
+ * WARNINGS:
+ * <code>goog.cloneObject</code> does not detect reference loops. Objects that
+ * refer to themselves will cause infinite recursion.
+ *
+ * <code>goog.cloneObject</code> is unaware of unique identifiers, and copies
+ * UIDs created by <code>getUid</code> into cloned results.
+ *
+ * @param {*} obj The value to clone.
+ * @return {*} A clone of the input value.
+ * @deprecated goog.cloneObject is unsafe. Prefer the goog.object methods.
+ */
 goog.cloneObject = function(obj) {
   var type = goog.typeOf(obj);
   if (type == 'object' || type == 'array') {
     if (obj.clone) {
       return obj.clone();
     }
-    var clone = type == 'array' ? [] : {***REMOVED***
+    var clone = type == 'array' ? [] : {};
     for (var key in obj) {
       clone[key] = goog.cloneObject(obj[key]);
     }
@@ -1123,39 +1123,39 @@ goog.cloneObject = function(obj) {
   }
 
   return obj;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A native implementation of goog.bind.
-***REMOVED*** @param {Function} fn A function to partially apply.
-***REMOVED*** @param {Object|undefined} selfObj Specifies the object which this should
-***REMOVED***     point to when the function is run.
-***REMOVED*** @param {...*} var_args Additional arguments that are partially applied to the
-***REMOVED***     function.
-***REMOVED*** @return {!Function} A partially-applied form of the function bind() was
-***REMOVED***     invoked as a method of.
-***REMOVED*** @private
-***REMOVED*** @suppress {deprecated} The compiler thinks that Function.prototype.bind is
-***REMOVED***     deprecated because some people have declared a pure-JS version.
-***REMOVED***     Only the pure-JS version is truly deprecated.
-***REMOVED***
+/**
+ * A native implementation of goog.bind.
+ * @param {Function} fn A function to partially apply.
+ * @param {Object|undefined} selfObj Specifies the object which this should
+ *     point to when the function is run.
+ * @param {...*} var_args Additional arguments that are partially applied to the
+ *     function.
+ * @return {!Function} A partially-applied form of the function bind() was
+ *     invoked as a method of.
+ * @private
+ * @suppress {deprecated} The compiler thinks that Function.prototype.bind is
+ *     deprecated because some people have declared a pure-JS version.
+ *     Only the pure-JS version is truly deprecated.
+ */
 goog.bindNative_ = function(fn, selfObj, var_args) {
-  return***REMOVED*****REMOVED*** @type {!Function}***REMOVED*** (fn.call.apply(fn.bind, arguments));
-***REMOVED***
+  return /** @type {!Function} */ (fn.call.apply(fn.bind, arguments));
+};
 
 
-***REMOVED***
-***REMOVED*** A pure-JS implementation of goog.bind.
-***REMOVED*** @param {Function} fn A function to partially apply.
-***REMOVED*** @param {Object|undefined} selfObj Specifies the object which this should
-***REMOVED***     point to when the function is run.
-***REMOVED*** @param {...*} var_args Additional arguments that are partially applied to the
-***REMOVED***     function.
-***REMOVED*** @return {!Function} A partially-applied form of the function bind() was
-***REMOVED***     invoked as a method of.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A pure-JS implementation of goog.bind.
+ * @param {Function} fn A function to partially apply.
+ * @param {Object|undefined} selfObj Specifies the object which this should
+ *     point to when the function is run.
+ * @param {...*} var_args Additional arguments that are partially applied to the
+ *     function.
+ * @return {!Function} A partially-applied form of the function bind() was
+ *     invoked as a method of.
+ * @private
+ */
 goog.bindJs_ = function(fn, selfObj, var_args) {
   if (!fn) {
     throw new Error();
@@ -1168,40 +1168,40 @@ goog.bindJs_ = function(fn, selfObj, var_args) {
       var newArgs = Array.prototype.slice.call(arguments);
       Array.prototype.unshift.apply(newArgs, boundArgs);
       return fn.apply(selfObj, newArgs);
-   ***REMOVED*****REMOVED***
+    };
 
   } else {
     return function() {
       return fn.apply(selfObj, arguments);
-   ***REMOVED*****REMOVED***
+    };
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Partially applies this function to a particular 'this object' and zero or
-***REMOVED*** more arguments. The result is a new function with some arguments of the first
-***REMOVED*** function pre-filled and the value of this 'pre-specified'.
-***REMOVED***
-***REMOVED*** Remaining arguments specified at call-time are appended to the pre-specified
-***REMOVED*** ones.
-***REMOVED***
-***REMOVED*** Also see: {@link #partial}.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED*** <pre>var barMethBound = bind(myFunction, myObj, 'arg1', 'arg2');
-***REMOVED*** barMethBound('arg3', 'arg4');</pre>
-***REMOVED***
-***REMOVED*** @param {?function(this:T, ...)} fn A function to partially apply.
-***REMOVED*** @param {T} selfObj Specifies the object which this should point to when the
-***REMOVED***     function is run.
-***REMOVED*** @param {...*} var_args Additional arguments that are partially applied to the
-***REMOVED***     function.
-***REMOVED*** @return {!Function} A partially-applied form of the function bind() was
-***REMOVED***     invoked as a method of.
-***REMOVED*** @template T
-***REMOVED*** @suppress {deprecated} See above.
-***REMOVED***
+/**
+ * Partially applies this function to a particular 'this object' and zero or
+ * more arguments. The result is a new function with some arguments of the first
+ * function pre-filled and the value of this 'pre-specified'.
+ *
+ * Remaining arguments specified at call-time are appended to the pre-specified
+ * ones.
+ *
+ * Also see: {@link #partial}.
+ *
+ * Usage:
+ * <pre>var barMethBound = bind(myFunction, myObj, 'arg1', 'arg2');
+ * barMethBound('arg3', 'arg4');</pre>
+ *
+ * @param {?function(this:T, ...)} fn A function to partially apply.
+ * @param {T} selfObj Specifies the object which this should point to when the
+ *     function is run.
+ * @param {...*} var_args Additional arguments that are partially applied to the
+ *     function.
+ * @return {!Function} A partially-applied form of the function bind() was
+ *     invoked as a method of.
+ * @template T
+ * @suppress {deprecated} See above.
+ */
 goog.bind = function(fn, selfObj, var_args) {
   // TODO(nicksantos): narrow the type signature.
   if (Function.prototype.bind &&
@@ -1217,22 +1217,22 @@ goog.bind = function(fn, selfObj, var_args) {
     goog.bind = goog.bindJs_;
   }
   return goog.bind.apply(null, arguments);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Like bind(), except that a 'this object' is not required. Useful when the
-***REMOVED*** target function is already bound.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED*** var g = partial(f, arg1, arg2);
-***REMOVED*** g(arg3, arg4);
-***REMOVED***
-***REMOVED*** @param {Function} fn A function to partially apply.
-***REMOVED*** @param {...*} var_args Additional arguments that are partially applied to fn.
-***REMOVED*** @return {!Function} A partially-applied form of the function bind() was
-***REMOVED***     invoked as a method of.
-***REMOVED***
+/**
+ * Like bind(), except that a 'this object' is not required. Useful when the
+ * target function is already bound.
+ *
+ * Usage:
+ * var g = partial(f, arg1, arg2);
+ * g(arg3, arg4);
+ *
+ * @param {Function} fn A function to partially apply.
+ * @param {...*} var_args Additional arguments that are partially applied to fn.
+ * @return {!Function} A partially-applied form of the function bind() was
+ *     invoked as a method of.
+ */
 goog.partial = function(fn, var_args) {
   var args = Array.prototype.slice.call(arguments, 1);
   return function() {
@@ -1241,17 +1241,17 @@ goog.partial = function(fn, var_args) {
     var newArgs = args.slice();
     newArgs.push.apply(newArgs, arguments);
     return fn.apply(this, newArgs);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** Copies all the members of a source object to a target object. This method
-***REMOVED*** does not work on all browsers for all objects that contain keys such as
-***REMOVED*** toString or hasOwnProperty. Use goog.object.extend for this purpose.
-***REMOVED*** @param {Object} target Target.
-***REMOVED*** @param {Object} source Source.
-***REMOVED***
+/**
+ * Copies all the members of a source object to a target object. This method
+ * does not work on all browsers for all objects that contain keys such as
+ * toString or hasOwnProperty. Use goog.object.extend for this purpose.
+ * @param {Object} target Target.
+ * @param {Object} source Source.
+ */
 goog.mixin = function(target, source) {
   for (var x in source) {
     target[x] = source[x];
@@ -1262,13 +1262,13 @@ goog.mixin = function(target, source) {
   // Object.prototype) but also it will not include 'replace' on objects that
   // extend String and change 'replace' (not that it is common for anyone to
   // extend anything except Object).
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} An integer value representing the number of milliseconds
-***REMOVED***     between midnight, January 1, 1970 and the current time.
-***REMOVED***
+/**
+ * @return {number} An integer value representing the number of milliseconds
+ *     between midnight, January 1, 1970 and the current time.
+ */
 goog.now = (goog.TRUSTED_SITE && Date.now) || (function() {
   // Unary plus operator converts its operand to a number which in the case of
   // a date is done by calling getTime().
@@ -1276,13 +1276,13 @@ goog.now = (goog.TRUSTED_SITE && Date.now) || (function() {
 });
 
 
-***REMOVED***
-***REMOVED*** Evals JavaScript in the global scope.  In IE this uses execScript, other
-***REMOVED*** browsers use goog.global.eval. If goog.global.eval does not evaluate in the
-***REMOVED*** global scope (for example, in Safari), appends a script tag instead.
-***REMOVED*** Throws an exception if neither execScript or eval is defined.
-***REMOVED*** @param {string} script JavaScript string.
-***REMOVED***
+/**
+ * Evals JavaScript in the global scope.  In IE this uses execScript, other
+ * browsers use goog.global.eval. If goog.global.eval does not evaluate in the
+ * global scope (for example, in Safari), appends a script tag instead.
+ * Throws an exception if neither execScript or eval is defined.
+ * @param {string} script JavaScript string.
+ */
 goog.globalEval = function(script) {
   if (goog.global.execScript) {
     goog.global.execScript(script, 'JavaScript');
@@ -1314,74 +1314,74 @@ goog.globalEval = function(script) {
   } else {
     throw Error('goog.globalEval not available');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates whether or not we can call 'eval' directly to eval code in the
-***REMOVED*** global scope. Set to a Boolean by the first call to goog.globalEval (which
-***REMOVED*** empirically tests whether eval works for globals). @see goog.globalEval
-***REMOVED*** @type {?boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Indicates whether or not we can call 'eval' directly to eval code in the
+ * global scope. Set to a Boolean by the first call to goog.globalEval (which
+ * empirically tests whether eval works for globals). @see goog.globalEval
+ * @type {?boolean}
+ * @private
+ */
 goog.evalWorksForGlobals_ = null;
 
 
-***REMOVED***
-***REMOVED*** Optional map of CSS class names to obfuscated names used with
-***REMOVED*** goog.getCssName().
-***REMOVED*** @type {Object|undefined}
-***REMOVED*** @private
-***REMOVED*** @see goog.setCssNameMapping
-***REMOVED***
+/**
+ * Optional map of CSS class names to obfuscated names used with
+ * goog.getCssName().
+ * @type {Object|undefined}
+ * @private
+ * @see goog.setCssNameMapping
+ */
 goog.cssNameMapping_;
 
 
-***REMOVED***
-***REMOVED*** Optional obfuscation style for CSS class names. Should be set to either
-***REMOVED*** 'BY_WHOLE' or 'BY_PART' if defined.
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED*** @see goog.setCssNameMapping
-***REMOVED***
+/**
+ * Optional obfuscation style for CSS class names. Should be set to either
+ * 'BY_WHOLE' or 'BY_PART' if defined.
+ * @type {string|undefined}
+ * @private
+ * @see goog.setCssNameMapping
+ */
 goog.cssNameMappingStyle_;
 
 
-***REMOVED***
-***REMOVED*** Handles strings that are intended to be used as CSS class names.
-***REMOVED***
-***REMOVED*** This function works in tandem with @see goog.setCssNameMapping.
-***REMOVED***
-***REMOVED*** Without any mapping set, the arguments are simple joined with a hyphen and
-***REMOVED*** passed through unaltered.
-***REMOVED***
-***REMOVED*** When there is a mapping, there are two possible styles in which these
-***REMOVED*** mappings are used. In the BY_PART style, each part (i.e. in between hyphens)
-***REMOVED*** of the passed in css name is rewritten according to the map. In the BY_WHOLE
-***REMOVED*** style, the full css name is looked up in the map directly. If a rewrite is
-***REMOVED*** not specified by the map, the compiler will output a warning.
-***REMOVED***
-***REMOVED*** When the mapping is passed to the compiler, it will replace calls to
-***REMOVED*** goog.getCssName with the strings from the mapping, e.g.
-***REMOVED***     var x = goog.getCssName('foo');
-***REMOVED***     var y = goog.getCssName(this.baseClass, 'active');
-***REMOVED***  becomes:
-***REMOVED***     var x= 'foo';
-***REMOVED***     var y = this.baseClass + '-active';
-***REMOVED***
-***REMOVED*** If one argument is passed it will be processed, if two are passed only the
-***REMOVED*** modifier will be processed, as it is assumed the first argument was generated
-***REMOVED*** as a result of calling goog.getCssName.
-***REMOVED***
-***REMOVED*** @param {string} className The class name.
-***REMOVED*** @param {string=} opt_modifier A modifier to be appended to the class name.
-***REMOVED*** @return {string} The class name or the concatenation of the class name and
-***REMOVED***     the modifier.
-***REMOVED***
+/**
+ * Handles strings that are intended to be used as CSS class names.
+ *
+ * This function works in tandem with @see goog.setCssNameMapping.
+ *
+ * Without any mapping set, the arguments are simple joined with a hyphen and
+ * passed through unaltered.
+ *
+ * When there is a mapping, there are two possible styles in which these
+ * mappings are used. In the BY_PART style, each part (i.e. in between hyphens)
+ * of the passed in css name is rewritten according to the map. In the BY_WHOLE
+ * style, the full css name is looked up in the map directly. If a rewrite is
+ * not specified by the map, the compiler will output a warning.
+ *
+ * When the mapping is passed to the compiler, it will replace calls to
+ * goog.getCssName with the strings from the mapping, e.g.
+ *     var x = goog.getCssName('foo');
+ *     var y = goog.getCssName(this.baseClass, 'active');
+ *  becomes:
+ *     var x= 'foo';
+ *     var y = this.baseClass + '-active';
+ *
+ * If one argument is passed it will be processed, if two are passed only the
+ * modifier will be processed, as it is assumed the first argument was generated
+ * as a result of calling goog.getCssName.
+ *
+ * @param {string} className The class name.
+ * @param {string=} opt_modifier A modifier to be appended to the class name.
+ * @return {string} The class name or the concatenation of the class name and
+ *     the modifier.
+ */
 goog.getCssName = function(className, opt_modifier) {
   var getMapping = function(cssName) {
     return goog.cssNameMapping_[cssName] || cssName;
- ***REMOVED*****REMOVED***
+  };
 
   var renameByParts = function(cssName) {
     // Remap all the parts individually.
@@ -1391,7 +1391,7 @@ goog.getCssName = function(className, opt_modifier) {
       mapped.push(getMapping(parts[i]));
     }
     return mapped.join('-');
- ***REMOVED*****REMOVED***
+  };
 
   var rename;
   if (goog.cssNameMapping_) {
@@ -1400,7 +1400,7 @@ goog.getCssName = function(className, opt_modifier) {
   } else {
     rename = function(a) {
       return a;
-   ***REMOVED*****REMOVED***
+    };
   }
 
   if (opt_modifier) {
@@ -1408,50 +1408,50 @@ goog.getCssName = function(className, opt_modifier) {
   } else {
     return rename(className);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the map to check when returning a value from goog.getCssName(). Example:
-***REMOVED*** <pre>
-***REMOVED*** goog.setCssNameMapping({
-***REMOVED***   "goog": "a",
-***REMOVED***   "disabled": "b",
-***REMOVED*** });
-***REMOVED***
-***REMOVED*** var x = goog.getCssName('goog');
-***REMOVED*** // The following evaluates to: "a a-b".
-***REMOVED*** goog.getCssName('goog') + ' ' + goog.getCssName(x, 'disabled')
-***REMOVED*** </pre>
-***REMOVED*** When declared as a map of string literals to string literals, the JSCompiler
-***REMOVED*** will replace all calls to goog.getCssName() using the supplied map if the
-***REMOVED*** --closure_pass flag is set.
-***REMOVED***
-***REMOVED*** @param {!Object} mapping A map of strings to strings where keys are possible
-***REMOVED***     arguments to goog.getCssName() and values are the corresponding values
-***REMOVED***     that should be returned.
-***REMOVED*** @param {string=} opt_style The style of css name mapping. There are two valid
-***REMOVED***     options: 'BY_PART', and 'BY_WHOLE'.
-***REMOVED*** @see goog.getCssName for a description.
-***REMOVED***
+/**
+ * Sets the map to check when returning a value from goog.getCssName(). Example:
+ * <pre>
+ * goog.setCssNameMapping({
+ *   "goog": "a",
+ *   "disabled": "b",
+ * });
+ *
+ * var x = goog.getCssName('goog');
+ * // The following evaluates to: "a a-b".
+ * goog.getCssName('goog') + ' ' + goog.getCssName(x, 'disabled')
+ * </pre>
+ * When declared as a map of string literals to string literals, the JSCompiler
+ * will replace all calls to goog.getCssName() using the supplied map if the
+ * --closure_pass flag is set.
+ *
+ * @param {!Object} mapping A map of strings to strings where keys are possible
+ *     arguments to goog.getCssName() and values are the corresponding values
+ *     that should be returned.
+ * @param {string=} opt_style The style of css name mapping. There are two valid
+ *     options: 'BY_PART', and 'BY_WHOLE'.
+ * @see goog.getCssName for a description.
+ */
 goog.setCssNameMapping = function(mapping, opt_style) {
   goog.cssNameMapping_ = mapping;
   goog.cssNameMappingStyle_ = opt_style;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** To use CSS renaming in compiled mode, one of the input files should have a
-***REMOVED*** call to goog.setCssNameMapping() with an object literal that the JSCompiler
-***REMOVED*** can extract and use to replace all calls to goog.getCssName(). In uncompiled
-***REMOVED*** mode, JavaScript code should be loaded before this base.js file that declares
-***REMOVED*** a global variable, CLOSURE_CSS_NAME_MAPPING, which is used below. This is
-***REMOVED*** to ensure that the mapping is loaded before any calls to goog.getCssName()
-***REMOVED*** are made in uncompiled mode.
-***REMOVED***
-***REMOVED*** A hook for overriding the CSS name mapping.
-***REMOVED*** @type {Object|undefined}
-***REMOVED***
+/**
+ * To use CSS renaming in compiled mode, one of the input files should have a
+ * call to goog.setCssNameMapping() with an object literal that the JSCompiler
+ * can extract and use to replace all calls to goog.getCssName(). In uncompiled
+ * mode, JavaScript code should be loaded before this base.js file that declares
+ * a global variable, CLOSURE_CSS_NAME_MAPPING, which is used below. This is
+ * to ensure that the mapping is loaded before any calls to goog.getCssName()
+ * are made in uncompiled mode.
+ *
+ * A hook for overriding the CSS name mapping.
+ * @type {Object|undefined}
+ */
 goog.global.CLOSURE_CSS_NAME_MAPPING;
 
 
@@ -1462,179 +1462,179 @@ if (!COMPILED && goog.global.CLOSURE_CSS_NAME_MAPPING) {
 }
 
 
-***REMOVED***
-***REMOVED*** Gets a localized message.
-***REMOVED***
-***REMOVED*** This function is a compiler primitive. If you give the compiler a localized
-***REMOVED*** message bundle, it will replace the string at compile-time with a localized
-***REMOVED*** version, and expand goog.getMsg call to a concatenated string.
-***REMOVED***
-***REMOVED*** Messages must be initialized in the form:
-***REMOVED*** <code>
-***REMOVED*** var MSG_NAME = goog.getMsg('Hello {$placeholder}', {'placeholder': 'world'});
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** @param {string} str Translatable string, places holders in the form {$foo}.
-***REMOVED*** @param {Object=} opt_values Map of place holder name to value.
-***REMOVED*** @return {string} message with placeholders filled.
-***REMOVED***
+/**
+ * Gets a localized message.
+ *
+ * This function is a compiler primitive. If you give the compiler a localized
+ * message bundle, it will replace the string at compile-time with a localized
+ * version, and expand goog.getMsg call to a concatenated string.
+ *
+ * Messages must be initialized in the form:
+ * <code>
+ * var MSG_NAME = goog.getMsg('Hello {$placeholder}', {'placeholder': 'world'});
+ * </code>
+ *
+ * @param {string} str Translatable string, places holders in the form {$foo}.
+ * @param {Object=} opt_values Map of place holder name to value.
+ * @return {string} message with placeholders filled.
+ */
 goog.getMsg = function(str, opt_values) {
-  var values = opt_values || {***REMOVED***
+  var values = opt_values || {};
   for (var key in values) {
     var value = ('' + values[key]).replace(/\$/g, '$$$$');
     str = str.replace(new RegExp('\\{\\$' + key + '\\}', 'gi'), value);
   }
   return str;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a localized message. If the message does not have a translation, gives a
-***REMOVED*** fallback message.
-***REMOVED***
-***REMOVED*** This is useful when introducing a new message that has not yet been
-***REMOVED*** translated into all languages.
-***REMOVED***
-***REMOVED*** This function is a compiler primitive. Must be used in the form:
-***REMOVED*** <code>var x = goog.getMsgWithFallback(MSG_A, MSG_B);</code>
-***REMOVED*** where MSG_A and MSG_B were initialized with goog.getMsg.
-***REMOVED***
-***REMOVED*** @param {string} a The preferred message.
-***REMOVED*** @param {string} b The fallback message.
-***REMOVED*** @return {string} The best translated message.
-***REMOVED***
+/**
+ * Gets a localized message. If the message does not have a translation, gives a
+ * fallback message.
+ *
+ * This is useful when introducing a new message that has not yet been
+ * translated into all languages.
+ *
+ * This function is a compiler primitive. Must be used in the form:
+ * <code>var x = goog.getMsgWithFallback(MSG_A, MSG_B);</code>
+ * where MSG_A and MSG_B were initialized with goog.getMsg.
+ *
+ * @param {string} a The preferred message.
+ * @param {string} b The fallback message.
+ * @return {string} The best translated message.
+ */
 goog.getMsgWithFallback = function(a, b) {
   return a;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exposes an unobfuscated global namespace path for the given object.
-***REMOVED*** Note that fields of the exported object***REMOVED***will* be obfuscated, unless they are
-***REMOVED*** exported in turn via this function or goog.exportProperty.
-***REMOVED***
-***REMOVED*** Also handy for making public items that are defined in anonymous closures.
-***REMOVED***
-***REMOVED*** ex. goog.exportSymbol('public.path.Foo', Foo);
-***REMOVED***
-***REMOVED*** ex. goog.exportSymbol('public.path.Foo.staticFunction', Foo.staticFunction);
-***REMOVED***     public.path.Foo.staticFunction();
-***REMOVED***
-***REMOVED*** ex. goog.exportSymbol('public.path.Foo.prototype.myMethod',
-***REMOVED***                       Foo.prototype.myMethod);
-***REMOVED***     new public.path.Foo().myMethod();
-***REMOVED***
-***REMOVED*** @param {string} publicPath Unobfuscated name to export.
-***REMOVED*** @param {*} object Object the name should point to.
-***REMOVED*** @param {Object=} opt_objectToExportTo The object to add the path to; default
-***REMOVED***     is goog.global.
-***REMOVED***
+/**
+ * Exposes an unobfuscated global namespace path for the given object.
+ * Note that fields of the exported object *will* be obfuscated, unless they are
+ * exported in turn via this function or goog.exportProperty.
+ *
+ * Also handy for making public items that are defined in anonymous closures.
+ *
+ * ex. goog.exportSymbol('public.path.Foo', Foo);
+ *
+ * ex. goog.exportSymbol('public.path.Foo.staticFunction', Foo.staticFunction);
+ *     public.path.Foo.staticFunction();
+ *
+ * ex. goog.exportSymbol('public.path.Foo.prototype.myMethod',
+ *                       Foo.prototype.myMethod);
+ *     new public.path.Foo().myMethod();
+ *
+ * @param {string} publicPath Unobfuscated name to export.
+ * @param {*} object Object the name should point to.
+ * @param {Object=} opt_objectToExportTo The object to add the path to; default
+ *     is goog.global.
+ */
 goog.exportSymbol = function(publicPath, object, opt_objectToExportTo) {
   goog.exportPath_(publicPath, object, opt_objectToExportTo);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exports a property unobfuscated into the object's namespace.
-***REMOVED*** ex. goog.exportProperty(Foo, 'staticFunction', Foo.staticFunction);
-***REMOVED*** ex. goog.exportProperty(Foo.prototype, 'myMethod', Foo.prototype.myMethod);
-***REMOVED*** @param {Object} object Object whose static property is being exported.
-***REMOVED*** @param {string} publicName Unobfuscated name to export.
-***REMOVED*** @param {*} symbol Object the name should point to.
-***REMOVED***
+/**
+ * Exports a property unobfuscated into the object's namespace.
+ * ex. goog.exportProperty(Foo, 'staticFunction', Foo.staticFunction);
+ * ex. goog.exportProperty(Foo.prototype, 'myMethod', Foo.prototype.myMethod);
+ * @param {Object} object Object whose static property is being exported.
+ * @param {string} publicName Unobfuscated name to export.
+ * @param {*} symbol Object the name should point to.
+ */
 goog.exportProperty = function(object, publicName, symbol) {
   object[publicName] = symbol;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inherit the prototype methods from one constructor into another.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED*** <pre>
-***REMOVED*** function ParentClass(a, b) { }
-***REMOVED*** ParentClass.prototype.foo = function(a) { }
-***REMOVED***
-***REMOVED*** function ChildClass(a, b, c) {
-***REMOVED***   goog.base(this, a, b);
-***REMOVED*** }
-***REMOVED*** goog.inherits(ChildClass, ParentClass);
-***REMOVED***
-***REMOVED*** var child = new ChildClass('a', 'b', 'see');
-***REMOVED*** child.foo(); // This works.
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** In addition, a superclass' implementation of a method can be invoked as
-***REMOVED*** follows:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** ChildClass.prototype.foo = function(a) {
-***REMOVED***   ChildClass.superClass_.foo.call(this, a);
-***REMOVED***   // Other code here.
-***REMOVED******REMOVED*****REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {Function} childCtor Child class.
-***REMOVED*** @param {Function} parentCtor Parent class.
-***REMOVED***
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * Usage:
+ * <pre>
+ * function ParentClass(a, b) { }
+ * ParentClass.prototype.foo = function(a) { }
+ *
+ * function ChildClass(a, b, c) {
+ *   goog.base(this, a, b);
+ * }
+ * goog.inherits(ChildClass, ParentClass);
+ *
+ * var child = new ChildClass('a', 'b', 'see');
+ * child.foo(); // This works.
+ * </pre>
+ *
+ * In addition, a superclass' implementation of a method can be invoked as
+ * follows:
+ *
+ * <pre>
+ * ChildClass.prototype.foo = function(a) {
+ *   ChildClass.superClass_.foo.call(this, a);
+ *   // Other code here.
+ * };
+ * </pre>
+ *
+ * @param {Function} childCtor Child class.
+ * @param {Function} parentCtor Parent class.
+ */
 goog.inherits = function(childCtor, parentCtor) {
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
-  function tempCtor() {***REMOVED***
+  /** @constructor */
+  function tempCtor() {};
   tempCtor.prototype = parentCtor.prototype;
   childCtor.superClass_ = parentCtor.prototype;
   childCtor.prototype = new tempCtor();
- ***REMOVED*****REMOVED*** @override***REMOVED***
+  /** @override */
   childCtor.prototype.constructor = childCtor;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Calls superclass constructor/method.
-  ***REMOVED***
-  ***REMOVED*** This function is only available if you use goog.inherits to
-  ***REMOVED*** express inheritance relationships between classes.
-  ***REMOVED***
-  ***REMOVED*** NOTE: This is a replacement for goog.base and for superClass_
-  ***REMOVED*** property defined in childCtor.
-  ***REMOVED***
-  ***REMOVED*** @param {!Object} me Should always be "this".
-  ***REMOVED*** @param {string} methodName The method name to call. Calling
-  ***REMOVED***     superclass constructor can be done with the special string
-  ***REMOVED***     'constructor'.
-  ***REMOVED*** @param {...*} var_args The arguments to pass to superclass
-  ***REMOVED***     method/constructor.
-  ***REMOVED*** @return {*} The return value of the superclass method/constructor.
- ***REMOVED*****REMOVED***
+  /**
+   * Calls superclass constructor/method.
+   *
+   * This function is only available if you use goog.inherits to
+   * express inheritance relationships between classes.
+   *
+   * NOTE: This is a replacement for goog.base and for superClass_
+   * property defined in childCtor.
+   *
+   * @param {!Object} me Should always be "this".
+   * @param {string} methodName The method name to call. Calling
+   *     superclass constructor can be done with the special string
+   *     'constructor'.
+   * @param {...*} var_args The arguments to pass to superclass
+   *     method/constructor.
+   * @return {*} The return value of the superclass method/constructor.
+   */
   childCtor.base = function(me, methodName, var_args) {
     var args = Array.prototype.slice.call(arguments, 2);
     return parentCtor.prototype[methodName].apply(me, args);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** Call up to the superclass.
-***REMOVED***
-***REMOVED*** If this is called from a constructor, then this calls the superclass
-***REMOVED*** constructor with arguments 1-N.
-***REMOVED***
-***REMOVED*** If this is called from a prototype method, then you must pass the name of the
-***REMOVED*** method as the second argument to this function. If you do not, you will get a
-***REMOVED*** runtime error. This calls the superclass' method with arguments 2-N.
-***REMOVED***
-***REMOVED*** This function only works if you use goog.inherits to express inheritance
-***REMOVED*** relationships between your classes.
-***REMOVED***
-***REMOVED*** This function is a compiler primitive. At compile-time, the compiler will do
-***REMOVED*** macro expansion to remove a lot of the extra overhead that this function
-***REMOVED*** introduces. The compiler will also enforce a lot of the assumptions that this
-***REMOVED*** function makes, and treat it as a compiler error if you break them.
-***REMOVED***
-***REMOVED*** @param {!Object} me Should always be "this".
-***REMOVED*** @param {*=} opt_methodName The method name if calling a super method.
-***REMOVED*** @param {...*} var_args The rest of the arguments.
-***REMOVED*** @return {*} The return value of the superclass method.
-***REMOVED*** @suppress {es5Strict} This method can not be used in strict mode, but
-***REMOVED***     all Closure Library consumers must depend on this file.
-***REMOVED***
+/**
+ * Call up to the superclass.
+ *
+ * If this is called from a constructor, then this calls the superclass
+ * constructor with arguments 1-N.
+ *
+ * If this is called from a prototype method, then you must pass the name of the
+ * method as the second argument to this function. If you do not, you will get a
+ * runtime error. This calls the superclass' method with arguments 2-N.
+ *
+ * This function only works if you use goog.inherits to express inheritance
+ * relationships between your classes.
+ *
+ * This function is a compiler primitive. At compile-time, the compiler will do
+ * macro expansion to remove a lot of the extra overhead that this function
+ * introduces. The compiler will also enforce a lot of the assumptions that this
+ * function makes, and treat it as a compiler error if you break them.
+ *
+ * @param {!Object} me Should always be "this".
+ * @param {*=} opt_methodName The method name if calling a super method.
+ * @param {...*} var_args The rest of the arguments.
+ * @return {*} The return value of the superclass method.
+ * @suppress {es5Strict} This method can not be used in strict mode, but
+ *     all Closure Library consumers must depend on this file.
+ */
 goog.base = function(me, opt_methodName, var_args) {
   var caller = arguments.callee.caller;
 
@@ -1672,33 +1672,33 @@ goog.base = function(me, opt_methodName, var_args) {
         'goog.base called from a method of one name ' +
         'to a method of a different name');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allow for aliasing within scope functions.  This function exists for
-***REMOVED*** uncompiled code - in compiled code the calls will be inlined and the aliases
-***REMOVED*** applied.  In uncompiled code the function is simply run since the aliases as
-***REMOVED*** written are valid JavaScript.
-***REMOVED*** @param {function()} fn Function to call.  This function can contain aliases
-***REMOVED***     to namespaces (e.g. "var dom = goog.dom") or classes
-***REMOVED***     (e.g. "var Timer = goog.Timer").
-***REMOVED***
+/**
+ * Allow for aliasing within scope functions.  This function exists for
+ * uncompiled code - in compiled code the calls will be inlined and the aliases
+ * applied.  In uncompiled code the function is simply run since the aliases as
+ * written are valid JavaScript.
+ * @param {function()} fn Function to call.  This function can contain aliases
+ *     to namespaces (e.g. "var dom = goog.dom") or classes
+ *     (e.g. "var Timer = goog.Timer").
+ */
 goog.scope = function(fn) {
   fn.call(goog.global);
-***REMOVED***
+};
 
 
 /*
-***REMOVED*** To support uncompiled, strict mode bundles that use eval to divide source
-***REMOVED*** like so:
-***REMOVED***    eval('someSource;//# sourceUrl sourcefile.js');
-***REMOVED*** We need to export the globally defined symbols "goog" and "COMPILED".
-***REMOVED*** Exporting "goog" breaks the compiler optimizations, so we required that
-***REMOVED*** be defined externally.
-***REMOVED*** NOTE: We don't use goog.exportSymbol here because we don't want to trigger
-***REMOVED*** extern generation when that compiler option is enabled.
-***REMOVED***
+ * To support uncompiled, strict mode bundles that use eval to divide source
+ * like so:
+ *    eval('someSource;//# sourceUrl sourcefile.js');
+ * We need to export the globally defined symbols "goog" and "COMPILED".
+ * Exporting "goog" breaks the compiler optimizations, so we required that
+ * be defined externally.
+ * NOTE: We don't use goog.exportSymbol here because we don't want to trigger
+ * extern generation when that compiler option is enabled.
+ */
 if (!COMPILED) {
   goog.global['COMPILED'] = COMPILED;
 }

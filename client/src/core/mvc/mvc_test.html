@@ -12,7 +12,7 @@
 <script src='../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.dom.classes');
   goog.require('xrx');
 </script>
@@ -39,11 +39,11 @@ function test01mvcComponentStackIsClean() {
   var modelComponents = xrx.mvc.getModelComponents();
   for(var i = 0; i < viewComponents.length; i++) {
     assertTrue(xrx.mvc.getComponent(i) instanceof xrx.mvc.Component);
- ***REMOVED*****REMOVED***
+  };
   for(var i = 0; i < modelComponents.length; i++) {
     assertTrue(xrx.mvc.getComponent(i) instanceof xrx.mvc.Component);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
@@ -66,7 +66,7 @@ function test02addComponentProgrammatically() {
   goog.dom.dataset.set(cons, 'xrxBind', bindComponent.getId());
   goog.dom.append(test02, cons);
   new xrx.widget.Console(cons);
-***REMOVED***
+};
 
 
 
@@ -75,7 +75,7 @@ function test03removeComponentProgrammatically() {
   xrx.mvc.removeModelComponent('b0');
   assertEquals(undefined, xrx.mvc.getViewComponent('c1'));
   assertEquals(undefined, xrx.mvc.getModelComponent('b0'));
-***REMOVED***
+};
 
 
 
@@ -91,7 +91,7 @@ function test04removeComponentsByParentElement() {
   // all other components remain
   assertFalse(undefined === xrx.mvc.getViewComponent('r1'));
   assertFalse(undefined === xrx.mvc.getModelComponent('b1'));
-***REMOVED***
+};
 
 
 

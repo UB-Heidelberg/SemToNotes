@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Wrappers for the HTML5 File API. These wrappers closely mirror
-***REMOVED*** the underlying APIs, but use Closure-style events and Deferred return values.
-***REMOVED*** Their existence also makes it possible to mock the FileSystem API for testing
-***REMOVED*** in browsers that don't support it natively.
-***REMOVED***
-***REMOVED*** When adding public functions to anything under this namespace, be sure to add
-***REMOVED*** its mock counterpart to goog.testing.fs.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Wrappers for the HTML5 File API. These wrappers closely mirror
+ * the underlying APIs, but use Closure-style events and Deferred return values.
+ * Their existence also makes it possible to mock the FileSystem API for testing
+ * in browsers that don't support it natively.
+ *
+ * When adding public functions to anything under this namespace, be sure to add
+ * its mock counterpart to goog.testing.fs.
+ *
+ */
 
 goog.provide('goog.fs');
 
@@ -33,15 +33,15 @@ goog.require('goog.fs.FileSystemImpl');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Get a wrapped FileSystem object.
-***REMOVED***
-***REMOVED*** @param {goog.fs.FileSystemType_} type The type of the filesystem to get.
-***REMOVED*** @param {number} size The size requested for the filesystem, in bytes.
-***REMOVED*** @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
-***REMOVED***     error occurs, the errback is called with a {@link goog.fs.Error}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get a wrapped FileSystem object.
+ *
+ * @param {goog.fs.FileSystemType_} type The type of the filesystem to get.
+ * @param {number} size The size requested for the filesystem, in bytes.
+ * @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
+ *     error occurs, the errback is called with a {@link goog.fs.Error}.
+ * @private
+ */
 goog.fs.get_ = function(type, size) {
   var requestFileSystem = goog.global.requestFileSystem ||
       goog.global.webkitRequestFileSystem;
@@ -57,91 +57,91 @@ goog.fs.get_ = function(type, size) {
     d.errback(new goog.fs.Error(err, 'requesting filesystem'));
   });
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The two types of filesystem.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The two types of filesystem.
+ *
+ * @enum {number}
+ * @private
+ */
 goog.fs.FileSystemType_ = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A temporary filesystem may be deleted by the user agent at its discretion.
- ***REMOVED*****REMOVED***
+  /**
+   * A temporary filesystem may be deleted by the user agent at its discretion.
+   */
   TEMPORARY: 0,
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A persistent filesystem will never be deleted without the user's or
-  ***REMOVED*** application's authorization.
- ***REMOVED*****REMOVED***
+  /**
+   * A persistent filesystem will never be deleted without the user's or
+   * application's authorization.
+   */
   PERSISTENT: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a temporary FileSystem object. A temporary filesystem may be deleted
-***REMOVED*** by the user agent at its discretion.
-***REMOVED***
-***REMOVED*** @param {number} size The size requested for the filesystem, in bytes.
-***REMOVED*** @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
-***REMOVED***     error occurs, the errback is called with a {@link goog.fs.Error}.
-***REMOVED***
+/**
+ * Returns a temporary FileSystem object. A temporary filesystem may be deleted
+ * by the user agent at its discretion.
+ *
+ * @param {number} size The size requested for the filesystem, in bytes.
+ * @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
+ *     error occurs, the errback is called with a {@link goog.fs.Error}.
+ */
 goog.fs.getTemporary = function(size) {
   return goog.fs.get_(goog.fs.FileSystemType_.TEMPORARY, size);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a persistent FileSystem object. A persistent filesystem will never be
-***REMOVED*** deleted without the user's or application's authorization.
-***REMOVED***
-***REMOVED*** @param {number} size The size requested for the filesystem, in bytes.
-***REMOVED*** @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
-***REMOVED***     error occurs, the errback is called with a {@link goog.fs.Error}.
-***REMOVED***
+/**
+ * Returns a persistent FileSystem object. A persistent filesystem will never be
+ * deleted without the user's or application's authorization.
+ *
+ * @param {number} size The size requested for the filesystem, in bytes.
+ * @return {!goog.async.Deferred} The deferred {@link goog.fs.FileSystem}. If an
+ *     error occurs, the errback is called with a {@link goog.fs.Error}.
+ */
 goog.fs.getPersistent = function(size) {
   return goog.fs.get_(goog.fs.FileSystemType_.PERSISTENT, size);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a blob URL for a blob object.
-***REMOVED*** Throws an error if the browser does not support Object Urls.
-***REMOVED***
-***REMOVED*** @param {!Blob} blob The object for which to create the URL.
-***REMOVED*** @return {string} The URL for the object.
-***REMOVED***
+/**
+ * Creates a blob URL for a blob object.
+ * Throws an error if the browser does not support Object Urls.
+ *
+ * @param {!Blob} blob The object for which to create the URL.
+ * @return {string} The URL for the object.
+ */
 goog.fs.createObjectUrl = function(blob) {
   return goog.fs.getUrlObject_().createObjectURL(blob);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Revokes a URL created by {@link goog.fs.createObjectUrl}.
-***REMOVED*** Throws an error if the browser does not support Object Urls.
-***REMOVED***
-***REMOVED*** @param {string} url The URL to revoke.
-***REMOVED***
+/**
+ * Revokes a URL created by {@link goog.fs.createObjectUrl}.
+ * Throws an error if the browser does not support Object Urls.
+ *
+ * @param {string} url The URL to revoke.
+ */
 goog.fs.revokeObjectUrl = function(url) {
   goog.fs.getUrlObject_().revokeObjectURL(url);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @typedef {!{createObjectURL: (function(!Blob): string),
-***REMOVED***            revokeObjectURL: function(string): void}}
-***REMOVED***
+/**
+ * @typedef {!{createObjectURL: (function(!Blob): string),
+ *            revokeObjectURL: function(string): void}}
+ */
 goog.fs.UrlObject_;
 
 
-***REMOVED***
-***REMOVED*** Get the object that has the createObjectURL and revokeObjectURL functions for
-***REMOVED*** this browser.
-***REMOVED***
-***REMOVED*** @return {goog.fs.UrlObject_} The object for this browser.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the object that has the createObjectURL and revokeObjectURL functions for
+ * this browser.
+ *
+ * @return {goog.fs.UrlObject_} The object for this browser.
+ * @private
+ */
 goog.fs.getUrlObject_ = function() {
   var urlObject = goog.fs.findUrlObject_();
   if (urlObject != null) {
@@ -149,54 +149,54 @@ goog.fs.getUrlObject_ = function() {
   } else {
     throw Error('This browser doesn\'t seem to support blob URLs');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the object that has the createObjectURL and revokeObjectURL functions
-***REMOVED*** for this browser.
-***REMOVED***
-***REMOVED*** @return {?goog.fs.UrlObject_} The object for this browser or null if the
-***REMOVED***     browser does not support Object Urls.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds the object that has the createObjectURL and revokeObjectURL functions
+ * for this browser.
+ *
+ * @return {?goog.fs.UrlObject_} The object for this browser or null if the
+ *     browser does not support Object Urls.
+ * @private
+ */
 goog.fs.findUrlObject_ = function() {
   // This is what the spec says to do
   // http://dev.w3.org/2006/webapi/FileAPI/#dfn-createObjectURL
   if (goog.isDef(goog.global.URL) &&
       goog.isDef(goog.global.URL.createObjectURL)) {
-    return***REMOVED*****REMOVED*** @type {goog.fs.UrlObject_}***REMOVED*** (goog.global.URL);
+    return /** @type {goog.fs.UrlObject_} */ (goog.global.URL);
   // This is what Chrome does (as of 10.0.648.6 dev)
   } else if (goog.isDef(goog.global.webkitURL) &&
              goog.isDef(goog.global.webkitURL.createObjectURL)) {
-    return***REMOVED*****REMOVED*** @type {goog.fs.UrlObject_}***REMOVED*** (goog.global.webkitURL);
+    return /** @type {goog.fs.UrlObject_} */ (goog.global.webkitURL);
   // This is what the spec used to say to do
   } else if (goog.isDef(goog.global.createObjectURL)) {
-    return***REMOVED*****REMOVED*** @type {goog.fs.UrlObject_}***REMOVED*** (goog.global);
+    return /** @type {goog.fs.UrlObject_} */ (goog.global);
   } else {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether this browser supports Object Urls. If not, calls to
-***REMOVED*** createObjectUrl and revokeObjectUrl will result in an error.
-***REMOVED***
-***REMOVED*** @return {boolean} True if this browser supports Object Urls.
-***REMOVED***
+/**
+ * Checks whether this browser supports Object Urls. If not, calls to
+ * createObjectUrl and revokeObjectUrl will result in an error.
+ *
+ * @return {boolean} True if this browser supports Object Urls.
+ */
 goog.fs.browserSupportsObjectUrls = function() {
   return goog.fs.findUrlObject_() != null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Concatenates one or more values together and converts them to a Blob.
-***REMOVED***
-***REMOVED*** @param {...(string|!Blob|!ArrayBuffer)} var_args The values that will make up
-***REMOVED***     the resulting blob.
-***REMOVED*** @return {!Blob} The blob.
-***REMOVED***
+/**
+ * Concatenates one or more values together and converts them to a Blob.
+ *
+ * @param {...(string|!Blob|!ArrayBuffer)} var_args The values that will make up
+ *     the resulting blob.
+ * @return {!Blob} The blob.
+ */
 goog.fs.getBlob = function(var_args) {
   var BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
 
@@ -209,20 +209,20 @@ goog.fs.getBlob = function(var_args) {
   } else {
     return goog.fs.getBlobWithProperties(goog.array.toArray(arguments));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a blob with the given properties.
-***REMOVED*** See https://developer.mozilla.org/en-US/docs/Web/API/Blob for more details.
-***REMOVED***
-***REMOVED*** @param {Array.<string|!Blob>} parts The values that will make up the
-***REMOVED***     resulting blob.
-***REMOVED*** @param {string=} opt_type The MIME type of the Blob.
-***REMOVED*** @param {string=} opt_endings Specifies how strings containing newlines are to
-***REMOVED***     be written out.
-***REMOVED*** @return {!Blob} The blob.
-***REMOVED***
+/**
+ * Creates a blob with the given properties.
+ * See https://developer.mozilla.org/en-US/docs/Web/API/Blob for more details.
+ *
+ * @param {Array.<string|!Blob>} parts The values that will make up the
+ *     resulting blob.
+ * @param {string=} opt_type The MIME type of the Blob.
+ * @param {string=} opt_endings Specifies how strings containing newlines are to
+ *     be written out.
+ * @return {!Blob} The blob.
+ */
 goog.fs.getBlobWithProperties = function(parts, opt_type, opt_endings) {
   var BlobBuilder = goog.global.BlobBuilder || goog.global.WebKitBlobBuilder;
 
@@ -233,7 +233,7 @@ goog.fs.getBlobWithProperties = function(parts, opt_type, opt_endings) {
     }
     return bb.getBlob(opt_type);
   } else if (goog.isDef(goog.global.Blob)) {
-    var properties = {***REMOVED***
+    var properties = {};
     if (opt_type) {
       properties['type'] = opt_type;
     }
@@ -244,36 +244,36 @@ goog.fs.getBlobWithProperties = function(parts, opt_type, opt_endings) {
   } else {
     throw Error('This browser doesn\'t seem to support creating Blobs');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a Blob or a File into a string. This should only be used when the
-***REMOVED*** blob is known to be small.
-***REMOVED***
-***REMOVED*** @param {!Blob} blob The blob to convert.
-***REMOVED*** @param {string=} opt_encoding The name of the encoding to use.
-***REMOVED*** @return {!goog.async.Deferred} The deferred string. If an error occurrs, the
-***REMOVED***     errback is called with a {@link goog.fs.Error}.
-***REMOVED*** @deprecated Use {@link goog.fs.FileReader.readAsText} instead.
-***REMOVED***
+/**
+ * Converts a Blob or a File into a string. This should only be used when the
+ * blob is known to be small.
+ *
+ * @param {!Blob} blob The blob to convert.
+ * @param {string=} opt_encoding The name of the encoding to use.
+ * @return {!goog.async.Deferred} The deferred string. If an error occurrs, the
+ *     errback is called with a {@link goog.fs.Error}.
+ * @deprecated Use {@link goog.fs.FileReader.readAsText} instead.
+ */
 goog.fs.blobToString = function(blob, opt_encoding) {
   return goog.fs.FileReader.readAsText(blob, opt_encoding);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Slices the blob. The returned blob contains data from the start byte
-***REMOVED*** (inclusive) till the end byte (exclusive). Negative indices can be used
-***REMOVED*** to count bytes from the end of the blob (-1 == blob.size - 1). Indices
-***REMOVED*** are always clamped to blob range. If end is omitted, all the data till
-***REMOVED*** the end of the blob is taken.
-***REMOVED***
-***REMOVED*** @param {!Blob} blob The blob to be sliced.
-***REMOVED*** @param {number} start Index of the starting byte.
-***REMOVED*** @param {number=} opt_end Index of the ending byte.
-***REMOVED*** @return {Blob} The blob slice or null if not supported.
-***REMOVED***
+/**
+ * Slices the blob. The returned blob contains data from the start byte
+ * (inclusive) till the end byte (exclusive). Negative indices can be used
+ * to count bytes from the end of the blob (-1 == blob.size - 1). Indices
+ * are always clamped to blob range. If end is omitted, all the data till
+ * the end of the blob is taken.
+ *
+ * @param {!Blob} blob The blob to be sliced.
+ * @param {number} start Index of the starting byte.
+ * @param {number=} opt_end Index of the ending byte.
+ * @return {Blob} The blob slice or null if not supported.
+ */
 goog.fs.sliceBlob = function(blob, start, opt_end) {
   if (!goog.isDef(opt_end)) {
     opt_end = blob.size;
@@ -315,5 +315,5 @@ goog.fs.sliceBlob = function(blob, start, opt_end) {
     return blob.slice(start, opt_end);
   }
   return null;
-***REMOVED***
+};
 

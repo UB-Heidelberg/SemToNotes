@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.drawing.EventHandler');
 
@@ -39,20 +39,20 @@ goog.require('xrx.drawing.EventTarget');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.drawing.EventHandler = function() {
 
   goog.base(this);
-***REMOVED***
+};
 goog.inherits(xrx.drawing.EventHandler, xrx.drawing.EventTarget);
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
   var pos = goog.style.getClientPosition(this.canvas_.getEventTarget());
   var touches = e.getBrowserEvent().changedTouches;
@@ -69,14 +69,14 @@ xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
   var point = new Array(2);
   this.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
   return point;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the shape which the user currently selected with the mouse.
-***REMOVED*** @return {xrx.shape.Shape}
-***REMOVED***
+/**
+ * Returns the shape which the user currently selected with the mouse.
+ * @return {xrx.shape.Shape}
+ */
 xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
   var layer;
   var shapes;
@@ -99,7 +99,7 @@ xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
     if (found === true) break;
   }
   return found ? shape : undefined;
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

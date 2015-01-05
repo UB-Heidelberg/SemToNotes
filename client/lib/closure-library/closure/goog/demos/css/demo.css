@@ -1,11 +1,11 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: attila@google.com (Attila Bodis)***REMOVED***
+/* Author: attila@google.com (Attila Bodis) */
 
 
 @import url(../../css/common.css);
@@ -17,7 +17,7 @@ body {
 }
 
 
-/* Misc. styles used for logging and debugging.***REMOVED***
+/* Misc. styles used for logging and debugging. */
 fieldset {
   padding: 4px 8px;
   margin-bottom: 1em;

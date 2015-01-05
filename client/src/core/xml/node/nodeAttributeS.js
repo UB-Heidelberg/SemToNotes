@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a attribute node
-***REMOVED*** implementation working on a streaming XML model.
-***REMOVED***
+/**
+ * @fileoverview A class representing a attribute node
+ * implementation working on a streaming XML model.
+ */
 
 goog.provide('xrx.node.AttributeS');
 
@@ -10,7 +10,7 @@ goog.provide('xrx.node.AttributeS');
 goog.require('xrx.node');
 goog.require('xrx.node.Attribute');
 goog.require('xrx.node.Streaming');
-***REMOVED***
+goog.require('xrx.xml.Stream');
 
 
 
@@ -21,14 +21,14 @@ xrx.node.AttributeS = function(num, parent) {
   this.num_ = num;
 
   this.parent_ = parent;
-***REMOVED***
+};
 goog.inherits(xrx.node.AttributeS, xrx.node.Streaming);
 
 
 
 xrx.node.AttributeS.prototype.getParent = function() {
   return this.parent_;
-***REMOVED***
+};
 
 
 
@@ -46,7 +46,7 @@ xrx.node.AttributeS.prototype.getToken = function() {
   var loc = this.getStream().attribute(xml, this.num_);
   
   return new xrx.token.Attribute(this.getLabel(), loc.offset, loc.length);
-***REMOVED***
+};
 
 
 
@@ -55,7 +55,7 @@ xrx.node.AttributeS.prototype.getLabel = function() {
   label.push(this.num_);
 
   return label;
-***REMOVED***
+};
 
 
 
@@ -65,7 +65,7 @@ xrx.node.AttributeS.prototype.getOffset = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.offset;
-***REMOVED***
+};
 
 
 
@@ -75,7 +75,7 @@ xrx.node.AttributeS.prototype.getLength = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.length;
-***REMOVED***
+};
 
 
 
@@ -134,7 +134,7 @@ xrx.node.AttributeS.prototype.getName = function() {
   var loc = stream.attrName(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 
@@ -143,7 +143,7 @@ xrx.node.AttributeS.prototype.getNamespaceUri = function(prefix) {
       this.parent_.getToken(), prefix);
 
   return ns ? ns.uri : '';
-***REMOVED***
+};
 
 
 
@@ -153,7 +153,7 @@ xrx.node.AttributeS.prototype.getStringValue = function() {
   var loc = this.getStream().attrValue(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 
@@ -163,7 +163,7 @@ xrx.node.AttributeS.prototype.getXml = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 

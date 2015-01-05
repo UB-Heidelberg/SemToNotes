@@ -14,8 +14,8 @@ See the COPYING file for details.
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.style');
@@ -34,7 +34,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/button.css">
   <link rel="stylesheet" href="../css/menubutton.css">
   <style>
-    /* Demo styles for goog.ui.Control.***REMOVED***
+    /* Demo styles for goog.ui.Control. */
     .goog-control {
       position: relative;
       margin: 2px;
@@ -71,7 +71,7 @@ See the COPYING file for details.
       border-color: orange;
     }
 
-    /* Demo styles for goog.ui.Container***REMOVED***
+    /* Demo styles for goog.ui.Container */
     .goog-container {
       position: relative;
       margin: 0;
@@ -79,7 +79,7 @@ See the COPYING file for details.
       padding: 0;
       background-color: #eee;
       outline: none !important;
-      zoom: 1; /* The container element must have layout on IE.***REMOVED***
+      zoom: 1; /* The container element must have layout on IE. */
     }
 
     .goog-container-vertical {
@@ -92,7 +92,7 @@ See the COPYING file for details.
       background: #fafafa url(../images/toolbar-bg.png) repeat-x bottom left;
     }
 
-    /* Additional demo styles.***REMOVED***
+    /* Additional demo styles. */
 
     .goog-month .goog-menu-button-caption {
       width: 18ex;
@@ -416,10 +416,10 @@ See the COPYING file for details.
     vc.addChildAt(new goog.ui.Separator(), 3, true);
     vc.getChild('Porthos').setEnabled(false);
     vc.render(goog.dom.getElement('vc'));
-  ***REMOVED***vc, EVENTS, logEvent);
+    goog.events.listen(vc, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('show_vc'),
+    goog.events.listen(goog.dom.getElement('show_vc'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -427,7 +427,7 @@ See the COPYING file for details.
           goog.log.info(logger, (e.target.checked ? 'Showed' : 'Hid') +
               ' vertical container in ' + (goog.now() - t) + 'ms');
         });
-  ***REMOVED***goog.dom.getElement('enable_vc'),
+    goog.events.listen(goog.dom.getElement('enable_vc'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -438,17 +438,17 @@ See the COPYING file for details.
           goog.log.info(logger, (e.target.checked ? 'Enabled' : 'Disabled') +
               ' vertical container in ' + (goog.now() - t) + 'ms');
         });
-  ***REMOVED***goog.dom.getElement('show_porthos'),
+    goog.events.listen(goog.dom.getElement('show_porthos'),
         goog.events.EventType.CLICK,
         function(e) {
           vc.getChild('Porthos').setVisible(e.target.checked);
         });
-  ***REMOVED***goog.dom.getElement('enable_porthos'),
+    goog.events.listen(goog.dom.getElement('enable_porthos'),
         goog.events.EventType.CLICK,
         function(e) {
           vc.getChild('Porthos').setEnabled(e.target.checked);
         });
-  ***REMOVED***goog.dom.getElement('enable_vc_events'),
+    goog.events.listen(goog.dom.getElement('enable_vc_events'),
         goog.events.EventType.CLICK,
         function(e) {
           vc.forEachChild(function(c) {
@@ -484,10 +484,10 @@ See the COPYING file for details.
           hc.addChild(c, true);
         });
     hc.getChild('Doc').setEnabled(false);
-  ***REMOVED***hc, EVENTS, logEvent);
+    goog.events.listen(hc, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('show_hc'),
+    goog.events.listen(goog.dom.getElement('show_hc'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -495,7 +495,7 @@ See the COPYING file for details.
           goog.log.info(logger, (e.target.checked ? 'Showed' : 'Hid') +
               ' horizontal container in ' + (goog.now() - t) + 'ms');
         });
-  ***REMOVED***goog.dom.getElement('enable_hc'),
+    goog.events.listen(goog.dom.getElement('enable_hc'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -506,17 +506,17 @@ See the COPYING file for details.
           goog.log.info(logger, (e.target.checked ? 'Enabled' : 'Disabled') +
               ' horizontal container in ' + (goog.now() - t) + 'ms');
         });
-  ***REMOVED***goog.dom.getElement('show_doc'),
+    goog.events.listen(goog.dom.getElement('show_doc'),
         goog.events.EventType.CLICK,
         function(e) {
           hc.getChild('Doc').setVisible(e.target.checked);
         });
-  ***REMOVED***goog.dom.getElement('enable_doc'),
+    goog.events.listen(goog.dom.getElement('enable_doc'),
         goog.events.EventType.CLICK,
         function(e) {
           hc.getChild('Doc').setEnabled(e.target.checked);
         });
-  ***REMOVED***goog.dom.getElement('enable_hc_events'),
+    goog.events.listen(goog.dom.getElement('enable_hc_events'),
         goog.events.EventType.CLICK,
         function(e) {
           hc.forEachChild(function(c) {
@@ -545,14 +545,14 @@ See the COPYING file for details.
       c.addClassName('goog-inline-block');
       // For demo purposes, have controls dispatch transition events.
       c.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-      nfc.addChild(c, /* opt_render***REMOVED*** true);
+      nfc.addChild(c, /* opt_render */ true);
       // Since the container itself is non-focusable, we need to make each
-      // child individually focusable; this has to happen***REMOVED***after* addChild().
+      // child individually focusable; this has to happen *after* addChild().
       // See e.g. bug http://b/1359754.
       c.setSupportedState(goog.ui.Component.State.FOCUSED, true);
     });
     nfc.render(goog.dom.getElement('nfc'));
-  ***REMOVED***nfc, EVENTS, logEvent);
+    goog.events.listen(nfc, EVENTS, logEvent);
 
     // Programmatically create a toolbar.
     var tb = new goog.ui.Container(goog.ui.Container.Orientation.HORIZONTAL);
@@ -598,10 +598,10 @@ See the COPYING file for details.
     tb.addChild(underlineButton, true);
 
     tb.render(goog.dom.getElement('tb'));
-  ***REMOVED***tb, EVENTS, logEvent);
+    goog.events.listen(tb, EVENTS, logEvent);
 
     // Hook up checkbox.
-  ***REMOVED***goog.dom.getElement('enable_tb'),
+    goog.events.listen(goog.dom.getElement('enable_tb'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -612,10 +612,10 @@ See the COPYING file for details.
 
     var tb2 = new goog.ui.Container();
     tb2.decorate(goog.dom.getElement('tb2'));
-  ***REMOVED***tb2, EVENTS, logEvent);
+    goog.events.listen(tb2, EVENTS, logEvent);
 
     // Hook up checkbox.
-  ***REMOVED***goog.dom.getElement('enable_tb2'),
+    goog.events.listen(goog.dom.getElement('enable_tb2'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -627,10 +627,10 @@ See the COPYING file for details.
     // BiDi container example:
     var tb3 = new goog.ui.Container();
     tb3.decorate(goog.dom.getElement('tb3'));
-  ***REMOVED***tb3, EVENTS, logEvent);
+    goog.events.listen(tb3, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('enable_tb3'),
+    goog.events.listen(goog.dom.getElement('enable_tb3'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -638,7 +638,7 @@ See the COPYING file for details.
           goog.log.info(logger, (e.target.checked ? 'Enabled' : 'Disabled') +
               ' toolbar in ' + (goog.now() - t) + 'ms');
         });
-  ***REMOVED***goog.dom.getElement('show_tb3'),
+    goog.events.listen(goog.dom.getElement('show_tb3'),
         goog.events.EventType.CLICK,
         function(e) {
           var t = goog.now();
@@ -654,7 +654,7 @@ See the COPYING file for details.
     tb4.setFocusable(true);
     new goog.ui.ContainerScroller(tb4);
 
-  ***REMOVED***goog.dom.getElement('tb4_highlight_links'),
+    goog.events.listen(goog.dom.getElement('tb4_highlight_links'),
         goog.events.EventType.CLICK,
         function(event) {
           var index = parseInt(event.target.innerHTML, 10);

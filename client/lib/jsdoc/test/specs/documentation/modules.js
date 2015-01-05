@@ -1,5 +1,5 @@
 /*global afterEach: true, beforeEach: true, describe: true, env: true, expect: true, it: true,
-jasmine: true, spyOn: true***REMOVED***
+jasmine: true, spyOn: true */
 describe("module names", function() {
     var path = require('jsdoc/path');
     var runtime = require('jsdoc/util/runtime');
@@ -31,7 +31,7 @@ describe("module names", function() {
         env.sourceFiles.push(filename);
         doclets = srcParser.parse(
             path.normalize( path.join(env.pwd, filename) )
-      ***REMOVED***
+        );
         expect(doclets.length).toBeGreaterThan(1);
         expect(doclets[0].longname).toEqual('module:mod-1');
     });
@@ -48,7 +48,7 @@ describe("module names", function() {
             ];
             env.opts._ = [];
 
-            doclet = new Doclet('***REMOVED*** @module***REMOVED***', {
+            doclet = new Doclet('/** @module */', {
                 lineno: 1,
                 filename: 'C:\\Users\\Jane Smith\\myproject\\lib\\mymodule.js'
             });
@@ -63,7 +63,7 @@ describe("module names", function() {
         env.sourceFiles.push(filename);
         doclets = srcParser.parse(
             path.normalize( path.join(env.pwd, filename) )
-      ***REMOVED***
+        );
 
         expect(doclets.length).toBeGreaterThan(1);
         expect(doclets[0].longname).toEqual('module:my/module/name');

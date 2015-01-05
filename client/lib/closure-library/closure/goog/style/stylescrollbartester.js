@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared unit tests for scrollbar measurement.
-***REMOVED***
-***REMOVED*** @author flan@google.com (Ian Flanigan)
-***REMOVED***
+/**
+ * @fileoverview Shared unit tests for scrollbar measurement.
+ *
+ * @author flan@google.com (Ian Flanigan)
+ */
 
 goog.provide('goog.styleScrollbarTester');
 
@@ -26,10 +26,10 @@ goog.require('goog.testing.asserts');
 goog.setTestOnly('goog.styleScrollbarTester');
 
 
-***REMOVED***
-***REMOVED*** Tests the scrollbar width calculation. Assumes that there is an element with
-***REMOVED*** id 'test-scrollbarwidth' in the page.
-***REMOVED***
+/**
+ * Tests the scrollbar width calculation. Assumes that there is an element with
+ * id 'test-scrollbarwidth' in the page.
+ */
 function testScrollbarWidth() {
   var width = goog.style.getScrollbarWidth();
   assertTrue(width > 0);

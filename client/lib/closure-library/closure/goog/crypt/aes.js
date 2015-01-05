@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Implementation of AES in JavaScript.
-***REMOVED*** @see http://en.wikipedia.org/wiki/Advanced_Encryption_Standard
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Implementation of AES in JavaScript.
+ * @see http://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+ *
+ */
 
 goog.provide('goog.crypt.Aes');
 
@@ -25,78 +25,78 @@ goog.require('goog.crypt.BlockCipher');
 
 
 
-***REMOVED***
-***REMOVED*** Implementation of AES in JavaScript.
-***REMOVED*** See http://en.wikipedia.org/wiki/Advanced_Encryption_Standard
-***REMOVED***
-***REMOVED*** WARNING: This is ECB mode only. If you are encrypting something
-***REMOVED*** longer than 16 bytes, or encrypting more than one value with the same key
-***REMOVED*** (so basically, always) you need to use this with a block cipher mode of
-***REMOVED*** operation.  See goog.crypt.Cbc.
-***REMOVED***
-***REMOVED*** See http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation for more
-***REMOVED*** information.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {goog.crypt.BlockCipher}
-***REMOVED*** @param {!Array.<number>} key The key as an array of integers in {0, 255}.
-***REMOVED***     The key must have lengths of 16, 24, or 32 integers for 128-,
-***REMOVED***     192-, or 256-bit encryption, respectively.
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Implementation of AES in JavaScript.
+ * See http://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+ *
+ * WARNING: This is ECB mode only. If you are encrypting something
+ * longer than 16 bytes, or encrypting more than one value with the same key
+ * (so basically, always) you need to use this with a block cipher mode of
+ * operation.  See goog.crypt.Cbc.
+ *
+ * See http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation for more
+ * information.
+ *
+ * @constructor
+ * @implements {goog.crypt.BlockCipher}
+ * @param {!Array.<number>} key The key as an array of integers in {0, 255}.
+ *     The key must have lengths of 16, 24, or 32 integers for 128-,
+ *     192-, or 256-bit encryption, respectively.
+ * @final
+ * @struct
+ */
 goog.crypt.Aes = function(key) {
   goog.crypt.Aes.assertKeyArray_(key);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The AES key.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The AES key.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.key_ = key;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Key length, in words.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Key length, in words.
+   * @type {number}
+   * @private
+   */
   this.keyLength_ = this.key_.length / 4;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of rounds.  Based on key length per AES spec.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of rounds.  Based on key length per AES spec.
+   * @type {number}
+   * @private
+   */
   this.numberOfRounds_ = this.keyLength_ + 6;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** 4x4 byte array containing the current state.
-  ***REMOVED*** @type {!Array.<Array.<number>>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * 4x4 byte array containing the current state.
+   * @type {!Array.<Array.<number>>}
+   * @private
+   */
   this.state_ = [[], [], [], []];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Scratch temporary array for calculation.
-  ***REMOVED*** @type {!Array.<Array.<number>>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Scratch temporary array for calculation.
+   * @type {!Array.<Array.<number>>}
+   * @private
+   */
   this.temp_ = [[], [], [], []];
 
   this.keyExpansion_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to call test method stubs.  This can be enabled
-***REMOVED***     for unit testing.
-***REMOVED***
+/**
+ * @define {boolean} Whether to call test method stubs.  This can be enabled
+ *     for unit testing.
+ */
 goog.define('goog.crypt.Aes.ENABLE_TEST_MODE', false);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.crypt.Aes.prototype.encrypt = function(input) {
 
   if (goog.crypt.Aes.ENABLE_TEST_MODE) {
@@ -143,12 +143,12 @@ goog.crypt.Aes.prototype.encrypt = function(input) {
   this.addRoundKey_(this.numberOfRounds_);
 
   return this.generateOutput_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.crypt.Aes.prototype.decrypt = function(input) {
 
   if (goog.crypt.Aes.ENABLE_TEST_MODE) {
@@ -200,22 +200,22 @@ goog.crypt.Aes.prototype.decrypt = function(input) {
   this.addRoundKey_(0);
 
   return this.generateOutput_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Block size, in words.  Fixed at 4 per AES spec.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Block size, in words.  Fixed at 4 per AES spec.
+ * @type {number}
+ * @private
+ */
 goog.crypt.Aes.BLOCK_SIZE_ = 4;
 
 
-***REMOVED***
-***REMOVED*** Asserts that the key's array of integers is in the correct format.
-***REMOVED*** @param {!Array.<number>} arr AES key as array of integers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Asserts that the key's array of integers is in the correct format.
+ * @param {!Array.<number>} arr AES key as array of integers.
+ * @private
+ */
 goog.crypt.Aes.assertKeyArray_ = function(arr) {
   if (goog.asserts.ENABLE_ASSERTS) {
     goog.asserts.assert(arr.length == 16 || arr.length == 24 ||
@@ -226,90 +226,90 @@ goog.crypt.Aes.assertKeyArray_ = function(arr) {
       goog.asserts.assert(arr[i] >= 0 && arr[i] <= 255);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** at the start of each round***REMOVED***in both functions encrypt() and decrypt()*.
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<Array.<number>>} Current state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * at the start of each round *in both functions encrypt() and decrypt()*.
+ * @param {number} roundNum Round number.
+ * @param {!Array.<Array.<number>>} Current state.
+ * @private
+ */
 goog.crypt.Aes.prototype.testStartRound_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** each round right after the SubBytes step gets executed***REMOVED***in both functions
-***REMOVED*** encrypt() and decrypt()*.
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<Array.<number>>} Current state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * each round right after the SubBytes step gets executed *in both functions
+ * encrypt() and decrypt()*.
+ * @param {number} roundNum Round number.
+ * @param {!Array.<Array.<number>>} Current state.
+ * @private
+ */
 goog.crypt.Aes.prototype.testAfterSubBytes_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** each round right after the ShiftRows step gets executed***REMOVED***in both functions
-***REMOVED*** encrypt() and decrypt()*.
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<Array.<number>>} Current state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * each round right after the ShiftRows step gets executed *in both functions
+ * encrypt() and decrypt()*.
+ * @param {number} roundNum Round number.
+ * @param {!Array.<Array.<number>>} Current state.
+ * @private
+ */
 goog.crypt.Aes.prototype.testAfterShiftRows_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** each round right after the MixColumns step gets executed***REMOVED***but only in the
-***REMOVED*** decrypt() function*.
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<Array.<number>>} Current state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * each round right after the MixColumns step gets executed *but only in the
+ * decrypt() function*.
+ * @param {number} roundNum Round number.
+ * @param {!Array.<Array.<number>>} Current state.
+ * @private
+ */
 goog.crypt.Aes.prototype.testAfterMixColumns_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** each round right after the AddRoundKey step gets executed  encrypt().
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<Array.<number>>} Current state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * each round right after the AddRoundKey step gets executed  encrypt().
+ * @param {number} roundNum Round number.
+ * @param {!Array.<Array.<number>>} Current state.
+ * @private
+ */
 goog.crypt.Aes.prototype.testAfterAddRoundKey_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Tests can populate this with a callback, and that callback will get called
-***REMOVED*** before each round on the round key. ***REMOVED***Gets called in both the encrypt() and
-***REMOVED*** decrypt() functions.*
-***REMOVED*** @param {number} roundNum Round number.
-***REMOVED*** @param {!Array.<number>} Computed key schedule.
-***REMOVED*** @param {number} index The index into the key schedule to test. This is not
-***REMOVED***     necessarily roundNum because the key schedule is used in reverse
-***REMOVED***     in the case of decryption.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests can populate this with a callback, and that callback will get called
+ * before each round on the round key.  *Gets called in both the encrypt() and
+ * decrypt() functions.*
+ * @param {number} roundNum Round number.
+ * @param {!Array.<number>} Computed key schedule.
+ * @param {number} index The index into the key schedule to test. This is not
+ *     necessarily roundNum because the key schedule is used in reverse
+ *     in the case of decryption.
+ * @private
+ */
 goog.crypt.Aes.prototype.testKeySchedule_ = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Helper to copy input into the AES state matrix.
-***REMOVED*** @param {!Array.<number>} input Byte array to copy into the state matrix.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper to copy input into the AES state matrix.
+ * @param {!Array.<number>} input Byte array to copy into the state matrix.
+ * @private
+ */
 goog.crypt.Aes.prototype.copyInput_ = function(input) {
   var v, p;
 
-  goog.asserts.assert(input.length == goog.crypt.Aes.BLOCK_SIZE_***REMOVED*** 4,
+  goog.asserts.assert(input.length == goog.crypt.Aes.BLOCK_SIZE_ * 4,
                       'Expecting input of 4 times block size.');
 
   for (var r = 0; r < goog.crypt.Aes.BLOCK_SIZE_; r++) {
     for (var c = 0; c < 4; c++) {
-      p = c***REMOVED*** 4 + r;
+      p = c * 4 + r;
       v = input[p];
 
       goog.asserts.assert(
@@ -319,59 +319,59 @@ goog.crypt.Aes.prototype.copyInput_ = function(input) {
       this.state_[r][c] = v;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper to copy the state matrix into an output array.
-***REMOVED*** @return {!Array.<number>} Output byte array.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper to copy the state matrix into an output array.
+ * @return {!Array.<number>} Output byte array.
+ * @private
+ */
 goog.crypt.Aes.prototype.generateOutput_ = function() {
   var output = [];
   for (var r = 0; r < goog.crypt.Aes.BLOCK_SIZE_; r++) {
     for (var c = 0; c < 4; c++) {
-      output[c***REMOVED*** 4 + r] = this.state_[r][c];
+      output[c * 4 + r] = this.state_[r][c];
     }
   }
   return output;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's AddRoundKey procedure. Add the current round key to the state.
-***REMOVED*** @param {number} round The current round.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's AddRoundKey procedure. Add the current round key to the state.
+ * @param {number} round The current round.
+ * @private
+ */
 goog.crypt.Aes.prototype.addRoundKey_ = function(round) {
   for (var r = 0; r < 4; r++) {
     for (var c = 0; c < 4; c++) {
-      this.state_[r][c] ^= this.keySchedule_[round***REMOVED*** 4 + c][r];
+      this.state_[r][c] ^= this.keySchedule_[round * 4 + c][r];
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's SubBytes procedure. Substitute bytes from the precomputed SBox lookup
-***REMOVED*** into the state.
-***REMOVED*** @param {!Array.<number>} box The SBox or invSBox.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's SubBytes procedure. Substitute bytes from the precomputed SBox lookup
+ * into the state.
+ * @param {!Array.<number>} box The SBox or invSBox.
+ * @private
+ */
 goog.crypt.Aes.prototype.subBytes_ = function(box) {
   for (var r = 0; r < 4; r++) {
     for (var c = 0; c < 4; c++) {
       this.state_[r][c] = box[this.state_[r][c]];
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's ShiftRows procedure. Shift the values in each row to the right. Each
-***REMOVED*** row is shifted one more slot than the one above it.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's ShiftRows procedure. Shift the values in each row to the right. Each
+ * row is shifted one more slot than the one above it.
+ * @private
+ */
 goog.crypt.Aes.prototype.shiftRows_ = function() {
   for (var r = 1; r < 4; r++) {
     for (var c = 0; c < 4; c++) {
@@ -385,13 +385,13 @@ goog.crypt.Aes.prototype.shiftRows_ = function() {
           goog.crypt.Aes.BLOCK_SIZE_];
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's InvShiftRows procedure. Shift the values in each row to the right.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's InvShiftRows procedure. Shift the values in each row to the right.
+ * @private
+ */
 goog.crypt.Aes.prototype.invShiftRows_ = function() {
   for (var r = 1; r < 4; r++) {
     for (var c = 0; c < 4; c++) {
@@ -405,13 +405,13 @@ goog.crypt.Aes.prototype.invShiftRows_ = function() {
       this.state_[r][c] = this.temp_[r][c];
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's MixColumns procedure. Mix the columns of the state using magic.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's MixColumns procedure. Mix the columns of the state using magic.
+ * @private
+ */
 goog.crypt.Aes.prototype.mixColumns_ = function() {
   var s = this.state_;
   var t = this.temp_[0];
@@ -431,13 +431,13 @@ goog.crypt.Aes.prototype.mixColumns_ = function() {
     s[3][c] = (goog.crypt.Aes.MULT_3_[t[0]] ^ t[1] ^ t[2] ^
                goog.crypt.Aes.MULT_2_[t[3]]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's InvMixColumns procedure.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's InvMixColumns procedure.
+ * @private
+ */
 goog.crypt.Aes.prototype.invMixColumns_ = function() {
   var s = this.state_;
   var t = this.temp_[0];
@@ -464,30 +464,30 @@ goog.crypt.Aes.prototype.invMixColumns_ = function() {
         goog.crypt.Aes.MULT_B_[t[0]] ^ goog.crypt.Aes.MULT_D_[t[1]] ^
         goog.crypt.Aes.MULT_9_[t[2]] ^ goog.crypt.Aes.MULT_E_[t[3]]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's KeyExpansion procedure. Create the key schedule from the initial key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's KeyExpansion procedure. Create the key schedule from the initial key.
+ * @private
+ */
 goog.crypt.Aes.prototype.keyExpansion_ = function() {
-  this.keySchedule_ = new Array(goog.crypt.Aes.BLOCK_SIZE_***REMOVED*** (
+  this.keySchedule_ = new Array(goog.crypt.Aes.BLOCK_SIZE_ * (
       this.numberOfRounds_ + 1));
 
   for (var rowNum = 0; rowNum < this.keyLength_; rowNum++) {
     this.keySchedule_[rowNum] = [
-      this.key_[4***REMOVED*** rowNum],
-      this.key_[4***REMOVED*** rowNum + 1],
-      this.key_[4***REMOVED*** rowNum + 2],
-      this.key_[4***REMOVED*** rowNum + 3]
+      this.key_[4 * rowNum],
+      this.key_[4 * rowNum + 1],
+      this.key_[4 * rowNum + 2],
+      this.key_[4 * rowNum + 3]
     ];
   }
 
   var temp = new Array(4);
 
   for (var rowNum = this.keyLength_;
-       rowNum < (goog.crypt.Aes.BLOCK_SIZE_***REMOVED*** (this.numberOfRounds_ + 1));
+       rowNum < (goog.crypt.Aes.BLOCK_SIZE_ * (this.numberOfRounds_ + 1));
        rowNum++) {
     temp[0] = this.keySchedule_[rowNum - 1][0];
     temp[1] = this.keySchedule_[rowNum - 1][1];
@@ -516,15 +516,15 @@ goog.crypt.Aes.prototype.keyExpansion_ = function() {
     this.keySchedule_[rowNum][3] =
         this.keySchedule_[rowNum - this.keyLength_][3] ^ temp[3];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's SubWord procedure.
-***REMOVED*** @param {!Array.<number>} w Bytes to find the SBox substitution for.
-***REMOVED*** @return {!Array.<number>} The substituted bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's SubWord procedure.
+ * @param {!Array.<number>} w Bytes to find the SBox substitution for.
+ * @return {!Array.<number>} The substituted bytes.
+ * @private
+ */
 goog.crypt.Aes.prototype.subWord_ = function(w) {
   w[0] = goog.crypt.Aes.SBOX_[w[0]];
   w[1] = goog.crypt.Aes.SBOX_[w[1]];
@@ -532,15 +532,15 @@ goog.crypt.Aes.prototype.subWord_ = function(w) {
   w[3] = goog.crypt.Aes.SBOX_[w[3]];
 
   return w;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** AES's RotWord procedure.
-***REMOVED*** @param {!Array.<number>} w Array of bytes to rotate.
-***REMOVED*** @return {!Array.<number>} The rotated bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * AES's RotWord procedure.
+ * @param {!Array.<number>} w Array of bytes to rotate.
+ * @return {!Array.<number>} The rotated bytes.
+ * @private
+ */
 goog.crypt.Aes.prototype.rotWord_ = function(w) {
   var temp = w[0];
 
@@ -550,22 +550,22 @@ goog.crypt.Aes.prototype.rotWord_ = function(w) {
   w[3] = temp;
 
   return w;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The key schedule.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key schedule.
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.prototype.keySchedule_;
 
 
-***REMOVED***
-***REMOVED*** Precomputed SBox lookup.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed SBox lookup.
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.SBOX_ = [
   0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe,
   0xd7, 0xab, 0x76,
@@ -617,11 +617,11 @@ goog.crypt.Aes.SBOX_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed InvSBox lookup.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed InvSBox lookup.
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.INV_SBOX_ = [
   0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38, 0xbf, 0x40, 0xa3, 0x9e, 0x81,
   0xf3, 0xd7, 0xfb,
@@ -673,11 +673,11 @@ goog.crypt.Aes.INV_SBOX_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed RCon lookup.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed RCon lookup.
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.RCON_ = [
   [0x00, 0x00, 0x00, 0x00],
   [0x01, 0x00, 0x00, 0x00],
@@ -693,11 +693,11 @@ goog.crypt.Aes.RCON_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 2 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 2 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_2_ = [
   0x00, 0x02, 0x04, 0x06, 0x08, 0x0A, 0x0C, 0x0E, 0x10, 0x12, 0x14, 0x16,
   0x18, 0x1A, 0x1C, 0x1E,
@@ -749,11 +749,11 @@ goog.crypt.Aes.MULT_2_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 3 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 3 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_3_ = [
   0x00, 0x03, 0x06, 0x05, 0x0C, 0x0F, 0x0A, 0x09, 0x18, 0x1B, 0x1E, 0x1D,
   0x14, 0x17, 0x12, 0x11,
@@ -805,11 +805,11 @@ goog.crypt.Aes.MULT_3_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 9 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 9 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_9_ = [
   0x00, 0x09, 0x12, 0x1B, 0x24, 0x2D, 0x36, 0x3F, 0x48, 0x41, 0x5A, 0x53,
   0x6C, 0x65, 0x7E, 0x77,
@@ -861,11 +861,11 @@ goog.crypt.Aes.MULT_9_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 11 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 11 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_B_ = [
   0x00, 0x0B, 0x16, 0x1D, 0x2C, 0x27, 0x3A, 0x31, 0x58, 0x53, 0x4E, 0x45,
   0x74, 0x7F, 0x62, 0x69,
@@ -917,11 +917,11 @@ goog.crypt.Aes.MULT_B_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 13 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 13 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_D_ = [
   0x00, 0x0D, 0x1A, 0x17, 0x34, 0x39, 0x2E, 0x23, 0x68, 0x65, 0x72, 0x7F,
   0x5C, 0x51, 0x46, 0x4B,
@@ -973,11 +973,11 @@ goog.crypt.Aes.MULT_D_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Precomputed lookup of multiplication by 14 in GF(2^8)
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Precomputed lookup of multiplication by 14 in GF(2^8)
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.crypt.Aes.MULT_E_ = [
   0x00, 0x0E, 0x1C, 0x12, 0x38, 0x36, 0x24, 0x2A, 0x70, 0x7E, 0x6C, 0x62,
   0x48, 0x46, 0x54, 0x5A,

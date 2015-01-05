@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility methods supporting the autocomplete package.
-***REMOVED***
-***REMOVED*** @see ../../demos/autocomplete-basic.html
-***REMOVED***
+/**
+ * @fileoverview Utility methods supporting the autocomplete package.
+ *
+ * @see ../../demos/autocomplete-basic.html
+ */
 
 goog.provide('goog.ui.ac');
 
@@ -26,16 +26,16 @@ goog.require('goog.ui.ac.InputHandler');
 goog.require('goog.ui.ac.Renderer');
 
 
-***REMOVED***
-***REMOVED*** Factory function for building a basic autocomplete widget that autocompletes
-***REMOVED*** an inputbox or text area from a data array.
-***REMOVED*** @param {Array} data Data array.
-***REMOVED*** @param {Element} input Input element or text area.
-***REMOVED*** @param {boolean=} opt_multi Whether to allow multiple entries separated with
-***REMOVED***     semi-colons or commas.
-***REMOVED*** @param {boolean=} opt_useSimilar use similar matches. e.g. "gost" => "ghost".
-***REMOVED*** @return {!goog.ui.ac.AutoComplete} A new autocomplete object.
-***REMOVED***
+/**
+ * Factory function for building a basic autocomplete widget that autocompletes
+ * an inputbox or text area from a data array.
+ * @param {Array} data Data array.
+ * @param {Element} input Input element or text area.
+ * @param {boolean=} opt_multi Whether to allow multiple entries separated with
+ *     semi-colons or commas.
+ * @param {boolean=} opt_useSimilar use similar matches. e.g. "gost" => "ghost".
+ * @return {!goog.ui.ac.AutoComplete} A new autocomplete object.
+ */
 goog.ui.ac.createSimpleAutoComplete =
     function(data, input, opt_multi, opt_useSimilar) {
   var matcher = new goog.ui.ac.ArrayMatcher(data, !opt_useSimilar);
@@ -47,4 +47,4 @@ goog.ui.ac.createSimpleAutoComplete =
   inputHandler.attachAutoComplete(autoComplete);
   inputHandler.attachInputs(input);
   return autoComplete;
-***REMOVED***
+};

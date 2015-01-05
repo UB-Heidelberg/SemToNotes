@@ -29,15 +29,15 @@ function MockMock() {
 
 MockMock.prototype.$replay = function() {
   this.replayCalled = true;
-***REMOVED***
+};
 
 MockMock.prototype.$reset = function() {
   this.resetCalled = true;
-***REMOVED***
+};
 
 MockMock.prototype.$verify = function() {
   this.verifyCalled = true;
-***REMOVED***
+};
 
 function setUp() {
   var mock = new goog.testing.Mock(MockMock);
@@ -103,10 +103,10 @@ function testTearDownAll() {
   // $tearDown is optional.
   mockMock2.$tearDown = function() {
     this.tearDownCalled = true;
- ***REMOVED*****REMOVED***
+  };
   mockMockExcluded.$tearDown = function() {
     this.tearDownCalled = true;
- ***REMOVED*****REMOVED***
+  };
 
   var control = new goog.testing.MockControl();
   control.addMock(mockMock1);

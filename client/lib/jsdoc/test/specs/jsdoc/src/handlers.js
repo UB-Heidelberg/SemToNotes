@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("jsdoc/src/handlers", function() {
     var handlers = require('jsdoc/src/handlers');
     var runtime = require('jsdoc/util/runtime');
@@ -40,7 +40,7 @@ describe("jsdoc/src/handlers", function() {
     });
 
     describe("jsdocCommentFound handler", function() {
-        var sourceCode = 'javascript:***REMOVED*** @name bar***REMOVED***',
+        var sourceCode = 'javascript:/** @name bar */',
             result = testParser.parse(sourceCode);
 
         it("should create a doclet for comments with '@name' tags", function() {

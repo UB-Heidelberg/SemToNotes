@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @see equationeditor.html
-***REMOVED***
+/**
+ * @see equationeditor.html
+ */
 
 goog.provide('goog.demos.editor.EquationEditor');
 
@@ -22,20 +22,20 @@ goog.require('goog.ui.equation.EquationEditorDialog');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * @constructor
+ * @final
+ */
 goog.demos.editor.EquationEditor = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new editor and opens the dialog.
-***REMOVED*** @param {string} initialEquation The initial equation value to use.
-***REMOVED***
+/**
+ * Creates a new editor and opens the dialog.
+ * @param {string} initialEquation The initial equation value to use.
+ */
 goog.demos.editor.EquationEditor.prototype.openEditor = function(
     initialEquation) {
   var editorDialog = new goog.ui.equation.EquationEditorDialog(initialEquation);
   editorDialog.setVisible(true);
-***REMOVED***
+};

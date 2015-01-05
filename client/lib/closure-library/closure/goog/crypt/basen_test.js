@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for arbitrary base conversion library baseconversion.js.
-***REMOVED***
+/**
+ * @fileoverview Tests for arbitrary base conversion library baseconversion.js.
+ */
 
 goog.provide('goog.crypt.baseNTest');
 goog.setTestOnly('goog.crypt.baseNTest');

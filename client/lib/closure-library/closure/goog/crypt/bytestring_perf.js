@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Performance test for different implementations of
-***REMOVED*** byteArrayToString.
-***REMOVED***
+/**
+ * @fileoverview Performance test for different implementations of
+ * byteArrayToString.
+ */
 
 
 goog.provide('goog.crypt.byteArrayToStringPerf');

@@ -1,8 +1,8 @@
-***REMOVED***
-***REMOVED*** Test {@tutorial test2} {@tutorial dupa}
-***REMOVED***
-***REMOVED*** @class
-***REMOVED*** @tutorial test
-***REMOVED*** @tutorial jasia
-***REMOVED***
+/**
+ * Test {@tutorial test2} {@tutorial dupa}
+ *
+ * @class
+ * @tutorial test
+ * @tutorial jasia
+ */
 function Test() {}

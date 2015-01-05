@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.Uri.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.Uri.
+ *
+ */
 
 goog.provide('goog.UriTest');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.testing.jsunit');
 
 goog.setTestOnly('goog.UriTest');
@@ -876,7 +876,7 @@ function testQueryDataCreateFromMap() {
 }
 
 function testQueryDataCreateFromMapWithArrayValues() {
-  var obj = {'key': ['1', '2', '3']***REMOVED***
+  var obj = {'key': ['1', '2', '3']};
   var qd = goog.Uri.QueryData.createFromMap(obj);
   assertEquals('key=1&key=2&key=3', qd.toString());
   qd.add('breakCache', 1);

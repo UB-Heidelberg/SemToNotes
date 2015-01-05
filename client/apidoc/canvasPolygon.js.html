@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview Canvas class representing a polygon.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Canvas class representing a polygon.
+ */
 
 goog.provide('xrx.canvas.Polygon');
 
@@ -38,54 +38,54 @@ goog.require('xrx.geometry.Path');
 
 
 
-***REMOVED***
-***REMOVED*** Canvas class representing a polygon.
-***REMOVED*** @param {xrx.canvas.Canvas} canvas The parent canvas object.
-***REMOVED***
-***REMOVED*** @extends xrx.canvas.Stylable
-***REMOVED***
+/**
+ * Canvas class representing a polygon.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ * @constructor
+ * @extends xrx.canvas.Stylable
+ */
 xrx.canvas.Polygon = function(canvas) {
 
   goog.base(this, canvas, new xrx.geometry.Path());
-***REMOVED***
+};
 goog.inherits(xrx.canvas.Polygon, xrx.canvas.Stylable);
 
 
 
-***REMOVED***
-***REMOVED*** Sets the coordinates for the polygon.
-***REMOVED*** @param {Array.&lt;Array.&lt;number>>} coords The coordinates.
-***REMOVED***
+/**
+ * Sets the coordinates for the polygon.
+ * @param {Array.&lt;Array.&lt;number>>} coords The coordinates.
+ */
 xrx.canvas.Polygon.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates of the polygon.
-***REMOVED*** @return {Array.&lt;Array.&lt;number>>} The coordinates.
-***REMOVED***
+/**
+ * Returns the coordinates of the polygon.
+ * @return {Array.&lt;Array.&lt;number>>} The coordinates.
+ */
 xrx.canvas.Polygon.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Updates one coordinate in the list of coordinates.
-***REMOVED*** @param {number} pos Index of the coordinate to be updated.
-***REMOVED*** @param {Array.&lt;number>} coord The new coordinate.
-***REMOVED***
+/**
+ * Updates one coordinate in the list of coordinates.
+ * @param {number} pos Index of the coordinate to be updated.
+ * @param {Array.&lt;number>} coord The new coordinate.
+ */
 xrx.canvas.Polygon.prototype.setCoordAt = function(pos, coord) {
   this.geometry_.coords[pos] = coord;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.canvas.Polygon.prototype.drawPath_ = function() {
   var coords = this.geometry_.coords;
   this.context_.beginPath();
@@ -95,27 +95,27 @@ xrx.canvas.Polygon.prototype.drawPath_ = function() {
   }
   this.context_.lineTo(coords[0][0], coords[0][1]);
   this.context_.closePath();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Draws the polygon.
-***REMOVED***
+/**
+ * Draws the polygon.
+ */
 xrx.canvas.Polygon.prototype.draw = function() {
   this.drawPath_();
   this.strokeAndFill_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new polygon.
-***REMOVED*** @param {xrx.canvas.Canvas} canvas The parent canvas object.
-***REMOVED***
+/**
+ * Creates a new polygon.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ */
 xrx.canvas.Polygon.create = function(canvas) {
   return new xrx.canvas.Polygon(canvas);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

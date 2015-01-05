@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides data persistence using HTML5 session storage
-***REMOVED*** mechanism. Session storage must be available under window.sessionStorage,
-***REMOVED*** see: http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides data persistence using HTML5 session storage
+ * mechanism. Session storage must be available under window.sessionStorage,
+ * see: http://www.w3.org/TR/webstorage/#the-sessionstorage-attribute.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.HTML5SessionStorage');
 
@@ -25,15 +25,15 @@ goog.require('goog.storage.mechanism.HTML5WebStorage');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a storage mechanism that uses HTML5 session storage.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.HTML5WebStorage}
-***REMOVED***
+/**
+ * Provides a storage mechanism that uses HTML5 session storage.
+ *
+ * @constructor
+ * @extends {goog.storage.mechanism.HTML5WebStorage}
+ */
 goog.storage.mechanism.HTML5SessionStorage = function() {
   var storage = null;
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     // May throw an exception in cases where the session storage object is
     // visible but access to it is disabled. For example, accessing the file
@@ -41,6 +41,6 @@ goog.storage.mechanism.HTML5SessionStorage = function() {
     storage = window.sessionStorage || null;
   } catch (e) {}
   goog.storage.mechanism.HTML5SessionStorage.base(this, 'constructor', storage);
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.HTML5SessionStorage,
               goog.storage.mechanism.HTML5WebStorage);

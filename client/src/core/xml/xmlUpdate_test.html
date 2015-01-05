@@ -15,7 +15,7 @@
   goog.require('xrx');
   goog.require('xrx.mvc');
   goog.require('xrx.mvc.Instance');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.index.Rebuild');
   goog.require('xrx.token');
   goog.require('xrx.token.Tokens');
@@ -55,7 +55,7 @@ function resetForNextTest() {
   instanceNs = undefined;
   instanceNs = new xrx.mvc.Instance(elementNs);
   instanceNs.getIndex();
-***REMOVED***
+};
 
 
 
@@ -66,22 +66,22 @@ function _testStringStream(inst) {
   traverse.rowStartTag = function(label, offset, length1, length2) {
     testString += '#' + xrx.token.START_TAG.toString() + ',' + label.toString() + ',' + offset.toString() + 
         ',' + length1.toString() + ',' + length2.toString();
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
     testString += '#' + xrx.token.EMPTY_TAG.toString() + ',' + label.toString() + ',' + offset.toString() +
         ',' + length1.toString() + ',' + length2.toString();
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label, offset, length1, length2) {
     testString += '#' + xrx.token.END_TAG.toString() + ',' + label.toString() + ',' + offset.toString() +
         ',' + length1.toString() + ',' + length2.toString();
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward();
 
   return testString;
-***REMOVED***
+};
 
 
 
@@ -99,7 +99,7 @@ function _testStringBinary(inst) {
   } while(row = index.iterNext());
 
   return testStringB;
-***REMOVED***
+};
 
 
 
@@ -108,7 +108,7 @@ function test00() {
 
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
-***REMOVED***
+};
 
 
 
@@ -133,7 +133,7 @@ function test01_1insertAttribute() {
 
   xrx.index.Rebuild.insertAttribute(instance.getIndex(), t2, diff2);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -162,7 +162,7 @@ function TODOtest01_2insertAttributeNs() {
   var t3 = instanceNs.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2,1])));
   assertThrows('Prefix c is not bound to namespace http://www.example.org/b.',
       goog.partial(xrx.xml.Update.insertAttribute, instanceNs, t3, 'c:a', 'http://www.example.org/b'));
-***REMOVED***
+};
 
 
 
@@ -196,7 +196,7 @@ function test02_1insertEmptyTag() {
 
   xrx.index.Rebuild.insertEmptyTag(instance.getIndex(), t3, 1, diff3);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -228,7 +228,7 @@ function TODOtest02_2insertEmptyTagNs() {
 
   xrx.index.Rebuild.insertEmptyTag(instanceNs.getIndex(), t1, 0, diff3);
   assertEquals(_testStringStream(instanceNs), _testStringBinary(instanceNs));
-***REMOVED***
+};
 
 
 
@@ -262,12 +262,12 @@ function test03insertFragment() {
 
   xrx.index.Rebuild.insertFragment(instance.getIndex(), instance.xml());
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
 function test04insertMixed() {
-***REMOVED***
+};
 
 
 
@@ -281,7 +281,7 @@ function test05insertNotTag() {
 
   xrx.index.Rebuild.insertNotTag(instance.getIndex(), t, diff);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -307,7 +307,7 @@ function test06_1insertStartEndTag() {
   var t3b = instance.getPilot().location(null, new xrx.token.NotTag(new xrx.xml.Label([1,2])));
   xrx.xml.Update.insertStartEndTag(instance, t3a, t3b, 2, 0, 'x');
   assertEquals(expected3, instance.xml());
-***REMOVED***
+};
 
 
 
@@ -330,7 +330,7 @@ function test06_2insertStartEndTagNs() {
       '<y xmlns="http://www.example.org/c"></y><b:y></b:y><y></y></b:b></a></x>';
   xrx.xml.Update.insertStartEndTag(instanceNs, t1, t1, 0, 0, 'y', 'http://www.example.org/c');
   assertEquals(expected3, instanceNs.xml());
-***REMOVED***
+};
 
 
 
@@ -344,7 +344,7 @@ function test07removeAttribute() {
 
   xrx.index.Rebuild.removeAttribute(instance.getIndex(), t, diff);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -358,17 +358,17 @@ function test08removeEmptyTag() {
 
   xrx.index.Rebuild.removeEmptyTag(instance.getIndex(), t, diff);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
 function test09removeFragment() {
-***REMOVED***
+};
 
 
 
 function test10removeMixed() {
-***REMOVED***
+};
 
 
 
@@ -392,7 +392,7 @@ function test11removeStartEndTag() {
 
   xrx.index.Rebuild.removeStartEndTag(instance.getIndex(), t21, t22, diffs2[0], diffs2[1]);
   //assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -416,7 +416,7 @@ function test12replaceAttrValue() {
 
   xrx.index.Rebuild.replaceAttrValue(instance.getIndex(), t2, diff2);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
@@ -458,13 +458,13 @@ function test13replaceNotTag() {
 
   xrx.index.Rebuild.replaceNotTag(instance.getIndex(), t4, diff4);
   assertEquals(_testStringStream(instance), _testStringBinary(instance));
-***REMOVED***
+};
 
 
 
 function test14replaceTagName() {
   //TODO
-***REMOVED***
+};
 
 
 

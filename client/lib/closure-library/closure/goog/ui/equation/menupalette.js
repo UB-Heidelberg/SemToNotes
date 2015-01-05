@@ -22,14 +22,14 @@ goog.require('goog.ui.equation.PaletteRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new menu palette.
-***REMOVED*** @param {goog.ui.equation.PaletteManager} paletteManager The
-***REMOVED***     manager of the palette.
-***REMOVED*** @extends {goog.ui.equation.Palette}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new menu palette.
+ * @param {goog.ui.equation.PaletteManager} paletteManager The
+ *     manager of the palette.
+ * @extends {goog.ui.equation.Palette}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.MenuPalette = function(paletteManager) {
   goog.ui.equation.Palette.call(this, paletteManager,
       goog.ui.equation.Palette.Type.MENU,
@@ -41,48 +41,48 @@ goog.ui.equation.MenuPalette = function(paletteManager) {
        goog.ui.equation.Palette.Type.ARROW],
       goog.ui.equation.MenuPaletteRenderer.getInstance());
   this.setSize(new goog.math.Size(5, 1));
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.MenuPalette, goog.ui.equation.Palette);
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for the palette.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for the palette.
+ * @type {string}
+ */
 goog.ui.equation.MenuPalette.CSS_CLASS = 'ee-menu-palette';
 
 
-***REMOVED***
-***REMOVED*** Overrides the setVisible method to make menu palette always visible.
-***REMOVED*** @param {boolean} visible Whether to show or hide the component.
-***REMOVED*** @param {boolean=} opt_force If true, doesn't check whether the component
-***REMOVED***     already has the requested visibility, and doesn't dispatch any events.
-***REMOVED*** @return {boolean} Whether the visibility was changed.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides the setVisible method to make menu palette always visible.
+ * @param {boolean} visible Whether to show or hide the component.
+ * @param {boolean=} opt_force If true, doesn't check whether the component
+ *     already has the requested visibility, and doesn't dispatch any events.
+ * @return {boolean} Whether the visibility was changed.
+ * @override
+ */
 goog.ui.equation.MenuPalette.prototype.setVisible = function(
     visible, opt_force) {
   return goog.ui.equation.MenuPalette.base(this, 'setVisible', true, opt_force);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The renderer for menu palette.
-***REMOVED*** @extends {goog.ui.equation.PaletteRenderer}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The renderer for menu palette.
+ * @extends {goog.ui.equation.PaletteRenderer}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.MenuPaletteRenderer = function() {
   goog.ui.PaletteRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.MenuPaletteRenderer,
     goog.ui.equation.PaletteRenderer);
 goog.addSingletonGetter(goog.ui.equation.MenuPaletteRenderer);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.MenuPaletteRenderer.prototype.getCssClass =
     function() {
   return goog.ui.equation.MenuPalette.CSS_CLASS;
-***REMOVED***
+};

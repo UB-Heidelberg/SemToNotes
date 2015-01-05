@@ -65,12 +65,12 @@ function addSomeRecords(howMany) {
 }
 
 function testAddRecord() {
-  addSomeRecords(goog.debug.LogBuffer.CAPACITY***REMOVED*** 3);
+  addSomeRecords(goog.debug.LogBuffer.CAPACITY * 3);
 }
 
 function testIsFull() {
   assertFalse('Should not be full.', buffer.isFull_);
-  addSomeRecords(goog.debug.LogBuffer.CAPACITY***REMOVED*** 1.5);
+  addSomeRecords(goog.debug.LogBuffer.CAPACITY * 1.5);
   assertTrue('Should be full.', buffer.isFull_);
   buffer.clear();
   assertFalse('Should not be full after clear().', buffer.isFull_);

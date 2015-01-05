@@ -12,57 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class that can be used to determine when an iframe is loaded.
-***REMOVED***
+/**
+ * @fileoverview Class that can be used to determine when an iframe is loaded.
+ */
 
 goog.provide('goog.net.IframeLoadMonitor');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** The correct way to determine whether a same-domain iframe has completed
-***REMOVED*** loading is different in IE and Firefox.  This class abstracts above these
-***REMOVED*** differences, providing a consistent interface for:
-***REMOVED*** <ol>
-***REMOVED*** <li> Determing if an iframe is currently loaded
-***REMOVED*** <li> Listening for an iframe that is not currently loaded, to finish loading
-***REMOVED*** </ol>
-***REMOVED***
-***REMOVED*** @param {HTMLIFrameElement} iframe An iframe.
-***REMOVED*** @param {boolean=} opt_hasContent Does the loaded iframe have content.
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The correct way to determine whether a same-domain iframe has completed
+ * loading is different in IE and Firefox.  This class abstracts above these
+ * differences, providing a consistent interface for:
+ * <ol>
+ * <li> Determing if an iframe is currently loaded
+ * <li> Listening for an iframe that is not currently loaded, to finish loading
+ * </ol>
+ *
+ * @param {HTMLIFrameElement} iframe An iframe.
+ * @param {boolean=} opt_hasContent Does the loaded iframe have content.
+ * @extends {goog.events.EventTarget}
+ * @constructor
+ * @final
+ */
 goog.net.IframeLoadMonitor = function(iframe, opt_hasContent) {
   goog.net.IframeLoadMonitor.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Iframe whose load state is monitored by this IframeLoadMonitor
-  ***REMOVED*** @type {HTMLIFrameElement}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Iframe whose load state is monitored by this IframeLoadMonitor
+   * @type {HTMLIFrameElement}
+   * @private
+   */
   this.iframe_ = iframe;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether or not the loaded iframe has any content.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether or not the loaded iframe has any content.
+   * @type {boolean}
+   * @private
+   */
   this.hasContent_ = !!opt_hasContent;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether or not the iframe is loaded.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether or not the iframe is loaded.
+   * @type {boolean}
+   * @private
+   */
   this.isLoaded_ = this.isLoadedHelper_();
 
   if (!this.isLoaded_) {
@@ -83,85 +83,85 @@ goog.net.IframeLoadMonitor = function(iframe, opt_hasContent) {
         goog.bind(this.handleLoad_, this),
         goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_);
   }
-***REMOVED***
+};
 goog.inherits(goog.net.IframeLoadMonitor, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Event type dispatched by a goog.net.IframeLoadMonitor when it internal iframe
-***REMOVED*** finishes loading for the first time after construction of the
-***REMOVED*** goog.net.IframeLoadMonitor
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Event type dispatched by a goog.net.IframeLoadMonitor when it internal iframe
+ * finishes loading for the first time after construction of the
+ * goog.net.IframeLoadMonitor
+ * @type {string}
+ */
 goog.net.IframeLoadMonitor.LOAD_EVENT = 'ifload';
 
 
-***REMOVED***
-***REMOVED*** Poll interval for polling iframe load states in milliseconds.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Poll interval for polling iframe load states in milliseconds.
+ * @type {number}
+ * @private
+ */
 goog.net.IframeLoadMonitor.POLL_INTERVAL_MS_ = 100;
 
 
-***REMOVED***
-***REMOVED*** Key for iframe load listener, or null if not currently listening on the
-***REMOVED*** iframe for a load event.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Key for iframe load listener, or null if not currently listening on the
+ * iframe for a load event.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.net.IframeLoadMonitor.prototype.onloadListenerKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** Returns whether or not the iframe is loaded.
-***REMOVED*** @return {boolean} whether or not the iframe is loaded.
-***REMOVED***
+/**
+ * Returns whether or not the iframe is loaded.
+ * @return {boolean} whether or not the iframe is loaded.
+ */
 goog.net.IframeLoadMonitor.prototype.isLoaded = function() {
   return this.isLoaded_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stops the poll timer if this IframeLoadMonitor is currently polling.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stops the poll timer if this IframeLoadMonitor is currently polling.
+ * @private
+ */
 goog.net.IframeLoadMonitor.prototype.maybeStopTimer_ = function() {
   if (this.intervalId_) {
     window.clearInterval(this.intervalId_);
     this.intervalId_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the iframe whose load state this IframeLoader monitors.
-***REMOVED*** @return {HTMLIFrameElement} the iframe whose load state this IframeLoader
-***REMOVED***     monitors.
-***REMOVED***
+/**
+ * Returns the iframe whose load state this IframeLoader monitors.
+ * @return {HTMLIFrameElement} the iframe whose load state this IframeLoader
+ *     monitors.
+ */
 goog.net.IframeLoadMonitor.prototype.getIframe = function() {
   return this.iframe_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.IframeLoadMonitor.prototype.disposeInternal = function() {
   delete this.iframe_;
   this.maybeStopTimer_();
   goog.events.unlistenByKey(this.onloadListenerKey_);
   goog.net.IframeLoadMonitor.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether or not the iframe is loaded.  Determines this by inspecting
-***REMOVED*** browser dependent properties of the iframe.
-***REMOVED*** @return {boolean} whether or not the iframe is loaded.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns whether or not the iframe is loaded.  Determines this by inspecting
+ * browser dependent properties of the iframe.
+ * @return {boolean} whether or not the iframe is loaded.
+ * @private
+ */
 goog.net.IframeLoadMonitor.prototype.isLoadedHelper_ = function() {
   var isLoaded = false;
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     // IE versions before IE11 will reliably have readyState set to complete if
     // the iframe is loaded. For everything else, the iframe is loaded if there
@@ -183,15 +183,15 @@ goog.net.IframeLoadMonitor.prototype.isLoadedHelper_ = function() {
     // fully loaded.
   }
   return isLoaded;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an event indicating that the loading status of the iframe has
-***REMOVED*** changed.  In Firefox this is a goog.events.EventType.LOAD event, in IE
-***REMOVED*** this is a goog.events.EventType.READYSTATECHANGED
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles an event indicating that the loading status of the iframe has
+ * changed.  In Firefox this is a goog.events.EventType.LOAD event, in IE
+ * this is a goog.events.EventType.READYSTATECHANGED
+ * @private
+ */
 goog.net.IframeLoadMonitor.prototype.handleLoad_ = function() {
   // Only do the handler if the iframe is loaded.
   if (this.isLoadedHelper_()) {
@@ -201,4 +201,4 @@ goog.net.IframeLoadMonitor.prototype.handleLoad_ = function() {
     this.isLoaded_ = true;
     this.dispatchEvent(goog.net.IframeLoadMonitor.LOAD_EVENT);
   }
-***REMOVED***
+};

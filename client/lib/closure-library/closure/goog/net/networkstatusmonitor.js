@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for objects monitoring and exposing runtime
-***REMOVED*** network status information.
-***REMOVED***
+/**
+ * @fileoverview Base class for objects monitoring and exposing runtime
+ * network status information.
+ */
 
 goog.provide('goog.net.NetworkStatusMonitor');
 
@@ -23,25 +23,25 @@ goog.require('goog.events.Listenable');
 
 
 
-***REMOVED***
-***REMOVED*** Base class for network status information providers.
-***REMOVED*** @interface
-***REMOVED*** @extends {goog.events.Listenable}
-***REMOVED***
-goog.net.NetworkStatusMonitor = function() {***REMOVED***
+/**
+ * Base class for network status information providers.
+ * @interface
+ * @extends {goog.events.Listenable}
+ */
+goog.net.NetworkStatusMonitor = function() {};
 
 
-***REMOVED***
-***REMOVED*** Enum for the events dispatched by the OnlineHandler.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum for the events dispatched by the OnlineHandler.
+ * @enum {string}
+ */
 goog.net.NetworkStatusMonitor.EventType = {
   ONLINE: 'online',
   OFFLINE: 'offline'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the system is online or otherwise.
-***REMOVED***
+/**
+ * @return {boolean} Whether the system is online or otherwise.
+ */
 goog.net.NetworkStatusMonitor.prototype.isOnline;

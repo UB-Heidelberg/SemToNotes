@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for a goog.ui.DatePicker.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+ * Standard styling for a goog.ui.DatePicker.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 .goog-date-picker,
 .goog-date-picker th,
@@ -104,12 +104,12 @@
   text-align: center;
 }
 
-***REMOVED*** Use td.className instead of !important***REMOVED***
+/** Use td.className instead of !important */
 td.goog-date-picker-today-cont {
   text-align: center;
 }
 
-***REMOVED*** Use td.className instead of !important***REMOVED***
+/** Use td.className instead of !important */
 td.goog-date-picker-none-cont {
   text-align: center;
 }
@@ -141,7 +141,7 @@ td.goog-date-picker-none-cont {
   background: #eee;
 }
 
-***REMOVED*** Use td.className instead of !important***REMOVED***
+/** Use td.className instead of !important */
 td.goog-date-picker-selected {
   background: #c3d9ff;
 }

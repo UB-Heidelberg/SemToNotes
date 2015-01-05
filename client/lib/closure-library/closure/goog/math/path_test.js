@@ -22,11 +22,11 @@ goog.require('goog.testing.jsunit');
 goog.setTestOnly('goog.math.PathTest');
 
 
-***REMOVED***
-***REMOVED*** Array mapping numeric segment constant to a descriptive character.
-***REMOVED*** @type {!Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array mapping numeric segment constant to a descriptive character.
+ * @type {!Array.<string>}
+ * @private
+ */
 var SEGMENT_NAMES_ = function() {
   var arr = [];
   arr[goog.math.Path.Segment.MOVETO] = 'M';
@@ -38,12 +38,12 @@ var SEGMENT_NAMES_ = function() {
 }();
 
 
-***REMOVED***
-***REMOVED*** Test if the given path matches the expected array of commands and parameters.
-***REMOVED*** @param {Array.<string|number>} expected The expected array of commands and
-***REMOVED***     parameters.
-***REMOVED*** @param {goog.math.Path} path The path to test against.
-***REMOVED***
+/**
+ * Test if the given path matches the expected array of commands and parameters.
+ * @param {Array.<string|number>} expected The expected array of commands and
+ *     parameters.
+ * @param {goog.math.Path} path The path to test against.
+ */
 var assertPathEquals = function(expected, path) {
   var actual = [];
   path.forEachSegment(function(seg, args) {
@@ -59,7 +59,7 @@ var assertPathEquals = function(expected, path) {
       assertEquals(expected[i], actual[i]);
     }
   }
-***REMOVED***
+};
 
 
 function testConstructor() {

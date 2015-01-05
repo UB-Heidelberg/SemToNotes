@@ -1,5 +1,5 @@
 /*global window, document, XMLHttpRequest, ActiveXObject, AnyName, Attribute, AttributeNode, Choice, Context, DatatypeLibrary, Element, ElementNode, Empty, Group, NOT_CHAR, 
-Name, NotAllowed, OneOrMore, QName, SAXScanner, Text , TextNode, ValidatorFunctions, XMLFilterImpl2, NamespaceSupport, InputSource, StringReader, Attributes2Impl, AttributesImpl***REMOVED***
+Name, NotAllowed, OneOrMore, QName, SAXScanner, Text , TextNode, ValidatorFunctions, XMLFilterImpl2, NamespaceSupport, InputSource, StringReader, Attributes2Impl, AttributesImpl */
 
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
@@ -41,11 +41,11 @@ knowledge of the CeCILL license and that you accept its terms.
 
 var that = this; // probably window object
 
-/* Private static variables (constant)***REMOVED***
+/* Private static variables (constant) */
 
 // comes from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf#Compatibility
 if (!Array.prototype.indexOf) {
-    Array.prototype.indexOf = function (searchElement /*, fromIndex***REMOVED*** ) {
+    Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
         "use strict";
         if (this == null) {
             throw new TypeError();
@@ -61,7 +61,7 @@ if (!Array.prototype.indexOf) {
             if (n != n) { // shortcut for verifying if it's NaN
                 n = 0;
             } else if (n != 0 && n != Infinity && n != -Infinity) {
-                n = (n > 0 || -1)***REMOVED*** Math.floor(Math.abs(n));
+                n = (n > 0 || -1) * Math.floor(Math.abs(n));
             }
         }
         if (n >= len) {
@@ -130,13 +130,13 @@ function SAXParser (contentHandler, lexicalHandler, errorHandler, declarationHan
     this.disallowedSetProperty = [];
     this.disallowedSetFeature = [];
 
-    this.disallowedSetPropertyValues = {***REMOVED***
-    this.disallowedSetFeatureValues = {***REMOVED***
+    this.disallowedSetPropertyValues = {};
+    this.disallowedSetFeatureValues = {};
 
     // For official features and properties, see http://www.saxproject.org/apidoc/org/xml/sax/package-summary.html#package_description
     // We can define our own as well
     // Except where specified, all features and properties should be supported (in at least the default configuration)
-    this.features = {***REMOVED*** // Boolean values
+    this.features = {}; // Boolean values
     this.features['http://xml.org/sax/features/external-general-entities'] = false; // Not supported yet
     this.features['http://xml.org/sax/features/external-parameter-entities'] = false; // Not supported yet
     this.features['http://xml.org/sax/features/is-standalone'] = undefined; // Can only be set during parsing
@@ -150,7 +150,7 @@ function SAXParser (contentHandler, lexicalHandler, errorHandler, declarationHan
     this.features['http://xml.org/sax/features/use-locator2'] = !!(locator && // No interfaces in JavaScript, so we duck-type:
                                                                                                                     typeof locator.getXMLVersion === 'function' &&
                                                                                                                     typeof locator.getEncoding === 'function'
-                                                                                                              ***REMOVED*** // Not supported yet
+                                                                                                                ); // Not supported yet
     this.features['http://xml.org/sax/features/use-entity-resolver2'] = true;
     this.features['http://xml.org/sax/features/validation'] = false;
     this.features['http://xml.org/sax/features/xmlns-uris'] = false;
@@ -168,12 +168,12 @@ function SAXParser (contentHandler, lexicalHandler, errorHandler, declarationHan
         - optional attributes which have default values are added
         - validation is possible
         that feature is automatically enabled if validation of attribute-whitespace-normalization is activated
-  ***REMOVED*****REMOVED***
+    */
     this.features['http://debeissat.nicolas.free.fr/ns/instance-augmentation'] = false;
     //without that property sax_vs_browser.html.html does not work as Firefox will not normalize attribute value properly
     this.features['http://debeissat.nicolas.free.fr/ns/attribute-whitespace-normalization'] = false;
 
-    this.properties = {***REMOVED*** // objects
+    this.properties = {}; // objects
     this.properties['http://xml.org/sax/properties/declaration-handler'] = this.declarationHandler = declarationHandler;
     this.properties['http://xml.org/sax/properties/document-xml-version'] = null; // string
     this.properties['http://xml.org/sax/properties/dom-node'] = this.domNode = domNode; // Not supported yet (if treating DOM node as though SAX2, this will be starting node)
@@ -181,28 +181,28 @@ function SAXParser (contentHandler, lexicalHandler, errorHandler, declarationHan
     this.properties['http://xml.org/sax/properties/xml-string'] = null; // Not supported yet (update with characters that were responsible for the event)
 }
 
-/* CUSTOM API***REMOVED***
+/* CUSTOM API */
 SAXParser.prototype.toString = function () {
     return "SAXParser";
-***REMOVED***
+};
 
 // BEGIN SAX2 XMLReader INTERFACE
 SAXParser.prototype.getContentHandler = function () {
     // Return the current content handler (ContentHandler).
     return this.contentHandler;
-***REMOVED***
+};
 SAXParser.prototype.getDTDHandler = function () {
     // Return the current DTD handler (DTDHandler).
     return this.dtdHandler;
-***REMOVED***
+};
 SAXParser.prototype.getEntityResolver = function () {
     // Return the current entity resolver (EntityResolver).
     return this.entityResolver;
-***REMOVED***
+};
 SAXParser.prototype.getErrorHandler = function () {
     // Return the current error handler (ErrorHandler).
     return this.errorHandler;
-***REMOVED***
+};
 SAXParser.prototype.getFeature = function (name) { // (java.lang.String)
     // Look up the value of a feature flag (boolean).
     if (this.features[name] === undefined) {
@@ -211,7 +211,7 @@ SAXParser.prototype.getFeature = function (name) { // (java.lang.String)
       throw new SAXNotSupportedException();
     }
     return this.features[name];
-***REMOVED***
+};
 SAXParser.prototype.getProperty = function (name) { // (java.lang.String)
     // Look up the value of a property (java.lang.Object).
     // It is possible for an XMLReader to recognize a property name but temporarily be unable to return its value. Some property values may be available only in specific contexts, such as before, during, or after a parse.
@@ -221,7 +221,7 @@ SAXParser.prototype.getProperty = function (name) { // (java.lang.String)
       throw new SAXNotSupportedException();
     }
     return this.properties[name];
-***REMOVED***
+};
 
 // For convenience, when dealing with strings as input, one can simply use our own parseString() instead of
 // XMLReader's parse() which expects an InputSouce (or systemId)
@@ -269,14 +269,14 @@ SAXParser.prototype.parse = function (inputOrSystemId, noCache) { // (InputSourc
         this.baseURI = path;
     }
     this.parseString(xmlAsString);
-***REMOVED***
+};
 
 SAXParser.prototype.parseString = function (xmlAsString) {
     var reader = new StringReader(xmlAsString);
     var readerWrapper = new ReaderWrapper(reader);
     this.initReaders(readerWrapper, reader);
     this.saxScanner.parse(readerWrapper);
-***REMOVED***
+};
 
 SAXParser.prototype.initReaders = function (readerWrapper, reader) {
     var saxEvents = new XMLFilterImpl2(this);
@@ -288,7 +288,7 @@ SAXParser.prototype.initReaders = function (readerWrapper, reader) {
         this.saxScanner.CHAR_DATA_REGEXP = /[<&\]]/;
     }
     if (!(this.features['http://apache.org/xml/features/nonvalidating/load-external-dtd'])) {
-        this.saxScanner.loadExternalDtd = function(externalId) {***REMOVED***
+        this.saxScanner.loadExternalDtd = function(externalId) {};
     }
     if (this.features['http://xml.org/sax/features/validation']) {
         this.features['http://debeissat.nicolas.free.fr/ns/instance-augmentation'] = true;
@@ -338,19 +338,19 @@ SAXParser.prototype.initReaders = function (readerWrapper, reader) {
             var columnNumber = this.reader.nextIdx - this.reader.s.substring(0, this.reader.nextIdx).lastIndexOf("\n");
             this.setColumnNumber(columnNumber);
             return this.getColumnNumberOld();
-       ***REMOVED*****REMOVED***
+        };
         this.contentHandler.locator.getLineNumber = function () {
             var lineNumber = this.reader.s.substring(0, this.reader.nextIdx).split("\n").length;
             this.setLineNumber(lineNumber);
             return this.getLineNumberOld();
-       ***REMOVED*****REMOVED***
+        };
     }
     saxEvents.warning = this.warning;
     saxEvents.error = this.error;
     saxEvents.fatalError = this.fatalError;
 }
 
-/* convenient method in order to set all handlers at once***REMOVED***
+/* convenient method in order to set all handlers at once */
 SAXParser.prototype.setHandler = function (handler) { // (ContentHandler/LexicalHandler/ErrorHandler/DeclarationHandler/DtdHandler)/EntityResolver(2)
     this.contentHandler = handler;
     this.lexicalHandler = handler;
@@ -358,23 +358,23 @@ SAXParser.prototype.setHandler = function (handler) { // (ContentHandler/Lexical
     this.declarationHandler = handler;
     this.dtdHandler = handler;
     this.entityResolver = handler;
-***REMOVED***
+};
 SAXParser.prototype.setContentHandler = function (handler) { // (ContentHandler)
     // Allow an application to register a content event handler (void).
     this.contentHandler = handler;
-***REMOVED***
+};
 SAXParser.prototype.setDTDHandler = function (handler) { // (DTDHandler)
     // Allow an application to register a DTD event handler (void).
     this.dtdHandler = handler;
-***REMOVED***
+};
 SAXParser.prototype.setEntityResolver = function (resolver) { // (EntityResolver)
     // Allow an application to register an entity resolver (void).
     this.entityResolver = resolver;
-***REMOVED***
+};
 SAXParser.prototype.setErrorHandler = function (handler) { // (ErrorHandler)
     // Allow an application to register an error event handler (void).
     this.errorHandler = handler;
-***REMOVED***
+};
 SAXParser.prototype.setFeature = function (name, value) { // (java.lang.String, boolean)
     // Set the value of a feature flag (void).
     if (this.features[name] === undefined) { // Should be defined already in some manner
@@ -387,7 +387,7 @@ SAXParser.prototype.setFeature = function (name, value) { // (java.lang.String, 
         throw new SAXNotSupportedException();
     }
     this.features[name] = value;
-***REMOVED***
+};
 SAXParser.prototype.setProperty = function (name, value) { // (java.lang.String, java.lang.Object)
     // Set the value of a property (void).
     // It is possible for an XMLReader to recognize a property name but to be unable to change the current value. Some property values may be immutable or mutable only in specific contexts, such as before, during, or after a parse.
@@ -412,28 +412,28 @@ SAXParser.prototype.setProperty = function (name, value) { // (java.lang.String,
             this.domNode = value;
             break;
     }
-***REMOVED***
+};
 // END SAX2 XMLReader INTERFACE
 
 
 // BEGIN FUNCTIONS WHICH SHOULD BE CONSIDERED PRIVATE
 SAXParser.prototype.getAttributes2Instance = function() {
     return new Attributes2Impl();
-***REMOVED***
+};
 
 SAXParser.prototype.getAttributes1Instance = function() {
     return new AttributesImpl();
-***REMOVED***
+};
 
 SAXParser.prototype.startDocument_augmenting = function() {
     //initializes the elements at saxParser level, not at XMLFilter
-    this.elements = {***REMOVED***
+    this.elements = {};
     this.instanceContext = new Context("", []);
     var datatypeLibrary = new DatatypeLibrary();
     this.debug = false;
     this.validatorFunctions = new ValidatorFunctions(this, datatypeLibrary);
     return this.parent.contentHandler.startDocument.call(this.parent.contentHandler);
-***REMOVED***
+};
 
 SAXParser.prototype.startDTD_augmenting = function(name, publicId, systemId) {
     this.pattern = this.elements[name] = new Element(new Name(null, name));
@@ -443,7 +443,7 @@ SAXParser.prototype.startDTD_augmenting = function(name, publicId, systemId) {
         return this.parent.lexicalHandler.startDTD.call(this.parent.lexicalHandler, name, publicId, systemId);
     }
     return undefined;
-***REMOVED***
+};
 
 /*
 [51]    	Mixed	   ::=   	'(' S? '#PCDATA' (S? '|' S? Name)* S? ')*'
@@ -474,7 +474,7 @@ SAXParser.getPatternFromMixed = function(model, xmlFilter) {
         return new Choice(new Empty(), new OneOrMore(new Choice(new Text(), pattern)));
     }
     return new Text();
-***REMOVED***
+};
 
 /*
 [47]   	children	   ::=   	(choice | seq) ('?' | '*' | '+')?
@@ -482,7 +482,7 @@ SAXParser.getPatternFromMixed = function(model, xmlFilter) {
 [49]   	choice	   ::=   	'(' S? cp ( S? '|' S? cp )+ S? ')'
 [50]   	seq	   ::=   	'(' S? cp ( S? ',' S? cp )* S? ')'
 */
-/* XML Name regular expressions***REMOVED***
+/* XML Name regular expressions */
 // Should disallow independent high or low surrogates or inversed surrogate pairs and also have option to reject private use characters; but strict mode will need to check for sequence of 2 characters if a surrogate is found
 var NAME_START_CHAR = ":A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u0200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\ud800-\udbff\udc00-\udfff"; // The last two ranges are for surrogates that comprise #x10000-#xEFFFF; // Fix: Need to remove surrogate pairs here and handle elsewhere; also must deal with surrogates in entities
 var NAME_END_CHAR = ".0-9\u00B7\u0300-\u036F\u203F-\u2040-"; // Don't need escaping since to be put in a character class
@@ -542,7 +542,7 @@ SAXParser.getPatternFromChildren = function(model, xmlFilter) {
         }
         return pattern;
     }
-***REMOVED***
+};
 
 /*
 [45]   	elementdecl	   ::=   	'<!ELEMENT' S  Name  S  contentspec  S? '>'	[VC: Unique Element Type Declaration]
@@ -564,7 +564,7 @@ SAXParser.getPatternFromModel = function(model, xmlFilter) {
         }
         return pattern;
     }
-***REMOVED***
+};
 
 SAXParser.prototype.elementDecl_augmenting = function(name, model) {
     var pattern = SAXParser.getPatternFromModel(model, this);
@@ -588,12 +588,12 @@ SAXParser.prototype.elementDecl_augmenting = function(name, model) {
         return this.parent.declarationHandler.elementDecl.call(this.parent.declarationHandler,  name, model);
     }
     return undefined;
-***REMOVED***
+};
 
 SAXParser.attWhitespaceNormalize = function(value) {
     value = value.replace(/\r\n/g, " ");
     return value.replace(/[\t\n\r]/g, " ");
-***REMOVED***
+};
 
 SAXParser.attWhitespaceCollapse = function(type, value) {
     if (type !== "string") {
@@ -602,7 +602,7 @@ SAXParser.attWhitespaceCollapse = function(type, value) {
         value = value.replace(/^\s/, "").replace(/\s$/, "");
     }
     return value;
-***REMOVED***
+};
 
 SAXParser.addAttributesIn = function(pattern, attributes) {
     if (pattern) {
@@ -619,7 +619,7 @@ SAXParser.addAttributesIn = function(pattern, attributes) {
             attributes.push(pattern);
         }
     }
-***REMOVED***
+};
 
 SAXParser.augmentAttributes = function(elementNode, pattern) {
     if (pattern) {
@@ -636,7 +636,7 @@ SAXParser.augmentAttributes = function(elementNode, pattern) {
             elementNode.addAttribute(pattern);
         }
     }
-***REMOVED***
+};
 
 SAXParser.isAlreadyDeclared = function(aName, attributes) {
     for (var i = 0 ; i < attributes.length ; i++) {
@@ -646,7 +646,7 @@ SAXParser.isAlreadyDeclared = function(aName, attributes) {
         }
     }
     return false;
-***REMOVED***
+};
 
 
 SAXParser.prototype.attributeDecl_augmenting = function(eName, aName, type, mode, value) {
@@ -699,7 +699,7 @@ SAXParser.prototype.attributeDecl_augmenting = function(eName, aName, type, mode
         return this.parent.declarationHandler.attributeDecl.call(this.parent.declarationHandler, eName, aName, type, mode, value);
     }
     return undefined;
-***REMOVED***
+};
 
 SAXParser.prototype.augmenting_elm = function(namespaceURI, localName, qName, atts) {
     var attributeNodes = [];
@@ -720,7 +720,7 @@ SAXParser.prototype.augmenting_elm = function(namespaceURI, localName, qName, at
                 this.atts.setDeclared(this.index, true);
                 this.atts.setSpecified(this.index, true);
             }
-       ***REMOVED*****REMOVED***
+        };
         attributeNodes.push(newAtt);
     }
     var newElement = new ElementNode(new QName(namespaceURI, localName), this.instanceContext, attributeNodes, []);
@@ -747,7 +747,7 @@ SAXParser.prototype.augmenting_elm = function(namespaceURI, localName, qName, at
             atts.setSpecified(index, false);
         }
         this.attributeNodes.push(new AttributeNode(qName, value));
-   ***REMOVED*****REMOVED***
+    };
     //this.childNode must be an ElementNode
     if (!this.childNode) {
         this.childNode = this.currentElementNode = newElement;
@@ -756,7 +756,7 @@ SAXParser.prototype.augmenting_elm = function(namespaceURI, localName, qName, at
         newElement.setParentNode(this.currentElementNode);
         this.currentElementNode = newElement;
     }
-***REMOVED***
+};
 
 /*
 sets the type of the attributes from DTD
@@ -773,7 +773,7 @@ SAXParser.prototype.startElement_augmenting = function(namespaceURI, localName, 
         }
     }
     return this.parent.contentHandler.startElement.call(this.parent.contentHandler, namespaceURI, localName, qName, atts);
-***REMOVED***
+};
 
 SAXParser.prototype.startElement_validating = function(namespaceURI, localName, qName, atts) {
     //may not have any DTD
@@ -789,14 +789,14 @@ SAXParser.prototype.startElement_validating = function(namespaceURI, localName, 
         }
     }
     return this.parent.contentHandler.startElement.call(this.parent.contentHandler, namespaceURI, localName, qName, atts);
-***REMOVED***
+};
 
 SAXParser.prototype.endElement_augmenting = function(namespaceURI, localName, qName) {
     if (this.currentElementNode && this.currentElementNode.parentNode) {
         this.currentElementNode = this.currentElementNode.parentNode;
     }
     return this.parent.contentHandler.endElement.call(this.parent.contentHandler, namespaceURI, localName, qName);
-***REMOVED***
+};
 
 SAXParser.prototype.characters_augmenting = function(ch, start, length) {
     //may not have any DTD
@@ -805,7 +805,7 @@ SAXParser.prototype.characters_augmenting = function(ch, start, length) {
         this.currentElementNode.childNodes.push(newText);
     }
     return this.parent.contentHandler.characters.call(this.parent.contentHandler, ch, start, length);
-***REMOVED***
+};
 
 SAXParser.prototype.endDocument_validating = function() {
     //if a dtd is present
@@ -821,7 +821,7 @@ SAXParser.prototype.endDocument_validating = function() {
         }
     }
     return this.parent.contentHandler.endDocument.call(this.parent.contentHandler);
-***REMOVED***
+};
 
 SAXParser.loadFile = function(fname) {
     var xmlhttp = null;
@@ -840,7 +840,7 @@ SAXParser.loadFile = function(fname) {
         throw new SAXException("Your browser does not support XMLHTTP, the external entity with URL : [" + fname + "] will not be resolved");
     }
     return false;
-***REMOVED***
+};
 
 SAXParser.prototype.resolveEntity = function(entityName, publicId, baseURI, systemId) {
     var txt;
@@ -856,19 +856,19 @@ SAXParser.prototype.resolveEntity = function(entityName, publicId, baseURI, syst
         return txt;
     }
     return "";
-***REMOVED***
+};
 
 SAXParser.getSAXParseException = function(message, locator, saxScanner) {
     var saxParseException = new SAXParseException(message, locator);
     return saxParseException;
-***REMOVED***
+};
 
 SAXParser.prototype.warning = function(message, saxScanner) {
     var saxParseException = SAXParser.getSAXParseException(message, this.parent.contentHandler.locator, saxScanner);
     if (this.parent && this.parent.errorHandler) {
         this.parent.errorHandler.warning.call(this.parent.errorHandler, saxParseException);
     }
-***REMOVED***
+};
 
 SAXParser.prototype.error = function(message, saxScanner) {
     var saxParseException = SAXParser.getSAXParseException(message, this.parent.contentHandler.locator, saxScanner);
@@ -877,7 +877,7 @@ SAXParser.prototype.error = function(message, saxScanner) {
 
         this.parent.errorHandler.error.call(this.parent.errorHandler, saxParseException);
     }
-***REMOVED***
+};
 
 SAXParser.prototype.fatalError = function(message, saxScanner) {
     var saxParseException = SAXParser.getSAXParseException(message, this.parent.contentHandler.locator, saxScanner);
@@ -885,7 +885,7 @@ SAXParser.prototype.fatalError = function(message, saxScanner) {
         this.parent.errorHandler.fatalError.call(this.parent.errorHandler, saxParseException);
     }
     throw saxParseException;
-***REMOVED***
+};
 
 
 
@@ -905,7 +905,7 @@ XMLReaderFactory.createXMLReader = function (className) {
         return new that[className]();
     }
     return new SAXParser(); // our system default XMLReader (parse() not implemented, however)
-***REMOVED***
+};
 
 // CUSTOM CONVENIENCE METHODS
 
@@ -922,7 +922,7 @@ XMLReaderFactory.getSaxImport = function() {
         }
     }
     return that.saxImport;
-***REMOVED***
+};
 
 XMLReaderFactory.getJsPath = function() {
     if (that.jsPath === undefined) {
@@ -933,7 +933,7 @@ XMLReaderFactory.getJsPath = function() {
         }
     }
     return that.jsPath;
-***REMOVED***
+};
 
 XMLReaderFactory.importJS = function(filename) {
     var scriptTag = XMLReaderFactory.getSaxImport();
@@ -950,7 +950,7 @@ XMLReaderFactory.importJS = function(filename) {
     } else {
         throw new SAXException("could not find script markup importing sax.js in the document");
     }
-***REMOVED***
+};
 
 XMLReaderFactory.checkDependencies = function() {
     if (typeof that.SAXScanner !== 'function') {
@@ -997,7 +997,7 @@ XMLReaderFactory.checkDependencies = function() {
             throw new SAXException("implementation of ReaderWrapper.js, like ReaderWrapper.js, not provided and could not be dynamically loaded because of exception", e6);
         }
     }
-***REMOVED***
+};
 
 
 // Add public API to global namespace (or other one, if we are in another)

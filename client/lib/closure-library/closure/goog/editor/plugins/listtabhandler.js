@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Editor plugin to handle tab keys in lists to indent and
-***REMOVED*** outdent.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ajp@google.com (Andy Perelson)
-***REMOVED***
+/**
+ * @fileoverview Editor plugin to handle tab keys in lists to indent and
+ * outdent.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ajp@google.com (Andy Perelson)
+ */
 
 goog.provide('goog.editor.plugins.ListTabHandler');
 
@@ -28,26 +28,26 @@ goog.require('goog.editor.plugins.AbstractTabHandler');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to handle tab keys in lists to indent and outdent.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractTabHandler}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin to handle tab keys in lists to indent and outdent.
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractTabHandler}
+ * @final
+ */
 goog.editor.plugins.ListTabHandler = function() {
   goog.editor.plugins.AbstractTabHandler.call(this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.ListTabHandler,
     goog.editor.plugins.AbstractTabHandler);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.ListTabHandler.prototype.getTrogClassId = function() {
   return 'ListTabHandler';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.ListTabHandler.prototype.handleTabKey = function(e) {
   var range = this.getFieldObject().getRange();
   if (goog.dom.getAncestorByTagNameAndClass(range.getContainerElement(),
@@ -63,5 +63,5 @@ goog.editor.plugins.ListTabHandler.prototype.handleTabKey = function(e) {
   }
 
   return false;
-***REMOVED***
+};
 

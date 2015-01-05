@@ -1,4 +1,4 @@
-/*global describe, expect, it***REMOVED***
+/*global describe, expect, it */
 'use strict';
 
 describe('jsdoc/tag/dictionary', function() {
@@ -7,7 +7,7 @@ describe('jsdoc/tag/dictionary', function() {
     var tagOptions = {
         canHaveValue: true,
         isNamespace: true
-   ***REMOVED*****REMOVED***
+    };
     var tagTitle = '!!!testTag!!!';
     var tagSynonym = '!!!testTagSynonym!!!';
     var tagDef = dictionary.defineTag(tagTitle, tagOptions).synonym(tagSynonym);

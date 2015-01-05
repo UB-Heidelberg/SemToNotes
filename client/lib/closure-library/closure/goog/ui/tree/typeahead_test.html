@@ -38,7 +38,7 @@ function makeATree() {
   tree.enterDocument();
 
   return tree;
-***REMOVED***
+};
 
 function createTreeFromTestData(node, data, maxLevels) {
   node.setHtml(data[0]);
@@ -53,11 +53,11 @@ function createTreeFromTestData(node, data, maxLevels) {
     node.add(childNode);
     createTreeFromTestData(childNode, child, maxLevels - 1);
   }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Test jumpToLabel_ functionality.
-***REMOVED***
+/**
+ * Test jumpToLabel_ functionality.
+ */
 function testJumpToLabel() {
   var tree = makeATree();
   var typeAhead = tree.typeAhead_;
@@ -76,11 +76,11 @@ function testJumpToLabel() {
   handled = typeAhead.jumpToLabel_('eve3');
   selectedItem = tree.getSelectedItem();
   assertTrue(handled && selectedItem.getHtml() == 'eve3');
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Test jumpTo_ functionality.
-***REMOVED***
+/**
+ * Test jumpTo_ functionality.
+ */
 function testJumpTo() {
   var tree = makeATree();
   var typeAhead = tree.typeAhead_;
@@ -95,16 +95,16 @@ function testJumpTo() {
   // Simulate a DOWN key on the tree, now the selection should be on 'eve3'
   var e = new Object();
   e.keyCode = goog.events.KeyCodes.DOWN;
-  e.preventDefault = function() {***REMOVED***
+  e.preventDefault = function() {};
   handled = tree.handleKeyEvent(e);
   selectedItem = tree.getSelectedItem();
   assertTrue(handled && selectedItem.getHtml() == 'eve3');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test handleTypeAheadChar functionality.
-***REMOVED***
+/**
+ * Test handleTypeAheadChar functionality.
+ */
 function testHandleTypeAheadChar() {
   var tree = makeATree();
   var typeAhead = tree.typeAhead_;
@@ -115,7 +115,7 @@ function testHandleTypeAheadChar() {
   // String.fromCharCode(46) = '.'  <-- correct
   e.keyCode = goog.events.KeyCodes.PERIOD;
   e.charCode = 46;
-  e.preventDefault = function() {***REMOVED***
+  e.preventDefault = function() {};
   typeAhead.handleTypeAheadChar(e);
   assertEquals('.', typeAhead.buffer_);
 

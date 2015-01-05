@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("inner scope", function() {
     describe("Outer~inner.member cases", function() {
         var docSet = jasmine.getDocSetFromFile('test/fixtures/innerscope.js');

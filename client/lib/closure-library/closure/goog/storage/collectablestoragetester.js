@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for the collectable storage interface.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for the collectable storage interface.
+ *
+ */
 
 goog.provide('goog.storage.collectableStorageTester');
 
@@ -23,13 +23,13 @@ goog.require('goog.testing.asserts');
 goog.setTestOnly('collectablestorage_test');
 
 
-***REMOVED***
-***REMOVED*** Tests basic operation: expiration and collection of collectable storage.
-***REMOVED***
-***REMOVED*** @param {goog.storage.mechanism.IterableMechanism} mechanism
-***REMOVED*** @param {goog.testing.MockClock} clock
-***REMOVED*** @param {goog.storage.CollectableStorage} storage
-***REMOVED*****REMOVED***
+/**
+ * Tests basic operation: expiration and collection of collectable storage.
+ *
+ * @param {goog.storage.mechanism.IterableMechanism} mechanism
+ * @param {goog.testing.MockClock} clock
+ * @param {goog.storage.CollectableStorage} storage
+  */
 goog.storage.collectableStorageTester.runBasicTests =
     function(mechanism, clock, storage) {
   // No expiration.
@@ -68,4 +68,4 @@ goog.storage.collectableStorageTester.runBasicTests =
   assertUndefined(storage.get('third'));
   storage.collect();
   clock.uninstall();
-***REMOVED***
+};

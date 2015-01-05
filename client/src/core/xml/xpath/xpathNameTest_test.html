@@ -15,7 +15,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.node');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
@@ -47,7 +47,7 @@ function test01namespace() {
   var r3 = xrx.xpath.evaluate('//z', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   //assertEquals(0, r3.snapshotLength);
-***REMOVED***
+};
 
 </script>
 </body>

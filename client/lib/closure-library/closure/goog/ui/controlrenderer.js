@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for control renderers.
-***REMOVED*** TODO(attila):  If the renderer framework works well, pull it into Component.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Base class for control renderers.
+ * TODO(attila):  If the renderer framework works well, pull it into Component.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ControlRenderer');
 
@@ -36,136 +36,136 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.Control}s.  Can be used as-is, but
-***REMOVED*** subclasses of Control will probably want to use renderers specifically
-***REMOVED*** tailored for them by extending this class.  Controls that use renderers
-***REMOVED*** delegate one or more of the following API methods to the renderer:
-***REMOVED*** <ul>
-***REMOVED***    <li>{@code createDom} - renders the DOM for the component
-***REMOVED***    <li>{@code canDecorate} - determines whether an element can be decorated
-***REMOVED***        by the component
-***REMOVED***    <li>{@code decorate} - decorates an existing element with the component
-***REMOVED***    <li>{@code setState} - updates the appearance of the component based on
-***REMOVED***        its state
-***REMOVED***    <li>{@code getContent} - returns the component's content
-***REMOVED***    <li>{@code setContent} - sets the component's content
-***REMOVED*** </ul>
-***REMOVED*** Controls are stateful; renderers, on the other hand, should be stateless and
-***REMOVED*** reusable.
-***REMOVED***
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.Control}s.  Can be used as-is, but
+ * subclasses of Control will probably want to use renderers specifically
+ * tailored for them by extending this class.  Controls that use renderers
+ * delegate one or more of the following API methods to the renderer:
+ * <ul>
+ *    <li>{@code createDom} - renders the DOM for the component
+ *    <li>{@code canDecorate} - determines whether an element can be decorated
+ *        by the component
+ *    <li>{@code decorate} - decorates an existing element with the component
+ *    <li>{@code setState} - updates the appearance of the component based on
+ *        its state
+ *    <li>{@code getContent} - returns the component's content
+ *    <li>{@code setContent} - sets the component's content
+ * </ul>
+ * Controls are stateful; renderers, on the other hand, should be stateless and
+ * reusable.
+ * @constructor
+ */
 goog.ui.ControlRenderer = function() {
-***REMOVED***
+};
 goog.addSingletonGetter(goog.ui.ControlRenderer);
 
 
-***REMOVED***
-***REMOVED*** Constructs a new renderer and sets the CSS class that the renderer will use
-***REMOVED*** as the base CSS class to apply to all elements rendered by that renderer.
-***REMOVED*** An example to use this function using a color palette:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** var myCustomRenderer = goog.ui.ControlRenderer.getCustomRenderer(
-***REMOVED***     goog.ui.PaletteRenderer, 'my-special-palette');
-***REMOVED*** var newColorPalette = new goog.ui.ColorPalette(
-***REMOVED***     colors, myCustomRenderer, opt_domHelper);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** Your CSS can look like this now:
-***REMOVED*** <pre>
-***REMOVED*** .my-special-palette { }
-***REMOVED*** .my-special-palette-table { }
-***REMOVED*** .my-special-palette-cell { }
-***REMOVED*** etc.
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** <em>instead</em> of
-***REMOVED*** <pre>
-***REMOVED*** .CSS_MY_SPECIAL_PALETTE .goog-palette { }
-***REMOVED*** .CSS_MY_SPECIAL_PALETTE .goog-palette-table { }
-***REMOVED*** .CSS_MY_SPECIAL_PALETTE .goog-palette-cell { }
-***REMOVED*** etc.
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** You would want to use this functionality when you want an instance of a
-***REMOVED*** component to have specific styles different than the other components of the
-***REMOVED*** same type in your application.  This avoids using descendant selectors to
-***REMOVED*** apply the specific styles to this component.
-***REMOVED***
-***REMOVED*** @param {Function} ctor The constructor of the renderer you are trying to
-***REMOVED***     create.
-***REMOVED*** @param {string} cssClassName The name of the CSS class for this renderer.
-***REMOVED*** @return {goog.ui.ControlRenderer} An instance of the desired renderer with
-***REMOVED***     its getCssClass() method overridden to return the supplied custom CSS
-***REMOVED***     class name.
-***REMOVED***
+/**
+ * Constructs a new renderer and sets the CSS class that the renderer will use
+ * as the base CSS class to apply to all elements rendered by that renderer.
+ * An example to use this function using a color palette:
+ *
+ * <pre>
+ * var myCustomRenderer = goog.ui.ControlRenderer.getCustomRenderer(
+ *     goog.ui.PaletteRenderer, 'my-special-palette');
+ * var newColorPalette = new goog.ui.ColorPalette(
+ *     colors, myCustomRenderer, opt_domHelper);
+ * </pre>
+ *
+ * Your CSS can look like this now:
+ * <pre>
+ * .my-special-palette { }
+ * .my-special-palette-table { }
+ * .my-special-palette-cell { }
+ * etc.
+ * </pre>
+ *
+ * <em>instead</em> of
+ * <pre>
+ * .CSS_MY_SPECIAL_PALETTE .goog-palette { }
+ * .CSS_MY_SPECIAL_PALETTE .goog-palette-table { }
+ * .CSS_MY_SPECIAL_PALETTE .goog-palette-cell { }
+ * etc.
+ * </pre>
+ *
+ * You would want to use this functionality when you want an instance of a
+ * component to have specific styles different than the other components of the
+ * same type in your application.  This avoids using descendant selectors to
+ * apply the specific styles to this component.
+ *
+ * @param {Function} ctor The constructor of the renderer you are trying to
+ *     create.
+ * @param {string} cssClassName The name of the CSS class for this renderer.
+ * @return {goog.ui.ControlRenderer} An instance of the desired renderer with
+ *     its getCssClass() method overridden to return the supplied custom CSS
+ *     class name.
+ */
 goog.ui.ControlRenderer.getCustomRenderer = function(ctor, cssClassName) {
   var renderer = new ctor();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns the CSS class to be applied to the root element of components
-  ***REMOVED*** rendered using this renderer.
-  ***REMOVED*** @return {string} Renderer-specific CSS class.
- ***REMOVED*****REMOVED***
+  /**
+   * Returns the CSS class to be applied to the root element of components
+   * rendered using this renderer.
+   * @return {string} Renderer-specific CSS class.
+   */
   renderer.getCssClass = function() {
     return cssClassName;
- ***REMOVED*****REMOVED***
+  };
 
   return renderer;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ControlRenderer.CSS_CLASS = goog.getCssName('goog-control');
 
 
-***REMOVED***
-***REMOVED*** Array of arrays of CSS classes that we want composite classes added and
-***REMOVED*** removed for in IE6 and lower as a workaround for lack of multi-class CSS
-***REMOVED*** selector support.
-***REMOVED***
-***REMOVED*** Subclasses that have accompanying CSS requiring this workaround should define
-***REMOVED*** their own static IE6_CLASS_COMBINATIONS constant and override
-***REMOVED*** getIe6ClassCombinations to return it.
-***REMOVED***
-***REMOVED*** For example, if your stylesheet uses the selector .button.collapse-left
-***REMOVED*** (and is compiled to .button_collapse-left for the IE6 version of the
-***REMOVED*** stylesheet,) you should include ['button', 'collapse-left'] in this array
-***REMOVED*** and the class button_collapse-left will be applied to the root element
-***REMOVED*** whenever both button and collapse-left are applied individually.
-***REMOVED***
-***REMOVED*** Members of each class name combination will be joined with underscores in the
-***REMOVED*** order that they're defined in the array. You should alphabetize them (for
-***REMOVED*** compatibility with the CSS compiler) unless you are doing something special.
-***REMOVED*** @type {Array.<Array.<string>>}
-***REMOVED***
+/**
+ * Array of arrays of CSS classes that we want composite classes added and
+ * removed for in IE6 and lower as a workaround for lack of multi-class CSS
+ * selector support.
+ *
+ * Subclasses that have accompanying CSS requiring this workaround should define
+ * their own static IE6_CLASS_COMBINATIONS constant and override
+ * getIe6ClassCombinations to return it.
+ *
+ * For example, if your stylesheet uses the selector .button.collapse-left
+ * (and is compiled to .button_collapse-left for the IE6 version of the
+ * stylesheet,) you should include ['button', 'collapse-left'] in this array
+ * and the class button_collapse-left will be applied to the root element
+ * whenever both button and collapse-left are applied individually.
+ *
+ * Members of each class name combination will be joined with underscores in the
+ * order that they're defined in the array. You should alphabetize them (for
+ * compatibility with the CSS compiler) unless you are doing something special.
+ * @type {Array.<Array.<string>>}
+ */
 goog.ui.ControlRenderer.IE6_CLASS_COMBINATIONS = [];
 
 
-***REMOVED***
-***REMOVED*** Map of component states to corresponding ARIA attributes.  Since the mapping
-***REMOVED*** of component states to ARIA attributes is neither component- nor
-***REMOVED*** renderer-specific, this is a static property of the renderer class, and is
-***REMOVED*** initialized on first use.
-***REMOVED*** @type {Object.<goog.ui.Component.State, goog.a11y.aria.State>}
-***REMOVED*** @private
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Map of component states to corresponding ARIA attributes.  Since the mapping
+ * of component states to ARIA attributes is neither component- nor
+ * renderer-specific, this is a static property of the renderer class, and is
+ * initialized on first use.
+ * @type {Object.<goog.ui.Component.State, goog.a11y.aria.State>}
+ * @private
+ * @const
+ */
 goog.ui.ControlRenderer.ARIA_ATTRIBUTE_MAP_;
 
 
-***REMOVED***
-***REMOVED*** Map of certain ARIA states to ARIA roles that support them. Used for checked
-***REMOVED*** and selected Component states because they are used on Components with ARIA
-***REMOVED*** roles that do not support the corresponding ARIA state.
-***REMOVED*** @private {!Object.<goog.a11y.aria.Role, goog.a11y.aria.State>}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Map of certain ARIA states to ARIA roles that support them. Used for checked
+ * and selected Component states because they are used on Components with ARIA
+ * roles that do not support the corresponding ARIA state.
+ * @private {!Object.<goog.a11y.aria.Role, goog.a11y.aria.State>}
+ * @const
+ */
 goog.ui.ControlRenderer.TOGGLE_ARIA_STATE_MAP_ = goog.object.create(
     goog.a11y.aria.Role.BUTTON, goog.a11y.aria.State.PRESSED,
     goog.a11y.aria.Role.CHECKBOX, goog.a11y.aria.State.CHECKED,
@@ -177,23 +177,23 @@ goog.ui.ControlRenderer.TOGGLE_ARIA_STATE_MAP_ = goog.object.create(
     goog.a11y.aria.Role.TREEITEM, goog.a11y.aria.State.SELECTED);
 
 
-***REMOVED***
-***REMOVED*** Returns the ARIA role to be applied to the control.
-***REMOVED*** See http://wiki/Main/ARIA for more info.
-***REMOVED*** @return {goog.a11y.aria.Role|undefined} ARIA role.
-***REMOVED***
+/**
+ * Returns the ARIA role to be applied to the control.
+ * See http://wiki/Main/ARIA for more info.
+ * @return {goog.a11y.aria.Role|undefined} ARIA role.
+ */
 goog.ui.ControlRenderer.prototype.getAriaRole = function() {
   // By default, the ARIA role is unspecified.
   return undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the control's contents wrapped in a DIV, with the renderer's own
-***REMOVED*** CSS class and additional state-specific classes applied to it.
-***REMOVED*** @param {goog.ui.Control} control Control to render.
-***REMOVED*** @return {Element} Root element for the control.
-***REMOVED***
+/**
+ * Returns the control's contents wrapped in a DIV, with the renderer's own
+ * CSS class and additional state-specific classes applied to it.
+ * @param {goog.ui.Control} control Control to render.
+ * @return {Element} Root element for the control.
+ */
 goog.ui.ControlRenderer.prototype.createDom = function(control) {
   // Create and return DIV wrapping contents.
   var element = control.getDomHelper().createDom(
@@ -201,36 +201,36 @@ goog.ui.ControlRenderer.prototype.createDom = function(control) {
 
   this.setAriaStates(control, element);
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes the control's root element and returns the parent element of the
-***REMOVED*** control's contents.  Since by default controls are rendered as a single
-***REMOVED*** DIV, the default implementation returns the element itself.  Subclasses
-***REMOVED*** with more complex DOM structures must override this method as needed.
-***REMOVED*** @param {Element} element Root element of the control whose content element
-***REMOVED***     is to be returned.
-***REMOVED*** @return {Element} The control's content element.
-***REMOVED***
+/**
+ * Takes the control's root element and returns the parent element of the
+ * control's contents.  Since by default controls are rendered as a single
+ * DIV, the default implementation returns the element itself.  Subclasses
+ * with more complex DOM structures must override this method as needed.
+ * @param {Element} element Root element of the control whose content element
+ *     is to be returned.
+ * @return {Element} The control's content element.
+ */
 goog.ui.ControlRenderer.prototype.getContentElement = function(element) {
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the control's DOM by adding or removing the specified class name
-***REMOVED*** to/from its root element. May add additional combined classes as needed in
-***REMOVED*** IE6 and lower. Because of this, subclasses should use this method when
-***REMOVED*** modifying class names on the control's root element.
-***REMOVED*** @param {goog.ui.Control|Element} control Control instance (or root element)
-***REMOVED***     to be updated.
-***REMOVED*** @param {string} className CSS class name to add or remove.
-***REMOVED*** @param {boolean} enable Whether to add or remove the class name.
-***REMOVED***
+/**
+ * Updates the control's DOM by adding or removing the specified class name
+ * to/from its root element. May add additional combined classes as needed in
+ * IE6 and lower. Because of this, subclasses should use this method when
+ * modifying class names on the control's root element.
+ * @param {goog.ui.Control|Element} control Control instance (or root element)
+ *     to be updated.
+ * @param {string} className CSS class name to add or remove.
+ * @param {boolean} enable Whether to add or remove the class name.
+ */
 goog.ui.ControlRenderer.prototype.enableClassName = function(control,
     className, enable) {
-  var element =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (
+  var element = /** @type {Element} */ (
       control.getElement ? control.getElement() : control);
   if (element) {
     var classNames = [className];
@@ -246,44 +246,44 @@ goog.ui.ControlRenderer.prototype.enableClassName = function(control,
 
     goog.dom.classlist.enableAll(element, classNames, enable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the control's DOM by adding or removing the specified extra class
-***REMOVED*** name to/from its element.
-***REMOVED*** @param {goog.ui.Control} control Control to be updated.
-***REMOVED*** @param {string} className CSS class name to add or remove.
-***REMOVED*** @param {boolean} enable Whether to add or remove the class name.
-***REMOVED***
+/**
+ * Updates the control's DOM by adding or removing the specified extra class
+ * name to/from its element.
+ * @param {goog.ui.Control} control Control to be updated.
+ * @param {string} className CSS class name to add or remove.
+ * @param {boolean} enable Whether to add or remove the class name.
+ */
 goog.ui.ControlRenderer.prototype.enableExtraClassName = function(control,
     className, enable) {
   // The base class implementation is trivial; subclasses should override as
   // needed.
   this.enableClassName(control, className, enable);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if this renderer can decorate the element, false otherwise.
-***REMOVED*** The default implementation always returns true.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {boolean} Whether the renderer can decorate the element.
-***REMOVED***
+/**
+ * Returns true if this renderer can decorate the element, false otherwise.
+ * The default implementation always returns true.
+ * @param {Element} element Element to decorate.
+ * @return {boolean} Whether the renderer can decorate the element.
+ */
 goog.ui.ControlRenderer.prototype.canDecorate = function(element) {
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default implementation of {@code decorate} for {@link goog.ui.Control}s.
-***REMOVED*** Initializes the control's ID, content, and state based on the ID of the
-***REMOVED*** element, its child nodes, and its CSS classes, respectively.  Returns the
-***REMOVED*** element.
-***REMOVED*** @param {goog.ui.Control} control Control instance to decorate the element.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {Element} Decorated element.
-***REMOVED***
+/**
+ * Default implementation of {@code decorate} for {@link goog.ui.Control}s.
+ * Initializes the control's ID, content, and state based on the ID of the
+ * element, its child nodes, and its CSS classes, respectively.  Returns the
+ * element.
+ * @param {goog.ui.Control} control Control instance to decorate the element.
+ * @param {Element} element Element to decorate.
+ * @return {Element} Decorated element.
+ */
 goog.ui.ControlRenderer.prototype.decorate = function(control, element) {
   // Set the control's ID to the decorated element's DOM ID, if any.
   if (element.id) {
@@ -358,16 +358,16 @@ goog.ui.ControlRenderer.prototype.decorate = function(control, element) {
 
   this.setAriaStates(control, element);
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the control's DOM by configuring properties that can only be set
-***REMOVED*** after the DOM has entered the document.  This implementation sets up BiDi
-***REMOVED*** and keyboard focus.  Called from {@link goog.ui.Control#enterDocument}.
-***REMOVED*** @param {goog.ui.Control} control Control whose DOM is to be initialized
-***REMOVED***     as it enters the document.
-***REMOVED***
+/**
+ * Initializes the control's DOM by configuring properties that can only be set
+ * after the DOM has entered the document.  This implementation sets up BiDi
+ * and keyboard focus.  Called from {@link goog.ui.Control#enterDocument}.
+ * @param {goog.ui.Control} control Control whose DOM is to be initialized
+ *     as it enters the document.
+ */
 goog.ui.ControlRenderer.prototype.initializeDom = function(control) {
   // Initialize render direction (BiDi).  We optimize the left-to-right render
   // direction by assuming that elements are left-to-right by default, and only
@@ -383,14 +383,14 @@ goog.ui.ControlRenderer.prototype.initializeDom = function(control) {
   if (control.isEnabled()) {
     this.setFocusable(control, control.isVisible());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the element's ARIA role.
-***REMOVED*** @param {Element} element Element to update.
-***REMOVED*** @param {?goog.a11y.aria.Role=} opt_preferredRole The preferred ARIA role.
-***REMOVED***
+/**
+ * Sets the element's ARIA role.
+ * @param {Element} element Element to update.
+ * @param {?goog.a11y.aria.Role=} opt_preferredRole The preferred ARIA role.
+ */
 goog.ui.ControlRenderer.prototype.setAriaRole = function(element,
     opt_preferredRole) {
   var ariaRole = opt_preferredRole || this.getAriaRole();
@@ -403,17 +403,17 @@ goog.ui.ControlRenderer.prototype.setAriaRole = function(element,
     }
     goog.a11y.aria.setRole(element, ariaRole);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the element's ARIA attributes, including distinguishing between
-***REMOVED*** universally supported ARIA properties and ARIA states that are only
-***REMOVED*** supported by certain ARIA roles. Only attributes which are initialized to be
-***REMOVED*** true will be set.
-***REMOVED*** @param {!goog.ui.Control} control Control whose ARIA state will be updated.
-***REMOVED*** @param {!Element} element Element whose ARIA state is to be updated.
-***REMOVED***
+/**
+ * Sets the element's ARIA attributes, including distinguishing between
+ * universally supported ARIA properties and ARIA states that are only
+ * supported by certain ARIA roles. Only attributes which are initialized to be
+ * true will be set.
+ * @param {!goog.ui.Control} control Control whose ARIA state will be updated.
+ * @param {!Element} element Element whose ARIA state is to be updated.
+ */
 goog.ui.ControlRenderer.prototype.setAriaStates = function(control, element) {
   goog.asserts.assert(control);
   goog.asserts.assert(element);
@@ -438,44 +438,44 @@ goog.ui.ControlRenderer.prototype.setAriaStates = function(control, element) {
     this.updateAriaState(
         element, goog.ui.Component.State.OPENED, control.isOpen());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows or disallows text selection within the control's DOM.
-***REMOVED*** @param {Element} element The control's root element.
-***REMOVED*** @param {boolean} allow Whether the element should allow text selection.
-***REMOVED***
+/**
+ * Allows or disallows text selection within the control's DOM.
+ * @param {Element} element The control's root element.
+ * @param {boolean} allow Whether the element should allow text selection.
+ */
 goog.ui.ControlRenderer.prototype.setAllowTextSelection = function(element,
     allow) {
   // On all browsers other than IE and Opera, it isn't necessary to recursively
   // apply unselectable styling to the element's children.
   goog.style.setUnselectable(element, !allow,
       !goog.userAgent.IE && !goog.userAgent.OPERA);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Applies special styling to/from the control's element if it is rendered
-***REMOVED*** right-to-left, and removes it if it is rendered left-to-right.
-***REMOVED*** @param {Element} element The control's root element.
-***REMOVED*** @param {boolean} rightToLeft Whether the component is rendered
-***REMOVED***     right-to-left.
-***REMOVED***
+/**
+ * Applies special styling to/from the control's element if it is rendered
+ * right-to-left, and removes it if it is rendered left-to-right.
+ * @param {Element} element The control's root element.
+ * @param {boolean} rightToLeft Whether the component is rendered
+ *     right-to-left.
+ */
 goog.ui.ControlRenderer.prototype.setRightToLeft = function(element,
     rightToLeft) {
   this.enableClassName(element,
       goog.getCssName(this.getStructuralCssClass(), 'rtl'), rightToLeft);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the control's key event target supports keyboard focus
-***REMOVED*** (based on its {@code tabIndex} attribute), false otherwise.
-***REMOVED*** @param {goog.ui.Control} control Control whose key event target is to be
-***REMOVED***     checked.
-***REMOVED*** @return {boolean} Whether the control's key event target is focusable.
-***REMOVED***
+/**
+ * Returns true if the control's key event target supports keyboard focus
+ * (based on its {@code tabIndex} attribute), false otherwise.
+ * @param {goog.ui.Control} control Control whose key event target is to be
+ *     checked.
+ * @return {boolean} Whether the control's key event target is focusable.
+ */
 goog.ui.ControlRenderer.prototype.isFocusable = function(control) {
   var keyTarget;
   if (control.isSupportedState(goog.ui.Component.State.FOCUSED) &&
@@ -483,18 +483,18 @@ goog.ui.ControlRenderer.prototype.isFocusable = function(control) {
     return goog.dom.isFocusableTabIndex(keyTarget);
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the control's key event target to make it focusable or non-focusable
-***REMOVED*** via its {@code tabIndex} attribute.  Does nothing if the control doesn't
-***REMOVED*** support the {@code FOCUSED} state, or if it has no key event target.
-***REMOVED*** @param {goog.ui.Control} control Control whose key event target is to be
-***REMOVED***     updated.
-***REMOVED*** @param {boolean} focusable Whether to enable keyboard focus support on the
-***REMOVED***     control's key event target.
-***REMOVED***
+/**
+ * Updates the control's key event target to make it focusable or non-focusable
+ * via its {@code tabIndex} attribute.  Does nothing if the control doesn't
+ * support the {@code FOCUSED} state, or if it has no key event target.
+ * @param {goog.ui.Control} control Control whose key event target is to be
+ *     updated.
+ * @param {boolean} focusable Whether to enable keyboard focus support on the
+ *     control's key event target.
+ */
 goog.ui.ControlRenderer.prototype.setFocusable = function(control, focusable) {
   var keyTarget;
   if (control.isSupportedState(goog.ui.Component.State.FOCUSED) &&
@@ -521,14 +521,14 @@ goog.ui.ControlRenderer.prototype.setFocusable = function(control, focusable) {
       goog.dom.setFocusableTabIndex(keyTarget, focusable);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shows or hides the element.
-***REMOVED*** @param {Element} element Element to update.
-***REMOVED*** @param {boolean} visible Whether to show the element.
-***REMOVED***
+/**
+ * Shows or hides the element.
+ * @param {Element} element Element to update.
+ * @param {boolean} visible Whether to show the element.
+ */
 goog.ui.ControlRenderer.prototype.setVisible = function(element, visible) {
   // The base class implementation is trivial; subclasses should override as
   // needed.  It should be possible to do animated reveals, for example.
@@ -536,15 +536,15 @@ goog.ui.ControlRenderer.prototype.setVisible = function(element, visible) {
   if (element) {
     goog.a11y.aria.setState(element, goog.a11y.aria.State.HIDDEN, !visible);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the appearance of the control in response to a state change.
-***REMOVED*** @param {goog.ui.Control} control Control instance to update.
-***REMOVED*** @param {goog.ui.Component.State} state State to enable or disable.
-***REMOVED*** @param {boolean} enable Whether the control is entering or exiting the state.
-***REMOVED***
+/**
+ * Updates the appearance of the control in response to a state change.
+ * @param {goog.ui.Control} control Control instance to update.
+ * @param {goog.ui.Component.State} state State to enable or disable.
+ * @param {boolean} enable Whether the control is entering or exiting the state.
+ */
 goog.ui.ControlRenderer.prototype.setState = function(control, state, enable) {
   var element = control.getElement();
   if (element) {
@@ -554,19 +554,19 @@ goog.ui.ControlRenderer.prototype.setState = function(control, state, enable) {
     }
     this.updateAriaState(element, state, enable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the element's ARIA (accessibility) attributes , including
-***REMOVED*** distinguishing between universally supported ARIA properties and ARIA states
-***REMOVED*** that are only supported by certain ARIA roles.
-***REMOVED*** @param {Element} element Element whose ARIA state is to be updated.
-***REMOVED*** @param {goog.ui.Component.State} state Component state being enabled or
-***REMOVED***     disabled.
-***REMOVED*** @param {boolean} enable Whether the state is being enabled or disabled.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Updates the element's ARIA (accessibility) attributes , including
+ * distinguishing between universally supported ARIA properties and ARIA states
+ * that are only supported by certain ARIA roles.
+ * @param {Element} element Element whose ARIA state is to be updated.
+ * @param {goog.ui.Component.State} state Component state being enabled or
+ *     disabled.
+ * @param {boolean} enable Whether the state is being enabled or disabled.
+ * @protected
+ */
 goog.ui.ControlRenderer.prototype.updateAriaState = function(element, state,
     enable) {
   // Ensure the ARIA attribute map exists.
@@ -584,53 +584,53 @@ goog.ui.ControlRenderer.prototype.updateAriaState = function(element, state,
   if (ariaAttr) {
     goog.a11y.aria.setState(element, ariaAttr, enable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the appropriate ARIA attribute based on ARIA role if the ARIA
-***REMOVED*** attribute is an ARIA state.
-***REMOVED*** @param {!Element} element The element from which to get the ARIA role for
-***REMOVED*** matching ARIA state.
-***REMOVED*** @param {goog.a11y.aria.State} attr The ARIA attribute to check to see if it
-***REMOVED*** can be applied to the given ARIA role.
-***REMOVED*** @return {goog.a11y.aria.State} An ARIA attribute that can be applied to the
-***REMOVED*** given ARIA role.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the appropriate ARIA attribute based on ARIA role if the ARIA
+ * attribute is an ARIA state.
+ * @param {!Element} element The element from which to get the ARIA role for
+ * matching ARIA state.
+ * @param {goog.a11y.aria.State} attr The ARIA attribute to check to see if it
+ * can be applied to the given ARIA role.
+ * @return {goog.a11y.aria.State} An ARIA attribute that can be applied to the
+ * given ARIA role.
+ * @private
+ */
 goog.ui.ControlRenderer.getAriaStateForAriaRole_ = function(element, attr) {
   var role = goog.a11y.aria.getRole(element);
   if (!role) {
     return attr;
   }
-  role =***REMOVED*****REMOVED*** @type {goog.a11y.aria.Role}***REMOVED*** (role);
+  role = /** @type {goog.a11y.aria.Role} */ (role);
   var matchAttr = goog.ui.ControlRenderer.TOGGLE_ARIA_STATE_MAP_[role] || attr;
   return goog.ui.ControlRenderer.isAriaState_(attr) ? matchAttr : attr;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the given ARIA attribute is an ARIA property or ARIA state.
-***REMOVED*** @param {goog.a11y.aria.State} attr The ARIA attribute to classify.
-***REMOVED*** @return {boolean} If the ARIA attribute is an ARIA state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the given ARIA attribute is an ARIA property or ARIA state.
+ * @param {goog.a11y.aria.State} attr The ARIA attribute to classify.
+ * @return {boolean} If the ARIA attribute is an ARIA state.
+ * @private
+ */
 goog.ui.ControlRenderer.isAriaState_ = function(attr) {
   return attr == goog.a11y.aria.State.CHECKED ||
       attr == goog.a11y.aria.State.SELECTED;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a control's root element, and sets its content to the given text
-***REMOVED*** caption or DOM structure.  The default implementation replaces the children
-***REMOVED*** of the given element.  Renderers that create more complex DOM structures
-***REMOVED*** must override this method accordingly.
-***REMOVED*** @param {Element} element The control's root element.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to be
-***REMOVED***     set as the control's content. The DOM nodes will not be cloned, they
-***REMOVED***     will only moved under the content element of the control.
-***REMOVED***
+/**
+ * Takes a control's root element, and sets its content to the given text
+ * caption or DOM structure.  The default implementation replaces the children
+ * of the given element.  Renderers that create more complex DOM structures
+ * must override this method accordingly.
+ * @param {Element} element The control's root element.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to be
+ *     set as the control's content. The DOM nodes will not be cloned, they
+ *     will only moved under the content element of the control.
+ */
 goog.ui.ControlRenderer.prototype.setContent = function(element, content) {
   var contentElem = this.getContentElement(element);
   if (contentElem) {
@@ -645,7 +645,7 @@ goog.ui.ControlRenderer.prototype.setContent = function(element, content) {
             contentElem.appendChild(goog.isString(child) ?
                 doc.createTextNode(child) : child);
           }
-       ***REMOVED*****REMOVED***
+        };
         if (goog.isArray(content)) {
           // Array of nodes.
           goog.array.forEach(content, childHandler);
@@ -653,7 +653,7 @@ goog.ui.ControlRenderer.prototype.setContent = function(element, content) {
           // NodeList. The second condition filters out TextNode which also has
           // length attribute but is not array like. The nodes have to be cloned
           // because childHandler removes them from the list during iteration.
-          goog.array.forEach(goog.array.clone(***REMOVED*** @type {NodeList}***REMOVED***(content)),
+          goog.array.forEach(goog.array.clone(/** @type {NodeList} */(content)),
               childHandler);
         } else {
           // Node or string.
@@ -662,90 +662,90 @@ goog.ui.ControlRenderer.prototype.setContent = function(element, content) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the element within the component's DOM that should receive keyboard
-***REMOVED*** focus (null if none).  The default implementation returns the control's root
-***REMOVED*** element.
-***REMOVED*** @param {goog.ui.Control} control Control whose key event target is to be
-***REMOVED***     returned.
-***REMOVED*** @return {Element} The key event target.
-***REMOVED***
+/**
+ * Returns the element within the component's DOM that should receive keyboard
+ * focus (null if none).  The default implementation returns the control's root
+ * element.
+ * @param {goog.ui.Control} control Control whose key event target is to be
+ *     returned.
+ * @return {Element} The key event target.
+ */
 goog.ui.ControlRenderer.prototype.getKeyEventTarget = function(control) {
   return control.getElement();
-***REMOVED***
+};
 
 
 // CSS class name management.
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class name to be applied to the root element of all
-***REMOVED*** components rendered or decorated using this renderer.  The class name
-***REMOVED*** is expected to uniquely identify the renderer class, i.e. no two
-***REMOVED*** renderer classes are expected to share the same CSS class name.
-***REMOVED*** @return {string} Renderer-specific CSS class name.
-***REMOVED***
+/**
+ * Returns the CSS class name to be applied to the root element of all
+ * components rendered or decorated using this renderer.  The class name
+ * is expected to uniquely identify the renderer class, i.e. no two
+ * renderer classes are expected to share the same CSS class name.
+ * @return {string} Renderer-specific CSS class name.
+ */
 goog.ui.ControlRenderer.prototype.getCssClass = function() {
   return goog.ui.ControlRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an array of combinations of classes to apply combined class names for
-***REMOVED*** in IE6 and below. See {@link IE6_CLASS_COMBINATIONS} for more detail. This
-***REMOVED*** method doesn't reference {@link IE6_CLASS_COMBINATIONS} so that it can be
-***REMOVED*** compiled out, but subclasses should return their IE6_CLASS_COMBINATIONS
-***REMOVED*** static constant instead.
-***REMOVED*** @return {Array.<Array.<string>>} Array of class name combinations.
-***REMOVED***
+/**
+ * Returns an array of combinations of classes to apply combined class names for
+ * in IE6 and below. See {@link IE6_CLASS_COMBINATIONS} for more detail. This
+ * method doesn't reference {@link IE6_CLASS_COMBINATIONS} so that it can be
+ * compiled out, but subclasses should return their IE6_CLASS_COMBINATIONS
+ * static constant instead.
+ * @return {Array.<Array.<string>>} Array of class name combinations.
+ */
 goog.ui.ControlRenderer.prototype.getIe6ClassCombinations = function() {
   return [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the name of a DOM structure-specific CSS class to be applied to the
-***REMOVED*** root element of all components rendered or decorated using this renderer.
-***REMOVED*** Unlike the class name returned by {@link #getCssClass}, the structural class
-***REMOVED*** name may be shared among different renderers that generate similar DOM
-***REMOVED*** structures.  The structural class name also serves as the basis of derived
-***REMOVED*** class names used to identify and style structural elements of the control's
-***REMOVED*** DOM, as well as the basis for state-specific class names.  The default
-***REMOVED*** implementation returns the same class name as {@link #getCssClass}, but
-***REMOVED*** subclasses are expected to override this method as needed.
-***REMOVED*** @return {string} DOM structure-specific CSS class name (same as the renderer-
-***REMOVED***     specific CSS class name by default).
-***REMOVED***
+/**
+ * Returns the name of a DOM structure-specific CSS class to be applied to the
+ * root element of all components rendered or decorated using this renderer.
+ * Unlike the class name returned by {@link #getCssClass}, the structural class
+ * name may be shared among different renderers that generate similar DOM
+ * structures.  The structural class name also serves as the basis of derived
+ * class names used to identify and style structural elements of the control's
+ * DOM, as well as the basis for state-specific class names.  The default
+ * implementation returns the same class name as {@link #getCssClass}, but
+ * subclasses are expected to override this method as needed.
+ * @return {string} DOM structure-specific CSS class name (same as the renderer-
+ *     specific CSS class name by default).
+ */
 goog.ui.ControlRenderer.prototype.getStructuralCssClass = function() {
   return this.getCssClass();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns all CSS class names applicable to the given control, based on its
-***REMOVED*** state.  The return value is an array of strings containing
-***REMOVED*** <ol>
-***REMOVED***   <li>the renderer-specific CSS class returned by {@link #getCssClass},
-***REMOVED***       followed by
-***REMOVED***   <li>the structural CSS class returned by {@link getStructuralCssClass} (if
-***REMOVED***       different from the renderer-specific CSS class), followed by
-***REMOVED***   <li>any state-specific classes returned by {@link #getClassNamesForState},
-***REMOVED***       followed by
-***REMOVED***   <li>any extra classes returned by the control's {@code getExtraClassNames}
-***REMOVED***       method and
-***REMOVED***   <li>for IE6 and lower, additional combined classes from
-***REMOVED***       {@link getAppliedCombinedClassNames_}.
-***REMOVED*** </ol>
-***REMOVED*** Since all controls have at least one renderer-specific CSS class name, this
-***REMOVED*** method is guaranteed to return an array of at least one element.
-***REMOVED*** @param {goog.ui.Control} control Control whose CSS classes are to be
-***REMOVED***     returned.
-***REMOVED*** @return {!Array.<string>} Array of CSS class names applicable to the control.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns all CSS class names applicable to the given control, based on its
+ * state.  The return value is an array of strings containing
+ * <ol>
+ *   <li>the renderer-specific CSS class returned by {@link #getCssClass},
+ *       followed by
+ *   <li>the structural CSS class returned by {@link getStructuralCssClass} (if
+ *       different from the renderer-specific CSS class), followed by
+ *   <li>any state-specific classes returned by {@link #getClassNamesForState},
+ *       followed by
+ *   <li>any extra classes returned by the control's {@code getExtraClassNames}
+ *       method and
+ *   <li>for IE6 and lower, additional combined classes from
+ *       {@link getAppliedCombinedClassNames_}.
+ * </ol>
+ * Since all controls have at least one renderer-specific CSS class name, this
+ * method is guaranteed to return an array of at least one element.
+ * @param {goog.ui.Control} control Control whose CSS classes are to be
+ *     returned.
+ * @return {!Array.<string>} Array of CSS class names applicable to the control.
+ * @protected
+ */
 goog.ui.ControlRenderer.prototype.getClassNames = function(control) {
   var cssClass = this.getCssClass();
 
@@ -775,27 +775,27 @@ goog.ui.ControlRenderer.prototype.getClassNames = function(control) {
   }
 
   return classNames;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an array of all the combined class names that should be applied based
-***REMOVED*** on the given list of classes. Checks the result of
-***REMOVED*** {@link getIe6ClassCombinations} for any combinations that have all
-***REMOVED*** members contained in classes. If a combination matches, the members are
-***REMOVED*** joined with an underscore (in order), and added to the return array.
-***REMOVED***
-***REMOVED*** If opt_includedClass is provided, return only the combined classes that have
-***REMOVED*** all members contained in classes AND include opt_includedClass as well.
-***REMOVED*** opt_includedClass is added to classes as well.
-***REMOVED*** @param {goog.array.ArrayLike.<string>} classes Array-like thing of classes to
-***REMOVED***     return matching combined classes for.
-***REMOVED*** @param {?string=} opt_includedClass If provided, get only the combined
-***REMOVED***     classes that include this one.
-***REMOVED*** @return {!Array.<string>} Array of combined class names that should be
-***REMOVED***     applied.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns an array of all the combined class names that should be applied based
+ * on the given list of classes. Checks the result of
+ * {@link getIe6ClassCombinations} for any combinations that have all
+ * members contained in classes. If a combination matches, the members are
+ * joined with an underscore (in order), and added to the return array.
+ *
+ * If opt_includedClass is provided, return only the combined classes that have
+ * all members contained in classes AND include opt_includedClass as well.
+ * opt_includedClass is added to classes as well.
+ * @param {goog.array.ArrayLike.<string>} classes Array-like thing of classes to
+ *     return matching combined classes for.
+ * @param {?string=} opt_includedClass If provided, get only the combined
+ *     classes that include this one.
+ * @return {!Array.<string>} Array of combined class names that should be
+ *     applied.
+ * @private
+ */
 goog.ui.ControlRenderer.prototype.getAppliedCombinedClassNames_ = function(
     classes, opt_includedClass) {
   var toAdd = [];
@@ -809,21 +809,21 @@ goog.ui.ControlRenderer.prototype.getAppliedCombinedClassNames_ = function(
     }
   });
   return toAdd;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a bit mask of {@link goog.ui.Component.State}s, and returns an array
-***REMOVED*** of the appropriate class names representing the given state, suitable to be
-***REMOVED*** applied to the root element of a component rendered using this renderer, or
-***REMOVED*** null if no state-specific classes need to be applied.  This default
-***REMOVED*** implementation uses the renderer's {@link getClassForState} method to
-***REMOVED*** generate each state-specific class.
-***REMOVED*** @param {number} state Bit mask of component states.
-***REMOVED*** @return {!Array.<string>} Array of CSS class names representing the given
-***REMOVED***     state.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Takes a bit mask of {@link goog.ui.Component.State}s, and returns an array
+ * of the appropriate class names representing the given state, suitable to be
+ * applied to the root element of a component rendered using this renderer, or
+ * null if no state-specific classes need to be applied.  This default
+ * implementation uses the renderer's {@link getClassForState} method to
+ * generate each state-specific class.
+ * @param {number} state Bit mask of component states.
+ * @return {!Array.<string>} Array of CSS class names representing the given
+ *     state.
+ * @protected
+ */
 goog.ui.ControlRenderer.prototype.getClassNamesForState = function(state) {
   var classNames = [];
   while (state) {
@@ -831,51 +831,51 @@ goog.ui.ControlRenderer.prototype.getClassNamesForState = function(state) {
     // the classNames array.
     var mask = state & -state;  // Least significant bit
     classNames.push(this.getClassForState(
-       ***REMOVED*****REMOVED*** @type {goog.ui.Component.State}***REMOVED*** (mask)));
+        /** @type {goog.ui.Component.State} */ (mask)));
     state &= ~mask;
   }
   return classNames;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a single {@link goog.ui.Component.State}, and returns the
-***REMOVED*** corresponding CSS class name (null if none).
-***REMOVED*** @param {goog.ui.Component.State} state Component state.
-***REMOVED*** @return {string|undefined} CSS class representing the given state (undefined
-***REMOVED***     if none).
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Takes a single {@link goog.ui.Component.State}, and returns the
+ * corresponding CSS class name (null if none).
+ * @param {goog.ui.Component.State} state Component state.
+ * @return {string|undefined} CSS class representing the given state (undefined
+ *     if none).
+ * @protected
+ */
 goog.ui.ControlRenderer.prototype.getClassForState = function(state) {
   if (!this.classByState_) {
     this.createClassByStateMap_();
   }
   return this.classByState_[state];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a single CSS class name which may represent a component state, and
-***REMOVED*** returns the corresponding component state (0x00 if none).
-***REMOVED*** @param {string} className CSS class name, possibly representing a component
-***REMOVED***     state.
-***REMOVED*** @return {goog.ui.Component.State} state Component state corresponding
-***REMOVED***     to the given CSS class (0x00 if none).
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Takes a single CSS class name which may represent a component state, and
+ * returns the corresponding component state (0x00 if none).
+ * @param {string} className CSS class name, possibly representing a component
+ *     state.
+ * @return {goog.ui.Component.State} state Component state corresponding
+ *     to the given CSS class (0x00 if none).
+ * @protected
+ */
 goog.ui.ControlRenderer.prototype.getStateFromClass = function(className) {
   if (!this.stateByClass_) {
     this.createStateByClassMap_();
   }
   var state = parseInt(this.stateByClass_[className], 10);
-  return***REMOVED*****REMOVED*** @type {goog.ui.Component.State}***REMOVED*** (isNaN(state) ? 0x00 : state);
-***REMOVED***
+  return /** @type {goog.ui.Component.State} */ (isNaN(state) ? 0x00 : state);
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the lookup table of states to classes, used during state changes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the lookup table of states to classes, used during state changes.
+ * @private
+ */
 goog.ui.ControlRenderer.prototype.createClassByStateMap_ = function() {
   var baseClass = this.getStructuralCssClass();
 
@@ -886,14 +886,14 @@ goog.ui.ControlRenderer.prototype.createClassByStateMap_ = function() {
   goog.asserts.assert(isValidClassName,
       'ControlRenderer has an invalid css class: \'' + baseClass + '\'');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Map of component states to state-specific structural class names,
-  ***REMOVED*** used when changing the DOM in response to a state change.  Precomputed
-  ***REMOVED*** and cached on first use to minimize object allocations and string
-  ***REMOVED*** concatenation.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Map of component states to state-specific structural class names,
+   * used when changing the DOM in response to a state change.  Precomputed
+   * and cached on first use to minimize object allocations and string
+   * concatenation.
+   * @type {Object}
+   * @private
+   */
   this.classByState_ = goog.object.create(
       goog.ui.Component.State.DISABLED, goog.getCssName(baseClass, 'disabled'),
       goog.ui.Component.State.HOVER, goog.getCssName(baseClass, 'hover'),
@@ -902,25 +902,25 @@ goog.ui.ControlRenderer.prototype.createClassByStateMap_ = function() {
       goog.ui.Component.State.CHECKED, goog.getCssName(baseClass, 'checked'),
       goog.ui.Component.State.FOCUSED, goog.getCssName(baseClass, 'focused'),
       goog.ui.Component.State.OPENED, goog.getCssName(baseClass, 'open'));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the lookup table of classes to states, used during decoration.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the lookup table of classes to states, used during decoration.
+ * @private
+ */
 goog.ui.ControlRenderer.prototype.createStateByClassMap_ = function() {
   // We need the classByState_ map so we can transpose it.
   if (!this.classByState_) {
     this.createClassByStateMap_();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Map of state-specific structural class names to component states,
-  ***REMOVED*** used during element decoration.  Precomputed and cached on first use
-  ***REMOVED*** to minimize object allocations and string concatenation.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Map of state-specific structural class names to component states,
+   * used during element decoration.  Precomputed and cached on first use
+   * to minimize object allocations and string concatenation.
+   * @type {Object}
+   * @private
+   */
   this.stateByClass_ = goog.object.transpose(this.classByState_);
-***REMOVED***
+};

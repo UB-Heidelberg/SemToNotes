@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match a tag and all of its children.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match a tag and all of its children.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.FullTag');
 
@@ -26,23 +26,23 @@ goog.require('goog.dom.pattern.Tag');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches a full tag including all its children.
-***REMOVED***
-***REMOVED*** @param {string|RegExp} tag Name of the tag.  Also will accept a regular
-***REMOVED***     expression to match against the tag name.
-***REMOVED*** @param {Object=} opt_attrs Optional map of attribute names to desired values.
-***REMOVED***     This pattern will only match when all attributes are present and match
-***REMOVED***     the string or regular expression value provided here.
-***REMOVED*** @param {Object=} opt_styles Optional map of CSS style names to desired
-***REMOVED***     values. This pattern will only match when all styles are present and
-***REMOVED***     match the string or regular expression value provided here.
-***REMOVED*** @param {Function=} opt_test Optional function that takes the element as a
-***REMOVED***     parameter and returns true if this pattern should match it.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.StartTag}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Pattern object that matches a full tag including all its children.
+ *
+ * @param {string|RegExp} tag Name of the tag.  Also will accept a regular
+ *     expression to match against the tag name.
+ * @param {Object=} opt_attrs Optional map of attribute names to desired values.
+ *     This pattern will only match when all attributes are present and match
+ *     the string or regular expression value provided here.
+ * @param {Object=} opt_styles Optional map of CSS style names to desired
+ *     values. This pattern will only match when all styles are present and
+ *     match the string or regular expression value provided here.
+ * @param {Function=} opt_test Optional function that takes the element as a
+ *     parameter and returns true if this pattern should match it.
+ * @constructor
+ * @extends {goog.dom.pattern.StartTag}
+ * @final
+ */
 goog.dom.pattern.FullTag = function(tag, opt_attrs, opt_styles, opt_test) {
   goog.dom.pattern.StartTag.call(
       this,
@@ -50,30 +50,30 @@ goog.dom.pattern.FullTag = function(tag, opt_attrs, opt_styles, opt_test) {
       opt_attrs,
       opt_styles,
       opt_test);
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.FullTag, goog.dom.pattern.StartTag);
 
 
-***REMOVED***
-***REMOVED*** Tracks the matcher's depth to detect the end of the tag.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tracks the matcher's depth to detect the end of the tag.
+ *
+ * @type {number}
+ * @private
+ */
 goog.dom.pattern.FullTag.prototype.depth_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Test whether the given token is a start tag token which matches the tag name,
-***REMOVED*** style, and attributes provided in the constructor.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} <code>MATCH</code> at the end of our
-***REMOVED***    tag, <code>MATCHING</code> if we are within the tag, and
-***REMOVED***    <code>NO_MATCH</code> if the starting tag does not match.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Test whether the given token is a start tag token which matches the tag name,
+ * style, and attributes provided in the constructor.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} <code>MATCH</code> at the end of our
+ *    tag, <code>MATCHING</code> if we are within the tag, and
+ *    <code>NO_MATCH</code> if the starting tag does not match.
+ * @override
+ */
 goog.dom.pattern.FullTag.prototype.matchToken = function(token, type) {
   if (!this.depth_) {
     // If we have not yet started, make sure we match as a StartTag.
@@ -91,4 +91,4 @@ goog.dom.pattern.FullTag.prototype.matchToken = function(token, type) {
            goog.dom.pattern.MatchType.MATCHING :
            goog.dom.pattern.MatchType.MATCH;
   }
-***REMOVED***
+};

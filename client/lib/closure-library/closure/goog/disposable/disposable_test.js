@@ -31,7 +31,7 @@ goog.inherits(DisposableTest, goog.Disposable);
 DisposableTest.prototype.disposeInternal = function() {
   DisposableTest.superClass_.disposeInternal.call(this);
   delete this.element;
-***REMOVED***
+};
 
 // Class that doesn't inherit from goog.Disposable, but implements the
 // disposable interface via duck typing.
@@ -42,7 +42,7 @@ function DisposableDuck() {
 
 DisposableDuck.prototype.dispose = function() {
   delete this.element;
-***REMOVED***
+};
 
 // Class which calls dispose recursively.
 
@@ -55,7 +55,7 @@ RecursiveDisposable.prototype.disposeInternal = function() {
   ++this.disposedCount;
   assertEquals('Disposed too many times', 1, this.disposedCount);
   this.dispose();
-***REMOVED***
+};
 
 // Test methods.
 
@@ -67,7 +67,7 @@ function setUp() {
 function tearDown() {
   goog.Disposable.MONITORING_MODE = goog.Disposable.MonitoringMode.OFF;
   goog.Disposable.INCLUDE_STACK_ON_CREATION = true;
-  goog.Disposable.instances_ = {***REMOVED***
+  goog.Disposable.instances_ = {};
   d1.dispose();
   d2.dispose();
 }
@@ -148,7 +148,7 @@ function testStaticDisposeOnNonDisposableType() {
 }
 
 function testMonitoringFailure() {
-  function BadDisposable() {***REMOVED***
+  function BadDisposable() {};
   goog.inherits(BadDisposable, goog.Disposable);
 
   goog.Disposable.MONITORING_MODE =
@@ -273,7 +273,7 @@ function testOnDisposeCallbackOrder() {
   var invocations = [];
   var callback = function(str) {
     invocations.push(str);
- ***REMOVED*****REMOVED***
+  };
   d1.addOnDisposeCallback(goog.partial(callback, 'a'));
   d1.addOnDisposeCallback(goog.partial(callback, 'b'));
   goog.dispose(d1);

@@ -12,58 +12,58 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for manipulating a form and elements.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author jonp@google.com (Jon Perlow)
-***REMOVED*** @author elsigh@google.com (Lindsey Simon)
-***REMOVED***
+/**
+ * @fileoverview Utilities for manipulating a form and elements.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @author jonp@google.com (Jon Perlow)
+ * @author elsigh@google.com (Lindsey Simon)
+ */
 
 goog.provide('goog.dom.forms');
 
 goog.require('goog.structs.Map');
 
 
-***REMOVED***
-***REMOVED*** Returns form data as a map of name to value arrays. This doesn't
-***REMOVED*** support file inputs.
-***REMOVED*** @param {HTMLFormElement} form The form.
-***REMOVED*** @return {!goog.structs.Map} A map of the form data as form name to arrays of
-***REMOVED***     values.
-***REMOVED***
+/**
+ * Returns form data as a map of name to value arrays. This doesn't
+ * support file inputs.
+ * @param {HTMLFormElement} form The form.
+ * @return {!goog.structs.Map} A map of the form data as form name to arrays of
+ *     values.
+ */
 goog.dom.forms.getFormDataMap = function(form) {
   var map = new goog.structs.Map();
   goog.dom.forms.getFormDataHelper_(form, map,
       goog.dom.forms.addFormDataToMap_);
   return map;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the form data as an application/x-www-url-encoded string. This
-***REMOVED*** doesn't support file inputs.
-***REMOVED*** @param {HTMLFormElement} form The form.
-***REMOVED*** @return {string} An application/x-www-url-encoded string.
-***REMOVED***
+/**
+ * Returns the form data as an application/x-www-url-encoded string. This
+ * doesn't support file inputs.
+ * @param {HTMLFormElement} form The form.
+ * @return {string} An application/x-www-url-encoded string.
+ */
 goog.dom.forms.getFormDataString = function(form) {
   var sb = [];
   goog.dom.forms.getFormDataHelper_(form, sb,
       goog.dom.forms.addFormDataToStringBuffer_);
   return sb.join('&');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the form data as a map or an application/x-www-url-encoded
-***REMOVED*** string. This doesn't support file inputs.
-***REMOVED*** @param {HTMLFormElement} form The form.
-***REMOVED*** @param {Object} result The object form data is being put in.
-***REMOVED*** @param {Function} fnAppend Function that takes {@code result}, an element
-***REMOVED***     name, and an element value, and adds the name/value pair to the result
-***REMOVED***     object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the form data as a map or an application/x-www-url-encoded
+ * string. This doesn't support file inputs.
+ * @param {HTMLFormElement} form The form.
+ * @param {Object} result The object form data is being put in.
+ * @param {Function} fnAppend Function that takes {@code result}, an element
+ *     name, and an element value, and adds the name/value pair to the result
+ *     object.
+ * @private
+ */
 goog.dom.forms.getFormDataHelper_ = function(form, result, fnAppend) {
   var els = form.elements;
   for (var el, i = 0; el = els[i]; i++) {
@@ -114,16 +114,16 @@ goog.dom.forms.getFormDataHelper_ = function(form, result, fnAppend) {
       fnAppend(result, name + '.y', '0');
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the name/value pair to the map.
-***REMOVED*** @param {goog.structs.Map} map The map to add to.
-***REMOVED*** @param {string} name The name.
-***REMOVED*** @param {string} value The value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds the name/value pair to the map.
+ * @param {goog.structs.Map} map The map to add to.
+ * @param {string} name The name.
+ * @param {string} value The value.
+ * @private
+ */
 goog.dom.forms.addFormDataToMap_ = function(map, name, value) {
   var array = map.get(name);
   if (!array) {
@@ -131,26 +131,26 @@ goog.dom.forms.addFormDataToMap_ = function(map, name, value) {
     map.set(name, array);
   }
   array.push(value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a name/value pair to an string buffer array in the form 'name=value'.
-***REMOVED*** @param {Array} sb The string buffer array for storing data.
-***REMOVED*** @param {string} name The name.
-***REMOVED*** @param {string} value The value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds a name/value pair to an string buffer array in the form 'name=value'.
+ * @param {Array} sb The string buffer array for storing data.
+ * @param {string} name The name.
+ * @param {string} value The value.
+ * @private
+ */
 goog.dom.forms.addFormDataToStringBuffer_ = function(sb, name, value) {
   sb.push(encodeURIComponent(name) + '=' + encodeURIComponent(value));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the form has a file input.
-***REMOVED*** @param {HTMLFormElement} form The form.
-***REMOVED*** @return {boolean} Whether the form has a file input.
-***REMOVED***
+/**
+ * Whether the form has a file input.
+ * @param {HTMLFormElement} form The form.
+ * @return {boolean} Whether the form has a file input.
+ */
 goog.dom.forms.hasFileInput = function(form) {
   var els = form.elements;
   for (var el, i = 0; el = els[i]; i++) {
@@ -159,14 +159,14 @@ goog.dom.forms.hasFileInput = function(form) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables or disables either all elements in a form or a single form element.
-***REMOVED*** @param {Element} el The element, either a form or an element within a form.
-***REMOVED*** @param {boolean} disabled Whether the element should be disabled.
-***REMOVED***
+/**
+ * Enables or disables either all elements in a form or a single form element.
+ * @param {Element} el The element, either a form or an element within a form.
+ * @param {boolean} disabled Whether the element should be disabled.
+ */
 goog.dom.forms.setDisabled = function(el, disabled) {
   // disable all elements in a form
   if (el.tagName == 'FORM') {
@@ -182,50 +182,50 @@ goog.dom.forms.setDisabled = function(el, disabled) {
     }
     el.disabled = disabled;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Focuses, and optionally selects the content of, a form element.
-***REMOVED*** @param {Element} el The form element.
-***REMOVED***
+/**
+ * Focuses, and optionally selects the content of, a form element.
+ * @param {Element} el The form element.
+ */
 goog.dom.forms.focusAndSelect = function(el) {
   el.focus();
   if (el.select) {
     el.select();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether a form element has a value.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @return {boolean} Whether the form has a value.
-***REMOVED***
+/**
+ * Whether a form element has a value.
+ * @param {Element} el The element.
+ * @return {boolean} Whether the form has a value.
+ */
 goog.dom.forms.hasValue = function(el) {
   var value = goog.dom.forms.getValue(el);
   return !!value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether a named form field has a value.
-***REMOVED*** @param {HTMLFormElement} form The form element.
-***REMOVED*** @param {string} name Name of an input to the form.
-***REMOVED*** @return {boolean} Whether the form has a value.
-***REMOVED***
+/**
+ * Whether a named form field has a value.
+ * @param {HTMLFormElement} form The form element.
+ * @param {string} name Name of an input to the form.
+ * @return {boolean} Whether the form has a value.
+ */
 goog.dom.forms.hasValueByName = function(form, name) {
   var value = goog.dom.forms.getValueByName(form, name);
   return !!value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current value of any element with a type.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @return {string|Array.<string>|null} The current value of the element
-***REMOVED***     (or null).
-***REMOVED***
+/**
+ * Gets the current value of any element with a type.
+ * @param {Element} el The element.
+ * @return {string|Array.<string>|null} The current value of the element
+ *     (or null).
+ */
 goog.dom.forms.getValue = function(el) {
   var type = el.type;
   if (!goog.isDef(type)) {
@@ -242,27 +242,27 @@ goog.dom.forms.getValue = function(el) {
     default:
       return goog.isDef(el.value) ? el.value : null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alias for goog.dom.form.element.getValue
-***REMOVED*** @type {Function}
-***REMOVED*** @deprecated Use {@link goog.dom.forms.getValue} instead.
-***REMOVED***
+/**
+ * Alias for goog.dom.form.element.getValue
+ * @type {Function}
+ * @deprecated Use {@link goog.dom.forms.getValue} instead.
+ */
 goog.dom.$F = goog.dom.forms.getValue;
 
 
-***REMOVED***
-***REMOVED*** Returns the value of the named form field. In the case of radio buttons,
-***REMOVED*** returns the value of the checked button with the given name.
-***REMOVED***
-***REMOVED*** @param {HTMLFormElement} form The form element.
-***REMOVED*** @param {string} name Name of an input to the form.
-***REMOVED***
-***REMOVED*** @return {Array.<string>|string|null} The value of the form element, or
-***REMOVED***     null if the form element does not exist or has no value.
-***REMOVED***
+/**
+ * Returns the value of the named form field. In the case of radio buttons,
+ * returns the value of the checked button with the given name.
+ *
+ * @param {HTMLFormElement} form The form element.
+ * @param {string} name Name of an input to the form.
+ *
+ * @return {Array.<string>|string|null} The value of the form element, or
+ *     null if the form element does not exist or has no value.
+ */
 goog.dom.forms.getValueByName = function(form, name) {
   var els = form.elements[name];
 
@@ -279,38 +279,38 @@ goog.dom.forms.getValueByName = function(form, name) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current value of a checkable input element.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @return {?string} The value of the form element (or null).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the current value of a checkable input element.
+ * @param {Element} el The element.
+ * @return {?string} The value of the form element (or null).
+ * @private
+ */
 goog.dom.forms.getInputChecked_ = function(el) {
   return el.checked ? el.value : null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current value of a select-one element.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @return {?string} The value of the form element (or null).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the current value of a select-one element.
+ * @param {Element} el The element.
+ * @return {?string} The value of the form element (or null).
+ * @private
+ */
 goog.dom.forms.getSelectSingle_ = function(el) {
   var selectedIndex = el.selectedIndex;
   return selectedIndex >= 0 ? el.options[selectedIndex].value : null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current value of a select-multiple element.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @return {Array.<string>?} The value of the form element (or null).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the current value of a select-multiple element.
+ * @param {Element} el The element.
+ * @return {Array.<string>?} The value of the form element (or null).
+ * @private
+ */
 goog.dom.forms.getSelectMultiple_ = function(el) {
   var values = [];
   for (var option, i = 0; option = el.options[i]; i++) {
@@ -319,16 +319,16 @@ goog.dom.forms.getSelectMultiple_ = function(el) {
     }
   }
   return values.length ? values : null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the current value of any element with a type.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @param {*=} opt_value The value to give to the element, which will be coerced
-***REMOVED***     by the browser in the default case using toString. This value should be
-***REMOVED***     an array for setting the value of select multiple elements.
-***REMOVED***
+/**
+ * Sets the current value of any element with a type.
+ * @param {Element} el The element.
+ * @param {*=} opt_value The value to give to the element, which will be coerced
+ *     by the browser in the default case using toString. This value should be
+ *     an array for setting the value of select multiple elements.
+ */
 goog.dom.forms.setValue = function(el, opt_value) {
   var type = el.type;
   if (goog.isDef(type)) {
@@ -336,44 +336,44 @@ goog.dom.forms.setValue = function(el, opt_value) {
       case 'checkbox':
       case 'radio':
         goog.dom.forms.setInputChecked_(el,
-           ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (opt_value));
+            /** @type {string} */ (opt_value));
         break;
       case 'select-one':
         goog.dom.forms.setSelectSingle_(el,
-           ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (opt_value));
+            /** @type {string} */ (opt_value));
         break;
       case 'select-multiple':
         goog.dom.forms.setSelectMultiple_(el,
-           ***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (opt_value));
+            /** @type {Array} */ (opt_value));
         break;
       default:
         el.value = goog.isDefAndNotNull(opt_value) ? opt_value : '';
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a checkable input element's checked property.
-***REMOVED*** #TODO(user): This seems potentially unintuitive since it doesn't set
-***REMOVED*** the value property but my hunch is that the primary use case is to check a
-***REMOVED*** checkbox, not to reset its value property.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @param {string|boolean=} opt_value The value, sets the element checked if
-***REMOVED***     val is set.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets a checkable input element's checked property.
+ * #TODO(user): This seems potentially unintuitive since it doesn't set
+ * the value property but my hunch is that the primary use case is to check a
+ * checkbox, not to reset its value property.
+ * @param {Element} el The element.
+ * @param {string|boolean=} opt_value The value, sets the element checked if
+ *     val is set.
+ * @private
+ */
 goog.dom.forms.setInputChecked_ = function(el, opt_value) {
   el.checked = opt_value ? 'checked' : null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value of a select-one element.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @param {string=} opt_value The value of the selected option element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the value of a select-one element.
+ * @param {Element} el The element.
+ * @param {string=} opt_value The value of the selected option element.
+ * @private
+ */
 goog.dom.forms.setSelectSingle_ = function(el, opt_value) {
   // unset any prior selections
   el.selectedIndex = -1;
@@ -385,16 +385,16 @@ goog.dom.forms.setSelectSingle_ = function(el, opt_value) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value of a select-multiple element.
-***REMOVED*** @param {Element} el The element.
-***REMOVED*** @param {Array.<string>|string=} opt_value The value of the selected option
-***REMOVED***     element(s).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the value of a select-multiple element.
+ * @param {Element} el The element.
+ * @param {Array.<string>|string=} opt_value The value of the selected option
+ *     element(s).
+ * @private
+ */
 goog.dom.forms.setSelectMultiple_ = function(el, opt_value) {
   // reset string opt_values as an array
   if (goog.isString(opt_value)) {
@@ -411,4 +411,4 @@ goog.dom.forms.setSelectMultiple_ = function(el, opt_value) {
       }
     }
   }
-***REMOVED***
+};

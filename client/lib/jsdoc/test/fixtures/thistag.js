@@ -1,10 +1,10 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Foo(name) {
     setName.apply(this, name);
 }
 
-***REMOVED*** @this Foo***REMOVED***
+/** @this Foo */
 function setName(name) {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     this.name = name;
 }

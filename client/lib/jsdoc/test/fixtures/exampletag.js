@@ -1,14 +1,14 @@
-***REMOVED*** @example
-***REMOVED*** console.log("foo");
-***REMOVED*** console.log("bar");
-***REMOVED***
+/** @example
+ * console.log("foo");
+ * console.log("bar");
+ */
 var x;
 
-***REMOVED*** @example
-***REMOVED*** console.log("foo");
-***REMOVED*** console.log("bar");
-***REMOVED*** @example
-***REMOVED*** <caption>Example 2</caption>
-***REMOVED*** 1 + 2;
-***REMOVED***
+/** @example
+ * console.log("foo");
+ * console.log("bar");
+ * @example
+ * <caption>Example 2</caption>
+ * 1 + 2;
+ */
 var y;

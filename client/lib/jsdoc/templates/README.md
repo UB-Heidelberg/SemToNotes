@@ -6,18 +6,18 @@ To create or use your own template:
 For example:
 
 ````javascript
-***REMOVED*** @module publish***REMOVED***
+/** @module publish */
 
-***REMOVED***
-***REMOVED*** Generate documentation output.
-***REMOVED***
-***REMOVED*** @param {TAFFY} data - A TaffyDB collection representing
-***REMOVED***                       all the symbols documented in your code.
-***REMOVED*** @param {object} opts - An object with options information.
-***REMOVED***
+/**
+ * Generate documentation output.
+ *
+ * @param {TAFFY} data - A TaffyDB collection representing
+ *                       all the symbols documented in your code.
+ * @param {object} opts - An object with options information.
+ */
 exports.publish = function(data, opts) {
     // do stuff here to generate your output files
-***REMOVED***
+};
 ````
 
 To invoke JSDoc 3 with your own template, use the `-t` command line option, and specify the path to your template folder:

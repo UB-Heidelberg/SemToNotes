@@ -50,23 +50,23 @@ function fixCssTextForIe(cssText) {
 }
 
 function testGetFileNameFromStyleSheet() {
-  var styleSheet = {'href': 'http://foo.com/something/filename.css'***REMOVED***
+  var styleSheet = {'href': 'http://foo.com/something/filename.css'};
   assertEquals('filename.css',
       goog.cssom.getFileNameFromStyleSheet(styleSheet));
 
-  styleSheet = {'href': 'https://foo.com:123/something/filename.css'***REMOVED***
+  styleSheet = {'href': 'https://foo.com:123/something/filename.css'};
   assertEquals('filename.css',
       goog.cssom.getFileNameFromStyleSheet(styleSheet));
 
-  styleSheet = {'href': 'http://foo.com/something/filename.css?bar=bas'***REMOVED***
+  styleSheet = {'href': 'http://foo.com/something/filename.css?bar=bas'};
   assertEquals('filename.css',
       goog.cssom.getFileNameFromStyleSheet(styleSheet));
 
-  styleSheet = {'href': 'filename.css?bar=bas'***REMOVED***
+  styleSheet = {'href': 'filename.css?bar=bas'};
   assertEquals('filename.css',
       goog.cssom.getFileNameFromStyleSheet(styleSheet));
 
-  styleSheet = {'href': 'filename.css'***REMOVED***
+  styleSheet = {'href': 'filename.css'};
   assertEquals('filename.css',
       goog.cssom.getFileNameFromStyleSheet(styleSheet));
 }

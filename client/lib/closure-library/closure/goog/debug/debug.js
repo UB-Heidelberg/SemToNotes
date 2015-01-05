@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Logging and debugging utilities.
-***REMOVED***
-***REMOVED*** @see ../demos/debug.html
-***REMOVED***
+/**
+ * @fileoverview Logging and debugging utilities.
+ *
+ * @see ../demos/debug.html
+ */
 
 goog.provide('goog.debug');
 
@@ -26,18 +26,18 @@ goog.require('goog.structs.Set');
 goog.require('goog.userAgent');
 
 
-***REMOVED*** @define {boolean} Whether logging should be enabled.***REMOVED***
+/** @define {boolean} Whether logging should be enabled. */
 goog.define('goog.debug.LOGGING_ENABLED', goog.DEBUG);
 
 
-***REMOVED***
-***REMOVED*** Catches onerror events fired by windows and similar objects.
-***REMOVED*** @param {function(Object)} logFunc The function to call with the error
-***REMOVED***    information.
-***REMOVED*** @param {boolean=} opt_cancel Whether to stop the error from reaching the
-***REMOVED***    browser.
-***REMOVED*** @param {Object=} opt_target Object that fires onerror events.
-***REMOVED***
+/**
+ * Catches onerror events fired by windows and similar objects.
+ * @param {function(Object)} logFunc The function to call with the error
+ *    information.
+ * @param {boolean=} opt_cancel Whether to stop the error from reaching the
+ *    browser.
+ * @param {Object=} opt_target Object that fires onerror events.
+ */
 goog.debug.catchErrors = function(logFunc, opt_cancel, opt_target) {
   var target = opt_target || goog.global;
   var oldErrorHandler = target.onerror;
@@ -53,33 +53,33 @@ goog.debug.catchErrors = function(logFunc, opt_cancel, opt_target) {
     retVal = !retVal;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** New onerror handler for this target. This onerror handler follows the spec
-  ***REMOVED*** according to
-  ***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/#runtime-script-errors
-  ***REMOVED*** The spec was changed in August 2013 to support receiving column information
-  ***REMOVED*** and an error object for all scripts on the same origin or cross origin
-  ***REMOVED*** scripts with the proper headers. See
-  ***REMOVED*** https://mikewest.org/2013/08/debugging-runtime-errors-with-window-onerror
-  ***REMOVED***
-  ***REMOVED*** @param {string} message The error message. For cross-origin errors, this
-  ***REMOVED***     will be scrubbed to just "Script error.". For new browsers that have
-  ***REMOVED***     updated to follow the latest spec, errors that come from origins that
-  ***REMOVED***     have proper cross origin headers will not be scrubbed.
-  ***REMOVED*** @param {string} url The URL of the script that caused the error. The URL
-  ***REMOVED***     will be scrubbed to "" for cross origin scripts unless the script has
-  ***REMOVED***     proper cross origin headers and the browser has updated to the latest
-  ***REMOVED***     spec.
-  ***REMOVED*** @param {number} line The line number in the script that the error
-  ***REMOVED***     occurred on.
-  ***REMOVED*** @param {number=} opt_col The optional column number that the error
-  ***REMOVED***     occurred on. Only browsers that have updated to the latest spec will
-  ***REMOVED***     include this.
-  ***REMOVED*** @param {Error=} opt_error The optional actual error object for this
-  ***REMOVED***     error that should include the stack. Only browsers that have updated
-  ***REMOVED***     to the latest spec will inlude this parameter.
-  ***REMOVED*** @return {boolean} Whether to prevent the error from reaching the browser.
- ***REMOVED*****REMOVED***
+  /**
+   * New onerror handler for this target. This onerror handler follows the spec
+   * according to
+   * http://www.whatwg.org/specs/web-apps/current-work/#runtime-script-errors
+   * The spec was changed in August 2013 to support receiving column information
+   * and an error object for all scripts on the same origin or cross origin
+   * scripts with the proper headers. See
+   * https://mikewest.org/2013/08/debugging-runtime-errors-with-window-onerror
+   *
+   * @param {string} message The error message. For cross-origin errors, this
+   *     will be scrubbed to just "Script error.". For new browsers that have
+   *     updated to follow the latest spec, errors that come from origins that
+   *     have proper cross origin headers will not be scrubbed.
+   * @param {string} url The URL of the script that caused the error. The URL
+   *     will be scrubbed to "" for cross origin scripts unless the script has
+   *     proper cross origin headers and the browser has updated to the latest
+   *     spec.
+   * @param {number} line The line number in the script that the error
+   *     occurred on.
+   * @param {number=} opt_col The optional column number that the error
+   *     occurred on. Only browsers that have updated to the latest spec will
+   *     include this.
+   * @param {Error=} opt_error The optional actual error object for this
+   *     error that should include the stack. Only browsers that have updated
+   *     to the latest spec will inlude this parameter.
+   * @return {boolean} Whether to prevent the error from reaching the browser.
+   */
   target.onerror = function(message, url, line, opt_col, opt_error) {
     if (oldErrorHandler) {
       oldErrorHandler(message, url, line, opt_col, opt_error);
@@ -92,17 +92,17 @@ goog.debug.catchErrors = function(logFunc, opt_cancel, opt_target) {
       error: opt_error
     });
     return retVal;
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a string representing an object and all its properties.
-***REMOVED*** @param {Object|null|undefined} obj Object to expose.
-***REMOVED*** @param {boolean=} opt_showFn Show the functions as well as the properties,
-***REMOVED***     default is false.
-***REMOVED*** @return {string} The string representation of {@code obj}.
-***REMOVED***
+/**
+ * Creates a string representing an object and all its properties.
+ * @param {Object|null|undefined} obj Object to expose.
+ * @param {boolean=} opt_showFn Show the functions as well as the properties,
+ *     default is false.
+ * @return {string} The string representation of {@code obj}.
+ */
 goog.debug.expose = function(obj, opt_showFn) {
   if (typeof obj == 'undefined') {
     return 'undefined';
@@ -117,29 +117,29 @@ goog.debug.expose = function(obj, opt_showFn) {
       continue;
     }
     var s = x + ' = ';
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       s += obj[x];
     } catch (e) {
-      s += '*** ' + e + '***REMOVED*****';
+      s += '*** ' + e + ' ***';
     }
     str.push(s);
   }
   return str.join('\n');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a string representing a given primitive or object, and for an
-***REMOVED*** object, all its properties and nested objects.  WARNING: If an object is
-***REMOVED*** given, it and all its nested objects will be modified.  To detect reference
-***REMOVED*** cycles, this method identifies objects using goog.getUid() which mutates the
-***REMOVED*** object.
-***REMOVED*** @param {*} obj Object to expose.
-***REMOVED*** @param {boolean=} opt_showFn Also show properties that are functions (by
-***REMOVED***     default, functions are omitted).
-***REMOVED*** @return {string} A string representation of {@code obj}.
-***REMOVED***
+/**
+ * Creates a string representing a given primitive or object, and for an
+ * object, all its properties and nested objects.  WARNING: If an object is
+ * given, it and all its nested objects will be modified.  To detect reference
+ * cycles, this method identifies objects using goog.getUid() which mutates the
+ * object.
+ * @param {*} obj Object to expose.
+ * @param {boolean=} opt_showFn Also show properties that are functions (by
+ *     default, functions are omitted).
+ * @return {string} A string representation of {@code obj}.
+ */
 goog.debug.deepExpose = function(obj, opt_showFn) {
   var str = [];
 
@@ -149,9 +149,9 @@ goog.debug.deepExpose = function(obj, opt_showFn) {
 
     var indentMultiline = function(str) {
       return str.replace(/\n/g, '\n' + space);
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       if (!goog.isDef(obj)) {
         str.push('undefined');
@@ -163,7 +163,7 @@ goog.debug.deepExpose = function(obj, opt_showFn) {
         str.push(indentMultiline(String(obj)));
       } else if (goog.isObject(obj)) {
         if (seen.contains(obj)) {
-          str.push('*** reference loop detected***REMOVED*****');
+          str.push('*** reference loop detected ***');
         } else {
           seen.add(obj);
           str.push('{');
@@ -182,20 +182,20 @@ goog.debug.deepExpose = function(obj, opt_showFn) {
         str.push(obj);
       }
     } catch (e) {
-      str.push('*** ' + e + '***REMOVED*****');
+      str.push('*** ' + e + ' ***');
     }
- ***REMOVED*****REMOVED***
+  };
 
   helper(obj, '', new goog.structs.Set());
   return str.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Recursively outputs a nested array as a string.
-***REMOVED*** @param {Array} arr The array.
-***REMOVED*** @return {string} String representing nested array.
-***REMOVED***
+/**
+ * Recursively outputs a nested array as a string.
+ * @param {Array} arr The array.
+ * @return {string} String representing nested array.
+ */
 goog.debug.exposeArray = function(arr) {
   var str = [];
   for (var i = 0; i < arr.length; i++) {
@@ -206,18 +206,18 @@ goog.debug.exposeArray = function(arr) {
     }
   }
   return '[ ' + str.join(', ') + ' ]';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exposes an exception that has been caught by a try...catch and outputs the
-***REMOVED*** error with a stack trace.
-***REMOVED*** @param {Object} err Error object or string.
-***REMOVED*** @param {Function=} opt_fn Optional function to start stack trace from.
-***REMOVED*** @return {string} Details of exception.
-***REMOVED***
+/**
+ * Exposes an exception that has been caught by a try...catch and outputs the
+ * error with a stack trace.
+ * @param {Object} err Error object or string.
+ * @param {Function=} opt_fn Optional function to start stack trace from.
+ * @return {string} Details of exception.
+ */
 goog.debug.exposeException = function(err, opt_fn) {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     var e = goog.debug.normalizeErrorObject(err);
 
@@ -232,14 +232,14 @@ goog.debug.exposeException = function(err, opt_fn) {
   } catch (e2) {
     return 'Exception trying to expose exception! You win, we lose. ' + e2;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes the error/exception object between browsers.
-***REMOVED*** @param {Object} err Raw error object.
-***REMOVED*** @return {!Object} Normalized error object.
-***REMOVED***
+/**
+ * Normalizes the error/exception object between browsers.
+ * @param {Object} err Raw error object.
+ * @return {!Object} Normalized error object.
+ */
 goog.debug.normalizeErrorObject = function(err) {
   var href = goog.getObjectByName('window.location.href');
   if (goog.isString(err)) {
@@ -249,7 +249,7 @@ goog.debug.normalizeErrorObject = function(err) {
       'lineNumber': 'Not available',
       'fileName': href,
       'stack': 'Not available'
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var lineNumber, fileName;
@@ -285,25 +285,25 @@ goog.debug.normalizeErrorObject = function(err) {
       'lineNumber': lineNumber,
       'fileName': fileName,
       'stack': err.stack || 'Not available'
-   ***REMOVED*****REMOVED***
+    };
   }
 
   // Standards error object
   return err;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts an object to an Error if it's a String,
-***REMOVED*** adds a stacktrace if there isn't one,
-***REMOVED*** and optionally adds an extra message.
-***REMOVED*** @param {Error|string} err  the original thrown object or string.
-***REMOVED*** @param {string=} opt_message  optional additional message to add to the
-***REMOVED***     error.
-***REMOVED*** @return {!Error} If err is a string, it is used to create a new Error,
-***REMOVED***     which is enhanced and returned.  Otherwise err itself is enhanced
-***REMOVED***     and returned.
-***REMOVED***
+/**
+ * Converts an object to an Error if it's a String,
+ * adds a stacktrace if there isn't one,
+ * and optionally adds an extra message.
+ * @param {Error|string} err  the original thrown object or string.
+ * @param {string=} opt_message  optional additional message to add to the
+ *     error.
+ * @return {!Error} If err is a string, it is used to create a new Error,
+ *     which is enhanced and returned.  Otherwise err itself is enhanced
+ *     and returned.
+ */
 goog.debug.enhanceError = function(err, opt_message) {
   var error;
   if (typeof err == 'string') {
@@ -328,17 +328,17 @@ goog.debug.enhanceError = function(err, opt_message) {
     error['message' + x] = String(opt_message);
   }
   return error;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current stack trace. Simple and iterative - doesn't worry about
-***REMOVED*** catching circular references or getting the args.
-***REMOVED*** @param {number=} opt_depth Optional maximum depth to trace back to.
-***REMOVED*** @return {string} A string with the function names of all functions in the
-***REMOVED***     stack, separated by \n.
-***REMOVED*** @suppress {es5Strict}
-***REMOVED***
+/**
+ * Gets the current stack trace. Simple and iterative - doesn't worry about
+ * catching circular references or getting the args.
+ * @param {number=} opt_depth Optional maximum depth to trace back to.
+ * @return {string} A string with the function names of all functions in the
+ *     stack, separated by \n.
+ * @suppress {es5Strict}
+ */
 goog.debug.getStacktraceSimple = function(opt_depth) {
   if (goog.STRICT_MODE_COMPATIBLE) {
     var stack = goog.debug.getNativeStackTrace_(goog.debug.getStacktraceSimple);
@@ -356,7 +356,7 @@ goog.debug.getStacktraceSimple = function(opt_depth) {
   while (fn && (!opt_depth || depth < opt_depth)) {
     sb.push(goog.debug.getFunctionName(fn));
     sb.push('()\n');
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       fn = fn.caller;
     } catch (e) {
@@ -376,21 +376,21 @@ goog.debug.getStacktraceSimple = function(opt_depth) {
   }
 
   return sb.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Max length of stack to try and output
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Max length of stack to try and output
+ * @type {number}
+ */
 goog.debug.MAX_STACK_DEPTH = 50;
 
 
-***REMOVED***
-***REMOVED*** @param {Function} fn The function to start getting the trace from.
-***REMOVED*** @return {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {Function} fn The function to start getting the trace from.
+ * @return {?string}
+ * @private
+ */
 goog.debug.getNativeStackTrace_ = function(fn) {
   var tempErr = new Error();
   if (Error.captureStackTrace) {
@@ -409,17 +409,17 @@ goog.debug.getNativeStackTrace_ = function(fn) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the current stack trace, either starting from the caller or starting
-***REMOVED*** from a specified function that's currently on the call stack.
-***REMOVED*** @param {Function=} opt_fn Optional function to start getting the trace from.
-***REMOVED***     If not provided, defaults to the function that called this.
-***REMOVED*** @return {string} Stack trace.
-***REMOVED*** @suppress {es5Strict}
-***REMOVED***
+/**
+ * Gets the current stack trace, either starting from the caller or starting
+ * from a specified function that's currently on the call stack.
+ * @param {Function=} opt_fn Optional function to start getting the trace from.
+ *     If not provided, defaults to the function that called this.
+ * @return {string} Stack trace.
+ * @suppress {es5Strict}
+ */
 goog.debug.getStacktrace = function(opt_fn) {
   var stack;
   if (goog.STRICT_MODE_COMPATIBLE) {
@@ -434,17 +434,17 @@ goog.debug.getStacktrace = function(opt_fn) {
         opt_fn || arguments.callee.caller, []);
   }
   return stack;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Private helper for getStacktrace().
-***REMOVED*** @param {Function} fn Function to start getting the trace from.
-***REMOVED*** @param {Array} visited List of functions visited so far.
-***REMOVED*** @return {string} Stack trace starting from function fn.
-***REMOVED*** @suppress {es5Strict}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private helper for getStacktrace().
+ * @param {Function} fn Function to start getting the trace from.
+ * @param {Array} visited List of functions visited so far.
+ * @return {string} Stack trace starting from function fn.
+ * @suppress {es5Strict}
+ * @private
+ */
 goog.debug.getStacktraceHelper_ = function(fn, visited) {
   var sb = [];
 
@@ -499,7 +499,7 @@ goog.debug.getStacktraceHelper_ = function(fn, visited) {
     }
     visited.push(fn);
     sb.push(')\n');
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       sb.push(goog.debug.getStacktraceHelper_(fn.caller, visited));
     } catch (e) {
@@ -512,24 +512,24 @@ goog.debug.getStacktraceHelper_ = function(fn, visited) {
     sb.push('[end]');
   }
   return sb.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set a custom function name resolver.
-***REMOVED*** @param {function(Function): string} resolver Resolves functions to their
-***REMOVED***     names.
-***REMOVED***
+/**
+ * Set a custom function name resolver.
+ * @param {function(Function): string} resolver Resolves functions to their
+ *     names.
+ */
 goog.debug.setFunctionResolver = function(resolver) {
   goog.debug.fnNameResolver_ = resolver;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a function name
-***REMOVED*** @param {Function} fn Function to get name of.
-***REMOVED*** @return {string} Function's name.
-***REMOVED***
+/**
+ * Gets a function name
+ * @param {Function} fn Function to get name of.
+ * @return {string} Function's name.
+ */
 goog.debug.getFunctionName = function(fn) {
   if (goog.debug.fnNameCache_[fn]) {
     return goog.debug.fnNameCache_[fn];
@@ -555,36 +555,36 @@ goog.debug.getFunctionName = function(fn) {
   }
 
   return goog.debug.fnNameCache_[functionSource];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Makes whitespace visible by replacing it with printable characters.
-***REMOVED*** This is useful in finding diffrences between the expected and the actual
-***REMOVED*** output strings of a testcase.
-***REMOVED*** @param {string} string whose whitespace needs to be made visible.
-***REMOVED*** @return {string} string whose whitespace is made visible.
-***REMOVED***
+/**
+ * Makes whitespace visible by replacing it with printable characters.
+ * This is useful in finding diffrences between the expected and the actual
+ * output strings of a testcase.
+ * @param {string} string whose whitespace needs to be made visible.
+ * @return {string} string whose whitespace is made visible.
+ */
 goog.debug.makeWhitespaceVisible = function(string) {
   return string.replace(/ /g, '[_]')
       .replace(/\f/g, '[f]')
       .replace(/\n/g, '[n]\n')
       .replace(/\r/g, '[r]')
       .replace(/\t/g, '[t]');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hash map for storing function names that have already been looked up.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.debug.fnNameCache_ = {***REMOVED***
+/**
+ * Hash map for storing function names that have already been looked up.
+ * @type {Object}
+ * @private
+ */
+goog.debug.fnNameCache_ = {};
 
 
-***REMOVED***
-***REMOVED*** Resolves functions to their names.  Resolved function names will be cached.
-***REMOVED*** @type {function(Function):string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Resolves functions to their names.  Resolved function names will be cached.
+ * @type {function(Function):string}
+ * @private
+ */
 goog.debug.fnNameResolver_;

@@ -1,8 +1,8 @@
-***REMOVED*** document me***REMOVED***
+/** document me */
 var tools = {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     serialiser: {
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         value: ''
     }
-***REMOVED***
+};

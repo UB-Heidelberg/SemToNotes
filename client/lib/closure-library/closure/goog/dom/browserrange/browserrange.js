@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the browser range namespace and interface, as
-***REMOVED*** well as several useful utility functions.
-***REMOVED***
-***REMOVED*** DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ojan@google.com (Ojan Vafai)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED***
-***REMOVED*** @supported IE6, IE7, FF1.5+, Safari.
-***REMOVED***
+/**
+ * @fileoverview Definition of the browser range namespace and interface, as
+ * well as several useful utility functions.
+ *
+ * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ojan@google.com (Ojan Vafai)
+ * @author jparent@google.com (Julie Parent)
+ *
+ * @supported IE6, IE7, FF1.5+, Safari.
+ */
 
 
 goog.provide('goog.dom.browserrange');
@@ -39,13 +39,13 @@ goog.require('goog.dom.browserrange.WebKitRange');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Common error constants.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Common error constants.
+ * @enum {string}
+ */
 goog.dom.browserrange.Error = {
   NOT_IMPLEMENTED: 'Not Implemented'
-***REMOVED***
+};
 
 
 // NOTE(robbyw): While it would be nice to eliminate the duplicate switches
@@ -53,38 +53,38 @@ goog.dom.browserrange.Error = {
 //               necessary code is stripped out.
 
 
-***REMOVED***
-***REMOVED*** Static method that returns the proper type of browser range.
-***REMOVED*** @param {Range|TextRange} range A browser range object.
-***REMOVED*** @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
-***REMOVED***
+/**
+ * Static method that returns the proper type of browser range.
+ * @param {Range|TextRange} range A browser range object.
+ * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
+ */
 goog.dom.browserrange.createRange = function(range) {
   if (goog.userAgent.IE && !goog.userAgent.isDocumentModeOrHigher(9)) {
     return new goog.dom.browserrange.IeRange(
-       ***REMOVED*****REMOVED*** @type {TextRange}***REMOVED*** (range),
+        /** @type {TextRange} */ (range),
         goog.dom.getOwnerDocument(range.parentElement()));
   } else if (goog.userAgent.WEBKIT) {
     return new goog.dom.browserrange.WebKitRange(
-       ***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (range));
+        /** @type {Range} */ (range));
   } else if (goog.userAgent.GECKO) {
     return new goog.dom.browserrange.GeckoRange(
-       ***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (range));
+        /** @type {Range} */ (range));
   } else if (goog.userAgent.OPERA) {
     return new goog.dom.browserrange.OperaRange(
-       ***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (range));
+        /** @type {Range} */ (range));
   } else {
     // Default other browsers, including Opera, to W3c ranges.
     return new goog.dom.browserrange.W3cRange(
-       ***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (range));
+        /** @type {Range} */ (range));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static method that returns the proper type of browser range.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
-***REMOVED***
+/**
+ * Static method that returns the proper type of browser range.
+ * @param {Node} node The node to select.
+ * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
+ */
 goog.dom.browserrange.createRangeFromNodeContents = function(node) {
   if (goog.userAgent.IE && !goog.userAgent.isDocumentModeOrHigher(9)) {
     return goog.dom.browserrange.IeRange.createFromNodeContents(node);
@@ -98,21 +98,21 @@ goog.dom.browserrange.createRangeFromNodeContents = function(node) {
     // Default other browsers to W3c ranges.
     return goog.dom.browserrange.W3cRange.createFromNodeContents(node);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static method that returns the proper type of browser range.
-***REMOVED*** @param {Node} startNode The node to start with.
-***REMOVED*** @param {number} startOffset The offset within the node to start.  This is
-***REMOVED***     either the index into the childNodes array for element startNodes or
-***REMOVED***     the index into the character array for text startNodes.
-***REMOVED*** @param {Node} endNode The node to end with.
-***REMOVED*** @param {number} endOffset The offset within the node to end.  This is
-***REMOVED***     either the index into the childNodes array for element endNodes or
-***REMOVED***     the index into the character array for text endNodes.
-***REMOVED*** @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
-***REMOVED***
+/**
+ * Static method that returns the proper type of browser range.
+ * @param {Node} startNode The node to start with.
+ * @param {number} startOffset The offset within the node to start.  This is
+ *     either the index into the childNodes array for element startNodes or
+ *     the index into the character array for text startNodes.
+ * @param {Node} endNode The node to end with.
+ * @param {number} endOffset The offset within the node to end.  This is
+ *     either the index into the childNodes array for element endNodes or
+ *     the index into the character array for text endNodes.
+ * @return {!goog.dom.browserrange.AbstractRange} A wrapper object.
+ */
 goog.dom.browserrange.createRangeFromNodes = function(startNode, startOffset,
     endNode, endOffset) {
   if (goog.userAgent.IE && !goog.userAgent.isDocumentModeOrHigher(9)) {
@@ -132,14 +132,14 @@ goog.dom.browserrange.createRangeFromNodes = function(startNode, startOffset,
     return goog.dom.browserrange.W3cRange.createFromNodes(startNode,
         startOffset, endNode, endOffset);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests whether the given node can contain a range end point.
-***REMOVED*** @param {Node} node The node to check.
-***REMOVED*** @return {boolean} Whether the given node can contain a range end point.
-***REMOVED***
+/**
+ * Tests whether the given node can contain a range end point.
+ * @param {Node} node The node to check.
+ * @return {boolean} Whether the given node can contain a range end point.
+ */
 goog.dom.browserrange.canContainRangeEndpoint = function(node) {
   // NOTE(user, bloom): This is not complete, as divs with style -
   // 'display:inline-block' or 'position:absolute' can also not contain range
@@ -147,4 +147,4 @@ goog.dom.browserrange.canContainRangeEndpoint = function(node) {
   // selected (can be container) or not.
   return goog.dom.canHaveChildren(node) ||
       node.nodeType == goog.dom.NodeType.TEXT;
-***REMOVED***
+};

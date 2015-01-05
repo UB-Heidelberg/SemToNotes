@@ -12,60 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED*** Implementations of DataNode for wrapping XML data.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview
+ * Implementations of DataNode for wrapping XML data.
+ *
+ */
 
 goog.provide('goog.ds.XmlDataSource');
 goog.provide('goog.ds.XmlHttpDataSource');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.xml');
 goog.require('goog.ds.BasicNodeList');
 goog.require('goog.ds.DataManager');
 goog.require('goog.ds.LoadState');
 goog.require('goog.ds.logger');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Data source whose backing is an xml node
-***REMOVED***
-***REMOVED*** @param {Node} node The XML node. Can be null.
-***REMOVED*** @param {goog.ds.XmlDataSource} parent Parent of XML element. Can be null.
-***REMOVED*** @param {string=} opt_name The name of this node relative to the parent node.
-***REMOVED***
-***REMOVED*** @extends {goog.ds.DataNode}
-***REMOVED***
-***REMOVED***
+/**
+ * Data source whose backing is an xml node
+ *
+ * @param {Node} node The XML node. Can be null.
+ * @param {goog.ds.XmlDataSource} parent Parent of XML element. Can be null.
+ * @param {string=} opt_name The name of this node relative to the parent node.
+ *
+ * @extends {goog.ds.DataNode}
+ * @constructor
+ */
 // TODO(arv): Use interfaces when available.
 goog.ds.XmlDataSource = function(node, parent, opt_name) {
   this.parent_ = parent;
   this.dataName_ = opt_name || (node ? node.nodeName : '');
   this.setNode_(node);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constant to select XML attributes for getChildNodes
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Constant to select XML attributes for getChildNodes
+ * @type {string}
+ * @private
+ */
 goog.ds.XmlDataSource.ATTRIBUTE_SELECTOR_ = '@*';
 
 
-***REMOVED***
-***REMOVED*** Set the current root nodeof the data source.
-***REMOVED*** Can be an attribute node, text node, or element node
-***REMOVED*** @param {Node} node The node. Can be null.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set the current root nodeof the data source.
+ * Can be an attribute node, text node, or element node
+ * @param {Node} node The node. Can be null.
+ *
+ * @private
+ */
 goog.ds.XmlDataSource.prototype.setNode_ = function(node) {
   this.node_ = node;
   if (node != null) {
@@ -81,15 +81,15 @@ goog.ds.XmlDataSource.prototype.setNode_ = function(node) {
         }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DataNodeList with the child nodes for this element.
-***REMOVED*** Allows for only building list as needed.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DataNodeList with the child nodes for this element.
+ * Allows for only building list as needed.
+ *
+ * @private
+ */
 goog.ds.XmlDataSource.prototype.createChildNodes_ = function() {
   if (this.childNodeList_) {
     return;
@@ -107,15 +107,15 @@ goog.ds.XmlDataSource.prototype.createChildNodes_ = function() {
     }
   }
   this.childNodeList_ = childNodeList;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DataNodeList with the attributes for the element
-***REMOVED*** Allows for only building list as needed.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DataNodeList with the attributes for the element
+ * Allows for only building list as needed.
+ *
+ * @private
+ */
 goog.ds.XmlDataSource.prototype.createAttributes_ = function() {
   if (this.attributes_) {
     return;
@@ -129,31 +129,31 @@ goog.ds.XmlDataSource.prototype.createAttributes_ = function() {
     }
   }
   this.attributes_ = attributes;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the value of the node
-***REMOVED*** @return {Object} The value of the node, or null if no value.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Get the value of the node
+ * @return {Object} The value of the node, or null if no value.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.get = function() {
   this.createChildNodes_();
   return this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the value of the node
-***REMOVED*** @param {*} value The new value of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Set the value of the node
+ * @param {*} value The new value of the node.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.set = function(value) {
   throw Error('Can\'t set on XmlDataSource yet');
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ds.XmlDataSource.prototype.getChildNodes = function(opt_selector) {
   if (opt_selector && opt_selector ==
       goog.ds.XmlDataSource.ATTRIBUTE_SELECTOR_) {
@@ -167,33 +167,33 @@ goog.ds.XmlDataSource.prototype.getChildNodes = function(opt_selector) {
     throw Error('Unsupported selector');
   }
 
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a named child node of the current node
-***REMOVED*** @param {string} name The node name.
-***REMOVED*** @return {goog.ds.DataNode} The child node, or null if
-***REMOVED***   no node of this name exists.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets a named child node of the current node
+ * @param {string} name The node name.
+ * @return {goog.ds.DataNode} The child node, or null if
+ *   no node of this name exists.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.getChildNode = function(name) {
   if (goog.string.startsWith(name, goog.ds.STR_ATTRIBUTE_START)) {
     var att = this.node_.getAttributeNode(name.substring(1));
     return att ? new goog.ds.XmlDataSource(att, this) : null;
   } else {
-    return***REMOVED*****REMOVED*** @type {goog.ds.DataNode}***REMOVED*** (this.getChildNodes().get(name));
+    return /** @type {goog.ds.DataNode} */ (this.getChildNodes().get(name));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the value of a child node
-***REMOVED*** @param {string} name The node name.
-***REMOVED*** @return {*} The value of the node, or null if no value or the child node
-***REMOVED***    doesn't exist.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the value of a child node
+ * @param {string} name The node name.
+ * @return {*} The value of the node, or null if no value or the child node
+ *    doesn't exist.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.getChildNodeValue = function(name) {
   if (goog.string.startsWith(name, goog.ds.STR_ATTRIBUTE_START)) {
     var node = this.node_.getAttributeNode(name.substring(1));
@@ -202,34 +202,34 @@ goog.ds.XmlDataSource.prototype.getChildNodeValue = function(name) {
     var node = this.getChildNode(name);
     return node ? node.get() : null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the name of the node relative to the parent node
-***REMOVED*** @return {string} The name of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Get the name of the node relative to the parent node
+ * @return {string} The name of the node.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.getDataName = function() {
   return this.dataName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Setthe name of the node relative to the parent node
-***REMOVED*** @param {string} name The name of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Setthe name of the node relative to the parent node
+ * @param {string} name The name of the node.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.setDataName = function(name) {
   this.dataName_ = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the a qualified data path to this node
-***REMOVED*** @return {string} The data path.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the a qualified data path to this node
+ * @return {string} The data path.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.getDataPath = function() {
   var parentPath = '';
   if (this.parent_) {
@@ -239,69 +239,69 @@ goog.ds.XmlDataSource.prototype.getDataPath = function() {
   }
 
   return parentPath + this.dataName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Load or reload the backing data for this node
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Load or reload the backing data for this node
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.load = function() {
   // Nothing to do
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the state of the backing data for this node
-***REMOVED*** @return {goog.ds.LoadState} The state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the state of the backing data for this node
+ * @return {goog.ds.LoadState} The state.
+ * @override
+ */
 goog.ds.XmlDataSource.prototype.getLoadState = function() {
   return this.node_ ? goog.ds.LoadState.LOADED : goog.ds.LoadState.NOT_LOADED;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Check whether a node is an empty text node. Nodes consisting of only white
-***REMOVED*** space (#x20, #xD, #xA, #x9) can generally be collapsed to a zero length
-***REMOVED*** text string.
-***REMOVED*** @param {string} str String to match.
-***REMOVED*** @return {boolean} True if string equates to empty text node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Check whether a node is an empty text node. Nodes consisting of only white
+ * space (#x20, #xD, #xA, #x9) can generally be collapsed to a zero length
+ * text string.
+ * @param {string} str String to match.
+ * @return {boolean} True if string equates to empty text node.
+ * @private
+ */
 goog.ds.XmlDataSource.isEmptyTextNodeValue_ = function(str) {
   return /^[\r\n\t ]*$/.test(str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an XML document with one empty node.
-***REMOVED*** Useful for places where you need a node that
-***REMOVED*** can be queried against.
-***REMOVED***
-***REMOVED*** @return {Document} Document with one empty node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates an XML document with one empty node.
+ * Useful for places where you need a node that
+ * can be queried against.
+ *
+ * @return {Document} Document with one empty node.
+ * @private
+ */
 goog.ds.XmlDataSource.createChildlessDocument_ = function() {
   return goog.dom.xml.createDocument('nothing');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Data source whose backing is an XMLHttpRequest,
-***REMOVED***
-***REMOVED*** A URI of an empty string will mean that no request is made
-***REMOVED*** and the data source will be a single, empty node.
-***REMOVED***
-***REMOVED*** @param {(string,goog.Uri)} uri URL of the XMLHttpRequest.
-***REMOVED*** @param {string} name Name of the datasource.
-***REMOVED***
-***REMOVED*** implements goog.ds.XmlHttpDataSource.
-***REMOVED***
-***REMOVED*** @extends {goog.ds.XmlDataSource}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Data source whose backing is an XMLHttpRequest,
+ *
+ * A URI of an empty string will mean that no request is made
+ * and the data source will be a single, empty node.
+ *
+ * @param {(string,goog.Uri)} uri URL of the XMLHttpRequest.
+ * @param {string} name Name of the datasource.
+ *
+ * implements goog.ds.XmlHttpDataSource.
+ * @constructor
+ * @extends {goog.ds.XmlDataSource}
+ * @final
+ */
 goog.ds.XmlHttpDataSource = function(uri, name) {
   goog.ds.XmlDataSource.call(this, null, null, name);
   if (uri) {
@@ -309,22 +309,22 @@ goog.ds.XmlHttpDataSource = function(uri, name) {
   } else {
     this.uri_ = null;
   }
-***REMOVED***
+};
 goog.inherits(goog.ds.XmlHttpDataSource, goog.ds.XmlDataSource);
 
 
-***REMOVED***
-***REMOVED*** Default load state is NOT_LOADED
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Default load state is NOT_LOADED
+ * @private
+ */
 goog.ds.XmlHttpDataSource.prototype.loadState_ = goog.ds.LoadState.NOT_LOADED;
 
 
-***REMOVED***
-***REMOVED*** Load or reload the backing data for this node.
-***REMOVED*** Fires the XMLHttpRequest
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Load or reload the backing data for this node.
+ * Fires the XMLHttpRequest
+ * @override
+ */
 goog.ds.XmlHttpDataSource.prototype.load = function() {
   if (this.uri_) {
     goog.log.info(goog.ds.logger, 'Sending XML request for DataSource ' +
@@ -336,42 +336,42 @@ goog.ds.XmlHttpDataSource.prototype.load = function() {
     this.node_ = goog.ds.XmlDataSource.createChildlessDocument_();
     this.loadState_ = goog.ds.LoadState.NOT_LOADED;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the state of the backing data for this node
-***REMOVED*** @return {goog.ds.LoadState} The state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the state of the backing data for this node
+ * @return {goog.ds.LoadState} The state.
+ * @override
+ */
 goog.ds.XmlHttpDataSource.prototype.getLoadState = function() {
   return this.loadState_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the completion of an XhrIo request. Dispatches to success or load
-***REMOVED*** based on the result.
-***REMOVED*** @param {!goog.events.Event} e The XhrIo event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the completion of an XhrIo request. Dispatches to success or load
+ * based on the result.
+ * @param {!goog.events.Event} e The XhrIo event object.
+ * @private
+ */
 goog.ds.XmlHttpDataSource.prototype.complete_ = function(e) {
-  var xhr =***REMOVED*****REMOVED*** @type {goog.net.XhrIo}***REMOVED*** (e.target);
+  var xhr = /** @type {goog.net.XhrIo} */ (e.target);
   if (xhr && xhr.isSuccess()) {
     this.success_(xhr);
   } else {
     this.failure_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Success result. Checks whether valid XML was returned
-***REMOVED*** and sets the XML and loadstate.
-***REMOVED***
-***REMOVED*** @param {!goog.net.XhrIo} xhr The successful XhrIo object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Success result. Checks whether valid XML was returned
+ * and sets the XML and loadstate.
+ *
+ * @param {!goog.net.XhrIo} xhr The successful XhrIo object.
+ * @private
+ */
 goog.ds.XmlHttpDataSource.prototype.success_ = function(xhr) {
   goog.log.info(goog.ds.logger,
       'Got data for DataSource ' + this.getDataName());
@@ -395,14 +395,14 @@ goog.ds.XmlHttpDataSource.prototype.success_ = function(xhr) {
   if (this.getDataName()) {
     goog.ds.DataManager.getInstance().fireDataChange(this.getDataName());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Failure result
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Failure result
+ *
+ * @private
+ */
 goog.ds.XmlHttpDataSource.prototype.failure_ = function() {
   goog.log.info(goog.ds.logger, 'Data retrieve failed for DataSource ' +
       this.getDataName());
@@ -413,4 +413,4 @@ goog.ds.XmlHttpDataSource.prototype.failure_ = function() {
   if (this.getDataName()) {
     goog.ds.DataManager.getInstance().fireDataChange(this.getDataName());
   }
-***REMOVED***
+};

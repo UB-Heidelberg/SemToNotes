@@ -13,10 +13,10 @@ See the COPYING file for details.
   <script src="../base.js"></script>
   <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.events.Event');
     goog.require('goog.events.EventHandler');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.html.SafeHtml');
     goog.require('goog.html.testing');
     goog.require('goog.positioning.AbsolutePosition');
@@ -38,20 +38,20 @@ See the COPYING file for details.
     var stubs = new goog.testing.PropertyReplacer();
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A subclass of Tooltip that overrides {@code getPositioningStrategy}
-    ***REMOVED*** for testing purposes.
-   ***REMOVED*****REMOVED***
+    /**
+     * A subclass of Tooltip that overrides {@code getPositioningStrategy}
+     * for testing purposes.
+     */
     function TestTooltip(el, text, dom) {
       goog.ui.Tooltip.call(this, el, text, dom);
-   ***REMOVED*****REMOVED***
+    };
     goog.inherits(TestTooltip, goog.ui.Tooltip);
 
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestTooltip.prototype.getPositioningStrategy = function() {
       return new goog.positioning.AbsolutePosition(13, 17);
-   ***REMOVED*****REMOVED***
+    };
 
 
     var tt, clock, handler, eventQueue, dom;

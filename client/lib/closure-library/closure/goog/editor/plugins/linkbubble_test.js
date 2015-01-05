@@ -23,7 +23,7 @@ goog.require('goog.editor.Link');
 goog.require('goog.editor.plugins.LinkBubble');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.string');
 goog.require('goog.style');
 goog.require('goog.testing.FunctionMock');
@@ -243,10 +243,10 @@ function testLinkTextClickedCustomUrlFn() {
 }
 
 
-***REMOVED***
-***REMOVED*** Urls with invalid schemes shouldn't be linkified.
-***REMOVED*** @bug 2585360
-***REMOVED***
+/**
+ * Urls with invalid schemes shouldn't be linkified.
+ * @bug 2585360
+ */
 function testDontLinkifyInvalidScheme() {
   mockWindowOpen.$replay();
   FIELDMOCK.$replay();
@@ -306,10 +306,10 @@ function testShouldOpenWithWhitelist() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 763211
-***REMOVED*** @bug 2182147
-***REMOVED***
+/**
+ * @bug 763211
+ * @bug 2182147
+ */
 function testLongUrlTestLinkAnchorTextCorrect() {
   FIELDMOCK.$replay();
   linkBubble.enable(FIELDMOCK);
@@ -337,9 +337,9 @@ function testLongUrlTestLinkAnchorTextCorrect() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 2416024
-***REMOVED***
+/**
+ * @bug 2416024
+ */
 function testOverridingCreateBubbleContentsDoesntNpeGetTargetUrl() {
   FIELDMOCK.$replay();
   linkBubble.enable(FIELDMOCK);

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Trogedit constants for browser features and quirks that should
-***REMOVED*** be used by the rich text editor.
-***REMOVED***
+/**
+ * @fileoverview Trogedit constants for browser features and quirks that should
+ * be used by the rich text editor.
+ */
 
 goog.provide('goog.editor.BrowserFeature');
 
@@ -25,11 +25,11 @@ goog.require('goog.userAgent.product');
 goog.require('goog.userAgent.product.isVersion');
 
 
-***REMOVED***
-***REMOVED*** Maps browser quirks to boolean values, detailing what the current
-***REMOVED*** browser supports.
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * Maps browser quirks to boolean values, detailing what the current
+ * browser supports.
+ * @type {Object}
+ */
 goog.editor.BrowserFeature = {
   // Whether this browser uses the IE TextRange object.
   HAS_IE_RANGES: goog.userAgent.IE && !goog.userAgent.isDocumentModeOrHigher(9),
@@ -270,4 +270,4 @@ goog.editor.BrowserFeature = {
 
   SUPPORTS_FILE_PASTING: goog.userAgent.product.CHROME &&
       goog.userAgent.product.isVersion('12')
-***REMOVED***
+};

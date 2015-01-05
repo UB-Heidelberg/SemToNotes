@@ -13,19 +13,19 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Represents a cubic Bezier curve.
-***REMOVED***
-***REMOVED*** Uses the deCasteljau algorithm to compute points on the curve.
-***REMOVED*** http://en.wikipedia.org/wiki/De_Casteljau's_algorithm
-***REMOVED***
-***REMOVED*** Currently it uses an unrolled version of the algorithm for speed.  Eventually
-***REMOVED*** it may be useful to use the loop form of the algorithm in order to support
-***REMOVED*** curves of arbitrary degree.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author wcrosby@google.com (Wayne Crosby)
-***REMOVED***
+/**
+ * @fileoverview Represents a cubic Bezier curve.
+ *
+ * Uses the deCasteljau algorithm to compute points on the curve.
+ * http://en.wikipedia.org/wiki/De_Casteljau's_algorithm
+ *
+ * Currently it uses an unrolled version of the algorithm for speed.  Eventually
+ * it may be useful to use the loop form of the algorithm in order to support
+ * curves of arbitrary degree.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author wcrosby@google.com (Wayne Crosby)
+ */
 
 goog.provide('goog.math.Bezier');
 
@@ -34,102 +34,102 @@ goog.require('goog.math.Coordinate');
 
 
 
-***REMOVED***
-***REMOVED*** Object representing a cubic bezier curve.
-***REMOVED*** @param {number} x0 X coordinate of the start point.
-***REMOVED*** @param {number} y0 Y coordinate of the start point.
-***REMOVED*** @param {number} x1 X coordinate of the first control point.
-***REMOVED*** @param {number} y1 Y coordinate of the first control point.
-***REMOVED*** @param {number} x2 X coordinate of the second control point.
-***REMOVED*** @param {number} y2 Y coordinate of the second control point.
-***REMOVED*** @param {number} x3 X coordinate of the end point.
-***REMOVED*** @param {number} y3 Y coordinate of the end point.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Object representing a cubic bezier curve.
+ * @param {number} x0 X coordinate of the start point.
+ * @param {number} y0 Y coordinate of the start point.
+ * @param {number} x1 X coordinate of the first control point.
+ * @param {number} y1 Y coordinate of the first control point.
+ * @param {number} x2 X coordinate of the second control point.
+ * @param {number} y2 Y coordinate of the second control point.
+ * @param {number} x3 X coordinate of the end point.
+ * @param {number} y3 Y coordinate of the end point.
+ * @constructor
+ * @final
+ */
 goog.math.Bezier = function(x0, y0, x1, y1, x2, y2, x3, y3) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X coordinate of the first point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X coordinate of the first point.
+   * @type {number}
+   */
   this.x0 = x0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y coordinate of the first point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y coordinate of the first point.
+   * @type {number}
+   */
   this.y0 = y0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X coordinate of the first control point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X coordinate of the first control point.
+   * @type {number}
+   */
   this.x1 = x1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y coordinate of the first control point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y coordinate of the first control point.
+   * @type {number}
+   */
   this.y1 = y1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X coordinate of the second control point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X coordinate of the second control point.
+   * @type {number}
+   */
   this.x2 = x2;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y coordinate of the second control point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y coordinate of the second control point.
+   * @type {number}
+   */
   this.y2 = y2;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X coordinate of the end point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X coordinate of the end point.
+   * @type {number}
+   */
   this.x3 = x3;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y coordinate of the end point.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y coordinate of the end point.
+   * @type {number}
+   */
   this.y3 = y3;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constant used to approximate ellipses.
-***REMOVED*** See: http://canvaspaint.org/blog/2006/12/ellipse/
-***REMOVED*** @type {number}
-***REMOVED***
-goog.math.Bezier.KAPPA = 4***REMOVED*** (Math.sqrt(2) - 1) / 3;
+/**
+ * Constant used to approximate ellipses.
+ * See: http://canvaspaint.org/blog/2006/12/ellipse/
+ * @type {number}
+ */
+goog.math.Bezier.KAPPA = 4 * (Math.sqrt(2) - 1) / 3;
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.math.Bezier} A copy of this curve.
-***REMOVED***
+/**
+ * @return {!goog.math.Bezier} A copy of this curve.
+ */
 goog.math.Bezier.prototype.clone = function() {
   return new goog.math.Bezier(this.x0, this.y0, this.x1, this.y1, this.x2,
       this.y2, this.x3, this.y3);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test if the given curve is exactly the same as this one.
-***REMOVED*** @param {goog.math.Bezier} other The other curve.
-***REMOVED*** @return {boolean} Whether the given curve is the same as this one.
-***REMOVED***
+/**
+ * Test if the given curve is exactly the same as this one.
+ * @param {goog.math.Bezier} other The other curve.
+ * @return {boolean} Whether the given curve is the same as this one.
+ */
 goog.math.Bezier.prototype.equals = function(other) {
   return this.x0 == other.x0 && this.y0 == other.y0 && this.x1 == other.x1 &&
          this.y1 == other.y1 && this.x2 == other.x2 && this.y2 == other.y2 &&
          this.x3 == other.x3 && this.y3 == other.y3;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Modifies the curve in place to progress in the opposite direction.
-***REMOVED***
+/**
+ * Modifies the curve in place to progress in the opposite direction.
+ */
 goog.math.Bezier.prototype.flip = function() {
   var temp = this.x0;
   this.x0 = this.x3;
@@ -144,14 +144,14 @@ goog.math.Bezier.prototype.flip = function() {
   temp = this.y1;
   this.y1 = this.y2;
   this.y2 = temp;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the curve's X coordinate at a point between 0 and 1.
-***REMOVED*** @param {number} t The point on the curve to find.
-***REMOVED*** @return {number} The computed coordinate.
-***REMOVED***
+/**
+ * Computes the curve's X coordinate at a point between 0 and 1.
+ * @param {number} t The point on the curve to find.
+ * @return {number} The computed coordinate.
+ */
 goog.math.Bezier.prototype.getPointX = function(t) {
   // Special case start and end.
   if (t == 0) {
@@ -171,14 +171,14 @@ goog.math.Bezier.prototype.getPointX = function(t) {
 
   // Final step - last point
   return goog.math.lerp(ix0, ix1, t);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the curve's Y coordinate at a point between 0 and 1.
-***REMOVED*** @param {number} t The point on the curve to find.
-***REMOVED*** @return {number} The computed coordinate.
-***REMOVED***
+/**
+ * Computes the curve's Y coordinate at a point between 0 and 1.
+ * @param {number} t The point on the curve to find.
+ * @return {number} The computed coordinate.
+ */
 goog.math.Bezier.prototype.getPointY = function(t) {
   // Special case start and end.
   if (t == 0) {
@@ -198,23 +198,23 @@ goog.math.Bezier.prototype.getPointY = function(t) {
 
   // Final step - last point
   return goog.math.lerp(iy0, iy1, t);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the curve at a point between 0 and 1.
-***REMOVED*** @param {number} t The point on the curve to find.
-***REMOVED*** @return {!goog.math.Coordinate} The computed coordinate.
-***REMOVED***
+/**
+ * Computes the curve at a point between 0 and 1.
+ * @param {number} t The point on the curve to find.
+ * @return {!goog.math.Coordinate} The computed coordinate.
+ */
 goog.math.Bezier.prototype.getPoint = function(t) {
   return new goog.math.Coordinate(this.getPointX(t), this.getPointY(t));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Changes this curve in place to be the portion of itself from [t, 1].
-***REMOVED*** @param {number} t The start of the desired portion of the curve.
-***REMOVED***
+/**
+ * Changes this curve in place to be the portion of itself from [t, 1].
+ * @param {number} t The start of the desired portion of the curve.
+ */
 goog.math.Bezier.prototype.subdivideLeft = function(t) {
   if (t == 1) {
     return;
@@ -248,39 +248,39 @@ goog.math.Bezier.prototype.subdivideLeft = function(t) {
   // Final step - last point
   this.x3 = goog.math.lerp(ix0, ix1, t);
   this.y3 = goog.math.lerp(iy0, iy1, t);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Changes this curve in place to be the portion of itself from [0, t].
-***REMOVED*** @param {number} t The end of the desired portion of the curve.
-***REMOVED***
+/**
+ * Changes this curve in place to be the portion of itself from [0, t].
+ * @param {number} t The end of the desired portion of the curve.
+ */
 goog.math.Bezier.prototype.subdivideRight = function(t) {
   this.flip();
   this.subdivideLeft(1 - t);
   this.flip();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Changes this curve in place to be the portion of itself from [s, t].
-***REMOVED*** @param {number} s The start of the desired portion of the curve.
-***REMOVED*** @param {number} t The end of the desired portion of the curve.
-***REMOVED***
+/**
+ * Changes this curve in place to be the portion of itself from [s, t].
+ * @param {number} s The start of the desired portion of the curve.
+ * @param {number} t The end of the desired portion of the curve.
+ */
 goog.math.Bezier.prototype.subdivide = function(s, t) {
   this.subdivideRight(s);
   this.subdivideLeft((t - s) / (1 - s));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the position t of a point on the curve given its x coordinate.
-***REMOVED*** That is, for an input xVal, finds t s.t. getPointX(t) = xVal.
-***REMOVED*** As such, the following should always be true up to some small epsilon:
-***REMOVED*** t ~ solvePositionFromXValue(getPointX(t)) for t in [0, 1].
-***REMOVED*** @param {number} xVal The x coordinate of the point to find on the curve.
-***REMOVED*** @return {number} The position t.
-***REMOVED***
+/**
+ * Computes the position t of a point on the curve given its x coordinate.
+ * That is, for an input xVal, finds t s.t. getPointX(t) = xVal.
+ * As such, the following should always be true up to some small epsilon:
+ * t ~ solvePositionFromXValue(getPointX(t)) for t in [0, 1].
+ * @param {number} xVal The x coordinate of the point to find on the curve.
+ * @return {number} The position t.
+ */
 goog.math.Bezier.prototype.solvePositionFromXValue = function(xVal) {
   // Desired precision on the computation.
   var epsilon = 1e-6;
@@ -327,14 +327,14 @@ goog.math.Bezier.prototype.solvePositionFromXValue = function(xVal) {
     value = this.getPointX(t);
   }
   return t;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the y coordinate of a point on the curve given its x coordinate.
-***REMOVED*** @param {number} xVal The x coordinate of the point on the curve.
-***REMOVED*** @return {number} The y coordinate of the point on the curve.
-***REMOVED***
+/**
+ * Computes the y coordinate of a point on the curve given its x coordinate.
+ * @param {number} xVal The x coordinate of the point on the curve.
+ * @return {number} The y coordinate of the point on the curve.
+ */
 goog.math.Bezier.prototype.solveYValueFromXValue = function(xVal) {
   return this.getPointY(this.solvePositionFromXValue(xVal));
-***REMOVED***
+};

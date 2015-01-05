@@ -19,10 +19,10 @@ goog.require('goog.testing.MockRange');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Tests that a MockRange can be created successfully, a call to a mock
-***REMOVED*** method can be recorded, and the correct behavior replayed and verified.
-***REMOVED***
+/**
+ * Tests that a MockRange can be created successfully, a call to a mock
+ * method can be recorded, and the correct behavior replayed and verified.
+ */
 function testMockMethod() {
   var mockRange = new goog.testing.MockRange();
   mockRange.getStartOffset().$returns(42);

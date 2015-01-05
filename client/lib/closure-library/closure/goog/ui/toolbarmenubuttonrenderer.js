@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A toolbar menu button renderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview A toolbar menu button renderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ToolbarMenuButtonRenderer');
 
@@ -24,34 +24,34 @@ goog.require('goog.ui.MenuButtonRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Toolbar-specific renderer for {@link goog.ui.MenuButton}s, based on {@link
-***REMOVED*** goog.ui.MenuButtonRenderer}.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuButtonRenderer}
-***REMOVED***
+/**
+ * Toolbar-specific renderer for {@link goog.ui.MenuButton}s, based on {@link
+ * goog.ui.MenuButtonRenderer}.
+ * @constructor
+ * @extends {goog.ui.MenuButtonRenderer}
+ */
 goog.ui.ToolbarMenuButtonRenderer = function() {
   goog.ui.MenuButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarMenuButtonRenderer, goog.ui.MenuButtonRenderer);
 goog.addSingletonGetter(goog.ui.ToolbarMenuButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of menu buttons rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of menu buttons rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ToolbarMenuButtonRenderer.CSS_CLASS =
     goog.getCssName('goog-toolbar-menu-button');
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of menu buttons
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of menu buttons
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.ToolbarMenuButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.ToolbarMenuButtonRenderer.CSS_CLASS;
-***REMOVED***
+};

@@ -15,7 +15,7 @@
 goog.provide('goog.testing.MockClockTest');
 goog.setTestOnly('goog.testing.MockClockTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.PropertyReplacer');
@@ -134,7 +134,7 @@ function testSetInterval() {
 
 function testRequestAnimationFrame() {
   goog.global.requestAnimationFrame = function() {
- ***REMOVED*****REMOVED***
+  };
   var clock = new goog.testing.MockClock(true);
   var times = [];
   var recFunc = goog.testing.recordFunction(function(now) {
@@ -216,9 +216,9 @@ function testClearInterval2() {
 
 function testCancelRequestAnimationFrame() {
   goog.global.requestAnimationFrame = function() {
- ***REMOVED*****REMOVED***
+  };
   goog.global.cancelRequestAnimationFrame = function() {
- ***REMOVED*****REMOVED***
+  };
   var clock = new goog.testing.MockClock(true);
   var ran = false;
   var c = goog.global.requestAnimationFrame(function() { ran = true; });
@@ -450,7 +450,7 @@ function testBalksOnTimeoutsGreaterThanMaxInt() {
       });
   assertThrows('Timeouts much greater than MAX_INT should fail',
       function() {
-        setTimeout(goog.nullFunction, 2147483648***REMOVED*** 10);
+        setTimeout(goog.nullFunction, 2147483648 * 10);
       });
   clock.uninstall();
 }
@@ -475,7 +475,7 @@ function testMozRequestAnimationFrame() {
   var clock = new goog.testing.MockClock(true);
 
   var mozBeforePaint = goog.testing.recordFunction();
-***REMOVED***window, 'MozBeforePaint', mozBeforePaint);
+  goog.events.listen(window, 'MozBeforePaint', mozBeforePaint);
 
   window.mozRequestAnimationFrame(null);
   assertEquals(0, mozBeforePaint.getCallCount());

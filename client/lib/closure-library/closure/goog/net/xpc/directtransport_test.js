@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests the direct transport.
-***REMOVED***
+/**
+ * @fileoverview Tests the direct transport.
+ */
 
 goog.provide('goog.net.xpc.DirectTransportTest');
 
@@ -34,35 +34,35 @@ var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall(
     'Direct transport tests.');
 
 
-***REMOVED***
-***REMOVED*** Echo service name.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Echo service name.
+ * @type {string}
+ * @const
+ */
 var ECHO_SERVICE_NAME = 'echo';
 
 
-***REMOVED***
-***REMOVED*** Response service name.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Response service name.
+ * @type {string}
+ * @const
+ */
 var RESPONSE_SERVICE_NAME = 'response';
 
 
-***REMOVED***
-***REMOVED*** Test Payload.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Test Payload.
+ * @type {string}
+ * @const
+ */
 var MESSAGE_PAYLOAD_1 = 'This is message payload 1.';
 
 
-***REMOVED***
-***REMOVED*** The name id of the peer iframe.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The name id of the peer iframe.
+ * @type {string}
+ * @const
+ */
 var PEER_IFRAME_ID = 'peer-iframe';
 
 
@@ -123,9 +123,9 @@ function createIframe() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests 2 same domain frames using direct transport.
-***REMOVED***
+/**
+ * Tests 2 same domain frames using direct transport.
+ */
 function testDirectTransport() {
   createIframe();
   channelName = goog.net.xpc.getRandomString(10);
@@ -166,9 +166,9 @@ function responseMessageHandler_testDirectTransport(message) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests 2 xpc's communicating with each other in the same window.
-***REMOVED***
+/**
+ * Tests 2 xpc's communicating with each other in the same window.
+ */
 function testSameWindowDirectTransport() {
   channelName = goog.net.xpc.getRandomString(10);
 
@@ -221,7 +221,7 @@ function innerEchoMessageHandler_testSameWindowDirectTransport(message) {
 
 
 function getConfiguration(role, opt_peerFrameId) {
-  var cfg = {***REMOVED***
+  var cfg = {};
   cfg[CfgFields.TRANSPORT] = TransportTypes.DIRECT;
   if (goog.isDefAndNotNull(opt_peerFrameId)) {
     cfg[CfgFields.IFRAME_ID] = opt_peerFrameId;
@@ -232,9 +232,9 @@ function getConfiguration(role, opt_peerFrameId) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests 2 same domain frames using direct transport using sync mode.
-***REMOVED***
+/**
+ * Tests 2 same domain frames using direct transport using sync mode.
+ */
 function testSyncMode() {
   createIframe();
   channelName = goog.net.xpc.getRandomString(10);

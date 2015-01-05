@@ -1,6 +1,6 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 describe("jsdoc/util/dumper", function() {
-    var common = {dumper: require('jsdoc/util/dumper')***REMOVED***
+    var common = {dumper: require('jsdoc/util/dumper')};
 
     it("should exist", function() {
         expect(common.dumper).toBeDefined();
@@ -72,7 +72,7 @@ describe("jsdoc/util/dumper", function() {
 
     it("can dump constructed instance values, not displaying prototype members", function() {
         function Foo(name){ this.name = name; }
-        Foo.prototype.sayHello = function(){***REMOVED***
+        Foo.prototype.sayHello = function(){};
 
         var actual = common.dumper.dump(new Foo('hello')),
         expected = '{\n    "name": "hello"\n}';
@@ -92,7 +92,7 @@ describe("jsdoc/util/dumper", function() {
     });
 
     it("doesn't crash on circular references", function() {
-        var a = {***REMOVED***
+        var a = {};
         a.b = a;
 
         var actual = common.dumper.dump(a),

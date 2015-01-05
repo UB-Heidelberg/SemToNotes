@@ -1,35 +1,35 @@
-***REMOVED*** @class***REMOVED***
+/** @class */
 var Person = makeClass(
-   ***REMOVED*****REMOVED*** @lends Person#***REMOVED***
+    /** @lends Person# */
     {
-       ***REMOVED*****REMOVED*** Set up initial values.***REMOVED***
+        /** Set up initial values. */
         initialize: function(name) {
         },
 
-       ***REMOVED*****REMOVED*** Speak a message.***REMOVED***
+        /** Speak a message. */
         say: function(message) {
             return this.name + " says: " + message;
         },
 
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** The name of the person.
-        ***REMOVED*** @type {string}
-       ***REMOVED*****REMOVED***
+        /**
+         * The name of the person.
+         * @type {string}
+         */
         get name() {
             return this._name;
         },
 
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** @type {string}
-        ***REMOVED*** @param val
-       ***REMOVED*****REMOVED***
+        /**
+         * @type {string}
+         * @param val
+         */
         set name(val) {
             this._name = name;
         },
 
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** @type {number}
-       ***REMOVED*****REMOVED***
+        /**
+         * @type {number}
+         */
         get age() {
             return 25;
         }

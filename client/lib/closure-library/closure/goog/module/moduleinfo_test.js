@@ -20,9 +20,9 @@ goog.require('goog.module.ModuleInfo');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Test initial state of module info.
-***REMOVED***
+/**
+ * Test initial state of module info.
+ */
 function testNotLoadedAtStart() {
   var m = new goog.module.ModuleInfo();
   assertFalse('Shouldn\'t be loaded', m.isLoaded());
@@ -30,13 +30,13 @@ function testNotLoadedAtStart() {
 
 var TestModule = function() {
   goog.module.BaseModule.call(this);
-***REMOVED***
+};
 goog.inherits(TestModule, goog.module.BaseModule);
 
 
-***REMOVED***
-***REMOVED*** Test loaded module info.
-***REMOVED***
+/**
+ * Test loaded module info.
+ */
 function testOnLoad() {
   var m = new goog.module.ModuleInfo();
 
@@ -55,9 +55,9 @@ function testOnLoad() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test callbacks on module load.
-***REMOVED***
+/**
+ * Test callbacks on module load.
+ */
 function testCallbacks() {
   var m = new goog.module.ModuleInfo();
   m.setModuleConstructor(TestModule);
@@ -81,9 +81,9 @@ function testCallbacks() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the error callbacks.
-***REMOVED***
+/**
+ * Tests the error callbacks.
+ */
 function testErrbacks() {
   var m = new goog.module.ModuleInfo();
   m.setModuleConstructor(TestModule);

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Datastructure: Priority Queue.
-***REMOVED***
-***REMOVED***
-***REMOVED*** This file provides the implementation of a Priority Queue. Smaller priorities
-***REMOVED*** move to the front of the queue. If two values have the same priority,
-***REMOVED*** it is arbitrary which value will come to the front of the queue first.
-***REMOVED***
+/**
+ * @fileoverview Datastructure: Priority Queue.
+ *
+ *
+ * This file provides the implementation of a Priority Queue. Smaller priorities
+ * move to the front of the queue. If two values have the same priority,
+ * it is arbitrary which value will come to the front of the queue first.
+ */
 
 // TODO(user): Should this rely on natural ordering via some Comparable
 //     interface?
@@ -31,36 +31,36 @@ goog.require('goog.structs.Heap');
 
 
 
-***REMOVED***
-***REMOVED*** Class for Priority Queue datastructure.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.structs.Heap.<number, VALUE>}
-***REMOVED*** @template VALUE
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for Priority Queue datastructure.
+ *
+ * @constructor
+ * @extends {goog.structs.Heap.<number, VALUE>}
+ * @template VALUE
+ * @final
+ */
 goog.structs.PriorityQueue = function() {
   goog.structs.Heap.call(this);
-***REMOVED***
+};
 goog.inherits(goog.structs.PriorityQueue, goog.structs.Heap);
 
 
-***REMOVED***
-***REMOVED*** Puts the specified value in the queue.
-***REMOVED*** @param {number} priority The priority of the value. A smaller value here
-***REMOVED***     means a higher priority.
-***REMOVED*** @param {VALUE} value The value.
-***REMOVED***
+/**
+ * Puts the specified value in the queue.
+ * @param {number} priority The priority of the value. A smaller value here
+ *     means a higher priority.
+ * @param {VALUE} value The value.
+ */
 goog.structs.PriorityQueue.prototype.enqueue = function(priority, value) {
   this.insert(priority, value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieves and removes the head of this queue.
-***REMOVED*** @return {VALUE} The element at the head of this queue. Returns undefined if
-***REMOVED***     the queue is empty.
-***REMOVED***
+/**
+ * Retrieves and removes the head of this queue.
+ * @return {VALUE} The element at the head of this queue. Returns undefined if
+ *     the queue is empty.
+ */
 goog.structs.PriorityQueue.prototype.dequeue = function() {
   return this.remove();
-***REMOVED***
+};

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilties for working with DOM nodes related to rich text
-***REMOVED*** editing.  Many of these are not general enough to go into goog.dom.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Utilties for working with DOM nodes related to rich text
+ * editing.  Many of these are not general enough to go into goog.dom.
+ *
+ */
 
 goog.provide('goog.editor.node');
 
@@ -32,11 +32,11 @@ goog.require('goog.string.Unicode');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Names of all block-level tags
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Names of all block-level tags
+ * @type {Object}
+ * @private
+ */
 goog.editor.node.BLOCK_TAG_NAMES_ = goog.object.createSet(
     goog.dom.TagName.ADDRESS,
     goog.dom.TagName.ARTICLE,
@@ -89,183 +89,183 @@ goog.editor.node.BLOCK_TAG_NAMES_ = goog.object.createSet(
     goog.dom.TagName.UL);
 
 
-***REMOVED***
-***REMOVED*** Names of tags that have intrinsic content.
-***REMOVED*** TODO(robbyw): What about object, br, input, textarea, button, isindex,
-***REMOVED*** hr, keygen, select, table, tr, td?
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Names of tags that have intrinsic content.
+ * TODO(robbyw): What about object, br, input, textarea, button, isindex,
+ * hr, keygen, select, table, tr, td?
+ * @type {Object}
+ * @private
+ */
 goog.editor.node.NON_EMPTY_TAGS_ = goog.object.createSet(
     goog.dom.TagName.IMG, goog.dom.TagName.IFRAME, goog.dom.TagName.EMBED);
 
 
-***REMOVED***
-***REMOVED*** Check if the node is in a standards mode document.
-***REMOVED*** @param {Node} node The node to test.
-***REMOVED*** @return {boolean} Whether the node is in a standards mode document.
-***REMOVED***
+/**
+ * Check if the node is in a standards mode document.
+ * @param {Node} node The node to test.
+ * @return {boolean} Whether the node is in a standards mode document.
+ */
 goog.editor.node.isStandardsMode = function(node) {
   return goog.dom.getDomHelper(node).isCss1CompatMode();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the right-most non-ignorable leaf node of the given node.
-***REMOVED*** @param {Node} parent The parent ndoe.
-***REMOVED*** @return {Node} The right-most non-ignorable leaf node.
-***REMOVED***
+/**
+ * Get the right-most non-ignorable leaf node of the given node.
+ * @param {Node} parent The parent ndoe.
+ * @return {Node} The right-most non-ignorable leaf node.
+ */
 goog.editor.node.getRightMostLeaf = function(parent) {
   var temp;
   while (temp = goog.editor.node.getLastChild(parent)) {
     parent = temp;
   }
   return parent;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the left-most non-ignorable leaf node of the given node.
-***REMOVED*** @param {Node} parent The parent ndoe.
-***REMOVED*** @return {Node} The left-most non-ignorable leaf node.
-***REMOVED***
+/**
+ * Get the left-most non-ignorable leaf node of the given node.
+ * @param {Node} parent The parent ndoe.
+ * @return {Node} The left-most non-ignorable leaf node.
+ */
 goog.editor.node.getLeftMostLeaf = function(parent) {
   var temp;
   while (temp = goog.editor.node.getFirstChild(parent)) {
     parent = temp;
   }
   return parent;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Version of firstChild that skips nodes that are entirely
-***REMOVED*** whitespace and comments.
-***REMOVED*** @param {Node} parent The reference node.
-***REMOVED*** @return {Node} The first child of sibling that is important according to
-***REMOVED***     goog.editor.node.isImportant, or null if no such node exists.
-***REMOVED***
+/**
+ * Version of firstChild that skips nodes that are entirely
+ * whitespace and comments.
+ * @param {Node} parent The reference node.
+ * @return {Node} The first child of sibling that is important according to
+ *     goog.editor.node.isImportant, or null if no such node exists.
+ */
 goog.editor.node.getFirstChild = function(parent) {
   return goog.editor.node.getChildHelper_(parent, false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Version of lastChild that skips nodes that are entirely whitespace or
-***REMOVED*** comments.  (Normally lastChild is a property of all DOM nodes that gives the
-***REMOVED*** last of the nodes contained directly in the reference node.)
-***REMOVED*** @param {Node} parent The reference node.
-***REMOVED*** @return {Node} The last child of sibling that is important according to
-***REMOVED***     goog.editor.node.isImportant, or null if no such node exists.
-***REMOVED***
+/**
+ * Version of lastChild that skips nodes that are entirely whitespace or
+ * comments.  (Normally lastChild is a property of all DOM nodes that gives the
+ * last of the nodes contained directly in the reference node.)
+ * @param {Node} parent The reference node.
+ * @return {Node} The last child of sibling that is important according to
+ *     goog.editor.node.isImportant, or null if no such node exists.
+ */
 goog.editor.node.getLastChild = function(parent) {
   return goog.editor.node.getChildHelper_(parent, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Version of previoussibling that skips nodes that are entirely
-***REMOVED*** whitespace or comments.  (Normally previousSibling is a property
-***REMOVED*** of all DOM nodes that gives the sibling node, the node that is
-***REMOVED*** a child of the same parent, that occurs immediately before the
-***REMOVED*** reference node.)
-***REMOVED*** @param {Node} sibling The reference node.
-***REMOVED*** @return {Node} The closest previous sibling to sibling that is
-***REMOVED***     important according to goog.editor.node.isImportant, or null if no such
-***REMOVED***     node exists.
-***REMOVED***
+/**
+ * Version of previoussibling that skips nodes that are entirely
+ * whitespace or comments.  (Normally previousSibling is a property
+ * of all DOM nodes that gives the sibling node, the node that is
+ * a child of the same parent, that occurs immediately before the
+ * reference node.)
+ * @param {Node} sibling The reference node.
+ * @return {Node} The closest previous sibling to sibling that is
+ *     important according to goog.editor.node.isImportant, or null if no such
+ *     node exists.
+ */
 goog.editor.node.getPreviousSibling = function(sibling) {
-  return***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (goog.editor.node.getFirstValue_(
+  return /** @type {Node} */ (goog.editor.node.getFirstValue_(
       goog.iter.filter(new goog.dom.iter.SiblingIterator(sibling, false, true),
       goog.editor.node.isImportant)));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Version of nextSibling that skips nodes that are entirely whitespace or
-***REMOVED*** comments.
-***REMOVED*** @param {Node} sibling The reference node.
-***REMOVED*** @return {Node} The closest next sibling to sibling that is important
-***REMOVED***     according to goog.editor.node.isImportant, or null if no
-***REMOVED***     such node exists.
-***REMOVED***
+/**
+ * Version of nextSibling that skips nodes that are entirely whitespace or
+ * comments.
+ * @param {Node} sibling The reference node.
+ * @return {Node} The closest next sibling to sibling that is important
+ *     according to goog.editor.node.isImportant, or null if no
+ *     such node exists.
+ */
 goog.editor.node.getNextSibling = function(sibling) {
-  return***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (goog.editor.node.getFirstValue_(
+  return /** @type {Node} */ (goog.editor.node.getFirstValue_(
       goog.iter.filter(new goog.dom.iter.SiblingIterator(sibling),
       goog.editor.node.isImportant)));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal helper for lastChild/firstChild that skips nodes that are entirely
-***REMOVED*** whitespace or comments.
-***REMOVED*** @param {Node} parent The reference node.
-***REMOVED*** @param {boolean} isReversed Whether children should be traversed forward
-***REMOVED***     or backward.
-***REMOVED*** @return {Node} The first/last child of sibling that is important according
-***REMOVED***     to goog.editor.node.isImportant, or null if no such node exists.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal helper for lastChild/firstChild that skips nodes that are entirely
+ * whitespace or comments.
+ * @param {Node} parent The reference node.
+ * @param {boolean} isReversed Whether children should be traversed forward
+ *     or backward.
+ * @return {Node} The first/last child of sibling that is important according
+ *     to goog.editor.node.isImportant, or null if no such node exists.
+ * @private
+ */
 goog.editor.node.getChildHelper_ = function(parent, isReversed) {
   return (!parent || parent.nodeType != goog.dom.NodeType.ELEMENT) ? null :
-     ***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (goog.editor.node.getFirstValue_(goog.iter.filter(
+      /** @type {Node} */ (goog.editor.node.getFirstValue_(goog.iter.filter(
           new goog.dom.iter.ChildIterator(
-             ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (parent), isReversed),
+              /** @type {Element} */ (parent), isReversed),
           goog.editor.node.isImportant)));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Utility function that returns the first value from an iterator or null if
-***REMOVED*** the iterator is empty.
-***REMOVED*** @param {goog.iter.Iterator} iterator The iterator to get a value from.
-***REMOVED*** @return {*} The first value from the iterator.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Utility function that returns the first value from an iterator or null if
+ * the iterator is empty.
+ * @param {goog.iter.Iterator} iterator The iterator to get a value from.
+ * @return {*} The first value from the iterator.
+ * @private
+ */
 goog.editor.node.getFirstValue_ = function(iterator) {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     return iterator.next();
   } catch (e) {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determine if a node should be returned by the iterator functions.
-***REMOVED*** @param {Node} node An object implementing the DOM1 Node interface.
-***REMOVED*** @return {boolean} Whether the node is an element, or a text node that
-***REMOVED***     is not all whitespace.
-***REMOVED***
+/**
+ * Determine if a node should be returned by the iterator functions.
+ * @param {Node} node An object implementing the DOM1 Node interface.
+ * @return {boolean} Whether the node is an element, or a text node that
+ *     is not all whitespace.
+ */
 goog.editor.node.isImportant = function(node) {
   // Return true if the node is not either a TextNode or an ElementNode.
   return node.nodeType == goog.dom.NodeType.ELEMENT ||
          node.nodeType == goog.dom.NodeType.TEXT &&
          !goog.editor.node.isAllNonNbspWhiteSpace(node);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determine whether a node's text content is entirely whitespace.
-***REMOVED*** @param {Node} textNode A node implementing the CharacterData interface (i.e.,
-***REMOVED***     a Text, Comment, or CDATASection node.
-***REMOVED*** @return {boolean} Whether the text content of node is whitespace,
-***REMOVED***     otherwise false.
-***REMOVED***
+/**
+ * Determine whether a node's text content is entirely whitespace.
+ * @param {Node} textNode A node implementing the CharacterData interface (i.e.,
+ *     a Text, Comment, or CDATASection node.
+ * @return {boolean} Whether the text content of node is whitespace,
+ *     otherwise false.
+ */
 goog.editor.node.isAllNonNbspWhiteSpace = function(textNode) {
   return goog.string.isBreakingWhitespace(textNode.nodeValue);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the node contains only whitespace and is not and does not
-***REMOVED*** contain any images, iframes or embed tags.
-***REMOVED*** @param {Node} node The node to check.
-***REMOVED*** @param {boolean=} opt_prohibitSingleNbsp By default, this function treats a
-***REMOVED***     single nbsp as empty.  Set this to true to treat this case as non-empty.
-***REMOVED*** @return {boolean} Whether the node contains only whitespace.
-***REMOVED***
+/**
+ * Returns true if the node contains only whitespace and is not and does not
+ * contain any images, iframes or embed tags.
+ * @param {Node} node The node to check.
+ * @param {boolean=} opt_prohibitSingleNbsp By default, this function treats a
+ *     single nbsp as empty.  Set this to true to treat this case as non-empty.
+ * @return {boolean} Whether the node contains only whitespace.
+ */
 goog.editor.node.isEmpty = function(node, opt_prohibitSingleNbsp) {
   var nodeData = goog.dom.getRawTextContent(node);
 
@@ -278,29 +278,29 @@ goog.editor.node.isEmpty = function(node, opt_prohibitSingleNbsp) {
   }
   return (!opt_prohibitSingleNbsp && nodeData == goog.string.Unicode.NBSP) ||
       goog.string.isBreakingWhitespace(nodeData);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the length of the text in node if it is a text node, or the number
-***REMOVED*** of children of the node, if it is an element. Useful for range-manipulation
-***REMOVED*** code where you need to know the offset for the right side of the node.
-***REMOVED*** @param {Node} node The node to get the length of.
-***REMOVED*** @return {number} The length of the node.
-***REMOVED***
+/**
+ * Returns the length of the text in node if it is a text node, or the number
+ * of children of the node, if it is an element. Useful for range-manipulation
+ * code where you need to know the offset for the right side of the node.
+ * @param {Node} node The node to get the length of.
+ * @return {number} The length of the node.
+ */
 goog.editor.node.getLength = function(node) {
   return node.length || node.childNodes.length;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Search child nodes using a predicate function and return the first node that
-***REMOVED*** satisfies the condition.
-***REMOVED*** @param {Node} parent The parent node to search.
-***REMOVED*** @param {function(Node):boolean} hasProperty A function that takes a child
-***REMOVED***    node as a parameter and returns true if it meets the criteria.
-***REMOVED*** @return {?number} The index of the node found, or null if no node is found.
-***REMOVED***
+/**
+ * Search child nodes using a predicate function and return the first node that
+ * satisfies the condition.
+ * @param {Node} parent The parent node to search.
+ * @param {function(Node):boolean} hasProperty A function that takes a child
+ *    node as a parameter and returns true if it meets the criteria.
+ * @return {?number} The index of the node found, or null if no node is found.
+ */
 goog.editor.node.findInChildren = function(parent, hasProperty) {
   for (var i = 0, len = parent.childNodes.length; i < len; i++) {
     if (hasProperty(parent.childNodes[i])) {
@@ -308,19 +308,19 @@ goog.editor.node.findInChildren = function(parent, hasProperty) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Search ancestor nodes using a predicate function and returns the topmost
-***REMOVED*** ancestor in the chain of consecutive ancestors that satisfies the condition.
-***REMOVED***
-***REMOVED*** @param {Node} node The node whose ancestors have to be searched.
-***REMOVED*** @param {function(Node): boolean} hasProperty A function that takes a parent
-***REMOVED***     node as a parameter and returns true if it meets the criteria.
-***REMOVED*** @return {Node} The topmost ancestor or null if no ancestor satisfies the
-***REMOVED***     predicate function.
-***REMOVED***
+/**
+ * Search ancestor nodes using a predicate function and returns the topmost
+ * ancestor in the chain of consecutive ancestors that satisfies the condition.
+ *
+ * @param {Node} node The node whose ancestors have to be searched.
+ * @param {function(Node): boolean} hasProperty A function that takes a parent
+ *     node as a parameter and returns true if it meets the criteria.
+ * @return {Node} The topmost ancestor or null if no ancestor satisfies the
+ *     predicate function.
+ */
 goog.editor.node.findHighestMatchingAncestor = function(node, hasProperty) {
   var parent = node.parentNode;
   var ancestor = null;
@@ -329,66 +329,66 @@ goog.editor.node.findHighestMatchingAncestor = function(node, hasProperty) {
     parent = parent.parentNode;
   }
   return ancestor;
-***REMOVED***
+};
 
 
-***REMOVED***
+/**
 * Checks if node is a block-level html element. The <tt>display</tt> css
-***REMOVED*** property is ignored.
-***REMOVED*** @param {Node} node The node to test.
-***REMOVED*** @return {boolean} Whether the node is a block-level node.
-***REMOVED***
+ * property is ignored.
+ * @param {Node} node The node to test.
+ * @return {boolean} Whether the node is a block-level node.
+ */
 goog.editor.node.isBlockTag = function(node) {
   return !!goog.editor.node.BLOCK_TAG_NAMES_[node.tagName];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Skips siblings of a node that are empty text nodes.
-***REMOVED*** @param {Node} node A node. May be null.
-***REMOVED*** @return {Node} The node or the first sibling of the node that is not an
-***REMOVED***     empty text node. May be null.
-***REMOVED***
+/**
+ * Skips siblings of a node that are empty text nodes.
+ * @param {Node} node A node. May be null.
+ * @return {Node} The node or the first sibling of the node that is not an
+ *     empty text node. May be null.
+ */
 goog.editor.node.skipEmptyTextNodes = function(node) {
   while (node && node.nodeType == goog.dom.NodeType.TEXT &&
       !node.nodeValue) {
     node = node.nextSibling;
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if an element is a top-level editable container (meaning that
-***REMOVED*** it itself is not editable, but all its child nodes are editable).
-***REMOVED*** @param {Node} element The element to test.
-***REMOVED*** @return {boolean} Whether the element is a top-level editable container.
-***REMOVED***
+/**
+ * Checks if an element is a top-level editable container (meaning that
+ * it itself is not editable, but all its child nodes are editable).
+ * @param {Node} element The element to test.
+ * @return {boolean} Whether the element is a top-level editable container.
+ */
 goog.editor.node.isEditableContainer = function(element) {
   return element.getAttribute &&
       element.getAttribute('g_editable') == 'true';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if a node is inside an editable container.
-***REMOVED*** @param {Node} node The node to test.
-***REMOVED*** @return {boolean} Whether the node is in an editable container.
-***REMOVED***
+/**
+ * Checks if a node is inside an editable container.
+ * @param {Node} node The node to test.
+ * @return {boolean} Whether the node is in an editable container.
+ */
 goog.editor.node.isEditable = function(node) {
   return !!goog.dom.getAncestor(node, goog.editor.node.isEditableContainer);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the top-most DOM node inside an editable field that is an ancestor
-***REMOVED*** (or self) of a given DOM node and meets the specified criteria.
-***REMOVED*** @param {Node} node The DOM node where the search starts.
-***REMOVED*** @param {function(Node) : boolean} criteria A function that takes a DOM node
-***REMOVED***     as a parameter and returns a boolean to indicate whether the node meets
-***REMOVED***     the criteria or not.
-***REMOVED*** @return {Node} The DOM node if found, or null.
-***REMOVED***
+/**
+ * Finds the top-most DOM node inside an editable field that is an ancestor
+ * (or self) of a given DOM node and meets the specified criteria.
+ * @param {Node} node The DOM node where the search starts.
+ * @param {function(Node) : boolean} criteria A function that takes a DOM node
+ *     as a parameter and returns a boolean to indicate whether the node meets
+ *     the criteria or not.
+ * @return {Node} The DOM node if found, or null.
+ */
 goog.editor.node.findTopMostEditableAncestor = function(node, criteria) {
   var targetNode = null;
   while (node && !goog.editor.node.isEditableContainer(node)) {
@@ -398,18 +398,18 @@ goog.editor.node.findTopMostEditableAncestor = function(node, criteria) {
     node = node.parentNode;
   }
   return targetNode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits off a subtree.
-***REMOVED*** @param {!Node} currentNode The starting splitting point.
-***REMOVED*** @param {Node=} opt_secondHalf The initial leftmost leaf the new subtree.
-***REMOVED***     If null, siblings after currentNode will be placed in the subtree, but
-***REMOVED***     no additional node will be.
-***REMOVED*** @param {Node=} opt_root The top of the tree where splitting stops at.
-***REMOVED*** @return {!Node} The new subtree.
-***REMOVED***
+/**
+ * Splits off a subtree.
+ * @param {!Node} currentNode The starting splitting point.
+ * @param {Node=} opt_secondHalf The initial leftmost leaf the new subtree.
+ *     If null, siblings after currentNode will be placed in the subtree, but
+ *     no additional node will be.
+ * @param {Node=} opt_root The top of the tree where splitting stops at.
+ * @return {!Node} The new subtree.
+ */
 goog.editor.node.splitDomTreeAt = function(currentNode,
     opt_secondHalf, opt_root) {
   var parent;
@@ -418,24 +418,24 @@ goog.editor.node.splitDomTreeAt = function(currentNode,
         opt_secondHalf);
     currentNode = parent;
   }
-  return***REMOVED*****REMOVED*** @type {!Node}***REMOVED***(opt_secondHalf);
-***REMOVED***
+  return /** @type {!Node} */(opt_secondHalf);
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a clone of node, moving all children after startNode to it.
-***REMOVED*** When firstChild is not null or undefined, it is also appended to the clone
-***REMOVED*** as the first child.
-***REMOVED*** @param {!Node} node The node to clone.
-***REMOVED*** @param {!Node} startNode All siblings after this node will be moved to the
-***REMOVED***     clone.
-***REMOVED*** @param {Node|undefined} firstChild The first child of the new cloned element.
-***REMOVED*** @return {!Node} The cloned node that now contains the children after
-***REMOVED***     startNode.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a clone of node, moving all children after startNode to it.
+ * When firstChild is not null or undefined, it is also appended to the clone
+ * as the first child.
+ * @param {!Node} node The node to clone.
+ * @param {!Node} startNode All siblings after this node will be moved to the
+ *     clone.
+ * @param {Node|undefined} firstChild The first child of the new cloned element.
+ * @return {!Node} The cloned node that now contains the children after
+ *     startNode.
+ * @private
+ */
 goog.editor.node.getSecondHalfOfNode_ = function(node, startNode, firstChild) {
-  var secondHalf =***REMOVED*****REMOVED*** @type {!Node}***REMOVED***(node.cloneNode(false));
+  var secondHalf = /** @type {!Node} */(node.cloneNode(false));
   while (startNode.nextSibling) {
     goog.dom.appendChild(secondHalf, startNode.nextSibling);
   }
@@ -443,36 +443,36 @@ goog.editor.node.getSecondHalfOfNode_ = function(node, startNode, firstChild) {
     secondHalf.insertBefore(firstChild, secondHalf.firstChild);
   }
   return secondHalf;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends all of oldNode's children to newNode. This removes all children from
-***REMOVED*** oldNode and appends them to newNode. oldNode is left with no children.
-***REMOVED*** @param {!Node} newNode Node to transfer children to.
-***REMOVED*** @param {Node} oldNode Node to transfer children from.
-***REMOVED*** @deprecated Use goog.dom.append directly instead.
-***REMOVED***
+/**
+ * Appends all of oldNode's children to newNode. This removes all children from
+ * oldNode and appends them to newNode. oldNode is left with no children.
+ * @param {!Node} newNode Node to transfer children to.
+ * @param {Node} oldNode Node to transfer children from.
+ * @deprecated Use goog.dom.append directly instead.
+ */
 goog.editor.node.transferChildren = function(newNode, oldNode) {
   goog.dom.append(newNode, oldNode.childNodes);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces the innerHTML of a node.
-***REMOVED***
-***REMOVED*** IE has serious problems if you try to set innerHTML of an editable node with
-***REMOVED*** any selection. Early versions of IE tear up the old internal tree storage, to
-***REMOVED*** help avoid ref-counting loops. But this sometimes leaves the selection object
-***REMOVED*** in a bad state and leads to segfaults.
-***REMOVED***
-***REMOVED*** Removing the nodes first prevents IE from tearing them up. This is not
-***REMOVED*** strictly necessary in nodes that do not have the selection. You should always
-***REMOVED*** use this function when setting innerHTML inside of a field.
-***REMOVED***
-***REMOVED*** @param {Node} node A node.
-***REMOVED*** @param {string} html The innerHTML to set on the node.
-***REMOVED***
+/**
+ * Replaces the innerHTML of a node.
+ *
+ * IE has serious problems if you try to set innerHTML of an editable node with
+ * any selection. Early versions of IE tear up the old internal tree storage, to
+ * help avoid ref-counting loops. But this sometimes leaves the selection object
+ * in a bad state and leads to segfaults.
+ *
+ * Removing the nodes first prevents IE from tearing them up. This is not
+ * strictly necessary in nodes that do not have the selection. You should always
+ * use this function when setting innerHTML inside of a field.
+ *
+ * @param {Node} node A node.
+ * @param {string} html The innerHTML to set on the node.
+ */
 goog.editor.node.replaceInnerHtml = function(node, html) {
   // Only do this IE. On gecko, we use element change events, and don't
   // want to trigger spurious events.
@@ -480,4 +480,4 @@ goog.editor.node.replaceInnerHtml = function(node, html) {
     goog.dom.removeChildren(node);
   }
   node.innerHTML = html;
-***REMOVED***
+};

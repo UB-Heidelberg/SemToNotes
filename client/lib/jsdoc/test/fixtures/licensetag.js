@@ -1,2 +1,2 @@
-***REMOVED*** @license GPL v2***REMOVED***
+/** @license GPL v2 */
 var x;

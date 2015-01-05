@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the goog.ui.tree.TreeNode class.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @author jonp@google.com (Jon Perlow)
-***REMOVED***
-***REMOVED*** This is a based on the webfx tree control. See file comment in
-***REMOVED*** treecontrol.js.
-***REMOVED***
+/**
+ * @fileoverview Definition of the goog.ui.tree.TreeNode class.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @author eae@google.com (Emil A Eklund)
+ * @author jonp@google.com (Jon Perlow)
+ *
+ * This is a based on the webfx tree control. See file comment in
+ * treecontrol.js.
+ */
 
 goog.provide('goog.ui.tree.TreeNode');
 
@@ -29,27 +29,27 @@ goog.require('goog.ui.tree.BaseNode');
 
 
 
-***REMOVED***
-***REMOVED*** A single node in the tree.
-***REMOVED*** @param {string|!goog.html.SafeHtml} html The html content of the node label.
-***REMOVED*** @param {Object=} opt_config The configuration for the tree. See
-***REMOVED***    goog.ui.tree.TreeControl.defaultConfig. If not specified, a default config
-***REMOVED***    will be used.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.tree.BaseNode}
-***REMOVED***
+/**
+ * A single node in the tree.
+ * @param {string|!goog.html.SafeHtml} html The html content of the node label.
+ * @param {Object=} opt_config The configuration for the tree. See
+ *    goog.ui.tree.TreeControl.defaultConfig. If not specified, a default config
+ *    will be used.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.tree.BaseNode}
+ */
 goog.ui.tree.TreeNode = function(html, opt_config, opt_domHelper) {
   goog.ui.tree.BaseNode.call(this, html, opt_config, opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.tree.TreeNode, goog.ui.tree.BaseNode);
 
 
-***REMOVED***
-***REMOVED*** Returns the tree.
-***REMOVED*** @return {?goog.ui.tree.TreeControl} The tree.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the tree.
+ * @return {?goog.ui.tree.TreeControl} The tree.
+ * @override
+ */
 goog.ui.tree.TreeNode.prototype.getTree = function() {
   if (this.tree) {
     return this.tree;
@@ -63,14 +63,14 @@ goog.ui.tree.TreeNode.prototype.getTree = function() {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the source for the icon.
-***REMOVED*** @return {string} Src for the icon.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the source for the icon.
+ * @return {string} Src for the icon.
+ * @override
+ */
 goog.ui.tree.TreeNode.prototype.getCalculatedIconClass = function() {
   var expanded = this.getExpanded();
   var expandedIconClass = this.getExpandedIconClass();
@@ -98,4 +98,4 @@ goog.ui.tree.TreeNode.prototype.getCalculatedIconClass = function() {
     }
   }
   return '';
-***REMOVED***
+};

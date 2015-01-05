@@ -12,53 +12,53 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for encoding strings according to MIME
-***REMOVED*** standards, especially RFC 1522.
-***REMOVED***
+/**
+ * @fileoverview Functions for encoding strings according to MIME
+ * standards, especially RFC 1522.
+ */
 goog.provide('goog.i18n.mime');
 goog.provide('goog.i18n.mime.encode');
 
 goog.require('goog.array');
 
 
-***REMOVED***
-***REMOVED*** Regular expression for matching those characters that are outside the
-***REMOVED*** range that can be used in the quoted-printable encoding of RFC 1522:
-***REMOVED*** anything outside the 7-bit ASCII encoding, plus ?, =, _ or space.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for matching those characters that are outside the
+ * range that can be used in the quoted-printable encoding of RFC 1522:
+ * anything outside the 7-bit ASCII encoding, plus ?, =, _ or space.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.mime.NONASCII_ = /[^!-<>@-^`-~]/g;
 
 
-***REMOVED***
-***REMOVED*** Like goog.i18n.NONASCII_ but also omits double-quotes.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Like goog.i18n.NONASCII_ but also omits double-quotes.
+ * @type {RegExp}
+ * @private
+ */
 goog.i18n.mime.NONASCII_NOQUOTE_ = /[^!#-<>@-^`-~]/g;
 
 
-***REMOVED***
-***REMOVED*** Encodes a string for inclusion in a MIME header. The string is encoded
-***REMOVED*** in UTF-8 according to RFC 1522, using quoted-printable form.
-***REMOVED*** @param {string} str The string to encode.
-***REMOVED*** @param {boolean=} opt_noquote Whether double-quote characters should also
-***REMOVED***     be escaped (should be true if the result will be placed inside a
-***REMOVED***     quoted string for a parameter value in a MIME header).
-***REMOVED*** @return {string} The encoded string.
-***REMOVED***
+/**
+ * Encodes a string for inclusion in a MIME header. The string is encoded
+ * in UTF-8 according to RFC 1522, using quoted-printable form.
+ * @param {string} str The string to encode.
+ * @param {boolean=} opt_noquote Whether double-quote characters should also
+ *     be escaped (should be true if the result will be placed inside a
+ *     quoted string for a parameter value in a MIME header).
+ * @return {string} The encoded string.
+ */
 goog.i18n.mime.encode = function(str, opt_noquote) {
   var nonascii = opt_noquote ?
       goog.i18n.mime.NONASCII_NOQUOTE_ : goog.i18n.mime.NONASCII_;
 
   if (str.search(nonascii) >= 0) {
     str = '=?UTF-8?Q?' + str.replace(nonascii,
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** @param {string} c The matched char.
-        ***REMOVED*** @return {string} The quoted-printable form of utf-8 encoding.
-       ***REMOVED*****REMOVED***
+        /**
+         * @param {string} c The matched char.
+         * @return {string} The quoted-printable form of utf-8 encoding.
+         */
         function(c) {
           var i = c.charCodeAt(0);
           if (i == 32) {
@@ -70,14 +70,14 @@ goog.i18n.mime.encode = function(str, opt_noquote) {
         }) + '?=';
   }
   return str;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get an array of UTF-8 hex codes for a given character.
-***REMOVED*** @param {string} c The matched character.
-***REMOVED*** @return {!Array.<string>} A hex array representing the character.
-***REMOVED***
+/**
+ * Get an array of UTF-8 hex codes for a given character.
+ * @param {string} c The matched character.
+ * @return {!Array.<string>} A hex array representing the character.
+ */
 goog.i18n.mime.getHexCharArray = function(c) {
   var i = c.charCodeAt(0);
   var a = [];
@@ -108,4 +108,4 @@ goog.i18n.mime.getHexCharArray = function(c) {
     a[i] = a[i].toString(16);
   }
   return a;
-***REMOVED***
+};

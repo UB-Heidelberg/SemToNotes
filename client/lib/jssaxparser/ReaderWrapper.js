@@ -1,4 +1,4 @@
-/*global window, ReaderWrapper***REMOVED***
+/*global window, ReaderWrapper */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -39,7 +39,7 @@ function ReaderWrapper(reader) {
     this.peeked = [];
 }
 
-***REMOVED************* NOT USED BY SCANNER***REMOVED**********************/
+/************ NOT USED BY SCANNER ********************/
 
 ReaderWrapper.WS = new RegExp('[\\t\\n\\r ]');
 
@@ -67,10 +67,10 @@ ReaderWrapper.prototype.skip = function (n) {
     if (n) {
         this.reader.skip(n);
     }
-***REMOVED***
+};
 
 
-***REMOVED************* USED BY SCANNER***REMOVED**********************/
+/************ USED BY SCANNER ********************/
 
 /*
 consumes first char of peeked array, or consumes next char of Reader
@@ -80,7 +80,7 @@ ReaderWrapper.prototype.next = function () {
          return this.peeked.pop();
     }
     return this.reader.read();
-***REMOVED***
+};
 
 
 /*
@@ -96,7 +96,7 @@ ReaderWrapper.prototype.peek = function () {
     var returned = this.reader.read();
     this.peeked[0] = returned;
     return returned;
-***REMOVED***
+};
 
 /*
 if dontSkipWhiteSpace is not passed, then it is false so skipWhiteSpaces is default
@@ -107,13 +107,13 @@ ReaderWrapper.prototype.nextChar = function(dontSkipWhiteSpace) {
     if (!dontSkipWhiteSpace) {
         this.skipWhiteSpaces();
     }
-***REMOVED***
+};
 
 ReaderWrapper.prototype.skipWhiteSpaces = function() {
     while (this.peek().search(ReaderWrapper.WS) !== -1) {
         this.next();
     }
-***REMOVED***
+};
 
 /*
 ending char is the last matching the regexp
@@ -140,7 +140,7 @@ ReaderWrapper.prototype.nextCharRegExp = function(regExp, continuation) {
             currChar = this.peek();
         }
     }
-***REMOVED***
+};
 
 /*
 same as above but with a char not a regexp and no continuation
@@ -180,7 +180,7 @@ ReaderWrapper.prototype.matchStr = function(str) {
         return true;
     }
     return false;
-***REMOVED***
+};
 
 /*
 if next char is ch
@@ -201,15 +201,15 @@ ReaderWrapper.prototype.quoteContent = function() {
     var content = this.nextCharWhileNot(quote);
     this.next();
     return content;
-***REMOVED***
+};
 
 ReaderWrapper.prototype.equals = function(ch) {
       return ch === this.peek();
-***REMOVED***
+};
 
 ReaderWrapper.prototype.unequals = function(ch) {
       return ch !== this.peek();
-***REMOVED***
+};
 
 ReaderWrapper.prototype.unread = function (str) {
     var i = str.length;
@@ -217,5 +217,5 @@ ReaderWrapper.prototype.unread = function (str) {
     while (i--) {
         this.peeked[this.peeked.length] = str.charAt(i);
     }
-***REMOVED***
+};
 

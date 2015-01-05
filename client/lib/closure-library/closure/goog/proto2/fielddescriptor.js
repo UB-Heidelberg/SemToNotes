@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol Buffer Field Descriptor class.
-***REMOVED***
+/**
+ * @fileoverview Protocol Buffer Field Descriptor class.
+ */
 
 goog.provide('goog.proto2.FieldDescriptor');
 
@@ -23,90 +23,90 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** A class which describes a field in a Protocol Buffer 2 Message.
-***REMOVED***
-***REMOVED*** @param {Function} messageType Constructor for the message
-***REMOVED***     class to which the field described by this class belongs.
-***REMOVED*** @param {number|string} tag The field's tag index.
-***REMOVED*** @param {Object} metadata The metadata about this field that will be used
-***REMOVED***     to construct this descriptor.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A class which describes a field in a Protocol Buffer 2 Message.
+ *
+ * @param {Function} messageType Constructor for the message
+ *     class to which the field described by this class belongs.
+ * @param {number|string} tag The field's tag index.
+ * @param {Object} metadata The metadata about this field that will be used
+ *     to construct this descriptor.
+ *
+ * @constructor
+ * @final
+ */
 goog.proto2.FieldDescriptor = function(messageType, tag, metadata) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The message type that contains the field that this
-  ***REMOVED*** descriptor describes.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The message type that contains the field that this
+   * descriptor describes.
+   * @type {Function}
+   * @private
+   */
   this.parent_ = messageType;
 
   // Ensure that the tag is numeric.
   goog.asserts.assert(goog.string.isNumeric(tag));
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The field's tag number.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.tag_ =***REMOVED*****REMOVED*** @type {number}***REMOVED*** (tag);
+  /**
+   * The field's tag number.
+   * @type {number}
+   * @private
+   */
+  this.tag_ = /** @type {number} */ (tag);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The field's name.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The field's name.
+   * @type {string}
+   * @private
+   */
   this.name_ = metadata.name;
 
- ***REMOVED*****REMOVED*** @type {goog.proto2.FieldDescriptor.FieldType}***REMOVED***
+  /** @type {goog.proto2.FieldDescriptor.FieldType} */
   metadata.fieldType;
 
- ***REMOVED*****REMOVED*** @type {*}***REMOVED***
+  /** @type {*} */
   metadata.repeated;
 
- ***REMOVED*****REMOVED*** @type {*}***REMOVED***
+  /** @type {*} */
   metadata.required;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If true, this field is a repeating field.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * If true, this field is a repeating field.
+   * @type {boolean}
+   * @private
+   */
   this.isRepeated_ = !!metadata.repeated;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If true, this field is required.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * If true, this field is required.
+   * @type {boolean}
+   * @private
+   */
   this.isRequired_ = !!metadata.required;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The field type of this field.
-  ***REMOVED*** @type {goog.proto2.FieldDescriptor.FieldType}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The field type of this field.
+   * @type {goog.proto2.FieldDescriptor.FieldType}
+   * @private
+   */
   this.fieldType_ = metadata.fieldType;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If this field is a primitive: The native (ECMAScript) type of this field.
-  ***REMOVED*** If an enumeration: The enumeration object.
-  ***REMOVED*** If a message or group field: The Message function.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * If this field is a primitive: The native (ECMAScript) type of this field.
+   * If an enumeration: The enumeration object.
+   * If a message or group field: The Message function.
+   * @type {Function}
+   * @private
+   */
   this.nativeType_ = metadata.type;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Is it permissible on deserialization to convert between numbers and
-  ***REMOVED*** well-formed strings?  Is true for 64-bit integral field types, false for
-  ***REMOVED*** all other field types.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Is it permissible on deserialization to convert between numbers and
+   * well-formed strings?  Is true for 64-bit integral field types, false for
+   * all other field types.
+   * @type {boolean}
+   * @private
+   */
   this.deserializationConversionPermitted_ = false;
 
   switch (this.fieldType_) {
@@ -119,22 +119,22 @@ goog.proto2.FieldDescriptor = function(messageType, tag, metadata) {
       break;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The default value of this field, if different from the default, default
-  ***REMOVED*** value.
-  ***REMOVED*** @type {*}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The default value of this field, if different from the default, default
+   * value.
+   * @type {*}
+   * @private
+   */
   this.defaultValue_ = metadata.defaultValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An enumeration defining the possible field types.
-***REMOVED*** Should be a mirror of that defined in descriptor.h.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * An enumeration defining the possible field types.
+ * Should be a mirror of that defined in descriptor.h.
+ *
+ * @enum {number}
+ */
 goog.proto2.FieldDescriptor.FieldType = {
   DOUBLE: 1,
   FLOAT: 2,
@@ -154,41 +154,41 @@ goog.proto2.FieldDescriptor.FieldType = {
   SFIXED64: 16,
   SINT32: 17,
   SINT64: 18
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the tag of the field that this descriptor represents.
-***REMOVED***
-***REMOVED*** @return {number} The tag number.
-***REMOVED***
+/**
+ * Returns the tag of the field that this descriptor represents.
+ *
+ * @return {number} The tag number.
+ */
 goog.proto2.FieldDescriptor.prototype.getTag = function() {
   return this.tag_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the descriptor describing the message that defined this field.
-***REMOVED*** @return {goog.proto2.Descriptor} The descriptor.
-***REMOVED***
+/**
+ * Returns the descriptor describing the message that defined this field.
+ * @return {goog.proto2.Descriptor} The descriptor.
+ */
 goog.proto2.FieldDescriptor.prototype.getContainingType = function() {
   return this.parent_.getDescriptor();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the name of the field that this descriptor represents.
-***REMOVED*** @return {string} The name.
-***REMOVED***
+/**
+ * Returns the name of the field that this descriptor represents.
+ * @return {string} The name.
+ */
 goog.proto2.FieldDescriptor.prototype.getName = function() {
   return this.name_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the default value of this field.
-***REMOVED*** @return {*} The default value.
-***REMOVED***
+/**
+ * Returns the default value of this field.
+ * @return {*} The default value.
+ */
 goog.proto2.FieldDescriptor.prototype.getDefaultValue = function() {
   if (this.defaultValue_ === undefined) {
     // Set the default value based on a new instance of the native type.
@@ -212,86 +212,86 @@ goog.proto2.FieldDescriptor.prototype.getDefaultValue = function() {
   }
 
   return this.defaultValue_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the field type of the field described by this descriptor.
-***REMOVED*** @return {goog.proto2.FieldDescriptor.FieldType} The field type.
-***REMOVED***
+/**
+ * Returns the field type of the field described by this descriptor.
+ * @return {goog.proto2.FieldDescriptor.FieldType} The field type.
+ */
 goog.proto2.FieldDescriptor.prototype.getFieldType = function() {
   return this.fieldType_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the native (i.e. ECMAScript) type of the field described by this
-***REMOVED*** descriptor.
-***REMOVED***
-***REMOVED*** @return {Object} The native type.
-***REMOVED***
+/**
+ * Returns the native (i.e. ECMAScript) type of the field described by this
+ * descriptor.
+ *
+ * @return {Object} The native type.
+ */
 goog.proto2.FieldDescriptor.prototype.getNativeType = function() {
   return this.nativeType_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if simple conversions between numbers and strings are permitted
-***REMOVED*** during deserialization for this field.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether conversion is permitted.
-***REMOVED***
+/**
+ * Returns true if simple conversions between numbers and strings are permitted
+ * during deserialization for this field.
+ *
+ * @return {boolean} Whether conversion is permitted.
+ */
 goog.proto2.FieldDescriptor.prototype.deserializationConversionPermitted =
     function() {
   return this.deserializationConversionPermitted_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the descriptor of the message type of this field. Only valid
-***REMOVED*** for fields of type GROUP and MESSAGE.
-***REMOVED***
-***REMOVED*** @return {goog.proto2.Descriptor} The message descriptor.
-***REMOVED***
+/**
+ * Returns the descriptor of the message type of this field. Only valid
+ * for fields of type GROUP and MESSAGE.
+ *
+ * @return {goog.proto2.Descriptor} The message descriptor.
+ */
 goog.proto2.FieldDescriptor.prototype.getFieldMessageType = function() {
   goog.asserts.assert(this.isCompositeType(), 'Expected message or group');
 
   return this.nativeType_.getDescriptor();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if the field stores composite data or repeated
-***REMOVED***     composite data (message or group).
-***REMOVED***
+/**
+ * @return {boolean} True if the field stores composite data or repeated
+ *     composite data (message or group).
+ */
 goog.proto2.FieldDescriptor.prototype.isCompositeType = function() {
   return this.fieldType_ == goog.proto2.FieldDescriptor.FieldType.MESSAGE ||
       this.fieldType_ == goog.proto2.FieldDescriptor.FieldType.GROUP;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the field described by this descriptor is repeating.
-***REMOVED*** @return {boolean} Whether the field is repeated.
-***REMOVED***
+/**
+ * Returns whether the field described by this descriptor is repeating.
+ * @return {boolean} Whether the field is repeated.
+ */
 goog.proto2.FieldDescriptor.prototype.isRepeated = function() {
   return this.isRepeated_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the field described by this descriptor is required.
-***REMOVED*** @return {boolean} Whether the field is required.
-***REMOVED***
+/**
+ * Returns whether the field described by this descriptor is required.
+ * @return {boolean} Whether the field is required.
+ */
 goog.proto2.FieldDescriptor.prototype.isRequired = function() {
   return this.isRequired_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the field described by this descriptor is optional.
-***REMOVED*** @return {boolean} Whether the field is optional.
-***REMOVED***
+/**
+ * Returns whether the field described by this descriptor is optional.
+ * @return {boolean} Whether the field is optional.
+ */
 goog.proto2.FieldDescriptor.prototype.isOptional = function() {
   return !this.isRepeated_ && !this.isRequired_;
-***REMOVED***
+};

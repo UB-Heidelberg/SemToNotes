@@ -1,8 +1,8 @@
 describe("@lends tag", function() {
     // see also specs/documentation/lends.js for tests on @lends behaviour.
     var doclet = require('jsdoc/doclet'),
-        doc = new doclet.Doclet('***REMOVED*** @lends***REMOVED***', {}),
-        doc2 = new doclet.Doclet('***REMOVED*** @lends MyClass#***REMOVED***', {});
+        doc = new doclet.Doclet('/** @lends */', {}),
+        doc2 = new doclet.Doclet('/** @lends MyClass# */', {});
 
     it("sets the doclet's 'alias' property to the tag value or <global>", function() {
         expect(doc.alias).toBe('<global>');

@@ -1,5 +1,5 @@
 /*global afterEach: true, app: true, beforeEach: true, describe: true, env: true, expect: true,
-it: true, jasmine: true***REMOVED***
+it: true, jasmine: true */
 // TODO: consolidate with specs/jsdoc/parser and specs/jsdoc/plugins
 describe("plugins", function() {
     var path = require('jsdoc/path');
@@ -14,7 +14,7 @@ describe("plugins", function() {
     // TODO: decouple this from the global parser
     app.jsdoc.parser = jasmine.createParser();
 
-    global.jsdocPluginsTest = global.jsdocPluginsTest || {***REMOVED***
+    global.jsdocPluginsTest = global.jsdocPluginsTest || {};
 
     require('jsdoc/plugins').installPlugins(pluginPaths, app.jsdoc.parser);
 

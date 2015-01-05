@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.node.Nodes');
 

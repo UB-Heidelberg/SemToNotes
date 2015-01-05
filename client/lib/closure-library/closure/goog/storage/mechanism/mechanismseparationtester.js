@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for storage mechanism separation.
-***REMOVED***
-***REMOVED*** These tests should be included by tests of any mechanism which natively
-***REMOVED*** implements namespaces. There is no need to include those tests for mechanisms
-***REMOVED*** extending goog.storage.mechanism.PrefixedMechanism. Make sure a different
-***REMOVED*** namespace is used for each object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for storage mechanism separation.
+ *
+ * These tests should be included by tests of any mechanism which natively
+ * implements namespaces. There is no need to include those tests for mechanisms
+ * extending goog.storage.mechanism.PrefixedMechanism. Make sure a different
+ * namespace is used for each object.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.mechanismSeparationTester');
 

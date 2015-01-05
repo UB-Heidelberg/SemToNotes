@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, xdescribe: true***REMOVED***
+/*global describe: true, expect: true, it: true, xdescribe: true */
 
 describe("jsdoc/plugins", function() {
     var plugins = require('jsdoc/plugins');

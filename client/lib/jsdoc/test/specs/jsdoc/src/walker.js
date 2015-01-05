@@ -1,4 +1,4 @@
-/*global describe, expect, it, xdescribe***REMOVED***
+/*global describe, expect, it, xdescribe */
 describe('jsdoc/src/walker', function() {
     var walker = require('jsdoc/src/walker');
 

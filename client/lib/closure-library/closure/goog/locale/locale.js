@@ -12,51 +12,51 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for dealing with Date formatting & Parsing,
-***REMOVED*** County and language name, TimeZone list.
-***REMOVED*** @suppress {deprecated} Use goog.i18n instead.
-***REMOVED***
+/**
+ * @fileoverview Functions for dealing with Date formatting & Parsing,
+ * County and language name, TimeZone list.
+ * @suppress {deprecated} Use goog.i18n instead.
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for locale related functions.
-***REMOVED***
+/**
+ * Namespace for locale related functions.
+ */
 goog.provide('goog.locale');
 
 goog.require('goog.locale.nativeNameConstants');
 
 
-***REMOVED***
-***REMOVED*** Set currnet locale to the specified one.
-***REMOVED*** @param {string} localeName Locale name string. We are following the usage
-***REMOVED***     in CLDR, but can make a few compromise for existing name compatibility.
-***REMOVED***
+/**
+ * Set currnet locale to the specified one.
+ * @param {string} localeName Locale name string. We are following the usage
+ *     in CLDR, but can make a few compromise for existing name compatibility.
+ */
 goog.locale.setLocale = function(localeName) {
   // it is common to see people use '-' as locale part separator, normalize it.
   localeName = localeName.replace(/-/g, '_');
   goog.locale.activeLocale_ = localeName;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieve the current locale
-***REMOVED*** @return {string} Current locale name string.
-***REMOVED*** @deprecated Use goog.LOCALE and goog.i18n instead.
-***REMOVED***
+/**
+ * Retrieve the current locale
+ * @return {string} Current locale name string.
+ * @deprecated Use goog.LOCALE and goog.i18n instead.
+ */
 goog.locale.getLocale = function() {
   if (!goog.locale.activeLocale_) {
     goog.locale.activeLocale_ = 'en';
   }
   return goog.locale.activeLocale_;
-***REMOVED***
+};
 
 
 // Couple of constants to represent predefined Date/Time format type.
-***REMOVED***
-***REMOVED*** Enum of resources that can be registered.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum of resources that can be registered.
+ * @enum {string}
+ */
 goog.locale.Resource = {
   DATE_TIME_CONSTANTS: 'DateTimeConstants',
   NUMBER_FORMAT_CONSTANTS: 'NumberFormatConstants',
@@ -67,7 +67,7 @@ goog.locale.Resource = {
   TIME_ZONE_SELECTED_SHORT_NAMES: 'TimeZoneSelectedShortNames',
   TIME_ZONE_SELECTED_LONG_NAMES: 'TimeZoneSelectedLongNames',
   TIME_ZONE_ALL_LONG_NAMES: 'TimeZoneAllLongNames'
-***REMOVED***
+};
 
 
 // BCP 47 language code:
@@ -86,89 +86,89 @@ goog.locale.Resource = {
 // you might get an unexpected result.
 
 
-***REMOVED***
-***REMOVED*** Returns the language-subtag of the given language code.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to extract language subtag from.
-***REMOVED*** @return {string} Language subtag (in lowercase).
-***REMOVED***
+/**
+ * Returns the language-subtag of the given language code.
+ *
+ * @param {string} languageCode Language code to extract language subtag from.
+ * @return {string} Language subtag (in lowercase).
+ */
 goog.locale.getLanguageSubTag = function(languageCode) {
   var result = languageCode.match(/^\w{2,3}([-_]|$)/);
   return result ? result[0].replace(/[_-]/g, '') : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the region-sub-tag of the given language code.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to extract region subtag from.
-***REMOVED*** @return {string} Region sub-tag (in uppercase).
-***REMOVED***
+/**
+ * Returns the region-sub-tag of the given language code.
+ *
+ * @param {string} languageCode Language code to extract region subtag from.
+ * @return {string} Region sub-tag (in uppercase).
+ */
 goog.locale.getRegionSubTag = function(languageCode) {
   var result = languageCode.match(/[-_]([a-zA-Z]{2}|\d{3})([-_]|$)/);
   return result ? result[0].replace(/[_-]/g, '') : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the script subtag of the locale with the first alphabet in uppercase
-***REMOVED*** and the rest 3 characters in lower case.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language Code to extract script subtag from.
-***REMOVED*** @return {string} Script subtag.
-***REMOVED***
+/**
+ * Returns the script subtag of the locale with the first alphabet in uppercase
+ * and the rest 3 characters in lower case.
+ *
+ * @param {string} languageCode Language Code to extract script subtag from.
+ * @return {string} Script subtag.
+ */
 goog.locale.getScriptSubTag = function(languageCode) {
   var result = languageCode.split(/[-_]/g);
   return result.length > 1 && result[1].match(/^[a-zA-Z]{4}$/) ?
       result[1] : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the variant-sub-tag of the given language code.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to extract variant subtag from.
-***REMOVED*** @return {string} Variant sub-tag.
-***REMOVED***
+/**
+ * Returns the variant-sub-tag of the given language code.
+ *
+ * @param {string} languageCode Language code to extract variant subtag from.
+ * @return {string} Variant sub-tag.
+ */
 goog.locale.getVariantSubTag = function(languageCode) {
   var result = languageCode.match(/[-_]([a-z]{2,})/);
   return result ? result[1] : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the country name of the provided language code in its native
-***REMOVED*** language.
-***REMOVED***
-***REMOVED*** This method depends on goog.locale.nativeNameConstants available from
-***REMOVED*** nativenameconstants.js. User of this method has to add dependency to this.
-***REMOVED***
-***REMOVED*** @param {string} countryCode Code to lookup the country name for.
-***REMOVED***
-***REMOVED*** @return {string} Country name for the provided language code.
-***REMOVED***
+/**
+ * Returns the country name of the provided language code in its native
+ * language.
+ *
+ * This method depends on goog.locale.nativeNameConstants available from
+ * nativenameconstants.js. User of this method has to add dependency to this.
+ *
+ * @param {string} countryCode Code to lookup the country name for.
+ *
+ * @return {string} Country name for the provided language code.
+ */
 goog.locale.getNativeCountryName = function(countryCode) {
   var key = goog.locale.getLanguageSubTag(countryCode) + '_' +
             goog.locale.getRegionSubTag(countryCode);
   return key in goog.locale.nativeNameConstants['COUNTRY'] ?
       goog.locale.nativeNameConstants['COUNTRY'][key] : countryCode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the localized country name for the provided language code in the
-***REMOVED*** current or provided locale symbols set.
-***REMOVED***
-***REMOVED*** This method depends on goog.locale.LocaleNameConstants__<locale> available
-***REMOVED*** from http://go/js_locale_data. User of this method has to add dependency to
-***REMOVED*** this.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to lookup the country name for.
-***REMOVED*** @param {Object=} opt_localeSymbols If omitted the current locale symbol
-***REMOVED***     set is used.
-***REMOVED***
-***REMOVED*** @return {string} Localized country name.
-***REMOVED***
+/**
+ * Returns the localized country name for the provided language code in the
+ * current or provided locale symbols set.
+ *
+ * This method depends on goog.locale.LocaleNameConstants__<locale> available
+ * from http://go/js_locale_data. User of this method has to add dependency to
+ * this.
+ *
+ * @param {string} languageCode Language code to lookup the country name for.
+ * @param {Object=} opt_localeSymbols If omitted the current locale symbol
+ *     set is used.
+ *
+ * @return {string} Localized country name.
+ */
 goog.locale.getLocalizedCountryName = function(languageCode,
                                                opt_localeSymbols) {
   if (!opt_localeSymbols) {
@@ -178,42 +178,42 @@ goog.locale.getLocalizedCountryName = function(languageCode,
   var code = goog.locale.getRegionSubTag(languageCode);
   return code in opt_localeSymbols['COUNTRY'] ?
       opt_localeSymbols['COUNTRY'][code] : languageCode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the language name of the provided language code in its native
-***REMOVED*** language.
-***REMOVED***
-***REMOVED*** This method depends on goog.locale.nativeNameConstants available from
-***REMOVED*** nativenameconstants.js. User of this method has to add dependency to this.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to lookup the language name for.
-***REMOVED***
-***REMOVED*** @return {string} Language name for the provided language code.
-***REMOVED***
+/**
+ * Returns the language name of the provided language code in its native
+ * language.
+ *
+ * This method depends on goog.locale.nativeNameConstants available from
+ * nativenameconstants.js. User of this method has to add dependency to this.
+ *
+ * @param {string} languageCode Language code to lookup the language name for.
+ *
+ * @return {string} Language name for the provided language code.
+ */
 goog.locale.getNativeLanguageName = function(languageCode) {
   if (languageCode in goog.locale.nativeNameConstants['LANGUAGE'])
     return goog.locale.nativeNameConstants['LANGUAGE'][languageCode];
   var code = goog.locale.getLanguageSubTag(languageCode);
   return code in goog.locale.nativeNameConstants['LANGUAGE'] ?
       goog.locale.nativeNameConstants['LANGUAGE'][code] : languageCode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the localized language name for the provided language code in
-***REMOVED*** the current or provided locale symbols set.
-***REMOVED***
-***REMOVED*** This method depends on goog.locale.LocaleNameConstants__<locale> available
-***REMOVED*** from http://go/js_locale_data. User of this method has to add dependency to
-***REMOVED*** this.
-***REMOVED***
-***REMOVED*** @param {string} languageCode Language code to lookup the language name for.
-***REMOVED*** @param {Object=} opt_localeSymbols locale symbol set if given.
-***REMOVED***
-***REMOVED*** @return {string} Localized language name of the provided language code.
-***REMOVED***
+/**
+ * Returns the localized language name for the provided language code in
+ * the current or provided locale symbols set.
+ *
+ * This method depends on goog.locale.LocaleNameConstants__<locale> available
+ * from http://go/js_locale_data. User of this method has to add dependency to
+ * this.
+ *
+ * @param {string} languageCode Language code to lookup the language name for.
+ * @param {Object=} opt_localeSymbols locale symbol set if given.
+ *
+ * @return {string} Localized language name of the provided language code.
+ */
 goog.locale.getLocalizedLanguageName = function(languageCode,
                                                 opt_localeSymbols) {
   if (!opt_localeSymbols) {
@@ -225,19 +225,19 @@ goog.locale.getLocalizedLanguageName = function(languageCode,
   var code = goog.locale.getLanguageSubTag(languageCode);
   return code in opt_localeSymbols['LANGUAGE'] ?
       opt_localeSymbols['LANGUAGE'][code] : languageCode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Register a resource object for certain locale.
-***REMOVED*** @param {Object} dataObj The resource object being registered.
-***REMOVED*** @param {goog.locale.Resource|string} resourceName String that represents
-***REMOVED***     the type of resource.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Register a resource object for certain locale.
+ * @param {Object} dataObj The resource object being registered.
+ * @param {goog.locale.Resource|string} resourceName String that represents
+ *     the type of resource.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerResource = function(dataObj, resourceName, localeName) {
   if (!goog.locale.resourceRegistry_[resourceName]) {
-    goog.locale.resourceRegistry_[resourceName] = {***REMOVED***
+    goog.locale.resourceRegistry_[resourceName] = {};
   }
   goog.locale.resourceRegistry_[resourceName][localeName] = dataObj;
   // the first registered locale becomes active one. Usually there will be
@@ -245,107 +245,107 @@ goog.locale.registerResource = function(dataObj, resourceName, localeName) {
   if (!goog.locale.activeLocale_) {
     goog.locale.activeLocale_ = localeName;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the required resource has already been registered.
-***REMOVED*** @param {goog.locale.Resource|string} resourceName String that represents
-***REMOVED***     the type of resource.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED*** @return {boolean} Whether the required resource has already been registered.
-***REMOVED***
+/**
+ * Returns true if the required resource has already been registered.
+ * @param {goog.locale.Resource|string} resourceName String that represents
+ *     the type of resource.
+ * @param {string} localeName Locale ID.
+ * @return {boolean} Whether the required resource has already been registered.
+ */
 goog.locale.isResourceRegistered = function(resourceName, localeName) {
   return resourceName in goog.locale.resourceRegistry_ &&
       localeName in goog.locale.resourceRegistry_[resourceName];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This object maps (resourceName, localeName) to a resourceObj.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.locale.resourceRegistry_ = {***REMOVED***
+/**
+ * This object maps (resourceName, localeName) to a resourceObj.
+ * @type {Object}
+ * @private
+ */
+goog.locale.resourceRegistry_ = {};
 
 
-***REMOVED***
-***REMOVED*** Registers the timezone constants object for a given locale name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED*** @deprecated Use goog.i18n.TimeZone, no longer need this.
-***REMOVED***
+/**
+ * Registers the timezone constants object for a given locale name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ * @deprecated Use goog.i18n.TimeZone, no longer need this.
+ */
 goog.locale.registerTimeZoneConstants = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.TIME_ZONE_CONSTANTS, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the LocaleNameConstants constants object for a given locale name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Registers the LocaleNameConstants constants object for a given locale name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerLocaleNameConstants = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.LOCAL_NAME_CONSTANTS, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the TimeZoneSelectedIds constants object for a given locale name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Registers the TimeZoneSelectedIds constants object for a given locale name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerTimeZoneSelectedIds = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.TIME_ZONE_SELECTED_IDS, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the TimeZoneSelectedShortNames constants object for a given
-***REMOVED***     locale name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Registers the TimeZoneSelectedShortNames constants object for a given
+ *     locale name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerTimeZoneSelectedShortNames = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.TIME_ZONE_SELECTED_SHORT_NAMES, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the TimeZoneSelectedLongNames constants object for a given locale
-***REMOVED***     name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Registers the TimeZoneSelectedLongNames constants object for a given locale
+ *     name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerTimeZoneSelectedLongNames = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.TIME_ZONE_SELECTED_LONG_NAMES, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the TimeZoneAllLongNames constants object for a given locale name.
-***REMOVED*** @param {Object} dataObj The resource object.
-***REMOVED*** @param {string} localeName Locale ID.
-***REMOVED***
+/**
+ * Registers the TimeZoneAllLongNames constants object for a given locale name.
+ * @param {Object} dataObj The resource object.
+ * @param {string} localeName Locale ID.
+ */
 goog.locale.registerTimeZoneAllLongNames = function(dataObj, localeName) {
   goog.locale.registerResource(
       dataObj, goog.locale.Resource.TIME_ZONE_ALL_LONG_NAMES, localeName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieve specified resource for certain locale.
-***REMOVED*** @param {string} resourceName String that represents the type of resource.
-***REMOVED*** @param {string=} opt_locale Locale ID, if not given, current locale
-***REMOVED***     will be assumed.
-***REMOVED*** @return {Object|undefined} The resource object that hold all the resource
-***REMOVED***     data, or undefined if not available.
-***REMOVED***
+/**
+ * Retrieve specified resource for certain locale.
+ * @param {string} resourceName String that represents the type of resource.
+ * @param {string=} opt_locale Locale ID, if not given, current locale
+ *     will be assumed.
+ * @return {Object|undefined} The resource object that hold all the resource
+ *     data, or undefined if not available.
+ */
 goog.locale.getResource = function(resourceName, opt_locale) {
   var locale = opt_locale ? opt_locale : goog.locale.getLocale();
 
@@ -353,20 +353,20 @@ goog.locale.getResource = function(resourceName, opt_locale) {
     return undefined;
   }
   return goog.locale.resourceRegistry_[resourceName][locale];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieve specified resource for certain locale with fallback. For example,
-***REMOVED*** request of 'zh_CN' will be resolved in following order: zh_CN, zh, en.
-***REMOVED*** If none of the above succeeds, of if the resource as indicated by
-***REMOVED*** resourceName does not exist at all, undefined will be returned.
-***REMOVED***
-***REMOVED*** @param {string} resourceName String that represents the type of resource.
-***REMOVED*** @param {string=} opt_locale locale ID, if not given, current locale
-***REMOVED***     will be assumed.
-***REMOVED*** @return {Object|undefined} The resource object for desired locale.
-***REMOVED***
+/**
+ * Retrieve specified resource for certain locale with fallback. For example,
+ * request of 'zh_CN' will be resolved in following order: zh_CN, zh, en.
+ * If none of the above succeeds, of if the resource as indicated by
+ * resourceName does not exist at all, undefined will be returned.
+ *
+ * @param {string} resourceName String that represents the type of resource.
+ * @param {string=} opt_locale locale ID, if not given, current locale
+ *     will be assumed.
+ * @return {Object|undefined} The resource object for desired locale.
+ */
 goog.locale.getResourceWithFallback = function(resourceName, opt_locale) {
   var locale = opt_locale ? opt_locale : goog.locale.getLocale();
 
@@ -387,7 +387,7 @@ goog.locale.getResourceWithFallback = function(resourceName, opt_locale) {
 
   // otherwise, fallback to 'en'
   return goog.locale.resourceRegistry_[resourceName]['en'];
-***REMOVED***
+};
 
 
 // Export global functions that are used by the date time constants files.

@@ -48,7 +48,7 @@ function createRandomFloat32Array(length) {
 function createRandomIndexArray(length) {
   var array = [];
   for (var i = 0; i < length; i++) {
-    array[i] = Math.floor(Math.random()***REMOVED*** length);
+    array[i] = Math.floor(Math.random() * length);
     array[i] = Math.min(length - 1, array[i]);
   }
   return array;
@@ -80,33 +80,33 @@ function createRandomMat4Array(length) {
   return m;
 }
 
-***REMOVED***
-***REMOVED*** Vec4Object is a 4-vector object with x,y,z,w components.
-***REMOVED*** @param {number} x The x component.
-***REMOVED*** @param {number} y The y component.
-***REMOVED*** @param {number} z The z component.
-***REMOVED*** @param {number} w The w component.
-***REMOVED***
-***REMOVED***
+/**
+ * Vec4Object is a 4-vector object with x,y,z,w components.
+ * @param {number} x The x component.
+ * @param {number} y The y component.
+ * @param {number} z The z component.
+ * @param {number} w The w component.
+ * @constructor
+ */
 Vec4Object = function(x, y, z, w) {
   this.x = x;
   this.y = y;
   this.z = z;
   this.w = w;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Add two vectors.
-***REMOVED*** @param {Vec4Object} v0 A vector.
-***REMOVED*** @param {Vec4Object} v1 Another vector.
-***REMOVED*** @param {Vec4Object} r The result.
-***REMOVED***
+/**
+ * Add two vectors.
+ * @param {Vec4Object} v0 A vector.
+ * @param {Vec4Object} v1 Another vector.
+ * @param {Vec4Object} r The result.
+ */
 Vec4Object.add = function(v0, v1, r) {
   r.x = v0.x + v1.x;
   r.y = v0.y + v1.y;
   r.z = v0.z + v1.z;
   r.w = v0.w + v1.w;
-***REMOVED***
+};
 
 function createRandomVec4ObjectArray(length) {
   var a = [];
@@ -131,13 +131,13 @@ function setArrayFromVec4(a, o, v) {
   a[o + 3] = v[3];
 }
 
-***REMOVED***
-***REMOVED*** This is the same as goog.vec.Vec4.add().  Use this to avoid namespace lookup
-***REMOVED*** overheads.
-***REMOVED*** @param {goog.vec.Vec4.Vec4Like} v0 A vector.
-***REMOVED*** @param {goog.vec.Vec4.Vec4Like} v1 Another vector.
-***REMOVED*** @param {goog.vec.Vec4.Vec4Like} r The result.
-***REMOVED***
+/**
+ * This is the same as goog.vec.Vec4.add().  Use this to avoid namespace lookup
+ * overheads.
+ * @param {goog.vec.Vec4.Vec4Like} v0 A vector.
+ * @param {goog.vec.Vec4.Vec4Like} v1 Another vector.
+ * @param {goog.vec.Vec4.Vec4Like} r The result.
+ */
 function addVec4(v0, v1, r) {
   r[0] = v0[0] + v1[0];
   r[1] = v0[1] + v1[1];
@@ -169,21 +169,21 @@ function addVec4ByOptionalOffset(v0, v1, r, opt_v0Off, opt_v1Off, opt_rOff) {
 function mat4MultVec4ByOffset(mBuf, mOff, vBuf, vOff, rBuf, rOff) {
   var x = vBuf[vOff + 0], y = vBuf[vOff + 1],
       z = vBuf[vOff + 2], w = vBuf[vOff + 3];
-  rBuf[rOff + 0] = x***REMOVED*** mBuf[mOff + 0] + y***REMOVED*** mBuf[mOff + 4] +
-      z***REMOVED*** mBuf[mOff + 8] + w***REMOVED*** mBuf[mOff + 12];
-  rBuf[rOff + 1] = x***REMOVED*** mBuf[mOff + 1] + y***REMOVED*** mBuf[mOff + 5] +
-      z***REMOVED*** mBuf[mOff + 9] + w***REMOVED*** mBuf[mOff + 13];
-  rBuf[rOff + 2] = x***REMOVED*** mBuf[mOff + 2] + y***REMOVED*** mBuf[mOff + 6] +
-      z***REMOVED*** mBuf[mOff + 10] + w***REMOVED*** mBuf[mOff + 14];
-  rBuf[rOff + 3] = x***REMOVED*** mBuf[mOff + 3] + y***REMOVED*** mBuf[mOff + 7] +
-      z***REMOVED*** mBuf[mOff + 11] + w***REMOVED*** mBuf[mOff + 15];
+  rBuf[rOff + 0] = x * mBuf[mOff + 0] + y * mBuf[mOff + 4] +
+      z * mBuf[mOff + 8] + w * mBuf[mOff + 12];
+  rBuf[rOff + 1] = x * mBuf[mOff + 1] + y * mBuf[mOff + 5] +
+      z * mBuf[mOff + 9] + w * mBuf[mOff + 13];
+  rBuf[rOff + 2] = x * mBuf[mOff + 2] + y * mBuf[mOff + 6] +
+      z * mBuf[mOff + 10] + w * mBuf[mOff + 14];
+  rBuf[rOff + 3] = x * mBuf[mOff + 3] + y * mBuf[mOff + 7] +
+      z * mBuf[mOff + 11] + w * mBuf[mOff + 15];
 }
 
 var NUM_ITERATIONS = 200000;
 
 function testAddVec4ByOffset() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -191,7 +191,7 @@ function testAddVec4ByOffset() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          addVec4ByOffset(a0, i***REMOVED*** 4, a1, i***REMOVED*** 4, a2, i***REMOVED*** 4);
+          addVec4ByOffset(a0, i * 4, a1, i * 4, a2, i * 4);
         }
       },
       'Add vectors using offsets');
@@ -199,7 +199,7 @@ function testAddVec4ByOffset() {
 
 function testAddVec4ByOptionalOffset() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -207,16 +207,16 @@ function testAddVec4ByOptionalOffset() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          addVec4ByOptionalOffset(a0, a1, a2, i***REMOVED*** 4, i***REMOVED*** 4, i***REMOVED*** 4);
+          addVec4ByOptionalOffset(a0, a1, a2, i * 4, i * 4, i * 4);
         }
       },
       'Add vectors with optional offsets (requires branch)');
 }
 
-***REMOVED***
-***REMOVED*** Check the overhead of using an array of individual
-***REMOVED*** Vec4s (Float32Arrays of length 4).
-***REMOVED***
+/**
+ * Check the overhead of using an array of individual
+ * Vec4s (Float32Arrays of length 4).
+ */
 function testAddVec4ByVec4s() {
   var nVecs = NUM_ITERATIONS;
   var a0 = createRandomVec4Array(nVecs);
@@ -234,7 +234,7 @@ function testAddVec4ByVec4s() {
 
 function testAddVec4ByTmp() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -244,19 +244,19 @@ function testAddVec4ByTmp() {
         var t0 = new Float32Array(4);
         var t1 = new Float32Array(4);
         for (var i = 0; i < nVecs; i++) {
-          setVec4FromArray(t0, a0, i***REMOVED*** 4);
-          setVec4FromArray(t1, a1, i***REMOVED*** 4);
+          setVec4FromArray(t0, a0, i * 4);
+          setVec4FromArray(t1, a1, i * 4);
           addVec4(t0, t1, t0);
-          setArrayFromVec4(a2, i***REMOVED*** 4, t0);
+          setArrayFromVec4(a2, i * 4, t0);
         }
       },
       'Add vectors using tmps');
 }
 
-***REMOVED***
-***REMOVED*** Check the overhead of using an array of Objects with the implicit hash
-***REMOVED*** lookups for the x,y,z,w components.
-***REMOVED***
+/**
+ * Check the overhead of using an array of Objects with the implicit hash
+ * lookups for the x,y,z,w components.
+ */
 function testAddVec4ByObjects() {
   var nVecs = NUM_ITERATIONS;
   var a0 = createRandomVec4ObjectArray(nVecs);
@@ -275,7 +275,7 @@ function testAddVec4ByObjects() {
 
 function testAddVec4BySubarray() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -283,9 +283,9 @@ function testAddVec4BySubarray() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          var t0 = a0.subarray(i***REMOVED*** 4***REMOVED*** 4);
-          var t1 = a1.subarray(i***REMOVED*** 4***REMOVED*** 4);
-          var t2 = a2.subarray(i***REMOVED*** 4***REMOVED*** 4);
+          var t0 = a0.subarray(i * 4 * 4);
+          var t1 = a1.subarray(i * 4 * 4);
+          var t2 = a2.subarray(i * 4 * 4);
           addVec4(t0, t1, t2);
         }
       },
@@ -294,7 +294,7 @@ function testAddVec4BySubarray() {
 
 function testAddVec4ByView() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -302,9 +302,9 @@ function testAddVec4ByView() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          var t0 = new Float32Array(a0.buffer, i***REMOVED*** 4***REMOVED*** 4);
-          var t1 = new Float32Array(a1.buffer, i***REMOVED*** 4***REMOVED*** 4);
-          var t2 = new Float32Array(a2.buffer, i***REMOVED*** 4***REMOVED*** 4);
+          var t0 = new Float32Array(a0.buffer, i * 4 * 4);
+          var t1 = new Float32Array(a1.buffer, i * 4 * 4);
+          var t2 = new Float32Array(a2.buffer, i * 4 * 4);
           addVec4(t0, t1, t2);
         }
       },
@@ -313,8 +313,8 @@ function testAddVec4ByView() {
 
 function testMat4MultVec4ByOffset() {
   var nVecs = NUM_ITERATIONS;
-  var nVecVals = nVecs***REMOVED*** 4;
-  var nMatVals = nVecs***REMOVED*** 16;
+  var nVecVals = nVecs * 4;
+  var nMatVals = nVecs * 16;
   var m = createRandomFloat32Array(nMatVals);
   var a0 = createRandomFloat32Array(nVecVals);
   var a1 = new Float32Array(nVecVals);
@@ -322,16 +322,16 @@ function testMat4MultVec4ByOffset() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          mat4MultVec4ByOffset(m, i***REMOVED*** 16, a0, i***REMOVED*** 4, a1, i***REMOVED*** 4);
+          mat4MultVec4ByOffset(m, i * 16, a0, i * 4, a1, i * 4);
         }
       },
-      'vec4 = mat4***REMOVED*** vec4 using offsets.');
+      'vec4 = mat4 * vec4 using offsets.');
 }
 
-***REMOVED***
-***REMOVED*** Check the overhead of using an array of individual
-***REMOVED*** Vec4s (Float32Arrays of length 4).
-***REMOVED***
+/**
+ * Check the overhead of using an array of individual
+ * Vec4s (Float32Arrays of length 4).
+ */
 function testMat4MultVec4ByVec4s() {
   var nVecs = NUM_ITERATIONS;
   var a0 = createRandomVec4Array(nVecs);
@@ -344,14 +344,14 @@ function testMat4MultVec4ByVec4s() {
           goog.vec.Mat4.multVec4(m[i], a0[i], a1[i]);
         }
       },
-      'vec4 = mat4***REMOVED*** vec4  using arrays of Vec4s and Mat4s');
+      'vec4 = mat4 * vec4  using arrays of Vec4s and Mat4s');
 }
 
-***REMOVED***
-***REMOVED*** Do 10x as many for the one vector tests.
-***REMOVED*** @type {number}
-***REMOVED***
-var NUM_ONE_ITERATIONS = NUM_ITERATIONS***REMOVED*** 10;
+/**
+ * Do 10x as many for the one vector tests.
+ * @type {number}
+ */
+var NUM_ONE_ITERATIONS = NUM_ITERATIONS * 10;
 
 function testAddOneVec4ByOffset() {
   var a0 = createRandomFloat32Array(4);
@@ -397,7 +397,7 @@ function testAddOneVec4ByOptionalOffset() {
 
 function testAddRandomVec4ByOffset() {
   var nVecs = NUM_ITERATIONS;
-  var nVals = nVecs***REMOVED*** 4;
+  var nVals = nVecs * 4;
   var a0 = createRandomFloat32Array(nVals);
   var a1 = createRandomFloat32Array(nVals);
   var a2 = new Float32Array(nVals);
@@ -408,7 +408,7 @@ function testAddRandomVec4ByOffset() {
   table.run(
       function() {
         for (var i = 0; i < nVecs; i++) {
-          addVec4ByOffset(a0, i0[i]***REMOVED*** 4, a1, i1[i]***REMOVED*** 4, a2, i2[i]***REMOVED*** 4);
+          addVec4ByOffset(a0, i0[i] * 4, a1, i1[i] * 4, a2, i2[i] * 4);
         }
       },
       'Add random vectors using offsets');

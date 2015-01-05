@@ -20,10 +20,10 @@ goog.require('goog.structs.AvlTree');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert strings into the AvlTree and have
-***REMOVED*** them be stored and sorted correctly by the default comparator.
-***REMOVED***
+/**
+ * This test verifies that we can insert strings into the AvlTree and have
+ * them be stored and sorted correctly by the default comparator.
+ */
 function testInsertsWithDefaultComparator() {
   var tree = new goog.structs.AvlTree();
   var values = ['bill', 'blake', 'elliot', 'jacob', 'john', 'myles', 'ted'];
@@ -67,11 +67,11 @@ function testInsertsWithDefaultComparator() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert strings into and remove strings from
-***REMOVED*** the AvlTree and have the only the non-removed values be stored and sorted
-***REMOVED*** correctly by the default comparator.
-***REMOVED***
+/**
+ * This test verifies that we can insert strings into and remove strings from
+ * the AvlTree and have the only the non-removed values be stored and sorted
+ * correctly by the default comparator.
+ */
 function testRemovesWithDefaultComparator() {
   var tree = new goog.structs.AvlTree();
   var values = ['bill', 'blake', 'elliot', 'jacob', 'john', 'myles', 'ted'];
@@ -105,11 +105,11 @@ function testRemovesWithDefaultComparator() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and have them be stored and sorted correctly by a custom
-***REMOVED*** comparator.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and have them be stored and sorted correctly by a custom
+ * comparator.
+ */
 function testInsertsAndRemovesWithCustomComparator() {
   var tree = new goog.structs.AvlTree(function(a, b) {
     return a - b;
@@ -142,10 +142,10 @@ function testInsertsAndRemovesWithCustomComparator() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and have it maintain the AVL-Tree upperbound on its height.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and have it maintain the AVL-Tree upperbound on its height.
+ */
 function testAvlTreeHeight() {
   var tree = new goog.structs.AvlTree(function(a, b) {
     return a - b;
@@ -164,16 +164,16 @@ function testAvlTreeHeight() {
     tree.remove(i);
   }
 
-  assertTrue(tree.getHeight() <= 1.4405***REMOVED***
+  assertTrue(tree.getHeight() <= 1.4405 *
       (Math.log(NUM_TO_INSERT - NUM_TO_REMOVE + 2) / Math.log(2)) - 1.3277);
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and have its contains method correctly determine the values it
-***REMOVED*** is contains.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and have its contains method correctly determine the values it
+ * is contains.
+ */
 function testAvlTreeContains() {
   var tree = new goog.structs.AvlTree();
   var values = ['bill', 'blake', 'elliot', 'jacob', 'john', 'myles', 'ted'];
@@ -204,11 +204,11 @@ function testAvlTreeContains() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and have its indexOf method correctly determine the in-order
-***REMOVED*** index of the values it contains.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and have its indexOf method correctly determine the in-order
+ * index of the values it contains.
+ */
 function testAvlTreeIndexOf() {
   var tree = new goog.structs.AvlTree();
   var values = ['bill', 'blake', 'elliot', 'jacob', 'john', 'myles', 'ted'];
@@ -239,11 +239,11 @@ function testAvlTreeIndexOf() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and have its minValue and maxValue routines return the correct
-***REMOVED*** min and max values contained by the tree.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and have its minValue and maxValue routines return the correct
+ * min and max values contained by the tree.
+ */
 function testMinAndMaxValues() {
   var tree = new goog.structs.AvlTree(function(a, b) {
     return a - b;
@@ -267,11 +267,11 @@ function testMinAndMaxValues() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that we can insert values into and remove values from
-***REMOVED*** the AvlTree and traverse the tree in reverse order using the
-***REMOVED*** reverseOrderTraverse routine.
-***REMOVED***
+/**
+ * This test verifies that we can insert values into and remove values from
+ * the AvlTree and traverse the tree in reverse order using the
+ * reverseOrderTraverse routine.
+ */
 function testReverseOrderTraverse() {
   var tree = new goog.structs.AvlTree(function(a, b) {
     return a - b;
@@ -299,9 +299,9 @@ function testReverseOrderTraverse() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies correct behavior of getCount(). See http://b/4347755
-***REMOVED***
+/**
+ * Verifies correct behavior of getCount(). See http://b/4347755
+ */
 function testGetCountBehavior() {
   var tree = new goog.structs.AvlTree();
   tree.add(1);
@@ -337,9 +337,9 @@ function testGetCountBehavior() {
 }
 
 
-***REMOVED***
-***REMOVED*** This test verifies that getKthOrder gets the correct value.
-***REMOVED***
+/**
+ * This test verifies that getKthOrder gets the correct value.
+ */
 function testGetKthOrder() {
   var tree = new goog.structs.AvlTree(function(a, b) {
     return a - b;

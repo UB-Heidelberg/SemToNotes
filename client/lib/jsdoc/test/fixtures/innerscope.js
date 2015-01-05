@@ -1,17 +1,17 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Message(to) {
 
     var headers = {},
         response;
 
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     headers.to = to;
 
     (function() {
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         response.code = '200';
 
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         headers.from = '';
     })()
 }

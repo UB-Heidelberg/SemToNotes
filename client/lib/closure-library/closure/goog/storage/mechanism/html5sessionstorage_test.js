@@ -16,9 +16,9 @@ goog.provide('goog.storage.mechanism.HTML5SessionStorageTest');
 goog.setTestOnly('goog.storage.mechanism.HTML5SessionStorageTest');
 
 goog.require('goog.storage.mechanism.HTML5SessionStorage');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSeparationTester');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSharingTester');
 goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
@@ -28,7 +28,7 @@ function setUp() {
   if (sessionStorage.isAvailable()) {
     mechanism = sessionStorage;
     // There should be at least 2 MiB.
-    minimumQuota = 2***REMOVED*** 1024***REMOVED*** 1024;
+    minimumQuota = 2 * 1024 * 1024;
     mechanism_shared = new goog.storage.mechanism.HTML5SessionStorage();
   }
 }

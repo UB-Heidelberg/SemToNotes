@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match a tag and all of its children.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match a tag and all of its children.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.Repeat');
 
@@ -26,18 +26,18 @@ goog.require('goog.dom.pattern.MatchType');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches a repetition of another pattern.
-***REMOVED*** @param {goog.dom.pattern.AbstractPattern} pattern The pattern to
-***REMOVED***     repetitively match.
-***REMOVED*** @param {number=} opt_minimum The minimum number of times to match.  Defaults
-***REMOVED***     to 0.
-***REMOVED*** @param {number=} opt_maximum The maximum number of times to match.  Defaults
-***REMOVED***     to unlimited.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.AbstractPattern}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Pattern object that matches a repetition of another pattern.
+ * @param {goog.dom.pattern.AbstractPattern} pattern The pattern to
+ *     repetitively match.
+ * @param {number=} opt_minimum The minimum number of times to match.  Defaults
+ *     to 0.
+ * @param {number=} opt_maximum The maximum number of times to match.  Defaults
+ *     to unlimited.
+ * @constructor
+ * @extends {goog.dom.pattern.AbstractPattern}
+ * @final
+ */
 goog.dom.pattern.Repeat = function(pattern,
                                    opt_minimum,
                                    opt_maximum) {
@@ -45,76 +45,76 @@ goog.dom.pattern.Repeat = function(pattern,
   this.minimum_ = opt_minimum || 0;
   this.maximum_ = opt_maximum || null;
   this.matches = [];
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.Repeat, goog.dom.pattern.AbstractPattern);
 
 
-***REMOVED***
-***REMOVED*** Pattern to repetitively match.
-***REMOVED***
-***REMOVED*** @type {goog.dom.pattern.AbstractPattern}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Pattern to repetitively match.
+ *
+ * @type {goog.dom.pattern.AbstractPattern}
+ * @private
+ */
 goog.dom.pattern.Repeat.prototype.pattern_;
 
 
-***REMOVED***
-***REMOVED*** Minimum number of times to match the pattern.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Minimum number of times to match the pattern.
+ *
+ * @private
+ */
 goog.dom.pattern.Repeat.prototype.minimum_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Optional maximum number of times to match the pattern.  A {@code null} value
-***REMOVED*** will be treated as infinity.
-***REMOVED***
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Optional maximum number of times to match the pattern.  A {@code null} value
+ * will be treated as infinity.
+ *
+ * @type {?number}
+ * @private
+ */
 goog.dom.pattern.Repeat.prototype.maximum_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Number of times the pattern has matched.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Number of times the pattern has matched.
+ *
+ * @type {number}
+ */
 goog.dom.pattern.Repeat.prototype.count = 0;
 
 
-***REMOVED***
-***REMOVED*** Whether the pattern has recently matched or failed to match and will need to
-***REMOVED*** be reset when starting a new round of matches.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the pattern has recently matched or failed to match and will need to
+ * be reset when starting a new round of matches.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.dom.pattern.Repeat.prototype.needsReset_ = false;
 
 
-***REMOVED***
-***REMOVED*** The matched nodes.
-***REMOVED***
-***REMOVED*** @type {Array.<Node>}
-***REMOVED***
+/**
+ * The matched nodes.
+ *
+ * @type {Array.<Node>}
+ */
 goog.dom.pattern.Repeat.prototype.matches;
 
 
-***REMOVED***
-***REMOVED*** Test whether the given token continues a repeated series of matches of the
-***REMOVED*** pattern given in the constructor.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} <code>MATCH</code> if the pattern
-***REMOVED***     matches, <code>BACKTRACK_MATCH</code> if the pattern does not match
-***REMOVED***     but already had accumulated matches, <code>MATCHING</code> if the pattern
-***REMOVED***     starts a match, and <code>NO_MATCH</code> if the pattern does not match.
-***REMOVED*** @suppress {missingProperties} See the broken line below.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Test whether the given token continues a repeated series of matches of the
+ * pattern given in the constructor.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} <code>MATCH</code> if the pattern
+ *     matches, <code>BACKTRACK_MATCH</code> if the pattern does not match
+ *     but already had accumulated matches, <code>MATCHING</code> if the pattern
+ *     starts a match, and <code>NO_MATCH</code> if the pattern does not match.
+ * @suppress {missingProperties} See the broken line below.
+ * @override
+ */
 goog.dom.pattern.Repeat.prototype.matchToken = function(token, type) {
   // Reset if we're starting a new match
   if (this.needsReset_) {
@@ -176,16 +176,16 @@ goog.dom.pattern.Repeat.prototype.matchToken = function(token, type) {
         return goog.dom.pattern.MatchType.NO_MATCH;
       }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset any internal state this pattern keeps.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Reset any internal state this pattern keeps.
+ * @override
+ */
 goog.dom.pattern.Repeat.prototype.reset = function() {
   this.pattern_.reset();
   this.count = 0;
   this.needsReset_ = false;
   this.matches.length = 0;
-***REMOVED***
+};

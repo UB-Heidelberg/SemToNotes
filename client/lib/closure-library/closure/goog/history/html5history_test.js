@@ -30,7 +30,7 @@ function setUp() {
 
   mockWindow = {
     location: {}
- ***REMOVED*****REMOVED***
+  };
   mockWindow.attachEvent = mockControl.createFunctionMock();
   mockWindow.attachEvent(
       goog.testing.mockmatchers.ignoreArgument,

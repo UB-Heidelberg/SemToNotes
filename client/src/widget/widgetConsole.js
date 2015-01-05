@@ -1,15 +1,15 @@
-***REMOVED***
-***REMOVED*** @fileoverview Class implements an XML console to pretty
-***REMOVED***     print XML instances in the browser.
-***REMOVED***
+/**
+ * @fileoverview Class implements an XML console to pretty
+ *     print XML instances in the browser.
+ */
 
 goog.provide('xrx.widget.Console');
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.string');
 goog.require('goog.style');
-***REMOVED***
+goog.require('xrx.xml.Indent');
 goog.require('xrx.xml.Serialize');
 goog.require('xrx.token.Tokens');
 goog.require('xrx.mvc');
@@ -18,50 +18,50 @@ goog.require('xrx.mvc.Cursor');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.widget.Console = function(element) {
 
   this.tabSize_ = 2;
 
   this.maxLines_ = 50;
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.widget.Console, xrx.mvc.ComponentView);
 xrx.mvc.registerComponent('xrx-widget-console', xrx.widget.Console);
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
-xrx.widget.Console.prototype.createDom = function() {***REMOVED***
+/**
+ *
+ */
+xrx.widget.Console.prototype.createDom = function() {};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.widget.Console.prototype.getValue = function() {
   return goog.dom.getTextContent(this.element_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.widget.Console.prototype.mvcRemove = function() {
   goog.dom.setTextContent(this.element_, '');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.widget.Console.prototype.mvcRefresh = function() {
   var node = this.getNode();
   var type = node ? node.getType() : undefined;
@@ -73,4 +73,4 @@ xrx.widget.Console.prototype.mvcRefresh = function() {
   } else {
     goog.dom.setTextContent(this.element_, node.getXml());
   }
-***REMOVED***
+};

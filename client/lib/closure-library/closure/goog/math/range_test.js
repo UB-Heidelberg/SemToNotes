@@ -19,11 +19,11 @@ goog.require('goog.math.Range');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Produce legible assertion results. If two ranges are not equal, the error
-***REMOVED*** message will be of the form
-***REMOVED*** "Expected <[1, 2]> (Object) but was <[3, 4]> (Object)"
-***REMOVED***
+/**
+ * Produce legible assertion results. If two ranges are not equal, the error
+ * message will be of the form
+ * "Expected <[1, 2]> (Object) but was <[3, 4]> (Object)"
+ */
 function assertRangesEqual(expected, actual) {
   if (!goog.math.Range.equals(expected, actual)) {
     assertEquals(expected, actual);

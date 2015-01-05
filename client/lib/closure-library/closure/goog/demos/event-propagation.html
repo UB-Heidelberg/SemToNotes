@@ -10,7 +10,7 @@ See the COPYING file for details.
 <title>goog.events</title>
 <script src="../base.js"></script>
 <script>
-***REMOVED***
+goog.require('goog.events');
 </script>
 <link rel="stylesheet" href="css/demo.css">
 <style>
@@ -135,13 +135,13 @@ function doLoad() {
   for (var i = 0; i < lis.length; i++) {
     //lis[i].addEventListener('mousedown', handleCapture, true);
     //lis[i].addEventListener('mousedown', handleBubble, false);
-  ***REMOVED***lis[i], 'mousedown', handleCapture, true);
-  ***REMOVED***lis[i], 'mousedown', handleBubble, false);
+    goog.events.listen(lis[i], 'mousedown', handleCapture, true);
+    goog.events.listen(lis[i], 'mousedown', handleBubble, false);
   }
   log('Finished adding handlers');
 
 
-***REMOVED***document.getElementById('log'),
+  goog.events.listen(document.getElementById('log'),
     'dblclick', function() { this.value = ''; });
 }
 

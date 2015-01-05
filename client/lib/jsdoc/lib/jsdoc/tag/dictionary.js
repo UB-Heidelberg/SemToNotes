@@ -1,21 +1,21 @@
-***REMOVED***
+/**
     @overview
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
-var _tags = {***REMOVED***
-var _tagSynonyms = {***REMOVED***
+var _tags = {};
+var _tagSynonyms = {};
 var _namespaces = [];
 var dictionary;
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 function TagDefinition(title, etc) {
-  ***REMOVED***
-    etc = etc || {***REMOVED***
+    var self = this;
+    etc = etc || {};
 
     this.title = dictionary.normalise(title);
 
@@ -24,15 +24,15 @@ function TagDefinition(title, etc) {
     });
 }
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 TagDefinition.prototype.synonym = function(synonymName) {
     _tagSynonyms[synonymName.toLowerCase()] = this.title;
     return this; // chainable
-***REMOVED***
+};
 
-***REMOVED*** @exports jsdoc/tag/dictionary***REMOVED***
+/** @exports jsdoc/tag/dictionary */
 dictionary = {
-   ***REMOVED*****REMOVED*** @function***REMOVED***
+    /** @function */
     defineTag: function(title, opts) {
         var def = new TagDefinition(title, opts);
         // all the other dictionary functions use normalised names; we should too.
@@ -45,7 +45,7 @@ dictionary = {
         return _tags[def.title];
     },
 
-   ***REMOVED*****REMOVED*** @function***REMOVED***
+    /** @function */
     lookUp: function(title) {
         title = dictionary.normalise(title);
 
@@ -56,7 +56,7 @@ dictionary = {
         return false;
     },
 
-   ***REMOVED*****REMOVED*** @function***REMOVED***
+    /** @function */
     isNamespace: function(kind) {
         if (kind) {
             kind = dictionary.normalise(kind);
@@ -68,7 +68,7 @@ dictionary = {
         return false;
     },
 
-   ***REMOVED*****REMOVED*** @function***REMOVED***
+    /** @function */
     normalise: function(title) {
         var canonicalName = title.toLowerCase();
 
@@ -78,7 +78,7 @@ dictionary = {
 
         return canonicalName;
     }
-***REMOVED***
+};
 
 require('jsdoc/tag/dictionary/definitions').defineTags(dictionary);
 

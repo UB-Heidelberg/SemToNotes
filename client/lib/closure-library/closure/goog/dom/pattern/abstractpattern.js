@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern base class.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern base class.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.AbstractPattern');
 
@@ -24,37 +24,37 @@ goog.require('goog.dom.pattern.MatchType');
 
 
 
-***REMOVED***
-***REMOVED*** Base pattern class for DOM matching.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * Base pattern class for DOM matching.
+ *
+ * @constructor
+ */
 goog.dom.pattern.AbstractPattern = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The first node matched by this pattern.
-***REMOVED*** @type {Node}
-***REMOVED***
+/**
+ * The first node matched by this pattern.
+ * @type {Node}
+ */
 goog.dom.pattern.AbstractPattern.prototype.matchedNode = null;
 
 
-***REMOVED***
-***REMOVED*** Reset any internal state this pattern keeps.
-***REMOVED***
+/**
+ * Reset any internal state this pattern keeps.
+ */
 goog.dom.pattern.AbstractPattern.prototype.reset = function() {
   // The base implementation does nothing.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test whether this pattern matches the given token.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} {@code MATCH} if the pattern matches.
-***REMOVED***
+/**
+ * Test whether this pattern matches the given token.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} {@code MATCH} if the pattern matches.
+ */
 goog.dom.pattern.AbstractPattern.prototype.matchToken = function(token, type) {
   return goog.dom.pattern.MatchType.NO_MATCH;
-***REMOVED***
+};

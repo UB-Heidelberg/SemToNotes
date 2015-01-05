@@ -34,7 +34,7 @@ function setUp() {
   debugConsole = new goog.debug.Console();
 
   // Set up a recorder for mockConsole.log
-  mockConsole = { log: goog.testing.recordFunction()***REMOVED*****REMOVED***
+  mockConsole = { log: goog.testing.recordFunction() };
   goog.debug.Console.console_ = mockConsole;
 
   // Test logger 1.
@@ -150,7 +150,7 @@ function testAddLogRecordWithAddAndRemoveFilter() {
 }
 
 function testSetConsole() {
-  var fakeConsole = {log: goog.testing.recordFunction()***REMOVED***
+  var fakeConsole = {log: goog.testing.recordFunction()};
 
   logAtLevel(goog.debug.Logger.Level.INFO, 'test message 1');
   logAtAllLevels('test message 1');
@@ -163,10 +163,10 @@ function testSetConsole() {
 }
 
 
-***REMOVED***
-***REMOVED*** Logs the message at all log levels.
-***REMOVED*** @param {string} message The message to log.
-***REMOVED***
+/**
+ * Logs the message at all log levels.
+ * @param {string} message The message to log.
+ */
 function logAtAllLevels(message) {
   logAtLevel(goog.debug.Logger.Level.SHOUT, message);
   logAtLevel(goog.debug.Logger.Level.SEVERE, message);
@@ -180,11 +180,11 @@ function logAtAllLevels(message) {
 }
 
 
-***REMOVED***
-***REMOVED*** Adds a log record to the debug console.
-***REMOVED*** @param {!goog.debug.Logger.Level} level The level at which to log.
-***REMOVED*** @param {string} message The message to log.
-***REMOVED***
+/**
+ * Adds a log record to the debug console.
+ * @param {!goog.debug.Logger.Level} level The level at which to log.
+ * @param {string} message The message to log.
+ */
 function logAtLevel(level, message) {
   debugConsole.addLogRecord(
       new goog.debug.LogRecord(level, message, loggerName1));

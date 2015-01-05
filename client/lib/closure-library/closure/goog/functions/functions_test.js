@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.functions.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.functions.
+ */
 
 goog.provide('goog.functionsTest');
 goog.setTestOnly('goog.functionsTest');
@@ -81,7 +81,7 @@ function testIdentity() {
 
   var arr = [1, 'b', null];
   assertEquals(arr, goog.functions.identity(arr));
-  var obj = {a: 'ay', b: 'bee', c: 'see'***REMOVED***
+  var obj = {a: 'ay', b: 'bee', c: 'see'};
   assertEquals(obj, goog.functions.identity(obj));
 }
 
@@ -98,7 +98,7 @@ function testError() {
 }
 
 function testFail() {
-  var obj = {***REMOVED***
+  var obj = {};
   var f = goog.functions.fail(obj);
   var e = assertThrows(
       'A function created by goog.functions.raise must throw its input', f);
@@ -108,11 +108,11 @@ function testFail() {
 function testCompose() {
   var add2 = function(x) {
     return x + 2;
- ***REMOVED*****REMOVED***
+  };
 
   var doubleValue = function(x) {
-    return x***REMOVED*** 2;
- ***REMOVED*****REMOVED***
+    return x * 2;
+  };
 
   assertEquals(6, goog.functions.compose(doubleValue, add2)(1));
   assertEquals(4, goog.functions.compose(add2, doubleValue)(1));
@@ -124,7 +124,7 @@ function testCompose() {
 
   var add2Numbers = function(x, y) {
     return x + y;
- ***REMOVED*****REMOVED***
+  };
   assertEquals(17, goog.functions.compose(add2Numbers)(10, 7));
   assertEquals(34, goog.functions.compose(doubleValue, add2Numbers)(10, 7));
 }
@@ -193,7 +193,7 @@ function testNot() {
     assertEquals(1, a);
     assertEquals(2, b);
     return false;
- ***REMOVED*****REMOVED***
+  };
 
   assertTrue(goog.functions.not(f)(1, 2));
 }
@@ -202,7 +202,7 @@ function testCreate(expectedArray) {
   var tempConstructor = function(a, b) {
     this.foo = a;
     this.bar = b;
- ***REMOVED*****REMOVED***
+  };
 
   var factory = goog.partial(goog.functions.create, tempConstructor, 'baz');
   var instance = factory('qux');
@@ -213,12 +213,12 @@ function testCreate(expectedArray) {
 }
 
 function testWithReturnValue() {
-  var obj = {***REMOVED***
+  var obj = {};
   var f = function(a, b) {
     assertEquals(obj, this);
     assertEquals(1, a);
     assertEquals(2, b);
- ***REMOVED*****REMOVED***
+  };
   assertTrue(goog.functions.withReturnValue(f, true).call(obj, 1, 2));
   assertFalse(goog.functions.withReturnValue(f, false).call(obj, 1, 2));
 }
@@ -227,7 +227,7 @@ function makeCallOrderLogger(name, returnValue) {
   return function() {
     callOrder.push(name);
     return returnValue;
- ***REMOVED*****REMOVED***
+  };
 }
 
 function assertCallOrderAndReset(expectedArray) {
@@ -238,7 +238,7 @@ function assertCallOrderAndReset(expectedArray) {
 function testCacheReturnValue() {
   var returnFive = function() {
     return 5;
- ***REMOVED*****REMOVED***
+  };
 
   var recordedReturnFive = goog.testing.recordFunction(returnFive);
   var cachedRecordedReturnFive = goog.functions.cacheReturnValue(
@@ -257,7 +257,7 @@ function testCacheReturnValueFlagEnabled() {
   var returnIncrementingInteger = function() {
     count++;
     return count;
- ***REMOVED*****REMOVED***
+  };
 
   var recordedFunction = goog.testing.recordFunction(
       returnIncrementingInteger);
@@ -280,7 +280,7 @@ function testCacheReturnValueFlagDisabled() {
   var returnIncrementingInteger = function() {
     count++;
     return count;
- ***REMOVED*****REMOVED***
+  };
 
   var recordedFunction = goog.testing.recordFunction(
       returnIncrementingInteger);

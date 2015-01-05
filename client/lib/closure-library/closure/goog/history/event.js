@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The event object dispatched when the history changes.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview The event object dispatched when the history changes.
+ *
+ */
 
 
 goog.provide('goog.history.Event');
@@ -25,31 +25,31 @@ goog.require('goog.history.EventType');
 
 
 
-***REMOVED***
-***REMOVED*** Event object dispatched after the history state has changed.
-***REMOVED*** @param {string} token The string identifying the new history state.
-***REMOVED*** @param {boolean} isNavigation True if the event was triggered by a browser
-***REMOVED***     action, such as forward or back, clicking on a link, editing the URL, or
-***REMOVED***     calling {@code window.history.(go|back|forward)}.
-***REMOVED***     False if the token has been changed by a {@code setToken} or
-***REMOVED***     {@code replaceToken} call.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Event object dispatched after the history state has changed.
+ * @param {string} token The string identifying the new history state.
+ * @param {boolean} isNavigation True if the event was triggered by a browser
+ *     action, such as forward or back, clicking on a link, editing the URL, or
+ *     calling {@code window.history.(go|back|forward)}.
+ *     False if the token has been changed by a {@code setToken} or
+ *     {@code replaceToken} call.
+ * @constructor
+ * @extends {goog.events.Event}
+ * @final
+ */
 goog.history.Event = function(token, isNavigation) {
   goog.events.Event.call(this, goog.history.EventType.NAVIGATE);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current history state.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The current history state.
+   * @type {string}
+   */
   this.token = token;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the event was triggered by browser navigation.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the event was triggered by browser navigation.
+   * @type {boolean}
+   */
   this.isNavigation = isNavigation;
-***REMOVED***
+};
 goog.inherits(goog.history.Event, goog.events.Event);

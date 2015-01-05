@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview SVG class representing a poly-line.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview SVG class representing a poly-line.
+ */
 
 goog.provide('xrx.svg.Polyline');
 
@@ -39,66 +39,66 @@ goog.require('xrx.svg.Stylable');
 
 
 
-***REMOVED***
-***REMOVED*** SVG class representing a poly-line.
-***REMOVED*** @param {SVGPolylineElement} element The SVG polyline element.
-***REMOVED***
-***REMOVED*** @extends xrx.svg.Stylable
-***REMOVED***
+/**
+ * SVG class representing a poly-line.
+ * @param {SVGPolylineElement} element The SVG polyline element.
+ * @constructor
+ * @extends xrx.svg.Stylable
+ */
 xrx.svg.Polyline = function(element) {
 
   goog.base(this, element, new xrx.geometry.Path());
-***REMOVED***
+};
 goog.inherits(xrx.svg.Polyline, xrx.svg.Stylable);
 
 
 
-***REMOVED***
-***REMOVED*** Sets the coordinates for the poly-line.
-***REMOVED*** @param {Array.&lt;Array.&lt;number>>} coords The coordinates.
-***REMOVED***
+/**
+ * Sets the coordinates for the poly-line.
+ * @param {Array.&lt;Array.&lt;number>>} coords The coordinates.
+ */
 xrx.svg.Polyline.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
   xrx.svg.setCoords(this.element_, coords);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates of the poly-line.
-***REMOVED*** @return {Array.&lt;Array.&lt;number>>} The coordinates.
-***REMOVED***
+/**
+ * Returns the coordinates of the poly-line.
+ * @return {Array.&lt;Array.&lt;number>>} The coordinates.
+ */
 xrx.svg.Polyline.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Appends a coordinate to the poly-line.
-***REMOVED*** @param {Array.&lt;number>} coord The new coordinate.
-***REMOVED***
+/**
+ * Appends a coordinate to the poly-line.
+ * @param {Array.&lt;number>} coord The new coordinate.
+ */
 xrx.svg.Polyline.prototype.appendCoord = function(coord) {
   this.geometry_.coords.push(coord);
   xrx.svg.setCoords(this.element_, this.geometry_.coords, false);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Draws the poly-line.
-***REMOVED***
-xrx.svg.Polyline.prototype.draw = function() {***REMOVED***
+/**
+ * Draws the poly-line.
+ */
+xrx.svg.Polyline.prototype.draw = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new poly-line.
-***REMOVED***
+/**
+ * Creates a new poly-line.
+ */
 xrx.svg.Polyline.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'polyline');
   return new xrx.svg.Polyline(element);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

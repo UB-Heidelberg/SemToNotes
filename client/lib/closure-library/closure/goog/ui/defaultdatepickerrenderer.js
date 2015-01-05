@@ -12,80 +12,80 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The default renderer for {@link goog.ui.DatePicker}.
-***REMOVED***
-***REMOVED*** @see ../demos/datepicker.html
-***REMOVED***
+/**
+ * @fileoverview The default renderer for {@link goog.ui.DatePicker}.
+ *
+ * @see ../demos/datepicker.html
+ */
 
 goog.provide('goog.ui.DefaultDatePickerRenderer');
 
 goog.require('goog.dom');
 goog.require('goog.dom.TagName');
-***REMOVED*** @suppress {extraRequire} Interface.***REMOVED***
+/** @suppress {extraRequire} Interface. */
 goog.require('goog.ui.DatePickerRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.DatePicker}. Renders the date picker's
-***REMOVED*** navigation header and footer.
-***REMOVED***
-***REMOVED*** @param {string} baseCssClass Name of base CSS class of the date picker.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper.
-***REMOVED***
-***REMOVED*** @implements {goog.ui.DatePickerRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.DatePicker}. Renders the date picker's
+ * navigation header and footer.
+ *
+ * @param {string} baseCssClass Name of base CSS class of the date picker.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper.
+ * @constructor
+ * @implements {goog.ui.DatePickerRenderer}
+ */
 goog.ui.DefaultDatePickerRenderer = function(baseCssClass, opt_domHelper) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Name of base CSS class of datepicker
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Name of base CSS class of datepicker
+   * @type {string}
+   * @private
+   */
   this.baseCssClass_ = baseCssClass;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!goog.dom.DomHelper}
+   * @private
+   */
   this.dom_ = opt_domHelper || goog.dom.getDomHelper();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the dom helper that is being used on this component.
-***REMOVED*** @return {!goog.dom.DomHelper} The dom helper used on this component.
-***REMOVED***
+/**
+ * Returns the dom helper that is being used on this component.
+ * @return {!goog.dom.DomHelper} The dom helper used on this component.
+ */
 goog.ui.DefaultDatePickerRenderer.prototype.getDomHelper = function() {
   return this.dom_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns base CSS class. This getter is used to get base CSS class part.
-***REMOVED*** All CSS class names in component are created as:
-***REMOVED***   goog.getCssName(this.getBaseCssClass(), 'CLASS_NAME')
-***REMOVED*** @return {string} Base CSS class.
-***REMOVED***
+/**
+ * Returns base CSS class. This getter is used to get base CSS class part.
+ * All CSS class names in component are created as:
+ *   goog.getCssName(this.getBaseCssClass(), 'CLASS_NAME')
+ * @return {string} Base CSS class.
+ */
 goog.ui.DefaultDatePickerRenderer.prototype.getBaseCssClass = function() {
   return this.baseCssClass_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Render the navigation row (navigating months and maybe years).
-***REMOVED***
-***REMOVED*** @param {!Element} row The parent element to render the component into.
-***REMOVED*** @param {boolean} simpleNavigation Whether the picker should render a simple
-***REMOVED***     navigation menu that only contains controls for navigating to the next
-***REMOVED***     and previous month. The default navigation menu contains controls for
-***REMOVED***     navigating to the next/previous month, next/previous year, and menus for
-***REMOVED***     jumping to specific months and years.
-***REMOVED*** @param {boolean} showWeekNum Whether week numbers should be shown.
-***REMOVED*** @param {string} fullDateFormat The full date format.
-***REMOVED***     {@see goog.i18n.DateTimeSymbols}.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Render the navigation row (navigating months and maybe years).
+ *
+ * @param {!Element} row The parent element to render the component into.
+ * @param {boolean} simpleNavigation Whether the picker should render a simple
+ *     navigation menu that only contains controls for navigating to the next
+ *     and previous month. The default navigation menu contains controls for
+ *     navigating to the next/previous month, next/previous year, and menus for
+ *     jumping to specific months and years.
+ * @param {boolean} showWeekNum Whether week numbers should be shown.
+ * @param {string} fullDateFormat The full date format.
+ *     {@see goog.i18n.DateTimeSymbols}.
+ * @override
+ */
 goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow =
     function(row, simpleNavigation, showWeekNum, fullDateFormat) {
   // Populate the navigation row according to the configured navigation mode.
@@ -139,16 +139,16 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderNavigationRow =
       row.appendChild(yearCell);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Render the footer row (with select buttons).
-***REMOVED***
-***REMOVED*** @param {!Element} row The parent element to render the component into.
-***REMOVED*** @param {boolean} showWeekNum Whether week numbers should be shown.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Render the footer row (with select buttons).
+ *
+ * @param {!Element} row The parent element to render the component into.
+ * @param {boolean} showWeekNum Whether week numbers should be shown.
+ * @override
+ */
 goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow =
     function(row, showWeekNum) {
   // Populate the footer row with buttons for Today and None.
@@ -156,7 +156,7 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow =
   cell.colSpan = showWeekNum ? 2 : 3;
   cell.className = goog.getCssName(this.getBaseCssClass(), 'today-cont');
 
- ***REMOVED*****REMOVED*** @desc Label for button that selects the current date.***REMOVED***
+  /** @desc Label for button that selects the current date. */
   var MSG_DATEPICKER_TODAY_BUTTON_LABEL = goog.getMsg('Today');
   this.createButton_(cell, MSG_DATEPICKER_TODAY_BUTTON_LABEL,
       goog.getCssName(this.getBaseCssClass(), 'today-btn'));
@@ -170,24 +170,24 @@ goog.ui.DefaultDatePickerRenderer.prototype.renderFooterRow =
   cell.colSpan = 2;
   cell.className = goog.getCssName(this.getBaseCssClass(), 'none-cont');
 
- ***REMOVED*****REMOVED*** @desc Label for button that clears the selection.***REMOVED***
+  /** @desc Label for button that clears the selection. */
   var MSG_DATEPICKER_NONE = goog.getMsg('None');
   this.createButton_(cell, MSG_DATEPICKER_NONE,
       goog.getCssName(this.getBaseCssClass(), 'none-btn'));
   row.appendChild(cell);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Support function for button creation.
-***REMOVED***
-***REMOVED*** @param {Element} parentNode Container the button should be added to.
-***REMOVED*** @param {string} label Button label.
-***REMOVED*** @param {string=} opt_className Class name for button, which will be used
-***REMOVED***    in addition to "goog-date-picker-btn".
-***REMOVED*** @private
-***REMOVED*** @return {!Element} The created button element.
-***REMOVED***
+/**
+ * Support function for button creation.
+ *
+ * @param {Element} parentNode Container the button should be added to.
+ * @param {string} label Button label.
+ * @param {string=} opt_className Class name for button, which will be used
+ *    in addition to "goog-date-picker-btn".
+ * @private
+ * @return {!Element} The created button element.
+ */
 goog.ui.DefaultDatePickerRenderer.prototype.createButton_ =
     function(parentNode, label, opt_className) {
   var classes = [goog.getCssName(this.getBaseCssClass(), 'btn')];
@@ -199,4 +199,4 @@ goog.ui.DefaultDatePickerRenderer.prototype.createButton_ =
   el.appendChild(this.getDomHelper().createTextNode(label));
   parentNode.appendChild(el);
   return el;
-***REMOVED***
+};

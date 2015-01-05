@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A tab control, designed to be used in {@link goog.ui.TabBar}s.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @see ../demos/tabbar.html
-***REMOVED***
+/**
+ * @fileoverview A tab control, designed to be used in {@link goog.ui.TabBar}s.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @see ../demos/tabbar.html
+ */
 
 goog.provide('goog.ui.Tab');
 
@@ -28,19 +28,19 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Tab control, designed to be hosted in a {@link goog.ui.TabBar}.  The tab's
-***REMOVED*** DOM may be different based on the configuration of the containing tab bar,
-***REMOVED*** so tabs should only be rendered or decorated as children of a tab bar.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to
-***REMOVED***     display as the tab's caption (if any).
-***REMOVED*** @param {goog.ui.TabRenderer=} opt_renderer Optional renderer used to render
-***REMOVED***     or decorate the tab.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED***
+/**
+ * Tab control, designed to be hosted in a {@link goog.ui.TabBar}.  The tab's
+ * DOM may be different based on the configuration of the containing tab bar,
+ * so tabs should only be rendered or decorated as children of a tab bar.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to
+ *     display as the tab's caption (if any).
+ * @param {goog.ui.TabRenderer=} opt_renderer Optional renderer used to render
+ *     or decorate the tab.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Control}
+ */
 goog.ui.Tab = function(content, opt_renderer, opt_domHelper) {
   goog.ui.Control.call(this, content,
       opt_renderer || goog.ui.TabRenderer.getInstance(), opt_domHelper);
@@ -53,46 +53,46 @@ goog.ui.Tab = function(content, opt_renderer, opt_domHelper) {
   this.setDispatchTransitionEvents(
       goog.ui.Component.State.DISABLED | goog.ui.Component.State.SELECTED,
       true);
-***REMOVED***
+};
 goog.inherits(goog.ui.Tab, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** Tooltip text for the tab, displayed on hover (if any).
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tooltip text for the tab, displayed on hover (if any).
+ * @type {string|undefined}
+ * @private
+ */
 goog.ui.Tab.prototype.tooltip_;
 
 
-***REMOVED***
-***REMOVED*** @return {string|undefined} Tab tooltip text (if any).
-***REMOVED***
+/**
+ * @return {string|undefined} Tab tooltip text (if any).
+ */
 goog.ui.Tab.prototype.getTooltip = function() {
   return this.tooltip_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the tab tooltip text.  If the tab has already been rendered, updates
-***REMOVED*** its tooltip.
-***REMOVED*** @param {string} tooltip New tooltip text.
-***REMOVED***
+/**
+ * Sets the tab tooltip text.  If the tab has already been rendered, updates
+ * its tooltip.
+ * @param {string} tooltip New tooltip text.
+ */
 goog.ui.Tab.prototype.setTooltip = function(tooltip) {
   this.getRenderer().setTooltip(this.getElement(), tooltip);
   this.setTooltipInternal(tooltip);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the tab tooltip text.  Considered protected; to be called only by the
-***REMOVED*** renderer during element decoration.
-***REMOVED*** @param {string} tooltip New tooltip text.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets the tab tooltip text.  Considered protected; to be called only by the
+ * renderer during element decoration.
+ * @param {string} tooltip New tooltip text.
+ * @protected
+ */
 goog.ui.Tab.prototype.setTooltipInternal = function(tooltip) {
   this.tooltip_ = tooltip;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for goog.ui.Tabs.

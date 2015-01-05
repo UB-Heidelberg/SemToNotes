@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview TrogEdit plugin to handle enter keys by inserting the
-***REMOVED*** specified block level tag.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview TrogEdit plugin to handle enter keys by inserting the
+ * specified block level tag.
+ *
+ */
 
 goog.provide('goog.editor.plugins.TagOnEnterHandler');
 
@@ -36,29 +36,29 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to handle enter keys. This subclass normalizes all browsers to use
-***REMOVED*** the given block tag on enter.
-***REMOVED*** @param {goog.dom.TagName} tag The type of tag to add on enter.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.EnterHandler}
-***REMOVED***
+/**
+ * Plugin to handle enter keys. This subclass normalizes all browsers to use
+ * the given block tag on enter.
+ * @param {goog.dom.TagName} tag The type of tag to add on enter.
+ * @constructor
+ * @extends {goog.editor.plugins.EnterHandler}
+ */
 goog.editor.plugins.TagOnEnterHandler = function(tag) {
   this.tag = tag;
 
   goog.editor.plugins.EnterHandler.call(this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.TagOnEnterHandler,
     goog.editor.plugins.EnterHandler);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.getTrogClassId = function() {
   return 'TagOnEnterHandler';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.getNonCollapsingBlankHtml =
     function() {
   if (this.tag == goog.dom.TagName.P) {
@@ -67,34 +67,34 @@ goog.editor.plugins.TagOnEnterHandler.prototype.getNonCollapsingBlankHtml =
     return '<div><br></div>';
   }
   return '<br>';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This plugin is active on uneditable fields so it can provide a value for
-***REMOVED*** queryCommandValue calls asking for goog.editor.Command.BLOCKQUOTE.
-***REMOVED*** @return {boolean} True.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * This plugin is active on uneditable fields so it can provide a value for
+ * queryCommandValue calls asking for goog.editor.Command.BLOCKQUOTE.
+ * @return {boolean} True.
+ * @override
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.activeOnUneditableFields =
     goog.functions.TRUE;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.isSupportedCommand = function(
     command) {
   return command == goog.editor.Command.DEFAULT_TAG;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.queryCommandValue = function(
     command) {
   return command == goog.editor.Command.DEFAULT_TAG ? this.tag : null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.handleBackspaceInternal =
     function(e, range) {
   goog.editor.plugins.TagOnEnterHandler.superClass_.handleBackspaceInternal.
@@ -103,20 +103,20 @@ goog.editor.plugins.TagOnEnterHandler.prototype.handleBackspaceInternal =
   if (goog.userAgent.GECKO) {
     this.markBrToNotBeRemoved_(range, true);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.processParagraphTagsInternal =
     function(e, split) {
   if ((goog.userAgent.OPERA || goog.userAgent.IE) &&
       this.tag != goog.dom.TagName.P) {
     this.ensureBlockIeOpera(this.tag);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.handleDeleteGecko = function(
     e) {
   var range = this.getFieldObject().getRange();
@@ -137,10 +137,10 @@ goog.editor.plugins.TagOnEnterHandler.prototype.handleDeleteGecko = function(
     // Manually delete the selection if it's at a BR.
     this.deleteBrGecko(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.handleKeyUpInternal = function(
     e) {
   if (goog.userAgent.GECKO) {
@@ -154,37 +154,37 @@ goog.editor.plugins.TagOnEnterHandler.prototype.handleKeyUpInternal = function(
     this.ensureBlockIeOpera(this.tag, true);
   }
   // Safari uses DIVs by default.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** String that matches a single BR tag or NBSP surrounded by non-breaking
-***REMOVED*** whitespace
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * String that matches a single BR tag or NBSP surrounded by non-breaking
+ * whitespace
+ * @type {string}
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.BrOrNbspSurroundedWithWhiteSpace_ =
     '[\t\n\r ]*(<br[^>]*\/?>|&nbsp;)[\t\n\r ]*';
 
 
-***REMOVED***
-***REMOVED*** String that matches a single BR tag or NBSP surrounded by non-breaking
-***REMOVED*** whitespace
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * String that matches a single BR tag or NBSP surrounded by non-breaking
+ * whitespace
+ * @type {RegExp}
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.emptyLiRegExp_ = new RegExp('^' +
     goog.editor.plugins.TagOnEnterHandler.BrOrNbspSurroundedWithWhiteSpace_ +
     '$');
 
 
-***REMOVED***
-***REMOVED*** Ensures the current node is wrapped in the tag.
-***REMOVED*** @param {Node} node The node to ensure gets wrapped.
-***REMOVED*** @param {Element} container Element containing the selection.
-***REMOVED*** @return {Element} Element containing the selection, after the wrapping.
- ***REMOVED*** @private
-***REMOVED***
+/**
+ * Ensures the current node is wrapped in the tag.
+ * @param {Node} node The node to ensure gets wrapped.
+ * @param {Element} container Element containing the selection.
+ * @return {Element} Element containing the selection, after the wrapping.
+  * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.ensureNodeIsWrappedW3c_ =
     function(node, container) {
   if (container == this.getFieldObject().getElement()) {
@@ -210,16 +210,16 @@ goog.editor.plugins.TagOnEnterHandler.prototype.ensureNodeIsWrappedW3c_ =
     // We do this by iterating up the hierarchy of postiion.node until we've
     // reached the node that's just under the container.
     var isChildOfFn = function(child) {
-      return container == child.parentNode;***REMOVED*****REMOVED***
+      return container == child.parentNode; };
     var nodeToWrap = goog.dom.getAncestor(node, isChildOfFn, true);
     container = goog.editor.plugins.TagOnEnterHandler.wrapInContainerW3c_(
         this.tag, {node: nodeToWrap, offset: 0}, container);
   }
   return container;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.handleEnterWebkitInternal =
     function(e) {
   if (this.tag == goog.dom.TagName.DIV) {
@@ -231,10 +231,10 @@ goog.editor.plugins.TagOnEnterHandler.prototype.handleEnterWebkitInternal =
     container = this.ensureNodeIsWrappedW3c_(position.node, container);
     goog.dom.Range.createCaret(position.node, position.offset).select();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.TagOnEnterHandler.prototype.
     handleEnterAtCursorGeckoInternal = function(e, wasCollapsed, range) {
   // We use this because there are a few cases where FF default
@@ -285,15 +285,15 @@ goog.editor.plugins.TagOnEnterHandler.prototype.
   e.preventDefault();
   // TODO(user): I think we probably don't need to stopPropagation here
   e.stopPropagation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If The cursor is in an empty LI then break out of the list like in IE
-***REMOVED*** @param {Node} li LI to break out of.
-***REMOVED*** @return {!Element} Element to put the cursor after.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If The cursor is in an empty LI then break out of the list like in IE
+ * @param {Node} li LI to break out of.
+ * @return {!Element} Element to put the cursor after.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.breakOutOfEmptyListItemGecko_ =
     function(li) {
   // Do this as follows:
@@ -337,20 +337,20 @@ goog.editor.plugins.TagOnEnterHandler.prototype.breakOutOfEmptyListItemGecko_ =
   newNode.innerHTML = '&nbsp;';
 
   return newNode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wrap the text indicated by "position" in an HTML container of type
-***REMOVED*** "nodeName".
-***REMOVED*** @param {string} nodeName Type of container, e.g. "p" (paragraph).
-***REMOVED*** @param {Object} position The W3C cursor position object
-***REMOVED***     (from getCursorPositionW3c).
-***REMOVED*** @param {Node} container The field containing position.
-***REMOVED*** @return {!Element} The container element that holds the contents from
-***REMOVED***     position.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Wrap the text indicated by "position" in an HTML container of type
+ * "nodeName".
+ * @param {string} nodeName Type of container, e.g. "p" (paragraph).
+ * @param {Object} position The W3C cursor position object
+ *     (from getCursorPositionW3c).
+ * @param {Node} container The field containing position.
+ * @return {!Element} The container element that holds the contents from
+ *     position.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.wrapInContainerW3c_ = function(nodeName,
     position, container) {
   var start = position.node;
@@ -376,19 +376,19 @@ goog.editor.plugins.TagOnEnterHandler.wrapInContainerW3c_ = function(nodeName,
   container.insertBefore(para, nextSibling);
 
   return para;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** When we delete an element, FF inserts a BR. We want to strip that
-***REMOVED*** BR after the fact, but in the case where your cursor is at a character
-***REMOVED*** right before a BR and you delete that character, we don't want to
-***REMOVED*** strip it. So we detect this case on keydown and mark the BR as not needing
-***REMOVED*** removal.
-***REMOVED*** @param {goog.dom.AbstractRange} range The closure range object.
-***REMOVED*** @param {boolean} isBackspace Whether this is handling the backspace key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * When we delete an element, FF inserts a BR. We want to strip that
+ * BR after the fact, but in the case where your cursor is at a character
+ * right before a BR and you delete that character, we don't want to
+ * strip it. So we detect this case on keydown and mark the BR as not needing
+ * removal.
+ * @param {goog.dom.AbstractRange} range The closure range object.
+ * @param {boolean} isBackspace Whether this is handling the backspace key.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.markBrToNotBeRemoved_ =
     function(range, isBackspace) {
   var focusNode = range.getFocusNode();
@@ -401,17 +401,17 @@ goog.editor.plugins.TagOnEnterHandler.prototype.markBrToNotBeRemoved_ =
       this.brToKeep_ = sibling;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If we hit delete/backspace to merge elements, FF inserts a BR.
-***REMOVED*** We want to strip that BR. In markBrToNotBeRemoved, we detect if
-***REMOVED*** there was already a BR there before the delete/backspace so that
-***REMOVED*** we don't accidentally remove a user-inserted BR.
-***REMOVED*** @param {boolean} isBackSpace Whether this is handling the backspace key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If we hit delete/backspace to merge elements, FF inserts a BR.
+ * We want to strip that BR. In markBrToNotBeRemoved, we detect if
+ * there was already a BR there before the delete/backspace so that
+ * we don't accidentally remove a user-inserted BR.
+ * @param {boolean} isBackSpace Whether this is handling the backspace key.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.removeBrIfNecessary_ = function(
     isBackSpace) {
   var range = this.getFieldObject().getRange();
@@ -452,27 +452,27 @@ goog.editor.plugins.TagOnEnterHandler.prototype.removeBrIfNecessary_ = function(
     goog.dom.Range.createCaret(focusNode,
         Math.min(focusOffset, focusNode.length)).select();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Trim the tabs and line breaks from a string.
-***REMOVED*** @param {string} string String to trim.
-***REMOVED*** @return {string} Trimmed string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Trim the tabs and line breaks from a string.
+ * @param {string} string String to trim.
+ * @return {string} Trimmed string.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.trimTabsAndLineBreaks_ = function(
     string) {
   return string.replace(/^[\t\n\r]|[\t\n\r]$/g, '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called in response to a normal enter keystroke. It has the action of
-***REMOVED*** splitting elements.
-***REMOVED*** @return {Element} The node that the cursor should be before.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called in response to a normal enter keystroke. It has the action of
+ * splitting elements.
+ * @return {Element} The node that the cursor should be before.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.handleRegularEnterGecko_ =
     function() {
   var range = this.getFieldObject().getRange();
@@ -523,21 +523,21 @@ goog.editor.plugins.TagOnEnterHandler.prototype.handleRegularEnterGecko_ =
       // it out of the anchor.
       var anchorToRemove = goog.editor.node.isEmpty(leftAnchor, false) ?
           leftAnchor : rightAnchor;
-      goog.dom.flattenElement(***REMOVED*** @type {Element}***REMOVED*** (anchorToRemove));
+      goog.dom.flattenElement(/** @type {Element} */ (anchorToRemove));
     }
   }
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (newNode);
-***REMOVED***
+  return /** @type {Element} */ (newNode);
+};
 
 
-***REMOVED***
-***REMOVED*** Scroll the cursor into view, resulting from splitting the paragraph/adding
-***REMOVED*** a br. It behaves differently than scrollIntoView
-***REMOVED*** @param {Element} element The element immediately following the cursor. Will
-***REMOVED***     be used to determine how to scroll in order to make the cursor visible.
-***REMOVED***     CANNOT be a BR, as they do not have offsetHeight/offsetTop.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Scroll the cursor into view, resulting from splitting the paragraph/adding
+ * a br. It behaves differently than scrollIntoView
+ * @param {Element} element The element immediately following the cursor. Will
+ *     be used to determine how to scroll in order to make the cursor visible.
+ *     CANNOT be a BR, as they do not have offsetHeight/offsetTop.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.prototype.scrollCursorIntoViewGecko_ =
     function(element) {
   if (!this.getFieldObject().isFixedHeight()) {
@@ -567,26 +567,26 @@ goog.editor.plugins.TagOnEnterHandler.prototype.scrollCursorIntoViewGecko_ =
     }
     field.scrollTop = bottomOfNode - viewportHeight;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits the DOM tree around the given node and returns the node
-***REMOVED*** containing the second half of the tree. The first half of the tree
-***REMOVED*** is modified, but not removed from the DOM.
-***REMOVED*** @param {Node} positionNode Node to split at.
-***REMOVED*** @param {number} positionOffset Offset into positionNode to split at.  If
-***REMOVED***     positionNode is a text node, this offset is an offset in to the text
-***REMOVED***     content of that node.  Otherwise, positionOffset is an offset in to
-***REMOVED***     the childNodes array.  All elements with child index of  positionOffset
-***REMOVED***     or greater will be moved to the second half.  If positionNode is an
-***REMOVED***     empty element, the dom will be split at that element, with positionNode
-***REMOVED***     ending up in the second half.  positionOffset must be 0 in this case.
-***REMOVED*** @param {Node=} opt_root Node at which to stop splitting the dom (the root
-***REMOVED***     is also split).
-***REMOVED*** @return {!Node} The node containing the second half of the tree.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits the DOM tree around the given node and returns the node
+ * containing the second half of the tree. The first half of the tree
+ * is modified, but not removed from the DOM.
+ * @param {Node} positionNode Node to split at.
+ * @param {number} positionOffset Offset into positionNode to split at.  If
+ *     positionNode is a text node, this offset is an offset in to the text
+ *     content of that node.  Otherwise, positionOffset is an offset in to
+ *     the childNodes array.  All elements with child index of  positionOffset
+ *     or greater will be moved to the second half.  If positionNode is an
+ *     empty element, the dom will be split at that element, with positionNode
+ *     ending up in the second half.  positionOffset must be 0 in this case.
+ * @param {Node=} opt_root Node at which to stop splitting the dom (the root
+ *     is also split).
+ * @return {!Node} The node containing the second half of the tree.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.splitDom_ = function(
     positionNode, positionOffset, opt_root) {
   if (!opt_root) opt_root = positionNode.ownerDocument.body;
@@ -643,42 +643,42 @@ goog.editor.plugins.TagOnEnterHandler.splitDom_ = function(
   }
 
   return secondHalf;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits the DOM tree around the given node and returns the node containing
-***REMOVED*** second half of the tree, which is appended after the old node.  The first
-***REMOVED*** half of the tree is modified, but not removed from the DOM.
-***REMOVED*** @param {Node} positionNode Node to split at.
-***REMOVED*** @param {number} positionOffset Offset into positionNode to split at.  If
-***REMOVED***     positionNode is a text node, this offset is an offset in to the text
-***REMOVED***     content of that node.  Otherwise, positionOffset is an offset in to
-***REMOVED***     the childNodes array.  All elements with child index of  positionOffset
-***REMOVED***     or greater will be moved to the second half.  If positionNode is an
-***REMOVED***     empty element, the dom will be split at that element, with positionNode
-***REMOVED***     ending up in the second half.  positionOffset must be 0 in this case.
-***REMOVED*** @param {Node} node Node to split.
-***REMOVED*** @return {!Node} The node containing the second half of the tree.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits the DOM tree around the given node and returns the node containing
+ * second half of the tree, which is appended after the old node.  The first
+ * half of the tree is modified, but not removed from the DOM.
+ * @param {Node} positionNode Node to split at.
+ * @param {number} positionOffset Offset into positionNode to split at.  If
+ *     positionNode is a text node, this offset is an offset in to the text
+ *     content of that node.  Otherwise, positionOffset is an offset in to
+ *     the childNodes array.  All elements with child index of  positionOffset
+ *     or greater will be moved to the second half.  If positionNode is an
+ *     empty element, the dom will be split at that element, with positionNode
+ *     ending up in the second half.  positionOffset must be 0 in this case.
+ * @param {Node} node Node to split.
+ * @return {!Node} The node containing the second half of the tree.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.splitDomAndAppend_ = function(
     positionNode, positionOffset, node) {
   var newNode = goog.editor.plugins.TagOnEnterHandler.splitDom_(
       positionNode, positionOffset, node);
   goog.dom.insertSiblingAfter(newNode, node);
   return newNode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Joins node and its adjacent text nodes together.
-***REMOVED*** @param {Node} node The node to start joining.
-***REMOVED*** @param {boolean} moveForward Determines whether to join left siblings (false)
-***REMOVED***     or right siblings (true).
-***REMOVED*** @return {Node} The joined text node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Joins node and its adjacent text nodes together.
+ * @param {Node} node The node to start joining.
+ * @param {boolean} moveForward Determines whether to join left siblings (false)
+ *     or right siblings (true).
+ * @return {Node} The joined text node.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.joinTextNodes_ = function(node,
     moveForward) {
   if (node && node.nodeName == '#text') {
@@ -697,19 +697,19 @@ goog.editor.plugins.TagOnEnterHandler.joinTextNodes_ = function(node,
     node.nodeValue = nodeValues.join('');
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces leading or trailing spaces of a text node to a single Nbsp.
-***REMOVED*** @param {Node} textNode The text node to search and replace white spaces.
-***REMOVED*** @param {boolean} fromStart Set to true to replace leading spaces, false to
-***REMOVED***     replace trailing spaces.
-***REMOVED*** @param {boolean} isLeaveEmpty Set to true to leave the node empty if the
-***REMOVED***     text node was empty in the first place, otherwise put a Nbsp into the
-***REMOVED***     text node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces leading or trailing spaces of a text node to a single Nbsp.
+ * @param {Node} textNode The text node to search and replace white spaces.
+ * @param {boolean} fromStart Set to true to replace leading spaces, false to
+ *     replace trailing spaces.
+ * @param {boolean} isLeaveEmpty Set to true to leave the node empty if the
+ *     text node was empty in the first place, otherwise put a Nbsp into the
+ *     text node.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.replaceWhiteSpaceWithNbsp_ = function(
     textNode, fromStart, isLeaveEmpty) {
   var regExp = fromStart ? /^[ \t\r\n]+/ : /[ \t\r\n]+$/;
@@ -719,19 +719,19 @@ goog.editor.plugins.TagOnEnterHandler.replaceWhiteSpaceWithNbsp_ = function(
   if (!isLeaveEmpty && textNode.nodeValue == '') {
     textNode.nodeValue = goog.string.Unicode.NBSP;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the first A element in a traversal from the input node.  The input
-***REMOVED*** node itself is not included in the search.
-***REMOVED*** @param {Node} node The node to start searching from.
-***REMOVED*** @param {boolean=} opt_useFirstChild Whether to traverse along the first child
-***REMOVED***     (true) or last child (false).
-***REMOVED*** @return {Node} The first anchor node found in the search, or null if none
-***REMOVED***     was found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds the first A element in a traversal from the input node.  The input
+ * node itself is not included in the search.
+ * @param {Node} node The node to start searching from.
+ * @param {boolean=} opt_useFirstChild Whether to traverse along the first child
+ *     (true) or last child (false).
+ * @return {Node} The first anchor node found in the search, or null if none
+ *     was found.
+ * @private
+ */
 goog.editor.plugins.TagOnEnterHandler.findAnchorInTraversal_ = function(node,
     opt_useFirstChild) {
   while ((node = opt_useFirstChild ? node.firstChild : node.lastChild) &&
@@ -739,4 +739,4 @@ goog.editor.plugins.TagOnEnterHandler.findAnchorInTraversal_ = function(node,
     // Do nothing - advancement is handled in the condition.
   }
   return node;
-***REMOVED***
+};

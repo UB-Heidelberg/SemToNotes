@@ -22,9 +22,9 @@ function testBasicSelectors() {
 
 function testSyntacticEquivalents() {
   // syntactic equivalents
-  assertQuery(12, '#t >***REMOVED***');
+  assertQuery(12, '#t > *');
   assertQuery(12, '#t >');
-  assertQuery(3, '.foo >***REMOVED***');
+  assertQuery(3, '.foo > *');
   assertQuery(3, '.foo >');
 }
 
@@ -35,7 +35,7 @@ function testWithARootById() {
   }
 
   // with a root, by ID
-  assertQuery(3, '>***REMOVED***', 'container');
+  assertQuery(3, '> *', 'container');
   assertQuery(3, '> h3', 't');
 }
 
@@ -83,12 +83,12 @@ function testDescendantSelectors() {
   }
 
   assertQuery(3, '>', 'container');
-  assertQuery(3, '>***REMOVED***', 'container');
+  assertQuery(3, '> *', 'container');
   assertQuery(2, '> [qux]', 'container');
   assertEquals('child1', goog.dom.query('> [qux]', 'container')[0].id);
   assertEquals('child3', goog.dom.query('> [qux]', 'container')[1].id);
   assertQuery(3, '>', 'container');
-  assertQuery(3, '>***REMOVED***', 'container');
+  assertQuery(3, '> *', 'container');
 }
 
 function testSiblingSelectors() {
@@ -96,7 +96,7 @@ function testSiblingSelectors() {
   assertQuery(3, '~', 'container');
   assertQuery(1, '.foo + span');
   assertQuery(4, '.foo ~ span');
-  assertQuery(1, '#foo ~***REMOVED***');
+  assertQuery(1, '#foo ~ *');
   assertQuery(1, '#foo ~');
 }
 
@@ -119,15 +119,15 @@ function testNthChild() {
   assertQuery(3, '#t :nth-child(3)');
   assertQuery(0, '#t > div:nth-child(1)');
   assertQuery(7, '#t span');
-  assertQuery(3, '#t >***REMOVED***:nth-child(n+10)');
-  assertQuery(1, '#t >***REMOVED***:nth-child(n+12)');
-  assertQuery(10, '#t >***REMOVED***:nth-child(-n+10)');
-  assertQuery(5, '#t >***REMOVED***:nth-child(-2n+10)');
-  assertQuery(6, '#t >***REMOVED***:nth-child(2n+2)');
-  assertQuery(5, '#t >***REMOVED***:nth-child(2n+4)');
-  assertQuery(5, '#t >***REMOVED***:nth-child(2n+4)');
-  assertQuery(12, '#t >***REMOVED***:nth-child(n-5)');
-  assertQuery(6, '#t >***REMOVED***:nth-child(2n-5)');
+  assertQuery(3, '#t > *:nth-child(n+10)');
+  assertQuery(1, '#t > *:nth-child(n+12)');
+  assertQuery(10, '#t > *:nth-child(-n+10)');
+  assertQuery(5, '#t > *:nth-child(-2n+10)');
+  assertQuery(6, '#t > *:nth-child(2n+2)');
+  assertQuery(5, '#t > *:nth-child(2n+4)');
+  assertQuery(5, '#t > *:nth-child(2n+4)');
+  assertQuery(12, '#t > *:nth-child(n-5)');
+  assertQuery(6, '#t > *:nth-child(2n-5)');
 }
 
 function testEmptyPseudoSelector() {
@@ -162,10 +162,10 @@ function testCorrectDocumentInFrame() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number} expectedNumberOfNodes
-***REMOVED*** @param {...*} var_args
-***REMOVED***
+/**
+ * @param {number} expectedNumberOfNodes
+ * @param {...*} var_args
+ */
 function assertQuery(expectedNumberOfNodes, var_args) {
   var args = Array.prototype.slice.call(arguments, 1);
   assertEquals(expectedNumberOfNodes,

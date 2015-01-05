@@ -1,4 +1,4 @@
-/*global ActiveXObject, window, document***REMOVED***
+/*global ActiveXObject, window, document */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -41,7 +41,7 @@ knowledge of the CeCILL license and that you accept its terms.
 function Serializer() {
     this.warnSaxParseExceptions = [];
     this.saxParseExceptions = [];
-    this.currentPrefixMapping = {***REMOVED***
+    this.currentPrefixMapping = {};
     this.string = "";
     //may not be dumped to the XML
     this.dtd = "";
@@ -53,9 +53,9 @@ function Serializer() {
 Serializer.prototype.entify = function entify(str) { // FIX: this is probably too many replaces in some cases and a call to it may not be needed at all in some cases
     //must not replace '&' of entities or character references
     return str.replace(/&(?!(amp;|gt;|lt;|quot;|#))/g, '&amp;').replace(/>/g, '&gt;').replace(new RegExp('<', 'g'), '&lt;').replace(/"/g, '&quot;');
-***REMOVED***
+};
 
-Serializer.prototype.startDocument = function() {***REMOVED***
+Serializer.prototype.startDocument = function() {};
 
 Serializer.prototype.startElement = function(namespaceURI, localName, qName, atts) {
     this.string += '<' + qName;
@@ -63,7 +63,7 @@ Serializer.prototype.startElement = function(namespaceURI, localName, qName, att
     for (var i in this.currentPrefixMapping) {
         this.string += ' xmlns:' + i + '="' + this.currentPrefixMapping[i] + '"'; // .toLowerCase()
     }
-    this.currentPrefixMapping = {***REMOVED***
+    this.currentPrefixMapping = {};
     for (i = 0 ; i < atts.getLength() ; i++) {
         var value = atts.getValue(i);
         value = value.replace(/\n/g, "&#10;");
@@ -72,22 +72,22 @@ Serializer.prototype.startElement = function(namespaceURI, localName, qName, att
         this.string += ' ' + atts.getQName(i) + '="' + value + '"'; // .toLowerCase()
     }
     this.string += '>';
-***REMOVED***
+};
 
 Serializer.prototype.endElement = function(namespaceURI, localName, qName) {
     this.string += '</' + qName + '>';
-***REMOVED***
+};
 
 Serializer.prototype.startPrefixMapping = function(prefix, uri) {
     this.currentPrefixMapping[prefix] = uri;
-***REMOVED***
+};
 
-Serializer.prototype.endPrefixMapping = function(prefix) {***REMOVED***
+Serializer.prototype.endPrefixMapping = function(prefix) {};
 
 Serializer.prototype.processingInstruction = function(target, data) {
     data = data.replace(/\r\n/g, "\n");
     this.string += '<?' + target + ' ' + data + '?>';
-***REMOVED***
+};
 
 Serializer.prototype.ignorableWhitespace = function(ch, start, length) {
     for (var i = 0; i < ch.length; i++) {
@@ -99,76 +99,76 @@ Serializer.prototype.ignorableWhitespace = function(ch, start, length) {
         }
     }
     //this.string += ch;
-***REMOVED***
+};
 
 Serializer.prototype.characters = function(ch, start, length) {
     ch = ch.replace(/\n/g, "&#10;");
     ch = ch.replace(/\r/g, "&#13;");
     ch = ch.replace(/\t/g, "&#9;");
     this.string += this.entify(ch);
-***REMOVED***
+};
 
-Serializer.prototype.skippedEntity = function(name) {***REMOVED***
+Serializer.prototype.skippedEntity = function(name) {};
 
-Serializer.prototype.endDocument = function() {***REMOVED***
+Serializer.prototype.endDocument = function() {};
 
 Serializer.prototype.setDocumentLocator = function (locator) {
     this.locator = locator;
-***REMOVED***
+};
 
 // INTERFACE: DeclHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/DeclHandler.html
 
-Serializer.prototype.attributeDecl = function(eName, aName, type, mode, value) {***REMOVED***
+Serializer.prototype.attributeDecl = function(eName, aName, type, mode, value) {};
 
-Serializer.prototype.elementDecl = function(name, model) {***REMOVED***
+Serializer.prototype.elementDecl = function(name, model) {};
 
-Serializer.prototype.externalEntityDecl = function(name, publicId, systemId) {***REMOVED***
+Serializer.prototype.externalEntityDecl = function(name, publicId, systemId) {};
 
-Serializer.prototype.internalEntityDecl = function(name, value) {***REMOVED***
+Serializer.prototype.internalEntityDecl = function(name, value) {};
 
 // INTERFACE: LexicalHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/LexicalHandler.html
 Serializer.prototype.comment = function(ch, start, length) {
     //this.string += '<!-- ' + ch + ' -->';
-***REMOVED***
+};
 
 Serializer.prototype.endCDATA = function() {
     //this.string += ']]>';
     this.cdata = false;
-***REMOVED***
+};
 
 Serializer.prototype.endDTD = function() {
     if (this.dtdDumped) {
         this.dtd += "]>\n";
         this.string += this.dtd;
     }
-***REMOVED***
+};
 
-Serializer.prototype.endEntity = function(name) {***REMOVED***
+Serializer.prototype.endEntity = function(name) {};
 
 Serializer.prototype.startCDATA = function() {
     //this.string += '<![CDATA[';
     this.cdata = true;
-***REMOVED***
+};
 
 Serializer.prototype.startDTD = function(name, publicId, systemId) {
     this.dtd += '<!DOCTYPE ' + name + " [\n";
-***REMOVED***
+};
 
-Serializer.prototype.startEntity = function(name) {***REMOVED***
+Serializer.prototype.startEntity = function(name) {};
 
 // Not a standard SAX method
 Serializer.prototype.startCharacterReference = function(hex, number) {
     //this.string += '&#' + (hex ? 'x' : '') + number + ';';
-***REMOVED***
+};
 
 
 // INTERFACE: EntityResolver: http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html
 // Could implement this by checking for last two arguments missing in EntityResolver2 resolveEntity() below
-// Serializer.prototype.resolveEntity(publicId, systemId) {***REMOVED***
+// Serializer.prototype.resolveEntity(publicId, systemId) {};
 
 // INTERFACE: EntityResolver2: http://www.saxproject.org/apidoc/org/xml/sax/ext/EntityResolver2.html
-Serializer.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {***REMOVED***
-Serializer.prototype.getExternalSubset = function(name, baseURI) {***REMOVED***
+Serializer.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {};
+Serializer.prototype.getExternalSubset = function(name, baseURI) {};
 
 // INTERFACE: DTDHandler: http://www.saxproject.org/apidoc/org/xml/sax/DTDHandler.html
 Serializer.prototype.notationDecl = function (name, publicId, systemId) {
@@ -180,20 +180,20 @@ Serializer.prototype.notationDecl = function (name, publicId, systemId) {
     if (systemId) {
         this.dtd += " SYSTEM '" + systemId + "'>\n";
     }
-***REMOVED***
+};
 
-Serializer.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {***REMOVED***
+Serializer.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {};
 
 // INTERFACE: ErrorHandler: http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
 Serializer.prototype.warning = function(saxParseException) {
     this.warnSaxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 Serializer.prototype.error = function(saxParseException) {
     this.saxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 Serializer.prototype.fatalError = function(saxParseException) {
     throw saxParseException;
-***REMOVED***
+};
 
 // EXPORT
 this.Serializer = Serializer;

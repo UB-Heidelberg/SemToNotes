@@ -18,7 +18,7 @@ goog.setTestOnly('goog.net.WebSocketTest');
 goog.require('goog.debug.EntryPointMonitor');
 goog.require('goog.debug.ErrorHandler');
 goog.require('goog.debug.entryPointRegistry');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.net.WebSocket');
 goog.require('goog.testing.MockClock');
@@ -240,7 +240,7 @@ function testExponentialBackOff() {
 
 function testEntryPointRegistry() {
   var monitor = new goog.debug.EntryPointMonitor();
-  var replacement = function() {***REMOVED***
+  var replacement = function() {};
   monitor.wrap = goog.testing.recordFunction(
       goog.functions.constant(replacement));
 
@@ -276,52 +276,52 @@ function testErrorHandlerCalled() {
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the browser firing the open event for the given web socket.
-***REMOVED*** @param {MockWebSocket} ws The mock web socket.
-***REMOVED***
+/**
+ * Simulates the browser firing the open event for the given web socket.
+ * @param {MockWebSocket} ws The mock web socket.
+ */
 function simulateOpenEvent(ws) {
   ws.readyState = goog.net.WebSocket.ReadyState_.OPEN;
   ws.onopen();
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the browser firing the close event for the given web socket.
-***REMOVED*** @param {MockWebSocket} ws The mock web socket.
-***REMOVED***
+/**
+ * Simulates the browser firing the close event for the given web socket.
+ * @param {MockWebSocket} ws The mock web socket.
+ */
 function simulateCloseEvent(ws) {
   ws.readyState = goog.net.WebSocket.ReadyState_.CLOSED;
   ws.onclose({data: 'mock close event'});
 }
 
 
-***REMOVED***
-***REMOVED*** Strategy for reconnection that backs off linearly with a 1 second offset.
-***REMOVED*** @param {number} attempt The number of reconnects since the last connection.
-***REMOVED*** @return {number} The amount of time to the next reconnect, in milliseconds.
-***REMOVED***
+/**
+ * Strategy for reconnection that backs off linearly with a 1 second offset.
+ * @param {number} attempt The number of reconnects since the last connection.
+ * @return {number} The amount of time to the next reconnect, in milliseconds.
+ */
 function linearBackOff(attempt) {
-  return (attempt***REMOVED*** 1000) + 1000;
+  return (attempt * 1000) + 1000;
 }
 
 
-***REMOVED***
-***REMOVED*** Strategy for reconnection that backs off with the fibonacci pattern.  It is
-***REMOVED*** offset by 5 seconds so the first attempt will happen after 5 seconds.
-***REMOVED*** @param {number} attempt The number of reconnects since the last connection.
-***REMOVED*** @return {number} The amount of time to the next reconnect, in milliseconds.
-***REMOVED***
+/**
+ * Strategy for reconnection that backs off with the fibonacci pattern.  It is
+ * offset by 5 seconds so the first attempt will happen after 5 seconds.
+ * @param {number} attempt The number of reconnects since the last connection.
+ * @return {number} The amount of time to the next reconnect, in milliseconds.
+ */
 function fibonacciBackOff(attempt) {
-  return (fibonacci(attempt)***REMOVED*** 1000) + 5000;
+  return (fibonacci(attempt) * 1000) + 5000;
 }
 
 
-***REMOVED***
-***REMOVED*** Computes the desired fibonacci number.
-***REMOVED*** @param {number} n The nth desired fibonacci number.
-***REMOVED*** @return {number} The nth fibonacci number.
-***REMOVED***
+/**
+ * Computes the desired fibonacci number.
+ * @param {number} n The nth desired fibonacci number.
+ * @return {number} The nth fibonacci number.
+ */
 function fibonacci(n) {
   if (n == 0) {
     return 0;
@@ -334,30 +334,30 @@ function fibonacci(n) {
 
 
 
-***REMOVED***
-***REMOVED*** Mock WebSocket constructor.
-***REMOVED*** @param {string} url The url to the web socket server.
-***REMOVED*** @param {string} protocol The protocol to use.
-***REMOVED***
-***REMOVED***
+/**
+ * Mock WebSocket constructor.
+ * @param {string} url The url to the web socket server.
+ * @param {string} protocol The protocol to use.
+ * @constructor
+ */
 MockWebSocket = function(url, protocol) {
   this.url = url;
   this.protocol = protocol;
   this.readyState = goog.net.WebSocket.ReadyState_.CONNECTING;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mocks out the close method of the WebSocket.
-***REMOVED***
+/**
+ * Mocks out the close method of the WebSocket.
+ */
 MockWebSocket.prototype.close = function() {
   this.readyState = goog.net.WebSocket.ReadyState_.CLOSING;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mocks out the send method of the WebSocket.
-***REMOVED***
+/**
+ * Mocks out the send method of the WebSocket.
+ */
 MockWebSocket.prototype.send = function() {
   // Nothing to do here.
-***REMOVED***
+};

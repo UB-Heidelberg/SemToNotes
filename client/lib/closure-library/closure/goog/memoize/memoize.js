@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tool for caching the result of expensive deterministic
-***REMOVED*** functions.
-***REMOVED***
-***REMOVED*** @see http://en.wikipedia.org/wiki/Memoization
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Tool for caching the result of expensive deterministic
+ * functions.
+ *
+ * @see http://en.wikipedia.org/wiki/Memoization
+ *
+ */
 
 goog.provide('goog.memoize');
 
 
-***REMOVED***
-***REMOVED*** Decorator around functions that caches the inner function's return values.
-***REMOVED***
-***REMOVED*** To cache parameterless functions, see goog.functions.cacheReturnValue.
-***REMOVED***
-***REMOVED*** @param {Function} f The function to wrap. Its return value may only depend
-***REMOVED***     on its arguments and 'this' context. There may be further restrictions
-***REMOVED***     on the arguments depending on the capabilities of the serializer used.
-***REMOVED*** @param {function(number, Object): string=} opt_serializer A function to
-***REMOVED***     serialize f's arguments. It must have the same signature as
-***REMOVED***     goog.memoize.simpleSerializer. It defaults to that function.
-***REMOVED*** @this {Object} The object whose function is being wrapped.
-***REMOVED*** @return {!Function} The wrapped function.
-***REMOVED***
+/**
+ * Decorator around functions that caches the inner function's return values.
+ *
+ * To cache parameterless functions, see goog.functions.cacheReturnValue.
+ *
+ * @param {Function} f The function to wrap. Its return value may only depend
+ *     on its arguments and 'this' context. There may be further restrictions
+ *     on the arguments depending on the capabilities of the serializer used.
+ * @param {function(number, Object): string=} opt_serializer A function to
+ *     serialize f's arguments. It must have the same signature as
+ *     goog.memoize.simpleSerializer. It defaults to that function.
+ * @this {Object} The object whose function is being wrapped.
+ * @return {!Function} The wrapped function.
+ */
 goog.memoize = function(f, opt_serializer) {
   var serializer = opt_serializer || goog.memoize.simpleSerializer;
 
@@ -55,50 +55,50 @@ goog.memoize = function(f, opt_serializer) {
     } else {
       return f.apply(this, arguments);
     }
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Flag to disable memoization in unit tests.
-***REMOVED***
+/**
+ * @define {boolean} Flag to disable memoization in unit tests.
+ */
 goog.define('goog.memoize.ENABLE_MEMOIZE', true);
 
 
-***REMOVED***
-***REMOVED*** Clears the memoization cache on the given object.
-***REMOVED*** @param {Object} cacheOwner The owner of the cache. This is the {@code this}
-***REMOVED***     context of the memoized function.
-***REMOVED***
+/**
+ * Clears the memoization cache on the given object.
+ * @param {Object} cacheOwner The owner of the cache. This is the {@code this}
+ *     context of the memoized function.
+ */
 goog.memoize.clearCache = function(cacheOwner) {
-  cacheOwner[goog.memoize.CACHE_PROPERTY_] = {***REMOVED***
-***REMOVED***
+  cacheOwner[goog.memoize.CACHE_PROPERTY_] = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Name of the property used by goog.memoize as cache.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Name of the property used by goog.memoize as cache.
+ * @type {string}
+ * @private
+ */
 goog.memoize.CACHE_PROPERTY_ = 'closure_memoize_cache_';
 
 
-***REMOVED***
-***REMOVED*** Simple and fast argument serializer function for goog.memoize.
-***REMOVED*** Supports string, number, boolean, null and undefined arguments. Doesn't
-***REMOVED*** support \x0B characters in the strings.
-***REMOVED*** @param {number} functionUid Unique identifier of the function whose result
-***REMOVED***     is cached.
-***REMOVED*** @param {Object} args The arguments that the function to memoize is called
-***REMOVED***     with. Note: it is an array-like object, because supports indexing and
-***REMOVED***     has the length property.
-***REMOVED*** @return {string} The list of arguments with type information concatenated
-***REMOVED***     with the functionUid argument, serialized as \x0B-separated string.
-***REMOVED***
+/**
+ * Simple and fast argument serializer function for goog.memoize.
+ * Supports string, number, boolean, null and undefined arguments. Doesn't
+ * support \x0B characters in the strings.
+ * @param {number} functionUid Unique identifier of the function whose result
+ *     is cached.
+ * @param {Object} args The arguments that the function to memoize is called
+ *     with. Note: it is an array-like object, because supports indexing and
+ *     has the length property.
+ * @return {string} The list of arguments with type information concatenated
+ *     with the functionUid argument, serialized as \x0B-separated string.
+ */
 goog.memoize.simpleSerializer = function(functionUid, args) {
   var context = [functionUid];
   for (var i = args.length - 1; i >= 0; --i) {
     context.push(typeof args[i], args[i]);
   }
   return context.join('\x0B');
-***REMOVED***
+};

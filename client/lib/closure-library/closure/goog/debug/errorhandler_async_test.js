@@ -24,7 +24,7 @@ var testCase = new goog.testing.AsyncTestCase(document.title);
 
 testCase.setUpPage = function() {
   this.waitForAsync('setUpPage');
-  this.stepTimeout = 5***REMOVED*** 1000;
+  this.stepTimeout = 5 * 1000;
 
   this.oldTimeout = window.setTimeout;
   this.oldInterval = window.setInterval;
@@ -52,13 +52,13 @@ testCase.setUpPage = function() {
   if (this.testingReqAnimFrame) {
     window.requestAnimationFrame(goog.bind(this.animFrame, this));
   }
-***REMOVED***
+};
 
 testCase.tearDownPage = function() {
   window.setTimeout = this.oldTimeout;
   window.setInterval = this.oldInterval;
   window.requestAnimationFrame = this.oldRequestAnimationFrame;
-***REMOVED***
+};
 
 testCase.onException = function(e) {
   this.exceptions.push(e);
@@ -66,28 +66,28 @@ testCase.onException = function(e) {
       (!this.testingReqAnimFrame || this.animFrameHit)) {
     this.continueTesting();
   }
-***REMOVED***
+};
 
 testCase.onError = function(msg, url, line) {
   this.errors++;
   return true;
-***REMOVED***
+};
 
 testCase.timeOut = function() {
   this.timeoutHit = true;
   throw arguments.callee;
-***REMOVED***
+};
 
 testCase.interval = function() {
   this.intervalHit = true;
   window.clearTimeout(this.intervalId);
   throw arguments.callee;
-***REMOVED***
+};
 
 testCase.animFrame = function() {
   this.animFrameHit = true;
   throw arguments.callee;
-***REMOVED***
+};
 
 testCase.addNewTest('testResults', function() {
   var timeoutHit, intervalHit, animFrameHit;

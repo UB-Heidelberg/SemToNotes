@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Performance test for goog.structs.Map and
-***REMOVED*** goog.labs.structs.Map. To run this test fairly, you would have to
-***REMOVED*** compile this via JsCompiler (with --export_test_functions), and
-***REMOVED*** pull the compiled JS into an empty HTML file.
-***REMOVED***
+/**
+ * @fileoverview Performance test for goog.structs.Map and
+ * goog.labs.structs.Map. To run this test fairly, you would have to
+ * compile this via JsCompiler (with --export_test_functions), and
+ * pull the compiled JS into an empty HTML file.
+ */
 
 goog.provide('goog.labs.structs.mapPerf');
 
@@ -31,58 +31,58 @@ goog.scope(function() {
 var mapPerf = goog.labs.structs.mapPerf;
 
 
-***REMOVED***
-***REMOVED*** @typedef {goog.labs.structs.Map|goog.structs.Map}
-***REMOVED***
+/**
+ * @typedef {goog.labs.structs.Map|goog.structs.Map}
+ */
 mapPerf.MapType;
 
 
-***REMOVED***
-***REMOVED*** @type {goog.testing.PerformanceTable}
-***REMOVED***
+/**
+ * @type {goog.testing.PerformanceTable}
+ */
 mapPerf.perfTable;
 
 
-***REMOVED***
-***REMOVED*** A key list. This maps loop index to key name to be used during
-***REMOVED*** benchmark. This ensure that we do not need to pay the cost of
-***REMOVED*** string concatenation/GC whenever we derive a key from loop index.
-***REMOVED***
-***REMOVED*** This is filled once in setUpPage and then remain unchanged for the
-***REMOVED*** rest of the test case.
-***REMOVED***
-***REMOVED*** @type {Array}
-***REMOVED***
+/**
+ * A key list. This maps loop index to key name to be used during
+ * benchmark. This ensure that we do not need to pay the cost of
+ * string concatenation/GC whenever we derive a key from loop index.
+ *
+ * This is filled once in setUpPage and then remain unchanged for the
+ * rest of the test case.
+ *
+ * @type {Array}
+ */
 mapPerf.keyList = [];
 
 
-***REMOVED***
-***REMOVED*** Maxium number of keys in keyList (and, by extension, the map under
-***REMOVED*** test).
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Maxium number of keys in keyList (and, by extension, the map under
+ * test).
+ * @type {number}
+ */
 mapPerf.MAX_NUM_KEY = 10000;
 
 
-***REMOVED***
-***REMOVED*** Fills the given map with generated key-value pair.
-***REMOVED*** @param {mapPerf.MapType} map The map to fill.
-***REMOVED*** @param {number} numKeys The number of key-value pair to fill.
-***REMOVED***
+/**
+ * Fills the given map with generated key-value pair.
+ * @param {mapPerf.MapType} map The map to fill.
+ * @param {number} numKeys The number of key-value pair to fill.
+ */
 mapPerf.fillMap = function(map, numKeys) {
   goog.asserts.assert(numKeys <= mapPerf.MAX_NUM_KEY);
 
   for (var i = 0; i < numKeys; ++i) {
     map.set(mapPerf.keyList[i], i);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Primes the given map with deletion of keys.
-***REMOVED*** @param {mapPerf.MapType} map The map to prime.
-***REMOVED*** @return {mapPerf.MapType} The primed map (for chaining).
-***REMOVED***
+/**
+ * Primes the given map with deletion of keys.
+ * @param {mapPerf.MapType} map The map to prime.
+ * @return {mapPerf.MapType} The primed map (for chaining).
+ */
 mapPerf.primeMapWithDeletion = function(map) {
   for (var i = 0; i < 1000; ++i) {
     map.set(mapPerf.keyList[i], i);
@@ -91,14 +91,14 @@ mapPerf.primeMapWithDeletion = function(map) {
     map.remove(mapPerf.keyList[i]);
   }
   return map;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Runs performance test for Map#get with the given map.
-***REMOVED*** @param {mapPerf.MapType} map The map to stress.
-***REMOVED*** @param {string} message Message to be put in performance table.
-***REMOVED***
+/**
+ * Runs performance test for Map#get with the given map.
+ * @param {mapPerf.MapType} map The map to stress.
+ * @param {string} message Message to be put in performance table.
+ */
 mapPerf.runPerformanceTestForMapGet = function(map, message) {
   mapPerf.fillMap(map, 10000);
 
@@ -116,14 +116,14 @@ mapPerf.runPerformanceTestForMapGet = function(map, message) {
         }
       },
       message);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Runs performance test for Map#set with the given map.
-***REMOVED*** @param {mapPerf.MapType} map The map to stress.
-***REMOVED*** @param {string} message Message to be put in performance table.
-***REMOVED***
+/**
+ * Runs performance test for Map#set with the given map.
+ * @param {mapPerf.MapType} map The map to stress.
+ * @param {string} message Message to be put in performance table.
+ */
 mapPerf.runPerformanceTestForMapSet = function(map, message) {
   mapPerf.perfTable.run(
       function() {
@@ -138,7 +138,7 @@ mapPerf.runPerformanceTestForMapSet = function(map, message) {
         }
       },
       message);
-***REMOVED***
+};
 
 
 goog.global['setUpPage'] = function() {
@@ -158,44 +158,44 @@ goog.global['setUpPage'] = function() {
   for (var i = 0; i < mapPerf.MAX_NUM_KEY; ++i) {
     mapPerf.keyList.push('k' + i);
   }
-***REMOVED***
+};
 
 
 goog.global['testGetFromLabsMap'] = function() {
   mapPerf.runPerformanceTestForMapGet(
       new goog.labs.structs.Map(), '#get: no previous deletion (Labs)');
-***REMOVED***
+};
 
 
 goog.global['testGetFromOriginalMap'] = function() {
   mapPerf.runPerformanceTestForMapGet(
       new goog.structs.Map(), '#get: no previous deletion (Original)');
-***REMOVED***
+};
 
 
 goog.global['testGetWithPreviousDeletionFromLabsMap'] = function() {
   mapPerf.runPerformanceTestForMapGet(
       mapPerf.primeMapWithDeletion(new goog.labs.structs.Map()),
       '#get: with previous deletion (Labs)');
-***REMOVED***
+};
 
 
 goog.global['testGetWithPreviousDeletionFromOriginalMap'] = function() {
   mapPerf.runPerformanceTestForMapGet(
       mapPerf.primeMapWithDeletion(new goog.structs.Map()),
       '#get: with previous deletion (Original)');
-***REMOVED***
+};
 
 
 goog.global['testSetFromLabsMap'] = function() {
   mapPerf.runPerformanceTestForMapSet(
       new goog.labs.structs.Map(), '#set: no previous deletion (Labs)');
-***REMOVED***
+};
 
 
 goog.global['testSetFromOriginalMap'] = function() {
   mapPerf.runPerformanceTestForMapSet(
       new goog.structs.Map(), '#set: no previous deletion (Original)');
-***REMOVED***
+};
 
 });  // goog.scope

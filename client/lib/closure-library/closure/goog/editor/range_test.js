@@ -553,9 +553,9 @@ function testRangeCreatedInFragmentedDomWithPreviousSiblings() {
 }
 
 
-***REMOVED***
-***REMOVED*** Branched from the tests for goog.dom.SavedCaretRange.
-***REMOVED***
+/**
+ * Branched from the tests for goog.dom.SavedCaretRange.
+ */
 function testSavedCaretRange() {
   var def = $('def-1');
   var jkl = $('jkl-1');
@@ -669,10 +669,10 @@ function testSelectionPreservingNormalize1() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that selectionPreservingNormalize doesn't explode with no
-***REMOVED*** selection in the document.
-***REMOVED***
+/**
+ * Make sure that selectionPreservingNormalize doesn't explode with no
+ * selection in the document.
+ */
 function testSelectionPreservingNormalize2() {
   var parent = $('normalizeTest-3');
   var def = $('def-3');
@@ -731,7 +731,7 @@ function testSelectionPreservingNormalizeAfterPlaceCursorNextTo() {
 }
 
 
-***REMOVED*** Normalize the body and return the normalized range.***REMOVED***
+/** Normalize the body and return the normalized range. */
 function normalizeBody(range) {
   var rangeFactory = goog.editor.range.normalize(range);
   document.body.normalize();
@@ -739,7 +739,7 @@ function normalizeBody(range) {
 }
 
 
-***REMOVED*** Break a text node up into lots of little fragments.***REMOVED***
+/** Break a text node up into lots of little fragments. */
 function fragmentText(text) {
   // NOTE(nicksantos): For some reason, splitText makes IE deeply
   // unhappy to the point where normalize and other normal DOM operations
@@ -761,11 +761,11 @@ function fragmentText(text) {
 }
 
 
-***REMOVED***
-***REMOVED*** Clear the selection by re-parsing the DOM. Then restore the saved
-***REMOVED*** selection.
-***REMOVED*** @param {goog.dom.SavedRange} saved The saved range.
-***REMOVED***
+/**
+ * Clear the selection by re-parsing the DOM. Then restore the saved
+ * selection.
+ * @param {goog.dom.SavedRange} saved The saved range.
+ */
 function clearSelectionAndRestoreSaved(saved) {
   goog.dom.Range.clearSelection(window);
   assertFalse(goog.dom.Range.hasSelection(window));

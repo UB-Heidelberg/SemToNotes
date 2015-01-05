@@ -16,17 +16,17 @@ goog.provide('goog.debug.ErrorReporterTest');
 goog.setTestOnly('goog.debug.ErrorReporterTest');
 
 goog.require('goog.debug.ErrorReporter');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
 
-MockXhrIo = function() {***REMOVED***
+MockXhrIo = function() {};
 
-MockXhrIo.prototype.onReadyStateChangeEntryPoint_ = function() {***REMOVED***
+MockXhrIo.prototype.onReadyStateChangeEntryPoint_ = function() {};
 
-MockXhrIo.protectEntryPoints = function() {***REMOVED***
+MockXhrIo.protectEntryPoints = function() {};
 
 MockXhrIo.lastUrl = null;
 
@@ -35,7 +35,7 @@ MockXhrIo.send = function(url, opt_callback, opt_method, opt_content,
   MockXhrIo.lastUrl = url;
   MockXhrIo.lastContent = opt_content;
   MockXhrIo.lastHeaders = opt_headers;
-***REMOVED***
+};
 
 var errorReporter;
 var originalSetTimeout = window.setTimeout;
@@ -58,7 +58,7 @@ function throwAnErrorWith(script, line, message, opt_stack) {
   var error = {
     message: message,
     fileName: script,
-    lineNumber: line***REMOVED***
+    lineNumber: line};
   if (opt_stack) {
     error['stack'] = opt_stack;
   }
@@ -197,7 +197,7 @@ function testProtectAdditionalEntryPoint_nonIE() {
   stubs.set(goog.userAgent, 'IE', false);
 
   errorReporter = goog.debug.ErrorReporter.install('/errorreporter');
-  var fn = function() {***REMOVED***
+  var fn = function() {};
   var protectedFn = errorReporter.protectAdditionalEntryPoint(fn);
   assertNotNull(protectedFn);
   assertNotEquals(fn, protectedFn);
@@ -208,7 +208,7 @@ function testProtectAdditionalEntryPoint_IE() {
   stubs.set(goog.userAgent, 'isVersionOrHigher', goog.functions.FALSE);
 
   errorReporter = goog.debug.ErrorReporter.install('/errorreporter');
-  var fn = function() {***REMOVED***
+  var fn = function() {};
   var protectedFn = errorReporter.protectAdditionalEntryPoint(fn);
   assertNull(protectedFn);
 }
@@ -216,7 +216,7 @@ function testProtectAdditionalEntryPoint_IE() {
 function testHandleException_dispatchesEvent() {
   errorReporter = goog.debug.ErrorReporter.install('/errorreporter');
   var loggedErrors = 0;
-***REMOVED***errorReporter,
+  goog.events.listen(errorReporter,
       goog.debug.ErrorReporter.ExceptionEvent.TYPE,
       function(event) {
         assertNotNullNorUndefined(event.error);
@@ -232,8 +232,8 @@ function testHandleException_includesContext() {
   errorReporter = goog.debug.ErrorReporter.install('/errorreporter');
   var loggedErrors = 0;
   var testError = new Error('test error');
-  var testContext = { 'contextParam' : 'contextValue'***REMOVED*****REMOVED***
-***REMOVED***errorReporter,
+  var testContext = { 'contextParam' : 'contextValue' };
+  goog.events.listen(errorReporter,
       goog.debug.ErrorReporter.ExceptionEvent.TYPE,
       function(event) {
         assertNotNullNorUndefined(event.error);
@@ -252,7 +252,7 @@ function testContextProvider() {
       });
   var loggedErrors = 0;
   var testError = new Error('test error');
-***REMOVED***errorReporter,
+  goog.events.listen(errorReporter,
       goog.debug.ErrorReporter.ExceptionEvent.TYPE,
       function(event) {
         assertNotNullNorUndefined(event.error);
@@ -271,7 +271,7 @@ function testContextProvider_withOtherContext() {
       });
   var loggedErrors = 0;
   var testError = new Error('test error');
-***REMOVED***errorReporter,
+  goog.events.listen(errorReporter,
       goog.debug.ErrorReporter.ExceptionEvent.TYPE,
       function(event) {
         assertNotNullNorUndefined(event.error);
@@ -287,7 +287,7 @@ function testContextProvider_withOtherContext() {
 
 function testHandleException_ignoresExceptionsDuringEventDispatch() {
   errorReporter = goog.debug.ErrorReporter.install('/errorreporter');
-***REMOVED***errorReporter,
+  goog.events.listen(errorReporter,
       goog.debug.ErrorReporter.ExceptionEvent.TYPE,
       function(event) {
         fail('This exception should be swallowed.');

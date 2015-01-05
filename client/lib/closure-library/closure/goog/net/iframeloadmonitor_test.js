@@ -16,7 +16,7 @@ goog.provide('goog.net.IframeLoadMonitorTest');
 goog.setTestOnly('goog.net.IframeLoadMonitorTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.IframeLoadMonitor');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.jsunit');
@@ -27,7 +27,7 @@ var TEST_FRAME_SRCS = ['iframeloadmonitor_test_frame.html',
 
 // Create a new test case.
 var iframeLoaderTestCase = new goog.testing.AsyncTestCase(document.title);
-iframeLoaderTestCase.stepTimeout = 4***REMOVED*** 1000;
+iframeLoaderTestCase.stepTimeout = 4 * 1000;
 
 // Array holding all iframe load monitors.
 iframeLoaderTestCase.iframeLoadMonitors_ = [];
@@ -36,10 +36,10 @@ iframeLoaderTestCase.iframeLoadMonitors_ = [];
 iframeLoaderTestCase.singleComplete_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Sets up the test environment, adds tests and sets up the worker pools.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Sets up the test environment, adds tests and sets up the worker pools.
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.setUpPage = function() {
   this.log('Setting tests up');
   iframeLoaderTestCase.waitForAsync('loading iframes');
@@ -49,7 +49,7 @@ iframeLoaderTestCase.setUpPage = function() {
   // Load single frame
   var frame = dom.createDom('iframe');
   this.iframeLoadMonitors_.push(new goog.net.IframeLoadMonitor(frame));
-***REMOVED***this.iframeLoadMonitors_[0],
+  goog.events.listen(this.iframeLoadMonitors_[0],
       goog.net.IframeLoadMonitor.LOAD_EVENT, this);
   var frameParent = dom.getElement('frame_parent');
   dom.appendChild(frameParent, frame);
@@ -59,40 +59,40 @@ iframeLoaderTestCase.setUpPage = function() {
   // Load single frame with content check
   var frame1 = dom.createDom('iframe');
   this.iframeLoadMonitors_.push(new goog.net.IframeLoadMonitor(frame1, true));
-***REMOVED***this.iframeLoadMonitors_[1],
+  goog.events.listen(this.iframeLoadMonitors_[1],
       goog.net.IframeLoadMonitor.LOAD_EVENT, this);
   var frameParent = dom.getElement('frame_parent');
   dom.appendChild(frameParent, frame1);
   this.log('Loading frame with content check at: ' + TEST_FRAME_SRCS[0]);
   frame1.src = TEST_FRAME_SRCS[0];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles any events fired
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Handles any events fired
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.handleEvent = function(e) {
   this.log('handleEvent, type: ' + e.type);
   if (e.type == goog.net.IframeLoadMonitor.LOAD_EVENT) {
     this.singleComplete_++;
     this.callbacksComplete();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if all the load callbacks are done
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Checks if all the load callbacks are done
+ * @this {goog.testing.AsyncTestCase}
+ */
 iframeLoaderTestCase.callbacksComplete = function() {
   if (this.singleComplete_ == 2) {
     iframeLoaderTestCase.continueTesting();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** Tests the results.***REMOVED***
+/** Tests the results. */
 iframeLoaderTestCase.addNewTest('testResults', function() {
   this.log('getting test results');
   for (var i = 0; i < this.iframeLoadMonitors_.length; i++) {
@@ -101,5 +101,5 @@ iframeLoaderTestCase.addNewTest('testResults', function() {
 });
 
 
-***REMOVED*** Standalone Closure Test Runner.***REMOVED***
+/** Standalone Closure Test Runner. */
 G_testRunner.initialize(iframeLoaderTestCase);

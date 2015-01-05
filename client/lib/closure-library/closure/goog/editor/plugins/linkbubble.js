@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for bubble plugins.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Base class for bubble plugins.
+ *
+ */
 
 goog.provide('goog.editor.plugins.LinkBubble');
 goog.provide('goog.editor.plugins.LinkBubble.Action');
@@ -36,222 +36,222 @@ goog.require('goog.window');
 
 
 
-***REMOVED***
-***REMOVED*** Property bubble plugin for links.
-***REMOVED*** @param {...!goog.editor.plugins.LinkBubble.Action} var_args List of
-***REMOVED***     extra actions supported by the bubble.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractBubblePlugin}
-***REMOVED***
+/**
+ * Property bubble plugin for links.
+ * @param {...!goog.editor.plugins.LinkBubble.Action} var_args List of
+ *     extra actions supported by the bubble.
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractBubblePlugin}
+ */
 goog.editor.plugins.LinkBubble = function(var_args) {
   goog.editor.plugins.LinkBubble.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** List of extra actions supported by the bubble.
-  ***REMOVED*** @type {Array.<!goog.editor.plugins.LinkBubble.Action>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * List of extra actions supported by the bubble.
+   * @type {Array.<!goog.editor.plugins.LinkBubble.Action>}
+   * @private
+   */
   this.extraActions_ = goog.array.toArray(arguments);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** List of spans corresponding to the extra actions.
-  ***REMOVED*** @type {Array.<!Element>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * List of spans corresponding to the extra actions.
+   * @type {Array.<!Element>}
+   * @private
+   */
   this.actionSpans_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A list of whitelisted URL schemes which are safe to open.
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A list of whitelisted URL schemes which are safe to open.
+   * @type {Array.<string>}
+   * @private
+   */
   this.safeToOpenSchemes_ = ['http', 'https', 'ftp'];
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.LinkBubble,
     goog.editor.plugins.AbstractBubblePlugin);
 
 
-***REMOVED***
-***REMOVED*** Element id for the link text.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the link text.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.LINK_TEXT_ID_ = 'tr_link-text';
 
 
-***REMOVED***
-***REMOVED*** Element id for the test link span.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the test link span.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.TEST_LINK_SPAN_ID_ = 'tr_test-link-span';
 
 
-***REMOVED***
-***REMOVED*** Element id for the test link.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the test link.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.TEST_LINK_ID_ = 'tr_test-link';
 
 
-***REMOVED***
-***REMOVED*** Element id for the change link span.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the change link span.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.CHANGE_LINK_SPAN_ID_ = 'tr_change-link-span';
 
 
-***REMOVED***
-***REMOVED*** Element id for the link.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the link.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.CHANGE_LINK_ID_ = 'tr_change-link';
 
 
-***REMOVED***
-***REMOVED*** Element id for the delete link span.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the delete link span.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.DELETE_LINK_SPAN_ID_ = 'tr_delete-link-span';
 
 
-***REMOVED***
-***REMOVED*** Element id for the delete link.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the delete link.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.DELETE_LINK_ID_ = 'tr_delete-link';
 
 
-***REMOVED***
-***REMOVED*** Element id for the link bubble wrapper div.
-***REMOVED*** type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element id for the link bubble wrapper div.
+ * type {string}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.LINK_DIV_ID_ = 'tr_link-div';
 
 
-***REMOVED***
-***REMOVED*** @desc Text label for link that lets the user click it to see where the link
-***REMOVED***     this bubble is for point to.
-***REMOVED***
+/**
+ * @desc Text label for link that lets the user click it to see where the link
+ *     this bubble is for point to.
+ */
 var MSG_LINK_BUBBLE_TEST_LINK = goog.getMsg('Go to link: ');
 
 
-***REMOVED***
-***REMOVED*** @desc Label that pops up a dialog to change the link.
-***REMOVED***
+/**
+ * @desc Label that pops up a dialog to change the link.
+ */
 var MSG_LINK_BUBBLE_CHANGE = goog.getMsg('Change');
 
 
-***REMOVED***
-***REMOVED*** @desc Label that allow the user to remove this link.
-***REMOVED***
+/**
+ * @desc Label that allow the user to remove this link.
+ */
 var MSG_LINK_BUBBLE_REMOVE = goog.getMsg('Remove');
 
 
-***REMOVED***
-***REMOVED*** Whether to stop leaking the page's url via the referrer header when the
-***REMOVED*** link text link is clicked.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to stop leaking the page's url via the referrer header when the
+ * link text link is clicked.
+ * @type {boolean}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.stopReferrerLeaks_ = false;
 
 
-***REMOVED***
-***REMOVED*** Whether to block opening links with a non-whitelisted URL scheme.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to block opening links with a non-whitelisted URL scheme.
+ * @type {boolean}
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.blockOpeningUnsafeSchemes_ =
     true;
 
 
-***REMOVED***
-***REMOVED*** Tells the plugin to stop leaking the page's url via the referrer header when
-***REMOVED*** the link text link is clicked. When the user clicks on a link, the
-***REMOVED*** browser makes a request for the link url, passing the url of the current page
-***REMOVED*** in the request headers. If the user wants the current url to be kept secret
-***REMOVED*** (e.g. an unpublished document), the owner of the url that was clicked will
-***REMOVED*** see the secret url in the request headers, and it will no longer be a secret.
-***REMOVED*** Calling this method will not send a referrer header in the request, just as
-***REMOVED*** if the user had opened a blank window and typed the url in themselves.
-***REMOVED***
+/**
+ * Tells the plugin to stop leaking the page's url via the referrer header when
+ * the link text link is clicked. When the user clicks on a link, the
+ * browser makes a request for the link url, passing the url of the current page
+ * in the request headers. If the user wants the current url to be kept secret
+ * (e.g. an unpublished document), the owner of the url that was clicked will
+ * see the secret url in the request headers, and it will no longer be a secret.
+ * Calling this method will not send a referrer header in the request, just as
+ * if the user had opened a blank window and typed the url in themselves.
+ */
 goog.editor.plugins.LinkBubble.prototype.stopReferrerLeaks = function() {
   // TODO(user): Right now only 2 plugins have this API to stop
   // referrer leaks. If more plugins need to do this, come up with a way to
   // enable the functionality in all plugins at once. Same thing for
   // setBlockOpeningUnsafeSchemes and associated functionality.
   this.stopReferrerLeaks_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tells the plugin whether to block URLs with schemes not in the whitelist.
-***REMOVED*** If blocking is enabled, this plugin will not linkify the link in the bubble
-***REMOVED*** popup.
-***REMOVED*** @param {boolean} blockOpeningUnsafeSchemes Whether to block non-whitelisted
-***REMOVED***     schemes.
-***REMOVED***
+/**
+ * Tells the plugin whether to block URLs with schemes not in the whitelist.
+ * If blocking is enabled, this plugin will not linkify the link in the bubble
+ * popup.
+ * @param {boolean} blockOpeningUnsafeSchemes Whether to block non-whitelisted
+ *     schemes.
+ */
 goog.editor.plugins.LinkBubble.prototype.setBlockOpeningUnsafeSchemes =
     function(blockOpeningUnsafeSchemes) {
   this.blockOpeningUnsafeSchemes_ = blockOpeningUnsafeSchemes;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a whitelist of allowed URL schemes that are safe to open.
-***REMOVED*** Schemes should all be in lowercase. If the plugin is set to block opening
-***REMOVED*** unsafe schemes, user-entered URLs will be converted to lowercase and checked
-***REMOVED*** against this list. The whitelist has no effect if blocking is not enabled.
-***REMOVED*** @param {Array.<string>} schemes String array of URL schemes to allow (http,
-***REMOVED***     https, etc.).
-***REMOVED***
+/**
+ * Sets a whitelist of allowed URL schemes that are safe to open.
+ * Schemes should all be in lowercase. If the plugin is set to block opening
+ * unsafe schemes, user-entered URLs will be converted to lowercase and checked
+ * against this list. The whitelist has no effect if blocking is not enabled.
+ * @param {Array.<string>} schemes String array of URL schemes to allow (http,
+ *     https, etc.).
+ */
 goog.editor.plugins.LinkBubble.prototype.setSafeToOpenSchemes =
     function(schemes) {
   this.safeToOpenSchemes_ = schemes;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.getTrogClassId = function() {
   return 'LinkBubble';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.isSupportedCommand =
     function(command) {
   return command == goog.editor.Command.UPDATE_LINK_BUBBLE;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.execCommandInternal =
     function(command, var_args) {
   if (command == goog.editor.Command.UPDATE_LINK_BUBBLE) {
     this.updateLink_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the href in the link bubble with a new link.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the href in the link bubble with a new link.
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.updateLink_ = function() {
   var targetEl = this.getTargetElement();
   this.closeBubble();
   this.createBubble(targetEl);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.getBubbleTargetFromSelection =
     function(selectedElement) {
   var bubbleTarget = goog.dom.getAncestorByTagNameAndClass(selectedElement,
@@ -276,56 +276,56 @@ goog.editor.plugins.LinkBubble.prototype.getBubbleTargetFromSelection =
     }
   }
 
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (bubbleTarget);
-***REMOVED***
+  return /** @type {Element} */ (bubbleTarget);
+};
 
 
-***REMOVED***
-***REMOVED*** Set the optional function for getting the "test" link of a url.
-***REMOVED*** @param {function(string) : string} func The function to use.
-***REMOVED***
+/**
+ * Set the optional function for getting the "test" link of a url.
+ * @param {function(string) : string} func The function to use.
+ */
 goog.editor.plugins.LinkBubble.prototype.setTestLinkUrlFn = function(func) {
   this.testLinkUrlFn_ = func;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the target element url for the bubble.
-***REMOVED*** @return {string} The url href.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the target element url for the bubble.
+ * @return {string} The url href.
+ * @protected
+ */
 goog.editor.plugins.LinkBubble.prototype.getTargetUrl = function() {
   // Get the href-attribute through getAttribute() rather than the href property
   // because Google-Toolbar on Firefox with "Send with Gmail" turned on
   // modifies the href-property of 'mailto:' links but leaves the attribute
   // untouched.
   return this.getTargetElement().getAttribute('href') || '';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.getBubbleType = function() {
   return goog.dom.TagName.A;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.getBubbleTitle = function() {
   return goog.ui.editor.messages.MSG_LINK_CAPTION;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the message to display for testing a link.
-***REMOVED*** @return {string} The message for testing a link.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the message to display for testing a link.
+ * @return {string} The message for testing a link.
+ * @protected
+ */
 goog.editor.plugins.LinkBubble.prototype.getTestLinkMessage = function() {
   return MSG_LINK_BUBBLE_TEST_LINK;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkBubble.prototype.createBubbleContents = function(
     bubbleContainer) {
   var linkObj = this.getLinkToTextObj_();
@@ -397,47 +397,47 @@ goog.editor.plugins.LinkBubble.prototype.createBubbleContents = function(
   bubbleContents.appendChild(removeLinkSpan);
 
   goog.dom.appendChild(bubbleContainer, bubbleContents);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests the link by opening it in a new tab/window. Should be used as the
-***REMOVED*** click event handler for the test pseudo-link.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Tests the link by opening it in a new tab/window. Should be used as the
+ * click event handler for the test pseudo-link.
+ * @protected
+ */
 goog.editor.plugins.LinkBubble.prototype.testLink = function() {
   goog.window.open(this.getTestLinkAction_(),
       {
         'target': '_blank',
         'noreferrer': this.stopReferrerLeaks_
       }, this.getFieldObject().getAppWindow());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the URL should be considered invalid.  This always returns
-***REMOVED*** false in the base class, and should be overridden by subclasses that wish
-***REMOVED*** to impose validity rules on URLs.
-***REMOVED*** @param {string} url The url to check.
-***REMOVED*** @return {boolean} Whether the URL should be considered invalid.
-***REMOVED***
+/**
+ * Returns whether the URL should be considered invalid.  This always returns
+ * false in the base class, and should be overridden by subclasses that wish
+ * to impose validity rules on URLs.
+ * @param {string} url The url to check.
+ * @return {boolean} Whether the URL should be considered invalid.
+ */
 goog.editor.plugins.LinkBubble.prototype.isInvalidUrl = goog.functions.FALSE;
 
 
-***REMOVED***
-***REMOVED*** Gets the text to display for a link, based on the type of link
-***REMOVED*** @return {!Object} Returns an object of the form:
-***REMOVED***     {linkText: displayTextForLinkTarget, valid: ifTheLinkIsValid}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the text to display for a link, based on the type of link
+ * @return {!Object} Returns an object of the form:
+ *     {linkText: displayTextForLinkTarget, valid: ifTheLinkIsValid}.
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.getLinkToTextObj_ = function() {
   var isError;
   var targetUrl = this.getTargetUrl();
 
   if (this.isInvalidUrl(targetUrl)) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc Message shown in a link bubble when the link is not a valid url.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc Message shown in a link bubble when the link is not a valid url.
+     */
     var MSG_INVALID_URL_LINK_BUBBLE = goog.getMsg('invalid url');
     targetUrl = MSG_INVALID_URL_LINK_BUBBLE;
     isError = true;
@@ -445,15 +445,15 @@ goog.editor.plugins.LinkBubble.prototype.getLinkToTextObj_ = function() {
     targetUrl = targetUrl.substring(7); // 7 == "mailto:".length
   }
 
-  return {linkText: targetUrl, valid: !isError***REMOVED***
-***REMOVED***
+  return {linkText: targetUrl, valid: !isError};
+};
 
 
-***REMOVED***
-***REMOVED*** Shows the link dialog.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Shows the link dialog.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.showLinkDialog_ = function(e) {
   // Needed when this occurs due to an ENTER key event, else the newly created
   // dialog manages to have its OK button pressed, causing it to disappear.
@@ -461,16 +461,16 @@ goog.editor.plugins.LinkBubble.prototype.showLinkDialog_ = function(e) {
 
   this.getFieldObject().execCommand(goog.editor.Command.MODAL_LINK_EDITOR,
       new goog.editor.Link(
-         ***REMOVED*****REMOVED*** @type {HTMLAnchorElement}***REMOVED*** (this.getTargetElement()),
+          /** @type {HTMLAnchorElement} */ (this.getTargetElement()),
           false));
   this.closeBubble();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deletes the link associated with the bubble
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Deletes the link associated with the bubble
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.deleteLink_ = function() {
   this.getFieldObject().dispatchBeforeChange();
 
@@ -483,14 +483,14 @@ goog.editor.plugins.LinkBubble.prototype.deleteLink_ = function() {
 
   this.getFieldObject().dispatchChange();
   this.getFieldObject().focus();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the proper state for the action links.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets the proper state for the action links.
+ * @protected
+ * @override
+ */
 goog.editor.plugins.LinkBubble.prototype.onShow = function() {
   var linkDiv = this.dom_.getElement(
       goog.editor.plugins.LinkBubble.LINK_DIV_ID_);
@@ -511,59 +511,59 @@ goog.editor.plugins.LinkBubble.prototype.onShow = function() {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the url for the bubble test link.  The test link is the link in the
-***REMOVED*** bubble the user can click on to make sure the link they entered is correct.
-***REMOVED*** @return {string} The url for the bubble link href.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the url for the bubble test link.  The test link is the link in the
+ * bubble the user can click on to make sure the link they entered is correct.
+ * @return {string} The url for the bubble link href.
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.getTestLinkAction_ = function() {
   var targetUrl = this.getTargetUrl();
   return this.testLinkUrlFn_ ? this.testLinkUrlFn_(targetUrl) : targetUrl;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether the plugin should open the given url in a new window.
-***REMOVED*** @param {string} url The url to check.
-***REMOVED*** @return {boolean} If the plugin should open the given url in a new window.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Checks whether the plugin should open the given url in a new window.
+ * @param {string} url The url to check.
+ * @return {boolean} If the plugin should open the given url in a new window.
+ * @protected
+ */
 goog.editor.plugins.LinkBubble.prototype.shouldOpenUrl = function(url) {
   return !this.blockOpeningUnsafeSchemes_ || this.isSafeSchemeToOpen_(url);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether or not a url has a scheme which is safe to open.
-***REMOVED*** Schemes like javascript are unsafe due to the possibility of XSS.
-***REMOVED*** @param {string} url A url.
-***REMOVED*** @return {boolean} Whether the url has a safe scheme.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines whether or not a url has a scheme which is safe to open.
+ * Schemes like javascript are unsafe due to the possibility of XSS.
+ * @param {string} url A url.
+ * @return {boolean} Whether the url has a safe scheme.
+ * @private
+ */
 goog.editor.plugins.LinkBubble.prototype.isSafeSchemeToOpen_ =
     function(url) {
   var scheme = goog.uri.utils.getScheme(url) || 'http';
   return goog.array.contains(this.safeToOpenSchemes_, scheme.toLowerCase());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Constructor for extra actions that can be added to the link bubble.
-***REMOVED*** @param {string} spanId The ID for the span showing the action.
-***REMOVED*** @param {string} linkId The ID for the link showing the action.
-***REMOVED*** @param {string} message The text for the link showing the action.
-***REMOVED*** @param {function(string):boolean} toShowFn Test function to determine whether
-***REMOVED***     to show the action for the given URL.
-***REMOVED*** @param {function(string):void} actionFn Action function to run when the
-***REMOVED***     action is clicked.  Takes the current target URL as a parameter.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructor for extra actions that can be added to the link bubble.
+ * @param {string} spanId The ID for the span showing the action.
+ * @param {string} linkId The ID for the link showing the action.
+ * @param {string} message The text for the link showing the action.
+ * @param {function(string):boolean} toShowFn Test function to determine whether
+ *     to show the action for the given URL.
+ * @param {function(string):void} actionFn Action function to run when the
+ *     action is clicked.  Takes the current target URL as a parameter.
+ * @constructor
+ * @final
+ */
 goog.editor.plugins.LinkBubble.Action = function(spanId, linkId, message,
     toShowFn, actionFn) {
   this.spanId_ = spanId;
@@ -571,4 +571,4 @@ goog.editor.plugins.LinkBubble.Action = function(spanId, linkId, message,
   this.message_ = message;
   this.toShowFn_ = toShowFn;
   this.actionFn_ = actionFn;
-***REMOVED***
+};

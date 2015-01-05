@@ -82,7 +82,7 @@ function testExpandIconAfterAddChild() {
 
 function testExpandEvents() {
   var n = new goog.ui.tree.BaseNode('');
-  n.getTree = function() {***REMOVED***
+  n.getTree = function() {};
   var expanded = false;
   n.setExpanded(expanded);
   assertEquals(expanded, n.getExpanded());
@@ -103,7 +103,7 @@ function testExpandEvents() {
 
 function testExpandEvents2() {
   var n = new goog.ui.tree.BaseNode('');
-  n.getTree = function() {***REMOVED***
+  n.getTree = function() {};
   var expanded = true;
   n.setExpanded(expanded);
   assertEquals(expanded, n.getExpanded());
@@ -124,7 +124,7 @@ function testExpandEvents2() {
 
 function testExpandEventsPreventDefault() {
   var n = new goog.ui.tree.BaseNode('');
-  n.getTree = function() {***REMOVED***
+  n.getTree = function() {};
   var expanded = true;
   n.setExpanded(expanded);
   assertEquals(expanded, n.getExpanded());
@@ -145,7 +145,7 @@ function testExpandEventsPreventDefault() {
 
 function testExpandEventsPreventDefault2() {
   var n = new goog.ui.tree.BaseNode('');
-  n.getTree = function() {***REMOVED***
+  n.getTree = function() {};
   var expanded = false;
   n.setExpanded(expanded);
   assertEquals(expanded, n.getExpanded());

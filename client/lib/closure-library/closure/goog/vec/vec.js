@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Supplies global data types and constants for the vector math
-***REMOVED***     library.
-***REMOVED***
+/**
+ * @fileoverview Supplies global data types and constants for the vector math
+ *     library.
+ */
 goog.provide('goog.vec');
 goog.provide('goog.vec.AnyType');
 goog.provide('goog.vec.ArrayType');
@@ -25,14 +25,14 @@ goog.provide('goog.vec.Float64');
 goog.provide('goog.vec.Number');
 
 
-***REMOVED***
-***REMOVED*** On platforms that don't have native Float32Array or Float64Array support we
-***REMOVED*** use a javascript implementation so that this math library can be used on all
-***REMOVED*** platforms.
-***REMOVED*** @suppress {extraRequire}
-***REMOVED***
+/**
+ * On platforms that don't have native Float32Array or Float64Array support we
+ * use a javascript implementation so that this math library can be used on all
+ * platforms.
+ * @suppress {extraRequire}
+ */
 goog.require('goog.vec.Float32Array');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.vec.Float64Array');
 
 // All vector and matrix operations are based upon arrays of numbers using
@@ -40,34 +40,34 @@ goog.require('goog.vec.Float64Array');
 // Numbers.
 
 
-***REMOVED*** @typedef {!Float32Array}***REMOVED***
+/** @typedef {!Float32Array} */
 goog.vec.Float32;
 
 
-***REMOVED*** @typedef {!Float64Array}***REMOVED***
+/** @typedef {!Float64Array} */
 goog.vec.Float64;
 
 
-***REMOVED*** @typedef {!Array.<number>}***REMOVED***
+/** @typedef {!Array.<number>} */
 goog.vec.Number;
 
 
-***REMOVED*** @typedef {!goog.vec.Float32|!goog.vec.Float64|!goog.vec.Number}***REMOVED***
+/** @typedef {!goog.vec.Float32|!goog.vec.Float64|!goog.vec.Number} */
 goog.vec.AnyType;
 
 
-***REMOVED***
-***REMOVED*** @deprecated Use AnyType.
-***REMOVED*** @typedef {!Float32Array|!Array.<number>}
-***REMOVED***
+/**
+ * @deprecated Use AnyType.
+ * @typedef {!Float32Array|!Array.<number>}
+ */
 goog.vec.ArrayType;
 
 
-***REMOVED***
-***REMOVED*** For graphics work, 6 decimal places of accuracy are typically all that is
-***REMOVED*** required.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * For graphics work, 6 decimal places of accuracy are typically all that is
+ * required.
+ *
+ * @type {number}
+ * @const
+ */
 goog.vec.EPSILON = 1e-6;

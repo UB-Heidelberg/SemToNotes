@@ -1,4 +1,4 @@
-/*global describe, env, expect, it***REMOVED***
+/*global describe, env, expect, it */
 describe('jsdoc/src/scanner', function() {
     var path = require('jsdoc/path');
     var scanner = require('jsdoc/src/scanner');

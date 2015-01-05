@@ -1,12 +1,12 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: pupius@google.com (Daniel Pupius)***REMOVED***
-/* Author: cibu@google.com (Cibu Johny)***REMOVED***
+/* Author: pupius@google.com (Daniel Pupius) */
+/* Author: cibu@google.com (Cibu Johny) */
 
 .goog-char-picker {
   background-color: #ddd;
@@ -14,7 +14,7 @@
   border: 1px solid #777;
 }
 
-/* goog.ui.HoverCard***REMOVED***
+/* goog.ui.HoverCard */
 .goog-char-picker-hovercard {
   border: solid 5px #ffcc33;
   min-width: 64px;
@@ -40,8 +40,8 @@
 }
 
 /*
-***REMOVED*** grid
-***REMOVED***
+ * grid
+ */
 .goog-char-picker-grid-container {
   border: 1px solid #777;
   background-color: #fff;
@@ -83,8 +83,8 @@
 }
 
 /*
-***REMOVED*** Hex entry
-***REMOVED***
+ * Hex entry
+ */
 
 .goog-char-picker-uplus {
 }
@@ -101,8 +101,8 @@
 }
 
 /*
-***REMOVED*** Grid buttons
-***REMOVED***
+ * Grid buttons
+ */
 .goog-char-picker-grid .goog-flat-button {
   position: relative;
   width: 24px;
@@ -121,10 +121,10 @@
 }
 
 /*
-***REMOVED*** goog.ui.Menu
-***REMOVED***
+ * goog.ui.Menu
+ */
 
-/* State: resting.***REMOVED***
+/* State: resting. */
 .goog-char-picker-button {
   border-width: 0px;
   margin: 0;
@@ -133,7 +133,7 @@
   background-position: center left;
 }
 
-/* State: resting.***REMOVED***
+/* State: resting. */
 .goog-char-picker-menu {
   background-color: #fff;
   border-color: #ccc #666 #666 #ccc;
@@ -150,15 +150,15 @@
 }
 
 /*
-***REMOVED*** goog.ui.MenuItem
-***REMOVED***
+ * goog.ui.MenuItem
+ */
 
-/* State: resting.***REMOVED***
+/* State: resting. */
 .goog-char-picker-menu .goog-menuitem {
   color: #000;
   list-style: none;
   margin: 0;
-  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut.***REMOVED***
+  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut. */
   padding: 1px 32px 1px 8px;
   white-space: nowrap;
 }
@@ -167,7 +167,7 @@
   color: #000;
   list-style: none;
   margin: 0;
-  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut.***REMOVED***
+  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut. */
   padding: 1px 32px 1px 8px;
   white-space: nowrap;
 }
@@ -178,26 +178,26 @@
   font-weight: bold;
   list-style: none;
   margin: 0;
-  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut.***REMOVED***
+  /* 28px on the left for icon or checkbox; 10ex on the right for shortcut. */
   padding: 3px 32px 3px 8px;
   white-space: nowrap;
 }
 
-/* BiDi override for the resting state.***REMOVED***
+/* BiDi override for the resting state. */
 .goog-char-picker-menu .goog-menuitem-rtl {
-  /* Flip left/right padding for BiDi.***REMOVED***
+  /* Flip left/right padding for BiDi. */
   padding: 2px 16px 2px 32px !important;
 }
 
-/* State: hover.***REMOVED***
+/* State: hover. */
 .goog-char-picker-menu .goog-menuitem-highlight {
   background-color: #d6e9f8;
 }
 /*
-***REMOVED*** goog.ui.MenuSeparator
-***REMOVED***
+ * goog.ui.MenuSeparator
+ */
 
-/* State: resting.***REMOVED***
+/* State: resting. */
 .goog-char-picker-menu .goog-menuseparator {
   border-top: 1px solid #ccc;
   margin: 2px 0;

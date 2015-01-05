@@ -21,7 +21,7 @@ goog.require('goog.dom.browserrange');
 goog.require('goog.editor.Field');
 goog.require('goog.editor.plugins.LoremIpsum');
 goog.require('goog.editor.plugins.UndoRedo');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.PropertyReplacer');
@@ -51,7 +51,7 @@ function setUp() {
       });
   mockEditableField.getHashCode = function() {
     return 'fieldId';
- ***REMOVED*****REMOVED***
+  };
 
   undoPlugin = new goog.editor.plugins.UndoRedo();
   undoPlugin.registerFieldObject(mockEditableField);
@@ -60,7 +60,7 @@ function setUp() {
   mockState.fieldHashCode = 'fieldId';
   mockState.isAsynchronous = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
   // Don't bother mocking the inherited event target pieces of the state.
   // If we don't do this, then mocked asynchronous undos are a lot harder and
   // that behavior is tested as part of the UndoRedoManager tests.
@@ -144,9 +144,9 @@ function testHandleKeyboardShortcut_TrogStates() {
   undoPlugin.undoManager_.undo();
   mockEditableField.$reset();
 
-  var stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false***REMOVED***
-  var stubRedoEvent = {ctrlKey: true, altKey: false, shiftKey: true***REMOVED***
-  var stubRedoEvent2 = {ctrlKey: true, altKey: false, shiftKey: false***REMOVED***
+  var stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false};
+  var stubRedoEvent = {ctrlKey: true, altKey: false, shiftKey: true};
+  var stubRedoEvent2 = {ctrlKey: true, altKey: false, shiftKey: false};
   var result;
 
   // Test handling Trogedit undos. Should always call EditableField's
@@ -187,7 +187,7 @@ function testHandleKeyboardShortcut_TrogStates() {
 }
 
 function testHandleKeyboardShortcut_NotTrogStates() {
-  var stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false***REMOVED***
+  var stubUndoEvent = {ctrlKey: true, altKey: false, shiftKey: false};
 
   // Trogedit undo states all have a fieldHashCode, nulling that out makes this
   // state be treated as a non-Trogedit undo-redo state.
@@ -277,7 +277,7 @@ function testUpdateCurrentState_() {
   // behavior.
   editableField.getInjectableContents = function(contents, styles) {
     return contents == '' ? 'foo' : contents;
- ***REMOVED*****REMOVED***
+  };
   editableField.setHtml(false, 'foo');
   undoPlugin.updateCurrentState_(editableField);
   assertEquals(currentState, undoPlugin.currentStates_[fieldHashCode]);
@@ -340,10 +340,10 @@ function testUpdateCurrentState_() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that change events get restarted properly after an undo call despite
-***REMOVED*** an exception being thrown in the process (see bug/1991234).
-***REMOVED***
+/**
+ * Tests that change events get restarted properly after an undo call despite
+ * an exception being thrown in the process (see bug/1991234).
+ */
 function testUndoRestartsChangeEvents() {
   undoPlugin.registerFieldObject(editableField);
   editableField.makeEditable(editableField);
@@ -414,23 +414,23 @@ function testRefreshCurrentState() {
 }
 
 
-***REMOVED***
-***REMOVED*** Returns the CursorPosition for the selection currently in the Field.
-***REMOVED*** @return {goog.editor.plugins.UndoRedo.CursorPosition_}
-***REMOVED***
+/**
+ * Returns the CursorPosition for the selection currently in the Field.
+ * @return {goog.editor.plugins.UndoRedo.CursorPosition_}
+ */
 function getCurrentCursorPosition() {
   return undoPlugin.getCursorPosition_(editableField);
 }
 
 
-***REMOVED***
-***REMOVED*** Compares two cursor positions and returns whether they are equal.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_} a
-***REMOVED***     A cursor position.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_} b
-***REMOVED***     A cursor position.
-***REMOVED*** @return {boolean} Whether the positions are equal.
-***REMOVED***
+/**
+ * Compares two cursor positions and returns whether they are equal.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_} a
+ *     A cursor position.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_} b
+ *     A cursor position.
+ * @return {boolean} Whether the positions are equal.
+ */
 function cursorPositionsEqual(a, b) {
   if (!a && !b) {
     return true;
@@ -482,7 +482,7 @@ function testEquals() {
 }
 
 
-***REMOVED*** @bug 1359214***REMOVED***
+/** @bug 1359214 */
 function testClearUndoHistory() {
   var undoRedoPlugin = new goog.editor.plugins.UndoRedo();
   editableField.registerPlugin(undoRedoPlugin);
@@ -502,7 +502,7 @@ function testClearUndoHistory() {
   editableField.dispatchChange();
 
   var numCalls = 0;
-***REMOVED***editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
       function() {
         numCalls++;
       });

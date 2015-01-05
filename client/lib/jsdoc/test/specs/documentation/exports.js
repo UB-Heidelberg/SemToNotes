@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine***REMOVED***
+/*global describe, expect, it, jasmine */
 describe("'exports' symbol in modules", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/exports.js');
     var sayHello = docSet.getByLongname('module:hello/world.sayHello')[0];

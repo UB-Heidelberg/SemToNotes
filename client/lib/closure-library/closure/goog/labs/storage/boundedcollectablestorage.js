@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a convenient API for data persistence with data
-***REMOVED*** expiration and number of items limit.
-***REMOVED***
-***REMOVED*** Setting and removing values keeps a max number of items invariant.
-***REMOVED*** Collecting values can be user initiated. If oversize, first removes
-***REMOVED*** expired items, if still oversize than removes the oldest items until a size
-***REMOVED*** constraint is fulfilled.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a convenient API for data persistence with data
+ * expiration and number of items limit.
+ *
+ * Setting and removing values keeps a max number of items invariant.
+ * Collecting values can be user initiated. If oversize, first removes
+ * expired items, if still oversize than removes the oldest items until a size
+ * constraint is fulfilled.
+ *
+ */
 
 goog.provide('goog.labs.storage.BoundedCollectableStorage');
 
@@ -38,44 +38,44 @@ var storage = goog.labs.storage;
 
 
 
-***REMOVED***
-***REMOVED*** Provides a storage with bounded number of elements, expiring keys and
-***REMOVED*** a collection method.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.IterableMechanism} mechanism The underlying
-***REMOVED***     storage mechanism.
-***REMOVED*** @param {number} maxItems Maximum number of items in storage.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.CollectableStorage}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Provides a storage with bounded number of elements, expiring keys and
+ * a collection method.
+ *
+ * @param {!goog.storage.mechanism.IterableMechanism} mechanism The underlying
+ *     storage mechanism.
+ * @param {number} maxItems Maximum number of items in storage.
+ * @constructor
+ * @extends {goog.storage.CollectableStorage}
+ * @final
+ */
 storage.BoundedCollectableStorage = function(mechanism, maxItems) {
   storage.BoundedCollectableStorage.base(this, 'constructor', mechanism);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A maximum number of items that should be stored.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * A maximum number of items that should be stored.
+   * @private {number}
+   */
   this.maxItems_ = maxItems;
-***REMOVED***
+};
 goog.inherits(storage.BoundedCollectableStorage,
               goog.storage.CollectableStorage);
 
 
-***REMOVED***
-***REMOVED*** An item key used to store a list of keys.
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An item key used to store a list of keys.
+ * @const
+ * @private
+ */
 storage.BoundedCollectableStorage.KEY_LIST_KEY_ = 'bounded-collectable-storage';
 
 
-***REMOVED***
-***REMOVED*** Recreates a list of keys in order of creation.
-***REMOVED***
-***REMOVED*** @return {!Array.<string>} a list of unexpired keys.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Recreates a list of keys in order of creation.
+ *
+ * @return {!Array.<string>} a list of unexpired keys.
+ * @private
+ */
 storage.BoundedCollectableStorage.prototype.rebuildIndex_ = function() {
   var keys = [];
   goog.iter.forEach(this.mechanism.__iterator__(true), function(key) {
@@ -84,7 +84,7 @@ storage.BoundedCollectableStorage.prototype.rebuildIndex_ = function() {
     }
 
     var wrapper;
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       wrapper = this.getWrapper(key, true);
     } catch (ex) {
@@ -108,17 +108,17 @@ storage.BoundedCollectableStorage.prototype.rebuildIndex_ = function() {
   return goog.array.map(keys, function(v) {
     return v.key;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets key list from a local storage. If an item does not exist,
-***REMOVED*** may recreate it.
-***REMOVED***
-***REMOVED*** @param {boolean} rebuild Whether to rebuild a index if no index item exists.
-***REMOVED*** @return {!Array.<string>} a list of keys if index exist, otherwise undefined.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets key list from a local storage. If an item does not exist,
+ * may recreate it.
+ *
+ * @param {boolean} rebuild Whether to rebuild a index if no index item exists.
+ * @return {!Array.<string>} a list of keys if index exist, otherwise undefined.
+ * @private
+ */
 storage.BoundedCollectableStorage.prototype.getKeys_ = function(rebuild) {
   var keys = storage.BoundedCollectableStorage.superClass_.get.call(this,
       storage.BoundedCollectableStorage.KEY_LIST_KEY_) || null;
@@ -129,31 +129,31 @@ storage.BoundedCollectableStorage.prototype.getKeys_ = function(rebuild) {
       keys = [];
     }
   }
-  return***REMOVED*****REMOVED*** @type {!Array.<string>}***REMOVED*** (keys);
-***REMOVED***
+  return /** @type {!Array.<string>} */ (keys);
+};
 
 
-***REMOVED***
-***REMOVED*** Saves a list of keys in a local storage.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} keys a list of keys to save.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Saves a list of keys in a local storage.
+ *
+ * @param {Array.<string>} keys a list of keys to save.
+ * @private
+ */
 storage.BoundedCollectableStorage.prototype.setKeys_ = function(keys) {
   storage.BoundedCollectableStorage.superClass_.set.call(this,
       storage.BoundedCollectableStorage.KEY_LIST_KEY_, keys);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Remove subsequence from a sequence.
-***REMOVED***
-***REMOVED*** @param {!Array.<string>} keys is a sequence.
-***REMOVED*** @param {!Array.<string>} keysToRemove subsequence of keys, the order must
-***REMOVED***     be kept.
-***REMOVED*** @return {!Array.<string>} a keys sequence after removing keysToRemove.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Remove subsequence from a sequence.
+ *
+ * @param {!Array.<string>} keys is a sequence.
+ * @param {!Array.<string>} keysToRemove subsequence of keys, the order must
+ *     be kept.
+ * @return {!Array.<string>} a keys sequence after removing keysToRemove.
+ * @private
+ */
 storage.BoundedCollectableStorage.removeSubsequence_ =
     function(keys, keysToRemove) {
   if (keysToRemove.length == 0) {
@@ -175,18 +175,18 @@ storage.BoundedCollectableStorage.removeSubsequence_ =
   goog.asserts.assert(keysToRemoveIdx == keysToRemove.length);
   goog.asserts.assert(keysIdx < keys.length);
   return goog.array.concat(keysToKeep, goog.array.slice(keys, keysIdx + 1));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Keeps the number of items in storage under maxItems. Removes elements in the
-***REMOVED*** order of creation.
-***REMOVED***
-***REMOVED*** @param {!Array.<string>} keys a list of keys in order of creation.
-***REMOVED*** @param {number} maxSize a number of items to keep.
-***REMOVED*** @return {!Array.<string>} keys left after removing oversize data.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Keeps the number of items in storage under maxItems. Removes elements in the
+ * order of creation.
+ *
+ * @param {!Array.<string>} keys a list of keys in order of creation.
+ * @param {number} maxSize a number of items to keep.
+ * @return {!Array.<string>} keys left after removing oversize data.
+ * @private
+ */
 storage.BoundedCollectableStorage.prototype.collectOversize_ =
     function(keys, maxSize) {
   if (keys.length <= maxSize) {
@@ -198,15 +198,15 @@ storage.BoundedCollectableStorage.prototype.collectOversize_ =
   }, this);
   return storage.BoundedCollectableStorage.removeSubsequence_(
       keys, keysToRemove);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cleans up the storage by removing expired keys.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_strict Also remove invalid keys.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Cleans up the storage by removing expired keys.
+ *
+ * @param {boolean=} opt_strict Also remove invalid keys.
+ * @override
+ */
 storage.BoundedCollectableStorage.prototype.collect =
     function(opt_strict) {
   var keys = this.getKeys_(true);
@@ -214,14 +214,14 @@ storage.BoundedCollectableStorage.prototype.collect =
   keys = storage.BoundedCollectableStorage.removeSubsequence_(
       keys, keysToRemove);
   this.setKeys_(keys);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Ensures that we keep only maxItems number of items in a local storage.
-***REMOVED*** @param {boolean=} opt_skipExpired skip removing expired items first.
-***REMOVED*** @param {boolean=} opt_strict Also remove invalid keys.
-***REMOVED***
+/**
+ * Ensures that we keep only maxItems number of items in a local storage.
+ * @param {boolean=} opt_skipExpired skip removing expired items first.
+ * @param {boolean=} opt_strict Also remove invalid keys.
+ */
 storage.BoundedCollectableStorage.prototype.collectOversize =
     function(opt_skipExpired, opt_strict) {
   var keys = this.getKeys_(true);
@@ -232,19 +232,19 @@ storage.BoundedCollectableStorage.prototype.collectOversize =
   }
   keys = this.collectOversize_(keys, this.maxItems_);
   this.setKeys_(keys);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set an item in the storage.
-***REMOVED***
-***REMOVED*** @param {string} key The key to set.
-***REMOVED*** @param {*} value The value to serialize to a string and save.
-***REMOVED*** @param {number=} opt_expiration The number of miliseconds since epoch
-***REMOVED***     (as in goog.now()) when the value is to expire. If the expiration
-***REMOVED***     time is not provided, the value will persist as long as possible.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Set an item in the storage.
+ *
+ * @param {string} key The key to set.
+ * @param {*} value The value to serialize to a string and save.
+ * @param {number=} opt_expiration The number of miliseconds since epoch
+ *     (as in goog.now()) when the value is to expire. If the expiration
+ *     time is not provided, the value will persist as long as possible.
+ * @override
+ */
 storage.BoundedCollectableStorage.prototype.set =
     function(key, value, opt_expiration) {
   storage.BoundedCollectableStorage.base(
@@ -262,15 +262,15 @@ storage.BoundedCollectableStorage.prototype.set =
     }
   }
   this.setKeys_(keys);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Remove an item from the data storage.
-***REMOVED***
-***REMOVED*** @param {string} key The key to remove.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Remove an item from the data storage.
+ *
+ * @param {string} key The key to remove.
+ * @override
+ */
 storage.BoundedCollectableStorage.prototype.remove = function(key) {
   storage.BoundedCollectableStorage.base(this, 'remove', key);
 
@@ -279,6 +279,6 @@ storage.BoundedCollectableStorage.prototype.remove = function(key) {
     goog.array.remove(keys, key);
     this.setKeys_(keys);
   }
-***REMOVED***
+};
 
 });  // goog.scope

@@ -1,4 +1,4 @@
-/*global env: true, expect: true, runs: true, waits: true***REMOVED***
+/*global env: true, expect: true, runs: true, waits: true */
 var fs = require('jsdoc/fs');
 var path = require('jsdoc/path');
 var util = require('util');
@@ -14,7 +14,7 @@ var jsdoc = {
     util: {
         runtime: require('jsdoc/util/runtime')
     }
-***REMOVED***
+};
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
@@ -52,7 +52,7 @@ jasmine.initialize = function(done, verbose) {
     var reporterOpts = {
         color: env.opts.nocolor === true ? false : true,
         onComplete: done
-   ***REMOVED*****REMOVED***
+    };
 
     reporter = env.opts.verbose ? new jasmineNode.TerminalVerboseReporter(reporterOpts) :
         new jasmineNode.TerminalReporter(reporterOpts);
@@ -63,25 +63,25 @@ jasmine.initialize = function(done, verbose) {
     jasmineEnv.updateInterval = 0;
 
     return jasmineEnv;
-***REMOVED***
+};
 
 jasmine.createParser = function(type) {
     return jsdoc.src.parser.createParser(type || jasmine.jsParser);
-***REMOVED***
+};
 
 function capitalize(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
 
-***REMOVED***
-***REMOVED*** Execute the specs in the specified folder.
-***REMOVED***
-***REMOVED*** @param {string} folder The folder in which the specs are to be found.
-***REMOVED*** @param {function?} done Callback function to execute when finished.
-***REMOVED*** @param {object} opts Options for executing the specs.
-***REMOVED*** @param {boolean} opts.verbose Whether or not to output verbose results.
-***REMOVED*** @param {RegExp} opts.matcher A regular expression to filter specs by. Only matching specs run.
-***REMOVED***
+/**
+ * Execute the specs in the specified folder.
+ *
+ * @param {string} folder The folder in which the specs are to be found.
+ * @param {function?} done Callback function to execute when finished.
+ * @param {object} opts Options for executing the specs.
+ * @param {boolean} opts.verbose Whether or not to output verbose results.
+ * @param {RegExp} opts.matcher A regular expression to filter specs by. Only matching specs run.
+ */
 jasmine.executeSpecsInFolder = function(folder, done, opts) {
     var fileMatcher = opts.matcher || new RegExp(".(js)$", "i"),
         specs = require('./spec-collection'),
@@ -103,7 +103,7 @@ jasmine.executeSpecsInFolder = function(folder, done, opts) {
 
     // Run Jasmine
     jasmineEnv.execute();
-***REMOVED***
+};
 
 function now() {
     return new Date().getTime();
@@ -125,11 +125,11 @@ jasmine.asyncSpecWait = function() {
             }
         });
     })();
-***REMOVED***
-jasmine.asyncSpecWait.timeout = 4***REMOVED*** 1000;
+};
+jasmine.asyncSpecWait.timeout = 4 * 1000;
 jasmine.asyncSpecDone = function() {
     jasmine.asyncSpecWait.done = true;
-***REMOVED***
+};
 
 jasmine.getDocSetFromFile = function(filename, parser, validate) {
     var doclets;
@@ -163,8 +163,8 @@ jasmine.getDocSetFromFile = function(filename, parser, validate) {
                 return (doclet.longname || doclet.name) === longname;
             });
         }
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};
 
 // set up jasmine's global functions
 Object.keys(jasmine).forEach(function(key) {

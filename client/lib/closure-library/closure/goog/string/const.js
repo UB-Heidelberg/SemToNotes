@@ -19,98 +19,98 @@ goog.require('goog.string.TypedString');
 
 
 
-***REMOVED***
-***REMOVED*** Wrapper for compile-time-constant strings.
-***REMOVED***
-***REMOVED*** Const is a wrapper for strings that can only be created from program
-***REMOVED*** constants (i.e., string literals).  This property relies on a custom Closure
-***REMOVED*** compiler check that {@code goog.string.Const.from} is only invoked on
-***REMOVED*** compile-time-constant expressions.
-***REMOVED***
-***REMOVED*** Const is useful in APIs whose correct and secure use requires that certain
-***REMOVED*** arguments are not attacker controlled: Compile-time constants are inherently
-***REMOVED*** under the control of the application and not under control of external
-***REMOVED*** attackers, and hence are safe to use in such contexts.
-***REMOVED***
-***REMOVED*** Instances of this type must be created via its factory method
-***REMOVED*** {@code goog.string.Const.from} and not by invoking its constructor.  The
-***REMOVED*** constructor intentionally takes no parameters and the type is immutable;
-***REMOVED*** hence only a default instance corresponding to the empty string can be
-***REMOVED*** obtained via constructor invocation.
-***REMOVED***
-***REMOVED*** @see goog.string.Const#from
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.string.TypedString}
-***REMOVED***
+/**
+ * Wrapper for compile-time-constant strings.
+ *
+ * Const is a wrapper for strings that can only be created from program
+ * constants (i.e., string literals).  This property relies on a custom Closure
+ * compiler check that {@code goog.string.Const.from} is only invoked on
+ * compile-time-constant expressions.
+ *
+ * Const is useful in APIs whose correct and secure use requires that certain
+ * arguments are not attacker controlled: Compile-time constants are inherently
+ * under the control of the application and not under control of external
+ * attackers, and hence are safe to use in such contexts.
+ *
+ * Instances of this type must be created via its factory method
+ * {@code goog.string.Const.from} and not by invoking its constructor.  The
+ * constructor intentionally takes no parameters and the type is immutable;
+ * hence only a default instance corresponding to the empty string can be
+ * obtained via constructor invocation.
+ *
+ * @see goog.string.Const#from
+ * @constructor
+ * @final
+ * @struct
+ * @implements {goog.string.TypedString}
+ */
 goog.string.Const = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The wrapped value of this Const object.  The field has a purposely ugly
-  ***REMOVED*** name to make (non-compiled) code that attempts to directly access this
-  ***REMOVED*** field stand out.
-  ***REMOVED*** @private {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The wrapped value of this Const object.  The field has a purposely ugly
+   * name to make (non-compiled) code that attempts to directly access this
+   * field stand out.
+   * @private {string}
+   */
   this.stringConstValueWithSecurityContract__googStringSecurityPrivate_ = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A type marker used to implement additional run-time type checking.
-  ***REMOVED*** @see goog.string.Const#unwrap
-  ***REMOVED*** @const
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A type marker used to implement additional run-time type checking.
+   * @see goog.string.Const#unwrap
+   * @const
+   * @private
+   */
   this.STRING_CONST_TYPE_MARKER__GOOG_STRING_SECURITY_PRIVATE_ =
       goog.string.Const.TYPE_MARKER_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @const
-***REMOVED***
+/**
+ * @override
+ * @const
+ */
 goog.string.Const.prototype.implementsGoogStringTypedString = true;
 
 
-***REMOVED***
-***REMOVED*** Returns this Const's value a string.
-***REMOVED***
-***REMOVED*** IMPORTANT: In code where it is security-relevant that an object's type is
-***REMOVED*** indeed {@code goog.string.Const}, use {@code goog.string.Const.unwrap}
-***REMOVED*** instead of this method.
-***REMOVED***
-***REMOVED*** @see goog.string.Const#unwrap
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns this Const's value a string.
+ *
+ * IMPORTANT: In code where it is security-relevant that an object's type is
+ * indeed {@code goog.string.Const}, use {@code goog.string.Const.unwrap}
+ * instead of this method.
+ *
+ * @see goog.string.Const#unwrap
+ * @override
+ */
 goog.string.Const.prototype.getTypedStringValue = function() {
   return this.stringConstValueWithSecurityContract__googStringSecurityPrivate_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a debug-string representation of this value.
-***REMOVED***
-***REMOVED*** To obtain the actual string value wrapped inside an object of this type,
-***REMOVED*** use {@code goog.string.Const.unwrap}.
-***REMOVED***
-***REMOVED*** @see goog.string.Const#unwrap
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns a debug-string representation of this value.
+ *
+ * To obtain the actual string value wrapped inside an object of this type,
+ * use {@code goog.string.Const.unwrap}.
+ *
+ * @see goog.string.Const#unwrap
+ * @override
+ */
 goog.string.Const.prototype.toString = function() {
   return 'Const{' +
          this.stringConstValueWithSecurityContract__googStringSecurityPrivate_ +
          '}';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs a runtime check that the provided object is indeed an instance
-***REMOVED*** of {@code goog.string.Const}, and returns its value.
-***REMOVED*** @param {!goog.string.Const} stringConst The object to extract from.
-***REMOVED*** @return {string} The Const object's contained string, unless the run-time
-***REMOVED***     type check fails. In that case, {@code unwrap} returns an innocuous
-***REMOVED***     string, or, if assertions are enabled, throws
-***REMOVED***     {@code goog.asserts.AssertionError}.
-***REMOVED***
+/**
+ * Performs a runtime check that the provided object is indeed an instance
+ * of {@code goog.string.Const}, and returns its value.
+ * @param {!goog.string.Const} stringConst The object to extract from.
+ * @return {string} The Const object's contained string, unless the run-time
+ *     type check fails. In that case, {@code unwrap} returns an innocuous
+ *     string, or, if assertions are enabled, throws
+ *     {@code goog.asserts.AssertionError}.
+ */
 goog.string.Const.unwrap = function(stringConst) {
   // Perform additional run-time type-checking to ensure that stringConst is
   // indeed an instance of the expected type.  This provides some additional
@@ -127,56 +127,56 @@ goog.string.Const.unwrap = function(stringConst) {
                       stringConst + '\'');
     return 'type_error:Const';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a Const object from a compile-time constant string.
-***REMOVED***
-***REMOVED*** It is illegal to invoke this function on an expression whose
-***REMOVED*** compile-time-contant value cannot be determined by the Closure compiler.
-***REMOVED***
-***REMOVED*** Correct invocations include,
-***REMOVED*** <pre>
-***REMOVED***   var s = goog.string.Const.from('hello');
-***REMOVED***   var t = goog.string.Const.from('hello' + 'world');
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** In contrast, the following are illegal:
-***REMOVED*** <pre>
-***REMOVED***   var s = goog.string.Const.from(getHello());
-***REMOVED***   var t = goog.string.Const.from('hello' + world);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** TODO(user): Compile-time checks that this function is only called
-***REMOVED*** with compile-time constant expressions.
-***REMOVED***
-***REMOVED*** @param {string} s A constant string from which to create a Const.
-***REMOVED*** @return {!goog.string.Const} A Const object initialized to stringConst.
-***REMOVED***
+/**
+ * Creates a Const object from a compile-time constant string.
+ *
+ * It is illegal to invoke this function on an expression whose
+ * compile-time-contant value cannot be determined by the Closure compiler.
+ *
+ * Correct invocations include,
+ * <pre>
+ *   var s = goog.string.Const.from('hello');
+ *   var t = goog.string.Const.from('hello' + 'world');
+ * </pre>
+ *
+ * In contrast, the following are illegal:
+ * <pre>
+ *   var s = goog.string.Const.from(getHello());
+ *   var t = goog.string.Const.from('hello' + world);
+ * </pre>
+ *
+ * TODO(user): Compile-time checks that this function is only called
+ * with compile-time constant expressions.
+ *
+ * @param {string} s A constant string from which to create a Const.
+ * @return {!goog.string.Const} A Const object initialized to stringConst.
+ */
 goog.string.Const.from = function(s) {
   return goog.string.Const.create__googStringSecurityPrivate_(s);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Type marker for the Const type, used to implement additional run-time
-***REMOVED*** type checking.
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
-goog.string.Const.TYPE_MARKER_ = {***REMOVED***
+/**
+ * Type marker for the Const type, used to implement additional run-time
+ * type checking.
+ * @const
+ * @private
+ */
+goog.string.Const.TYPE_MARKER_ = {};
 
 
-***REMOVED***
-***REMOVED*** Utility method to create Const instances.
-***REMOVED*** @param {string} s The string to initialize the Const object with.
-***REMOVED*** @return {!goog.string.Const} The initialized Const object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Utility method to create Const instances.
+ * @param {string} s The string to initialize the Const object with.
+ * @return {!goog.string.Const} The initialized Const object.
+ * @private
+ */
 goog.string.Const.create__googStringSecurityPrivate_ = function(s) {
   var stringConst = new goog.string.Const();
   stringConst.stringConstValueWithSecurityContract__googStringSecurityPrivate_ =
       s;
   return stringConst;
-***REMOVED***
+};

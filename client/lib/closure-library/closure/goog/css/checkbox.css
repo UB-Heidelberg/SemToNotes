@@ -1,19 +1,19 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: pallosp@google.com (Peter Pallos)***REMOVED***
+/* Author: pallosp@google.com (Peter Pallos) */
 
-/* Sample 3-state checkbox styles.***REMOVED***
+/* Sample 3-state checkbox styles. */
 
 .goog-checkbox {
   border: 1px solid #1C5180;
   display: -moz-inline-box;
   display: inline-block;
-  font-size: 1px;  /* Fixes the height in IE6***REMOVED***
+  font-size: 1px;  /* Fixes the height in IE6 */
   height: 11px;
   margin: 0 4px 0 1px;
   vertical-align: text-bottom;

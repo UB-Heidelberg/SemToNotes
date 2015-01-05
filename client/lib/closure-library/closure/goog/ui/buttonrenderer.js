@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Default renderer for {@link goog.ui.Button}s.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Default renderer for {@link goog.ui.Button}s.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ButtonRenderer');
 
@@ -30,58 +30,58 @@ goog.require('goog.ui.ControlRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.Button}s.  Extends the superclass with
-***REMOVED*** the following button-specific API methods:
-***REMOVED*** <ul>
-***REMOVED***   <li>{@code getValue} - returns the button element's value
-***REMOVED***   <li>{@code setValue} - updates the button element to reflect its new value
-***REMOVED***   <li>{@code getTooltip} - returns the button element's tooltip text
-***REMOVED***   <li>{@code setTooltip} - updates the button element's tooltip text
-***REMOVED***   <li>{@code setCollapsed} - removes one or both of the button element's
-***REMOVED***       borders
-***REMOVED*** </ul>
-***REMOVED*** For alternate renderers, see {@link goog.ui.NativeButtonRenderer},
-***REMOVED*** {@link goog.ui.CustomButtonRenderer}, and {@link goog.ui.FlatButtonRenderer}.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ControlRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.Button}s.  Extends the superclass with
+ * the following button-specific API methods:
+ * <ul>
+ *   <li>{@code getValue} - returns the button element's value
+ *   <li>{@code setValue} - updates the button element to reflect its new value
+ *   <li>{@code getTooltip} - returns the button element's tooltip text
+ *   <li>{@code setTooltip} - updates the button element's tooltip text
+ *   <li>{@code setCollapsed} - removes one or both of the button element's
+ *       borders
+ * </ul>
+ * For alternate renderers, see {@link goog.ui.NativeButtonRenderer},
+ * {@link goog.ui.CustomButtonRenderer}, and {@link goog.ui.FlatButtonRenderer}.
+ * @constructor
+ * @extends {goog.ui.ControlRenderer}
+ */
 goog.ui.ButtonRenderer = function() {
   goog.ui.ControlRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ButtonRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.ButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ButtonRenderer.CSS_CLASS = goog.getCssName('goog-button');
 
 
-***REMOVED***
-***REMOVED*** Returns the ARIA role to be applied to buttons.
-***REMOVED*** @return {goog.a11y.aria.Role|undefined} ARIA role.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the ARIA role to be applied to buttons.
+ * @return {goog.a11y.aria.Role|undefined} ARIA role.
+ * @override
+ */
 goog.ui.ButtonRenderer.prototype.getAriaRole = function() {
   return goog.a11y.aria.Role.BUTTON;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the button's ARIA (accessibility) state if the button is being
-***REMOVED*** treated as a checkbox. Also makes sure that attributes which aren't
-***REMOVED*** supported by buttons aren't being added.
-***REMOVED*** @param {Element} element Element whose ARIA state is to be updated.
-***REMOVED*** @param {goog.ui.Component.State} state Component state being enabled or
-***REMOVED***     disabled.
-***REMOVED*** @param {boolean} enable Whether the state is being enabled or disabled.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Updates the button's ARIA (accessibility) state if the button is being
+ * treated as a checkbox. Also makes sure that attributes which aren't
+ * supported by buttons aren't being added.
+ * @param {Element} element Element whose ARIA state is to be updated.
+ * @param {goog.ui.Component.State} state Component state being enabled or
+ *     disabled.
+ * @param {boolean} enable Whether the state is being enabled or disabled.
+ * @protected
+ * @override
+ */
 goog.ui.ButtonRenderer.prototype.updateAriaState = function(element, state,
     enable) {
   switch (state) {
@@ -99,10 +99,10 @@ goog.ui.ButtonRenderer.prototype.updateAriaState = function(element, state,
           this, 'updateAriaState', element, state, enable);
       break;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ButtonRenderer.prototype.createDom = function(button) {
   var element = goog.ui.ButtonRenderer.base(this, 'createDom', button);
   this.setTooltip(element, button.getTooltip());
@@ -119,10 +119,10 @@ goog.ui.ButtonRenderer.prototype.createDom = function(button) {
   }
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ButtonRenderer.prototype.decorate = function(button, element) {
   // The superclass implementation takes care of common attributes; we only
   // need to set the value and the tooltip.
@@ -139,44 +139,44 @@ goog.ui.ButtonRenderer.prototype.decorate = function(button, element) {
   }
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a button's root element, and returns the value associated with it.
-***REMOVED*** No-op in the base class.
-***REMOVED*** @param {Element} element The button's root element.
-***REMOVED*** @return {string|undefined} The button's value (undefined if none).
-***REMOVED***
+/**
+ * Takes a button's root element, and returns the value associated with it.
+ * No-op in the base class.
+ * @param {Element} element The button's root element.
+ * @return {string|undefined} The button's value (undefined if none).
+ */
 goog.ui.ButtonRenderer.prototype.getValue = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Takes a button's root element and a value, and updates the element to reflect
-***REMOVED*** the new value.  No-op in the base class.
-***REMOVED*** @param {Element} element The button's root element.
-***REMOVED*** @param {string} value New value.
-***REMOVED***
+/**
+ * Takes a button's root element and a value, and updates the element to reflect
+ * the new value.  No-op in the base class.
+ * @param {Element} element The button's root element.
+ * @param {string} value New value.
+ */
 goog.ui.ButtonRenderer.prototype.setValue = goog.nullFunction;
 
 
-***REMOVED***
-***REMOVED*** Takes a button's root element, and returns its tooltip text.
-***REMOVED*** @param {Element} element The button's root element.
-***REMOVED*** @return {string|undefined} The tooltip text.
-***REMOVED***
+/**
+ * Takes a button's root element, and returns its tooltip text.
+ * @param {Element} element The button's root element.
+ * @return {string|undefined} The tooltip text.
+ */
 goog.ui.ButtonRenderer.prototype.getTooltip = function(element) {
   return element.title;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a button's root element and a tooltip string, and updates the element
-***REMOVED*** with the new tooltip.
-***REMOVED*** @param {Element} element The button's root element.
-***REMOVED*** @param {string} tooltip New tooltip text.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Takes a button's root element and a tooltip string, and updates the element
+ * with the new tooltip.
+ * @param {Element} element The button's root element.
+ * @param {string} tooltip New tooltip text.
+ * @protected
+ */
 goog.ui.ButtonRenderer.prototype.setTooltip = function(element, tooltip) {
   if (element) {
     // Don't set a title attribute if there isn't a tooltip. Blank title
@@ -187,18 +187,18 @@ goog.ui.ButtonRenderer.prototype.setTooltip = function(element, tooltip) {
       element.removeAttribute('title');
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Collapses the border on one or both sides of the button, allowing it to be
-***REMOVED*** combined with the adjacent button(s), forming a single UI componenet with
-***REMOVED*** multiple targets.
-***REMOVED*** @param {goog.ui.Button} button Button to update.
-***REMOVED*** @param {number} sides Bitmap of one or more {@link goog.ui.ButtonSide}s for
-***REMOVED***     which borders should be collapsed.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Collapses the border on one or both sides of the button, allowing it to be
+ * combined with the adjacent button(s), forming a single UI componenet with
+ * multiple targets.
+ * @param {goog.ui.Button} button Button to update.
+ * @param {number} sides Bitmap of one or more {@link goog.ui.ButtonSide}s for
+ *     which borders should be collapsed.
+ * @protected
+ */
 goog.ui.ButtonRenderer.prototype.setCollapsed = function(button, sides) {
   var isRtl = button.isRightToLeft();
   var collapseLeftClassName =
@@ -210,10 +210,10 @@ goog.ui.ButtonRenderer.prototype.setCollapsed = function(button, sides) {
       !!(sides & goog.ui.ButtonSide.START));
   button.enableClassName(isRtl ? collapseLeftClassName : collapseRightClassName,
       !!(sides & goog.ui.ButtonSide.END));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.ButtonRenderer.CSS_CLASS;
-***REMOVED***
+};

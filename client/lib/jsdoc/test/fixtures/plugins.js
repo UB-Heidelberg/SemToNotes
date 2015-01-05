@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED*** @name virtual
-***REMOVED***
+/**
+ * @name virtual
+ */
 
 var foo = "bar";
 
-***REMOVED***
-***REMOVED*** @foo bar
-***REMOVED***
+/**
+ * @foo bar
+ */
 var test = "tada";

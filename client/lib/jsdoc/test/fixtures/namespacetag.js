@@ -1,11 +1,11 @@
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 var x = {
-***REMOVED***
-***REMOVED*** @namespace Foo***REMOVED***
-***REMOVED*** @namespace {function} Bar***REMOVED***
+};
+/** @namespace Foo */
+/** @namespace {function} Bar */
 
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 var S = {
-	***REMOVED*** Member of the namespace S.***REMOVED***
+	/** Member of the namespace S. */
 	Socket: function() {}
-***REMOVED***
+};

@@ -17,7 +17,7 @@ goog.setTestOnly('goog.editor.plugins.UndoRedoManagerTest');
 
 goog.require('goog.editor.plugins.UndoRedoManager');
 goog.require('goog.editor.plugins.UndoRedoState');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.testing.StrictMock');
 goog.require('goog.testing.jsunit');
 
@@ -34,7 +34,7 @@ var preventDefault;
 function setUp() {
   manager = new goog.editor.plugins.UndoRedoManager();
   stateChangeCount = 0;
-***REMOVED***manager,
+  goog.events.listen(manager,
       goog.editor.plugins.UndoRedoManager.EventType.STATE_CHANGE,
       function() {
         stateChangeCount++;
@@ -42,7 +42,7 @@ function setUp() {
 
   beforeUndoCount = 0;
   preventDefault = false;
-***REMOVED***manager,
+  goog.events.listen(manager,
       goog.editor.plugins.UndoRedoManager.EventType.BEFORE_UNDO,
       function(e) {
         beforeUndoCount++;
@@ -52,7 +52,7 @@ function setUp() {
       });
 
   beforeRedoCount = 0;
-***REMOVED***manager,
+  goog.events.listen(manager,
       goog.editor.plugins.UndoRedoManager.EventType.BEFORE_REDO,
       function(e) {
         beforeRedoCount++;
@@ -68,12 +68,12 @@ function setUp() {
 
   mockState1.equals = mockState2.equals = mockState3.equals = function(state) {
     return this == state;
- ***REMOVED*****REMOVED***
+  };
 
   mockState1.isAsynchronous = mockState2.isAsynchronous =
       mockState3.isAsynchronous = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
 }
 
 
@@ -83,9 +83,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Adds all the mock states to the undo-redo manager.
-***REMOVED***
+/**
+ * Adds all the mock states to the undo-redo manager.
+ */
 function addStatesToManager() {
   manager.addState(states[0]);
 
@@ -98,9 +98,9 @@ function addStatesToManager() {
 }
 
 
-***REMOVED***
-***REMOVED*** Resets all mock states so that they are ready for testing.
-***REMOVED***
+/**
+ * Resets all mock states so that they are ready for testing.
+ */
 function resetStates() {
   for (var i = 0; i < states.length; i++) {
     states[i].$reset();
@@ -118,7 +118,7 @@ function testSetMaxUndoDepth() {
 
 function testAddState() {
   var stateAddedCount = 0;
-***REMOVED***manager,
+  goog.events.listen(manager,
       goog.editor.plugins.UndoRedoManager.EventType.STATE_ADDED,
       function() {
         stateAddedCount++;
@@ -234,11 +234,11 @@ function testUndo_Asynchronous() {
   var undoCalled = false;
   stubState.undo = function() {
     undoCalled = true;
- ***REMOVED*****REMOVED***
+  };
   stubState.redo = goog.nullFunction;
   stubState.equals = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
 
   manager.addState(mockState2);
   manager.addState(mockState1);
@@ -333,11 +333,11 @@ function testRedo_Asynchronous() {
   var redoCalled = false;
   stubState.redo = function() {
     redoCalled = true;
- ***REMOVED*****REMOVED***
+  };
   stubState.undo = goog.nullFunction;
   stubState.equals = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
 
   manager.addState(stubState);
   manager.addState(mockState1);

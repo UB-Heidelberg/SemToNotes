@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Test adapter for testing Closure Promises against the
-***REMOVED*** Promises/A+ Compliance Test Suite, which is implemented as a Node.js module.
-***REMOVED***
-***REMOVED*** This test suite adapter may not be run in Node.js directly, but must first be
-***REMOVED*** compiled with the Closure Compiler to pull in the required dependencies.
-***REMOVED***
-***REMOVED*** @see https://npmjs.org/package/promises-aplus-tests
-***REMOVED***
+/**
+ * @fileoverview Test adapter for testing Closure Promises against the
+ * Promises/A+ Compliance Test Suite, which is implemented as a Node.js module.
+ *
+ * This test suite adapter may not be run in Node.js directly, but must first be
+ * compiled with the Closure Compiler to pull in the required dependencies.
+ *
+ * @see https://npmjs.org/package/promises-aplus-tests
+ */
 
 goog.provide('goog.promise.testSuiteAdapter');
 
@@ -29,31 +29,31 @@ goog.require('goog.Promise');
 goog.setTestOnly('goog.promise.testSuiteAdapter');
 
 
-var promisesAplusTests =***REMOVED*****REMOVED*** @type {function(!Object, function(*))}***REMOVED*** (
+var promisesAplusTests = /** @type {function(!Object, function(*))} */ (
     require('promises_aplus_tests'));
 
 
-***REMOVED***
-***REMOVED*** Adapter for specifying Promise-creating functions to the Promises test suite.
-***REMOVED*** @type {!Object}
-***REMOVED***
+/**
+ * Adapter for specifying Promise-creating functions to the Promises test suite.
+ * @type {!Object}
+ */
 goog.promise.testSuiteAdapter = {
- ***REMOVED*****REMOVED*** @type {function(*): !goog.Promise}***REMOVED***
+  /** @type {function(*): !goog.Promise} */
   'resolved': goog.Promise.resolve,
 
- ***REMOVED*****REMOVED*** @type {function(*): !goog.Promise}***REMOVED***
+  /** @type {function(*): !goog.Promise} */
   'rejected': goog.Promise.reject,
 
- ***REMOVED*****REMOVED*** @return {!Object}***REMOVED***
+  /** @return {!Object} */
   'deferred': function() {
-    var promiseObj = {***REMOVED***
+    var promiseObj = {};
     promiseObj['promise'] = new goog.Promise(function(resolve, reject) {
       promiseObj['resolve'] = resolve;
       promiseObj['reject'] = reject;
     });
     return promiseObj;
   }
-***REMOVED***
+};
 
 
 // Node.js defines setTimeout globally, but Closure relies on finding it

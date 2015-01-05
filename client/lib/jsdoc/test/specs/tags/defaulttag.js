@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("@default tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/defaulttag.js');
 
@@ -39,7 +39,7 @@ describe("@default tag", function() {
 
     it('When symbol has a @default tag with an object, the doclet should contain the stringified object', function() {
         var obj = docSet.getByLongname('obj')[0];
-        var testObj = { valueA: 'a', valueB: false, valueC: 7***REMOVED***
+        var testObj = { valueA: 'a', valueB: false, valueC: 7};
 
         expect(obj.defaultvalue).toBe( JSON.stringify(testObj) );
         expect(obj.defaultvaluetype).toBe('object');
@@ -51,7 +51,7 @@ describe("@default tag", function() {
             valueA: 'a',
             valueB: false,
             valueC: 7
-       ***REMOVED*****REMOVED***
+        };
 
         expect(multilineObject.defaultvalue).toBe( JSON.stringify(testObj) );
         expect(multilineObject.defaultvaluetype).toBe('object');

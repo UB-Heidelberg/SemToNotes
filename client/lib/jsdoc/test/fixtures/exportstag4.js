@@ -1,11 +1,11 @@
 define(
-  ***REMOVED*****REMOVED*** @exports some/module***REMOVED***
+   /** @exports some/module */
    function () {
-      ***REMOVED*****REMOVED*** @class***REMOVED***
+       /** @class */
        function myClass() {}
 
-      ***REMOVED*****REMOVED*** Some method***REMOVED***
-       myClass.prototype.myMethod = function () {***REMOVED***
+       /** Some method */
+       myClass.prototype.myMethod = function () {};
 
        return new myClass();
    }

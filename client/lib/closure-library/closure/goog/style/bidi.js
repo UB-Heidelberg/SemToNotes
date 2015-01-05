@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Bidi utility functions.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Bidi utility functions.
+ *
+ */
 
 goog.provide('goog.style.bidi');
 
@@ -24,13 +24,13 @@ goog.require('goog.style');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Returns the normalized scrollLeft position for a scrolled element.
-***REMOVED*** @param {Element} element The scrolled element.
-***REMOVED*** @return {number} The number of pixels the element is scrolled. 0 indicates
-***REMOVED***     that the element is not scrolled at all (which, in general, is the
-***REMOVED***     left-most position in ltr and the right-most position in rtl).
-***REMOVED***
+/**
+ * Returns the normalized scrollLeft position for a scrolled element.
+ * @param {Element} element The scrolled element.
+ * @return {number} The number of pixels the element is scrolled. 0 indicates
+ *     that the element is not scrolled at all (which, in general, is the
+ *     left-most position in ltr and the right-most position in rtl).
+ */
 goog.style.bidi.getScrollLeft = function(element) {
   var isRtl = goog.style.isRightToLeft(element);
   if (isRtl && goog.userAgent.GECKO) {
@@ -52,39 +52,39 @@ goog.style.bidi.getScrollLeft = function(element) {
   // ScrollLeft behavior is identical in rtl and ltr, it starts at 0 and
   // increases as the element is scrolled away from the start.
   return element.scrollLeft;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the "offsetStart" of an element, analagous to offsetLeft but
-***REMOVED*** normalized for right-to-left environments and various browser
-***REMOVED*** inconsistencies. This value returned can always be passed to setScrollOffset
-***REMOVED*** to scroll to an element's left edge in a left-to-right offsetParent or
-***REMOVED*** right edge in a right-to-left offsetParent.
-***REMOVED***
-***REMOVED*** For example, here offsetStart is 10px in an LTR environment and 5px in RTL:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** |          xxxxxxxxxx     |
-***REMOVED***  ^^^^^^^^^^   ^^^^   ^^^^^
-***REMOVED***     10px      elem    5px
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** If an element is positioned before the start of its offsetParent, the
-***REMOVED*** startOffset may be negative.  This can be used with setScrollOffset to
-***REMOVED*** reliably scroll to an element:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** var scrollOffset = goog.style.bidi.getOffsetStart(element);
-***REMOVED*** goog.style.bidi.setScrollOffset(element.offsetParent, scrollOffset);
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @see setScrollOffset
-***REMOVED***
-***REMOVED*** @param {Element} element The element for which we need to determine the
-***REMOVED***     offsetStart position.
-***REMOVED*** @return {number} The offsetStart for that element.
-***REMOVED***
+/**
+ * Returns the "offsetStart" of an element, analagous to offsetLeft but
+ * normalized for right-to-left environments and various browser
+ * inconsistencies. This value returned can always be passed to setScrollOffset
+ * to scroll to an element's left edge in a left-to-right offsetParent or
+ * right edge in a right-to-left offsetParent.
+ *
+ * For example, here offsetStart is 10px in an LTR environment and 5px in RTL:
+ *
+ * <pre>
+ * |          xxxxxxxxxx     |
+ *  ^^^^^^^^^^   ^^^^   ^^^^^
+ *     10px      elem    5px
+ * </pre>
+ *
+ * If an element is positioned before the start of its offsetParent, the
+ * startOffset may be negative.  This can be used with setScrollOffset to
+ * reliably scroll to an element:
+ *
+ * <pre>
+ * var scrollOffset = goog.style.bidi.getOffsetStart(element);
+ * goog.style.bidi.setScrollOffset(element.offsetParent, scrollOffset);
+ * </pre>
+ *
+ * @see setScrollOffset
+ *
+ * @param {Element} element The element for which we need to determine the
+ *     offsetStart position.
+ * @return {number} The offsetStart for that element.
+ */
 goog.style.bidi.getOffsetStart = function(element) {
   var offsetLeftForReal = element.offsetLeft;
 
@@ -124,20 +124,20 @@ goog.style.bidi.getOffsetStart = function(element) {
   }
 
   return offsetLeftForReal;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the element's scrollLeft attribute so it is correctly scrolled by
-***REMOVED*** offsetStart pixels.  This takes into account whether the element is RTL and
-***REMOVED*** the nuances of different browsers.  To scroll to the "beginning" of an
-***REMOVED*** element use getOffsetStart to obtain the element's offsetStart value and then
-***REMOVED*** pass the value to setScrollOffset.
-***REMOVED*** @see getOffsetStart
-***REMOVED*** @param {Element} element The element to set scrollLeft on.
-***REMOVED*** @param {number} offsetStart The number of pixels to scroll the element.
-***REMOVED***     If this value is < 0, 0 is used.
-***REMOVED***
+/**
+ * Sets the element's scrollLeft attribute so it is correctly scrolled by
+ * offsetStart pixels.  This takes into account whether the element is RTL and
+ * the nuances of different browsers.  To scroll to the "beginning" of an
+ * element use getOffsetStart to obtain the element's offsetStart value and then
+ * pass the value to setScrollOffset.
+ * @see getOffsetStart
+ * @param {Element} element The element to set scrollLeft on.
+ * @param {number} offsetStart The number of pixels to scroll the element.
+ *     If this value is < 0, 0 is used.
+ */
 goog.style.bidi.setScrollOffset = function(element, offsetStart) {
   offsetStart = Math.max(offsetStart, 0);
   // In LTR and in "mirrored" browser RTL (such as IE), we set scrollLeft to
@@ -157,17 +157,17 @@ goog.style.bidi.setScrollOffset = function(element, offsetStart) {
   } else {
     element.scrollLeft = offsetStart;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the element's left style attribute in LTR or right style attribute in
-***REMOVED*** RTL.  Also clears the left attribute in RTL and the right attribute in LTR.
-***REMOVED*** @param {Element} elem The element to position.
-***REMOVED*** @param {number} left The left position in LTR; will be set as right in RTL.
-***REMOVED*** @param {?number} top The top position.  If null only the left/right is set.
-***REMOVED*** @param {boolean} isRtl Whether we are in RTL mode.
-***REMOVED***
+/**
+ * Sets the element's left style attribute in LTR or right style attribute in
+ * RTL.  Also clears the left attribute in RTL and the right attribute in LTR.
+ * @param {Element} elem The element to position.
+ * @param {number} left The left position in LTR; will be set as right in RTL.
+ * @param {?number} top The top position.  If null only the left/right is set.
+ * @param {boolean} isRtl Whether we are in RTL mode.
+ */
 goog.style.bidi.setPosition = function(elem, left, top, isRtl) {
   if (!goog.isNull(top)) {
     elem.style.top = top + 'px';
@@ -179,4 +179,4 @@ goog.style.bidi.setPosition = function(elem, left, top, isRtl) {
     elem.style.left = left + 'px';
     elem.style.right = '';
   }
-***REMOVED***
+};

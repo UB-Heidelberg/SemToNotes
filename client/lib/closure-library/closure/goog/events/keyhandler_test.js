@@ -16,9 +16,9 @@ goog.provide('goog.events.KeyEventTest');
 goog.setTestOnly('goog.events.KeyEventTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.KeyHandler');
 goog.require('goog.testing.events');
@@ -29,13 +29,13 @@ function setUp() {
   // Have this based on a fictitious DOCUMENT_MODE constant.
   goog.userAgent.isDocumentMode = function(mode) {
     return mode <= goog.userAgent.DOCUMENT_MODE;
- ***REMOVED*****REMOVED***
+  };
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the key handler for the IE 8 and lower behavior.
-***REMOVED***
+/**
+ * Tests the key handler for the IE 8 and lower behavior.
+ */
 function testIe8StyleKeyHandling() {
   goog.userAgent.OPERA = false;
   goog.userAgent.IE = true;
@@ -53,9 +53,9 @@ function testIe8StyleKeyHandling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the key handler for the IE 8 and lower behavior.
-***REMOVED***
+/**
+ * Tests the key handler for the IE 8 and lower behavior.
+ */
 function testIe8StyleKeyHandlingInIe9DocumentMode() {
   goog.userAgent.OPERA = false;
   goog.userAgent.IE = true;
@@ -74,7 +74,7 @@ function testIe8StyleKeyHandlingInIe9DocumentMode() {
 
 function assertIe8StyleKeyHandling() {
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.ENTER);
@@ -177,9 +177,9 @@ function assertIe8StyleKeyHandling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests special cases for IE9.
-***REMOVED***
+/**
+ * Tests special cases for IE9.
+ */
 function testIe9StyleKeyHandling() {
   goog.userAgent.OPERA = false;
   goog.userAgent.IE = true;
@@ -194,7 +194,7 @@ function testIe9StyleKeyHandling() {
   goog.events.KeyHandler.USES_KEYDOWN_ = true;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.ENTER);
@@ -208,9 +208,9 @@ function testIe9StyleKeyHandling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the key handler for the Gecko behavior.
-***REMOVED***
+/**
+ * Tests the key handler for the Gecko behavior.
+ */
 function testGeckoStyleKeyHandling() {
   goog.userAgent.OPERA = false;
   goog.userAgent.IE = false;
@@ -223,7 +223,7 @@ function testGeckoStyleKeyHandling() {
   goog.events.KeyHandler.USES_KEYDOWN_ = false;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.ENTER);
@@ -302,9 +302,9 @@ function testGeckoStyleKeyHandling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the key handler for the Safari 3 behavior.
-***REMOVED***
+/**
+ * Tests the key handler for the Safari 3 behavior.
+ */
 function testSafari3StyleKeyHandling() {
   goog.userAgent.OPERA = false;
   goog.userAgent.IE = false;
@@ -319,7 +319,7 @@ function testSafari3StyleKeyHandling() {
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
   // Make sure all events are caught while testing
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.ENTER);
@@ -434,9 +434,9 @@ function testSafari3StyleKeyHandling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the key handler for the Opera behavior.
-***REMOVED***
+/**
+ * Tests the key handler for the Opera behavior.
+ */
 function testOperaStyleKeyHandling() {
   goog.userAgent.OPERA = true;
   goog.userAgent.IE = false;
@@ -449,7 +449,7 @@ function testOperaStyleKeyHandling() {
   goog.events.KeyHandler.USES_KEYDOWN_ = false;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.ENTER);
@@ -539,7 +539,7 @@ function testGeckoOnMacAltHandling() {
   goog.events.KeyHandler.SAVE_ALT_FOR_KEYPRESS_ = true;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, goog.events.KeyCodes.COMMA, 0, null, false,
@@ -581,7 +581,7 @@ function testGeckoEqualSign() {
   goog.events.KeyHandler.USES_KEYDOWN_ = false;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, 61, 0);
@@ -606,7 +606,7 @@ function testMacGeckoSlash() {
   goog.events.KeyHandler.USES_KEYDOWN_ = false;
 
   var keyEvent, keyHandler = new goog.events.KeyHandler();
-***REMOVED***keyHandler, goog.events.KeyHandler.EventType.KEY,
+  goog.events.listen(keyHandler, goog.events.KeyHandler.EventType.KEY,
       function(e) { keyEvent = e; });
 
   fireKeyDown(keyHandler, 0, 63, null, false, false, true);
@@ -667,15 +667,15 @@ function testCapturePhase() {
   var gotInBubblePhase;
 
   var target = goog.dom.createDom('div');
-***REMOVED***
-      new goog.events.KeyHandler(target, false /* bubble***REMOVED***),
+  goog.events.listen(
+      new goog.events.KeyHandler(target, false /* bubble */),
       goog.events.KeyHandler.EventType.KEY,
       function() {
         gotInBubblePhase = true;
         assertTrue(gotInCapturePhase);
       });
-***REMOVED***
-      new goog.events.KeyHandler(target, true /* capture***REMOVED***),
+  goog.events.listen(
+      new goog.events.KeyHandler(target, true /* capture */),
       goog.events.KeyHandler.EventType.KEY,
       function() {
         gotInCapturePhase = true;
@@ -723,6 +723,6 @@ function createFakeKeyEvent(type, keyCode, opt_charCode, opt_keyIdentifier,
     altKey: opt_altKey || false,
     shiftKey: opt_shiftKey || false,
     timeStamp: goog.now()
- ***REMOVED*****REMOVED***
+  };
   return new goog.events.BrowserEvent(event);
 }

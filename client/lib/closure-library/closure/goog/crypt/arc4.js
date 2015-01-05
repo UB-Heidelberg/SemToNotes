@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview ARC4 streamcipher implementation.  A description of the
-***REMOVED*** algorithm can be found at:
-***REMOVED*** http://www.mozilla.org/projects/security/pki/nss/draft-kaukonen-cipher-arcfour-03.txt.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED*** <code>
-***REMOVED***   var arc4 = new goog.crypt.Arc4();
-***REMOVED***   arc4.setKey(key);
-***REMOVED***   arc4.discard(1536);
-***REMOVED***   arc4.crypt(bytes);
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** Note: For converting between strings and byte arrays, goog.crypt.base64 may
-***REMOVED*** be useful.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview ARC4 streamcipher implementation.  A description of the
+ * algorithm can be found at:
+ * http://www.mozilla.org/projects/security/pki/nss/draft-kaukonen-cipher-arcfour-03.txt.
+ *
+ * Usage:
+ * <code>
+ *   var arc4 = new goog.crypt.Arc4();
+ *   arc4.setKey(key);
+ *   arc4.discard(1536);
+ *   arc4.crypt(bytes);
+ * </code>
+ *
+ * Note: For converting between strings and byte arrays, goog.crypt.base64 may
+ * be useful.
+ *
+ */
 
 goog.provide('goog.crypt.Arc4');
 
@@ -36,41 +36,41 @@ goog.require('goog.asserts');
 
 
 
-***REMOVED***
-***REMOVED*** ARC4 streamcipher implementation.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * ARC4 streamcipher implementation.
+ * @constructor
+ * @final
+ * @struct
+ */
 goog.crypt.Arc4 = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A permutation of all 256 possible bytes.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A permutation of all 256 possible bytes.
+   * @type {Array.<number>}
+   * @private
+   */
   this.state_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** 8 bit index pointer into this.state_.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * 8 bit index pointer into this.state_.
+   * @type {number}
+   * @private
+   */
   this.index1_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** 8 bit index pointer into this.state_.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * 8 bit index pointer into this.state_.
+   * @type {number}
+   * @private
+   */
   this.index2_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initialize the cipher for use with new key.
-***REMOVED*** @param {Array.<number>} key A byte array containing the key.
-***REMOVED*** @param {number=} opt_length Indicates # of bytes to take from the key.
-***REMOVED***
+/**
+ * Initialize the cipher for use with new key.
+ * @param {Array.<number>} key A byte array containing the key.
+ * @param {number=} opt_length Indicates # of bytes to take from the key.
+ */
 goog.crypt.Arc4.prototype.setKey = function(key, opt_length) {
   goog.asserts.assertArray(key, 'Key parameter must be a byte array');
 
@@ -95,27 +95,27 @@ goog.crypt.Arc4.prototype.setKey = function(key, opt_length) {
 
   this.index1_ = 0;
   this.index2_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Discards n bytes of the keystream.
-***REMOVED*** These days 1536 is considered a decent amount to drop to get the key state
-***REMOVED*** warmed-up enough for secure usage. This is not done in the constructor to
-***REMOVED*** preserve efficiency for use cases that do not need this.
-***REMOVED*** NOTE: Discard is identical to crypt without actually xoring any data. It's
-***REMOVED*** unfortunate to have this code duplicated, but this was done for performance
-***REMOVED*** reasons. Alternatives which were attempted:
-***REMOVED*** 1. Create a temp array of the correct length and pass it to crypt. This
-***REMOVED***    works but needlessly allocates an array. But more importantly this
-***REMOVED***    requires choosing an array type (Array or Uint8Array) in discard, and
-***REMOVED***    choosing a different type than will be passed to crypt by the client
-***REMOVED***    code hurts the javascript engines ability to optimize crypt (7x hit in
-***REMOVED***    v8).
-***REMOVED*** 2. Make data option in crypt so discard can pass null, this has a huge
-***REMOVED***    perf hit for crypt.
-***REMOVED*** @param {number} length Number of bytes to disregard from the stream.
-***REMOVED***
+/**
+ * Discards n bytes of the keystream.
+ * These days 1536 is considered a decent amount to drop to get the key state
+ * warmed-up enough for secure usage. This is not done in the constructor to
+ * preserve efficiency for use cases that do not need this.
+ * NOTE: Discard is identical to crypt without actually xoring any data. It's
+ * unfortunate to have this code duplicated, but this was done for performance
+ * reasons. Alternatives which were attempted:
+ * 1. Create a temp array of the correct length and pass it to crypt. This
+ *    works but needlessly allocates an array. But more importantly this
+ *    requires choosing an array type (Array or Uint8Array) in discard, and
+ *    choosing a different type than will be passed to crypt by the client
+ *    code hurts the javascript engines ability to optimize crypt (7x hit in
+ *    v8).
+ * 2. Make data option in crypt so discard can pass null, this has a huge
+ *    perf hit for crypt.
+ * @param {number} length Number of bytes to disregard from the stream.
+ */
 goog.crypt.Arc4.prototype.discard = function(length) {
   var i = this.index1_;
   var j = this.index2_;
@@ -132,14 +132,14 @@ goog.crypt.Arc4.prototype.discard = function(length) {
 
   this.index1_ = i;
   this.index2_ = j;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** En- or decrypt (same operation for streamciphers like ARC4)
-***REMOVED*** @param {Array.<number>|Uint8Array} data The data to be xor-ed in place.
-***REMOVED*** @param {number=} opt_length The number of bytes to crypt.
-***REMOVED***
+/**
+ * En- or decrypt (same operation for streamciphers like ARC4)
+ * @param {Array.<number>|Uint8Array} data The data to be xor-ed in place.
+ * @param {number=} opt_length The number of bytes to crypt.
+ */
 goog.crypt.Arc4.prototype.crypt = function(data, opt_length) {
   if (!opt_length) {
     opt_length = data.length;
@@ -161,4 +161,4 @@ goog.crypt.Arc4.prototype.crypt = function(data, opt_length) {
 
   this.index1_ = i;
   this.index2_ = j;
-***REMOVED***
+};

@@ -27,22 +27,22 @@ See the COPYING file for details.
 var sprite = '../../demos/emoji/sprite.png';
 var sprite2 = '../../demos/emoji/sprite2.png';
 
-***REMOVED***
-***REMOVED*** Creates a SpriteInfo object with the specified properties. If the image is
-***REMOVED*** sprited via CSS, then only the first parameter needs a value. If the image
-***REMOVED*** is sprited via metadata, then the first parameter should be left null.
-***REMOVED***
-***REMOVED*** @param {?string} cssClass CSS class to properly display the sprited image.
-***REMOVED*** @param {string=} opt_url Url of the sprite image.
-***REMOVED*** @param {number=} opt_width Width of the image being sprited.
-***REMOVED*** @param {number=} opt_height Height of the image being sprited.
-***REMOVED*** @param {number=} opt_xOffset Positive x offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {number=} opt_yOffset Positive y offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {boolean=} opt_animated Whether the sprite info is for an animated
-***REMOVED***     emoji.
-***REMOVED***
+/**
+ * Creates a SpriteInfo object with the specified properties. If the image is
+ * sprited via CSS, then only the first parameter needs a value. If the image
+ * is sprited via metadata, then the first parameter should be left null.
+ *
+ * @param {?string} cssClass CSS class to properly display the sprited image.
+ * @param {string=} opt_url Url of the sprite image.
+ * @param {number=} opt_width Width of the image being sprited.
+ * @param {number=} opt_height Height of the image being sprited.
+ * @param {number=} opt_xOffset Positive x offset of the image being sprited
+ *     within the sprite.
+ * @param {number=} opt_yOffset Positive y offset of the image being sprited
+ *     within the sprite.
+ * @param {boolean=} opt_animated Whether the sprite info is for an animated
+ *     emoji.
+ */
 function si(cssClass, opt_url, opt_width, opt_height, opt_xOffset,
             opt_yOffset, opt_animated) {
   return new goog.ui.emoji.SpriteInfo(cssClass, opt_url, opt_width,
@@ -95,14 +95,14 @@ var spritedEmoji2 = [
         ]];
 
 
-***REMOVED***
-***REMOVED*** Returns true if the two paths end with the same file.
-***REMOVED***
-***REMOVED*** E.g., ('../../cool.gif', 'file:///home/usr/somewhere/cool.gif') --> true
-***REMOVED***
-***REMOVED*** @param {string} path1 First url
-***REMOVED*** @param {string} path2 Second url
-***REMOVED***
+/**
+ * Returns true if the two paths end with the same file.
+ *
+ * E.g., ('../../cool.gif', 'file:///home/usr/somewhere/cool.gif') --> true
+ *
+ * @param {string} path1 First url
+ * @param {string} path2 Second url
+ */
 function checkPathsEndWithSameFile(path1, path2) {
   var pieces1 = path1.split('/');
   var file1 = pieces1[pieces1.length - 1];
@@ -113,15 +113,15 @@ function checkPathsEndWithSameFile(path1, path2) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks and verifies the structure of a non-progressive fast-loading picker
-***REMOVED*** after the animated emoji have loaded.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
-***REMOVED*** @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
-***REMOVED*** @param {Object} images Map of id -> Image for the images loaded in this
-***REMOVED***     picker.
-***REMOVED***
+/**
+ * Checks and verifies the structure of a non-progressive fast-loading picker
+ * after the animated emoji have loaded.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
+ * @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
+ * @param {Object} images Map of id -> Image for the images loaded in this
+ *     picker.
+ */
 function checkPostLoadStructureForFastLoadNonProgressivePicker(palette,
                                                                emoji,
                                                                images) {
@@ -130,7 +130,7 @@ function checkPostLoadStructureForFastLoadNonProgressivePicker(palette,
     var emojiInfo = emoji[1][i];
     var cell = palette.getSelectedItem();
     var id = cell.getAttribute(goog.ui.emoji.Emoji.ATTRIBUTE);
-    var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (cell.firstChild);
+    var inner = /** @type {Element} */ (cell.firstChild);
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
@@ -187,7 +187,7 @@ function checkPostLoadStructureForFastLoadNonProgressivePicker(palette,
 }
 
 var testCase = new goog.testing.AsyncTestCase(document.title);
-testCase.stepTimeout = 4***REMOVED*** 1000;
+testCase.stepTimeout = 4 * 1000;
 
 testCase.setUpPage = function() {
   this.waitForAsync('setUpPage');
@@ -201,32 +201,32 @@ testCase.setUpPage = function() {
 
   this.palette = this.picker.getPage(0);
   var imageLoader = this.palette.getImageLoader();
-  this.images = {***REMOVED***
+  this.images = {};
 
-***REMOVED***imageLoader, goog.net.EventType.COMPLETE,
+  goog.events.listen(imageLoader, goog.net.EventType.COMPLETE,
       this.onImageLoaderComplete, false, this);
-***REMOVED***imageLoader, goog.events.EventType.LOAD,
+  goog.events.listen(imageLoader, goog.events.EventType.LOAD,
       this.onImageLoaded, false, this);
 
   // Now we load the animated emoji and check the structure again. The animated
   // emoji will be different.
   this.picker.manuallyLoadAnimatedEmoji();
-***REMOVED***
+};
 
 testCase.onImageLoaded = function(e) {
   var image = e.target;
   this.log('Image loaded: ' + image.src);
   this.images[image.id] = image;
-***REMOVED***
+};
 
 testCase.onImageLoaderComplete = function(e) {
   this.log('Image loading complete');
   this.continueTesting();
-***REMOVED***
+};
 
 testCase.tearDownPage = function() {
   this.picker.dispose();
-***REMOVED***
+};
 
 testCase.addNewTest('testStructure', function() {
   // Bug 2280968

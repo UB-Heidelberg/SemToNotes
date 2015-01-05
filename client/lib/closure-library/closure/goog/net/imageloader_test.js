@@ -18,9 +18,9 @@ goog.setTestOnly('goog.net.ImageLoaderTest');
 goog.require('goog.Timer');
 goog.require('goog.array');
 goog.require('goog.dispose');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.net.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.object');
@@ -43,10 +43,10 @@ var TEST_EVENT_TYPES = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Mapping from test image file name to:
-***REMOVED*** [expected width, expected height, expected event to be fired].
-***REMOVED***
+/**
+ * Mapping from test image file name to:
+ * [expected width, expected height, expected event to be fired].
+ */
 var TEST_IMAGES = {
   'imageloader_testimg1.gif': [20, 20, goog.events.EventType.LOAD],
   'imageloader_testimg2.gif': [20, 20, goog.events.EventType.LOAD],
@@ -54,7 +54,7 @@ var TEST_IMAGES = {
 
   'this-is-not-image-1.gif': [0, 0, goog.net.EventType.ERROR],
   'this-is-not-image-2.gif': [0, 0, goog.net.EventType.ERROR]
-***REMOVED***
+};
 
 
 var startTime;
@@ -80,11 +80,11 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests loading image and disposing before loading completes.
-***REMOVED***
+/**
+ * Tests loading image and disposing before loading completes.
+ */
 function testDisposeInTheMiddleOfLoadingWorks() {
-***REMOVED***loader, TEST_EVENT_TYPES,
+  goog.events.listen(loader, TEST_EVENT_TYPES,
       goog.partial(handleDisposalImageLoaderEvent, loader));
   // waitForAsync before starting loader just in case
   // handleDisposalImageLoaderEvent is called from within loader.start
@@ -118,12 +118,12 @@ function handleDisposalImageLoaderEvent(loader, e) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests loading of images until completion.
-***REMOVED***
+/**
+ * Tests loading of images until completion.
+ */
 function testLoadingUntilCompletion() {
-  var results = {***REMOVED***
-***REMOVED***loader, TEST_EVENT_TYPES,
+  var results = {};
+  goog.events.listen(loader, TEST_EVENT_TYPES,
       function(e) {
         switch (e.type) {
           case goog.events.EventType.LOAD:
@@ -169,16 +169,16 @@ function assertImagesAreCorrect(results) {
     assertEquals('Image length is not correct', value[1], image[1]);
 
     // Check if fired the correct event.
-    assertEquals('Event***REMOVED***' + value[2] + '* must be fired', value[2], image[2]);
+    assertEquals('Event *' + value[2] + '* must be fired', value[2], image[2]);
   });
 }
 
 
-***REMOVED***
-***REMOVED*** Overrides the loader's loadImage_ method so that it dispatches an image
-***REMOVED*** loaded event immediately, causing any event listners to receive them
-***REMOVED*** synchronously.  This allows tests to assume synchronous execution.
-***REMOVED***
+/**
+ * Overrides the loader's loadImage_ method so that it dispatches an image
+ * loaded event immediately, causing any event listners to receive them
+ * synchronously.  This allows tests to assume synchronous execution.
+ */
 function makeLoaderSynchronous(loader) {
   var originalLoadImage = loader.loadImage_;
   loader.loadImage_ = function(request, id) {
@@ -187,19 +187,19 @@ function makeLoaderSynchronous(loader) {
     var event = new goog.events.Event(goog.events.EventType.LOAD);
     event.currentTarget = this.imageIdToImageMap_[id];
     loader.onNetworkEvent_(event);
- ***REMOVED*****REMOVED***
+  };
 
   // Make listen() a no-op.
   loader.handler_.listen = goog.nullFunction;
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that if an additional image is added after start() was called, but
-***REMOVED*** before COMPLETE was dispatched, no COMPLETE event is sent.  Verifies COMPLETE
-***REMOVED*** is finally sent when .start() is called again and all images have now
-***REMOVED*** completed loading.
-***REMOVED***
+/**
+ * Verifies that if an additional image is added after start() was called, but
+ * before COMPLETE was dispatched, no COMPLETE event is sent.  Verifies COMPLETE
+ * is finally sent when .start() is called again and all images have now
+ * completed loading.
+ */
 function testImagesAddedAfterStart() {
   // Use synchronous image loading.
   makeLoaderSynchronous(loader);
@@ -211,11 +211,11 @@ function testImagesAddedAfterStart() {
 
   // Keep track of the total # of image loads.
   var loadRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.events.EventType.LOAD, loadRecordFn);
+  goog.events.listen(loader, goog.events.EventType.LOAD, loadRecordFn);
 
   // Keep track of how many times COMPLETE was dispatched.
   var completeRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.net.EventType.COMPLETE, completeRecordFn);
+  goog.events.listen(loader, goog.net.EventType.COMPLETE, completeRecordFn);
 
   // Start testing.
   loader.start();
@@ -234,18 +234,18 @@ function testImagesAddedAfterStart() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that more images can be added after an upload starts, and start()
-***REMOVED*** can be called for them, resulting in just one COMPLETE event once all the
-***REMOVED*** images have completed.
-***REMOVED***
+/**
+ * Verifies that more images can be added after an upload starts, and start()
+ * can be called for them, resulting in just one COMPLETE event once all the
+ * images have completed.
+ */
 function testImagesAddedAndStartedAfterStart() {
   // Use synchronous image loading.
   makeLoaderSynchronous(loader);
 
   // Keep track of the total # of image loads.
   var loadRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.events.EventType.LOAD, loadRecordFn);
+  goog.events.listen(loader, goog.events.EventType.LOAD, loadRecordFn);
 
   // Add more images once the first images finishes loading, and call start()
   // to get them going.
@@ -257,7 +257,7 @@ function testImagesAddedAndStartedAfterStart() {
 
   // Keep track of how many times COMPLETE was dispatched.
   var completeRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.net.EventType.COMPLETE, completeRecordFn);
+  goog.events.listen(loader, goog.net.EventType.COMPLETE, completeRecordFn);
 
   // Start testing.  Make sure all 7 images loaded.
   loader.start();
@@ -268,10 +268,10 @@ function testImagesAddedAndStartedAfterStart() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that if images are removed after loading has started, COMPLETE
-***REMOVED*** is dispatched once the remaining images have finished.
-***REMOVED***
+/**
+ * Verifies that if images are removed after loading has started, COMPLETE
+ * is dispatched once the remaining images have finished.
+ */
 function testImagesRemovedAfterStart() {
   // Use synchronous image loading.
   makeLoaderSynchronous(loader);
@@ -286,11 +286,11 @@ function testImagesRemovedAfterStart() {
 
   // Keep track of the total # of image loads.
   var loadRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.events.EventType.LOAD, loadRecordFn);
+  goog.events.listen(loader, goog.events.EventType.LOAD, loadRecordFn);
 
   // Keep track of how many times COMPLETE was dispatched.
   var completeRecordFn = goog.testing.recordFunction();
-***REMOVED***loader, goog.net.EventType.COMPLETE, completeRecordFn);
+  goog.events.listen(loader, goog.net.EventType.COMPLETE, completeRecordFn);
 
   // Start testing.  Make sure only the 3 images remaining loaded.
   loader.start();
@@ -301,15 +301,15 @@ function testImagesRemovedAfterStart() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that the correct image attribute is set when using CORS requests.
-***REMOVED***
+/**
+ * Verifies that the correct image attribute is set when using CORS requests.
+ */
 function testSetsCorsAttribute() {
   // Use synchronous image loading.
   makeLoaderSynchronous(loader);
 
   // Verify the crossOrigin attribute of the requested images.
-***REMOVED***loader, goog.events.EventType.LOAD, function(e) {
+  goog.events.listen(loader, goog.events.EventType.LOAD, function(e) {
     var image = e.target;
     if (image.id == 'cors_request') {
       assertEquals(

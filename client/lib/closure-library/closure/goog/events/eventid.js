@@ -16,32 +16,32 @@ goog.provide('goog.events.EventId');
 
 
 
-***REMOVED***
-***REMOVED*** A templated class that is used when registering for events. Typical usage:
-***REMOVED*** <code>
-***REMOVED***  ***REMOVED*****REMOVED*** @type {goog.events.EventId.<MyEventObj>}
-***REMOVED***   var myEventId = new goog.events.EventId(
-***REMOVED***       goog.events.getUniqueId(('someEvent'));
-***REMOVED***
-***REMOVED***   // No need to cast or declare here since the compiler knows the correct
-***REMOVED***   // type of 'evt' (MyEventObj).
-***REMOVED***   something.listen(myEventId, function(evt) {});
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** @param {string} eventId
-***REMOVED*** @template T
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A templated class that is used when registering for events. Typical usage:
+ * <code>
+ *   /** @type {goog.events.EventId.<MyEventObj>}
+ *   var myEventId = new goog.events.EventId(
+ *       goog.events.getUniqueId(('someEvent'));
+ *
+ *   // No need to cast or declare here since the compiler knows the correct
+ *   // type of 'evt' (MyEventObj).
+ *   something.listen(myEventId, function(evt) {});
+ * </code>
+ *
+ * @param {string} eventId
+ * @template T
+ * @constructor
+ * @struct
+ * @final
+ */
 goog.events.EventId = function(eventId) {
- ***REMOVED*****REMOVED*** @const***REMOVED*** this.id = eventId;
-***REMOVED***
+  /** @const */ this.id = eventId;
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.events.EventId.prototype.toString = function() {
   return this.id;
-***REMOVED***
+};

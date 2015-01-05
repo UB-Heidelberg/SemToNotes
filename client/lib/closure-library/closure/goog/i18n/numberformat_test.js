@@ -692,9 +692,9 @@ function testFailParseShouldThrow() {
 }
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether we're on Linux Firefox 3.6.3.
-***REMOVED***
+/**
+ * @return {boolean} Whether we're on Linux Firefox 3.6.3.
+ */
 function isFirefox363Linux() {
   return goog.userAgent.product.FIREFOX && goog.userAgent.LINUX &&
       goog.userAgent.product.isVersion('3.6.3') &&

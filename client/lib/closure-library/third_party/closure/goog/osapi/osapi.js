@@ -1,50 +1,50 @@
-***REMOVED***
-***REMOVED*** @license
-***REMOVED*** Licensed to the Apache Software Foundation (ASF) under one
-***REMOVED*** or more contributor license agreements. See the NOTICE file
-***REMOVED*** distributed with this work for additional information
-***REMOVED*** regarding copyright ownership. The ASF licenses this file
-***REMOVED*** to you under the Apache License, Version 2.0 (the
-***REMOVED*** "License"); you may not use this file except in compliance
-***REMOVED*** with the License. You may obtain a copy of the License at
-***REMOVED*** http://www.apache.org/licenses/LICENSE-2.0
-***REMOVED*** Unless required by applicable law or agreed to in writing,
-***REMOVED*** software distributed under the License is distributed on an
-***REMOVED*** "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-***REMOVED*** KIND, either express or implied. See the License for the
-***REMOVED*** specific language governing permissions and limitations under the License.
-***REMOVED***
+/**
+ * @license
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership. The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-***REMOVED***
-***REMOVED*** @fileoverview Base OSAPI binding.
-***REMOVED*** This file was copied from
-***REMOVED*** http://svn.apache.org/repos/asf/shindig/trunk/features/src/main/javascript/features/shindig.container/osapi.js
-***REMOVED*** and it's slightly modified for Closure.
-***REMOVED***
+/**
+ * @fileoverview Base OSAPI binding.
+ * This file was copied from
+ * http://svn.apache.org/repos/asf/shindig/trunk/features/src/main/javascript/features/shindig.container/osapi.js
+ * and it's slightly modified for Closure.
+ */
 
 goog.provide('goog.osapi');
 
 
 // Expose osapi from container side.
-var osapi = osapi || {***REMOVED***
+var osapi = osapi || {};
 goog.exportSymbol('osapi', osapi);
 
 
-***REMOVED*** @type {Function}***REMOVED***
+/** @type {Function} */
 osapi.callback;
 
 
-***REMOVED***
-***REMOVED*** Dispatch a JSON-RPC batch request to services defined in the osapi namespace
-***REMOVED*** @param {Array.<Object>} requests an array of rpc requests.
-***REMOVED***
+/**
+ * Dispatch a JSON-RPC batch request to services defined in the osapi namespace
+ * @param {Array.<Object>} requests an array of rpc requests.
+ */
 goog.osapi.handleGadgetRpcMethod = function(requests) {
   var responses = new Array(requests.length);
   var callCount = 0;
   var callback = osapi.callback;
   var dummy = function(params, apiCallback) {
     apiCallback({});
- ***REMOVED*****REMOVED***
+  };
   for (var i = 0; i < requests.length; i++) {
     // Don't allow underscores in any part of the method name as a
     // convention for restricted methods
@@ -69,20 +69,20 @@ goog.osapi.handleGadgetRpcMethod = function(requests) {
     current(requests[i]['params'], function(i) {
       return function(response) {
         // Put back in json-rpc format
-        responses[i] = {'id': requests[i].id, 'data': response***REMOVED***
+        responses[i] = {'id': requests[i].id, 'data': response};
         callCount++;
         if (callCount == requests.length) {
           callback(responses);
         }
-     ***REMOVED*****REMOVED***
+      };
     }(i));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes container side osapi binding.
-***REMOVED***
+/**
+ * Initializes container side osapi binding.
+ */
 goog.osapi.init = function() {
    // Container-side binding for the gadgetsrpctransport used by osapi.
    // Containers add services to the client-side osapi implementation by
@@ -90,6 +90,6 @@ goog.osapi.init = function() {
   if (gadgets && gadgets.rpc) { // Only define if gadgets rpc exists.
     // Register the osapi RPC dispatcher.
     gadgets.rpc.register('osapi._handleGadgetRpcMethod',
-       ***REMOVED*****REMOVED*** @type {!Function}***REMOVED*** (goog.osapi.handleGadgetRpcMethod));
+        /** @type {!Function} */ (goog.osapi.handleGadgetRpcMethod));
   }
-***REMOVED***
+};

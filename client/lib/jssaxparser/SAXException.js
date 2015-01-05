@@ -11,10 +11,10 @@ SAXException.prototype = new Error(); // We try to make useful as a JavaScript e
 SAXException.constructor = SAXException;
 SAXException.prototype.getMessage = function () {
     return this.message;
-***REMOVED***
+};
 SAXException.prototype.getException = function () {
     return this.exception;
-***REMOVED***
+};
 
 
 // Not fully implemented
@@ -47,22 +47,22 @@ SAXParseException.prototype.getColumnNumber = function () {
     if (this.locator) {
         return this.locator.getColumnNumber();
     }
-***REMOVED***
+};
 SAXParseException.prototype.getLineNumber = function () {
     if (this.locator) {
         return this.locator.getLineNumber();
     }
-***REMOVED***
+};
 SAXParseException.prototype.getPublicId = function () {
     if (this.locator) {
         return this.locator.getPublicId();
     }
-***REMOVED***
+};
 SAXParseException.prototype.getSystemId = function () {
     if (this.locator) {
         return this.locator.getSystemId();
     }
-***REMOVED***
+};
 
 
 this.SAXException = SAXException;

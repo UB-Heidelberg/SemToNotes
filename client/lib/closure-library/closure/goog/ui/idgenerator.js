@@ -12,37 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Generator for unique element IDs.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Generator for unique element IDs.
+ *
+ */
 
 goog.provide('goog.ui.IdGenerator');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new id generator.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new id generator.
+ * @constructor
+ * @final
+ */
 goog.ui.IdGenerator = function() {
-***REMOVED***
+};
 goog.addSingletonGetter(goog.ui.IdGenerator);
 
 
-***REMOVED***
-***REMOVED*** Next unique ID to use
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Next unique ID to use
+ * @type {number}
+ * @private
+ */
 goog.ui.IdGenerator.prototype.nextId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Gets the next unique ID.
-***REMOVED*** @return {string} The next unique identifier.
-***REMOVED***
+/**
+ * Gets the next unique ID.
+ * @return {string} The next unique identifier.
+ */
 goog.ui.IdGenerator.prototype.getNextUniqueId = function() {
   return ':' + (this.nextId_++).toString(36);
-***REMOVED***
+};

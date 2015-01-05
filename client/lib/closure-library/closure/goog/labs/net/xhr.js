@@ -13,13 +13,13 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Offered as an alternative to XhrIo as a way for making requests
-***REMOVED*** via XMLHttpRequest.  Instead of mirroring the XHR interface and exposing
-***REMOVED*** events, results are used as a way to pass a "promise" of the response to
-***REMOVED*** interested parties.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Offered as an alternative to XhrIo as a way for making requests
+ * via XMLHttpRequest.  Instead of mirroring the XHR interface and exposing
+ * events, results are used as a way to pass a "promise" of the response to
+ * interested parties.
+ *
+ */
 
 goog.provide('goog.labs.net.xhr');
 goog.provide('goog.labs.net.xhr.Error');
@@ -43,132 +43,132 @@ var _ = goog.labs.net.xhr;
 var HttpStatus = goog.net.HttpStatus;
 
 
-***REMOVED***
-***REMOVED*** Configuration options for an XMLHttpRequest.
-***REMOVED*** - headers: map of header key/value pairs.
-***REMOVED*** - timeoutMs: number of milliseconds after which the request will be timed
-***REMOVED***      out by the client. Default is to allow the browser to handle timeouts.
-***REMOVED*** - withCredentials: whether user credentials are to be included in a
-***REMOVED***      cross-origin request.  See:
-***REMOVED***      http://dev.w3.org/2006/webapi/XMLHttpRequest-2/#the-withcredentials-attribute
-***REMOVED*** - mimeType: allows the caller to override the content-type and charset for
-***REMOVED***      the request, which is useful when requesting binary data.  See:
-***REMOVED***      http://dev.w3.org/2006/webapi/XMLHttpRequest-2/#dom-xmlhttprequest-overridemimetype
-***REMOVED*** - xssiPrefix: Prefix used for protecting against XSSI attacks, which should
-***REMOVED***      be removed before parsing the response as JSON.
-***REMOVED***
-***REMOVED*** @typedef {{
-***REMOVED***   headers: (Object.<string>|undefined),
-***REMOVED***   timeoutMs: (number|undefined),
-***REMOVED***   withCredentials: (boolean|undefined),
-***REMOVED***   mimeType: (string|undefined),
-***REMOVED***   xssiPrefix: (string|undefined)
-***REMOVED*** }}
-***REMOVED***
+/**
+ * Configuration options for an XMLHttpRequest.
+ * - headers: map of header key/value pairs.
+ * - timeoutMs: number of milliseconds after which the request will be timed
+ *      out by the client. Default is to allow the browser to handle timeouts.
+ * - withCredentials: whether user credentials are to be included in a
+ *      cross-origin request.  See:
+ *      http://dev.w3.org/2006/webapi/XMLHttpRequest-2/#the-withcredentials-attribute
+ * - mimeType: allows the caller to override the content-type and charset for
+ *      the request, which is useful when requesting binary data.  See:
+ *      http://dev.w3.org/2006/webapi/XMLHttpRequest-2/#dom-xmlhttprequest-overridemimetype
+ * - xssiPrefix: Prefix used for protecting against XSSI attacks, which should
+ *      be removed before parsing the response as JSON.
+ *
+ * @typedef {{
+ *   headers: (Object.<string>|undefined),
+ *   timeoutMs: (number|undefined),
+ *   withCredentials: (boolean|undefined),
+ *   mimeType: (string|undefined),
+ *   xssiPrefix: (string|undefined)
+ * }}
+ */
 _.Options;
 
 
-***REMOVED***
-***REMOVED*** Defines the types that are allowed as post data.
-***REMOVED*** @typedef {(ArrayBuffer|Blob|Document|FormData|null|string|undefined)}
-***REMOVED***
+/**
+ * Defines the types that are allowed as post data.
+ * @typedef {(ArrayBuffer|Blob|Document|FormData|null|string|undefined)}
+ */
 _.PostData;
 
 
-***REMOVED***
-***REMOVED*** The Content-Type HTTP header name.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The Content-Type HTTP header name.
+ * @type {string}
+ */
 _.CONTENT_TYPE_HEADER = 'Content-Type';
 
 
-***REMOVED***
-***REMOVED*** The Content-Type HTTP header value for a url-encoded form.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The Content-Type HTTP header value for a url-encoded form.
+ * @type {string}
+ */
 _.FORM_CONTENT_TYPE = 'application/x-www-form-urlencoded;charset=utf-8';
 
 
-***REMOVED***
-***REMOVED*** Sends a get request, returning a promise that will be resolved
-***REMOVED*** with the response text once the request completes.
-***REMOVED***
-***REMOVED*** @param {string} url The URL to request.
-***REMOVED*** @param {_.Options=} opt_options Configuration options for the request.
-***REMOVED*** @return {!goog.Promise.<string>} A promise that will be resolved with the
-***REMOVED***     response text once the request completes.
-***REMOVED***
+/**
+ * Sends a get request, returning a promise that will be resolved
+ * with the response text once the request completes.
+ *
+ * @param {string} url The URL to request.
+ * @param {_.Options=} opt_options Configuration options for the request.
+ * @return {!goog.Promise.<string>} A promise that will be resolved with the
+ *     response text once the request completes.
+ */
 _.get = function(url, opt_options) {
   return _.send('GET', url, null, opt_options).then(function(xhr) {
     return xhr.responseText;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a post request, returning a promise that will be resolved
-***REMOVED*** with the response text once the request completes.
-***REMOVED***
-***REMOVED*** @param {string} url The URL to request.
-***REMOVED*** @param {_.PostData} data The body of the post request.
-***REMOVED*** @param {_.Options=} opt_options Configuration options for the request.
-***REMOVED*** @return {!goog.Promise.<string>} A promise that will be resolved with the
-***REMOVED***     response text once the request completes.
-***REMOVED***
+/**
+ * Sends a post request, returning a promise that will be resolved
+ * with the response text once the request completes.
+ *
+ * @param {string} url The URL to request.
+ * @param {_.PostData} data The body of the post request.
+ * @param {_.Options=} opt_options Configuration options for the request.
+ * @return {!goog.Promise.<string>} A promise that will be resolved with the
+ *     response text once the request completes.
+ */
 _.post = function(url, data, opt_options) {
   return _.send('POST', url, data, opt_options).then(function(xhr) {
     return xhr.responseText;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a get request, returning a promise that will be resolved with
-***REMOVED*** the parsed response text once the request completes.
-***REMOVED***
-***REMOVED*** @param {string} url The URL to request.
-***REMOVED*** @param {_.Options=} opt_options Configuration options for the request.
-***REMOVED*** @return {!goog.Promise.<Object>} A promise that will be resolved with the
-***REMOVED***     response JSON once the request completes.
-***REMOVED***
+/**
+ * Sends a get request, returning a promise that will be resolved with
+ * the parsed response text once the request completes.
+ *
+ * @param {string} url The URL to request.
+ * @param {_.Options=} opt_options Configuration options for the request.
+ * @return {!goog.Promise.<Object>} A promise that will be resolved with the
+ *     response JSON once the request completes.
+ */
 _.getJson = function(url, opt_options) {
   return _.send('GET', url, null, opt_options).then(function(xhr) {
     return _.parseJson_(xhr.responseText, opt_options);
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a post request, returning a promise that will be resolved with
-***REMOVED*** the parsed response text once the request completes.
-***REMOVED***
-***REMOVED*** @param {string} url The URL to request.
-***REMOVED*** @param {_.PostData} data The body of the post request.
-***REMOVED*** @param {_.Options=} opt_options Configuration options for the request.
-***REMOVED*** @return {!goog.Promise.<Object>} A promise that will be resolved with the
-***REMOVED***     response JSON once the request completes.
-***REMOVED***
+/**
+ * Sends a post request, returning a promise that will be resolved with
+ * the parsed response text once the request completes.
+ *
+ * @param {string} url The URL to request.
+ * @param {_.PostData} data The body of the post request.
+ * @param {_.Options=} opt_options Configuration options for the request.
+ * @return {!goog.Promise.<Object>} A promise that will be resolved with the
+ *     response JSON once the request completes.
+ */
 _.postJson = function(url, data, opt_options) {
   return _.send('POST', url, data, opt_options).then(function(xhr) {
     return _.parseJson_(xhr.responseText, opt_options);
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a request, returning a promise that will be resolved
-***REMOVED*** with the XHR object once the request completes.
-***REMOVED***
-***REMOVED*** @param {string} method The HTTP method for the request.
-***REMOVED*** @param {string} url The URL to request.
-***REMOVED*** @param {_.PostData} data The body of the post request.
-***REMOVED*** @param {_.Options=} opt_options Configuration options for the request.
-***REMOVED*** @return {!goog.Promise.<!goog.net.XhrLike.OrNative>} A promise that will be
-***REMOVED***     resolved with the XHR object once the request completes.
-***REMOVED***
+/**
+ * Sends a request, returning a promise that will be resolved
+ * with the XHR object once the request completes.
+ *
+ * @param {string} method The HTTP method for the request.
+ * @param {string} url The URL to request.
+ * @param {_.PostData} data The body of the post request.
+ * @param {_.Options=} opt_options Configuration options for the request.
+ * @return {!goog.Promise.<!goog.net.XhrLike.OrNative>} A promise that will be
+ *     resolved with the XHR object once the request completes.
+ */
 _.send = function(method, url, data, opt_options) {
   return new goog.Promise(function(resolve, reject) {
-    var options = opt_options || {***REMOVED***
+    var options = opt_options || {};
     var timer;
 
     var xhr = goog.net.XmlHttp();
@@ -193,10 +193,10 @@ _.send = function(method, url, data, opt_options) {
           reject(new _.HttpError(xhr.status, url, xhr));
         }
       }
-   ***REMOVED*****REMOVED***
+    };
     xhr.onerror = function() {
       reject(new _.Error('Network error', url, xhr));
-   ***REMOVED*****REMOVED***
+    };
 
     // Set the headers.
     var contentTypeIsSet = false;
@@ -249,30 +249,30 @@ _.send = function(method, url, data, opt_options) {
       reject(new _.Error('Error sending XHR: ' + e.message, url, xhr));
     }
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} url The URL to test.
-***REMOVED*** @return {boolean} Whether the effective scheme is HTTP or HTTPs.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {string} url The URL to test.
+ * @return {boolean} Whether the effective scheme is HTTP or HTTPs.
+ * @private
+ */
 _.isEffectiveSchemeHttp_ = function(url) {
   var scheme = goog.uri.utils.getEffectiveScheme(url);
   // NOTE(user): Empty-string is for the case under FF3.5 when the location
   // is not defined inside a web worker.
   return scheme == 'http' || scheme == 'https' || scheme == '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** JSON-parses the given response text, returning an Object.
-***REMOVED***
-***REMOVED*** @param {string} responseText Response text.
-***REMOVED*** @param {_.Options|undefined} options The options object.
-***REMOVED*** @return {Object} The JSON-parsed value of the original responseText.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * JSON-parses the given response text, returning an Object.
+ *
+ * @param {string} responseText Response text.
+ * @param {_.Options|undefined} options The options object.
+ * @return {Object} The JSON-parsed value of the original responseText.
+ * @private
+ */
 _.parseJson_ = function(responseText, options) {
   var prefixStrippedResult = responseText;
   if (options && options.xssiPrefix) {
@@ -280,102 +280,102 @@ _.parseJson_ = function(responseText, options) {
         options.xssiPrefix, prefixStrippedResult);
   }
   return goog.json.parse(prefixStrippedResult);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Strips the XSSI prefix from the input string.
-***REMOVED***
-***REMOVED*** @param {string} prefix The XSSI prefix.
-***REMOVED*** @param {string} string The string to strip the prefix from.
-***REMOVED*** @return {string} The input string without the prefix.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Strips the XSSI prefix from the input string.
+ *
+ * @param {string} prefix The XSSI prefix.
+ * @param {string} string The string to strip the prefix from.
+ * @return {string} The input string without the prefix.
+ * @private
+ */
 _.stripXssiPrefix_ = function(prefix, string) {
   if (goog.string.startsWith(string, prefix)) {
     string = string.substring(prefix.length);
   }
   return string;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Generic error that may occur during a request.
-***REMOVED***
-***REMOVED*** @param {string} message The error message.
-***REMOVED*** @param {string} url The URL that was being requested.
-***REMOVED*** @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED***
-***REMOVED***
+/**
+ * Generic error that may occur during a request.
+ *
+ * @param {string} message The error message.
+ * @param {string} url The URL that was being requested.
+ * @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
+ * @extends {goog.debug.Error}
+ * @constructor
+ */
 _.Error = function(message, url, xhr) {
   _.Error.base(this, 'constructor', message + ', url=' + url);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The URL that was requested.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The URL that was requested.
+   * @type {string}
+   */
   this.url = url;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The XMLHttpRequest corresponding with the failed request.
-  ***REMOVED*** @type {!goog.net.XhrLike.OrNative}
- ***REMOVED*****REMOVED***
+  /**
+   * The XMLHttpRequest corresponding with the failed request.
+   * @type {!goog.net.XhrLike.OrNative}
+   */
   this.xhr = xhr;
-***REMOVED***
+};
 goog.inherits(_.Error, goog.debug.Error);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 _.Error.prototype.name = 'XhrError';
 
 
 
-***REMOVED***
-***REMOVED*** Class for HTTP errors.
-***REMOVED***
-***REMOVED*** @param {number} status The HTTP status code of the response.
-***REMOVED*** @param {string} url The URL that was being requested.
-***REMOVED*** @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
-***REMOVED*** @extends {_.Error}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for HTTP errors.
+ *
+ * @param {number} status The HTTP status code of the response.
+ * @param {string} url The URL that was being requested.
+ * @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
+ * @extends {_.Error}
+ * @constructor
+ * @final
+ */
 _.HttpError = function(status, url, xhr) {
   _.HttpError.base(
       this, 'constructor', 'Request Failed, status=' + status, url, xhr);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The HTTP status code for the error.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The HTTP status code for the error.
+   * @type {number}
+   */
   this.status = status;
-***REMOVED***
+};
 goog.inherits(_.HttpError, _.Error);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 _.HttpError.prototype.name = 'XhrHttpError';
 
 
 
-***REMOVED***
-***REMOVED*** Class for Timeout errors.
-***REMOVED***
-***REMOVED*** @param {string} url The URL that timed out.
-***REMOVED*** @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
-***REMOVED*** @extends {_.Error}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for Timeout errors.
+ *
+ * @param {string} url The URL that timed out.
+ * @param {!goog.net.XhrLike.OrNative} xhr The XHR that failed.
+ * @extends {_.Error}
+ * @constructor
+ * @final
+ */
 _.TimeoutError = function(url, xhr) {
   _.TimeoutError.base(this, 'constructor', 'Request timed out', url, xhr);
-***REMOVED***
+};
 goog.inherits(_.TimeoutError, _.Error);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 _.TimeoutError.prototype.name = 'XhrTimeoutError';
 
 });  // goog.scope

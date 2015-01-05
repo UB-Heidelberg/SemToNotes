@@ -19,14 +19,14 @@ goog.require('goog.ui.equation.Palette');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new Greek symbols palette.
-***REMOVED*** @param {goog.ui.equation.PaletteManager} paletteManager The
-***REMOVED***     manager of the palette.
-***REMOVED*** @extends {goog.ui.equation.Palette}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new Greek symbols palette.
+ * @param {goog.ui.equation.PaletteManager} paletteManager The
+ *     manager of the palette.
+ * @extends {goog.ui.equation.Palette}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.GreekPalette = function(paletteManager) {
   goog.ui.equation.Palette.call(this, paletteManager,
       goog.ui.equation.Palette.Type.GREEK,
@@ -72,5 +72,5 @@ goog.ui.equation.GreekPalette = function(paletteManager) {
        '\\Psi',
        '\\Omega']);
   this.setSize(new goog.math.Size(7, 6));
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.GreekPalette, goog.ui.equation.Palette);

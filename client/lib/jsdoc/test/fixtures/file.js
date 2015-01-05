@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @overview This is a file doclet.
-***REMOVED*** @copyright Michael Mathews 2011
-***REMOVED***
+/**
+ * @overview This is a file doclet.
+ * @copyright Michael Mathews 2011
+ */
 
 function ignoreMe() {
 }

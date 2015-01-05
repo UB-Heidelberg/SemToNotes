@@ -1,4 +1,4 @@
-***REMOVED***
+/**
     @version 1.2.3
 */
 function foo(x) {

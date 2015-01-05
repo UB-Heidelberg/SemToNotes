@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A SimpleResult object that implements goog.result.Result.
-***REMOVED*** See below for a more detailed description.
-***REMOVED***
+/**
+ * @fileoverview A SimpleResult object that implements goog.result.Result.
+ * See below for a more detailed description.
+ */
 
 goog.provide('goog.result.SimpleResult');
 goog.provide('goog.result.SimpleResult.StateError');
@@ -27,109 +27,109 @@ goog.require('goog.result.Result');
 
 
 
-***REMOVED***
-***REMOVED*** A SimpleResult object is a basic implementation of the
-***REMOVED*** goog.result.Result interface. This could be subclassed(e.g. XHRResult)
-***REMOVED*** or instantiated and returned by another class as a form of result. The caller
-***REMOVED*** receiving the result could then attach handlers to be called when the result
-***REMOVED*** is resolved(success or error).
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {goog.result.Result}
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
+/**
+ * A SimpleResult object is a basic implementation of the
+ * goog.result.Result interface. This could be subclassed(e.g. XHRResult)
+ * or instantiated and returned by another class as a form of result. The caller
+ * receiving the result could then attach handlers to be called when the result
+ * is resolved(success or error).
+ *
+ * @constructor
+ * @implements {goog.result.Result}
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
 goog.result.SimpleResult = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current state of this Result.
-  ***REMOVED*** @type {goog.result.Result.State}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current state of this Result.
+   * @type {goog.result.Result.State}
+   * @private
+   */
   this.state_ = goog.result.Result.State.PENDING;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The list of handlers to call when this Result is resolved.
-  ***REMOVED*** @type {!Array.<!goog.result.SimpleResult.HandlerEntry_>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The list of handlers to call when this Result is resolved.
+   * @type {!Array.<!goog.result.SimpleResult.HandlerEntry_>}
+   * @private
+   */
   this.handlers_ = [];
 
   // The value_ and error_ properties are initialized in the constructor to
   // ensure that all SimpleResult instances share the same hidden class in
   // modern JavaScript engines.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The 'value' of this Result.
-  ***REMOVED*** @type {*}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The 'value' of this Result.
+   * @type {*}
+   * @private
+   */
   this.value_ = undefined;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The error slug for this Result.
-  ***REMOVED*** @type {*}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The error slug for this Result.
+   * @type {*}
+   * @private
+   */
   this.error_ = undefined;
-***REMOVED***
+};
 goog.Thenable.addImplementation(goog.result.SimpleResult);
 
 
-***REMOVED***
-***REMOVED*** A waiting handler entry.
-***REMOVED*** @typedef {{
-***REMOVED***   callback: !function(goog.result.SimpleResult),
-***REMOVED***   scope: Object
-***REMOVED*** }}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A waiting handler entry.
+ * @typedef {{
+ *   callback: !function(goog.result.SimpleResult),
+ *   scope: Object
+ * }}
+ * @private
+ */
 goog.result.SimpleResult.HandlerEntry_;
 
 
 
-***REMOVED***
-***REMOVED*** Error thrown if there is an attempt to set the value or error for this result
-***REMOVED*** more than once.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
+/**
+ * Error thrown if there is an attempt to set the value or error for this result
+ * more than once.
+ *
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
 goog.result.SimpleResult.StateError = function() {
   goog.result.SimpleResult.StateError.base(this, 'constructor',
       'Multiple attempts to set the state of this Result');
-***REMOVED***
+};
 goog.inherits(goog.result.SimpleResult.StateError, goog.debug.Error);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.SimpleResult.prototype.getState = function() {
   return this.state_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.SimpleResult.prototype.getValue = function() {
   return this.value_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.SimpleResult.prototype.getError = function() {
   return this.error_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches handlers to be called when the value of this Result is available.
-***REMOVED***
-***REMOVED*** @param {!function(this:T, !goog.result.SimpleResult)} handler The function
-***REMOVED***     called when the value is available. The function is passed the Result
-***REMOVED***     object as the only argument.
-***REMOVED*** @param {T=} opt_scope Optional scope for the handler.
-***REMOVED*** @template T
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Attaches handlers to be called when the value of this Result is available.
+ *
+ * @param {!function(this:T, !goog.result.SimpleResult)} handler The function
+ *     called when the value is available. The function is passed the Result
+ *     object as the only argument.
+ * @param {T=} opt_scope Optional scope for the handler.
+ * @template T
+ * @override
+ */
 goog.result.SimpleResult.prototype.wait = function(handler, opt_scope) {
   if (this.isPending_()) {
     this.handlers_.push({
@@ -139,14 +139,14 @@ goog.result.SimpleResult.prototype.wait = function(handler, opt_scope) {
   } else {
     handler.call(opt_scope, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value of this Result, changing the state.
-***REMOVED***
-***REMOVED*** @param {*} value The value to set for this Result.
-***REMOVED***
+/**
+ * Sets the value of this Result, changing the state.
+ *
+ * @param {*} value The value to set for this Result.
+ */
 goog.result.SimpleResult.prototype.setValue = function(value) {
   if (this.isPending_()) {
     this.value_ = value;
@@ -156,14 +156,14 @@ goog.result.SimpleResult.prototype.setValue = function(value) {
     // setValue is a no-op if this Result has been canceled.
     throw new goog.result.SimpleResult.StateError();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the Result to be an error Result.
-***REMOVED***
-***REMOVED*** @param {*=} opt_error Optional error slug to set for this Result.
-***REMOVED***
+/**
+ * Sets the Result to be an error Result.
+ *
+ * @param {*=} opt_error Optional error slug to set for this Result.
+ */
 goog.result.SimpleResult.prototype.setError = function(opt_error) {
   if (this.isPending_()) {
     this.error_ = opt_error;
@@ -173,14 +173,14 @@ goog.result.SimpleResult.prototype.setError = function(opt_error) {
     // setError is a no-op if this Result has been canceled.
     throw new goog.result.SimpleResult.StateError();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the handlers registered for this Result.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calls the handlers registered for this Result.
+ *
+ * @private
+ */
 goog.result.SimpleResult.prototype.callHandlers_ = function() {
   var handlers = this.handlers_;
   this.handlers_ = [];
@@ -188,25 +188,25 @@ goog.result.SimpleResult.prototype.callHandlers_ = function() {
     var handlerEntry = handlers[n];
     handlerEntry.callback.call(handlerEntry.scope, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the Result is pending.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {boolean} Whether the Result is pending.
+ * @private
+ */
 goog.result.SimpleResult.prototype.isPending_ = function() {
   return this.state_ == goog.result.Result.State.PENDING;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cancels the Result.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the result was canceled. It will not be canceled if
-***REMOVED***    the result was already canceled or has already resolved.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Cancels the Result.
+ *
+ * @return {boolean} Whether the result was canceled. It will not be canceled if
+ *    the result was already canceled or has already resolved.
+ * @override
+ */
 goog.result.SimpleResult.prototype.cancel = function() {
   // cancel is a no-op if the result has been resolved.
   if (this.isPending_()) {
@@ -214,17 +214,17 @@ goog.result.SimpleResult.prototype.cancel = function() {
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.SimpleResult.prototype.isCanceled = function() {
   return this.state_ == goog.result.Result.State.ERROR &&
          this.error_ instanceof goog.result.Result.CancelError;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.SimpleResult.prototype.then = function(
     opt_onFulfilled, opt_onRejected, opt_context) {
   var resolve, reject;
@@ -244,17 +244,17 @@ goog.result.SimpleResult.prototype.then = function(
     }
   });
   return promise.then(opt_onFulfilled, opt_onRejected, opt_context);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a SimpleResult that fires when the given promise resolves.
-***REMOVED*** Use only during migration to Promises.
-***REMOVED*** @param {!goog.Promise.<?>} promise
-***REMOVED*** @return {!goog.result.Result}
-***REMOVED***
+/**
+ * Creates a SimpleResult that fires when the given promise resolves.
+ * Use only during migration to Promises.
+ * @param {!goog.Promise.<?>} promise
+ * @return {!goog.result.Result}
+ */
 goog.result.SimpleResult.fromPromise = function(promise) {
   var result = new goog.result.SimpleResult();
   promise.then(result.setValue, result.setError, result);
   return result;
-***REMOVED***
+};

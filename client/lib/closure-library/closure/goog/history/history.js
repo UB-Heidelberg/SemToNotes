@@ -12,150 +12,150 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Browser history stack management class.
-***REMOVED***
-***REMOVED*** The goog.History object allows a page to create history state without leaving
-***REMOVED*** the current document. This allows users to, for example, hit the browser's
-***REMOVED*** back button without leaving the current page.
-***REMOVED***
-***REMOVED*** The history object can be instantiated in one of two modes. In user visible
-***REMOVED*** mode, the current history state is shown in the browser address bar as a
-***REMOVED*** document location fragment (the portion of the URL after the '#'). These
-***REMOVED*** addresses can be bookmarked, copied and pasted into another browser, and
-***REMOVED*** modified directly by the user like any other URL.
-***REMOVED***
-***REMOVED*** If the history object is created in invisible mode, the user can still
-***REMOVED*** affect the state using the browser forward and back buttons, but the current
-***REMOVED*** state is not displayed in the browser address bar. These states are not
-***REMOVED*** bookmarkable or editable.
-***REMOVED***
-***REMOVED*** It is possible to use both types of history object on the same page, but not
-***REMOVED*** currently recommended due to browser deficiencies.
-***REMOVED***
-***REMOVED*** Tested to work in:
-***REMOVED*** <ul>
-***REMOVED***   <li>Firefox 1.0-4.0
-***REMOVED***   <li>Internet Explorer 5.5-9.0
-***REMOVED***   <li>Opera 9+
-***REMOVED***   <li>Safari 4+
-***REMOVED*** </ul>
-***REMOVED***
-***REMOVED*** @author brenneman@google.com (Shawn Brenneman)
-***REMOVED*** @see ../demos/history1.html
-***REMOVED*** @see ../demos/history2.html
-***REMOVED***
+/**
+ * @fileoverview Browser history stack management class.
+ *
+ * The goog.History object allows a page to create history state without leaving
+ * the current document. This allows users to, for example, hit the browser's
+ * back button without leaving the current page.
+ *
+ * The history object can be instantiated in one of two modes. In user visible
+ * mode, the current history state is shown in the browser address bar as a
+ * document location fragment (the portion of the URL after the '#'). These
+ * addresses can be bookmarked, copied and pasted into another browser, and
+ * modified directly by the user like any other URL.
+ *
+ * If the history object is created in invisible mode, the user can still
+ * affect the state using the browser forward and back buttons, but the current
+ * state is not displayed in the browser address bar. These states are not
+ * bookmarkable or editable.
+ *
+ * It is possible to use both types of history object on the same page, but not
+ * currently recommended due to browser deficiencies.
+ *
+ * Tested to work in:
+ * <ul>
+ *   <li>Firefox 1.0-4.0
+ *   <li>Internet Explorer 5.5-9.0
+ *   <li>Opera 9+
+ *   <li>Safari 4+
+ * </ul>
+ *
+ * @author brenneman@google.com (Shawn Brenneman)
+ * @see ../demos/history1.html
+ * @see ../demos/history2.html
+ */
 
 /* Some browser specific implementation notes:
-***REMOVED***
-***REMOVED*** Firefox (through version 2.0.0.1):
-***REMOVED***
-***REMOVED*** Ideally, navigating inside the hidden iframe could be done using
-***REMOVED*** about:blank#state instead of a real page on the server. Setting the hash on
-***REMOVED*** about:blank creates history entries, but the hash is not recorded and is lost
-***REMOVED*** when the user hits the back button. This is true in Opera as well. A blank
-***REMOVED*** HTML page must be provided for invisible states to be recorded in the iframe
-***REMOVED*** hash.
-***REMOVED***
-***REMOVED*** After leaving the page with the History object and returning to it (by
-***REMOVED*** hitting the back button from another site), the last state of the iframe is
-***REMOVED*** overwritten. The most recent state is saved in a hidden input field so the
-***REMOVED*** previous state can be restored.
-***REMOVED***
-***REMOVED*** Firefox does not store the previous value of dynamically generated input
-***REMOVED*** elements. To save the state, the hidden element must be in the HTML document,
-***REMOVED*** either in the original source or added with document.write. If a reference
-***REMOVED*** to the input element is not provided as a constructor argument, then the
-***REMOVED*** history object creates one using document.write, in which case the history
-***REMOVED*** object must be created from a script in the body element of the page.
-***REMOVED***
-***REMOVED*** Manually editing the address field to a different hash link prevents further
-***REMOVED*** updates to the address bar. The page continues to work as normal, but the
-***REMOVED*** address shown will be incorrect until the page is reloaded.
-***REMOVED***
-***REMOVED*** NOTE(user): It should be noted that Firefox will URL encode any non-regular
-***REMOVED*** ascii character, along with |space|, ", <, and >, when added to the fragment.
-***REMOVED*** If you expect these characters in your tokens you should consider that
-***REMOVED*** setToken('<b>') would result in the history fragment "%3Cb%3E", and
-***REMOVED*** "esp&eacute;re" would show "esp%E8re".  (IE allows unicode characters in the
-***REMOVED*** fragment)
-***REMOVED***
-***REMOVED*** TODO(user): Should we encapsulate this escaping into the API for visible
-***REMOVED*** history and encode all characters that aren't supported by Firefox?  It also
-***REMOVED*** needs to be optional so apps can elect to handle the escaping themselves.
-***REMOVED***
-***REMOVED***
-***REMOVED*** Internet Explorer (through version 7.0):
-***REMOVED***
-***REMOVED*** IE does not modify the history stack when the document fragment is changed.
-***REMOVED*** We create history entries instead by using document.open and document.write
-***REMOVED*** into a hidden iframe.
-***REMOVED***
-***REMOVED*** IE destroys the history stack when navigating from /foo.html#someFragment to
-***REMOVED*** /foo.html. The workaround is to always append the # to the URL. This is
-***REMOVED*** somewhat unfortunate when loading the page without any # specified, because
-***REMOVED*** a second "click" sound will play on load as the fragment is automatically
-***REMOVED*** appended. If the hash is always present, this can be avoided.
-***REMOVED***
-***REMOVED*** Manually editing the hash in the address bar in IE6 and then hitting the back
-***REMOVED*** button can replace the page with a blank page. This is a Bad User Experience,
-***REMOVED*** but probably not preventable.
-***REMOVED***
-***REMOVED*** IE also has a bug when the page is loaded via a server redirect, setting
-***REMOVED*** a new hash value on the window location will force a page reload. This will
-***REMOVED*** happen the first time setToken is called with a new token. The only known
-***REMOVED*** workaround is to force a client reload early, for example by setting
-***REMOVED*** window.location.hash = window.location.hash, which will otherwise be a no-op.
-***REMOVED***
-***REMOVED*** Internet Explorer 8.0, Webkit 532.1 and Gecko 1.9.2:
-***REMOVED***
-***REMOVED*** IE8 has introduced the support to the HTML5 onhashchange event, which means
-***REMOVED*** we don't have to do any polling to detect fragment changes. Chrome and
-***REMOVED*** Firefox have added it on their newer builds, wekbit 532.1 and gecko 1.9.2.
-***REMOVED*** http://www.w3.org/TR/html5/history.html
-***REMOVED*** NOTE(goto): it is important to note that the document needs to have the
-***REMOVED*** <!DOCTYPE html> tag to enable the IE8 HTML5 mode. If the tag is not present,
-***REMOVED*** IE8 will enter IE7 compatibility mode (which can also be enabled manually).
-***REMOVED***
-***REMOVED*** Opera (through version 9.02):
-***REMOVED***
-***REMOVED*** Navigating through pages at a rate faster than some threshhold causes Opera
-***REMOVED*** to cancel all outstanding timeouts and intervals, including the location
-***REMOVED*** polling loop. Since this condition cannot be detected, common input events
-***REMOVED*** are captured to cause the loop to restart.
-***REMOVED***
-***REMOVED*** location.replace is adding a history entry inside setHash_, despite
-***REMOVED*** documentation that suggests it should not.
-***REMOVED***
-***REMOVED***
-***REMOVED*** Safari (through version 2.0.4):
-***REMOVED***
-***REMOVED*** After hitting the back button, the location.hash property is no longer
-***REMOVED*** readable from JavaScript. This is fixed in later WebKit builds, but not in
-***REMOVED*** currently shipping Safari. For now, the only recourse is to disable history
-***REMOVED*** states in Safari. Pages are still navigable via the History object, but the
-***REMOVED*** back button cannot restore previous states.
-***REMOVED***
-***REMOVED*** Safari sets history states on navigation to a hashlink, but doesn't allow
-***REMOVED*** polling of the hash, so following actual anchor links in the page will create
-***REMOVED*** useless history entries. Using location.replace does not seem to prevent
-***REMOVED*** this. Not a terribly good user experience, but fixed in later Webkits.
-***REMOVED***
-***REMOVED***
-***REMOVED*** WebKit (nightly version 420+):
-***REMOVED***
-***REMOVED*** This almost works. Returning to a page with an invisible history object does
-***REMOVED*** not restore the old state, however, and there is no pageshow event that fires
-***REMOVED*** in this browser. Holding off on finding a solution for now.
-***REMOVED***
-***REMOVED***
-***REMOVED*** HTML5 capable browsers (Firefox 4, Chrome, Safari 5)
-***REMOVED***
-***REMOVED*** No known issues. The goog.history.Html5History class provides a simpler
-***REMOVED*** implementation more suitable for recent browsers. These implementations
-***REMOVED*** should be merged so the history class automatically invokes the correct
-***REMOVED*** implementation.
-***REMOVED***
+ *
+ * Firefox (through version 2.0.0.1):
+ *
+ * Ideally, navigating inside the hidden iframe could be done using
+ * about:blank#state instead of a real page on the server. Setting the hash on
+ * about:blank creates history entries, but the hash is not recorded and is lost
+ * when the user hits the back button. This is true in Opera as well. A blank
+ * HTML page must be provided for invisible states to be recorded in the iframe
+ * hash.
+ *
+ * After leaving the page with the History object and returning to it (by
+ * hitting the back button from another site), the last state of the iframe is
+ * overwritten. The most recent state is saved in a hidden input field so the
+ * previous state can be restored.
+ *
+ * Firefox does not store the previous value of dynamically generated input
+ * elements. To save the state, the hidden element must be in the HTML document,
+ * either in the original source or added with document.write. If a reference
+ * to the input element is not provided as a constructor argument, then the
+ * history object creates one using document.write, in which case the history
+ * object must be created from a script in the body element of the page.
+ *
+ * Manually editing the address field to a different hash link prevents further
+ * updates to the address bar. The page continues to work as normal, but the
+ * address shown will be incorrect until the page is reloaded.
+ *
+ * NOTE(user): It should be noted that Firefox will URL encode any non-regular
+ * ascii character, along with |space|, ", <, and >, when added to the fragment.
+ * If you expect these characters in your tokens you should consider that
+ * setToken('<b>') would result in the history fragment "%3Cb%3E", and
+ * "esp&eacute;re" would show "esp%E8re".  (IE allows unicode characters in the
+ * fragment)
+ *
+ * TODO(user): Should we encapsulate this escaping into the API for visible
+ * history and encode all characters that aren't supported by Firefox?  It also
+ * needs to be optional so apps can elect to handle the escaping themselves.
+ *
+ *
+ * Internet Explorer (through version 7.0):
+ *
+ * IE does not modify the history stack when the document fragment is changed.
+ * We create history entries instead by using document.open and document.write
+ * into a hidden iframe.
+ *
+ * IE destroys the history stack when navigating from /foo.html#someFragment to
+ * /foo.html. The workaround is to always append the # to the URL. This is
+ * somewhat unfortunate when loading the page without any # specified, because
+ * a second "click" sound will play on load as the fragment is automatically
+ * appended. If the hash is always present, this can be avoided.
+ *
+ * Manually editing the hash in the address bar in IE6 and then hitting the back
+ * button can replace the page with a blank page. This is a Bad User Experience,
+ * but probably not preventable.
+ *
+ * IE also has a bug when the page is loaded via a server redirect, setting
+ * a new hash value on the window location will force a page reload. This will
+ * happen the first time setToken is called with a new token. The only known
+ * workaround is to force a client reload early, for example by setting
+ * window.location.hash = window.location.hash, which will otherwise be a no-op.
+ *
+ * Internet Explorer 8.0, Webkit 532.1 and Gecko 1.9.2:
+ *
+ * IE8 has introduced the support to the HTML5 onhashchange event, which means
+ * we don't have to do any polling to detect fragment changes. Chrome and
+ * Firefox have added it on their newer builds, wekbit 532.1 and gecko 1.9.2.
+ * http://www.w3.org/TR/html5/history.html
+ * NOTE(goto): it is important to note that the document needs to have the
+ * <!DOCTYPE html> tag to enable the IE8 HTML5 mode. If the tag is not present,
+ * IE8 will enter IE7 compatibility mode (which can also be enabled manually).
+ *
+ * Opera (through version 9.02):
+ *
+ * Navigating through pages at a rate faster than some threshhold causes Opera
+ * to cancel all outstanding timeouts and intervals, including the location
+ * polling loop. Since this condition cannot be detected, common input events
+ * are captured to cause the loop to restart.
+ *
+ * location.replace is adding a history entry inside setHash_, despite
+ * documentation that suggests it should not.
+ *
+ *
+ * Safari (through version 2.0.4):
+ *
+ * After hitting the back button, the location.hash property is no longer
+ * readable from JavaScript. This is fixed in later WebKit builds, but not in
+ * currently shipping Safari. For now, the only recourse is to disable history
+ * states in Safari. Pages are still navigable via the History object, but the
+ * back button cannot restore previous states.
+ *
+ * Safari sets history states on navigation to a hashlink, but doesn't allow
+ * polling of the hash, so following actual anchor links in the page will create
+ * useless history entries. Using location.replace does not seem to prevent
+ * this. Not a terribly good user experience, but fixed in later Webkits.
+ *
+ *
+ * WebKit (nightly version 420+):
+ *
+ * This almost works. Returning to a page with an invisible history object does
+ * not restore the old state, however, and there is no pageshow event that fires
+ * in this browser. Holding off on finding a solution for now.
+ *
+ *
+ * HTML5 capable browsers (Firefox 4, Chrome, Safari 5)
+ *
+ * No known issues. The goog.history.Html5History class provides a simpler
+ * implementation more suitable for recent browsers. These implementations
+ * should be merged so the history class automatically invokes the correct
+ * implementation.
+ */
 
 
 goog.provide('goog.History');
@@ -166,7 +166,7 @@ goog.require('goog.Timer');
 goog.require('goog.dom');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.history.Event');
 goog.require('goog.history.EventType');
 goog.require('goog.memoize');
@@ -175,51 +175,51 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A history management object. Can be instantiated in user-visible mode (uses
-***REMOVED*** the address fragment to manage state) or in hidden mode. This object should
-***REMOVED*** be created from a script in the document body before the document has
-***REMOVED*** finished loading.
-***REMOVED***
-***REMOVED*** To store the hidden states in browsers other than IE, a hidden iframe is
-***REMOVED*** used. It must point to a valid html page on the same domain (which can and
-***REMOVED*** probably should be blank.)
-***REMOVED***
-***REMOVED*** Sample instantiation and usage:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** // Instantiate history to use the address bar for state.
-***REMOVED*** var h = new goog.History();
-***REMOVED*** goog.events.listen(h, goog.history.EventType.NAVIGATE, navCallback);
-***REMOVED*** h.setEnabled(true);
-***REMOVED***
-***REMOVED*** // Any changes to the location hash will call the following function.
-***REMOVED*** function navCallback(e) {
-***REMOVED***   alert('Navigated to state "' + e.token + '"');
-***REMOVED*** }
-***REMOVED***
-***REMOVED*** // The history token can also be set from code directly.
-***REMOVED*** h.setToken('foo');
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_invisible True to use hidden history states instead of
-***REMOVED***     the user-visible location hash.
-***REMOVED*** @param {string=} opt_blankPageUrl A URL to a blank page on the same server.
-***REMOVED***     Required if opt_invisible is true.  This URL is also used as the src
-***REMOVED***     for the iframe used to track history state in IE (if not specified the
-***REMOVED***     iframe is not given a src attribute).  Access is Denied error may
-***REMOVED***     occur in IE7 if the window's URL's scheme is https, and this URL is
-***REMOVED***     not specified.
-***REMOVED*** @param {HTMLInputElement=} opt_input The hidden input element to be used to
-***REMOVED***     store the history token.  If not provided, a hidden input element will
-***REMOVED***     be created using document.write.
-***REMOVED*** @param {HTMLIFrameElement=} opt_iframe The hidden iframe that will be used by
-***REMOVED***     IE for pushing history state changes, or by all browsers if opt_invisible
-***REMOVED***     is true. If not provided, a hidden iframe element will be created using
-***REMOVED***     document.write.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * A history management object. Can be instantiated in user-visible mode (uses
+ * the address fragment to manage state) or in hidden mode. This object should
+ * be created from a script in the document body before the document has
+ * finished loading.
+ *
+ * To store the hidden states in browsers other than IE, a hidden iframe is
+ * used. It must point to a valid html page on the same domain (which can and
+ * probably should be blank.)
+ *
+ * Sample instantiation and usage:
+ *
+ * <pre>
+ * // Instantiate history to use the address bar for state.
+ * var h = new goog.History();
+ * goog.events.listen(h, goog.history.EventType.NAVIGATE, navCallback);
+ * h.setEnabled(true);
+ *
+ * // Any changes to the location hash will call the following function.
+ * function navCallback(e) {
+ *   alert('Navigated to state "' + e.token + '"');
+ * }
+ *
+ * // The history token can also be set from code directly.
+ * h.setToken('foo');
+ * </pre>
+ *
+ * @param {boolean=} opt_invisible True to use hidden history states instead of
+ *     the user-visible location hash.
+ * @param {string=} opt_blankPageUrl A URL to a blank page on the same server.
+ *     Required if opt_invisible is true.  This URL is also used as the src
+ *     for the iframe used to track history state in IE (if not specified the
+ *     iframe is not given a src attribute).  Access is Denied error may
+ *     occur in IE7 if the window's URL's scheme is https, and this URL is
+ *     not specified.
+ * @param {HTMLInputElement=} opt_input The hidden input element to be used to
+ *     store the history token.  If not provided, a hidden input element will
+ *     be created using document.write.
+ * @param {HTMLIFrameElement=} opt_iframe The hidden iframe that will be used by
+ *     IE for pushing history state changes, or by all browsers if opt_invisible
+ *     is true. If not provided, a hidden iframe element will be created using
+ *     document.write.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
                         opt_iframe) {
   goog.events.EventTarget.call(this);
@@ -238,30 +238,30 @@ goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
     input = goog.dom.getElement(inputId);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An input element that stores the current iframe state. Used to restore
-  ***REMOVED*** the state when returning to the page on non-IE browsers.
-  ***REMOVED*** @type {HTMLInputElement}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.hiddenInput_ =***REMOVED*****REMOVED*** @type {HTMLInputElement}***REMOVED*** (input);
+  /**
+   * An input element that stores the current iframe state. Used to restore
+   * the state when returning to the page on non-IE browsers.
+   * @type {HTMLInputElement}
+   * @private
+   */
+  this.hiddenInput_ = /** @type {HTMLInputElement} */ (input);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The window whose location contains the history token fragment. This is
-  ***REMOVED*** the window that contains the hidden input. It's typically the top window.
-  ***REMOVED*** It is not necessarily the same window that the js code is loaded in.
-  ***REMOVED*** @type {Window}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The window whose location contains the history token fragment. This is
+   * the window that contains the hidden input. It's typically the top window.
+   * It is not necessarily the same window that the js code is loaded in.
+   * @type {Window}
+   * @private
+   */
   this.window_ = opt_input ?
       goog.dom.getWindow(goog.dom.getOwnerDocument(opt_input)) : window;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The base URL for the hidden iframe. Must refer to a document in the
-  ***REMOVED*** same domain as the main page.
-  ***REMOVED*** @type {string|undefined}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The base URL for the hidden iframe. Must refer to a document in the
+   * same domain as the main page.
+   * @type {string|undefined}
+   * @private
+   */
   this.iframeSrc_ = opt_blankPageUrl;
 
   if (goog.userAgent.IE && !opt_blankPageUrl) {
@@ -269,27 +269,27 @@ goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
                                                             'javascript:""';
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A timer for polling the current history state for changes.
-  ***REMOVED*** @type {goog.Timer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A timer for polling the current history state for changes.
+   * @type {goog.Timer}
+   * @private
+   */
   this.timer_ = new goog.Timer(goog.History.PollingType.NORMAL);
   this.registerDisposable(this.timer_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** True if the state tokens are displayed in the address bar, false for hidden
-  ***REMOVED*** history states.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * True if the state tokens are displayed in the address bar, false for hidden
+   * history states.
+   * @type {boolean}
+   * @private
+   */
   this.userVisible_ = !opt_invisible;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An object to keep track of the history event listeners.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.History>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An object to keep track of the history event listeners.
+   * @type {goog.events.EventHandler.<!goog.History>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   if (opt_invisible || goog.History.LEGACY_IE) {
@@ -307,20 +307,20 @@ goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
       iframe = goog.dom.getElement(iframeId);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Internet Explorer uses a hidden iframe for all history changes. Other
-    ***REMOVED*** browsers use the iframe only for pushing invisible states.
-    ***REMOVED*** @type {HTMLIFrameElement}
-    ***REMOVED*** @private
-   ***REMOVED*****REMOVED***
-    this.iframe_ =***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED*** (iframe);
+    /**
+     * Internet Explorer uses a hidden iframe for all history changes. Other
+     * browsers use the iframe only for pushing invisible states.
+     * @type {HTMLIFrameElement}
+     * @private
+     */
+    this.iframe_ = /** @type {HTMLIFrameElement} */ (iframe);
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Whether the hidden iframe has had a document written to it yet in this
-    ***REMOVED*** session.
-    ***REMOVED*** @type {boolean}
-    ***REMOVED*** @private
-   ***REMOVED*****REMOVED***
+    /**
+     * Whether the hidden iframe has had a document written to it yet in this
+     * session.
+     * @type {boolean}
+     * @private
+     */
     this.unsetIframe_ = true;
   }
 
@@ -332,19 +332,19 @@ goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
                               goog.events.EventType.LOAD,
                               this.onDocumentLoaded);
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** IE-only variable for determining if the document has loaded.
-    ***REMOVED*** @type {boolean}
-    ***REMOVED*** @protected
-   ***REMOVED*****REMOVED***
+    /**
+     * IE-only variable for determining if the document has loaded.
+     * @type {boolean}
+     * @protected
+     */
     this.documentLoaded = false;
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** IE-only variable for storing whether the history object should be enabled
-    ***REMOVED*** once the document finishes loading.
-    ***REMOVED*** @type {boolean}
-    ***REMOVED*** @private
-   ***REMOVED*****REMOVED***
+    /**
+     * IE-only variable for storing whether the history object should be enabled
+     * once the document finishes loading.
+     * @type {boolean}
+     * @private
+     */
     this.shouldEnable_ = false;
   }
 
@@ -356,48 +356,48 @@ goog.History = function(opt_invisible, opt_blankPageUrl, opt_input,
   }
 
   goog.History.historyCount_++;
-***REMOVED***
+};
 goog.inherits(goog.History, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Status of when the object is active and dispatching events.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Status of when the object is active and dispatching events.
+ * @type {boolean}
+ * @private
+ */
 goog.History.prototype.enabled_ = false;
 
 
-***REMOVED***
-***REMOVED*** Whether the object is performing polling with longer intervals. This can
-***REMOVED*** occur for instance when setting the location of the iframe when in invisible
-***REMOVED*** mode and the server that is hosting the blank html page is down. In FF, this
-***REMOVED*** will cause the location of the iframe to no longer be accessible, with
-***REMOVED*** permision denied exceptions being thrown on every access of the history
-***REMOVED*** token. When this occurs, the polling interval is elongated. This causes
-***REMOVED*** exceptions to be thrown at a lesser rate while allowing for the history
-***REMOVED*** object to resurrect itself when the html page becomes accessible.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the object is performing polling with longer intervals. This can
+ * occur for instance when setting the location of the iframe when in invisible
+ * mode and the server that is hosting the blank html page is down. In FF, this
+ * will cause the location of the iframe to no longer be accessible, with
+ * permision denied exceptions being thrown on every access of the history
+ * token. When this occurs, the polling interval is elongated. This causes
+ * exceptions to be thrown at a lesser rate while allowing for the history
+ * object to resurrect itself when the html page becomes accessible.
+ * @type {boolean}
+ * @private
+ */
 goog.History.prototype.longerPolling_ = false;
 
 
-***REMOVED***
-***REMOVED*** The last token set by the history object, used to poll for changes.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The last token set by the history object, used to poll for changes.
+ * @type {?string}
+ * @private
+ */
 goog.History.prototype.lastToken_ = null;
 
 
-***REMOVED***
-***REMOVED*** Whether the browser supports HTML5 history management's onhashchange event.
-***REMOVED*** {@link http://www.w3.org/TR/html5/history.html}. IE 9 in compatibility mode
-***REMOVED*** indicates that onhashchange is in window, but testing reveals the event
-***REMOVED*** isn't actually fired.
-***REMOVED*** @return {boolean} Whether onhashchange is supported.
-***REMOVED***
+/**
+ * Whether the browser supports HTML5 history management's onhashchange event.
+ * {@link http://www.w3.org/TR/html5/history.html}. IE 9 in compatibility mode
+ * indicates that onhashchange is in window, but testing reveals the event
+ * isn't actually fired.
+ * @return {boolean} Whether onhashchange is supported.
+ */
 goog.History.isOnHashChangeSupported = goog.memoize(function() {
   return goog.userAgent.IE ?
       document.documentMode >= 8 :
@@ -405,54 +405,54 @@ goog.History.isOnHashChangeSupported = goog.memoize(function() {
 });
 
 
-***REMOVED***
-***REMOVED*** Whether the current browser is Internet Explorer prior to version 8. Many IE
-***REMOVED*** specific workarounds developed before version 8 are unnecessary in more
-***REMOVED*** current versions.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the current browser is Internet Explorer prior to version 8. Many IE
+ * specific workarounds developed before version 8 are unnecessary in more
+ * current versions.
+ * @type {boolean}
+ */
 goog.History.LEGACY_IE = goog.userAgent.IE &&
     !goog.userAgent.isDocumentModeOrHigher(8);
 
 
-***REMOVED***
-***REMOVED*** Whether the browser always requires the hash to be present. Internet Explorer
-***REMOVED*** before version 8 will reload the HTML page if the hash is omitted.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the browser always requires the hash to be present. Internet Explorer
+ * before version 8 will reload the HTML page if the hash is omitted.
+ * @type {boolean}
+ */
 goog.History.HASH_ALWAYS_REQUIRED = goog.History.LEGACY_IE;
 
 
-***REMOVED***
-***REMOVED*** If not null, polling in the user invisible mode will be disabled until this
-***REMOVED*** token is seen. This is used to prevent a race condition where the iframe
-***REMOVED*** hangs temporarily while the location is changed.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If not null, polling in the user invisible mode will be disabled until this
+ * token is seen. This is used to prevent a race condition where the iframe
+ * hangs temporarily while the location is changed.
+ * @type {?string}
+ * @private
+ */
 goog.History.prototype.lockedToken_ = null;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.History.prototype.disposeInternal = function() {
   goog.History.superClass_.disposeInternal.call(this);
   this.eventHandler_.dispose();
   this.setEnabled(false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts or stops the History polling loop. When enabled, the History object
-***REMOVED*** will immediately fire an event for the current location. The caller can set
-***REMOVED*** up event listeners between the call to the constructor and the call to
-***REMOVED*** setEnabled.
-***REMOVED***
-***REMOVED*** On IE, actual startup may be delayed until the iframe and hidden input
-***REMOVED*** element have been loaded and can be polled. This behavior is transparent to
-***REMOVED*** the caller.
-***REMOVED***
-***REMOVED*** @param {boolean} enable Whether to enable the history polling loop.
-***REMOVED***
+/**
+ * Starts or stops the History polling loop. When enabled, the History object
+ * will immediately fire an event for the current location. The caller can set
+ * up event listeners between the call to the constructor and the call to
+ * setEnabled.
+ *
+ * On IE, actual startup may be delayed until the iframe and hidden input
+ * element have been loaded and can be polled. This behavior is transparent to
+ * the caller.
+ *
+ * @param {boolean} enable Whether to enable the history polling loop.
+ */
 goog.History.prototype.setEnabled = function(enable) {
 
   if (enable == this.enabled_) {
@@ -512,18 +512,18 @@ goog.History.prototype.setEnabled = function(enable) {
     this.eventHandler_.removeAll();
     this.timer_.stop();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback for the window onload event in IE. This is necessary to read the
-***REMOVED*** value of the hidden input after restoring a history session. The value of
-***REMOVED*** input elements is not viewable until after window onload for some reason (the
-***REMOVED*** iframe state is similarly unavailable during the loading phase.)  If
-***REMOVED*** setEnabled is called before the iframe has completed loading, the history
-***REMOVED*** object will actually be enabled at this point.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Callback for the window onload event in IE. This is necessary to read the
+ * value of the hidden input after restoring a history session. The value of
+ * input elements is not viewable until after window onload for some reason (the
+ * iframe state is similarly unavailable during the loading phase.)  If
+ * setEnabled is called before the iframe has completed loading, the history
+ * object will actually be enabled at this point.
+ * @protected
+ */
 goog.History.prototype.onDocumentLoaded = function() {
   this.documentLoaded = true;
 
@@ -535,15 +535,15 @@ goog.History.prototype.onDocumentLoaded = function() {
   }
 
   this.setEnabled(this.shouldEnable_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for the Gecko pageshow event. Restarts the history object so that the
-***REMOVED*** correct state can be restored in the hash or iframe.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handler for the Gecko pageshow event. Restarts the history object so that the
+ * correct state can be restored in the hash or iframe.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.History.prototype.onShow_ = function(e) {
   // NOTE(user): persisted is a property passed in the pageshow event that
   // indicates whether the page is being persisted from the cache or is being
@@ -552,28 +552,28 @@ goog.History.prototype.onShow_ = function(e) {
     this.setEnabled(false);
     this.setEnabled(true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles HTML5 onhashchange events on browsers where it is supported.
-***REMOVED*** This is very similar to {@link #check_}, except that it is not executed
-***REMOVED*** continuously. It is only used when
-***REMOVED*** {@code goog.History.isOnHashChangeSupported()} is true.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles HTML5 onhashchange events on browsers where it is supported.
+ * This is very similar to {@link #check_}, except that it is not executed
+ * continuously. It is only used when
+ * {@code goog.History.isOnHashChangeSupported()} is true.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
+ */
 goog.History.prototype.onHashChange_ = function(e) {
   var hash = this.getLocationFragment_(this.window_);
   if (hash != this.lastToken_) {
     this.update_(hash, true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The current token.
-***REMOVED***
+/**
+ * @return {string} The current token.
+ */
 goog.History.prototype.getToken = function() {
   if (this.lockedToken_ != null) {
     return this.lockedToken_;
@@ -582,65 +582,65 @@ goog.History.prototype.getToken = function() {
   } else {
     return this.getIframeToken_() || '';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the history state. When user visible states are used, the URL fragment
-***REMOVED*** will be set to the provided token.  Sometimes it is necessary to set the
-***REMOVED*** history token before the document title has changed, in this case IE's
-***REMOVED*** history drop down can be out of sync with the token.  To get around this
-***REMOVED*** problem, the app can pass in a title to use with the hidden iframe.
-***REMOVED*** @param {string} token The history state identifier.
-***REMOVED*** @param {string=} opt_title Optional title used when setting the hidden iframe
-***REMOVED***     title in IE.
-***REMOVED***
+/**
+ * Sets the history state. When user visible states are used, the URL fragment
+ * will be set to the provided token.  Sometimes it is necessary to set the
+ * history token before the document title has changed, in this case IE's
+ * history drop down can be out of sync with the token.  To get around this
+ * problem, the app can pass in a title to use with the hidden iframe.
+ * @param {string} token The history state identifier.
+ * @param {string=} opt_title Optional title used when setting the hidden iframe
+ *     title in IE.
+ */
 goog.History.prototype.setToken = function(token, opt_title) {
   this.setHistoryState_(token, false, opt_title);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces the current history state without affecting the rest of the history
-***REMOVED*** stack.
-***REMOVED*** @param {string} token The history state identifier.
-***REMOVED*** @param {string=} opt_title Optional title used when setting the hidden iframe
-***REMOVED***     title in IE.
-***REMOVED***
+/**
+ * Replaces the current history state without affecting the rest of the history
+ * stack.
+ * @param {string} token The history state identifier.
+ * @param {string=} opt_title Optional title used when setting the hidden iframe
+ *     title in IE.
+ */
 goog.History.prototype.replaceToken = function(token, opt_title) {
   this.setHistoryState_(token, true, opt_title);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the location fragment for the current URL.  We don't use location.hash
-***REMOVED*** directly as the browser helpfully urlDecodes the string for us which can
-***REMOVED*** corrupt the tokens.  For example, if we want to store: label/%2Froot it would
-***REMOVED*** be returned as label//root.
-***REMOVED*** @param {Window} win The window object to use.
-***REMOVED*** @return {string} The fragment.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the location fragment for the current URL.  We don't use location.hash
+ * directly as the browser helpfully urlDecodes the string for us which can
+ * corrupt the tokens.  For example, if we want to store: label/%2Froot it would
+ * be returned as label//root.
+ * @param {Window} win The window object to use.
+ * @return {string} The fragment.
+ * @private
+ */
 goog.History.prototype.getLocationFragment_ = function(win) {
   var href = win.location.href;
   var index = href.indexOf('#');
   return index < 0 ? '' : href.substring(index + 1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the history state. When user visible states are used, the URL fragment
-***REMOVED*** will be set to the provided token. Setting opt_replace to true will cause the
-***REMOVED*** navigation to occur, but will replace the current history entry without
-***REMOVED*** affecting the length of the stack.
-***REMOVED***
-***REMOVED*** @param {string} token The history state identifier.
-***REMOVED*** @param {boolean} replace Set to replace the current history entry instead of
-***REMOVED***    appending a new history state.
-***REMOVED*** @param {string=} opt_title Optional title used when setting the hidden iframe
-***REMOVED***     title in IE.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the history state. When user visible states are used, the URL fragment
+ * will be set to the provided token. Setting opt_replace to true will cause the
+ * navigation to occur, but will replace the current history entry without
+ * affecting the length of the stack.
+ *
+ * @param {string} token The history state identifier.
+ * @param {boolean} replace Set to replace the current history entry instead of
+ *    appending a new history state.
+ * @param {string=} opt_title Optional title used when setting the hidden iframe
+ *     title in IE.
+ * @private
+ */
 goog.History.prototype.setHistoryState_ = function(token, replace, opt_title) {
   if (this.getToken() != token) {
     if (this.userVisible_) {
@@ -667,31 +667,31 @@ goog.History.prototype.setHistoryState_ = function(token, replace, opt_title) {
       this.dispatchEvent(new goog.history.Event(token, false));
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets or replaces the URL fragment. The token does not need to be URL encoded
-***REMOVED*** according to the URL specification, though certain characters (like newline)
-***REMOVED*** are automatically stripped.
-***REMOVED***
-***REMOVED*** If opt_replace is not set, non-IE browsers will append a new entry to the
-***REMOVED*** history list. Setting the hash does not affect the history stack in IE
-***REMOVED*** (unless there is a pre-existing named anchor for that hash.)
-***REMOVED***
-***REMOVED*** Older versions of Webkit cannot query the location hash, but it still can be
-***REMOVED*** set. If we detect one of these versions, always replace instead of creating
-***REMOVED*** new history entries.
-***REMOVED***
-***REMOVED*** window.location.replace replaces the current state from the history stack.
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/#dom-location-replace
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/#replacement-enabled
-***REMOVED***
-***REMOVED*** @param {string} token The new string to set.
-***REMOVED*** @param {boolean=} opt_replace Set to true to replace the current token
-***REMOVED***    without appending a history entry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets or replaces the URL fragment. The token does not need to be URL encoded
+ * according to the URL specification, though certain characters (like newline)
+ * are automatically stripped.
+ *
+ * If opt_replace is not set, non-IE browsers will append a new entry to the
+ * history list. Setting the hash does not affect the history stack in IE
+ * (unless there is a pre-existing named anchor for that hash.)
+ *
+ * Older versions of Webkit cannot query the location hash, but it still can be
+ * set. If we detect one of these versions, always replace instead of creating
+ * new history entries.
+ *
+ * window.location.replace replaces the current state from the history stack.
+ * http://www.whatwg.org/specs/web-apps/current-work/#dom-location-replace
+ * http://www.whatwg.org/specs/web-apps/current-work/#replacement-enabled
+ *
+ * @param {string} token The new string to set.
+ * @param {boolean=} opt_replace Set to true to replace the current token
+ *    without appending a history entry.
+ * @private
+ */
 goog.History.prototype.setHash_ = function(token, opt_replace) {
   // If the page uses a BASE element, setting location.hash directly will
   // navigate away from the current document. Also, the original URL path may
@@ -715,23 +715,23 @@ goog.History.prototype.setHash_ = function(token, opt_replace) {
       loc.href = url;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the hidden iframe state. On IE, this is accomplished by writing a new
-***REMOVED*** document into the iframe. In Firefox, the iframe's URL fragment stores the
-***REMOVED*** state instead.
-***REMOVED***
-***REMOVED*** Older versions of webkit cannot set the iframe, so ignore those browsers.
-***REMOVED***
-***REMOVED*** @param {string} token The new string to set.
-***REMOVED*** @param {boolean=} opt_replace Set to true to replace the current iframe state
-***REMOVED***     without appending a new history entry.
-***REMOVED*** @param {string=} opt_title Optional title used when setting the hidden iframe
-***REMOVED***     title in IE.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the hidden iframe state. On IE, this is accomplished by writing a new
+ * document into the iframe. In Firefox, the iframe's URL fragment stores the
+ * state instead.
+ *
+ * Older versions of webkit cannot set the iframe, so ignore those browsers.
+ *
+ * @param {string} token The new string to set.
+ * @param {boolean=} opt_replace Set to true to replace the current iframe state
+ *     without appending a new history entry.
+ * @param {string=} opt_title Optional title used when setting the hidden iframe
+ *     title in IE.
+ * @private
+ */
 goog.History.prototype.setIframeToken_ = function(token,
                                                   opt_replace,
                                                   opt_title) {
@@ -749,7 +749,7 @@ goog.History.prototype.setIframeToken_ = function(token,
       doc.write(goog.string.subs(
           goog.History.IFRAME_SOURCE_TEMPLATE_,
           goog.string.htmlEscape(
-             ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (opt_title || this.window_.document.title)),
+              /** @type {string} */ (opt_title || this.window_.document.title)),
           token));
       doc.close();
     } else {
@@ -767,21 +767,21 @@ goog.History.prototype.setIframeToken_ = function(token,
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the current state string from the hidden iframe. On internet explorer,
-***REMOVED*** this is stored as a string in the document body. Other browsers use the
-***REMOVED*** location hash of the hidden iframe.
-***REMOVED***
-***REMOVED*** Older versions of webkit cannot access the iframe location, so always return
-***REMOVED*** null in that case.
-***REMOVED***
-***REMOVED*** @return {?string} The state token saved in the iframe (possibly null if the
-***REMOVED***     iframe has never loaded.).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the current state string from the hidden iframe. On internet explorer,
+ * this is stored as a string in the document body. Other browsers use the
+ * location hash of the hidden iframe.
+ *
+ * Older versions of webkit cannot access the iframe location, so always return
+ * null in that case.
+ *
+ * @return {?string} The state token saved in the iframe (possibly null if the
+ *     iframe has never loaded.).
+ * @private
+ */
 goog.History.prototype.getIframeToken_ = function() {
   if (goog.userAgent.IE) {
     var doc = goog.dom.getFrameContentDocument(this.iframe_);
@@ -792,7 +792,7 @@ goog.History.prototype.getIframeToken_ = function() {
     var contentWindow = this.iframe_.contentWindow;
     if (contentWindow) {
       var hash;
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         // Iframe tokens are urlEncoded
         hash = goog.string.urlDecode(this.getLocationFragment_(contentWindow));
@@ -826,18 +826,18 @@ goog.History.prototype.getIframeToken_ = function() {
       return null;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks the state of the document fragment and the iframe title to detect
-***REMOVED*** navigation changes. If {@code goog.HistoryisOnHashChangeSupported()} is
-***REMOVED*** {@code false}, then this runs approximately twenty times per second.
-***REMOVED*** @param {boolean} isNavigation True if the event was initiated by a browser
-***REMOVED***     action, false if it was caused by a setToken call. See
-***REMOVED***     {@link goog.history.Event}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks the state of the document fragment and the iframe title to detect
+ * navigation changes. If {@code goog.HistoryisOnHashChangeSupported()} is
+ * {@code false}, then this runs approximately twenty times per second.
+ * @param {boolean} isNavigation True if the event was initiated by a browser
+ *     action, false if it was caused by a setToken call. See
+ *     {@link goog.history.Event}.
+ * @private
+ */
 goog.History.prototype.check_ = function(isNavigation) {
   if (this.userVisible_) {
     var hash = this.getLocationFragment_(this.window_);
@@ -856,19 +856,19 @@ goog.History.prototype.check_ = function(isNavigation) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the current history state with a given token. Called after a change
-***REMOVED*** to the location or the iframe state is detected by poll_.
-***REMOVED***
-***REMOVED*** @param {string} token The new history state.
-***REMOVED*** @param {boolean} isNavigation True if the event was initiated by a browser
-***REMOVED***     action, false if it was caused by a setToken call. See
-***REMOVED***     {@link goog.history.Event}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the current history state with a given token. Called after a change
+ * to the location or the iframe state is detected by poll_.
+ *
+ * @param {string} token The new history state.
+ * @param {boolean} isNavigation True if the event was initiated by a browser
+ *     action, false if it was caused by a setToken call. See
+ *     {@link goog.history.Event}.
+ * @private
+ */
 goog.History.prototype.update_ = function(token, isNavigation) {
   this.lastToken_ = this.hiddenInput_.value = token;
 
@@ -883,48 +883,48 @@ goog.History.prototype.update_ = function(token, isNavigation) {
   }
 
   this.dispatchEvent(new goog.history.Event(this.getToken(), isNavigation));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets if the history oject should use longer intervals when polling.
-***REMOVED***
-***REMOVED*** @param {boolean} longerPolling Whether to enable longer polling.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets if the history oject should use longer intervals when polling.
+ *
+ * @param {boolean} longerPolling Whether to enable longer polling.
+ * @private
+ */
 goog.History.prototype.setLongerPolling_ = function(longerPolling) {
   if (this.longerPolling_ != longerPolling) {
     this.timer_.setInterval(longerPolling ?
         goog.History.PollingType.LONG : goog.History.PollingType.NORMAL);
   }
   this.longerPolling_ = longerPolling;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opera cancels all outstanding timeouts and intervals after any rapid
-***REMOVED*** succession of navigation events, including the interval used to detect
-***REMOVED*** navigation events. This function restarts the interval so that navigation can
-***REMOVED*** continue. Ideally, only events which would be likely to cause a navigation
-***REMOVED*** change (mousedown and keydown) would be bound to this function. Since Opera
-***REMOVED*** seems to ignore keydown events while the alt key is pressed (such as
-***REMOVED*** alt-left or right arrow), this function is also bound to the much more
-***REMOVED*** frequent mousemove event. This way, when the update loop freezes, it will
-***REMOVED*** unstick itself as the user wiggles the mouse in frustration.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Opera cancels all outstanding timeouts and intervals after any rapid
+ * succession of navigation events, including the interval used to detect
+ * navigation events. This function restarts the interval so that navigation can
+ * continue. Ideally, only events which would be likely to cause a navigation
+ * change (mousedown and keydown) would be bound to this function. Since Opera
+ * seems to ignore keydown events while the alt key is pressed (such as
+ * alt-left or right arrow), this function is also bound to the much more
+ * frequent mousemove event. This way, when the update loop freezes, it will
+ * unstick itself as the user wiggles the mouse in frustration.
+ * @private
+ */
 goog.History.prototype.operaDefibrillator_ = function() {
   this.timer_.stop();
   this.timer_.start();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** List of user input event types registered in Opera to restart the history
-***REMOVED*** timer (@see goog.History#operaDefibrillator_).
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * List of user input event types registered in Opera to restart the history
+ * timer (@see goog.History#operaDefibrillator_).
+ * @type {Array.<string>}
+ * @private
+ */
 goog.History.INPUT_EVENTS_ = [
   goog.events.EventType.MOUSEDOWN,
   goog.events.EventType.KEYDOWN,
@@ -932,68 +932,68 @@ goog.History.INPUT_EVENTS_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Minimal HTML page used to populate the iframe in Internet Explorer. The title
-***REMOVED*** is visible in the history dropdown menu, the iframe state is stored as the
-***REMOVED*** body innerHTML.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Minimal HTML page used to populate the iframe in Internet Explorer. The title
+ * is visible in the history dropdown menu, the iframe state is stored as the
+ * body innerHTML.
+ * @type {string}
+ * @private
+ */
 goog.History.IFRAME_SOURCE_TEMPLATE_ = '<title>%s</title><body>%s</body>';
 
 
-***REMOVED***
-***REMOVED*** HTML template for an invisible iframe.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * HTML template for an invisible iframe.
+ * @type {string}
+ * @private
+ */
 goog.History.IFRAME_TEMPLATE_ =
     '<iframe id="%s" style="display:none" %s></iframe>';
 
 
-***REMOVED***
-***REMOVED*** HTML template for an invisible named input element.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * HTML template for an invisible named input element.
+ * @type {string}
+ * @private
+ */
 goog.History.INPUT_TEMPLATE_ =
     '<input type="text" name="%s" id="%s" style="display:none">';
 
 
-***REMOVED***
-***REMOVED*** Counter for the number of goog.History objects that have been instantiated.
-***REMOVED*** Used to create unique IDs.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Counter for the number of goog.History objects that have been instantiated.
+ * Used to create unique IDs.
+ * @type {number}
+ * @private
+ */
 goog.History.historyCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Types of polling. The values are in ms of the polling interval.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Types of polling. The values are in ms of the polling interval.
+ * @enum {number}
+ */
 goog.History.PollingType = {
   NORMAL: 150,
   LONG: 10000
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constant for the history change event type.
-***REMOVED*** @enum {string}
-***REMOVED*** @deprecated Use goog.history.EventType.
-***REMOVED***
+/**
+ * Constant for the history change event type.
+ * @enum {string}
+ * @deprecated Use goog.history.EventType.
+ */
 goog.History.EventType = goog.history.EventType;
 
 
 
-***REMOVED***
-***REMOVED*** Constant for the history change event type.
-***REMOVED*** @param {string} token The string identifying the new history state.
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
-***REMOVED*** @deprecated Use goog.history.Event.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constant for the history change event type.
+ * @param {string} token The string identifying the new history state.
+ * @extends {goog.events.Event}
+ * @constructor
+ * @deprecated Use goog.history.Event.
+ * @final
+ */
 goog.History.Event = goog.history.Event;

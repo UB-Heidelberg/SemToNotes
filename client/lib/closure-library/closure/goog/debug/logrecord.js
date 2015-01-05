@@ -12,117 +12,117 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the LogRecord class. Please minimize
-***REMOVED*** dependencies this file has on other closure classes as any dependency it
-***REMOVED*** takes won't be able to use the logging infrastructure.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of the LogRecord class. Please minimize
+ * dependencies this file has on other closure classes as any dependency it
+ * takes won't be able to use the logging infrastructure.
+ *
+ */
 
 goog.provide('goog.debug.LogRecord');
 
 
 
-***REMOVED***
-***REMOVED*** LogRecord objects are used to pass logging requests between
-***REMOVED*** the logging framework and individual log Handlers.
-***REMOVED***
-***REMOVED*** @param {goog.debug.Logger.Level} level One of the level identifiers.
-***REMOVED*** @param {string} msg The string message.
-***REMOVED*** @param {string} loggerName The name of the source logger.
-***REMOVED*** @param {number=} opt_time Time this log record was created if other than now.
-***REMOVED***     If 0, we use #goog.now.
-***REMOVED*** @param {number=} opt_sequenceNumber Sequence number of this log record. This
-***REMOVED***     should only be passed in when restoring a log record from persistence.
-***REMOVED***
+/**
+ * LogRecord objects are used to pass logging requests between
+ * the logging framework and individual log Handlers.
+ * @constructor
+ * @param {goog.debug.Logger.Level} level One of the level identifiers.
+ * @param {string} msg The string message.
+ * @param {string} loggerName The name of the source logger.
+ * @param {number=} opt_time Time this log record was created if other than now.
+ *     If 0, we use #goog.now.
+ * @param {number=} opt_sequenceNumber Sequence number of this log record. This
+ *     should only be passed in when restoring a log record from persistence.
+ */
 goog.debug.LogRecord = function(level, msg, loggerName,
     opt_time, opt_sequenceNumber) {
   this.reset(level, msg, loggerName, opt_time, opt_sequenceNumber);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Time the LogRecord was created.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Time the LogRecord was created.
+ * @type {number}
+ * @private
+ */
 goog.debug.LogRecord.prototype.time_;
 
 
-***REMOVED***
-***REMOVED*** Level of the LogRecord
-***REMOVED*** @type {goog.debug.Logger.Level}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Level of the LogRecord
+ * @type {goog.debug.Logger.Level}
+ * @private
+ */
 goog.debug.LogRecord.prototype.level_;
 
 
-***REMOVED***
-***REMOVED*** Message associated with the record
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Message associated with the record
+ * @type {string}
+ * @private
+ */
 goog.debug.LogRecord.prototype.msg_;
 
 
-***REMOVED***
-***REMOVED*** Name of the logger that created the record.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Name of the logger that created the record.
+ * @type {string}
+ * @private
+ */
 goog.debug.LogRecord.prototype.loggerName_;
 
 
-***REMOVED***
-***REMOVED*** Sequence number for the LogRecord. Each record has a unique sequence number
-***REMOVED*** that is greater than all log records created before it.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sequence number for the LogRecord. Each record has a unique sequence number
+ * that is greater than all log records created before it.
+ * @type {number}
+ * @private
+ */
 goog.debug.LogRecord.prototype.sequenceNumber_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Exception associated with the record
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Exception associated with the record
+ * @type {Object}
+ * @private
+ */
 goog.debug.LogRecord.prototype.exception_ = null;
 
 
-***REMOVED***
-***REMOVED*** Exception text associated with the record
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Exception text associated with the record
+ * @type {?string}
+ * @private
+ */
 goog.debug.LogRecord.prototype.exceptionText_ = null;
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to enable log sequence numbers.
-***REMOVED***
+/**
+ * @define {boolean} Whether to enable log sequence numbers.
+ */
 goog.define('goog.debug.LogRecord.ENABLE_SEQUENCE_NUMBERS', true);
 
 
-***REMOVED***
-***REMOVED*** A sequence counter for assigning increasing sequence numbers to LogRecord
-***REMOVED*** objects.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A sequence counter for assigning increasing sequence numbers to LogRecord
+ * objects.
+ * @type {number}
+ * @private
+ */
 goog.debug.LogRecord.nextSequenceNumber_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Sets all fields of the log record.
-***REMOVED*** @param {goog.debug.Logger.Level} level One of the level identifiers.
-***REMOVED*** @param {string} msg The string message.
-***REMOVED*** @param {string} loggerName The name of the source logger.
-***REMOVED*** @param {number=} opt_time Time this log record was created if other than now.
-***REMOVED***     If 0, we use #goog.now.
-***REMOVED*** @param {number=} opt_sequenceNumber Sequence number of this log record. This
-***REMOVED***     should only be passed in when restoring a log record from persistence.
-***REMOVED***
+/**
+ * Sets all fields of the log record.
+ * @param {goog.debug.Logger.Level} level One of the level identifiers.
+ * @param {string} msg The string message.
+ * @param {string} loggerName The name of the source logger.
+ * @param {number=} opt_time Time this log record was created if other than now.
+ *     If 0, we use #goog.now.
+ * @param {number=} opt_sequenceNumber Sequence number of this log record. This
+ *     should only be passed in when restoring a log record from persistence.
+ */
 goog.debug.LogRecord.prototype.reset = function(level, msg, loggerName,
     opt_time, opt_sequenceNumber) {
   if (goog.debug.LogRecord.ENABLE_SEQUENCE_NUMBERS) {
@@ -136,136 +136,136 @@ goog.debug.LogRecord.prototype.reset = function(level, msg, loggerName,
   this.loggerName_ = loggerName;
   delete this.exception_;
   delete this.exceptionText_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the source Logger's name.
-***REMOVED***
-***REMOVED*** @return {string} source logger name (may be null).
-***REMOVED***
+/**
+ * Get the source Logger's name.
+ *
+ * @return {string} source logger name (may be null).
+ */
 goog.debug.LogRecord.prototype.getLoggerName = function() {
   return this.loggerName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the exception that is part of the log record.
-***REMOVED***
-***REMOVED*** @return {Object} the exception.
-***REMOVED***
+/**
+ * Get the exception that is part of the log record.
+ *
+ * @return {Object} the exception.
+ */
 goog.debug.LogRecord.prototype.getException = function() {
   return this.exception_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the exception that is part of the log record.
-***REMOVED***
-***REMOVED*** @param {Object} exception the exception.
-***REMOVED***
+/**
+ * Set the exception that is part of the log record.
+ *
+ * @param {Object} exception the exception.
+ */
 goog.debug.LogRecord.prototype.setException = function(exception) {
   this.exception_ = exception;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the exception text that is part of the log record.
-***REMOVED***
-***REMOVED*** @return {?string} Exception text.
-***REMOVED***
+/**
+ * Get the exception text that is part of the log record.
+ *
+ * @return {?string} Exception text.
+ */
 goog.debug.LogRecord.prototype.getExceptionText = function() {
   return this.exceptionText_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the exception text that is part of the log record.
-***REMOVED***
-***REMOVED*** @param {string} text The exception text.
-***REMOVED***
+/**
+ * Set the exception text that is part of the log record.
+ *
+ * @param {string} text The exception text.
+ */
 goog.debug.LogRecord.prototype.setExceptionText = function(text) {
   this.exceptionText_ = text;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the source Logger's name.
-***REMOVED***
-***REMOVED*** @param {string} loggerName source logger name (may be null).
-***REMOVED***
+/**
+ * Get the source Logger's name.
+ *
+ * @param {string} loggerName source logger name (may be null).
+ */
 goog.debug.LogRecord.prototype.setLoggerName = function(loggerName) {
   this.loggerName_ = loggerName;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the logging message level, for example Level.SEVERE.
-***REMOVED*** @return {goog.debug.Logger.Level} the logging message level.
-***REMOVED***
+/**
+ * Get the logging message level, for example Level.SEVERE.
+ * @return {goog.debug.Logger.Level} the logging message level.
+ */
 goog.debug.LogRecord.prototype.getLevel = function() {
   return this.level_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the logging message level, for example Level.SEVERE.
-***REMOVED*** @param {goog.debug.Logger.Level} level the logging message level.
-***REMOVED***
+/**
+ * Set the logging message level, for example Level.SEVERE.
+ * @param {goog.debug.Logger.Level} level the logging message level.
+ */
 goog.debug.LogRecord.prototype.setLevel = function(level) {
   this.level_ = level;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the "raw" log message, before localization or formatting.
-***REMOVED***
-***REMOVED*** @return {string} the raw message string.
-***REMOVED***
+/**
+ * Get the "raw" log message, before localization or formatting.
+ *
+ * @return {string} the raw message string.
+ */
 goog.debug.LogRecord.prototype.getMessage = function() {
   return this.msg_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the "raw" log message, before localization or formatting.
-***REMOVED***
-***REMOVED*** @param {string} msg the raw message string.
-***REMOVED***
+/**
+ * Set the "raw" log message, before localization or formatting.
+ *
+ * @param {string} msg the raw message string.
+ */
 goog.debug.LogRecord.prototype.setMessage = function(msg) {
   this.msg_ = msg;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get event time in milliseconds since 1970.
-***REMOVED***
-***REMOVED*** @return {number} event time in millis since 1970.
-***REMOVED***
+/**
+ * Get event time in milliseconds since 1970.
+ *
+ * @return {number} event time in millis since 1970.
+ */
 goog.debug.LogRecord.prototype.getMillis = function() {
   return this.time_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set event time in milliseconds since 1970.
-***REMOVED***
-***REMOVED*** @param {number} time event time in millis since 1970.
-***REMOVED***
+/**
+ * Set event time in milliseconds since 1970.
+ *
+ * @param {number} time event time in millis since 1970.
+ */
 goog.debug.LogRecord.prototype.setMillis = function(time) {
   this.time_ = time;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the sequence number.
-***REMOVED*** <p>
-***REMOVED*** Sequence numbers are normally assigned in the LogRecord
-***REMOVED*** constructor, which assigns unique sequence numbers to
-***REMOVED*** each new LogRecord in increasing order.
-***REMOVED*** @return {number} the sequence number.
-***REMOVED***
+/**
+ * Get the sequence number.
+ * <p>
+ * Sequence numbers are normally assigned in the LogRecord
+ * constructor, which assigns unique sequence numbers to
+ * each new LogRecord in increasing order.
+ * @return {number} the sequence number.
+ */
 goog.debug.LogRecord.prototype.getSequenceNumber = function() {
   return this.sequenceNumber_;
-***REMOVED***
+};
 

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Represents a gradient to be used with a Graphics implementor.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Represents a gradient to be used with a Graphics implementor.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 goog.provide('goog.graphics.LinearGradient');
@@ -27,149 +27,149 @@ goog.require('goog.graphics.Fill');
 
 
 
-***REMOVED***
-***REMOVED*** Creates an immutable linear gradient fill object.
-***REMOVED***
-***REMOVED*** @param {number} x1 Start X position of the gradient.
-***REMOVED*** @param {number} y1 Start Y position of the gradient.
-***REMOVED*** @param {number} x2 End X position of the gradient.
-***REMOVED*** @param {number} y2 End Y position of the gradient.
-***REMOVED*** @param {string} color1 Start color of the gradient.
-***REMOVED*** @param {string} color2 End color of the gradient.
-***REMOVED*** @param {?number=} opt_opacity1 Start opacity of the gradient, both or neither
-***REMOVED***     of opt_opacity1 and opt_opacity2 have to be set.
-***REMOVED*** @param {?number=} opt_opacity2 End opacity of the gradient.
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.Fill}
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates an immutable linear gradient fill object.
+ *
+ * @param {number} x1 Start X position of the gradient.
+ * @param {number} y1 Start Y position of the gradient.
+ * @param {number} x2 End X position of the gradient.
+ * @param {number} y2 End Y position of the gradient.
+ * @param {string} color1 Start color of the gradient.
+ * @param {string} color2 End color of the gradient.
+ * @param {?number=} opt_opacity1 Start opacity of the gradient, both or neither
+ *     of opt_opacity1 and opt_opacity2 have to be set.
+ * @param {?number=} opt_opacity2 End opacity of the gradient.
+ * @constructor
+ * @extends {goog.graphics.Fill}
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ * @final
+ */
 goog.graphics.LinearGradient =
     function(x1, y1, x2, y2, color1, color2, opt_opacity1, opt_opacity2) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Start X position of the gradient.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Start X position of the gradient.
+   * @type {number}
+   * @private
+   */
   this.x1_ = x1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Start Y position of the gradient.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Start Y position of the gradient.
+   * @type {number}
+   * @private
+   */
   this.y1_ = y1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** End X position of the gradient.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * End X position of the gradient.
+   * @type {number}
+   * @private
+   */
   this.x2_ = x2;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** End Y position of the gradient.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * End Y position of the gradient.
+   * @type {number}
+   * @private
+   */
   this.y2_ = y2;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Start color of the gradient.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Start color of the gradient.
+   * @type {string}
+   * @private
+   */
   this.color1_ = color1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** End color of the gradient.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * End color of the gradient.
+   * @type {string}
+   * @private
+   */
   this.color2_ = color2;
 
   goog.asserts.assert(
       goog.isNumber(opt_opacity1) == goog.isNumber(opt_opacity2),
       'Both or neither of opt_opacity1 and opt_opacity2 have to be set.');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Start opacity of the gradient.
-  ***REMOVED*** @type {?number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Start opacity of the gradient.
+   * @type {?number}
+   * @private
+   */
   this.opacity1_ = goog.isDef(opt_opacity1) ? opt_opacity1 : null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** End opacity of the gradient.
-  ***REMOVED*** @type {?number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * End opacity of the gradient.
+   * @type {?number}
+   * @private
+   */
   this.opacity2_ = goog.isDef(opt_opacity2) ? opt_opacity2 : null;
-***REMOVED***
+};
 goog.inherits(goog.graphics.LinearGradient, goog.graphics.Fill);
 
 
-***REMOVED***
-***REMOVED*** @return {number} The start X position of the gradient.
-***REMOVED***
+/**
+ * @return {number} The start X position of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getX1 = function() {
   return this.x1_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The start Y position of the gradient.
-***REMOVED***
+/**
+ * @return {number} The start Y position of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getY1 = function() {
   return this.y1_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The end X position of the gradient.
-***REMOVED***
+/**
+ * @return {number} The end X position of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getX2 = function() {
   return this.x2_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The end Y position of the gradient.
-***REMOVED***
+/**
+ * @return {number} The end Y position of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getY2 = function() {
   return this.y2_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.graphics.LinearGradient.prototype.getColor1 = function() {
   return this.color1_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.graphics.LinearGradient.prototype.getColor2 = function() {
   return this.color2_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?number} The start opacity of the gradient.
-***REMOVED***
+/**
+ * @return {?number} The start opacity of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getOpacity1 = function() {
   return this.opacity1_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?number} The end opacity of the gradient.
-***REMOVED***
+/**
+ * @return {?number} The end opacity of the gradient.
+ */
 goog.graphics.LinearGradient.prototype.getOpacity2 = function() {
   return this.opacity2_;
-***REMOVED***
+};

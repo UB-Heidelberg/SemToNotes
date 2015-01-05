@@ -12,30 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Enum for button side constants. In its own file so as to not
-***REMOVED*** cause a circular dependency with {@link goog.ui.ButtonRenderer}.
-***REMOVED***
-***REMOVED*** @author doughtie@google.com (Gavin Doughtie)
-***REMOVED***
+/**
+ * @fileoverview Enum for button side constants. In its own file so as to not
+ * cause a circular dependency with {@link goog.ui.ButtonRenderer}.
+ *
+ * @author doughtie@google.com (Gavin Doughtie)
+ */
 
 goog.provide('goog.ui.ButtonSide');
 
 
-***REMOVED***
-***REMOVED*** Constants for button sides, see {@link goog.ui.Button.prototype.setCollapsed}
-***REMOVED*** for details.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Constants for button sides, see {@link goog.ui.Button.prototype.setCollapsed}
+ * for details.
+ * @enum {number}
+ */
 goog.ui.ButtonSide = {
- ***REMOVED*****REMOVED*** Neither side.***REMOVED***
+  /** Neither side. */
   NONE: 0,
- ***REMOVED*****REMOVED*** Left for LTR, right for RTL.***REMOVED***
+  /** Left for LTR, right for RTL. */
   START: 1,
- ***REMOVED*****REMOVED*** Right for LTR, left for RTL.***REMOVED***
+  /** Right for LTR, left for RTL. */
   END: 2,
- ***REMOVED*****REMOVED*** Both sides.***REMOVED***
+  /** Both sides. */
   BOTH: 3
-***REMOVED***
+};
 
 

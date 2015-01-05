@@ -22,11 +22,11 @@ goog.require('goog.math.Size');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Produce legible assertion results. If two rects are not equal, the error
-***REMOVED*** message will be of the form
-***REMOVED*** "Expected <(1, 2 - 10 x 10)> (Object) but was <(3, 4 - 20 x 20)> (Object)"
-***REMOVED***
+/**
+ * Produce legible assertion results. If two rects are not equal, the error
+ * message will be of the form
+ * "Expected <(1, 2 - 10 x 10)> (Object) but was <(3, 4 - 20 x 20)> (Object)"
+ */
 function assertRectsEqual(expected, actual) {
   if (!goog.math.Rect.equals(expected, actual)) {
     assertEquals(expected, actual);

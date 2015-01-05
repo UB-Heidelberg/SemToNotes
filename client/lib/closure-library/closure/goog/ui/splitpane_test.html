@@ -144,7 +144,7 @@ function testOrientationChange() {
   assertEquals(500, handleSize.width);
 
   firstSize = goog.style.getBorderBoxSize(first);
-  assertEquals(120, firstSize.height); // 200***REMOVED*** 300/500 = 120
+  assertEquals(120, firstSize.height); // 200 * 300/500 = 120
   assertEquals(500, firstSize.width);
 
   secondSize = goog.style.getBorderBoxSize(second);
@@ -172,7 +172,7 @@ function testDragEvent() {
   splitpane.render(goog.dom.getElement('sandbox'));
 
   var handler = goog.testing.recordFunction();
-***REMOVED***splitpane, goog.ui.SplitPane.EventType.HANDLE_DRAG,
+  goog.events.listen(splitpane, goog.ui.SplitPane.EventType.HANDLE_DRAG,
       handler);
   var handle = goog.dom.getElementsByTagNameAndClass('div',
       'goog-splitpane-handle')[0];
@@ -195,7 +195,7 @@ function testDragEndEvent() {
   splitpane.setHandleSize(10);
   splitpane.render(goog.dom.getElement('sandbox'));
   var handler = goog.testing.recordFunction();
-***REMOVED***splitpane, goog.ui.SplitPane.EventType.HANDLE_DRAG_END,
+  goog.events.listen(splitpane, goog.ui.SplitPane.EventType.HANDLE_DRAG_END,
       handler);
 
   var handle = goog.dom.getElementsByTagNameAndClass('div',
@@ -219,7 +219,7 @@ function testSnapEvent() {
   splitpane.setHandleSize(10);
   splitpane.render(goog.dom.getElement('sandbox'));
   var handler = goog.testing.recordFunction();
-***REMOVED***splitpane, goog.ui.SplitPane.EventType.HANDLE_SNAP,
+  goog.events.listen(splitpane, goog.ui.SplitPane.EventType.HANDLE_SNAP,
       handler);
   var handle = goog.dom.getElementsByTagNameAndClass('div',
       'goog-splitpane-handle')[0];

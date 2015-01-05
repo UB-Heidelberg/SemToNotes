@@ -13,7 +13,7 @@ See the COPYING file for details.
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Component.EventType');
@@ -82,7 +82,7 @@ See the COPYING file for details.
 
     var p1 = new goog.ui.DimensionPicker();
     p1.render(goog.dom.getElement('p1'));
-  ***REMOVED***p1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(p1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var picker = e.target;
           var size = picker.getValue();
@@ -90,7 +90,7 @@ See the COPYING file for details.
           goog.dom.setTextContent(goog.dom.getElement('p1_value'),
               size.width + ' x ' + size.height);
         });
-  ***REMOVED***p1, EVENTS, logEvent);
+    goog.events.listen(p1, EVENTS, logEvent);
 
     // Perf and clean up
 

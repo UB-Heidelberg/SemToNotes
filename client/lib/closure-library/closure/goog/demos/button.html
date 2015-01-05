@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Button');
@@ -33,7 +33,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/flatbutton.css">
   <link rel="stylesheet" href="../css/linkbutton.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -43,17 +43,17 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Highlight" icon.***REMOVED***
+    /* "Highlight" icon. */
     .highlight-icon{
       background-position: -64px;
     }
 
-    /* "Insert Image" icon.***REMOVED***
+    /* "Insert Image" icon. */
     .insert-image-icon {
       background-position: -80px;
     }
 
-    /* Custom style for the "default" button.***REMOVED***
+    /* Custom style for the "default" button. */
     .default-button {
       font-weight: bold;
     }
@@ -205,15 +205,15 @@ See the COPYING file for details.
     b1.render(goog.dom.getElement('b1'));
     b1.setTooltip('I changed the tooltip using setTooltip() ' +
         'after the button was rendered.');
-  ***REMOVED***b1, EVENTS, logEvent);
+    goog.events.listen(b1, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('b1_enable'),
+    goog.events.listen(goog.dom.getElement('b1_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           b1.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***b1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(b1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var newCaption = window.prompt('Enter new caption for button:');
           b1.setCaption(newCaption || 'Empty');
@@ -222,15 +222,15 @@ See the COPYING file for details.
     // Create the second button by decorating an element.
     var b2 = new goog.ui.Button();
     b2.decorate(goog.dom.getElement('b2'));
-  ***REMOVED***b2, EVENTS, logEvent);
+    goog.events.listen(b2, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('b2_enable'),
+    goog.events.listen(goog.dom.getElement('b2_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           b2.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***b2, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(b2, goog.ui.Component.EventType.ACTION,
         function(e) {
           alert('The value of the button is: ' + b2.getValue());
         });
@@ -243,15 +243,15 @@ See the COPYING file for details.
     fb1.render(goog.dom.getElement('fb1'));
     fb1.setTooltip('I changed the tooltip using setTooltip() ' +
         'after the button was rendered.');
-  ***REMOVED***fb1, EVENTS, logEvent);
+    goog.events.listen(fb1, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('fb1_enable'),
+    goog.events.listen(goog.dom.getElement('fb1_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           fb1.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***fb1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(fb1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var newCaption = window.prompt('Enter new caption for button:');
           fb1.setCaption(newCaption || 'Empty');
@@ -259,15 +259,15 @@ See the COPYING file for details.
 
     // Decorate 2nd flat button.
     var fb2 = goog.ui.decorate(goog.dom.getElement('fb2'));
-  ***REMOVED***fb2, EVENTS, logEvent);
+    goog.events.listen(fb2, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('fb2_enable'),
+    goog.events.listen(goog.dom.getElement('fb2_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           fb2.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***fb2, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(fb2, goog.ui.Component.EventType.ACTION,
         function(e) {
           alert('The caption of the button is: ' + fb2.getCaption());
         });
@@ -282,15 +282,15 @@ See the COPYING file for details.
     lb.render(goog.dom.getElement('lb'));
     lb.setTooltip('I changed the tooltip using setTooltip() ' +
         'after the button was rendered.');
-  ***REMOVED***lb, EVENTS, logEvent);
+    goog.events.listen(lb, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('lb_enable'),
+    goog.events.listen(goog.dom.getElement('lb_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           lb.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***lb, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(lb, goog.ui.Component.EventType.ACTION,
         function(e) {
           var newCaption = window.prompt('Enter new caption for button:');
           lb.setCaption(newCaption || 'Empty');
@@ -313,12 +313,12 @@ See the COPYING file for details.
     rightButton.setCollapsed(goog.ui.ButtonSide.START);
     goog.array.forEach(customButtons, function(b) {
       b.render(goog.dom.getElement('cb1'));
-    ***REMOVED***b, goog.ui.Component.EventType.ACTION,
+      goog.events.listen(b, goog.ui.Component.EventType.ACTION,
           function(e) {
             var newCaption = window.prompt('Enter new caption for button:');
             b.setCaption(newCaption || 'Empty');
           });
-    ***REMOVED***b, EVENTS, logEvent);
+      goog.events.listen(b, EVENTS, logEvent);
     });
 
     // Decorate some custom buttons.
@@ -333,16 +333,16 @@ See the COPYING file for details.
       var button = goog.ui.decorate(element);
       button.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
       cb2.push(button);
-    ***REMOVED***button, EVENTS, logEvent);
+      goog.events.listen(button, EVENTS, logEvent);
     });
 
     // Decorate toggle buttons.
     var toggleEnableElem = goog.dom.getElement('toggleEnable');
     var toggleEnable = goog.ui.decorate(toggleEnableElem);
     toggleEnable.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-  ***REMOVED***toggleEnable, EVENTS, logEvent);
+    goog.events.listen(toggleEnable, EVENTS, logEvent);
 
-  ***REMOVED***toggleEnable, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(toggleEnable, goog.ui.Component.EventType.ACTION,
         function(e) {
           cb2[1].setEnabled(e.target.isChecked());
         });
@@ -350,9 +350,9 @@ See the COPYING file for details.
     var hideShowElem = goog.dom.getElement('hideShow');
     var hideShow = new goog.ui.decorate(hideShowElem);
     hideShow.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-  ***REMOVED***hideShow, EVENTS, logEvent);
+    goog.events.listen(hideShow, EVENTS, logEvent);
 
-  ***REMOVED***hideShow, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(hideShow, goog.ui.Component.EventType.ACTION,
         function(e) {
           cb2[1].setVisible(e.target.isChecked());
         });
@@ -365,7 +365,7 @@ See the COPYING file for details.
       var button = goog.ui.decorate(element);
       button.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
       cb3.push(button);
-    ***REMOVED***button, EVENTS, logEvent);
+      goog.events.listen(button, EVENTS, logEvent);
     });
 
 
@@ -376,7 +376,7 @@ See the COPYING file for details.
           'Insert Image')
     ]);
     iconbutton1.render(goog.dom.getElement('iconbuttons'));
-  ***REMOVED***iconbutton1, EVENTS, logEvent);
+    goog.events.listen(iconbutton1, EVENTS, logEvent);
 
     // Add a custom style, too.
     var iconbutton2 = new goog.ui.ToggleButton([
@@ -386,7 +386,7 @@ See the COPYING file for details.
     ]);
     iconbutton2.addClassName('default-button');
     iconbutton2.render(goog.dom.getElement('iconbuttons'));
-  ***REMOVED***iconbutton2, EVENTS, logEvent);
+    goog.events.listen(iconbutton2, EVENTS, logEvent);
 
     goog.dom.setTextContent(goog.dom.getElement('perf'),
         (goog.now() - timer) + 'ms');

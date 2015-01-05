@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Vendor prefix getters.
-***REMOVED***
+/**
+ * @fileoverview Vendor prefix getters.
+ */
 
 goog.provide('goog.dom.vendor');
 
@@ -22,12 +22,12 @@ goog.require('goog.string');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Returns the JS vendor prefix used in CSS properties. Different vendors
-***REMOVED*** use different methods of changing the case of the property names.
-***REMOVED***
-***REMOVED*** @return {?string} The JS vendor prefix or null if there is none.
-***REMOVED***
+/**
+ * Returns the JS vendor prefix used in CSS properties. Different vendors
+ * use different methods of changing the case of the property names.
+ *
+ * @return {?string} The JS vendor prefix or null if there is none.
+ */
 goog.dom.vendor.getVendorJsPrefix = function() {
   if (goog.userAgent.WEBKIT) {
     return 'Webkit';
@@ -40,14 +40,14 @@ goog.dom.vendor.getVendorJsPrefix = function() {
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the vendor prefix used in CSS properties.
-***REMOVED***
-***REMOVED*** @return {?string} The vendor prefix or null if there is none.
-***REMOVED***
+/**
+ * Returns the vendor prefix used in CSS properties.
+ *
+ * @return {?string} The vendor prefix or null if there is none.
+ */
 goog.dom.vendor.getVendorPrefix = function() {
   if (goog.userAgent.WEBKIT) {
     return '-webkit';
@@ -60,16 +60,16 @@ goog.dom.vendor.getVendorPrefix = function() {
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} propertyName A property name.
-***REMOVED*** @param {!Object=} opt_object If provided, we verify if the property exists in
-***REMOVED***     the object.
-***REMOVED*** @return {?string} A vendor prefixed property name, or null if it does not
-***REMOVED***     exist.
-***REMOVED***
+/**
+ * @param {string} propertyName A property name.
+ * @param {!Object=} opt_object If provided, we verify if the property exists in
+ *     the object.
+ * @return {?string} A vendor prefixed property name, or null if it does not
+ *     exist.
+ */
 goog.dom.vendor.getPrefixedPropertyName = function(propertyName, opt_object) {
   // We first check for a non-prefixed property, if available.
   if (opt_object && propertyName in opt_object) {
@@ -83,14 +83,14 @@ goog.dom.vendor.getPrefixedPropertyName = function(propertyName, opt_object) {
         prefixedPropertyName : null;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} eventType An event type.
-***REMOVED*** @return {string} A lower-cased vendor prefixed event type.
-***REMOVED***
+/**
+ * @param {string} eventType An event type.
+ * @return {string} A lower-cased vendor prefixed event type.
+ */
 goog.dom.vendor.getPrefixedEventType = function(eventType) {
   var prefix = goog.dom.vendor.getVendorJsPrefix() || '';
   return (prefix + eventType).toLowerCase();
-***REMOVED***
+};

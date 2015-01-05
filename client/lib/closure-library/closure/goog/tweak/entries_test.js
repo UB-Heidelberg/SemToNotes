@@ -17,7 +17,7 @@ goog.setTestOnly('goog.tweak.BaseEntryTest');
 
 goog.require('goog.testing.MockControl');
 goog.require('goog.testing.jsunit');
-***REMOVED*** @suppress {extraRequire} needed for createRegistryEntries.***REMOVED***
+/** @suppress {extraRequire} needed for createRegistryEntries. */
 goog.require('goog.tweak.testhelpers');
 
 var mockControl;

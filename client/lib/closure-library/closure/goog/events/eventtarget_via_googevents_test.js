@@ -15,7 +15,7 @@
 goog.provide('goog.events.EventTargetGoogEventsTest');
 goog.setTestOnly('goog.events.EventTargetGoogEventsTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
 goog.require('goog.events.eventTargetTester');
 goog.require('goog.events.eventTargetTester.KeyType');
@@ -27,10 +27,10 @@ goog.require('goog.testing.jsunit');
 function setUp() {
   var newListenableFn = function() {
     return new goog.events.EventTarget();
- ***REMOVED*****REMOVED***
+  };
   var unlistenByKeyFn = function(src, key) {
     return goog.events.unlistenByKey(key);
- ***REMOVED*****REMOVED***
+  };
   goog.events.eventTargetTester.setUp(
       newListenableFn, goog.events.listen, goog.events.unlisten,
       unlistenByKeyFn, goog.events.listenOnce, goog.events.dispatchEvent,
@@ -45,12 +45,12 @@ function tearDown() {
 }
 
 function testUnlistenProperCleanup() {
-***REMOVED***eventTargets[0], EventType.A, listeners[0]);
+  goog.events.listen(eventTargets[0], EventType.A, listeners[0]);
   goog.events.unlisten(eventTargets[0], EventType.A, listeners[0]);
 
   assertEquals(0, goog.object.getCount(goog.events.listeners_));
 
-***REMOVED***eventTargets[0], EventType.A, listeners[0]);
+  goog.events.listen(eventTargets[0], EventType.A, listeners[0]);
   eventTargets[0].unlisten(EventType.A, listeners[0]);
 
   assertEquals(0, goog.object.getCount(goog.events.listeners_));
@@ -70,16 +70,16 @@ function testListenOnceProperCleanup() {
 }
 
 function testListenWithObject() {
-  var obj = {***REMOVED***
+  var obj = {};
   obj.handleEvent = goog.testing.recordFunction();
-***REMOVED***eventTargets[0], EventType.A, obj);
+  goog.events.listen(eventTargets[0], EventType.A, obj);
   eventTargets[0].dispatchEvent(EventType.A);
   assertEquals(1, obj.handleEvent.getCallCount());
 }
 
 function testListenWithObjectHandleEventReturningFalse() {
-  var obj = {***REMOVED***
-  obj.handleEvent = function() { return false;***REMOVED*****REMOVED***
-***REMOVED***eventTargets[0], EventType.A, obj);
+  var obj = {};
+  obj.handleEvent = function() { return false; };
+  goog.events.listen(eventTargets[0], EventType.A, obj);
   assertFalse(eventTargets[0].dispatchEvent(EventType.A));
 }

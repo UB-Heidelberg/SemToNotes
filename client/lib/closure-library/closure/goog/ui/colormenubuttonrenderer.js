@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.ColorMenuButton}s.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.ColorMenuButton}s.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ColorMenuButtonRenderer');
 
@@ -29,85 +29,85 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Renderer for {@link goog.ui.ColorMenuButton}s.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuButtonRenderer}
-***REMOVED***
+/**
+ * Renderer for {@link goog.ui.ColorMenuButton}s.
+ * @constructor
+ * @extends {goog.ui.MenuButtonRenderer}
+ */
 goog.ui.ColorMenuButtonRenderer = function() {
   goog.ui.MenuButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ColorMenuButtonRenderer, goog.ui.MenuButtonRenderer);
 goog.addSingletonGetter(goog.ui.ColorMenuButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ColorMenuButtonRenderer.CSS_CLASS =
     goog.getCssName('goog-color-menu-button');
 
 
-***REMOVED***
-***REMOVED*** Overrides the superclass implementation by wrapping the caption text or DOM
-***REMOVED*** structure in a color indicator element.  Creates the following DOM structure:
-***REMOVED***   <div class="goog-inline-block goog-menu-button-caption">
-***REMOVED***     <div class="goog-color-menu-button-indicator">
-***REMOVED***       Contents...
-***REMOVED***     </div>
-***REMOVED***   </div>
-***REMOVED*** The 'goog-color-menu-button-indicator' style should be defined to have a
-***REMOVED*** bottom border of nonzero width and a default color that blends into its
-***REMOVED*** background.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
-***REMOVED*** @return {Element} Caption element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides the superclass implementation by wrapping the caption text or DOM
+ * structure in a color indicator element.  Creates the following DOM structure:
+ *   <div class="goog-inline-block goog-menu-button-caption">
+ *     <div class="goog-color-menu-button-indicator">
+ *       Contents...
+ *     </div>
+ *   </div>
+ * The 'goog-color-menu-button-indicator' style should be defined to have a
+ * bottom border of nonzero width and a default color that blends into its
+ * background.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure.
+ * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
+ * @return {Element} Caption element.
+ * @override
+ */
 goog.ui.ColorMenuButtonRenderer.prototype.createCaption = function(content,
     dom) {
   return goog.ui.ColorMenuButtonRenderer.superClass_.createCaption.call(this,
       goog.ui.ColorMenuButtonRenderer.wrapCaption(content, dom), dom);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wrap a caption in a div with the color-menu-button-indicator CSS class.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
-***REMOVED*** @return {Element} Caption element.
-***REMOVED***
+/**
+ * Wrap a caption in a div with the color-menu-button-indicator CSS class.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure.
+ * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
+ * @return {Element} Caption element.
+ */
 goog.ui.ColorMenuButtonRenderer.wrapCaption = function(content, dom) {
   return dom.createDom('div',
       goog.getCssName(goog.ui.ColorMenuButtonRenderer.CSS_CLASS, 'indicator'),
       content);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a color menu button control's root element and a value object
-***REMOVED*** (which is assumed to be a color), and updates the button's DOM to reflect
-***REMOVED*** the new color.  Overrides {@link goog.ui.ButtonRenderer#setValue}.
-***REMOVED*** @param {Element} element The button control's root element (if rendered).
-***REMOVED*** @param {*} value New value; assumed to be a color spec string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a color menu button control's root element and a value object
+ * (which is assumed to be a color), and updates the button's DOM to reflect
+ * the new color.  Overrides {@link goog.ui.ButtonRenderer#setValue}.
+ * @param {Element} element The button control's root element (if rendered).
+ * @param {*} value New value; assumed to be a color spec string.
+ * @override
+ */
 goog.ui.ColorMenuButtonRenderer.prototype.setValue = function(element, value) {
   if (element) {
     goog.ui.ColorMenuButtonRenderer.setCaptionValue(
         this.getContentElement(element), value);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a control's content element and a value object (which is assumed
-***REMOVED*** to be a color), and updates its DOM to reflect the new color.
-***REMOVED*** @param {Element} caption A content element of a control.
-***REMOVED*** @param {*} value New value; assumed to be a color spec string.
-***REMOVED***
+/**
+ * Takes a control's content element and a value object (which is assumed
+ * to be a color), and updates its DOM to reflect the new color.
+ * @param {Element} caption A content element of a control.
+ * @param {*} value New value; assumed to be a color spec string.
+ */
 goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
   // Assume that the caption's first child is the indicator.
   if (caption && caption.firstChild) {
@@ -115,7 +115,7 @@ goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
     // borderBottomColor will cause a JS error on IE).
     var hexColor;
 
-    var strValue =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (value);
+    var strValue = /** @type {string} */ (value);
     hexColor = strValue && goog.color.isValidColor(strValue) ?
         goog.color.parse(strValue).hex :
         null;
@@ -125,17 +125,17 @@ goog.ui.ColorMenuButtonRenderer.setCaptionValue = function(caption, value) {
     caption.firstChild.style.borderBottomColor = hexColor ||
         (goog.userAgent.IE ? '' : 'transparent');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the button's DOM when it enters the document.  Overrides the
-***REMOVED*** superclass implementation by making sure the button's color indicator is
-***REMOVED*** initialized.
-***REMOVED*** @param {goog.ui.Control} button goog.ui.ColorMenuButton whose DOM is to be
-***REMOVED***     initialized as it enters the document.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Initializes the button's DOM when it enters the document.  Overrides the
+ * superclass implementation by making sure the button's color indicator is
+ * initialized.
+ * @param {goog.ui.Control} button goog.ui.ColorMenuButton whose DOM is to be
+ *     initialized as it enters the document.
+ * @override
+ */
 goog.ui.ColorMenuButtonRenderer.prototype.initializeDom = function(button) {
   var buttonElement = button.getElement();
   goog.asserts.assert(buttonElement);
@@ -144,4 +144,4 @@ goog.ui.ColorMenuButtonRenderer.prototype.initializeDom = function(button) {
       goog.ui.ColorMenuButtonRenderer.CSS_CLASS);
   goog.ui.ColorMenuButtonRenderer.superClass_.initializeDom.call(this,
       button);
-***REMOVED***
+};

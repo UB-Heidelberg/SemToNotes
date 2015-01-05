@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This data is generated from an SVG image of a tiger.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview This data is generated from an SVG image of a tiger.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 var tigerData = [{f: '#fff', s: {c: '#000', w: 0.172},

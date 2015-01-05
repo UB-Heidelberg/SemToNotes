@@ -1,10 +1,10 @@
-/*eslint no-nested-ternary:0, space-infix-ops: 0***REMOVED***
-***REMOVED***
+/*eslint no-nested-ternary:0, space-infix-ops: 0 */
+/**
     @overview Builds a tree-like JSON string from the doclet data.
     @version 0.0.3
     @example
         ./jsdoc scratch/jsdoc_test.js -t templates/haruki -d console -q format=xml
-***REMOVED***
+ */
 'use strict';
 
 function graft(parentNode, childNodes, parentLongname, parentName) {
@@ -26,7 +26,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 'description': element.description || '',
                 'access': element.access || '',
                 'virtual': !!element.virtual
-           ***REMOVED*****REMOVED***
+            };
 
             parentNode.namespaces.push(thisNamespace);
 
@@ -42,7 +42,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 'description': element.description || '',
                 'access': element.access || '',
                 'virtual': !!element.virtual
-           ***REMOVED*****REMOVED***
+            };
 
             parentNode.mixins.push(thisMixin);
 
@@ -60,7 +60,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 'description': element.description || '',
                 'parameters': [ ],
                 'examples': []
-           ***REMOVED*****REMOVED***
+            };
 
             parentNode.functions.push(thisFunction);
 
@@ -68,7 +68,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 thisFunction.returns = {
                     'type': element.returns[0].type? (element.returns[0].type.names.length === 1? element.returns[0].type.names[0] : element.returns[0].type.names) : '',
                     'description': element.returns[0].description || ''
-               ***REMOVED*****REMOVED***
+                };
             }
 
             if (element.examples) {
@@ -115,7 +115,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 'description': element.description || '',
                 'parameters': [],
                 'examples': []
-           ***REMOVED*****REMOVED***
+            };
 
             parentNode.events.push(thisEvent);
 
@@ -123,7 +123,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                 thisEvent.returns = {
                     'type': element.returns.type? (element.returns.type.names.length === 1? element.returns.type.names[0] : element.returns.type.names) : '',
                     'description': element.returns.description || ''
-               ***REMOVED*****REMOVED***
+                };
             }
 
             if (element.examples) {
@@ -164,7 +164,7 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
                     ],
                     'examples': []
                 }
-           ***REMOVED*****REMOVED***
+            };
 
             parentNode.classes.push(thisClass);
 
@@ -192,10 +192,10 @@ function graft(parentNode, childNodes, parentLongname, parentName) {
     });
 }
 
-***REMOVED***
+/**
     @param {TAFFY} data
     @param {object} opts
-***REMOVED***
+ */
 exports.publish = function(data, opts) {
 
     var root = {},
@@ -219,4 +219,4 @@ exports.publish = function(data, opts) {
         console.log('This template only supports output to the console. Use the option "-d console" when you run JSDoc.');
     }
 
-***REMOVED***
+};

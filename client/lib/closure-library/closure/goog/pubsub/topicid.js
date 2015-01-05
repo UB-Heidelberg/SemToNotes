@@ -16,46 +16,46 @@ goog.provide('goog.pubsub.TopicId');
 
 
 
-***REMOVED***
-***REMOVED*** A templated class that is used to register {@code goog.pubsub.PubSub}
-***REMOVED*** subscribers.
-***REMOVED***
-***REMOVED*** Typical usage for a publisher:
-***REMOVED*** <code>
-***REMOVED***  ***REMOVED*****REMOVED*** @type {!goog.pubsub.TopicId.<!zorg.State>}
-***REMOVED***   zorg.TopicId.STATE_CHANGE = new goog.pubsub.TopicId(
-***REMOVED***       goog.events.getUniqueId('state-change'));
-***REMOVED***
-***REMOVED***   // Compiler enforces that these types are correct.
-***REMOVED***   pubSub.publish(zorg.TopicId.STATE_CHANGE, zorg.State.STARTED);
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** Typical usage for a subscriber:
-***REMOVED*** <code>
-***REMOVED***   // Compiler enforces the callback parameter type.
-***REMOVED***   pubSub.subscribe(zorg.TopicId.STATE_CHANGE, function(state) {
-***REMOVED***     if (state == zorg.State.STARTED) {
-***REMOVED***       // Handle STARTED state.
-***REMOVED***     }
-***REMOVED***   });
-***REMOVED*** </code>
-***REMOVED***
-***REMOVED*** @param {string} topicId
-***REMOVED*** @template PAYLOAD
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * A templated class that is used to register {@code goog.pubsub.PubSub}
+ * subscribers.
+ *
+ * Typical usage for a publisher:
+ * <code>
+ *   /** @type {!goog.pubsub.TopicId.<!zorg.State>}
+ *   zorg.TopicId.STATE_CHANGE = new goog.pubsub.TopicId(
+ *       goog.events.getUniqueId('state-change'));
+ *
+ *   // Compiler enforces that these types are correct.
+ *   pubSub.publish(zorg.TopicId.STATE_CHANGE, zorg.State.STARTED);
+ * </code>
+ *
+ * Typical usage for a subscriber:
+ * <code>
+ *   // Compiler enforces the callback parameter type.
+ *   pubSub.subscribe(zorg.TopicId.STATE_CHANGE, function(state) {
+ *     if (state == zorg.State.STARTED) {
+ *       // Handle STARTED state.
+ *     }
+ *   });
+ * </code>
+ *
+ * @param {string} topicId
+ * @template PAYLOAD
+ * @constructor
+ * @final
+ * @struct
+ */
 goog.pubsub.TopicId = function(topicId) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @const
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @const
+   * @private
+   */
   this.topicId_ = topicId;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.pubsub.TopicId.prototype.toString = function() {
   return this.topicId_;
-***REMOVED***
+};

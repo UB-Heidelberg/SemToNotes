@@ -20,21 +20,21 @@ var reader = new xrx.xml.Reader(xml);
 function testFirst() {
   reader.first();
   assertEquals('<', reader.get());
-***REMOVED***
+};
 
 
 
 function testLast() {
   reader.last();
   assertEquals('>', reader.get());
-***REMOVED***
+};
 
 
 
 function testSetAndGet() {
   reader.set(5);
   assertEquals('b', reader.get());
-***REMOVED***
+};
 
 
 
@@ -50,7 +50,7 @@ function testFinished() {
   reader.last();
   for (var i = 0; i < xml.length + 5; i++) { reader.previous(); }
   assertEquals(true, reader.finished());
-***REMOVED***
+};
 
 
 
@@ -59,7 +59,7 @@ function testNext() {
   reader.next();
   assertEquals(3, reader.pos());
   assertEquals('1', reader.get());
-***REMOVED***
+};
 
 
 
@@ -68,21 +68,21 @@ function testPrevious() {
   reader.previous();
   assertEquals(3, reader.pos());
   assertEquals('1', reader.get());
-***REMOVED***
+};
 
 
 
 function testRight() {
   reader.first();
   assertEquals('2', reader.peek(7));
-***REMOVED***
+};
 
 
 
 function testLeft() {
   reader.last();
   assertEquals('6', reader.peek(-8));
-***REMOVED***
+};
 
 
 
@@ -90,7 +90,7 @@ function testForward() {
   reader.first();
   reader.forward(7)
   assertEquals('2', reader.get());
-***REMOVED***
+};
 
 
 
@@ -98,7 +98,7 @@ function testBackward() {
   reader.last();
   reader.backward(8)
   assertEquals('6', reader.get());
-***REMOVED***
+};
 
 
 
@@ -107,7 +107,7 @@ function testForwardInclusive() {
   reader.forwardInclusive('>');
   assertEquals(3, reader.pos());
   assertEquals('1', reader.get());
-***REMOVED***
+};
 
 
 
@@ -116,7 +116,7 @@ function testForwardExclusive() {
   reader.forwardExclusive('>');
   assertEquals(2, reader.pos());
   assertEquals('>', reader.get());
-***REMOVED***
+};
 
 
 
@@ -125,7 +125,7 @@ function testBackwardInclusive() {
   reader.backwardInclusive('<');
   assertEquals(34, reader.pos());
   assertEquals('<', reader.get());
-***REMOVED***
+};
 
 
 
@@ -137,7 +137,7 @@ function testBackwardExclusive() {
   reader.backwardExclusive('<');
   assertEquals(1, reader.pos());
   assertEquals('a', reader.get());
-***REMOVED***
+};
 
 
 

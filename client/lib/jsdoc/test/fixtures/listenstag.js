@@ -1,33 +1,33 @@
-***REMOVED*** @module myModule***REMOVED***
+/** @module myModule */
 
-***REMOVED*** An event (has listeners).
-***REMOVED*** @event MyEvent
-***REMOVED*** @memberof module:myModule
-***REMOVED*** @param {number} foo - asdf.***REMOVED***
+/** An event (has listeners).
+ * @event MyEvent
+ * @memberof module:myModule
+ * @param {number} foo - asdf. */
 
-***REMOVED*** A handler.
-***REMOVED*** @listens module:myModule.MyEvent
-***REMOVED*** @listens module:myModule~Events.event:Event2
-***REMOVED*** @listens fakeEvent
-***REMOVED***
+/** A handler.
+ * @listens module:myModule.MyEvent
+ * @listens module:myModule~Events.event:Event2
+ * @listens fakeEvent
+ */
 function MyHandler() {
 }
 
-***REMOVED*** Another handler.
-***REMOVED*** @listens module:myModule.MyEvent
-***REMOVED***
+/** Another handler.
+ * @listens module:myModule.MyEvent
+ */
 function AnotherHandler() {
 }
 
-***REMOVED*** a namespace.
-***REMOVED*** @namespace***REMOVED***
+/** a namespace.
+ * @namespace */
 var Events = {
-***REMOVED***
+};
 
-***REMOVED*** Another event (has listeners).
-***REMOVED*** @event Event2
-***REMOVED*** @memberof module:myModule~Events
-***REMOVED***
+/** Another event (has listeners).
+ * @event Event2
+ * @memberof module:myModule~Events
+ */
 
-***REMOVED*** An event with no listeners.
-***REMOVED*** @event module:myModule#Event3***REMOVED***
+/** An event with no listeners.
+ * @event module:myModule#Event3 */

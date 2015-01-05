@@ -5,20 +5,20 @@ JSDoc 3 Haruki is an experimental template optimised for use with publishing pro
 
 Currently Haruki only supports a subset of the tags supported by the default template. Those are:
 
- ***REMOVED*** @name
- ***REMOVED*** @desc
- ***REMOVED*** @type
- ***REMOVED*** @namespace
- ***REMOVED*** @method (or @function)
- ***REMOVED*** @member (or @var)
- ***REMOVED*** @class
- ***REMOVED*** @mixin
- ***REMOVED*** @event
- ***REMOVED*** @param
- ***REMOVED*** @returns
- ***REMOVED*** @throws
- ***REMOVED*** @example
- ***REMOVED*** @access (like @private or @public)
+  * @name
+  * @desc
+  * @type
+  * @namespace
+  * @method (or @function)
+  * @member (or @var)
+  * @class
+  * @mixin
+  * @event
+  * @param
+  * @returns
+  * @throws
+  * @example
+  * @access (like @private or @public)
 
 This limited support set is intentional, as it is meant to be a usable set that could be shared with either JavaScript or PHP documentation -- another experimental tool, named "Vonnegut", can produce Haruki compatible JSON from PHPDoc tags.
 

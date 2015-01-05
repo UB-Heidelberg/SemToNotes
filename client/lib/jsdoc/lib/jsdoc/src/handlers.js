@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @module jsdoc/src/handlers
-***REMOVED***
+/**
+ * @module jsdoc/src/handlers
+ */
 'use strict';
 
 var jsdoc = {
@@ -9,7 +9,7 @@ var jsdoc = {
     util: {
         logger: require('jsdoc/util/logger')
     }
-***REMOVED***
+};
 var util = require('util');
 
 var currentModule = null;
@@ -54,10 +54,10 @@ function setDefaultScopeMemberOf(doclet) {
     }
 }
 
-***REMOVED***
-***REMOVED*** Attach these event handlers to a particular instance of a parser.
-***REMOVED*** @param parser
-***REMOVED***
+/**
+ * Attach these event handlers to a particular instance of a parser.
+ * @param parser
+ */
 exports.attachTo = function(parser) {
     function filter(doclet) {
         // you can't document prototypes
@@ -72,7 +72,7 @@ exports.attachTo = function(parser) {
         var e;
         if (newDoclet) {
             setCurrentModule(newDoclet);
-            e = { doclet: newDoclet***REMOVED*****REMOVED***
+            e = { doclet: newDoclet };
             parser.emit('newDoclet', e);
 
             if ( !e.defaultPrevented && !filter(e.doclet) ) {
@@ -120,9 +120,9 @@ exports.attachTo = function(parser) {
                         newDoclet.name = newDoclet.name.replace(moduleRegExp, '');
                     }
 
-                    // like***REMOVED*****REMOVED*** @module foo***REMOVED*** exports.bar = 1;
-                    // or***REMOVED*****REMOVED*** @module foo***REMOVED*** module.exports.bar = 1;
-                    // but not***REMOVED*****REMOVED*** @module foo***REMOVED*** module.exports = 1;
+                    // like /** @module foo */ exports.bar = 1;
+                    // or /** @module foo */ module.exports.bar = 1;
+                    // but not /** @module foo */ module.exports = 1;
                     if ( (nameStartsWith === 'exports' || nameStartsWith === 'module.exports') &&
                         newDoclet.name !== 'module.exports' && currentModule ) {
                         memberofName = currentModule;
@@ -133,12 +133,12 @@ exports.attachTo = function(parser) {
                         newDoclet.postProcess();
                     }
                     else {
-                        // like***REMOVED*****REMOVED*** @module foo***REMOVED*** exports = {bar: 1***REMOVED***
-                        // or***REMOVED*****REMOVED*** blah***REMOVED*** this.foo = 1;
+                        // like /** @module foo */ exports = {bar: 1};
+                        // or /** blah */ this.foo = 1;
                         memberofName = parser.resolveThis(e.astnode);
                         scope = nameStartsWith === 'exports' ? 'static' : 'instance';
 
-                        // like***REMOVED*****REMOVED*** @module foo***REMOVED*** this.bar = 1;
+                        // like /** @module foo */ this.bar = 1;
                         if (nameStartsWith === 'this' && currentModule && !memberofName) {
                             memberofName = currentModule;
                             scope = 'static';
@@ -216,4 +216,4 @@ exports.attachTo = function(parser) {
     parser.on('fileComplete', function(e) {
         currentModule = null;
     });
-***REMOVED***
+};

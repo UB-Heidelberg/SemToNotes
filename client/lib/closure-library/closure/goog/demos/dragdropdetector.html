@@ -29,7 +29,7 @@ See the COPYING file for details.
   <p>Try dropping images from other web pages on this page.</p>
   <script type="text/javascript">
     var detector = new goog.ui.DragDropDetector();
-  ***REMOVED***detector,
+    goog.events.listen(detector,
         [
           goog.ui.DragDropDetector.EventType.IMAGE_DROPPED,
           goog.ui.DragDropDetector.EventType.LINK_DROPPED

@@ -35,7 +35,7 @@ body {
       sum = 0;
       var t2 = goog.debug.Trace.startTracer('Run ' + i);
       for (var j = 0; j < 50000; j++) {
-        sum += j***REMOVED*** i;
+        sum += j * i;
       }
       goog.debug.Trace.addComment('after');
       goog.debug.Trace.stopTracer(t2);

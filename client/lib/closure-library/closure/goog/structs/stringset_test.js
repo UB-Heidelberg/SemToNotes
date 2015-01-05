@@ -56,7 +56,7 @@ function testOverridingObjectPrototypeToStringIsSafe() {
   var originalToString = Object.prototype.toString;
   Object.prototype.toString = function() {
     return 'object';
- ***REMOVED*****REMOVED***
+  };
   try {
     assertEquals(0, new goog.structs.StringSet().getCount());
     assertFalse(new goog.structs.StringSet().contains('toString'));
@@ -134,7 +134,7 @@ function testEquals() {
 function testForEach() {
   var s = new goog.structs.StringSet(TEST_VALUES);
   var values = [];
-  var context = {***REMOVED***
+  var context = {};
   s.forEach(function(value, key, stringSet) {
     assertEquals('context of forEach callback', context, this);
     values.push(value);
@@ -162,7 +162,7 @@ function testGetDifference() {
 function testGetIntersection() {
   var s1 = new goog.structs.StringSet([1, 2]);
   var s2 = new goog.structs.StringSet([2, 3]);
-  assertSameElements('{1, 2}***REMOVED*** {2, 3}', ['2'],
+  assertSameElements('{1, 2} * {2, 3}', ['2'],
       s1.getIntersection(s2).getValues());
 }
 

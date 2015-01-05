@@ -12,47 +12,47 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED*** DataSource implementation that uses XMLHttpRequest as transport, with
-***REMOVED*** response as serialized JS object (not required to be JSON) that can
-***REMOVED*** be evaluated and set to a variable.
-***REMOVED***
-***REMOVED*** Response can have unexecutable starting/ending text to prevent inclusion
-***REMOVED*** using <script src="...">
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview
+ * DataSource implementation that uses XMLHttpRequest as transport, with
+ * response as serialized JS object (not required to be JSON) that can
+ * be evaluated and set to a variable.
+ *
+ * Response can have unexecutable starting/ending text to prevent inclusion
+ * using <script src="...">
+ *
+ */
 
 
 goog.provide('goog.ds.JsXmlHttpDataSource');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.ds.DataManager');
 goog.require('goog.ds.FastDataNode');
 goog.require('goog.ds.LoadState');
 goog.require('goog.ds.logger');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.log');
 goog.require('goog.net.EventType');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 
 
 
-***REMOVED***
-***REMOVED*** Similar to JsonDataSource, with using XMLHttpRequest for transport
-***REMOVED*** Currently requires the result be a JS object that can be evaluated and
-***REMOVED*** set to a variable and doesn't require strict JSON notation.
-***REMOVED***
-***REMOVED*** @param {string || goog.Uri} uri URI for the request.
-***REMOVED*** @param {string} name Name of the datasource.
-***REMOVED*** @param {string=} opt_startText Text to expect/strip before JS response.
-***REMOVED*** @param {string=} opt_endText Text to expect/strip after JS response.
-***REMOVED*** @param {boolean=} opt_usePost If true, use POST. Defaults to false (GET).
-***REMOVED***
-***REMOVED*** @extends {goog.ds.FastDataNode}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Similar to JsonDataSource, with using XMLHttpRequest for transport
+ * Currently requires the result be a JS object that can be evaluated and
+ * set to a variable and doesn't require strict JSON notation.
+ *
+ * @param {string || goog.Uri} uri URI for the request.
+ * @param {string} name Name of the datasource.
+ * @param {string=} opt_startText Text to expect/strip before JS response.
+ * @param {string=} opt_endText Text to expect/strip after JS response.
+ * @param {boolean=} opt_usePost If true, use POST. Defaults to false (GET).
+ *
+ * @extends {goog.ds.FastDataNode}
+ * @constructor
+ * @final
+ */
 goog.ds.JsXmlHttpDataSource = function(uri, name, opt_startText, opt_endText,
                                        opt_usePost) {
   goog.ds.FastDataNode.call(this, {}, name, null);
@@ -61,61 +61,61 @@ goog.ds.JsXmlHttpDataSource = function(uri, name, opt_startText, opt_endText,
     this.xhr_ = new goog.net.XhrIo();
     this.usePost_ = !!opt_usePost;
 
-  ***REMOVED***this.xhr_, goog.net.EventType.COMPLETE,
+    goog.events.listen(this.xhr_, goog.net.EventType.COMPLETE,
         this.completed_, false, this);
   } else {
     this.uri_ = null;
   }
   this.startText_ = opt_startText;
   this.endText_ = opt_endText;
-***REMOVED***
+};
 goog.inherits(goog.ds.JsXmlHttpDataSource, goog.ds.FastDataNode);
 
 
-***REMOVED***
-***REMOVED*** Delimiter for start of JSON data in response.
-***REMOVED*** null = starts at first character of response
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter for start of JSON data in response.
+ * null = starts at first character of response
+ * @type {string|undefined}
+ * @private
+ */
 goog.ds.JsXmlHttpDataSource.prototype.startText_;
 
 
-***REMOVED***
-***REMOVED*** Delimiter for end of JSON data in response.
-***REMOVED*** null = ends at last character of response
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter for end of JSON data in response.
+ * null = ends at last character of response
+ * @type {string|undefined}
+ * @private
+ */
 goog.ds.JsXmlHttpDataSource.prototype.endText_;
 
 
-***REMOVED***
-***REMOVED*** Gets the state of the backing data for this node
-***REMOVED*** @return {goog.ds.LoadState} The state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the state of the backing data for this node
+ * @return {goog.ds.LoadState} The state.
+ * @override
+ */
 goog.ds.JsXmlHttpDataSource.prototype.getLoadState = function() {
   return this.loadState_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the request data. This can be used if it is required to
-***REMOVED*** send a specific body rather than build the body from the query
-***REMOVED*** parameters. Only used in POST requests.
-***REMOVED*** @param {string} data The data to send in the request body.
-***REMOVED***
+/**
+ * Sets the request data. This can be used if it is required to
+ * send a specific body rather than build the body from the query
+ * parameters. Only used in POST requests.
+ * @param {string} data The data to send in the request body.
+ */
 goog.ds.JsXmlHttpDataSource.prototype.setQueryData = function(data) {
   this.queryData_ = data;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Load or reload the backing data for this node.
-***REMOVED*** Fires the JsonDataSource
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Load or reload the backing data for this node.
+ * Fires the JsonDataSource
+ * @override
+ */
 goog.ds.JsXmlHttpDataSource.prototype.load = function() {
   goog.log.info(goog.ds.logger, 'Sending JS request for DataSource ' +
       this.getDataName() + ' to ' + this.uri_);
@@ -139,24 +139,24 @@ goog.ds.JsXmlHttpDataSource.prototype.load = function() {
   } else {
     this.loadState_ = goog.ds.LoadState.NOT_LOADED;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called on successful request.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called on successful request.
+ * @private
+ */
 goog.ds.JsXmlHttpDataSource.prototype.success_ = function()  {
   goog.ds.DataManager.getInstance().fireDataChange(this.getDataName());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Completed callback. Loads data if successful, otherwise sets
-***REMOVED*** state to FAILED
-***REMOVED*** @param {goog.events.Event} e Event object, Xhr is target.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Completed callback. Loads data if successful, otherwise sets
+ * state to FAILED
+ * @param {goog.events.Event} e Event object, Xhr is target.
+ * @private
+ */
 goog.ds.JsXmlHttpDataSource.prototype.completed_ = function(e) {
   if (this.xhr_.isSuccess()) {
     goog.log.info(goog.ds.logger,
@@ -174,9 +174,9 @@ goog.ds.JsXmlHttpDataSource.prototype.completed_ = function(e) {
     }
 
     // Eval result
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
-      var jsonObj =***REMOVED*****REMOVED*** @type {Object}***REMOVED*** (eval('[' + text + '][0]'));
+      var jsonObj = /** @type {Object} */ (eval('[' + text + '][0]'));
       this.extendWith(jsonObj);
       this.loadState_ = goog.ds.LoadState.LOADED;
     }
@@ -193,4 +193,4 @@ goog.ds.JsXmlHttpDataSource.prototype.completed_ = function(e) {
         this.getDataName());
     this.loadState_ = goog.ds.LoadState.FAILED;
   }
-***REMOVED***
+};

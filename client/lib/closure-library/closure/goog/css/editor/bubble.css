@@ -1,17 +1,17 @@
 /*
-***REMOVED*** Copyright 2005 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2005 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Bubble styles.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED***
+ * Bubble styles.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author nicksantos@google.com (Nick Santos)
+ * @author jparent@google.com (Julie Parent)
+ */
 
 div.tr_bubble {
   position: absolute;

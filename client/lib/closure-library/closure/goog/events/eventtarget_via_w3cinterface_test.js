@@ -24,22 +24,22 @@ goog.require('goog.testing.jsunit');
 function setUp() {
   var newListenableFn = function() {
     return new goog.events.EventTarget();
- ***REMOVED*****REMOVED***
+  };
   var listenFn = function(src, type, listener, opt_capt, opt_handler) {
     src.addEventListener(type, listener, opt_capt, opt_handler);
- ***REMOVED*****REMOVED***
+  };
   var unlistenFn = function(src, type, listener, opt_capt, opt_handler) {
     src.removeEventListener(type, listener, opt_capt, opt_handler);
- ***REMOVED*****REMOVED***
+  };
   var dispatchEventFn = function(src, e) {
     return src.dispatchEvent(e);
- ***REMOVED*****REMOVED***
+  };
 
   goog.events.eventTargetTester.setUp(
-      newListenableFn, listenFn, unlistenFn, null /* unlistenByKeyFn***REMOVED***,
-      null /* listenOnceFn***REMOVED***, dispatchEventFn, null /* removeAllFn***REMOVED***,
-      null /* getListenersFn***REMOVED***, null /* getListenerFn***REMOVED***,
-      null /* hasListenerFn***REMOVED***,
+      newListenableFn, listenFn, unlistenFn, null /* unlistenByKeyFn */,
+      null /* listenOnceFn */, dispatchEventFn, null /* removeAllFn */,
+      null /* getListenersFn */, null /* getListenerFn */,
+      null /* hasListenerFn */,
       goog.events.eventTargetTester.KeyType.UNDEFINED,
       goog.events.eventTargetTester.UnlistenReturnType.UNDEFINED, true);
 }

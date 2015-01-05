@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A node implementation for streaming XPath evaluation.
-***REMOVED***
+/**
+ * @fileoverview A node implementation for streaming XPath evaluation.
+ */
 
 goog.provide('xrx.node.Streaming');
 
@@ -11,57 +11,57 @@ goog.require('xrx.node.Node');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.node.Streaming = function(type, document, token) {
 
   goog.base(this, type, document);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.token}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.token}
+   * @private
+   */
   this.token_ = token;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {enum}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {enum}
+   * @private
+   */
   this.impl_ = {
     Document: 'DocumentS',
     Element: 'ElementS',
     Attribute: 'AttributeS',
     Text: 'TextS'
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 goog.inherits(xrx.node.Streaming, xrx.node.Node);
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.Streaming.prototype.getToken = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.Streaming.prototype.getLabel = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.Streaming.prototype.getOffset = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.Streaming.prototype.getLength = goog.abstractMethod;
 

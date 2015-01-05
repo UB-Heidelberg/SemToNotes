@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.json.hybrid.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.json.hybrid.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.json.hybridTest');
 

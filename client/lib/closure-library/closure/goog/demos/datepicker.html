@@ -127,7 +127,7 @@ See the COPYING file for details.
     var dp_iso_8601 = new goog.ui.DatePicker();
     dp_iso_8601.render(document.getElementById('widget_iso_8601'));
 
-  ***REMOVED***dp_iso_8601,
+    goog.events.listen(dp_iso_8601,
         goog.ui.DatePicker.Events.CHANGE, function(event) {
       goog.dom.setTextContent(document.getElementById('label_iso_8601'),
           event.date ?
@@ -141,7 +141,7 @@ See the COPYING file for details.
     var dp_custom = new goog.ui.DatePicker(new goog.date.Date(2006, 0, 1));
     dp_custom.render(document.getElementById('widget_custom'));
 
-  ***REMOVED***dp_custom, goog.ui.DatePicker.Events.CHANGE,
+    goog.events.listen(dp_custom, goog.ui.DatePicker.Events.CHANGE,
                        function(event) {
       goog.dom.setTextContent(document.getElementById('label_custom'),
           event.date ?
@@ -158,7 +158,7 @@ See the COPYING file for details.
     var dp_en_US = new goog.ui.DatePicker();
     dp_en_US.render(document.getElementById('widget_en_US'));
 
-  ***REMOVED***dp_en_US, goog.ui.DatePicker.Events.CHANGE,
+    goog.events.listen(dp_en_US, goog.ui.DatePicker.Events.CHANGE,
         function(event) {
       goog.dom.setTextContent(document.getElementById('label_en_US'), event.date ?
           event.date.toIsoString(true) : 'none');
@@ -174,7 +174,7 @@ See the COPYING file for details.
     dp_de = new goog.ui.DatePicker();
     dp_de.render(document.getElementById('widget_de'));
 
-  ***REMOVED***dp_de, goog.ui.DatePicker.Events.CHANGE, function(event) {
+    goog.events.listen(dp_de, goog.ui.DatePicker.Events.CHANGE, function(event) {
       goog.dom.setTextContent(document.getElementById('label_de'), event.date ?
           event.date.toIsoString(true) : 'none');
     });
@@ -189,7 +189,7 @@ See the COPYING file for details.
     var dp_ml = new goog.ui.DatePicker();
     dp_ml.render(document.getElementById('widget_ml'));
 
-  ***REMOVED***dp_ml, goog.ui.DatePicker.Events.CHANGE, function(event) {
+    goog.events.listen(dp_ml, goog.ui.DatePicker.Events.CHANGE, function(event) {
       goog.dom.setTextContent(document.getElementById('label_ml'), event.date ?
           event.date.toIsoString(true) : 'none');
     });
@@ -203,7 +203,7 @@ See the COPYING file for details.
 
     dp_ar_YE.render(document.getElementById('widget_ar_YE'));
 
-  ***REMOVED***dp_ar_YE, goog.ui.DatePicker.Events.CHANGE,
+    goog.events.listen(dp_ar_YE, goog.ui.DatePicker.Events.CHANGE,
         function(event) {
       goog.dom.setTextContent(document.getElementById('label_ar_YE'), event.date ?
           event.date.toIsoString(true) : 'none');
@@ -219,7 +219,7 @@ See the COPYING file for details.
     var dp_th = new goog.ui.DatePicker();
     dp_th.render(document.getElementById('widget_th'));
 
-  ***REMOVED***dp_th, goog.ui.DatePicker.Events.CHANGE, function(event) {
+    goog.events.listen(dp_th, goog.ui.DatePicker.Events.CHANGE, function(event) {
       goog.dom.setTextContent(document.getElementById('label_th'), event.date ?
           event.date.toIsoString(true) : 'none');
     });
@@ -234,7 +234,7 @@ See the COPYING file for details.
     var dp_ja = new goog.ui.DatePicker();
     dp_ja.render(document.getElementById('widget_ja'));
 
-  ***REMOVED***dp_ja, goog.ui.DatePicker.Events.CHANGE, function(event) {
+    goog.events.listen(dp_ja, goog.ui.DatePicker.Events.CHANGE, function(event) {
       goog.dom.setTextContent(document.getElementById('label_ja'), event.date ?
           event.date.toIsoString(true) : 'none');
     });

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A one dimensional linear interpolator.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A one dimensional linear interpolator.
+ *
+ */
 
 goog.provide('goog.math.interpolator.Linear1');
 
@@ -25,30 +25,30 @@ goog.require('goog.math.interpolator.Interpolator1');
 
 
 
-***REMOVED***
-***REMOVED*** A one dimensional linear interpolator.
-***REMOVED*** @implements {goog.math.interpolator.Interpolator1}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A one dimensional linear interpolator.
+ * @implements {goog.math.interpolator.Interpolator1}
+ * @constructor
+ * @final
+ */
 goog.math.interpolator.Linear1 = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The abscissa of the data points.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The abscissa of the data points.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.x_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The ordinate of the data points.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The ordinate of the data points.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.y_ = [];
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.math.interpolator.Linear1.prototype.setData = function(x, y) {
   goog.asserts.assert(x.length == y.length,
       'input arrays to setData should have the same length');
@@ -59,10 +59,10 @@ goog.math.interpolator.Linear1.prototype.setData = function(x, y) {
     this.x_ = x.slice();
     this.y_ = y.slice();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.math.interpolator.Linear1.prototype.interpolate = function(x) {
   var pos = goog.array.binarySearch(this.x_, x);
   if (pos < 0) {
@@ -72,12 +72,12 @@ goog.math.interpolator.Linear1.prototype.interpolate = function(x) {
 
   var progress = (x - this.x_[pos]) / (this.x_[pos + 1] - this.x_[pos]);
   return goog.math.lerp(this.y_[pos], this.y_[pos + 1], progress);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.math.interpolator.Linear1.prototype.getInverse = function() {
   var interpolator = new goog.math.interpolator.Linear1();
   interpolator.setData(this.y_, this.x_);
   return interpolator;
-***REMOVED***
+};

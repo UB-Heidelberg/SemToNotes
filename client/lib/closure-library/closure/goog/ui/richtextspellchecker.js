@@ -12,146 +12,146 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Rich text spell checker implementation.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @author sergeys@google.com (Sergey Solyanik)
-***REMOVED*** @see ../demos/richtextspellchecker.html
-***REMOVED***
+/**
+ * @fileoverview Rich text spell checker implementation.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @author sergeys@google.com (Sergey Solyanik)
+ * @see ../demos/richtextspellchecker.html
+ */
 
 goog.provide('goog.ui.RichTextSpellChecker');
 
 goog.require('goog.Timer');
 goog.require('goog.dom');
 goog.require('goog.dom.NodeType');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.spell.SpellCheck');
 goog.require('goog.string.StringBuffer');
 goog.require('goog.ui.AbstractSpellChecker');
 
 
 
-***REMOVED***
-***REMOVED*** Rich text spell checker implementation.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck} handler Instance of the SpellCheckHandler
-***REMOVED***     support object to use. A single instance can be shared by multiple editor
-***REMOVED***     components.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.AbstractSpellChecker}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Rich text spell checker implementation.
+ *
+ * @param {goog.spell.SpellCheck} handler Instance of the SpellCheckHandler
+ *     support object to use. A single instance can be shared by multiple editor
+ *     components.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.AbstractSpellChecker}
+ * @final
+ */
 goog.ui.RichTextSpellChecker = function(handler, opt_domHelper) {
   goog.ui.AbstractSpellChecker.call(this, handler, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** String buffer for use in reassembly of the original text.
-  ***REMOVED*** @type {goog.string.StringBuffer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * String buffer for use in reassembly of the original text.
+   * @type {goog.string.StringBuffer}
+   * @private
+   */
   this.workBuffer_ = new goog.string.StringBuffer();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Bound async function (to avoid rebinding it on every call).
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Bound async function (to avoid rebinding it on every call).
+   * @type {Function}
+   * @private
+   */
   this.boundContinueAsyncFn_ = goog.bind(this.continueAsync_, this);
-***REMOVED***
+};
 goog.inherits(goog.ui.RichTextSpellChecker, goog.ui.AbstractSpellChecker);
 
 
-***REMOVED***
-***REMOVED*** Root node for rich editor.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Root node for rich editor.
+ * @type {Node}
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.rootNode_;
 
 
-***REMOVED***
-***REMOVED*** Current node where spell checker has interrupted to go to the next stack
-***REMOVED*** frame.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Current node where spell checker has interrupted to go to the next stack
+ * frame.
+ * @type {Node}
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.currentNode_;
 
 
-***REMOVED***
-***REMOVED*** Counter of inserted elements. Used in processing loop to attempt to preserve
-***REMOVED*** existing nodes if they contain no misspellings.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Counter of inserted elements. Used in processing loop to attempt to preserve
+ * existing nodes if they contain no misspellings.
+ * @type {number}
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.elementsInserted_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Number of words to scan to precharge the dictionary.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Number of words to scan to precharge the dictionary.
+ * @type {number}
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.dictionaryPreScanSize_ = 1000;
 
 
-***REMOVED***
-***REMOVED*** Class name for word spans.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Class name for word spans.
+ * @type {string}
+ */
 goog.ui.RichTextSpellChecker.prototype.wordClassName =
     goog.getCssName('goog-spellcheck-word');
 
 
-***REMOVED***
-***REMOVED*** DomHelper to be used for interacting with the editable document/element.
-***REMOVED***
-***REMOVED*** @type {goog.dom.DomHelper|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * DomHelper to be used for interacting with the editable document/element.
+ *
+ * @type {goog.dom.DomHelper|undefined}
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.editorDom_;
 
 
-***REMOVED***
-***REMOVED*** Tag name porition of the marker for the text that does not need to be checked
-***REMOVED*** for spelling.
-***REMOVED***
-***REMOVED*** @type {Array.<string|undefined>}
-***REMOVED***
+/**
+ * Tag name porition of the marker for the text that does not need to be checked
+ * for spelling.
+ *
+ * @type {Array.<string|undefined>}
+ */
 goog.ui.RichTextSpellChecker.prototype.excludeTags;
 
 
-***REMOVED***
-***REMOVED*** CSS Style text for invalid words. As it's set inside the rich edit iframe
-***REMOVED*** classes defined in the parent document are not availble, thus the style is
-***REMOVED*** set inline.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS Style text for invalid words. As it's set inside the rich edit iframe
+ * classes defined in the parent document are not availble, thus the style is
+ * set inline.
+ * @type {string}
+ */
 goog.ui.RichTextSpellChecker.prototype.invalidWordCssText =
     'background: yellow;';
 
 
-***REMOVED***
-***REMOVED*** Creates the initial DOM representation for the component.
-***REMOVED***
-***REMOVED*** @throws {Error} Not supported. Use decorate.
-***REMOVED*** @see #decorate
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Creates the initial DOM representation for the component.
+ *
+ * @throws {Error} Not supported. Use decorate.
+ * @see #decorate
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.createDom = function() {
   throw Error('Render not supported for goog.ui.RichTextSpellChecker.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decorates the element for the UI component.
-***REMOVED***
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Decorates the element for the UI component.
+ *
+ * @param {Element} element Element to decorate.
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
   if (element.contentDocument || element.contentWindow) {
@@ -162,38 +162,38 @@ goog.ui.RichTextSpellChecker.prototype.decorateInternal = function(element) {
     this.rootNode_ = element;
     this.editorDom_ = goog.dom.getDomHelper(element);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.RichTextSpellChecker.prototype.enterDocument = function() {
   goog.ui.RichTextSpellChecker.superClass_.enterDocument.call(this);
   this.initSuggestionsMenu();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks spelling for all text and displays correction UI.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Checks spelling for all text and displays correction UI.
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.check = function() {
   this.blockReadyEvents();
   this.preChargeDictionary_(this.rootNode_, this.dictionaryPreScanSize_);
   this.unblockReadyEvents();
 
-***REMOVED***this.spellCheck, goog.spell.SpellCheck.EventType.READY,
+  goog.events.listen(this.spellCheck, goog.spell.SpellCheck.EventType.READY,
                      this.onDictionaryCharged_, true, this);
   this.spellCheck.processPending();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes nodes recursively.
-***REMOVED***
-***REMOVED*** @param {Node} node Node to start with.
-***REMOVED*** @param {number} words Max number of words to process.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes nodes recursively.
+ *
+ * @param {Node} node Node to start with.
+ * @param {number} words Max number of words to process.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.preChargeDictionary_ = function(node,
                                                                        words) {
   while (node) {
@@ -216,14 +216,14 @@ goog.ui.RichTextSpellChecker.prototype.preChargeDictionary_ = function(node,
     }
     node = next;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts actual processing after the dictionary is charged.
-***REMOVED*** @param {goog.events.Event} e goog.spell.SpellCheck.EventType.READY event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Starts actual processing after the dictionary is charged.
+ * @param {goog.events.Event} e goog.spell.SpellCheck.EventType.READY event.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.onDictionaryCharged_ = function(e) {
   e.stopPropagation();
   goog.events.unlisten(this.spellCheck, goog.spell.SpellCheck.EventType.READY,
@@ -240,13 +240,13 @@ goog.ui.RichTextSpellChecker.prototype.onDictionaryCharged_ = function(e) {
   }
   this.finishAsyncProcessing();
   this.finishCheck_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Continues asynchrnonous spell checking.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Continues asynchrnonous spell checking.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.continueAsync_ = function() {
   var result = this.continueAsyncProcessing();
   if (result == goog.ui.AbstractSpellChecker.AsyncResult.PENDING) {
@@ -260,32 +260,32 @@ goog.ui.RichTextSpellChecker.prototype.continueAsync_ = function() {
   }
   this.finishAsyncProcessing();
   this.finishCheck_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finalizes spelling check.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finalizes spelling check.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.finishCheck_ = function() {
   delete this.currentNode_;
   this.spellCheck.processPending();
 
   if (!this.isVisible()) {
-  ***REMOVED***this.rootNode_, goog.events.EventType.CLICK,
+    goog.events.listen(this.rootNode_, goog.events.EventType.CLICK,
                        this.onWordClick_, false, this);
   }
   goog.ui.RichTextSpellChecker.superClass_.check.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds next node in our enumeration of the tree.
-***REMOVED***
-***REMOVED*** @param {Node} node The node to which we're computing the next node for.
-***REMOVED*** @return {Node} The next node or null if none was found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds next node in our enumeration of the tree.
+ *
+ * @param {Node} node The node to which we're computing the next node for.
+ * @return {Node} The next node or null if none was found.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.nextNode_ = function(node) {
   while (node != this.rootNode_) {
     if (node.nextSibling) {
@@ -294,24 +294,24 @@ goog.ui.RichTextSpellChecker.prototype.nextNode_ = function(node) {
     node = node.parentNode;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the node is text node without any children.
-***REMOVED***
-***REMOVED*** @param {Node} node The node to check.
-***REMOVED*** @return {boolean} Whether the node is a text leaf node.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the node is text node without any children.
+ *
+ * @param {Node} node The node to check.
+ * @return {boolean} Whether the node is a text leaf node.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.isTextLeaf_ = function(node) {
   return node != null &&
          node.nodeType == goog.dom.NodeType.TEXT &&
          !node.firstChild;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.RichTextSpellChecker.prototype.setExcludeMarker = function(marker) {
   if (marker) {
     if (typeof marker == 'string') {
@@ -331,16 +331,16 @@ goog.ui.RichTextSpellChecker.prototype.setExcludeMarker = function(marker) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the node is excluded from checking.
-***REMOVED***
-***REMOVED*** @param {Node} node The node to check.
-***REMOVED*** @return {boolean} Whether the node is excluded.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the node is excluded from checking.
+ *
+ * @param {Node} node The node to check.
+ * @return {boolean} Whether the node is excluded.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.isExcluded_ = function(node) {
   if (this.excludeMarker && node.className) {
     for (var i = 0; i < this.excludeMarker.length; i++) {
@@ -355,16 +355,16 @@ goog.ui.RichTextSpellChecker.prototype.isExcluded_ = function(node) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes nodes recursively.
-***REMOVED***
-***REMOVED*** @param {Node} node Node where to start.
-***REMOVED*** @return {goog.ui.AbstractSpellChecker.AsyncResult|undefined} Result code.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes nodes recursively.
+ *
+ * @param {Node} node Node where to start.
+ * @return {goog.ui.AbstractSpellChecker.AsyncResult|undefined} Result code.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.processNode_ = function(node) {
   delete this.currentNode_;
   while (node) {
@@ -430,33 +430,33 @@ goog.ui.RichTextSpellChecker.prototype.processNode_ = function(node) {
     }
     node = next;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes word.
-***REMOVED***
-***REMOVED*** @param {Node} node Node containing word.
-***REMOVED*** @param {string} word Word to process.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Processes word.
+ *
+ * @param {Node} node Node containing word.
+ * @param {string} word Word to process.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
+ * @protected
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.processWord = function(node, word,
                                                               status) {
   node.parentNode.insertBefore(this.createWordElement(word, status), node);
   this.elementsInserted_++;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes recognized text and separators.
-***REMOVED***
-***REMOVED*** @param {Node} node Node containing separator.
-***REMOVED*** @param {string} text Text to process.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Processes recognized text and separators.
+ *
+ * @param {Node} node Node containing separator.
+ * @param {string} text Text to process.
+ * @protected
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.processRange = function(node, text) {
   // The text does not change, it only gets split, so if the lengths are the
   // same, the text is the same, so keep the existing node.
@@ -467,33 +467,33 @@ goog.ui.RichTextSpellChecker.prototype.processRange = function(node, text) {
 
   node.parentNode.insertBefore(this.editorDom_.createTextNode(text), node);
   this.elementsInserted_++;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.RichTextSpellChecker.prototype.createWordElement = function(
     word, status) {
   var parameters = this.getElementProperties(status);
-  var el =***REMOVED*****REMOVED*** @type {!HTMLSpanElement}***REMOVED*** (this.editorDom_.createDom('span',
+  var el = /** @type {!HTMLSpanElement} */ (this.editorDom_.createDom('span',
       parameters, word));
   this.registerWordElement(word, el);
   return el;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates or replaces element based on word status.
-***REMOVED*** @see goog.ui.AbstractSpellChecker.prototype.updateElement_
-***REMOVED***
-***REMOVED*** Overridden from AbstractSpellChecker because we need to be mindful of
-***REMOVED*** deleting the currentNode_ - this can break our pending processing.
-***REMOVED***
-***REMOVED*** @param {Element} el Word element.
-***REMOVED*** @param {string} word Word to update status for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Updates or replaces element based on word status.
+ * @see goog.ui.AbstractSpellChecker.prototype.updateElement_
+ *
+ * Overridden from AbstractSpellChecker because we need to be mindful of
+ * deleting the currentNode_ - this can break our pending processing.
+ *
+ * @param {Element} el Word element.
+ * @param {string} word Word to update status for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @protected
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.updateElement = function(el, word,
     status) {
   if (status == goog.spell.SpellCheck.WordStatus.VALID && el !=
@@ -502,13 +502,13 @@ goog.ui.RichTextSpellChecker.prototype.updateElement = function(el, word,
   } else {
     goog.dom.setProperties(el, this.getElementProperties(status));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hides correction UI.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Hides correction UI.
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.resume = function() {
   goog.ui.RichTextSpellChecker.superClass_.resume.call(this);
 
@@ -516,16 +516,16 @@ goog.ui.RichTextSpellChecker.prototype.resume = function() {
 
   goog.events.unlisten(this.rootNode_, goog.events.EventType.CLICK,
                        this.onWordClick_, false, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes nodes recursively, removes all spell checker markup, and
-***REMOVED*** consolidates text nodes.
-***REMOVED***
-***REMOVED*** @param {Node} node node on which to recurse.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes nodes recursively, removes all spell checker markup, and
+ * consolidates text nodes.
+ *
+ * @param {Node} node node on which to recurse.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.restoreNode_ = function(node) {
   while (node) {
     if (this.isExcluded_(node)) {
@@ -578,35 +578,35 @@ goog.ui.RichTextSpellChecker.prototype.restoreNode_ = function(node) {
     }
     node = node.nextSibling;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns desired element properties for the specified status.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
-***REMOVED*** @return {!Object} Properties to apply to word element.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns desired element properties for the specified status.
+ *
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
+ * @return {!Object} Properties to apply to word element.
+ * @protected
+ * @override
+ */
 goog.ui.RichTextSpellChecker.prototype.getElementProperties =
     function(status) {
   return {
     'class': this.wordClassName,
     'style': (status == goog.spell.SpellCheck.WordStatus.INVALID) ?
         this.invalidWordCssText : ''
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for click events.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handler for click events.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @private
+ */
 goog.ui.RichTextSpellChecker.prototype.onWordClick_ = function(event) {
-  var target =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (event.target);
+  var target = /** @type {Element} */ (event.target);
   if (event.target.className == this.wordClassName &&
       this.spellCheck.checkWord(goog.dom.getTextContent(target)) ==
       goog.spell.SpellCheck.WordStatus.INVALID) {
@@ -616,12 +616,12 @@ goog.ui.RichTextSpellChecker.prototype.onWordClick_ = function(event) {
     // Prevent document click handler from closing the menu.
     event.stopPropagation();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.RichTextSpellChecker.prototype.disposeInternal = function() {
   goog.ui.RichTextSpellChecker.superClass_.disposeInternal.call(this);
   this.rootNode_ = null;
   this.editorDom_ = null;
-***REMOVED***
+};

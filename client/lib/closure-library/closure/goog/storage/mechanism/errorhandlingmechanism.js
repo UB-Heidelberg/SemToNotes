@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Wraps a storage mechanism with a custom error handler.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Wraps a storage mechanism with a custom error handler.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.ErrorHandlingMechanism');
 
@@ -23,72 +23,72 @@ goog.require('goog.storage.mechanism.Mechanism');
 
 
 
-***REMOVED***
-***REMOVED*** Wraps a storage mechanism with a custom error handler.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.Mechanism} mechanism Underlying storage
-***REMOVED***     mechanism.
-***REMOVED*** @param {goog.storage.mechanism.ErrorHandlingMechanism.ErrorHandler}
-***REMOVED***     errorHandler An error handler.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.Mechanism}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wraps a storage mechanism with a custom error handler.
+ *
+ * @param {!goog.storage.mechanism.Mechanism} mechanism Underlying storage
+ *     mechanism.
+ * @param {goog.storage.mechanism.ErrorHandlingMechanism.ErrorHandler}
+ *     errorHandler An error handler.
+ * @constructor
+ * @extends {goog.storage.mechanism.Mechanism}
+ * @final
+ */
 goog.storage.mechanism.ErrorHandlingMechanism = function(mechanism,
                                                          errorHandler) {
   goog.storage.mechanism.ErrorHandlingMechanism.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The mechanism to be wrapped.
-  ***REMOVED*** @type {!goog.storage.mechanism.Mechanism}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The mechanism to be wrapped.
+   * @type {!goog.storage.mechanism.Mechanism}
+   * @private
+   */
   this.mechanism_ = mechanism;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The error handler.
-  ***REMOVED*** @type {goog.storage.mechanism.ErrorHandlingMechanism.ErrorHandler}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The error handler.
+   * @type {goog.storage.mechanism.ErrorHandlingMechanism.ErrorHandler}
+   * @private
+   */
   this.errorHandler_ = errorHandler;
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.ErrorHandlingMechanism,
               goog.storage.mechanism.Mechanism);
 
 
-***REMOVED***
-***REMOVED*** Valid storage mechanism operations.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Valid storage mechanism operations.
+ * @enum {string}
+ */
 goog.storage.mechanism.ErrorHandlingMechanism.Operation = {
   SET: 'set',
   GET: 'get',
   REMOVE: 'remove'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A function that handles errors raised in goog.storage.  Since some places in
-***REMOVED*** the goog.storage codebase throw strings instead of Error objects, we accept
-***REMOVED*** these as a valid parameter type.  It supports the following arguments:
-***REMOVED***
-***REMOVED*** 1) The raised error (either in Error or string form);
-***REMOVED*** 2) The operation name which triggered the error, as defined per the
-***REMOVED***    ErrorHandlingMechanism.Operation enum;
-***REMOVED*** 3) The key that is passed to a storage method;
-***REMOVED*** 4) An optional value that is passed to a storage method (only used in set
-***REMOVED***    operations).
-***REMOVED***
-***REMOVED*** @typedef {function(
-***REMOVED***   (!Error|string),
-***REMOVED***   goog.storage.mechanism.ErrorHandlingMechanism.Operation,
-***REMOVED***   string,
-***REMOVED***  ***REMOVED***=)}
-***REMOVED***
+/**
+ * A function that handles errors raised in goog.storage.  Since some places in
+ * the goog.storage codebase throw strings instead of Error objects, we accept
+ * these as a valid parameter type.  It supports the following arguments:
+ *
+ * 1) The raised error (either in Error or string form);
+ * 2) The operation name which triggered the error, as defined per the
+ *    ErrorHandlingMechanism.Operation enum;
+ * 3) The key that is passed to a storage method;
+ * 4) An optional value that is passed to a storage method (only used in set
+ *    operations).
+ *
+ * @typedef {function(
+ *   (!Error|string),
+ *   goog.storage.mechanism.ErrorHandlingMechanism.Operation,
+ *   string,
+ *   *=)}
+ */
 goog.storage.mechanism.ErrorHandlingMechanism.ErrorHandler;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.ErrorHandlingMechanism.prototype.set = function(key,
                                                                        value) {
   try {
@@ -100,10 +100,10 @@ goog.storage.mechanism.ErrorHandlingMechanism.prototype.set = function(key,
         key,
         value);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.ErrorHandlingMechanism.prototype.get = function(key) {
   try {
     return this.mechanism_.get(key);
@@ -113,10 +113,10 @@ goog.storage.mechanism.ErrorHandlingMechanism.prototype.get = function(key) {
         goog.storage.mechanism.ErrorHandlingMechanism.Operation.GET,
         key);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.ErrorHandlingMechanism.prototype.remove = function(key) {
   try {
     this.mechanism_.remove(key);
@@ -126,4 +126,4 @@ goog.storage.mechanism.ErrorHandlingMechanism.prototype.remove = function(key) {
         goog.storage.mechanism.ErrorHandlingMechanism.Operation.REMOVE,
         key);
   }
-***REMOVED***
+};

@@ -1,11 +1,11 @@
-***REMOVED***
-***REMOVED*** @overview Schema for validating JSDoc doclets.
-***REMOVED***
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED*** @see <http://tools.ietf.org/html/draft-zyp-json-schema-03>
-***REMOVED***
+/**
+ * @overview Schema for validating JSDoc doclets.
+ *
+ * @author Michael Mathews <micmath@gmail.com>
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ * @see <http://tools.ietf.org/html/draft-zyp-json-schema-03>
+ */
 'use strict';
 
 // JSON schema types
@@ -97,7 +97,7 @@ var META_SCHEMA = exports.META_SCHEMA = {
             type: OBJECT
         }
     }
-***REMOVED***
+};
 
 // type property containing type names
 var TYPE_PROPERTY_SCHEMA = exports.TYPE_PROPERTY_SCHEMA = {
@@ -112,7 +112,7 @@ var TYPE_PROPERTY_SCHEMA = exports.TYPE_PROPERTY_SCHEMA = {
             }
         }
     }
-***REMOVED***
+};
 
 // enumeration properties
 var ENUM_PROPERTY_SCHEMA = exports.ENUM_PROPERTY_SCHEMA = {
@@ -165,7 +165,7 @@ var ENUM_PROPERTY_SCHEMA = exports.ENUM_PROPERTY_SCHEMA = {
             type: BOOLEAN_OPTIONAL
         }
     }
-***REMOVED***
+};
 
 // function parameter, or object property defined with @property tag
 var PARAM_SCHEMA = exports.PARAM_SCHEMA = {
@@ -204,7 +204,7 @@ var PARAM_SCHEMA = exports.PARAM_SCHEMA = {
             optional: true
         }
     }
-***REMOVED***
+};
 
 var DOCLET_SCHEMA = exports.DOCLET_SCHEMA = {
     type: OBJECT,
@@ -557,7 +557,7 @@ var DOCLET_SCHEMA = exports.DOCLET_SCHEMA = {
             optional: true
         }
     }
-***REMOVED***
+};
 
 var PACKAGE_SCHEMA = exports.PACKAGE_SCHEMA = {
     type: OBJECT,
@@ -613,7 +613,7 @@ var PACKAGE_SCHEMA = exports.PACKAGE_SCHEMA = {
             optional: true
         }
     }
-***REMOVED***
+};
 
 var DOCLETS_SCHEMA = exports.DOCLETS_SCHEMA = {
     type: ARRAY,
@@ -621,4 +621,4 @@ var DOCLETS_SCHEMA = exports.DOCLETS_SCHEMA = {
     items: {
         anyOf: [DOCLET_SCHEMA, PACKAGE_SCHEMA]
     }
-***REMOVED***
+};

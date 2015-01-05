@@ -12,32 +12,32 @@ var uid = 100000000;
 // TODO: currently unused
 var GLOBAL_NODE_ID = exports.GLOBAL_NODE_ID = require('jsdoc/name').GLOBAL_LONGNAME;
 
-***REMOVED***
-***REMOVED*** Check whether an AST node represents a function.
-***REMOVED***
-***REMOVED*** @param {Object} node - The AST node to check.
-***REMOVED*** @return {boolean} Set to `true` if the node is a function or `false` in all other cases.
-***REMOVED***
+/**
+ * Check whether an AST node represents a function.
+ *
+ * @param {Object} node - The AST node to check.
+ * @return {boolean} Set to `true` if the node is a function or `false` in all other cases.
+ */
 var isFunction = exports.isFunction = function(node) {
     return node.type === Syntax.FunctionDeclaration || node.type === Syntax.FunctionExpression;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Check whether an AST node creates a new scope.
-***REMOVED***
-***REMOVED*** @param {Object} node - The AST node to check.
-***REMOVED*** @return {Boolean} Set to `true` if the node creates a new scope, or `false` in all other cases.
-***REMOVED***
+/**
+ * Check whether an AST node creates a new scope.
+ *
+ * @param {Object} node - The AST node to check.
+ * @return {Boolean} Set to `true` if the node creates a new scope, or `false` in all other cases.
+ */
 var isScope = exports.isScope = function(node) {
     // TODO: handle blocks with "let" declarations
     return !!node && typeof node === 'object' && ( node.type === Syntax.CatchClause ||
         isFunction(node) );
-***REMOVED***
+};
 
 // TODO: docs
 var addNodeProperties = exports.addNodeProperties = function(node) {
     var debugEnabled = !!global.env.opts.debug;
-    var newProperties = {***REMOVED***
+    var newProperties = {};
 
     if (!node || typeof node !== 'object') {
         return null;
@@ -47,7 +47,7 @@ var addNodeProperties = exports.addNodeProperties = function(node) {
         newProperties.nodeId = {
             value: 'astnode' + uid++,
             enumerable: debugEnabled
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.parent && node.parent !== null) {
@@ -55,7 +55,7 @@ var addNodeProperties = exports.addNodeProperties = function(node) {
             // `null` means 'no parent', so use `undefined` for now
             value: undefined,
             writable: true
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.enclosingScope && node.enclosingScope !== null) {
@@ -63,31 +63,31 @@ var addNodeProperties = exports.addNodeProperties = function(node) {
             // `null` means 'no enclosing scope', so use `undefined` for now
             value: undefined,
             writable: true
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.knownVariables) {
         newProperties.knownVariables = {
             value: node.enclosingScope ? doop(node.enclosingScope.knownVariables) : {}
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.ownedVariables) {
         newProperties.ownedVariables = {
             value: {}
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.knownAliases) {
         newProperties.knownAliases = {
             value: node.enclosingScope ? doop(node.enclosingScope.knownAliases) : {}
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (!node.ownedAliases) {
         newProperties.ownedAliases = {
             value: {}
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (debugEnabled && !node.parentId) {
@@ -96,7 +96,7 @@ var addNodeProperties = exports.addNodeProperties = function(node) {
             get: function() {
                 return this.parent ? this.parent.nodeId : null;
             }
-       ***REMOVED*****REMOVED***
+        };
     }
 
     if (debugEnabled && !node.enclosingScopeId) {
@@ -105,13 +105,13 @@ var addNodeProperties = exports.addNodeProperties = function(node) {
             get: function() {
                 return this.enclosingScope ? this.enclosingScope.nodeId : null;
             }
-       ***REMOVED*****REMOVED***
+        };
     }
 
     Object.defineProperties(node, newProperties);
 
     return node;
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: currently unused
@@ -119,14 +119,14 @@ exports.makeGlobalNode = function() {
     var node = {
         name: GLOBAL_NODE_ID,
         type: GLOBAL_NODE_ID
-   ***REMOVED*****REMOVED***
+    };
 
     Object.defineProperty(node, 'nodeId', {
         value: GLOBAL_NODE_ID
     });
 
     return addNodeProperties(node);
-***REMOVED***
+};
 
 // TODO: docs
 var nodeToString = exports.nodeToString = function(node) {
@@ -181,7 +181,7 @@ var nodeToString = exports.nodeToString = function(node) {
             break;
 
         case Syntax.ObjectExpression:
-            tempObject = {***REMOVED***
+            tempObject = {};
             node.properties.forEach(function(prop) {
                 var key = prop.key.name;
                 // preserve literal values so that the JSON form shows the correct type
@@ -225,7 +225,7 @@ var nodeToString = exports.nodeToString = function(node) {
     }
 
     return str;
-***REMOVED***
+};
 
 // TODO: docs
 var getParamNames = exports.getParamNames = function(node) {
@@ -236,26 +236,26 @@ var getParamNames = exports.getParamNames = function(node) {
     return node.params.map(function(param) {
         return nodeToString(param);
     });
-***REMOVED***
+};
 
 // TODO: docs
 var isAccessor = exports.isAccessor = function(node) {
     return !!node && typeof node === 'object' && node.type === Syntax.Property &&
         (node.kind === 'get' || node.kind === 'set');
-***REMOVED***
+};
 
 // TODO: docs
 var isAssignment = exports.isAssignment = function(node) {
     return !!node && typeof node === 'object' && (node.type === Syntax.AssignmentExpression ||
         node.type === Syntax.VariableDeclarator);
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** Retrieve information about the node, including its name and type.
-***REMOVED***
+/**
+ * Retrieve information about the node, including its name and type.
+ */
 var getInfo = exports.getInfo = function(node) {
-    var info = {***REMOVED***
+    var info = {};
 
     switch (node.type) {
         // like: "foo = 'bar'" (after foo has been declared)
@@ -332,7 +332,7 @@ var getInfo = exports.getInfo = function(node) {
     }
 
     return info;
-***REMOVED***
+};
 
 // TODO: may want to use separate methods for known and owned variables/functions/aliases
 
@@ -348,7 +348,7 @@ var addVariable = exports.addVariable = function(node, declarator) {
     _addVariable(node, name, value);
 
     return node;
-***REMOVED***
+};
 
 // TODO: docs
 var addAllVariables = exports.addAllVariables = function(node, declaration) {
@@ -357,7 +357,7 @@ var addAllVariables = exports.addAllVariables = function(node, declaration) {
     }
 
     return node;
-***REMOVED***
+};
 
 // TODO: docs
 var addFunction = exports.addFunction = function(node, declaration) {
@@ -370,7 +370,7 @@ var addFunction = exports.addFunction = function(node, declaration) {
     }
 
     return node;
-***REMOVED***
+};
 
 // TODO: docs
 var addAlias = exports.addAlias = function(node, variableName, aliasName) {
@@ -385,4 +385,4 @@ var addAlias = exports.addAlias = function(node, variableName, aliasName) {
     });
 
     return node;
-***REMOVED***
+};

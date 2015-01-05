@@ -15,7 +15,7 @@ See the COPYING file for details.
   goog.require('goog.dom');
   goog.require('goog.dom.TagName');
   goog.require('goog.events.Event');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events.EventType');
   goog.require('goog.net.cookies');
   goog.require('goog.testing.events');
   goog.require('goog.testing.jsunit');
@@ -29,19 +29,19 @@ See the COPYING file for details.
 
   goog.net.cookies.get = function(key) {
     return COOKIE_VALUES[key];
- ***REMOVED*****REMOVED***
+  };
 
   goog.net.cookies.set = function(key, value) {
     return COOKIE_VALUES[key] = value;
- ***REMOVED*****REMOVED***
+  };
 
   goog.net.cookies.remove = function(key, value) {
     delete COOKIE_VALUES[key];
- ***REMOVED*****REMOVED***
+  };
 
   function setUp() {
     goog.dom.removeChildren(goog.dom.getElement('test_container'));
-    COOKIE_VALUES = {***REMOVED***
+    COOKIE_VALUES = {};
   }
 
   function newCookieEditor(opt_cookieValue) {

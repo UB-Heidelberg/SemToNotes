@@ -12,28 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract base class for spell checker implementations.
-***REMOVED***
-***REMOVED*** The spell checker supports two modes - synchronous and asynchronous.
-***REMOVED***
-***REMOVED*** In synchronous mode subclass calls processText_ which processes all the text
-***REMOVED*** given to it before it returns. If the text string is very long, it could
-***REMOVED*** cause warnings from the browser that considers the script to be
-***REMOVED*** busy-looping.
-***REMOVED***
-***REMOVED*** Asynchronous mode allows breaking processing large text segments without
-***REMOVED*** encountering stop script warnings by rescheduling remaining parts of the
-***REMOVED*** text processing to another stack.
-***REMOVED***
-***REMOVED*** In asynchronous mode abstract spell checker keeps track of a number of text
-***REMOVED*** chunks that have been processed after the very beginning, and returns every
-***REMOVED*** so often so that the calling function could reschedule its execution on a
-***REMOVED*** different stack (for example by calling setInterval(0)).
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @author sergeys@google.com (Sergey Solyanik)
-***REMOVED***
+/**
+ * @fileoverview Abstract base class for spell checker implementations.
+ *
+ * The spell checker supports two modes - synchronous and asynchronous.
+ *
+ * In synchronous mode subclass calls processText_ which processes all the text
+ * given to it before it returns. If the text string is very long, it could
+ * cause warnings from the browser that considers the script to be
+ * busy-looping.
+ *
+ * Asynchronous mode allows breaking processing large text segments without
+ * encountering stop script warnings by rescheduling remaining parts of the
+ * text processing to another stack.
+ *
+ * In asynchronous mode abstract spell checker keeps track of a number of text
+ * chunks that have been processed after the very beginning, and returns every
+ * so often so that the calling function could reschedule its execution on a
+ * different stack (for example by calling setInterval(0)).
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @author sergeys@google.com (Sergey Solyanik)
+ */
 
 goog.provide('goog.ui.AbstractSpellChecker');
 goog.provide('goog.ui.AbstractSpellChecker.AsyncResult');
@@ -45,9 +45,9 @@ goog.require('goog.dom');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.classlist');
 goog.require('goog.dom.selection');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.math.Coordinate');
 goog.require('goog.spell.SpellCheck');
 goog.require('goog.structs.Set');
@@ -59,353 +59,353 @@ goog.require('goog.ui.PopupMenu');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract base class for spell checker editor implementations. Provides basic
-***REMOVED*** functionality such as word lookup and caching.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck} spellCheck Instance of the SpellCheck
-***REMOVED***     support object to use. A single instance can be shared by multiple editor
-***REMOVED***     components.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * Abstract base class for spell checker editor implementations. Provides basic
+ * functionality such as word lookup and caching.
+ *
+ * @param {goog.spell.SpellCheck} spellCheck Instance of the SpellCheck
+ *     support object to use. A single instance can be shared by multiple editor
+ *     components.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.AbstractSpellChecker = function(spellCheck, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Handler to use for caching and lookups.
-  ***REMOVED*** @type {goog.spell.SpellCheck}
-  ***REMOVED*** @protected
- ***REMOVED*****REMOVED***
+  /**
+   * Handler to use for caching and lookups.
+   * @type {goog.spell.SpellCheck}
+   * @protected
+   */
   this.spellCheck = spellCheck;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Word to element references. Used by replace/ignore.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.wordElements_ = {***REMOVED***
+  /**
+   * Word to element references. Used by replace/ignore.
+   * @type {Object}
+   * @private
+   */
+  this.wordElements_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** List of all 'edit word' input elements.
-  ***REMOVED*** @type {Array.<Element>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * List of all 'edit word' input elements.
+   * @type {Array.<Element>}
+   * @private
+   */
   this.inputElements_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Global regular expression for splitting a string into individual words and
-  ***REMOVED*** blocks of separators. Matches zero or one word followed by zero or more
-  ***REMOVED*** separators.
-  ***REMOVED*** @type {RegExp}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Global regular expression for splitting a string into individual words and
+   * blocks of separators. Matches zero or one word followed by zero or more
+   * separators.
+   * @type {RegExp}
+   * @private
+   */
   this.splitRegex_ = new RegExp(
       '([^' + goog.spell.SpellCheck.WORD_BOUNDARY_CHARS + ']*)' +
       '([' + goog.spell.SpellCheck.WORD_BOUNDARY_CHARS + ']*)', 'g');
 
-***REMOVED***this.spellCheck,
+  goog.events.listen(this.spellCheck,
       goog.spell.SpellCheck.EventType.WORD_CHANGED, this.onWordChanged_,
       false, this);
-***REMOVED***
+};
 goog.inherits(goog.ui.AbstractSpellChecker, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** The prefix to mark keys with.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The prefix to mark keys with.
+ * @type {string}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.KEY_PREFIX_ = ':';
 
 
-***REMOVED***
-***REMOVED*** The prefix for ids on the spans.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The prefix for ids on the spans.
+ * @type {string}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.ID_SUFFIX_ = 'sc';
 
 
-***REMOVED***
-***REMOVED*** The attribute name for original element contents (to offer subsequent
-***REMOVED*** correction menu).
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The attribute name for original element contents (to offer subsequent
+ * correction menu).
+ * @type {string}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.ORIGINAL_ = 'g-spell-original';
 
 
-***REMOVED***
-***REMOVED*** Suggestions menu.
-***REMOVED***
-***REMOVED*** @type {goog.ui.PopupMenu|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Suggestions menu.
+ *
+ * @type {goog.ui.PopupMenu|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.menu_;
 
 
-***REMOVED***
-***REMOVED*** Separator between suggestions and ignore in suggestions menu.
-***REMOVED***
-***REMOVED*** @type {goog.ui.MenuSeparator|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Separator between suggestions and ignore in suggestions menu.
+ *
+ * @type {goog.ui.MenuSeparator|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.menuSeparator_;
 
 
-***REMOVED***
-***REMOVED*** Menu item for ignore option.
-***REMOVED***
-***REMOVED*** @type {goog.ui.MenuItem|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Menu item for ignore option.
+ *
+ * @type {goog.ui.MenuItem|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.menuIgnore_;
 
 
-***REMOVED***
-***REMOVED*** Menu item for edit word option.
-***REMOVED***
-***REMOVED*** @type {goog.ui.MenuItem|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Menu item for edit word option.
+ *
+ * @type {goog.ui.MenuItem|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.menuEdit_;
 
 
-***REMOVED***
-***REMOVED*** Whether the correction UI is visible.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the correction UI is visible.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.isVisible_ = false;
 
 
-***REMOVED***
-***REMOVED*** Cache for corrected words. All corrected words are reverted to their original
-***REMOVED*** status on resume. Therefore that status is never written to the cache and is
-***REMOVED*** instead indicated by this set.
-***REMOVED***
-***REMOVED*** @type {goog.structs.Set|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cache for corrected words. All corrected words are reverted to their original
+ * status on resume. Therefore that status is never written to the cache and is
+ * instead indicated by this set.
+ *
+ * @type {goog.structs.Set|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.correctedWords_;
 
 
-***REMOVED***
-***REMOVED*** Class name for suggestions menu.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Class name for suggestions menu.
+ *
+ * @type {string}
+ */
 goog.ui.AbstractSpellChecker.prototype.suggestionsMenuClassName =
     goog.getCssName('goog-menu');
 
 
-***REMOVED***
-***REMOVED*** Whether corrected words should be highlighted.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether corrected words should be highlighted.
+ *
+ * @type {boolean}
+ */
 goog.ui.AbstractSpellChecker.prototype.markCorrected = false;
 
 
-***REMOVED***
-***REMOVED*** Word the correction menu is displayed for.
-***REMOVED***
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Word the correction menu is displayed for.
+ *
+ * @type {string|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.activeWord_;
 
 
-***REMOVED***
-***REMOVED*** Element the correction menu is displayed for.
-***REMOVED***
-***REMOVED*** @type {Element|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element the correction menu is displayed for.
+ *
+ * @type {Element|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.activeElement_;
 
 
-***REMOVED***
-***REMOVED*** Indicator that the spell checker is running in the asynchronous mode.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Indicator that the spell checker is running in the asynchronous mode.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.asyncMode_ = false;
 
 
-***REMOVED***
-***REMOVED*** Maximum number of words to process on a single stack in asynchronous mode.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum number of words to process on a single stack in asynchronous mode.
+ *
+ * @type {number}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.asyncWordsPerBatch_ = 1000;
 
 
-***REMOVED***
-***REMOVED*** Current text to process when running in the asynchronous mode.
-***REMOVED***
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Current text to process when running in the asynchronous mode.
+ *
+ * @type {string|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.asyncText_;
 
 
-***REMOVED***
-***REMOVED*** Current start index of the range that spell-checked correctly.
-***REMOVED***
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Current start index of the range that spell-checked correctly.
+ *
+ * @type {number|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.asyncRangeStart_;
 
 
-***REMOVED***
-***REMOVED*** Current node with which the asynchronous text is associated.
-***REMOVED***
-***REMOVED*** @type {Node|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Current node with which the asynchronous text is associated.
+ *
+ * @type {Node|undefined}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.asyncNode_;
 
 
-***REMOVED***
-***REMOVED*** Number of elements processed in the asyncronous mode since last yield.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Number of elements processed in the asyncronous mode since last yield.
+ *
+ * @type {number}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.processedElementsCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Markers for the text that does not need to be included in the processing.
-***REMOVED***
-***REMOVED*** For rich text editor this is a list of strings formatted as
-***REMOVED*** tagName.className or className. If both are specified, the element will be
-***REMOVED*** excluded if BOTH are matched. If only a className is specified, then we will
-***REMOVED*** exclude regions with the className. If only one marker is needed, it may be
-***REMOVED*** passed as a string.
-***REMOVED*** For plain text editor this is a RegExp that matches the excluded text.
-***REMOVED***
-***REMOVED*** Used exclusively by the derived classes
-***REMOVED***
-***REMOVED*** @type {Array.<string>|string|RegExp|undefined}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Markers for the text that does not need to be included in the processing.
+ *
+ * For rich text editor this is a list of strings formatted as
+ * tagName.className or className. If both are specified, the element will be
+ * excluded if BOTH are matched. If only a className is specified, then we will
+ * exclude regions with the className. If only one marker is needed, it may be
+ * passed as a string.
+ * For plain text editor this is a RegExp that matches the excluded text.
+ *
+ * Used exclusively by the derived classes
+ *
+ * @type {Array.<string>|string|RegExp|undefined}
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.excludeMarker;
 
 
-***REMOVED***
-***REMOVED*** Next unique instance ID for a misspelled word.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Next unique instance ID for a misspelled word.
+ * @type {number}
+ * @private
+ */
 goog.ui.AbstractSpellChecker.nextId_ = 1;
 
 
-***REMOVED***
-***REMOVED*** @return {goog.spell.SpellCheck} The handler used for caching and lookups.
-***REMOVED***
+/**
+ * @return {goog.spell.SpellCheck} The handler used for caching and lookups.
+ */
 goog.ui.AbstractSpellChecker.prototype.getSpellCheck = function() {
   return this.spellCheck;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.spell.SpellCheck} The handler used for caching and lookups.
-***REMOVED*** @override
-***REMOVED*** @suppress {checkTypes} This method makes no sense. It overrides
-***REMOVED***     Component's getHandler with something different.
-***REMOVED*** @deprecated Use #getSpellCheck instead.
-***REMOVED***
+/**
+ * @return {goog.spell.SpellCheck} The handler used for caching and lookups.
+ * @override
+ * @suppress {checkTypes} This method makes no sense. It overrides
+ *     Component's getHandler with something different.
+ * @deprecated Use #getSpellCheck instead.
+ */
 goog.ui.AbstractSpellChecker.prototype.getHandler = function() {
   return this.getSpellCheck();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the spell checker used for caching and lookups.
-***REMOVED*** @param {goog.spell.SpellCheck} spellCheck The handler used for caching and
-***REMOVED***     lookups.
-***REMOVED***
+/**
+ * Sets the spell checker used for caching and lookups.
+ * @param {goog.spell.SpellCheck} spellCheck The handler used for caching and
+ *     lookups.
+ */
 goog.ui.AbstractSpellChecker.prototype.setSpellCheck = function(spellCheck) {
   this.spellCheck = spellCheck;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the handler used for caching and lookups.
-***REMOVED*** @param {goog.spell.SpellCheck} handler The handler used for caching and
-***REMOVED***     lookups.
-***REMOVED*** @deprecated Use #setSpellCheck instead.
-***REMOVED***
+/**
+ * Sets the handler used for caching and lookups.
+ * @param {goog.spell.SpellCheck} handler The handler used for caching and
+ *     lookups.
+ * @deprecated Use #setSpellCheck instead.
+ */
 goog.ui.AbstractSpellChecker.prototype.setHandler = function(handler) {
   this.setSpellCheck(handler);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.PopupMenu|undefined} The suggestions menu.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {goog.ui.PopupMenu|undefined} The suggestions menu.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.getMenu = function() {
   return this.menu_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.MenuItem|undefined} The menu item for edit word option.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {goog.ui.MenuItem|undefined} The menu item for edit word option.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.getMenuEdit = function() {
   return this.menuEdit_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The next unique instance ID for a misspelled word.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {number} The next unique instance ID for a misspelled word.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.getNextId = function() {
   return goog.ui.AbstractSpellChecker.nextId_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the marker for the excluded text.
-***REMOVED***
-***REMOVED*** {@see goog.ui.AbstractSpellChecker.prototype.excludeMarker}
-***REMOVED***
-***REMOVED*** @param {Array.<string>|string|RegExp|null} marker A RegExp for plain text
-***REMOVED***        or class names for the rich text spell checker for the elements to
-***REMOVED***        exclude from checking.
-***REMOVED***
+/**
+ * Sets the marker for the excluded text.
+ *
+ * {@see goog.ui.AbstractSpellChecker.prototype.excludeMarker}
+ *
+ * @param {Array.<string>|string|RegExp|null} marker A RegExp for plain text
+ *        or class names for the rich text spell checker for the elements to
+ *        exclude from checking.
+ */
 goog.ui.AbstractSpellChecker.prototype.setExcludeMarker = function(marker) {
   this.excludeMarker = marker || undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks spelling for all text.
-***REMOVED*** Should be overridden by implementation.
-***REMOVED***
+/**
+ * Checks spelling for all text.
+ * Should be overridden by implementation.
+ */
 goog.ui.AbstractSpellChecker.prototype.check = function() {
   this.isVisible_ = true;
   if (this.markCorrected) {
     this.correctedWords_ = new goog.structs.Set();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hides correction UI.
-***REMOVED*** Should be overridden by implementation.
-***REMOVED***
+/**
+ * Hides correction UI.
+ * Should be overridden by implementation.
+ */
 goog.ui.AbstractSpellChecker.prototype.resume = function() {
   this.isVisible_ = false;
   this.clearWordElements();
@@ -419,44 +419,44 @@ goog.ui.AbstractSpellChecker.prototype.resume = function() {
   if (this.correctedWords_) {
     this.correctedWords_.clear();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the correction ui is visible.
-***REMOVED***
+/**
+ * @return {boolean} Whether the correction ui is visible.
+ */
 goog.ui.AbstractSpellChecker.prototype.isVisible = function() {
   return this.isVisible_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the word to element references map used by replace/ignore.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Clears the word to element references map used by replace/ignore.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.clearWordElements = function() {
-  this.wordElements_ = {***REMOVED***
-***REMOVED***
+  this.wordElements_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Ignores spelling of word.
-***REMOVED***
-***REMOVED*** @param {string} word Word to add.
-***REMOVED***
+/**
+ * Ignores spelling of word.
+ *
+ * @param {string} word Word to add.
+ */
 goog.ui.AbstractSpellChecker.prototype.ignoreWord = function(word) {
   this.spellCheck.setWordStatus(word,
       goog.spell.SpellCheck.WordStatus.IGNORED);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Edits a word.
-***REMOVED***
-***REMOVED*** @param {Element} el An element wrapping the word that should be edited.
-***REMOVED*** @param {string} old Word to edit.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Edits a word.
+ *
+ * @param {Element} el An element wrapping the word that should be edited.
+ * @param {string} old Word to edit.
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.editWord_ = function(el, old) {
   var input = this.getDomHelper().createDom(
       'input', {'type': 'text', 'value': old});
@@ -474,16 +474,16 @@ goog.ui.AbstractSpellChecker.prototype.editWord_ = function(el, old) {
   } catch (o) { }
 
   this.inputElements_.push(input);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces word.
-***REMOVED***
-***REMOVED*** @param {Element} el An element wrapping the word that should be replaced.
-***REMOVED*** @param {string} old Word that was replaced.
-***REMOVED*** @param {string} word Word to replace with.
-***REMOVED***
+/**
+ * Replaces word.
+ *
+ * @param {Element} el An element wrapping the word that should be replaced.
+ * @param {string} old Word that was replaced.
+ * @param {string} word Word to replace with.
+ */
 goog.ui.AbstractSpellChecker.prototype.replaceWord = function(el, old, word) {
   if (old != word) {
     if (!el.getAttribute(goog.ui.AbstractSpellChecker.ORIGINAL_)) {
@@ -524,19 +524,19 @@ goog.ui.AbstractSpellChecker.prototype.replaceWord = function(el, old, word) {
 
     this.dispatchEvent(goog.events.EventType.CHANGE);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieves the array of suggested spelling choices.
-***REMOVED***
-***REMOVED*** @return {Array.<string>} Suggested spelling choices.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Retrieves the array of suggested spelling choices.
+ *
+ * @return {Array.<string>} Suggested spelling choices.
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.getSuggestions_ = function() {
   // Add new suggestion entries.
   var suggestions = this.spellCheck.getSuggestions(
-     ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.activeWord_));
+      /** @type {string} */ (this.activeWord_));
   if (!suggestions[0]) {
     var originalWord = this.activeElement_.getAttribute(
         goog.ui.AbstractSpellChecker.ORIGINAL_);
@@ -545,17 +545,17 @@ goog.ui.AbstractSpellChecker.prototype.getSuggestions_ = function() {
     }
   }
   return suggestions;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Displays suggestions menu.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to display menu for.
-***REMOVED*** @param {goog.events.BrowserEvent|goog.math.Coordinate=} opt_pos Position to
-***REMOVED***     display menu at relative to the viewport (in client coordinates), or a
-***REMOVED***     mouse event.
-***REMOVED***
+/**
+ * Displays suggestions menu.
+ *
+ * @param {Element} el Element to display menu for.
+ * @param {goog.events.BrowserEvent|goog.math.Coordinate=} opt_pos Position to
+ *     display menu at relative to the viewport (in client coordinates), or a
+ *     mouse event.
+ */
 goog.ui.AbstractSpellChecker.prototype.showSuggestionsMenu = function(el,
                                                                       opt_pos) {
   this.activeWord_ = goog.dom.getTextContent(el);
@@ -574,7 +574,7 @@ goog.ui.AbstractSpellChecker.prototype.showSuggestionsMenu = function(el,
   }
 
   if (!suggestions[0]) {
-   ***REMOVED*****REMOVED*** @desc Item shown in menu when no suggestions are available.***REMOVED***
+    /** @desc Item shown in menu when no suggestions are available. */
     var MSG_SPELL_NO_SUGGESTIONS = goog.getMsg('No Suggestions');
     var item = new goog.ui.MenuItem(
         MSG_SPELL_NO_SUGGESTIONS, '', this.getDomHelper());
@@ -613,15 +613,15 @@ goog.ui.AbstractSpellChecker.prototype.showSuggestionsMenu = function(el,
   } else {
     this.menu_.setVisible(true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes suggestions menu. Populates menu with separator and ignore option
-***REMOVED*** that are always valid. Suggestions are later added above the separator.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Initializes suggestions menu. Populates menu with separator and ignore option
+ * that are always valid. Suggestions are later added above the separator.
+ *
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.initSuggestionsMenu = function() {
   this.menu_ = new goog.ui.PopupMenu(this.getDomHelper());
   this.menuSeparator_ = new goog.ui.MenuSeparator(this.getDomHelper());
@@ -629,10 +629,10 @@ goog.ui.AbstractSpellChecker.prototype.initSuggestionsMenu = function() {
   // Leave alone setAllowAutoFocus at default (true). This allows menu to get
   // keyboard focus and thus allowing non-mouse users to get to the menu.
 
- ***REMOVED*****REMOVED*** @desc Ignore entry in suggestions menu.***REMOVED***
+  /** @desc Ignore entry in suggestions menu. */
   var MSG_SPELL_IGNORE = goog.getMsg('Ignore');
 
- ***REMOVED*****REMOVED*** @desc Edit word entry in suggestions menu.***REMOVED***
+  /** @desc Edit word entry in suggestions menu. */
   var MSG_SPELL_EDIT_WORD = goog.getMsg('Edit Word');
 
   this.menu_.addChild(this.menuSeparator_, true);
@@ -650,20 +650,20 @@ goog.ui.AbstractSpellChecker.prototype.initSuggestionsMenu = function() {
   goog.dom.classlist.add(menuElement,
       this.suggestionsMenuClassName);
 
-***REMOVED***this.menu_, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(this.menu_, goog.ui.Component.EventType.ACTION,
       this.onCorrectionAction, false, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles correction menu actions.
-***REMOVED***
-***REMOVED*** @param {goog.events.Event} event Action event.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles correction menu actions.
+ *
+ * @param {goog.events.Event} event Action event.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.onCorrectionAction = function(event) {
-  var word =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.activeWord_);
-  var el =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.activeElement_);
+  var word = /** @type {string} */ (this.activeWord_);
+  var el = /** @type {Element} */ (this.activeElement_);
   if (event.target == this.menuIgnore_) {
     this.ignoreWord(word);
   } else if (event.target == this.menuEdit_) {
@@ -675,15 +675,15 @@ goog.ui.AbstractSpellChecker.prototype.onCorrectionAction = function(event) {
 
   delete this.activeWord_;
   delete this.activeElement_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes spell-checker markup and restore the node to text.
-***REMOVED***
-***REMOVED*** @param {Element} el Word element. MUST have a text node child.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Removes spell-checker markup and restore the node to text.
+ *
+ * @param {Element} el Word element. MUST have a text node child.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.removeMarkup = function(el) {
   var firstChild = el.firstChild;
   var text = firstChild.nodeValue;
@@ -706,19 +706,19 @@ goog.ui.AbstractSpellChecker.prototype.removeMarkup = function(el) {
   }
 
   this.getDomHelper().removeNode(el);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates element based on word status. Either converts it to a text node, or
-***REMOVED*** merges it with the previous or next text node if the status of the world is
-***REMOVED*** VALID, in which case the element itself is eliminated.
-***REMOVED***
-***REMOVED*** @param {Element} el Word element.
-***REMOVED*** @param {string} word Word to update status for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Updates element based on word status. Either converts it to a text node, or
+ * merges it with the previous or next text node if the status of the world is
+ * VALID, in which case the element itself is eliminated.
+ *
+ * @param {Element} el Word element.
+ * @param {string} word Word to update status for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.updateElement =
     function(el, word, status) {
   if (this.markCorrected && this.correctedWords_ &&
@@ -730,40 +730,40 @@ goog.ui.AbstractSpellChecker.prototype.updateElement =
   } else {
     goog.dom.setProperties(el, this.getElementProperties(status));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generates unique Ids for spell checker elements.
-***REMOVED*** @param {number=} opt_id Id to suffix with.
-***REMOVED*** @return {string} Unique element id.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Generates unique Ids for spell checker elements.
+ * @param {number=} opt_id Id to suffix with.
+ * @return {string} Unique element id.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.makeElementId = function(opt_id) {
   return (opt_id ? opt_id : goog.ui.AbstractSpellChecker.nextId_++) +
       '.' + goog.ui.AbstractSpellChecker.ID_SUFFIX_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the span element that matches the given number id.
-***REMOVED*** @param {number} id Number id to make the element id.
-***REMOVED*** @return {Element} The matching span element or null if no span matches.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the span element that matches the given number id.
+ * @param {number} id Number id to make the element id.
+ * @return {Element} The matching span element or null if no span matches.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.getElementById = function(id) {
   return this.getDomHelper().getElement(this.makeElementId(id));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an element for a specified word and stores a reference to it.
-***REMOVED***
-***REMOVED*** @param {string} word Word to create element for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @return {!HTMLSpanElement} The created element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Creates an element for a specified word and stores a reference to it.
+ *
+ * @param {string} word Word to create element for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @return {!HTMLSpanElement} The created element.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.createWordElement = function(
     word, status) {
   var parameters = this.getElementProperties(status);
@@ -776,23 +776,23 @@ goog.ui.AbstractSpellChecker.prototype.createWordElement = function(
     parameters['tabIndex'] = -1;
   }
 
-  var el =***REMOVED*****REMOVED*** @type {!HTMLSpanElement}***REMOVED***
+  var el = /** @type {!HTMLSpanElement} */
       (this.getDomHelper().createDom('span', parameters, word));
   goog.a11y.aria.setRole(el, 'menuitem');
   goog.a11y.aria.setState(el, 'haspopup', true);
   this.registerWordElement(word, el);
 
   return el;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stores a reference to word element.
-***REMOVED***
-***REMOVED*** @param {string} word The word to store.
-***REMOVED*** @param {HTMLSpanElement} el The element associated with it.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Stores a reference to word element.
+ *
+ * @param {string} word The word to store.
+ * @param {HTMLSpanElement} el The element associated with it.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.registerWordElement = function(
     word, el) {
   // Avoid potential collision with the built-in object namespace. For
@@ -803,27 +803,27 @@ goog.ui.AbstractSpellChecker.prototype.registerWordElement = function(
   } else {
     this.wordElements_[index] = [el];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns desired element properties for the specified status.
-***REMOVED*** Should be overridden by implementation.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @return {Object} Properties to apply to the element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns desired element properties for the specified status.
+ * Should be overridden by implementation.
+ *
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @return {Object} Properties to apply to the element.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.getElementProperties =
     goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handles word change events and updates the word elements accordingly.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck.WordChangedEvent} event The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles word change events and updates the word elements accordingly.
+ *
+ * @param {goog.spell.SpellCheck.WordChangedEvent} event The event object.
+ * @private
+ */
 goog.ui.AbstractSpellChecker.prototype.onWordChanged_ = function(event) {
   // Avoid potential collision with the built-in object namespace. For
   // example, 'watch' is a reserved name in FireFox.
@@ -834,10 +834,10 @@ goog.ui.AbstractSpellChecker.prototype.onWordChanged_ = function(event) {
       this.updateElement(el, event.word, event.status);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.AbstractSpellChecker.prototype.disposeInternal = function() {
   if (this.isVisible_) {
     // Clears wordElements_
@@ -858,19 +858,19 @@ goog.ui.AbstractSpellChecker.prototype.disposeInternal = function() {
   delete this.wordElements_;
 
   goog.ui.AbstractSpellChecker.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Precharges local dictionary cache. This is optional, but greatly reduces
-***REMOVED*** amount of subsequent churn in the DOM tree because most of the words become
-***REMOVED*** known from the very beginning.
-***REMOVED***
-***REMOVED*** @param {string} text Text to process.
-***REMOVED*** @param {number} words Max number of words to scan.
-***REMOVED*** @return {number} number of words actually scanned.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Precharges local dictionary cache. This is optional, but greatly reduces
+ * amount of subsequent churn in the DOM tree because most of the words become
+ * known from the very beginning.
+ *
+ * @param {string} text Text to process.
+ * @param {number} words Max number of words to scan.
+ * @return {number} number of words actually scanned.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.populateDictionary = function(text,
                                                                      words) {
   this.splitRegex_.lastIndex = 0;
@@ -891,42 +891,42 @@ goog.ui.AbstractSpellChecker.prototype.populateDictionary = function(text,
   }
   this.spellCheck.processPending();
   return numScanned;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes word.
-***REMOVED*** Should be overridden by implementation.
-***REMOVED***
-***REMOVED*** @param {Node} node Node containing word.
-***REMOVED*** @param {string} text Word to process.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Processes word.
+ * Should be overridden by implementation.
+ *
+ * @param {Node} node Node containing word.
+ * @param {string} text Word to process.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of the word.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.processWord = function(
     node, text, status) {
   throw Error('Need to override processWord_ in derivative class');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes range of text that checks out (contains no unrecognized words).
-***REMOVED*** Should be overridden by implementation. May contain words and separators.
-***REMOVED***
-***REMOVED*** @param {Node} node Node containing text range.
-***REMOVED*** @param {string} text text to process.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Processes range of text that checks out (contains no unrecognized words).
+ * Should be overridden by implementation. May contain words and separators.
+ *
+ * @param {Node} node Node containing text range.
+ * @param {string} text text to process.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.processRange = function(node, text) {
   throw Error('Need to override processRange_ in derivative class');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts asynchronous processing mode.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Starts asynchronous processing mode.
+ *
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.initializeAsyncMode = function() {
   if (this.asyncMode_ || this.processedElementsCount_ ||
       this.asyncText_ != null || this.asyncNode_) {
@@ -939,16 +939,16 @@ goog.ui.AbstractSpellChecker.prototype.initializeAsyncMode = function() {
   delete this.asyncNode_;
 
   this.blockReadyEvents();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finalizes asynchronous processing mode. Should be called after there is no
-***REMOVED*** more text to process and processTextAsync and/or continueAsyncProcessing
-***REMOVED*** returned FINISHED.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Finalizes asynchronous processing mode. Should be called after there is no
+ * more text to process and processTextAsync and/or continueAsyncProcessing
+ * returned FINISHED.
+ *
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.finishAsyncProcessing = function() {
   if (!this.asyncMode_ || this.asyncText_ != null || this.asyncNode_) {
     throw Error('Async mode not started or there is still text to process.');
@@ -958,43 +958,43 @@ goog.ui.AbstractSpellChecker.prototype.finishAsyncProcessing = function() {
 
   this.unblockReadyEvents();
   this.spellCheck.processPending();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Blocks processing of spell checker READY events. This is used in dictionary
-***REMOVED*** recharge and async mode so that completion is not signaled prematurely.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Blocks processing of spell checker READY events. This is used in dictionary
+ * recharge and async mode so that completion is not signaled prematurely.
+ *
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.blockReadyEvents = function() {
-***REMOVED***this.spellCheck, goog.spell.SpellCheck.EventType.READY,
+  goog.events.listen(this.spellCheck, goog.spell.SpellCheck.EventType.READY,
       goog.events.Event.stopPropagation, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unblocks processing of spell checker READY events. This is used in
-***REMOVED*** dictionary recharge and async mode so that completion is not signaled
-***REMOVED*** prematurely.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Unblocks processing of spell checker READY events. This is used in
+ * dictionary recharge and async mode so that completion is not signaled
+ * prematurely.
+ *
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.unblockReadyEvents = function() {
   goog.events.unlisten(this.spellCheck, goog.spell.SpellCheck.EventType.READY,
       goog.events.Event.stopPropagation, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits text into individual words and blocks of separators. Calls virtual
-***REMOVED*** processWord_ and processRange_ methods.
-***REMOVED***
-***REMOVED*** @param {Node} node Node containing text.
-***REMOVED*** @param {string} text Text to process.
-***REMOVED*** @return {goog.ui.AbstractSpellChecker.AsyncResult} operation result.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Splits text into individual words and blocks of separators. Calls virtual
+ * processWord_ and processRange_ methods.
+ *
+ * @param {Node} node Node containing text.
+ * @param {string} text Text to process.
+ * @return {goog.ui.AbstractSpellChecker.AsyncResult} operation result.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.processTextAsync = function(
     node, text) {
   if (!this.asyncMode_ || this.asyncText_ != null || this.asyncNode_) {
@@ -1038,21 +1038,21 @@ goog.ui.AbstractSpellChecker.prototype.processTextAsync = function(
   }
 
   return goog.ui.AbstractSpellChecker.AsyncResult.DONE;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Continues processing started by processTextAsync. Calls virtual
-***REMOVED*** processWord_ and processRange_ methods.
-***REMOVED***
-***REMOVED*** @return {goog.ui.AbstractSpellChecker.AsyncResult} operation result.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Continues processing started by processTextAsync. Calls virtual
+ * processWord_ and processRange_ methods.
+ *
+ * @return {goog.ui.AbstractSpellChecker.AsyncResult} operation result.
+ * @protected
+ */
 goog.ui.AbstractSpellChecker.prototype.continueAsyncProcessing = function() {
   if (!this.asyncMode_ || this.asyncText_ == null || !this.asyncNode_) {
     throw Error('Not in async mode or processing not started.');
   }
-  var node =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (this.asyncNode_);
+  var node = /** @type {Node} */ (this.asyncNode_);
   var stringSegmentStart = this.asyncRangeStart_;
   goog.asserts.assertNumber(stringSegmentStart);
   var text = this.asyncText_;
@@ -1092,50 +1092,50 @@ goog.ui.AbstractSpellChecker.prototype.continueAsyncProcessing = function() {
   }
 
   return goog.ui.AbstractSpellChecker.AsyncResult.DONE;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a word to an internal key representation. This is necessary to
-***REMOVED*** avoid collisions with object's internal namespace. Only words that are
-***REMOVED*** reserved need to be escaped.
-***REMOVED***
-***REMOVED*** @param {string} word The word to map.
-***REMOVED*** @return {string} The index.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts a word to an internal key representation. This is necessary to
+ * avoid collisions with object's internal namespace. Only words that are
+ * reserved need to be escaped.
+ *
+ * @param {string} word The word to map.
+ * @return {string} The index.
+ * @private
+ */
 goog.ui.AbstractSpellChecker.toInternalKey_ = function(word) {
   if (word in Object.prototype) {
     return goog.ui.AbstractSpellChecker.KEY_PREFIX_ + word;
   }
   return word;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constants for representing the direction while navigating.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Constants for representing the direction while navigating.
+ *
+ * @enum {number}
+ */
 goog.ui.AbstractSpellChecker.Direction = {
   PREVIOUS: 0,
   NEXT: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constants for the result of asynchronous processing.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Constants for the result of asynchronous processing.
+ * @enum {number}
+ */
 goog.ui.AbstractSpellChecker.AsyncResult = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Caller must reschedule operation and call continueAsyncProcessing on the
-  ***REMOVED*** new stack frame.
- ***REMOVED*****REMOVED***
+  /**
+   * Caller must reschedule operation and call continueAsyncProcessing on the
+   * new stack frame.
+   */
   PENDING: 1,
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Current element has been fully processed. Caller can call
-  ***REMOVED*** processTextAsync or finishAsyncProcessing.
- ***REMOVED*****REMOVED***
+  /**
+   * Current element has been fully processed. Caller can call
+   * processTextAsync or finishAsyncProcessing.
+   */
   DONE: 2
-***REMOVED***
+};

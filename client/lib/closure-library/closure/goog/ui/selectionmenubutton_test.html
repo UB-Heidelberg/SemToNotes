@@ -23,7 +23,7 @@ See the COPYING file for details.
 <script>
   goog.require('goog.Timer');
   goog.require('goog.dom');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.Event');
   goog.require('goog.events.KeyCodes');
   goog.require('goog.positioning');
@@ -57,9 +57,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Open the menu and click on the menu item inside.
-***REMOVED***
+/**
+ * Open the menu and click on the menu item inside.
+ */
 function testBasicButtonBehavior() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);
@@ -69,7 +69,7 @@ function testBasicButtonBehavior() {
 
   var menuItemClicked = 0;
   var lastMenuItemClicked = null;
-***REMOVED***selectionMenuButton.getMenu(),
+  goog.events.listen(selectionMenuButton.getMenu(),
     goog.ui.Component.EventType.ACTION,
     function(e) {
       menuItemClicked++;
@@ -86,16 +86,16 @@ function testBasicButtonBehavior() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the checkbox fires the same events as the first 2 items.
-***REMOVED***
+/**
+ * Tests that the checkbox fires the same events as the first 2 items.
+ */
 function testCheckboxFireEvents() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);
 
   var menuItemClicked = 0;
   var lastMenuItemClicked = null;
-***REMOVED***selectionMenuButton.getMenu(),
+  goog.events.listen(selectionMenuButton.getMenu(),
     goog.ui.Component.EventType.ACTION,
     function(e) {
       menuItemClicked++;
@@ -124,9 +124,9 @@ function testCheckboxFireEvents() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the checkbox state gets updated when the first 2 events fire
-***REMOVED***
+/**
+ * Tests that the checkbox state gets updated when the first 2 events fire
+ */
 function testCheckboxReceiveEvents() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);
@@ -142,9 +142,9 @@ function testCheckboxReceiveEvents() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that set/getSelectionState correctly changes the state
-***REMOVED***
+/**
+ * Tests that set/getSelectionState correctly changes the state
+ */
 function testSelectionState() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);
@@ -176,9 +176,9 @@ function testSelectionState() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the checkbox gets disabled when the button is disabled
-***REMOVED***
+/**
+ * Tests that the checkbox gets disabled when the button is disabled
+ */
 function testCheckboxDisabled() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);
@@ -194,9 +194,9 @@ function testCheckboxDisabled() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that clicking the checkbox does not open the menu
-***REMOVED***
+/**
+ * Tests that clicking the checkbox does not open the menu
+ */
 function testCheckboxClickMenuClosed() {
   var node = goog.dom.getElement('demoSelectionMenuButton');
   selectionMenuButton.decorate(node);

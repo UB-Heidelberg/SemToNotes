@@ -13,7 +13,7 @@
 <script type="text/javascript">
   goog.require('goog.array');
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.object');
   goog.require('xrx');
   goog.require('xrx.mvc');
@@ -26,13 +26,13 @@
 
 function checkFirstItemExists(repeatComponent) {
   assertFalse(undefined === repeatComponent.firstItem_);
-***REMOVED***
+};
 
 
 
 function checkNextItemsLength(repeatComponent, length) {
   assertEquals(length, repeatComponent.nextItems_.length);
-***REMOVED***
+};
 
 
 
@@ -42,7 +42,7 @@ function checkItemElementsLength(repeatComponent, length) {
   var repeatItems = goog.dom.getElementsByClass('xrx-mvc-repeat-item', repeatDiv);
   assertEquals(length, children.length);
   assertEquals(length, repeatItems.length);
-***REMOVED***
+};
 
 
 
@@ -54,13 +54,13 @@ function getComponents_(repeatComponent) {
         component.getElement() !== repeatDiv) components.push(component);
   });
   return components;
-***REMOVED***
+};
 
 
 
 function checkComponentsLength(repeatComponent, length) {
   assertEquals(length, getComponents_(repeatComponent).length);
-***REMOVED***
+};
 
 
 
@@ -68,7 +68,7 @@ function checkComponentValues(repeatComponent, values) {
   goog.array.forEach(getComponents_(repeatComponent), function(component, i){
     assertEquals(values[i], component.getValue());
   }, this);
-***REMOVED***
+};
 
 
 
@@ -81,7 +81,7 @@ function checkIdsAreUnique(repeatComponent) {
   var uniqueIds = goog.array.clone(ids);
   goog.array.removeDuplicates(uniqueIds);
   assertTrue(ids.length === uniqueIds.length);
-***REMOVED***
+};
 
 
 
@@ -134,7 +134,7 @@ function mvcRefreshTest(repeatId) {
       '<b>2</b>', '<c>3</c>', '<c>3</c>']);
   checkIdsAreUnique(repeatComponent);
 */
-***REMOVED***
+};
 
 
 
@@ -161,7 +161,7 @@ function mvcRefreshTest(repeatId) {
 <script type="text/javascript">
 function test01MvcRefreshWrapped() {
   mvcRefreshTest('r01');
-***REMOVED***
+};
 </script>
 
 <div id="test02" style="display:none">
@@ -179,7 +179,7 @@ function test01MvcRefreshWrapped() {
 <script type="text/javascript">
 function test02MvcRefreshUnwrapped() {
   mvcRefreshTest('r02');
-***REMOVED***
+};
 </script>
 
 <div id="test03" style="display:none">
@@ -207,7 +207,7 @@ function test03RemoveNodesForward() {
     consoles = goog.dom.getElementsByClass('xrx-widget-console', repeatDiv);
     component = xrx.mvc.getComponent(consoles[0].id);
     xrx.mvc.Controller.removeNode(component);
- ***REMOVED*****REMOVED***
+  };
 
   // initial state
   checkFirstItemExists(repeatComponent);
@@ -244,7 +244,7 @@ function test03RemoveNodesForward() {
   checkComponentsLength(repeatComponent, 2);
   checkComponentValues(repeatComponent, ['', '']);
   checkIdsAreUnique(repeatComponent);
-***REMOVED***
+};
 
 </script>
 

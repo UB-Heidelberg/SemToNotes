@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract Editor plugin class to handle tab keys.  Has one
-***REMOVED*** abstract method which should be overriden to handle a tab key press.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ajp@google.com (Andy Perelson)
-***REMOVED***
+/**
+ * @fileoverview Abstract Editor plugin class to handle tab keys.  Has one
+ * abstract method which should be overriden to handle a tab key press.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ajp@google.com (Andy Perelson)
+ */
 
 goog.provide('goog.editor.plugins.AbstractTabHandler');
 
@@ -27,24 +27,24 @@ goog.require('goog.events.KeyCodes');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to handle tab keys. Specific tab behavior defined by subclasses.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED***
+/**
+ * Plugin to handle tab keys. Specific tab behavior defined by subclasses.
+ *
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ */
 goog.editor.plugins.AbstractTabHandler = function() {
   goog.editor.Plugin.call(this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.AbstractTabHandler, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.AbstractTabHandler.prototype.getTrogClassId =
     goog.abstractMethod;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.AbstractTabHandler.prototype.handleKeyboardShortcut =
     function(e, key, isModifierPressed) {
   // If a dialog doesn't have selectable field, Moz grabs the event and
@@ -65,14 +65,14 @@ goog.editor.plugins.AbstractTabHandler.prototype.handleKeyboardShortcut =
   }
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle a tab key press.
-***REMOVED*** @param {goog.events.Event} e The key event.
-***REMOVED*** @return {boolean} Whether this event was handled by this plugin.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handle a tab key press.
+ * @param {goog.events.Event} e The key event.
+ * @return {boolean} Whether this event was handled by this plugin.
+ * @protected
+ */
 goog.editor.plugins.AbstractTabHandler.prototype.handleTabKey =
     goog.abstractMethod;

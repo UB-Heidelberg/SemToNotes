@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Asynchronous hash computer for the Blob interface.
-***REMOVED***
-***REMOVED*** The Blob interface, part of the HTML5 File API, is supported on Chrome 7+,
-***REMOVED*** Firefox 4.0 and Opera 11. No Blob interface implementation is expected on
-***REMOVED*** Internet Explorer 10. Chrome 11, Firefox 5.0 and the subsequent release of
-***REMOVED*** Opera are supposed to use vendor prefixes due to evolving API, see
-***REMOVED*** http://dev.w3.org/2006/webapi/FileAPI/ for details.
-***REMOVED***
-***REMOVED*** This implementation currently uses upcoming Chrome and Firefox prefixes,
-***REMOVED*** plus the original Blob.slice specification, as implemented on Chrome 10
-***REMOVED*** and Firefox 4.0.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Asynchronous hash computer for the Blob interface.
+ *
+ * The Blob interface, part of the HTML5 File API, is supported on Chrome 7+,
+ * Firefox 4.0 and Opera 11. No Blob interface implementation is expected on
+ * Internet Explorer 10. Chrome 11, Firefox 5.0 and the subsequent release of
+ * Opera are supposed to use vendor prefixes due to evolving API, see
+ * http://dev.w3.org/2006/webapi/FileAPI/ for details.
+ *
+ * This implementation currently uses upcoming Chrome and Firefox prefixes,
+ * plus the original Blob.slice specification, as implemented on Chrome 10
+ * and Firefox 4.0.
+ *
+ */
 
 goog.provide('goog.crypt.BlobHasher');
 goog.provide('goog.crypt.BlobHasher.EventType');
@@ -39,81 +39,81 @@ goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** Construct the hash computer.
-***REMOVED***
-***REMOVED*** @param {!goog.crypt.Hash} hashFn The hash function to use.
-***REMOVED*** @param {number=} opt_blockSize Processing block size.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Construct the hash computer.
+ *
+ * @param {!goog.crypt.Hash} hashFn The hash function to use.
+ * @param {number=} opt_blockSize Processing block size.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.crypt.BlobHasher = function(hashFn, opt_blockSize) {
   goog.crypt.BlobHasher.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The actual hash function.
-  ***REMOVED*** @type {!goog.crypt.Hash}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The actual hash function.
+   * @type {!goog.crypt.Hash}
+   * @private
+   */
   this.hashFn_ = hashFn;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The blob being processed or null if no blob is being processed.
-  ***REMOVED*** @type {Blob}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The blob being processed or null if no blob is being processed.
+   * @type {Blob}
+   * @private
+   */
   this.blob_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Computed hash value.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Computed hash value.
+   * @type {Array.<number>}
+   * @private
+   */
   this.hashVal_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of bytes already processed.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of bytes already processed.
+   * @type {number}
+   * @private
+   */
   this.bytesProcessed_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of bytes to hash or Infinity for no limit.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The number of bytes to hash or Infinity for no limit.
+   * @type {number}
+   * @private
+   */
   this.hashingLimit_ = Infinity;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Processing block size.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Processing block size.
+   * @type {number}
+   * @private
+   */
   this.blockSize_ = opt_blockSize || 5000000;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** File reader object. Will be null if no chunk is currently being read.
-  ***REMOVED*** @type {FileReader}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * File reader object. Will be null if no chunk is currently being read.
+   * @type {FileReader}
+   * @private
+   */
   this.fileReader_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The logger used by this object.
-  ***REMOVED*** @type {goog.log.Logger}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The logger used by this object.
+   * @type {goog.log.Logger}
+   * @private
+   */
   this.logger_ = goog.log.getLogger('goog.crypt.BlobHasher');
-***REMOVED***
+};
 goog.inherits(goog.crypt.BlobHasher, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Event names for hash computation events
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event names for hash computation events
+ * @enum {string}
+ */
 goog.crypt.BlobHasher.EventType = {
   STARTED: 'started',
   PROGRESS: 'progress',
@@ -121,13 +121,13 @@ goog.crypt.BlobHasher.EventType = {
   COMPLETE: 'complete',
   ABORT: 'abort',
   ERROR: 'error'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Start the hash computation.
-***REMOVED*** @param {!Blob} blob The blob of data to compute the hash for.
-***REMOVED***
+/**
+ * Start the hash computation.
+ * @param {!Blob} blob The blob of data to compute the hash for.
+ */
 goog.crypt.BlobHasher.prototype.hash = function(blob) {
   this.abort();
   this.hashFn_.reset();
@@ -137,20 +137,20 @@ goog.crypt.BlobHasher.prototype.hash = function(blob) {
   this.dispatchEvent(goog.crypt.BlobHasher.EventType.STARTED);
 
   this.processNextBlock_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the maximum number of bytes to hash or Infinity for no limit. Can be
-***REMOVED*** called before hash() to throttle the hash computation. The hash computation
-***REMOVED*** can then be continued by repeatedly calling setHashingLimit() with greater
-***REMOVED*** byte offsets. This is useful if you don't need the hash until some time in
-***REMOVED*** the future, for example when uploading a file and you don't need the hash
-***REMOVED*** until the transfer is complete.
-***REMOVED*** @param {number} byteOffset The byte offset to compute the hash up to.
-***REMOVED***     Should be a non-negative integer or Infinity for no limit. Negative
-***REMOVED***     values are not allowed.
-***REMOVED***
+/**
+ * Sets the maximum number of bytes to hash or Infinity for no limit. Can be
+ * called before hash() to throttle the hash computation. The hash computation
+ * can then be continued by repeatedly calling setHashingLimit() with greater
+ * byte offsets. This is useful if you don't need the hash until some time in
+ * the future, for example when uploading a file and you don't need the hash
+ * until the transfer is complete.
+ * @param {number} byteOffset The byte offset to compute the hash up to.
+ *     Should be a non-negative integer or Infinity for no limit. Negative
+ *     values are not allowed.
+ */
 goog.crypt.BlobHasher.prototype.setHashingLimit = function(byteOffset) {
   goog.asserts.assert(byteOffset >= 0, 'Hashing limit must be non-negative.');
   this.hashingLimit_ = byteOffset;
@@ -160,12 +160,12 @@ goog.crypt.BlobHasher.prototype.setHashingLimit = function(byteOffset) {
   if (this.blob_ && !this.fileReader_) {
     this.processNextBlock_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Abort hash computation.
-***REMOVED***
+/**
+ * Abort hash computation.
+ */
 goog.crypt.BlobHasher.prototype.abort = function() {
   if (this.fileReader_) {
     this.fileReader_.abort();
@@ -176,30 +176,30 @@ goog.crypt.BlobHasher.prototype.abort = function() {
     this.blob_ = null;
     this.dispatchEvent(goog.crypt.BlobHasher.EventType.ABORT);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} Number of bytes processed so far.
-***REMOVED***
+/**
+ * @return {number} Number of bytes processed so far.
+ */
 goog.crypt.BlobHasher.prototype.getBytesProcessed = function() {
   return this.bytesProcessed_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Array.<number>} The computed hash value or null if not ready.
-***REMOVED***
+/**
+ * @return {Array.<number>} The computed hash value or null if not ready.
+ */
 goog.crypt.BlobHasher.prototype.getHash = function() {
   return this.hashVal_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function setting up the processing for the next block, or finalizing
-***REMOVED*** the computation if all blocks were processed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function setting up the processing for the next block, or finalizing
+ * the computation if all blocks were processed.
+ * @private
+ */
 goog.crypt.BlobHasher.prototype.processNextBlock_ = function() {
   goog.asserts.assert(this.blob_, 'A hash computation must be in progress.');
 
@@ -241,13 +241,13 @@ goog.crypt.BlobHasher.prototype.processNextBlock_ = function() {
     this.blob_ = null;
     this.dispatchEvent(goog.crypt.BlobHasher.EventType.COMPLETE);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle processing block loaded.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handle processing block loaded.
+ * @private
+ */
 goog.crypt.BlobHasher.prototype.onLoad_ = function() {
   goog.log.info(this.logger_, 'Successfully loaded a chunk');
 
@@ -271,15 +271,15 @@ goog.crypt.BlobHasher.prototype.onLoad_ = function() {
   this.dispatchEvent(goog.crypt.BlobHasher.EventType.PROGRESS);
 
   this.processNextBlock_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles error.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles error.
+ * @private
+ */
 goog.crypt.BlobHasher.prototype.onError_ = function() {
   this.fileReader_ = null;
   this.blob_ = null;
   this.dispatchEvent(goog.crypt.BlobHasher.EventType.ERROR);
-***REMOVED***
+};

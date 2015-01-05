@@ -36,7 +36,7 @@ function setUp() {
   window.setTimeout = function(handler, time) {
     timeoutWasCalled = true;
     timeoutHandler = handler;
- ***REMOVED*****REMOVED***
+  };
 }
 
 // Firefox throws a JS error when a script is not found.  We catch that here and
@@ -51,7 +51,7 @@ window.onerror = function(msg, url, line) {
   } else {
     return originalOnError && originalOnError(msg, url, line);
   }
-***REMOVED***
+};
 
 function tearDown() {
   window.setTimeout = originalTimeout;
@@ -95,9 +95,9 @@ function testSend() {
 
   var userCallback = function(data) {
     replyReceived = data;
- ***REMOVED*****REMOVED***
+  };
 
-  var payload = {atisket: 'atasket', basket: 'yellow'***REMOVED***
+  var payload = {atisket: 'atasket', basket: 'yellow'};
   var result = jsonp.send(payload, userCallback);
 
   var script = getScriptElement(result);
@@ -138,9 +138,9 @@ function testSendWhenCallbackHasTwoParameters() {
   var userCallback = function(data, opt_data2) {
     replyReceived = data;
     replyReceived2 = opt_data2;
- ***REMOVED*****REMOVED***
+  };
 
-  var payload = {atisket: 'atasket', basket: 'yellow'***REMOVED***
+  var payload = {atisket: 'atasket', basket: 'yellow'};
   var result = jsonp.send(payload, userCallback);
   var script = getScriptElement(result);
 
@@ -171,9 +171,9 @@ function testSendWithCallbackParamValue() {
 
   var userCallback = function(data) {
     replyReceived = data;
- ***REMOVED*****REMOVED***
+  };
 
-  var payload = {atisket: 'atasket', basket: 'yellow'***REMOVED***
+  var payload = {atisket: 'atasket', basket: 'yellow'};
   var result = jsonp.send(payload, userCallback, undefined, 'dummyId');
 
   var script = getScriptElement(result);
@@ -214,12 +214,12 @@ function testSendFailure() {
 
   var userCallback = function(data) {
     replyReceived = data;
- ***REMOVED*****REMOVED***
+  };
   var userErrorCallback = function(data) {
     errorReplyReceived = data;
- ***REMOVED*****REMOVED***
+  };
 
-  var payload = { justa: 'test'***REMOVED*****REMOVED***
+  var payload = { justa: 'test' };
 
   jsonp.send(payload, userCallback, userErrorCallback);
 
@@ -254,7 +254,7 @@ function testCancel() {
   var successCalled = false;
   var successCallback = function() {
     successCalled = true;
- ***REMOVED*****REMOVED***
+  };
 
   // Send and cancel a request, then make sure it was cleaned up.
   var jsonp = new goog.net.Jsonp(fakeUrl);

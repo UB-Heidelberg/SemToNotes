@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("aliases", function() {
     describe("standard", function() {
         var docSet = jasmine.getDocSetFromFile('test/fixtures/alias.js');

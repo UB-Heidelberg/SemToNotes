@@ -18,7 +18,7 @@ goog.setTestOnly('goog.cssom.iframe.styleTest');
 goog.require('goog.cssom');
 goog.require('goog.cssom.iframe.style');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
 
@@ -45,7 +45,7 @@ function crawlDom(startNode, func) {
 }
 
 function getCurrentCssProperties(node, propList) {
-  var props = {***REMOVED***
+  var props = {};
   if (node.nodeType != 1) { return; }
   for (var i = 0; i < propList.length; i++) {
     var prop = propList[i];
@@ -72,7 +72,7 @@ function CssPropertyCollector() {
   this.collectProps = function(node) {
     var nodeProps = getCurrentCssProperties(node, propertiesToTest);
     if (nodeProps) { propsList.push([nodeProps, node]); }
- ***REMOVED*****REMOVED***
+  };
 }
 
 function recursivelyListCssProperties(el) {
@@ -115,8 +115,8 @@ function testMatchCssSelector() {
     ['div.colorful', [4, 0]],
     ['div#mydiv .colorful', [4, 0]],
     ['.colorful', [4, 0]],
-    ['body***REMOVED*** div', [4, 2]],
-    ['body***REMOVED******REMOVED***', [4, 2]]
+    ['body * div', [4, 2]],
+    ['body * *', [4, 2]]
   ];
   for (var i = 0; i < expectedResults.length; i++) {
     var input = expectedResults[i][0];

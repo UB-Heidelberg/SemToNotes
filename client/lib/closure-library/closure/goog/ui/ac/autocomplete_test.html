@@ -34,16 +34,16 @@ See the COPYING file for details.
 <body>
 <div id="test-area"></div>
 <script>
-***REMOVED***
-***REMOVED*** Mock DataStore
-***REMOVED***
+/**
+ * Mock DataStore
+ */
 function MockDS(opt_autoHilite) {
   this.autoHilite_ = opt_autoHilite;
   var disabledRow = {
     match: function(str) {return this.text.match(str);},
     rowDisabled: true,
     text: 'hello@u.edu'
- ***REMOVED*****REMOVED***
+  };
   this.rows_ = [
     '"Slartibartfast Theadore" <fjordmaster@magrathea.com>',
     '"Zaphod Beeblebrox" <theprez@universe.gov>',
@@ -59,7 +59,7 @@ function MockDS(opt_autoHilite) {
   ];
   this.isRowDisabled = function(row) {
     return !!row.rowDisabled;
- ***REMOVED*****REMOVED***
+  };
 }
 
 MockDS.prototype.requestMatchingRows = function(token, maxMatches,
@@ -80,25 +80,25 @@ MockDS.prototype.requestMatchingRows = function(token, maxMatches,
     options.setAutoHilite(this.autoHilite_);
     matchHandler(token, matches, options);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mock Selection Handler
-***REMOVED***
+/**
+ * Mock Selection Handler
+ */
 
 function MockSelect() {
-***REMOVED***
+};
 goog.inherits(MockSelect, goog.events.EventTarget);
 
 MockSelect.prototype.selectRow = function(row) {
   this.selectedRow = row;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Renderer subclass that exposes additional private members for testing.
-***REMOVED***
+/**
+ * Renderer subclass that exposes additional private members for testing.
+ */
 function TestRend() {
   goog.ui.ac.Renderer.call(this, goog.dom.getElement('test-area'));
 }
@@ -106,19 +106,19 @@ goog.inherits(TestRend, goog.ui.ac.Renderer);
 
 TestRend.prototype.getRenderedRows = function() {
   return this.rows_;
-***REMOVED***
+};
 
 TestRend.prototype.getHilitedRowIndex = function() {
   return this.hilitedRow_;
-***REMOVED***
+};
 
 TestRend.prototype.getHilitedRowDiv = function() {
   return this.rowDivs_[this.hilitedRow_];
-***REMOVED***
+};
 
 TestRend.prototype.getRowDiv = function(index) {
   return this.rowDivs_[index];
-***REMOVED***
+};
 
 var handler;
 var inputElement;
@@ -136,9 +136,9 @@ function tearDown() {
   goog.dom.removeChildren(goog.dom.getElement('test-area'));
 }
 
-***REMOVED***
-***REMOVED*** Make sure results are truncated (or not) by setMaxMatches.
-***REMOVED***
+/**
+ * Make sure results are truncated (or not) by setMaxMatches.
+ */
 function testMaxMatches() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -248,9 +248,9 @@ function testMouseClickOnRowAfterBlur() {
 
 
 /*
-***REMOVED*** Send AutoComplete a SELECT event with empty string for the row. We can't
-***REMOVED*** simulate with a simple mouse click, so we dispatch the event directly.
-***REMOVED***
+ * Send AutoComplete a SELECT event with empty string for the row. We can't
+ * simulate with a simple mouse click, so we dispatch the event directly.
+ */
 function testSelectEventEmptyRow() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -321,10 +321,10 @@ function testGetRowCount() {
   assertEquals(2, ac.getRowCount());
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with default behavior of
-***REMOVED*** allowFreeSelect_ and wrap_.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with default behavior of
+ * allowFreeSelect_ and wrap_.
+ */
 function testHiliteNextPrev_default() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -371,14 +371,14 @@ function testHiliteNextPrev_default() {
     ac.hilitePrev();
     checkHilitedIndex(rend, 0);
   }
-  // 21 changes in the loop above (3***REMOVED*** 7)
+  // 21 changes in the loop above (3 * 7)
   assertEquals(21, updates);
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with default behavior of
-***REMOVED*** allowFreeSelect_ and wrap_ and with a disabled first row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with default behavior of
+ * allowFreeSelect_ and wrap_ and with a disabled first row.
+ */
 function testHiliteNextPrevWithDisabledFirstRow_default() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -418,14 +418,14 @@ function testHiliteNextPrevWithDisabledFirstRow_default() {
     ac.hilitePrev();
     checkHilitedIndex(rend, 1);
   }
-  // 9 changes in the loop above (3***REMOVED*** 3)
+  // 9 changes in the loop above (3 * 3)
   assertEquals(9, updates);
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with default behavior of
-***REMOVED*** allowFreeSelect_ and wrap_ and with a disabled middle row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with default behavior of
+ * allowFreeSelect_ and wrap_ and with a disabled middle row.
+ */
 function testHiliteNextPrevWithDisabledMiddleRow_default() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -465,14 +465,14 @@ function testHiliteNextPrevWithDisabledMiddleRow_default() {
     ac.hilitePrev();
     checkHilitedIndex(rend, 0);
   }
-  // 9 changes in the loop above (3***REMOVED*** 3)
+  // 9 changes in the loop above (3 * 3)
   assertEquals(9, updates);
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with default behavior of
-***REMOVED*** allowFreeSelect_ and wrap_ and with a disabled last row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with default behavior of
+ * allowFreeSelect_ and wrap_ and with a disabled last row.
+ */
 function testHiliteNextPrevWithDisabledLastRow_default() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -510,14 +510,14 @@ function testHiliteNextPrevWithDisabledLastRow_default() {
     ac.hilitePrev();
     checkHilitedIndex(rend, 0);
   }
-  // 9 changes in the loop above (3***REMOVED*** 3)
+  // 9 changes in the loop above (3 * 3)
   assertEquals(9, updates);
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ off and
-***REMOVED*** allowFreeSelect_ on.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ off and
+ * allowFreeSelect_ on.
+ */
 function testHiliteNextPrev_allowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -564,10 +564,10 @@ function testHiliteNextPrev_allowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ off and
-***REMOVED*** allowFreeSelect_ on, and a disabled first row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ off and
+ * allowFreeSelect_ on, and a disabled first row.
+ */
 function testHiliteNextPrevWithDisabledFirstRow_allowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -610,10 +610,10 @@ function testHiliteNextPrevWithDisabledFirstRow_allowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ off and
-***REMOVED*** allowFreeSelect_ on, and a disabled middle row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ off and
+ * allowFreeSelect_ on, and a disabled middle row.
+ */
 function testHiliteNextPrevWithDisabledMiddleRow_allowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -656,10 +656,10 @@ function testHiliteNextPrevWithDisabledMiddleRow_allowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ off and
-***REMOVED*** allowFreeSelect_ on, and a disabled last row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ off and
+ * allowFreeSelect_ on, and a disabled last row.
+ */
 function testHiliteNextPrevWithDisabledLastRow_allowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -701,10 +701,10 @@ function testHiliteNextPrevWithDisabledLastRow_allowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ off.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ off.
+ */
 function testHiliteNextPrev_wrap() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -748,10 +748,10 @@ function testHiliteNextPrev_wrap() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ off and a disabled first row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ off and a disabled first row.
+ */
 function testHiliteNextPrevWithDisabledFirstRow_wrap() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -792,10 +792,10 @@ function testHiliteNextPrevWithDisabledFirstRow_wrap() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ off and a disabled middle row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ off and a disabled middle row.
+ */
 function testHiliteNextPrevWithDisabledMiddleRow_wrap() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -835,10 +835,10 @@ function testHiliteNextPrevWithDisabledMiddleRow_wrap() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ off and a disabled last row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ off and a disabled last row.
+ */
 function testHiliteNextPrevWithDisabledLastRow_wrap() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -879,10 +879,10 @@ function testHiliteNextPrevWithDisabledLastRow_wrap() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on.
+ */
 function testHiliteNextPrev_wrapAndAllowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -933,10 +933,10 @@ function testHiliteNextPrev_wrapAndAllowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on and a disabled first row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on and a disabled first row.
+ */
 function testHiliteNextPrevWithDisabledFirstRow_wrapAndAllowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -982,10 +982,10 @@ function testHiliteNextPrevWithDisabledFirstRow_wrapAndAllowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on and a disabled middle row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on and a disabled middle row.
+ */
 function testHiliteNextPrevWithDisabledMiddleRow_wrapAndAllowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1031,10 +1031,10 @@ function testHiliteNextPrevWithDisabledMiddleRow_wrapAndAllowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on and a disabled last row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on and a disabled last row.
+ */
 function testHiliteNextPrevWithDisabledLastRow_wrapAndAllowFreeSelect() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1080,10 +1080,10 @@ function testHiliteNextPrevWithDisabledLastRow_wrapAndAllowFreeSelect() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on AND turn autoHilite_ off.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on AND turn autoHilite_ off.
+ */
 function testHiliteNextPrev_wrapAndAllowFreeSelectNoAutoHilite() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1142,10 +1142,10 @@ function testHiliteNextPrev_wrapAndAllowFreeSelectNoAutoHilite() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on AND turn autoHilite_ off, and a disabled first row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on AND turn autoHilite_ off, and a disabled first row.
+ */
 function testHiliteNextPrevWithDisabledFirstRow_wrapAndAllowFreeSelectNoAutoHilite() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1199,10 +1199,10 @@ function testHiliteNextPrevWithDisabledFirstRow_wrapAndAllowFreeSelectNoAutoHili
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on AND turn autoHilite_ off, and a disabled middle row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on AND turn autoHilite_ off, and a disabled middle row.
+ */
 function testHiliteNextPrevWithDisabledMiddleRow_wrapAndAllowFreeSelectNoAutoHilite() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1257,10 +1257,10 @@ function testHiliteNextPrevWithDisabledMiddleRow_wrapAndAllowFreeSelectNoAutoHil
   }
 }
 
-***REMOVED***
-***REMOVED*** Try using next and prev to navigate past the ends with wrap_ on
-***REMOVED*** allowFreeSelect_ on AND turn autoHilite_ off, and a disabled last row.
-***REMOVED***
+/**
+ * Try using next and prev to navigate past the ends with wrap_ on
+ * allowFreeSelect_ on AND turn autoHilite_ off, and a disabled last row.
+ */
 function testHiliteNextPrevWithDisabledLastRow_wrapAndAllowFreeSelectNoAutoHilite() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1351,10 +1351,10 @@ function testHiliteWithChangingNumberOfRows() {
   checkHilitedIndex(rend, 0);
 }
 
-***REMOVED***
-***REMOVED*** Checks that autohilite is disabled when there is no token; this allows the
-***REMOVED*** user to tab out of an empty autocomplete.
-***REMOVED***
+/**
+ * Checks that autohilite is disabled when there is no token; this allows the
+ * user to tab out of an empty autocomplete.
+ */
 function testNoAutoHiliteWhenTokenIsEmpty() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1376,9 +1376,9 @@ function testNoAutoHiliteWhenTokenIsEmpty() {
   checkHilitedIndex(rend, 0);
 }
 
-***REMOVED***
-***REMOVED*** Checks that opt_preserveHilited works.
-***REMOVED***
+/**
+ * Checks that opt_preserveHilited works.
+ */
 function testPreserveHilitedWithoutAutoHilite() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1401,7 +1401,7 @@ function testPreserveHilitedWithoutAutoHilite() {
   checkHilitedIndex(rend, 1);
 
   // Re-render and check if the second element is still hilited
-  ac.renderRows(rend.getRenderedRows(), true /* preserve hilite***REMOVED***);
+  ac.renderRows(rend.getRenderedRows(), true /* preserve hilite */);
 
   checkHilitedIndex(rend, 1);
 
@@ -1411,9 +1411,9 @@ function testPreserveHilitedWithoutAutoHilite() {
   checkHilitedIndex(rend, -1);
 }
 
-***REMOVED***
-***REMOVED*** Checks that the autohilite argument "true" of the matcher is used.
-***REMOVED***
+/**
+ * Checks that the autohilite argument "true" of the matcher is used.
+ */
 function testAutoHiliteFromMatcherTrue() {
   var ds = new MockDS(true);
   var rend = new TestRend();
@@ -1430,9 +1430,9 @@ function testAutoHiliteFromMatcherTrue() {
   checkHilitedIndex(rend, 0);
 }
 
-***REMOVED***
-***REMOVED*** Checks that the autohilite argument "false" of the matcher is used.
-***REMOVED***
+/**
+ * Checks that the autohilite argument "false" of the matcher is used.
+ */
 function testAutoHiliteFromMatcherFalse() {
   var ds = new MockDS(false);
   var rend = new TestRend();
@@ -1449,9 +1449,9 @@ function testAutoHiliteFromMatcherFalse() {
   checkHilitedIndex(rend, -1);
 }
 
-***REMOVED***
-***REMOVED*** Hilite using ids, the way mouse-based hiliting would work.
-***REMOVED***
+/**
+ * Hilite using ids, the way mouse-based hiliting would work.
+ */
 function testHiliteId() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1471,9 +1471,9 @@ function testHiliteId() {
   }
 }
 
-***REMOVED***
-***REMOVED*** Test selecting the hilited row
-***REMOVED***
+/**
+ * Test selecting the hilited row
+ */
 function testSelection() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1496,9 +1496,9 @@ function testSelection() {
                select.selectedRow);
 }
 
-***REMOVED***
-***REMOVED*** Dismiss when empty and non-empty
-***REMOVED***
+/**
+ * Dismiss when empty and non-empty
+ */
 function testDismiss() {
   var ds = new MockDS();
   var rend = new TestRend();
@@ -1534,12 +1534,12 @@ function testTriggerSuggestionsOnUpdate() {
   var dismissCalled = 0;
   rend.dismiss = function() {
     dismissCalled++;
- ***REMOVED*****REMOVED***
+  };
 
   var updateCalled = 0;
   select.update = function(opt_force) {
     updateCalled++;
- ***REMOVED*****REMOVED***
+  };
 
   // Normally, menu is dismissed after selecting row (without updating).
   ac.setToken('the');
@@ -1564,9 +1564,9 @@ function testDispose() {
   ac.dispose();
 }
 
-***REMOVED***
-***REMOVED*** Ensure that activedescendant is updated properly.
-***REMOVED***
+/**
+ * Ensure that activedescendant is updated properly.
+ */
 function testRolesAndStates() {
   function checkActiveDescendant(activeDescendant) {
     assertNotNull(inputElement);

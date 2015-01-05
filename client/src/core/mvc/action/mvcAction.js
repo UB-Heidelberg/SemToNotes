@@ -1,29 +1,29 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing an action.
-***REMOVED***
+/**
+ * @fileoverview A class representing an action.
+ */
 
 goog.provide('xrx.mvc.Action');
 
 
 
 goog.require('goog.array');
-***REMOVED***
-***REMOVED***
+goog.require('goog.dom.DomHelper');
+goog.require('xrx.mvc.ComponentModel');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.Action = function(element) {
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.mvc.Action, xrx.mvc.ComponentModel);
 
 
 
-xrx.mvc.Action.prototype.mvcRecalculate = function() {***REMOVED***
+xrx.mvc.Action.prototype.mvcRecalculate = function() {};
 
 
 
@@ -32,4 +32,4 @@ xrx.mvc.Action.prototype.execute = function() {
   goog.array.forEach(children, function(e, i, a) {
     xrx.mvc.getModelComponent(e.id).execute();
   });
-***REMOVED***
+};

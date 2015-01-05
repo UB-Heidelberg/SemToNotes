@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class to stream the tokens of an XML instance.
-***REMOVED*** TODO(jochen): test special cases like <a b="/>"/>
-***REMOVED***
+/**
+ * @fileoverview A class to stream the tokens of an XML instance.
+ * TODO(jochen): test special cases like <a b="/>"/>
+ */
 
 goog.provide('xrx.xml.Stream');
 
@@ -17,87 +17,87 @@ goog.require('xrx.token');
 
 
 
-***REMOVED***
-***REMOVED*** A class to stream the tokens of an XML instance.
-***REMOVED*** @param {!string} xml A well-formed, normalized XML instance.
-***REMOVED*** Make sure that the XML input is parsed with {@link xrx.xml.Parser}
-***REMOVED*** beforehand.
-***REMOVED***
-***REMOVED***
+/**
+ * A class to stream the tokens of an XML instance.
+ * @param {!string} xml A well-formed, normalized XML instance.
+ * Make sure that the XML input is parsed with {@link xrx.xml.Parser}
+ * beforehand.
+ * @constructor
+ */
 xrx.xml.Stream = function(xml) {
 
   goog.base(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type
+   * @private
+   */
   this.reader_ = new xrx.xml.Reader(xml);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the stream is stopped.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the stream is stopped.
+   * @type {boolean}
+   * @private
+   */
   this.stopped_ = false;
-***REMOVED***
+};
 goog.inherits(xrx.xml.Stream, xrx.xml.Event);
 
 
 
-***REMOVED***
-***REMOVED*** Returns or sets the content of the current stream reader.
-***REMOVED*** @param opt_xml Well-formed, normalized UTF-8 XML string.
-***REMOVED*** @return The content of the stream reader.
-***REMOVED***
+/**
+ * Returns or sets the content of the current stream reader.
+ * @param opt_xml Well-formed, normalized UTF-8 XML string.
+ * @return The content of the stream reader.
+ */
 xrx.xml.Stream.prototype.xml = function(opt_xml) {
   return !opt_xml ? this.reader_.input() : this.reader_.input(opt_xml);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Updates the XML stream at a location.
-***REMOVED*** @param {!number} offset The offset.
-***REMOVED*** @param {!number} length Number of characters to replace.
-***REMOVED*** @param {!string} xml The new string.
-***REMOVED***
+/**
+ * Updates the XML stream at a location.
+ * @param {!number} offset The offset.
+ * @param {!number} length Number of characters to replace.
+ * @param {!string} xml The new string.
+ */
 xrx.xml.Stream.prototype.update = function(offset, length, xml) {
   this.reader_.input(this.xml().substr(0, offset) + xml + 
       this.xml().substr(offset + length));
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Can be called to stop streaming.
-***REMOVED***
+/**
+ * Can be called to stop streaming.
+ */
 xrx.xml.Stream.prototype.stop = function() {
   this.stopped_ = true;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns or sets the position of the stream reader.
-***REMOVED*** @param opt_pos The position.
-***REMOVED*** @return {!number} The position or the new position.
-***REMOVED***
+/**
+ * Returns or sets the position of the stream reader.
+ * @param opt_pos The position.
+ * @return {!number} The position or the new position.
+ */
 xrx.xml.Stream.prototype.pos = function(opt_pos) {
   if (opt_pos) this.reader_.set(opt_pos);
   return this.reader_.pos();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Throws events for the secondary tokens of a tag for the features
-***REMOVED*** turned on.
-***REMOVED*** TODO(jochen): can we avoid re-parsing of tokens?
-***REMOVED*** @param token The current token.
-***REMOVED*** @param {!number} offset The current offset.
-***REMOVED*** @param {!number} length The current length.
-***REMOVED***
+/**
+ * Throws events for the secondary tokens of a tag for the features
+ * turned on.
+ * TODO(jochen): can we avoid re-parsing of tokens?
+ * @param token The current token.
+ * @param {!number} offset The current offset.
+ * @param {!number} length The current length.
+ */
 xrx.xml.Stream.prototype.features = function(token, offset, length) {
   var stream = this;
 
@@ -151,15 +151,15 @@ xrx.xml.Stream.prototype.features = function(token, offset, length) {
       }
     }
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Enumeration of internal states used by the streamer.
-***REMOVED*** @enum
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Enumeration of internal states used by the streamer.
+ * @enum
+ * @private
+ */
 xrx.xml.Stream.State_ = {
   ATTR_NAME: 'ATTR_NAME',
   ATTR_VAL: 'ATTR_VAL',
@@ -179,17 +179,17 @@ xrx.xml.Stream.State_ = {
   XML_DECL: 'XML_DECL',
   XML_END: 'XML_END',
   XML_PROLOG: 'XML_PROLOG'
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams an XML document or XML fragment in forward direction
-***REMOVED*** and fires start-row, end-row, empty row and namespace events. 
-***REMOVED*** The streaming starts at the beginning of the XML instance by
-***REMOVED*** default or optionally at an offset.
-***REMOVED*** @param {?number} opt_offset The offset.
-***REMOVED***
+/**
+ * Streams an XML document or XML fragment in forward direction
+ * and fires start-row, end-row, empty row and namespace events. 
+ * The streaming starts at the beginning of the XML instance by
+ * default or optionally at an offset.
+ * @param {?number} opt_offset The offset.
+ */
 xrx.xml.Stream.prototype.forward = function(opt_offset) {
   var state = xrx.xml.Stream.State_.XML_PROLOG;
   var token;
@@ -206,7 +206,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
       reader.forward('![CDATA['.length);
       while (!xrx.xml.Lexer.atCDEnd(reader)) {
         reader.forwardExclusive(']');
-     ***REMOVED*****REMOVED***
+      };
       reader.forwardInclusive('>');
       state = xrx.xml.Stream.State_.NOT_TAG;
       isCdata = true;
@@ -216,7 +216,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
       reader.forward('!--'.length);
       while (!xrx.xml.Lexer.atCommentEnd(reader)) {
         reader.forwardExclusive('-');
-     ***REMOVED*****REMOVED***
+      };
       reader.forwardInclusive('>');
       state = xrx.xml.Stream.State_.NOT_TAG;
       token = xrx.token.COMMENT;
@@ -274,7 +274,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
       offset = reader.pos();
       while (!xrx.xml.Lexer.atPIEnd(reader)) {
         reader.forwardExclusive('?');
-     ***REMOVED*****REMOVED***
+      };
       reader.forward('?>'.length);
       state = xrx.xml.Stream.State_.NOT_TAG;
       token = xrx.token.PI;
@@ -306,7 +306,7 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
         state = xrx.xml.Stream.State_.NOT_TAG;
       }
     }
- ***REMOVED*****REMOVED***
+  };
   for (;;) {
     if (process[state]) { 
       process[state](this);
@@ -318,17 +318,17 @@ xrx.xml.Stream.prototype.forward = function(opt_offset) {
       break;
     }
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams an XML document or XML fragment in backward direction
-***REMOVED*** and fires start-row, end-row, empty row and namespace events. The 
-***REMOVED*** streaming starts at the end of the XML instance by default or
-***REMOVED*** optionally at an offset.
-***REMOVED*** @param {?number} opt_offset The offset.
-***REMOVED***
+/**
+ * Streams an XML document or XML fragment in backward direction
+ * and fires start-row, end-row, empty row and namespace events. The 
+ * streaming starts at the end of the XML instance by default or
+ * optionally at an offset.
+ * @param {?number} opt_offset The offset.
+ */
 xrx.xml.Stream.prototype.backward = function(opt_offset) {
   var state = xrx.xml.Stream.State_.XML_PROLOG;
   var reader = this.reader_;
@@ -439,7 +439,7 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
       reader.backward('?'.length);
       while (!xrx.xml.Lexer.atPIStart(reader, true)) {
         reader.backwardInclusive('?');
-     ***REMOVED*****REMOVED***
+      };
       reader.backward('<'.length);
       state = xrx.xml.Stream.State_.NOT_TAG;
       var off = reader.pos();
@@ -459,7 +459,7 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
       reader.get() === '>' ? state = xrx.xml.Stream.State_.GT_SEEN : 
           state = xrx.xml.Stream.State_.NOT_TAG;
     }
- ***REMOVED*****REMOVED***
+  };
   for (;;) {
     if (process[state]) { 
       process[state](this);
@@ -471,17 +471,17 @@ xrx.xml.Stream.prototype.backward = function(opt_offset) {
       break;
     }
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag, an empty tag or an end-tag and
-***REMOVED*** returns the location of the name of the tag.
-***REMOVED*** @param {!string} xml The tag.
-***REMOVED*** @param {?xrx.xml.Reader} opt_reader Optional reader object.
-***REMOVED*** @return {!xrx.xml.Location} The tag-name.
-***REMOVED***
+/**
+ * Streams a start-tag, an empty tag or an end-tag and
+ * returns the location of the name of the tag.
+ * @param {!string} xml The tag.
+ * @param {?xrx.xml.Reader} opt_reader Optional reader object.
+ * @return {!xrx.xml.Location} The tag-name.
+ */
 xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
   var state = xrx.xml.Stream.State_.TAG_START;
   var offset;
@@ -508,7 +508,7 @@ xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
         length = reader.pos() - offset - 1;
       }
     }
- ***REMOVED*****REMOVED***
+  };
   for (;;) {
     if (process[state]) { 
       process[state](this);
@@ -518,32 +518,32 @@ xrx.xml.Stream.prototype.tagName = function(xml, opt_reader) {
     if (state === xrx.xml.Stream.State_.TOK_END) break; 
   }
   return new xrx.xml.Location(offset, length);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns the location
-***REMOVED*** of the n'th attribute, or null if the attribute does not exist.
-***REMOVED*** @param {!string} xml The start-tag or empty tag string.
-***REMOVED*** @param {!number} pos The attribute position.
-***REMOVED*** @param {?number} opt_offset Offset where to start streaming if known.
-***REMOVED*** @return {string|null} The attribute at position n or null.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns the location
+ * of the n'th attribute, or null if the attribute does not exist.
+ * @param {!string} xml The start-tag or empty tag string.
+ * @param {!number} pos The attribute position.
+ * @param {?number} opt_offset Offset where to start streaming if known.
+ * @return {string|null} The attribute at position n or null.
+ */
 xrx.xml.Stream.prototype.attribute = function(xml, pos, opt_offset) {
   return this.attr_(xml, pos, xrx.token.ATTRIBUTE, opt_offset);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns an array of 
-***REMOVED*** locations of all attributes found in the tag.
-***REMOVED*** @param {!string} xml The start-tag or empty tag string.
-***REMOVED*** @return {Array.<xrx.xml.Location>} The location array.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns an array of 
+ * locations of all attributes found in the tag.
+ * @param {!string} xml The start-tag or empty tag string.
+ * @return {Array.<xrx.xml.Location>} The location array.
+ */
 xrx.xml.Stream.prototype.attributes = function(xml) {
-  var locs = {***REMOVED***
+  var locs = {};
   var location = new xrx.xml.Location();
   for(var i = 1;;i++) {
     var newLocation = this.attribute(xml, i, location.offset + location.length);
@@ -552,18 +552,18 @@ xrx.xml.Stream.prototype.attributes = function(xml) {
     if(newLocation.xml(xml).match(/^xmlns(:|=)/) === null) locs[i] = newLocation;
   }
   return locs;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns an array of 
-***REMOVED*** locations of all namespaces found in the tag.
-***REMOVED*** @param {!string} xml The start-tag or empty tag string.
-***REMOVED*** @return {Array.<xrx.xml.Location>} The location array.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns an array of 
+ * locations of all namespaces found in the tag.
+ * @param {!string} xml The start-tag or empty tag string.
+ * @return {Array.<xrx.xml.Location>} The location array.
+ */
 xrx.xml.Stream.prototype.namespaces = function(xml) {
-  var locs = {***REMOVED***
+  var locs = {};
   var location = new xrx.xml.Location();
 
   for(var i = 1;;i++) {
@@ -574,18 +574,18 @@ xrx.xml.Stream.prototype.namespaces = function(xml) {
   }
 
   return locs;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns an array of 
-***REMOVED*** locations of all attributes and namespaces found in the tag.
-***REMOVED*** @param {!string} xml The start-tag or empty tag string.
-***REMOVED*** @return {Array.<xrx.xml.Location>} The location array.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns an array of 
+ * locations of all attributes and namespaces found in the tag.
+ * @param {!string} xml The start-tag or empty tag string.
+ * @return {Array.<xrx.xml.Location>} The location array.
+ */
 xrx.xml.Stream.prototype.secondaries = function(xml) {
-  var locs = {***REMOVED***
+  var locs = {};
   var location = new xrx.xml.Location();
   for(var i = 1;;i++) {
     var newLocation = this.attribute(xml, i, location.offset + location.length);
@@ -594,40 +594,40 @@ xrx.xml.Stream.prototype.secondaries = function(xml) {
     locs[i] = newLocation;
   }
   return locs;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns the location
-***REMOVED*** of the name of the n'th attribute.
-***REMOVED*** @param {!string} xml The tag.
-***REMOVED*** @param {!number} pos The attribute position.
-***REMOVED*** @return {!xrx.xml.Location} The attribute name location.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns the location
+ * of the name of the n'th attribute.
+ * @param {!string} xml The tag.
+ * @param {!number} pos The attribute position.
+ * @return {!xrx.xml.Location} The attribute name location.
+ */
 xrx.xml.Stream.prototype.attrName = function(xml, pos) {
   return this.attr_(xml, pos, xrx.token.ATTR_NAME);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Streams a start-tag or an empty tag and returns the location 
-***REMOVED*** of the value of the n'th attribute.
-***REMOVED*** @param {!string} xml The attribute.
-***REMOVED*** @param {!number} pos The attribute position.
-***REMOVED*** @param {?number} opt_offset Offset where to start streaming if known.
-***REMOVED*** @return {!xrx.xml.Location} The attribute value location.
-***REMOVED***
+/**
+ * Streams a start-tag or an empty tag and returns the location 
+ * of the value of the n'th attribute.
+ * @param {!string} xml The attribute.
+ * @param {!number} pos The attribute position.
+ * @param {?number} opt_offset Offset where to start streaming if known.
+ * @return {!xrx.xml.Location} The attribute value location.
+ */
 xrx.xml.Stream.prototype.attrValue = function(xml, pos, opt_offset) {
   return this.attr_(xml, pos, xrx.token.ATTR_VALUE, opt_offset);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shared utility function for attribute tokens.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Shared utility function for attribute tokens.
+ * @private
+ */
 xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_reader) {
   var reader = opt_reader || new xrx.xml.Reader(xml);
   if (opt_offset) reader.set(opt_offset);
@@ -680,7 +680,7 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
         }
       }
     }
- ***REMOVED*****REMOVED***
+  };
   for (;;) {
     if (process[state]) { 
       process[state](this);
@@ -690,4 +690,4 @@ xrx.xml.Stream.prototype.attr_ = function(xml, pos, tokenType, opt_offset, opt_r
     if (state === xrx.xml.Stream.State_.TOK_END) break;
   }
   return location;
-***REMOVED***
+};

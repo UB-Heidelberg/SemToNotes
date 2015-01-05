@@ -60,7 +60,7 @@ function cloneArray(array) {
  applies a xpath expression from the domNode.
  The xpath expression must begin by "."
  example : .//textarea|.//select
-***REMOVED***
+ */
 
 function applyXpath(domNode,xpath) {
     var inputs = new Array();
@@ -83,7 +83,7 @@ function applyXpath(domNode,xpath) {
 
 /*
  get the first ancestor with that tag name and that class name
-***REMOVED***
+ */
 function getFirstAncestorByTagAndClass(domNode,tagName,className) {
     var ancestor = domNode.parentNode;
     while (ancestor) {
@@ -99,7 +99,7 @@ function getFirstAncestorByTagAndClass(domNode,tagName,className) {
 /*
  sets the selection of that <select> to 'selectionName'
  returns true when the selection has been made, false otherwise
-***REMOVED***
+ */
 function setSelected(select,optionName) {
     var optionTags = select.getElementsByTagName('option');
     for (var i=0 ; i<optionTags.length ; i++) {
@@ -114,7 +114,7 @@ function setSelected(select,optionName) {
 /*
  function in order to retrieve easily the text of the selected option in
  the <select> whose id is selectElementId
-***REMOVED***
+ */
 function getSelected(selectId) {
     var select = document.getElementById(selectId);
     return select.options[select.selectedIndex].value;
@@ -123,7 +123,7 @@ function getSelected(selectId) {
 /*
  returns true if that domNode is actually displayed in the web page
  checks that all the <div> ancestors of that node are also displayed.
-***REMOVED***
+ */
 function isDisplayed(domNode) {
     if (domNode.style && domNode.style.display && domNode.style.display == 'none') {
         return false;
@@ -146,7 +146,7 @@ function isDisplayed(domNode) {
  'strTagName', and the value of that attribute is 'strAttributeValue'
   Copyright Robert Nyman, http://www.robertnyman.com
   Free to use if this text is included
-***REMOVED***
+ */
 function getElementsByAttribute(oElm, strTagName, strAttributeName, strAttributeValue) {
     var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
     var arrReturnElements = new Array();
@@ -182,7 +182,7 @@ function getElementByTagClassRefs(parentNode, tagName, classValue, refsValue) {
 
 /*
  comes from http://www.w3schools.com/dom/tryit.asp?filename=note_parsertest2
-***REMOVED***
+ */
 function createDocumentFromText(text) {
     // code for IE
     if (window.ActiveXObject) {

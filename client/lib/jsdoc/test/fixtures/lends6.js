@@ -1,29 +1,29 @@
 define([], function() {
     var Person = makeClass(
-       ***REMOVED*****REMOVED*** @lends Person.prototype***REMOVED***
+        /** @lends Person.prototype */
         {
-           ***REMOVED*****REMOVED*** @constructs***REMOVED***
+            /** @constructs */
             initialize: function(name) {
                 this.name = name;
             },
-           ***REMOVED*****REMOVED*** Speak a message.***REMOVED***
+            /** Speak a message. */
             say: function(message) {
                 return this.name + " says: " + message;
             }
         }
-  ***REMOVED***
+    );
 
     var Robot = makeClass(
-       ***REMOVED*****REMOVED*** @lends Robot.prototype***REMOVED***
+        /** @lends Robot.prototype */
         {
-           ***REMOVED*****REMOVED*** @constructs***REMOVED***
+            /** @constructs */
             initialize: function(name) {
                 this.name = name;
             },
-           ***REMOVED*****REMOVED*** Feign emotion.***REMOVED***
+            /** Feign emotion. */
             emote: function() {
                 return this.name + " loves you!";
             }
         }
-  ***REMOVED***
+    );
 });

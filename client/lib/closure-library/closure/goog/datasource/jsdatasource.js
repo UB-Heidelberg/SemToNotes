@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An implementation of DataNode for wrapping JS data.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An implementation of DataNode for wrapping JS data.
+ *
+ */
 
 
 goog.provide('goog.ds.JsDataSource');
@@ -28,74 +28,74 @@ goog.require('goog.ds.EmptyNodeList');
 goog.require('goog.ds.LoadState');
 
 
-***REMOVED***
-***REMOVED*** Data source whose backing is JavaScript data
-***REMOVED***
-***REMOVED*** Names that are reserved for system use and shouldn't be used for data node
-***REMOVED*** names: eval, toSource, toString, unwatch, valueOf, watch. Behavior is
-***REMOVED*** undefined if these names are used.
-***REMOVED***
-***REMOVED*** @param {Object} root The root JS node.
-***REMOVED*** @param {string} dataName The name of this node relative to the parent node.
-***REMOVED*** @param {Object=} opt_parent Optional parent of this JsDataSource.
-***REMOVED***
-***REMOVED*** implements goog.ds.DataNode.
-***REMOVED***
-***REMOVED*** @extends {goog.ds.DataNode}
-***REMOVED***
+/**
+ * Data source whose backing is JavaScript data
+ *
+ * Names that are reserved for system use and shouldn't be used for data node
+ * names: eval, toSource, toString, unwatch, valueOf, watch. Behavior is
+ * undefined if these names are used.
+ *
+ * @param {Object} root The root JS node.
+ * @param {string} dataName The name of this node relative to the parent node.
+ * @param {Object=} opt_parent Optional parent of this JsDataSource.
+ *
+ * implements goog.ds.DataNode.
+ * @constructor
+ * @extends {goog.ds.DataNode}
+ */
 // TODO(arv): Use interfaces when available.
 goog.ds.JsDataSource = function(root, dataName, opt_parent) {
   this.parent_ = opt_parent;
   this.dataName_ = dataName;
   this.setRoot(root);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The root JS object. Can be null.
-***REMOVED*** @type {*}
-***REMOVED*** @protected
-***REMOVED*** @suppress {underscore|visibility}
-***REMOVED***
+/**
+ * The root JS object. Can be null.
+ * @type {*}
+ * @protected
+ * @suppress {underscore|visibility}
+ */
 goog.ds.JsDataSource.prototype.root_;
 
 
-***REMOVED***
-***REMOVED*** Sets the root JS object
-***REMOVED*** @param {Object} root The root JS object. Can be null.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets the root JS object
+ * @param {Object} root The root JS object. Can be null.
+ *
+ * @protected
+ */
 goog.ds.JsDataSource.prototype.setRoot = function(root) {
   this.root_ = root;
   this.childNodeList_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set this data source to use list semantics. List data sources:
-***REMOVED*** - Are assumed to have child nodes of all of the same type of data
-***REMOVED*** - Fire data changes on the root node of the list whenever children
-***REMOVED***     are added or removed
-***REMOVED*** @param {?boolean} isList True to use list semantics.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set this data source to use list semantics. List data sources:
+ * - Are assumed to have child nodes of all of the same type of data
+ * - Fire data changes on the root node of the list whenever children
+ *     are added or removed
+ * @param {?boolean} isList True to use list semantics.
+ * @private
+ */
 goog.ds.JsDataSource.prototype.setIsList_ = function(isList) {
   this.isList_ = isList;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ds.JsDataSource.prototype.get = function() {
   return !goog.isObject(this.root_) ? this.root_ : this.getChildNodes();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the value of the node
-***REMOVED*** @param {*} value The new value of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Set the value of the node
+ * @param {*} value The new value of the node.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.set = function(value) {
   if (value && goog.isObject(this.root_)) {
     throw Error('Can\'t set group nodes to new values yet');
@@ -108,13 +108,13 @@ goog.ds.JsDataSource.prototype.set = function(value) {
   this.childNodeList_ = null;
 
   goog.ds.DataManager.getInstance().fireDataChange(this.getDataPath());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** TODO(user) revisit lazy creation.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * TODO(user) revisit lazy creation.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getChildNodes = function(opt_selector) {
   if (!this.root_) {
     return new goog.ds.EmptyNodeList();
@@ -133,17 +133,17 @@ goog.ds.JsDataSource.prototype.getChildNodes = function(opt_selector) {
     throw Error('Selector not supported yet (' + opt_selector + ')');
   }
 
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DataNodeList with the child nodes for this element.
-***REMOVED*** Allows for only building list as needed.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_force Whether to force recreating child nodes,
-***REMOVED***     defaults to false.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DataNodeList with the child nodes for this element.
+ * Allows for only building list as needed.
+ *
+ * @param {boolean=} opt_force Whether to force recreating child nodes,
+ *     defaults to false.
+ * @private
+ */
 goog.ds.JsDataSource.prototype.createChildNodes_ = function(opt_force) {
   if (this.childNodeList_ && !opt_force) {
     return;
@@ -180,24 +180,24 @@ goog.ds.JsDataSource.prototype.createChildNodes_ = function(opt_force) {
     }
   }
   this.childNodeList_ = childNodeList;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a named child node of the current node
-***REMOVED*** @param {string} name The node name.
-***REMOVED*** @param {boolean=} opt_canCreate If true, can create child node.
-***REMOVED*** @return {goog.ds.DataNode} The child node, or null if no node of
-***REMOVED***     this name exists.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets a named child node of the current node
+ * @param {string} name The node name.
+ * @param {boolean=} opt_canCreate If true, can create child node.
+ * @return {goog.ds.DataNode} The child node, or null if no node of
+ *     this name exists.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getChildNode = function(name, opt_canCreate) {
   if (!this.root_) {
     return null;
   }
-  var node =***REMOVED*****REMOVED*** @type {goog.ds.DataNode}***REMOVED*** (this.getChildNodes().get(name));
+  var node = /** @type {goog.ds.DataNode} */ (this.getChildNodes().get(name));
   if (!node && opt_canCreate) {
-    var newObj = {***REMOVED***
+    var newObj = {};
     if (goog.isArray(this.root_)) {
       newObj['id'] = name;
       this.root_.push(newObj);
@@ -210,16 +210,16 @@ goog.ds.JsDataSource.prototype.getChildNode = function(name, opt_canCreate) {
     }
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the value of a child node
-***REMOVED*** @param {string} name The node name.
-***REMOVED*** @return {Object} The value of the node, or null if no value or the child
-***REMOVED***    node doesn't exist.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the value of a child node
+ * @param {string} name The node name.
+ * @return {Object} The value of the node, or null if no value or the child
+ *    node doesn't exist.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getChildNodeValue = function(name) {
   if (this.childNodeList_) {
     var node = this.getChildNodes().get(name);
@@ -229,18 +229,18 @@ goog.ds.JsDataSource.prototype.getChildNodeValue = function(name) {
   } else {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a named child node of the current node.
-***REMOVED*** If value is null, removes the child node.
-***REMOVED*** @param {string} name The node name.
-***REMOVED*** @param {Object} value The value to set, can be DataNode, object,
-***REMOVED***     property, or null.
-***REMOVED*** @return {Object} The child node, if set.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets a named child node of the current node.
+ * If value is null, removes the child node.
+ * @param {string} name The node name.
+ * @param {Object} value The value to set, can be DataNode, object,
+ *     property, or null.
+ * @return {Object} The child node, if set.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.setChildNode = function(name, value) {
   var removedPath = null;
   var node = null;
@@ -258,7 +258,7 @@ goog.ds.JsDataSource.prototype.setChildNode = function(name, value) {
         node = new goog.ds.JsDataSource(value, name, this);
       } else {
         node = new goog.ds.JsPropertyDataSource(
-           ***REMOVED*****REMOVED*** @type {goog.ds.DataNode}***REMOVED*** (this.root_), name, this);
+            /** @type {goog.ds.DataNode} */ (this.root_), name, this);
       }
     }
   }
@@ -290,7 +290,7 @@ goog.ds.JsDataSource.prototype.setChildNode = function(name, value) {
     if (index == null) {
       addedNode = true;
     }
-    this.childNodeList_.setNode(name,***REMOVED*****REMOVED*** @type {goog.ds.DataNode}***REMOVED*** (node));
+    this.childNodeList_.setNode(name, /** @type {goog.ds.DataNode} */ (node));
   } else if (goog.isObject(this.root_)) {
     if (value == null) {
       // Remove the node
@@ -309,7 +309,7 @@ goog.ds.JsDataSource.prototype.setChildNode = function(name, value) {
     }
     // Only need to update childNodeList_ if has been created already
     if (this.childNodeList_) {
-      this.childNodeList_.setNode(name,***REMOVED*****REMOVED*** @type {goog.ds.DataNode}***REMOVED*** (node));
+      this.childNodeList_.setNode(name, /** @type {goog.ds.DataNode} */ (node));
     }
   }
 
@@ -329,34 +329,34 @@ goog.ds.JsDataSource.prototype.setChildNode = function(name, value) {
     }
   }
   return node;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the name of the node relative to the parent node
-***REMOVED*** @return {string} The name of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Get the name of the node relative to the parent node
+ * @return {string} The name of the node.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getDataName = function() {
   return this.dataName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Setthe name of the node relative to the parent node
-***REMOVED*** @param {string} dataName The name of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Setthe name of the node relative to the parent node
+ * @param {string} dataName The name of the node.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.setDataName = function(dataName) {
   this.dataName_ = dataName;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the a qualified data path to this node
-***REMOVED*** @return {string} The data path.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the a qualified data path to this node
+ * @return {string} The data path.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getDataPath = function() {
   var parentPath = '';
   if (this.parent_) {
@@ -364,77 +364,77 @@ goog.ds.JsDataSource.prototype.getDataPath = function() {
   }
 
   return parentPath + this.dataName_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Load or reload the backing data for this node
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Load or reload the backing data for this node
+ * @override
+ */
 goog.ds.JsDataSource.prototype.load = function() {
   // Nothing to do
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the state of the backing data for this node
-***REMOVED*** TODO(user) Discuss null value handling
-***REMOVED*** @return {goog.ds.LoadState} The state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets the state of the backing data for this node
+ * TODO(user) Discuss null value handling
+ * @return {goog.ds.LoadState} The state.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.getLoadState = function() {
   return (this.root_ == null) ? goog.ds.LoadState.NOT_LOADED :
       goog.ds.LoadState.LOADED;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the value of this node is a homogeneous list of data
-***REMOVED*** @return {boolean} True if a list.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Whether the value of this node is a homogeneous list of data
+ * @return {boolean} True if a list.
+ * @override
+ */
 goog.ds.JsDataSource.prototype.isList = function() {
   return this.isList_ != null ? this.isList_ : goog.isArray(this.root_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Data source for JavaScript properties that arent objects. Contains reference
-***REMOVED*** to parent object so that you can set the vaule
-***REMOVED***
-***REMOVED*** @param {goog.ds.DataNode} parent Parent object.
-***REMOVED*** @param {string} dataName Name of this property.
-***REMOVED*** @param {goog.ds.DataNode=} opt_parentDataNode The parent data node. If
-***REMOVED***     omitted, assumes that the parent object is the parent data node.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ds.BaseDataNode}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Data source for JavaScript properties that arent objects. Contains reference
+ * to parent object so that you can set the vaule
+ *
+ * @param {goog.ds.DataNode} parent Parent object.
+ * @param {string} dataName Name of this property.
+ * @param {goog.ds.DataNode=} opt_parentDataNode The parent data node. If
+ *     omitted, assumes that the parent object is the parent data node.
+ *
+ * @constructor
+ * @extends {goog.ds.BaseDataNode}
+ * @final
+ */
 goog.ds.JsPropertyDataSource = function(parent, dataName, opt_parentDataNode) {
   goog.ds.BaseDataNode.call(this);
   this.dataName_ = dataName;
   this.parent_ = parent;
   this.parentDataNode_ = opt_parentDataNode || this.parent_;
-***REMOVED***
+};
 goog.inherits(goog.ds.JsPropertyDataSource, goog.ds.BaseDataNode);
 
 
-***REMOVED***
-***REMOVED*** Get the value of the node
-***REMOVED*** @return {Object} The value of the node, or null if no value.
-***REMOVED***
+/**
+ * Get the value of the node
+ * @return {Object} The value of the node, or null if no value.
+ */
 goog.ds.JsPropertyDataSource.prototype.get = function() {
   return this.parent_[this.dataName_];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the value of the node
-***REMOVED*** @param {Object} value The new value of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Set the value of the node
+ * @param {Object} value The new value of the node.
+ * @override
+ */
 goog.ds.JsPropertyDataSource.prototype.set = function(value) {
   var oldValue = this.parent_[this.dataName_];
   this.parent_[this.dataName_] = value;
@@ -442,20 +442,20 @@ goog.ds.JsPropertyDataSource.prototype.set = function(value) {
   if (oldValue != value) {
     goog.ds.DataManager.getInstance().fireDataChange(this.getDataPath());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the name of the node relative to the parent node
-***REMOVED*** @return {string} The name of the node.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Get the name of the node relative to the parent node
+ * @return {string} The name of the node.
+ * @override
+ */
 goog.ds.JsPropertyDataSource.prototype.getDataName = function() {
   return this.dataName_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ds.JsPropertyDataSource.prototype.getParent = function() {
   return this.parentDataNode_;
-***REMOVED***
+};

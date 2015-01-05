@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview SHA-1 cryptographic hash.
-***REMOVED*** Variable names follow the notation in FIPS PUB 180-3:
-***REMOVED*** http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED***   var sha1 = new goog.crypt.sha1();
-***REMOVED***   sha1.update(bytes);
-***REMOVED***   var hash = sha1.digest();
-***REMOVED***
-***REMOVED*** Performance:
-***REMOVED***   Chrome 23:   ~400 Mbit/s
-***REMOVED***   Firefox 16:  ~250 Mbit/s
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview SHA-1 cryptographic hash.
+ * Variable names follow the notation in FIPS PUB 180-3:
+ * http://csrc.nist.gov/publications/fips/fips180-3/fips180-3_final.pdf.
+ *
+ * Usage:
+ *   var sha1 = new goog.crypt.sha1();
+ *   sha1.update(bytes);
+ *   var hash = sha1.digest();
+ *
+ * Performance:
+ *   Chrome 23:   ~400 Mbit/s
+ *   Firefox 16:  ~250 Mbit/s
+ *
+ */
 
 goog.provide('goog.crypt.Sha1');
 
@@ -34,48 +34,48 @@ goog.require('goog.crypt.Hash');
 
 
 
-***REMOVED***
-***REMOVED*** SHA-1 cryptographic hash constructor.
-***REMOVED***
-***REMOVED*** The properties declared here are discussed in the above algorithm document.
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Hash}
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * SHA-1 cryptographic hash constructor.
+ *
+ * The properties declared here are discussed in the above algorithm document.
+ * @constructor
+ * @extends {goog.crypt.Hash}
+ * @final
+ * @struct
+ */
 goog.crypt.Sha1 = function() {
   goog.crypt.Sha1.base(this, 'constructor');
 
   this.blockSize = 512 / 8;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Holds the previous values of accumulated variables a-e in the compress_
-  ***REMOVED*** function.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Holds the previous values of accumulated variables a-e in the compress_
+   * function.
+   * @type {Array.<number>}
+   * @private
+   */
   this.chain_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A buffer holding the partially computed hash result.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A buffer holding the partially computed hash result.
+   * @type {Array.<number>}
+   * @private
+   */
   this.buf_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of 80 bytes, each a part of the message to be hashed.  Referred to
-  ***REMOVED*** as the message schedule in the docs.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An array of 80 bytes, each a part of the message to be hashed.  Referred to
+   * as the message schedule in the docs.
+   * @type {Array.<number>}
+   * @private
+   */
   this.W_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Contains data needed to pad messages less than 64 bytes.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Contains data needed to pad messages less than 64 bytes.
+   * @type {Array.<number>}
+   * @private
+   */
   this.pad_ = [];
 
   this.pad_[0] = 128;
@@ -83,22 +83,22 @@ goog.crypt.Sha1 = function() {
     this.pad_[i] = 0;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {number}
+   */
   this.inbuf_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {number}
+   */
   this.total_ = 0;
 
   this.reset();
-***REMOVED***
+};
 goog.inherits(goog.crypt.Sha1, goog.crypt.Hash);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha1.prototype.reset = function() {
   this.chain_[0] = 0x67452301;
   this.chain_[1] = 0xefcdab89;
@@ -108,15 +108,15 @@ goog.crypt.Sha1.prototype.reset = function() {
 
   this.inbuf_ = 0;
   this.total_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal compress helper function.
-***REMOVED*** @param {Array.<number>|Uint8Array|string} buf Block to compress.
-***REMOVED*** @param {number=} opt_offset Offset of the block in the buffer.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal compress helper function.
+ * @param {Array.<number>|Uint8Array|string} buf Block to compress.
+ * @param {number=} opt_offset Offset of the block in the buffer.
+ * @private
+ */
 goog.crypt.Sha1.prototype.compress_ = function(buf, opt_offset) {
   if (!opt_offset) {
     opt_offset = 0;
@@ -197,10 +197,10 @@ goog.crypt.Sha1.prototype.compress_ = function(buf, opt_offset) {
   this.chain_[2] = (this.chain_[2] + c) & 0xffffffff;
   this.chain_[3] = (this.chain_[3] + d) & 0xffffffff;
   this.chain_[4] = (this.chain_[4] + e) & 0xffffffff;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha1.prototype.update = function(bytes, opt_length) {
   if (!goog.isDef(opt_length)) {
     opt_length = bytes.length;
@@ -254,13 +254,13 @@ goog.crypt.Sha1.prototype.update = function(bytes, opt_length) {
 
   this.inbuf_ = inbuf;
   this.total_ += opt_length;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Sha1.prototype.digest = function() {
   var digest = [];
-  var totalBits = this.total_***REMOVED*** 8;
+  var totalBits = this.total_ * 8;
 
   // Add pad 0x80 0x00*.
   if (this.inbuf_ < 56) {
@@ -286,4 +286,4 @@ goog.crypt.Sha1.prototype.digest = function() {
   }
 
   return digest;
-***REMOVED***
+};

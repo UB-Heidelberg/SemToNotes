@@ -1,18 +1,18 @@
-/*global java***REMOVED***
-/*eslint no-process-exit:0***REMOVED***
-***REMOVED***
-***REMOVED*** Helper methods for running JSDoc on the command line.
-***REMOVED***
-***REMOVED*** A few critical notes for anyone who works on this module:
-***REMOVED***
-***REMOVED*** + The module should really export an instance of `cli`, and `props` should be properties of a
-***REMOVED*** `cli` instance. However, Rhino interpreted `this` as a reference to `global` within the
-***REMOVED*** prototype's methods, so we couldn't do that.
-***REMOVED*** + On Rhino, for unknown reasons, the `jsdoc/fs` and `jsdoc/path` modules can fail in some cases
-***REMOVED*** when they are required by this module. You may need to use `fs` and `path` instead.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/*global java */
+/*eslint no-process-exit:0 */
+/**
+ * Helper methods for running JSDoc on the command line.
+ *
+ * A few critical notes for anyone who works on this module:
+ *
+ * + The module should really export an instance of `cli`, and `props` should be properties of a
+ * `cli` instance. However, Rhino interpreted `this` as a reference to `global` within the
+ * prototype's methods, so we couldn't do that.
+ * + On Rhino, for unknown reasons, the `jsdoc/fs` and `jsdoc/path` modules can fail in some cases
+ * when they are required by this module. You may need to use `fs` and `path` instead.
+ *
+ * @private
+ */
 module.exports = (function() {
 'use strict';
 
@@ -26,14 +26,14 @@ var props = {
     packageJson: null,
     shouldExitWithError: false,
     tmpdir: null
-***REMOVED***
+};
 
 var app = global.app;
 var env = global.env;
 
 var FATAL_ERROR_MESSAGE = 'Exiting JSDoc because an error occurred. See the previous log ' +
     'messages for details.';
-var cli = {***REMOVED***
+var cli = {};
 
 // TODO: docs
 cli.setVersionInfo = function() {
@@ -46,10 +46,10 @@ cli.setVersionInfo = function() {
     env.version = {
         number: info.version,
         revision: new Date( parseInt(info.revision, 10) ).toUTCString()
-   ***REMOVED*****REMOVED***
+    };
 
     return cli;
-***REMOVED***
+};
 
 // TODO: docs
 cli.loadConfig = function() {
@@ -65,7 +65,7 @@ cli.loadConfig = function() {
     var defaultOpts = {
         destination: './out/',
         encoding: 'utf8'
-   ***REMOVED*****REMOVED***
+    };
 
     try {
         env.opts = args.parse(env.args);
@@ -99,7 +99,7 @@ cli.loadConfig = function() {
     env.opts = _.defaults(env.opts, env.conf.opts, defaultOpts);
 
     return cli;
-***REMOVED***
+};
 
 // TODO: docs
 cli.configureLogger = function() {
@@ -129,7 +129,7 @@ cli.configureLogger = function() {
     logger.once('logger:fatal', fatalError);
 
     return cli;
-***REMOVED***
+};
 
 // TODO: docs
 cli.logStart = function() {
@@ -141,7 +141,7 @@ cli.logStart = function() {
             opts: env.opts
         }
     });
-***REMOVED***
+};
 
 // TODO: docs
 cli.logFinish = function() {
@@ -156,7 +156,7 @@ cli.logFinish = function() {
         deltaSeconds = (delta / 1000).toFixed(2);
         logger.info('Finished running in %s seconds.', deltaSeconds);
     }
-***REMOVED***
+};
 
 // TODO: docs
 cli.runCommand = function(cb) {
@@ -187,7 +187,7 @@ cli.runCommand = function(cb) {
     }
 
     cmd(done);
-***REMOVED***
+};
 
 // TODO: docs
 cli.printHelp = function(cb) {
@@ -195,7 +195,7 @@ cli.printHelp = function(cb) {
     console.log( '\n' + require('jsdoc/opts/args').help() + '\n' );
     console.log('Visit http://usejsdoc.org for more information.');
     cb(0);
-***REMOVED***
+};
 
 // TODO: docs
 cli.runTests = function(cb) {
@@ -207,12 +207,12 @@ cli.runTests = function(cb) {
     runner(function(failCount) {
         cb(failCount);
     });
-***REMOVED***
+};
 
 // TODO: docs
 cli.getVersion = function() {
     return 'JSDoc ' + env.version.number + ' (' + env.version.revision + ')';
-***REMOVED***
+};
 
 // TODO: docs
 cli.printVersion = function(cb) {
@@ -221,7 +221,7 @@ cli.printVersion = function(cb) {
     if (cb) {
         cb(0);
     }
-***REMOVED***
+};
 
 // TODO: docs
 cli.main = function(cb) {
@@ -239,13 +239,13 @@ cli.main = function(cb) {
 
     env.run.finish = new Date();
     cb(0);
-***REMOVED***
+};
 
 function getRandomId() {
     var MIN = 100000;
     var MAX = 999999;
 
-    return Math.floor(Math.random()***REMOVED*** (MAX - MIN + 1) + MIN);
+    return Math.floor(Math.random() * (MAX - MIN + 1) + MIN);
 }
 
 // TODO: docs
@@ -285,7 +285,7 @@ cli.scanFiles = function() {
     }
 
     return cli;
-***REMOVED***
+};
 
 function resolvePluginPaths(paths) {
     var path = require('jsdoc/path');
@@ -325,7 +325,7 @@ cli.createParser = function() {
     handlers.attachTo(app.jsdoc.parser);
 
     return cli;
-***REMOVED***
+};
 
 cli.parseFiles = function() {
     var augment = require('jsdoc/augment');
@@ -350,7 +350,7 @@ cli.parseFiles = function() {
     app.jsdoc.parser.fireProcessingComplete(docs);
 
     return cli;
-***REMOVED***
+};
 
 cli.processParseResults = function() {
     if (env.opts.explain) {
@@ -362,13 +362,13 @@ cli.processParseResults = function() {
     }
 
     return cli;
-***REMOVED***
+};
 
 cli.dumpParseResults = function() {
     global.dump(props.docs);
 
     return cli;
-***REMOVED***
+};
 
 cli.resolveTutorials = function() {
     var resolver = require('jsdoc/tutorial/resolver');
@@ -379,7 +379,7 @@ cli.resolveTutorials = function() {
     }
 
     return cli;
-***REMOVED***
+};
 
 cli.generateDocs = function() {
     var path = require('jsdoc/path');
@@ -412,7 +412,7 @@ cli.generateDocs = function() {
             taffy(props.docs),
             env.opts,
             resolver.root
-      ***REMOVED***
+        );
         logger.info('complete.');
     }
     else {
@@ -421,7 +421,7 @@ cli.generateDocs = function() {
     }
 
     return cli;
-***REMOVED***
+};
 
 // TODO: docs
 cli.exit = function(exitCode, message) {
@@ -430,7 +430,7 @@ cli.exit = function(exitCode, message) {
     }
 
     process.exit(exitCode || 0);
-***REMOVED***
+};
 
 return cli;
 

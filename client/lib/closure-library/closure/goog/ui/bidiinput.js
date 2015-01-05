@@ -12,100 +12,100 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Component for an input field with bidi direction automatic
-***REMOVED*** detection. The input element directionality is automatically set according
-***REMOVED*** to the contents (value) of the element.
-***REMOVED***
-***REMOVED*** @see ../demos/bidiinput.html
-***REMOVED***
+/**
+ * @fileoverview Component for an input field with bidi direction automatic
+ * detection. The input element directionality is automatically set according
+ * to the contents (value) of the element.
+ *
+ * @see ../demos/bidiinput.html
+ */
 
 
 goog.provide('goog.ui.BidiInput');
 
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.InputHandler');
 goog.require('goog.i18n.bidi');
 goog.require('goog.ui.Component');
 
 
 
-***REMOVED***
-***REMOVED*** Default implementation of BidiInput.
-***REMOVED***
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper  Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * Default implementation of BidiInput.
+ *
+ * @param {goog.dom.DomHelper=} opt_domHelper  Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.BidiInput = function(opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.BidiInput, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** The input handler that provides the input event.
-***REMOVED*** @type {goog.events.InputHandler?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The input handler that provides the input event.
+ * @type {goog.events.InputHandler?}
+ * @private
+ */
 goog.ui.BidiInput.prototype.inputHandler_ = null;
 
 
-***REMOVED***
-***REMOVED*** Decorates the given HTML element as a BidiInput. The HTML element can be an
-***REMOVED*** input element with type='text', a textarea element, or any contenteditable.
-***REMOVED*** Overrides {@link goog.ui.Component#decorateInternal}.  Considered protected.
-***REMOVED*** @param {Element} element  Element to decorate.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Decorates the given HTML element as a BidiInput. The HTML element can be an
+ * input element with type='text', a textarea element, or any contenteditable.
+ * Overrides {@link goog.ui.Component#decorateInternal}.  Considered protected.
+ * @param {Element} element  Element to decorate.
+ * @protected
+ * @override
+ */
 goog.ui.BidiInput.prototype.decorateInternal = function(element) {
   goog.ui.BidiInput.superClass_.decorateInternal.call(this, element);
   this.init_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the element for the text input.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Creates the element for the text input.
+ * @protected
+ * @override
+ */
 goog.ui.BidiInput.prototype.createDom = function() {
   this.setElementInternal(
       this.getDomHelper().createDom('input', {'type': 'text'}));
   this.init_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the events and initial text direction.
-***REMOVED*** Called from either decorate or createDom, after the input field has
-***REMOVED*** been created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializes the events and initial text direction.
+ * Called from either decorate or createDom, after the input field has
+ * been created.
+ * @private
+ */
 goog.ui.BidiInput.prototype.init_ = function() {
   // Set initial direction by current text
   this.setDirection_();
 
   // Listen to value change events
   this.inputHandler_ = new goog.events.InputHandler(this.getElement());
-***REMOVED***this.inputHandler_,
+  goog.events.listen(this.inputHandler_,
       goog.events.InputHandler.EventType.INPUT,
       this.setDirection_, false, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the direction of the input element based on the current value. If the
-***REMOVED*** value does not have any strongly directional characters, remove the dir
-***REMOVED*** attribute so that the direction is inherited instead.
-***REMOVED*** This method is called when the user changes the input element value, or
-***REMOVED*** when a program changes the value using
-***REMOVED*** {@link goog.ui.BidiInput#setValue}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set the direction of the input element based on the current value. If the
+ * value does not have any strongly directional characters, remove the dir
+ * attribute so that the direction is inherited instead.
+ * This method is called when the user changes the input element value, or
+ * when a program changes the value using
+ * {@link goog.ui.BidiInput#setValue}
+ * @private
+ */
 goog.ui.BidiInput.prototype.setDirection_ = function() {
   var element = this.getElement();
   var text = this.getValue();
@@ -120,31 +120,31 @@ goog.ui.BidiInput.prototype.setDirection_ = function() {
       // Default for no direction, inherit from document.
       element.removeAttribute('dir');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the direction of the input element.
-***REMOVED*** @return {?string} Return 'rtl' for right-to-left text,
-***REMOVED***     'ltr' for left-to-right text, or null if the value itself is not
-***REMOVED***     enough to determine directionality (e.g. an empty value), and the
-***REMOVED***     direction is inherited from a parent element (typically the body
-***REMOVED***     element).
-***REMOVED***
+/**
+ * Returns the direction of the input element.
+ * @return {?string} Return 'rtl' for right-to-left text,
+ *     'ltr' for left-to-right text, or null if the value itself is not
+ *     enough to determine directionality (e.g. an empty value), and the
+ *     direction is inherited from a parent element (typically the body
+ *     element).
+ */
 goog.ui.BidiInput.prototype.getDirection = function() {
   var dir = this.getElement().dir;
   if (dir == '') {
     dir = null;
   }
   return dir;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value of the underlying input field, and sets the direction
-***REMOVED*** according to the given value.
-***REMOVED*** @param {string} value  The Value to set in the underlying input field.
-***REMOVED***
+/**
+ * Sets the value of the underlying input field, and sets the direction
+ * according to the given value.
+ * @param {string} value  The Value to set in the underlying input field.
+ */
 goog.ui.BidiInput.prototype.setValue = function(value) {
   var element = this.getElement();
   if (goog.isDefAndNotNull(element.value)) {
@@ -153,21 +153,21 @@ goog.ui.BidiInput.prototype.setValue = function(value) {
     goog.dom.setTextContent(element, value);
   }
   this.setDirection_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the value of the underlying input field.
-***REMOVED*** @return {string} Value of the underlying input field.
-***REMOVED***
+/**
+ * Returns the value of the underlying input field.
+ * @return {string} Value of the underlying input field.
+ */
 goog.ui.BidiInput.prototype.getValue = function() {
   var element = this.getElement();
   return goog.isDefAndNotNull(element.value) ? element.value :
       goog.dom.getRawTextContent(element);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.BidiInput.prototype.disposeInternal = function() {
   if (this.inputHandler_) {
     goog.events.removeAll(this.inputHandler_);
@@ -175,4 +175,4 @@ goog.ui.BidiInput.prototype.disposeInternal = function() {
     this.inputHandler_ = null;
     goog.ui.BidiInput.superClass_.disposeInternal.call(this);
   }
-***REMOVED***
+};

@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
@@ -72,7 +72,7 @@ function getDrawingCanvas(id, callback) {
   canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2, canvasPolygon]);
   canvasDrawing.draw();
   return canvasDrawing;
-***REMOVED***
+};
 
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
@@ -87,7 +87,7 @@ function getDrawingSvg(id, callback) {
   svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2, svgPolygon]);
   svgDrawing.draw();
   return svgDrawing;
-***REMOVED***
+};
 
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
@@ -102,7 +102,7 @@ function getDrawingVml(id, callback) {
   vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2, vmlPolygon]);
   vmlDrawing.draw();
   return vmlDrawing;
-***REMOVED***
+};
 
 function test1AddShapes() {
   if (!xrx.engine.isOldIE()) {
@@ -111,7 +111,7 @@ function test1AddShapes() {
   } else {
     var vmlDrawing = getDrawingVml('vmlAddShapes');
   }
-***REMOVED***
+};
 
 function test2RemoveShapes() {
   if (!xrx.engine.isOldIE()) {
@@ -136,7 +136,7 @@ function test2RemoveShapes() {
     assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
     assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
   }
-***REMOVED***
+};
 
 function test3RemoveOneShape() {
   if (!xrx.engine.isOldIE()) {
@@ -165,7 +165,7 @@ function test3RemoveOneShape() {
     assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
     assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
   }
-***REMOVED***
+};
 
 </script>
 

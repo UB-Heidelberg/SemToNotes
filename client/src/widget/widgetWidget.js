@@ -1,9 +1,9 @@
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.widget.Widget');
 
 
 
-xrx.widget.Widget = function() {***REMOVED***
+xrx.widget.Widget = function() {};

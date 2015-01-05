@@ -12,41 +12,41 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Interface definition of a block cipher. A block cipher is a
-***REMOVED*** pair of algorithms that implement encryption and decryption of input bytes.
-***REMOVED***
-***REMOVED*** @see http://en.wikipedia.org/wiki/Block_cipher
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Interface definition of a block cipher. A block cipher is a
+ * pair of algorithms that implement encryption and decryption of input bytes.
+ *
+ * @see http://en.wikipedia.org/wiki/Block_cipher
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.crypt.BlockCipher');
 
 
 
-***REMOVED***
-***REMOVED*** Interface definition for a block cipher.
-***REMOVED*** @interface
-***REMOVED***
-goog.crypt.BlockCipher = function() {***REMOVED***
+/**
+ * Interface definition for a block cipher.
+ * @interface
+ */
+goog.crypt.BlockCipher = function() {};
 
 
-***REMOVED***
-***REMOVED*** Encrypt a plaintext block.  The implementation may expect (and assert)
-***REMOVED*** a particular block length.
-***REMOVED*** @param {!Array.<number>} input Plaintext array of input bytes.
-***REMOVED*** @return {!Array.<number>} Encrypted ciphertext array of bytes.  Should be the
-***REMOVED***     same length as input.
-***REMOVED***
+/**
+ * Encrypt a plaintext block.  The implementation may expect (and assert)
+ * a particular block length.
+ * @param {!Array.<number>} input Plaintext array of input bytes.
+ * @return {!Array.<number>} Encrypted ciphertext array of bytes.  Should be the
+ *     same length as input.
+ */
 goog.crypt.BlockCipher.prototype.encrypt;
 
 
-***REMOVED***
-***REMOVED*** Decrypt a plaintext block.  The implementation may expect (and assert)
-***REMOVED*** a particular block length.
-***REMOVED*** @param {!Array.<number>} input Ciphertext. Array of input bytes.
-***REMOVED*** @return {!Array.<number>} Decrypted plaintext array of bytes.  Should be the
-***REMOVED***     same length as input.
-***REMOVED***
+/**
+ * Decrypt a plaintext block.  The implementation may expect (and assert)
+ * a particular block length.
+ * @param {!Array.<number>} input Ciphertext. Array of input bytes.
+ * @return {!Array.<number>} Decrypted plaintext array of bytes.  Should be the
+ *     same length as input.
+ */
 goog.crypt.BlockCipher.prototype.decrypt;

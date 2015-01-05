@@ -20,7 +20,7 @@ goog.require('goog.dom.NodeType');
 goog.require('goog.dom.TagName');
 goog.require('goog.functions');
 goog.require('goog.soy');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.soy.testHelper');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.jsunit');
@@ -127,10 +127,10 @@ function testRenderAsElementWithNoData() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the function throws an error for unsafe templates.
-***REMOVED*** @param {Function} function Callback to test.
-***REMOVED***
+/**
+ * Asserts that the function throws an error for unsafe templates.
+ * @param {Function} function Callback to test.
+ */
 function assertUnsafeTemplateOutputErrorThrown(func) {
   stubs.set(goog.asserts, 'ENABLE_ASSERTS', true);
   assertContains('Soy template output is unsafe for use as HTML',

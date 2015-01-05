@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Detection for whether the user has Picasa installed.
-***REMOVED*** Only Picasa versions 2 and later can be detected, and only from Firefox or
-***REMOVED*** Internet Explorer. Picasa for Linux cannot be detected.
-***REMOVED***
-***REMOVED*** In the future, Picasa may provide access to the installed version number,
-***REMOVED*** but until then we can only detect that Picasa 2 or later is present.
-***REMOVED***
-***REMOVED*** To check for Picasa on Internet Explorer requires using document.write, so
-***REMOVED*** this file must be included at page rendering time and cannot be imported
-***REMOVED*** later as part of a dynamically loaded module.
-***REMOVED***
-***REMOVED*** @author brenneman@google.com (Shawn Brenneman)
-***REMOVED*** @see ../demos/useragent.html
-***REMOVED***
+/**
+ * @fileoverview Detection for whether the user has Picasa installed.
+ * Only Picasa versions 2 and later can be detected, and only from Firefox or
+ * Internet Explorer. Picasa for Linux cannot be detected.
+ *
+ * In the future, Picasa may provide access to the installed version number,
+ * but until then we can only detect that Picasa 2 or later is present.
+ *
+ * To check for Picasa on Internet Explorer requires using document.write, so
+ * this file must be included at page rendering time and cannot be imported
+ * later as part of a dynamically loaded module.
+ *
+ * @author brenneman@google.com (Shawn Brenneman)
+ * @see ../demos/useragent.html
+ */
 
 
 goog.provide('goog.userAgent.picasa');
@@ -35,12 +35,12 @@ goog.require('goog.string');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Variable name used to temporarily save the Picasa state in the global object
-***REMOVED*** in Internet Explorer.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Variable name used to temporarily save the Picasa state in the global object
+ * in Internet Explorer.
+ * @type {string}
+ * @private
+ */
 goog.userAgent.picasa.IE_HAS_PICASA_ = 'hasPicasa';
 
 
@@ -80,33 +80,33 @@ goog.userAgent.picasa.IE_HAS_PICASA_ = 'hasPicasa';
     hasPicasa = true;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we detect the user has Picasa installed.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we detect the user has Picasa installed.
+   * @type {boolean}
+   */
   goog.userAgent.picasa.HAS_PICASA = hasPicasa;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The installed version of Picasa. If Picasa is detected, this means it is
-  ***REMOVED*** version 2 or later. The precise version number is not yet available to the
-  ***REMOVED*** browser, this is a placeholder for later versions of Picasa.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The installed version of Picasa. If Picasa is detected, this means it is
+   * version 2 or later. The precise version number is not yet available to the
+   * browser, this is a placeholder for later versions of Picasa.
+   * @type {string}
+   */
   goog.userAgent.picasa.VERSION = hasPicasa ? '2' : '';
 
 })();
 
 
-***REMOVED***
-***REMOVED*** Whether the installed Picasa version is as new or newer than a given version.
-***REMOVED*** This is not yet relevant, we can't detect the true Picasa version number yet,
-***REMOVED*** but this may be possible in future Picasa releases.
-***REMOVED*** @param {string} version The version to check.
-***REMOVED*** @return {boolean} Whether the installed Picasa version is as new or newer
-***REMOVED***     than a given version.
-***REMOVED***
+/**
+ * Whether the installed Picasa version is as new or newer than a given version.
+ * This is not yet relevant, we can't detect the true Picasa version number yet,
+ * but this may be possible in future Picasa releases.
+ * @param {string} version The version to check.
+ * @return {boolean} Whether the installed Picasa version is as new or newer
+ *     than a given version.
+ */
 goog.userAgent.picasa.isVersion = function(version) {
   return goog.string.compareVersions(
       goog.userAgent.picasa.VERSION, version) >= 0;
-***REMOVED***
+};

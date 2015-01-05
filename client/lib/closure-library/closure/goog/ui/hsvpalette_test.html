@@ -20,7 +20,7 @@ This test has not yet been updated to run on IE8. See http://b/hotlist?id=36311
   <script>
     goog.require('goog.color');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.math.Rect');
     goog.require('goog.style');
     goog.require('goog.testing.PropertyReplacer');
@@ -90,7 +90,7 @@ This test has not yet been updated to run on IE8. See http://b/hotlist?id=36311
     function testChangeEvent() {
       // TODO(user): Add functionality to goog.testing.events to assert
       // an event was fired.
-    ***REMOVED***samplePalette, goog.ui.Component.EventType.ACTION,
+      goog.events.listen(samplePalette, goog.ui.Component.EventType.ACTION,
           function() {eventWasFired = true;});
       samplePalette.setColor('#123456');
       assertTrue(eventWasFired);

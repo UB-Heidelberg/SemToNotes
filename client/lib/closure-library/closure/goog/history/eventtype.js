@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Event types for goog.history.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Event types for goog.history.
+ *
+ */
 
 
 goog.provide('goog.history.EventType');
 
 
-***REMOVED***
-***REMOVED*** Event types for goog.history.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event types for goog.history.
+ * @enum {string}
+ */
 goog.history.EventType = {
   NAVIGATE: 'navigate'
-***REMOVED***
+};

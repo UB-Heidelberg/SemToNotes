@@ -14,8 +14,8 @@ See the COPYING file for details.
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.style');
@@ -43,10 +43,10 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/toolbar.css">
   <style>
     /*
-    ***REMOVED*** Sample toolbar styles.
-   ***REMOVED*****REMOVED***
+     * Sample toolbar styles.
+     */
 
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -55,14 +55,14 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* Font select.***REMOVED***
+    /* Font select. */
     .goog-edit-font .goog-toolbar-menu-button-caption {
       color: #246;
       width: 15ex;
       overflow: hidden;
     }
 
-    /* Font select options.***REMOVED***
+    /* Font select options. */
     .goog-edit-font-normal {
       font-family: Arial, sans-serif;
     }
@@ -82,38 +82,38 @@ See the COPYING file for details.
       font-family: Verdana, sans-serif;
     }
 
-    /* Font size.***REMOVED***
+    /* Font size. */
     .goog-edit-font-size .goog-toolbar-menu-button-caption {
       color: #246;
       width: 5ex;
     }
 
-    /* Bold.***REMOVED***
+    /* Bold. */
     .goog-edit-bold {
       background-position: 0;
     }
 
-    /* Italic.***REMOVED***
+    /* Italic. */
     .goog-edit-italic {
       background-position: -16px;
     }
 
-    /* Underline.***REMOVED***
+    /* Underline. */
     .goog-edit-underline {
       background-position: -32px;
     }
 
-    /* Color.***REMOVED***
+    /* Color. */
     .goog-edit-color {
       background-position: -48px;
     }
 
-    /* Background color.***REMOVED***
+    /* Background color. */
     .goog-edit-background {
       background-position: -64px;
     }
 
-    /* Menu buttons.***REMOVED***
+    /* Menu buttons. */
     .goog-edit-style,
     .goog-edit-insert,
     .goog-edit-link,
@@ -122,13 +122,13 @@ See the COPYING file for details.
       color: #246;
     }
 
-    /* Link.***REMOVED***
+    /* Link. */
     .goog-edit-link {
       color: #009;
       text-decoration: underline;
     }
 
-    /* Insert menu.***REMOVED***
+    /* Insert menu. */
     .goog-edit-insert-icon {
       background-position: -80px;
       vertical-align: bottom;
@@ -138,12 +138,12 @@ See the COPYING file for details.
       vertical-align: bottom;
     }
 
-    /* List style menu.***REMOVED***
+    /* List style menu. */
     .goog-edit-list-style {
       background-position: -96px;
     }
 
-    /* Text alignment buttons.***REMOVED***
+    /* Text alignment buttons. */
     .goog-edit-align-left {
       background-position: -128px;
     }
@@ -155,9 +155,9 @@ See the COPYING file for details.
     }
 
     /*
-    ***REMOVED*** Menu styles, overriding those in menus.css to make these menus a little
-    ***REMOVED*** more like the CCC editor UI design.
-   ***REMOVED*****REMOVED***
+     * Menu styles, overriding those in menus.css to make these menus a little
+     * more like the CCC editor UI design.
+     */
 
     .goog-menu {
       position: absolute;
@@ -514,7 +514,7 @@ See the COPYING file for details.
           (goog.now() - start) + 'ms');
     }
 
-  ***REMOVED***goog.dom.getElement('enable_log'),
+    goog.events.listen(goog.dom.getElement('enable_log'),
         goog.events.EventType.CLICK,
         function(e) {
           goog.style.setElementShown(goog.dom.getElement('log'), e.target.checked);
@@ -577,14 +577,14 @@ See the COPYING file for details.
     t1.addChild(btnRight, true);
     t1.render(goog.dom.getElement('t1'));
     showPerf('perf1', timer);
-  ***REMOVED***t1, EVENTS, logEvent);
+    goog.events.listen(t1, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('t1_show'),
+    goog.events.listen(goog.dom.getElement('t1_show'),
         goog.events.EventType.CLICK, handleShow, false, t1);
-  ***REMOVED***goog.dom.getElement('t1_enable'),
+    goog.events.listen(goog.dom.getElement('t1_enable'),
         goog.events.EventType.CLICK, handleEnable, false, t1);
-  ***REMOVED***goog.dom.getElement('toggleButton_enable'),
+    goog.events.listen(goog.dom.getElement('toggleButton_enable'),
         goog.events.EventType.CLICK, handleEnable, false, toggleButton);
 
     // Create right-to-left toolbar programmatically.
@@ -612,7 +612,7 @@ See the COPYING file for details.
 
     t1rtl.render(goog.dom.getElement('t1rtl'));
     showPerf('perf1rtl', timer);
-  ***REMOVED***t1rtl, EVENTS, logEvent);
+    goog.events.listen(t1rtl, EVENTS, logEvent);
 
     // The setCollapsed method needs to be called after the toolbar is rendered
     // for it to pick up the directionality of the toolbar.
@@ -622,11 +622,11 @@ See the COPYING file for details.
     btnRightRtl.setCollapsed(goog.ui.ButtonSide.START);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('t1rtl_show'),
+    goog.events.listen(goog.dom.getElement('t1rtl_show'),
         goog.events.EventType.CLICK, handleShow, false, t1rtl);
-  ***REMOVED***goog.dom.getElement('t1rtl_enable'),
+    goog.events.listen(goog.dom.getElement('t1rtl_enable'),
         goog.events.EventType.CLICK, handleEnable, false, t1rtl);
-  ***REMOVED***goog.dom.getElement('rtlToggleButton_enable'),
+    goog.events.listen(goog.dom.getElement('rtlToggleButton_enable'),
         goog.events.EventType.CLICK, handleEnable, false, rtlToggleButton);
 
     // Decorate the second toolbar.
@@ -634,14 +634,14 @@ See the COPYING file for details.
     var t2 = new goog.ui.Toolbar();
     t2.decorate(goog.dom.getElement('t2'));
     showPerf('perf2', timer);
-  ***REMOVED***t2, EVENTS, logEvent);
+    goog.events.listen(t2, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('t2_show'),
+    goog.events.listen(goog.dom.getElement('t2_show'),
         goog.events.EventType.CLICK, handleShow, false, t2);
-  ***REMOVED***goog.dom.getElement('t2_enable'),
+    goog.events.listen(goog.dom.getElement('t2_enable'),
         goog.events.EventType.CLICK, handleEnable, false, t2);
-  ***REMOVED***goog.dom.getElement('menuButton_enable'),
+    goog.events.listen(goog.dom.getElement('menuButton_enable'),
         goog.events.EventType.CLICK, handleEnable, false,
         t2.getChild('menuButton'));
 
@@ -650,14 +650,14 @@ See the COPYING file for details.
     var t2rtl = new goog.ui.Toolbar();
     t2rtl.decorate(goog.dom.getElement('t2rtl'));
     showPerf('perf2rtl', timer);
-  ***REMOVED***t2rtl, EVENTS, logEvent);
+    goog.events.listen(t2rtl, EVENTS, logEvent);
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('t2rtl_show'),
+    goog.events.listen(goog.dom.getElement('t2rtl_show'),
         goog.events.EventType.CLICK, handleShow, false, t2rtl);
-  ***REMOVED***goog.dom.getElement('t2rtl_enable'),
+    goog.events.listen(goog.dom.getElement('t2rtl_enable'),
         goog.events.EventType.CLICK, handleEnable, false, t2rtl);
-  ***REMOVED***goog.dom.getElement('rtlMenuButton_enable'),
+    goog.events.listen(goog.dom.getElement('rtlMenuButton_enable'),
         goog.events.EventType.CLICK, handleEnable, false,
         t2rtl.getChild('rtlMenuButton'));
 
@@ -666,7 +666,7 @@ See the COPYING file for details.
     var t3 = new goog.ui.Toolbar();
     t3.decorate(goog.dom.getElement('t3'));
     showPerf('perf3', timer);
-  ***REMOVED***t3, EVENTS, logEvent);
+    goog.events.listen(t3, EVENTS, logEvent);
 
     // Have the alignment buttons be controlled by a selection model.
     var selectionModel = new goog.ui.SelectionModel();
@@ -681,21 +681,21 @@ See the COPYING file for details.
           // Let the selection model control the button's checked state.
           button.setAutoStates(goog.ui.Component.State.CHECKED, false);
           selectionModel.addItem(button);
-        ***REMOVED***button, goog.ui.Component.EventType.ACTION,
+          goog.events.listen(button, goog.ui.Component.EventType.ACTION,
               function(e) {
                 selectionModel.setSelectedItem(e.target);
               });
         });
 
     // Hook up checkboxes.
-  ***REMOVED***goog.dom.getElement('t3_show'),
+    goog.events.listen(goog.dom.getElement('t3_show'),
         goog.events.EventType.CLICK, handleShow, false, t3);
-  ***REMOVED***goog.dom.getElement('t3_enable'),
+    goog.events.listen(goog.dom.getElement('t3_enable'),
         goog.events.EventType.CLICK, handleEnable, false, t3);
-  ***REMOVED***goog.dom.getElement('font_enable'),
+    goog.events.listen(goog.dom.getElement('font_enable'),
         goog.events.EventType.CLICK, handleEnable, false,
         t3.getChild('font'));
-  ***REMOVED***goog.dom.getElement('fontSize_show'),
+    goog.events.listen(goog.dom.getElement('fontSize_show'),
         goog.events.EventType.CLICK, handleShow, false,
         t3.getChild('fontSize'));
   </script>

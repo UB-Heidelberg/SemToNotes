@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tabbed pane with style and functionality specific to
-***REMOVED*** Editor dialogs.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Tabbed pane with style and functionality specific to
+ * Editor dialogs.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.ui.editor.TabPane');
 
@@ -25,7 +25,7 @@ goog.require('goog.asserts');
 goog.require('goog.dom.TagName');
 goog.require('goog.dom.classlist');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.require('goog.ui.Control');
@@ -34,54 +34,54 @@ goog.require('goog.ui.TabBar');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new Editor-style tab pane.
-***REMOVED*** @param {goog.dom.DomHelper} dom The dom helper for the window to create this
-***REMOVED***     tab pane in.
-***REMOVED*** @param {string=} opt_caption Optional caption of the tab pane.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new Editor-style tab pane.
+ * @param {goog.dom.DomHelper} dom The dom helper for the window to create this
+ *     tab pane in.
+ * @param {string=} opt_caption Optional caption of the tab pane.
+ * @constructor
+ * @extends {goog.ui.Component}
+ * @final
+ */
 goog.ui.editor.TabPane = function(dom, opt_caption) {
   goog.ui.editor.TabPane.base(this, 'constructor', dom);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The event handler used to register events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.ui.editor.TabPane>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The event handler used to register events.
+   * @type {goog.events.EventHandler.<!goog.ui.editor.TabPane>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
   this.registerDisposable(this.eventHandler_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The tab bar used to render the tabs.
-  ***REMOVED*** @type {goog.ui.TabBar}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The tab bar used to render the tabs.
+   * @type {goog.ui.TabBar}
+   * @private
+   */
   this.tabBar_ = new goog.ui.TabBar(goog.ui.TabBar.Location.START,
       undefined, this.dom_);
   this.tabBar_.setFocusable(false);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The content element.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The content element.
+   * @private
+   */
   this.tabContent_ = this.dom_.createDom(goog.dom.TagName.DIV,
       {className: goog.getCssName('goog-tab-content')});
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The currently selected radio button.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The currently selected radio button.
+   * @type {Element}
+   * @private
+   */
   this.selectedRadio_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The currently visible tab content.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The currently visible tab content.
+   * @type {Element}
+   * @private
+   */
   this.visibleContent_ = null;
 
 
@@ -93,36 +93,36 @@ goog.ui.editor.TabPane = function(dom, opt_caption) {
     captionControl.setEnabled(false);
     this.tabBar_.addChild(captionControl, true);
   }
-***REMOVED***
+};
 goog.inherits(goog.ui.editor.TabPane, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** @return {string} The ID of the content element for the current tab.
-***REMOVED***
+/**
+ * @return {string} The ID of the content element for the current tab.
+ */
 goog.ui.editor.TabPane.prototype.getCurrentTabId = function() {
   return this.tabBar_.getSelectedTab().getId();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects the tab with the given id.
-***REMOVED*** @param {string} id Id of the tab to select.
-***REMOVED***
+/**
+ * Selects the tab with the given id.
+ * @param {string} id Id of the tab to select.
+ */
 goog.ui.editor.TabPane.prototype.setSelectedTabId = function(id) {
   this.tabBar_.setSelectedTab(this.tabBar_.getChild(id));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a tab to the tab pane.
-***REMOVED*** @param {string} id The id of the tab to add.
-***REMOVED*** @param {string} caption The caption of the tab.
-***REMOVED*** @param {string} tooltip The tooltip for the tab.
-***REMOVED*** @param {string} groupName for the radio button group.
-***REMOVED*** @param {Element} content The content element to show when this tab is
-***REMOVED***     selected.
-***REMOVED***
+/**
+ * Adds a tab to the tab pane.
+ * @param {string} id The id of the tab to add.
+ * @param {string} caption The caption of the tab.
+ * @param {string} tooltip The tooltip for the tab.
+ * @param {string} groupName for the radio button group.
+ * @param {Element} content The content element to show when this tab is
+ *     selected.
+ */
 goog.ui.editor.TabPane.prototype.addTab = function(id, caption, tooltip,
     groupName, content) {
   var radio = this.dom_.createDom(goog.dom.TagName.INPUT,
@@ -149,10 +149,10 @@ goog.ui.editor.TabPane.prototype.addTab = function(id, caption, tooltip,
   content.id = id + '-tab';
   this.tabContent_.appendChild(content);
   goog.style.setElementShown(content, false);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.editor.TabPane.prototype.enterDocument = function() {
   goog.ui.editor.TabPane.base(this, 'enterDocument');
 
@@ -173,16 +173,16 @@ goog.ui.editor.TabPane.prototype.enterDocument = function() {
   root.appendChild(
       this.dom_.createDom(goog.dom.TagName.DIV,
           {className: goog.getCssName('goog-tab-bar-clear')}));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a tab change.
-***REMOVED*** @param {goog.events.Event} e The browser change event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a tab change.
+ * @param {goog.events.Event} e The browser change event.
+ * @private
+ */
 goog.ui.editor.TabPane.prototype.handleTabSelect_ = function(e) {
-  var tab =***REMOVED*****REMOVED*** @type {goog.ui.Tab}***REMOVED*** (e.target);
+  var tab = /** @type {goog.ui.Tab} */ (e.target);
 
   // Show the tab content.
   if (this.visibleContent_) {
@@ -198,4 +198,4 @@ goog.ui.editor.TabPane.prototype.handleTabSelect_ = function(e) {
   this.selectedRadio_ = tab.getElement().getElementsByTagName(
       goog.dom.TagName.INPUT)[0];
   this.selectedRadio_.checked = true;
-***REMOVED***
+};

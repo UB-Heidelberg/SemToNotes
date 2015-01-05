@@ -1,10 +1,10 @@
-***REMOVED***
+/**
     A collection of functions relating to JSDoc symbol name manipulation.
     @module jsdoc/name
     @requires jsdoc/tag/dictionary
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var _ = require('underscore');
@@ -22,13 +22,13 @@ var SCOPE_NAMES = exports.SCOPE_NAMES = {
     inner: 'inner',
     instance: 'instance',
     'static': 'static'
-***REMOVED***
+};
 var STATIC = exports.STATIC = '.';
 var scopeToPunc = exports.scopeToPunc = {
     'inner': INNER,
     'instance': INSTANCE,
     'static': STATIC
-***REMOVED***
+};
 var puncToScope = exports.puncToScope = _.invert(scopeToPunc);
 
 var DEFAULT_SCOPE = SCOPE_NAMES.static;
@@ -44,12 +44,12 @@ function prototypeToPunc(name) {
     return name.replace(/(?:^|\.)prototype\.?/g, INSTANCE);
 }
 
-***REMOVED***
+/**
     Resolves the longname, memberof, variation and name values of the given doclet.
     @param {module:jsdoc/doclet.Doclet} doclet
-***REMOVED***
+ */
 exports.resolve = function(doclet) {
-    var about = {***REMOVED***
+    var about = {};
     var leadingScope = new RegExp('^' + REGEXP_SCOPE_PUNC);
     var memberof = doclet.memberof || '';
     var name = doclet.name ? String(doclet.name) : '';
@@ -147,20 +147,20 @@ exports.resolve = function(doclet) {
     if (!doclet.longname) {
         doclet.longname = '';
     }
-***REMOVED***
+};
 
 // TODO: make this a private method, or remove it if possible
 RegExp.escape = RegExp.escape || function(str) {
     var specials = new RegExp('[.*+?|()\\[\\]{}\\\\]', 'g'); // .*+?|()[]{}\
     return str.replace(specials, '\\$&');
-***REMOVED***
+};
 
-***REMOVED***
+/**
     @method module:jsdoc/name.applyNamespace
     @param {string} longname The full longname of the symbol.
     @param {string} ns The namespace to be applied.
     @returns {string} The longname with the namespace applied.
-***REMOVED***
+ */
 exports.applyNamespace = function(longname, ns) {
     var nameParts = exports.shorten(longname),
         name = nameParts.name;
@@ -171,15 +171,15 @@ exports.applyNamespace = function(longname, ns) {
     }
 
     return longname;
-***REMOVED***
+};
 
-***REMOVED***
+/**
     Given a longname like "a.b#c(2)", slice it up into ["a.b", "#", 'c', '2'],
     representing the memberof, the scope, the name, and variation.
     @param {string} longname
     @param {string} forcedMemberof
     @returns {object} Representing the properties of the given name.
-***REMOVED***
+ */
 exports.shorten = function(longname, forcedMemberof) {
     // quoted strings in a longname are atomic, convert to tokens
     var atoms = [], token;
@@ -223,7 +223,7 @@ exports.shorten = function(longname, forcedMemberof) {
         memberof = parts[2] || '';
     }
 
-    // like***REMOVED*****REMOVED*** @name foo.bar(2)***REMOVED***
+    // like /** @name foo.bar(2) */
     if ( /(.+)\(([^)]+)\)$/.test(name) ) {
         name = RegExp.$1;
         variation = RegExp.$2;
@@ -239,14 +239,14 @@ exports.shorten = function(longname, forcedMemberof) {
     }
 
     ////
-    return {longname: longname, memberof: memberof, scope: scope, name: name, variation: variation***REMOVED***
-***REMOVED***
+    return {longname: longname, memberof: memberof, scope: scope, name: name, variation: variation};
+};
 
-***REMOVED***
+/**
     Split a string that starts with a name and ends with a description into its parts.
     @param {string} nameDesc
     @returns {object} Hash with "name" and "description" properties.
-***REMOVED***
+ */
 exports.splitName = function(nameDesc) {
     // like: name, [name], name text, [name] text, name - text, or [name] - text
     // the hyphen must be on the same line as the name; this prevents us from treating a Markdown
@@ -255,5 +255,5 @@ exports.splitName = function(nameDesc) {
     return {
         name: RegExp.$1,
         description: RegExp.$3
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};

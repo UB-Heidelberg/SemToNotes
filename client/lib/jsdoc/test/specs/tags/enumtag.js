@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true, xit: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true, xit: true */
 describe("@enum tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/enumtag.js');
     var tristate = docSet.getByLongname('TriState')[0];

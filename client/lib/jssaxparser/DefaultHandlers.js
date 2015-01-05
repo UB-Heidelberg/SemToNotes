@@ -1,4 +1,4 @@
-/*global SAXParseException***REMOVED***
+/*global SAXParseException */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -46,60 +46,60 @@ function DefaultHandler () {
 }
 // INTERFACE: ContentHandler: http://www.saxproject.org/apidoc/org/xml/sax/ContentHandler.html
 DefaultHandler.prototype.startDocument = function() {
-***REMOVED***
+};
 
 DefaultHandler.prototype.startElement = function(namespaceURI, localName, qName, atts) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.endElement = function(namespaceURI, localName, qName) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.startPrefixMapping = function(prefix, uri) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.endPrefixMapping = function(prefix) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.processingInstruction = function(target, data) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.ignorableWhitespace = function(ch, start, length) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.characters = function(ch, start, length) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.skippedEntity = function(name) {
-***REMOVED***
+};
 
 DefaultHandler.prototype.endDocument = function() {
-***REMOVED***
+};
 
 DefaultHandler.prototype.setDocumentLocator = function (locator) {
     this.locator = locator;
-***REMOVED***
+};
 // INTERFACE: EntityResolver: http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html
 // Could implement this by checking for last two arguments missing in EntityResolver2 resolveEntity() below
 DefaultHandler.prototype.resolveEntity = function (publicId, systemId) {
     return null;
-***REMOVED***
+};
 
 // INTERFACE: DTDHandler: http://www.saxproject.org/apidoc/org/xml/sax/DTDHandler.html
 DefaultHandler.prototype.notationDecl = function (name, publicId, systemId) {
-***REMOVED***
+};
 DefaultHandler.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {
-***REMOVED***
+};
 
 // INTERFACE: ErrorHandler: http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
 DefaultHandler.prototype.warning = function(saxParseException) {
     this.saxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 DefaultHandler.prototype.error = function(saxParseException) {
     this.saxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 DefaultHandler.prototype.fatalError = function(saxParseException) {
     throw saxParseException;
-***REMOVED***
+};
 
 
 // http://www.saxproject.org/apidoc/org/xml/sax/ext/DefaultHandler2.html
@@ -111,47 +111,47 @@ DefaultHandler2.prototype = new DefaultHandler();
 // INTERFACE: DeclHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/DeclHandler.html
 
 DefaultHandler2.prototype.attributeDecl = function(eName, aName, type, mode, value) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.elementDecl = function(name, model) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.externalEntityDecl = function(name, publicId, systemId) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.internalEntityDecl = function(name, value) {
-***REMOVED***
+};
 
 // INTERFACE: LexicalHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/LexicalHandler.html
 
 DefaultHandler2.prototype.comment = function(ch, start, length) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.endCDATA = function() {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.endDTD = function() {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.endEntity = function(name) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.startCDATA = function() {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.startDTD = function(name, publicId, systemId) {
-***REMOVED***
+};
 
 DefaultHandler2.prototype.startEntity = function(name) {
-***REMOVED***
+};
 // INTERFACE: EntityResolver: http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html
 // Could implement this by checking for last two arguments missing in EntityResolver2 resolveEntity() below
-// DefaultHandler2.prototype.resolveEntity = function (publicId, systemId) {***REMOVED***
+// DefaultHandler2.prototype.resolveEntity = function (publicId, systemId) {};
 // INTERFACE: EntityResolver2: http://www.saxproject.org/apidoc/org/xml/sax/ext/EntityResolver2.html
 DefaultHandler2.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {
-***REMOVED***
+};
 DefaultHandler2.prototype.getExternalSubset = function(name, baseURI) {
-***REMOVED***
+};
 
 
 

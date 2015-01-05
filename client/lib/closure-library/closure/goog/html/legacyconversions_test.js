@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.legacyconversions.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.legacyconversions.
+ */
 
 goog.provide('goog.html.legacyconversionsTest');
 
@@ -28,7 +28,7 @@ goog.require('goog.testing.jsunit');
 goog.setTestOnly('goog.html.legacyconversionsTest');
 
 
-***REMOVED*** @type {!goog.testing.PropertyReplacer}***REMOVED***
+/** @type {!goog.testing.PropertyReplacer} */
 var stubs = new goog.testing.PropertyReplacer();
 
 

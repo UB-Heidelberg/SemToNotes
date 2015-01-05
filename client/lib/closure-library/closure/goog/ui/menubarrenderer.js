@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.menuBar}.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.menuBar}.
+ *
+ */
 
 goog.provide('goog.ui.MenuBarRenderer');
 
@@ -25,44 +25,44 @@ goog.require('goog.ui.ContainerRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.menuBar}s, based on {@link
-***REMOVED*** goog.ui.ContainerRenderer}.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ContainerRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.menuBar}s, based on {@link
+ * goog.ui.ContainerRenderer}.
+ * @constructor
+ * @extends {goog.ui.ContainerRenderer}
+ * @final
+ */
 goog.ui.MenuBarRenderer = function() {
   goog.ui.MenuBarRenderer.base(this, 'constructor',
       goog.a11y.aria.Role.MENUBAR);
-***REMOVED***
+};
 goog.inherits(goog.ui.MenuBarRenderer, goog.ui.ContainerRenderer);
 goog.addSingletonGetter(goog.ui.MenuBarRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of elements rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of elements rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.MenuBarRenderer.CSS_CLASS = goog.getCssName('goog-menubar');
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.ui.MenuBarRenderer.prototype.getCssClass = function() {
   return goog.ui.MenuBarRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the default orientation of containers rendered or decorated by this
-***REMOVED*** renderer.  This implementation returns {@code HORIZONTAL}.
-***REMOVED*** @return {goog.ui.Container.Orientation} Default orientation for containers
-***REMOVED***     created or decorated by this renderer.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the default orientation of containers rendered or decorated by this
+ * renderer.  This implementation returns {@code HORIZONTAL}.
+ * @return {goog.ui.Container.Orientation} Default orientation for containers
+ *     created or decorated by this renderer.
+ * @override
+ */
 goog.ui.MenuBarRenderer.prototype.getDefaultOrientation = function() {
   return goog.ui.Container.Orientation.HORIZONTAL;
-***REMOVED***
+};

@@ -23,7 +23,7 @@ var oldGetObjectByName;
 
 // provide our own window that implements our instrumented and
 // immediate-call versions of setTimeout and setInterval
-var fakeWin = {***REMOVED***
+var fakeWin = {};
 
 var errorHandler;
 var mockControl;
@@ -38,7 +38,7 @@ function setUp() {
   // On IE, globalEval happens async. So make it synchronous.
   goog.globalEval = function(str) {
     eval(str);
- ***REMOVED*****REMOVED***
+  };
 
   oldGetObjectByName = goog.getObjectByName;
   goog.getObjectByName = function(name) {
@@ -47,7 +47,7 @@ function setUp() {
     } else {
       return oldGetObjectByName(name);
     }
- ***REMOVED*****REMOVED***
+  };
 
   fakeWin.setTimeout = function(fn, time) {
     fakeWin.setTimeout.called = true;
@@ -57,7 +57,7 @@ function setUp() {
     } else {
       fn();
     }
- ***REMOVED*****REMOVED***
+  };
 
   fakeWin.setInterval = function(fn, time) {
     fakeWin.setInterval.called = true;
@@ -67,13 +67,13 @@ function setUp() {
     } else {
       fn();
     }
- ***REMOVED*****REMOVED***
+  };
 
   fakeWin.requestAnimationFrame = function(fn) {
     fakeWin.requestAnimationFrame.called = true;
     fakeWin.requestAnimationFrame.that = this;
     fn();
- ***REMOVED*****REMOVED***
+  };
 
   // just record the exception in the error handler when it happens
   errorHandler = new goog.debug.ErrorHandler(
@@ -172,7 +172,7 @@ function testDisposal() {
 }
 
 function testUnwrap() {
-  var fn = function() {***REMOVED***
+  var fn = function() {};
   var wrappedFn = errorHandler.wrap(fn);
   assertNotEquals(wrappedFn, fn);
 
@@ -187,7 +187,7 @@ function testStackPreserved() {
     var e = Error();
     hasStacks = !!e.stack;
     throw e;
- ***REMOVED*****REMOVED***
+  };
   var wrappedFn = errorHandler.wrap(specialFunctionName);
   try {
     wrappedFn();
@@ -203,7 +203,7 @@ function testStackPreserved() {
 function testGetProtectedFunction() {
   var fn = function() {
     throw new Error('Foo');
- ***REMOVED*****REMOVED***
+  };
   var protectedFn = errorHandler.getProtectedFunction(fn);
   var e = assertThrows(protectedFn);
   assertTrue(e instanceof goog.debug.ErrorHandler.ProtectedFunctionError);
@@ -221,7 +221,7 @@ function testGetProtectedFunction_withoutWrappedErrors() {
     var e = new Error('Foo');
     e.stack = 'STACK';
     throw e;
- ***REMOVED*****REMOVED***
+  };
   var protectedFn = errorHandler.getProtectedFunction(fn);
   if (shouldCallErrorLog) {
     goog.global.console.error('Foo', 'STACK');
@@ -239,7 +239,7 @@ function testGetProtectedFunction_withoutWrappedErrorsWithMessagePrefix() {
   errorHandler.setPrefixErrorMessages(true);
   var fn = function() {
     throw new Error('Foo');
- ***REMOVED*****REMOVED***
+  };
   var protectedFn = errorHandler.getProtectedFunction(fn);
   var e = assertThrows(protectedFn);
   assertTrue(e instanceof Error);
@@ -249,7 +249,7 @@ function testGetProtectedFunction_withoutWrappedErrorsWithMessagePrefix() {
 
   var stringError = function() {
     throw 'String';
- ***REMOVED*****REMOVED***
+  };
   protectedFn = errorHandler.getProtectedFunction(stringError);
   e = assertThrows(protectedFn);
   assertEquals('string', typeof e);

@@ -12,56 +12,56 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Interface for a factory for creating XMLHttpRequest objects
-***REMOVED*** and metadata about them.
-***REMOVED*** @author dbk@google.com (David Barrett-Kahn)
-***REMOVED***
+/**
+ * @fileoverview Interface for a factory for creating XMLHttpRequest objects
+ * and metadata about them.
+ * @author dbk@google.com (David Barrett-Kahn)
+ */
 
 goog.provide('goog.net.XmlHttpFactory');
 
-***REMOVED*** @suppress {extraRequire} Typedef.***REMOVED***
+/** @suppress {extraRequire} Typedef. */
 goog.require('goog.net.XhrLike');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract base class for an XmlHttpRequest factory.
-***REMOVED***
-***REMOVED***
+/**
+ * Abstract base class for an XmlHttpRequest factory.
+ * @constructor
+ */
 goog.net.XmlHttpFactory = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cache of options - we only actually call internalGetOptions once.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cache of options - we only actually call internalGetOptions once.
+ * @type {Object}
+ * @private
+ */
 goog.net.XmlHttpFactory.prototype.cachedOptions_ = null;
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.net.XhrLike.OrNative} A new XhrLike instance.
-***REMOVED***
+/**
+ * @return {!goog.net.XhrLike.OrNative} A new XhrLike instance.
+ */
 goog.net.XmlHttpFactory.prototype.createInstance = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {Object} Options describing how xhr objects obtained from this
-***REMOVED***     factory should be used.
-***REMOVED***
+/**
+ * @return {Object} Options describing how xhr objects obtained from this
+ *     factory should be used.
+ */
 goog.net.XmlHttpFactory.prototype.getOptions = function() {
   return this.cachedOptions_ ||
       (this.cachedOptions_ = this.internalGetOptions());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Override this method in subclasses to preserve the caching offered by
-***REMOVED*** getOptions().
-***REMOVED*** @return {Object} Options describing how xhr objects obtained from this
-***REMOVED***     factory should be used.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Override this method in subclasses to preserve the caching offered by
+ * getOptions().
+ * @return {Object} Options describing how xhr objects obtained from this
+ *     factory should be used.
+ * @protected
+ */
 goog.net.XmlHttpFactory.prototype.internalGetOptions = goog.abstractMethod;

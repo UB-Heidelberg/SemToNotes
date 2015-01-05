@@ -17,7 +17,7 @@ See the COPYING file for details.
     goog.require('goog.a11y.aria.Role');
     goog.require('goog.dom');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.i18n.DateTimeSymbols_en_US');
     goog.require('goog.i18n.DateTimeSymbols_zh_HK');
     goog.require('goog.style');
@@ -48,7 +48,7 @@ See the COPYING file for details.
         'Button element must have expected class names',
         ['goog-date-picker-btn', 'goog-date-picker-month'],
         goog.dom.classlist.get(month)
-  ***REMOVED***
+    );
   }
 
   function testIsYearOnLeft() {
@@ -62,7 +62,7 @@ See the COPYING file for details.
         'Button element must have expected class names',
         ['goog-date-picker-btn', 'goog-date-picker-year'],
         goog.dom.classlist.get(year)
-  ***REMOVED***
+    );
   }
 
   function testHidingOfTableFoot0() {
@@ -177,15 +177,15 @@ See the COPYING file for details.
     var selectEvents = 0;
     var changeEvents = 0;
     var changeActiveMonthEvents = 0;
-  ***REMOVED***picker, goog.ui.DatePicker.Events.SELECT,
+    goog.events.listen(picker, goog.ui.DatePicker.Events.SELECT,
         function() {
           selectEvents++;
         });
-  ***REMOVED***picker, goog.ui.DatePicker.Events.CHANGE,
+    goog.events.listen(picker, goog.ui.DatePicker.Events.CHANGE,
         function() {
           changeEvents++;
         });
-  ***REMOVED***picker, goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH,
+    goog.events.listen(picker, goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH,
         function() {
           changeActiveMonthEvents++;
         });
@@ -230,7 +230,7 @@ See the COPYING file for details.
   function testChangeActiveMonth() {
     picker = new goog.ui.DatePicker();
     var changeActiveMonthEvents = 0;
-  ***REMOVED***picker, goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH,
+    goog.events.listen(picker, goog.ui.DatePicker.Events.CHANGE_ACTIVE_MONTH,
     function() {
       changeActiveMonthEvents++;
     });
@@ -287,7 +287,7 @@ See the COPYING file for details.
     picker.render();
     var cells = goog.dom.getElementsByTagNameAndClass('td', undefined,
         picker.getElement());
-    var existingIds = {***REMOVED***
+    var existingIds = {};
     var numCells = cells.length;
     for (var i = 0; i < numCells; i++) {
       assertNotNull(cells[i]);

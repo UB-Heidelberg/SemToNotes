@@ -51,7 +51,7 @@ label.options {
 goog.require('goog.debug.DivConsole');
 goog.require('goog.dispose');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.ActionHandler');
 goog.require('goog.events.ActionHandler.EventType');
 goog.require('goog.fx.Transition.EventType');
@@ -172,7 +172,7 @@ function animate_() {
     case 'Fade': fade(); break;
   }
 
-***REMOVED***
+  goog.events.listen(
       transition, goog.fx.Transition.EventType.END, function() {
         isPlaying = false;
         resetButton.value = 'Reset';
@@ -205,7 +205,7 @@ function getValue_(name) {
 }
 
 function installListener_(transition) {
-***REMOVED***transition, eventTypes, function(e) {
+  goog.events.listen(transition, eventTypes, function(e) {
     goog.log.info(logger, 'Fired event: ' + e.type);
   });
 }

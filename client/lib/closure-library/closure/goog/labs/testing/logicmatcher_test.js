@@ -15,9 +15,9 @@
 goog.provide('goog.labs.testing.logicMatcherTest');
 goog.setTestOnly('goog.labs.testing.logicMatcherTest');
 
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.AllOfMatcher');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.GreaterThanMatcher');
 goog.require('goog.labs.testing.MatcherError');
 goog.require('goog.labs.testing.assertThat');

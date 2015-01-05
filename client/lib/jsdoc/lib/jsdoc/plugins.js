@@ -1,8 +1,8 @@
-/*global app: true***REMOVED***
-***REMOVED***
-***REMOVED*** Utility functions to support the JSDoc plugin framework.
-***REMOVED*** @module jsdoc/plugins
-***REMOVED***
+/*global app: true */
+/**
+ * Utility functions to support the JSDoc plugin framework.
+ * @module jsdoc/plugins
+ */
 'use strict';
 
 var logger = require('jsdoc/util/logger');
@@ -50,4 +50,4 @@ exports.installPlugins = function(plugins, parser) {
             parser.addAstNodeVisitor(plugin.astNodeVisitor);
         }
     }
-***REMOVED***
+};

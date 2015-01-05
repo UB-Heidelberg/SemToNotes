@@ -1,13 +1,13 @@
 declare({
-    globals:***REMOVED*****REMOVED*** @lends***REMOVED*** {
+    globals: /** @lends */ {
 
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         'test': function() { },
 
-       ***REMOVED*****REMOVED*** @namespace***REMOVED***
+        /** @namespace */
         'test1': {
 
-           ***REMOVED*****REMOVED*** document me***REMOVED***
+            /** document me */
             'test2': function() {  }
         }
     }

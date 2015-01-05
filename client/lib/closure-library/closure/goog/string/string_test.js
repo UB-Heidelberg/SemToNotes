@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.string.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.string.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.stringTest');
 
 goog.require('goog.functions');
@@ -340,7 +340,7 @@ function testSubs() {
   function f() {
     fail('This should not be called');
   }
-  f.toString = function() { return 'f';***REMOVED*****REMOVED***
+  f.toString = function() { return 'f'; };
   assertEquals('Should not call function', 'f', goog.string.subs('%s', f));
 
   // If the string that is to be substituted in contains $& then it will be
@@ -369,10 +369,10 @@ function testSubs() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies that if too many arguments are given, they are ignored.
-***REMOVED*** Logic test for bug documented here: http://go/eusxz
-***REMOVED***
+/**
+ * Verifies that if too many arguments are given, they are ignored.
+ * Logic test for bug documented here: http://go/eusxz
+ */
 function testSubsTooManyArguments() {
   assertEquals('one', goog.string.subs('one', 'two', 'three'));
   assertEquals('onetwo', goog.string.subs('one%s', 'two', 'three'));
@@ -482,7 +482,7 @@ function testHtmlEscapeAndUnescapeEntities() {
 function testHtmlUnescapeEntitiesWithDocument() {
   var documentMock = {
     createElement: mockControl.createFunctionMock('createElement')
- ***REMOVED*****REMOVED***
+  };
   var divMock = document.createElement('div');
   documentMock.createElement('div').$returns(divMock);
   mockControl.$replayAll();
@@ -906,8 +906,8 @@ function testAsString() {
   assertEquals('true', goog.string.makeSafe(true));
   assertEquals('false', goog.string.makeSafe(false));
 
-  var funky = function() {***REMOVED***
-  funky.toString = function() { return 'funky-thing'***REMOVED*****REMOVED***
+  var funky = function() {};
+  funky.toString = function() { return 'funky-thing' };
   assertEquals('funky-thing', goog.string.makeSafe(funky));
 }
 
@@ -985,9 +985,9 @@ function assertHashcodeEquals(expectedHashCode, str) {
 }
 
 
-***REMOVED***
-***REMOVED*** Verify we get random-ish looking values for hash of Strings.
-***REMOVED***
+/**
+ * Verify we get random-ish looking values for hash of Strings.
+ */
 function testHashCode() {
   try {
     goog.string.hashCode(null);
@@ -1008,7 +1008,7 @@ function testHashCode() {
 function testUniqueString() {
   var TEST_COUNT = 20;
 
-  var obj = {***REMOVED***
+  var obj = {};
   for (var i = 0; i < TEST_COUNT; i++) {
     obj[goog.string.createUniqueString()] = true;
   }

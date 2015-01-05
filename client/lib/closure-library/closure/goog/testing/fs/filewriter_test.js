@@ -16,7 +16,7 @@ goog.provide('goog.testing.fs.FileWriterTest');
 goog.setTestOnly('goog.testing.fs.FileWriterTest');
 
 goog.require('goog.async.Deferred');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fs.Error');
 goog.require('goog.fs.FileSaver');
 goog.require('goog.testing.AsyncTestCase');

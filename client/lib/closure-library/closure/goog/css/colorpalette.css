@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for color palettes.
-***REMOVED***
-***REMOVED*** @author pupius@google.com (Daniel Pupius)
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for color palettes.
+ *
+ * @author pupius@google.com (Daniel Pupius)
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
 .goog-palette-cell .goog-palette-colorswatch {
@@ -28,7 +28,7 @@
 }
 
 .goog-palette-cell-selected .goog-palette-colorswatch {
-  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  /* Client apps may override the URL at which they serve the sprite. */
   background: url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -368px 0;
   border: 1px solid #333;
   color: #fff;

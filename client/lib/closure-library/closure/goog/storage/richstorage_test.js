@@ -32,7 +32,7 @@ function testWrapping() {
   var storage = new goog.storage.RichStorage(mechanism);
 
   // Some metadata.
-  var object = {'a': 97, 'b': 98***REMOVED***
+  var object = {'a': 97, 'b': 98};
   var wrapper = new goog.storage.RichStorage.Wrapper(object);
   wrapper['meta'] = 'info';
   storage.set('first', wrapper);

@@ -1,6 +1,6 @@
-***REMOVED*** A function.
-***REMOVED*** @todo something
-***REMOVED*** @todo something else
-***REMOVED***
+/** A function.
+ * @todo something
+ * @todo something else
+ */
 function x() {
 }

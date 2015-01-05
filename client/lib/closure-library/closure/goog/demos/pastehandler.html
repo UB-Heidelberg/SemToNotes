@@ -41,7 +41,7 @@ See the COPYING file for details.
     var pasteHandler = new goog.events.PasteHandler(textarea);
     var logger = goog.log.getLogger('demo')
 
-  ***REMOVED***pasteHandler, goog.events.PasteHandler.EventType.PASTE,
+    goog.events.listen(pasteHandler, goog.events.PasteHandler.EventType.PASTE,
         function(e) {
           goog.log.log(logger, goog.log.Level.SHOUT, 'pasted!');
         });

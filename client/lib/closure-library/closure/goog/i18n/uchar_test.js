@@ -36,7 +36,7 @@ function testToCharCode() {
 function testcodePointAt() {
   // Basic cases.
   assertEquals(0x006C, goog.i18n.uChar.getCodePointAround('Hello!', 2));
-  assertEquals(0x2708 /* Airplane symbol (non-ASCII)***REMOVED***,
+  assertEquals(0x2708 /* Airplane symbol (non-ASCII) */,
       goog.i18n.uChar.getCodePointAround('Hello\u2708', 5));
 
   // Supplementary characters.

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A thick wrapper around images.
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview A thick wrapper around images.
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.graphics.ext.Image');
@@ -25,40 +25,40 @@ goog.require('goog.graphics.ext.Element');
 
 
 
-***REMOVED***
-***REMOVED*** Wrapper for a graphics image element.
-***REMOVED*** @param {goog.graphics.ext.Group} group Parent for this element.
-***REMOVED*** @param {string} src The path to the image to display.
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.ext.Element}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wrapper for a graphics image element.
+ * @param {goog.graphics.ext.Group} group Parent for this element.
+ * @param {string} src The path to the image to display.
+ * @constructor
+ * @extends {goog.graphics.ext.Element}
+ * @final
+ */
 goog.graphics.ext.Image = function(group, src) {
   // Initialize with some stock values.
   var wrapper = group.getGraphicsImplementation().drawImage(0, 0, 1, 1, src,
       group.getWrapper());
   goog.graphics.ext.Element.call(this, group, wrapper);
-***REMOVED***
+};
 goog.inherits(goog.graphics.ext.Image, goog.graphics.ext.Element);
 
 
-***REMOVED***
-***REMOVED*** Redraw the image.  Called when the coordinate system is changed.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Redraw the image.  Called when the coordinate system is changed.
+ * @protected
+ * @override
+ */
 goog.graphics.ext.Image.prototype.redraw = function() {
   goog.graphics.ext.Image.superClass_.redraw.call(this);
 
   // Our position is already handled bu transform_.
   this.getWrapper().setSize(this.getWidth(), this.getHeight());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Update the source of the image.
-***REMOVED*** @param {string} src  Source of the image.
-***REMOVED***
+/**
+ * Update the source of the image.
+ * @param {string} src  Source of the image.
+ */
 goog.graphics.ext.Image.prototype.setSource = function(src) {
   this.getWrapper().setSource(src);
-***REMOVED***
+};

@@ -12,227 +12,227 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A wrapper for asynchronous message-passing channels that buffer
-***REMOVED*** their output until both ends of the channel are connected.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A wrapper for asynchronous message-passing channels that buffer
+ * their output until both ends of the channel are connected.
+ *
+ */
 
 goog.provide('goog.messaging.BufferedChannel');
 
 goog.require('goog.Timer');
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.debug.Error');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.log');
 goog.require('goog.messaging.MessageChannel');
 goog.require('goog.messaging.MultiChannel');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new BufferedChannel, which operates like its underlying channel
-***REMOVED*** except that it buffers calls to send until it receives a message from its
-***REMOVED*** peer claiming that the peer is ready to receive.  The peer is also expected
-***REMOVED*** to be a BufferedChannel, though this is not enforced.
-***REMOVED***
-***REMOVED*** @param {!goog.messaging.MessageChannel} messageChannel The MessageChannel
-***REMOVED***     we're wrapping.
-***REMOVED*** @param {number=} opt_interval Polling interval for sending ready
-***REMOVED***     notifications to peer, in ms.  Default is 50.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @implements {goog.messaging.MessageChannel***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new BufferedChannel, which operates like its underlying channel
+ * except that it buffers calls to send until it receives a message from its
+ * peer claiming that the peer is ready to receive.  The peer is also expected
+ * to be a BufferedChannel, though this is not enforced.
+ *
+ * @param {!goog.messaging.MessageChannel} messageChannel The MessageChannel
+ *     we're wrapping.
+ * @param {number=} opt_interval Polling interval for sending ready
+ *     notifications to peer, in ms.  Default is 50.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @implements {goog.messaging.MessageChannel};
+ * @final
+ */
 goog.messaging.BufferedChannel = function(messageChannel, opt_interval) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Buffer of messages to be sent when the channel's peer is ready.
-  ***REMOVED***
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Buffer of messages to be sent when the channel's peer is ready.
+   *
+   * @type {Array.<Object>}
+   * @private
+   */
   this.buffer_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Channel dispatcher wrapping the underlying delegate channel.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.messaging.MultiChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Channel dispatcher wrapping the underlying delegate channel.
+   *
+   * @type {!goog.messaging.MultiChannel}
+   * @private
+   */
   this.multiChannel_ = new goog.messaging.MultiChannel(messageChannel);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Virtual channel for carrying the user's messages.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.messaging.MessageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Virtual channel for carrying the user's messages.
+   *
+   * @type {!goog.messaging.MessageChannel}
+   * @private
+   */
   this.userChannel_ = this.multiChannel_.createVirtualChannel(
       goog.messaging.BufferedChannel.USER_CHANNEL_NAME_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Virtual channel for carrying control messages for BufferedChannel.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.messaging.MessageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Virtual channel for carrying control messages for BufferedChannel.
+   *
+   * @type {!goog.messaging.MessageChannel}
+   * @private
+   */
   this.controlChannel_ = this.multiChannel_.createVirtualChannel(
       goog.messaging.BufferedChannel.CONTROL_CHANNEL_NAME_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Timer for the peer ready ping loop.
-  ***REMOVED***
-  ***REMOVED*** @type {goog.Timer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Timer for the peer ready ping loop.
+   *
+   * @type {goog.Timer}
+   * @private
+   */
   this.timer_ = new goog.Timer(
       opt_interval || goog.messaging.BufferedChannel.DEFAULT_INTERVAL_MILLIS_);
 
   this.timer_.start();
-***REMOVED***
+  goog.events.listen(
       this.timer_, goog.Timer.TICK, this.sendReadyPing_, false, this);
 
   this.controlChannel_.registerService(
       goog.messaging.BufferedChannel.PEER_READY_SERVICE_NAME_,
       goog.bind(this.setPeerReady_, this));
-***REMOVED***
+};
 goog.inherits(goog.messaging.BufferedChannel, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Default polling interval (in ms) for setPeerReady_ notifications.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Default polling interval (in ms) for setPeerReady_ notifications.
+ *
+ * @type {number}
+ * @const
+ * @private
+ */
 goog.messaging.BufferedChannel.DEFAULT_INTERVAL_MILLIS_ = 50;
 
 
-***REMOVED***
-***REMOVED*** The name of the private service which handles peer ready pings.  The
-***REMOVED*** service registered with this name is bound to this.setPeerReady_, an internal
-***REMOVED*** part of BufferedChannel's implementation that clients should not send to
-***REMOVED*** directly.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the private service which handles peer ready pings.  The
+ * service registered with this name is bound to this.setPeerReady_, an internal
+ * part of BufferedChannel's implementation that clients should not send to
+ * directly.
+ *
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.BufferedChannel.PEER_READY_SERVICE_NAME_ = 'setPeerReady_';
 
 
-***REMOVED***
-***REMOVED*** The name of the virtual channel along which user messages are sent.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the virtual channel along which user messages are sent.
+ *
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.BufferedChannel.USER_CHANNEL_NAME_ = 'user';
 
 
-***REMOVED***
-***REMOVED*** The name of the virtual channel along which internal control messages are
-***REMOVED*** sent.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the virtual channel along which internal control messages are
+ * sent.
+ *
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.BufferedChannel.CONTROL_CHANNEL_NAME_ = 'control';
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.BufferedChannel.prototype.connect = function(opt_connectCb) {
   if (opt_connectCb) {
     opt_connectCb();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.BufferedChannel.prototype.isConnected = function() {
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the channel's peer is ready.
-***REMOVED***
+/**
+ * @return {boolean} Whether the channel's peer is ready.
+ */
 goog.messaging.BufferedChannel.prototype.isPeerReady = function() {
   return this.peerReady_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logger.
-***REMOVED***
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger.
+ *
+ * @type {goog.log.Logger}
+ * @const
+ * @private
+ */
 goog.messaging.BufferedChannel.prototype.logger_ = goog.log.getLogger(
     'goog.messaging.bufferedchannel');
 
 
-***REMOVED***
-***REMOVED*** Handles one tick of our peer ready notification loop.  This entails sending a
-***REMOVED*** ready ping to the peer and shutting down the loop if we've received a ping
-***REMOVED*** ourselves.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles one tick of our peer ready notification loop.  This entails sending a
+ * ready ping to the peer and shutting down the loop if we've received a ping
+ * ourselves.
+ *
+ * @private
+ */
 goog.messaging.BufferedChannel.prototype.sendReadyPing_ = function() {
   try {
     this.controlChannel_.send(
         goog.messaging.BufferedChannel.PEER_READY_SERVICE_NAME_,
-        /* payload***REMOVED*** this.isPeerReady() ? '1' : '');
+        /* payload */ this.isPeerReady() ? '1' : '');
   } catch (e) {
     this.timer_.stop();  // So we don't keep calling send and re-throwing.
     throw e;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
- ***REMOVED*** Whether or not the peer channel is ready to receive messages.
- ***REMOVED***
- ***REMOVED*** @type {boolean}
- ***REMOVED*** @private
-***REMOVED*****REMOVED***
+/**
+  * Whether or not the peer channel is ready to receive messages.
+  *
+  * @type {boolean}
+  * @private
+  */
 goog.messaging.BufferedChannel.prototype.peerReady_;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.BufferedChannel.prototype.registerService = function(
     serviceName, callback, opt_objectPayload) {
   this.userChannel_.registerService(serviceName, callback, opt_objectPayload);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.BufferedChannel.prototype.registerDefaultService = function(
     callback) {
   this.userChannel_.registerDefaultService(callback);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Send a message over the channel.  If the peer is not ready, the message will
-***REMOVED*** be buffered and sent once we've received a ready message from our peer.
-***REMOVED***
-***REMOVED*** @param {string} serviceName The name of the service this message should be
-***REMOVED***     delivered to.
-***REMOVED*** @param {string|!Object} payload The value of the message. If this is an
-***REMOVED***     Object, it is serialized to JSON before sending.  It's the responsibility
-***REMOVED***     of implementors of this class to perform the serialization.
-***REMOVED*** @see goog.net.xpc.BufferedChannel.send
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Send a message over the channel.  If the peer is not ready, the message will
+ * be buffered and sent once we've received a ready message from our peer.
+ *
+ * @param {string} serviceName The name of the service this message should be
+ *     delivered to.
+ * @param {string|!Object} payload The value of the message. If this is an
+ *     Object, it is serialized to JSON before sending.  It's the responsibility
+ *     of implementors of this class to perform the serialization.
+ * @see goog.net.xpc.BufferedChannel.send
+ * @override
+ */
 goog.messaging.BufferedChannel.prototype.send = function(serviceName, payload) {
   if (this.isPeerReady()) {
     this.userChannel_.send(serviceName, payload);
@@ -241,18 +241,18 @@ goog.messaging.BufferedChannel.prototype.send = function(serviceName, payload) {
         'buffering message ' + serviceName);
     this.buffer_.push({serviceName: serviceName, payload: payload});
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Marks the channel's peer as ready, then sends buffered messages and nulls the
-***REMOVED*** buffer.  Subsequent calls to setPeerReady_ have no effect.
-***REMOVED***
-***REMOVED*** @param {(!Object|string)} peerKnowsWeKnowItsReady Passed by the peer to
-***REMOVED***     indicate whether it knows that we've received its ping and that it's
-***REMOVED***     ready.  Non-empty if true, empty if false.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Marks the channel's peer as ready, then sends buffered messages and nulls the
+ * buffer.  Subsequent calls to setPeerReady_ have no effect.
+ *
+ * @param {(!Object|string)} peerKnowsWeKnowItsReady Passed by the peer to
+ *     indicate whether it knows that we've received its ping and that it's
+ *     ready.  Non-empty if true, empty if false.
+ * @private
+ */
 goog.messaging.BufferedChannel.prototype.setPeerReady_ = function(
     peerKnowsWeKnowItsReady) {
   if (peerKnowsWeKnowItsReady) {
@@ -277,12 +277,12 @@ goog.messaging.BufferedChannel.prototype.setPeerReady_ = function(
     this.userChannel_.send(message.serviceName, message.payload);
   }
   this.buffer_ = null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.BufferedChannel.prototype.disposeInternal = function() {
   goog.dispose(this.multiChannel_);
   goog.dispose(this.timer_);
   goog.messaging.BufferedChannel.base(this, 'disposeInternal');
-***REMOVED***
+};

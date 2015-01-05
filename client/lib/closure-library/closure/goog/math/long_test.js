@@ -1339,7 +1339,7 @@ function testToFromInt() {
 
 function testToFromNumber() {
   for (var i = 0; i < TEST_BITS.length; i += 2) {
-    var num = TEST_BITS[i]***REMOVED*** Math.pow(2, 32) + TEST_BITS[i + 1] >= 0 ?
+    var num = TEST_BITS[i] * Math.pow(2, 32) + TEST_BITS[i + 1] >= 0 ?
         TEST_BITS[i + 1] : Math.pow(2, 32) + TEST_BITS[i + 1];
     var val = goog.math.Long.fromNumber(num);
     assertEquals(num, val.toNumber());
@@ -1379,7 +1379,7 @@ function createTestComparisons(i) {
       assertEquals(i > j, vi.greaterThan(vj));
       assertEquals(i >= j, vi.greaterThanOrEqual(vj));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 // Here and below, we translate one conceptual test (e.g., "testComparisons")
@@ -1455,7 +1455,7 @@ function createTestBitOperations(i) {
     assertEquals(TEST_BITS[i + 1], vi.shiftRight(64).getLowBits());
     assertEquals(TEST_BITS[i], vi.shiftRightUnsigned(64).getHighBits());
     assertEquals(TEST_BITS[i + 1], vi.shiftRightUnsigned(64).getLowBits());
- ***REMOVED*****REMOVED***
+  };
 }
 
 for (var i = 0; i < TEST_BITS.length; i += 2) {

@@ -25,33 +25,33 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A streaming XPath 1.0 implementation forked
-***REMOVED***     from Google's Wicked Good XPath library.
-***REMOVED***
-***REMOVED***
-***REMOVED*** The MIT License
-***REMOVED*** 
-***REMOVED*** Copyright (c) 2007 Cybozu Labs, Inc.
-***REMOVED*** Copyright (c) 2012 Google Inc.
-***REMOVED*** 
-***REMOVED*** Permission is hereby granted, free of charge, to any person obtaining a copy
-***REMOVED*** of this software and associated documentation files (the "Software"), to deal
-***REMOVED*** in the Software without restriction, including without limitation the rights
-***REMOVED*** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-***REMOVED*** copies of the Software, and to permit persons to whom the Software is
-***REMOVED*** furnished to do so, subject to the following conditions:
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A streaming XPath 1.0 implementation forked
+ *     from Google's Wicked Good XPath library.
+ */
+/**
+ * The MIT License
+ * 
+ * Copyright (c) 2007 Cybozu Labs, Inc.
+ * Copyright (c) 2012 Google Inc.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
 
-***REMOVED*** The above copyright notice and this permission notice shall be included in
-***REMOVED*** all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
 
-***REMOVED*** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-***REMOVED*** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-***REMOVED*** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-***REMOVED*** AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-***REMOVED*** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-***REMOVED*** OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-***REMOVED*** THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
 */
 
 goog.provide('xrx.xpath');
@@ -66,41 +66,41 @@ goog.require('xrx.xpath.Parser');
 
 
 
-xrx.xpath.XPathFunctions = {***REMOVED***
+xrx.xpath.XPathFunctions = {};
 
 
-***REMOVED***
-***REMOVED*** XPath namespace resolver.
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * XPath namespace resolver.
+ *
+ * @enum {string}
+ */
 xrx.xpath.XPathNSResolver = {
   'xml': 'http://www.w3.org/XML/1998/namespace',
   'xmlns': 'http://www.w3.org/2000/xmlns/',
   'xs': 'http://www.w3.org/2001/XMLSchema',
   'fn': 'http://www.w3.org/2005/xpath-functions',
   'err': 'http://www.w3.org/2005/xqt-errors'
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Adds a new prefix and URI to the static XPath context.
-***REMOVED*** 
-***REMOVED*** @param {!string} prefix The namespace prefix.
-***REMOVED*** @param {!string} uri The namespace uri.
-***REMOVED***
+/**
+ * Adds a new prefix and URI to the static XPath context.
+ * 
+ * @param {!string} prefix The namespace prefix.
+ * @param {!string} uri The namespace uri.
+ */
 xrx.xpath.declareNamespace = function(prefix, uri) {
   xrx.xpath.XPathNSResolver[prefix] = uri;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Adds a custom function to the static XPath context.
-***REMOVED*** 
-***REMOVED*** @param {!xrx.xpath.Function} The function.
-***REMOVED***
+/**
+ * Adds a custom function to the static XPath context.
+ * 
+ * @param {!xrx.xpath.Function} The function.
+ */
 xrx.xpath.declareFunction = function(func) {
   var prefix = func.name.substr(0, func.name.indexOf(':'));
 
@@ -112,16 +112,16 @@ xrx.xpath.declareFunction = function(func) {
 
   xrx.xpath.FunctionCall.createFunc(func.name, func.retrunType,
       true, true, true, func.evaluate, func.minArgs, func.maxArgs);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Enum for XPathResult types.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for XPathResult types.
+ *
+ * @private
+ * @enum {number}
+ */
 xrx.xpath.XPathResultType = {
   ANY_TYPE: 0,
   NUMBER_TYPE: 1,
@@ -133,20 +133,20 @@ xrx.xpath.XPathResultType = {
   ORDERED_NODE_SNAPSHOT_TYPE: 7,
   ANY_UNORDERED_NODE_TYPE: 8,
   FIRST_ORDERED_NODE_TYPE: 9
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The exported XPathExpression type.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {XPathExpression}
-***REMOVED*** @param {string} expr The expression string.
-***REMOVED*** @param {?(XPathNSResolver|function(string): ?string)} nsResolver
-***REMOVED***     XPath namespace resolver.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The exported XPathExpression type.
+ *
+ * @constructor
+ * @extends {XPathExpression}
+ * @param {string} expr The expression string.
+ * @param {?(XPathNSResolver|function(string): ?string)} nsResolver
+ *     XPath namespace resolver.
+ * @private
+ */
 xrx.xpath.XPathExpression = function(expr) {
   if (!expr.length) {
     throw Error('Empty XPath expression.');
@@ -163,20 +163,20 @@ xrx.xpath.XPathExpression = function(expr) {
   this['evaluate'] = function(node, type) {
     var value = gexpr.evaluate(new xrx.xpath.Context(node));
     return new xrx.xpath.XPathResult(value, type);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
-***REMOVED***
-***REMOVED*** The exported XPathResult type.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {XPathResult}
-***REMOVED*** @param {(!xrx.xpath.NodeSet|number|string|boolean)} value The result value.
-***REMOVED*** @param {number} type The result type.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The exported XPathResult type.
+ *
+ * @constructor
+ * @extends {XPathResult}
+ * @param {(!xrx.xpath.NodeSet|number|string|boolean)} value The result value.
+ * @param {number} type The result type.
+ * @private
+ */
 xrx.xpath.XPathResult = function(value, type) {
   if (type == xrx.xpath.XPathResultType.ANY_TYPE) {
     if (value instanceof xrx.xpath.NodeSet) {
@@ -239,22 +239,22 @@ xrx.xpath.XPathResult = function(value, type) {
       throw Error('iterateNext called with wrong result type');
     }
     return (index >= nodes.length) ? null : nodes[index++];
- ***REMOVED*****REMOVED***
+  };
   this['snapshotItem'] = function(i) {
     if (type != xrx.xpath.XPathResultType.UNORDERED_NODE_SNAPSHOT_TYPE &amp;&amp;
         type != xrx.xpath.XPathResultType.ORDERED_NODE_SNAPSHOT_TYPE) {
       throw Error('snapshotItem called with wrong result type');
     }
     return (i >= nodes.length || i &lt; 0) ? null : nodes[i];
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
 
 xrx.xpath.evaluate = function(expr, context, nsResolver, type, result) {
   return new xrx.xpath.XPathExpression(expr, nsResolver).
       evaluate(context, type);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

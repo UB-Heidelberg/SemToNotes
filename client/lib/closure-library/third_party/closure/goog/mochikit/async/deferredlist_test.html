@@ -25,19 +25,19 @@ var DeferredList = goog.async.DeferredList;
 Deferred.STRICT_ERRORS = true;
 
 
-***REMOVED***
-***REMOVED*** A list of unhandled errors.
-***REMOVED*** @type {Array.<Error>}
-***REMOVED***
+/**
+ * A list of unhandled errors.
+ * @type {Array.<Error>}
+ */
 var storedErrors = [];
 
 
-***REMOVED***
-***REMOVED*** Adds a catch-all error handler to deferred objects. Unhandled errors that
-***REMOVED*** reach the catch-all will be rethrown during tearDown.
-***REMOVED***
-***REMOVED*** @param {...Deferred} var_args A list of deferred objects.
-***REMOVED***
+/**
+ * Adds a catch-all error handler to deferred objects. Unhandled errors that
+ * reach the catch-all will be rethrown during tearDown.
+ *
+ * @param {...Deferred} var_args A list of deferred objects.
+ */
 function addCatchAll(var_args) {
   for (var i = 0, d; d = arguments[i]; i++) {
     d.addErrback(function(res) {
@@ -47,9 +47,9 @@ function addCatchAll(var_args) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks storedErrors for unhandled errors. If found, the error is rethrown.
-***REMOVED***
+/**
+ * Checks storedErrors for unhandled errors. If found, the error is rethrown.
+ */
 function checkCatchAll() {
   var err = storedErrors.shift();
   goog.array.clear(storedErrors);
@@ -435,10 +435,10 @@ function testErrorDoesNotCancelPendingChildrenForVanillaLists() {
 function testInputDeferredsStillUsable() {
   var increment = function(res) {
     return res + 1;
- ***REMOVED*****REMOVED***
+  };
   var incrementErrback = function(res) {
     throw res + 1;
- ***REMOVED*****REMOVED***
+  };
 
   var aComplete = false;
   var bComplete = false;

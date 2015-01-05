@@ -1,9 +1,9 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @overview Adds support for reusable partial jsdoc files.
     @module plugins/partial
     @author Ludo Antonov <ludo@hulu.com>
-***REMOVED***
+ */
 'use strict';
 
 var fs = require('jsdoc/fs');
@@ -29,4 +29,4 @@ exports.handlers = {
             return partialData;
         });
     }
-***REMOVED***
+};

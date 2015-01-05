@@ -1,4 +1,4 @@
-/*global beforeEach: true, describe: true, expect: true, it: true, jasmine: true, spyOn: true***REMOVED***
+/*global beforeEach: true, describe: true, expect: true, it: true, jasmine: true, spyOn: true */
 describe('rhino/jsdoc/src/parser', function() {
     var jsdoc = {
         src: {
@@ -7,7 +7,7 @@ describe('rhino/jsdoc/src/parser', function() {
                 return require( runtime.getModulePath('jsdoc/src/parser') );
             })()
         }
-   ***REMOVED*****REMOVED***
+    };
 
     // don't run this spec if we're currently testing another parser
     if (jasmine.jsParser !== 'rhino') {
@@ -93,7 +93,7 @@ describe('rhino/jsdoc/src/parser', function() {
         describe('parse', function() {
             beforeEach(newParser);
 
-            var sourceCode = ['javascript:***REMOVED*** foo***REMOVED***var foo;'];
+            var sourceCode = ['javascript:/** foo */var foo;'];
 
             it('should call Rhino node visitors', function() {
                 var args;
@@ -104,7 +104,7 @@ describe('rhino/jsdoc/src/parser', function() {
                             args = Array.prototype.slice.call(arguments);
                         }
                     }
-               ***REMOVED*****REMOVED***
+                };
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.addNodeVisitor(visitor);
@@ -140,7 +140,7 @@ describe('rhino/jsdoc/src/parser', function() {
                             e.code.name = 'bar';
                         }
                     }
-               ***REMOVED*****REMOVED***
+                };
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.addNodeVisitor(visitor);
@@ -162,12 +162,12 @@ describe('rhino/jsdoc/src/parser', function() {
                     visitNode: function(rhinoNode, e, parser, sourceName) {
                         e.stopPropagation = true;
                     }
-               ***REMOVED*****REMOVED***
+                };
                 var visitor2 = {
                     visitNode: function(rhinoNode, e, parser, sourceName) {
                         e.propertyThatWillNeverBeSet = ':(';
                     }
-               ***REMOVED*****REMOVED***
+                };
 
                 require('jsdoc/src/handlers').attachTo(parser);
                 parser.addNodeVisitor(visitor1);

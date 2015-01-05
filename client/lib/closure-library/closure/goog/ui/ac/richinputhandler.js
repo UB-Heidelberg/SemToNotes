@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class for managing the interactions between a rich autocomplete
-***REMOVED*** object and a text-input or textarea.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class for managing the interactions between a rich autocomplete
+ * object and a text-input or textarea.
+ *
+ */
 
 goog.provide('goog.ui.ac.RichInputHandler');
 
@@ -24,35 +24,35 @@ goog.require('goog.ui.ac.InputHandler');
 
 
 
-***REMOVED***
-***REMOVED*** Class for managing the interaction between an autocomplete object and a
-***REMOVED*** text-input or textarea.
-***REMOVED*** @param {?string=} opt_separators Seperators to split multiple entries.
-***REMOVED*** @param {?string=} opt_literals Characters used to delimit text literals.
-***REMOVED*** @param {?boolean=} opt_multi Whether to allow multiple entries
-***REMOVED***     (Default: true).
-***REMOVED*** @param {?number=} opt_throttleTime Number of milliseconds to throttle
-***REMOVED***     keyevents with (Default: 150).
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ac.InputHandler}
-***REMOVED***
+/**
+ * Class for managing the interaction between an autocomplete object and a
+ * text-input or textarea.
+ * @param {?string=} opt_separators Seperators to split multiple entries.
+ * @param {?string=} opt_literals Characters used to delimit text literals.
+ * @param {?boolean=} opt_multi Whether to allow multiple entries
+ *     (Default: true).
+ * @param {?number=} opt_throttleTime Number of milliseconds to throttle
+ *     keyevents with (Default: 150).
+ * @constructor
+ * @extends {goog.ui.ac.InputHandler}
+ */
 goog.ui.ac.RichInputHandler = function(opt_separators, opt_literals,
     opt_multi, opt_throttleTime) {
   goog.ui.ac.InputHandler.call(this, opt_separators, opt_literals,
       opt_multi, opt_throttleTime);
-***REMOVED***
+};
 goog.inherits(goog.ui.ac.RichInputHandler, goog.ui.ac.InputHandler);
 
 
-***REMOVED***
-***REMOVED*** Selects the given rich row.  The row's select(target) method is called.
-***REMOVED*** @param {Object} row The row to select.
-***REMOVED*** @return {boolean} Whether to suppress the update event.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Selects the given rich row.  The row's select(target) method is called.
+ * @param {Object} row The row to select.
+ * @return {boolean} Whether to suppress the update event.
+ * @override
+ */
 goog.ui.ac.RichInputHandler.prototype.selectRow = function(row) {
   var suppressUpdate = goog.ui.ac.RichInputHandler.superClass_
       .selectRow.call(this, row);
   row.select(this.ac_.getTarget());
   return suppressUpdate;
-***REMOVED***
+};

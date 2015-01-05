@@ -186,12 +186,12 @@ function TestHandler() {
 
 TestHandler.prototype.onPublish = function(logRecord) {
   this.logRecord = logRecord;
-***REMOVED***
+};
 
 
 TestHandler.prototype.reset = function() {
   this.logRecord = null;
-***REMOVED***
+};
 
 function testGetLogRecord() {
   var name = 'test.get.log.record';

@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class for showing simple modal dialog boxes.
-***REMOVED***
-***REMOVED*** TODO(user):
-***REMOVED***  ***REMOVED*** Standardize CSS class names with other components
-***REMOVED***  ***REMOVED*** Add functionality to "host" other components in content area
-***REMOVED***  ***REMOVED*** Abstract out ButtonSet and make it more general
-***REMOVED*** @see ../demos/dialog.html
-***REMOVED***
+/**
+ * @fileoverview Class for showing simple modal dialog boxes.
+ *
+ * TODO(user):
+ *   * Standardize CSS class names with other components
+ *   * Add functionality to "host" other components in content area
+ *   * Abstract out ButtonSet and make it more general
+ * @see ../demos/dialog.html
+ */
 
 goog.provide('goog.ui.Dialog');
 goog.provide('goog.ui.Dialog.ButtonSet');
@@ -39,9 +39,9 @@ goog.require('goog.dom.NodeType');
 goog.require('goog.dom.TagName');
 goog.require('goog.dom.classlist');
 goog.require('goog.dom.safe');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.fx.Dragger');
 goog.require('goog.html.SafeHtml');
@@ -54,290 +54,290 @@ goog.require('goog.ui.ModalPopup');
 
 
 
-***REMOVED***
-***REMOVED*** Class for showing simple dialog boxes.
-***REMOVED*** The Html structure of the dialog box is:
-***REMOVED*** <pre>
-***REMOVED***  Element         Function                Class-name, modal-dialog = default
-***REMOVED*** ----------------------------------------------------------------------------
-***REMOVED*** - iframe         Iframe mask              modal-dialog-bg
-***REMOVED*** - div            Background mask          modal-dialog-bg
-***REMOVED*** - div            Dialog area              modal-dialog
-***REMOVED***     - div        Title bar                modal-dialog-title
-***REMOVED***        - span                             modal-dialog-title-text
-***REMOVED***          - text  Title text               N/A
-***REMOVED***        - span                             modal-dialog-title-close
-***REMOVED***          - ??    Close box                N/A
-***REMOVED***     - div        Content area             modal-dialog-content
-***REMOVED***        - ??      User specified content   N/A
-***REMOVED***     - div        Button area              modal-dialog-buttons
-***REMOVED***        - button                           N/A
-***REMOVED***        - button
-***REMOVED***        - ...
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {string=} opt_class CSS class name for the dialog element, also used
-***REMOVED***     as a class name prefix for related elements; defaults to modal-dialog.
-***REMOVED***     This should be a single, valid CSS class name.
-***REMOVED*** @param {boolean=} opt_useIframeMask Work around windowed controls z-index
-***REMOVED***     issue by using an iframe instead of a div for bg element.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper; see {@link
-***REMOVED***     goog.ui.Component} for semantics.
-***REMOVED*** @extends {goog.ui.ModalPopup}
-***REMOVED***
+/**
+ * Class for showing simple dialog boxes.
+ * The Html structure of the dialog box is:
+ * <pre>
+ *  Element         Function                Class-name, modal-dialog = default
+ * ----------------------------------------------------------------------------
+ * - iframe         Iframe mask              modal-dialog-bg
+ * - div            Background mask          modal-dialog-bg
+ * - div            Dialog area              modal-dialog
+ *     - div        Title bar                modal-dialog-title
+ *        - span                             modal-dialog-title-text
+ *          - text  Title text               N/A
+ *        - span                             modal-dialog-title-close
+ *          - ??    Close box                N/A
+ *     - div        Content area             modal-dialog-content
+ *        - ??      User specified content   N/A
+ *     - div        Button area              modal-dialog-buttons
+ *        - button                           N/A
+ *        - button
+ *        - ...
+ * </pre>
+ * @constructor
+ * @param {string=} opt_class CSS class name for the dialog element, also used
+ *     as a class name prefix for related elements; defaults to modal-dialog.
+ *     This should be a single, valid CSS class name.
+ * @param {boolean=} opt_useIframeMask Work around windowed controls z-index
+ *     issue by using an iframe instead of a div for bg element.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper; see {@link
+ *     goog.ui.Component} for semantics.
+ * @extends {goog.ui.ModalPopup}
+ */
 goog.ui.Dialog = function(opt_class, opt_useIframeMask, opt_domHelper) {
   goog.ui.Dialog.base(this, 'constructor', opt_useIframeMask, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** CSS class name for the dialog element, also used as a class name prefix for
-  ***REMOVED*** related elements.  Defaults to goog.getCssName('modal-dialog').
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * CSS class name for the dialog element, also used as a class name prefix for
+   * related elements.  Defaults to goog.getCssName('modal-dialog').
+   * @type {string}
+   * @private
+   */
   this.class_ = opt_class || goog.getCssName('modal-dialog');
 
   this.buttons_ = goog.ui.Dialog.ButtonSet.createOkCancel();
-***REMOVED***
+};
 goog.inherits(goog.ui.Dialog, goog.ui.ModalPopup);
 
 
-***REMOVED***
-***REMOVED*** Button set.  Default to Ok/Cancel.
-***REMOVED*** @type {goog.ui.Dialog.ButtonSet}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Button set.  Default to Ok/Cancel.
+ * @type {goog.ui.Dialog.ButtonSet}
+ * @private
+ */
 goog.ui.Dialog.prototype.buttons_;
 
 
-***REMOVED***
-***REMOVED*** Whether the escape key closes this dialog.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the escape key closes this dialog.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.Dialog.prototype.escapeToCancel_ = true;
 
 
-***REMOVED***
-***REMOVED*** Whether this dialog should include a title close button.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether this dialog should include a title close button.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.Dialog.prototype.hasTitleCloseButton_ = true;
 
 
-***REMOVED***
-***REMOVED*** Whether the dialog is modal. Defaults to true.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the dialog is modal. Defaults to true.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.Dialog.prototype.modal_ = true;
 
 
-***REMOVED***
-***REMOVED*** Whether the dialog is draggable. Defaults to true.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the dialog is draggable. Defaults to true.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.Dialog.prototype.draggable_ = true;
 
 
-***REMOVED***
-***REMOVED*** Opacity for background mask.  Defaults to 50%.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Opacity for background mask.  Defaults to 50%.
+ * @type {number}
+ * @private
+ */
 goog.ui.Dialog.prototype.backgroundElementOpacity_ = 0.50;
 
 
-***REMOVED***
-***REMOVED*** Dialog's title.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dialog's title.
+ * @type {string}
+ * @private
+ */
 goog.ui.Dialog.prototype.title_ = '';
 
 
-***REMOVED***
-***REMOVED*** Dialog's content (HTML).
-***REMOVED*** @type {goog.html.SafeHtml}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dialog's content (HTML).
+ * @type {goog.html.SafeHtml}
+ * @private
+ */
 goog.ui.Dialog.prototype.content_ = null;
 
 
-***REMOVED***
-***REMOVED*** Dragger.
-***REMOVED*** @type {goog.fx.Dragger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dragger.
+ * @type {goog.fx.Dragger}
+ * @private
+ */
 goog.ui.Dialog.prototype.dragger_ = null;
 
 
-***REMOVED***
-***REMOVED*** Whether the dialog should be disposed when it is hidden.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the dialog should be disposed when it is hidden.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.Dialog.prototype.disposeOnHide_ = false;
 
 
-***REMOVED***
-***REMOVED*** Element for the title bar.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element for the title bar.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.prototype.titleEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element for the text area of the title bar.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element for the text area of the title bar.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.prototype.titleTextEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Id of element for the text area of the title bar.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Id of element for the text area of the title bar.
+ * @type {?string}
+ * @private
+ */
 goog.ui.Dialog.prototype.titleTextId_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element for the close box area of the title bar.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element for the close box area of the title bar.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.prototype.titleCloseEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element for the content area.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element for the content area.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.prototype.contentEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element for the button bar.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element for the button bar.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.prototype.buttonEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** The dialog's preferred ARIA role.
-***REMOVED*** @type {goog.a11y.aria.Role}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The dialog's preferred ARIA role.
+ * @type {goog.a11y.aria.Role}
+ * @private
+ */
 goog.ui.Dialog.prototype.preferredAriaRole_ = goog.a11y.aria.Role.DIALOG;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.getCssClass = function() {
   return this.class_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the title.
-***REMOVED*** @param {string} title The title text.
-***REMOVED***
+/**
+ * Sets the title.
+ * @param {string} title The title text.
+ */
 goog.ui.Dialog.prototype.setTitle = function(title) {
   this.title_ = title;
   if (this.titleTextEl_) {
     goog.dom.setTextContent(this.titleTextEl_, title);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the title.
-***REMOVED*** @return {string} The title.
-***REMOVED***
+/**
+ * Gets the title.
+ * @return {string} The title.
+ */
 goog.ui.Dialog.prototype.getTitle = function() {
   return this.title_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows arbitrary HTML to be set in the content element.
-***REMOVED*** TODO(user): Deprecate in favor of setSafeHtmlContent, once developer docs on
-***REMOVED*** using goog.html.SafeHtml are in place.
-***REMOVED*** @param {string} html Content HTML.
-***REMOVED***
+/**
+ * Allows arbitrary HTML to be set in the content element.
+ * TODO(user): Deprecate in favor of setSafeHtmlContent, once developer docs on
+ * using goog.html.SafeHtml are in place.
+ * @param {string} html Content HTML.
+ */
 goog.ui.Dialog.prototype.setContent = function(html) {
   this.setSafeHtmlContent(goog.html.legacyconversions.safeHtmlFromString(html));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows arbitrary HTML to be set in the content element.
-***REMOVED*** @param {!goog.html.SafeHtml} html Content HTML.
-***REMOVED***
+/**
+ * Allows arbitrary HTML to be set in the content element.
+ * @param {!goog.html.SafeHtml} html Content HTML.
+ */
 goog.ui.Dialog.prototype.setSafeHtmlContent = function(html) {
   this.content_ = html;
   if (this.contentEl_) {
     goog.dom.safe.setInnerHtml(this.contentEl_, html);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the content HTML of the content element as a plain string.
-***REMOVED***
-***REMOVED*** Note that this method returns the HTML markup that was previously set via
-***REMOVED*** setContent(). In particular, the HTML returned by this method does not
-***REMOVED*** reflect any changes to the content element's DOM that were made my means
-***REMOVED*** other than setContent().
-***REMOVED***
-***REMOVED*** @return {string} Content HTML.
-***REMOVED***
+/**
+ * Gets the content HTML of the content element as a plain string.
+ *
+ * Note that this method returns the HTML markup that was previously set via
+ * setContent(). In particular, the HTML returned by this method does not
+ * reflect any changes to the content element's DOM that were made my means
+ * other than setContent().
+ *
+ * @return {string} Content HTML.
+ */
 goog.ui.Dialog.prototype.getContent = function() {
   return this.content_ != null ?
       goog.html.SafeHtml.unwrap(this.content_) : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the content HTML of the content element.
-***REMOVED*** @return {goog.html.SafeHtml} Content HTML.
-***REMOVED***
+/**
+ * Gets the content HTML of the content element.
+ * @return {goog.html.SafeHtml} Content HTML.
+ */
 goog.ui.Dialog.prototype.getSafeHtmlContent = function() {
   return this.content_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the dialog's preferred ARIA role. This can be used to override the
-***REMOVED*** default dialog role, e.g. with an ARIA role of ALERTDIALOG for a simple
-***REMOVED*** warning or confirmation dialog.
-***REMOVED*** @return {goog.a11y.aria.Role} This dialog's preferred ARIA role.
-***REMOVED***
+/**
+ * Returns the dialog's preferred ARIA role. This can be used to override the
+ * default dialog role, e.g. with an ARIA role of ALERTDIALOG for a simple
+ * warning or confirmation dialog.
+ * @return {goog.a11y.aria.Role} This dialog's preferred ARIA role.
+ */
 goog.ui.Dialog.prototype.getPreferredAriaRole = function() {
   return this.preferredAriaRole_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the dialog's preferred ARIA role. This can be used to override the
-***REMOVED*** default dialog role, e.g. with an ARIA role of ALERTDIALOG for a simple
-***REMOVED*** warning or confirmation dialog.
-***REMOVED*** @param {goog.a11y.aria.Role} role This dialog's preferred ARIA role.
-***REMOVED***
+/**
+ * Sets the dialog's preferred ARIA role. This can be used to override the
+ * default dialog role, e.g. with an ARIA role of ALERTDIALOG for a simple
+ * warning or confirmation dialog.
+ * @param {goog.a11y.aria.Role} role This dialog's preferred ARIA role.
+ */
 goog.ui.Dialog.prototype.setPreferredAriaRole = function(role) {
   this.preferredAriaRole_ = role;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Renders if the DOM is not created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Renders if the DOM is not created.
+ * @private
+ */
 goog.ui.Dialog.prototype.renderIfNoDom_ = function() {
   if (!this.getElement()) {
     // TODO(gboyer): Ideally we'd only create the DOM, but many applications
@@ -346,102 +346,102 @@ goog.ui.Dialog.prototype.renderIfNoDom_ = function() {
     // created.
     this.render();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the content element so that more complicated things can be done with
-***REMOVED*** the content area.  Renders if the DOM is not yet created.  Overrides
-***REMOVED*** {@link goog.ui.Component#getContentElement}.
-***REMOVED*** @return {Element} The content element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the content element so that more complicated things can be done with
+ * the content area.  Renders if the DOM is not yet created.  Overrides
+ * {@link goog.ui.Component#getContentElement}.
+ * @return {Element} The content element.
+ * @override
+ */
 goog.ui.Dialog.prototype.getContentElement = function() {
   this.renderIfNoDom_();
   return this.contentEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the title element so that more complicated things can be done with
-***REMOVED*** the title.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The title element.
-***REMOVED***
+/**
+ * Returns the title element so that more complicated things can be done with
+ * the title.  Renders if the DOM is not yet created.
+ * @return {Element} The title element.
+ */
 goog.ui.Dialog.prototype.getTitleElement = function() {
   this.renderIfNoDom_();
   return this.titleEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the title text element so that more complicated things can be done
-***REMOVED*** with the text of the title.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The title text element.
-***REMOVED***
+/**
+ * Returns the title text element so that more complicated things can be done
+ * with the text of the title.  Renders if the DOM is not yet created.
+ * @return {Element} The title text element.
+ */
 goog.ui.Dialog.prototype.getTitleTextElement = function() {
   this.renderIfNoDom_();
   return this.titleTextEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the title close element so that more complicated things can be done
-***REMOVED*** with the close area of the title.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The close box.
-***REMOVED***
+/**
+ * Returns the title close element so that more complicated things can be done
+ * with the close area of the title.  Renders if the DOM is not yet created.
+ * @return {Element} The close box.
+ */
 goog.ui.Dialog.prototype.getTitleCloseElement = function() {
   this.renderIfNoDom_();
   return this.titleCloseEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the button element so that more complicated things can be done with
-***REMOVED*** the button area.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The button container element.
-***REMOVED***
+/**
+ * Returns the button element so that more complicated things can be done with
+ * the button area.  Renders if the DOM is not yet created.
+ * @return {Element} The button container element.
+ */
 goog.ui.Dialog.prototype.getButtonElement = function() {
   this.renderIfNoDom_();
   return this.buttonEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the dialog element so that more complicated things can be done with
-***REMOVED*** the dialog box.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The dialog element.
-***REMOVED***
+/**
+ * Returns the dialog element so that more complicated things can be done with
+ * the dialog box.  Renders if the DOM is not yet created.
+ * @return {Element} The dialog element.
+ */
 goog.ui.Dialog.prototype.getDialogElement = function() {
   this.renderIfNoDom_();
   return this.getElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the background mask element so that more complicated things can be
-***REMOVED*** done with the background region.  Renders if the DOM is not yet created.
-***REMOVED*** @return {Element} The background mask element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the background mask element so that more complicated things can be
+ * done with the background region.  Renders if the DOM is not yet created.
+ * @return {Element} The background mask element.
+ * @override
+ */
 goog.ui.Dialog.prototype.getBackgroundElement = function() {
   this.renderIfNoDom_();
   return goog.ui.Dialog.base(this, 'getBackgroundElement');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the opacity of the background mask.
-***REMOVED*** @return {number} Background mask opacity.
-***REMOVED***
+/**
+ * Gets the opacity of the background mask.
+ * @return {number} Background mask opacity.
+ */
 goog.ui.Dialog.prototype.getBackgroundElementOpacity = function() {
   return this.backgroundElementOpacity_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the opacity of the background mask.
-***REMOVED*** @param {number} opacity Background mask opacity.
-***REMOVED***
+/**
+ * Sets the opacity of the background mask.
+ * @param {number} opacity Background mask opacity.
+ */
 goog.ui.Dialog.prototype.setBackgroundElementOpacity = function(opacity) {
   this.backgroundElementOpacity_ = opacity;
 
@@ -451,30 +451,30 @@ goog.ui.Dialog.prototype.setBackgroundElementOpacity = function(opacity) {
       goog.style.setOpacity(bgEl, this.backgroundElementOpacity_);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the modal property of the dialog. In case the dialog is already
-***REMOVED*** inDocument, renders the modal background elements according to the specified
-***REMOVED*** modal parameter.
-***REMOVED***
-***REMOVED*** Note that non-modal dialogs cannot use an iframe mask.
-***REMOVED***
-***REMOVED*** @param {boolean} modal Whether the dialog is modal.
-***REMOVED***
+/**
+ * Sets the modal property of the dialog. In case the dialog is already
+ * inDocument, renders the modal background elements according to the specified
+ * modal parameter.
+ *
+ * Note that non-modal dialogs cannot use an iframe mask.
+ *
+ * @param {boolean} modal Whether the dialog is modal.
+ */
 goog.ui.Dialog.prototype.setModal = function(modal) {
   if (modal != this.modal_) {
     this.setModalInternal_(modal);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the modal property of the dialog.
-***REMOVED*** @param {boolean} modal Whether the dialog is modal.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the modal property of the dialog.
+ * @param {boolean} modal Whether the dialog is modal.
+ * @private
+ */
 goog.ui.Dialog.prototype.setModalInternal_ = function(modal) {
   this.modal_ = modal;
   if (this.isInDocument()) {
@@ -494,60 +494,60 @@ goog.ui.Dialog.prototype.setModalInternal_ = function(modal) {
   if (this.isVisible()) {
     this.setA11YDetectBackground(modal);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} modal Whether the dialog is modal.
-***REMOVED***
+/**
+ * @return {boolean} modal Whether the dialog is modal.
+ */
 goog.ui.Dialog.prototype.getModal = function() {
   return this.modal_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The CSS class name for the dialog element.
-***REMOVED***
+/**
+ * @return {string} The CSS class name for the dialog element.
+ */
 goog.ui.Dialog.prototype.getClass = function() {
   return this.getCssClass();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the dialog can be dragged.
-***REMOVED*** @param {boolean} draggable Whether the dialog can be dragged.
-***REMOVED***
+/**
+ * Sets whether the dialog can be dragged.
+ * @param {boolean} draggable Whether the dialog can be dragged.
+ */
 goog.ui.Dialog.prototype.setDraggable = function(draggable) {
   this.draggable_ = draggable;
   this.setDraggingEnabled_(draggable && this.isInDocument());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a dragger for moving the dialog and adds a class for the move cursor.
-***REMOVED*** Defaults to allow dragging of the title only, but can be overridden if
-***REMOVED*** different drag targets or dragging behavior is desired.
-***REMOVED*** @return {!goog.fx.Dragger} The created dragger instance.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns a dragger for moving the dialog and adds a class for the move cursor.
+ * Defaults to allow dragging of the title only, but can be overridden if
+ * different drag targets or dragging behavior is desired.
+ * @return {!goog.fx.Dragger} The created dragger instance.
+ * @protected
+ */
 goog.ui.Dialog.prototype.createDragger = function() {
   return new goog.fx.Dragger(this.getElement(), this.titleEl_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the dialog is draggable.
-***REMOVED***
+/**
+ * @return {boolean} Whether the dialog is draggable.
+ */
 goog.ui.Dialog.prototype.getDraggable = function() {
   return this.draggable_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables or disables dragging.
-***REMOVED*** @param {boolean} enabled Whether to enable it.
-***REMOVED*** @private.
-***REMOVED***
+/**
+ * Enables or disables dragging.
+ * @param {boolean} enabled Whether to enable it.
+ * @private.
+ */
 goog.ui.Dialog.prototype.setDraggingEnabled_ = function(enabled) {
   // This isn't ideal, but the quickest and easiest way to append
   // title-draggable to the last class in the class_ string, then trim and
@@ -569,16 +569,16 @@ goog.ui.Dialog.prototype.setDraggingEnabled_ = function(enabled) {
   if (enabled && !this.dragger_) {
     this.dragger_ = this.createDragger();
     goog.dom.classlist.addAll(goog.asserts.assert(this.titleEl_), classNames);
-  ***REMOVED***this.dragger_, goog.fx.Dragger.EventType.START,
+    goog.events.listen(this.dragger_, goog.fx.Dragger.EventType.START,
         this.setDraggerLimits_, false, this);
   } else if (!enabled && this.dragger_) {
     this.dragger_.dispose();
     this.dragger_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.createDom = function() {
   goog.ui.Dialog.base(this, 'createDom');
   var element = this.getElement();
@@ -625,10 +625,10 @@ goog.ui.Dialog.prototype.createDom = function() {
   }
   goog.style.setElementShown(this.buttonEl_, !!this.buttons_);
   this.setBackgroundElementOpacity(this.backgroundElementOpacity_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.decorateInternal = function(element) {
   goog.ui.Dialog.base(this, 'decorateInternal', element);
   var dialogElement = this.getElement();
@@ -708,10 +708,10 @@ goog.ui.Dialog.prototype.decorateInternal = function(element) {
     goog.style.setElementShown(this.buttonEl_, !!this.buttons_);
   }
   this.setBackgroundElementOpacity(this.backgroundElementOpacity_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.enterDocument = function() {
   goog.ui.Dialog.base(this, 'enterDocument');
 
@@ -750,10 +750,10 @@ goog.ui.Dialog.prototype.enterDocument = function() {
   if (!this.modal_) {
     this.setModalInternal_(false);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.exitDocument = function() {
   if (this.isVisible()) {
     this.setVisible(false);
@@ -763,17 +763,17 @@ goog.ui.Dialog.prototype.exitDocument = function() {
   this.setDraggingEnabled_(false);
 
   goog.ui.Dialog.base(this, 'exitDocument');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the visibility of the dialog box and moves focus to the
-***REMOVED*** default button. Lazily renders the component if needed. After this
-***REMOVED*** method returns, isVisible() will always return the new state, even
-***REMOVED*** if there is a transition.
-***REMOVED*** @param {boolean} visible Whether the dialog should be visible.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets the visibility of the dialog box and moves focus to the
+ * default button. Lazily renders the component if needed. After this
+ * method returns, isVisible() will always return the new state, even
+ * if there is a transition.
+ * @param {boolean} visible Whether the dialog should be visible.
+ * @override
+ */
 goog.ui.Dialog.prototype.setVisible = function(visible) {
   if (visible == this.isVisible()) {
     return;
@@ -785,31 +785,31 @@ goog.ui.Dialog.prototype.setVisible = function(visible) {
   }
 
   goog.ui.Dialog.base(this, 'setVisible', visible);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.onShow = function() {
   goog.ui.Dialog.base(this, 'onShow');
   this.dispatchEvent(goog.ui.Dialog.EventType.AFTER_SHOW);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.onHide = function() {
   goog.ui.Dialog.base(this, 'onHide');
   this.dispatchEvent(goog.ui.Dialog.EventType.AFTER_HIDE);
   if (this.disposeOnHide_) {
     this.dispose();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets dragger limits when dragging is started.
-***REMOVED*** @param {!goog.events.Event} e goog.fx.Dragger.EventType.START event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets dragger limits when dragging is started.
+ * @param {!goog.events.Event} e goog.fx.Dragger.EventType.START event.
+ * @private
+ */
 goog.ui.Dialog.prototype.setDraggerLimits_ = function(e) {
   var doc = this.getDomHelper().getDocument();
   var win = goog.dom.getWindow(doc) || window;
@@ -830,25 +830,25 @@ goog.ui.Dialog.prototype.setDraggerLimits_ = function(e) {
     this.dragger_.setLimits(new goog.math.Rect(0, 0,
         w - dialogSize.width, h - dialogSize.height));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a click on the title close area.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser's event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a click on the title close area.
+ * @param {goog.events.BrowserEvent} e Browser's event object.
+ * @private
+ */
 goog.ui.Dialog.prototype.onTitleCloseClick_ = function(e) {
   this.handleTitleClose_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs the action of closing the dialog in response to the title close
-***REMOVED*** button being interacted with. General purpose method to be called by click
-***REMOVED*** and button event handlers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Performs the action of closing the dialog in response to the title close
+ * button being interacted with. General purpose method to be called by click
+ * and button event handlers.
+ * @private
+ */
 goog.ui.Dialog.prototype.handleTitleClose_ = function() {
   if (!this.hasTitleCloseButton_) {
     return;
@@ -858,86 +858,86 @@ goog.ui.Dialog.prototype.handleTitleClose_ = function() {
   var key = bs && bs.getCancel();
   // Only if there is a valid cancel button is an event dispatched.
   if (key) {
-    var caption =***REMOVED*****REMOVED*** @type {Element|string}***REMOVED***(bs.get(key));
+    var caption = /** @type {Element|string} */(bs.get(key));
     if (this.dispatchEvent(new goog.ui.Dialog.Event(key, caption))) {
       this.setVisible(false);
     }
   } else {
     this.setVisible(false);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether this dialog has a title close button.
-***REMOVED***
+/**
+ * @return {boolean} Whether this dialog has a title close button.
+ */
 goog.ui.Dialog.prototype.getHasTitleCloseButton = function() {
   return this.hasTitleCloseButton_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the dialog should have a close button in the title bar. There
-***REMOVED*** will always be an element for the title close button, but setting this
-***REMOVED*** parameter to false will cause it to be hidden and have no active listener.
-***REMOVED*** @param {boolean} b Whether this dialog should have a title close button.
-***REMOVED***
+/**
+ * Sets whether the dialog should have a close button in the title bar. There
+ * will always be an element for the title close button, but setting this
+ * parameter to false will cause it to be hidden and have no active listener.
+ * @param {boolean} b Whether this dialog should have a title close button.
+ */
 goog.ui.Dialog.prototype.setHasTitleCloseButton = function(b) {
   this.hasTitleCloseButton_ = b;
   if (this.titleCloseEl_) {
     goog.style.setElementShown(this.titleCloseEl_, this.hasTitleCloseButton_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the escape key should close this dialog.
-***REMOVED***
+/**
+ * @return {boolean} Whether the escape key should close this dialog.
+ */
 goog.ui.Dialog.prototype.isEscapeToCancel = function() {
   return this.escapeToCancel_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {boolean} b Whether the escape key should close this dialog.
-***REMOVED***
+/**
+ * @param {boolean} b Whether the escape key should close this dialog.
+ */
 goog.ui.Dialog.prototype.setEscapeToCancel = function(b) {
   this.escapeToCancel_ = b;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the dialog should be disposed when it is hidden.  By default
-***REMOVED*** dialogs are not disposed when they are hidden.
-***REMOVED*** @param {boolean} b Whether the dialog should get disposed when it gets
-***REMOVED***     hidden.
-***REMOVED***
+/**
+ * Sets whether the dialog should be disposed when it is hidden.  By default
+ * dialogs are not disposed when they are hidden.
+ * @param {boolean} b Whether the dialog should get disposed when it gets
+ *     hidden.
+ */
 goog.ui.Dialog.prototype.setDisposeOnHide = function(b) {
   this.disposeOnHide_ = b;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the dialog should be disposed when it is hidden.
-***REMOVED***
+/**
+ * @return {boolean} Whether the dialog should be disposed when it is hidden.
+ */
 goog.ui.Dialog.prototype.getDisposeOnHide = function() {
   return this.disposeOnHide_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Dialog.prototype.disposeInternal = function() {
   this.titleCloseEl_ = null;
   this.buttonEl_ = null;
   goog.ui.Dialog.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the button set to use.
-***REMOVED*** Note: Passing in null will cause no button set to be rendered.
-***REMOVED*** @param {goog.ui.Dialog.ButtonSet?} buttons The button set to use.
-***REMOVED***
+/**
+ * Sets the button set to use.
+ * Note: Passing in null will cause no button set to be rendered.
+ * @param {goog.ui.Dialog.ButtonSet?} buttons The button set to use.
+ */
 goog.ui.Dialog.prototype.setButtonSet = function(buttons) {
   this.buttons_ = buttons;
   if (this.buttonEl_) {
@@ -949,62 +949,62 @@ goog.ui.Dialog.prototype.setButtonSet = function(buttons) {
     }
     goog.style.setElementShown(this.buttonEl_, !!this.buttons_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the button set being used.
-***REMOVED*** @return {goog.ui.Dialog.ButtonSet?} The button set being used.
-***REMOVED***
+/**
+ * Returns the button set being used.
+ * @return {goog.ui.Dialog.ButtonSet?} The button set being used.
+ */
 goog.ui.Dialog.prototype.getButtonSet = function() {
   return this.buttons_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a click on the button container.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser's event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a click on the button container.
+ * @param {goog.events.BrowserEvent} e Browser's event object.
+ * @private
+ */
 goog.ui.Dialog.prototype.onButtonClick_ = function(e) {
-  var button = this.findParentButton_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var button = this.findParentButton_(/** @type {Element} */ (e.target));
   if (button && !button.disabled) {
     var key = button.name;
-    var caption =***REMOVED*****REMOVED*** @type {Element|string}***REMOVED***(
+    var caption = /** @type {Element|string} */(
         this.getButtonSet().get(key));
     if (this.dispatchEvent(new goog.ui.Dialog.Event(key, caption))) {
       this.setVisible(false);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the parent button of an element (or null if there was no button
-***REMOVED*** parent).
-***REMOVED*** @param {Element} element The element that was clicked on.
-***REMOVED*** @return {Element} Returns the parent button or null if not found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds the parent button of an element (or null if there was no button
+ * parent).
+ * @param {Element} element The element that was clicked on.
+ * @return {Element} Returns the parent button or null if not found.
+ * @private
+ */
 goog.ui.Dialog.prototype.findParentButton_ = function(element) {
   var el = element;
   while (el != null && el != this.buttonEl_) {
     if (el.tagName == 'BUTTON') {
-      return***REMOVED*****REMOVED*** @type {Element}***REMOVED***(el);
+      return /** @type {Element} */(el);
     }
     el = el.parentNode;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles keydown and keypress events, and dismisses the popup if cancel is
-***REMOVED*** pressed.  If there is a cancel action in the ButtonSet, than that will be
-***REMOVED*** fired.  Also prevents tabbing out of the dialog.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser's event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles keydown and keypress events, and dismisses the popup if cancel is
+ * pressed.  If there is a cancel action in the ButtonSet, than that will be
+ * fired.  Also prevents tabbing out of the dialog.
+ * @param {goog.events.BrowserEvent} e Browser's event object.
+ * @private
+ */
 goog.ui.Dialog.prototype.onKey_ = function(e) {
   var close = false;
   var hasHandler = false;
@@ -1027,7 +1027,7 @@ goog.ui.Dialog.prototype.onKey_ = function(e) {
         var caption = buttonSet.get(cancel);
         close = this.dispatchEvent(
             new goog.ui.Dialog.Event(cancel,
-               ***REMOVED*****REMOVED*** @type {Element|null|string}***REMOVED***(caption)));
+                /** @type {Element|null|string} */(caption)));
       } else if (!isSpecialFormElement) {
         close = true;
       }
@@ -1082,171 +1082,171 @@ goog.ui.Dialog.prototype.onKey_ = function(e) {
   if (close) {
     this.setVisible(false);
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Dialog event class.
-***REMOVED*** @param {string} key Key identifier for the button.
-***REMOVED*** @param {string|Element} caption Caption on the button (might be i18nlized).
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
+/**
+ * Dialog event class.
+ * @param {string} key Key identifier for the button.
+ * @param {string|Element} caption Caption on the button (might be i18nlized).
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 goog.ui.Dialog.Event = function(key, caption) {
   this.type = goog.ui.Dialog.EventType.SELECT;
   this.key = key;
   this.caption = caption;
-***REMOVED***
+};
 goog.inherits(goog.ui.Dialog.Event, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Event type constant for dialog events.
-***REMOVED*** TODO(attila): Change this to goog.ui.Dialog.EventType.SELECT.
-***REMOVED*** @type {string}
-***REMOVED*** @deprecated Use goog.ui.Dialog.EventType.SELECT.
-***REMOVED***
+/**
+ * Event type constant for dialog events.
+ * TODO(attila): Change this to goog.ui.Dialog.EventType.SELECT.
+ * @type {string}
+ * @deprecated Use goog.ui.Dialog.EventType.SELECT.
+ */
 goog.ui.Dialog.SELECT_EVENT = 'dialogselect';
 
 
-***REMOVED***
-***REMOVED*** Events dispatched by dialogs.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Events dispatched by dialogs.
+ * @enum {string}
+ */
 goog.ui.Dialog.EventType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched when the user closes the dialog.
-  ***REMOVED*** The dispatched event will always be of type {@link goog.ui.Dialog.Event}.
-  ***REMOVED*** Canceling the event will prevent the dialog from closing.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched when the user closes the dialog.
+   * The dispatched event will always be of type {@link goog.ui.Dialog.Event}.
+   * Canceling the event will prevent the dialog from closing.
+   */
   SELECT: 'dialogselect',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched after the dialog is closed. Not cancelable.
-  ***REMOVED*** @deprecated Use goog.ui.PopupBase.EventType.HIDE.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched after the dialog is closed. Not cancelable.
+   * @deprecated Use goog.ui.PopupBase.EventType.HIDE.
+   */
   AFTER_HIDE: 'afterhide',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched after the dialog is shown. Not cancelable.
-  ***REMOVED*** @deprecated Use goog.ui.PopupBase.EventType.SHOW.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched after the dialog is shown. Not cancelable.
+   * @deprecated Use goog.ui.PopupBase.EventType.SHOW.
+   */
   AFTER_SHOW: 'aftershow'
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A button set defines the behaviour of a set of buttons that the dialog can
-***REMOVED*** show.  Uses the {@link goog.structs.Map} interface.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper; see {@link
-***REMOVED***    goog.ui.Component} for semantics.
-***REMOVED***
-***REMOVED*** @extends {goog.structs.Map}
-***REMOVED***
+/**
+ * A button set defines the behaviour of a set of buttons that the dialog can
+ * show.  Uses the {@link goog.structs.Map} interface.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper; see {@link
+ *    goog.ui.Component} for semantics.
+ * @constructor
+ * @extends {goog.structs.Map}
+ */
 goog.ui.Dialog.ButtonSet = function(opt_domHelper) {
   // TODO(attila):  Refactor ButtonSet to extend goog.ui.Component?
   this.dom_ = opt_domHelper || goog.dom.getDomHelper();
   goog.structs.Map.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.Dialog.ButtonSet, goog.structs.Map);
 
 
-***REMOVED***
-***REMOVED*** A CSS className for this component.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A CSS className for this component.
+ * @type {string}
+ * @private
+ */
 goog.ui.Dialog.ButtonSet.prototype.class_ = goog.getCssName('goog-buttonset');
 
 
-***REMOVED***
-***REMOVED*** The button that has default focus (references key in buttons_ map).
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The button that has default focus (references key in buttons_ map).
+ * @type {?string}
+ * @private
+ */
 goog.ui.Dialog.ButtonSet.prototype.defaultButton_ = null;
 
 
-***REMOVED***
-***REMOVED*** Optional container the button set should be rendered into.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Optional container the button set should be rendered into.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Dialog.ButtonSet.prototype.element_ = null;
 
 
-***REMOVED***
-***REMOVED*** The button whose action is associated with the escape key and the X button
-***REMOVED*** on the dialog.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The button whose action is associated with the escape key and the X button
+ * on the dialog.
+ * @type {?string}
+ * @private
+ */
 goog.ui.Dialog.ButtonSet.prototype.cancelButton_ = null;
 
 
-***REMOVED***
-***REMOVED*** Adds a button to the button set.  Buttons will be displayed in the order they
-***REMOVED*** are added.
-***REMOVED***
-***REMOVED*** @param {*} key Key used to identify the button in events.
-***REMOVED*** @param {*} caption A string caption or a DOM node that can be
-***REMOVED***     appended to a button element.
-***REMOVED*** @param {boolean=} opt_isDefault Whether this button is the default button,
-***REMOVED***     Dialog will dispatch for this button if enter is pressed.
-***REMOVED*** @param {boolean=} opt_isCancel Whether this button has the same behaviour as
-***REMOVED***    cancel.  If escape is pressed this button will fire.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The button set, to make it easy to chain
-***REMOVED***    "set" calls and build new ButtonSets.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Adds a button to the button set.  Buttons will be displayed in the order they
+ * are added.
+ *
+ * @param {*} key Key used to identify the button in events.
+ * @param {*} caption A string caption or a DOM node that can be
+ *     appended to a button element.
+ * @param {boolean=} opt_isDefault Whether this button is the default button,
+ *     Dialog will dispatch for this button if enter is pressed.
+ * @param {boolean=} opt_isCancel Whether this button has the same behaviour as
+ *    cancel.  If escape is pressed this button will fire.
+ * @return {!goog.ui.Dialog.ButtonSet} The button set, to make it easy to chain
+ *    "set" calls and build new ButtonSets.
+ * @override
+ */
 goog.ui.Dialog.ButtonSet.prototype.set = function(key, caption,
     opt_isDefault, opt_isCancel) {
   goog.structs.Map.prototype.set.call(this, key, caption);
 
   if (opt_isDefault) {
-    this.defaultButton_ =***REMOVED*****REMOVED*** @type {?string}***REMOVED*** (key);
+    this.defaultButton_ = /** @type {?string} */ (key);
   }
   if (opt_isCancel) {
-    this.cancelButton_ =***REMOVED*****REMOVED*** @type {?string}***REMOVED*** (key);
+    this.cancelButton_ = /** @type {?string} */ (key);
   }
 
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a button (an object with a key and caption) to this button set. Buttons
-***REMOVED*** will be displayed in the order they are added.
-***REMOVED*** @see goog.ui.Dialog.DefaultButtons
-***REMOVED*** @param {!{key: string, caption: string}} button The button key and caption.
-***REMOVED*** @param {boolean=} opt_isDefault Whether this button is the default button.
-***REMOVED***     Dialog will dispatch for this button if enter is pressed.
-***REMOVED*** @param {boolean=} opt_isCancel Whether this button has the same behavior as
-***REMOVED***     cancel. If escape is pressed this button will fire.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The button set, to make it easy to chain
-***REMOVED***     "addButton" calls and build new ButtonSets.
-***REMOVED***
+/**
+ * Adds a button (an object with a key and caption) to this button set. Buttons
+ * will be displayed in the order they are added.
+ * @see goog.ui.Dialog.DefaultButtons
+ * @param {!{key: string, caption: string}} button The button key and caption.
+ * @param {boolean=} opt_isDefault Whether this button is the default button.
+ *     Dialog will dispatch for this button if enter is pressed.
+ * @param {boolean=} opt_isCancel Whether this button has the same behavior as
+ *     cancel. If escape is pressed this button will fire.
+ * @return {!goog.ui.Dialog.ButtonSet} The button set, to make it easy to chain
+ *     "addButton" calls and build new ButtonSets.
+ */
 goog.ui.Dialog.ButtonSet.prototype.addButton = function(button, opt_isDefault,
     opt_isCancel) {
   return this.set(button.key, button.caption, opt_isDefault, opt_isCancel);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches the button set to an element, rendering it inside.
-***REMOVED*** @param {Element} el Container.
-***REMOVED***
+/**
+ * Attaches the button set to an element, rendering it inside.
+ * @param {Element} el Container.
+ */
 goog.ui.Dialog.ButtonSet.prototype.attachToElement = function(el) {
   this.element_ = el;
   this.render();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Renders the button set inside its container element.
-***REMOVED***
+/**
+ * Renders the button set inside its container element.
+ */
 goog.ui.Dialog.ButtonSet.prototype.render = function() {
   if (this.element_) {
     goog.dom.safe.setInnerHtml(
@@ -1260,18 +1260,18 @@ goog.ui.Dialog.ButtonSet.prototype.render = function() {
       this.element_.appendChild(button);
     }, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decorates the given element by adding any {@code button} elements found
-***REMOVED*** among its descendants to the button set.  The first button found is assumed
-***REMOVED*** to be the default and will receive focus when the button set is rendered.
-***REMOVED*** If a button with a name of {@link goog.ui.Dialog.DefaultButtonKeys.CANCEL}
-***REMOVED*** is found, it is assumed to have "Cancel" semantics.
-***REMOVED*** TODO(attila):  ButtonSet should be a goog.ui.Component.  Really.
-***REMOVED*** @param {Element} element The element to decorate; should contain buttons.
-***REMOVED***
+/**
+ * Decorates the given element by adding any {@code button} elements found
+ * among its descendants to the button set.  The first button found is assumed
+ * to be the default and will receive focus when the button set is rendered.
+ * If a button with a name of {@link goog.ui.Dialog.DefaultButtonKeys.CANCEL}
+ * is found, it is assumed to have "Cancel" semantics.
+ * TODO(attila):  ButtonSet should be a goog.ui.Component.  Really.
+ * @param {Element} element The element to decorate; should contain buttons.
+ */
 goog.ui.Dialog.ButtonSet.prototype.decorate = function(element) {
   if (!element || element.nodeType != goog.dom.NodeType.ELEMENT) {
     return;
@@ -1294,70 +1294,70 @@ goog.ui.Dialog.ButtonSet.prototype.decorate = function(element) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the component's element.
-***REMOVED*** @return {Element} The element for the component.
-***REMOVED*** TODO(user): Remove after refactoring to goog.ui.Component.
-***REMOVED***
+/**
+ * Gets the component's element.
+ * @return {Element} The element for the component.
+ * TODO(user): Remove after refactoring to goog.ui.Component.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the dom helper that is being used on this component.
-***REMOVED*** @return {!goog.dom.DomHelper} The dom helper used on this component.
-***REMOVED*** TODO(user): Remove after refactoring to goog.ui.Component.
-***REMOVED***
+/**
+ * Returns the dom helper that is being used on this component.
+ * @return {!goog.dom.DomHelper} The dom helper used on this component.
+ * TODO(user): Remove after refactoring to goog.ui.Component.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getDomHelper = function() {
   return this.dom_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the default button.
-***REMOVED*** @param {?string} key The default button.
-***REMOVED***
+/**
+ * Sets the default button.
+ * @param {?string} key The default button.
+ */
 goog.ui.Dialog.ButtonSet.prototype.setDefault = function(key) {
   this.defaultButton_ = key;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the default button.
-***REMOVED*** @return {?string} The default button.
-***REMOVED***
+/**
+ * Returns the default button.
+ * @return {?string} The default button.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getDefault = function() {
   return this.defaultButton_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the cancel button.
-***REMOVED*** @param {?string} key The cancel button.
-***REMOVED***
+/**
+ * Sets the cancel button.
+ * @param {?string} key The cancel button.
+ */
 goog.ui.Dialog.ButtonSet.prototype.setCancel = function(key) {
   this.cancelButton_ = key;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the cancel button.
-***REMOVED*** @return {?string} The cancel button.
-***REMOVED***
+/**
+ * Returns the cancel button.
+ * @return {?string} The cancel button.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getCancel = function() {
   return this.cancelButton_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the HTML Button element.
-***REMOVED*** @param {string} key The button to return.
-***REMOVED*** @return {Element} The button, if found else null.
-***REMOVED***
+/**
+ * Returns the HTML Button element.
+ * @param {string} key The button to return.
+ * @return {Element} The button, if found else null.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getButton = function(key) {
   var buttons = this.getAllButtons();
   for (var i = 0, nextButton; nextButton = buttons[i]; i++) {
@@ -1366,48 +1366,48 @@ goog.ui.Dialog.ButtonSet.prototype.getButton = function(key) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns all the HTML Button elements in the button set container.
-***REMOVED*** @return {!NodeList} A live NodeList of the buttons.
-***REMOVED***
+/**
+ * Returns all the HTML Button elements in the button set container.
+ * @return {!NodeList} A live NodeList of the buttons.
+ */
 goog.ui.Dialog.ButtonSet.prototype.getAllButtons = function() {
   return this.element_.getElementsByTagName(goog.dom.TagName.BUTTON);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables or disables a button in this set by key. If the button is not found,
-***REMOVED*** does nothing.
-***REMOVED*** @param {string} key The button to enable or disable.
-***REMOVED*** @param {boolean} enabled True to enable; false to disable.
-***REMOVED***
+/**
+ * Enables or disables a button in this set by key. If the button is not found,
+ * does nothing.
+ * @param {string} key The button to enable or disable.
+ * @param {boolean} enabled True to enable; false to disable.
+ */
 goog.ui.Dialog.ButtonSet.prototype.setButtonEnabled = function(key, enabled) {
   var button = this.getButton(key);
   if (button) {
     button.disabled = !enabled;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables or disables all of the buttons in this set.
-***REMOVED*** @param {boolean} enabled True to enable; false to disable.
-***REMOVED***
+/**
+ * Enables or disables all of the buttons in this set.
+ * @param {boolean} enabled True to enable; false to disable.
+ */
 goog.ui.Dialog.ButtonSet.prototype.setAllButtonsEnabled = function(enabled) {
   var allButtons = this.getAllButtons();
   for (var i = 0, button; button = allButtons[i]; i++) {
     button.disabled = !enabled;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The keys used to identify standard buttons in events.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The keys used to identify standard buttons in events.
+ * @enum {string}
+ */
 goog.ui.Dialog.DefaultButtonKeys = {
   OK: 'ok',
   CANCEL: 'cancel',
@@ -1415,62 +1415,62 @@ goog.ui.Dialog.DefaultButtonKeys = {
   NO: 'no',
   SAVE: 'save',
   CONTINUE: 'continue'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'OK' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'OK' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_OK_ = goog.getMsg('OK');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'Cancel' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'Cancel' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_CANCEL_ = goog.getMsg('Cancel');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'Yes' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'Yes' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_YES_ = goog.getMsg('Yes');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'No' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'No' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_NO_ = goog.getMsg('No');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'Save' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'Save' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_SAVE_ = goog.getMsg('Save');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard caption for the dialog 'Continue' button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard caption for the dialog 'Continue' button.
+ * @private
+ */
 goog.ui.Dialog.MSG_DIALOG_CONTINUE_ = goog.getMsg('Continue');
 
 
-***REMOVED***
-***REMOVED*** @desc Standard label for the dialog 'X' (close) button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @desc Standard label for the dialog 'X' (close) button.
+ * @private
+ */
 goog.ui.Dialog.MSG_GOOG_UI_DIALOG_CLOSE_ = goog.getMsg('Close');
 
 
-***REMOVED***
-***REMOVED*** The default captions for the default buttons.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * The default captions for the default buttons.
+ * @enum {string}
+ */
 goog.ui.Dialog.DefaultButtonCaptions = {
   OK: goog.ui.Dialog.MSG_DIALOG_OK_,
   CANCEL: goog.ui.Dialog.MSG_DIALOG_CANCEL_,
@@ -1478,13 +1478,13 @@ goog.ui.Dialog.DefaultButtonCaptions = {
   NO: goog.ui.Dialog.MSG_DIALOG_NO_,
   SAVE: goog.ui.Dialog.MSG_DIALOG_SAVE_,
   CONTINUE: goog.ui.Dialog.MSG_DIALOG_CONTINUE_
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The standard buttons (keys associated with captions).
-***REMOVED*** @enum {!{key: string, caption: string}}
-***REMOVED***
+/**
+ * The standard buttons (keys associated with captions).
+ * @enum {!{key: string, caption: string}}
+ */
 goog.ui.Dialog.ButtonSet.DefaultButtons = {
   OK: {
     key: goog.ui.Dialog.DefaultButtonKeys.OK,
@@ -1510,85 +1510,85 @@ goog.ui.Dialog.ButtonSet.DefaultButtons = {
     key: goog.ui.Dialog.DefaultButtonKeys.CONTINUE,
     caption: goog.ui.Dialog.DefaultButtonCaptions.CONTINUE
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new ButtonSet with a single 'OK' button, which is also set with
-***REMOVED*** cancel button semantics so that pressing escape will close the dialog.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
-***REMOVED***
+/**
+ * Creates a new ButtonSet with a single 'OK' button, which is also set with
+ * cancel button semantics so that pressing escape will close the dialog.
+ * @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
+ */
 goog.ui.Dialog.ButtonSet.createOk = function() {
   return new goog.ui.Dialog.ButtonSet().
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.OK, true, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new ButtonSet with 'OK' (default) and 'Cancel' buttons.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
-***REMOVED***
+/**
+ * Creates a new ButtonSet with 'OK' (default) and 'Cancel' buttons.
+ * @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
+ */
 goog.ui.Dialog.ButtonSet.createOkCancel = function() {
   return new goog.ui.Dialog.ButtonSet().
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.OK, true).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.CANCEL, false, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new ButtonSet with 'Yes' (default) and 'No' buttons.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
-***REMOVED***
+/**
+ * Creates a new ButtonSet with 'Yes' (default) and 'No' buttons.
+ * @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
+ */
 goog.ui.Dialog.ButtonSet.createYesNo = function() {
   return new goog.ui.Dialog.ButtonSet().
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.YES, true).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.NO, false, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new ButtonSet with 'Yes', 'No' (default), and 'Cancel' buttons.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
-***REMOVED***
+/**
+ * Creates a new ButtonSet with 'Yes', 'No' (default), and 'Cancel' buttons.
+ * @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
+ */
 goog.ui.Dialog.ButtonSet.createYesNoCancel = function() {
   return new goog.ui.Dialog.ButtonSet().
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.YES).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.NO, true).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.CANCEL, false, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new ButtonSet with 'Continue', 'Save', and 'Cancel' (default)
-***REMOVED*** buttons.
-***REMOVED*** @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
-***REMOVED***
+/**
+ * Creates a new ButtonSet with 'Continue', 'Save', and 'Cancel' (default)
+ * buttons.
+ * @return {!goog.ui.Dialog.ButtonSet} The created ButtonSet.
+ */
 goog.ui.Dialog.ButtonSet.createContinueSaveCancel = function() {
   return new goog.ui.Dialog.ButtonSet().
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.CONTINUE).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.SAVE).
       addButton(goog.ui.Dialog.ButtonSet.DefaultButtons.CANCEL, true, true);
-***REMOVED***
+};
 
 
 // TODO(user): These shared instances should be phased out.
 (function() {
   if (typeof document != 'undefined') {
-   ***REMOVED*****REMOVED*** @deprecated Use goog.ui.Dialog.ButtonSet#createOk.***REMOVED***
+    /** @deprecated Use goog.ui.Dialog.ButtonSet#createOk. */
     goog.ui.Dialog.ButtonSet.OK = goog.ui.Dialog.ButtonSet.createOk();
 
-   ***REMOVED*****REMOVED*** @deprecated Use goog.ui.Dialog.ButtonSet#createOkCancel.***REMOVED***
+    /** @deprecated Use goog.ui.Dialog.ButtonSet#createOkCancel. */
     goog.ui.Dialog.ButtonSet.OK_CANCEL =
         goog.ui.Dialog.ButtonSet.createOkCancel();
 
-   ***REMOVED*****REMOVED*** @deprecated Use goog.ui.Dialog.ButtonSet#createYesNo.***REMOVED***
+    /** @deprecated Use goog.ui.Dialog.ButtonSet#createYesNo. */
     goog.ui.Dialog.ButtonSet.YES_NO = goog.ui.Dialog.ButtonSet.createYesNo();
 
-   ***REMOVED*****REMOVED*** @deprecated Use goog.ui.Dialog.ButtonSet#createYesNoCancel.***REMOVED***
+    /** @deprecated Use goog.ui.Dialog.ButtonSet#createYesNoCancel. */
     goog.ui.Dialog.ButtonSet.YES_NO_CANCEL =
         goog.ui.Dialog.ButtonSet.createYesNoCancel();
 
-   ***REMOVED*****REMOVED*** @deprecated Use goog.ui.Dialog.ButtonSet#createContinueSaveCancel.***REMOVED***
+    /** @deprecated Use goog.ui.Dialog.ButtonSet#createContinueSaveCancel. */
     goog.ui.Dialog.ButtonSet.CONTINUE_SAVE_CANCEL =
         goog.ui.Dialog.ButtonSet.createContinueSaveCancel();
   }

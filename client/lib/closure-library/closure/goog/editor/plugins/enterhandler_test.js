@@ -25,7 +25,7 @@ goog.require('goog.editor.Plugin');
 goog.require('goog.editor.plugins.Blockquote');
 goog.require('goog.editor.plugins.EnterHandler');
 goog.require('goog.editor.range');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.testing.ExpectedFailures');
 goog.require('goog.testing.MockClock');
@@ -154,10 +154,10 @@ function testEnterInBlockquoteCreatesDivInBrMode() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that breaking after a BR doesn't result in unnecessary newlines.
-***REMOVED*** @bug 1471047
-***REMOVED***
+/**
+ * Tests that breaking after a BR doesn't result in unnecessary newlines.
+ * @bug 1471047
+ */
 function testEnterInBlockquoteRemovesUnnecessaryBrWithCursorAfterBr() {
   setUpFields(true);
 
@@ -197,11 +197,11 @@ function testEnterInBlockquoteRemovesUnnecessaryBrWithCursorAfterBr() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that breaking in a text node before a BR doesn't result in unnecessary
-***REMOVED*** newlines.
-***REMOVED*** @bug 1471047
-***REMOVED***
+/**
+ * Tests that breaking in a text node before a BR doesn't result in unnecessary
+ * newlines.
+ * @bug 1471047
+ */
 function testEnterInBlockquoteRemovesUnnecessaryBrWithCursorBeforeBr() {
   setUpFields(true);
 
@@ -239,13 +239,13 @@ function testEnterInBlockquoteRemovesUnnecessaryBrWithCursorBeforeBr() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that pressing enter in a blockquote doesn't create unnecessary
-***REMOVED*** DOM subtrees.
-***REMOVED***
-***REMOVED*** @bug 1991539
-***REMOVED*** @bug 1991392
-***REMOVED***
+/**
+ * Tests that pressing enter in a blockquote doesn't create unnecessary
+ * DOM subtrees.
+ *
+ * @bug 1991539
+ * @bug 1991392
+ */
 function testEnterInBlockquoteRemovesExtraNodes() {
   setUpFields(true);
 
@@ -326,7 +326,7 @@ function testEnterInBlockquoteRemovesExtraNodes() {
 function testEnterInList() {
   setUpFields(true);
 
-  // <enter> in a list should***REMOVED***never* be handled by custom code. Lists are
+  // <enter> in a list should *never* be handled by custom code. Lists are
   // just way too complicated to get right.
   field1.setHtml(false,
       '<ol><li>hi!<span id="field1cursor"></span></li></ol>');
@@ -365,11 +365,11 @@ function testEnterAtEndOfBlockInWebkit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleting a BR that comes right before a block element works.
-***REMOVED*** @bug 1471096
-***REMOVED*** @bug 2056376
-***REMOVED***
+/**
+ * Tests that deleting a BR that comes right before a block element works.
+ * @bug 1471096
+ * @bug 2056376
+ */
 function testDeleteBrBeforeBlock() {
   setUpFields(true);
 
@@ -484,10 +484,10 @@ function testDeleteBrBeforeBlock() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleting a BR before a blockquote doesn't remove quoted text.
-***REMOVED*** @bug 1471075
-***REMOVED***
+/**
+ * Tests that deleting a BR before a blockquote doesn't remove quoted text.
+ * @bug 1471075
+ */
 function testDeleteBeforeBlockquote() {
   setUpFields(true);
 
@@ -525,11 +525,11 @@ function testDeleteBeforeBlockquote() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleting a BR is working normally (that the workaround for the
-***REMOVED*** bug is not causing double deletes).
-***REMOVED*** @bug 1471096
-***REMOVED***
+/**
+ * Tests that deleting a BR is working normally (that the workaround for the
+ * bug is not causing double deletes).
+ * @bug 1471096
+ */
 function testDeleteBrNormal() {
   setUpFields(true);
 
@@ -553,11 +553,11 @@ function testDeleteBrNormal() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleteCursorSelectionW3C_ correctly recognizes visually
-***REMOVED*** collapsed selections in Opera even if they contain a <br>.
-***REMOVED*** See the deleteCursorSelectionW3C_ comment in enterhandler.js.
-***REMOVED***
+/**
+ * Tests that deleteCursorSelectionW3C_ correctly recognizes visually
+ * collapsed selections in Opera even if they contain a <br>.
+ * See the deleteCursorSelectionW3C_ comment in enterhandler.js.
+ */
 function testCollapsedSelectionKeepsBrOpera() {
   setUpFields(true);
 
@@ -572,12 +572,12 @@ function testCollapsedSelectionKeepsBrOpera() {
 }
 
 
-***REMOVED***
-***REMOVED*** Selects the node at the given id, and simulates an ENTER keypress.
-***REMOVED*** @param {goog.editor.Field} field The field with the node.
-***REMOVED*** @param {string} id A DOM id.
-***REMOVED*** @return {boolean} Whether preventDefault was called on the event.
-***REMOVED***
+/**
+ * Selects the node at the given id, and simulates an ENTER keypress.
+ * @param {goog.editor.Field} field The field with the node.
+ * @param {string} id A DOM id.
+ * @return {boolean} Whether preventDefault was called on the event.
+ */
 function selectNodeAndHitEnter(field, id) {
   var dom = field.getEditableDomHelper();
   var cursor = dom.getElement(id);
@@ -587,23 +587,23 @@ function selectNodeAndHitEnter(field, id) {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a field with only the enter handler plugged in, for testing.
-***REMOVED*** @param {string} id A DOM id.
-***REMOVED*** @return {goog.editor.Field} A field.
-***REMOVED***
+/**
+ * Creates a field with only the enter handler plugged in, for testing.
+ * @param {string} id A DOM id.
+ * @return {goog.editor.Field} A field.
+ */
 function makeField(id, classnameRequiredToSplitBlockquote) {
   var field = new goog.editor.Field(id);
   field.registerPlugin(new goog.editor.plugins.EnterHandler());
   field.registerPlugin(new goog.editor.plugins.Blockquote(
       classnameRequiredToSplitBlockquote));
 
-***REMOVED***field, goog.editor.Field.EventType.BEFORECHANGE,
+  goog.events.listen(field, goog.editor.Field.EventType.BEFORECHANGE,
       function() {
         // set the global flag that beforechange was fired.
         firedBeforeChange = true;
       });
-***REMOVED***field, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(field, goog.editor.Field.EventType.DELAYEDCHANGE,
       function() {
         // set the global flag that delayed change was fired.
         firedDelayedChange = true;
@@ -613,27 +613,27 @@ function makeField(id, classnameRequiredToSplitBlockquote) {
 }
 
 
-***REMOVED***
-***REMOVED*** Reset all the global flags related to change events.
-***REMOVED***
+/**
+ * Reset all the global flags related to change events.
+ */
 function resetChangeFlags() {
   waitForChangeEvents();
   firedBeforeChange = firedDelayedChange = false;
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that both change flags were fired since the last reset.
-***REMOVED***
+/**
+ * Asserts that both change flags were fired since the last reset.
+ */
 function assertChangeFlags() {
   assert('Beforechange should have fired', firedBeforeChange);
   assert('Delayedchange should have fired', firedDelayedChange);
 }
 
 
-***REMOVED***
-***REMOVED*** Wait for delayedchange to propagate.
-***REMOVED***
+/**
+ * Wait for delayedchange to propagate.
+ */
 function waitForChangeEvents() {
   clock.tick(goog.editor.Field.DELAYED_CHANGE_FREQUENCY +
       goog.editor.Field.CHANGE_FREQUENCY);
@@ -655,9 +655,9 @@ function testPrepareContent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that the prepared contents matches the expected.
-***REMOVED***
+/**
+ * Assert that the prepared contents matches the expected.
+ */
 function assertPreparedContents(expected, original) {
   assertEquals(expected,
       field1.reduceOp_(

@@ -1,23 +1,23 @@
-***REMOVED***
-***REMOVED*** @returns {string|Array<string>}  The names of the found item(s).
-***REMOVED***
+/**
+ * @returns {string|Array<string>}  The names of the found item(s).
+ */
 function find(targetName) {
 }
 
-***REMOVED***
-***REMOVED*** @returns {!string} The name, if defined.
-***REMOVED***
+/**
+ * @returns {!string} The name, if defined.
+ */
 function getName() {
 }
 
-***REMOVED***
-***REMOVED*** @return The binding id.
-***REMOVED***
+/**
+ * @return The binding id.
+ */
 function bind(callback) {
 }
 
-***REMOVED***
-***REMOVED*** @return An object to be passed to {@link find}.
-***REMOVED***
+/**
+ * @return An object to be passed to {@link find}.
+ */
 function convert(name) {
 }

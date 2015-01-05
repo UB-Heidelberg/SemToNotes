@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base64 en/decoding. Not much to say here except that we
-***REMOVED*** work with decoded values in arrays of bytes. By "byte" I mean a number
-***REMOVED*** in [0, 255].
-***REMOVED***
-***REMOVED*** @author doughtie@google.com (Gavin Doughtie)
-***REMOVED*** @author fschneider@google.com (Fritz Schneider)
-***REMOVED***
+/**
+ * @fileoverview Base64 en/decoding. Not much to say here except that we
+ * work with decoded values in arrays of bytes. By "byte" I mean a number
+ * in [0, 255].
+ *
+ * @author doughtie@google.com (Gavin Doughtie)
+ * @author fschneider@google.com (Fritz Schneider)
+ */
 
 goog.provide('goog.crypt.base64');
 goog.require('goog.crypt');
@@ -28,88 +28,88 @@ goog.require('goog.userAgent');
 // Static lookup maps, lazily populated by init_()
 
 
-***REMOVED***
-***REMOVED*** Maps bytes to characters.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maps bytes to characters.
+ * @type {Object}
+ * @private
+ */
 goog.crypt.base64.byteToCharMap_ = null;
 
 
-***REMOVED***
-***REMOVED*** Maps characters to bytes.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maps characters to bytes.
+ * @type {Object}
+ * @private
+ */
 goog.crypt.base64.charToByteMap_ = null;
 
 
-***REMOVED***
-***REMOVED*** Maps bytes to websafe characters.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maps bytes to websafe characters.
+ * @type {Object}
+ * @private
+ */
 goog.crypt.base64.byteToCharMapWebSafe_ = null;
 
 
-***REMOVED***
-***REMOVED*** Maps websafe characters to bytes.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maps websafe characters to bytes.
+ * @type {Object}
+ * @private
+ */
 goog.crypt.base64.charToByteMapWebSafe_ = null;
 
 
-***REMOVED***
-***REMOVED*** Our default alphabet, shared between
-***REMOVED*** ENCODED_VALS and ENCODED_VALS_WEBSAFE
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Our default alphabet, shared between
+ * ENCODED_VALS and ENCODED_VALS_WEBSAFE
+ * @type {string}
+ */
 goog.crypt.base64.ENCODED_VALS_BASE =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
     'abcdefghijklmnopqrstuvwxyz' +
     '0123456789';
 
 
-***REMOVED***
-***REMOVED*** Our default alphabet. Value 64 (=) is special; it means "nothing."
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Our default alphabet. Value 64 (=) is special; it means "nothing."
+ * @type {string}
+ */
 goog.crypt.base64.ENCODED_VALS =
     goog.crypt.base64.ENCODED_VALS_BASE + '+/=';
 
 
-***REMOVED***
-***REMOVED*** Our websafe alphabet.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Our websafe alphabet.
+ * @type {string}
+ */
 goog.crypt.base64.ENCODED_VALS_WEBSAFE =
     goog.crypt.base64.ENCODED_VALS_BASE + '-_.';
 
 
-***REMOVED***
-***REMOVED*** Whether this browser supports the atob and btoa functions. This extension
-***REMOVED*** started at Mozilla but is now implemented by many browsers. We use the
-***REMOVED*** ASSUME_* variables to avoid pulling in the full useragent detection library
-***REMOVED*** but still allowing the standard per-browser compilations.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether this browser supports the atob and btoa functions. This extension
+ * started at Mozilla but is now implemented by many browsers. We use the
+ * ASSUME_* variables to avoid pulling in the full useragent detection library
+ * but still allowing the standard per-browser compilations.
+ *
+ * @type {boolean}
+ */
 goog.crypt.base64.HAS_NATIVE_SUPPORT = goog.userAgent.GECKO ||
                                        goog.userAgent.WEBKIT ||
                                        goog.userAgent.OPERA ||
                                        typeof(goog.global.atob) == 'function';
 
 
-***REMOVED***
-***REMOVED*** Base64-encode an array of bytes.
-***REMOVED***
-***REMOVED*** @param {Array.<number>|Uint8Array} input An array of bytes (numbers with
-***REMOVED***     value in [0, 255]) to encode.
-***REMOVED*** @param {boolean=} opt_webSafe Boolean indicating we should use the
-***REMOVED***     alternative alphabet.
-***REMOVED*** @return {string} The base64 encoded string.
-***REMOVED***
+/**
+ * Base64-encode an array of bytes.
+ *
+ * @param {Array.<number>|Uint8Array} input An array of bytes (numbers with
+ *     value in [0, 255]) to encode.
+ * @param {boolean=} opt_webSafe Boolean indicating we should use the
+ *     alternative alphabet.
+ * @return {string} The base64 encoded string.
+ */
 goog.crypt.base64.encodeByteArray = function(input, opt_webSafe) {
   if (!goog.isArrayLike(input)) {
     throw Error('encodeByteArray takes an array as a parameter');
@@ -150,17 +150,17 @@ goog.crypt.base64.encodeByteArray = function(input, opt_webSafe) {
   }
 
   return output.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Base64-encode a string.
-***REMOVED***
-***REMOVED*** @param {string} input A string to encode.
-***REMOVED*** @param {boolean=} opt_webSafe If true, we should use the
-***REMOVED***     alternative alphabet.
-***REMOVED*** @return {string} The base64 encoded string.
-***REMOVED***
+/**
+ * Base64-encode a string.
+ *
+ * @param {string} input A string to encode.
+ * @param {boolean=} opt_webSafe If true, we should use the
+ *     alternative alphabet.
+ * @return {string} The base64 encoded string.
+ */
 goog.crypt.base64.encodeString = function(input, opt_webSafe) {
   // Shortcut for Mozilla browsers that implement
   // a native base64 encoder in the form of "btoa/atob"
@@ -169,17 +169,17 @@ goog.crypt.base64.encodeString = function(input, opt_webSafe) {
   }
   return goog.crypt.base64.encodeByteArray(
       goog.crypt.stringToByteArray(input), opt_webSafe);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Base64-decode a string.
-***REMOVED***
-***REMOVED*** @param {string} input to decode.
-***REMOVED*** @param {boolean=} opt_webSafe True if we should use the
-***REMOVED***     alternative alphabet.
-***REMOVED*** @return {string} string representing the decoded value.
-***REMOVED***
+/**
+ * Base64-decode a string.
+ *
+ * @param {string} input to decode.
+ * @param {boolean=} opt_webSafe True if we should use the
+ *     alternative alphabet.
+ * @return {string} string representing the decoded value.
+ */
 goog.crypt.base64.decodeString = function(input, opt_webSafe) {
   // Shortcut for Mozilla browsers that implement
   // a native base64 encoder in the form of "btoa/atob"
@@ -188,24 +188,24 @@ goog.crypt.base64.decodeString = function(input, opt_webSafe) {
   }
   return goog.crypt.byteArrayToString(
       goog.crypt.base64.decodeStringToByteArray(input, opt_webSafe));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Base64-decode a string.
-***REMOVED***
-***REMOVED*** In base-64 decoding, groups of four characters are converted into three
-***REMOVED*** bytes.  If the encoder did not apply padding, the input length may not
-***REMOVED*** be a multiple of 4.
-***REMOVED***
-***REMOVED*** In this case, the last group will have fewer than 4 characters, and
-***REMOVED*** padding will be inferred.  If the group has one or two characters, it decodes
-***REMOVED*** to one byte.  If the group has three characters, it decodes to two bytes.
-***REMOVED***
-***REMOVED*** @param {string} input Input to decode.
-***REMOVED*** @param {boolean=} opt_webSafe True if we should use the web-safe alphabet.
-***REMOVED*** @return {!Array} bytes representing the decoded value.
-***REMOVED***
+/**
+ * Base64-decode a string.
+ *
+ * In base-64 decoding, groups of four characters are converted into three
+ * bytes.  If the encoder did not apply padding, the input length may not
+ * be a multiple of 4.
+ *
+ * In this case, the last group will have fewer than 4 characters, and
+ * padding will be inferred.  If the group has one or two characters, it decodes
+ * to one byte.  If the group has three characters, it decodes to two bytes.
+ *
+ * @param {string} input Input to decode.
+ * @param {boolean=} opt_webSafe True if we should use the web-safe alphabet.
+ * @return {!Array} bytes representing the decoded value.
+ */
 goog.crypt.base64.decodeStringToByteArray = function(input, opt_webSafe) {
   goog.crypt.base64.init_();
 
@@ -250,20 +250,20 @@ goog.crypt.base64.decodeStringToByteArray = function(input, opt_webSafe) {
   }
 
   return output;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Lazy static initialization function. Called before
-***REMOVED*** accessing any of the static map variables.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lazy static initialization function. Called before
+ * accessing any of the static map variables.
+ * @private
+ */
 goog.crypt.base64.init_ = function() {
   if (!goog.crypt.base64.byteToCharMap_) {
-    goog.crypt.base64.byteToCharMap_ = {***REMOVED***
-    goog.crypt.base64.charToByteMap_ = {***REMOVED***
-    goog.crypt.base64.byteToCharMapWebSafe_ = {***REMOVED***
-    goog.crypt.base64.charToByteMapWebSafe_ = {***REMOVED***
+    goog.crypt.base64.byteToCharMap_ = {};
+    goog.crypt.base64.charToByteMap_ = {};
+    goog.crypt.base64.byteToCharMapWebSafe_ = {};
+    goog.crypt.base64.charToByteMapWebSafe_ = {};
 
     // We want quick mappings back and forth, so we precompute two maps.
     for (var i = 0; i < goog.crypt.base64.ENCODED_VALS.length; i++) {
@@ -276,4 +276,4 @@ goog.crypt.base64.init_ = function() {
           goog.crypt.base64.byteToCharMapWebSafe_[i]] = i;
     }
   }
-***REMOVED***
+};

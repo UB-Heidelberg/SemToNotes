@@ -70,12 +70,12 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** This is a helper function for setting up the targetElement with a
-***REMOVED*** given direction.
-***REMOVED***
-***REMOVED*** @param {string} dir The direction of the targetElement, 'ltr' or 'rtl'.
-***REMOVED***
+/**
+ * This is a helper function for setting up the targetElement with a
+ * given direction.
+ *
+ * @param {string} dir The direction of the targetElement, 'ltr' or 'rtl'.
+ */
 function prepareTargetWithGivenDirection(dir) {
   goog.style.setStyle(document.body, 'direction', dir);
 
@@ -87,7 +87,7 @@ function prepareTargetWithGivenDirection(dir) {
   bubblePlugin.createBubbleContents = function(bubbleContainer) {
     bubbleContainer.innerHTML = '<div style="border:1px solid blue;">B</div>';
     goog.style.setStyle(bubbleContainer, 'border', '1px solid white');
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.registerFieldObject(FIELDMOCK);
   bubblePlugin.enable(FIELDMOCK);
   bubblePlugin.createBubble(link);
@@ -99,7 +99,7 @@ function helpTestCreateBubble(opt_fn) {
   bubblePlugin.createBubbleContents = function(bubbleContainer) {
     numCalled++;
     assertNotNull('bubbleContainer should not be null', bubbleContainer);
- ***REMOVED*****REMOVED***
+  };
   if (opt_fn) {
     opt_fn();
   }
@@ -120,7 +120,7 @@ function testOpeningBubbleCallsOnShow() {
   testCreateBubble(function() {
     bubblePlugin.onShow = function() {
       numCalled++;
-   ***REMOVED*****REMOVED***
+    };
   });
 
   assertEquals('onShow should be called', 1, numCalled);
@@ -159,7 +159,7 @@ function testNoTwoBubblesOpenAtSameTime() {
   bubblePlugin.closeBubble = function() {
     numTimesCloseCalled++;
     origClose();
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.getBubbleTargetFromSelection = goog.functions.identity;
   bubblePlugin.createBubbleContents = goog.nullFunction;
 
@@ -197,9 +197,9 @@ function testHandleSelectionChangeWithTarget() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for @bug 2945341
-***REMOVED***
+/**
+ * Regression test for @bug 2945341
+ */
 function testSelectOneTextCharacterNoError() {
   FIELDMOCK.$replay();
   bubblePlugin.getBubbleTargetFromSelection = goog.functions.identity;
@@ -215,12 +215,12 @@ function testSelectOneTextCharacterNoError() {
 function testTabKeyEvents() {
   FIELDMOCK.focus();
   FIELDMOCK.$replay();
-  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing***REMOVED***);
+  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing */);
   bubblePlugin.getBubbleTargetFromSelection = goog.functions.identity;
   bubblePlugin.createBubbleContents = function(container) {
     this.createLink('linkInBubble0', 'Foo', false, container);
     this.createLink('linkInBubble1', 'Bar', false, container);
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.handleSelectionChangeInternal(link);
 
   goog.testing.events.fireKeySequence(fieldDiv,
@@ -238,12 +238,12 @@ function testTabKeyEvents() {
 function testTabKeyEventsWithShiftKey() {
   FIELDMOCK.focus();
   FIELDMOCK.$replay();
-  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing***REMOVED***);
+  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing */);
   bubblePlugin.getBubbleTargetFromSelection = goog.functions.identity;
   bubblePlugin.createBubbleContents = function(container) {
     this.createLink('linkInBubble0', 'Foo', false, container);
     this.createLink('linkInBubble1', 'Bar', false, container);
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.handleSelectionChangeInternal(link);
 
   goog.testing.events.fireKeySequence(fieldDiv,
@@ -264,7 +264,7 @@ function testTabKeyNoEffectKeyboardNavDisabled() {
   bubblePlugin.createBubbleContents = function(container) {
     this.createLink('linkInBubble0', 'Foo', false, container);
     this.createLink('linkInBubble1', 'Bar', false, container);
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.handleSelectionChangeInternal(link);
 
   assertFalse('The action should not be handled by the plugin',
@@ -278,12 +278,12 @@ function testTabKeyNoEffectKeyboardNavDisabled() {
 
 function testOtherKeyEventNoEffectKeyboardNavEnabled() {
   FIELDMOCK.$replay();
-  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing***REMOVED***);
+  bubblePlugin.enableKeyboardNavigation(true /* enable link tabbing */);
   bubblePlugin.getBubbleTargetFromSelection = goog.functions.identity;
   bubblePlugin.createBubbleContents = function(container) {
     this.createLink('linkInBubble0', 'Foo', false, container);
     this.createLink('linkInBubble1', 'Bar', false, container);
- ***REMOVED*****REMOVED***
+  };
   bubblePlugin.handleSelectionChangeInternal(link);
 
   // Test pressing CTRL + B: this should not have any effect.

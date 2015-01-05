@@ -18,8 +18,8 @@ goog.require('goog.Timer');
 goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 goog.require('goog.dom.selection');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.style');
 goog.require('goog.ui.equation.ChangeEvent');
@@ -30,148 +30,148 @@ goog.require('goog.ui.equation.PaletteEvent');
 
 
 
-***REMOVED***
-***REMOVED*** User interface for TeX equation editor tab pane.
-***REMOVED*** @param {Object} context The context this Tex editor pane runs in.
-***REMOVED*** @param {string} helpUrl The help link URL.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.equation.EditorPane}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * User interface for TeX equation editor tab pane.
+ * @param {Object} context The context this Tex editor pane runs in.
+ * @param {string} helpUrl The help link URL.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.equation.EditorPane}
+ * @final
+ */
 goog.ui.equation.TexPane = function(
     context, helpUrl, opt_domHelper) {
   goog.ui.equation.EditorPane.call(this, opt_domHelper);
 
   this.setHelpUrl(helpUrl);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The palette manager instance.
-  ***REMOVED*** @type {goog.ui.equation.PaletteManager}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The palette manager instance.
+   * @type {goog.ui.equation.PaletteManager}
+   * @private
+   */
   this.paletteManager_ =
-     ***REMOVED*****REMOVED*** @type {goog.ui.equation.PaletteManager}***REMOVED***(
+      /** @type {goog.ui.equation.PaletteManager} */(
       context.paletteManager);
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.TexPane,
     goog.ui.equation.EditorPane);
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for the preview container.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for the preview container.
+ * @type {string}
+ */
 goog.ui.equation.TexPane.PREVIEW_CONTAINER_CSS_CLASS =
     'ee-preview-container';
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for section titles.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for section titles.
+ * @type {string}
+ */
 goog.ui.equation.TexPane.SECTION_TITLE_CSS_CLASS =
     'ee-section-title';
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for section titles that float left.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for section titles that float left.
+ * @type {string}
+ */
 goog.ui.equation.TexPane.SECTION_TITLE_FLOAT_CSS_CLASS =
     'ee-section-title-floating';
 
 
-***REMOVED***
-***REMOVED*** The CSS id name for the link to "Learn more".
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS id name for the link to "Learn more".
+ * @type {string}
+ */
 goog.ui.equation.TexPane.SECTION_LEARN_MORE_CSS_ID =
     'ee-section-learn-more';
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for the Tex editor.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for the Tex editor.
+ * @type {string}
+ */
 goog.ui.equation.TexPane.TEX_EDIT_CSS_CLASS = 'ee-tex';
 
 
-***REMOVED***
-***REMOVED*** The CSS class name for the preview container.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The CSS class name for the preview container.
+ * @type {string}
+ */
 goog.ui.equation.TexPane.WARNING_CLASS =
     'ee-warning';
 
 
-***REMOVED***
-***REMOVED*** The content div of the TeX editor.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The content div of the TeX editor.
+ * @type {Element}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.texEditorElement_ = null;
 
 
-***REMOVED***
-***REMOVED*** The container div for the server-generated image of the equation.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The container div for the server-generated image of the equation.
+ * @type {Element}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.previewContainer_;
 
 
-***REMOVED***
-***REMOVED*** An inner container used to layout all the elements in Tex Editor.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An inner container used to layout all the elements in Tex Editor.
+ * @type {Element}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.innerContainer_;
 
 
-***REMOVED***
-***REMOVED*** The textarea for free form TeX.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The textarea for free form TeX.
+ * @type {Element}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.texEdit_;
 
 
-***REMOVED***
-***REMOVED*** The input handler for Tex editor.
-***REMOVED*** @type {goog.events.InputHandler}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The input handler for Tex editor.
+ * @type {goog.events.InputHandler}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.texInputHandler_;
 
 
-***REMOVED***
-***REMOVED*** The last text that was renderred as an image.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The last text that was renderred as an image.
+ * @type {string}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.lastRenderredText_ = '';
 
 
-***REMOVED***
-***REMOVED*** A sequence number for text change events. Used to delay drawing
-***REMOVED*** until the user paused typing.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A sequence number for text change events. Used to delay drawing
+ * until the user paused typing.
+ * @type {number}
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.changeSequence_ = 0;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.createDom = function() {
 
- ***REMOVED*****REMOVED*** @desc Title for TeX editor tab in the equation editor dialog.***REMOVED***
+  /** @desc Title for TeX editor tab in the equation editor dialog. */
   var MSG_EE_TEX_EQUATION = goog.getMsg('TeX Equation');
 
- ***REMOVED*****REMOVED*** @desc Title for equation preview image in the equation editor dialog.***REMOVED***
+  /** @desc Title for equation preview image in the equation editor dialog. */
   var MSG_EE_TEX_PREVIEW = goog.getMsg('Preview');
 
- ***REMOVED*****REMOVED*** @desc Link text that leads to an info page about the equation dialog.***REMOVED***
+  /** @desc Link text that leads to an info page about the equation dialog. */
   var MSG_EE_LEARN_MORE = goog.getMsg('Learn more');
 
   var domHelper = this.dom_;
@@ -227,15 +227,15 @@ goog.ui.equation.TexPane.prototype.createDom = function() {
   innerContainer.appendChild(previewContainer);
 
   this.setElementInternal(texEditorEl);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.enterDocument = function() {
   this.texInputHandler_ = new goog.events.InputHandler(this.texEdit_);
 
   // Listen to changes in the edit box to redraw equation.
-***REMOVED***this.texInputHandler_,
+  goog.events.listen(this.texInputHandler_,
       goog.events.InputHandler.EventType.INPUT,
       this.handleTexChange_, false, this);
 
@@ -249,33 +249,33 @@ goog.ui.equation.TexPane.prototype.enterDocument = function() {
   this.getHandler().listen(this.paletteManager_,
       goog.ui.equation.PaletteEvent.Type.ACTION,
       this.handlePaletteAction_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.setVisible = function(visible) {
   goog.ui.equation.TexPane.base(this, 'setVisible', visible);
   if (visible) {
     goog.Timer.callOnce(this.focusTexEdit_, 0, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the focus to the TeX edit box.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the focus to the TeX edit box.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.focusTexEdit_ = function() {
   this.texEdit_.focus();
   goog.dom.selection.setCursorPosition(this.texEdit_,
       this.texEdit_.value.length);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles input change within the TeX textarea.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles input change within the TeX textarea.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.handleEquationChange_ = function() {
   var text = this.getEquation();
   if (text == this.lastRenderredText_) {
@@ -305,10 +305,10 @@ goog.ui.equation.TexPane.prototype.handleEquationChange_ = function() {
     } else {
       // Show a warning message.
 
-     ***REMOVED*****REMOVED***
-      ***REMOVED*** @desc A warning message shown when equation the user entered is too
-      ***REMOVED***     long to display.
-     ***REMOVED*****REMOVED***
+      /**
+       * @desc A warning message shown when equation the user entered is too
+       *     long to display.
+       */
       var MSG_EE_TEX_EQUATION_TOO_LONG =
           goog.getMsg('Equation is too long');
 
@@ -318,44 +318,44 @@ goog.ui.equation.TexPane.prototype.handleEquationChange_ = function() {
     }
     dom.appendChild(container, childNode);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a change to the equation text.
-***REMOVED*** Queues a request to handle input change within the TeX textarea.
-***REMOVED*** Refreshing the image is done only after a short timeout, to combine
-***REMOVED*** fast typing events into one draw.
-***REMOVED*** @param {goog.events.Event} e The keyboard event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a change to the equation text.
+ * Queues a request to handle input change within the TeX textarea.
+ * Refreshing the image is done only after a short timeout, to combine
+ * fast typing events into one draw.
+ * @param {goog.events.Event} e The keyboard event.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.handleTexChange_ = function(e) {
   this.changeSequence_++;
   goog.Timer.callOnce(
       goog.bind(this.handleTexChangeTimer_, this, this.changeSequence_),
       500);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a timer timeout on delayed text change redraw.
-***REMOVED*** @param {number} seq The change sequence number when the timer started.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a timer timeout on delayed text change redraw.
+ * @param {number} seq The change sequence number when the timer started.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.handleTexChangeTimer_ =
     function(seq) {
   // Draw only if this was the last change. If not, just wait for the last.
   if (seq == this.changeSequence_) {
     this.handleEquationChange_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an action generated by a palette click.
-***REMOVED*** @param {goog.ui.equation.PaletteEvent} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles an action generated by a palette click.
+ * @param {goog.ui.equation.PaletteEvent} e The event object.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.handlePaletteAction_ = function(e) {
   var palette = e.getPalette();
   var paletteManager = this.paletteManager_;
@@ -379,7 +379,7 @@ goog.ui.equation.TexPane.prototype.handlePaletteAction_ = function(e) {
     // Then we just open the one corresponding to the item under the mouse.
     if (action) {
       var subPalette = this.paletteManager_.setActive(
-         ***REMOVED*****REMOVED*** @type {goog.ui.equation.Palette.Type}***REMOVED*** (action));
+          /** @type {goog.ui.equation.Palette.Type} */ (action));
       if (!subPalette.getElement()) {
         subPalette.render(this.innerContainer_);
       }
@@ -403,15 +403,15 @@ goog.ui.equation.TexPane.prototype.handlePaletteAction_ = function(e) {
 
   // Let the tex editor always catch the focus.
   texEdit.focus();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts text into the equation at the current cursor position.
-***REMOVED*** Moves the cursor to after the inserted text.
-***REMOVED*** @param {string} text Text to insert.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Inserts text into the equation at the current cursor position.
+ * Moves the cursor to after the inserted text.
+ * @param {string} text Text to insert.
+ * @private
+ */
 goog.ui.equation.TexPane.prototype.insert_ = function(text) {
   var texEdit = this.texEdit_;
   var pos = goog.dom.selection.getStart(texEdit);
@@ -420,26 +420,26 @@ goog.ui.equation.TexPane.prototype.insert_ = function(text) {
   texEdit['value'] = equation;
   goog.dom.selection.setCursorPosition(texEdit, pos + text.length);
   this.handleEquationChange_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.getEquation = function() {
   return this.texEdit_['value'];
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.setEquation =
     function(equation) {
   this.texEdit_['value'] = equation;
   this.handleEquationChange_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.TexPane.prototype.disposeInternal = function() {
   this.texInputHandler_.dispose();
   this.paletteManager_ = null;
   goog.ui.equation.TexPane.base(this, 'disposeInternal');
-***REMOVED***
+};

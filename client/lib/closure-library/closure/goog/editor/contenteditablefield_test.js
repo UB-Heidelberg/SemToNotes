@@ -17,7 +17,7 @@ goog.setTestOnly('goog.editor.ContentEditableFieldTest');
 
 goog.require('goog.dom');
 goog.require('goog.editor.ContentEditableField');
-***REMOVED*** @suppress {extraRequire} needed for test setup***REMOVED***
+/** @suppress {extraRequire} needed for test setup */
 goog.require('goog.editor.field_test');
 goog.require('goog.testing.jsunit');
 
@@ -44,7 +44,7 @@ function testMakeEditableAndUnEditable() {
   field.makeEditable();
   assertEquals('true', String(elem.contentEditable));
   assertEquals('Hello world', goog.dom.getTextContent(elem));
-  field.setHtml(false /* addParas***REMOVED***, 'Goodbye world');
+  field.setHtml(false /* addParas */, 'Goodbye world');
   assertEquals('Goodbye world', goog.dom.getTextContent(elem));
 
   field.makeUneditable();

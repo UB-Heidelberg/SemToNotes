@@ -17,7 +17,7 @@ goog.setTestOnly('goog.events.InputHandlerTest');
 
 goog.require('goog.dom');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.testing.events');

@@ -32,16 +32,16 @@ goog.require('goog.testing.jsunit');
 goog.require('goog.testing.recordFunction');
 
 
-***REMOVED***
-***REMOVED*** Delay between a network failure and the next network request.
-***REMOVED***
+/**
+ * Delay between a network failure and the next network request.
+ */
 var RETRY_TIME = 1000;
 
 
-***REMOVED***
-***REMOVED*** A really long time - used to make sure no more timeouts will fire.
-***REMOVED***
-var ALL_DAY_MS = 1000***REMOVED*** 60***REMOVED*** 60***REMOVED*** 24;
+/**
+ * A really long time - used to make sure no more timeouts will fire.
+ */
+var ALL_DAY_MS = 1000 * 60 * 60 * 24;
 
 var stubs = new goog.testing.PropertyReplacer();
 
@@ -70,14 +70,14 @@ function debugToWindow(message) {
 }
 
 
-***REMOVED***
-***REMOVED*** Stubs goog.net.tmpnetwork to always time out. It maintains the
-***REMOVED*** contract given by goog.net.tmpnetwork.testGoogleCom, but always
-***REMOVED*** times out (calling callback(false)).
-***REMOVED***
-***REMOVED*** stubTmpnetwork should be called in tests that require it before
-***REMOVED*** a call to testGoogleCom happens. It is reset at tearDown.
-***REMOVED***
+/**
+ * Stubs goog.net.tmpnetwork to always time out. It maintains the
+ * contract given by goog.net.tmpnetwork.testGoogleCom, but always
+ * times out (calling callback(false)).
+ *
+ * stubTmpnetwork should be called in tests that require it before
+ * a call to testGoogleCom happens. It is reset at tearDown.
+ */
 function stubTmpnetwork() {
   stubs.set(goog.net.tmpnetwork, 'testLoadImage',
       function(url, timeout, callback) {
@@ -87,10 +87,10 @@ function stubTmpnetwork() {
 
 
 
-***REMOVED***
-***REMOVED*** Mock ChannelRequest.
-***REMOVED***
-***REMOVED***
+/**
+ * Mock ChannelRequest.
+ * @constructor
+ */
 var MockChannelRequest = function(channel, channelDebug, opt_sessionId,
     opt_requestId, opt_retryId) {
   this.channel_ = channel;
@@ -104,18 +104,18 @@ var MockChannelRequest = function(channel, channelDebug, opt_sessionId,
   // For debugging, keep track of whether this is a back or forward channel.
   this.isBack = !!(opt_requestId == 'rpc');
   this.isForward = !this.isBack;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.postData_ = null;
 
 MockChannelRequest.prototype.requestStartTime_ = null;
 
-MockChannelRequest.prototype.setExtraHeaders = function(extraHeaders) {***REMOVED***
+MockChannelRequest.prototype.setExtraHeaders = function(extraHeaders) {};
 
-MockChannelRequest.prototype.setTimeout = function(timeout) {***REMOVED***
+MockChannelRequest.prototype.setTimeout = function(timeout) {};
 
 MockChannelRequest.prototype.setReadyStateChangeThrottle =
-    function(throttle) {***REMOVED***
+    function(throttle) {};
 
 MockChannelRequest.prototype.xmlHttpPost = function(uri, postData,
     decodeChunks) {
@@ -123,55 +123,55 @@ MockChannelRequest.prototype.xmlHttpPost = function(uri, postData,
       decodeChunks);
   this.postData_ = postData;
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.xmlHttpGet = function(uri, decodeChunks,
     opt_noClose) {
   this.channelDebug_.debug('<--- GET: ' + uri + ', ' + decodeChunks + ', ' +
       opt_noClose);
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.tridentGet = function(uri, usingSecondaryDomain) {
   this.channelDebug_.debug('<---GET (T): ' + uri);
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.sendUsingImgTag = function(uri) {
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.cancel = function() {
   this.successful_ = false;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getSuccess = function() {
   return this.successful_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getLastError = function() {
   return this.lastError_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getLastStatusCode = function() {
   return this.lastStatusCode_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getSessionId = function() {
   return this.sessionId_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getRequestId = function() {
   return this.requestId_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getPostData = function() {
   return this.postData_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getRequestStartTime = function() {
   return this.requestStartTime_;
-***REMOVED***
+};
 
 
 function setUpPage() {
@@ -180,20 +180,20 @@ function setUpPage() {
       channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId) {
     return new MockChannelRequest(
         channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId);
- ***REMOVED*****REMOVED***
+  };
 
   // Mock out the stat notification code.
   goog.net.BrowserChannel.notifyStatEvent = function(stat) {
     numStatEvents++;
     lastStatEvent = stat;
- ***REMOVED*****REMOVED***
+  };
 
   goog.net.BrowserChannel.notifyTimingEvent = function(size, rtt, retries) {
     numTimingEvents++;
     lastPostSize = size;
     lastPostRtt = rtt;
     lastPostRetryCount = retries;
- ***REMOVED*****REMOVED***
+  };
 }
 
 
@@ -208,13 +208,13 @@ function setUp() {
   gotError = false;
 
   handler = new goog.net.BrowserChannel.Handler();
-  handler.channelOpened = function() {***REMOVED***
+  handler.channelOpened = function() {};
   handler.channelError = function(channel, error) {
     gotError = true;
- ***REMOVED*****REMOVED***
+  };
   handler.channelSuccess = function(channel, maps) {
     deliveredMaps = goog.array.clone(maps);
- ***REMOVED*****REMOVED***
+  };
   handler.channelClosed = function(
       channel, opt_pendingMaps, opt_undeliveredMaps) {
     // Mock out the handler, and let it set a formatted user readable string
@@ -225,21 +225,21 @@ function setUp() {
     if (opt_undeliveredMaps) {
       this.undeliveredMapsString = formatArrayOfMaps(opt_undeliveredMaps);
     }
- ***REMOVED*****REMOVED***
-  handler.channelHandleMultipleArrays = function() {***REMOVED***
-  handler.channelHandleArray = function() {***REMOVED***
+  };
+  handler.channelHandleMultipleArrays = function() {};
+  handler.channelHandleArray = function() {};
 
   browserChannel.setHandler(handler);
 
   // Provide a predictable retry time for testing.
   browserChannel.getRetryTime_ = function(retryCount) {
     return RETRY_TIME;
- ***REMOVED*****REMOVED***
+  };
 
   var channelDebug = new goog.net.ChannelDebug();
   channelDebug.debug = function(message) {
     debugToWindow(message);
- ***REMOVED*****REMOVED***
+  };
   browserChannel.setChannelDebug(channelDebug);
 
   numStatEvents = 0;
@@ -254,9 +254,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to return a formatted string representing an array of maps.
-***REMOVED***
+/**
+ * Helper function to return a formatted string representing an array of maps.
+ */
 function formatArrayOfMaps(arrayOfMaps) {
   var result = [];
   for (var i = 0; i < arrayOfMaps.length; i++) {
@@ -404,7 +404,7 @@ function response(lastArrayIdSentFromServer, outstandingDataSize) {
   browserChannel.onRequestData(
       browserChannel.forwardChannelRequest_,
       responseData
-***REMOVED***
+  );
   browserChannel.onRequestComplete(
       browserChannel.forwardChannelRequest_);
   mockClock.tick(0);
@@ -518,7 +518,7 @@ function testConnect_withServerHostPrefix() {
 function testConnect_withClientHostPrefix() {
   handler.correctHostPrefix = function(hostPrefix) {
     return 'clientHostPrefix';
- ***REMOVED*****REMOVED***
+  };
   connect();
   assertEquals('clientHostPrefix', browserChannel.hostPrefix_);
 }
@@ -526,7 +526,7 @@ function testConnect_withClientHostPrefix() {
 function testConnect_overrideServerHostPrefix() {
   handler.correctHostPrefix = function(hostPrefix) {
     return 'clientHostPrefix';
- ***REMOVED*****REMOVED***
+  };
   connect(undefined, 'serverHostPrefix');
   assertEquals('clientHostPrefix', browserChannel.hostPrefix_);
 }
@@ -660,10 +660,10 @@ function testTimingEvent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that dropping the forward channel retry limit below the retry count
-***REMOVED*** reports an error, and prevents another request from firing.
-***REMOVED***
+/**
+ * Make sure that dropping the forward channel retry limit below the retry count
+ * reports an error, and prevents another request from firing.
+ */
 function testSetFailFastWhileWaitingForRetry() {
   stubTmpnetwork();
 
@@ -711,10 +711,10 @@ function testSetFailFastWhileWaitingForRetry() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that dropping the forward channel retry limit below the retry count
-***REMOVED*** reports an error, and prevents another request from firing.
-***REMOVED***
+/**
+ * Make sure that dropping the forward channel retry limit below the retry count
+ * reports an error, and prevents another request from firing.
+ */
 function testSetFailFastWhileRetryXhrIsInFlight() {
   stubTmpnetwork();
 
@@ -773,9 +773,9 @@ function testSetFailFastWhileRetryXhrIsInFlight() {
 }
 
 
-***REMOVED***
-***REMOVED*** Makes sure that setting fail fast while not retrying doesn't cause a failure.
-***REMOVED***
+/**
+ * Makes sure that setting fail fast while not retrying doesn't cause a failure.
+ */
 function testSetFailFastAtRetryCount() {
   stubTmpnetwork();
 
@@ -940,7 +940,7 @@ function testUndeliveredMaps_doesNotNotifyWhenSuccessful() {
     if (opt_pendingMaps || opt_undeliveredMaps) {
       fail('No pending or undelivered maps should be reported.');
     }
- ***REMOVED*****REMOVED***
+  };
 
   connect();
   sendMap('foo1', 'bar1');
@@ -957,7 +957,7 @@ function testUndeliveredMaps_doesNotNotifyIfNothingWasSent() {
     if (opt_pendingMaps || opt_undeliveredMaps) {
       fail('No pending or undelivered maps should be reported.');
     }
- ***REMOVED*****REMOVED***
+  };
 
   connect();
   mockClock.tick(ALL_DAY_MS);
@@ -1121,7 +1121,7 @@ function testResponseWithArraysMissing() {
 
   assertEquals(1, browserChannel.lastArrayId_);
   assertEquals(7, browserChannel.lastPostResponseArrayId_);
-  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE * 2);
   assertEquals(goog.net.BrowserChannel.Stat.BACKCHANNEL_DEAD, lastStatEvent);
 }
 
@@ -1156,7 +1156,7 @@ function testOnlyRetryOnceBasedOnResponse() {
   assertEquals(1, browserChannel.lastArrayId_);
   assertEquals(7, browserChannel.lastPostResponseArrayId_);
   assertTrue(hasDeadBackChannelTimer());
-  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE * 2);
   assertEquals(goog.net.BrowserChannel.Stat.BACKCHANNEL_DEAD, lastStatEvent);
   assertEquals(1, browserChannel.backChannelRetryCount_);
   mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE);
@@ -1197,7 +1197,7 @@ function testResponseWithBigOutstandingData() {
   assertEquals(1, browserChannel.lastArrayId_);
   assertEquals(7, browserChannel.lastPostResponseArrayId_);
   assertFalse(hasDeadBackChannelTimer());
-  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE * 2);
   assertNotEquals(goog.net.BrowserChannel.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
 }
@@ -1213,7 +1213,7 @@ function testResponseInBufferedMode() {
   assertEquals(1, browserChannel.lastArrayId_);
   assertEquals(7, browserChannel.lastPostResponseArrayId_);
   assertFalse(hasDeadBackChannelTimer());
-  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.net.BrowserChannel.RTT_ESTIMATE * 2);
   assertNotEquals(goog.net.BrowserChannel.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
 }
@@ -1225,7 +1225,7 @@ function testResponseWithGarbage() {
   browserChannel.onRequestData(
       browserChannel.forwardChannelRequest_,
       'garbage'
-***REMOVED***
+  );
   assertEquals(goog.net.BrowserChannel.State.CLOSED,
       browserChannel.getState());
 }
@@ -1237,7 +1237,7 @@ function testResponseWithGarbageInArray() {
   browserChannel.onRequestData(
       browserChannel.forwardChannelRequest_,
       '["garbage"]'
-***REMOVED***
+  );
   assertEquals(goog.net.BrowserChannel.State.CLOSED,
       browserChannel.getState());
 }
@@ -1303,7 +1303,7 @@ function testCreateXhrIo() {
 function testSetParser() {
   var recordUnsafeParse = goog.testing.recordFunction(
       goog.json.unsafeParse);
-  var parser = {***REMOVED***
+  var parser = {};
   parser.parse = recordUnsafeParse;
   browserChannel.setParser(parser);
 

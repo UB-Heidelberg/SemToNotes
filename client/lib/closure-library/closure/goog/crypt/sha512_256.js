@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview SHA-512/256 cryptographic hash.
-***REMOVED***
-***REMOVED*** WARNING:  SHA-256 and SHA-512/256 are different members of the SHA-2
-***REMOVED*** family of hashes.  Although both give 32-byte results, the two results
-***REMOVED*** should bear no relationship to each other.
-***REMOVED***
-***REMOVED*** Please be careful before using this hash function.
-***REMOVED*** <p>
-***REMOVED*** Usage:
-***REMOVED***   var sha512_256 = new goog.crypt.Sha512_256();
-***REMOVED***   sha512_256.update(bytes);
-***REMOVED***   var hash = sha512_256.digest();
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview SHA-512/256 cryptographic hash.
+ *
+ * WARNING:  SHA-256 and SHA-512/256 are different members of the SHA-2
+ * family of hashes.  Although both give 32-byte results, the two results
+ * should bear no relationship to each other.
+ *
+ * Please be careful before using this hash function.
+ * <p>
+ * Usage:
+ *   var sha512_256 = new goog.crypt.Sha512_256();
+ *   sha512_256.update(bytes);
+ *   var hash = sha512_256.digest();
+ *
+ */
 
 goog.provide('goog.crypt.Sha512_256');
 
@@ -34,22 +34,22 @@ goog.require('goog.crypt.Sha2_64bit');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a SHA-512/256 cryptographic hash.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Sha2_64bit}
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Constructs a SHA-512/256 cryptographic hash.
+ *
+ * @constructor
+ * @extends {goog.crypt.Sha2_64bit}
+ * @final
+ * @struct
+ */
 goog.crypt.Sha512_256 = function() {
-  goog.crypt.Sha512_256.base(this, 'constructor', 4  /* numHashBlocks***REMOVED***,
+  goog.crypt.Sha512_256.base(this, 'constructor', 4  /* numHashBlocks */,
       goog.crypt.Sha512_256.INIT_HASH_BLOCK_);
-***REMOVED***
+};
 goog.inherits(goog.crypt.Sha512_256, goog.crypt.Sha2_64bit);
 
 
-***REMOVED*** @private {!Array.<number>}***REMOVED***
+/** @private {!Array.<number>} */
 goog.crypt.Sha512_256.INIT_HASH_BLOCK_ = [
   // Section 5.3.6.2 of
   // csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf

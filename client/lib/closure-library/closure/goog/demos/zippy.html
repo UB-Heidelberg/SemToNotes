@@ -13,7 +13,7 @@ See the COPYING file for details.
   <script>
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.ui.AnimatedZippy');
     goog.require('goog.ui.Zippy');
@@ -131,11 +131,11 @@ See the COPYING file for details.
     }
 
     var z1 = new goog.ui.Zippy('header1', 'content1');
-  ***REMOVED***z1, EVENTS, logEvent);
+    goog.events.listen(z1, EVENTS, logEvent);
     var z2 = new goog.ui.AnimatedZippy('header2', 'content2', true);
-  ***REMOVED***z2, EVENTS, logEvent);
+    goog.events.listen(z2, EVENTS, logEvent);
     var z3 = new goog.ui.AnimatedZippy('header3', 'content3', false);
-  ***REMOVED***z3, EVENTS, logEvent);
+    goog.events.listen(z3, EVENTS, logEvent);
 
     z1.expand();
 
@@ -143,7 +143,7 @@ See the COPYING file for details.
       z3.setExpanded(!event.expanded);
     }
 
-  ***REMOVED***z2, goog.ui.Zippy.Events.TOGGLE, zippyToggle);
+    goog.events.listen(z2, goog.ui.Zippy.Events.TOGGLE, zippyToggle);
   </script>
 </body>
 </html>

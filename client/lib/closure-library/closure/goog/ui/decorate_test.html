@@ -40,7 +40,7 @@ See the COPYING file for details.
 
     FakeComponentX.prototype.decorate = function(element) {
       this.element = element;
-   ***REMOVED*****REMOVED***
+    };
 
     // FakeComponentY doesn't have an explicitly registered default
     // renderer; it should inherit the default renderer from its superclass.
@@ -68,7 +68,7 @@ See the COPYING file for details.
 
     FakeSingletonRenderer.getInstance = function() {
       return FakeSingletonRenderer.instance_;
-   ***REMOVED*****REMOVED***
+    };
 
     function setUp() {
       goog.ui.registry.setDefaultRenderer(FakeComponentX, FakeRenderer);

@@ -20,7 +20,7 @@ goog.require('goog.dom.TagName');
 goog.require('goog.editor.BrowserFeature');
 goog.require('goog.editor.style');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.style');
 goog.require('goog.testing.LooseMock');
 goog.require('goog.testing.jsunit');
@@ -81,9 +81,9 @@ function tearDownGetNodeFunctions() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test isBlockLevel with a node that is block style and a node that is not
-***REMOVED***
+/**
+ * Test isBlockLevel with a node that is block style and a node that is not
+ */
 function testIsDisplayBlock() {
   assertTrue('Body is block style',
       goog.editor.style.isDisplayBlock(document.body));
@@ -93,10 +93,10 @@ function testIsDisplayBlock() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that isContainer returns true when the node is of non-inline HTML and
-***REMOVED*** false when it is not
-***REMOVED***
+/**
+ * Test that isContainer returns true when the node is of non-inline HTML and
+ * false when it is not
+ */
 function testIsContainer() {
   var tableNode = $dom('table');
   var liNode = $dom('li');
@@ -114,10 +114,10 @@ function testIsContainer() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that getContainer properly returns the node itself if it is a
-***REMOVED*** container, an ancestor node if it is a container, and null otherwise
-***REMOVED***
+/**
+ * Test that getContainer properly returns the node itself if it is a
+ * container, an ancestor node if it is a container, and null otherwise
+ */
 function testGetContainer() {
   setUpGetNodeFunctions();
   assertEquals('Should return self', childNode1,

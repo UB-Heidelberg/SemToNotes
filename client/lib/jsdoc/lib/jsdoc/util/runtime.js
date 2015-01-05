@@ -1,28 +1,28 @@
-/*global env, java***REMOVED***
-***REMOVED***
-***REMOVED*** Helper functions to enable JSDoc to run on multiple JavaScript runtimes.
-***REMOVED***
-***REMOVED*** @module jsdoc/util/runtime
-***REMOVED*** @private
-***REMOVED***
+/*global env, java */
+/**
+ * Helper functions to enable JSDoc to run on multiple JavaScript runtimes.
+ *
+ * @module jsdoc/util/runtime
+ * @private
+ */
 'use strict';
 
 var os = require('os');
 
 // These strings represent directory names; do not modify them!
-***REMOVED*** @private***REMOVED***
+/** @private */
 var RHINO = exports.RHINO = 'rhino';
-***REMOVED*** @private***REMOVED***
+/** @private */
 var NODE = exports.NODE = 'node';
 
-***REMOVED***
-***REMOVED*** The JavaScript runtime that is executing JSDoc:
-***REMOVED***
-***REMOVED*** + `module:jsdoc/util/runtime~RHINO`: Mozilla Rhino.
-***REMOVED*** + `module:jsdoc/util/runtime~NODE`: Node.js.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The JavaScript runtime that is executing JSDoc:
+ *
+ * + `module:jsdoc/util/runtime~RHINO`: Mozilla Rhino.
+ * + `module:jsdoc/util/runtime~NODE`: Node.js.
+ *
+ * @private
+ */
 var runtime = (function() {
     if (global.Packages && typeof global.Packages === 'object' &&
         Object.prototype.toString.call(global.Packages) === '[object JavaPackage]') {
@@ -35,21 +35,21 @@ var runtime = (function() {
     }
 })();
 
-***REMOVED***
-***REMOVED*** Check whether Mozilla Rhino is running JSDoc.
-***REMOVED*** @return {boolean} Set to `true` if the current runtime is Mozilla Rhino.
-***REMOVED***
+/**
+ * Check whether Mozilla Rhino is running JSDoc.
+ * @return {boolean} Set to `true` if the current runtime is Mozilla Rhino.
+ */
 exports.isRhino = function() {
     return runtime === RHINO;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Check whether Node.js is running JSDoc.
-***REMOVED*** @return {boolean} Set to `true` if the current runtime is Node.js.
-***REMOVED***
+/**
+ * Check whether Node.js is running JSDoc.
+ * @return {boolean} Set to `true` if the current runtime is Node.js.
+ */
 exports.isNode = function() {
     return runtime === NODE;
-***REMOVED***
+};
 
 function initializeRhino(args) {
     // the JSDoc dirname is the main module URI, minus the filename, converted to a path
@@ -91,27 +91,27 @@ exports.initialize = function(args) {
         default:
             throw new Error('Cannot initialize the unknown JavaScript runtime "' + runtime + '"!');
     }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve the identifier for the current JavaScript runtime.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {string} The runtime identifier.
-***REMOVED***
+/**
+ * Retrieve the identifier for the current JavaScript runtime.
+ *
+ * @private
+ * @return {string} The runtime identifier.
+ */
 exports.getRuntime = function() {
     return runtime;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get the require path for the runtime-specific implementation of a module.
-***REMOVED***
-***REMOVED*** @param {string} partialPath - The partial path to the module. Use the same format as when calling
-***REMOVED*** `require()`.
-***REMOVED*** @return {object} The require path for the runtime-specific implementation of the module.
-***REMOVED***
+/**
+ * Get the require path for the runtime-specific implementation of a module.
+ *
+ * @param {string} partialPath - The partial path to the module. Use the same format as when calling
+ * `require()`.
+ * @return {object} The require path for the runtime-specific implementation of the module.
+ */
 exports.getModulePath = function(partialPath) {
     var path = require('path');
 
     return path.join(env.dirname, runtime, partialPath);
-***REMOVED***
+};

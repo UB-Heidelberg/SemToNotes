@@ -31,7 +31,7 @@ _REQUIRES_REGEX = re.compile(_BASE_REGEX_STRING % 'require')
 class Source(object):
   """Scans a JavaScript source for its provided and required namespaces."""
 
-  # Matches a "/* ...***REMOVED***" comment.
+  # Matches a "/* ... */" comment.
   # Note: We can't definitively distinguish a "/*" in a string literal without a
   # state machine tokenizer. We'll assume that a line starting with whitespace
   # and "/*" is a comment.

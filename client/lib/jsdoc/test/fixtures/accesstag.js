@@ -1,29 +1,29 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Thingy() {
 
-   ***REMOVED*****REMOVED*** @access private***REMOVED***
+    /** @access private */
     var foo = 0;
 
-   ***REMOVED*****REMOVED*** @access protected***REMOVED***
+    /** @access protected */
     this._bar = 1;
 
-   ***REMOVED*****REMOVED*** @access public***REMOVED***
+    /** @access public */
     this.pez = 2;
 
 }
 
 // same as...
 
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function OtherThingy() {
 
-   ***REMOVED*****REMOVED*** @private***REMOVED***
+    /** @private */
     var foo = 0;
 
-   ***REMOVED*****REMOVED*** @protected***REMOVED***
+    /** @protected */
     this._bar = 1;
 
-   ***REMOVED*****REMOVED*** @public***REMOVED***
+    /** @public */
     this.pez = 2;
 
 }

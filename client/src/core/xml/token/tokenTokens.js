@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Utility class to include all tokens at once.
-***REMOVED***
+/**
+ * @fileoverview Utility class to include all tokens at once.
+ */
 
 goog.provide('xrx.token.Tokens');
 
@@ -26,12 +26,12 @@ goog.require('xrx.token.TagName');
 
 
 
-***REMOVED***
-***REMOVED*** Converts a generic token into its native form.
-***REMOVED***
-***REMOVED*** @param {!xrx.token} token The token to convert.
-***REMOVED*** @return {?}
-***REMOVED***
+/**
+ * Converts a generic token into its native form.
+ *
+ * @param {!xrx.token} token The token to convert.
+ * @return {?}
+ */
 xrx.token.Tokens.getNative = function(token) {
   var newToken;
   var label = token.label().clone();
@@ -44,7 +44,7 @@ xrx.token.Tokens.getNative = function(token) {
     tmp.offset(offset);
     tmp.length(length);
     return tmp;
- ***REMOVED*****REMOVED***
+  };
   
   switch(token.type()) {
   case xrx.token.START_TAG:
@@ -74,7 +74,7 @@ xrx.token.Tokens.getNative = function(token) {
   default:
     throw Error('Token is generic or unknown.');
     break;  
- ***REMOVED*****REMOVED***
+  };
   
   return newToken;
-***REMOVED***
+};

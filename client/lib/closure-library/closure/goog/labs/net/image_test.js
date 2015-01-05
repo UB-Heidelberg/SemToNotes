@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.net.Image.
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.net.Image.
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.labs.net.imageTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.labs.net.image');
 goog.require('goog.string');
 goog.require('goog.testing.AsyncTestCase');
@@ -54,7 +54,7 @@ function testInvalidImage() {
   asyncTestCase.waitForAsync('image load');
 
   goog.labs.net.image.load(url).then(
-      fail /* opt_onResolved***REMOVED***,
+      fail /* opt_onResolved */,
       function() {
         assertEquals('Listeners should have been cleaned up.',
             0, goog.events.getTotalListenerCount());
@@ -66,7 +66,7 @@ function testImageFactory() {
   var returnedImage = new Image();
   var factory = function() {
     return returnedImage;
- ***REMOVED*****REMOVED***
+  };
   var countedFactory = goog.testing.recordFunction(factory);
 
   var url = 'testdata/cleardot.gif';

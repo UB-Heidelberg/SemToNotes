@@ -1,14 +1,14 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class implementing a magnifier tool for a drawing canvas.
-***REMOVED***
+/**
+ * @fileoverview A class implementing a magnifier tool for a drawing canvas.
+ */
 
 goog.provide('xrx.drawing.tool.Magnifier');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+goog.require('goog.dom.DomHelper');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.fx.Dragger');
 goog.require('goog.math.AffineTransform');
 goog.require('goog.math.Rect');
@@ -21,9 +21,9 @@ goog.require('xrx.vml');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.drawing.tool.Magnifier = function(drawing, element, canvas, group, image) {
 
   goog.base(this, drawing, element, canvas);
@@ -37,7 +37,7 @@ xrx.drawing.tool.Magnifier = function(drawing, element, canvas, group, image) {
   this.height_ = 100;
 
   this.ctm_ = new goog.math.AffineTransform();
-***REMOVED***
+};
 goog.inherits(xrx.drawing.tool.Magnifier, xrx.drawing.tool.Tool);
 
 
@@ -45,14 +45,14 @@ goog.inherits(xrx.drawing.tool.Magnifier, xrx.drawing.tool.Tool);
 xrx.drawing.tool.Magnifier.prototype.hide = function() {
   goog.style.setStyle(this.element_, 'display', 'none');
   this.isActive_ = false;
-***REMOVED***
+};
 
 
 
 xrx.drawing.tool.Magnifier.prototype.show = function() {
   goog.style.setStyle(this.element_, 'display', 'block');
   this.isActive_ = true;
-***REMOVED***
+};
 
 
 
@@ -67,7 +67,7 @@ xrx.drawing.tool.Magnifier.prototype.reset = function() {
   goog.style.setStyle(this.element_, 'top', '50px');
   goog.style.setStyle(this.element_, 'border', 'solid black 4px');
   this.group_.draw();
-***REMOVED***
+};
 
 
 
@@ -100,7 +100,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
   } else {
     throw Error('Unknown engine.');
   }
-***REMOVED***
+};
 
 
 
@@ -108,10 +108,10 @@ xrx.drawing.tool.Magnifier.prototype.registerDrag_ = function() {
   var size = goog.style.getSize(this.drawing_.getElement());
   var limits = new goog.math.Rect(0, 0, size.width, size.height);
   var dragger = new goog.fx.Dragger(this.element_, this.element_, limits); // TODO: limits (IE < 9)
-***REMOVED***dragger, goog.events.EventType.DRAG, function(e) {
+  goog.events.listen(dragger, goog.events.EventType.DRAG, function(e) {
     this.handleDrag_(e, dragger);
   }, false, this);
-***REMOVED***
+};
 
 
 
@@ -133,4 +133,4 @@ xrx.drawing.tool.Magnifier.create = function(drawing) {
   magnifier.registerDrag_();
 
   return magnifier;
-***REMOVED***
+};

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Codec functions of the v8 wire protocol. Eventually we'd want
-***REMOVED*** to support pluggable wire-format to improve wire efficiency and to enable
-***REMOVED*** binary encoding. Such support will require an interface class, which
-***REMOVED*** will be added later.
-***REMOVED***
-***REMOVED*** @visibility {:internal}
-***REMOVED***
+/**
+ * @fileoverview Codec functions of the v8 wire protocol. Eventually we'd want
+ * to support pluggable wire-format to improve wire efficiency and to enable
+ * binary encoding. Such support will require an interface class, which
+ * will be added later.
+ *
+ * @visibility {:internal}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.WireV8');
@@ -31,19 +31,19 @@ goog.require('goog.structs');
 
 
 
-***REMOVED***
-***REMOVED*** The v8 codec class.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * The v8 codec class.
+ *
+ * @constructor
+ * @struct
+ */
 goog.labs.net.webChannel.WireV8 = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Parser for a response payload. The parser should return an array.
-  ***REMOVED*** @private {!goog.string.Parser}
- ***REMOVED*****REMOVED***
+  /**
+   * Parser for a response payload. The parser should return an array.
+   * @private {!goog.string.Parser}
+   */
   this.parser_ = new goog.json.EvalJsonProcessor(null, true);
-***REMOVED***
+};
 
 
 goog.scope(function() {
@@ -51,16 +51,16 @@ var WireV8 = goog.labs.net.webChannel.WireV8;
 var Wire = goog.labs.net.webChannel.Wire;
 
 
-***REMOVED***
-***REMOVED*** Encodes a standalone message into the wire format.
-***REMOVED***
-***REMOVED*** May throw exception if the message object contains any invalid elements.
-***REMOVED***
-***REMOVED*** @param {!Object|!goog.structs.Map} message The message data.
-***REMOVED***     V8 only support JS objects (or Map).
-***REMOVED*** @param {!Array.<string>} buffer The text buffer to write the message to.
-***REMOVED*** @param {string=} opt_prefix The prefix for each field of the object.
-***REMOVED***
+/**
+ * Encodes a standalone message into the wire format.
+ *
+ * May throw exception if the message object contains any invalid elements.
+ *
+ * @param {!Object|!goog.structs.Map} message The message data.
+ *     V8 only support JS objects (or Map).
+ * @param {!Array.<string>} buffer The text buffer to write the message to.
+ * @param {string=} opt_prefix The prefix for each field of the object.
+ */
 WireV8.prototype.encodeMessage = function(message, buffer, opt_prefix) {
   var prefix = opt_prefix || '';
   try {
@@ -77,17 +77,17 @@ WireV8.prototype.encodeMessage = function(message, buffer, opt_prefix) {
     buffer.push(prefix + 'type' + '=' + encodeURIComponent('_badmap'));
     throw ex;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Encodes all the buffered messages of the forward channel.
-***REMOVED***
-***REMOVED*** @param {!Array.<Wire.QueuedMap>} messageQueue The message data.
-***REMOVED***     V8 only support JS objects.
-***REMOVED*** @param {number} count The number of messages to be encoded.
-***REMOVED*** @param {?function(!Object)} badMapHandler Callback for bad messages.
-***REMOVED***
+/**
+ * Encodes all the buffered messages of the forward channel.
+ *
+ * @param {!Array.<Wire.QueuedMap>} messageQueue The message data.
+ *     V8 only support JS objects.
+ * @param {number} count The number of messages to be encoded.
+ * @param {?function(!Object)} badMapHandler Callback for bad messages.
+ */
 WireV8.prototype.encodeMessageQueue = function(messageQueue, count,
     badMapHandler) {
   var sb = ['count=' + count];
@@ -113,26 +113,26 @@ WireV8.prototype.encodeMessageQueue = function(messageQueue, count,
     }
   }
   return sb.join('&');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decodes a standalone message received from the wire. May throw exception
-***REMOVED*** if text is ill-formatted.
-***REMOVED***
-***REMOVED*** We use eval() to decode as the server may generate JS literals,
-***REMOVED*** which don't necessarily comply with the JSON format, such as
-***REMOVED*** double quota, null array element.
-***REMOVED***
-***REMOVED*** Over time we will phase out servers that don't generate JSON formatted
-***REMOVED*** messages.
-***REMOVED***
-***REMOVED*** @param {string} messageText The string content as received from the wire.
-***REMOVED*** @return {*} The decoded message object.
-***REMOVED***
+/**
+ * Decodes a standalone message received from the wire. May throw exception
+ * if text is ill-formatted.
+ *
+ * We use eval() to decode as the server may generate JS literals,
+ * which don't necessarily comply with the JSON format, such as
+ * double quota, null array element.
+ *
+ * Over time we will phase out servers that don't generate JSON formatted
+ * messages.
+ *
+ * @param {string} messageText The string content as received from the wire.
+ * @return {*} The decoded message object.
+ */
 WireV8.prototype.decodeMessage = function(messageText) {
   var response = this.parser_.parse(messageText);
   goog.asserts.assert(goog.isArray(response));  // throw exception
   return response;
-***REMOVED***
+};
 });  // goog.scope

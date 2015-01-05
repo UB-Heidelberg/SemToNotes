@@ -16,7 +16,7 @@ goog.provide('goog.labs.testing.stringMatcherTest');
 goog.setTestOnly('goog.labs.testing.stringMatcherTest');
 
 goog.require('goog.labs.testing.MatcherError');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.StringContainsInOrderMatcher');
 goog.require('goog.labs.testing.assertThat');
 goog.require('goog.testing.jsunit');

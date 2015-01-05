@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Iterators over DOM nodes.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Iterators over DOM nodes.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.iter.AncestorIterator');
 goog.provide('goog.dom.iter.ChildIterator');
@@ -27,39 +27,39 @@ goog.require('goog.iter.StopIteration');
 
 
 
-***REMOVED***
-***REMOVED*** Iterator over a Node's siblings.
-***REMOVED*** @param {Node} node The node to start with.
-***REMOVED*** @param {boolean=} opt_includeNode Whether to return the given node as the
-***REMOVED***     first return value from next.
-***REMOVED*** @param {boolean=} opt_reverse Whether to traverse siblings in reverse
-***REMOVED***     document order.
-***REMOVED***
-***REMOVED*** @extends {goog.iter.Iterator}
-***REMOVED***
+/**
+ * Iterator over a Node's siblings.
+ * @param {Node} node The node to start with.
+ * @param {boolean=} opt_includeNode Whether to return the given node as the
+ *     first return value from next.
+ * @param {boolean=} opt_reverse Whether to traverse siblings in reverse
+ *     document order.
+ * @constructor
+ * @extends {goog.iter.Iterator}
+ */
 goog.dom.iter.SiblingIterator = function(node, opt_includeNode, opt_reverse) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current node, or null if iteration is finished.
-  ***REMOVED*** @type {Node}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current node, or null if iteration is finished.
+   * @type {Node}
+   * @private
+   */
   this.node_ = node;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to iterate in reverse.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to iterate in reverse.
+   * @type {boolean}
+   * @private
+   */
   this.reverse_ = !!opt_reverse;
 
   if (node && !opt_includeNode) {
     this.next();
   }
-***REMOVED***
+};
 goog.inherits(goog.dom.iter.SiblingIterator, goog.iter.Iterator);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.iter.SiblingIterator.prototype.next = function() {
   var node = this.node_;
   if (!node) {
@@ -67,20 +67,20 @@ goog.dom.iter.SiblingIterator.prototype.next = function() {
   }
   this.node_ = this.reverse_ ? node.previousSibling : node.nextSibling;
   return node;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Iterator over an Element's children.
-***REMOVED*** @param {Element} element The element to iterate over.
-***REMOVED*** @param {boolean=} opt_reverse Optionally traverse children from last to
-***REMOVED***     first.
-***REMOVED*** @param {number=} opt_startIndex Optional starting index.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.iter.SiblingIterator}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Iterator over an Element's children.
+ * @param {Element} element The element to iterate over.
+ * @param {boolean=} opt_reverse Optionally traverse children from last to
+ *     first.
+ * @param {number=} opt_startIndex Optional starting index.
+ * @constructor
+ * @extends {goog.dom.iter.SiblingIterator}
+ * @final
+ */
 goog.dom.iter.ChildIterator = function(element, opt_reverse, opt_startIndex) {
   if (!goog.isDef(opt_startIndex)) {
     opt_startIndex = opt_reverse && element.childNodes.length ?
@@ -88,36 +88,36 @@ goog.dom.iter.ChildIterator = function(element, opt_reverse, opt_startIndex) {
   }
   goog.dom.iter.SiblingIterator.call(this, element.childNodes[opt_startIndex],
       true, opt_reverse);
-***REMOVED***
+};
 goog.inherits(goog.dom.iter.ChildIterator, goog.dom.iter.SiblingIterator);
 
 
 
-***REMOVED***
-***REMOVED*** Iterator over a Node's ancestors, stopping after the document body.
-***REMOVED*** @param {Node} node The node to start with.
-***REMOVED*** @param {boolean=} opt_includeNode Whether to return the given node as the
-***REMOVED***     first return value from next.
-***REMOVED***
-***REMOVED*** @extends {goog.iter.Iterator}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Iterator over a Node's ancestors, stopping after the document body.
+ * @param {Node} node The node to start with.
+ * @param {boolean=} opt_includeNode Whether to return the given node as the
+ *     first return value from next.
+ * @constructor
+ * @extends {goog.iter.Iterator}
+ * @final
+ */
 goog.dom.iter.AncestorIterator = function(node, opt_includeNode) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current node, or null if iteration is finished.
-  ***REMOVED*** @type {Node}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current node, or null if iteration is finished.
+   * @type {Node}
+   * @private
+   */
   this.node_ = node;
 
   if (node && !opt_includeNode) {
     this.next();
   }
-***REMOVED***
+};
 goog.inherits(goog.dom.iter.AncestorIterator, goog.iter.Iterator);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.iter.AncestorIterator.prototype.next = function() {
   var node = this.node_;
   if (!node) {
@@ -125,5 +125,5 @@ goog.dom.iter.AncestorIterator.prototype.next = function() {
   }
   this.node_ = node.parentNode;
   return node;
-***REMOVED***
+};
 

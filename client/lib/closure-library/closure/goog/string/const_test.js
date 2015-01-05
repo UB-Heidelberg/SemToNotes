@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.string.Const.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.string.Const.
+ */
 
 goog.provide('goog.string.constTest');
 
@@ -37,12 +37,12 @@ function testConst() {
 }
 
 
-***REMOVED*** @suppress {checkTypes}***REMOVED***
+/** @suppress {checkTypes} */
 function testUnwrap() {
-  var evil = {***REMOVED***
+  var evil = {};
   evil.constStringValueWithSecurityContract__googStringSecurityPrivate_ =
       'evil';
-  evil.CONST_STRING_TYPE_MARKER__GOOG_STRING_SECURITY_PRIVATE_ = {***REMOVED***
+  evil.CONST_STRING_TYPE_MARKER__GOOG_STRING_SECURITY_PRIVATE_ = {};
 
   var exception = assertThrows(function() {
     goog.string.Const.unwrap(evil);

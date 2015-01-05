@@ -12,50 +12,50 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Action event wrapper implementation.
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Action event wrapper implementation.
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.events.actionEventWrapper');
 
 goog.require('goog.a11y.aria');
 goog.require('goog.a11y.aria.Role');
-***REMOVED***
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+goog.require('goog.events');
+/** @suppress {extraRequire} */
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.EventWrapper');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Event wrapper for action handling. Fires when an element is activated either
-***REMOVED*** by clicking it or by focusing it and pressing Enter.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {goog.events.EventWrapper}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Event wrapper for action handling. Fires when an element is activated either
+ * by clicking it or by focusing it and pressing Enter.
+ *
+ * @constructor
+ * @implements {goog.events.EventWrapper}
+ * @private
+ */
 goog.events.ActionEventWrapper_ = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Singleton instance of ActionEventWrapper_.
-***REMOVED*** @type {goog.events.ActionEventWrapper_}
-***REMOVED***
+/**
+ * Singleton instance of ActionEventWrapper_.
+ * @type {goog.events.ActionEventWrapper_}
+ */
 goog.events.actionEventWrapper = new goog.events.ActionEventWrapper_();
 
 
-***REMOVED***
-***REMOVED*** Event types used by the wrapper.
-***REMOVED***
-***REMOVED*** @type {Array.<goog.events.EventType>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Event types used by the wrapper.
+ *
+ * @type {Array.<goog.events.EventType>}
+ * @private
+ */
 goog.events.ActionEventWrapper_.EVENT_TYPES_ = [
   goog.events.EventType.CLICK,
   goog.userAgent.GECKO ?
@@ -64,21 +64,21 @@ goog.events.ActionEventWrapper_.EVENT_TYPES_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Adds an event listener using the wrapper on a DOM Node or an object that has
-***REMOVED*** implemented {@link goog.events.EventTarget}. A listener can only be added
-***REMOVED*** once to an object.
-***REMOVED***
-***REMOVED*** @param {goog.events.ListenableType} target The target to listen to events on.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
-***REMOVED***     method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @param {goog.events.EventHandler=} opt_eventHandler Event handler to add
-***REMOVED***     listener to.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Adds an event listener using the wrapper on a DOM Node or an object that has
+ * implemented {@link goog.events.EventTarget}. A listener can only be added
+ * once to an object.
+ *
+ * @param {goog.events.ListenableType} target The target to listen to events on.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
+ *     method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @param {goog.events.EventHandler=} opt_eventHandler Event handler to add
+ *     listener to.
+ * @override
+ */
 goog.events.ActionEventWrapper_.prototype.listen = function(target, listener,
     opt_capt, opt_scope, opt_eventHandler) {
   var callback = function(e) {
@@ -93,12 +93,12 @@ goog.events.ActionEventWrapper_.prototype.listen = function(target, listener,
       listenerFn.call(opt_scope, e);
     } else if (e.keyCode == goog.events.KeyCodes.SPACE &&
         e.type == goog.events.EventType.KEYUP &&
-        goog.a11y.aria.getRole(***REMOVED*** @type {!Element}***REMOVED*** (e.target)) ==
+        goog.a11y.aria.getRole(/** @type {!Element} */ (e.target)) ==
             goog.a11y.aria.Role.BUTTON) {
       listenerFn.call(opt_scope, e);
       e.preventDefault();
     }
- ***REMOVED*****REMOVED***
+  };
   callback.listener_ = listener;
   callback.scope_ = opt_scope;
 
@@ -107,26 +107,26 @@ goog.events.ActionEventWrapper_.prototype.listen = function(target, listener,
         goog.events.ActionEventWrapper_.EVENT_TYPES_,
         callback, opt_capt);
   } else {
-  ***REMOVED***target,
+    goog.events.listen(target,
         goog.events.ActionEventWrapper_.EVENT_TYPES_,
         callback, opt_capt);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an event listener added using goog.events.EventWrapper.listen.
-***REMOVED***
-***REMOVED*** @param {goog.events.ListenableType} target The node to remove listener from.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
-***REMOVED***     method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @param {goog.events.EventHandler=} opt_eventHandler Event handler to remove
-***REMOVED***     listener from.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Removes an event listener added using goog.events.EventWrapper.listen.
+ *
+ * @param {goog.events.ListenableType} target The node to remove listener from.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
+ *     method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @param {goog.events.EventHandler=} opt_eventHandler Event handler to remove
+ *     listener from.
+ * @override
+ */
 goog.events.ActionEventWrapper_.prototype.unlisten = function(target, listener,
     opt_capt, opt_scope, opt_eventHandler) {
   for (var type, j = 0; type = goog.events.ActionEventWrapper_.EVENT_TYPES_[j];
@@ -145,4 +145,4 @@ goog.events.ActionEventWrapper_.prototype.unlisten = function(target, listener,
       }
     }
   }
-***REMOVED***
+};

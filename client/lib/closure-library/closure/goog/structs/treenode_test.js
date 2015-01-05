@@ -217,7 +217,7 @@ function testForEachChild() {
   node1.addChild(node2);
   node1.addChild(node3);
 
-  var thisContext = {***REMOVED***
+  var thisContext = {};
   var visitedNodes = [];
   var indices = [];
   node1.forEachChild(function(node, index, children) {
@@ -239,7 +239,7 @@ function testForEachDescendant() {
   node2.addChild(node3);
   node2.addChild(node4);
 
-  var thisContext = {***REMOVED***
+  var thisContext = {};
   var visitedNodes = [];
   node1.forEachDescendant(function(node) {
     assertEquals('value of this', thisContext, this);
@@ -257,7 +257,7 @@ function testTraverse() {
   node2.addChild(node3);
   node2.addChild(node4);
 
-  var thisContext = {***REMOVED***
+  var thisContext = {};
   var visitedNodes = [];
   node1.traverse(function(node) {
     assertEquals('value of this', thisContext, this);

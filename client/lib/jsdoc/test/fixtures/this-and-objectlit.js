@@ -1,11 +1,11 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Page(title) {
     this.parts = {
         title: title,
         body: {
-           ***REMOVED*****REMOVED*** document me***REMOVED***
+            /** document me */
             heading: '',
             main: ''
         }
-   ***REMOVED*****REMOVED***
+    };
 }

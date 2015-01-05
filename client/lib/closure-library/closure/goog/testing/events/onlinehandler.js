@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview NetworkStatusMonitor test double.
-***REMOVED*** @author dbk@google.com (David Barrett-Kahn)
-***REMOVED***
+/**
+ * @fileoverview NetworkStatusMonitor test double.
+ * @author dbk@google.com (David Barrett-Kahn)
+ */
 
 goog.provide('goog.testing.events.OnlineHandler');
 
@@ -24,36 +24,36 @@ goog.require('goog.net.NetworkStatusMonitor');
 
 
 
-***REMOVED***
-***REMOVED*** NetworkStatusMonitor test double.
-***REMOVED*** @param {boolean} initialState The initial online state of the mock.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @implements {goog.net.NetworkStatusMonitor}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * NetworkStatusMonitor test double.
+ * @param {boolean} initialState The initial online state of the mock.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @implements {goog.net.NetworkStatusMonitor}
+ * @final
+ */
 goog.testing.events.OnlineHandler = function(initialState) {
   goog.testing.events.OnlineHandler.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the mock is online.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the mock is online.
+   * @private {boolean}
+   */
   this.online_ = initialState;
-***REMOVED***
+};
 goog.inherits(goog.testing.events.OnlineHandler, goog.events.EventTarget);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.events.OnlineHandler.prototype.isOnline = function() {
   return this.online_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the online state.
-***REMOVED*** @param {boolean} newOnlineState The new online state.
-***REMOVED***
+/**
+ * Sets the online state.
+ * @param {boolean} newOnlineState The new online state.
+ */
 goog.testing.events.OnlineHandler.prototype.setOnline =
     function(newOnlineState) {
   if (newOnlineState != this.online_) {
@@ -62,4 +62,4 @@ goog.testing.events.OnlineHandler.prototype.setOnline =
         goog.net.NetworkStatusMonitor.EventType.ONLINE :
         goog.net.NetworkStatusMonitor.EventType.OFFLINE);
   }
-***REMOVED***
+};

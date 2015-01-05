@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Simple logger that logs to the window console if available.
-***REMOVED***
-***REMOVED*** Has an autoInstall option which can be put into initialization code, which
-***REMOVED*** will start logging if "Debug=true" is in document.location.href
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Simple logger that logs to the window console if available.
+ *
+ * Has an autoInstall option which can be put into initialization code, which
+ * will start logging if "Debug=true" is in document.location.href
+ *
+ */
 
 goog.provide('goog.debug.Console');
 
@@ -28,18 +28,18 @@ goog.require('goog.debug.TextFormatter');
 
 
 
-***REMOVED***
-***REMOVED*** Create and install a log handler that logs to window.console if available
-***REMOVED***
-***REMOVED***
+/**
+ * Create and install a log handler that logs to window.console if available
+ * @constructor
+ */
 goog.debug.Console = function() {
   this.publishHandler_ = goog.bind(this.addLogRecord, this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Formatter for formatted output.
-  ***REMOVED*** @type {!goog.debug.TextFormatter}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Formatter for formatted output.
+   * @type {!goog.debug.TextFormatter}
+   * @private
+   */
   this.formatter_ = new goog.debug.TextFormatter();
   this.formatter_.showAbsoluteTime = false;
   this.formatter_.showExceptionText = false;
@@ -47,28 +47,28 @@ goog.debug.Console = function() {
   this.isCapturing_ = false;
   this.logBuffer_ = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Loggers that we shouldn't output.
-  ***REMOVED*** @type {!Object.<boolean>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.filteredLoggers_ = {***REMOVED***
-***REMOVED***
+  /**
+   * Loggers that we shouldn't output.
+   * @type {!Object.<boolean>}
+   * @private
+   */
+  this.filteredLoggers_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the text formatter used by this console
-***REMOVED*** @return {!goog.debug.TextFormatter} The text formatter.
-***REMOVED***
+/**
+ * Returns the text formatter used by this console
+ * @return {!goog.debug.TextFormatter} The text formatter.
+ */
 goog.debug.Console.prototype.getFormatter = function() {
   return this.formatter_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether we are currently capturing logger output.
-***REMOVED*** @param {boolean} capturing Whether to capture logger output.
-***REMOVED***
+/**
+ * Sets whether we are currently capturing logger output.
+ * @param {boolean} capturing Whether to capture logger output.
+ */
 goog.debug.Console.prototype.setCapturing = function(capturing) {
   if (capturing == this.isCapturing_) {
     return;
@@ -83,13 +83,13 @@ goog.debug.Console.prototype.setCapturing = function(capturing) {
     this.logBuffer = '';
   }
   this.isCapturing_ = capturing;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a log record.
-***REMOVED*** @param {goog.debug.LogRecord} logRecord The log entry.
-***REMOVED***
+/**
+ * Adds a log record.
+ * @param {goog.debug.LogRecord} logRecord The log entry.
+ */
 goog.debug.Console.prototype.addLogRecord = function(logRecord) {
 
   // Check to see if the log record is filtered or not.
@@ -121,55 +121,55 @@ goog.debug.Console.prototype.addLogRecord = function(logRecord) {
   } else {
     this.logBuffer_ += record;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a logger name to be filtered.
-***REMOVED*** @param {string} loggerName the logger name to add.
-***REMOVED***
+/**
+ * Adds a logger name to be filtered.
+ * @param {string} loggerName the logger name to add.
+ */
 goog.debug.Console.prototype.addFilter = function(loggerName) {
   this.filteredLoggers_[loggerName] = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a logger name to be filtered.
-***REMOVED*** @param {string} loggerName the logger name to remove.
-***REMOVED***
+/**
+ * Removes a logger name to be filtered.
+ * @param {string} loggerName the logger name to remove.
+ */
 goog.debug.Console.prototype.removeFilter = function(loggerName) {
   delete this.filteredLoggers_[loggerName];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Global console logger instance
-***REMOVED*** @type {goog.debug.Console}
-***REMOVED***
+/**
+ * Global console logger instance
+ * @type {goog.debug.Console}
+ */
 goog.debug.Console.instance = null;
 
 
-***REMOVED***
-***REMOVED*** The console to which to log.  This is a property so it can be mocked out in
-***REMOVED*** this unit test for goog.debug.Console.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The console to which to log.  This is a property so it can be mocked out in
+ * this unit test for goog.debug.Console.
+ * @type {Object}
+ * @private
+ */
 goog.debug.Console.console_ = window.console;
 
 
-***REMOVED***
-***REMOVED*** Sets the console to which to log.
-***REMOVED*** @param {!Object} console The console to which to log.
-***REMOVED***
+/**
+ * Sets the console to which to log.
+ * @param {!Object} console The console to which to log.
+ */
 goog.debug.Console.setConsole = function(console) {
   goog.debug.Console.console_ = console;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Install the console and start capturing if "Debug=true" is in the page URL
-***REMOVED***
+/**
+ * Install the console and start capturing if "Debug=true" is in the page URL
+ */
 goog.debug.Console.autoInstall = function() {
   if (!goog.debug.Console.instance) {
     goog.debug.Console.instance = new goog.debug.Console();
@@ -178,30 +178,30 @@ goog.debug.Console.autoInstall = function() {
   if (window.location.href.indexOf('Debug=true') != -1) {
     goog.debug.Console.instance.setCapturing(true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show an alert with all of the captured debug information.
-***REMOVED*** Information is only captured if console is not available
-***REMOVED***
+/**
+ * Show an alert with all of the captured debug information.
+ * Information is only captured if console is not available
+ */
 goog.debug.Console.show = function() {
   alert(goog.debug.Console.instance.logBuffer_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the record to the console using the given function.  If the function is
-***REMOVED*** not available on the console object, the log function is used instead.
-***REMOVED*** @param {!Object} console The console object.
-***REMOVED*** @param {string} fnName The name of the function to use.
-***REMOVED*** @param {string} record The record to log.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logs the record to the console using the given function.  If the function is
+ * not available on the console object, the log function is used instead.
+ * @param {!Object} console The console object.
+ * @param {string} fnName The name of the function to use.
+ * @param {string} record The record to log.
+ * @private
+ */
 goog.debug.Console.logToConsole_ = function(console, fnName, record) {
   if (console[fnName]) {
     console[fnName](record);
   } else {
     console.log(record);
   }
-***REMOVED***
+};

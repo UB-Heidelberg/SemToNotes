@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Common test functions for tweak unit tests.
-***REMOVED***
-***REMOVED*** @author agrieve@google.com (Andrew Grieve)
-***REMOVED***
+/**
+ * @fileoverview Common test functions for tweak unit tests.
+ *
+ * @author agrieve@google.com (Andrew Grieve)
+ */
 
 goog.provide('goog.tweak.testhelpers');
 
@@ -43,14 +43,14 @@ var boolTwoEntry;
 var buttonEntry;
 
 
-***REMOVED***
-***REMOVED*** Creates a registry with some entries in it.
-***REMOVED*** @param {string} queryParams The query parameter string to use for the
-***REMOVED***     registry.
-***REMOVED*** @param {!Object.<string|number|boolean>=} opt_compilerOverrides Compiler
-***REMOVED***     overrides.
-***REMOVED*** @suppress {accessControls} Private state is accessed for test purposes.
-***REMOVED***
+/**
+ * Creates a registry with some entries in it.
+ * @param {string} queryParams The query parameter string to use for the
+ *     registry.
+ * @param {!Object.<string|number|boolean>=} opt_compilerOverrides Compiler
+ *     overrides.
+ * @suppress {accessControls} Private state is accessed for test purposes.
+ */
 function createRegistryEntries(queryParams, opt_compilerOverrides) {
   // Initialize the registry with the given query string.
   var registry =

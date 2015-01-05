@@ -25,53 +25,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview VML class representing a group.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview VML class representing a group.
+ */
 
 goog.provide('xrx.vml.Group');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.vml.Element');
 
 
 
-***REMOVED***
-***REMOVED*** VML class representing a group.
-***REMOVED*** @param {Raphael.set} raphael The Raphael set object.
-***REMOVED***
-***REMOVED*** @extends xrx.vml.Element
-***REMOVED***
+/**
+ * VML class representing a group.
+ * @param {Raphael.set} raphael The Raphael set object.
+ * @constructor
+ * @extends xrx.vml.Element
+ */
 xrx.vml.Group = function(raphael) {
 
   goog.base(this, raphael);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The child elements of the group.
-  ***REMOVED*** @type {Array.&lt;xrx.vml.Element>}
- ***REMOVED*****REMOVED***
+  /**
+   * The child elements of the group.
+   * @type {Array.&lt;xrx.vml.Element>}
+   */
   this.childs_ = [];
-***REMOVED***
+};
 goog.inherits(xrx.vml.Group, xrx.vml.Element);
 
 
 
-***REMOVED***
-***REMOVED*** Returns the child elements of the group.
-***REMOVED*** @return {xrx.vml.Element} The child elements.
-***REMOVED***
+/**
+ * Returns the child elements of the group.
+ * @return {xrx.vml.Element} The child elements.
+ */
 xrx.vml.Group.prototype.getChildren = function() {
   return this.childs_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Adds child elements to a group.
-***REMOVED*** @param {xrx.vml.Element} children The child elements.
-***REMOVED***
+/**
+ * Adds child elements to a group.
+ * @param {xrx.vml.Element} children The child elements.
+ */
 xrx.vml.Group.prototype.addChildren = function(children) {
   if (!goog.isArray(children)) children = [children];
   var child;
@@ -82,52 +82,52 @@ xrx.vml.Group.prototype.addChildren = function(children) {
     this.raphael_.push(child.getRaphael());
   }
   if (shield) shield.toFront();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Removes all child elements from the group.
-***REMOVED***
+/**
+ * Removes all child elements from the group.
+ */
 xrx.vml.Group.prototype.removeChildren = function() {
   var len = this.raphael_.length;
   this.childs_ = [];
   for (var i = 0; i &lt; len; i++) {
     goog.dom.removeNode(this.raphael_.pop().node);
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Removes a child element at an index.
-***REMOVED*** @param {number} index The index.
-***REMOVED***
+/**
+ * Removes a child element at an index.
+ * @param {number} index The index.
+ */
 xrx.vml.Group.prototype.removeChildAt = function(index) {
   this.childs_.splice(index, 1);
   goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Draws each child element of the group.
-***REMOVED***
+/**
+ * Draws each child element of the group.
+ */
 xrx.vml.Group.prototype.draw = function() {
   this.raphael_.show();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new group.
-***REMOVED*** @param {xrx.vml.Canvas} canvas The parent canvas of the group.
-***REMOVED***
+/**
+ * Creates a new group.
+ * @param {xrx.vml.Canvas} canvas The parent canvas of the group.
+ */
 xrx.vml.Group.create = function(canvas) {
   var raphael = canvas.getRaphael().set();
   raphael.hide();
   return new xrx.vml.Group(raphael);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

@@ -1,51 +1,51 @@
-***REMOVED***
-***REMOVED*** @fileoverview SVG class representing a group.
-***REMOVED***
+/**
+ * @fileoverview SVG class representing a group.
+ */
 
 goog.provide('xrx.svg.Group');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Element');
 
 
 
-***REMOVED***
-***REMOVED*** SVG class representing a group.
-***REMOVED*** @param {SVGGroupElement} element The SVG group element.
-***REMOVED***
-***REMOVED*** @extends xrx.svg.Element
-***REMOVED***
+/**
+ * SVG class representing a group.
+ * @param {SVGGroupElement} element The SVG group element.
+ * @constructor
+ * @extends xrx.svg.Element
+ */
 xrx.svg.Group = function(element) {
 
-***REMOVED***
+  goog.base(this, element);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The child elements of the group.
-  ***REMOVED*** @type {Array.<xrx.svg.Element>}
- ***REMOVED*****REMOVED***
+  /**
+   * The child elements of the group.
+   * @type {Array.<xrx.svg.Element>}
+   */
   this.childs_ = [];
-***REMOVED***
+};
 goog.inherits(xrx.svg.Group, xrx.svg.Element);
 
 
 
-***REMOVED***
-***REMOVED*** Returns the child elements of the group.
-***REMOVED*** @return {xrx.svg.Element} The child elements.
-***REMOVED***
+/**
+ * Returns the child elements of the group.
+ * @return {xrx.svg.Element} The child elements.
+ */
 xrx.svg.Group.prototype.getChildren = function() {
   return this.childs_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Adds child elements to a group.
-***REMOVED*** @param {xrx.svg.Element} children The child elements.
-***REMOVED***
+/**
+ * Adds child elements to a group.
+ * @param {xrx.svg.Element} children The child elements.
+ */
 xrx.svg.Group.prototype.addChildren = function(children) {
   if (!goog.isArray(children)) children = [children];
   var child;
@@ -54,43 +54,43 @@ xrx.svg.Group.prototype.addChildren = function(children) {
     this.childs_.push(child);
     goog.dom.append(this.element_, child.getElement());
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Removes all child elements from the group.
-***REMOVED***
+/**
+ * Removes all child elements from the group.
+ */
 xrx.svg.Group.prototype.removeChildren = function() {
   goog.dom.removeChildren(this.element_);
   this.childs_ = [];
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Removes a child element at an index.
-***REMOVED*** @param {number} index The index.
-***REMOVED***
+/**
+ * Removes a child element at an index.
+ * @param {number} index The index.
+ */
 xrx.svg.Group.prototype.removeChildAt = function(index) {
   var child = this.childs_[index];
   goog.dom.removeNode(child.getElement());
   this.childs_.splice(index, 1);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Draws each child element of the group.
-***REMOVED***
-xrx.svg.Group.prototype.draw = function() {***REMOVED***
+/**
+ * Draws each child element of the group.
+ */
+xrx.svg.Group.prototype.draw = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new group.
-***REMOVED***
+/**
+ * Creates a new group.
+ */
 xrx.svg.Group.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'g');
   return new xrx.svg.Group(element);
-***REMOVED***
+};

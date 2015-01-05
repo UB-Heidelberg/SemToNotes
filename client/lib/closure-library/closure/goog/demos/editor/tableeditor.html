@@ -83,7 +83,7 @@ See the COPYING file for details.
       new goog.ui.editor.ToolbarController(myField, myToolbar);
 
   // Watch for field changes, to display below.
-***REMOVED***myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
       updateFieldContents);
 
   myField.makeEditable();

@@ -1,4 +1,4 @@
 function setPosition(newP) {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     this.position = newP; // sets global property
 }

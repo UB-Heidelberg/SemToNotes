@@ -172,14 +172,14 @@ function testBlendedStandardsGrowingMatchesComparisonDiv() {
 }
 
 
-***REMOVED***
-***REMOVED*** Check a given body for the most basic properties that all iframes must have.
-***REMOVED***
-***REMOVED*** @param {Element} body The actual body element
-***REMOVED*** @param {string} id The expected id
-***REMOVED*** @param {string} bodyHTML The expected innerHTML
-***REMOVED*** @param {boolean=} opt_rtl If true, expect RTL directionality
-***REMOVED***
+/**
+ * Check a given body for the most basic properties that all iframes must have.
+ *
+ * @param {Element} body The actual body element
+ * @param {string} id The expected id
+ * @param {string} bodyHTML The expected innerHTML
+ * @param {boolean=} opt_rtl If true, expect RTL directionality
+ */
 function assertBodyCorrect(body, id, bodyHTML, opt_rtl) {
   assertEquals(bodyHTML, body.innerHTML);
   // We can't just check
@@ -202,9 +202,9 @@ function assertBodyCorrect(body, id, bodyHTML, opt_rtl) {
 }
 
 
-***REMOVED***
-***REMOVED*** @return {Object} A mock document
-***REMOVED***
+/**
+ * @return {Object} A mock document
+ */
 function createMockDocument() {
   return {
     body: {
@@ -212,5 +212,5 @@ function createMockDocument() {
       getAttribute: function(key) { return this[key]; },
       style: { direction: '' }
     }
- ***REMOVED*****REMOVED***
+  };
 }

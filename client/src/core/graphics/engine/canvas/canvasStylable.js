@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Canvas class representing a stylable element.
-***REMOVED***
+/**
+ * @fileoverview Canvas class representing a stylable element.
+ */
 
 goog.provide('xrx.canvas.Stylable');
 
@@ -10,95 +10,95 @@ goog.require('xrx.canvas.Element');
 
 
 
-***REMOVED***
-***REMOVED*** Canvas class representing a stylable element.
-***REMOVED*** @param {HTMLCanvasElement} canvas The parent canvas element.
-***REMOVED*** @param {xrx.geometry.Geometry} geometry A geometry object.
-***REMOVED***
-***REMOVED*** @extends {xrx.canvas.Element}
-***REMOVED***
+/**
+ * Canvas class representing a stylable element.
+ * @param {HTMLCanvasElement} canvas The parent canvas element.
+ * @param {xrx.geometry.Geometry} geometry A geometry object.
+ * @constructor
+ * @extends {xrx.canvas.Element}
+ */
 xrx.canvas.Stylable = function(canvas, geometry) {
 
   goog.base(this, canvas);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the geometry of the stylable element.
-  ***REMOVED*** @type {xrx.geometry.Geometry}
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the geometry of the stylable element.
+   * @type {xrx.geometry.Geometry}
+   */
   this.geometry_ = geometry;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the stroke style.
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the stroke style.
+   */
   this.stroke_ = {
     color: 'black',
     width: 1
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object describing the fill style.
- ***REMOVED*****REMOVED***
+  /**
+   * Object describing the fill style.
+   */
   this.fill_ = {
     color: '',
     opacity: 0
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 goog.inherits(xrx.canvas.Stylable, xrx.canvas.Element);
 
 
 
-***REMOVED***
-***REMOVED*** Returns the geometry object of the stylable element.
-***REMOVED*** @return {xrx.geometry.Geometry} The geometry object.
-***REMOVED***
+/**
+ * Returns the geometry object of the stylable element.
+ * @return {xrx.geometry.Geometry} The geometry object.
+ */
 xrx.canvas.Stylable.prototype.getGeometry = function() {
   return this.geometry_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke width of the stylable element.
-***REMOVED*** @param {number} width The stroke width.
-***REMOVED***
+/**
+ * Sets the stroke width of the stylable element.
+ * @param {number} width The stroke width.
+ */
 xrx.canvas.Stylable.prototype.setStrokeWidth = function(width) {
   this.stroke_.width = width;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the stroke color of the stylable element.
-***REMOVED*** @param {string} color The stroke color.
-***REMOVED***
+/**
+ * Sets the stroke color of the stylable element.
+ * @param {string} color The stroke color.
+ */
 xrx.canvas.Stylable.prototype.setStrokeColor = function(color) {
   this.stroke_.color = color;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill color of the stylable element.
-***REMOVED*** @param {string} color The fill color.
-***REMOVED***
+/**
+ * Sets the fill color of the stylable element.
+ * @param {string} color The fill color.
+ */
 xrx.canvas.Stylable.prototype.setFillColor = function(color) {
   this.fill_.color = color;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the fill opacity of the stylable element.
-***REMOVED*** @param {string} factor The fill opacity.
-***REMOVED***
+/**
+ * Sets the fill opacity of the stylable element.
+ * @param {string} factor The fill opacity.
+ */
 xrx.canvas.Stylable.prototype.setFillOpacity = function(factor) {
   this.fill_.opacity = factor;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
   this.context_.fillStyle = this.fill_.color;
   this.context_.globalAlpha = this.fill_.opacity;
@@ -107,4 +107,4 @@ xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
   this.context_.strokeStyle = this.stroke_.color;
   this.context_.lineWidth = this.stroke_.width;
   if (this.stroke_.width > 0) this.context_.stroke();
-***REMOVED***
+};

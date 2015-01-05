@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Contains the class which uses native messaging
-***REMOVED*** facilities for cross domain communication.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Contains the class which uses native messaging
+ * facilities for cross domain communication.
+ *
+ */
 
 
 goog.provide('goog.net.xpc.NativeMessagingTransport');
@@ -24,7 +24,7 @@ goog.provide('goog.net.xpc.NativeMessagingTransport');
 goog.require('goog.Timer');
 goog.require('goog.asserts');
 goog.require('goog.async.Deferred');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.log');
 goog.require('goog.net.xpc');
@@ -34,112 +34,112 @@ goog.require('goog.net.xpc.TransportTypes');
 
 
 
-***REMOVED***
-***REMOVED*** The native messaging transport
-***REMOVED***
-***REMOVED*** Uses document.postMessage() to send messages to other documents.
-***REMOVED*** Receiving is done by listening on 'message'-events on the document.
-***REMOVED***
-***REMOVED*** @param {goog.net.xpc.CrossPageChannel} channel The channel this
-***REMOVED***     transport belongs to.
-***REMOVED*** @param {string} peerHostname The hostname (protocol, domain, and port) of the
-***REMOVED***     peer.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for
-***REMOVED***     finding the correct window/document.
-***REMOVED*** @param {boolean=} opt_oneSidedHandshake If this is true, only the outer
-***REMOVED***     transport sends a SETUP message and expects a SETUP_ACK.  The inner
-***REMOVED***     transport goes connected when it receives the SETUP.
-***REMOVED*** @param {number=} opt_protocolVersion Which version of its setup protocol the
-***REMOVED***     transport should use.  The default is '2'.
-***REMOVED***
-***REMOVED*** @extends {goog.net.xpc.Transport}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The native messaging transport
+ *
+ * Uses document.postMessage() to send messages to other documents.
+ * Receiving is done by listening on 'message'-events on the document.
+ *
+ * @param {goog.net.xpc.CrossPageChannel} channel The channel this
+ *     transport belongs to.
+ * @param {string} peerHostname The hostname (protocol, domain, and port) of the
+ *     peer.
+ * @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for
+ *     finding the correct window/document.
+ * @param {boolean=} opt_oneSidedHandshake If this is true, only the outer
+ *     transport sends a SETUP message and expects a SETUP_ACK.  The inner
+ *     transport goes connected when it receives the SETUP.
+ * @param {number=} opt_protocolVersion Which version of its setup protocol the
+ *     transport should use.  The default is '2'.
+ * @constructor
+ * @extends {goog.net.xpc.Transport}
+ * @final
+ */
 goog.net.xpc.NativeMessagingTransport = function(channel, peerHostname,
     opt_domHelper, opt_oneSidedHandshake, opt_protocolVersion) {
   goog.net.xpc.NativeMessagingTransport.base(
       this, 'constructor', opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel this transport belongs to.
-  ***REMOVED*** @type {goog.net.xpc.CrossPageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The channel this transport belongs to.
+   * @type {goog.net.xpc.CrossPageChannel}
+   * @private
+   */
   this.channel_ = channel;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Which version of the transport's protocol should be used.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Which version of the transport's protocol should be used.
+   * @type {number}
+   * @private
+   */
   this.protocolVersion_ = opt_protocolVersion || 2;
   goog.asserts.assert(this.protocolVersion_ >= 1);
   goog.asserts.assert(this.protocolVersion_ <= 2);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The hostname of the peer. This parameterizes all calls to postMessage, and
-  ***REMOVED*** should contain the precise protocol, domain, and port of the peer window.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The hostname of the peer. This parameterizes all calls to postMessage, and
+   * should contain the precise protocol, domain, and port of the peer window.
+   * @type {string}
+   * @private
+   */
   this.peerHostname_ = peerHostname || '*';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The event handler.
-  ***REMOVED*** @type {!goog.events.EventHandler.<!goog.net.xpc.NativeMessagingTransport>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The event handler.
+   * @type {!goog.events.EventHandler.<!goog.net.xpc.NativeMessagingTransport>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Timer for connection reattempts.
-  ***REMOVED*** @type {!goog.Timer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Timer for connection reattempts.
+   * @type {!goog.Timer}
+   * @private
+   */
   this.maybeAttemptToConnectTimer_ = new goog.Timer(100, this.getWindow());
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether one-sided handshakes are enabled.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether one-sided handshakes are enabled.
+   * @type {boolean}
+   * @private
+   */
   this.oneSidedHandshake_ = !!opt_oneSidedHandshake;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fires once we've received our SETUP_ACK message.
-  ***REMOVED*** @type {!goog.async.Deferred}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Fires once we've received our SETUP_ACK message.
+   * @type {!goog.async.Deferred}
+   * @private
+   */
   this.setupAckReceived_ = new goog.async.Deferred();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fires once we've sent our SETUP_ACK message.
-  ***REMOVED*** @type {!goog.async.Deferred}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Fires once we've sent our SETUP_ACK message.
+   * @type {!goog.async.Deferred}
+   * @private
+   */
   this.setupAckSent_ = new goog.async.Deferred();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fires once we're marked connected.
-  ***REMOVED*** @type {!goog.async.Deferred}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Fires once we're marked connected.
+   * @type {!goog.async.Deferred}
+   * @private
+   */
   this.connected_ = new goog.async.Deferred();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The unique ID of this side of the connection. Used to determine when a peer
-  ***REMOVED*** is reloaded.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The unique ID of this side of the connection. Used to determine when a peer
+   * is reloaded.
+   * @type {string}
+   * @private
+   */
   this.endpointId_ = goog.net.xpc.getRandomString(10);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The unique ID of the peer. If we get a message from a peer with an ID we
-  ***REMOVED*** don't expect, we reset the connection.
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The unique ID of the peer. If we get a message from a peer with an ID we
+   * don't expect, we reset the connection.
+   * @type {?string}
+   * @private
+   */
   this.peerEndpointId_ = null;
 
   // We don't want to mark ourselves connected until we have sent whatever
@@ -174,92 +174,92 @@ goog.net.xpc.NativeMessagingTransport = function(channel, peerHostname,
   goog.log.info(goog.net.xpc.logger, 'NativeMessagingTransport created.  ' +
       'protocolVersion=' + this.protocolVersion_ + ', oneSidedHandshake=' +
       this.oneSidedHandshake_ + ', role=' + this.channel_.getRole());
-***REMOVED***
+};
 goog.inherits(goog.net.xpc.NativeMessagingTransport, goog.net.xpc.Transport);
 
 
-***REMOVED***
-***REMOVED*** Length of the delay in milliseconds between the channel being connected and
-***REMOVED*** the connection callback being called, in cases where coverage of timing flaws
-***REMOVED*** is required.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Length of the delay in milliseconds between the channel being connected and
+ * the connection callback being called, in cases where coverage of timing flaws
+ * is required.
+ * @type {number}
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.CONNECTION_DELAY_MS_ = 200;
 
 
-***REMOVED***
-***REMOVED*** Current determination of peer's protocol version, or null for unknown.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Current determination of peer's protocol version, or null for unknown.
+ * @type {?number}
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.peerProtocolVersion_ = null;
 
 
-***REMOVED***
-***REMOVED*** Flag indicating if this instance of the transport has been initialized.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag indicating if this instance of the transport has been initialized.
+ * @type {boolean}
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.initialized_ = false;
 
 
-***REMOVED***
-***REMOVED*** The transport type.
-***REMOVED*** @type {number}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * The transport type.
+ * @type {number}
+ * @override
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.transportType =
     goog.net.xpc.TransportTypes.NATIVE_MESSAGING;
 
 
-***REMOVED***
-***REMOVED*** The delimiter used for transport service messages.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The delimiter used for transport service messages.
+ * @type {string}
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_ = ',';
 
 
-***REMOVED***
-***REMOVED*** Tracks the number of NativeMessagingTransport channels that have been
-***REMOVED*** initialized but not disposed yet in a map keyed by the UID of the window
-***REMOVED*** object.  This allows for multiple windows to be initiallized and listening
-***REMOVED*** for messages.
-***REMOVED*** @type {Object.<number>}
-***REMOVED*** @private
-***REMOVED***
-goog.net.xpc.NativeMessagingTransport.activeCount_ = {***REMOVED***
+/**
+ * Tracks the number of NativeMessagingTransport channels that have been
+ * initialized but not disposed yet in a map keyed by the UID of the window
+ * object.  This allows for multiple windows to be initiallized and listening
+ * for messages.
+ * @type {Object.<number>}
+ * @private
+ */
+goog.net.xpc.NativeMessagingTransport.activeCount_ = {};
 
 
-***REMOVED***
-***REMOVED*** Id of a timer user during postMessage sends.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Id of a timer user during postMessage sends.
+ * @type {number}
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.sendTimerId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Checks whether the peer transport protocol version could be as indicated.
-***REMOVED*** @param {number} version The version to check for.
-***REMOVED*** @return {boolean} Whether the peer transport protocol version is as
-***REMOVED***     indicated, or null.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks whether the peer transport protocol version could be as indicated.
+ * @param {number} version The version to check for.
+ * @return {boolean} Whether the peer transport protocol version is as
+ *     indicated, or null.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.couldPeerVersionBe_ =
     function(version) {
   return this.peerProtocolVersion_ == null ||
       this.peerProtocolVersion_ == version;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes this transport. Registers a listener for 'message'-events
-***REMOVED*** on the document.
-***REMOVED*** @param {Window} listenWindow The window to listen to events on.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializes this transport. Registers a listener for 'message'-events
+ * on the document.
+ * @param {Window} listenWindow The window to listen to events on.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
   var uid = goog.getUid(listenWindow);
   var value = goog.net.xpc.NativeMessagingTransport.activeCount_[uid];
@@ -269,7 +269,7 @@ goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
   if (value == 0) {
     // Listen for message-events. These are fired on window in FF3 and on
     // document in Opera.
-  ***REMOVED***
+    goog.events.listen(
         listenWindow.postMessage ? listenWindow : listenWindow.document,
         'message',
         goog.net.xpc.NativeMessagingTransport.messageReceived_,
@@ -277,15 +277,15 @@ goog.net.xpc.NativeMessagingTransport.initialize_ = function(listenWindow) {
         goog.net.xpc.NativeMessagingTransport);
   }
   goog.net.xpc.NativeMessagingTransport.activeCount_[uid] = value + 1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes an incoming message-event.
-***REMOVED*** @param {goog.events.BrowserEvent} msgEvt The message event.
-***REMOVED*** @return {boolean} True if message was successfully delivered to a channel.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes an incoming message-event.
+ * @param {goog.events.BrowserEvent} msgEvt The message event.
+ * @return {boolean} True if message was successfully delivered to a channel.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
   var data = msgEvt.getBrowserEvent().data;
 
@@ -349,14 +349,14 @@ goog.net.xpc.NativeMessagingTransport.messageReceived_ = function(msgEvt) {
   // Failed to find a channel to deliver this message to, so simply ignore it.
   goog.log.info(goog.net.xpc.logger, 'channel name mismatch; message ignored"');
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles transport service messages.
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles transport service messages.
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler =
     function(payload) {
   var transportParts =
@@ -398,14 +398,14 @@ goog.net.xpc.NativeMessagingTransport.prototype.transportServiceHandler =
       }
       break;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a SETUP transport service message of the correct protocol number for
-***REMOVED*** our current situation.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sends a SETUP transport service message of the correct protocol number for
+ * our current situation.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ =
     function() {
   // 'real' (legacy) v1 transports don't know about there being v2 ones out
@@ -427,16 +427,16 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupMessage_ =
   if (this.couldPeerVersionBe_(1)) {
     this.send(goog.net.xpc.TRANSPORT_SERVICE_, goog.net.xpc.SETUP);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a SETUP_ACK transport service message of the correct protocol number
-***REMOVED*** for our current situation.
-***REMOVED*** @param {number} protocolVersion The protocol version of the SETUP message
-***REMOVED***     which gave rise to this ack message.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sends a SETUP_ACK transport service message of the correct protocol number
+ * for our current situation.
+ * @param {number} protocolVersion The protocol version of the SETUP message
+ *     which gave rise to this ack message.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ =
     function(protocolVersion) {
   goog.asserts.assert(this.protocolVersion_ != 1 || protocolVersion != 2,
@@ -453,15 +453,15 @@ goog.net.xpc.NativeMessagingTransport.prototype.sendSetupAckMessage_ =
   if (!this.setupAckSent_.hasFired()) {
     this.setupAckSent_.callback(true);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempts to set the peer protocol number.  Downgrades from 2 to 1 are not
-***REMOVED*** permitted.
-***REMOVED*** @param {number} version The new protocol number.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempts to set the peer protocol number.  Downgrades from 2 to 1 are not
+ * permitted.
+ * @param {number} version The new protocol number.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.setPeerProtocolVersion_ =
     function(version) {
   if (version > this.peerProtocolVersion_) {
@@ -473,29 +473,29 @@ goog.net.xpc.NativeMessagingTransport.prototype.setPeerProtocolVersion_ =
     }
     this.peerEndpointId_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Connects this transport.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Connects this transport.
+ * @override
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.connect = function() {
   goog.net.xpc.NativeMessagingTransport.initialize_(this.getWindow());
   this.initialized_ = true;
   this.maybeAttemptToConnect_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Connects to other peer. In the case of the outer peer, the setup messages are
-***REMOVED*** likely sent before the inner peer is ready to receive them. Therefore, this
-***REMOVED*** function will continue trying to send the SETUP message until the inner peer
-***REMOVED*** responds. In the case of the inner peer, it will occasionally have its
-***REMOVED*** channel name fall out of sync with the outer peer, particularly during
-***REMOVED*** soft-reloads and history navigations.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Connects to other peer. In the case of the outer peer, the setup messages are
+ * likely sent before the inner peer is ready to receive them. Therefore, this
+ * function will continue trying to send the SETUP message until the inner peer
+ * responds. In the case of the inner peer, it will occasionally have its
+ * channel name fall out of sync with the outer peer, particularly during
+ * soft-reloads and history navigations.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.maybeAttemptToConnect_ =
     function() {
   // In a one-sided handshake, the outer frame does not send a SETUP message,
@@ -510,16 +510,16 @@ goog.net.xpc.NativeMessagingTransport.prototype.maybeAttemptToConnect_ =
   }
   this.maybeAttemptToConnectTimer_.start();
   this.sendSetupMessage_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a message.
-***REMOVED*** @param {string} service The name off the service the message is to be
-***REMOVED*** delivered to.
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sends a message.
+ * @param {string} service The name off the service the message is to be
+ * delivered to.
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.send = function(service,
                                                                 payload) {
   var win = this.channel_.getPeerWindowObject();
@@ -563,28 +563,28 @@ goog.net.xpc.NativeMessagingTransport.prototype.send = function(service,
         goog.log.warning(goog.net.xpc.logger,
             'Error performing postMessage, ignoring.', error);
       }
-   ***REMOVED*****REMOVED***
+    };
     this.sendTimerId_ = goog.Timer.callOnce(sendFunctor, 0);
- ***REMOVED*****REMOVED***
+  };
   this.send(service, payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Notify the channel that this transport is connected.  If either transport is
-***REMOVED*** protocol v1, a short delay is required to paper over timing vulnerabilities
-***REMOVED*** in that protocol version.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Notify the channel that this transport is connected.  If either transport is
+ * protocol v1, a short delay is required to paper over timing vulnerabilities
+ * in that protocol version.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.prototype.notifyConnected_ =
     function() {
   var delay = (this.protocolVersion_ == 1 || this.peerProtocolVersion_ == 1) ?
       goog.net.xpc.NativeMessagingTransport.CONNECTION_DELAY_MS_ : undefined;
   this.channel_.notifyConnected(delay);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
   if (this.initialized_) {
     var listenWindow = this.getWindow();
@@ -625,23 +625,23 @@ goog.net.xpc.NativeMessagingTransport.prototype.disposeInternal = function() {
   delete this.send;
 
   goog.net.xpc.NativeMessagingTransport.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse a transport service payload message.  For v1, it is simply expected to
-***REMOVED*** be 'SETUP' or 'SETUP_ACK'.  For v2, an example setup message is
-***REMOVED*** 'SETUP_NTPV2,abc123', where the second part is the endpoint id.  The v2 setup
-***REMOVED*** ack message is simply 'SETUP_ACK_NTPV2'.
-***REMOVED*** @param {string} payload The payload.
-***REMOVED*** @return {!Array.<?string>} An array with the message type as the first member
-***REMOVED***     and the endpoint id as the second, if one was sent, or null otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse a transport service payload message.  For v1, it is simply expected to
+ * be 'SETUP' or 'SETUP_ACK'.  For v2, an example setup message is
+ * 'SETUP_NTPV2,abc123', where the second part is the endpoint id.  The v2 setup
+ * ack message is simply 'SETUP_ACK_NTPV2'.
+ * @param {string} payload The payload.
+ * @return {!Array.<?string>} An array with the message type as the first member
+ *     and the endpoint id as the second, if one was sent, or null otherwise.
+ * @private
+ */
 goog.net.xpc.NativeMessagingTransport.parseTransportPayload_ =
     function(payload) {
-  var transportParts =***REMOVED*****REMOVED*** @type {!Array.<?string>}***REMOVED*** (payload.split(
+  var transportParts = /** @type {!Array.<?string>} */ (payload.split(
       goog.net.xpc.NativeMessagingTransport.MESSAGE_DELIMITER_));
   transportParts[1] = transportParts[1] || null;
   return transportParts;
-***REMOVED***
+};

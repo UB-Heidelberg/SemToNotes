@@ -125,7 +125,7 @@ function testSequenceCalledSync() {
 }
 
 function testScope() {
-  var aScope = {***REMOVED***
+  var aScope = {};
   goog.async.run(futureCallback1);
   goog.async.run(futureCallback2, aScope);
 

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match any children of a tag.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match any children of a tag.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.AllChildren');
 
@@ -25,35 +25,35 @@ goog.require('goog.dom.pattern.MatchType');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches any nodes at or below the current tree depth.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.AbstractPattern}
-***REMOVED***
+/**
+ * Pattern object that matches any nodes at or below the current tree depth.
+ *
+ * @constructor
+ * @extends {goog.dom.pattern.AbstractPattern}
+ */
 goog.dom.pattern.AllChildren = function() {
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.AllChildren, goog.dom.pattern.AbstractPattern);
 
 
-***REMOVED***
-***REMOVED*** Tracks the matcher's depth to detect the end of the tag.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tracks the matcher's depth to detect the end of the tag.
+ *
+ * @type {number}
+ * @private
+ */
 goog.dom.pattern.AllChildren.prototype.depth_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Test whether the given token is on the same level.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} {@code MATCHING} if the token is on the
-***REMOVED***     same level or deeper and {@code BACKTRACK_MATCH} if not.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Test whether the given token is on the same level.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} {@code MATCHING} if the token is on the
+ *     same level or deeper and {@code BACKTRACK_MATCH} if not.
+ * @override
+ */
 goog.dom.pattern.AllChildren.prototype.matchToken = function(token, type) {
   this.depth_ += type;
 
@@ -63,13 +63,13 @@ goog.dom.pattern.AllChildren.prototype.matchToken = function(token, type) {
     this.depth_ = 0;
     return goog.dom.pattern.MatchType.BACKTRACK_MATCH;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset any internal state this pattern keeps.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Reset any internal state this pattern keeps.
+ * @override
+ */
 goog.dom.pattern.AllChildren.prototype.reset = function() {
   this.depth_ = 0;
-***REMOVED***
+};

@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This event handler will dispatch events when
-***REMOVED*** {@code navigator.onLine} changes.  HTML5 defines two events, online and
-***REMOVED*** offline that is fired on the window.  As of today 3 browsers support these
-***REMOVED*** events: Firefox 3 (Gecko 1.9), Opera 9.5, and IE8.  If we have any of these
-***REMOVED*** we listen to the 'online' and 'offline' events on the current window
-***REMOVED*** object.  Otherwise we poll the navigator.onLine property to detect changes.
-***REMOVED***
-***REMOVED*** Note that this class only reflects what the browser tells us and this usually
-***REMOVED*** only reflects changes to the File -> Work Offline menu item.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @see ../demos/onlinehandler.html
-***REMOVED***
+/**
+ * @fileoverview This event handler will dispatch events when
+ * {@code navigator.onLine} changes.  HTML5 defines two events, online and
+ * offline that is fired on the window.  As of today 3 browsers support these
+ * events: Firefox 3 (Gecko 1.9), Opera 9.5, and IE8.  If we have any of these
+ * we listen to the 'online' and 'offline' events on the current window
+ * object.  Otherwise we poll the navigator.onLine property to detect changes.
+ *
+ * Note that this class only reflects what the browser tells us and this usually
+ * only reflects changes to the File -> Work Offline menu item.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @see ../demos/onlinehandler.html
+ */
 
 // TODO(arv): We should probably implement some kind of polling service and/or
 // a poll for changes event handler that can be used to fire events when a state
@@ -38,24 +38,24 @@ goog.require('goog.Timer');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.net.NetworkStatusMonitor');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Basic object for detecting whether the online state changes.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @implements {goog.net.NetworkStatusMonitor}
-***REMOVED***
+/**
+ * Basic object for detecting whether the online state changes.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @implements {goog.net.NetworkStatusMonitor}
+ */
 goog.events.OnlineHandler = function() {
   goog.events.OnlineHandler.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @private {goog.events.EventHandler.<!goog.events.OnlineHandler>}
- ***REMOVED*****REMOVED***
+  /**
+   * @private {goog.events.EventHandler.<!goog.events.OnlineHandler>}
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
   // Some browsers do not support navigator.onLine and therefore we don't
@@ -77,80 +77,80 @@ goog.events.OnlineHandler = function() {
     this.eventHandler_.listen(this.timer_, goog.Timer.TICK, this.handleTick_);
     this.timer_.start();
   }
-***REMOVED***
+};
 goog.inherits(goog.events.OnlineHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Enum for the events dispatched by the OnlineHandler.
-***REMOVED*** @enum {string}
-***REMOVED*** @deprecated Use goog.net.NetworkStatusMonitor.EventType instead.
-***REMOVED***
+/**
+ * Enum for the events dispatched by the OnlineHandler.
+ * @enum {string}
+ * @deprecated Use goog.net.NetworkStatusMonitor.EventType instead.
+ */
 goog.events.OnlineHandler.EventType = goog.net.NetworkStatusMonitor.EventType;
 
 
-***REMOVED***
-***REMOVED*** The time to wait before checking the {@code navigator.onLine} again.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The time to wait before checking the {@code navigator.onLine} again.
+ * @type {number}
+ * @private
+ */
 goog.events.OnlineHandler.POLL_INTERVAL_ = 250;
 
 
-***REMOVED***
-***REMOVED*** Stores the last value of the online state so we can detect if this has
-***REMOVED*** changed.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stores the last value of the online state so we can detect if this has
+ * changed.
+ * @type {boolean}
+ * @private
+ */
 goog.events.OnlineHandler.prototype.online_;
 
 
-***REMOVED***
-***REMOVED*** The timer object used to poll the online state.
-***REMOVED*** @type {goog.Timer}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The timer object used to poll the online state.
+ * @type {goog.Timer}
+ * @private
+ */
 goog.events.OnlineHandler.prototype.timer_;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.OnlineHandler.prototype.isOnline = function() {
   return goog.events.BrowserFeature.HAS_NAVIGATOR_ONLINE_PROPERTY ?
       navigator.onLine : true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called every time the timer ticks to see if the state has changed and when
-***REMOVED*** the online state changes the method handleChange_ is called.
-***REMOVED*** @param {goog.events.Event} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called every time the timer ticks to see if the state has changed and when
+ * the online state changes the method handleChange_ is called.
+ * @param {goog.events.Event} e The event object.
+ * @private
+ */
 goog.events.OnlineHandler.prototype.handleTick_ = function(e) {
   var online = this.isOnline();
   if (online != this.online_) {
     this.online_ = online;
     this.handleChange_(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when the online state changes.  This dispatches the
-***REMOVED*** {@code ONLINE} and {@code OFFLINE} events respectively.
-***REMOVED*** @param {goog.events.Event} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when the online state changes.  This dispatches the
+ * {@code ONLINE} and {@code OFFLINE} events respectively.
+ * @param {goog.events.Event} e The event object.
+ * @private
+ */
 goog.events.OnlineHandler.prototype.handleChange_ = function(e) {
   var type = this.isOnline() ?
       goog.net.NetworkStatusMonitor.EventType.ONLINE :
       goog.net.NetworkStatusMonitor.EventType.OFFLINE;
   this.dispatchEvent(type);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.OnlineHandler.prototype.disposeInternal = function() {
   goog.events.OnlineHandler.base(this, 'disposeInternal');
   this.eventHandler_.dispose();
@@ -159,4 +159,4 @@ goog.events.OnlineHandler.prototype.disposeInternal = function() {
     this.timer_.dispose();
     this.timer_ = null;
   }
-***REMOVED***
+};

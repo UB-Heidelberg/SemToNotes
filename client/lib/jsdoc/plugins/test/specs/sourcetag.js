@@ -1,4 +1,4 @@
-/*global describe: true, env: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, env: true, expect: true, it: true, jasmine: true */
 describe("sourcetag plugin", function() {
     var parser = jasmine.createParser();
     var path = require('jsdoc/path');

@@ -17,7 +17,7 @@ goog.setTestOnly('goog.testing.fs.integrationTest');
 
 goog.require('goog.async.Deferred');
 goog.require('goog.async.DeferredList');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fs');
 goog.require('goog.fs.DirectoryEntry');
 goog.require('goog.fs.Error');
@@ -217,5 +217,5 @@ function checkReadyState(expectedState, writer) {
 }
 
 function splitArgs(fn) {
-  return function(args) { return fn(args[0], args[1]);***REMOVED*****REMOVED***
+  return function(args) { return fn(args[0], args[1]); };
 }

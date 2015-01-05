@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A class that attempts parse/serialize JSON using native JSON,
-***REMOVED***     falling back to goog.json if necessary.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview A class that attempts parse/serialize JSON using native JSON,
+ *     falling back to goog.json if necessary.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.json.HybridJsonProcessor');
 
@@ -26,22 +26,22 @@ goog.require('goog.json.hybrid');
 
 
 
-***REMOVED***
-***REMOVED*** Processor form of goog.json.hybrid, which attempts to parse/serialize
-***REMOVED*** JSON using native JSON methods, falling back to goog.json if not
-***REMOVED*** available.
-***REMOVED***
-***REMOVED*** @implements {goog.json.Processor}
-***REMOVED*** @final
-***REMOVED***
-goog.json.HybridJsonProcessor = function() {***REMOVED***
+/**
+ * Processor form of goog.json.hybrid, which attempts to parse/serialize
+ * JSON using native JSON methods, falling back to goog.json if not
+ * available.
+ * @constructor
+ * @implements {goog.json.Processor}
+ * @final
+ */
+goog.json.HybridJsonProcessor = function() {};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.HybridJsonProcessor.prototype.stringify =
-   ***REMOVED*****REMOVED*** @type {function (*): string}***REMOVED*** (goog.json.hybrid.stringify);
+    /** @type {function (*): string} */ (goog.json.hybrid.stringify);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.HybridJsonProcessor.prototype.parse =
-   ***REMOVED*****REMOVED*** @type {function (*): !Object}***REMOVED*** (goog.json.hybrid.parse);
+    /** @type {function (*): !Object} */ (goog.json.hybrid.parse);

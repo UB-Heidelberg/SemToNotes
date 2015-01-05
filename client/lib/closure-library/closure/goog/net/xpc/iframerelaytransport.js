@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Contains the iframe relay tranport.
-***REMOVED***
+/**
+ * @fileoverview Contains the iframe relay tranport.
+ */
 
 
 goog.provide('goog.net.xpc.IframeRelayTransport');
 
 goog.require('goog.dom');
 goog.require('goog.dom.safe');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.html.SafeHtml');
 goog.require('goog.log');
 goog.require('goog.log.Level');
@@ -35,106 +35,106 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Iframe relay transport. Creates hidden iframes containing a document
-***REMOVED*** from the peer's origin. Data is transferred in the fragment identifier.
-***REMOVED*** Therefore the document loaded in the iframes can be served from the
-***REMOVED*** browser's cache.
-***REMOVED***
-***REMOVED*** @param {goog.net.xpc.CrossPageChannel} channel The channel this
-***REMOVED***     transport belongs to.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for finding
-***REMOVED***     the correct window.
-***REMOVED***
-***REMOVED*** @extends {goog.net.xpc.Transport}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Iframe relay transport. Creates hidden iframes containing a document
+ * from the peer's origin. Data is transferred in the fragment identifier.
+ * Therefore the document loaded in the iframes can be served from the
+ * browser's cache.
+ *
+ * @param {goog.net.xpc.CrossPageChannel} channel The channel this
+ *     transport belongs to.
+ * @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for finding
+ *     the correct window.
+ * @constructor
+ * @extends {goog.net.xpc.Transport}
+ * @final
+ */
 goog.net.xpc.IframeRelayTransport = function(channel, opt_domHelper) {
   goog.net.xpc.IframeRelayTransport.base(this, 'constructor', opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel this transport belongs to.
-  ***REMOVED*** @type {goog.net.xpc.CrossPageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The channel this transport belongs to.
+   * @type {goog.net.xpc.CrossPageChannel}
+   * @private
+   */
   this.channel_ = channel;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The URI used to relay data to the peer.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The URI used to relay data to the peer.
+   * @type {string}
+   * @private
+   */
   this.peerRelayUri_ =
       this.channel_.getConfig()[goog.net.xpc.CfgFields.PEER_RELAY_URI];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The id of the iframe the peer page lives in.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The id of the iframe the peer page lives in.
+   * @type {string}
+   * @private
+   */
   this.peerIframeId_ =
       this.channel_.getConfig()[goog.net.xpc.CfgFields.IFRAME_ID];
 
   if (goog.userAgent.WEBKIT) {
     goog.net.xpc.IframeRelayTransport.startCleanupTimer_();
   }
-***REMOVED***
+};
 goog.inherits(goog.net.xpc.IframeRelayTransport, goog.net.xpc.Transport);
 
 
 if (goog.userAgent.WEBKIT) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array to keep references to the relay-iframes. Used only if
-  ***REMOVED*** there is no way to detect when the iframes are loaded. In that
-  ***REMOVED*** case the relay-iframes are removed after a timeout.
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array to keep references to the relay-iframes. Used only if
+   * there is no way to detect when the iframes are loaded. In that
+   * case the relay-iframes are removed after a timeout.
+   * @type {Array.<Object>}
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.iframeRefs_ = [];
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Interval at which iframes are destroyed.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Interval at which iframes are destroyed.
+   * @type {number}
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.CLEANUP_INTERVAL_ = 1000;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Time after which a relay-iframe is destroyed.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Time after which a relay-iframe is destroyed.
+   * @type {number}
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.IFRAME_MAX_AGE_ = 3000;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The cleanup timer id.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The cleanup timer id.
+   * @type {number}
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.cleanupTimer_ = 0;
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Starts the cleanup timer.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Starts the cleanup timer.
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.startCleanupTimer_ = function() {
     if (!goog.net.xpc.IframeRelayTransport.cleanupTimer_) {
       goog.net.xpc.IframeRelayTransport.cleanupTimer_ = window.setTimeout(
           function() { goog.net.xpc.IframeRelayTransport.cleanup_(); },
           goog.net.xpc.IframeRelayTransport.CLEANUP_INTERVAL_);
     }
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Remove all relay-iframes which are older than the maximal age.
-  ***REMOVED*** @param {number=} opt_maxAge The maximal age in milliseconds.
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Remove all relay-iframes which are older than the maximal age.
+   * @param {number=} opt_maxAge The maximal age in milliseconds.
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.cleanup_ = function(opt_maxAge) {
     var now = goog.now();
     var maxAge =
@@ -153,57 +153,57 @@ if (goog.userAgent.WEBKIT) {
     goog.net.xpc.IframeRelayTransport.cleanupTimer_ = window.setTimeout(
         goog.net.xpc.IframeRelayTransport.cleanupCb_,
         goog.net.xpc.IframeRelayTransport.CLEANUP_INTERVAL_);
- ***REMOVED*****REMOVED***
+  };
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Function which wraps cleanup_().
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Function which wraps cleanup_().
+   * @private
+   */
   goog.net.xpc.IframeRelayTransport.cleanupCb_ = function() {
     goog.net.xpc.IframeRelayTransport.cleanup_();
- ***REMOVED*****REMOVED***
+  };
 }
 
 
-***REMOVED***
-***REMOVED*** Maximum sendable size of a payload via a single iframe in IE.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum sendable size of a payload via a single iframe in IE.
+ * @type {number}
+ * @private
+ */
 goog.net.xpc.IframeRelayTransport.IE_PAYLOAD_MAX_SIZE_ = 1800;
 
 
-***REMOVED***
-***REMOVED*** @typedef {{fragments: !Array.<string>, received: number, expected: number}}
-***REMOVED***
+/**
+ * @typedef {{fragments: !Array.<string>, received: number, expected: number}}
+ */
 goog.net.xpc.IframeRelayTransport.FragmentInfo;
 
 
-***REMOVED***
-***REMOVED*** Used to track incoming payload fragments. The implementation can process
-***REMOVED*** incoming fragments from several channels at a time, even if data is
-***REMOVED*** out-of-order or interleaved.
-***REMOVED***
-***REMOVED*** @type {!Object.<string, !goog.net.xpc.IframeRelayTransport.FragmentInfo>}
-***REMOVED*** @private
-***REMOVED***
-goog.net.xpc.IframeRelayTransport.fragmentMap_ = {***REMOVED***
+/**
+ * Used to track incoming payload fragments. The implementation can process
+ * incoming fragments from several channels at a time, even if data is
+ * out-of-order or interleaved.
+ *
+ * @type {!Object.<string, !goog.net.xpc.IframeRelayTransport.FragmentInfo>}
+ * @private
+ */
+goog.net.xpc.IframeRelayTransport.fragmentMap_ = {};
 
 
-***REMOVED***
-***REMOVED*** The transport type.
-***REMOVED*** @type {number}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * The transport type.
+ * @type {number}
+ * @override
+ */
 goog.net.xpc.IframeRelayTransport.prototype.transportType =
     goog.net.xpc.TransportTypes.IFRAME_RELAY;
 
 
-***REMOVED***
-***REMOVED*** Connects this transport.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Connects this transport.
+ * @override
+ */
 goog.net.xpc.IframeRelayTransport.prototype.connect = function() {
   if (!this.getWindow()['xpcRelay']) {
     this.getWindow()['xpcRelay'] =
@@ -211,16 +211,16 @@ goog.net.xpc.IframeRelayTransport.prototype.connect = function() {
   }
 
   this.send(goog.net.xpc.TRANSPORT_SERVICE_, goog.net.xpc.SETUP);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes an incoming message.
-***REMOVED***
-***REMOVED*** @param {string} channelName The name of the channel.
-***REMOVED*** @param {string} frame The raw frame content.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes an incoming message.
+ *
+ * @param {string} channelName The name of the channel.
+ * @param {string} frame The raw frame content.
+ * @private
+ */
 goog.net.xpc.IframeRelayTransport.receiveMessage_ =
     function(channelName, frame) {
   var pos = frame.indexOf(':');
@@ -247,7 +247,7 @@ goog.net.xpc.IframeRelayTransport.receiveMessage_ =
     if (!fragmentInfo) {
       fragmentInfo =
           goog.net.xpc.IframeRelayTransport.fragmentMap_[messageIdStr] =
-          {fragments: [], received: 0, expected: 0***REMOVED***
+          {fragments: [], received: 0, expected: 0};
     }
 
     if (goog.string.contains(fragmentIdStr, '++')) {
@@ -268,14 +268,14 @@ goog.net.xpc.IframeRelayTransport.receiveMessage_ =
 
   goog.net.xpc.channels[channelName].
       xpcDeliver(service, decodeURIComponent(payload));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles transport service messages (internal signalling).
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles transport service messages (internal signalling).
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.IframeRelayTransport.prototype.transportServiceHandler =
     function(payload) {
   if (payload == goog.net.xpc.SETUP) {
@@ -287,16 +287,16 @@ goog.net.xpc.IframeRelayTransport.prototype.transportServiceHandler =
   else if (payload == goog.net.xpc.SETUP_ACK_) {
     this.channel_.notifyConnected();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a message.
-***REMOVED***
-***REMOVED*** @param {string} service Name of service this the message has to be delivered.
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sends a message.
+ *
+ * @param {string} service Name of service this the message has to be delivered.
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.IframeRelayTransport.prototype.send = function(service, payload) {
   // If we're on IE and the post-encoding payload is large, split it
   // into multiple payloads and send each one separately. Otherwise,
@@ -321,17 +321,17 @@ goog.net.xpc.IframeRelayTransport.prototype.send = function(service, payload) {
   } else {
     this.send_(service, encodedPayload);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends an encoded message or message fragment.
-***REMOVED*** @param {string} service Name of service this the message has to be delivered.
-***REMOVED*** @param {string} encodedPayload The message content, URI encoded.
-***REMOVED*** @param {string=} opt_fragmentIdStr If sending a fragment, a string that
-***REMOVED***     identifies the fragment.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sends an encoded message or message fragment.
+ * @param {string} service Name of service this the message has to be delivered.
+ * @param {string} encodedPayload The message content, URI encoded.
+ * @param {string=} opt_fragmentIdStr If sending a fragment, a string that
+ *     identifies the fragment.
+ * @private
+ */
 goog.net.xpc.IframeRelayTransport.prototype.send_ =
     function(service, encodedPayload, opt_fragmentIdStr) {
   // IE requires that we create the onload attribute inline, otherwise the
@@ -355,7 +355,7 @@ goog.net.xpc.IframeRelayTransport.prototype.send_ =
         iframeElement: ifr
       });
     } else {
-    ***REMOVED***ifr, 'load',
+      goog.events.listen(ifr, 'load',
                          goog.net.xpc.IframeRelayTransport.iframeLoadHandler_);
     }
   }
@@ -381,25 +381,25 @@ goog.net.xpc.IframeRelayTransport.prototype.send_ =
   this.getWindow().document.body.appendChild(ifr);
 
   goog.log.log(goog.net.xpc.logger, goog.log.Level.FINEST, 'msg sent: ' + url);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The iframe load handler. Gets called as method on the iframe element.
-***REMOVED*** @private
-***REMOVED*** @this Element
-***REMOVED***
+/**
+ * The iframe load handler. Gets called as method on the iframe element.
+ * @private
+ * @this Element
+ */
 goog.net.xpc.IframeRelayTransport.iframeLoadHandler_ = function() {
   goog.log.log(goog.net.xpc.logger, goog.log.Level.FINEST, 'iframe-load');
   goog.dom.removeNode(this);
   this.xpcOnload = null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.xpc.IframeRelayTransport.prototype.disposeInternal = function() {
   goog.net.xpc.IframeRelayTransport.base(this, 'disposeInternal');
   if (goog.userAgent.WEBKIT) {
     goog.net.xpc.IframeRelayTransport.cleanup_(0);
   }
-***REMOVED***
+};

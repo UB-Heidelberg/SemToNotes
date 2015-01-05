@@ -24,14 +24,14 @@ goog.require('goog.ui.equation.TexEditor');
 
 
 
-***REMOVED***
-***REMOVED*** User interface for equation editor plugin standalone tests.
-***REMOVED***
-***REMOVED*** @param {string=} opt_equation Encoded equation. If not specified, starts with
-***REMOVED***     an empty equation.
-***REMOVED*** @extends {goog.ui.Dialog}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * User interface for equation editor plugin standalone tests.
+ * @constructor
+ * @param {string=} opt_equation Encoded equation. If not specified, starts with
+ *     an empty equation.
+ * @extends {goog.ui.Dialog}
+ * @final
+ */
 goog.ui.equation.EquationEditorDialog = function(opt_equation) {
   goog.ui.Dialog.call(this);
   this.setTitle('Equation Editor');
@@ -49,11 +49,11 @@ goog.ui.equation.EquationEditorDialog = function(opt_equation) {
   var domHelper = goog.dom.getDomHelper(contentElement);
   var context = this.populateContext_();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The equation editor main API.
-  ***REMOVED*** @type {goog.ui.equation.TexEditor}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The equation editor main API.
+   * @type {goog.ui.equation.TexEditor}
+   * @private
+   */
   this.equationEditor_ =
       new goog.ui.equation.TexEditor(context, '', domHelper);
 
@@ -66,75 +66,75 @@ goog.ui.equation.EquationEditorDialog = function(opt_equation) {
 
   goog.dom.classlist.add(
       goog.asserts.assert(this.getDialogElement()), 'ee-modal-dialog');
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.EquationEditorDialog, goog.ui.Dialog);
 
 
-***REMOVED***
-***REMOVED*** The dialog's OK button element.
-***REMOVED*** @type {Element?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The dialog's OK button element.
+ * @type {Element?}
+ * @private
+ */
 goog.ui.equation.EquationEditorDialog.prototype.okButton_;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.equation.EquationEditorDialog.prototype.setVisible = function(visible) {
   goog.ui.equation.EquationEditorDialog.base(this, 'setVisible', visible);
   this.equationEditor_.setVisible(visible);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Populates the context of this dialog.
-***REMOVED*** @return {!Object} The context that this dialog runs in.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Populates the context of this dialog.
+ * @return {!Object} The context that this dialog runs in.
+ * @private
+ */
 goog.ui.equation.EquationEditorDialog.prototype.populateContext_ = function() {
-  var context = {***REMOVED***
+  var context = {};
   context.paletteManager = new goog.ui.equation.PaletteManager(
       this.getDomHelper());
   return context;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles CHANGE event fired when user changes equation.
-***REMOVED*** @param {goog.ui.equation.ChangeEvent} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles CHANGE event fired when user changes equation.
+ * @param {goog.ui.equation.ChangeEvent} e The event object.
+ * @private
+ */
 goog.ui.equation.EquationEditorDialog.prototype.onChange_ = function(e) {
   if (!this.okButton_) {
     this.okButton_ = this.getButtonSet().getButton(
         goog.ui.Dialog.DefaultButtonKeys.OK);
   }
   this.okButton_.disabled = !e.isValid;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the encoded equation.
-***REMOVED*** @return {string} The encoded equation.
-***REMOVED***
+/**
+ * Returns the encoded equation.
+ * @return {string} The encoded equation.
+ */
 goog.ui.equation.EquationEditorDialog.prototype.getEquation = function() {
   return this.equationEditor_.getEquation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the encoded equation.
-***REMOVED*** @param {string} equation The encoded equation.
-***REMOVED***
+/**
+ * Sets the encoded equation.
+ * @param {string} equation The encoded equation.
+ */
 goog.ui.equation.EquationEditorDialog.prototype.setEquation =
     function(equation) {
   this.equationEditor_.setEquation(equation);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The html code to embed in the document.
-***REMOVED***
+/**
+ * @return {string} The html code to embed in the document.
+ */
 goog.ui.equation.EquationEditorDialog.prototype.getHtml = function() {
   return this.equationEditor_.getHtml();
-***REMOVED***
+};
 

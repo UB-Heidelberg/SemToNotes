@@ -13,11 +13,11 @@
 // limitations under the License.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @fileoverview Plugin for generating emoticons.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview Plugin for generating emoticons.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ */
 
 goog.provide('goog.editor.plugins.Emoticons');
 
@@ -30,46 +30,46 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin for generating emoticons.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin for generating emoticons.
+ *
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.Emoticons = function() {
   goog.editor.plugins.Emoticons.base(this, 'constructor');
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.Emoticons, goog.editor.Plugin);
 
 
-***REMOVED*** The emoticon command.***REMOVED***
+/** The emoticon command. */
 goog.editor.plugins.Emoticons.COMMAND = '+emoticon';
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.Emoticons.prototype.getTrogClassId =
     goog.functions.constant(goog.editor.plugins.Emoticons.COMMAND);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.Emoticons.prototype.isSupportedCommand = function(
     command) {
   return command == goog.editor.plugins.Emoticons.COMMAND;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts an emoticon into the editor at the cursor location. Places the
-***REMOVED*** cursor to the right of the inserted emoticon.
-***REMOVED*** @param {string} command Command to execute.
-***REMOVED*** @param {*=} opt_arg Emoji to insert.
-***REMOVED*** @return {!Object|undefined} The result of the command.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Inserts an emoticon into the editor at the cursor location. Places the
+ * cursor to the right of the inserted emoticon.
+ * @param {string} command Command to execute.
+ * @param {*=} opt_arg Emoji to insert.
+ * @return {!Object|undefined} The result of the command.
+ * @override
+ */
 goog.editor.plugins.Emoticons.prototype.execCommandInternal = function(
     command, opt_arg) {
-  var emoji =***REMOVED*****REMOVED*** @type {goog.ui.emoji.Emoji}***REMOVED*** (opt_arg);
+  var emoji = /** @type {goog.ui.emoji.Emoji} */ (opt_arg);
   var dom = this.getFieldDomHelper();
   var img = dom.createDom(goog.dom.TagName.IMG, {
     'src': emoji.getUrl(),
@@ -86,4 +86,4 @@ goog.editor.plugins.Emoticons.prototype.execCommandInternal = function(
     this.getFieldObject().focus();
     goog.editor.range.placeCursorNextTo(img, false);
   }
-***REMOVED***
+};

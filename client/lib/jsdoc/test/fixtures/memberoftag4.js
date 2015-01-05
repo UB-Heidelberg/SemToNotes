@@ -1,16 +1,16 @@
-***REMOVED***
-***REMOVED*** Namespace doStuff.
-***REMOVED*** @namespace doStuff
-***REMOVED***
+/**
+ * Namespace doStuff.
+ * @namespace doStuff
+ */
 
-***REMOVED***
-***REMOVED*** Function with the same name as its namespace.
-***REMOVED*** @memberof doStuff
-***REMOVED***
+/**
+ * Function with the same name as its namespace.
+ * @memberof doStuff
+ */
 function doStuff() {}
 
-***REMOVED***
-***REMOVED*** Function with a different name than the namespace.
-***REMOVED*** @memberof doStuff
-***REMOVED***
+/**
+ * Function with a different name than the namespace.
+ * @memberof doStuff
+ */
 function doOtherStuff() {}

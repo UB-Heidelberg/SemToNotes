@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities used by goog.labs.userAgent tools. These functions
-***REMOVED*** should not be used outside of goog.labs.userAgent.*.
-***REMOVED***
-***REMOVED*** @visibility {//closure/goog/bin/sizetests:__pkg__}
-***REMOVED*** @visibility {//closure/goog/dom:__subpackages__}
-***REMOVED*** @visibility {//closure/goog/style:__pkg__}
-***REMOVED*** @visibility {//closure/goog/testing:__pkg__}
-***REMOVED*** @visibility {//closure/goog/useragent:__subpackages__}
-***REMOVED*** @visibility {//testing/puppet/modules:__pkg__}***REMOVED***
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Utilities used by goog.labs.userAgent tools. These functions
+ * should not be used outside of goog.labs.userAgent.*.
+ *
+ * @visibility {//closure/goog/bin/sizetests:__pkg__}
+ * @visibility {//closure/goog/dom:__subpackages__}
+ * @visibility {//closure/goog/style:__pkg__}
+ * @visibility {//closure/goog/testing:__pkg__}
+ * @visibility {//closure/goog/useragent:__subpackages__}
+ * @visibility {//testing/puppet/modules:__pkg__} *
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.labs.userAgent.util');
 
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Gets the native userAgent string from navigator if it exists.
-***REMOVED*** If navigator or navigator.userAgent string is missing, returns an empty
-***REMOVED*** string.
-***REMOVED*** @return {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the native userAgent string from navigator if it exists.
+ * If navigator or navigator.userAgent string is missing, returns an empty
+ * string.
+ * @return {string}
+ * @private
+ */
 goog.labs.userAgent.util.getNativeUserAgentString_ = function() {
   var navigator = goog.labs.userAgent.util.getNavigator_();
   if (navigator) {
@@ -47,76 +47,76 @@ goog.labs.userAgent.util.getNativeUserAgentString_ = function() {
     }
   }
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Getter for the native navigator.
-***REMOVED*** This is a separate function so it can be stubbed out in testing.
-***REMOVED*** @return {Navigator}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Getter for the native navigator.
+ * This is a separate function so it can be stubbed out in testing.
+ * @return {Navigator}
+ * @private
+ */
 goog.labs.userAgent.util.getNavigator_ = function() {
   return goog.global.navigator;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A possible override for applications which wish to not check
-***REMOVED*** navigator.userAgent but use a specified value for detection instead.
-***REMOVED*** @private {string}
-***REMOVED***
+/**
+ * A possible override for applications which wish to not check
+ * navigator.userAgent but use a specified value for detection instead.
+ * @private {string}
+ */
 goog.labs.userAgent.util.userAgent_ =
     goog.labs.userAgent.util.getNativeUserAgentString_();
 
 
-***REMOVED***
-***REMOVED*** Applications may override browser detection on the built in
-***REMOVED*** navigator.userAgent object by setting this string. Set to null to use the
-***REMOVED*** browser object instead.
-***REMOVED*** @param {?string=} opt_userAgent The User-Agent override.
-***REMOVED***
+/**
+ * Applications may override browser detection on the built in
+ * navigator.userAgent object by setting this string. Set to null to use the
+ * browser object instead.
+ * @param {?string=} opt_userAgent The User-Agent override.
+ */
 goog.labs.userAgent.util.setUserAgent = function(opt_userAgent) {
   goog.labs.userAgent.util.userAgent_ = opt_userAgent ||
       goog.labs.userAgent.util.getNativeUserAgentString_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The user agent string.
-***REMOVED***
+/**
+ * @return {string} The user agent string.
+ */
 goog.labs.userAgent.util.getUserAgent = function() {
   return goog.labs.userAgent.util.userAgent_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} str
-***REMOVED*** @return {boolean} Whether the user agent contains the given string, ignoring
-***REMOVED***     case.
-***REMOVED***
+/**
+ * @param {string} str
+ * @return {boolean} Whether the user agent contains the given string, ignoring
+ *     case.
+ */
 goog.labs.userAgent.util.matchUserAgent = function(str) {
   var userAgent = goog.labs.userAgent.util.getUserAgent();
   return goog.string.contains(userAgent, str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string} str
-***REMOVED*** @return {boolean} Whether the user agent contains the given string.
-***REMOVED***
+/**
+ * @param {string} str
+ * @return {boolean} Whether the user agent contains the given string.
+ */
 goog.labs.userAgent.util.matchUserAgentIgnoreCase = function(str) {
   var userAgent = goog.labs.userAgent.util.getUserAgent();
   return goog.string.caseInsensitiveContains(userAgent, str);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses the user agent into tuples for each section.
-***REMOVED*** @param {string} userAgent
-***REMOVED*** @return {!Array.<!Array.<string>>} Tuples of key, version, and the contents
-***REMOVED***     of the parenthetical.
-***REMOVED***
+/**
+ * Parses the user agent into tuples for each section.
+ * @param {string} userAgent
+ * @return {!Array.<!Array.<string>>} Tuples of key, version, and the contents
+ *     of the parenthetical.
+ */
 goog.labs.userAgent.util.extractVersionTuples = function(userAgent) {
   // Matches each section of a user agent string.
   // Example UA:
@@ -150,5 +150,5 @@ goog.labs.userAgent.util.extractVersionTuples = function(userAgent) {
   }
 
   return data;
-***REMOVED***
+};
 

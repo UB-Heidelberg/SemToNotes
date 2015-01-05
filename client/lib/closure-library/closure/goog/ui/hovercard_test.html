@@ -75,7 +75,7 @@ See the COPYING file for details.
     }
 
     function initCard(opt_isAnchor, opt_checkChildren, opt_maxSearchSteps) {
-      var isAnchor = opt_isAnchor || {SPAN: 'email'***REMOVED***
+      var isAnchor = opt_isAnchor || {SPAN: 'email'};
       card = new goog.ui.HoverCard(isAnchor, opt_checkChildren);
       card.setText('Test hovercard');
 
@@ -83,10 +83,10 @@ See the COPYING file for details.
         card.setMaxSearchSteps(opt_maxSearchSteps);
       }
 
-    ***REMOVED***card, goog.ui.HoverCard.EventType.TRIGGER, onTrigger);
-    ***REMOVED***card, goog.ui.HoverCard.EventType.CANCEL_TRIGGER,
+      goog.events.listen(card, goog.ui.HoverCard.EventType.TRIGGER, onTrigger);
+      goog.events.listen(card, goog.ui.HoverCard.EventType.CANCEL_TRIGGER,
                          onCancel);
-    ***REMOVED***card, goog.ui.HoverCard.EventType.BEFORE_SHOW,
+      goog.events.listen(card, goog.ui.HoverCard.EventType.BEFORE_SHOW,
                          onBeforeShow);
 
       // This gets around the problem where AdvancedToolTip thinks it's
@@ -121,9 +121,9 @@ See the COPYING file for details.
       timer.uninstall();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify that hovercard displays and goes away under normal circumstances.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify that hovercard displays and goes away under normal circumstances.
+     */
     function testTrigger() {
       initCard();
 
@@ -151,10 +151,10 @@ See the COPYING file for details.
       assertFalse('Card should be hidden', card.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify that CANCEL_TRIGGER event occurs when mouse goes out of
-    ***REMOVED*** triggering element before hovercard is shown.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify that CANCEL_TRIGGER event occurs when mouse goes out of
+     * triggering element before hovercard is shown.
+     */
     function testOnCancel() {
       initCard();
 
@@ -168,9 +168,9 @@ See the COPYING file for details.
       assertEquals('Should have cancelled trigger', john, cancelledElement);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify that mousing over non-triggering elements don't interfere.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify that mousing over non-triggering elements don't interfere.
+     */
     function testMouseOverNonTrigger() {
       initCard();
 
@@ -186,19 +186,19 @@ See the COPYING file for details.
       assertNull(triggeredElement);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify that a mouse over event with no target will not break
-    ***REMOVED*** hover card.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify that a mouse over event with no target will not break
+     * hover card.
+     */
     function testMouseOverNoTarget() {
       initCard();
       card.handleTriggerMouseOver_(new goog.testing.events.Event());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify that mousing over a second trigger before the first one shows
-    ***REMOVED*** will correctly cancel the first and show the second.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify that mousing over a second trigger before the first one shows
+     * will correctly cancel the first and show the second.
+     */
     function testMultipleTriggers() {
       initCard();
 
@@ -237,9 +237,9 @@ See the COPYING file for details.
       assertEquals('Should cancel second card', james, cancelledElement);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify manual triggering.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify manual triggering.
+     */
     function testManualTrigger() {
       initCard();
 
@@ -260,9 +260,9 @@ See the COPYING file for details.
       assertFalse(card.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify creating with isAnchor function.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify creating with isAnchor function.
+     */
     function testIsAnchor() {
       // Initialize card so only bill triggers it.
       initCard(function(element) {
@@ -285,9 +285,9 @@ See the COPYING file for details.
       assertFalse('Should not trigger card', card.isVisible());
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Verify mouse over child of anchor triggers hovercard.
-   ***REMOVED*****REMOVED***
+    /**
+     * Verify mouse over child of anchor triggers hovercard.
+     */
     function testAnchorWithChildren() {
       initCard();
 

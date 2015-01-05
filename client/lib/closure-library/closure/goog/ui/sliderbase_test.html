@@ -17,8 +17,8 @@ See the COPYING file for details.
   goog.require('goog.a11y.aria');
   goog.require('goog.a11y.aria.State');
   goog.require('goog.dom.classlist');
- ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
+  goog.require('goog.events.EventType');
   goog.require('goog.events.KeyCodes');
   goog.require('goog.fx.Animation');
   goog.require('goog.math.Coordinate');
@@ -50,7 +50,7 @@ See the COPYING file for details.
 
 #twoThumbSlider {
   position: relative;
-  /* Extra 20px is so distance between thumb centers is 1000px***REMOVED***
+  /* Extra 20px is so distance between thumb centers is 1000px */
   width: 1020px;
 }
 
@@ -94,72 +94,72 @@ var twoChangeEventCount;
 var mockClock;
 var mockAnimation;
 
-***REMOVED***
-***REMOVED*** A basic class to implement the abstract goog.ui.SliderBase for testing.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.SliderBase}
-***REMOVED***
+/**
+ * A basic class to implement the abstract goog.ui.SliderBase for testing.
+ * @constructor
+ * @extends {goog.ui.SliderBase}
+ */
 function OneThumbSlider() {
-  goog.ui.SliderBase.call(this, undefined /* domHelper***REMOVED***, function(value) {
+  goog.ui.SliderBase.call(this, undefined /* domHelper */, function(value) {
     return value > 5 ? 'A big value.' : 'A small value.';
   });
 }
 goog.inherits(OneThumbSlider, goog.ui.SliderBase);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 OneThumbSlider.prototype.createThumbs = function() {
   this.valueThumb = this.extentThumb = goog.dom.getElement('thumb');
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 OneThumbSlider.prototype.getCssClass = function(orientation) {
   return goog.getCssName('test-slider', orientation);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A basic class to implement the abstract goog.ui.SliderBase for testing.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.SliderBase}
-***REMOVED***
+/**
+ * A basic class to implement the abstract goog.ui.SliderBase for testing.
+ * @constructor
+ * @extends {goog.ui.SliderBase}
+ */
 function TwoThumbSlider() {
   goog.ui.SliderBase.call(this);
 }
 goog.inherits(TwoThumbSlider, goog.ui.SliderBase);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 TwoThumbSlider.prototype.createThumbs = function() {
   this.valueThumb = goog.dom.getElement('valueThumb');
   this.extentThumb = goog.dom.getElement('extentThumb');
   this.rangeHighlight = goog.dom.getElement('rangeHighlight');
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 TwoThumbSlider.prototype.getCssClass = function(orientation) {
   return goog.getCssName('test-slider', orientation);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Basic class that implements the AnimationFactory interface for testing.
-***REMOVED*** @param {!goog.fx.Animation|!Array.<!goog.fx.Animation>} testAnimations The
-***REMOVED***     test animations to use.
-***REMOVED***
-***REMOVED*** @implements {goog.ui.SliderBase.AnimationFactory}
-***REMOVED***
+/**
+ * Basic class that implements the AnimationFactory interface for testing.
+ * @param {!goog.fx.Animation|!Array.<!goog.fx.Animation>} testAnimations The
+ *     test animations to use.
+ * @constructor
+ * @implements {goog.ui.SliderBase.AnimationFactory}
+ */
 function AnimationFactory(testAnimations) {
   this.testAnimations = testAnimations;
 }
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 AnimationFactory.prototype.createAnimations = function() {
   return this.testAnimations;
-***REMOVED***
+};
 
 
 function setUp() {
@@ -173,7 +173,7 @@ function setUp() {
   oneThumbSlider = new OneThumbSlider();
   oneThumbSlider.decorate(oneThumbElem);
   oneChangeEventCount = 0;
-***REMOVED***oneThumbSlider, goog.ui.Component.EventType.CHANGE,
+  goog.events.listen(oneThumbSlider, goog.ui.Component.EventType.CHANGE,
       function() {
         oneChangeEventCount++;
       });
@@ -187,7 +187,7 @@ function setUp() {
   twoThumbSlider = new TwoThumbSlider();
   twoThumbSlider.decorate(twoThumbElem);
   twoChangeEventCount = 0;
-***REMOVED***twoThumbSlider, goog.ui.Component.EventType.CHANGE,
+  goog.events.listen(twoThumbSlider, goog.ui.Component.EventType.CHANGE,
       function() {
         twoChangeEventCount++;
       });
@@ -203,7 +203,7 @@ function setUp() {
   oneThumbSliderRtl = new OneThumbSlider();
   oneThumbSliderRtl.enableFlipForRtl(true);
   oneThumbSliderRtl.decorate(oneThumbElemRtl);
-***REMOVED***oneThumbSliderRtl, goog.ui.Component.EventType.CHANGE,
+  goog.events.listen(oneThumbSliderRtl, goog.ui.Component.EventType.CHANGE,
       function() {
         oneChangeEventCount++;
       });
@@ -218,7 +218,7 @@ function setUp() {
   twoThumbSliderRtl.enableFlipForRtl(true);
   twoThumbSliderRtl.decorate(twoThumbElemRtl);
   twoChangeEventCount = 0;
-***REMOVED***twoThumbSliderRtl, goog.ui.Component.EventType.CHANGE,
+  goog.events.listen(twoThumbSliderRtl, goog.ui.Component.EventType.CHANGE,
       function() {
         twoChangeEventCount++;
       });
@@ -388,11 +388,11 @@ function testGetValueText() {
 
 function testRangeListener() {
   var slider = new goog.ui.SliderBase;
-  slider.updateUi_ = slider.updateAriaStates = function() {***REMOVED***
+  slider.updateUi_ = slider.updateAriaStates = function() {};
   slider.rangeModel.setValue(0);
 
   var f = goog.testing.recordFunction();
-***REMOVED***slider, goog.ui.Component.EventType.CHANGE, f);
+  goog.events.listen(slider, goog.ui.Component.EventType.CHANGE, f);
 
   slider.rangeModel.setValue(50);
   assertEquals(1, f.getCallCount());
@@ -404,21 +404,21 @@ function testRangeListener() {
                2, f.getCallCount());
 }
 
-***REMOVED***
-***REMOVED*** Verifies that rangeHighlight position and size are correct for the given
-***REMOVED*** startValue and endValue. Assumes slider has default min/max values [0, 100],
-***REMOVED*** width of 1020px, and thumb widths of 20px, with rangeHighlight drawn from
-***REMOVED*** the centers of the thumbs.
-***REMOVED*** @param {number} rangeHighlight The range highlight.
-***REMOVED*** @param {number} startValue The start value.
-***REMOVED*** @param {number} endValue The end value.
-***REMOVED***
+/**
+ * Verifies that rangeHighlight position and size are correct for the given
+ * startValue and endValue. Assumes slider has default min/max values [0, 100],
+ * width of 1020px, and thumb widths of 20px, with rangeHighlight drawn from
+ * the centers of the thumbs.
+ * @param {number} rangeHighlight The range highlight.
+ * @param {number} startValue The start value.
+ * @param {number} endValue The end value.
+ */
 function assertHighlightedRange(rangeHighlight, startValue, endValue) {
   var rangeStr = '[' + startValue + ', ' + endValue + ']';
-  var rangeStart = 10 + 10***REMOVED*** startValue;
+  var rangeStart = 10 + 10 * startValue;
   assertEquals('Range highlight for ' + rangeStr + ' should start at ' +
       rangeStart + 'px.', rangeStart, rangeHighlight.offsetLeft);
-  var rangeSize = 10***REMOVED*** (endValue - startValue);
+  var rangeSize = 10 * (endValue - startValue);
   assertEquals('Range highlight for ' + rangeStr + ' should have size ' +
       rangeSize + 'px.', rangeSize, rangeHighlight.offsetWidth);
 }
@@ -597,16 +597,16 @@ function testRangeHighlightAnimation() {
   assertHighlightedRange(rangeHighlight, 25, 75);
 }
 
-***REMOVED***
-***REMOVED*** Verifies that no error occurs and that the range highlight is sized correctly
-***REMOVED*** for a zero-size slider (i.e. doesn't attempt to set a negative size). The
-***REMOVED*** test tries to resize the slider from its original size to 0, then checks
-***REMOVED*** that the range highlight's size is correctly set to 0.
-***REMOVED***
-***REMOVED*** The size verification is needed because Webkit/Gecko outright ignore calls
-***REMOVED*** to set negative sizes on an element, leaving it at its former size. IE
-***REMOVED*** throws an error in the same situation.
-***REMOVED***
+/**
+ * Verifies that no error occurs and that the range highlight is sized correctly
+ * for a zero-size slider (i.e. doesn't attempt to set a negative size). The
+ * test tries to resize the slider from its original size to 0, then checks
+ * that the range highlight's size is correctly set to 0.
+ *
+ * The size verification is needed because Webkit/Gecko outright ignore calls
+ * to set negative sizes on an element, leaving it at its former size. IE
+ * throws an error in the same situation.
+ */
 function testRangeHighlightForZeroSizeSlider() {
   // Make sure range highlight spans whole slider before zeroing width.
   twoThumbSlider.setExtent(100);
@@ -749,12 +749,12 @@ function testMouseClickWithMoveToPointEnabled() {
 
   // Case when value is increased
   goog.testing.events.fireClickSequence(oneThumbSlider.getElement(),
-      /* opt_button***REMOVED*** undefined, coords);
+      /* opt_button */ undefined, coords);
   assertEquals(oneThumbSlider.getValue(), initialValue + stepSize);
 
   // Case when value is decreased
   goog.testing.events.fireClickSequence(oneThumbSlider.getElement(),
-      /* opt_button***REMOVED*** undefined, coords);
+      /* opt_button */ undefined, coords);
   assertEquals(oneThumbSlider.getValue(), initialValue);
 
   // Case when thumb is clicked
@@ -784,9 +784,9 @@ function testSingleThumbSliderHasZeroExtent() {
   assertEquals(0, oneThumbSlider.getExtent());
 }
 
-***REMOVED***
-***REMOVED*** Tests getThumbCoordinateForValue method.
-***REMOVED***
+/**
+ * Tests getThumbCoordinateForValue method.
+ */
 function testThumbCoordinateForValueWithHorizontalSlider() {
   // Make sure the y-coordinate stays the same for the horizontal slider.
   var originalY = goog.style.getPosition(oneThumbSlider.valueThumb).y;
@@ -796,7 +796,7 @@ function testThumbCoordinateForValueWithHorizontalSlider() {
 
   // Verify coordinate for a particular value.
   var value = 20;
-  var expectedX = Math.round(value / range***REMOVED*** width);
+  var expectedX = Math.round(value / range * width);
   var expectedCoord = new goog.math.Coordinate(expectedX, originalY);
   var coord = oneThumbSlider.getThumbCoordinateForValue(value);
   assertObjectEquals(expectedCoord, coord);
@@ -817,7 +817,7 @@ function testThumbCoordinateForValueWithVerticalSlider() {
 
   // Verify coordinate for a particular value.
   var value = 20;
-  var expectedY = height - Math.round(value / range***REMOVED*** height);
+  var expectedY = height - Math.round(value / range * height);
   var expectedCoord = new goog.math.Coordinate(originalX, expectedY);
   var coord = oneThumbSlider.getThumbCoordinateForValue(value);
   assertObjectEquals(expectedCoord, coord);
@@ -828,9 +828,9 @@ function testThumbCoordinateForValueWithVerticalSlider() {
   assertObjectEquals(expectedCoord, coord);
 }
 
-***REMOVED***
-***REMOVED*** Tests getValueFromMousePosition method.
-***REMOVED***
+/**
+ * Tests getValueFromMousePosition method.
+ */
 function testValueFromMousePosition() {
   var value = 30;
   oneThumbSlider.setValue(value);
@@ -839,7 +839,7 @@ function testValueFromMousePosition() {
   offset.x += size.width / 2;
   offset.y += size.height / 2;
   var e = null;
-***REMOVED***oneThumbSlider, goog.events.EventType.MOUSEMOVE,
+  goog.events.listen(oneThumbSlider, goog.events.EventType.MOUSEMOVE,
       function(evt) {
         e = evt;
       });
@@ -853,9 +853,9 @@ function testValueFromMousePosition() {
       value, Math.round(oneThumbSlider.getValueFromMousePosition(e)));
 }
 
-***REMOVED***
-***REMOVED*** Tests ignoring click event after mousedown event.
-***REMOVED***
+/**
+ * Tests ignoring click event after mousedown event.
+ */
 function testClickAfterMousedown() {
   // Get the center of the thumb at value zero.
   oneThumbSlider.setValue(0);
@@ -872,18 +872,18 @@ function testClickAfterMousedown() {
   // Temporarily control time.
   var theTime = goog.now();
   var saveGoogNow = goog.now;
-  goog.now = function() { return theTime;***REMOVED*****REMOVED***
+  goog.now = function() { return theTime; };
 
   // set coordinate for a particular value.
   var valueOne = 10;
-  offset.x = offsetXAtZero + Math.round(valueOne / range***REMOVED*** width);
+  offset.x = offsetXAtZero + Math.round(valueOne / range * width);
   goog.testing.events.fireMouseDownEvent(sliderElement, null, offset);
   assertEquals(valueOne, oneThumbSlider.getValue());
 
   // Verify a click event with another value that follows quickly is ignored.
   theTime += oneThumbSlider.MOUSE_DOWN_DELAY_ / 2;
   var valueTwo = 20;
-  offset.x = offsetXAtZero + Math.round(valueTwo / range***REMOVED*** width);
+  offset.x = offsetXAtZero + Math.round(valueTwo / range * width);
   goog.testing.events.fireClickEvent(sliderElement, null, offset);
   assertEquals(valueOne, oneThumbSlider.getValue());
 
@@ -895,9 +895,9 @@ function testClickAfterMousedown() {
   goog.now = saveGoogNow;
 }
 
-***REMOVED***
-***REMOVED*** Tests dragging events.
-***REMOVED***
+/**
+ * Tests dragging events.
+ */
 function testDragEvents() {
   var offset = goog.style.getPageOffset(oneThumbSlider.valueThumb);
   var size = goog.style.getSize(oneThumbSlider.valueThumb);
@@ -906,9 +906,9 @@ function testDragEvents() {
   var event_types = [];
   var handler = function(evt) {
     event_types.push(evt.type);
- ***REMOVED*****REMOVED***
+  };
 
-***REMOVED***oneThumbSlider,
+  goog.events.listen(oneThumbSlider,
       [goog.ui.SliderBase.EventType.DRAG_START,
       goog.ui.SliderBase.EventType.DRAG_END,
       goog.ui.SliderBase.EventType.DRAG_VALUE_START,
@@ -924,11 +924,11 @@ function testDragEvents() {
   function isValueOrExtentDragStart(type) {
     return type == goog.ui.SliderBase.EventType.DRAG_VALUE_START ||
         type == goog.ui.SliderBase.EventType.DRAG_EXTENT_START;
- ***REMOVED*****REMOVED***
+  };
   function isValueOrExtentDragEnd(type) {
     return type == goog.ui.SliderBase.EventType.DRAG_VALUE_END ||
         type == goog.ui.SliderBase.EventType.DRAG_EXTENT_END;
- ***REMOVED*****REMOVED***
+  };
 
   // Test that dragging the thumb calls all the correct events.
   goog.testing.events.fireMouseDownEvent(oneThumbSlider.valueThumb);

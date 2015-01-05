@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-***REMOVED***
-***REMOVED*** Styles for the Editor's Edit Link dialog.
-***REMOVED***
-***REMOVED*** @author marcosalmeida@google.com (Marcos Almeida)
-***REMOVED***
+/**
+ * Styles for the Editor's Edit Link dialog.
+ *
+ * @author marcosalmeida@google.com (Marcos Almeida)
+ */
 
 
 .tr-link-dialog-explanation-text {
@@ -18,8 +18,8 @@
 }
 
 .tr-link-dialog-target-input {
-  width: 98%; /* 98% prevents scroll bars in standards mode.***REMOVED***
-  /* Input boxes for URLs and email address should always be LTR.***REMOVED***
+  width: 98%; /* 98% prevents scroll bars in standards mode. */
+  /* Input boxes for URLs and email address should always be LTR. */
   direction: ltr;
 }
 

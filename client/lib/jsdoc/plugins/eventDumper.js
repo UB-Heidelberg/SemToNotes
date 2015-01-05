@@ -1,15 +1,15 @@
-/*global env: true***REMOVED***
-***REMOVED***
-***REMOVED*** @overview Dump information about parser events to the console.
-***REMOVED*** @module plugins/eventDumper
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED***
+/*global env: true */
+/**
+ * @overview Dump information about parser events to the console.
+ * @module plugins/eventDumper
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ */
 'use strict';
 
 var _ = require('underscore');
 var util = require('util');
 
-var conf = env.conf.eventDumper || {***REMOVED***
+var conf = env.conf.eventDumper || {};
 var isRhino = require('jsdoc/util/runtime').isRhino();
 
 // Dump the included parser events (defaults to all events)
@@ -29,12 +29,12 @@ if (conf.exclude) {
     events = _.difference(events, conf.exclude);
 }
 
-***REMOVED***
-***REMOVED*** Check whether a variable appears to be a Java native object.
-***REMOVED***
-***REMOVED*** @param {*} o - The variable to check.
-***REMOVED*** @return {boolean} Set to `true` for Java native objects and `false` in all other cases.
-***REMOVED***
+/**
+ * Check whether a variable appears to be a Java native object.
+ *
+ * @param {*} o - The variable to check.
+ * @return {boolean} Set to `true` for Java native objects and `false` in all other cases.
+ */
 function isJavaNativeObject(o) {
     if (!isRhino) {
         return false;
@@ -43,12 +43,12 @@ function isJavaNativeObject(o) {
     return o && typeof o === 'object' && typeof o.getClass === 'function';
 }
 
-***REMOVED***
-***REMOVED*** Replace AST node objects in events with a placeholder.
-***REMOVED***
-***REMOVED*** @param {Object} o - An object whose properties may contain AST node objects.
-***REMOVED*** @return {Object} The modified object.
-***REMOVED***
+/**
+ * Replace AST node objects in events with a placeholder.
+ *
+ * @param {Object} o - An object whose properties may contain AST node objects.
+ * @return {Object} The modified object.
+ */
 function replaceNodeObjects(o) {
     var doop = require('jsdoc/util/doop');
 
@@ -73,14 +73,14 @@ function replaceNodeObjects(o) {
     return o;
 }
 
-***REMOVED***
-***REMOVED*** Get rid of unwanted crud in an event object.
-***REMOVED***
-***REMOVED*** @param {object} e The event object.
-***REMOVED*** @return {object} The fixed-up object.
-***REMOVED***
+/**
+ * Get rid of unwanted crud in an event object.
+ *
+ * @param {object} e The event object.
+ * @return {object} The fixed-up object.
+ */
 function cleanse(e) {
-    var result = {***REMOVED***
+    var result = {};
 
     Object.keys(e).forEach(function(prop) {
         // by default, don't stringify properties that contain an array of functions
@@ -103,7 +103,7 @@ function cleanse(e) {
     return result;
 }
 
-exports.handlers = {***REMOVED***
+exports.handlers = {};
 
 events.forEach(function(eventType) {
     exports.handlers[eventType] = function(e) {
@@ -111,5 +111,5 @@ events.forEach(function(eventType) {
             type: eventType,
             content: cleanse(e)
         }, null, 4) );
-   ***REMOVED*****REMOVED***
+    };
 });

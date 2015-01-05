@@ -11,7 +11,7 @@ See the COPYING file for details.
   <meta charset="utf-8">
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.ui.AdvancedTooltip');
   </script>
   <link rel="stylesheet" href="css/demo.css">
@@ -68,11 +68,11 @@ See the COPYING file for details.
         'Clicking<br> this<br> button<br> has no effect.');
     new goog.ui.Tooltip('btn-close', 'Closes tooltip');
 
-  ***REMOVED***document.getElementById('btn-close'),
+    goog.events.listen(document.getElementById('btn-close'),
         goog.events.EventType.CLICK, function(e) {
             tooltip.setVisible(false);
         }
-  ***REMOVED***
+    );
   </script>
 </body>
 </html>

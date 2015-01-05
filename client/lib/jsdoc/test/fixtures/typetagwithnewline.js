@@ -1,14 +1,14 @@
-***REMOVED*** @class Matryoshka***REMOVED***
+/** @class Matryoshka */
 function Matryoshka() {}
 
-***REMOVED***
-***REMOVED*** @type {(!Array.<number>|
-***REMOVED***         !Array.<!Array.<number>>)}
-***REMOVED***
+/**
+ * @type {(!Array.<number>|
+ *         !Array.<!Array.<number>>)}
+ */
 Matryoshka.mini;
 
-***REMOVED***
-***REMOVED*** @type (!Array.<number>|!Array.<!Array.<number>>|
-***REMOVED***        !Array.<!Array.<!Array.<number>>>)
-***REMOVED***
+/**
+ * @type (!Array.<number>|!Array.<!Array.<number>>|
+ *        !Array.<!Array.<!Array.<number>>>)
+ */
 Matryoshka.mega;

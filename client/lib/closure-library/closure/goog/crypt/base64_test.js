@@ -76,7 +76,7 @@ function testOddLengthByteArrayDecoding() {
 
   // Repeat the test in web-safe decoding mode.
   var decodedBuffer2 = goog.crypt.base64.decodeStringToByteArray(encodedBuffer,
-      true  /* web-safe***REMOVED***);
+      true  /* web-safe */);
   assertEquals(4, decodedBuffer2.length);
   assertEquals('abcd', goog.crypt.byteArrayToString(decodedBuffer2));
 }
@@ -120,14 +120,14 @@ function testWebSafeEncoding() {
   enc = goog.crypt.base64.encodeString(test);
   assertEquals('Non-websafe broken?', 'Pj4+Pz8/Pj4+Pz8/PS8r', enc);
   enc = goog.crypt.base64.encodeByteArray(
-      goog.crypt.stringToByteArray(test), true /* websafe***REMOVED***);
+      goog.crypt.stringToByteArray(test), true /* websafe */);
   assertEquals('Websafe encoding broken', 'Pj4-Pz8_Pj4-Pz8_PS8r', enc);
   enc = goog.crypt.base64.encodeString(test, true);
   assertEquals('Non-websafe broken?', 'Pj4-Pz8_Pj4-Pz8_PS8r', enc);
   var dec = goog.crypt.byteArrayToString(
-      goog.crypt.base64.decodeStringToByteArray(enc, true /* websafe***REMOVED***));
+      goog.crypt.base64.decodeStringToByteArray(enc, true /* websafe */));
   assertEquals('Websafe decoding broken', test, dec);
-  dec = goog.crypt.base64.decodeString(enc, true /* websafe***REMOVED***);
+  dec = goog.crypt.base64.decodeString(enc, true /* websafe */);
   assertEquals('Websafe decoding broken', test, dec);
 
   // Test parsing malformed characters

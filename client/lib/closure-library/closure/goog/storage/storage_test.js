@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for the storage interface.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for the storage interface.
+ *
+ */
 
 goog.provide('goog.storage.storage_test');
 
@@ -57,4 +57,4 @@ goog.storage.storage_test.runBasicTests = function(storage) {
   assertUndefined(storage.get('first'));
   assertUndefined(storage.get('second'));
   assertUndefined(storage.get('third'));
-***REMOVED***
+};

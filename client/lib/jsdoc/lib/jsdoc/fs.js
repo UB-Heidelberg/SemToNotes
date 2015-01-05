@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** Extended version of the standard `fs` module.
-***REMOVED*** @module jsdoc/fs
-***REMOVED***
+/**
+ * Extended version of the standard `fs` module.
+ * @module jsdoc/fs
+ */
 'use strict';
 
 var fs = require('fs');
@@ -64,7 +64,7 @@ var ls = exports.ls = function(dir, recurse, _allFiles, _path) {
     }
 
     return _allFiles;
-***REMOVED***
+};
 
 // export the VM-specific implementations of the extra methods
 // TODO: document extra methods here

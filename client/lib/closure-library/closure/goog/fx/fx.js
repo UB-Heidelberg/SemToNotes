@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Legacy stub for the goog.fx namespace.  Requires the moved
-***REMOVED*** namespaces. Animation and easing have been moved to animation.js and
-***REMOVED*** easing.js.  Users of this stub should move off so we may remove it in the
-***REMOVED*** future.
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Legacy stub for the goog.fx namespace.  Requires the moved
+ * namespaces. Animation and easing have been moved to animation.js and
+ * easing.js.  Users of this stub should move off so we may remove it in the
+ * future.
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.fx');
 

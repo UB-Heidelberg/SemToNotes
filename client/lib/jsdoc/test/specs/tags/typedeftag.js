@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe('@typedef tag', function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/typedeftag.js');
     var numberlike = docSet.getByLongname('calc.NumberLike')[0];

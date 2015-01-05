@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Concrete implementation of the goog.fs.FileSystem interface
-***REMOVED***     using an HTML FileSystem object.
-***REMOVED***
+/**
+ * @fileoverview Concrete implementation of the goog.fs.FileSystem interface
+ *     using an HTML FileSystem object.
+ */
 goog.provide('goog.fs.FileSystemImpl');
 
 goog.require('goog.fs.DirectoryEntryImpl');
@@ -23,43 +23,43 @@ goog.require('goog.fs.FileSystem');
 
 
 
-***REMOVED***
-***REMOVED*** A local filesystem.
-***REMOVED***
-***REMOVED*** This shouldn't be instantiated directly. Instead, it should be accessed via
-***REMOVED*** {@link goog.fs.getTemporary} or {@link goog.fs.getPersistent}.
-***REMOVED***
-***REMOVED*** @param {!FileSystem} fs The underlying FileSystem object.
-***REMOVED***
-***REMOVED*** @implements {goog.fs.FileSystem}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A local filesystem.
+ *
+ * This shouldn't be instantiated directly. Instead, it should be accessed via
+ * {@link goog.fs.getTemporary} or {@link goog.fs.getPersistent}.
+ *
+ * @param {!FileSystem} fs The underlying FileSystem object.
+ * @constructor
+ * @implements {goog.fs.FileSystem}
+ * @final
+ */
 goog.fs.FileSystemImpl = function(fs) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying FileSystem object.
-  ***REMOVED***
-  ***REMOVED*** @type {!FileSystem}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying FileSystem object.
+   *
+   * @type {!FileSystem}
+   * @private
+   */
   this.fs_ = fs;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.FileSystemImpl.prototype.getName = function() {
   return this.fs_.name;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.FileSystemImpl.prototype.getRoot = function() {
   return new goog.fs.DirectoryEntryImpl(this, this.fs_.root);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!FileSystem} The underlying FileSystem object.
-***REMOVED***
+/**
+ * @return {!FileSystem} The underlying FileSystem object.
+ */
 goog.fs.FileSystemImpl.prototype.getBrowserFileSystem = function() {
   return this.fs_;
-***REMOVED***
+};

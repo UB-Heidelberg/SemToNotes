@@ -1,13 +1,13 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a document node
-***REMOVED*** implementation working on a binary XML model.
-***REMOVED***
+/**
+ * @fileoverview A class representing a document node
+ * implementation working on a binary XML model.
+ */
 
 goog.provide('xrx.node.DocumentB');
 
 
 
-***REMOVED***
+goog.require('xrx.index.Index');
 goog.require('xrx.xml.Label');
 goog.require('xrx.node');
 goog.require('xrx.node.Binary');
@@ -17,18 +17,18 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a binary document node.
-***REMOVED***
-***REMOVED*** @param {!string} instanceId The ID of the instance. 
-***REMOVED***
-***REMOVED***
+/**
+ * Creates a binary document node.
+ *
+ * @param {!string} instanceId The ID of the instance. 
+ * @constructor
+ */
 xrx.node.DocumentB = function(instanceId) {
 
   goog.base(this, xrx.node.DOCUMENT, this);
 
   this.instanceId_ = instanceId;
-***REMOVED***
+};
 goog.inherits(xrx.node.DocumentB, xrx.node.Binary);
 
 
@@ -118,10 +118,10 @@ xrx.node.DocumentB.prototype.getStringValue = function() {
     row = this.getIndex().getRowByKey(key);
     string += xml.substr(row.getOffset() + row.getLength1(),
         row.getLength2() - row.getLength1());
- ***REMOVED*****REMOVED***
+  };
 
   return string;
-***REMOVED***
+};
 
 
 
@@ -144,7 +144,7 @@ xrx.node.DocumentB.prototype.getNodeChild = function(test) {
   if (test.matches(element)) nodeset.add(element);
 
   return nodeset;
-***REMOVED***
+};
 
 
 
@@ -176,7 +176,7 @@ xrx.node.DocumentB.prototype.getNodeDescendant = function(test) {
   } while(row = index.iterNext());
 
   return nodeset;
-***REMOVED***
+};
 
 
 

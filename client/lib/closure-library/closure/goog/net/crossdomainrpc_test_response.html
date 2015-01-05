@@ -33,15 +33,15 @@ function createPayload(size) {
     chars.push('0');
   }
   return chars.join('');
-***REMOVED***
+};
 
-var payload = createPayload(16***REMOVED*** 1024);
+var payload = createPayload(16 * 1024);
 
 var currentDirectory = location.href.substring(
     0, location.href.lastIndexOf('/')
 );
 
-var echo = {***REMOVED***
+var echo = {};
 echo[goog.net.CrossDomainRpc.PARAM_ECHO_REQUEST_ID] = 0;
 echo[goog.net.CrossDomainRpc.PARAM_ECHO_DUMMY_URI] = goog.userAgent.IE ?
     currentDirectory + '/crossdomainrpc_test.gif' :

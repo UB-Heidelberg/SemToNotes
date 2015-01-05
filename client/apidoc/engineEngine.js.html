@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A class representing a graphics rendering engine.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class representing a graphics rendering engine.
+ */
 
 goog.provide('xrx.engine.Engine');
 
@@ -40,78 +40,78 @@ goog.require('xrx.vml');
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a graphics rendering engine.
-***REMOVED*** @param {string} opt_engine The rendering engine to be used. If no
-***REMOVED***     parameter is overloaded, the engine class searches for the
-***REMOVED***     best rendering engine available.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing a graphics rendering engine.
+ * @param {string} opt_engine The rendering engine to be used. If no
+ *     parameter is overloaded, the engine class searches for the
+ *     best rendering engine available.
+ * @constructor
+ */
 xrx.engine.Engine = function(opt_engine) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Name of the rendering engine.
-  ***REMOVED*** @see xrx.engine
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Name of the rendering engine.
+   * @see xrx.engine
+   * @type {string}
+   * @private
+   */
   this.engine_ = opt_engine;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Pointer to the rendering engine base class.
-  ***REMOVED*** @type {(xrx.canvas|xrx.svg|xrx.vml)}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Pointer to the rendering engine base class.
+   * @type {(xrx.canvas|xrx.svg|xrx.vml)}
+   * @private
+   */
   this.renderer_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Indicates whether a rendering engine could be initialized
-  ***REMOVED*** successfully.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Indicates whether a rendering engine could be initialized
+   * successfully.
+   * @type {boolean}
+   * @private
+   */
   this.available_ = false;
 
   this.init_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the installed graphics renderer.
-***REMOVED*** @return {(xrx.canvas|xrx.svg|xrx.vml)} The renderer.
-***REMOVED***
+/**
+ * Returns the installed graphics renderer.
+ * @return {(xrx.canvas|xrx.svg|xrx.vml)} The renderer.
+ */
 xrx.engine.Engine.prototype.getRenderer = function() {
   return this.renderer_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Tests whether the overloaded renderer name is the currently installed.
-***REMOVED*** @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} name The
-***REMOVED***     renderer name.
-***REMOVED*** @return {boolean} Whether the renderer matches.
-***REMOVED***
+/**
+ * Tests whether the overloaded renderer name is the currently installed.
+ * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} name The
+ *     renderer name.
+ * @return {boolean} Whether the renderer matches.
+ */
 xrx.engine.Engine.prototype.hasRenderer = function(name) {
   return this.engine_ === name;
-***REMOVED*** 
+}; 
 
 
 
-***REMOVED***
-***REMOVED*** Whether the rendering engine could be initialized successfully.
-***REMOVED*** @return {boolean} Whether the engine is available for use.
-***REMOVED***
+/**
+ * Whether the rendering engine could be initialized successfully.
+ * @return {boolean} Whether the engine is available for use.
+ */
 xrx.engine.Engine.prototype.isAvailable = function() {
   return this.available_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
   if (xrx.canvas.isSupported()) {
     this.engine_ = xrx.engine.CANVAS;
@@ -128,13 +128,13 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
   } else {
     throw Error('There is no graphics rendering engine available.');
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
   if (this.engine_ === xrx.engine.CANVAS) {
     this.renderer_ = xrx.canvas;
@@ -149,20 +149,20 @@ xrx.engine.Engine.prototype.forceRenderer_ = function() {
     this.available_ = false;
     throw Error('Unknown graphics rendering engine.');
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.engine.Engine.prototype.init_ = function() {
   if (this.engine_) {
     this.forceRenderer_();
   } else {
     this.findOptimalRenderer_();
   }
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

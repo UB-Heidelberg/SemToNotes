@@ -92,7 +92,7 @@ function testPhantomKey() {
 }
 
 function testNonUsKeyboards() {
-  var fakeEvent = createEventWithKeyCode(1092 /* Russian a***REMOVED***);
+  var fakeEvent = createEventWithKeyCode(1092 /* Russian a */);
   assertTrue('Expected key to not modify text: 1092',
       KeyCodes.isTextModifyingKeyEvent(fakeEvent));
 }

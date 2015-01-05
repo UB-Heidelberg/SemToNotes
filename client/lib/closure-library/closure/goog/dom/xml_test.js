@@ -79,7 +79,7 @@ function testSetAttributes() {
     title: 'A title',
     random: 'woop',
     cellpadding: '123'
- ***REMOVED*****REMOVED***
+  };
 
   goog.dom.xml.setAttributes(xmlElement, attrs);
   goog.dom.xml.setAttributes(domElement, attrs);

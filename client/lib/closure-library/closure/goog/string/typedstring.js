@@ -16,33 +16,33 @@ goog.provide('goog.string.TypedString');
 
 
 
-***REMOVED***
-***REMOVED*** Wrapper for strings that conform to a data type or language.
-***REMOVED***
-***REMOVED*** Implementations of this interface are wrappers for strings, and typically
-***REMOVED*** associate a type contract with the wrapped string.  Concrete implementations
-***REMOVED*** of this interface may choose to implement additional run-time type checking,
-***REMOVED*** see for example {@code goog.html.SafeHtml}. If available, client code that
-***REMOVED*** needs to ensure type membership of an object should use the type's function
-***REMOVED*** to assert type membership, such as {@code goog.html.SafeHtml.unwrap}.
-***REMOVED*** @interface
-***REMOVED***
-goog.string.TypedString = function() {***REMOVED***
+/**
+ * Wrapper for strings that conform to a data type or language.
+ *
+ * Implementations of this interface are wrappers for strings, and typically
+ * associate a type contract with the wrapped string.  Concrete implementations
+ * of this interface may choose to implement additional run-time type checking,
+ * see for example {@code goog.html.SafeHtml}. If available, client code that
+ * needs to ensure type membership of an object should use the type's function
+ * to assert type membership, such as {@code goog.html.SafeHtml.unwrap}.
+ * @interface
+ */
+goog.string.TypedString = function() {};
 
 
-***REMOVED***
-***REMOVED*** Interface marker of the TypedString interface.
-***REMOVED***
-***REMOVED*** This property can be used to determine at runtime whether or not an object
-***REMOVED*** implements this interface.  All implementations of this interface set this
-***REMOVED*** property to {@code true}.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Interface marker of the TypedString interface.
+ *
+ * This property can be used to determine at runtime whether or not an object
+ * implements this interface.  All implementations of this interface set this
+ * property to {@code true}.
+ * @type {boolean}
+ */
 goog.string.TypedString.prototype.implementsGoogStringTypedString;
 
 
-***REMOVED***
-***REMOVED*** Retrieves this wrapped string's value.
-***REMOVED*** @return {!string} The wrapped string's value.
-***REMOVED***
+/**
+ * Retrieves this wrapped string's value.
+ * @return {!string} The wrapped string's value.
+ */
 goog.string.TypedString.prototype.getTypedStringValue;

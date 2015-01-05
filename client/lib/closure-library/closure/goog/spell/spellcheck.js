@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Support class for spell checker components.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Support class for spell checker components.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.spell.SpellCheck');
 goog.provide('goog.spell.SpellCheck.WordChangedEvent');
@@ -27,219 +27,219 @@ goog.require('goog.structs.Set');
 
 
 
-***REMOVED***
-***REMOVED*** Support class for spell checker components. Provides basic functionality
-***REMOVED*** such as word lookup and caching.
-***REMOVED***
-***REMOVED*** @param {Function=} opt_lookupFunction Function to use for word lookup. Must
-***REMOVED***     accept an array of words, an object reference and a callback function as
-***REMOVED***     parameters. It must also call the callback function (as a method on the
-***REMOVED***     object), once ready, with an array containing the original words, their
-***REMOVED***     spelling status and optionally an array of suggestions.
-***REMOVED*** @param {string=} opt_language Content language.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Support class for spell checker components. Provides basic functionality
+ * such as word lookup and caching.
+ *
+ * @param {Function=} opt_lookupFunction Function to use for word lookup. Must
+ *     accept an array of words, an object reference and a callback function as
+ *     parameters. It must also call the callback function (as a method on the
+ *     object), once ready, with an array containing the original words, their
+ *     spelling status and optionally an array of suggestions.
+ * @param {string=} opt_language Content language.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.spell.SpellCheck = function(opt_lookupFunction, opt_language) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Function used to lookup spelling of words.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Function used to lookup spelling of words.
+   * @type {Function}
+   * @private
+   */
   this.lookupFunction_ = opt_lookupFunction || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Cache for words not yet checked with lookup function.
-  ***REMOVED*** @type {goog.structs.Set}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Cache for words not yet checked with lookup function.
+   * @type {goog.structs.Set}
+   * @private
+   */
   this.unknownWords_ = new goog.structs.Set();
 
   this.setLanguage(opt_language);
-***REMOVED***
+};
 goog.inherits(goog.spell.SpellCheck, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Delay, in ms, to wait for additional words to be entered before a lookup
-***REMOVED*** operation is triggered.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delay, in ms, to wait for additional words to be entered before a lookup
+ * operation is triggered.
+ *
+ * @type {number}
+ * @private
+ */
 goog.spell.SpellCheck.LOOKUP_DELAY_ = 100;
 
 
-***REMOVED***
-***REMOVED*** Constants for event names
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Constants for event names
+ *
+ * @enum {string}
+ */
 goog.spell.SpellCheck.EventType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fired when all pending words have been processed.
- ***REMOVED*****REMOVED***
+  /**
+   * Fired when all pending words have been processed.
+   */
   READY: 'ready',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fired when all lookup function failed.
- ***REMOVED*****REMOVED***
+  /**
+   * Fired when all lookup function failed.
+   */
   ERROR: 'error',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Fired when a word's status is changed.
- ***REMOVED*****REMOVED***
+  /**
+   * Fired when a word's status is changed.
+   */
   WORD_CHANGED: 'wordchanged'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cache. Shared across all spell checker instances. Map with langauge as the
-***REMOVED*** key and a cache for that language as the value.
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.spell.SpellCheck.cache_ = {***REMOVED***
+/**
+ * Cache. Shared across all spell checker instances. Map with langauge as the
+ * key and a cache for that language as the value.
+ *
+ * @type {Object}
+ * @private
+ */
+goog.spell.SpellCheck.cache_ = {};
 
 
-***REMOVED***
-***REMOVED*** Content Language.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Content Language.
+ * @type {string}
+ * @private
+ */
 goog.spell.SpellCheck.prototype.language_ = '';
 
 
-***REMOVED***
-***REMOVED*** Cache for set language. Reference to the element corresponding to the set
-***REMOVED*** language in the static goog.spell.SpellCheck.cache_.
-***REMOVED***
-***REMOVED*** @type {Object|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cache for set language. Reference to the element corresponding to the set
+ * language in the static goog.spell.SpellCheck.cache_.
+ *
+ * @type {Object|undefined}
+ * @private
+ */
 goog.spell.SpellCheck.prototype.cache_;
 
 
-***REMOVED***
-***REMOVED*** Id for timer processing the pending queue.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Id for timer processing the pending queue.
+ *
+ * @type {number}
+ * @private
+ */
 goog.spell.SpellCheck.prototype.queueTimer_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Whether a lookup operation is in progress.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether a lookup operation is in progress.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.spell.SpellCheck.prototype.lookupInProgress_ = false;
 
 
-***REMOVED***
-***REMOVED*** Codes representing the status of an individual word.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Codes representing the status of an individual word.
+ *
+ * @enum {number}
+ */
 goog.spell.SpellCheck.WordStatus = {
   UNKNOWN: 0,
   VALID: 1,
   INVALID: 2,
   IGNORED: 3,
   CORRECTED: 4 // Temporary status, not stored in cache
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Fields for word array in cache.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Fields for word array in cache.
+ *
+ * @enum {number}
+ */
 goog.spell.SpellCheck.CacheIndex = {
   STATUS: 0,
   SUGGESTIONS: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expression for identifying word boundaries.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Regular expression for identifying word boundaries.
+ *
+ * @type {string}
+ */
 goog.spell.SpellCheck.WORD_BOUNDARY_CHARS =
     '\t\r\n\u00A0 !\"#$%&()*+,\-.\/:;<=>?@\[\\\]^_`{|}~';
 
 
-***REMOVED***
-***REMOVED*** Regular expression for identifying word boundaries.
-***REMOVED***
-***REMOVED*** @type {RegExp}
-***REMOVED***
+/**
+ * Regular expression for identifying word boundaries.
+ *
+ * @type {RegExp}
+ */
 goog.spell.SpellCheck.WORD_BOUNDARY_REGEX = new RegExp(
     '[' + goog.spell.SpellCheck.WORD_BOUNDARY_CHARS + ']');
 
 
-***REMOVED***
-***REMOVED*** Regular expression for splitting a string into individual words and blocks of
-***REMOVED*** separators. Matches zero or one word followed by zero or more separators.
-***REMOVED***
-***REMOVED*** @type {RegExp}
-***REMOVED***
+/**
+ * Regular expression for splitting a string into individual words and blocks of
+ * separators. Matches zero or one word followed by zero or more separators.
+ *
+ * @type {RegExp}
+ */
 goog.spell.SpellCheck.SPLIT_REGEX = new RegExp(
     '([^' + goog.spell.SpellCheck.WORD_BOUNDARY_CHARS + ']*)' +
     '([' + goog.spell.SpellCheck.WORD_BOUNDARY_CHARS + ']*)');
 
 
-***REMOVED***
-***REMOVED*** Sets the lookup function.
-***REMOVED***
-***REMOVED*** @param {Function} f Function to use for word lookup. Must accept an array of
-***REMOVED***     words, an object reference and a callback function as parameters.
-***REMOVED***     It must also call the callback function (as a method on the object),
-***REMOVED***     once ready, with an array containing the original words, their
-***REMOVED***     spelling status and optionally an array of suggestions.
-***REMOVED***
+/**
+ * Sets the lookup function.
+ *
+ * @param {Function} f Function to use for word lookup. Must accept an array of
+ *     words, an object reference and a callback function as parameters.
+ *     It must also call the callback function (as a method on the object),
+ *     once ready, with an array containing the original words, their
+ *     spelling status and optionally an array of suggestions.
+ */
 goog.spell.SpellCheck.prototype.setLookupFunction = function(f) {
   this.lookupFunction_ = f;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets language.
-***REMOVED***
-***REMOVED*** @param {string=} opt_language Content language.
-***REMOVED***
+/**
+ * Sets language.
+ *
+ * @param {string=} opt_language Content language.
+ */
 goog.spell.SpellCheck.prototype.setLanguage = function(opt_language) {
   this.language_ = opt_language || '';
 
   if (!goog.spell.SpellCheck.cache_[this.language_]) {
-    goog.spell.SpellCheck.cache_[this.language_] = {***REMOVED***
+    goog.spell.SpellCheck.cache_[this.language_] = {};
   }
   this.cache_ = goog.spell.SpellCheck.cache_[this.language_];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns language.
-***REMOVED***
-***REMOVED*** @return {string} Content language.
-***REMOVED***
+/**
+ * Returns language.
+ *
+ * @return {string} Content language.
+ */
 goog.spell.SpellCheck.prototype.getLanguage = function() {
   return this.language_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks spelling for a block of text.
-***REMOVED***
-***REMOVED*** @param {string} text Block of text to spell check.
-***REMOVED***
+/**
+ * Checks spelling for a block of text.
+ *
+ * @param {string} text Block of text to spell check.
+ */
 goog.spell.SpellCheck.prototype.checkBlock = function(text) {
   var words = text.split(goog.spell.SpellCheck.WORD_BOUNDARY_REGEX);
 
@@ -256,18 +256,18 @@ goog.spell.SpellCheck.prototype.checkBlock = function(text) {
   else if (this.unknownWords_.getCount() == 0) {
     this.dispatchEvent(goog.spell.SpellCheck.EventType.READY);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks spelling for a single word. Returns the status of the supplied word,
-***REMOVED*** or UNKNOWN if it's not cached. If it's not cached the word is added to a
-***REMOVED*** queue and checked with the verification implementation with a short delay.
-***REMOVED***
-***REMOVED*** @param {string} word Word to check spelling of.
-***REMOVED*** @return {goog.spell.SpellCheck.WordStatus} The status of the supplied word,
-***REMOVED***     or UNKNOWN if it's not cached.
-***REMOVED***
+/**
+ * Checks spelling for a single word. Returns the status of the supplied word,
+ * or UNKNOWN if it's not cached. If it's not cached the word is added to a
+ * queue and checked with the verification implementation with a short delay.
+ *
+ * @param {string} word Word to check spelling of.
+ * @return {goog.spell.SpellCheck.WordStatus} The status of the supplied word,
+ *     or UNKNOWN if it's not cached.
+ */
 goog.spell.SpellCheck.prototype.checkWord = function(word) {
   var status = this.checkWord_(word);
 
@@ -278,18 +278,18 @@ goog.spell.SpellCheck.prototype.checkWord = function(word) {
   }
 
   return status;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks spelling for a single word. Returns the status of the supplied word,
-***REMOVED*** or UNKNOWN if it's not cached.
-***REMOVED***
-***REMOVED*** @param {string} word Word to check spelling of.
-***REMOVED*** @return {goog.spell.SpellCheck.WordStatus} The status of the supplied word,
-***REMOVED***     or UNKNOWN if it's not cached.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks spelling for a single word. Returns the status of the supplied word,
+ * or UNKNOWN if it's not cached.
+ *
+ * @param {string} word Word to check spelling of.
+ * @return {goog.spell.SpellCheck.WordStatus} The status of the supplied word,
+ *     or UNKNOWN if it's not cached.
+ * @private
+ */
 goog.spell.SpellCheck.prototype.checkWord_ = function(word) {
   if (!word) {
     return goog.spell.SpellCheck.WordStatus.INVALID;
@@ -302,15 +302,15 @@ goog.spell.SpellCheck.prototype.checkWord_ = function(word) {
   }
 
   return cacheEntry[goog.spell.SpellCheck.CacheIndex.STATUS];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes pending words unless a lookup operation has already been queued or
-***REMOVED*** is in progress.
-***REMOVED***
-***REMOVED*** @throws {Error}
-***REMOVED***
+/**
+ * Processes pending words unless a lookup operation has already been queued or
+ * is in progress.
+ *
+ * @throws {Error}
+ */
 goog.spell.SpellCheck.prototype.processPending = function() {
   if (this.unknownWords_.getCount()) {
     if (!this.queueTimer_ && !this.lookupInProgress_) {
@@ -319,15 +319,15 @@ goog.spell.SpellCheck.prototype.processPending = function() {
   } else {
     this.dispatchEvent(goog.spell.SpellCheck.EventType.READY);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes pending words using the verification callback.
-***REMOVED***
-***REMOVED*** @throws {Error}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes pending words using the verification callback.
+ *
+ * @throws {Error}
+ * @private
+ */
 goog.spell.SpellCheck.prototype.processPending_ = function() {
   if (!this.lookupFunction_) {
     throw Error('No lookup function provided for spell checker.');
@@ -342,23 +342,23 @@ goog.spell.SpellCheck.prototype.processPending_ = function() {
   }
 
   this.queueTimer_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback for lookup function.
-***REMOVED***
-***REMOVED*** @param {Array.<Array>} data Data array. Each word is represented by an
-***REMOVED***     array containing the word, the status and optionally an array of
-***REMOVED***     suggestions. Passing null indicates that the operation failed.
-***REMOVED*** @private
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** obj.lookupCallback_([
-***REMOVED***   ['word', VALID],
-***REMOVED***   ['wrod', INVALID, ['word', 'wood', 'rod']]
-***REMOVED*** ]);
-***REMOVED***
+/**
+ * Callback for lookup function.
+ *
+ * @param {Array.<Array>} data Data array. Each word is represented by an
+ *     array containing the word, the status and optionally an array of
+ *     suggestions. Passing null indicates that the operation failed.
+ * @private
+ *
+ * Example:
+ * obj.lookupCallback_([
+ *   ['word', VALID],
+ *   ['wrod', INVALID, ['word', 'wood', 'rod']]
+ * ]);
+ */
 goog.spell.SpellCheck.prototype.lookupCallback_ = function(data) {
 
   // Lookup function failed; abort then dispatch error event.
@@ -387,34 +387,34 @@ goog.spell.SpellCheck.prototype.lookupCallback_ = function(data) {
     this.queueTimer_ = goog.Timer.callOnce(this.processPending_,
         goog.spell.SpellCheck.LOOKUP_DELAY_, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a words spelling status.
-***REMOVED***
-***REMOVED*** @param {string} word Word to set status for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @param {Array.<string>=} opt_suggestions Suggestions.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** obj.setWordStatus('word', VALID);
-***REMOVED*** obj.setWordStatus('wrod', INVALID, ['word', 'wood', 'rod']);.
-***REMOVED***
+/**
+ * Sets a words spelling status.
+ *
+ * @param {string} word Word to set status for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @param {Array.<string>=} opt_suggestions Suggestions.
+ *
+ * Example:
+ * obj.setWordStatus('word', VALID);
+ * obj.setWordStatus('wrod', INVALID, ['word', 'wood', 'rod']);.
+ */
 goog.spell.SpellCheck.prototype.setWordStatus =
     function(word, status, opt_suggestions) {
   this.setWordStatus_(word, status, opt_suggestions);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a words spelling status.
-***REMOVED***
-***REMOVED*** @param {string} word Word to set status for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @param {Array.<string>=} opt_suggestions Suggestions.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets a words spelling status.
+ *
+ * @param {string} word Word to set status for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @param {Array.<string>=} opt_suggestions Suggestions.
+ * @private
+ */
 goog.spell.SpellCheck.prototype.setWordStatus_ =
     function(word, status, opt_suggestions) {
   var suggestions = opt_suggestions || [];
@@ -423,15 +423,15 @@ goog.spell.SpellCheck.prototype.setWordStatus_ =
 
   this.dispatchEvent(
       new goog.spell.SpellCheck.WordChangedEvent(this, word, status));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns suggestions for the given word.
-***REMOVED***
-***REMOVED*** @param {string} word Word to get suggestions for.
-***REMOVED*** @return {Array.<string>} An array of suggestions for the given word.
-***REMOVED***
+/**
+ * Returns suggestions for the given word.
+ *
+ * @param {string} word Word to get suggestions for.
+ * @return {Array.<string>} An array of suggestions for the given word.
+ */
 goog.spell.SpellCheck.prototype.getSuggestions = function(word) {
   var cacheEntry = this.cache_[word];
 
@@ -443,35 +443,35 @@ goog.spell.SpellCheck.prototype.getSuggestions = function(word) {
   return cacheEntry[goog.spell.SpellCheck.CacheIndex.STATUS] ==
       goog.spell.SpellCheck.WordStatus.INVALID ?
       cacheEntry[goog.spell.SpellCheck.CacheIndex.SUGGESTIONS] : [];
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Object representing a word changed event. Fired when the status of a word
-***REMOVED*** changes.
-***REMOVED***
-***REMOVED*** @param {goog.spell.SpellCheck} target Spellcheck object initiating event.
-***REMOVED*** @param {string} word Word to set status for.
-***REMOVED*** @param {goog.spell.SpellCheck.WordStatus} status Status of word.
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Object representing a word changed event. Fired when the status of a word
+ * changes.
+ *
+ * @param {goog.spell.SpellCheck} target Spellcheck object initiating event.
+ * @param {string} word Word to set status for.
+ * @param {goog.spell.SpellCheck.WordStatus} status Status of word.
+ * @extends {goog.events.Event}
+ * @constructor
+ * @final
+ */
 goog.spell.SpellCheck.WordChangedEvent = function(target, word, status) {
   goog.events.Event.call(this, goog.spell.SpellCheck.EventType.WORD_CHANGED,
       target);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Word the status has changed for.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Word the status has changed for.
+   * @type {string}
+   */
   this.word = word;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** New status
-  ***REMOVED*** @type {goog.spell.SpellCheck.WordStatus}
- ***REMOVED*****REMOVED***
+  /**
+   * New status
+   * @type {goog.spell.SpellCheck.WordStatus}
+   */
   this.status = status;
-***REMOVED***
+};
 goog.inherits(goog.spell.SpellCheck.WordChangedEvent, goog.events.Event);

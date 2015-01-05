@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for working with selections in input boxes and text
-***REMOVED*** areas.
-***REMOVED***
-***REMOVED*** @see ../demos/dom_selection.html
-***REMOVED***
+/**
+ * @fileoverview Utilities for working with selections in input boxes and text
+ * areas.
+ *
+ * @see ../demos/dom_selection.html
+ */
 
 
 goog.provide('goog.dom.selection');
@@ -26,12 +26,12 @@ goog.require('goog.string');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Sets the place where the selection should start inside a textarea or a text
-***REMOVED*** input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @param {number} pos The position to set the start of the selection at.
-***REMOVED***
+/**
+ * Sets the place where the selection should start inside a textarea or a text
+ * input
+ * @param {Element} textfield A textarea or text input.
+ * @param {number} pos The position to set the start of the selection at.
+ */
 goog.dom.selection.setStart = function(textfield, pos) {
   if (goog.dom.selection.useSelectionProperties_(textfield)) {
     textfield.selectionStart = pos;
@@ -49,42 +49,42 @@ goog.dom.selection.setStart = function(textfield, pos) {
       range.select();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the place where the selection starts inside a textarea or a text
-***REMOVED*** input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @return {number} The position where the selection starts or 0 if it was
-***REMOVED***     unable to find the position or no selection exists. Note that we can't
-***REMOVED***     reliably tell the difference between an element that has no selection and
-***REMOVED***     one where it starts at 0.
-***REMOVED***
+/**
+ * Return the place where the selection starts inside a textarea or a text
+ * input
+ * @param {Element} textfield A textarea or text input.
+ * @return {number} The position where the selection starts or 0 if it was
+ *     unable to find the position or no selection exists. Note that we can't
+ *     reliably tell the difference between an element that has no selection and
+ *     one where it starts at 0.
+ */
 goog.dom.selection.getStart = function(textfield) {
   return goog.dom.selection.getEndPoints_(textfield, true)[0];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the start and end points of the selection within a textarea in IE.
-***REMOVED*** IE treats newline characters as \r\n characters, and we need to check for
-***REMOVED*** these characters at the edge of our selection, to ensure that we return the
-***REMOVED*** right cursor position.
-***REMOVED*** @param {TextRange} range Complete range object, e.g., "Hello\r\n".
-***REMOVED*** @param {TextRange} selRange Selected range object.
-***REMOVED*** @param {boolean} getOnlyStart Value indicating if only start
-***REMOVED***     cursor position is to be returned. In IE, obtaining the end position
-***REMOVED***     involves extra work, hence we have this parameter for calls which need
-***REMOVED***     only start position.
-***REMOVED*** @return {!Array.<number>} An array with the start and end positions where the
-***REMOVED***     selection starts and ends or [0,0] if it was unable to find the
-***REMOVED***     positions or no selection exists. Note that we can't reliably tell the
-***REMOVED***     difference between an element that has no selection and one where
-***REMOVED***     it starts and ends at 0. If getOnlyStart was true, we return
-***REMOVED***     -1 as end offset.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the start and end points of the selection within a textarea in IE.
+ * IE treats newline characters as \r\n characters, and we need to check for
+ * these characters at the edge of our selection, to ensure that we return the
+ * right cursor position.
+ * @param {TextRange} range Complete range object, e.g., "Hello\r\n".
+ * @param {TextRange} selRange Selected range object.
+ * @param {boolean} getOnlyStart Value indicating if only start
+ *     cursor position is to be returned. In IE, obtaining the end position
+ *     involves extra work, hence we have this parameter for calls which need
+ *     only start position.
+ * @return {!Array.<number>} An array with the start and end positions where the
+ *     selection starts and ends or [0,0] if it was unable to find the
+ *     positions or no selection exists. Note that we can't reliably tell the
+ *     difference between an element that has no selection and one where
+ *     it starts and ends at 0. If getOnlyStart was true, we return
+ *     -1 as end offset.
+ * @private
+ */
 goog.dom.selection.getEndPointsTextareaIe_ = function(
     range, selRange, getOnlyStart) {
   // Create a duplicate of the selected range object to perform our actions
@@ -161,40 +161,40 @@ goog.dom.selection.getEndPointsTextareaIe_ = function(
   return [
     untrimmedBeforeSelectionText.length,
     untrimmedBeforeSelectionText.length + untrimmedSelectionText.length];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the start and end points of the selection inside a textarea or a
-***REMOVED*** text input.
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @return {!Array.<number>} An array with the start and end positions where the
-***REMOVED***     selection starts and ends or [0,0] if it was unable to find the
-***REMOVED***     positions or no selection exists. Note that we can't reliably tell the
-***REMOVED***     difference between an element that has no selection and one where
-***REMOVED***     it starts and ends at 0.
-***REMOVED***
+/**
+ * Returns the start and end points of the selection inside a textarea or a
+ * text input.
+ * @param {Element} textfield A textarea or text input.
+ * @return {!Array.<number>} An array with the start and end positions where the
+ *     selection starts and ends or [0,0] if it was unable to find the
+ *     positions or no selection exists. Note that we can't reliably tell the
+ *     difference between an element that has no selection and one where
+ *     it starts and ends at 0.
+ */
 goog.dom.selection.getEndPoints = function(textfield) {
   return goog.dom.selection.getEndPoints_(textfield, false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the start and end points of the selection inside a textarea or a
-***REMOVED*** text input.
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @param {boolean} getOnlyStart Value indicating if only start
-***REMOVED***     cursor position is to be returned. In IE, obtaining the end position
-***REMOVED***     involves extra work, hence we have this parameter. In FF, there is not
-***REMOVED***     much extra effort involved.
-***REMOVED*** @return {!Array.<number>} An array with the start and end positions where the
-***REMOVED***     selection starts and ends or [0,0] if it was unable to find the
-***REMOVED***     positions or no selection exists. Note that we can't reliably tell the
-***REMOVED***     difference between an element that has no selection and one where
-***REMOVED***     it starts and ends at 0. If getOnlyStart was true, we return
-***REMOVED***     -1 as end offset.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the start and end points of the selection inside a textarea or a
+ * text input.
+ * @param {Element} textfield A textarea or text input.
+ * @param {boolean} getOnlyStart Value indicating if only start
+ *     cursor position is to be returned. In IE, obtaining the end position
+ *     involves extra work, hence we have this parameter. In FF, there is not
+ *     much extra effort involved.
+ * @return {!Array.<number>} An array with the start and end positions where the
+ *     selection starts and ends or [0,0] if it was unable to find the
+ *     positions or no selection exists. Note that we can't reliably tell the
+ *     difference between an element that has no selection and one where
+ *     it starts and ends at 0. If getOnlyStart was true, we return
+ *     -1 as end offset.
+ * @private
+ */
 goog.dom.selection.getEndPoints_ = function(textfield, getOnlyStart) {
   var startPos = 0;
   var endPos = 0;
@@ -221,15 +221,15 @@ goog.dom.selection.getEndPoints_ = function(textfield, getOnlyStart) {
     }
   }
   return [startPos, endPos];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the place where the selection should end inside a text area or a text
-***REMOVED*** input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @param {number} pos The position to end the selection at.
-***REMOVED***
+/**
+ * Sets the place where the selection should end inside a text area or a text
+ * input
+ * @param {Element} textfield A textarea or text input.
+ * @param {number} pos The position to end the selection at.
+ */
 goog.dom.selection.setEnd = function(textfield, pos) {
   if (goog.dom.selection.useSelectionProperties_(textfield)) {
     textfield.selectionEnd = pos;
@@ -250,25 +250,25 @@ goog.dom.selection.setEnd = function(textfield, pos) {
       selectionRange.select();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the place where the selection ends inside a textarea or a text input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @return {number} The position where the selection ends or 0 if it was
-***REMOVED***     unable to find the position or no selection exists.
-***REMOVED***
+/**
+ * Returns the place where the selection ends inside a textarea or a text input
+ * @param {Element} textfield A textarea or text input.
+ * @return {number} The position where the selection ends or 0 if it was
+ *     unable to find the position or no selection exists.
+ */
 goog.dom.selection.getEnd = function(textfield) {
   return goog.dom.selection.getEndPoints_(textfield, false)[1];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the cursor position within a textfield.
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @param {number} pos The position within the text field.
-***REMOVED***
+/**
+ * Sets the cursor position within a textfield.
+ * @param {Element} textfield A textarea or text input.
+ * @param {number} pos The position within the text field.
+ */
 goog.dom.selection.setCursorPosition = function(textfield, pos) {
   if (goog.dom.selection.useSelectionProperties_(textfield)) {
     // Mozilla directly supports this
@@ -286,14 +286,14 @@ goog.dom.selection.setCursorPosition = function(textfield, pos) {
     sel.move('character', pos);
     sel.select();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the selected text inside a textarea or a text input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @param {string} text The text to change the selection to.
-***REMOVED***
+/**
+ * Sets the selected text inside a textarea or a text input
+ * @param {Element} textfield A textarea or text input.
+ * @param {string} text The text to change the selection to.
+ */
 goog.dom.selection.setText = function(textfield, text) {
   if (goog.dom.selection.useSelectionProperties_(textfield)) {
     var value = textfield.value;
@@ -322,14 +322,14 @@ goog.dom.selection.setText = function(textfield, text) {
   } else {
     throw Error('Cannot set the selection end');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the selected text inside a textarea or a text input
-***REMOVED*** @param {Element} textfield A textarea or text input.
-***REMOVED*** @return {string} The selected text.
-***REMOVED***
+/**
+ * Returns the selected text inside a textarea or a text input
+ * @param {Element} textfield A textarea or text input.
+ * @return {string} The selected text.
+ */
 goog.dom.selection.getText = function(textfield) {
   if (goog.dom.selection.useSelectionProperties_(textfield)) {
     var s = textfield.value;
@@ -350,18 +350,18 @@ goog.dom.selection.getText = function(textfield) {
   }
 
   throw Error('Cannot get the selection text');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the selected text within a textarea in IE.
-***REMOVED*** IE treats newline characters as \r\n characters, and we need to check for
-***REMOVED*** these characters at the edge of our selection, to ensure that we return the
-***REMOVED*** right string.
-***REMOVED*** @param {TextRange} selRange Selected range object.
-***REMOVED*** @return {string} Selected text in the textarea.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the selected text within a textarea in IE.
+ * IE treats newline characters as \r\n characters, and we need to check for
+ * these characters at the edge of our selection, to ensure that we return the
+ * right string.
+ * @param {TextRange} selRange Selected range object.
+ * @return {string} Selected text in the textarea.
+ * @private
+ */
 goog.dom.selection.getSelectionRangeText_ = function(selRange) {
   // Create a duplicate of the selected range object to perform our actions
   // against. Suppose the text in the textarea is "Hello\r\nWorld" and the
@@ -400,17 +400,17 @@ goog.dom.selection.getSelectionRangeText_ = function(selRange) {
     }
   }
   return untrimmedSelectionText;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for returning the range for an object as well as the
-***REMOVED*** selection range
-***REMOVED*** @private
-***REMOVED*** @param {Element} el The element to get the range for.
-***REMOVED*** @return {!Array.<TextRange>} Range of object and selection range in two
-***REMOVED***     element array.
-***REMOVED***
+/**
+ * Helper function for returning the range for an object as well as the
+ * selection range
+ * @private
+ * @param {Element} el The element to get the range for.
+ * @return {!Array.<TextRange>} Range of object and selection range in two
+ *     element array.
+ */
 goog.dom.selection.getRangeIe_ = function(el) {
   var doc = el.ownerDocument || el.document;
 
@@ -426,19 +426,19 @@ goog.dom.selection.getRangeIe_ = function(el) {
   }
 
   return [range, selectionRange];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for canonicalizing a position inside a textfield in IE.
-***REMOVED*** Deals with the issue that \r\n counts as 2 characters, but
-***REMOVED*** move('character', n) passes over both characters in one move.
-***REMOVED*** @private
-***REMOVED*** @param {Element} textfield The text element.
-***REMOVED*** @param {number} pos The position desired in that element.
-***REMOVED*** @return {number} The canonicalized position that will work properly with
-***REMOVED***     move('character', pos).
-***REMOVED***
+/**
+ * Helper function for canonicalizing a position inside a textfield in IE.
+ * Deals with the issue that \r\n counts as 2 characters, but
+ * move('character', n) passes over both characters in one move.
+ * @private
+ * @param {Element} textfield The text element.
+ * @param {number} pos The position desired in that element.
+ * @return {number} The canonicalized position that will work properly with
+ *     move('character', pos).
+ */
 goog.dom.selection.canonicalizePositionIe_ = function(textfield, pos) {
   if (textfield.type == 'textarea') {
     // We do this only for textarea because it is the only one which can
@@ -447,18 +447,18 @@ goog.dom.selection.canonicalizePositionIe_ = function(textfield, pos) {
     pos = goog.string.canonicalizeNewlines(value).length;
   }
   return pos;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to determine whether it's okay to use
-***REMOVED*** selectionStart/selectionEnd.
-***REMOVED***
-***REMOVED*** @param {Element} el The element to check for.
-***REMOVED*** @return {boolean} Whether it's okay to use the selectionStart and
-***REMOVED***     selectionEnd properties on {@code el}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function to determine whether it's okay to use
+ * selectionStart/selectionEnd.
+ *
+ * @param {Element} el The element to check for.
+ * @return {boolean} Whether it's okay to use the selectionStart and
+ *     selectionEnd properties on {@code el}.
+ * @private
+ */
 goog.dom.selection.useSelectionProperties_ = function(el) {
   try {
     return typeof el.selectionStart == 'number';
@@ -467,4 +467,4 @@ goog.dom.selection.useSelectionProperties_ = function(el) {
     // on an element with display: none.
     return false;
   }
-***REMOVED***
+};

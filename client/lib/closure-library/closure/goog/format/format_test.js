@@ -39,20 +39,20 @@ function testFormatFileSize() {
   assertEquals('600', fileSize(600));
 
   assertEquals('1K', fileSize(1024));
-  assertEquals('2K', fileSize(2***REMOVED*** 1024));
-  assertEquals('5K', fileSize(5***REMOVED*** 1024));
-  assertEquals('5.123K', fileSize(5.12345***REMOVED*** 1024, 3));
-  assertEquals('5.68K', fileSize(5.678***REMOVED*** 1024, 2));
+  assertEquals('2K', fileSize(2 * 1024));
+  assertEquals('5K', fileSize(5 * 1024));
+  assertEquals('5.123K', fileSize(5.12345 * 1024, 3));
+  assertEquals('5.68K', fileSize(5.678 * 1024, 2));
 
-  assertEquals('1M', fileSize(1024***REMOVED*** 1024));
-  assertEquals('1.5M', fileSize(1.5***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('2M', fileSize(1.5***REMOVED*** 1024***REMOVED*** 1024, 0));
-  assertEquals('1.5M', fileSize(1.51***REMOVED*** 1024***REMOVED*** 1024, 1));
-  assertEquals('1.56M', fileSize(1.56***REMOVED*** 1024***REMOVED*** 1024, 2));
+  assertEquals('1M', fileSize(1024 * 1024));
+  assertEquals('1.5M', fileSize(1.5 * 1024 * 1024));
+  assertEquals('2M', fileSize(1.5 * 1024 * 1024, 0));
+  assertEquals('1.5M', fileSize(1.51 * 1024 * 1024, 1));
+  assertEquals('1.56M', fileSize(1.56 * 1024 * 1024, 2));
 
-  assertEquals('1G', fileSize(1024***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('6G', fileSize(6***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('12.06T', fileSize(12345.6789***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
+  assertEquals('1G', fileSize(1024 * 1024 * 1024));
+  assertEquals('6G', fileSize(6 * 1024 * 1024 * 1024));
+  assertEquals('12.06T', fileSize(12345.6789 * 1024 * 1024 * 1024));
 }
 
 function testIsConvertableScaledNumber() {
@@ -83,20 +83,20 @@ function testNumericValueToString() {
   assertEquals('600', numericValueToString(600));
 
   assertEquals('1.02K', numericValueToString(1024));
-  assertEquals('2.05K', numericValueToString(2***REMOVED*** 1024));
-  assertEquals('5.12K', numericValueToString(5***REMOVED*** 1024));
-  assertEquals('5.246K', numericValueToString(5.12345***REMOVED*** 1024, 3));
-  assertEquals('5.81K', numericValueToString(5.678***REMOVED*** 1024, 2));
+  assertEquals('2.05K', numericValueToString(2 * 1024));
+  assertEquals('5.12K', numericValueToString(5 * 1024));
+  assertEquals('5.246K', numericValueToString(5.12345 * 1024, 3));
+  assertEquals('5.81K', numericValueToString(5.678 * 1024, 2));
 
-  assertEquals('1.05M', numericValueToString(1024***REMOVED*** 1024));
-  assertEquals('1.57M', numericValueToString(1.5***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('2M', numericValueToString(1.5***REMOVED*** 1024***REMOVED*** 1024, 0));
-  assertEquals('1.6M', numericValueToString(1.51***REMOVED*** 1024***REMOVED*** 1024, 1));
-  assertEquals('1.64M', numericValueToString(1.56***REMOVED*** 1024***REMOVED*** 1024, 2));
+  assertEquals('1.05M', numericValueToString(1024 * 1024));
+  assertEquals('1.57M', numericValueToString(1.5 * 1024 * 1024));
+  assertEquals('2M', numericValueToString(1.5 * 1024 * 1024, 0));
+  assertEquals('1.6M', numericValueToString(1.51 * 1024 * 1024, 1));
+  assertEquals('1.64M', numericValueToString(1.56 * 1024 * 1024, 2));
 
-  assertEquals('1.07G', numericValueToString(1024***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('6.44G', numericValueToString(6***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('13.26T', numericValueToString(12345.6789***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
+  assertEquals('1.07G', numericValueToString(1024 * 1024 * 1024));
+  assertEquals('6.44G', numericValueToString(6 * 1024 * 1024 * 1024));
+  assertEquals('13.26T', numericValueToString(12345.6789 * 1024 * 1024 * 1024));
 
   assertEquals('23.4m', numericValueToString(0.0234));
   assertEquals('1.23u', numericValueToString(0.00000123));
@@ -115,13 +115,13 @@ function testFormatNumBytes() {
   assertEquals('45', numBytesToString(45));
   assertEquals('454', numBytesToString(454));
 
-  assertEquals('5KB', numBytesToString(5***REMOVED*** 1024));
-  assertEquals('1MB', numBytesToString(1024***REMOVED*** 1024));
-  assertEquals('6GB', numBytesToString(6***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
-  assertEquals('12.06TB', numBytesToString(12345.6789***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024));
+  assertEquals('5KB', numBytesToString(5 * 1024));
+  assertEquals('1MB', numBytesToString(1024 * 1024));
+  assertEquals('6GB', numBytesToString(6 * 1024 * 1024 * 1024));
+  assertEquals('12.06TB', numBytesToString(12345.6789 * 1024 * 1024 * 1024));
 
   assertEquals('454', numBytesToString(454, 2, true, true));
-  assertEquals('5 KB', numBytesToString(5***REMOVED*** 1024, 2, true, true));
+  assertEquals('5 KB', numBytesToString(5 * 1024, 2, true, true));
 }
 
 function testStringToNumeric() {
@@ -135,9 +135,9 @@ function testStringToNumeric() {
   assertEquals(-45, stringToNumericValue('-45'));
   assertEquals(454, stringToNumericValue('454'));
 
-  assertEquals(5***REMOVED*** 1024, stringToNumericValue('5KB'));
-  assertEquals(1024***REMOVED*** 1024, stringToNumericValue('1MB'));
-  assertEquals(6***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024, stringToNumericValue('6GB'));
+  assertEquals(5 * 1024, stringToNumericValue('5KB'));
+  assertEquals(1024 * 1024, stringToNumericValue('1MB'));
+  assertEquals(6 * 1024 * 1024 * 1024, stringToNumericValue('6GB'));
   assertEquals(13260110230978.56, stringToNumericValue('12.06TB'));
 
   assertEquals(5010, stringToNumericValue('5.01K'));
@@ -152,9 +152,9 @@ function testStringToNumBytes() {
   assertEquals(45, stringToNumBytes('45'));
   assertEquals(454, stringToNumBytes('454'));
 
-  assertEquals(5***REMOVED*** 1024, stringToNumBytes('5K'));
-  assertEquals(1024***REMOVED*** 1024, stringToNumBytes('1M'));
-  assertEquals(6***REMOVED*** 1024***REMOVED*** 1024***REMOVED*** 1024, stringToNumBytes('6G'));
+  assertEquals(5 * 1024, stringToNumBytes('5K'));
+  assertEquals(1024 * 1024, stringToNumBytes('1M'));
+  assertEquals(6 * 1024 * 1024 * 1024, stringToNumBytes('6G'));
   assertEquals(13260110230978.56, stringToNumBytes('12.06T'));
 }
 

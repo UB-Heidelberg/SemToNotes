@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A toolbar select control.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @author ssaviano@google.com (Steven Saviano)
-***REMOVED***
+/**
+ * @fileoverview A toolbar select control.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @author ssaviano@google.com (Steven Saviano)
+ */
 
 goog.provide('goog.ui.ToolbarSelect');
 
@@ -27,25 +27,25 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** A select control for a toolbar.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} caption Default caption or existing DOM
-***REMOVED***     structure to display as the button's caption when nothing is selected.
-***REMOVED*** @param {goog.ui.Menu=} opt_menu Menu containing selection options.
-***REMOVED*** @param {goog.ui.MenuButtonRenderer=} opt_renderer Renderer used to
-***REMOVED***     render or decorate the control; defaults to
-***REMOVED***     {@link goog.ui.ToolbarMenuButtonRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Select}
-***REMOVED***
+/**
+ * A select control for a toolbar.
+ *
+ * @param {goog.ui.ControlContent} caption Default caption or existing DOM
+ *     structure to display as the button's caption when nothing is selected.
+ * @param {goog.ui.Menu=} opt_menu Menu containing selection options.
+ * @param {goog.ui.MenuButtonRenderer=} opt_renderer Renderer used to
+ *     render or decorate the control; defaults to
+ *     {@link goog.ui.ToolbarMenuButtonRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Select}
+ */
 goog.ui.ToolbarSelect = function(
     caption, opt_menu, opt_renderer, opt_domHelper) {
   goog.ui.Select.call(this, caption, opt_menu, opt_renderer ||
       goog.ui.ToolbarMenuButtonRenderer.getInstance(), opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarSelect, goog.ui.Select);
 
 

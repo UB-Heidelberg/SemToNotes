@@ -1,7 +1,7 @@
-/*global env: true***REMOVED***
-***REMOVED***
-***REMOVED*** @module jsdoc/util/templateHelper
-***REMOVED***
+/*global env: true */
+/**
+ * @module jsdoc/util/templateHelper
+ */
 'use strict';
 
 var dictionary = require('jsdoc/tag/dictionary');
@@ -9,19 +9,19 @@ var util = require('util');
 
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
-var files = {***REMOVED***
+var files = {};
 
 // each container gets its own html file
 var containers = ['class', 'module', 'external', 'namespace', 'mixin'];
 
 var tutorials;
 
-***REMOVED*** Sets tutorials map.
+/** Sets tutorials map.
     @param {jsdoc.tutorial.Tutorial} root - Root tutorial node.
-***REMOVED***
+ */
 exports.setTutorials = function(root) {
     tutorials = root;
-***REMOVED***
+};
 
 exports.globalName = 'global';
 exports.fileExtension = '.html';
@@ -69,19 +69,19 @@ function cleanseFilename(str) {
 var htmlsafe = exports.htmlsafe = function(str) {
     return str.replace(/&/g, '&amp;')
         .replace(/</g, '&lt;');
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Convert a string to a unique filename, including an extension.
-***REMOVED***
-***REMOVED*** Filenames are cached to ensure that they are used only once. For example, if the same string is
-***REMOVED*** passed in twice, two different filenames will be returned.
-***REMOVED***
-***REMOVED*** Also, filenames are not considered unique if they are capitalized differently but are otherwise
-***REMOVED*** identical.
-***REMOVED*** @param {string} str The string to convert.
-***REMOVED*** @return {string} The filename to use for the string.
-***REMOVED***
+/**
+ * Convert a string to a unique filename, including an extension.
+ *
+ * Filenames are cached to ensure that they are used only once. For example, if the same string is
+ * passed in twice, two different filenames will be returned.
+ *
+ * Also, filenames are not considered unique if they are capitalized differently but are otherwise
+ * identical.
+ * @param {string} str The string to convert.
+ * @return {string} The filename to use for the string.
+ */
 var getUniqueFilename = exports.getUniqueFilename = function(str) {
     // allow for namespace prefix
     var basename = cleanseFilename(str);
@@ -100,18 +100,18 @@ var getUniqueFilename = exports.getUniqueFilename = function(str) {
     basename = basename.length ? basename : '_';
 
     return makeFilenameUnique(basename, str) + exports.fileExtension;
-***REMOVED***
+};
 
 // two-way lookup
 var linkMap = {
     longnameToUrl: {},
     urlToLongname: {}
-***REMOVED***
+};
 
 var tutorialLinkMap = {
     nameToUrl: {},
     urlToName: {}
-***REMOVED***
+};
 
 var longnameToUrl = exports.longnameToUrl = linkMap.longnameToUrl;
 
@@ -141,30 +141,30 @@ function hasUrlPrefix(text) {
     return (/^(http|ftp)s?:\/\//).test(text);
 }
 
-***REMOVED***
-***REMOVED*** Build an HTML link to the symbol with the specified longname. If the longname is not
-***REMOVED*** associated with a URL, this method simply returns the link text, if provided, or the longname.
-***REMOVED***
-***REMOVED*** The `longname` parameter can also contain a URL rather than a symbol's longname.
-***REMOVED***
-***REMOVED*** This method supports type applications that can contain one or more types, such as
-***REMOVED*** `Array.<MyClass>` or `Array.<(MyClass|YourClass)>`. In these examples, the method attempts to
-***REMOVED*** replace `Array`, `MyClass`, and `YourClass` with links to the appropriate types. The link text
-***REMOVED*** is ignored for type applications.
-***REMOVED***
-***REMOVED*** @param {string} longname - The longname (or URL) that is the target of the link.
-***REMOVED*** @param {string=} linkText - The text to display for the link, or `longname` if no text is
-***REMOVED*** provided.
-***REMOVED*** @param {Object} options - Options for building the link.
-***REMOVED*** @param {string=} options.cssClass - The CSS class (or classes) to include in the link's `<a>`
-***REMOVED*** tag.
-***REMOVED*** @param {string=} options.fragmentId - The fragment identifier (for example, `name` in
-***REMOVED*** `foo.html#name`) to append to the link target.
-***REMOVED*** @param {string=} options.linkMap - The link map in which to look up the longname.
-***REMOVED*** @param {boolean=} options.monospace - Indicates whether to display the link text in a monospace
-***REMOVED*** font.
-***REMOVED*** @return {string} The HTML link, or the link text if the link is not available.
-***REMOVED***
+/**
+ * Build an HTML link to the symbol with the specified longname. If the longname is not
+ * associated with a URL, this method simply returns the link text, if provided, or the longname.
+ *
+ * The `longname` parameter can also contain a URL rather than a symbol's longname.
+ *
+ * This method supports type applications that can contain one or more types, such as
+ * `Array.<MyClass>` or `Array.<(MyClass|YourClass)>`. In these examples, the method attempts to
+ * replace `Array`, `MyClass`, and `YourClass` with links to the appropriate types. The link text
+ * is ignored for type applications.
+ *
+ * @param {string} longname - The longname (or URL) that is the target of the link.
+ * @param {string=} linkText - The text to display for the link, or `longname` if no text is
+ * provided.
+ * @param {Object} options - Options for building the link.
+ * @param {string=} options.cssClass - The CSS class (or classes) to include in the link's `<a>`
+ * tag.
+ * @param {string=} options.fragmentId - The fragment identifier (for example, `name` in
+ * `foo.html#name`) to append to the link target.
+ * @param {string=} options.linkMap - The link map in which to look up the longname.
+ * @param {boolean=} options.monospace - Indicates whether to display the link text in a monospace
+ * font.
+ * @return {string} The HTML link, or the link text if the link is not available.
+ */
 function buildLink(longname, linkText, options) {
     var catharsis = require('catharsis');
 
@@ -204,32 +204,32 @@ function buildLink(longname, linkText, options) {
     }
 }
 
-***REMOVED***
-***REMOVED*** Retrieve an HTML link to the symbol with the specified longname. If the longname is not
-***REMOVED*** associated with a URL, this method simply returns the link text, if provided, or the longname.
-***REMOVED***
-***REMOVED*** The `longname` parameter can also contain a URL rather than a symbol's longname.
-***REMOVED***
-***REMOVED*** This method supports type applications that can contain one or more types, such as
-***REMOVED*** `Array.<MyClass>` or `Array.<(MyClass|YourClass)>`. In these examples, the method attempts to
-***REMOVED*** replace `Array`, `MyClass`, and `YourClass` with links to the appropriate types. The link text
-***REMOVED*** is ignored for type applications.
-***REMOVED***
-***REMOVED*** @param {string} longname - The longname (or URL) that is the target of the link.
-***REMOVED*** @param {string=} linkText - The text to display for the link, or `longname` if no text is
-***REMOVED*** provided.
-***REMOVED*** @param {string=} cssClass - The CSS class (or classes) to include in the link's `<a>` tag.
-***REMOVED*** @param {string=} fragmentId - The fragment identifier (for example, `name` in `foo.html#name`) to
-***REMOVED*** append to the link target.
-***REMOVED*** @return {string} The HTML link, or a plain-text string if the link is not available.
-***REMOVED***
+/**
+ * Retrieve an HTML link to the symbol with the specified longname. If the longname is not
+ * associated with a URL, this method simply returns the link text, if provided, or the longname.
+ *
+ * The `longname` parameter can also contain a URL rather than a symbol's longname.
+ *
+ * This method supports type applications that can contain one or more types, such as
+ * `Array.<MyClass>` or `Array.<(MyClass|YourClass)>`. In these examples, the method attempts to
+ * replace `Array`, `MyClass`, and `YourClass` with links to the appropriate types. The link text
+ * is ignored for type applications.
+ *
+ * @param {string} longname - The longname (or URL) that is the target of the link.
+ * @param {string=} linkText - The text to display for the link, or `longname` if no text is
+ * provided.
+ * @param {string=} cssClass - The CSS class (or classes) to include in the link's `<a>` tag.
+ * @param {string=} fragmentId - The fragment identifier (for example, `name` in `foo.html#name`) to
+ * append to the link target.
+ * @return {string} The HTML link, or a plain-text string if the link is not available.
+ */
 var linkto = exports.linkto = function(longname, linkText, cssClass, fragmentId) {
     return buildLink(longname, linkText, {
         cssClass: cssClass,
         fragmentId: fragmentId,
         linkMap: longnameToUrl
     });
-***REMOVED***
+};
 
 function useMonospace(tag, text) {
     var cleverLinks;
@@ -278,7 +278,7 @@ function splitLinkText(text) {
     return {
         linkText: linkText,
         target: target || text
-   ***REMOVED*****REMOVED***
+    };
 }
 
 var tutorialToUrl = exports.tutorialToUrl = function(tutorial) {
@@ -298,23 +298,23 @@ var tutorialToUrl = exports.tutorialToUrl = function(tutorial) {
     }
 
     return tutorialLinkMap.nameToUrl[node.name];
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve a link to a tutorial, or the name of the tutorial if the tutorial is missing. If the
-***REMOVED*** `missingOpts` parameter is supplied, the names of missing tutorials will be prefixed by the
-***REMOVED*** specified text and wrapped in the specified HTML tag and CSS class.
-***REMOVED***
-***REMOVED*** @todo Deprecate missingOpts once we have a better error-reporting mechanism.
-***REMOVED*** @param {string} tutorial The name of the tutorial.
-***REMOVED*** @param {string} content The link text to use.
-***REMOVED*** @param {object} [missingOpts] Options for displaying the name of a missing tutorial.
-***REMOVED*** @param {string} missingOpts.classname The CSS class to wrap around the tutorial name.
-***REMOVED*** @param {string} missingOpts.prefix The prefix to add to the tutorial name.
-***REMOVED*** @param {string} missingOpts.tag The tag to wrap around the tutorial name.
-***REMOVED*** @return {string} An HTML link to the tutorial, or the name of the tutorial with the specified
-***REMOVED*** options.
-***REMOVED***
+/**
+ * Retrieve a link to a tutorial, or the name of the tutorial if the tutorial is missing. If the
+ * `missingOpts` parameter is supplied, the names of missing tutorials will be prefixed by the
+ * specified text and wrapped in the specified HTML tag and CSS class.
+ *
+ * @todo Deprecate missingOpts once we have a better error-reporting mechanism.
+ * @param {string} tutorial The name of the tutorial.
+ * @param {string} content The link text to use.
+ * @param {object} [missingOpts] Options for displaying the name of a missing tutorial.
+ * @param {string} missingOpts.classname The CSS class to wrap around the tutorial name.
+ * @param {string} missingOpts.prefix The prefix to add to the tutorial name.
+ * @param {string} missingOpts.tag The tag to wrap around the tutorial name.
+ * @return {string} An HTML link to the tutorial, or the name of the tutorial with the specified
+ * options.
+ */
 var toTutorial = exports.toTutorial = function(tutorial, content, missingOpts) {
     if (!tutorial) {
         require('jsdoc/util/logger').error( new Error('Missing required parameter: tutorial') );
@@ -324,7 +324,7 @@ var toTutorial = exports.toTutorial = function(tutorial, content, missingOpts) {
     var node = tutorials.getByName(tutorial);
     // no such tutorial
     if (!node) {
-        missingOpts = missingOpts || {***REMOVED***
+        missingOpts = missingOpts || {};
         var tag = missingOpts.tag;
         var classname = missingOpts.classname;
 
@@ -342,9 +342,9 @@ var toTutorial = exports.toTutorial = function(tutorial, content, missingOpts) {
     content = content || node.title;
 
     return '<a href="' + tutorialToUrl(tutorial) + '">' + content + '</a>';
-***REMOVED***
+};
 
-***REMOVED*** Find symbol {@link ...} and {@tutorial ...} strings in text and turn into html links***REMOVED***
+/** Find symbol {@link ...} and {@tutorial ...} strings in text and turn into html links */
 exports.resolveLinks = function(str) {
     var replaceInlineTags = require('jsdoc/tag/inline').replaceInlineTags;
 
@@ -368,7 +368,7 @@ exports.resolveLinks = function(str) {
         return {
             leadingText: leadingText,
             string: string
-       ***REMOVED*****REMOVED***
+        };
     }
 
     function processLink(string, tagInfo) {
@@ -403,12 +403,12 @@ exports.resolveLinks = function(str) {
         linkcode: processLink,
         linkplain: processLink,
         tutorial: processTutorial
-   ***REMOVED*****REMOVED***
+    };
 
     return replaceInlineTags(str, replacers).newString;
-***REMOVED***
+};
 
-***REMOVED*** Convert tag text like "Jane Doe <jdoe@example.org>" into a mailto link***REMOVED***
+/** Convert tag text like "Jane Doe <jdoe@example.org>" into a mailto link */
 exports.resolveAuthorLinks = function(str) {
     var author;
     var matches = str.match(/^\s?([\s\S]+)\b\s+<(\S+@\S+)>\s?$/);
@@ -420,29 +420,29 @@ exports.resolveAuthorLinks = function(str) {
     }
 
     return author;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Find items in a TaffyDB database that match the specified key-value pairs.
-***REMOVED*** @param {TAFFY} data The TaffyDB database to search.
-***REMOVED*** @param {object|function} spec Key-value pairs to match against (for example,
-***REMOVED*** `{ longname: 'foo' }`), or a function that returns `true` if a value matches or `false` if it
-***REMOVED*** does not match.
-***REMOVED*** @return {array<object>} The matching items.
-***REMOVED***
+/**
+ * Find items in a TaffyDB database that match the specified key-value pairs.
+ * @param {TAFFY} data The TaffyDB database to search.
+ * @param {object|function} spec Key-value pairs to match against (for example,
+ * `{ longname: 'foo' }`), or a function that returns `true` if a value matches or `false` if it
+ * does not match.
+ * @return {array<object>} The matching items.
+ */
 var find = exports.find = function(data, spec) {
     return data(spec).get();
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Check whether a symbol is a function and is the only symbol exported by a module (as in
-***REMOVED*** `module.exports = function() {***REMOVED***`).
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {module:jsdoc/doclet.Doclet} doclet - The doclet for the symbol.
-***REMOVED*** @return {boolean} `true` if the symbol is a function and is the only symbol exported by a module;
-***REMOVED*** otherwise, `false`.
-***REMOVED***
+/**
+ * Check whether a symbol is a function and is the only symbol exported by a module (as in
+ * `module.exports = function() {};`).
+ *
+ * @private
+ * @param {module:jsdoc/doclet.Doclet} doclet - The doclet for the symbol.
+ * @return {boolean} `true` if the symbol is a function and is the only symbol exported by a module;
+ * otherwise, `false`.
+ */
 function isModuleFunction(doclet) {
     var MODULE_PREFIX = require('jsdoc/name').MODULE_PREFIX;
 
@@ -450,20 +450,20 @@ function isModuleFunction(doclet) {
         doclet.longname.indexOf(MODULE_PREFIX) === 0 && doclet.kind === 'function';
 }
 
-***REMOVED***
-***REMOVED*** Retrieve all of the following types of members from a set of doclets:
-***REMOVED***
-***REMOVED*** + Classes
-***REMOVED*** + Externals
-***REMOVED*** + Globals
-***REMOVED*** + Mixins
-***REMOVED*** + Modules
-***REMOVED*** + Namespaces
-***REMOVED*** + Events
-***REMOVED*** @param {TAFFY} data The TaffyDB database to search.
-***REMOVED*** @return {object} An object with `classes`, `externals`, `globals`, `mixins`, `modules`,
-***REMOVED*** `events`, and `namespaces` properties. Each property contains an array of objects.
-***REMOVED***
+/**
+ * Retrieve all of the following types of members from a set of doclets:
+ *
+ * + Classes
+ * + Externals
+ * + Globals
+ * + Mixins
+ * + Modules
+ * + Namespaces
+ * + Events
+ * @param {TAFFY} data The TaffyDB database to search.
+ * @return {object} An object with `classes`, `externals`, `globals`, `mixins`, `modules`,
+ * `events`, and `namespaces` properties. Each property contains an array of objects.
+ */
 exports.getMembers = function(data) {
     var members = {
         classes: find( data, {kind: 'class'} ),
@@ -476,22 +476,22 @@ exports.getMembers = function(data) {
         mixins: find( data, {kind: 'mixin'} ),
         modules: find( data, {kind: 'module'} ),
         namespaces: find( data, {kind: 'namespace'} )
-   ***REMOVED*****REMOVED***
+    };
 
-    // functions that are also modules (as in "module.exports = function() {***REMOVED***") are not globals
+    // functions that are also modules (as in "module.exports = function() {};") are not globals
     members.globals = members.globals.filter(function(doclet) {
         return !isModuleFunction(doclet);
     });
 
     return members;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve the member attributes for a doclet (for example, `virtual`, `static`, and
-***REMOVED*** `readonly`).
-***REMOVED*** @param {object} d The doclet whose attributes will be retrieved.
-***REMOVED*** @return {array<string>} The member attributes for the doclet.
-***REMOVED***
+/**
+ * Retrieve the member attributes for a doclet (for example, `virtual`, `static`, and
+ * `readonly`).
+ * @param {object} d The doclet whose attributes will be retrieved.
+ * @return {array<string>} The member attributes for the doclet.
+ */
 exports.getAttribs = function(d) {
     var attribs = [];
 
@@ -527,15 +527,15 @@ exports.getAttribs = function(d) {
     }
 
     return attribs;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve links to allowed types for the member.
-***REMOVED***
-***REMOVED*** @param {Object} d - The doclet whose types will be retrieved.
-***REMOVED*** @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
-***REMOVED*** @return {Array.<string>} HTML links to allowed types for the member.
-***REMOVED***
+/**
+ * Retrieve links to allowed types for the member.
+ *
+ * @param {Object} d - The doclet whose types will be retrieved.
+ * @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
+ * @return {Array.<string>} HTML links to allowed types for the member.
+ */
 exports.getSignatureTypes = function(d, cssClass) {
     var types = [];
 
@@ -550,18 +550,18 @@ exports.getSignatureTypes = function(d, cssClass) {
     }
 
     return types;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve names of the parameters that the member accepts. If a value is provided for `optClass`,
-***REMOVED*** the names of optional parameters will be wrapped in a `<span>` tag with that class.
-***REMOVED*** @param {object} d The doclet whose parameter names will be retrieved.
-***REMOVED*** @param {string} [optClass] The class to assign to the `<span>` tag that is wrapped around the
-***REMOVED*** names of optional parameters. If a value is not provided, optional parameter names will not be
-***REMOVED*** wrapped with a `<span>` tag. Must be a legal value for a CSS class name.
-***REMOVED*** @return {array<string>} An array of parameter names, with or without `<span>` tags wrapping the
-***REMOVED*** names of optional parameters.
-***REMOVED***
+/**
+ * Retrieve names of the parameters that the member accepts. If a value is provided for `optClass`,
+ * the names of optional parameters will be wrapped in a `<span>` tag with that class.
+ * @param {object} d The doclet whose parameter names will be retrieved.
+ * @param {string} [optClass] The class to assign to the `<span>` tag that is wrapped around the
+ * names of optional parameters. If a value is not provided, optional parameter names will not be
+ * wrapped with a `<span>` tag. Must be a legal value for a CSS class name.
+ * @return {array<string>} An array of parameter names, with or without `<span>` tags wrapping the
+ * names of optional parameters.
+ */
 exports.getSignatureParams = function(d, optClass) {
     var pnames = [];
 
@@ -579,15 +579,15 @@ exports.getSignatureParams = function(d, optClass) {
     }
 
     return pnames;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve links to types that the member can return.
-***REMOVED***
-***REMOVED*** @param {Object} d - The doclet whose types will be retrieved.
-***REMOVED*** @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
-***REMOVED*** @return {Array.<string>} HTML links to types that the member can return.
-***REMOVED***
+/**
+ * Retrieve links to types that the member can return.
+ *
+ * @param {Object} d - The doclet whose types will be retrieved.
+ * @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
+ * @return {Array.<string>} HTML links to types that the member can return.
+ */
 exports.getSignatureReturns = function(d, cssClass) {
     var returnTypes = [];
 
@@ -608,16 +608,16 @@ exports.getSignatureReturns = function(d, cssClass) {
     }
 
     return returnTypes;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve links to a member's ancestors.
-***REMOVED***
-***REMOVED*** @param {TAFFY} data - The TaffyDB database to search.
-***REMOVED*** @param {Object} doclet - The doclet whose ancestors will be retrieved.
-***REMOVED*** @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
-***REMOVED*** @return {Array.<string>} HTML links to a member's ancestors.
-***REMOVED***
+/**
+ * Retrieve links to a member's ancestors.
+ *
+ * @param {TAFFY} data - The TaffyDB database to search.
+ * @param {Object} doclet - The doclet whose ancestors will be retrieved.
+ * @param {string} [cssClass] - The CSS class to include in the `class` attribute for each link.
+ * @return {Array.<string>} HTML links to a member's ancestors.
+ */
 exports.getAncestorLinks = function(data, doclet, cssClass) {
     var ancestors = [],
         doc = doclet.memberof;
@@ -634,17 +634,17 @@ exports.getAncestorLinks = function(data, doclet, cssClass) {
         ancestors[ancestors.length - 1] += (exports.scopeToPunc[doclet.scope] || '');
     }
     return ancestors;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Iterates through all the doclets in `data`, ensuring that if a method
-***REMOVED*** @listens to an event, then that event has a 'listeners' array with the
-***REMOVED*** longname of the listener in it.
-***REMOVED***
-***REMOVED*** @param {TAFFY} data - The TaffyDB database to search.
-***REMOVED***
+/**
+ * Iterates through all the doclets in `data`, ensuring that if a method
+ * @listens to an event, then that event has a 'listeners' array with the
+ * longname of the listener in it.
+ *
+ * @param {TAFFY} data - The TaffyDB database to search.
+ */
 exports.addEventListeners = function(data) {
-    // TODO: do this on the***REMOVED***pruned* data
+    // TODO: do this on the *pruned* data
     // find all doclets that @listen to something.
     var listeners = find(data, function () { return this.listens && this.listens.length; });
 
@@ -654,7 +654,7 @@ exports.addEventListeners = function(data) {
 
     var doc,
         l,
-        _events = {***REMOVED*** // just a cache to prevent me doing so many lookups
+        _events = {}; // just a cache to prevent me doing so many lookups
 
     listeners.forEach(function (listener) {
         l = listener.listens;
@@ -670,18 +670,18 @@ exports.addEventListeners = function(data) {
             }
         });
     });
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Remove members that will not be included in the output, including:
-***REMOVED***
-***REMOVED*** + Undocumented members.
-***REMOVED*** + Members tagged `@ignore`.
-***REMOVED*** + Members of anonymous classes.
-***REMOVED*** + Members tagged `@private`, unless the `private` option is enabled.
-***REMOVED*** @param {TAFFY} data The TaffyDB database to prune.
-***REMOVED*** @return {TAFFY} The pruned database.
-***REMOVED***
+/**
+ * Remove members that will not be included in the output, including:
+ *
+ * + Undocumented members.
+ * + Members tagged `@ignore`.
+ * + Members of anonymous classes.
+ * + Members tagged `@private`, unless the `private` option is enabled.
+ * @param {TAFFY} data The TaffyDB database to prune.
+ * @return {TAFFY} The pruned database.
+ */
 exports.prune = function(data) {
     data({undocumented: true}).remove();
     data({ignore: true}).remove();
@@ -689,18 +689,18 @@ exports.prune = function(data) {
     data({memberof: '<anonymous>'}).remove();
 
     return data;
-***REMOVED***
+};
 
 var registerLink = exports.registerLink = function(longname, url) {
     linkMap.longnameToUrl[longname] = url;
     linkMap.urlToLongname[url] = longname;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get a longname's filename if one has been registered; otherwise, generate a unique filename, then
-***REMOVED*** register the filename.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get a longname's filename if one has been registered; otherwise, generate a unique filename, then
+ * register the filename.
+ * @private
+ */
 function getFilename(longname) {
     var url;
 
@@ -714,7 +714,7 @@ function getFilename(longname) {
     return url;
 }
 
-***REMOVED*** Turn a doclet into a URL.***REMOVED***
+/** Turn a doclet into a URL. */
 exports.createLink = function(doclet) {
     var filename;
     var fragment;
@@ -759,4 +759,4 @@ exports.createLink = function(doclet) {
     url = fragment ? (filename + INSTANCE + fragment) : filename;
 
     return url;
-***REMOVED***
+};

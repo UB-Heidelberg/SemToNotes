@@ -121,9 +121,9 @@ function testGetCompatModeStandards() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a DOM tree and tests that getLeftMostLeaf returns proper node
-***REMOVED***
+/**
+ * Creates a DOM tree and tests that getLeftMostLeaf returns proper node
+ */
 function testGetLeftMostLeaf() {
   setUpDomTree();
 
@@ -142,9 +142,9 @@ function testGetLeftMostLeaf() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a DOM tree and tests that getRightMostLeaf returns proper node
-***REMOVED***
+/**
+ * Creates a DOM tree and tests that getRightMostLeaf returns proper node
+ */
 function testGetRightMostLeaf() {
   setUpDomTree();
 
@@ -163,10 +163,10 @@ function testGetRightMostLeaf() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a DOM tree and tests that getFirstChild properly ignores
-***REMOVED*** ignorable nodes
-***REMOVED***
+/**
+ * Creates a DOM tree and tests that getFirstChild properly ignores
+ * ignorable nodes
+ */
 function testGetFirstChild() {
   setUpDomTree();
 
@@ -188,10 +188,10 @@ function testGetFirstChild() {
 }
 
 
-***REMOVED***
-***REMOVED*** Create a DOM tree and test that getLastChild properly ignores
-***REMOVED*** ignorable nodes
-***REMOVED***
+/**
+ * Create a DOM tree and test that getLastChild properly ignores
+ * ignorable nodes
+ */
 function testGetLastChild() {
   setUpDomTree();
 
@@ -213,10 +213,10 @@ function testGetLastChild() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test if nodes that should be ignorable return false and nodes that should
-***REMOVED*** not be ignored return true.
-***REMOVED***
+/**
+ * Test if nodes that should be ignorable return false and nodes that should
+ * not be ignored return true.
+ */
 function testIsImportant() {
   var wsNode = document.createTextNode(' \t\r\n');
   assertFalse('White space node is ignorable',
@@ -232,10 +232,10 @@ function testIsImportant() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that isAllNonNbspWhiteSpace returns true if node contains only
-***REMOVED*** whitespace that is not nbsp and false otherwise
-***REMOVED***
+/**
+ * Test that isAllNonNbspWhiteSpace returns true if node contains only
+ * whitespace that is not nbsp and false otherwise
+ */
 function testIsAllNonNbspWhiteSpace() {
   var wsNode = document.createTextNode(' \t\r\n');
   assertTrue('String is all non nbsp',
@@ -249,10 +249,10 @@ function testIsAllNonNbspWhiteSpace() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a DOM tree and Test that getPreviousSibling properly ignores
-***REMOVED*** ignorable nodes
-***REMOVED***
+/**
+ * Creates a DOM tree and Test that getPreviousSibling properly ignores
+ * ignorable nodes
+ */
 function testGetPreviousSibling() {
   setUpDomTree();
 
@@ -281,10 +281,10 @@ function testGetPreviousSibling() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a DOM tree and tests that getNextSibling properly ignores igrnorable
-***REMOVED*** nodes when determining the next sibling
-***REMOVED***
+/**
+ * Creates a DOM tree and tests that getNextSibling properly ignores igrnorable
+ * nodes when determining the next sibling
+ */
 function testGetNextSibling() {
   setUpDomTree();
 
@@ -366,11 +366,11 @@ function testIsEmpty() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that getLength returns 0 if the node has no length and no children,
-***REMOVED*** the # of children if the node has no length but does have children,
-***REMOVED*** and the length of the node if the node does have length
-***REMOVED***
+/**
+ * Test that getLength returns 0 if the node has no length and no children,
+ * the # of children if the node has no length but does have children,
+ * and the length of the node if the node does have length
+ */
 function testGetLength() {
   var parentNode = document.createElement('p');
 
@@ -417,7 +417,7 @@ function testFindHighestMatchingAncestor() {
   setUpDomTree();
   var predicateFunc = function(node) {
     return node.tagName == 'DIV';
- ***REMOVED*****REMOVED***
+  };
   var node = goog.editor.node.findHighestMatchingAncestor(
       gChildTextNode3a, predicateFunc);
   assertNotNull('Should return an ancestor', node);
@@ -428,7 +428,7 @@ function testFindHighestMatchingAncestor() {
 
   predicateFunc = function(node) {
     return node.childNodes.length == 1;
- ***REMOVED*****REMOVED***
+  };
   node = goog.editor.node.findHighestMatchingAncestor(gChildTextNode3a,
                                                       predicateFunc);
   assertNull("Shouldn't return an ancestor", node);

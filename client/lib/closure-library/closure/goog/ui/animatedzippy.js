@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Animated zippy widget implementation.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/zippy.html
-***REMOVED***
+/**
+ * @fileoverview Animated zippy widget implementation.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/zippy.html
+ */
 
 goog.provide('goog.ui.AnimatedZippy');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fx.Animation');
 goog.require('goog.fx.Transition');
 goog.require('goog.fx.easing');
@@ -31,20 +31,20 @@ goog.require('goog.ui.ZippyEvent');
 
 
 
-***REMOVED***
-***REMOVED*** Zippy widget. Expandable/collapsible container, clicking the header toggles
-***REMOVED*** the visibility of the content.
-***REMOVED***
-***REMOVED*** @param {Element|string|null} header Header element, either element
-***REMOVED***     reference, string id or null if no header exists.
-***REMOVED*** @param {Element|string} content Content element, either element reference or
-***REMOVED***     string id.
-***REMOVED*** @param {boolean=} opt_expanded Initial expanded/visibility state. Defaults to
-***REMOVED***     false.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper An optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Zippy}
-***REMOVED***
+/**
+ * Zippy widget. Expandable/collapsible container, clicking the header toggles
+ * the visibility of the content.
+ *
+ * @param {Element|string|null} header Header element, either element
+ *     reference, string id or null if no header exists.
+ * @param {Element|string} content Content element, either element reference or
+ *     string id.
+ * @param {boolean=} opt_expanded Initial expanded/visibility state. Defaults to
+ *     false.
+ * @param {goog.dom.DomHelper=} opt_domHelper An optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Zippy}
+ */
 goog.ui.AnimatedZippy = function(header, content, opt_expanded, opt_domHelper) {
   var domHelper = opt_domHelper || goog.dom.getDomHelper();
 
@@ -54,18 +54,18 @@ goog.ui.AnimatedZippy = function(header, content, opt_expanded, opt_domHelper) {
   elContent.parentNode.replaceChild(elWrapper, elContent);
   elWrapper.appendChild(elContent);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Content wrapper, used for animation.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Content wrapper, used for animation.
+   * @type {Element}
+   * @private
+   */
   this.elWrapper_ = elWrapper;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Reference to animation or null if animation is not active.
-  ***REMOVED*** @type {goog.fx.Animation}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Reference to animation or null if animation is not active.
+   * @type {goog.fx.Animation}
+   * @private
+   */
   this.anim_ = null;
 
   // Call constructor of super class.
@@ -78,39 +78,39 @@ goog.ui.AnimatedZippy = function(header, content, opt_expanded, opt_domHelper) {
   var expanded = this.isExpanded();
   this.elWrapper_.style.display = expanded ? '' : 'none';
   this.updateHeaderClassName(expanded);
-***REMOVED***
+};
 goog.inherits(goog.ui.AnimatedZippy, goog.ui.Zippy);
 
 
-***REMOVED***
-***REMOVED*** Duration of expand/collapse animation, in milliseconds.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Duration of expand/collapse animation, in milliseconds.
+ * @type {number}
+ */
 goog.ui.AnimatedZippy.prototype.animationDuration = 500;
 
 
-***REMOVED***
-***REMOVED*** Acceleration function for expand/collapse animation.
-***REMOVED*** @type {!Function}
-***REMOVED***
+/**
+ * Acceleration function for expand/collapse animation.
+ * @type {!Function}
+ */
 goog.ui.AnimatedZippy.prototype.animationAcceleration = goog.fx.easing.easeOut;
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the zippy is in the process of being expanded or
-***REMOVED***     collapsed.
-***REMOVED***
+/**
+ * @return {boolean} Whether the zippy is in the process of being expanded or
+ *     collapsed.
+ */
 goog.ui.AnimatedZippy.prototype.isBusy = function() {
   return this.anim_ != null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets expanded state.
-***REMOVED***
-***REMOVED*** @param {boolean} expanded Expanded/visibility state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets expanded state.
+ *
+ * @param {boolean} expanded Expanded/visibility state.
+ * @override
+ */
 goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
   if (this.isExpanded() == expanded && !this.anim_) {
     return;
@@ -150,35 +150,35 @@ goog.ui.AnimatedZippy.prototype.setExpanded = function(expanded) {
   var events = [goog.fx.Transition.EventType.BEGIN,
                 goog.fx.Animation.EventType.ANIMATE,
                 goog.fx.Transition.EventType.END];
-***REMOVED***this.anim_, events, this.onAnimate_, false, this);
-***REMOVED***this.anim_,
+  goog.events.listen(this.anim_, events, this.onAnimate_, false, this);
+  goog.events.listen(this.anim_,
                      goog.fx.Transition.EventType.END,
                      goog.bind(this.onAnimationCompleted_, this, expanded));
 
   // Start animation.
   this.anim_.play(false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called during animation
-***REMOVED***
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called during animation
+ *
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.ui.AnimatedZippy.prototype.onAnimate_ = function(e) {
   var contentElement = this.getContentElement();
   var h = contentElement.offsetHeight;
   contentElement.style.marginTop = (e.y - h) + 'px';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called once the expand/collapse animation has completed.
-***REMOVED***
-***REMOVED*** @param {boolean} expanded Expanded/visibility state.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called once the expand/collapse animation has completed.
+ *
+ * @param {boolean} expanded Expanded/visibility state.
+ * @private
+ */
 goog.ui.AnimatedZippy.prototype.onAnimationCompleted_ = function(expanded) {
   // Fix wrong end position if the content has changed during the animation.
   if (expanded) {
@@ -196,4 +196,4 @@ goog.ui.AnimatedZippy.prototype.onAnimationCompleted_ = function(expanded) {
   // Fire toggle event.
   this.dispatchEvent(new goog.ui.ZippyEvent(goog.ui.Zippy.Events.TOGGLE,
                                             this, expanded));
-***REMOVED***
+};

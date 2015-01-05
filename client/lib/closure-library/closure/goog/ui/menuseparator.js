@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class for representing menu separators.
-***REMOVED*** @see goog.ui.Menu
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A class for representing menu separators.
+ * @see goog.ui.Menu
+ *
+ */
 
 goog.provide('goog.ui.MenuSeparator');
 
@@ -26,19 +26,19 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a menu separator.  A menu separator extends {@link
-***REMOVED*** goog.ui.Separator} by always setting its renderer to {@link
-***REMOVED*** goog.ui.MenuSeparatorRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
-***REMOVED***     document interactions.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Separator}
-***REMOVED***
+/**
+ * Class representing a menu separator.  A menu separator extends {@link
+ * goog.ui.Separator} by always setting its renderer to {@link
+ * goog.ui.MenuSeparatorRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
+ *     document interactions.
+ * @constructor
+ * @extends {goog.ui.Separator}
+ */
 goog.ui.MenuSeparator = function(opt_domHelper) {
   goog.ui.Separator.call(this, goog.ui.MenuSeparatorRenderer.getInstance(),
       opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.MenuSeparator, goog.ui.Separator);
 
 

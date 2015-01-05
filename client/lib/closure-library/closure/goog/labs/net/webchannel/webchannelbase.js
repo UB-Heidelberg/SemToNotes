@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base WebChannel implementation.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Base WebChannel implementation.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.WebChannelBase');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.debug.TextFormatter');
@@ -37,7 +37,7 @@ goog.require('goog.labs.net.webChannel.netUtils');
 goog.require('goog.labs.net.webChannel.requestStats');
 goog.require('goog.labs.net.webChannel.requestStats.Stat');
 goog.require('goog.log');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.object');
 goog.require('goog.string');
 goog.require('goog.structs');
@@ -57,468 +57,468 @@ var requestStats = goog.labs.net.webChannel.requestStats;
 
 
 
-***REMOVED***
-***REMOVED*** This WebChannel implementation is branched off goog.net.BrowserChannel
-***REMOVED*** for now. Ongoing changes to goog.net.BrowserChannel will be back
-***REMOVED*** ported to this implementation as needed.
-***REMOVED***
-***REMOVED*** @param {!goog.net.WebChannel.Options=} opt_options Configuration for the
-***REMOVED***        WebChannel instance.
-***REMOVED*** @param {string=} opt_clientVersion An application-specific version number
-***REMOVED***        that is sent to the server when connected.
-***REMOVED*** @param {!ConnectionState=} opt_conn Previously determined connection
-***REMOVED***        conditions.
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.labs.net.webChannel.Channel}
-***REMOVED***
+/**
+ * This WebChannel implementation is branched off goog.net.BrowserChannel
+ * for now. Ongoing changes to goog.net.BrowserChannel will be back
+ * ported to this implementation as needed.
+ *
+ * @param {!goog.net.WebChannel.Options=} opt_options Configuration for the
+ *        WebChannel instance.
+ * @param {string=} opt_clientVersion An application-specific version number
+ *        that is sent to the server when connected.
+ * @param {!ConnectionState=} opt_conn Previously determined connection
+ *        conditions.
+ * @constructor
+ * @struct
+ * @implements {goog.labs.net.webChannel.Channel}
+ */
 goog.labs.net.webChannel.WebChannelBase = function(opt_options,
     opt_clientVersion, opt_conn) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The application specific version that is passed to the server.
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The application specific version that is passed to the server.
+   * @private {?string}
+   */
   this.clientVersion_ = opt_clientVersion || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of queued maps that need to be sent to the server.
-  ***REMOVED*** @private {!Array.<Wire.QueuedMap>}
- ***REMOVED*****REMOVED***
+  /**
+   * An array of queued maps that need to be sent to the server.
+   * @private {!Array.<Wire.QueuedMap>}
+   */
   this.outgoingMaps_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of dequeued maps that we have either received a non-successful
-  ***REMOVED*** response for, or no response at all, and which therefore may or may not
-  ***REMOVED*** have been received by the server.
-  ***REMOVED*** @private {!Array.<Wire.QueuedMap>}
- ***REMOVED*****REMOVED***
+  /**
+   * An array of dequeued maps that we have either received a non-successful
+   * response for, or no response at all, and which therefore may or may not
+   * have been received by the server.
+   * @private {!Array.<Wire.QueuedMap>}
+   */
   this.pendingMaps_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel debug used for logging
-  ***REMOVED*** @private {!WebChannelDebug}
- ***REMOVED*****REMOVED***
+  /**
+   * The channel debug used for logging
+   * @private {!WebChannelDebug}
+   */
   this.channelDebug_ = new WebChannelDebug();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Previous connectivity test results.
-  ***REMOVED*** @private {!ConnectionState}
- ***REMOVED*****REMOVED***
+  /**
+   * Previous connectivity test results.
+   * @private {!ConnectionState}
+   */
   this.ConnState_ = opt_conn || new ConnectionState();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Extra HTTP headers to add to all the requests sent to the server.
-  ***REMOVED*** @private {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * Extra HTTP headers to add to all the requests sent to the server.
+   * @private {Object}
+   */
   this.extraHeaders_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Extra parameters to add to all the requests sent to the server.
-  ***REMOVED*** @private {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * Extra parameters to add to all the requests sent to the server.
+   * @private {Object}
+   */
   this.extraParams_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The ChannelRequest object for the backchannel.
-  ***REMOVED*** @private {ChannelRequest}
- ***REMOVED*****REMOVED***
+  /**
+   * The ChannelRequest object for the backchannel.
+   * @private {ChannelRequest}
+   */
   this.backChannelRequest_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The relative path (in the context of the the page hosting the browser
-  ***REMOVED*** channel) for making requests to the server.
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The relative path (in the context of the the page hosting the browser
+   * channel) for making requests to the server.
+   * @private {?string}
+   */
   this.path_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The absolute URI for the forwardchannel request.
-  ***REMOVED*** @private {goog.Uri}
- ***REMOVED*****REMOVED***
+  /**
+   * The absolute URI for the forwardchannel request.
+   * @private {goog.Uri}
+   */
   this.forwardChannelUri_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The absolute URI for the backchannel request.
-  ***REMOVED*** @private {goog.Uri}
- ***REMOVED*****REMOVED***
+  /**
+   * The absolute URI for the backchannel request.
+   * @private {goog.Uri}
+   */
   this.backChannelUri_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A subdomain prefix for using a subdomain in IE for the backchannel
-  ***REMOVED*** requests.
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * A subdomain prefix for using a subdomain in IE for the backchannel
+   * requests.
+   * @private {?string}
+   */
   this.hostPrefix_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we allow the use of a subdomain in IE for the backchannel requests.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we allow the use of a subdomain in IE for the backchannel requests.
+   * @private {boolean}
+   */
   this.allowHostPrefix_ = true;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The next id to use for the RID (request identifier) parameter. This
-  ***REMOVED*** identifier uniquely identifies the forward channel request.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The next id to use for the RID (request identifier) parameter. This
+   * identifier uniquely identifies the forward channel request.
+   * @private {number}
+   */
   this.nextRid_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The id to use for the next outgoing map. This identifier uniquely
-  ***REMOVED*** identifies a sent map.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The id to use for the next outgoing map. This identifier uniquely
+   * identifies a sent map.
+   * @private {number}
+   */
   this.nextMapId_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to fail forward-channel requests after one try or a few tries.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to fail forward-channel requests after one try or a few tries.
+   * @private {boolean}
+   */
   this.failFast_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The handler that receive callbacks for state changes and data.
-  ***REMOVED*** @private {goog.labs.net.webChannel.WebChannelBase.Handler}
- ***REMOVED*****REMOVED***
+  /**
+   * The handler that receive callbacks for state changes and data.
+   * @private {goog.labs.net.webChannel.WebChannelBase.Handler}
+   */
   this.handler_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Timer identifier for asynchronously making a forward channel request.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * Timer identifier for asynchronously making a forward channel request.
+   * @private {?number}
+   */
   this.forwardChannelTimerId_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Timer identifier for asynchronously making a back channel request.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * Timer identifier for asynchronously making a back channel request.
+   * @private {?number}
+   */
   this.backChannelTimerId_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Timer identifier for the timer that waits for us to retry the backchannel
-  ***REMOVED*** in the case where it is dead and no longer receiving data.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * Timer identifier for the timer that waits for us to retry the backchannel
+   * in the case where it is dead and no longer receiving data.
+   * @private {?number}
+   */
   this.deadBackChannelTimerId_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The TestChannel object which encapsulates the logic for determining
-  ***REMOVED*** interesting network conditions about the client.
-  ***REMOVED*** @private {BaseTestChannel}
- ***REMOVED*****REMOVED***
+  /**
+   * The TestChannel object which encapsulates the logic for determining
+   * interesting network conditions about the client.
+   * @private {BaseTestChannel}
+   */
   this.connectionTest_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the client's network conditions can support chunked responses.
-  ***REMOVED*** @private {?boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the client's network conditions can support chunked responses.
+   * @private {?boolean}
+   */
   this.useChunked_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether chunked mode is allowed. In certain debugging situations, it's
-  ***REMOVED*** useful to disable this.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether chunked mode is allowed. In certain debugging situations, it's
+   * useful to disable this.
+   * @private {boolean}
+   */
   this.allowChunkedMode_ = true;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The array identifier of the last array received from the server for the
-  ***REMOVED*** backchannel request.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The array identifier of the last array received from the server for the
+   * backchannel request.
+   * @private {number}
+   */
   this.lastArrayId_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The array id of the last array sent by the server that we know about.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The array id of the last array sent by the server that we know about.
+   * @private {number}
+   */
   this.lastPostResponseArrayId_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The last status code received.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The last status code received.
+   * @private {number}
+   */
   this.lastStatusCode_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of times we have retried the current forward channel request.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Number of times we have retried the current forward channel request.
+   * @private {number}
+   */
   this.forwardChannelRetryCount_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of times in a row that we have retried the current back channel
-  ***REMOVED*** request and received no data.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Number of times in a row that we have retried the current back channel
+   * request and received no data.
+   * @private {number}
+   */
   this.backChannelRetryCount_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The attempt id for the current back channel request. Starts at 1 and
-  ***REMOVED*** increments for each reconnect. The server uses this to log if our
-  ***REMOVED*** connection is flaky or not.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The attempt id for the current back channel request. Starts at 1 and
+   * increments for each reconnect. The server uses this to log if our
+   * connection is flaky or not.
+   * @private {number}
+   */
   this.backChannelAttemptId_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The base part of the time before firing next retry request. Default is 5
-  ***REMOVED*** seconds. Note that a random delay is added (see {@link retryDelaySeedMs_})
-  ***REMOVED*** for all retries, and linear backoff is applied to the sum for subsequent
-  ***REMOVED*** retries.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
-  this.baseRetryDelayMs_ = 5***REMOVED*** 1000;
+  /**
+   * The base part of the time before firing next retry request. Default is 5
+   * seconds. Note that a random delay is added (see {@link retryDelaySeedMs_})
+   * for all retries, and linear backoff is applied to the sum for subsequent
+   * retries.
+   * @private {number}
+   */
+  this.baseRetryDelayMs_ = 5 * 1000;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A random time between 0 and this number of MS is added to the
-  ***REMOVED*** {@link baseRetryDelayMs_}. Default is 10 seconds.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
-  this.retryDelaySeedMs_ = 10***REMOVED*** 1000;
+  /**
+   * A random time between 0 and this number of MS is added to the
+   * {@link baseRetryDelayMs_}. Default is 10 seconds.
+   * @private {number}
+   */
+  this.retryDelaySeedMs_ = 10 * 1000;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Maximum number of attempts to connect to the server for forward channel
-  ***REMOVED*** requests. Defaults to 2.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Maximum number of attempts to connect to the server for forward channel
+   * requests. Defaults to 2.
+   * @private {number}
+   */
   this.forwardChannelMaxRetries_ = 2;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The timeout in milliseconds for a forward channel request. Defaults to 20
-  ***REMOVED*** seconds. Note that part of this timeout can be randomized.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
-  this.forwardChannelRequestTimeoutMs_ = 20***REMOVED*** 1000;
+  /**
+   * The timeout in milliseconds for a forward channel request. Defaults to 20
+   * seconds. Note that part of this timeout can be randomized.
+   * @private {number}
+   */
+  this.forwardChannelRequestTimeoutMs_ = 20 * 1000;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A throttle time in ms for readystatechange events for the backchannel.
-  ***REMOVED*** Useful for throttling when ready state is INTERACTIVE (partial data).
-  ***REMOVED***
-  ***REMOVED*** This throttle is useful if the server sends large data chunks down the
-  ***REMOVED*** backchannel.  It prevents examining XHR partial data on every readystate
-  ***REMOVED*** change event.  This is useful because large chunks can trigger hundreds
-  ***REMOVED*** of readystatechange events, each of which takes ~5ms or so to handle,
-  ***REMOVED*** in turn making the UI unresponsive for a significant period.
-  ***REMOVED***
-  ***REMOVED*** If set to zero no throttle is used.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * A throttle time in ms for readystatechange events for the backchannel.
+   * Useful for throttling when ready state is INTERACTIVE (partial data).
+   *
+   * This throttle is useful if the server sends large data chunks down the
+   * backchannel.  It prevents examining XHR partial data on every readystate
+   * change event.  This is useful because large chunks can trigger hundreds
+   * of readystatechange events, each of which takes ~5ms or so to handle,
+   * in turn making the UI unresponsive for a significant period.
+   *
+   * If set to zero no throttle is used.
+   * @private {number}
+   */
   this.readyStateChangeThrottleMs_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether cross origin requests are supported for the channel.
-  ***REMOVED***
-  ***REMOVED*** See {@link goog.net.XhrIo#setWithCredentials}.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether cross origin requests are supported for the channel.
+   *
+   * See {@link goog.net.XhrIo#setWithCredentials}.
+   * @private {boolean}
+   */
   this.supportsCrossDomainXhrs_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current session id.
-  ***REMOVED*** @private {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The current session id.
+   * @private {string}
+   */
   this.sid_ = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current ChannelRequest pool for the forward channel.
-  ***REMOVED*** @private {!ForwardChannelRequestPool}
- ***REMOVED*****REMOVED***
+  /**
+   * The current ChannelRequest pool for the forward channel.
+   * @private {!ForwardChannelRequestPool}
+   */
   this.forwardChannelRequestPool_ = new ForwardChannelRequestPool(
       opt_options && opt_options.concurrentRequestLimit);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The V8 codec.
-  ***REMOVED*** @private {!WireV8}
- ***REMOVED*****REMOVED***
+  /**
+   * The V8 codec.
+   * @private {!WireV8}
+   */
   this.wireCodec_ = new WireV8();
-***REMOVED***
+};
 
 var WebChannelBase = goog.labs.net.webChannel.WebChannelBase;
 
 
-***REMOVED***
-***REMOVED*** The channel version that we negotiated with the server for this session.
-***REMOVED*** Starts out as the version we request, and then is changed to the negotiated
-***REMOVED*** version after the initial open.
-***REMOVED*** @private {number}
-***REMOVED***
+/**
+ * The channel version that we negotiated with the server for this session.
+ * Starts out as the version we request, and then is changed to the negotiated
+ * version after the initial open.
+ * @private {number}
+ */
 WebChannelBase.prototype.channelVersion_ = Wire.LATEST_CHANNEL_VERSION;
 
 
-***REMOVED***
-***REMOVED*** Enum type for the channel state machine.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum type for the channel state machine.
+ * @enum {number}
+ */
 WebChannelBase.State = {
- ***REMOVED*****REMOVED*** The channel is closed.***REMOVED***
+  /** The channel is closed. */
   CLOSED: 0,
 
- ***REMOVED*****REMOVED*** The channel has been initialized but hasn't yet initiated a connection.***REMOVED***
+  /** The channel has been initialized but hasn't yet initiated a connection. */
   INIT: 1,
 
- ***REMOVED*****REMOVED*** The channel is in the process of opening a connection to the server.***REMOVED***
+  /** The channel is in the process of opening a connection to the server. */
   OPENING: 2,
 
- ***REMOVED*****REMOVED*** The channel is open.***REMOVED***
+  /** The channel is open. */
   OPENED: 3
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The current state of the WebChannel.
-***REMOVED*** @private {!WebChannelBase.State}
-***REMOVED***
+/**
+ * The current state of the WebChannel.
+ * @private {!WebChannelBase.State}
+ */
 WebChannelBase.prototype.state_ = WebChannelBase.State.INIT;
 
 
-***REMOVED***
-***REMOVED*** The timeout in milliseconds for a forward channel request.
-***REMOVED*** @type {number}
-***REMOVED***
-WebChannelBase.FORWARD_CHANNEL_RETRY_TIMEOUT = 20***REMOVED*** 1000;
+/**
+ * The timeout in milliseconds for a forward channel request.
+ * @type {number}
+ */
+WebChannelBase.FORWARD_CHANNEL_RETRY_TIMEOUT = 20 * 1000;
 
 
-***REMOVED***
-***REMOVED*** Maximum number of attempts to connect to the server for back channel
-***REMOVED*** requests.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Maximum number of attempts to connect to the server for back channel
+ * requests.
+ * @type {number}
+ */
 WebChannelBase.BACK_CHANNEL_MAX_RETRIES = 3;
 
 
-***REMOVED***
-***REMOVED*** A number in MS of how long we guess the maxmium amount of time a round trip
-***REMOVED*** to the server should take. In the future this could be substituted with a
-***REMOVED*** real measurement of the RTT.
-***REMOVED*** @type {number}
-***REMOVED***
-WebChannelBase.RTT_ESTIMATE = 3***REMOVED*** 1000;
+/**
+ * A number in MS of how long we guess the maxmium amount of time a round trip
+ * to the server should take. In the future this could be substituted with a
+ * real measurement of the RTT.
+ * @type {number}
+ */
+WebChannelBase.RTT_ESTIMATE = 3 * 1000;
 
 
-***REMOVED***
-***REMOVED*** When retrying for an inactive channel, we will multiply the total delay by
-***REMOVED*** this number.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * When retrying for an inactive channel, we will multiply the total delay by
+ * this number.
+ * @type {number}
+ */
 WebChannelBase.INACTIVE_CHANNEL_RETRY_FACTOR = 2;
 
 
-***REMOVED***
-***REMOVED*** Enum type for identifying an error.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum type for identifying an error.
+ * @enum {number}
+ */
 WebChannelBase.Error = {
- ***REMOVED*****REMOVED*** Value that indicates no error has occurred.***REMOVED***
+  /** Value that indicates no error has occurred. */
   OK: 0,
 
- ***REMOVED*****REMOVED*** An error due to a request failing.***REMOVED***
+  /** An error due to a request failing. */
   REQUEST_FAILED: 2,
 
- ***REMOVED*****REMOVED*** An error due to the user being logged out.***REMOVED***
+  /** An error due to the user being logged out. */
   LOGGED_OUT: 4,
 
- ***REMOVED*****REMOVED*** An error due to server response which contains no data.***REMOVED***
+  /** An error due to server response which contains no data. */
   NO_DATA: 5,
 
- ***REMOVED*****REMOVED*** An error due to a server response indicating an unknown session id***REMOVED***
+  /** An error due to a server response indicating an unknown session id */
   UNKNOWN_SESSION_ID: 6,
 
- ***REMOVED*****REMOVED*** An error due to a server response requesting to stop the channel.***REMOVED***
+  /** An error due to a server response requesting to stop the channel. */
   STOP: 7,
 
- ***REMOVED*****REMOVED*** A general network error.***REMOVED***
+  /** A general network error. */
   NETWORK: 8,
 
- ***REMOVED*****REMOVED*** An error due to bad data being returned from the server.***REMOVED***
+  /** An error due to bad data being returned from the server. */
   BAD_DATA: 10,
 
- ***REMOVED*****REMOVED*** An error due to a response that is not parsable.***REMOVED***
+  /** An error due to a response that is not parsable. */
   BAD_RESPONSE: 11,
 
- ***REMOVED*****REMOVED*** ActiveX is blocked by the machine's admin settings.***REMOVED***
+  /** ActiveX is blocked by the machine's admin settings. */
   ACTIVE_X_BLOCKED: 12
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal enum type for the two channel types.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal enum type for the two channel types.
+ * @enum {number}
+ * @private
+ */
 WebChannelBase.ChannelType_ = {
   FORWARD_CHANNEL: 1,
 
   BACK_CHANNEL: 2
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The maximum number of maps that can be sent in one POST. Should match
-***REMOVED*** MAX_MAPS_PER_REQUEST on the server code.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The maximum number of maps that can be sent in one POST. Should match
+ * MAX_MAPS_PER_REQUEST on the server code.
+ * @type {number}
+ * @private
+ */
 WebChannelBase.MAX_MAPS_PER_REQUEST_ = 1000;
 
 
-***REMOVED***
-***REMOVED*** A guess at a cutoff at which to no longer assume the backchannel is dead
-***REMOVED*** when we are slow to receive data. Number in bytes.
-***REMOVED***
-***REMOVED*** Assumption: The worst bandwidth we work on is 50 kilobits/sec
-***REMOVED*** 50kbits/sec***REMOVED*** (1 byte / 8 bits)***REMOVED*** 6 sec dead backchannel timeout
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * A guess at a cutoff at which to no longer assume the backchannel is dead
+ * when we are slow to receive data. Number in bytes.
+ *
+ * Assumption: The worst bandwidth we work on is 50 kilobits/sec
+ * 50kbits/sec * (1 byte / 8 bits) * 6 sec dead backchannel timeout
+ * @type {number}
+ */
 WebChannelBase.OUTSTANDING_DATA_BACKCHANNEL_RETRY_CUTOFF = 37500;
 
 
-***REMOVED***
-***REMOVED*** @return {!ForwardChannelRequestPool} The forward channel request pool.
-***REMOVED***
+/**
+ * @return {!ForwardChannelRequestPool} The forward channel request pool.
+ */
 WebChannelBase.prototype.getForwardChannelRequestPool = function() {
   return this.forwardChannelRequestPool_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Object} The codec object, to be used for the test channel.
-***REMOVED***
+/**
+ * @return {!Object} The codec object, to be used for the test channel.
+ */
 WebChannelBase.prototype.getWireCodec = function() {
   return this.wireCodec_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the logger.
-***REMOVED***
-***REMOVED*** @return {!WebChannelDebug} The channel debug object.
-***REMOVED***
+/**
+ * Returns the logger.
+ *
+ * @return {!WebChannelDebug} The channel debug object.
+ */
 WebChannelBase.prototype.getChannelDebug = function() {
   return this.channelDebug_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the logger.
-***REMOVED***
-***REMOVED*** @param {!WebChannelDebug} channelDebug The channel debug object.
-***REMOVED***
+/**
+ * Sets the logger.
+ *
+ * @param {!WebChannelDebug} channelDebug The channel debug object.
+ */
 WebChannelBase.prototype.setChannelDebug = function(channelDebug) {
   this.channelDebug_ = channelDebug;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the channel. This initiates connections to the server.
-***REMOVED***
-***REMOVED*** @param {string} testPath  The path for the test connection.
-***REMOVED*** @param {string} channelPath  The path for the channel connection.
-***REMOVED*** @param {!Object=} opt_extraParams Extra parameter keys and values to add to
-***REMOVED***     the requests.
-***REMOVED*** @param {string=} opt_oldSessionId  Session ID from a previous session.
-***REMOVED*** @param {number=} opt_oldArrayId  The last array ID from a previous session.
-***REMOVED***
+/**
+ * Starts the channel. This initiates connections to the server.
+ *
+ * @param {string} testPath  The path for the test connection.
+ * @param {string} channelPath  The path for the channel connection.
+ * @param {!Object=} opt_extraParams Extra parameter keys and values to add to
+ *     the requests.
+ * @param {string=} opt_oldSessionId  Session ID from a previous session.
+ * @param {number=} opt_oldArrayId  The last array ID from a previous session.
+ */
 WebChannelBase.prototype.connect = function(testPath, channelPath,
     opt_extraParams, opt_oldSessionId, opt_oldArrayId) {
   this.channelDebug_.debug('connect()');
@@ -526,7 +526,7 @@ WebChannelBase.prototype.connect = function(testPath, channelPath,
   requestStats.notifyStatEvent(requestStats.Stat.CONNECT_ATTEMPT);
 
   this.path_ = channelPath;
-  this.extraParams_ = opt_extraParams || {***REMOVED***
+  this.extraParams_ = opt_extraParams || {};
 
   // Attach parameters about the previous session if reconnecting.
   if (opt_oldSessionId && goog.isDef(opt_oldArrayId)) {
@@ -535,12 +535,12 @@ WebChannelBase.prototype.connect = function(testPath, channelPath,
   }
 
   this.connectTest_(testPath);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disconnects and closes the channel.
-***REMOVED***
+/**
+ * Disconnects and closes the channel.
+ */
 WebChannelBase.prototype.disconnect = function() {
   this.channelDebug_.debug('disconnect()');
 
@@ -562,25 +562,25 @@ WebChannelBase.prototype.disconnect = function() {
   }
 
   this.onClose_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the session id of the channel. Only available after the
-***REMOVED*** channel has been opened.
-***REMOVED*** @return {string} Session ID.
-***REMOVED***
+/**
+ * Returns the session id of the channel. Only available after the
+ * channel has been opened.
+ * @return {string} Session ID.
+ */
 WebChannelBase.prototype.getSessionId = function() {
   return this.sid_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the test channel to determine network conditions.
-***REMOVED***
-***REMOVED*** @param {string} testPath  The relative PATH for the test connection.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Starts the test channel to determine network conditions.
+ *
+ * @param {string} testPath  The relative PATH for the test connection.
+ * @private
+ */
 WebChannelBase.prototype.connectTest_ = function(testPath) {
   this.channelDebug_.debug('connectTest_()');
   if (!this.okToMakeRequest_()) {
@@ -589,26 +589,26 @@ WebChannelBase.prototype.connectTest_ = function(testPath) {
   this.connectionTest_ = new BaseTestChannel(this, this.channelDebug_);
   this.connectionTest_.setExtraHeaders(this.extraHeaders_);
   this.connectionTest_.connect(testPath);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the regular channel which is run after the test channel is complete.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Starts the regular channel which is run after the test channel is complete.
+ * @private
+ */
 WebChannelBase.prototype.connectChannel_ = function() {
   this.channelDebug_.debug('connectChannel_()');
   this.ensureInState_(WebChannelBase.State.INIT, WebChannelBase.State.CLOSED);
   this.forwardChannelUri_ =
-      this.getForwardChannelUri(***REMOVED*** @type {string}***REMOVED*** (this.path_));
+      this.getForwardChannelUri(/** @type {string} */ (this.path_));
   this.ensureForwardChannel_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cancels all outstanding requests.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cancels all outstanding requests.
+ * @private
+ */
 WebChannelBase.prototype.cancelRequests_ = function() {
   if (this.connectionTest_) {
     this.connectionTest_.abort();
@@ -633,142 +633,142 @@ WebChannelBase.prototype.cancelRequests_ = function() {
     goog.global.clearTimeout(this.forwardChannelTimerId_);
     this.forwardChannelTimerId_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the extra HTTP headers to add to all the requests sent to the server.
-***REMOVED***
-***REMOVED*** @return {Object} The HTTP headers, or null.
-***REMOVED***
+/**
+ * Returns the extra HTTP headers to add to all the requests sent to the server.
+ *
+ * @return {Object} The HTTP headers, or null.
+ */
 WebChannelBase.prototype.getExtraHeaders = function() {
   return this.extraHeaders_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets extra HTTP headers to add to all the requests sent to the server.
-***REMOVED***
-***REMOVED*** @param {Object} extraHeaders The HTTP headers, or null.
-***REMOVED***
+/**
+ * Sets extra HTTP headers to add to all the requests sent to the server.
+ *
+ * @param {Object} extraHeaders The HTTP headers, or null.
+ */
 WebChannelBase.prototype.setExtraHeaders = function(extraHeaders) {
   this.extraHeaders_ = extraHeaders;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the throttle for handling onreadystatechange events for the request.
-***REMOVED***
-***REMOVED*** @param {number} throttle The throttle in ms.  A value of zero indicates
-***REMOVED***     no throttle.
-***REMOVED***
+/**
+ * Sets the throttle for handling onreadystatechange events for the request.
+ *
+ * @param {number} throttle The throttle in ms.  A value of zero indicates
+ *     no throttle.
+ */
 WebChannelBase.prototype.setReadyStateChangeThrottle = function(throttle) {
   this.readyStateChangeThrottleMs_ = throttle;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether cross origin requests are supported for the channel.
-***REMOVED***
-***REMOVED*** Setting this allows the creation of requests to secondary domains and
-***REMOVED*** sends XHRs with the CORS withCredentials bit set to true.
-***REMOVED***
-***REMOVED*** In order for cross-origin requests to work, the server will also need to set
-***REMOVED*** CORS response headers as per:
-***REMOVED*** https://developer.mozilla.org/en-US/docs/HTTP_access_control
-***REMOVED***
-***REMOVED*** See {@link goog.net.XhrIo#setWithCredentials}.
-***REMOVED*** @param {boolean} supportCrossDomain Whether cross domain XHRs are supported.
-***REMOVED***
+/**
+ * Sets whether cross origin requests are supported for the channel.
+ *
+ * Setting this allows the creation of requests to secondary domains and
+ * sends XHRs with the CORS withCredentials bit set to true.
+ *
+ * In order for cross-origin requests to work, the server will also need to set
+ * CORS response headers as per:
+ * https://developer.mozilla.org/en-US/docs/HTTP_access_control
+ *
+ * See {@link goog.net.XhrIo#setWithCredentials}.
+ * @param {boolean} supportCrossDomain Whether cross domain XHRs are supported.
+ */
 WebChannelBase.prototype.setSupportsCrossDomainXhrs =
     function(supportCrossDomain) {
   this.supportsCrossDomainXhrs_ = supportCrossDomain;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the handler used for channel callback events.
-***REMOVED***
-***REMOVED*** @return {WebChannelBase.Handler} The handler.
-***REMOVED***
+/**
+ * Returns the handler used for channel callback events.
+ *
+ * @return {WebChannelBase.Handler} The handler.
+ */
 WebChannelBase.prototype.getHandler = function() {
   return this.handler_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the handler used for channel callback events.
-***REMOVED*** @param {WebChannelBase.Handler} handler The handler to set.
-***REMOVED***
+/**
+ * Sets the handler used for channel callback events.
+ * @param {WebChannelBase.Handler} handler The handler to set.
+ */
 WebChannelBase.prototype.setHandler = function(handler) {
   this.handler_ = handler;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the channel allows the use of a subdomain. There may be
-***REMOVED*** cases where this isn't allowed.
-***REMOVED*** @return {boolean} Whether a host prefix is allowed.
-***REMOVED***
+/**
+ * Returns whether the channel allows the use of a subdomain. There may be
+ * cases where this isn't allowed.
+ * @return {boolean} Whether a host prefix is allowed.
+ */
 WebChannelBase.prototype.getAllowHostPrefix = function() {
   return this.allowHostPrefix_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the channel allows the use of a subdomain. There may be cases
-***REMOVED*** where this isn't allowed, for example, logging in with troutboard where
-***REMOVED*** using a subdomain causes Apache to force the user to authenticate twice.
-***REMOVED*** @param {boolean} allowHostPrefix Whether a host prefix is allowed.
-***REMOVED***
+/**
+ * Sets whether the channel allows the use of a subdomain. There may be cases
+ * where this isn't allowed, for example, logging in with troutboard where
+ * using a subdomain causes Apache to force the user to authenticate twice.
+ * @param {boolean} allowHostPrefix Whether a host prefix is allowed.
+ */
 WebChannelBase.prototype.setAllowHostPrefix = function(allowHostPrefix) {
   this.allowHostPrefix_ = allowHostPrefix;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the channel is buffered or not. This state is valid for
-***REMOVED*** querying only after the test connection has completed. This may be
-***REMOVED*** queried in the WebChannelBase.okToMakeRequest() callback.
-***REMOVED*** A channel may be buffered if the test connection determines that
-***REMOVED*** a chunked response could not be sent down within a suitable time.
-***REMOVED*** @return {boolean} Whether the channel is buffered.
-***REMOVED***
+/**
+ * Returns whether the channel is buffered or not. This state is valid for
+ * querying only after the test connection has completed. This may be
+ * queried in the WebChannelBase.okToMakeRequest() callback.
+ * A channel may be buffered if the test connection determines that
+ * a chunked response could not be sent down within a suitable time.
+ * @return {boolean} Whether the channel is buffered.
+ */
 WebChannelBase.prototype.isBuffered = function() {
   return !this.useChunked_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether chunked mode is allowed. In certain debugging situations,
-***REMOVED*** it's useful for the application to have a way to disable chunked mode for a
-***REMOVED*** user.
+/**
+ * Returns whether chunked mode is allowed. In certain debugging situations,
+ * it's useful for the application to have a way to disable chunked mode for a
+ * user.
 
-***REMOVED*** @return {boolean} Whether chunked mode is allowed.
-***REMOVED***
+ * @return {boolean} Whether chunked mode is allowed.
+ */
 WebChannelBase.prototype.getAllowChunkedMode = function() {
   return this.allowChunkedMode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether chunked mode is allowed. In certain debugging situations, it's
-***REMOVED*** useful for the application to have a way to disable chunked mode for a user.
-***REMOVED*** @param {boolean} allowChunkedMode  Whether chunked mode is allowed.
-***REMOVED***
+/**
+ * Sets whether chunked mode is allowed. In certain debugging situations, it's
+ * useful for the application to have a way to disable chunked mode for a user.
+ * @param {boolean} allowChunkedMode  Whether chunked mode is allowed.
+ */
 WebChannelBase.prototype.setAllowChunkedMode = function(allowChunkedMode) {
   this.allowChunkedMode_ = allowChunkedMode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a request to the server. The format of the request is a Map data
-***REMOVED*** structure of key/value pairs. These maps are then encoded in a format
-***REMOVED*** suitable for the wire and then reconstituted as a Map data structure that
-***REMOVED*** the server can process.
-***REMOVED*** @param {!Object|!goog.structs.Map} map The map to send.
-***REMOVED*** @param {!Object=} opt_context The context associated with the map.
-***REMOVED***
+/**
+ * Sends a request to the server. The format of the request is a Map data
+ * structure of key/value pairs. These maps are then encoded in a format
+ * suitable for the wire and then reconstituted as a Map data structure that
+ * the server can process.
+ * @param {!Object|!goog.structs.Map} map The map to send.
+ * @param {!Object=} opt_context The context associated with the map.
+ */
 WebChannelBase.prototype.sendMap = function(map, opt_context) {
   goog.asserts.assert(this.state_ != WebChannelBase.State.CLOSED,
       'Invalid operation: sending map when state is closed');
@@ -789,15 +789,15 @@ WebChannelBase.prototype.sendMap = function(map, opt_context) {
       this.state_ == WebChannelBase.State.OPENED) {
     this.ensureForwardChannel_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** When set to true, this changes the behavior of the forward channel so it
-***REMOVED*** will not retry requests; it will fail after one network failure, and if
-***REMOVED*** there was already one network failure, the request will fail immediately.
-***REMOVED*** @param {boolean} failFast  Whether or not to fail fast.
-***REMOVED***
+/**
+ * When set to true, this changes the behavior of the forward channel so it
+ * will not retry requests; it will fail after one network failure, and if
+ * there was already one network failure, the request will fail immediately.
+ * @param {boolean} failFast  Whether or not to fail fast.
+ */
 WebChannelBase.prototype.setFailFast = function(failFast) {
   this.failFast_ = failFast;
   this.channelDebug_.info('setFailFast: ' + failFast);
@@ -819,94 +819,94 @@ WebChannelBase.prototype.setFailFast = function(failFast) {
       this.signalError_(WebChannelBase.Error.REQUEST_FAILED);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The max number of forward-channel retries, which will be 0
-***REMOVED*** in fail-fast mode.
-***REMOVED***
+/**
+ * @return {number} The max number of forward-channel retries, which will be 0
+ * in fail-fast mode.
+ */
 WebChannelBase.prototype.getForwardChannelMaxRetries = function() {
   return this.failFast_ ? 0 : this.forwardChannelMaxRetries_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the maximum number of attempts to connect to the server for forward
-***REMOVED*** channel requests.
-***REMOVED*** @param {number} retries The maximum number of attempts.
-***REMOVED***
+/**
+ * Sets the maximum number of attempts to connect to the server for forward
+ * channel requests.
+ * @param {number} retries The maximum number of attempts.
+ */
 WebChannelBase.prototype.setForwardChannelMaxRetries = function(retries) {
   this.forwardChannelMaxRetries_ = retries;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the timeout for a forward channel request.
-***REMOVED*** @param {number} timeoutMs The timeout in milliseconds.
-***REMOVED***
+/**
+ * Sets the timeout for a forward channel request.
+ * @param {number} timeoutMs The timeout in milliseconds.
+ */
 WebChannelBase.prototype.setForwardChannelRequestTimeout = function(timeoutMs) {
   this.forwardChannelRequestTimeoutMs_ = timeoutMs;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The max number of back-channel retries, which is a constant.
-***REMOVED***
+/**
+ * @return {number} The max number of back-channel retries, which is a constant.
+ */
 WebChannelBase.prototype.getBackChannelMaxRetries = function() {
   // Back-channel retries is a constant.
   return WebChannelBase.BACK_CHANNEL_MAX_RETRIES;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.isClosed = function() {
   return this.state_ == WebChannelBase.State.CLOSED;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the channel state.
-***REMOVED*** @return {WebChannelBase.State} The current state of the channel.
-***REMOVED***
+/**
+ * Returns the channel state.
+ * @return {WebChannelBase.State} The current state of the channel.
+ */
 WebChannelBase.prototype.getState = function() {
   return this.state_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the last status code received for a request.
-***REMOVED*** @return {number} The last status code received for a request.
-***REMOVED***
+/**
+ * Return the last status code received for a request.
+ * @return {number} The last status code received for a request.
+ */
 WebChannelBase.prototype.getLastStatusCode = function() {
   return this.lastStatusCode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The last array id received.
-***REMOVED***
+/**
+ * @return {number} The last array id received.
+ */
 WebChannelBase.prototype.getLastArrayId = function() {
   return this.lastArrayId_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether there are outstanding requests servicing the channel.
-***REMOVED*** @return {boolean} true if there are outstanding requests.
-***REMOVED***
+/**
+ * Returns whether there are outstanding requests servicing the channel.
+ * @return {boolean} true if there are outstanding requests.
+ */
 WebChannelBase.prototype.hasOutstandingRequests = function() {
   return this.getOutstandingRequests_() != 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of outstanding requests.
-***REMOVED*** @return {number} The number of outstanding requests to the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the number of outstanding requests.
+ * @return {number} The number of outstanding requests to the server.
+ * @private
+ */
 WebChannelBase.prototype.getOutstandingRequests_ = function() {
   var count = 0;
   if (this.backChannelRequest_) {
@@ -914,13 +914,13 @@ WebChannelBase.prototype.getOutstandingRequests_ = function() {
   }
   count += this.forwardChannelRequestPool_.getRequestCount();
   return count;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Ensures that a forward channel request is scheduled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Ensures that a forward channel request is scheduled.
+ * @private
+ */
 WebChannelBase.prototype.ensureForwardChannel_ = function() {
   if (this.forwardChannelRequestPool_.isFull()) {
     // enough connection in process - no need to start a new request
@@ -935,16 +935,16 @@ WebChannelBase.prototype.ensureForwardChannel_ = function() {
   this.forwardChannelTimerId_ = requestStats.setTimeout(
       goog.bind(this.onStartForwardChannelTimer_, this), 0);
   this.forwardChannelRetryCount_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a forward-channel retry for the specified request, unless the max
-***REMOVED*** retries has been reached.
-***REMOVED*** @param {ChannelRequest} request The failed request to retry.
-***REMOVED*** @return {boolean} true iff a retry was scheduled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a forward-channel retry for the specified request, unless the max
+ * retries has been reached.
+ * @param {ChannelRequest} request The failed request to retry.
+ * @return {boolean} true iff a retry was scheduled.
+ * @private
+ */
 WebChannelBase.prototype.maybeRetryForwardChannel_ =
     function(request) {
   if (this.forwardChannelRequestPool_.isFull() || this.forwardChannelTimerId_) {
@@ -965,27 +965,27 @@ WebChannelBase.prototype.maybeRetryForwardChannel_ =
       this.getRetryTime_(this.forwardChannelRetryCount_));
   this.forwardChannelRetryCount_++;
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Timer callback for ensureForwardChannel
-***REMOVED*** @param {ChannelRequest=} opt_retryRequest A failed request
-***REMOVED*** to retry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Timer callback for ensureForwardChannel
+ * @param {ChannelRequest=} opt_retryRequest A failed request
+ * to retry.
+ * @private
+ */
 WebChannelBase.prototype.onStartForwardChannelTimer_ = function(
     opt_retryRequest) {
   this.forwardChannelTimerId_ = null;
   this.startForwardChannel_(opt_retryRequest);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Begins a new forward channel operation to the server.
-***REMOVED*** @param {ChannelRequest=} opt_retryRequest A failed request to retry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Begins a new forward channel operation to the server.
+ * @param {ChannelRequest=} opt_retryRequest A failed request to retry.
+ * @private
+ */
 WebChannelBase.prototype.startForwardChannel_ = function(
     opt_retryRequest) {
   this.channelDebug_.debug('startForwardChannel_');
@@ -1021,16 +1021,16 @@ WebChannelBase.prototype.startForwardChannel_ = function(
     this.makeForwardChannelRequest_();
     this.channelDebug_.debug('startForwardChannel_ finished, sent request');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Establishes a new channel session with the the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Establishes a new channel session with the the server.
+ * @private
+ */
 WebChannelBase.prototype.open_ = function() {
   this.channelDebug_.debug('open_()');
-  this.nextRid_ = Math.floor(Math.random()***REMOVED*** 100000);
+  this.nextRid_ = Math.floor(Math.random() * 100000);
 
   var rid = this.nextRid_++;
   var request = ChannelRequest.createChannelRequest(
@@ -1048,14 +1048,14 @@ WebChannelBase.prototype.open_ = function() {
 
   this.forwardChannelRequestPool_.addRequest(request);
   request.xmlHttpPost(uri, requestText, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Makes a forward channel request using XMLHTTP.
-***REMOVED*** @param {!ChannelRequest=} opt_retryRequest A failed request to retry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Makes a forward channel request using XMLHTTP.
+ * @param {!ChannelRequest=} opt_retryRequest A failed request to retry.
+ * @private
+ */
 WebChannelBase.prototype.makeForwardChannelRequest_ =
     function(opt_retryRequest) {
   var rid;
@@ -1083,18 +1083,18 @@ WebChannelBase.prototype.makeForwardChannelRequest_ =
   // Randomize from 50%-100% of the forward channel timeout to avoid
   // a big hit if servers happen to die at once.
   request.setTimeout(
-      Math.round(this.forwardChannelRequestTimeoutMs_***REMOVED*** 0.50) +
-      Math.round(this.forwardChannelRequestTimeoutMs_***REMOVED*** 0.50***REMOVED*** Math.random()));
+      Math.round(this.forwardChannelRequestTimeoutMs_ * 0.50) +
+      Math.round(this.forwardChannelRequestTimeoutMs_ * 0.50 * Math.random()));
   this.forwardChannelRequestPool_.addRequest(request);
   request.xmlHttpPost(uri, requestText, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the additional parameters from the handler to the given URI.
-***REMOVED*** @param {!goog.Uri} uri The URI to add the parameters to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds the additional parameters from the handler to the given URI.
+ * @param {!goog.Uri} uri The URI to add the parameters to.
+ * @private
+ */
 WebChannelBase.prototype.addAdditionalParams_ = function(uri) {
   // Add the additional reconnect parameters as needed.
   if (this.handler_) {
@@ -1105,15 +1105,15 @@ WebChannelBase.prototype.addAdditionalParams_ = function(uri) {
       });
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the request text from the outgoing maps and resets it.
-***REMOVED*** @return {string} The encoded request text created from all the currently
-***REMOVED***                  queued outgoing maps.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the request text from the outgoing maps and resets it.
+ * @return {string} The encoded request text created from all the currently
+ *                  queued outgoing maps.
+ * @private
+ */
 WebChannelBase.prototype.dequeueOutgoingMaps_ = function() {
   var count = Math.min(this.outgoingMaps_.length,
                        WebChannelBase.MAX_MAPS_PER_REQUEST_);
@@ -1124,24 +1124,24 @@ WebChannelBase.prototype.dequeueOutgoingMaps_ = function() {
   this.pendingMaps_ = this.pendingMaps_.concat(
       this.outgoingMaps_.splice(0, count));
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Requeues unacknowledged sent arrays for retransmission in the next forward
-***REMOVED*** channel request.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Requeues unacknowledged sent arrays for retransmission in the next forward
+ * channel request.
+ * @private
+ */
 WebChannelBase.prototype.requeuePendingMaps_ = function() {
   this.outgoingMaps_ = this.pendingMaps_.concat(this.outgoingMaps_);
   this.pendingMaps_.length = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Ensures there is a backchannel request for receiving data from the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Ensures there is a backchannel request for receiving data from the server.
+ * @private
+ */
 WebChannelBase.prototype.ensureBackChannel_ = function() {
   if (this.backChannelRequest_) {
     // already have one
@@ -1157,14 +1157,14 @@ WebChannelBase.prototype.ensureBackChannel_ = function() {
   this.backChannelTimerId_ = requestStats.setTimeout(
       goog.bind(this.onStartBackChannelTimer_, this), 0);
   this.backChannelRetryCount_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a back-channel retry, unless the max retries has been reached.
-***REMOVED*** @return {boolean} true iff a retry was scheduled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a back-channel retry, unless the max retries has been reached.
+ * @return {boolean} true iff a retry was scheduled.
+ * @private
+ */
 WebChannelBase.prototype.maybeRetryBackChannel_ = function() {
   if (this.backChannelRequest_ || this.backChannelTimerId_) {
     // Should be impossible to be called in this state.
@@ -1184,23 +1184,23 @@ WebChannelBase.prototype.maybeRetryBackChannel_ = function() {
       this.getRetryTime_(this.backChannelRetryCount_));
   this.backChannelRetryCount_++;
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Timer callback for ensureBackChannel_.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Timer callback for ensureBackChannel_.
+ * @private
+ */
 WebChannelBase.prototype.onStartBackChannelTimer_ = function() {
   this.backChannelTimerId_ = null;
   this.startBackChannel_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Begins a new back channel operation to the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Begins a new back channel operation to the server.
+ * @private
+ */
 WebChannelBase.prototype.startBackChannel_ = function() {
   if (!this.okToMakeRequest_()) {
     // channel is cancelled
@@ -1227,20 +1227,20 @@ WebChannelBase.prototype.startBackChannel_ = function() {
     this.backChannelRequest_.tridentGet(uri, Boolean(this.hostPrefix_));
   } else {
     uri.setParameterValue('TYPE', 'xmlhttp');
-    this.backChannelRequest_.xmlHttpGet(uri, true /* decodeChunks***REMOVED***,
-        this.hostPrefix_, false /* opt_noClose***REMOVED***);
+    this.backChannelRequest_.xmlHttpGet(uri, true /* decodeChunks */,
+        this.hostPrefix_, false /* opt_noClose */);
   }
   this.channelDebug_.debug('New Request created');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gives the handler a chance to return an error code and stop channel
-***REMOVED*** execution. A handler might want to do this to check that the user is still
-***REMOVED*** logged in, for example.
-***REMOVED*** @private
-***REMOVED*** @return {boolean} If it's OK to make a request.
-***REMOVED***
+/**
+ * Gives the handler a chance to return an error code and stop channel
+ * execution. A handler might want to do this to check that the user is still
+ * logged in, for example.
+ * @private
+ * @return {boolean} If it's OK to make a request.
+ */
 WebChannelBase.prototype.okToMakeRequest_ = function() {
   if (this.handler_) {
     var result = this.handler_.okToMakeRequest(this);
@@ -1252,12 +1252,12 @@ WebChannelBase.prototype.okToMakeRequest_ = function() {
     }
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.testConnectionFinished =
     function(testChannel, useChunked) {
   this.channelDebug_.debug('Test Connection Finished');
@@ -1272,23 +1272,23 @@ WebChannelBase.prototype.testConnectionFinished =
   this.lastStatusCode_ = testChannel.getLastStatusCode();
 
   this.connectChannel_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.testConnectionFailure =
     function(testChannel, errorCode) {
   this.channelDebug_.debug('Test Connection Failed');
   this.lastStatusCode_ = testChannel.getLastStatusCode();
   this.signalError_(WebChannelBase.Error.REQUEST_FAILED);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.onRequestData = function(request, responseText) {
   if (this.state_ == WebChannelBase.State.CLOSED ||
       (this.backChannelRequest_ != request &&
@@ -1307,7 +1307,7 @@ WebChannelBase.prototype.onRequestData = function(request, responseText) {
       response = null;
     }
     if (goog.isArray(response) && response.length == 3) {
-      this.handlePostResponse_(***REMOVED*** @type {!Array}***REMOVED*** (response), request);
+      this.handlePostResponse_(/** @type {!Array} */ (response), request);
     } else {
       this.channelDebug_.debug('Bad POST response data returned');
       this.signalError_(WebChannelBase.Error.BAD_RESPONSE);
@@ -1318,19 +1318,19 @@ WebChannelBase.prototype.onRequestData = function(request, responseText) {
     }
     if (!goog.string.isEmpty(responseText)) {
       var response = this.wireCodec_.decodeMessage(responseText);
-      this.onInput_(***REMOVED*** @type {!Array}***REMOVED*** (response));
+      this.onInput_(/** @type {!Array} */ (response));
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a POST response from the server.
-***REMOVED*** @param {Array} responseValues The key value pairs in the POST response.
-***REMOVED*** @param {!ChannelRequest} forwardReq The forward channel request that
-***REMOVED*** triggers this function call.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a POST response from the server.
+ * @param {Array} responseValues The key value pairs in the POST response.
+ * @param {!ChannelRequest} forwardReq The forward channel request that
+ * triggers this function call.
+ * @private
+ */
 WebChannelBase.prototype.handlePostResponse_ = function(
     responseValues, forwardReq) {
   // The first response value is set to 0 if server is missing backchannel.
@@ -1351,19 +1351,19 @@ WebChannelBase.prototype.handlePostResponse_ = function(
       // We expect to receive data within 2 RTTs or we retry the backchannel.
       this.deadBackChannelTimerId_ = requestStats.setTimeout(
           goog.bind(this.onBackChannelDead_, this),
-          2***REMOVED*** WebChannelBase.RTT_ESTIMATE);
+          2 * WebChannelBase.RTT_ESTIMATE);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a POST response from the server telling us that it has detected that
-***REMOVED*** we have no hanging GET connection.
-***REMOVED*** @param {!ChannelRequest} forwardReq The forward channel request that
-***REMOVED*** triggers this function call.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a POST response from the server telling us that it has detected that
+ * we have no hanging GET connection.
+ * @param {!ChannelRequest} forwardReq The forward channel request that
+ * triggers this function call.
+ * @private
+ */
 WebChannelBase.prototype.handleBackchannelMissing_ = function(forwardReq) {
   // As long as the back channel was started before the POST was sent,
   // we should retry the backchannel. We give a slight buffer of RTT_ESTIMATE
@@ -1385,17 +1385,17 @@ WebChannelBase.prototype.handleBackchannelMissing_ = function(forwardReq) {
   }
   this.maybeRetryBackChannel_();
   requestStats.notifyStatEvent(requestStats.Stat.BACKCHANNEL_MISSING);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether we should start the process of retrying a possibly
-***REMOVED*** dead backchannel.
-***REMOVED*** @param {number} outstandingBytes The number of bytes for which the server has
-***REMOVED***     not yet received acknowledgement.
-***REMOVED*** @return {boolean} Whether to start the backchannel retry timer.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines whether we should start the process of retrying a possibly
+ * dead backchannel.
+ * @param {number} outstandingBytes The number of bytes for which the server has
+ *     not yet received acknowledgement.
+ * @return {boolean} Whether to start the backchannel retry timer.
+ * @private
+ */
 WebChannelBase.prototype.shouldRetryBackChannel_ = function(
     outstandingBytes) {
   // Not too many outstanding bytes, not buffered and not after a retry.
@@ -1403,18 +1403,18 @@ WebChannelBase.prototype.shouldRetryBackChannel_ = function(
       WebChannelBase.OUTSTANDING_DATA_BACKCHANNEL_RETRY_CUTOFF &&
       !this.isBuffered() &&
       this.backChannelRetryCount_ == 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decides which host prefix should be used, if any.  If there is a handler,
-***REMOVED*** allows the handler to validate a host prefix provided by the server, and
-***REMOVED*** optionally override it.
-***REMOVED*** @param {?string} serverHostPrefix The host prefix provided by the server.
-***REMOVED*** @return {?string} The host prefix to actually use, if any. Will return null
-***REMOVED***     if the use of host prefixes was disabled via setAllowHostPrefix().
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Decides which host prefix should be used, if any.  If there is a handler,
+ * allows the handler to validate a host prefix provided by the server, and
+ * optionally override it.
+ * @param {?string} serverHostPrefix The host prefix provided by the server.
+ * @return {?string} The host prefix to actually use, if any. Will return null
+ *     if the use of host prefixes was disabled via setAllowHostPrefix().
+ * @override
+ */
 WebChannelBase.prototype.correctHostPrefix = function(serverHostPrefix) {
   if (this.allowHostPrefix_) {
     if (this.handler_) {
@@ -1423,14 +1423,14 @@ WebChannelBase.prototype.correctHostPrefix = function(serverHostPrefix) {
     return serverHostPrefix;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the timer that indicates that our backchannel is no longer able to
-***REMOVED*** successfully receive data from the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the timer that indicates that our backchannel is no longer able to
+ * successfully receive data from the server.
+ * @private
+ */
 WebChannelBase.prototype.onBackChannelDead_ = function() {
   if (goog.isDefAndNotNull(this.deadBackChannelTimerId_)) {
     this.deadBackChannelTimerId_ = null;
@@ -1439,43 +1439,43 @@ WebChannelBase.prototype.onBackChannelDead_ = function() {
     this.maybeRetryBackChannel_();
     requestStats.notifyStatEvent(requestStats.Stat.BACKCHANNEL_DEAD);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the timer that indicates that our backchannel is no longer able to
-***REMOVED*** successfully receive data from the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears the timer that indicates that our backchannel is no longer able to
+ * successfully receive data from the server.
+ * @private
+ */
 WebChannelBase.prototype.clearDeadBackchannelTimer_ = function() {
   if (goog.isDefAndNotNull(this.deadBackChannelTimerId_)) {
     goog.global.clearTimeout(this.deadBackChannelTimerId_);
     this.deadBackChannelTimerId_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether or not the given error/status combination is fatal or not.
-***REMOVED*** On fatal errors we immediately close the session rather than retrying the
-***REMOVED*** failed request.
-***REMOVED*** @param {?ChannelRequest.Error} error The error code for the
-***REMOVED*** failed request.
-***REMOVED*** @param {number} statusCode The last HTTP status code.
-***REMOVED*** @return {boolean} Whether or not the error is fatal.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns whether or not the given error/status combination is fatal or not.
+ * On fatal errors we immediately close the session rather than retrying the
+ * failed request.
+ * @param {?ChannelRequest.Error} error The error code for the
+ * failed request.
+ * @param {number} statusCode The last HTTP status code.
+ * @return {boolean} Whether or not the error is fatal.
+ * @private
+ */
 WebChannelBase.isFatalError_ = function(error, statusCode) {
   return error == ChannelRequest.Error.UNKNOWN_SESSION_ID ||
       error == ChannelRequest.Error.ACTIVE_X_BLOCKED ||
       (error == ChannelRequest.Error.STATUS &&
        statusCode > 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.onRequestComplete = function(request) {
   this.channelDebug_.debug('Request complete');
   var type;
@@ -1556,44 +1556,44 @@ WebChannelBase.prototype.onRequestComplete = function(request) {
       this.signalError_(WebChannelBase.Error.REQUEST_FAILED);
       break;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} retryCount Number of retries so far.
-***REMOVED*** @return {number} Time in ms before firing next retry request.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {number} retryCount Number of retries so far.
+ * @return {number} Time in ms before firing next retry request.
+ * @private
+ */
 WebChannelBase.prototype.getRetryTime_ = function(retryCount) {
   var retryTime = this.baseRetryDelayMs_ +
-      Math.floor(Math.random()***REMOVED*** this.retryDelaySeedMs_);
+      Math.floor(Math.random() * this.retryDelaySeedMs_);
   if (!this.isActive()) {
     this.channelDebug_.debug('Inactive channel');
     retryTime =
-        retryTime***REMOVED*** WebChannelBase.INACTIVE_CHANNEL_RETRY_FACTOR;
+        retryTime * WebChannelBase.INACTIVE_CHANNEL_RETRY_FACTOR;
   }
   // Backoff for subsequent retries
-  retryTime***REMOVED***= retryCount;
+  retryTime *= retryCount;
   return retryTime;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} baseDelayMs The base part of the retry delay, in ms.
-***REMOVED*** @param {number} delaySeedMs A random delay between 0 and this is added to
-***REMOVED***     the base part.
-***REMOVED***
+/**
+ * @param {number} baseDelayMs The base part of the retry delay, in ms.
+ * @param {number} delaySeedMs A random delay between 0 and this is added to
+ *     the base part.
+ */
 WebChannelBase.prototype.setRetryDelay = function(baseDelayMs, delaySeedMs) {
   this.baseRetryDelayMs_ = baseDelayMs;
   this.retryDelaySeedMs_ = delaySeedMs;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes the data returned by the server.
-***REMOVED*** @param {!Array.<!Array>} respArray The response array returned by the server.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Processes the data returned by the server.
+ * @param {!Array.<!Array>} respArray The response array returned by the server.
+ * @private
+ */
 WebChannelBase.prototype.onInput_ = function(respArray) {
   var batch = this.handler_ && this.handler_.channelHandleMultipleArrays ?
       [] : null;
@@ -1614,7 +1614,7 @@ WebChannelBase.prototype.onInput_ = function(respArray) {
           this.handler_.channelOpened(this);
         }
         this.backChannelUri_ = this.getBackChannelUri(
-            this.hostPrefix_,***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.path_));
+            this.hostPrefix_, /** @type {string} */ (this.path_));
         // Open connection to receive data
         this.ensureBackChannel_();
       } else if (nextArray[0] == 'stop') {
@@ -1648,26 +1648,26 @@ WebChannelBase.prototype.onInput_ = function(respArray) {
   if (batch && !goog.array.isEmpty(batch)) {
     this.handler_.channelHandleMultipleArrays(this, batch);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper to ensure the channel is in the expected state.
-***REMOVED*** @param {...number} var_args The channel must be in one of the indicated
-***REMOVED***     states.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper to ensure the channel is in the expected state.
+ * @param {...number} var_args The channel must be in one of the indicated
+ *     states.
+ * @private
+ */
 WebChannelBase.prototype.ensureInState_ = function(var_args) {
   goog.asserts.assert(goog.array.contains(arguments, this.state_),
       'Unexpected channel state: %s', this.state_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Signals an error has occurred.
-***REMOVED*** @param {WebChannelBase.Error} error The error code for the failure.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Signals an error has occurred.
+ * @param {WebChannelBase.Error} error The error code for the failure.
+ * @private
+ */
 WebChannelBase.prototype.signalError_ = function(error) {
   this.channelDebug_.info('Error code ' + error);
   if (error == WebChannelBase.Error.REQUEST_FAILED) {
@@ -1682,14 +1682,14 @@ WebChannelBase.prototype.signalError_ = function(error) {
     requestStats.notifyStatEvent(requestStats.Stat.ERROR_OTHER);
   }
   this.onError_(error);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback for netUtils.testNetwork during error handling.
-***REMOVED*** @param {boolean} networkUp Whether the network is up.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Callback for netUtils.testNetwork during error handling.
+ * @param {boolean} networkUp Whether the network is up.
+ * @private
+ */
 WebChannelBase.prototype.testNetworkCallback_ = function(networkUp) {
   if (networkUp) {
     this.channelDebug_.info('Successfully pinged google.com');
@@ -1701,27 +1701,27 @@ WebChannelBase.prototype.testNetworkCallback_ = function(networkUp) {
     // calls notifyStatEvent, and we don't want to have another stat event.
     this.onError_(WebChannelBase.Error.NETWORK);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when messages have been successfully sent from the queue.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when messages have been successfully sent from the queue.
+ * @private
+ */
 WebChannelBase.prototype.onSuccess_ = function() {
   // TODO(user): optimize for request pool (>1)
   if (this.handler_) {
     this.handler_.channelSuccess(this, this.pendingMaps_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when we've determined the final error for a channel. It closes the
-***REMOVED*** notifiers the handler of the error and closes the channel.
-***REMOVED*** @param {WebChannelBase.Error} error  The error code for the failure.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when we've determined the final error for a channel. It closes the
+ * notifiers the handler of the error and closes the channel.
+ * @param {WebChannelBase.Error} error  The error code for the failure.
+ * @private
+ */
 WebChannelBase.prototype.onError_ = function(error) {
   this.channelDebug_.debug('HttpChannel: error - ' + error);
   this.state_ = WebChannelBase.State.CLOSED;
@@ -1730,14 +1730,14 @@ WebChannelBase.prototype.onError_ = function(error) {
   }
   this.onClose_();
   this.cancelRequests_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when the channel has been closed. It notifiers the handler of the
-***REMOVED*** event, and reports any pending or undelivered maps.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when the channel has been closed. It notifiers the handler of the
+ * event, and reports any pending or undelivered maps.
+ * @private
+ */
 WebChannelBase.prototype.onClose_ = function() {
   this.state_ = WebChannelBase.State.CLOSED;
   this.lastStatusCode_ = -1;
@@ -1758,41 +1758,41 @@ WebChannelBase.prototype.onClose_ = function() {
           copyOfUndeliveredMaps);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.getForwardChannelUri = function(path) {
   var uri = this.createDataUri(null, path);
   this.channelDebug_.debug('GetForwardChannelUri: ' + uri);
   return uri;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.getConnectionState = function() {
   return this.ConnState_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.getBackChannelUri = function(hostPrefix, path) {
   var uri = this.createDataUri(this.shouldUseSecondaryDomains() ?
       hostPrefix : null, path);
   this.channelDebug_.debug('GetBackChannelUri: ' + uri);
   return uri;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.createDataUri =
     function(hostPrefix, path, opt_overridePort) {
   var uri = goog.Uri.parse(path);
@@ -1830,83 +1830,83 @@ WebChannelBase.prototype.createDataUri =
   this.addAdditionalParams_(uri);
 
   return uri;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.createXhrIo = function(hostPrefix) {
   if (hostPrefix && !this.supportsCrossDomainXhrs_) {
     throw Error('Can\'t create secondary domain capable XhrIo object.');
   }
-***REMOVED***
+  var xhr = new goog.net.XhrIo();
   xhr.setWithCredentials(this.supportsCrossDomainXhrs_);
   return xhr;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.isActive = function() {
   return !!this.handler_ && this.handler_.isActive(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 WebChannelBase.prototype.shouldUseSecondaryDomains = function() {
   return this.supportsCrossDomainXhrs_ ||
       !ChannelRequest.supportsXhrStreaming();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A LogSaver that can be used to accumulate all the debug logs so they
-***REMOVED*** can be sent to the server when a problem is detected.
-***REMOVED***
-WebChannelBase.LogSaver = {***REMOVED***
+/**
+ * A LogSaver that can be used to accumulate all the debug logs so they
+ * can be sent to the server when a problem is detected.
+ */
+WebChannelBase.LogSaver = {};
 
 
-***REMOVED***
-***REMOVED*** Buffer for accumulating the debug log
-***REMOVED*** @type {goog.structs.CircularBuffer}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Buffer for accumulating the debug log
+ * @type {goog.structs.CircularBuffer}
+ * @private
+ */
 WebChannelBase.LogSaver.buffer_ = new goog.structs.CircularBuffer(1000);
 
 
-***REMOVED***
-***REMOVED*** Whether we're currently accumulating the debug log.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether we're currently accumulating the debug log.
+ * @type {boolean}
+ * @private
+ */
 WebChannelBase.LogSaver.enabled_ = false;
 
 
-***REMOVED***
-***REMOVED*** Formatter for saving logs.
-***REMOVED*** @type {goog.debug.Formatter}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formatter for saving logs.
+ * @type {goog.debug.Formatter}
+ * @private
+ */
 WebChannelBase.LogSaver.formatter_ = new goog.debug.TextFormatter();
 
 
-***REMOVED***
-***REMOVED*** Returns whether the LogSaver is enabled.
-***REMOVED*** @return {boolean} Whether saving is enabled or disabled.
-***REMOVED***
+/**
+ * Returns whether the LogSaver is enabled.
+ * @return {boolean} Whether saving is enabled or disabled.
+ */
 WebChannelBase.LogSaver.isEnabled = function() {
   return WebChannelBase.LogSaver.enabled_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables of disables the LogSaver.
-***REMOVED*** @param {boolean} enable Whether to enable or disable saving.
-***REMOVED***
+/**
+ * Enables of disables the LogSaver.
+ * @param {boolean} enable Whether to enable or disable saving.
+ */
 WebChannelBase.LogSaver.setEnabled = function(enable) {
   if (enable == WebChannelBase.LogSaver.enabled_) {
     return;
@@ -1919,177 +1919,177 @@ WebChannelBase.LogSaver.setEnabled = function(enable) {
   } else {
     goog.log.removeHandler(logger, fn);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a log record.
-***REMOVED*** @param {goog.log.LogRecord} logRecord the LogRecord.
-***REMOVED***
+/**
+ * Adds a log record.
+ * @param {goog.log.LogRecord} logRecord the LogRecord.
+ */
 WebChannelBase.LogSaver.addLogRecord = function(logRecord) {
   WebChannelBase.LogSaver.buffer_.add(
       WebChannelBase.LogSaver.formatter_.formatRecord(logRecord));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the log as a single string.
-***REMOVED*** @return {string} The log as a single string.
-***REMOVED***
+/**
+ * Returns the log as a single string.
+ * @return {string} The log as a single string.
+ */
 WebChannelBase.LogSaver.getBuffer = function() {
   return WebChannelBase.LogSaver.buffer_.getValues().join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the buffer
-***REMOVED***
+/**
+ * Clears the buffer
+ */
 WebChannelBase.LogSaver.clearBuffer = function() {
   WebChannelBase.LogSaver.buffer_.clear();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Abstract base class for the channel handler
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED***
-WebChannelBase.Handler = function() {***REMOVED***
+/**
+ * Abstract base class for the channel handler
+ * @constructor
+ * @struct
+ */
+WebChannelBase.Handler = function() {};
 
 
-***REMOVED***
-***REMOVED*** Callback handler for when a batch of response arrays is received from the
-***REMOVED*** server. When null, batched dispatching is disabled.
-***REMOVED*** @type {?function(!WebChannelBase, !Array.<!Array>)}
-***REMOVED***
+/**
+ * Callback handler for when a batch of response arrays is received from the
+ * server. When null, batched dispatching is disabled.
+ * @type {?function(!WebChannelBase, !Array.<!Array>)}
+ */
 WebChannelBase.Handler.prototype.channelHandleMultipleArrays = null;
 
 
-***REMOVED***
-***REMOVED*** Whether it's okay to make a request to the server. A handler can return
-***REMOVED*** false if the channel should fail. For example, if the user has logged out,
-***REMOVED*** the handler may want all requests to fail immediately.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @return {WebChannelBase.Error} An error code. The code should
-***REMOVED*** return WebChannelBase.Error.OK to indicate it's okay. Any other
-***REMOVED*** error code will cause a failure.
-***REMOVED***
+/**
+ * Whether it's okay to make a request to the server. A handler can return
+ * false if the channel should fail. For example, if the user has logged out,
+ * the handler may want all requests to fail immediately.
+ * @param {WebChannelBase} channel The channel.
+ * @return {WebChannelBase.Error} An error code. The code should
+ * return WebChannelBase.Error.OK to indicate it's okay. Any other
+ * error code will cause a failure.
+ */
 WebChannelBase.Handler.prototype.okToMakeRequest = function(channel) {
   return WebChannelBase.Error.OK;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates the WebChannel has successfully negotiated with the server
-***REMOVED*** and can now send and receive data.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED***
+/**
+ * Indicates the WebChannel has successfully negotiated with the server
+ * and can now send and receive data.
+ * @param {WebChannelBase} channel The channel.
+ */
 WebChannelBase.Handler.prototype.channelOpened = function(channel) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** New input is available for the application to process.
-***REMOVED***
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @param {Array} array The data array.
-***REMOVED***
+/**
+ * New input is available for the application to process.
+ *
+ * @param {WebChannelBase} channel The channel.
+ * @param {Array} array The data array.
+ */
 WebChannelBase.Handler.prototype.channelHandleArray = function(channel, array) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates maps were successfully sent on the channel.
-***REMOVED***
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @param {Array.<Wire.QueuedMap>} deliveredMaps The
-***REMOVED***     array of maps that have been delivered to the server. This is a direct
-***REMOVED***     reference to the internal array, so a copy should be made
-***REMOVED***     if the caller desires a reference to the data.
-***REMOVED***
+/**
+ * Indicates maps were successfully sent on the channel.
+ *
+ * @param {WebChannelBase} channel The channel.
+ * @param {Array.<Wire.QueuedMap>} deliveredMaps The
+ *     array of maps that have been delivered to the server. This is a direct
+ *     reference to the internal array, so a copy should be made
+ *     if the caller desires a reference to the data.
+ */
 WebChannelBase.Handler.prototype.channelSuccess =
     function(channel, deliveredMaps) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates an error occurred on the WebChannel.
-***REMOVED***
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @param {WebChannelBase.Error} error The error code.
-***REMOVED***
+/**
+ * Indicates an error occurred on the WebChannel.
+ *
+ * @param {WebChannelBase} channel The channel.
+ * @param {WebChannelBase.Error} error The error code.
+ */
 WebChannelBase.Handler.prototype.channelError = function(channel, error) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates the WebChannel is closed. Also notifies about which maps,
-***REMOVED*** if any, that may not have been delivered to the server.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @param {Array.<Wire.QueuedMap>=} opt_pendingMaps The
-***REMOVED***     array of pending maps, which may or may not have been delivered to the
-***REMOVED***     server.
-***REMOVED*** @param {Array.<Wire.QueuedMap>=} opt_undeliveredMaps
-***REMOVED***     The array of undelivered maps, which have definitely not been delivered
-***REMOVED***     to the server.
-***REMOVED***
+/**
+ * Indicates the WebChannel is closed. Also notifies about which maps,
+ * if any, that may not have been delivered to the server.
+ * @param {WebChannelBase} channel The channel.
+ * @param {Array.<Wire.QueuedMap>=} opt_pendingMaps The
+ *     array of pending maps, which may or may not have been delivered to the
+ *     server.
+ * @param {Array.<Wire.QueuedMap>=} opt_undeliveredMaps
+ *     The array of undelivered maps, which have definitely not been delivered
+ *     to the server.
+ */
 WebChannelBase.Handler.prototype.channelClosed =
     function(channel, opt_pendingMaps, opt_undeliveredMaps) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets any parameters that should be added at the time another connection is
-***REMOVED*** made to the server.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @return {!Object} Extra parameter keys and values to add to the
-***REMOVED***                  requests.
-***REMOVED***
+/**
+ * Gets any parameters that should be added at the time another connection is
+ * made to the server.
+ * @param {WebChannelBase} channel The channel.
+ * @return {!Object} Extra parameter keys and values to add to the
+ *                  requests.
+ */
 WebChannelBase.Handler.prototype.getAdditionalParams = function(channel) {
-  return {***REMOVED***
-***REMOVED***
+  return {};
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the URI of an image that can be used to test network connectivity.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @return {goog.Uri?} A custom URI to load for the network test.
-***REMOVED***
+/**
+ * Gets the URI of an image that can be used to test network connectivity.
+ * @param {WebChannelBase} channel The channel.
+ * @return {goog.Uri?} A custom URI to load for the network test.
+ */
 WebChannelBase.Handler.prototype.getNetworkTestImageUri = function(channel) {
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets whether this channel is currently active. This is used to determine the
-***REMOVED*** length of time to wait before retrying.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @return {boolean} Whether the channel is currently active.
-***REMOVED***
+/**
+ * Gets whether this channel is currently active. This is used to determine the
+ * length of time to wait before retrying.
+ * @param {WebChannelBase} channel The channel.
+ * @return {boolean} Whether the channel is currently active.
+ */
 WebChannelBase.Handler.prototype.isActive = function(channel) {
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called by the channel if enumeration of the map throws an exception.
-***REMOVED*** @param {WebChannelBase} channel The channel.
-***REMOVED*** @param {Object} map The map that can't be enumerated.
-***REMOVED***
+/**
+ * Called by the channel if enumeration of the map throws an exception.
+ * @param {WebChannelBase} channel The channel.
+ * @param {Object} map The map that can't be enumerated.
+ */
 WebChannelBase.Handler.prototype.badMapError = function(channel, map) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the handler to override a host prefix provided by the server. Will
-***REMOVED*** be called whenever the channel has received such a prefix and is considering
-***REMOVED*** its use.
-***REMOVED*** @param {?string} serverHostPrefix The host prefix provided by the server.
-***REMOVED*** @return {?string} The host prefix the client should use.
-***REMOVED***
+/**
+ * Allows the handler to override a host prefix provided by the server. Will
+ * be called whenever the channel has received such a prefix and is considering
+ * its use.
+ * @param {?string} serverHostPrefix The host prefix provided by the server.
+ * @return {?string} The host prefix the client should use.
+ */
 WebChannelBase.Handler.prototype.correctHostPrefix =
     function(serverHostPrefix) {
   return serverHostPrefix;
-***REMOVED***
+};
 });  // goog.scope

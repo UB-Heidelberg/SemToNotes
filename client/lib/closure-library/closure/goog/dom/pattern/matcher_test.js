@@ -97,7 +97,7 @@ function testMatcherWithQuit() {
       return true;
     }
     count++;
- ***REMOVED*****REMOVED***
+  };
 
   var matcher = new goog.dom.pattern.Matcher();
   matcher.addPattern(pattern1, callback);
@@ -124,7 +124,7 @@ function testMatcherWithReplace() {
 
       return true;
     }
- ***REMOVED*****REMOVED***
+  };
 
   var matcher = new goog.dom.pattern.Matcher();
   matcher.addPattern(pattern1, callback);

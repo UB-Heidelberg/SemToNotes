@@ -12,91 +12,91 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A simple mock class for imitating HTML5 MessageEvents.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A simple mock class for imitating HTML5 MessageEvents.
+ *
+ */
 
 goog.provide('goog.testing.messaging.MockMessageEvent');
 
 goog.require('goog.events.BrowserEvent');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.testing.events');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new fake MessageEvent.
-***REMOVED***
-***REMOVED*** @param {*} data The data of the message.
-***REMOVED*** @param {string=} opt_origin The origin of the message, for server-sent and
-***REMOVED***     cross-document events.
-***REMOVED*** @param {string=} opt_lastEventId The last event ID, for server-sent events.
-***REMOVED*** @param {Window=} opt_source The proxy for the source window, for
-***REMOVED***     cross-document events.
-***REMOVED*** @param {Array.<MessagePort>=} opt_ports The Array of ports sent with the
-***REMOVED***     message, for cross-document and channel events.
-***REMOVED*** @extends {goog.testing.events.Event}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new fake MessageEvent.
+ *
+ * @param {*} data The data of the message.
+ * @param {string=} opt_origin The origin of the message, for server-sent and
+ *     cross-document events.
+ * @param {string=} opt_lastEventId The last event ID, for server-sent events.
+ * @param {Window=} opt_source The proxy for the source window, for
+ *     cross-document events.
+ * @param {Array.<MessagePort>=} opt_ports The Array of ports sent with the
+ *     message, for cross-document and channel events.
+ * @extends {goog.testing.events.Event}
+ * @constructor
+ * @final
+ */
 goog.testing.messaging.MockMessageEvent = function(
     data, opt_origin, opt_lastEventId, opt_source, opt_ports) {
   goog.testing.messaging.MockMessageEvent.base(
       this, 'constructor', goog.events.EventType.MESSAGE);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The data of the message.
-  ***REMOVED*** @type {*}
- ***REMOVED*****REMOVED***
+  /**
+   * The data of the message.
+   * @type {*}
+   */
   this.data = data;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The origin of the message, for server-sent and cross-document events.
-  ***REMOVED*** @type {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The origin of the message, for server-sent and cross-document events.
+   * @type {?string}
+   */
   this.origin = opt_origin || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The last event ID, for server-sent events.
-  ***REMOVED*** @type {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The last event ID, for server-sent events.
+   * @type {?string}
+   */
   this.lastEventId = opt_lastEventId || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The proxy for the source window, for cross-document events.
-  ***REMOVED*** @type {Window}
- ***REMOVED*****REMOVED***
+  /**
+   * The proxy for the source window, for cross-document events.
+   * @type {Window}
+   */
   this.source = opt_source || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The Array of ports sent with the message, for cross-document and channel
-  ***REMOVED*** events.
-  ***REMOVED*** @type {Array.<!MessagePort>}
- ***REMOVED*****REMOVED***
+  /**
+   * The Array of ports sent with the message, for cross-document and channel
+   * events.
+   * @type {Array.<!MessagePort>}
+   */
   this.ports = opt_ports || null;
-***REMOVED***
+};
 goog.inherits(
     goog.testing.messaging.MockMessageEvent, goog.testing.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Wraps a new fake MessageEvent in a BrowserEvent, like how a real MessageEvent
-***REMOVED*** would be wrapped.
-***REMOVED***
-***REMOVED*** @param {*} data The data of the message.
-***REMOVED*** @param {string=} opt_origin The origin of the message, for server-sent and
-***REMOVED***     cross-document events.
-***REMOVED*** @param {string=} opt_lastEventId The last event ID, for server-sent events.
-***REMOVED*** @param {Window=} opt_source The proxy for the source window, for
-***REMOVED***     cross-document events.
-***REMOVED*** @param {Array.<MessagePort>=} opt_ports The Array of ports sent with the
-***REMOVED***     message, for cross-document and channel events.
-***REMOVED*** @return {!goog.events.BrowserEvent} The wrapping event.
-***REMOVED***
+/**
+ * Wraps a new fake MessageEvent in a BrowserEvent, like how a real MessageEvent
+ * would be wrapped.
+ *
+ * @param {*} data The data of the message.
+ * @param {string=} opt_origin The origin of the message, for server-sent and
+ *     cross-document events.
+ * @param {string=} opt_lastEventId The last event ID, for server-sent events.
+ * @param {Window=} opt_source The proxy for the source window, for
+ *     cross-document events.
+ * @param {Array.<MessagePort>=} opt_ports The Array of ports sent with the
+ *     message, for cross-document and channel events.
+ * @return {!goog.events.BrowserEvent} The wrapping event.
+ */
 goog.testing.messaging.MockMessageEvent.wrap = function(
     data, opt_origin, opt_lastEventId, opt_source, opt_ports) {
   return new goog.events.BrowserEvent(
       new goog.testing.messaging.MockMessageEvent(
           data, opt_origin, opt_lastEventId, opt_source, opt_ports));
-***REMOVED***
+};

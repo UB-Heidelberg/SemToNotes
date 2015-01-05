@@ -131,7 +131,7 @@ function testSerializeSkipFunction() {
     b: true,
     i: 100,
     f: function() { var x = 'x'; }
- ***REMOVED*****REMOVED***
+  };
   assertSerialize('', object.f);
   assertSerialize('{"s":"string value","b":true,"i":100}', object);
 }
@@ -145,7 +145,7 @@ function testObjectSerialize_recursion() {
     return; // this makes safari 4 crash.
   }
 
-  var anObject = {***REMOVED***
+  var anObject = {};
   anObject.thisObject = anObject;
   assertThrows('expected recursion exception', function() {
     goog.json.serialize(anObject);
@@ -153,7 +153,7 @@ function testObjectSerialize_recursion() {
 }
 
 function testObjectSerializeWithHasOwnProperty() {
-  var object = {'hasOwnProperty': null***REMOVED***
+  var object = {'hasOwnProperty': null};
   if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('9')) {
     assertEquals('{}', goog.json.serialize(object));
   } else {
@@ -456,10 +456,10 @@ function testIsValid() {
 }
 
 function testDoNotSerializeProto() {
-  function F() {***REMOVED***
+  function F() {};
   F.prototype = {
     c: 3
- ***REMOVED*****REMOVED***
+  };
 
   var obj = new F;
   obj.a = 1;
@@ -505,7 +505,7 @@ function testReplacer() {
 
   var f = function(k, v) {
     return typeof v == 'number' ? v + 1 : v;
- ***REMOVED*****REMOVED***
+  };
   assertSerialize('{"a":1,"b":{"c":2}}', {'a': 0, 'b': {'c': 1}}, f);
 }
 
@@ -519,11 +519,11 @@ function testToJSONSerialize() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given object serializes to the given value.
-***REMOVED*** If the current browser has an implementation of JSON.serialize,
-***REMOVED*** we make sure our version matches that one.
-***REMOVED***
+/**
+ * Asserts that the given object serializes to the given value.
+ * If the current browser has an implementation of JSON.serialize,
+ * we make sure our version matches that one.
+ */
 function assertSerialize(expected, obj, opt_replacer) {
   assertEquals(expected, goog.json.serialize(obj, opt_replacer));
 
@@ -555,11 +555,11 @@ function assertSerialize(expected, obj, opt_replacer) {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {string} a
-***REMOVED*** @param {string} b
-***REMOVED*** @return {string} any common character between two strings a and b.
-***REMOVED***
+/**
+ * @param {string} a
+ * @param {string} b
+ * @return {string} any common character between two strings a and b.
+ */
 function findCommonChar(a, b) {
   for (var i = 0; i < b.length; i++) {
     if (a.indexOf(b.charAt(i)) >= 0) {

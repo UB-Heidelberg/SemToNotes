@@ -276,20 +276,20 @@ function testSameDomainNoDomain() {
 
 
 
-***REMOVED***
-***REMOVED*** Simple class with a constant toString.
-***REMOVED*** @param {string} stringValue The result of toString.
-***REMOVED***
-***REMOVED***
+/**
+ * Simple class with a constant toString.
+ * @param {string} stringValue The result of toString.
+ * @constructor
+ */
 function HasString(stringValue) {
   this.value_ = stringValue;
 }
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 HasString.prototype.toString = function() {
   return this.value_;
-***REMOVED***
+};
 
 
 function testBuildFromEncodedParts() {
@@ -362,7 +362,7 @@ function testValuelessParam() {
   assertEquals('http://foo.com?q',
       utils.appendParam('http://foo.com', 'q'));
   assertEquals('http://foo.com?q',
-      utils.appendParam('http://foo.com', 'q', null /* opt_value***REMOVED***));
+      utils.appendParam('http://foo.com', 'q', null /* opt_value */));
   assertEquals('http://foo.com?q#preserve',
       utils.appendParam('http://foo.com#preserve', 'q'));
   assertEquals('should tolerate a lone question mark',

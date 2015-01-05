@@ -15,7 +15,7 @@
 goog.provide('goog.fx.AnimationTest');
 goog.setTestOnly('goog.fx.AnimationTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fx.Animation');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.jsunit');
@@ -33,11 +33,11 @@ function tearDownPage() {
 function testPauseLogic() {
   var anim = new goog.fx.Animation([], [], 3000);
   var nFrames = 0;
-***REMOVED***anim, goog.fx.Animation.EventType.ANIMATE, function(e) {
+  goog.events.listen(anim, goog.fx.Animation.EventType.ANIMATE, function(e) {
     assertRoughlyEquals(e.progress, progress, 1e-6);
     nFrames++;
   });
-***REMOVED***anim, goog.fx.Animation.EventType.END, function(e) {
+  goog.events.listen(anim, goog.fx.Animation.EventType.END, function(e) {
     nFrames++;
   });
   var nSteps = 10;
@@ -105,7 +105,7 @@ function testSetProgress() {
   var nFrames = 0;
   anim.play();
   anim.setProgress(0.5);
-***REMOVED***anim, goog.fx.Animation.EventType.ANIMATE, function(e) {
+  goog.events.listen(anim, goog.fx.Animation.EventType.ANIMATE, function(e) {
     assertEquals(500, e.coords[0]);
     assertRoughlyEquals(0.5, e.progress, 1e-4);
     nFrames++;

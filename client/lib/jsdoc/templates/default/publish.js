@@ -1,4 +1,4 @@
-/*global env: true***REMOVED***
+/*global env: true */
 'use strict';
 
 var fs = require('jsdoc/fs');
@@ -209,7 +209,7 @@ function generate(title, docs, filename, resolveLinks) {
     var docData = {
         title: title,
         docs: docs
-   ***REMOVED*****REMOVED***
+    };
 
     var outpath = path.join(outdir, filename),
         html = view.render('container.tmpl', docData);
@@ -233,7 +233,7 @@ function generateSourceFiles(sourceFiles, encoding) {
             source = {
                 kind: 'source',
                 code: helper.htmlsafe( fs.readFileSync(sourceFiles[file].resolved, encoding) )
-           ***REMOVED*****REMOVED***
+            };
         }
         catch(e) {
             logger.error('Error while generating source file %s: %s', file, e.message);
@@ -244,19 +244,19 @@ function generateSourceFiles(sourceFiles, encoding) {
     });
 }
 
-***REMOVED***
-***REMOVED*** Look for classes or functions with the same name as modules (which indicates that the module
-***REMOVED*** exports only that class or function), then attach the classes or functions to the `module`
-***REMOVED*** property of the appropriate module doclets. The name of each class or function is also updated
-***REMOVED*** for display purposes. This function mutates the original arrays.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {Array.<module:jsdoc/doclet.Doclet>} doclets - The array of classes and functions to
-***REMOVED*** check.
-***REMOVED*** @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of module doclets to search.
-***REMOVED***
+/**
+ * Look for classes or functions with the same name as modules (which indicates that the module
+ * exports only that class or function), then attach the classes or functions to the `module`
+ * property of the appropriate module doclets. The name of each class or function is also updated
+ * for display purposes. This function mutates the original arrays.
+ *
+ * @private
+ * @param {Array.<module:jsdoc/doclet.Doclet>} doclets - The array of classes and functions to
+ * check.
+ * @param {Array.<module:jsdoc/doclet.Doclet>} modules - The array of module doclets to search.
+ */
 function attachModuleSymbols(doclets, modules) {
-    var symbols = {***REMOVED***
+    var symbols = {};
 
     // build a lookup table
     doclets.forEach(function(symbol) {
@@ -271,19 +271,19 @@ function attachModuleSymbols(doclets, modules) {
     });
 }
 
-***REMOVED***
-***REMOVED*** Create the navigation sidebar.
-***REMOVED*** @param {object} members The members that will be used to create the sidebar.
-***REMOVED*** @param {array<object>} members.classes
-***REMOVED*** @param {array<object>} members.externals
-***REMOVED*** @param {array<object>} members.globals
-***REMOVED*** @param {array<object>} members.mixins
-***REMOVED*** @param {array<object>} members.modules
-***REMOVED*** @param {array<object>} members.namespaces
-***REMOVED*** @param {array<object>} members.tutorials
-***REMOVED*** @param {array<object>} members.events
-***REMOVED*** @return {string} The HTML for the navigation sidebar.
-***REMOVED***
+/**
+ * Create the navigation sidebar.
+ * @param {object} members The members that will be used to create the sidebar.
+ * @param {array<object>} members.classes
+ * @param {array<object>} members.externals
+ * @param {array<object>} members.globals
+ * @param {array<object>} members.mixins
+ * @param {array<object>} members.modules
+ * @param {array<object>} members.namespaces
+ * @param {array<object>} members.tutorials
+ * @param {array<object>} members.events
+ * @return {string} The HTML for the navigation sidebar.
+ */
 function buildNav(members) {
     var nav = '<h2><a href="index.html">Index</a></h2>',
         seen = {},
@@ -395,16 +395,16 @@ function buildNav(members) {
     return nav;
 }
 
-***REMOVED***
+/**
     @param {TAFFY} taffyData See <http://taffydb.com/>.
     @param {object} opts
     @param {Tutorial} tutorials
-***REMOVED***
+ */
 exports.publish = function(taffyData, opts, tutorials) {
     data = taffyData;
 
-    var conf = env.conf.templates || {***REMOVED***
-    conf['default'] = conf['default'] || {***REMOVED***
+    var conf = env.conf.templates || {};
+    conf['default'] = conf['default'] || {};
 
     var templatePath = opts.template;
     view = new template.Template(templatePath + '/tmpl');
@@ -430,7 +430,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     data.sort('longname, version, since');
     helper.addEventListeners(data);
 
-    var sourceFiles = {***REMOVED***
+    var sourceFiles = {};
     var sourceFilePaths = [];
     data().each(function(doclet) {
          doclet.attribs = '';
@@ -447,7 +447,7 @@ exports.publish = function(taffyData, opts, tutorials) {
                 return {
                     caption: caption || '',
                     code: code || example
-               ***REMOVED*****REMOVED***
+                };
             });
         }
         if (doclet.see) {
@@ -463,7 +463,7 @@ exports.publish = function(taffyData, opts, tutorials) {
             sourceFiles[sourcePath] = {
                 resolved: sourcePath,
                 shortened: null
-           ***REMOVED*****REMOVED***
+            };
             if (sourceFilePaths.indexOf(sourcePath) === -1) {
                 sourceFilePaths.push(sourcePath);
             }
@@ -637,7 +637,7 @@ exports.publish = function(taffyData, opts, tutorials) {
             header: tutorial.title,
             content: tutorial.parse(),
             children: tutorial.children
-       ***REMOVED*****REMOVED***
+        };
 
         var tutorialPath = path.join(outdir, filename),
             html = view.render('tutorial.tmpl', tutorialData);
@@ -656,4 +656,4 @@ exports.publish = function(taffyData, opts, tutorials) {
         });
     }
     saveChildren(tutorials);
-***REMOVED***
+};

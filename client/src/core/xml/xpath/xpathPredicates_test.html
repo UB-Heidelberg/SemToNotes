@@ -15,7 +15,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.node');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
   goog.require('xrx.xpath.DataType');
@@ -36,14 +36,14 @@ function resultEquals(expression, hits, xml) {
   for (var n in xml) {
     assertEquals(xml[n], r.iterateNext().getXml());
   }
-***REMOVED***
+};
 
 function test01childText() {
 
   resultEquals('//*[text()]', 2, ['<a><b>1</b><c attr="v"/>2</a>', '<b>1</b>']);
   resultEquals('//*[not(text())]', 2, ['<a><a><b>1</b><c attr="v"/>2</a></a>', '<c attr="v"/>']);
   resultEquals('//*[.="1"]', 1, ['<b>1</b>']);
-***REMOVED***
+};
 
 function test02childAttribute() {
 
@@ -51,7 +51,7 @@ function test02childAttribute() {
   resultEquals('//*[not(@attr)]', 3, ['<a><a><b>1</b><c attr="v"/>2</a></a>',
       '<a><b>1</b><c attr="v"/>2</a>', '<b>1</b>']);
   resultEquals('//*[@attr="v"]', 1, ['<c attr="v"/>']);
-***REMOVED***
+};
 
 </script>
 </body>

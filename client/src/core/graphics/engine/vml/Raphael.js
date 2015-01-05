@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A reduced version of the Raphael.js library.
-***REMOVED***
+/**
+ * @fileoverview A reduced version of the Raphael.js library.
+ */
 
 goog.provide('xrx.vml.Raphael');
 
@@ -12,7 +12,7 @@ goog.require('xrx.vml');
 
 xrx.vml.Raphael = function(element, width, height) {
   return Raphael(element, width, height);
-***REMOVED***
+};
 
 
 
@@ -49,28 +49,28 @@ xrx.vml.Raphael = function(element, width, height) {
   factory(glob);
 }(this, function (window) {
     /*\
-    ***REMOVED*** Raphael
+     * Raphael
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Creates a canvas object on which to draw.
-    ***REMOVED*** You must do this first, as all future calls to drawing methods
-    ***REMOVED*** from this instance will be bound to this canvas.
+     **
+     * Creates a canvas object on which to draw.
+     * You must do this first, as all future calls to drawing methods
+     * from this instance will be bound to this canvas.
      > Parameters
-    ***REMOVED****
+     **
      - container (HTMLElement|string) DOM element or its ID which is going to be a parent for drawing surface
      - width (number)
      - height (number)
      - callback (function) #optional callback function which is going to be executed in the context of newly created paper
-    ***REMOVED*** or
+     * or
      - x (number)
      - y (number)
      - width (number)
      - height (number)
      - callback (function) #optional callback function which is going to be executed in the context of newly created paper
-    ***REMOVED*** or
+     * or
      - all (array) (first 3 or 4 elements in the array are equal to [containerID, width, height] or [x, y, width, height]. The rest are element descriptions in format {type: type, <attributes>}). See @Paper.add.
      - callback (function) #optional callback function which is going to be executed in the context of newly created paper
-    ***REMOVED*** or
+     * or
      - onReadyCallback (function) function that is going to be called on DOM ready event. You can also subscribe to this event via Eve’s “DOMLoad” event. In this case method returns `undefined`.
      = (object) @Paper
      > Usage
@@ -130,22 +130,22 @@ xrx.vml.Raphael = function(element, width, height) {
         },
         Paper = function () {
             /*\
-            ***REMOVED*** Paper.ca
+             * Paper.ca
              [ property (object) ]
-            ***REMOVED****
-            ***REMOVED*** Shortcut for @Paper.customAttributes
+             **
+             * Shortcut for @Paper.customAttributes
             \*/
             /*\
-            ***REMOVED*** Paper.customAttributes
+             * Paper.customAttributes
              [ property (object) ]
-            ***REMOVED****
-            ***REMOVED*** If you have a set of attributes that you would like to represent
-            ***REMOVED*** as a function of some number you can do it easily with custom attributes:
+             **
+             * If you have a set of attributes that you would like to represent
+             * as a function of some number you can do it easily with custom attributes:
              > Usage
              | paper.customAttributes.hue = function (num) {
              |     num = num % 1;
-             |     return {fill: "hsb(" + num + ", 0.75, 1)"***REMOVED***
-             |***REMOVED*****REMOVED***
+             |     return {fill: "hsb(" + num + ", 0.75, 1)"};
+             | };
              | // Custom attribute “hue” will change fill
              | // to be given hue with fixed saturation and brightness.
              | // Now you can use it like this:
@@ -156,12 +156,12 @@ xrx.vml.Raphael = function(element, width, height) {
              | // You could also create custom attribute
              | // with multiple parameters:
              | paper.customAttributes.hsb = function (h, s, b) {
-             |     return {fill: "hsb(" + [h, s, b].join(",") + ")"***REMOVED***
-             |***REMOVED*****REMOVED***
+             |     return {fill: "hsb(" + [h, s, b].join(",") + ")"};
+             | };
              | c.attr({hsb: "0.5 .8 1"});
              | c.animate({hsb: [1, 0, 0.5]}, 1e3);
             \*/
-            this.ca = this.customAttributes = {***REMOVED***
+            this.ca = this.customAttributes = {};
         },
         paperproto,
         appendChild = "appendChild",
@@ -255,7 +255,7 @@ xrx.vml.Raphael = function(element, width, height) {
         },
         rectPath = R._rectPath = function (x, y, w, h, r) {
             if (r) {
-                return [["M", x + r, y], ["l", w - r***REMOVED*** 2, 0], ["a", r, r, 0, 0, 1, r, r], ["l", 0, h - r***REMOVED*** 2], ["a", r, r, 0, 0, 1, -r, r], ["l", r***REMOVED*** 2 - w, 0], ["a", r, r, 0, 0, 1, -r, -r], ["l", 0, r***REMOVED*** 2 - h], ["a", r, r, 0, 0, 1, r, -r], ["z"]];
+                return [["M", x + r, y], ["l", w - r * 2, 0], ["a", r, r, 0, 0, 1, r, r], ["l", 0, h - r * 2], ["a", r, r, 0, 0, 1, -r, r], ["l", r * 2 - w, 0], ["a", r, r, 0, 0, 1, -r, -r], ["l", 0, r * 2 - h], ["a", r, r, 0, 0, 1, r, -r], ["z"]];
             }
             return [["M", x, y], ["l", w, 0], ["l", 0, h], ["l", -w, 0], ["z"]];
         },
@@ -263,7 +263,7 @@ xrx.vml.Raphael = function(element, width, height) {
             if (ry == null) {
                 ry = rx;
             }
-            return [["M", x, y], ["m", 0, -ry], ["a", rx, ry, 0, 1, 1, 0, 2***REMOVED*** ry], ["a", rx, ry, 0, 1, 1, 0, -2***REMOVED*** ry], ["z"]];
+            return [["M", x, y], ["m", 0, -ry], ["a", rx, ry, 0, 1, 1, 0, 2 * ry], ["a", rx, ry, 0, 1, 1, 0, -2 * ry], ["z"]];
         },
         getPath = R._getPath = {
             path: function (el) {
@@ -295,10 +295,10 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         },
         /*\
-        ***REMOVED*** Raphael.mapPath
+         * Raphael.mapPath
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Transform the path string with given matrix.
+         **
+         * Transform the path string with given matrix.
          > Parameters
          - path (string) path string
          - matrix (object) see @Matrix
@@ -320,14 +320,14 @@ xrx.vml.Raphael = function(element, width, height) {
                 }
             }
             return path;
-       ***REMOVED*****REMOVED***
+        };
 
     R._g = g;
     /*\
-    ***REMOVED*** Raphael.type
+     * Raphael.type
      [ property (string) ]
-    ***REMOVED****
-    ***REMOVED*** Can be “SVG”, “VML” or empty, depending on browser support.
+     **
+     * Can be “SVG”, “VML” or empty, depending on browser support.
     \*/
     R.type = (g.win.SVGAngle || g.doc.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#BasicStructure", "1.1") ? "SVG" : "VML");
     if (R.type == "VML") {
@@ -342,39 +342,39 @@ xrx.vml.Raphael = function(element, width, height) {
         d = null;
     }
     /*\
-    ***REMOVED*** Raphael.svg
+     * Raphael.svg
      [ property (boolean) ]
-    ***REMOVED****
-    ***REMOVED*** `true` if browser supports SVG.
+     **
+     * `true` if browser supports SVG.
     \*/
     /*\
-    ***REMOVED*** Raphael.vml
+     * Raphael.vml
      [ property (boolean) ]
-    ***REMOVED****
-    ***REMOVED*** `true` if browser supports VML.
+     **
+     * `true` if browser supports VML.
     \*/
     R.svg = !(R.vml = R.type == "VML");
     R._Paper = Paper;
     /*\
-    ***REMOVED*** Raphael.fn
+     * Raphael.fn
      [ property (object) ]
-    ***REMOVED****
-    ***REMOVED*** You can add your own method to the canvas. For example if you want to draw a pie chart,
-    ***REMOVED*** you can create your own pie chart function and ship it as a Raphaël plugin. To do this
-    ***REMOVED*** you need to extend the `Raphael.fn` object. You should modify the `fn` object before a
-    ***REMOVED*** Raphaël instance is created, otherwise it will take no effect. Please note that the
-    ***REMOVED*** ability for namespaced plugins was removed in Raphael 2.0. It is up to the plugin to
-    ***REMOVED*** ensure any namespacing ensures proper context.
+     **
+     * You can add your own method to the canvas. For example if you want to draw a pie chart,
+     * you can create your own pie chart function and ship it as a Raphaël plugin. To do this
+     * you need to extend the `Raphael.fn` object. You should modify the `fn` object before a
+     * Raphaël instance is created, otherwise it will take no effect. Please note that the
+     * ability for namespaced plugins was removed in Raphael 2.0. It is up to the plugin to
+     * ensure any namespacing ensures proper context.
      > Usage
      | Raphael.fn.arrow = function (x1, y1, x2, y2, size) {
      |     return this.path( ... );
-     |***REMOVED*****REMOVED***
+     | };
      | // or create namespace
      | Raphael.fn.mystuff = {
      |     arrow: function () {…},
      |     star: function () {…},
      |     // etc…
-     |***REMOVED*****REMOVED***
+     | };
      | var paper = Raphael(10, 10, 630, 480);
      | // then use it
      | paper.arrow(10, 10, 30, 30, 5).attr({fill: "#f00"});
@@ -385,10 +385,10 @@ xrx.vml.Raphael = function(element, width, height) {
     R._id = 0;
     R._oid = 0;
     /*\
-    ***REMOVED*** Raphael.is
+     * Raphael.is
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Handfull replacement for `typeof` operator.
+     **
+     * Handfull replacement for `typeof` operator.
      > Parameters
      - o (…) any object or primitive
      - type (string) name of the type, i.e. “string”, “function”, “number”, etc.
@@ -407,7 +407,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 (type == "object" && o === Object(o)) ||
                 (type == "array" && Array.isArray && Array.isArray(o)) ||
                 objectToString.call(o).slice(8, -1).toLowerCase() == type;
-   ***REMOVED*****REMOVED***
+    };
 
     function clone(obj) {
         if (typeof obj == "function" || Object(obj) !== obj) {
@@ -421,10 +421,10 @@ xrx.vml.Raphael = function(element, width, height) {
     }
 
     /*\
-    ***REMOVED*** Raphael.angle
+     * Raphael.angle
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns angle between two or three points
+     **
+     * Returns angle between two or three points
      > Parameters
      - x1 (number) x coord of first point
      - y1 (number) y coord of first point
@@ -441,40 +441,40 @@ xrx.vml.Raphael = function(element, width, height) {
             if (!x && !y) {
                 return 0;
             }
-            return (180 + math.atan2(-y, -x)***REMOVED*** 180 / PI + 360) % 360;
+            return (180 + math.atan2(-y, -x) * 180 / PI + 360) % 360;
         } else {
             return R.angle(x1, y1, x3, y3) - R.angle(x2, y2, x3, y3);
         }
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.rad
+     * Raphael.rad
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Transform angle to radians
+     **
+     * Transform angle to radians
      > Parameters
      - deg (number) angle in degrees
      = (number) angle in radians.
     \*/
     R.rad = function (deg) {
-        return deg % 360***REMOVED*** PI / 180;
-   ***REMOVED*****REMOVED***
+        return deg % 360 * PI / 180;
+    };
     /*\
-    ***REMOVED*** Raphael.deg
+     * Raphael.deg
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Transform angle to degrees
+     **
+     * Transform angle to degrees
      > Parameters
      - deg (number) angle in radians
      = (number) angle in degrees.
     \*/
     R.deg = function (rad) {
-        return rad***REMOVED*** 180 / PI % 360;
-   ***REMOVED*****REMOVED***
+        return rad * 180 / PI % 360;
+    };
     /*\
-    ***REMOVED*** Raphael.snapTo
+     * Raphael.snapTo
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Snaps given value to given grid.
+     **
+     * Snaps given value to given grid.
      > Parameters
      - values (array|number) given array of values or step of the grid
      - value (number) value to adjust
@@ -499,29 +499,29 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return value;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Raphael.createUUID
+     * Raphael.createUUID
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns RFC4122, version 4 ID
+     **
+     * Returns RFC4122, version 4 ID
     \*/
     var createUUID = R.createUUID = (function (uuidRegEx, uuidReplacer) {
         return function () {
             return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(uuidRegEx, uuidReplacer).toUpperCase();
-       ***REMOVED*****REMOVED***
+        };
     })(/[xy]/g, function (c) {
-        var r = math.random()***REMOVED*** 16 | 0,
+        var r = math.random() * 16 | 0,
             v = c == "x" ? r : (r & 3 | 8);
         return v.toString(16);
     });
 
     /*\
-    ***REMOVED*** Raphael.setWindow
+     * Raphael.setWindow
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Used when you need to draw in `&lt;iframe>`. Switched window to the iframe one.
+     **
+     * Used when you need to draw in `&lt;iframe>`. Switched window to the iframe one.
      > Parameters
      - newwin (window) new window object
     \*/
@@ -531,7 +531,7 @@ xrx.vml.Raphael = function(element, width, height) {
         if (R._engine.initWin) {
             R._engine.initWin(g.win);
         }
-   ***REMOVED*****REMOVED***
+    };
     var toHex = function (color) {
         if (R.vml) {
             // http://dean.edwards.name/weblog/2009/10/convert-any-colour-value-to-hex-in-msie/
@@ -598,25 +598,25 @@ xrx.vml.Raphael = function(element, width, height) {
         return [r, g, b];
     },
     packageRGB = function (r, g, b, o) {
-        r***REMOVED***= 255;
-        g***REMOVED***= 255;
-        b***REMOVED***= 255;
+        r *= 255;
+        g *= 255;
+        b *= 255;
         var rgb = {
             r: r,
             g: g,
             b: b,
             hex: R.rgb(r, g, b),
             toString: rgbtoString
-       ***REMOVED*****REMOVED***
+        };
         R.is(o, "finite") && (rgb.opacity = o);
         return rgb;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Raphael.color
+     * Raphael.color
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Parses the color string and returns object with all values for the given color.
+     **
+     * Parses the color string and returns object with all values for the given color.
      > Parameters
      - clr (string) color string in one of the supported formats (see @Raphael.getRGB)
      = (object) Combined RGB & HSB object in format:
@@ -658,18 +658,18 @@ xrx.vml.Raphael = function(element, width, height) {
                 rgb = R.rgb2hsb(clr);
                 clr.v = rgb.b;
             } else {
-                clr = {hex: "none"***REMOVED***
+                clr = {hex: "none"};
                 clr.r = clr.g = clr.b = clr.h = clr.s = clr.v = clr.l = -1;
             }
         }
         clr.toString = rgbtoString;
         return clr;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.hsb2rgb
+     * Raphael.hsb2rgb
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts HSB values to RGB object.
+     **
+     * Converts HSB values to RGB object.
      > Parameters
      - h (number) hue
      - s (number) saturation
@@ -689,11 +689,11 @@ xrx.vml.Raphael = function(element, width, height) {
             h = h.h;
             o = h.o;
         }
-        h***REMOVED***= 360;
+        h *= 360;
         var R, G, B, X, C;
         h = (h % 360) / 60;
-        C = v***REMOVED*** s;
-        X = C***REMOVED*** (1 - abs(h % 2 - 1));
+        C = v * s;
+        X = C * (1 - abs(h % 2 - 1));
         R = G = B = v - C;
 
         h = ~~h;
@@ -701,12 +701,12 @@ xrx.vml.Raphael = function(element, width, height) {
         G += [X, C, C, X, 0, 0][h];
         B += [0, 0, X, C, C, X][h];
         return packageRGB(R, G, B, o);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.hsl2rgb
+     * Raphael.hsl2rgb
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts HSL values to RGB object.
+     **
+     * Converts HSL values to RGB object.
      > Parameters
      - h (number) hue
      - s (number) saturation
@@ -730,11 +730,11 @@ xrx.vml.Raphael = function(element, width, height) {
             s /= 100;
             l /= 100;
         }
-        h***REMOVED***= 360;
+        h *= 360;
         var R, G, B, X, C;
         h = (h % 360) / 60;
-        C = 2***REMOVED*** s***REMOVED*** (l < .5 ? l : 1 - l);
-        X = C***REMOVED*** (1 - abs(h % 2 - 1));
+        C = 2 * s * (l < .5 ? l : 1 - l);
+        X = C * (1 - abs(h % 2 - 1));
         R = G = B = l - C / 2;
 
         h = ~~h;
@@ -742,12 +742,12 @@ xrx.vml.Raphael = function(element, width, height) {
         G += [X, C, C, X, 0, 0][h];
         B += [0, 0, X, C, C, X][h];
         return packageRGB(R, G, B, o);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.rgb2hsb
+     * Raphael.rgb2hsb
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts RGB values to HSB object.
+     **
+     * Converts RGB values to HSB object.
      > Parameters
      - r (number) red
      - g (number) green
@@ -772,16 +772,16 @@ xrx.vml.Raphael = function(element, width, height) {
              V == r ? (g - b) / C :
              V == g ? (b - r) / C + 2 :
                       (r - g) / C + 4
-          ***REMOVED***
-        H = ((H + 360) % 6)***REMOVED*** 60 / 360;
+            );
+        H = ((H + 360) % 6) * 60 / 360;
         S = C == 0 ? 0 : C / V;
-        return {h: H, s: S, b: V, toString: hsbtoString***REMOVED***
-   ***REMOVED*****REMOVED***
+        return {h: H, s: S, b: V, toString: hsbtoString};
+    };
     /*\
-    ***REMOVED*** Raphael.rgb2hsl
+     * Raphael.rgb2hsl
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts RGB values to HSL object.
+     **
+     * Converts RGB values to HSL object.
      > Parameters
      - r (number) red
      - g (number) green
@@ -807,16 +807,16 @@ xrx.vml.Raphael = function(element, width, height) {
              M == r ? (g - b) / C :
              M == g ? (b - r) / C + 2 :
                       (r - g) / C + 4);
-        H = ((H + 360) % 6)***REMOVED*** 60 / 360;
+        H = ((H + 360) % 6) * 60 / 360;
         L = (M + m) / 2;
         S = (C == 0 ? 0 :
-             L < .5 ? C / (2***REMOVED*** L) :
-                      C / (2 - 2***REMOVED*** L));
-        return {h: H, s: S, l: L, toString: hsltoString***REMOVED***
-   ***REMOVED*****REMOVED***
+             L < .5 ? C / (2 * L) :
+                      C / (2 - 2 * L));
+        return {h: H, s: S, l: L, toString: hsltoString};
+    };
     R._path2string = function () {
         return this.join(",").replace(p2s, "$1");
-   ***REMOVED*****REMOVED***
+    };
     function repush(array, item) {
         for (var i = 0, ii = array.length; i < ii; i++) if (array[i] === item) {
             return array.push(array.splice(i, 1)[0]);
@@ -847,23 +847,23 @@ xrx.vml.Raphael = function(element, width, height) {
             f.call(this);
             this.onload = null;
             g.doc.body.removeChild(this);
-       ***REMOVED*****REMOVED***
+        };
         img.onerror = function () {
             g.doc.body.removeChild(this);
-       ***REMOVED*****REMOVED***
+        };
         g.doc.body.appendChild(img);
         img.src = src;
-   ***REMOVED*****REMOVED***
+    };
 
     function clrToString() {
         return this.hex;
     }
 
     /*\
-    ***REMOVED*** Raphael.getRGB
+     * Raphael.getRGB
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Parses colour string as RGB object
+     **
+     * Parses colour string as RGB object
      > Parameters
      - colour (string) colour string in one of formats:
      # <ul>
@@ -888,10 +888,10 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     R.getRGB = cacher(function (colour) {
         if (!colour || !!((colour = Str(colour)).indexOf("-") + 1)) {
-            return {r: -1, g: -1, b: -1, hex: "none", error: 1, toString: clrToString***REMOVED***
+            return {r: -1, g: -1, b: -1, hex: "none", error: 1, toString: clrToString};
         }
         if (colour == "none") {
-            return {r: -1, g: -1, b: -1, hex: "none", toString: clrToString***REMOVED***
+            return {r: -1, g: -1, b: -1, hex: "none", toString: clrToString};
         }
         !(hsrg[has](colour.toLowerCase().substring(0, 2)) || colour.charAt() == "#") && (colour = toHex(colour));
         var res,
@@ -916,22 +916,22 @@ xrx.vml.Raphael = function(element, width, height) {
             if (rgb[4]) {
                 values = rgb[4][split](commaSpaces);
                 red = toFloat(values[0]);
-                values[0].slice(-1) == "%" && (red***REMOVED***= 2.55);
+                values[0].slice(-1) == "%" && (red *= 2.55);
                 green = toFloat(values[1]);
-                values[1].slice(-1) == "%" && (green***REMOVED***= 2.55);
+                values[1].slice(-1) == "%" && (green *= 2.55);
                 blue = toFloat(values[2]);
-                values[2].slice(-1) == "%" && (blue***REMOVED***= 2.55);
+                values[2].slice(-1) == "%" && (blue *= 2.55);
                 rgb[1].toLowerCase().slice(0, 4) == "rgba" && (opacity = toFloat(values[3]));
                 values[3] && values[3].slice(-1) == "%" && (opacity /= 100);
             }
             if (rgb[5]) {
                 values = rgb[5][split](commaSpaces);
                 red = toFloat(values[0]);
-                values[0].slice(-1) == "%" && (red***REMOVED***= 2.55);
+                values[0].slice(-1) == "%" && (red *= 2.55);
                 green = toFloat(values[1]);
-                values[1].slice(-1) == "%" && (green***REMOVED***= 2.55);
+                values[1].slice(-1) == "%" && (green *= 2.55);
                 blue = toFloat(values[2]);
-                values[2].slice(-1) == "%" && (blue***REMOVED***= 2.55);
+                values[2].slice(-1) == "%" && (blue *= 2.55);
                 (values[0].slice(-3) == "deg" || values[0].slice(-1) == "\xb0") && (red /= 360);
                 rgb[1].toLowerCase().slice(0, 4) == "hsba" && (opacity = toFloat(values[3]));
                 values[3] && values[3].slice(-1) == "%" && (opacity /= 100);
@@ -940,28 +940,28 @@ xrx.vml.Raphael = function(element, width, height) {
             if (rgb[6]) {
                 values = rgb[6][split](commaSpaces);
                 red = toFloat(values[0]);
-                values[0].slice(-1) == "%" && (red***REMOVED***= 2.55);
+                values[0].slice(-1) == "%" && (red *= 2.55);
                 green = toFloat(values[1]);
-                values[1].slice(-1) == "%" && (green***REMOVED***= 2.55);
+                values[1].slice(-1) == "%" && (green *= 2.55);
                 blue = toFloat(values[2]);
-                values[2].slice(-1) == "%" && (blue***REMOVED***= 2.55);
+                values[2].slice(-1) == "%" && (blue *= 2.55);
                 (values[0].slice(-3) == "deg" || values[0].slice(-1) == "\xb0") && (red /= 360);
                 rgb[1].toLowerCase().slice(0, 4) == "hsla" && (opacity = toFloat(values[3]));
                 values[3] && values[3].slice(-1) == "%" && (opacity /= 100);
                 return R.hsl2rgb(red, green, blue, opacity);
             }
-            rgb = {r: red, g: green, b: blue, toString: clrToString***REMOVED***
+            rgb = {r: red, g: green, b: blue, toString: clrToString};
             rgb.hex = "#" + (16777216 | blue | (green << 8) | (red << 16)).toString(16).slice(1);
             R.is(opacity, "finite") && (rgb.opacity = opacity);
             return rgb;
         }
-        return {r: -1, g: -1, b: -1, hex: "none", error: 1, toString: clrToString***REMOVED***
+        return {r: -1, g: -1, b: -1, hex: "none", error: 1, toString: clrToString};
     }, R);
     /*\
-    ***REMOVED*** Raphael.hsb
+     * Raphael.hsb
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts HSB values to hex representation of the colour.
+     **
+     * Converts HSB values to hex representation of the colour.
      > Parameters
      - h (number) hue
      - s (number) saturation
@@ -972,10 +972,10 @@ xrx.vml.Raphael = function(element, width, height) {
         return R.hsb2rgb(h, s, b).hex;
     });
     /*\
-    ***REMOVED*** Raphael.hsl
+     * Raphael.hsl
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts HSL values to hex representation of the colour.
+     **
+     * Converts HSL values to hex representation of the colour.
      > Parameters
      - h (number) hue
      - s (number) saturation
@@ -986,10 +986,10 @@ xrx.vml.Raphael = function(element, width, height) {
         return R.hsl2rgb(h, s, l).hex;
     });
     /*\
-    ***REMOVED*** Raphael.rgb
+     * Raphael.rgb
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Converts RGB values to hex representation of the colour.
+     **
+     * Converts RGB values to hex representation of the colour.
      > Parameters
      - r (number) red
      - g (number) green
@@ -1000,10 +1000,10 @@ xrx.vml.Raphael = function(element, width, height) {
         return "#" + (16777216 | b | (g << 8) | (r << 16)).toString(16).slice(1);
     });
     /*\
-    ***REMOVED*** Raphael.getColor
+     * Raphael.getColor
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** On each call returns next colour in the spectrum. To reset it back to red call @Raphael.getColor.reset
+     **
+     * On each call returns next colour in the spectrum. To reset it back to red call @Raphael.getColor.reset
      > Parameters
      - value (number) #optional brightness, default is `0.75`
      = (string) hex representation of the colour.
@@ -1018,21 +1018,21 @@ xrx.vml.Raphael = function(element, width, height) {
             start.s <= 0 && (this.getColor.start = {h: 0, s: 1, b: start.b});
         }
         return rgb.hex;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.getColor.reset
+     * Raphael.getColor.reset
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Resets spectrum position for @Raphael.getColor back to red.
+     **
+     * Resets spectrum position for @Raphael.getColor back to red.
     \*/
     R.getColor.reset = function () {
         delete this.start;
-   ***REMOVED*****REMOVED***
+    };
 
     // http://schepers.cc/getting-to-the-point
     function catmullRom2bezier(crp, z) {
         var d = [];
-        for (var i = 0, iLen = crp.length; iLen - 2***REMOVED*** !z > i; i += 2) {
+        for (var i = 0, iLen = crp.length; iLen - 2 * !z > i; i += 2) {
             var p = [
                         {x: +crp[i - 2], y: +crp[i - 1]},
                         {x: +crp[i],     y: +crp[i + 1]},
@@ -1041,24 +1041,24 @@ xrx.vml.Raphael = function(element, width, height) {
                     ];
             if (z) {
                 if (!i) {
-                    p[0] = {x: +crp[iLen - 2], y: +crp[iLen - 1]***REMOVED***
+                    p[0] = {x: +crp[iLen - 2], y: +crp[iLen - 1]};
                 } else if (iLen - 4 == i) {
-                    p[3] = {x: +crp[0], y: +crp[1]***REMOVED***
+                    p[3] = {x: +crp[0], y: +crp[1]};
                 } else if (iLen - 2 == i) {
-                    p[2] = {x: +crp[0], y: +crp[1]***REMOVED***
-                    p[3] = {x: +crp[2], y: +crp[3]***REMOVED***
+                    p[2] = {x: +crp[0], y: +crp[1]};
+                    p[3] = {x: +crp[2], y: +crp[3]};
                 }
             } else {
                 if (iLen - 4 == i) {
                     p[3] = p[2];
                 } else if (!i) {
-                    p[0] = {x: +crp[i], y: +crp[i + 1]***REMOVED***
+                    p[0] = {x: +crp[i], y: +crp[i + 1]};
                 }
             }
             d.push(["C",
-                  (-p[0].x + 6***REMOVED*** p[1].x + p[2].x) / 6,
-                  (-p[0].y + 6***REMOVED*** p[1].y + p[2].y) / 6,
-                  (p[1].x + 6***REMOVED*** p[2].x - p[3].x) / 6,
+                  (-p[0].x + 6 * p[1].x + p[2].x) / 6,
+                  (-p[0].y + 6 * p[1].y + p[2].y) / 6,
+                  (p[1].x + 6 * p[2].x - p[3].x) / 6,
                   (p[1].y + 6*p[2].y - p[3].y) / 6,
                   p[2].x,
                   p[2].y
@@ -1068,12 +1068,12 @@ xrx.vml.Raphael = function(element, width, height) {
         return d;
     }
     /*\
-    ***REMOVED*** Raphael.parsePathString
+     * Raphael.parsePathString
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Parses given path string into an array of arrays of path segments.
+     **
+     * Utility method
+     **
+     * Parses given path string into an array of arrays of path segments.
      > Parameters
      - pathString (string|array) path string or array of segments (in the last case it will be returned straight away)
      = (array) array of segments.
@@ -1117,14 +1117,14 @@ xrx.vml.Raphael = function(element, width, height) {
         data.toString = R._path2string;
         pth.arr = pathClone(data);
         return data;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.parseTransformString
+     * Raphael.parseTransformString
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Parses given path string into an array of transformations.
+     **
+     * Utility method
+     **
+     * Parses given path string into an array of transformations.
      > Parameters
      - TString (string|array) transform string or array of transformations (in the last case it will be returned straight away)
      = (array) array of transformations.
@@ -1153,13 +1153,13 @@ xrx.vml.Raphael = function(element, width, height) {
     });
     // PATHS
     var paths = function (ps) {
-        var p = paths.ps = paths.ps || {***REMOVED***
+        var p = paths.ps = paths.ps || {};
         if (p[ps]) {
             p[ps].sleep = 100;
         } else {
             p[ps] = {
                 sleep: 100
-           ***REMOVED*****REMOVED***
+            };
         }
         setTimeout(function () {
             for (var key in p) if (p[has](key) && key != ps) {
@@ -1168,14 +1168,14 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         });
         return p[ps];
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.findDotsAtSegment
+     * Raphael.findDotsAtSegment
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Find dot coordinates on the given cubic bezier curve at the given t.
+     **
+     * Utility method
+     **
+     * Find dot coordinates on the given cubic bezier curve at the given t.
      > Parameters
      - p1x (number) x of the first point of the curve
      - p1y (number) y of the first point of the curve
@@ -1213,19 +1213,19 @@ xrx.vml.Raphael = function(element, width, height) {
         var t1 = 1 - t,
             t13 = pow(t1, 3),
             t12 = pow(t1, 2),
-            t2 = t***REMOVED*** t,
-            t3 = t2***REMOVED*** t,
-            x = t13***REMOVED*** p1x + t12***REMOVED*** 3***REMOVED*** t***REMOVED*** c1x + t1***REMOVED*** 3***REMOVED*** t***REMOVED*** t***REMOVED*** c2x + t3***REMOVED*** p2x,
-            y = t13***REMOVED*** p1y + t12***REMOVED*** 3***REMOVED*** t***REMOVED*** c1y + t1***REMOVED*** 3***REMOVED*** t***REMOVED*** t***REMOVED*** c2y + t3***REMOVED*** p2y,
-            mx = p1x + 2***REMOVED*** t***REMOVED*** (c1x - p1x) + t2***REMOVED*** (c2x - 2***REMOVED*** c1x + p1x),
-            my = p1y + 2***REMOVED*** t***REMOVED*** (c1y - p1y) + t2***REMOVED*** (c2y - 2***REMOVED*** c1y + p1y),
-            nx = c1x + 2***REMOVED*** t***REMOVED*** (c2x - c1x) + t2***REMOVED*** (p2x - 2***REMOVED*** c2x + c1x),
-            ny = c1y + 2***REMOVED*** t***REMOVED*** (c2y - c1y) + t2***REMOVED*** (p2y - 2***REMOVED*** c2y + c1y),
-            ax = t1***REMOVED*** p1x + t***REMOVED*** c1x,
-            ay = t1***REMOVED*** p1y + t***REMOVED*** c1y,
-            cx = t1***REMOVED*** c2x + t***REMOVED*** p2x,
-            cy = t1***REMOVED*** c2y + t***REMOVED*** p2y,
-            alpha = (90 - math.atan2(mx - nx, my - ny)***REMOVED*** 180 / PI);
+            t2 = t * t,
+            t3 = t2 * t,
+            x = t13 * p1x + t12 * 3 * t * c1x + t1 * 3 * t * t * c2x + t3 * p2x,
+            y = t13 * p1y + t12 * 3 * t * c1y + t1 * 3 * t * t * c2y + t3 * p2y,
+            mx = p1x + 2 * t * (c1x - p1x) + t2 * (c2x - 2 * c1x + p1x),
+            my = p1y + 2 * t * (c1y - p1y) + t2 * (c2y - 2 * c1y + p1y),
+            nx = c1x + 2 * t * (c2x - c1x) + t2 * (p2x - 2 * c2x + c1x),
+            ny = c1y + 2 * t * (c2y - c1y) + t2 * (p2y - 2 * c2y + c1y),
+            ax = t1 * p1x + t * c1x,
+            ay = t1 * p1y + t * c1y,
+            cx = t1 * c2x + t * p2x,
+            cy = t1 * c2y + t * p2y,
+            alpha = (90 - math.atan2(mx - nx, my - ny) * 180 / PI);
         (mx > nx || my < ny) && (alpha += 180);
         return {
             x: x,
@@ -1235,15 +1235,15 @@ xrx.vml.Raphael = function(element, width, height) {
             start: {x: ax, y: ay},
             end: {x: cx, y: cy},
             alpha: alpha
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     /*\
-    ***REMOVED*** Raphael.bezierBBox
+     * Raphael.bezierBBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Return bounding box of a given cubic bezier curve
+     **
+     * Utility method
+     **
+     * Return bounding box of a given cubic bezier curve
      > Parameters
      - p1x (number) x of the first point of the curve
      - p1y (number) y of the first point of the curve
@@ -1253,7 +1253,7 @@ xrx.vml.Raphael = function(element, width, height) {
      - c2y (number) y of the second anchor of the curve
      - p2x (number) x of the second point of the curve
      - p2y (number) y of the second point of the curve
-    ***REMOVED*** or
+     * or
      - bez (array) array of six points for bezier curve
      = (object) point information in format:
      o {
@@ -1279,15 +1279,15 @@ xrx.vml.Raphael = function(element, width, height) {
             y2: bbox.max.y,
             width: bbox.max.x - bbox.min.x,
             height: bbox.max.y - bbox.min.y
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     /*\
-    ***REMOVED*** Raphael.isPointInsideBBox
+     * Raphael.isPointInsideBBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Returns `true` if given point is inside bounding boxes.
+     **
+     * Utility method
+     **
+     * Returns `true` if given point is inside bounding boxes.
      > Parameters
      - bbox (string) bounding box
      - x (string) x coordinate of the point
@@ -1296,14 +1296,14 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     R.isPointInsideBBox = function (bbox, x, y) {
         return x >= bbox.x && x <= bbox.x2 && y >= bbox.y && y <= bbox.y2;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.isBBoxIntersect
+     * Raphael.isBBoxIntersect
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Returns `true` if two bounding boxes intersect
+     **
+     * Utility method
+     **
+     * Returns `true` if two bounding boxes intersect
      > Parameters
      - bbox1 (string) first bounding box
      - bbox2 (string) second bounding box
@@ -1321,11 +1321,11 @@ xrx.vml.Raphael = function(element, width, height) {
             || i(bbox1, bbox2.x2, bbox2.y2)
             || (bbox1.x < bbox2.x2 && bbox1.x > bbox2.x || bbox2.x < bbox1.x2 && bbox2.x > bbox1.x)
             && (bbox1.y < bbox2.y2 && bbox1.y > bbox2.y || bbox2.y < bbox1.y2 && bbox2.y > bbox1.y);
-   ***REMOVED*****REMOVED***
+    };
     function base3(t, p1, p2, p3, p4) {
-        var t1 = -3***REMOVED*** p1 + 9***REMOVED*** p2 - 9***REMOVED*** p3 + 3***REMOVED*** p4,
-            t2 = t***REMOVED*** t1 + 6***REMOVED*** p1 - 12***REMOVED*** p2 + 6***REMOVED*** p3;
-        return t***REMOVED*** t2 - 3***REMOVED*** p1 + 3***REMOVED*** p2;
+        var t1 = -3 * p1 + 9 * p2 - 9 * p3 + 3 * p4,
+            t2 = t * t1 + 6 * p1 - 12 * p2 + 6 * p3;
+        return t * t2 - 3 * p1 + 3 * p2;
     }
     function bezlen(x1, y1, x2, y2, x3, y3, x4, y4, z) {
         if (z == null) {
@@ -1338,13 +1338,13 @@ xrx.vml.Raphael = function(element, width, height) {
             Cvalues = [0.2491,0.2491,0.2335,0.2335,0.2032,0.2032,0.1601,0.1601,0.1069,0.1069,0.0472,0.0472],
             sum = 0;
         for (var i = 0; i < n; i++) {
-            var ct = z2***REMOVED*** Tvalues[i] + z2,
+            var ct = z2 * Tvalues[i] + z2,
                 xbase = base3(ct, x1, x2, x3, x4),
                 ybase = base3(ct, y1, y2, y3, y4),
-                comb = xbase***REMOVED*** xbase + ybase***REMOVED*** ybase;
-            sum += Cvalues[i]***REMOVED*** math.sqrt(comb);
+                comb = xbase * xbase + ybase * ybase;
+            sum += Cvalues[i] * math.sqrt(comb);
         }
-        return z2***REMOVED*** sum;
+        return z2 * sum;
     }
     function getTatLen(x1, y1, x2, y2, x3, y3, x4, y4, ll) {
         if (ll < 0 || bezlen(x1, y1, x2, y2, x3, y3, x4, y4) < ll) {
@@ -1358,7 +1358,7 @@ xrx.vml.Raphael = function(element, width, height) {
         l = bezlen(x1, y1, x2, y2, x3, y3, x4, y4, t2);
         while (abs(l - ll) > e) {
             step /= 2;
-            t2 += (l < ll ? 1 : -1)***REMOVED*** step;
+            t2 += (l < ll ? 1 : -1) * step;
             l = bezlen(x1, y1, x2, y2, x3, y3, x4, y4, t2);
         }
         return t2;
@@ -1372,9 +1372,9 @@ xrx.vml.Raphael = function(element, width, height) {
         ) {
             return;
         }
-        var nx = (x1***REMOVED*** y2 - y1***REMOVED*** x2)***REMOVED*** (x3 - x4) - (x1 - x2)***REMOVED*** (x3***REMOVED*** y4 - y3***REMOVED*** x4),
-            ny = (x1***REMOVED*** y2 - y1***REMOVED*** x2)***REMOVED*** (y3 - y4) - (y1 - y2)***REMOVED*** (x3***REMOVED*** y4 - y3***REMOVED*** x4),
-            denominator = (x1 - x2)***REMOVED*** (y3 - y4) - (y1 - y2)***REMOVED*** (x3 - x4);
+        var nx = (x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4),
+            ny = (x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4),
+            denominator = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 
         if (!denominator) {
             return;
@@ -1395,7 +1395,7 @@ xrx.vml.Raphael = function(element, width, height) {
         ) {
             return;
         }
-        return {x: px, y: py***REMOVED***
+        return {x: px, y: py};
     }
     function inter(bez1, bez2) {
         return interHelper(bez1, bez2);
@@ -1439,8 +1439,8 @@ xrx.vml.Raphael = function(element, width, height) {
                         continue;
                     }
                     xy[is.x.toFixed(4)] = is.y.toFixed(4);
-                    var t1 = di.t + abs((is[ci] - di[ci]) / (di1[ci] - di[ci]))***REMOVED*** (di1.t - di.t),
-                        t2 = dj.t + abs((is[cj] - dj[cj]) / (dj1[cj] - dj[cj]))***REMOVED*** (dj1.t - dj.t);
+                    var t1 = di.t + abs((is[ci] - di[ci]) / (di1[ci] - di[ci])) * (di1.t - di.t),
+                        t2 = dj.t + abs((is[cj] - dj[cj]) / (dj1[cj] - dj[cj])) * (dj1.t - dj.t);
                     if (t1 >= 0 && t1 <= 1.001 && t2 >= 0 && t2 <= 1.001) {
                         if (justCount) {
                             res++;
@@ -1459,12 +1459,12 @@ xrx.vml.Raphael = function(element, width, height) {
         return res;
     }
     /*\
-    ***REMOVED*** Raphael.pathIntersection
+     * Raphael.pathIntersection
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Finds intersections of two paths
+     **
+     * Utility method
+     **
+     * Finds intersections of two paths
      > Parameters
      - path1 (string) path string
      - path2 (string) path string
@@ -1484,10 +1484,10 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     R.pathIntersection = function (path1, path2) {
         return interPathHelper(path1, path2);
-   ***REMOVED*****REMOVED***
+    };
     R.pathIntersectionNumber = function (path1, path2) {
         return interPathHelper(path1, path2, 1);
-   ***REMOVED*****REMOVED***
+    };
     function interPathHelper(path1, path2, justCount) {
         path1 = R._path2curve(path1);
         path2 = R._path2curve(path2);
@@ -1542,12 +1542,12 @@ xrx.vml.Raphael = function(element, width, height) {
         return res;
     }
     /*\
-    ***REMOVED*** Raphael.isPointInsidePath
+     * Raphael.isPointInsidePath
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Returns `true` if given point is inside a given closed path.
+     **
+     * Utility method
+     **
+     * Returns `true` if given point is inside a given closed path.
      > Parameters
      - path (string) path string
      - x (number) x of the point
@@ -1558,14 +1558,14 @@ xrx.vml.Raphael = function(element, width, height) {
         var bbox = R.pathBBox(path);
         return R.isPointInsideBBox(bbox, x, y) &&
                interPathHelper(path, [["M", x, y], ["H", bbox.x2 + 10]], 1) % 2 == 1;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.pathBBox
+     * Raphael.pathBBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Return bounding box of a given path
+     **
+     * Utility method
+     **
+     * Return bounding box of a given path
      > Parameters
      - path (string) path string
      = (object) bounding box
@@ -1586,7 +1586,7 @@ xrx.vml.Raphael = function(element, width, height) {
             return clone(pth.bbox);
         }
         if (!path) {
-            return {x: 0, y: 0, width: 0, height: 0, x2: 0, y2: 0***REMOVED***
+            return {x: 0, y: 0, width: 0, height: 0, x2: 0, y2: 0};
         }
         path = path2curve(path);
         var x = 0,
@@ -1624,7 +1624,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 height: height,
                 cx: xmin + width / 2,
                 cy: ymin + height / 2
-           ***REMOVED*****REMOVED***
+            };
         pth.bbox = clone(bb);
         return bb;
     },
@@ -1816,10 +1816,10 @@ xrx.vml.Raphael = function(element, width, height) {
             var _13 = 1 / 3,
                 _23 = 2 / 3;
             return [
-                    _13***REMOVED*** x1 + _23***REMOVED*** ax,
-                    _13***REMOVED*** y1 + _23***REMOVED*** ay,
-                    _13***REMOVED*** x2 + _23***REMOVED*** ax,
-                    _13***REMOVED*** y2 + _23***REMOVED*** ay,
+                    _13 * x1 + _23 * ax,
+                    _13 * y1 + _23 * ay,
+                    _13 * x2 + _23 * ax,
+                    _13 * y2 + _23 * ay,
                     x2,
                     y2
                 ];
@@ -1827,14 +1827,14 @@ xrx.vml.Raphael = function(element, width, height) {
         a2c = function (x1, y1, rx, ry, angle, large_arc_flag, sweep_flag, x2, y2, recursive) {
             // for more information of where this math came from visit:
             // http://www.w3.org/TR/SVG11/implnote.html#ArcImplementationNotes
-            var _120 = PI***REMOVED*** 120 / 180,
-                rad = PI / 180***REMOVED*** (+angle || 0),
+            var _120 = PI * 120 / 180,
+                rad = PI / 180 * (+angle || 0),
                 res = [],
                 xy,
                 rotate = cacher(function (x, y, rad) {
-                    var X = x***REMOVED*** math.cos(rad) - y***REMOVED*** math.sin(rad),
-                        Y = x***REMOVED*** math.sin(rad) + y***REMOVED*** math.cos(rad);
-                    return {x: X, y: Y***REMOVED***
+                    var X = x * math.cos(rad) - y * math.sin(rad),
+                        Y = x * math.sin(rad) + y * math.cos(rad);
+                    return {x: X, y: Y};
                 });
             if (!recursive) {
                 xy = rotate(x1, y1, -rad);
@@ -1843,34 +1843,34 @@ xrx.vml.Raphael = function(element, width, height) {
                 xy = rotate(x2, y2, -rad);
                 x2 = xy.x;
                 y2 = xy.y;
-                var cos = math.cos(PI / 180***REMOVED*** angle),
-                    sin = math.sin(PI / 180***REMOVED*** angle),
+                var cos = math.cos(PI / 180 * angle),
+                    sin = math.sin(PI / 180 * angle),
                     x = (x1 - x2) / 2,
                     y = (y1 - y2) / 2;
-                var h = (x***REMOVED*** x) / (rx***REMOVED*** rx) + (y***REMOVED*** y) / (ry***REMOVED*** ry);
+                var h = (x * x) / (rx * rx) + (y * y) / (ry * ry);
                 if (h > 1) {
                     h = math.sqrt(h);
-                    rx = h***REMOVED*** rx;
-                    ry = h***REMOVED*** ry;
+                    rx = h * rx;
+                    ry = h * ry;
                 }
-                var rx2 = rx***REMOVED*** rx,
-                    ry2 = ry***REMOVED*** ry,
-                    k = (large_arc_flag == sweep_flag ? -1 : 1)***REMOVED***
-                        math.sqrt(abs((rx2***REMOVED*** ry2 - rx2***REMOVED*** y***REMOVED*** y - ry2***REMOVED*** x***REMOVED*** x) / (rx2***REMOVED*** y***REMOVED*** y + ry2***REMOVED*** x***REMOVED*** x))),
-                    cx = k***REMOVED*** rx***REMOVED*** y / ry + (x1 + x2) / 2,
-                    cy = k***REMOVED*** -ry***REMOVED*** x / rx + (y1 + y2) / 2,
+                var rx2 = rx * rx,
+                    ry2 = ry * ry,
+                    k = (large_arc_flag == sweep_flag ? -1 : 1) *
+                        math.sqrt(abs((rx2 * ry2 - rx2 * y * y - ry2 * x * x) / (rx2 * y * y + ry2 * x * x))),
+                    cx = k * rx * y / ry + (x1 + x2) / 2,
+                    cy = k * -ry * x / rx + (y1 + y2) / 2,
                     f1 = math.asin(((y1 - cy) / ry).toFixed(9)),
                     f2 = math.asin(((y2 - cy) / ry).toFixed(9));
 
                 f1 = x1 < cx ? PI - f1 : f1;
                 f2 = x2 < cx ? PI - f2 : f2;
-                f1 < 0 && (f1 = PI***REMOVED*** 2 + f1);
-                f2 < 0 && (f2 = PI***REMOVED*** 2 + f2);
+                f1 < 0 && (f1 = PI * 2 + f1);
+                f2 < 0 && (f2 = PI * 2 + f2);
                 if (sweep_flag && f1 > f2) {
-                    f1 = f1 - PI***REMOVED*** 2;
+                    f1 = f1 - PI * 2;
                 }
                 if (!sweep_flag && f2 > f1) {
-                    f2 = f2 - PI***REMOVED*** 2;
+                    f2 = f2 - PI * 2;
                 }
             } else {
                 f1 = recursive[0];
@@ -1883,9 +1883,9 @@ xrx.vml.Raphael = function(element, width, height) {
                 var f2old = f2,
                     x2old = x2,
                     y2old = y2;
-                f2 = f1 + _120***REMOVED*** (sweep_flag && f2 > f1 ? 1 : -1);
-                x2 = cx + rx***REMOVED*** math.cos(f2);
-                y2 = cy + ry***REMOVED*** math.sin(f2);
+                f2 = f1 + _120 * (sweep_flag && f2 > f1 ? 1 : -1);
+                x2 = cx + rx * math.cos(f2);
+                y2 = cy + ry * math.sin(f2);
                 res = a2c(x2, y2, rx, ry, angle, 0, sweep_flag, x2old, y2old, [f2, f2old, cx, cy]);
             }
             df = f2 - f1;
@@ -1894,14 +1894,14 @@ xrx.vml.Raphael = function(element, width, height) {
                 c2 = math.cos(f2),
                 s2 = math.sin(f2),
                 t = math.tan(df / 4),
-                hx = 4 / 3***REMOVED*** rx***REMOVED*** t,
-                hy = 4 / 3***REMOVED*** ry***REMOVED*** t,
+                hx = 4 / 3 * rx * t,
+                hy = 4 / 3 * ry * t,
                 m1 = [x1, y1],
-                m2 = [x1 + hx***REMOVED*** s1, y1 - hy***REMOVED*** c1],
-                m3 = [x2 + hx***REMOVED*** s2, y2 - hy***REMOVED*** c2],
+                m2 = [x1 + hx * s1, y1 - hy * c1],
+                m3 = [x2 + hx * s2, y2 - hy * c2],
                 m4 = [x2, y2];
-            m2[0] = 2***REMOVED*** m1[0] - m2[0];
-            m2[1] = 2***REMOVED*** m1[1] - m2[1];
+            m2[0] = 2 * m1[0] - m2[0];
+            m2[1] = 2 * m1[1] - m2[1];
             if (recursive) {
                 return [m2, m3, m4][concat](res);
             } else {
@@ -1916,16 +1916,16 @@ xrx.vml.Raphael = function(element, width, height) {
         findDotAtSegment = function (p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y, t) {
             var t1 = 1 - t;
             return {
-                x: pow(t1, 3)***REMOVED*** p1x + pow(t1, 2)***REMOVED*** 3***REMOVED*** t***REMOVED*** c1x + t1***REMOVED*** 3***REMOVED*** t***REMOVED*** t***REMOVED*** c2x + pow(t, 3)***REMOVED*** p2x,
-                y: pow(t1, 3)***REMOVED*** p1y + pow(t1, 2)***REMOVED*** 3***REMOVED*** t***REMOVED*** c1y + t1***REMOVED*** 3***REMOVED*** t***REMOVED*** t***REMOVED*** c2y + pow(t, 3)***REMOVED*** p2y
-           ***REMOVED*****REMOVED***
+                x: pow(t1, 3) * p1x + pow(t1, 2) * 3 * t * c1x + t1 * 3 * t * t * c2x + pow(t, 3) * p2x,
+                y: pow(t1, 3) * p1y + pow(t1, 2) * 3 * t * c1y + t1 * 3 * t * t * c2y + pow(t, 3) * p2y
+            };
         },
         curveDim = cacher(function (p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y) {
-            var a = (c2x - 2***REMOVED*** c1x + p1x) - (p2x - 2***REMOVED*** c2x + c1x),
-                b = 2***REMOVED*** (c1x - p1x) - 2***REMOVED*** (c2x - c1x),
+            var a = (c2x - 2 * c1x + p1x) - (p2x - 2 * c2x + c1x),
+                b = 2 * (c1x - p1x) - 2 * (c2x - c1x),
                 c = p1x - c1x,
-                t1 = (-b + math.sqrt(b***REMOVED*** b - 4***REMOVED*** a***REMOVED*** c)) / 2 / a,
-                t2 = (-b - math.sqrt(b***REMOVED*** b - 4***REMOVED*** a***REMOVED*** c)) / 2 / a,
+                t1 = (-b + math.sqrt(b * b - 4 * a * c)) / 2 / a,
+                t2 = (-b - math.sqrt(b * b - 4 * a * c)) / 2 / a,
                 y = [p1y, p2y],
                 x = [p1x, p2x],
                 dot;
@@ -1941,11 +1941,11 @@ xrx.vml.Raphael = function(element, width, height) {
                 x.push(dot.x);
                 y.push(dot.y);
             }
-            a = (c2y - 2***REMOVED*** c1y + p1y) - (p2y - 2***REMOVED*** c2y + c1y);
-            b = 2***REMOVED*** (c1y - p1y) - 2***REMOVED*** (c2y - c1y);
+            a = (c2y - 2 * c1y + p1y) - (p2y - 2 * c2y + c1y);
+            b = 2 * (c1y - p1y) - 2 * (c2y - c1y);
             c = p1y - c1y;
-            t1 = (-b + math.sqrt(b***REMOVED*** b - 4***REMOVED*** a***REMOVED*** c)) / 2 / a;
-            t2 = (-b - math.sqrt(b***REMOVED*** b - 4***REMOVED*** a***REMOVED*** c)) / 2 / a;
+            t1 = (-b + math.sqrt(b * b - 4 * a * c)) / 2 / a;
+            t2 = (-b - math.sqrt(b * b - 4 * a * c)) / 2 / a;
             abs(t1) > "1e12" && (t1 = .5);
             abs(t2) > "1e12" && (t2 = .5);
             if (t1 > 0 && t1 < 1) {
@@ -1961,7 +1961,7 @@ xrx.vml.Raphael = function(element, width, height) {
             return {
                 min: {x: mmin[apply](0, x), y: mmin[apply](0, y)},
                 max: {x: mmax[apply](0, x), y: mmax[apply](0, y)}
-           ***REMOVED*****REMOVED***
+            };
         }),
         path2curve = R._path2curve = cacher(function (path, path2) {
             var pth = !path2 && paths(path);
@@ -1973,7 +1973,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 attrs = {x: 0, y: 0, bx: 0, by: 0, X: 0, Y: 0, qx: null, qy: null},
                 attrs2 = {x: 0, y: 0, bx: 0, by: 0, X: 0, Y: 0, qx: null, qy: null},
                 processPath = function (path, d, pcom) {
-                    var nx, ny, tq = {T:1, Q:1***REMOVED***
+                    var nx, ny, tq = {T:1, Q:1};
                     if (!path) {
                         return ["C", d.x, d.y, d.x, d.y, d.x, d.y];
                     }
@@ -1988,8 +1988,8 @@ xrx.vml.Raphael = function(element, width, height) {
                             break;
                         case "S":
                             if (pcom == "C" || pcom == "S") { // In "S" case we have to take into account, if the previous command is C/S.
-                                nx = d.x***REMOVED*** 2 - d.bx;          // And reflect the previous
-                                ny = d.y***REMOVED*** 2 - d.by;          // command's control point relative to the current point.
+                                nx = d.x * 2 - d.bx;          // And reflect the previous
+                                ny = d.y * 2 - d.by;          // command's control point relative to the current point.
                             }
                             else {                            // or some else or nothing
                                 nx = d.x;
@@ -1999,8 +1999,8 @@ xrx.vml.Raphael = function(element, width, height) {
                             break;
                         case "T":
                             if (pcom == "Q" || pcom == "T") { // In "T" case we have to take into account, if the previous command is Q/T.
-                                d.qx = d.x***REMOVED*** 2 - d.qx;        // And make a reflection similar
-                                d.qy = d.y***REMOVED*** 2 - d.qy;        // to case "S".
+                                d.qx = d.x * 2 - d.qx;        // And make a reflection similar
+                                d.qy = d.y * 2 - d.qy;        // to case "S".
                             }
                             else {                            // or something else or nothing
                                 d.qx = d.x;
@@ -2048,7 +2048,7 @@ xrx.vml.Raphael = function(element, width, height) {
                         a1.y = path1[i][2];
                         ii = mmax(p.length, p2 && p2.length || 0);
                     }
-               ***REMOVED*****REMOVED***
+                };
             for (var i = 0, ii = mmax(p.length, p2 && p2.length || 0); i < ii; i++) {
                 p[i] = processPath(p[i], attrs);
                 fixArc(p, i);
@@ -2154,12 +2154,12 @@ xrx.vml.Raphael = function(element, width, height) {
             el.next = el2;
         },
         /*\
-        ***REMOVED*** Raphael.toMatrix
+         * Raphael.toMatrix
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Utility method
-        ***REMOVED****
-        ***REMOVED*** Returns matrix of transformations applied to a given path
+         **
+         * Utility method
+         **
+         * Returns matrix of transformations applied to a given path
          > Parameters
          - path (string) path string
          - transform (string|array) transformation string
@@ -2174,17 +2174,17 @@ xrx.vml.Raphael = function(element, width, height) {
                     getBBox: function () {
                         return bb;
                     }
-               ***REMOVED*****REMOVED***
+                };
             extractTransform(el, transform);
             return el.matrix;
         },
         /*\
-        ***REMOVED*** Raphael.transformPath
+         * Raphael.transformPath
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Utility method
-        ***REMOVED****
-        ***REMOVED*** Returns path transformed by a given transformation
+         **
+         * Utility method
+         **
+         * Returns path transformed by a given transformation
          > Parameters
          - path (string) path string
          - transform (string|array) transformation string
@@ -2248,8 +2248,8 @@ xrx.vml.Raphael = function(element, width, height) {
                         if (tlen == 2 || tlen == 3) {
                             bb = bb || el.getBBox(1);
                             m.scale(t[1], t[tlen - 1], bb.x + bb.width / 2, bb.y + bb.height / 2);
-                            sx***REMOVED***= t[1];
-                            sy***REMOVED***= t[tlen - 1];
+                            sx *= t[1];
+                            sy *= t[tlen - 1];
                         } else if (tlen == 5) {
                             if (absolute) {
                                 x2 = inver.x(t[3], t[4]);
@@ -2258,8 +2258,8 @@ xrx.vml.Raphael = function(element, width, height) {
                             } else {
                                 m.scale(t[1], t[2], t[3], t[4]);
                             }
-                            sx***REMOVED***= t[1];
-                            sy***REMOVED***= t[2];
+                            sx *= t[1];
+                            sy *= t[2];
                         }
                     } else if (command == "m" && tlen == 7) {
                         m.add(t[1], t[2], t[3], t[4], t[5], t[6]);
@@ -2270,10 +2270,10 @@ xrx.vml.Raphael = function(element, width, height) {
             }
 
             /*\
-            ***REMOVED*** Element.matrix
+             * Element.matrix
              [ property (object) ]
-            ***REMOVED****
-            ***REMOVED*** Keeps @Matrix object, which represents element transformation
+             **
+             * Keeps @Matrix object, which represents element transformation
             \*/
             el.matrix = m;
 
@@ -2337,8 +2337,8 @@ xrx.vml.Raphael = function(element, width, height) {
             return {
                 from: from,
                 to: to
-           ***REMOVED*****REMOVED***
-       ***REMOVED*****REMOVED***
+            };
+        };
     R._getContainer = function (x, y, w, h) {
         var container;
         container = h == null && !R.is(x, "object") ? g.doc.getElementById(x) : x;
@@ -2351,13 +2351,13 @@ xrx.vml.Raphael = function(element, width, height) {
                     container: container,
                     width: container.style.pixelWidth || container.offsetWidth,
                     height: container.style.pixelHeight || container.offsetHeight
-               ***REMOVED*****REMOVED***
+                };
             } else {
                 return {
                     container: container,
                     width: y,
                     height: w
-               ***REMOVED*****REMOVED***
+                };
             }
         }
         return {
@@ -2366,40 +2366,40 @@ xrx.vml.Raphael = function(element, width, height) {
             y: y,
             width: w,
             height: h
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     /*\
-    ***REMOVED*** Raphael.pathToRelative
+     * Raphael.pathToRelative
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Converts path to relative form
+     **
+     * Utility method
+     **
+     * Converts path to relative form
      > Parameters
      - pathString (string|array) path string or array of segments
      = (array) array of segments.
     \*/
     R.pathToRelative = pathToRelative;
-    R._engine = {***REMOVED***
+    R._engine = {};
     /*\
-    ***REMOVED*** Raphael.path2curve
+     * Raphael.path2curve
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Converts path to a new path where all segments are cubic bezier curves.
+     **
+     * Utility method
+     **
+     * Converts path to a new path where all segments are cubic bezier curves.
      > Parameters
      - pathString (string|array) path string or array of segments
      = (array) array of segments.
     \*/
     R.path2curve = path2curve;
     /*\
-    ***REMOVED*** Raphael.matrix
+     * Raphael.matrix
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Utility method
-    ***REMOVED****
-    ***REMOVED*** Returns matrix based on given parameters.
+     **
+     * Utility method
+     **
+     * Returns matrix based on given parameters.
      > Parameters
      - a (number)
      - b (number)
@@ -2411,7 +2411,7 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     R.matrix = function (a, b, c, d, e, f) {
         return new Matrix(a, b, c, d, e, f);
-   ***REMOVED*****REMOVED***
+    };
     function Matrix(a, b, c, d, e, f) {
         if (a != null) {
             this.a = +a;
@@ -2431,10 +2431,10 @@ xrx.vml.Raphael = function(element, width, height) {
     }
     (function (matrixproto) {
         /*\
-        ***REMOVED*** Matrix.add
+         * Matrix.add
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Adds given matrix to existing one.
+         **
+         * Adds given matrix to existing one.
          > Parameters
          - a (number)
          - b (number)
@@ -2459,7 +2459,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 for (y = 0; y < 3; y++) {
                     res = 0;
                     for (z = 0; z < 3; z++) {
-                        res += m[x][z]***REMOVED*** matrix[z][y];
+                        res += m[x][z] * matrix[z][y];
                     }
                     out[x][y] = res;
                 }
@@ -2470,46 +2470,46 @@ xrx.vml.Raphael = function(element, width, height) {
             this.d = out[1][1];
             this.e = out[0][2];
             this.f = out[1][2];
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.invert
+         * Matrix.invert
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Returns inverted version of the matrix
+         **
+         * Returns inverted version of the matrix
          = (object) @Matrix
         \*/
         matrixproto.invert = function () {
             var me = this,
-                x = me.a***REMOVED*** me.d - me.b***REMOVED*** me.c;
-            return new Matrix(me.d / x, -me.b / x, -me.c / x, me.a / x, (me.c***REMOVED*** me.f - me.d***REMOVED*** me.e) / x, (me.b***REMOVED*** me.e - me.a***REMOVED*** me.f) / x);
-       ***REMOVED*****REMOVED***
+                x = me.a * me.d - me.b * me.c;
+            return new Matrix(me.d / x, -me.b / x, -me.c / x, me.a / x, (me.c * me.f - me.d * me.e) / x, (me.b * me.e - me.a * me.f) / x);
+        };
         /*\
-        ***REMOVED*** Matrix.clone
+         * Matrix.clone
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Returns copy of the matrix
+         **
+         * Returns copy of the matrix
          = (object) @Matrix
         \*/
         matrixproto.clone = function () {
             return new Matrix(this.a, this.b, this.c, this.d, this.e, this.f);
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.translate
+         * Matrix.translate
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Translate the matrix
+         **
+         * Translate the matrix
          > Parameters
          - x (number)
          - y (number)
         \*/
         matrixproto.translate = function (x, y) {
             this.add(1, 0, 0, 1, x, y);
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.scale
+         * Matrix.scale
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Scales the matrix
+         **
+         * Scales the matrix
          > Parameters
          - x (number)
          - y (number) #optional
@@ -2521,12 +2521,12 @@ xrx.vml.Raphael = function(element, width, height) {
             (cx || cy) && this.add(1, 0, 0, 1, cx, cy);
             this.add(x, 0, 0, y, 0, 0);
             (cx || cy) && this.add(1, 0, 0, 1, -cx, -cy);
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.rotate
+         * Matrix.rotate
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Rotates the matrix
+         **
+         * Rotates the matrix
          > Parameters
          - a (number)
          - x (number)
@@ -2540,51 +2540,51 @@ xrx.vml.Raphael = function(element, width, height) {
                 sin = +math.sin(a).toFixed(9);
             this.add(cos, sin, -sin, cos, x, y);
             this.add(1, 0, 0, 1, -x, -y);
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.x
+         * Matrix.x
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Return x coordinate for given point after transformation described by the matrix. See also @Matrix.y
+         **
+         * Return x coordinate for given point after transformation described by the matrix. See also @Matrix.y
          > Parameters
          - x (number)
          - y (number)
          = (number) x
         \*/
         matrixproto.x = function (x, y) {
-            return x***REMOVED*** this.a + y***REMOVED*** this.c + this.e;
-       ***REMOVED*****REMOVED***
+            return x * this.a + y * this.c + this.e;
+        };
         /*\
-        ***REMOVED*** Matrix.y
+         * Matrix.y
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Return y coordinate for given point after transformation described by the matrix. See also @Matrix.x
+         **
+         * Return y coordinate for given point after transformation described by the matrix. See also @Matrix.x
          > Parameters
          - x (number)
          - y (number)
          = (number) y
         \*/
         matrixproto.y = function (x, y) {
-            return x***REMOVED*** this.b + y***REMOVED*** this.d + this.f;
-       ***REMOVED*****REMOVED***
+            return x * this.b + y * this.d + this.f;
+        };
         matrixproto.get = function (i) {
             return +this[Str.fromCharCode(97 + i)].toFixed(4);
-       ***REMOVED*****REMOVED***
+        };
         matrixproto.toString = function () {
             return R.svg ?
                 "matrix(" + [this.get(0), this.get(1), this.get(2), this.get(3), this.get(4), this.get(5)].join() + ")" :
                 [this.get(0), this.get(2), this.get(1), this.get(3), 0, 0].join();
-       ***REMOVED*****REMOVED***
+        };
         matrixproto.toFilter = function () {
             return "progid:DXImageTransform.Microsoft.Matrix(M11=" + this.get(0) +
                 ", M12=" + this.get(2) + ", M21=" + this.get(1) + ", M22=" + this.get(3) +
                 ", Dx=" + this.get(4) + ", Dy=" + this.get(5) + ", sizingmethod='auto expand')";
-       ***REMOVED*****REMOVED***
+        };
         matrixproto.offset = function () {
             return [this.e.toFixed(4), this.f.toFixed(4)];
-       ***REMOVED*****REMOVED***
+        };
         function norm(a) {
-            return a[0]***REMOVED*** a[0] + a[1]***REMOVED*** a[1];
+            return a[0] * a[0] + a[1] * a[1];
         }
         function normalize(a) {
             var mag = math.sqrt(norm(a));
@@ -2592,10 +2592,10 @@ xrx.vml.Raphael = function(element, width, height) {
             a[1] && (a[1] /= mag);
         }
         /*\
-        ***REMOVED*** Matrix.split
+         * Matrix.split
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Splits matrix into primitive transformations
+         **
+         * Splits matrix into primitive transformations
          = (object) in format:
          o dx (number) translation by x
          o dy (number) translation by y
@@ -2606,7 +2606,7 @@ xrx.vml.Raphael = function(element, width, height) {
          o isSimple (boolean) could it be represented via simple transformations
         \*/
         matrixproto.split = function () {
-            var out = {***REMOVED***
+            var out = {};
             // translation
             out.dx = this.e;
             out.dy = this.f;
@@ -2616,8 +2616,8 @@ xrx.vml.Raphael = function(element, width, height) {
             out.scalex = math.sqrt(norm(row[0]));
             normalize(row[0]);
 
-            out.shear = row[0][0]***REMOVED*** row[1][0] + row[0][1]***REMOVED*** row[1][1];
-            row[1] = [row[1][0] - row[0][0]***REMOVED*** out.shear, row[1][1] - row[0][1]***REMOVED*** out.shear];
+            out.shear = row[0][0] * row[1][0] + row[0][1] * row[1][1];
+            row[1] = [row[1][0] - row[0][0] * out.shear, row[1][1] - row[0][1] * out.shear];
 
             out.scaley = math.sqrt(norm(row[1]));
             normalize(row[1]);
@@ -2639,12 +2639,12 @@ xrx.vml.Raphael = function(element, width, height) {
             out.isSuperSimple = !+out.shear.toFixed(9) && out.scalex.toFixed(9) == out.scaley.toFixed(9) && !out.rotate;
             out.noRotation = !+out.shear.toFixed(9) && !out.rotate;
             return out;
-       ***REMOVED*****REMOVED***
+        };
         /*\
-        ***REMOVED*** Matrix.toTransformString
+         * Matrix.toTransformString
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** Return transform string that represents given matrix
+         **
+         * Return transform string that represents given matrix
          = (string) transform string
         \*/
         matrixproto.toTransformString = function (shorter) {
@@ -2659,7 +2659,7 @@ xrx.vml.Raphael = function(element, width, height) {
             } else {
                 return "m" + [this.get(0), this.get(1), this.get(2), this.get(3), this.get(4), this.get(5)];
             }
-       ***REMOVED*****REMOVED***
+        };
     })(Matrix.prototype);
 
     // WebKit rendering bug workaround method
@@ -2667,53 +2667,53 @@ xrx.vml.Raphael = function(element, width, height) {
     if ((navigator.vendor == "Apple Computer, Inc.") && (version && version[1] < 4 || navigator.platform.slice(0, 2) == "iP") ||
         (navigator.vendor == "Google Inc." && version && version[1] < 8)) {
         /*\
-        ***REMOVED*** Paper.safari
+         * Paper.safari
          [ method ]
-        ***REMOVED****
-        ***REMOVED*** There is an inconvenient rendering bug in Safari (WebKit):
-        ***REMOVED*** sometimes the rendering should be forced.
-        ***REMOVED*** This method should help with dealing with this bug.
+         **
+         * There is an inconvenient rendering bug in Safari (WebKit):
+         * sometimes the rendering should be forced.
+         * This method should help with dealing with this bug.
         \*/
         paperproto.safari = function () {
             var rect = this.rect(-99, -99, this.width + 99, this.height + 99).attr({stroke: "none"});
             setTimeout(function () {rect.remove();});
-       ***REMOVED*****REMOVED***
+        };
     } else {
         paperproto.safari = fun;
     }
     /*\
-    ***REMOVED*** Raphael.el
+     * Raphael.el
      [ property (object) ]
-    ***REMOVED****
-    ***REMOVED*** You can add your own method to elements. This is usefull when you want to hack default functionality or
-    ***REMOVED*** want to wrap some common transformation or attributes in one method. In difference to canvas methods,
-    ***REMOVED*** you can redefine element method at any time. Expending element methods wouldn’t affect set.
+     **
+     * You can add your own method to elements. This is usefull when you want to hack default functionality or
+     * want to wrap some common transformation or attributes in one method. In difference to canvas methods,
+     * you can redefine element method at any time. Expending element methods wouldn’t affect set.
      > Usage
      | Raphael.el.red = function () {
      |     this.attr({fill: "#f00"});
-     |***REMOVED*****REMOVED***
+     | };
      | // then use it
      | paper.circle(100, 100, 20).red();
     \*/
-    elproto = R.el = {***REMOVED***
+    elproto = R.el = {};
     /*\
-    ***REMOVED*** Element.data
+     * Element.data
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Adds or retrieves given value asociated with given key.
-    ***REMOVED**** 
-    ***REMOVED*** See also @Element.removeData
+     **
+     * Adds or retrieves given value asociated with given key.
+     ** 
+     * See also @Element.removeData
      > Parameters
      - key (string) key to store data
      - value (any) #optional value to store
      = (object) @Element
-    ***REMOVED*** or, if value is not specified:
+     * or, if value is not specified:
      = (any) value
-    ***REMOVED*** or, if key and value are not specified:
+     * or, if key and value are not specified:
      = (object) Key/value pairs for all the data associated with the element.
      > Usage
      | for (var i = 0, i < 5, i++) {
-     |     paper.circle(10 + 15***REMOVED*** i, 10, 10)
+     |     paper.circle(10 + 15 * i, 10, 10)
      |          .attr({fill: "#000"})
      |          .data("i", i)
      |          .click(function () {
@@ -2722,7 +2722,7 @@ xrx.vml.Raphael = function(element, width, height) {
      | }
     \*/
     elproto.data = function (key, value) {
-        var data = eldata[this.id] = eldata[this.id] || {***REMOVED***
+        var data = eldata[this.id] = eldata[this.id] || {};
         if (arguments.length == 0) {
             return data;
         }
@@ -2737,48 +2737,48 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         data[key] = value;
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.removeData
+     * Element.removeData
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes value associated with an element by given key.
-    ***REMOVED*** If key is not provided, removes all the data of the element.
+     **
+     * Removes value associated with an element by given key.
+     * If key is not provided, removes all the data of the element.
      > Parameters
      - key (string) #optional key
      = (object) @Element
     \*/
     elproto.removeData = function (key) {
         if (key == null) {
-            eldata[this.id] = {***REMOVED***
+            eldata[this.id] = {};
         } else {
             eldata[this.id] && delete eldata[this.id][key];
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
      /*\
-    ***REMOVED*** Element.getData
+     * Element.getData
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Retrieves the element data
+     **
+     * Retrieves the element data
      = (object) data
     \*/
     elproto.getData = function () {
         return clone(eldata[this.id] || {});
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.circle
+     * Paper.circle
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Draws a circle.
-    ***REMOVED****
+     **
+     * Draws a circle.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the centre
      - y (number) y coordinate of the centre
      - r (number) radius
      = (object) Raphaël element object with type “circle”
-    ***REMOVED****
+     **
      > Usage
      | var c = paper.circle(50, 50, 40);
     \*/
@@ -2786,22 +2786,22 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = R._engine.circle(this, x || 0, y || 0, r || 0);
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.rect
+     * Paper.rect
      [ method ]
-    ***REMOVED***
-    ***REMOVED*** Draws a rectangle.
-    ***REMOVED****
+     *
+     * Draws a rectangle.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the top left corner
      - y (number) y coordinate of the top left corner
      - width (number) width
      - height (number) height
      - r (number) #optional radius for rounded corners, default is 0
      = (object) Raphaël element object with type “rect”
-    ***REMOVED****
+     **
      > Usage
      | // regular rectangle
      | var c = paper.rect(10, 10, 50, 50);
@@ -2812,21 +2812,21 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = R._engine.rect(this, x || 0, y || 0, w || 0, h || 0, r || 0);
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.ellipse
+     * Paper.ellipse
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Draws an ellipse.
-    ***REMOVED****
+     **
+     * Draws an ellipse.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the centre
      - y (number) y coordinate of the centre
      - rx (number) horizontal radius
      - ry (number) vertical radius
      = (object) Raphaël element object with type “ellipse”
-    ***REMOVED****
+     **
      > Usage
      | var c = paper.ellipse(50, 50, 40, 20);
     \*/
@@ -2834,18 +2834,18 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = R._engine.ellipse(this, x || 0, y || 0, rx || 0, ry || 0);
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.path
+     * Paper.path
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Creates a path element by given path data string.
+     **
+     * Creates a path element by given path data string.
      > Parameters
      - pathString (string) #optional path string in SVG format.
-    ***REMOVED*** Path string consists of one-letter commands, followed by comma seprarated arguments in numercal form. Example:
+     * Path string consists of one-letter commands, followed by comma seprarated arguments in numercal form. Example:
      | "M10,20L30,40"
-    ***REMOVED*** Here we can see two commands: “M”, with arguments `(10, 20)` and “L” with arguments `(30, 40)`. Upper case letter mean command is absolute, lower case—relative.
-    ***REMOVED***
+     * Here we can see two commands: “M”, with arguments `(10, 20)` and “L” with arguments `(30, 40)`. Upper case letter mean command is absolute, lower case—relative.
+     *
      # <p>Here is short list of commands available, for more details see <a href="http://www.w3.org/TR/SVG/paths.html#PathData" title="Details of a path's data attribute's format are described in the SVG specification.">SVG path string format</a>.</p>
      # <table><thead><tr><th>Command</th><th>Name</th><th>Parameters</th></tr></thead><tbody>
      # <tr><td>M</td><td>moveto</td><td>(x y)+</td></tr>
@@ -2859,35 +2859,35 @@ xrx.vml.Raphael = function(element, width, height) {
      # <tr><td>T</td><td>smooth quadratic Bézier curveto</td><td>(x y)+</td></tr>
      # <tr><td>A</td><td>elliptical arc</td><td>(rx ry x-axis-rotation large-arc-flag sweep-flag x y)+</td></tr>
      # <tr><td>R</td><td><a href="http://en.wikipedia.org/wiki/Catmull–Rom_spline#Catmull.E2.80.93Rom_spline">Catmull-Rom curveto</a>*</td><td>x1 y1 (x y)+</td></tr></tbody></table>
-    ***REMOVED******REMOVED*** “Catmull-Rom curveto” is a not standard SVG command and added in 2.0 to make life easier.
-    ***REMOVED*** Note: there is a special case when path consist of just three commands: “M10,10R…z”. In this case path will smoothly connects to its beginning.
+     * * “Catmull-Rom curveto” is a not standard SVG command and added in 2.0 to make life easier.
+     * Note: there is a special case when path consist of just three commands: “M10,10R…z”. In this case path will smoothly connects to its beginning.
      > Usage
      | var c = paper.path("M10 10L90 90");
      | // draw a diagonal line:
      | // move to 10,10, line to 90,90
-    ***REMOVED*** For example of path strings, check out these icons: http://raphaeljs.com/icons/
+     * For example of path strings, check out these icons: http://raphaeljs.com/icons/
     \*/
     paperproto.path = function (pathString) {
         pathString && !R.is(pathString, string) && !R.is(pathString[0], array) && (pathString += E);
         var out = R._engine.path(R.format[apply](R, arguments), this);
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.image
+     * Paper.image
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Embeds an image into the surface.
-    ***REMOVED****
+     **
+     * Embeds an image into the surface.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - src (string) URI of the source image
      - x (number) x coordinate position
      - y (number) y coordinate position
      - width (number) width of the image
      - height (number) height of the image
      = (object) Raphaël element object with type “image”
-    ***REMOVED****
+     **
      > Usage
      | var c = paper.image("apple.png", 10, 10, 80, 80);
     \*/
@@ -2895,20 +2895,20 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = R._engine.image(this, src || "about:blank", x || 0, y || 0, w || 0, h || 0);
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.text
+     * Paper.text
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Draws a text string. If you need line breaks, put “\n” in the string.
-    ***REMOVED****
+     **
+     * Draws a text string. If you need line breaks, put “\n” in the string.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate position
      - y (number) y coordinate position
      - text (string) The text string to draw
      = (object) Raphaël element object with type “text”
-    ***REMOVED****
+     **
      > Usage
      | var t = paper.text(50, 50, "Raphaël\nkicks\nbutt!");
     \*/
@@ -2916,16 +2916,16 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = R._engine.text(this, x || 0, y || 0, Str(text));
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.set
+     * Paper.set
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Creates array-like object to keep and operate several elements at once.
-    ***REMOVED*** Warning: it doesn’t create any elements for itself in the page, it just groups existing elements.
-    ***REMOVED*** Sets act as pseudo elements — all methods available to an element can be used on a set.
+     **
+     * Creates array-like object to keep and operate several elements at once.
+     * Warning: it doesn’t create any elements for itself in the page, it just groups existing elements.
+     * Sets act as pseudo elements — all methods available to an element can be used on a set.
      = (object) array-like object that represents set of elements
-    ***REMOVED****
+     **
      > Usage
      | var st = paper.set();
      | st.push(
@@ -2941,14 +2941,14 @@ xrx.vml.Raphael = function(element, width, height) {
         out["paper"] = this;
         out["type"] = "set";
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.setStart
+     * Paper.setStart
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Creates @Paper.set. All elements that will be created after calling this method and before calling
-    ***REMOVED*** @Paper.setFinish will be added to the set.
-    ***REMOVED****
+     **
+     * Creates @Paper.set. All elements that will be created after calling this method and before calling
+     * @Paper.setFinish will be added to the set.
+     **
      > Usage
      | paper.setStart();
      | paper.circle(10, 10, 5),
@@ -2958,43 +2958,43 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     paperproto.setStart = function (set) {
         this.__set__ = set || this.set();
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.setFinish
+     * Paper.setFinish
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** See @Paper.setStart. This method finishes catching and returns resulting set.
-    ***REMOVED****
+     **
+     * See @Paper.setStart. This method finishes catching and returns resulting set.
+     **
      = (object) set
     \*/
     paperproto.setFinish = function (set) {
         var out = this.__set__;
         delete this.__set__;
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.setSize
+     * Paper.setSize
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** If you need to change dimensions of the canvas call this method
-    ***REMOVED****
+     **
+     * If you need to change dimensions of the canvas call this method
+     **
      > Parameters
-    ***REMOVED****
+     **
      - width (number) new width of the canvas
      - height (number) new height of the canvas
     \*/
     paperproto.setSize = function (width, height) {
         return R._engine.setSize.call(this, width, height);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.setViewBox
+     * Paper.setViewBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Sets the view box of the paper. Practically it gives you ability to zoom and pan whole paper surface by 
-    ***REMOVED*** specifying new boundaries.
-    ***REMOVED****
+     **
+     * Sets the view box of the paper. Practically it gives you ability to zoom and pan whole paper surface by 
+     * specifying new boundaries.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) new x position, default is `0`
      - y (number) new y position, default is `0`
      - w (number) new width of the canvas
@@ -3003,25 +3003,25 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     paperproto.setViewBox = function (x, y, w, h, fit) {
         return R._engine.setViewBox.call(this, x, y, w, h, fit);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.top
+     * Paper.top
      [ property ]
-    ***REMOVED****
-    ***REMOVED*** Points to the topmost element on the paper
+     **
+     * Points to the topmost element on the paper
     \*/
     /*\
-    ***REMOVED*** Paper.bottom
+     * Paper.bottom
      [ property ]
-    ***REMOVED****
-    ***REMOVED*** Points to the bottom element on the paper
+     **
+     * Points to the bottom element on the paper
     \*/
     paperproto.top = paperproto.bottom = null;
     /*\
-    ***REMOVED*** Paper.raphael
+     * Paper.raphael
      [ property ]
-    ***REMOVED****
-    ***REMOVED*** Points to the @Raphael object/function
+     **
+     * Points to the @Raphael object/function
     \*/
     paperproto.raphael = R;
     var getOffset = function (elem) {
@@ -3035,17 +3035,17 @@ xrx.vml.Raphael = function(element, width, height) {
         return {
             y: top,
             x: left
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     /*\
-    ***REMOVED*** Paper.getElementByPoint
+     * Paper.getElementByPoint
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns you topmost element under given point.
-    ***REMOVED****
+     **
+     * Returns you topmost element under given point.
+     **
      = (object) Raphaël element object
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate from the top left corner of the window
      - y (number) y coordinate from the top left corner of the window
      > Usage
@@ -3075,16 +3075,16 @@ xrx.vml.Raphael = function(element, width, height) {
         target == paper.canvas.parentNode && (target = svg);
         target = target && target.raphael ? paper.getById(target.raphaelid) : null;
         return target;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Paper.getElementsByBBox
+     * Paper.getElementsByBBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns set of elements that have an intersecting bounding box
-    ***REMOVED****
+     **
+     * Returns set of elements that have an intersecting bounding box
+     **
      > Parameters
-    ***REMOVED****
+     **
      - bbox (object) bbox to check with
      = (object) @Set
      \*/
@@ -3096,16 +3096,16 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         });
         return set;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Paper.getById
+     * Paper.getById
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns you element by its internal ID.
-    ***REMOVED****
+     **
+     * Returns you element by its internal ID.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - id (number) id
      = (object) Raphaël element object
     \*/
@@ -3118,17 +3118,17 @@ xrx.vml.Raphael = function(element, width, height) {
             bot = bot.next;
         }
         return null;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.forEach
+     * Paper.forEach
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Executes given function for each element on the paper
-    ***REMOVED***
-    ***REMOVED*** If callback function returns `false` it will stop loop running.
-    ***REMOVED****
+     **
+     * Executes given function for each element on the paper
+     *
+     * If callback function returns `false` it will stop loop running.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - callback (function) function to run
      - thisArg (object) context object for the callback
      = (object) Paper object
@@ -3146,15 +3146,15 @@ xrx.vml.Raphael = function(element, width, height) {
             bot = bot.next;
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.getElementsByPoint
+     * Paper.getElementsByPoint
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns set of elements that have common point inside
-    ***REMOVED****
+     **
+     * Returns set of elements that have common point inside
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the point
      - y (number) y coordinate of the point
      = (object) @Set
@@ -3167,7 +3167,7 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         });
         return set;
-   ***REMOVED*****REMOVED***
+    };
     function x_y() {
         return this.x + S + this.y;
     }
@@ -3175,13 +3175,13 @@ xrx.vml.Raphael = function(element, width, height) {
         return this.x + S + this.y + S + this.width + " \xd7 " + this.height;
     }
     /*\
-    ***REMOVED*** Element.isPointInside
+     * Element.isPointInside
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Determine if given point is inside this element’s shape
-    ***REMOVED****
+     **
+     * Determine if given point is inside this element’s shape
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the point
      - y (number) y coordinate of the point
      = (boolean) `true` if point inside the shape
@@ -3192,15 +3192,15 @@ xrx.vml.Raphael = function(element, width, height) {
             rp = R.transformPath(rp, this.attr('transform'));
         }
         return R.isPointInsidePath(rp, x, y);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.getBBox
+     * Element.getBBox
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return bounding box for a given element
-    ***REMOVED****
+     **
+     * Return bounding box for a given element
+     **
      > Parameters
-    ***REMOVED****
+     **
      - isWithoutTransform (boolean) flag, `true` if you want to have bounding box before transformations. Default is `false`.
      = (object) Bounding box object:
      o {
@@ -3214,7 +3214,7 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     elproto.getBBox = function (isWithoutTransform) {
         if (this.removed) {
-            return {***REMOVED***
+            return {};
         }
         var _ = this._;
         if (isWithoutTransform) {
@@ -3236,13 +3236,13 @@ xrx.vml.Raphael = function(element, width, height) {
             _.dirty = _.dirtyT = 0;
         }
         return _.bbox;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.clone
+     * Element.clone
      [ method ]
-    ***REMOVED****
+     **
      = (object) clone of a given element
-    ***REMOVED****
+     **
     \*/
     elproto.clone = function () {
         if (this.removed) {
@@ -3251,17 +3251,17 @@ xrx.vml.Raphael = function(element, width, height) {
         var out = this.paper[this.type]().attr(this.attr());
         this.__set__ && this.__set__.push(out);
         return out;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.glow
+     * Element.glow
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return set of elements that create glow-like effect around given element. See @Paper.set.
-    ***REMOVED***
-    ***REMOVED*** Note: Glow is not connected to the element. If you change element attributes it won’t adjust itself.
-    ***REMOVED****
+     **
+     * Return set of elements that create glow-like effect around given element. See @Paper.set.
+     *
+     * Note: Glow is not connected to the element. If you change element attributes it won’t adjust itself.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - glow (object) #optional parameters object with all properties optional:
      o {
      o     width (number) size of the glow, default is `10`
@@ -3277,7 +3277,7 @@ xrx.vml.Raphael = function(element, width, height) {
         if (this.type == "text") {
             return null;
         }
-        glow = glow || {***REMOVED***
+        glow = glow || {};
         var s = {
             width: (glow.width || 10) + (+this.attr("stroke-width") || 1),
             fill: glow.fill || false,
@@ -3297,12 +3297,12 @@ xrx.vml.Raphael = function(element, width, height) {
                 fill: s.fill ? s.color : "none",
                 "stroke-linejoin": "round",
                 "stroke-linecap": "round",
-                "stroke-width": +(s.width / c***REMOVED*** i).toFixed(3),
+                "stroke-width": +(s.width / c * i).toFixed(3),
                 opacity: +(s.opacity / c).toFixed(3)
             }));
         }
         return out.insertBefore(this).translate(s.offsetx, s.offsety);
-   ***REMOVED*****REMOVED***
+    };
     var curveslengths = {},
     getPointAtSegmentLength = function (p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y, length) {
         if (length == null) {
@@ -3337,7 +3337,7 @@ xrx.vml.Raphael = function(element, width, height) {
                         }
                         if (!istotal && !subpath) {
                             point = getPointAtSegmentLength(x, y, p[1], p[2], p[3], p[4], p[5], p[6], length - len);
-                            return {x: point.x, y: point.y, alpha: point.alpha***REMOVED***
+                            return {x: point.x, y: point.y, alpha: point.alpha};
                         }
                     }
                     len += l;
@@ -3350,35 +3350,35 @@ xrx.vml.Raphael = function(element, width, height) {
             point = istotal ? len : subpath ? subpaths : R.findDotsAtSegment(x, y, p[0], p[1], p[2], p[3], p[4], p[5], 1);
             point.alpha && (point = {x: point.x, y: point.y, alpha: point.alpha});
             return point;
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     var getTotalLength = getLengthFactory(1),
         getPointAtLength = getLengthFactory(),
         getSubpathsAtLength = getLengthFactory(0, 1);
     /*\
-    ***REMOVED*** Raphael.getTotalLength
+     * Raphael.getTotalLength
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns length of the given path in pixels.
-    ***REMOVED****
+     **
+     * Returns length of the given path in pixels.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - path (string) SVG path string.
-    ***REMOVED****
+     **
      = (number) length.
     \*/
     R.getTotalLength = getTotalLength;
     /*\
-    ***REMOVED*** Raphael.getPointAtLength
+     * Raphael.getPointAtLength
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return coordinates of the point located at the given length on the given path.
-    ***REMOVED****
+     **
+     * Return coordinates of the point located at the given length on the given path.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - path (string) SVG path string
      - length (number)
-    ***REMOVED****
+     **
      = (object) representation of the point:
      o {
      o     x: (number) x coordinate
@@ -3388,17 +3388,17 @@ xrx.vml.Raphael = function(element, width, height) {
     \*/
     R.getPointAtLength = getPointAtLength;
     /*\
-    ***REMOVED*** Raphael.getSubpath
+     * Raphael.getSubpath
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return subpath of a given path from given length to given length.
-    ***REMOVED****
+     **
+     * Return subpath of a given path from given length to given length.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - path (string) SVG path string
      - from (number) position of the start of the segment
      - to (number) position of the end of the segment
-    ***REMOVED****
+     **
      = (string) pathstring for the segment
     \*/
     R.getSubpath = function (path, from, to) {
@@ -3407,12 +3407,12 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         var a = getSubpathsAtLength(path, to, 1);
         return from ? getSubpathsAtLength(a, from).end : a;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.getTotalLength
+     * Element.getTotalLength
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns length of the path in pixels. Only works for element of “path” type.
+     **
+     * Returns length of the path in pixels. Only works for element of “path” type.
      = (number) length.
     \*/
     elproto.getTotalLength = function () {
@@ -3426,17 +3426,17 @@ xrx.vml.Raphael = function(element, width, height) {
         }
 
         return getTotalLength(path);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.getPointAtLength
+     * Element.getPointAtLength
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return coordinates of the point located at the given length on the given path. Only works for element of “path” type.
-    ***REMOVED****
+     **
+     * Return coordinates of the point located at the given length on the given path. Only works for element of “path” type.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - length (number)
-    ***REMOVED****
+     **
      = (object) representation of the point:
      o {
      o     x: (number) x coordinate
@@ -3451,14 +3451,14 @@ xrx.vml.Raphael = function(element, width, height) {
         }
 
         return getPointAtLength(path, length);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.getPath
+     * Element.getPath
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Returns path of the element. Only works for elements of “path” type and simple elements like circle.
+     **
+     * Returns path of the element. Only works for elements of “path” type and simple elements like circle.
      = (object) path
-    ***REMOVED****
+     **
     \*/
     elproto.getPath = function () {
         var path,
@@ -3473,18 +3473,18 @@ xrx.vml.Raphael = function(element, width, height) {
         }
 
         return path;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.getSubpath
+     * Element.getSubpath
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Return subpath of a given element from given length to given length. Only works for element of “path” type.
-    ***REMOVED****
+     **
+     * Return subpath of a given element from given length to given length. Only works for element of “path” type.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - from (number) position of the start of the segment
      - to (number) position of the end of the segment
-    ***REMOVED****
+     **
      = (string) pathstring for the segment
     \*/
     elproto.getSubpath = function (from, to) {
@@ -3493,20 +3493,20 @@ xrx.vml.Raphael = function(element, width, height) {
             return;
         }
         return R.getSubpath(path, from, to);
-   ***REMOVED*****REMOVED***
+    };
     function CubicBezierAtTime(t, p1x, p1y, p2x, p2y, duration) {
-        var cx = 3***REMOVED*** p1x,
-            bx = 3***REMOVED*** (p2x - p1x) - cx,
+        var cx = 3 * p1x,
+            bx = 3 * (p2x - p1x) - cx,
             ax = 1 - cx - bx,
-            cy = 3***REMOVED*** p1y,
-            by = 3***REMOVED*** (p2y - p1y) - cy,
+            cy = 3 * p1y,
+            by = 3 * (p2y - p1y) - cy,
             ay = 1 - cy - by;
         function sampleCurveX(t) {
-            return ((ax***REMOVED*** t + bx)***REMOVED*** t + cx)***REMOVED*** t;
+            return ((ax * t + bx) * t + cx) * t;
         }
         function solve(x, epsilon) {
             var t = solveCurveX(x, epsilon);
-            return ((ay***REMOVED*** t + by)***REMOVED*** t + cy)***REMOVED*** t;
+            return ((ay * t + by) * t + cy) * t;
         }
         function solveCurveX(x, epsilon) {
             var t0, t1, t2, x2, d2, i;
@@ -3515,7 +3515,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 if (abs(x2) < epsilon) {
                     return t2;
                 }
-                d2 = (3***REMOVED*** ax***REMOVED*** t2 + 2***REMOVED*** bx)***REMOVED*** t2 + cx;
+                d2 = (3 * ax * t2 + 2 * bx) * t2 + cx;
                 if (abs(d2) < 1e-6) {
                     break;
                 }
@@ -3544,11 +3544,11 @@ xrx.vml.Raphael = function(element, width, height) {
             }
             return t2;
         }
-        return solve(t, 1 / (200***REMOVED*** duration));
+        return solve(t, 1 / (200 * duration));
     }
     elproto.toString = function () {
         return "Rapha\xebl\u2019s object";
-   ***REMOVED*****REMOVED***
+    };
 
     // Set
     var Set = function (items) {
@@ -3566,10 +3566,10 @@ xrx.vml.Raphael = function(element, width, height) {
     },
     setproto = Set.prototype;
     /*\
-    ***REMOVED*** Set.push
+     * Set.push
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Adds each argument to the current set.
+     **
+     * Adds each argument to the current set.
      = (object) original element
     \*/
     setproto.push = function () {
@@ -3584,28 +3584,28 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Set.pop
+     * Set.pop
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes last element and returns it.
+     **
+     * Removes last element and returns it.
      = (object) element
     \*/
     setproto.pop = function () {
         this.length && delete this[this.length--];
         return this.items.pop();
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Set.forEach
+     * Set.forEach
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Executes given function for each element in the set.
-    ***REMOVED***
-    ***REMOVED*** If function returns `false` it will stop loop running.
-    ***REMOVED****
+     **
+     * Executes given function for each element in the set.
+     *
+     * If function returns `false` it will stop loop running.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - callback (function) function to run
      - thisArg (object) context object for the callback
      = (object) Set object
@@ -3617,7 +3617,7 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     for (var method in elproto) if (elproto[has](method)) {
         setproto[method] = (function (methodname) {
             return function () {
@@ -3625,7 +3625,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return this.forEach(function (el) {
                     el[methodname][apply](el, arg);
                 });
-           ***REMOVED*****REMOVED***
+            };
         })(method);
     }
     setproto.attr = function (name, value) {
@@ -3639,26 +3639,26 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Set.clear
+     * Set.clear
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removeds all elements from the set
+     **
+     * Removeds all elements from the set
     \*/
     setproto.clear = function () {
         while (this.length) {
             this.pop();
         }
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Set.splice
+     * Set.splice
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes given element from the set
-    ***REMOVED****
+     **
+     * Removes given element from the set
+     **
      > Parameters
-    ***REMOVED****
+     **
      - index (number) position of the deletion
      - count (number) number of element to remove
      - insertion… (object) #optional elements to insert
@@ -3689,15 +3689,15 @@ xrx.vml.Raphael = function(element, width, height) {
             delete this[i++];
         }
         return new Set(todel);
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Set.exclude
+     * Set.exclude
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes given element from the set
-    ***REMOVED****
+     **
+     * Removes given element from the set
+     **
      > Parameters
-    ***REMOVED****
+     **
      - element (object) element to remove
      = (boolean) `true` if object was found & removed from the set
     \*/
@@ -3706,7 +3706,7 @@ xrx.vml.Raphael = function(element, width, height) {
             this.splice(i, 1);
             return true;
         }
-   ***REMOVED*****REMOVED***
+    };
     setproto.animate = function (params, ms, easing, callback) {
         (R.is(easing, "function") || !easing) && (callback = easing || null);
         var len = this.items.length,
@@ -3728,14 +3728,14 @@ xrx.vml.Raphael = function(element, width, height) {
             (this.items[i] && !this.items[i].removed) || len--;
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     setproto.insertAfter = function (el) {
         var i = this.items.length;
         while (i--) {
             this.items[i].insertAfter(el);
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     setproto.getBBox = function () {
         var x = [],
             y = [],
@@ -3759,18 +3759,18 @@ xrx.vml.Raphael = function(element, width, height) {
             y2: y2,
             width: x2 - x,
             height: y2 - y
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     setproto.clone = function (s) {
         s = this.paper.set();
         for (var i = 0, ii = this.items.length; i < ii; i++) {
             s.push(this.items[i].clone());
         }
         return s;
-   ***REMOVED*****REMOVED***
+    };
     setproto.toString = function () {
         return "Rapha\xebl\u2018s set";
-   ***REMOVED*****REMOVED***
+    };
 
     setproto.glow = function(glowConfig) {
         var ret = this.paper.set();
@@ -3783,17 +3783,17 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         });
         return ret;
-   ***REMOVED*****REMOVED***
+    };
 
 
     /*\
-    ***REMOVED*** Set.isPointInside
+     * Set.isPointInside
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Determine if given point is inside this set’s elements
-    ***REMOVED****
+     **
+     * Determine if given point is inside this set’s elements
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x coordinate of the point
      - y (number) y coordinate of the point
      = (boolean) `true` if point is inside any of the set's elements
@@ -3807,18 +3807,18 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         });
         return isPointInside;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Raphael.registerFont
+     * Raphael.registerFont
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Adds given font to the registered set of fonts for Raphaël. Should be used as an internal call from within Cufón’s font file.
-    ***REMOVED*** Returns original parameter, so it could be used with chaining.
+     **
+     * Adds given font to the registered set of fonts for Raphaël. Should be used as an internal call from within Cufón’s font file.
+     * Returns original parameter, so it could be used with chaining.
      # <a href="http://wiki.github.com/sorccu/cufon/about">More about Cufón and how to convert your font form TTF, OTF, etc to JavaScript file.</a>
-    ***REMOVED****
+     **
      > Parameters
-    ***REMOVED****
+     **
      - font (object) the font to register
      = (object) the font you passed in
      > Usage
@@ -3828,7 +3828,7 @@ xrx.vml.Raphael = function(element, width, height) {
         if (!font.face) {
             return font;
         }
-        this.fonts = this.fonts || {***REMOVED***
+        this.fonts = this.fonts || {};
         var fontcopy = {
                 w: font.w,
                 face: {},
@@ -3853,7 +3853,7 @@ xrx.vml.Raphael = function(element, width, height) {
                     d: path.d && "M" + path.d.replace(/[mlcxtrv]/g, function (command) {
                             return {l: "L", c: "C", x: "z", t: "m", r: "l", v: "c"}[command] || "M";
                         }) + "z"
-               ***REMOVED*****REMOVED***
+                };
                 if (path.k) {
                     for (var k in path.k) if (path[has](k)) {
                         fontcopy.glyphs[glyph].k[k] = path.k[k];
@@ -3862,15 +3862,15 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return font;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.getFont
+     * Paper.getFont
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Finds font object in the registered fonts by given parameters. You could specify only one word from the font name, like “Myriad” for “Myriad Pro”.
-    ***REMOVED****
+     **
+     * Finds font object in the registered fonts by given parameters. You could specify only one word from the font name, like “Myriad” for “Myriad Pro”.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - family (string) font family name or any word from it
      - weight (string) #optional font weight
      - style (string) #optional font style
@@ -3906,16 +3906,16 @@ xrx.vml.Raphael = function(element, width, height) {
             }
         }
         return thefont;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.print
+     * Paper.print
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Creates path that represent given text written using given font at given position with given size.
-    ***REMOVED*** Result of the method is path element that contains whole text as a separate path.
-    ***REMOVED****
+     **
+     * Creates path that represent given text written using given font at given position with given size.
+     * Result of the method is path element that contains whole text as a separate path.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - x (number) x position of the text
      - y (number) y position of the text
      - string (string) text to print
@@ -3950,15 +3950,15 @@ xrx.vml.Raphael = function(element, width, height) {
                     shift = 0;
                     curr = 0;
                     notfirst = 0;
-                    shifty += lineHeight***REMOVED*** line_spacing;
+                    shifty += lineHeight * line_spacing;
                 } else {
                     var prev = notfirst && font.glyphs[letters[i - 1]] || {},
                         curr = font.glyphs[letters[i]];
-                    shift += notfirst ? (prev.w || font.w) + (prev.k && prev.k[letters[i]] || 0) + (font.w***REMOVED*** letter_spacing) : 0;
+                    shift += notfirst ? (prev.w || font.w) + (prev.k && prev.k[letters[i]] || 0) + (font.w * letter_spacing) : 0;
                     notfirst = 1;
                 }
                 if (curr && curr.d) {
-                    path += R.transformPath(curr.d, ["t", shift***REMOVED*** scale, shifty***REMOVED*** scale, "s", scale, scale, top, height, "t", (x - top) / scale, (y - height) / scale]);
+                    path += R.transformPath(curr.d, ["t", shift * scale, shifty * scale, "s", scale, scale, top, height, "t", (x - top) / scale, (y - height) / scale]);
                 }
             }
         }
@@ -3966,16 +3966,16 @@ xrx.vml.Raphael = function(element, width, height) {
             fill: "#000",
             stroke: "none"
         });
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Paper.add
+     * Paper.add
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Imports elements in JSON array in format `{type: type, <attributes>}`
-    ***REMOVED****
+     **
+     * Imports elements in JSON array in format `{type: type, <attributes>}`
+     **
      > Parameters
-    ***REMOVED****
+     **
      - json (array)
      = (object) resulting set of imported elements
      > Usage
@@ -4003,21 +4003,21 @@ xrx.vml.Raphael = function(element, width, height) {
                 ii = json.length,
                 j;
             for (; i < ii; i++) {
-                j = json[i] || {***REMOVED***
+                j = json[i] || {};
                 elements[has](j.type) && res.push(this[j.type]().attr(j));
             }
         }
         return res;
-   ***REMOVED*****REMOVED***
+    };
 
     /*\
-    ***REMOVED*** Raphael.format
+     * Raphael.format
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Simple format function. Replaces construction of type “`{<number>}`” to the corresponding argument.
-    ***REMOVED****
+     **
+     * Simple format function. Replaces construction of type “`{<number>}`” to the corresponding argument.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - token (string) string to format
      - … (string) rest of arguments will be treated as parameters for replacement
      = (string) formated string
@@ -4035,15 +4035,15 @@ xrx.vml.Raphael = function(element, width, height) {
             return args[++i] == null ? E : args[i];
         }));
         return token || E;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.fullfill
+     * Raphael.fullfill
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** A little bit more advanced format function than @Raphael.format. Replaces construction of type “`{<name>}`” to the corresponding argument.
-    ***REMOVED****
+     **
+     * A little bit more advanced format function than @Raphael.format. Replaces construction of type “`{<name>}`” to the corresponding argument.
+     **
      > Parameters
-    ***REMOVED****
+     **
      - token (string) string to format
      - json (object) object which properties will be used as a replacement
      = (string) formated string
@@ -4075,20 +4075,20 @@ xrx.vml.Raphael = function(element, width, height) {
                 });
                 res = (res == null || res == obj ? all : res) + "";
                 return res;
-           ***REMOVED*****REMOVED***
+            };
         return function (str, obj) {
             return String(str).replace(tokenRegex, function (all, key) {
                 return replacer(all, key, obj);
             });
-       ***REMOVED*****REMOVED***
+        };
     })();
     /*\
-    ***REMOVED*** Raphael.ninja
+     * Raphael.ninja
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** If you want to leave no trace of Raphaël (Well, Raphaël creates only one global variable `Raphael`, but anyway.) You can use `ninja` method.
-    ***REMOVED*** Beware, that in this case plugins could stop working, because they are depending on global variable existance.
-    ***REMOVED****
+     **
+     * If you want to leave no trace of Raphaël (Well, Raphaël creates only one global variable `Raphael`, but anyway.) You can use `ninja` method.
+     * Beware, that in this case plugins could stop working, because they are depending on global variable existance.
+     **
      = (object) Raphael object
      > Usage
      | (function (local_raphael) {
@@ -4099,24 +4099,24 @@ xrx.vml.Raphael = function(element, width, height) {
     R.ninja = function () {
         oldRaphael.was ? (g.win.Raphael = oldRaphael.is) : delete Raphael;
         return R;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Raphael.st
+     * Raphael.st
      [ property (object) ]
-    ***REMOVED****
-    ***REMOVED*** You can add your own method to elements and sets. It is wise to add a set method for each element method
-    ***REMOVED*** you added, so you will be able to call the same method on sets too.
-    ***REMOVED****
-    ***REMOVED*** See also @Raphael.el.
+     **
+     * You can add your own method to elements and sets. It is wise to add a set method for each element method
+     * you added, so you will be able to call the same method on sets too.
+     **
+     * See also @Raphael.el.
      > Usage
      | Raphael.el.red = function () {
      |     this.attr({fill: "#f00"});
-     |***REMOVED*****REMOVED***
+     | };
      | Raphael.st.red = function () {
      |     this.forEach(function (el) {
      |         el.red();
      |     });
-     |***REMOVED*****REMOVED***
+     | };
      | // then use it
      | paper.set(paper.circle(100, 100, 20), paper.circle(110, 100, 20)).red();
     \*/
@@ -4155,10 +4155,10 @@ xrx.vml.Raphael = function(element, width, height) {
             open: "M6,1 1,3.5 6,6",
             oval: "M2.5,0A2.5,2.5,0,0,1,2.5,5 2.5,2.5,0,0,1,2.5,0z"
         },
-        markerCounter = {***REMOVED***
+        markerCounter = {};
     R.toString = function () {
         return  "Your browser supports SVG.\nYou are running Rapha\xebl " + this.version;
-   ***REMOVED*****REMOVED***
+    };
     var $ = function (el, attr) {
         if (attr) {
             if (typeof el == "string") {
@@ -4191,11 +4191,11 @@ xrx.vml.Raphael = function(element, width, height) {
                 if (_fx && _fy) {
                     fx = toFloat(_fx);
                     fy = toFloat(_fy);
-                    var dir = ((fy > .5)***REMOVED*** 2 - 1);
+                    var dir = ((fy > .5) * 2 - 1);
                     pow(fx - .5, 2) + pow(fy - .5, 2) > .25 &&
-                        (fy = math.sqrt(.25 - pow(fx - .5, 2))***REMOVED*** dir + .5) &&
+                        (fy = math.sqrt(.25 - pow(fx - .5, 2)) * dir + .5) &&
                         fy != .5 &&
-                        (fy = fy.toFixed(5) - 1e-5***REMOVED*** dir);
+                        (fy = fy.toFixed(5) - 1e-5 * dir);
                 }
                 return E;
             });
@@ -4208,8 +4208,8 @@ xrx.vml.Raphael = function(element, width, height) {
                 }
                 var vector = [0, 0, math.cos(R.rad(angle)), math.sin(R.rad(angle))],
                     max = 1 / (mmax(abs(vector[2]), abs(vector[3])) || 1);
-                vector[2]***REMOVED***= max;
-                vector[3]***REMOVED***= max;
+                vector[2] *= max;
+                vector[3] *= max;
                 if (vector[2] < 0) {
                     vector[0] = -vector[2];
                     vector[2] = 0;
@@ -4309,13 +4309,13 @@ xrx.vml.Raphael = function(element, width, height) {
                 attr = {
                     fill: "none",
                     stroke: attrs.stroke
-               ***REMOVED*****REMOVED***
+                };
             } else {
                 refX = dx = w / 2;
                 attr = {
                     fill: attrs.stroke,
                     stroke: "none"
-               ***REMOVED*****REMOVED***
+                };
             }
             if (o._.arrows) {
                 if (isEnd) {
@@ -4326,7 +4326,7 @@ xrx.vml.Raphael = function(element, width, height) {
                     o._.arrows.startMarker && markerCounter[o._.arrows.startMarker]--;
                 }
             } else {
-                o._.arrows = {***REMOVED***
+                o._.arrows = {};
             }
             if (type != "none") {
                 var pathId = "raphael-marker-" + type,
@@ -4365,15 +4365,15 @@ xrx.vml.Raphael = function(element, width, height) {
                     use = marker.getElementsByTagName("use")[0];
                 }
                 $(use, attr);
-                var delta = dx***REMOVED*** (type != "diamond" && type != "oval");
+                var delta = dx * (type != "diamond" && type != "oval");
                 if (isEnd) {
-                    from = o._.arrows.startdx***REMOVED*** stroke || 0;
-                    to = R.getTotalLength(attrs.path) - delta***REMOVED*** stroke;
+                    from = o._.arrows.startdx * stroke || 0;
+                    to = R.getTotalLength(attrs.path) - delta * stroke;
                 } else {
-                    from = delta***REMOVED*** stroke;
-                    to = R.getTotalLength(attrs.path) - (o._.arrows.enddx***REMOVED*** stroke || 0);
+                    from = delta * stroke;
+                    to = R.getTotalLength(attrs.path) - (o._.arrows.enddx * stroke || 0);
                 }
-                attr = {***REMOVED***
+                attr = {};
                 attr["marker-" + se] = "url(#" + markerId + ")";
                 if (to || from) {
                     attr.d = R.getSubpath(attrs.path, from, to);
@@ -4386,11 +4386,11 @@ xrx.vml.Raphael = function(element, width, height) {
                 o._.arrows[se + "String"] = value;
             } else {
                 if (isEnd) {
-                    from = o._.arrows.startdx***REMOVED*** stroke || 0;
+                    from = o._.arrows.startdx * stroke || 0;
                     to = R.getTotalLength(attrs.path) - from;
                 } else {
                     from = 0;
-                    to = R.getTotalLength(attrs.path) - (o._.arrows.enddx***REMOVED*** stroke || 0);
+                    to = R.getTotalLength(attrs.path) - (o._.arrows.enddx * stroke || 0);
                 }
                 o._.arrows[se + "Path"] && $(node, {d: R.getSubpath(attrs.path, from, to)});
                 delete o._.arrows[se + "Path"];
@@ -4427,7 +4427,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 dashes = [],
                 i = value.length;
             while (i--) {
-                dashes[i] = value[i]***REMOVED*** width + ((i % 2) ? 1 : -1)***REMOVED*** butt;
+                dashes[i] = value[i] * width + ((i % 2) ? 1 : -1) * butt;
             }
             $(o.node, {"stroke-dasharray": dashes.join(",")});
         }
@@ -4588,7 +4588,7 @@ xrx.vml.Raphael = function(element, width, height) {
                             value /= mmax(abs(o._.sx), abs(o._.sy)) || 1;
                         }
                         if (o.paper._vbSize) {
-                            value***REMOVED***= o.paper._vbSize;
+                            value *= o.paper._vbSize;
                         }
                         node.setAttribute(att, value);
                         if (attrs["stroke-dasharray"]) {
@@ -4642,7 +4642,7 @@ xrx.vml.Raphael = function(element, width, height) {
                                 var gradient = R._g.doc.getElementById(node.getAttribute("fill").replace(/^url\(#|\)$/g, E));
                                 if (gradient) {
                                     var stops = gradient.getElementsByTagName("stop");
-                                    $(stops[stops.length - 1], {"stop-opacity": ("opacity" in attrs ? attrs.opacity : 1)***REMOVED*** ("fill-opacity" in attrs ? attrs["fill-opacity"] : 1)});
+                                    $(stops[stops.length - 1], {"stop-opacity": ("opacity" in attrs ? attrs.opacity : 1) * ("fill-opacity" in attrs ? attrs["fill-opacity"] : 1)});
                                 }
                             }
                             attrs.gradient = value;
@@ -4711,7 +4711,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 tspan;
             for (var i = 0, ii = texts.length; i < ii; i++) {
                 tspan = $("tspan");
-                i && $(tspan, {dy: fontSize***REMOVED*** leading, x: a.x});
+                i && $(tspan, {dy: fontSize * leading, x: a.x});
                 tspan.appendChild(R._g.doc.createTextNode(texts[i]));
                 node.appendChild(tspan);
                 tspans[i] = tspan;
@@ -4719,7 +4719,7 @@ xrx.vml.Raphael = function(element, width, height) {
         } else {
             tspans = node.getElementsByTagName("tspan");
             for (i = 0, ii = tspans.length; i < ii; i++) if (i) {
-                $(tspans[i], {dy: fontSize***REMOVED*** leading, x: a.x});
+                $(tspans[i], {dy: fontSize * leading, x: a.x});
             } else {
                 $(tspans[0], {dy: 0});
             }
@@ -4734,25 +4734,25 @@ xrx.vml.Raphael = function(element, width, height) {
         var X = 0,
             Y = 0;
         /*\
-        ***REMOVED*** Element.node
+         * Element.node
          [ property (object) ]
-        ***REMOVED****
-        ***REMOVED*** Gives you a reference to the DOM object, so you can assign event handlers or just mess around.
-        ***REMOVED****
-        ***REMOVED*** Note: Don’t mess with it.
+         **
+         * Gives you a reference to the DOM object, so you can assign event handlers or just mess around.
+         **
+         * Note: Don’t mess with it.
          > Usage
          | // draw a circle at coordinate 10,10 with radius of 10
          | var c = paper.circle(10, 10, 10);
          | c.node.onclick = function () {
          |     c.attr("fill", "red");
-         |***REMOVED*****REMOVED***
+         | };
         \*/
         this[0] = this.node = node;
         /*\
-        ***REMOVED*** Element.raphael
+         * Element.raphael
          [ property (object) ]
-        ***REMOVED****
-        ***REMOVED*** Internal reference to @Raphael object. In case it is not available.
+         **
+         * Internal reference to @Raphael object. In case it is not available.
          > Usage
          | Raphael.el.red = function () {
          |     var hsb = this.paper.raphael.rgb2hsb(this.attr("fill"));
@@ -4762,21 +4762,21 @@ xrx.vml.Raphael = function(element, width, height) {
         \*/
         node.raphael = true;
         /*\
-        ***REMOVED*** Element.id
+         * Element.id
          [ property (number) ]
-        ***REMOVED****
-        ***REMOVED*** Unique id of the element. Especially usesful when you want to listen to events of the element, 
-        ***REMOVED*** because all events are fired in format `<module>.<action>.<id>`. Also useful for @Paper.getById method.
+         **
+         * Unique id of the element. Especially usesful when you want to listen to events of the element, 
+         * because all events are fired in format `<module>.<action>.<id>`. Also useful for @Paper.getById method.
         \*/
         this.id = R._oid++;
         node.raphaelid = this.id;
         this.matrix = R.matrix();
         this.realPath = null;
         /*\
-        ***REMOVED*** Element.paper
+         * Element.paper
          [ property (object) ]
-        ***REMOVED****
-        ***REMOVED*** Internal reference to “paper” where object drawn. Mainly for use in plugins and element extensions.
+         **
+         * Internal reference to “paper” where object drawn. Mainly for use in plugins and element extensions.
          > Usage
          | Raphael.el.cross = function () {
          |     this.attr({fill: "red"});
@@ -4785,7 +4785,7 @@ xrx.vml.Raphael = function(element, width, height) {
          | }
         \*/
         this.paper = svg;
-        this.attrs = this.attrs || {***REMOVED***
+        this.attrs = this.attrs || {};
         this._ = {
             transform: [],
             sx: 1,
@@ -4794,22 +4794,22 @@ xrx.vml.Raphael = function(element, width, height) {
             dx: 0,
             dy: 0,
             dirty: 1
-       ***REMOVED*****REMOVED***
+        };
         !svg.bottom && (svg.bottom = this);
         /*\
-        ***REMOVED*** Element.prev
+         * Element.prev
          [ property (object) ]
-        ***REMOVED****
-        ***REMOVED*** Reference to the previous element in the hierarchy.
+         **
+         * Reference to the previous element in the hierarchy.
         \*/
         this.prev = svg.top;
         svg.top && (svg.top.next = this);
         svg.top = this;
         /*\
-        ***REMOVED*** Element.next
+         * Element.next
          [ property (object) ]
-        ***REMOVED****
-        ***REMOVED*** Reference to the next element in the hierarchy.
+         **
+         * Reference to the next element in the hierarchy.
         \*/
         this.next = null;
     },
@@ -4829,19 +4829,19 @@ xrx.vml.Raphael = function(element, width, height) {
             path: pathString
         });
         return p;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.rotate
+     * Element.rotate
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Deprecated! Use @Element.transform instead.
-    ***REMOVED*** Adds rotation by given angle around given point to the list of
-    ***REMOVED*** transformations of the element.
+     **
+     * Deprecated! Use @Element.transform instead.
+     * Adds rotation by given angle around given point to the list of
+     * transformations of the element.
      > Parameters
      - deg (number) angle in degrees
      - cx (number) #optional x coordinate of the centre of rotation
      - cy (number) #optional y coordinate of the centre of rotation
-    ***REMOVED*** If cx & cy aren’t specified centre of the shape is used as a point of rotation.
+     * If cx & cy aren’t specified centre of the shape is used as a point of rotation.
      = (object) @Element
     \*/
     elproto.rotate = function (deg, cx, cy) {
@@ -4862,20 +4862,20 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         this.transform(this._.transform.concat([["r", deg, cx, cy]]));
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.scale
+     * Element.scale
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Deprecated! Use @Element.transform instead.
-    ***REMOVED*** Adds scale by given amount relative to given point to the list of
-    ***REMOVED*** transformations of the element.
+     **
+     * Deprecated! Use @Element.transform instead.
+     * Adds scale by given amount relative to given point to the list of
+     * transformations of the element.
      > Parameters
      - sx (number) horisontal scale amount
      - sy (number) vertical scale amount
      - cx (number) #optional x coordinate of the centre of scale
      - cy (number) #optional y coordinate of the centre of scale
-    ***REMOVED*** If cx & cy aren’t specified centre of the shape is used instead.
+     * If cx & cy aren’t specified centre of the shape is used instead.
      = (object) @Element
     \*/
     elproto.scale = function (sx, sy, cx, cy) {
@@ -4898,13 +4898,13 @@ xrx.vml.Raphael = function(element, width, height) {
         cy = cy == null ? bbox.y + bbox.height / 2 : cy;
         this.transform(this._.transform.concat([["s", sx, sy, cx, cy]]));
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.translate
+     * Element.translate
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Deprecated! Use @Element.transform instead.
-    ***REMOVED*** Adds translation by given amount to the list of transformations of the element.
+     **
+     * Deprecated! Use @Element.transform instead.
+     * Adds translation by given amount to the list of transformations of the element.
      > Parameters
      - dx (number) horisontal shift
      - dy (number) vertical shift
@@ -4922,24 +4922,24 @@ xrx.vml.Raphael = function(element, width, height) {
         dy = +dy || 0;
         this.transform(this._.transform.concat([["t", dx, dy]]));
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.transform
+     * Element.transform
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Adds transformation to the element which is separate to other attributes,
-    ***REMOVED*** i.e. translation doesn’t change `x` or `y` of the rectange. The format
-    ***REMOVED*** of transformation string is similar to the path string syntax:
+     **
+     * Adds transformation to the element which is separate to other attributes,
+     * i.e. translation doesn’t change `x` or `y` of the rectange. The format
+     * of transformation string is similar to the path string syntax:
      | "t100,100r30,100,100s2,2,100,100r45s1.5"
-    ***REMOVED*** Each letter is a command. There are four commands: `t` is for translate, `r` is for rotate, `s` is for
-    ***REMOVED*** scale and `m` is for matrix.
-    ***REMOVED***
-    ***REMOVED*** There are also alternative “absolute” translation, rotation and scale: `T`, `R` and `S`. They will not take previous transformation into account. For example, `...T100,0` will always move element 100 px horisontally, while `...t100,0` could move it vertically if there is `r90` before. Just compare results of `r90t100,0` and `r90T100,0`.
-    ***REMOVED***
-    ***REMOVED*** So, the example line above could be read like “translate by 100, 100; rotate 30° around 100, 100; scale twice around 100, 100;
-    ***REMOVED*** rotate 45° around centre; scale 1.5 times relative to centre”. As you can see rotate and scale commands have origin
-    ***REMOVED*** coordinates as optional parameters, the default is the centre point of the element.
-    ***REMOVED*** Matrix accepts six parameters.
+     * Each letter is a command. There are four commands: `t` is for translate, `r` is for rotate, `s` is for
+     * scale and `m` is for matrix.
+     *
+     * There are also alternative “absolute” translation, rotation and scale: `T`, `R` and `S`. They will not take previous transformation into account. For example, `...T100,0` will always move element 100 px horisontally, while `...t100,0` could move it vertically if there is `r90` before. Just compare results of `r90t100,0` and `r90T100,0`.
+     *
+     * So, the example line above could be read like “translate by 100, 100; rotate 30° around 100, 100; scale twice around 100, 100;
+     * rotate 45° around centre; scale 1.5 times relative to centre”. As you can see rotate and scale commands have origin
+     * coordinates as optional parameters, the default is the centre point of the element.
+     * Matrix accepts six parameters.
      > Usage
      | var el = paper.rect(10, 20, 300, 200);
      | // translate 100, 100, rotate 45°, translate -100, 0
@@ -4955,9 +4955,9 @@ xrx.vml.Raphael = function(element, width, height) {
      | console.log(el.transform());
      > Parameters
      - tstr (string) #optional transformation string
-    ***REMOVED*** If tstr isn’t specified
+     * If tstr isn’t specified
      = (string) current transformation string
-    ***REMOVED*** else
+     * else
      = (object) @Element
     \*/
     elproto.transform = function (tstr) {
@@ -4977,34 +4977,34 @@ xrx.vml.Raphael = function(element, width, height) {
         }
 
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.hide
+     * Element.hide
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Makes element invisible. See @Element.show.
+     **
+     * Makes element invisible. See @Element.show.
      = (object) @Element
     \*/
     elproto.hide = function () {
         !this.removed && this.paper.safari(this.node.style.display = "none");
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.show
+     * Element.show
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Makes element visible. See @Element.hide.
+     **
+     * Makes element visible. See @Element.hide.
      = (object) @Element
     \*/
     elproto.show = function () {
         !this.removed && this.paper.safari(this.node.style.display = "");
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.remove
+     * Element.remove
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes element from the paper.
+     **
+     * Removes element from the paper.
     \*/
     elproto.remove = function () {
         if (this.removed || !this.node.parentNode) {
@@ -5026,36 +5026,36 @@ xrx.vml.Raphael = function(element, width, height) {
             this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
         this.removed = true;
-   ***REMOVED*****REMOVED***
+    };
     elproto._getBBox = function () {
         if (this.node.style.display == "none") {
             this.show();
             var hide = true;
         }
-        var bbox = {***REMOVED***
+        var bbox = {};
         try {
             bbox = this.node.getBBox();
         } catch(e) {
             // Firefox 3.0.x plays badly here
         } finally {
-            bbox = bbox || {***REMOVED***
+            bbox = bbox || {};
         }
         hide && this.hide();
         return bbox;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.attr
+     * Element.attr
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Sets the attributes of the element.
+     **
+     * Sets the attributes of the element.
      > Parameters
      - attrName (string) attribute’s name
      - value (string) value
-    ***REMOVED*** or
+     * or
      - params (object) object of name/value pairs
-    ***REMOVED*** or
+     * or
      - attrName (string) attribute’s name
-    ***REMOVED*** or
+     * or
      - attrNames (array) in this case method returns array of current values for given attribute names
      = (object) @Element if attrsName & value or params are passed in.
      = (...) value of the attribute if only attrsName is passed in.
@@ -5098,12 +5098,12 @@ xrx.vml.Raphael = function(element, width, height) {
      o x (number)
      o y (number)
      > Gradients
-    ***REMOVED*** Linear gradient format: “`‹angle›-‹colour›[-‹colour›[:‹offset›]]*-‹colour›`”, example: “`90-#fff-#000`” – 90°
-    ***REMOVED*** gradient from white to black or “`0-#fff-#f00:20-#000`” – 0° gradient from white via red (at 20%) to black.
-    ***REMOVED***
-    ***REMOVED*** radial gradient: “`r[(‹fx›, ‹fy›)]‹colour›[-‹colour›[:‹offset›]]*-‹colour›`”, example: “`r#fff-#000`” –
-    ***REMOVED*** gradient from white to black or “`r(0.25, 0.75)#fff-#000`” – gradient from white to black with focus point
-    ***REMOVED*** at 0.25, 0.75. Focus point coordinates are in 0..1 range. Radial gradients can only be applied to circles and ellipses.
+     * Linear gradient format: “`‹angle›-‹colour›[-‹colour›[:‹offset›]]*-‹colour›`”, example: “`90-#fff-#000`” – 90°
+     * gradient from white to black or “`0-#fff-#f00:20-#000`” – 0° gradient from white via red (at 20%) to black.
+     *
+     * radial gradient: “`r[(‹fx›, ‹fy›)]‹colour›[-‹colour›[:‹offset›]]*-‹colour›`”, example: “`r#fff-#000`” –
+     * gradient from white to black or “`r(0.25, 0.75)#fff-#000`” – gradient from white to black with focus point
+     * at 0.25, 0.75. Focus point coordinates are in 0..1 range. Radial gradients can only be applied to circles and ellipses.
      > Path String
      # <p>Please refer to <a href="http://www.w3.org/TR/SVG/paths.html#PathData" title="Details of a path’s data attribute’s format are described in the SVG specification.">SVG documentation regarding path string</a>. Raphaël fully supports it.</p>
      > Colour Parsing
@@ -5129,7 +5129,7 @@ xrx.vml.Raphael = function(element, width, height) {
             return this;
         }
         if (name == null) {
-            var res = {***REMOVED***
+            var res = {};
             for (var a in this.attrs) if (this.attrs[has](a)) {
                 res[a] = this.attrs[a];
             }
@@ -5145,7 +5145,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return this._.transform;
             }
             var names = name.split(separator),
-                out = {***REMOVED***
+                out = {};
             for (var i = 0, ii = names.length; i < ii; i++) {
                 name = names[i];
                 if (name in this.attrs) {
@@ -5159,14 +5159,14 @@ xrx.vml.Raphael = function(element, width, height) {
             return ii - 1 ? out : out[names[0]];
         }
         if (value == null && R.is(name, "array")) {
-            out = {***REMOVED***
+            out = {};
             for (i = 0, ii = name.length; i < ii; i++) {
                 out[name[i]] = this.attr(name[i]);
             }
             return out;
         }
         if (value != null) {
-            var params = {***REMOVED***
+            var params = {};
             params[name] = value;
         } else if (name != null && R.is(name, "object")) {
             params = name;
@@ -5180,12 +5180,12 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         setFillAndStroke(this, params);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.toFront
+     * Element.toFront
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Moves the element so it is the closest to the viewer’s eyes, on top of other elements.
+     **
+     * Moves the element so it is the closest to the viewer’s eyes, on top of other elements.
      = (object) @Element
     \*/
     elproto.toFront = function () {
@@ -5200,12 +5200,12 @@ xrx.vml.Raphael = function(element, width, height) {
         var svg = this.paper;
         svg.top != this && R._tofront(this, svg);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.toBack
+     * Element.toBack
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Moves the element so it is the furthest from the viewer’s eyes, behind other elements.
+     **
+     * Moves the element so it is the furthest from the viewer’s eyes, behind other elements.
      = (object) @Element
     \*/
     elproto.toBack = function () {
@@ -5221,12 +5221,12 @@ xrx.vml.Raphael = function(element, width, height) {
         R._toback(this, this.paper);
         var svg = this.paper;
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.insertAfter
+     * Element.insertAfter
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Inserts current object after the given one.
+     **
+     * Inserts current object after the given one.
      = (object) @Element
     \*/
     elproto.insertAfter = function (element) {
@@ -5241,12 +5241,12 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         R._insertafter(this, element, this.paper);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Element.insertBefore
+     * Element.insertBefore
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Inserts current object before the given one.
+     **
+     * Inserts current object before the given one.
      = (object) @Element
     \*/
     elproto.insertBefore = function (element) {
@@ -5257,7 +5257,7 @@ xrx.vml.Raphael = function(element, width, height) {
         node.parentNode.insertBefore(this.node, node);
         R._insertbefore(this, element, this.paper);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.blur = function (size) {
         // Experimental. No Safari support. Use it on your own risk.
         var t = this;
@@ -5280,44 +5280,44 @@ xrx.vml.Raphael = function(element, width, height) {
             t.node.removeAttribute("filter");
         }
         return t;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.circle = function (svg, x, y, r) {
         var el = $("circle");
         svg.canvas && svg.canvas.appendChild(el);
         var res = new Element(el, svg);
-        res.attrs = {cx: x, cy: y, r: r, fill: "none", stroke: "#000"***REMOVED***
+        res.attrs = {cx: x, cy: y, r: r, fill: "none", stroke: "#000"};
         res.type = "circle";
         $(el, res.attrs);
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.rect = function (svg, x, y, w, h, r) {
         var el = $("rect");
         svg.canvas && svg.canvas.appendChild(el);
         var res = new Element(el, svg);
-        res.attrs = {x: x, y: y, width: w, height: h, r: r || 0, rx: r || 0, ry: r || 0, fill: "none", stroke: "#000"***REMOVED***
+        res.attrs = {x: x, y: y, width: w, height: h, r: r || 0, rx: r || 0, ry: r || 0, fill: "none", stroke: "#000"};
         res.type = "rect";
         $(el, res.attrs);
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.ellipse = function (svg, x, y, rx, ry) {
         var el = $("ellipse");
         svg.canvas && svg.canvas.appendChild(el);
         var res = new Element(el, svg);
-        res.attrs = {cx: x, cy: y, rx: rx, ry: ry, fill: "none", stroke: "#000"***REMOVED***
+        res.attrs = {cx: x, cy: y, rx: rx, ry: ry, fill: "none", stroke: "#000"};
         res.type = "ellipse";
         $(el, res.attrs);
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.image = function (svg, src, x, y, w, h) {
         var el = $("image");
         $(el, {x: x, y: y, width: w, height: h, preserveAspectRatio: "none"});
         el.setAttributeNS(xlink, "href", src);
         svg.canvas && svg.canvas.appendChild(el);
         var res = new Element(el, svg);
-        res.attrs = {x: x, y: y, width: w, height: h, src: src***REMOVED***
+        res.attrs = {x: x, y: y, width: w, height: h, src: src};
         res.type = "image";
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.text = function (svg, x, y, text) {
         var el = $("text");
         svg.canvas && svg.canvas.appendChild(el);
@@ -5330,11 +5330,11 @@ xrx.vml.Raphael = function(element, width, height) {
             font: R._availableAttrs.font,
             stroke: "none",
             fill: "#000"
-       ***REMOVED*****REMOVED***
+        };
         res.type = "text";
         setFillAndStroke(res, res.attrs);
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.setSize = function (width, height) {
         this.width = width || this.width;
         this.height = height || this.height;
@@ -5344,7 +5344,7 @@ xrx.vml.Raphael = function(element, width, height) {
             this.setViewBox.apply(this, this._viewBox);
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.create = function () {
         var con = R._getContainer.apply(0, arguments),
             container = con && con.container,
@@ -5389,7 +5389,7 @@ xrx.vml.Raphael = function(element, width, height) {
         isFloating && (container.renderfix = function () {});
         container.renderfix();
         return container;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.setViewBox = function (x, y, w, h, fit) {
         var size = mmax(w / this.width, h / this.height),
             top = this.top,
@@ -5419,15 +5419,15 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         this._viewBox = [x, y, w, h, !!fit];
         return this;
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.renderfix
+     * Paper.renderfix
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Fixes the issue of Firefox and IE9 regarding subpixel rendering. If paper is dependant
-    ***REMOVED*** on other elements after reflow it could shift half pixel which cause for lines to lost their crispness.
-    ***REMOVED*** This method fixes the issue.
-    ***REMOVED****
+     **
+     * Fixes the issue of Firefox and IE9 regarding subpixel rendering. If paper is dependant
+     * on other elements after reflow it could shift half pixel which cause for lines to lost their crispness.
+     * This method fixes the issue.
+     **
        Special thanks to Mariusz Nowak (http://www.medikoo.com/) for this method.
     \*/
     R.prototype.renderfix = function () {
@@ -5451,12 +5451,12 @@ xrx.vml.Raphael = function(element, width, height) {
                 s.top = this._top + "px";
             }
         }
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.clear
+     * Paper.clear
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Clears the paper, i.e. removes all the elements.
+     **
+     * Clears the paper, i.e. removes all the elements.
     \*/
     R.prototype.clear = function () {
         var c = this.canvas;
@@ -5467,19 +5467,19 @@ xrx.vml.Raphael = function(element, width, height) {
         (this.desc = $("desc")).appendChild(R._g.doc.createTextNode("Created with Rapha\xebl " + R.version));
         c.appendChild(this.desc);
         c.appendChild(this.defs = $("defs"));
-   ***REMOVED*****REMOVED***
+    };
     /*\
-    ***REMOVED*** Paper.remove
+     * Paper.remove
      [ method ]
-    ***REMOVED****
-    ***REMOVED*** Removes the paper from the DOM.
+     **
+     * Removes the paper from the DOM.
     \*/
     R.prototype.remove = function () {
         this.canvas.parentNode && this.canvas.parentNode.removeChild(this.canvas);
         for (var i in this) {
             this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
-   ***REMOVED*****REMOVED***
+    };
     var setproto = R.st;
     for (var method in elproto) if (elproto[has](method) && !setproto[has](method)) {
         setproto[method] = (function (methodname) {
@@ -5488,7 +5488,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return this.forEach(function (el) {
                     el[methodname].apply(el, arg);
                 });
-           ***REMOVED*****REMOVED***
+            };
         })(method);
     }
 })();
@@ -5543,7 +5543,7 @@ xrx.vml.Raphael = function(element, width, height) {
                             res += vals + map[command == "m" ? "l" : "L"];
                             vals = [];
                         }
-                        vals.push(round(value***REMOVED*** zoom));
+                        vals.push(round(value * zoom));
                     });
                     return res + vals;
                 });
@@ -5556,7 +5556,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 r = pa[i][0].toLowerCase();
                 r == "z" && (r = "x");
                 for (var j = 1, jj = p.length; j < jj; j++) {
-                    r += round(p[j]***REMOVED*** zoom) + (j != jj - 1 ? "," : E);
+                    r += round(p[j] * zoom) + (j != jj - 1 ? "," : E);
                 }
                 res.push(r);
             }
@@ -5568,7 +5568,7 @@ xrx.vml.Raphael = function(element, width, height) {
             return {
                 dx: m.x(dx, dy),
                 dy: m.y(dx, dy)
-           ***REMOVED*****REMOVED***
+            };
         },
         setCoords = function (p, sx, sy, dx, dy, deg) {
             var _ = p._,
@@ -5586,7 +5586,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return;
             }
             o.coordsize = abs(kx) + S + abs(ky);
-            s.rotation = deg***REMOVED*** (sx***REMOVED*** sy < 0 ? -1 : 1);
+            s.rotation = deg * (sx * sy < 0 ? -1 : 1);
             if (deg) {
                 var c = compensation(deg, dx, dy);
                 dx = c.dx;
@@ -5595,25 +5595,25 @@ xrx.vml.Raphael = function(element, width, height) {
             sx < 0 && (flip += "x");
             sy < 0 && (flip += " y") && (y = -1);
             s.flip = flip;
-            o.coordorigin = (dx***REMOVED*** -kx) + S + (dy***REMOVED*** -ky);
+            o.coordorigin = (dx * -kx) + S + (dy * -ky);
             if (fillpos || _.fillsize) {
                 var fill = o.getElementsByTagName(fillString);
                 fill = fill && fill[0];
                 o.removeChild(fill);
                 if (fillpos) {
                     c = compensation(deg, m.x(fillpos[0], fillpos[1]), m.y(fillpos[0], fillpos[1]));
-                    fill.position = c.dx***REMOVED*** y + S + c.dy***REMOVED*** y;
+                    fill.position = c.dx * y + S + c.dy * y;
                 }
                 if (_.fillsize) {
-                    fill.size = _.fillsize[0]***REMOVED*** abs(sx) + S + _.fillsize[1]***REMOVED*** abs(sy);
+                    fill.size = _.fillsize[0] * abs(sx) + S + _.fillsize[1] * abs(sy);
                 }
                 o.appendChild(fill);
             }
             s.visibility = "visible";
-       ***REMOVED*****REMOVED***
+        };
     R.toString = function () {
         return  "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " + this.version;
-   ***REMOVED*****REMOVED***
+    };
     var addArrow = function (o, value, isEnd) {
         var values = Str(value).toLowerCase().split("-"),
             se = isEnd ? "end" : "start",
@@ -5644,7 +5644,7 @@ xrx.vml.Raphael = function(element, width, height) {
     },
     setFillAndStroke = function (o, params) {
         // o.paper.canvas.style.display = "none";
-        o.attrs = o.attrs || {***REMOVED***
+        o.attrs = o.attrs || {};
         var node = o.node,
             a = o.attrs,
             s = node.style,
@@ -5680,7 +5680,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 cy = +a.cy,
                 rx = +a.rx || +a.r || 0,
                 ry = +a.ry || +a.r || 0;
-            node.path = R.format("ar{0},{1},{2},{3},{4},{1},{4},{1}x", round((cx - rx)***REMOVED*** zoom), round((cy - ry)***REMOVED*** zoom), round((cx + rx)***REMOVED*** zoom), round((cy + ry)***REMOVED*** zoom), round(cx***REMOVED*** zoom));
+            node.path = R.format("ar{0},{1},{2},{3},{4},{1},{4},{1}x", round((cx - rx) * zoom), round((cy - ry) * zoom), round((cx + rx) * zoom), round((cy + ry) * zoom), round(cx * zoom));
             o._.dirty = 1;
         }
         if ("clip-rect" in params) {
@@ -5769,7 +5769,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 }
             }
             if ("fill-opacity" in params || "opacity" in params) {
-                var opacity = ((+a["fill-opacity"] + 1 || 2) - 1)***REMOVED*** ((+a.opacity + 1 || 2) - 1)***REMOVED*** ((+R.getRGB(params.fill).o + 1 || 2) - 1);
+                var opacity = ((+a["fill-opacity"] + 1 || 2) - 1) * ((+a.opacity + 1 || 2) - 1) * ((+R.getRGB(params.fill).o + 1 || 2) - 1);
                 opacity = mmin(mmax(opacity, 0), 1);
                 fill.opacity = opacity;
                 if (fill.src) {
@@ -5792,12 +5792,12 @@ xrx.vml.Raphael = function(element, width, height) {
             (params.stroke == "none" || params.stroke === null || stroke.on == null || params.stroke == 0 || params["stroke-width"] == 0) && (stroke.on = false);
             var strokeColor = R.getRGB(params.stroke);
             stroke.on && params.stroke && (stroke.color = strokeColor.hex);
-            opacity = ((+a["stroke-opacity"] + 1 || 2) - 1)***REMOVED*** ((+a.opacity + 1 || 2) - 1)***REMOVED*** ((+strokeColor.o + 1 || 2) - 1);
-            var width = (toFloat(params["stroke-width"]) || 1)***REMOVED*** .75;
+            opacity = ((+a["stroke-opacity"] + 1 || 2) - 1) * ((+a.opacity + 1 || 2) - 1) * ((+strokeColor.o + 1 || 2) - 1);
+            var width = (toFloat(params["stroke-width"]) || 1) * .75;
             opacity = mmin(mmax(opacity, 0), 1);
             params["stroke-width"] == null && (width = a["stroke-width"]);
             params["stroke-width"] && (stroke.weight = width);
-            width && width < 1 && (opacity***REMOVED***= width) && (stroke.weight = 1);
+            width && width < 1 && (opacity *= width) && (stroke.weight = 1);
             stroke.opacity = opacity;
         
             params["stroke-linejoin"] && (stroke.joinstyle = params["stroke-linejoin"] || "miter");
@@ -5815,7 +5815,7 @@ xrx.vml.Raphael = function(element, width, height) {
                     "- .": "dashdot",
                     "--.": "longdashdot",
                     "--..": "longdashdotdot"
-               ***REMOVED*****REMOVED***
+                };
                 stroke.dashstyle = dasharray[has](params["stroke-dasharray"]) ? dasharray[params["stroke-dasharray"]] : E;
             }
             newstroke && node.appendChild(stroke);
@@ -5831,7 +5831,7 @@ xrx.vml.Raphael = function(element, width, height) {
             a["font-weight"] && (s.fontWeight = a["font-weight"]);
             a["font-style"] && (s.fontStyle = a["font-style"]);
             fontSize = toFloat(a["font-size"] || fontSize && fontSize[0]) || 10;
-            s.fontSize = fontSize***REMOVED*** m + "px";
+            s.fontSize = fontSize * m + "px";
             res.textpath.string && (span.innerHTML = Str(res.textpath.string).replace(/</g, "&#60;").replace(/&/g, "&#38;").replace(/\n/g, "<br>"));
             var brect = span.getBoundingClientRect();
             res.W = a.w = (brect.right - brect.left) / m;
@@ -5840,7 +5840,7 @@ xrx.vml.Raphael = function(element, width, height) {
             res.X = a.x;
             res.Y = a.y + res.H / 2;
 
-            ("x" in params || "y" in params) && (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x***REMOVED*** zoom), round(a.y***REMOVED*** zoom), round(a.x***REMOVED*** zoom) + 1));
+            ("x" in params || "y" in params) && (res.path.v = R.format("m{0},{1}l{2},{1}", round(a.x * zoom), round(a.y * zoom), round(a.x * zoom) + 1));
             var dirtyattrs = ["x", "y", "text", "font", "font-family", "font-weight", "font-style", "font-size"];
             for (var d = 0, dd = dirtyattrs.length; d < dd; d++) if (dirtyattrs[d] in params) {
                 res._.dirty = 1;
@@ -5867,7 +5867,7 @@ xrx.vml.Raphael = function(element, width, height) {
         // res.paper.canvas.style.display = E;
     },
     addGradientFill = function (o, gradient, fill) {
-        o.attrs = o.attrs || {***REMOVED***
+        o.attrs = o.attrs || {};
         var attrs = o.attrs,
             pow = Math.pow,
             opacity,
@@ -5880,7 +5880,7 @@ xrx.vml.Raphael = function(element, width, height) {
             if (fx && fy) {
                 fx = toFloat(fx);
                 fy = toFloat(fy);
-                pow(fx - .5, 2) + pow(fy - .5, 2) > .25 && (fy = math.sqrt(.25 - pow(fx - .5, 2))***REMOVED*** ((fy > .5)***REMOVED*** 2 - 1) + .5);
+                pow(fx - .5, 2) + pow(fy - .5, 2) > .25 && (fy = math.sqrt(.25 - pow(fx - .5, 2)) * ((fy > .5) * 2 - 1) + .5);
                 fxfy = fx + S + fy;
             }
             return E;
@@ -5931,7 +5931,7 @@ xrx.vml.Raphael = function(element, width, height) {
         node.raphaelid = this.id;
         this.X = 0;
         this.Y = 0;
-        this.attrs = {***REMOVED***
+        this.attrs = {};
         this.paper = vml;
         this.matrix = R.matrix();
         this._ = {
@@ -5943,13 +5943,13 @@ xrx.vml.Raphael = function(element, width, height) {
             deg: 0,
             dirty: 1,
             dirtyT: 1
-       ***REMOVED*****REMOVED***
+        };
         !vml.bottom && (vml.bottom = this);
         this.prev = vml.top;
         vml.top && (vml.top.next = this);
         vml.top = this;
         this.next = null;
-   ***REMOVED*****REMOVED***
+    };
     var elproto = R.el;
 
     Element.prototype = elproto;
@@ -5982,7 +5982,7 @@ xrx.vml.Raphael = function(element, width, height) {
                     bbt = this.getBBox(1),
                     dx = bb.x - bbt.x,
                     dy = bb.y - bbt.y;
-                o.coordorigin = (dx***REMOVED*** -zoom) + S + (dy***REMOVED*** -zoom);
+                o.coordorigin = (dx * -zoom) + S + (dy * -zoom);
                 setCoords(this, 1, 1, dx, dy, 0);
             } else {
                 o.style.filter = E;
@@ -5995,7 +5995,7 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         oldt && (this._.transform = oldt);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.rotate = function (deg, cx, cy) {
         if (this.removed) {
             return this;
@@ -6018,7 +6018,7 @@ xrx.vml.Raphael = function(element, width, height) {
         this._.dirtyT = 1;
         this.transform(this._.transform.concat([["r", deg, cx, cy]]));
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.translate = function (dx, dy) {
         if (this.removed) {
             return this;
@@ -6035,7 +6035,7 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         this.transform(this._.transform.concat([["t", dx, dy]]));
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.scale = function (sx, sy, cx, cy) {
         if (this.removed) {
             return this;
@@ -6060,26 +6060,26 @@ xrx.vml.Raphael = function(element, width, height) {
         this.transform(this._.transform.concat([["s", sx, sy, cx, cy]]));
         this._.dirtyT = 1;
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.hide = function () {
         !this.removed && (this.node.style.display = "none");
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.show = function () {
         !this.removed && (this.node.style.display = E);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto._getBBox = function () {
         if (this.removed) {
-            return {***REMOVED***
+            return {};
         }
         return {
             x: this.X + (this.bbx || 0) - this.W / 2,
             y: this.Y - this.H,
             width: this.W,
             height: this.H
-       ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+        };
+    };
     elproto.remove = function () {
         if (this.removed || !this.node.parentNode) {
             return;
@@ -6092,13 +6092,13 @@ xrx.vml.Raphael = function(element, width, height) {
             this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
         this.removed = true;
-   ***REMOVED*****REMOVED***
+    };
     elproto.attr = function (name, value) {
         if (this.removed) {
             return this;
         }
         if (name == null) {
-            var res = {***REMOVED***
+            var res = {};
             for (var a in this.attrs) if (this.attrs[has](a)) {
                 res[a] = this.attrs[a];
             }
@@ -6111,7 +6111,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return this.attrs.gradient;
             }
             var names = name.split(separator),
-                out = {***REMOVED***
+                out = {};
             for (var i = 0, ii = names.length; i < ii; i++) {
                 name = names[i];
                 if (name in this.attrs) {
@@ -6125,7 +6125,7 @@ xrx.vml.Raphael = function(element, width, height) {
             return ii - 1 ? out : out[names[0]];
         }
         if (this.attrs && value == null && R.is(name, "array")) {
-            out = {***REMOVED***
+            out = {};
             for (i = 0, ii = name.length; i < ii; i++) {
                 out[name[i]] = this.attr(name[i]);
             }
@@ -6133,7 +6133,7 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         var params;
         if (value != null) {
-            params = {***REMOVED***
+            params = {};
             params[name] = value;
         }
         value == null && R.is(name, "object") && (params = name);
@@ -6153,12 +6153,12 @@ xrx.vml.Raphael = function(element, width, height) {
             // this.paper.canvas.style.display = E;
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.toFront = function () {
         !this.removed && this.node.parentNode.appendChild(this.node);
         this.paper && this.paper.top != this && R._tofront(this, this.paper);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.toBack = function () {
         if (this.removed) {
             return this;
@@ -6168,7 +6168,7 @@ xrx.vml.Raphael = function(element, width, height) {
             R._toback(this, this.paper);
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.insertAfter = function (element) {
         if (this.removed) {
             return this;
@@ -6183,7 +6183,7 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         R._insertafter(this, element, this.paper);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.insertBefore = function (element) {
         if (this.removed) {
             return this;
@@ -6194,7 +6194,7 @@ xrx.vml.Raphael = function(element, width, height) {
         element.node.parentNode.insertBefore(this.node, element.node);
         R._insertbefore(this, element, this.paper);
         return this;
-   ***REMOVED*****REMOVED***
+    };
     elproto.blur = function (size) {
         var s = this.node.runtimeStyle,
             f = s.filter;
@@ -6209,7 +6209,7 @@ xrx.vml.Raphael = function(element, width, height) {
             delete this.attrs.blur;
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
 
     R._engine.path = function (pathString, vml) {
         var el = createNode("shape");
@@ -6217,7 +6217,7 @@ xrx.vml.Raphael = function(element, width, height) {
         el.coordsize = zoom + S + zoom;
         el.coordorigin = vml.coordorigin;
         var p = new Element(el, vml),
-            attr = {fill: "none", stroke: "#000"***REMOVED***
+            attr = {fill: "none", stroke: "#000"};
         pathString && (attr.path = pathString);
         p.type = "path";
         p.path = [];
@@ -6230,7 +6230,7 @@ xrx.vml.Raphael = function(element, width, height) {
         p.skew = skew;
         p.transform(E);
         return p;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.rect = function (vml, x, y, w, h, r) {
         var path = R._rectPath(x, y, w, h, r),
             res = vml.path(path),
@@ -6243,14 +6243,14 @@ xrx.vml.Raphael = function(element, width, height) {
         a.path = path;
         res.type = "rect";
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.ellipse = function (vml, x, y, rx, ry) {
         var res = vml.path(),
             a = res.attrs;
         res.X = x - rx;
         res.Y = y - ry;
-        res.W = rx***REMOVED*** 2;
-        res.H = ry***REMOVED*** 2;
+        res.W = rx * 2;
+        res.H = ry * 2;
         res.type = "ellipse";
         setFillAndStroke(res, {
             cx: x,
@@ -6259,13 +6259,13 @@ xrx.vml.Raphael = function(element, width, height) {
             ry: ry
         });
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.circle = function (vml, x, y, r) {
         var res = vml.path(),
             a = res.attrs;
         res.X = x - r;
         res.Y = y - r;
-        res.W = res.H = r***REMOVED*** 2;
+        res.W = res.H = r * 2;
         res.type = "circle";
         setFillAndStroke(res, {
             cx: x,
@@ -6273,7 +6273,7 @@ xrx.vml.Raphael = function(element, width, height) {
             r: r
         });
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.image = function (vml, src, x, y, w, h) {
         var path = R._rectPath(x, y, w, h),
             res = vml.path(path).attr({stroke: "none"}),
@@ -6296,7 +6296,7 @@ xrx.vml.Raphael = function(element, width, height) {
         node.appendChild(fill);
         setCoords(res, 1, 1, 0, 0, 0);
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.text = function (vml, x, y, text) {
         var el = createNode("shape"),
             path = createNode("path"),
@@ -6304,7 +6304,7 @@ xrx.vml.Raphael = function(element, width, height) {
         x = x || 0;
         y = y || 0;
         text = text || "";
-        path.v = R.format("m{0},{1}l{2},{1}", round(x***REMOVED*** zoom), round(y***REMOVED*** zoom), round(x***REMOVED*** zoom) + 1);
+        path.v = R.format("m{0},{1}l{2},{1}", round(x * zoom), round(y * zoom), round(x * zoom) + 1);
         path.textpathok = true;
         o.string = Str(text);
         o.on = true;
@@ -6317,7 +6317,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 stroke: "none",
                 font: R._availableAttrs.font,
                 text: text
-           ***REMOVED*****REMOVED***
+            };
         p.shape = el;
         p.path = path;
         p.textpath = o;
@@ -6337,7 +6337,7 @@ xrx.vml.Raphael = function(element, width, height) {
         p.skew = skew;
         p.transform(E);
         return p;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.setSize = function (width, height) {
         var cs = this.canvas.style;
         this.width = width;
@@ -6351,7 +6351,7 @@ xrx.vml.Raphael = function(element, width, height) {
             R._engine.setViewBox.apply(this, this._viewBox);
         }
         return this;
-   ***REMOVED*****REMOVED***
+    };
     R._engine.setViewBox = function (x, y, w, h, fit) {
         var width = this.width,
             height = this.height,
@@ -6360,11 +6360,11 @@ xrx.vml.Raphael = function(element, width, height) {
         if (fit) {
             H = height / h;
             W = width / w;
-            if (w***REMOVED*** H < width) {
-                x -= (width - w***REMOVED*** H) / 2 / H;
+            if (w * H < width) {
+                x -= (width - w * H) / 2 / H;
             }
-            if (h***REMOVED*** W < height) {
-                y -= (height - h***REMOVED*** W) / 2 / W;
+            if (h * W < height) {
+                y -= (height - h * W) / 2 / W;
             }
         }
         this._viewBox = [x, y, w, h, !!fit];
@@ -6372,12 +6372,12 @@ xrx.vml.Raphael = function(element, width, height) {
             dx: -x,
             dy: -y,
             scale: size
-       ***REMOVED*****REMOVED***
+        };
         this.forEach(function (el) {
             el.transform("...");
         });
         return this;
-   ***REMOVED*****REMOVED***
+    };
     var createNode;
     R._engine.initWin = function (win) {
             var doc = win.document;
@@ -6386,13 +6386,13 @@ xrx.vml.Raphael = function(element, width, height) {
                 !doc.namespaces.rvml && doc.namespaces.add("rvml", "urn:schemas-microsoft-com:vml");
                 createNode = function (tagName) {
                     return doc.createElement('<rvml:' + tagName + ' class="rvml">');
-               ***REMOVED*****REMOVED***
+                };
             } catch (e) {
                 createNode = function (tagName) {
                     return doc.createElement('<' + tagName + ' xmlns="urn:schemas-microsoft.com:vml" class="rvml">');
-               ***REMOVED*****REMOVED***
+                };
             }
-       ***REMOVED*****REMOVED***
+        };
     R._engine.initWin(R._g.win);
     R._engine.create = function () {
         var con = R._getContainer.apply(0, arguments),
@@ -6416,12 +6416,12 @@ xrx.vml.Raphael = function(element, width, height) {
         res.height = height;
         width == +width && (width += "px");
         height == +height && (height += "px");
-        res.coordsize = zoom***REMOVED*** 1e3 + S + zoom***REMOVED*** 1e3;
+        res.coordsize = zoom * 1e3 + S + zoom * 1e3;
         res.coordorigin = "0 0";
         res.span = R._g.doc.createElement("span");
         res.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;";
         c.appendChild(res.span);
-        cs.cssText = R.format("top:0;left:0;width:{0***REMOVED***height:{1***REMOVED***display:inline-block;position:relative;clip:rect(0 {0} {1} 0);overflow:hidden", width, height);
+        cs.cssText = R.format("top:0;left:0;width:{0};height:{1};display:inline-block;position:relative;clip:rect(0 {0} {1} 0);overflow:hidden", width, height);
         if (container == 1) {
             R._g.doc.body.appendChild(c);
             cs.left = x + "px";
@@ -6434,23 +6434,23 @@ xrx.vml.Raphael = function(element, width, height) {
                 container.appendChild(c);
             }
         }
-        res.renderfix = function () {***REMOVED***
+        res.renderfix = function () {};
         return res;
-   ***REMOVED*****REMOVED***
+    };
     R.prototype.clear = function () {
         this.canvas.innerHTML = E;
         this.span = R._g.doc.createElement("span");
         this.span.style.cssText = "position:absolute;left:-9999em;top:-9999em;padding:0;margin:0;line-height:1;display:inline;";
         this.canvas.appendChild(this.span);
         this.bottom = this.top = null;
-   ***REMOVED*****REMOVED***
+    };
     R.prototype.remove = function () {
         this.canvas.parentNode.removeChild(this.canvas);
         for (var i in this) {
             this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
         return true;
-   ***REMOVED*****REMOVED***
+    };
 
     var setproto = R.st;
     for (var method in elproto) if (elproto[has](method) && !setproto[has](method)) {
@@ -6460,7 +6460,7 @@ xrx.vml.Raphael = function(element, width, height) {
                 return this.forEach(function (el) {
                     el[methodname].apply(el, arg);
                 });
-           ***REMOVED*****REMOVED***
+            };
         })(method);
     }
 })();

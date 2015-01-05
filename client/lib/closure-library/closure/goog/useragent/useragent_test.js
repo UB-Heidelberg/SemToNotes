@@ -27,7 +27,7 @@ goog.require('goog.userAgentTestUtil');
 var documentMode;
 goog.userAgent.getDocumentMode_ = function() {
   return documentMode;
-***REMOVED***
+};
 
 
 var propertyReplacer = new goog.testing.PropertyReplacer();
@@ -37,7 +37,7 @@ var UserAgents = {
   IE: 'IE',
   OPERA: 'OPERA',
   WEBKIT: 'WEBKIT'
-***REMOVED***
+};
 
 
 function tearDown() {
@@ -46,13 +46,13 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test browser detection for a user agent configuration.
-***REMOVED*** @param {Array.<number>} expectedAgents Array of expected userAgents.
-***REMOVED*** @param {string} uaString User agent string.
-***REMOVED*** @param {string=} opt_product Navigator product string.
-***REMOVED*** @param {string=} opt_vendor Navigator vendor string.
-***REMOVED***
+/**
+ * Test browser detection for a user agent configuration.
+ * @param {Array.<number>} expectedAgents Array of expected userAgents.
+ * @param {string} uaString User agent string.
+ * @param {string=} opt_product Navigator product string.
+ * @param {string=} opt_vendor Navigator vendor string.
+ */
 function assertUserAgent(expectedAgents, uaString, opt_product, opt_vendor) {
   var mockGlobal = {
     'navigator': {
@@ -60,7 +60,7 @@ function assertUserAgent(expectedAgents, uaString, opt_product, opt_vendor) {
       'product': opt_product,
       'vendor': opt_vendor
     }
- ***REMOVED*****REMOVED***
+  };
   propertyReplacer.set(goog, 'global', mockGlobal);
 
   goog.labs.userAgent.util.setUserAgent(null);
@@ -78,14 +78,14 @@ function testOperaInit() {
     'version': function() {
       return '9.20';
     }
- ***REMOVED*****REMOVED***
+  };
 
   var mockGlobal = {
     'navigator': {
       'userAgent': 'Opera/9.20 (Windows NT 5.1; U; de),gzip(gfe)'
     },
     'opera': mockOpera
- ***REMOVED*****REMOVED***
+  };
   propertyReplacer.set(goog, 'global', mockGlobal);
 
   propertyReplacer.set(goog.userAgent, 'getUserAgentString', function() {
@@ -217,7 +217,7 @@ function testDocumentModeInStandardsMode() {
 function testOpera() {
   var assertOpera = function(uaString) {
     assertUserAgent([UserAgents.OPERA], uaString);
- ***REMOVED*****REMOVED***
+  };
   assertOpera('Opera/7.23 (Windows 98; U) [en]');
   assertOpera('Opera/8.00 (Windows NT 5.1; U; en)');
   assertOpera('Opera/8.0 (X11; Linux i686; U; cs)');
@@ -245,7 +245,7 @@ function testUnknownBrowser() {
 
 function testNoNavigator() {
   // global object has no "navigator" property.
-  var mockGlobal = {***REMOVED***
+  var mockGlobal = {};
   propertyReplacer.set(goog, 'global', mockGlobal);
   goog.labs.userAgent.util.setUserAgent(null);
   goog.userAgentTestUtil.reinitializeUserAgent();

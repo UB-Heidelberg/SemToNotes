@@ -1,10 +1,10 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @module jsdoc/src/filter
 
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var path = require('jsdoc/path');
@@ -21,13 +21,13 @@ function makeRegExp(config) {
     return regExp;
 }
 
-***REMOVED***
+/**
     @constructor
     @param {object} opts
     @param {string[]} opts.exclude - Specific files to exclude.
     @param {string|RegExp} opts.includePattern
     @param {string|RegExp} opts.excludePattern
-***REMOVED***
+ */
 exports.Filter = function(opts) {
     this.exclude = opts.exclude && Array.isArray(opts.exclude) ?
         opts.exclude.map(function($) {
@@ -36,12 +36,12 @@ exports.Filter = function(opts) {
         null;
     this.includePattern = makeRegExp(opts.includePattern);
     this.excludePattern = makeRegExp(opts.excludePattern);
-***REMOVED***
+};
 
-***REMOVED***
+/**
     @param {string} filepath - The filepath to check.
     @returns {boolean} Should the given file be included?
-***REMOVED***
+ */
 exports.Filter.prototype.isIncluded = function(filepath) {
     var included = true;
 
@@ -64,4 +64,4 @@ exports.Filter.prototype.isIncluded = function(filepath) {
     }
 
     return included;
-***REMOVED***
+};

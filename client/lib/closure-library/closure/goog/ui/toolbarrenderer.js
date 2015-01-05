@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.Toolbar}s.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.Toolbar}s.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ToolbarRenderer');
 
@@ -28,62 +28,62 @@ goog.require('goog.ui.ToolbarSeparatorRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.Toolbar}s, based on {@link
-***REMOVED*** goog.ui.ContainerRenderer}.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ContainerRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.Toolbar}s, based on {@link
+ * goog.ui.ContainerRenderer}.
+ * @constructor
+ * @extends {goog.ui.ContainerRenderer}
+ */
 goog.ui.ToolbarRenderer = function() {
   goog.ui.ContainerRenderer.call(this, goog.a11y.aria.Role.TOOLBAR);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarRenderer, goog.ui.ContainerRenderer);
 goog.addSingletonGetter(goog.ui.ToolbarRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of toolbars rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of toolbars rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ToolbarRenderer.CSS_CLASS = goog.getCssName('goog-toolbar');
 
 
-***REMOVED***
-***REMOVED*** Inspects the element, and creates an instance of {@link goog.ui.Control} or
-***REMOVED*** an appropriate subclass best suited to decorate it.  Overrides the superclass
-***REMOVED*** implementation by recognizing HR elements as separators.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {goog.ui.Control?} A new control suitable to decorate the element
-***REMOVED***     (null if none).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Inspects the element, and creates an instance of {@link goog.ui.Control} or
+ * an appropriate subclass best suited to decorate it.  Overrides the superclass
+ * implementation by recognizing HR elements as separators.
+ * @param {Element} element Element to decorate.
+ * @return {goog.ui.Control?} A new control suitable to decorate the element
+ *     (null if none).
+ * @override
+ */
 goog.ui.ToolbarRenderer.prototype.getDecoratorForChild = function(element) {
   return element.tagName == 'HR' ?
       new goog.ui.Separator(goog.ui.ToolbarSeparatorRenderer.getInstance()) :
       goog.ui.ToolbarRenderer.superClass_.getDecoratorForChild.call(this,
           element);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of containers
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of containers
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.ToolbarRenderer.prototype.getCssClass = function() {
   return goog.ui.ToolbarRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the default orientation of containers rendered or decorated by this
-***REMOVED*** renderer.  This implementation returns {@code HORIZONTAL}.
-***REMOVED*** @return {goog.ui.Container.Orientation} Default orientation for containers
-***REMOVED***     created or decorated by this renderer.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the default orientation of containers rendered or decorated by this
+ * renderer.  This implementation returns {@code HORIZONTAL}.
+ * @return {goog.ui.Container.Orientation} Default orientation for containers
+ *     created or decorated by this renderer.
+ * @override
+ */
 goog.ui.ToolbarRenderer.prototype.getDefaultOrientation = function() {
   return goog.ui.Container.Orientation.HORIZONTAL;
-***REMOVED***
+};

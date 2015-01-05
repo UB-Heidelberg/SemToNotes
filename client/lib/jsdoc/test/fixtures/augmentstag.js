@@ -1,51 +1,51 @@
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 function Foo() {
-   ***REMOVED*****REMOVED*** First property***REMOVED***
+    /** First property */
     this.prop1 = true;
 }
 
-***REMOVED***
-***REMOVED*** Second property
-***REMOVED*** @type {String}
-***REMOVED***
+/**
+ * Second property
+ * @type {String}
+ */
 Foo.prototype.prop2 = "parent prop2";
 
-***REMOVED***
-***REMOVED*** First parent method.
-***REMOVED***
-Foo.prototype.method1 = function() {***REMOVED***
+/**
+ * First parent method.
+ */
+Foo.prototype.method1 = function() {};
 
-***REMOVED***
-***REMOVED*** Second parent method.
-***REMOVED***
-Foo.prototype.method2 = function() {***REMOVED***
+/**
+ * Second parent method.
+ */
+Foo.prototype.method2 = function() {};
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends Foo
-***REMOVED***
+/**
+ * @constructor
+ * @extends Foo
+ */
 function Bar() {
-   ***REMOVED*****REMOVED*** Third prop***REMOVED****/
+    /** Third prop **/
     this.prop3 = true;
 }
 
-***REMOVED***
-***REMOVED*** Second child method.
-***REMOVED***
-Bar.prototype.method2 = function() {***REMOVED***
+/**
+ * Second child method.
+ */
+Bar.prototype.method2 = function() {};
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {Bar}
-***REMOVED***
+/**
+ * @constructor
+ * @extends {Bar}
+ */
 function Baz() {
-   ***REMOVED*****REMOVED*** Override prop1***REMOVED***
+    /** Override prop1 */
     this.prop1 = "new";
 }
 
-***REMOVED***
-***REMOVED*** Third grandchild method.
-***REMOVED***
-Baz.prototype.method3 = function() {***REMOVED***
+/**
+ * Third grandchild method.
+ */
+Baz.prototype.method3 = function() {};

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.net.webChannel.WebChannelBase.
-***REMOVED*** @suppress {accessControls} Private methods are accessed for test purposes.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.net.webChannel.WebChannelBase.
+ * @suppress {accessControls} Private methods are accessed for test purposes.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.webChannelBaseTest');
@@ -44,16 +44,16 @@ goog.require('goog.testing.jsunit');
 goog.setTestOnly('goog.labs.net.webChannel.webChannelBaseTest');
 
 
-***REMOVED***
-***REMOVED*** Delay between a network failure and the next network request.
-***REMOVED***
+/**
+ * Delay between a network failure and the next network request.
+ */
 var RETRY_TIME = 1000;
 
 
-***REMOVED***
-***REMOVED*** A really long time - used to make sure no more timeouts will fire.
-***REMOVED***
-var ALL_DAY_MS = 1000***REMOVED*** 60***REMOVED*** 60***REMOVED*** 24;
+/**
+ * A really long time - used to make sure no more timeouts will fire.
+ */
+var ALL_DAY_MS = 1000 * 60 * 60 * 24;
 
 var stubs = new goog.testing.PropertyReplacer();
 
@@ -82,14 +82,14 @@ function debugToWindow(message) {
 }
 
 
-***REMOVED***
-***REMOVED*** Stubs goog.labs.net.webChannel.netUtils to always time out. It maintains the
-***REMOVED*** contract given by goog.labs.net.webChannel.netUtils.testNetwork, but always
-***REMOVED*** times out (calling callback(false)).
-***REMOVED***
-***REMOVED*** stubNetUtils should be called in tests that require it before
-***REMOVED*** a call to testNetwork happens. It is reset at tearDown.
-***REMOVED***
+/**
+ * Stubs goog.labs.net.webChannel.netUtils to always time out. It maintains the
+ * contract given by goog.labs.net.webChannel.netUtils.testNetwork, but always
+ * times out (calling callback(false)).
+ *
+ * stubNetUtils should be called in tests that require it before
+ * a call to testNetwork happens. It is reset at tearDown.
+ */
 function stubNetUtils() {
   stubs.set(goog.labs.net.webChannel.netUtils, 'testLoadImage',
       function(url, timeout, callback) {
@@ -98,12 +98,12 @@ function stubNetUtils() {
 }
 
 
-***REMOVED***
-***REMOVED*** Stubs goog.labs.net.webChannel.ForwardChannelRequestPool.isSpdyEnabled_
-***REMOVED*** to manage the max pool size for the forward channel.
-***REMOVED***
-***REMOVED*** @param {boolean} spdyEnabled Whether SPDY is enabled for the test.
-***REMOVED***
+/**
+ * Stubs goog.labs.net.webChannel.ForwardChannelRequestPool.isSpdyEnabled_
+ * to manage the max pool size for the forward channel.
+ *
+ * @param {boolean} spdyEnabled Whether SPDY is enabled for the test.
+ */
 function stubSpdyCheck(spdyEnabled) {
   stubs.set(goog.labs.net.webChannel.ForwardChannelRequestPool,
       'isSpdyEnabled_',
@@ -114,12 +114,12 @@ function stubSpdyCheck(spdyEnabled) {
 
 
 
-***REMOVED***
-***REMOVED*** Mock ChannelRequest.
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Mock ChannelRequest.
+ * @constructor
+ * @struct
+ * @final
+ */
 var MockChannelRequest = function(channel, channelDebug, opt_sessionId,
     opt_requestId, opt_retryId) {
   this.channel_ = channel;
@@ -133,18 +133,18 @@ var MockChannelRequest = function(channel, channelDebug, opt_sessionId,
   // For debugging, keep track of whether this is a back or forward channel.
   this.isBack = !!(opt_requestId == 'rpc');
   this.isForward = !this.isBack;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.postData_ = null;
 
 MockChannelRequest.prototype.requestStartTime_ = null;
 
-MockChannelRequest.prototype.setExtraHeaders = function(extraHeaders) {***REMOVED***
+MockChannelRequest.prototype.setExtraHeaders = function(extraHeaders) {};
 
-MockChannelRequest.prototype.setTimeout = function(timeout) {***REMOVED***
+MockChannelRequest.prototype.setTimeout = function(timeout) {};
 
 MockChannelRequest.prototype.setReadyStateChangeThrottle =
-    function(throttle) {***REMOVED***
+    function(throttle) {};
 
 MockChannelRequest.prototype.xmlHttpPost = function(uri, postData,
     decodeChunks) {
@@ -152,80 +152,80 @@ MockChannelRequest.prototype.xmlHttpPost = function(uri, postData,
       decodeChunks);
   this.postData_ = postData;
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.xmlHttpGet = function(uri, decodeChunks,
     opt_noClose) {
   this.channelDebug_.debug('<--- GET: ' + uri + ', ' + decodeChunks + ', ' +
       opt_noClose);
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.tridentGet = function(uri, usingSecondaryDomain) {
   this.channelDebug_.debug('<---GET (T): ' + uri);
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.sendUsingImgTag = function(uri) {
   this.requestStartTime_ = goog.now();
-***REMOVED***
+};
 
 MockChannelRequest.prototype.cancel = function() {
   this.successful_ = false;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getSuccess = function() {
   return this.successful_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getLastError = function() {
   return this.lastError_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getLastStatusCode = function() {
   return this.lastStatusCode_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getSessionId = function() {
   return this.sessionId_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getRequestId = function() {
   return this.requestId_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getPostData = function() {
   return this.postData_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getRequestStartTime = function() {
   return this.requestStartTime_;
-***REMOVED***
+};
 
 MockChannelRequest.prototype.getXhr = function() {
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @suppress {invalidCasts} The cast from MockChannelRequest to
-***REMOVED*** ChannelRequest is invalid and will not compile.
-***REMOVED***
+/**
+ * @suppress {invalidCasts} The cast from MockChannelRequest to
+ * ChannelRequest is invalid and will not compile.
+ */
 function setUpPage() {
   // Use our MockChannelRequests instead of the real ones.
   goog.labs.net.webChannel.ChannelRequest.createChannelRequest = function(
       channel, channelDebug, opt_sessionId, opt_requestId, opt_retryId) {
-    return***REMOVED*****REMOVED*** @type {!goog.labs.net.webChannel.ChannelRequest}***REMOVED*** (
+    return /** @type {!goog.labs.net.webChannel.ChannelRequest} */ (
         new MockChannelRequest(channel, channelDebug, opt_sessionId,
             opt_requestId, opt_retryId));
- ***REMOVED*****REMOVED***
+  };
 
   // Mock out the stat notification code.
   goog.labs.net.webChannel.requestStats.notifyStatEvent = function(
       stat) {
     numStatEvents++;
     lastStatEvent = stat;
- ***REMOVED*****REMOVED***
+  };
 
   goog.labs.net.webChannel.requestStats.notifyTimingEvent = function(
       size, rtt, retries) {
@@ -233,7 +233,7 @@ function setUpPage() {
     lastPostSize = size;
     lastPostRtt = rtt;
     lastPostRetryCount = retries;
- ***REMOVED*****REMOVED***
+  };
 }
 
 function setUp() {
@@ -247,17 +247,17 @@ function setUp() {
   gotError = false;
 
   handler = new goog.labs.net.webChannel.WebChannelBase.Handler();
-  handler.channelOpened = function() {***REMOVED***
+  handler.channelOpened = function() {};
   handler.channelError = function(channel, error) {
     gotError = true;
- ***REMOVED*****REMOVED***
+  };
   handler.channelSuccess = function(channel, maps) {
     deliveredMaps = goog.array.clone(maps);
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @suppress {checkTypes} The callback function type declaration is skipped.
- ***REMOVED*****REMOVED***
+  /**
+   * @suppress {checkTypes} The callback function type declaration is skipped.
+   */
   handler.channelClosed = function(
       channel, opt_pendingMaps, opt_undeliveredMaps) {
     // Mock out the handler, and let it set a formatted user readable string
@@ -268,21 +268,21 @@ function setUp() {
     if (opt_undeliveredMaps) {
       handler.undeliveredMapsString = formatArrayOfMaps(opt_undeliveredMaps);
     }
- ***REMOVED*****REMOVED***
-  handler.channelHandleMultipleArrays = function() {***REMOVED***
-  handler.channelHandleArray = function() {***REMOVED***
+  };
+  handler.channelHandleMultipleArrays = function() {};
+  handler.channelHandleArray = function() {};
 
   channel.setHandler(handler);
 
   // Provide a predictable retry time for testing.
   channel.getRetryTime_ = function(retryCount) {
     return RETRY_TIME;
- ***REMOVED*****REMOVED***
+  };
 
   var channelDebug = new goog.labs.net.webChannel.WebChannelDebug();
   channelDebug.debug = function(message) {
     debugToWindow(message);
- ***REMOVED*****REMOVED***
+  };
   channel.setChannelDebug(channelDebug);
 
   numStatEvents = 0;
@@ -306,9 +306,9 @@ function getSingleForwardRequest() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to return a formatted string representing an array of maps.
-***REMOVED***
+/**
+ * Helper function to return a formatted string representing an array of maps.
+ */
 function formatArrayOfMaps(arrayOfMaps) {
   var result = [];
   for (var i = 0; i < arrayOfMaps.length; i++) {
@@ -359,12 +359,12 @@ function testFormatArrayOfMaps() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number=} opt_serverVersion
-***REMOVED*** @param {string=} opt_hostPrefix
-***REMOVED*** @param {string=} opt_uriPrefix
-***REMOVED*** @param {boolean=} opt_spdyEnabled
-***REMOVED***
+/**
+ * @param {number=} opt_serverVersion
+ * @param {string=} opt_hostPrefix
+ * @param {string=} opt_uriPrefix
+ * @param {boolean=} opt_spdyEnabled
+ */
 function connectForwardChannel(
     opt_serverVersion, opt_hostPrefix, opt_uriPrefix, opt_spdyEnabled) {
   stubSpdyCheck(!!opt_spdyEnabled);
@@ -376,12 +376,12 @@ function connectForwardChannel(
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number=} opt_serverVersion
-***REMOVED*** @param {string=} opt_hostPrefix
-***REMOVED*** @param {string=} opt_uriPrefix
-***REMOVED*** @param {boolean=} opt_spdyEnabled
-***REMOVED***
+/**
+ * @param {number=} opt_serverVersion
+ * @param {string=} opt_hostPrefix
+ * @param {string=} opt_uriPrefix
+ * @param {boolean=} opt_spdyEnabled
+ */
 function connect(opt_serverVersion, opt_hostPrefix, opt_uriPrefix,
     opt_spdyEnabled) {
   connectForwardChannel(opt_serverVersion, opt_hostPrefix, opt_uriPrefix,
@@ -422,10 +422,10 @@ function completeBackTestConnection() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number=} opt_serverVersion
-***REMOVED*** @param {string=} opt_hostPrefix
-***REMOVED***
+/**
+ * @param {number=} opt_serverVersion
+ * @param {string=} opt_hostPrefix
+ */
 function completeForwardChannel(opt_serverVersion, opt_hostPrefix) {
   var responseData = '[[0,["c","1234567890ABCDEF",' +
       (opt_hostPrefix ? '"' + opt_hostPrefix + '"' : 'null') +
@@ -460,11 +460,11 @@ function responseDone() {
 }
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {number=} opt_lastArrayIdSentFromServer
-***REMOVED*** @param {number=} opt_outstandingDataSize
-***REMOVED***
+/**
+ *
+ * @param {number=} opt_lastArrayIdSentFromServer
+ * @param {number=} opt_outstandingDataSize
+ */
 function responseNoBackchannel(
     opt_lastArrayIdSentFromServer, opt_outstandingDataSize) {
   var responseData = goog.json.serialize(
@@ -483,7 +483,7 @@ function response(lastArrayIdSentFromServer, outstandingDataSize) {
   channel.onRequestData(
       getSingleForwardRequest(),
       responseData
-***REMOVED***
+  );
   channel.onRequestComplete(
       getSingleForwardRequest());
   mockClock.tick(0);
@@ -510,9 +510,9 @@ function responseTimeout() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {number=} opt_statusCode
-***REMOVED***
+/**
+ * @param {number=} opt_statusCode
+ */
 function responseRequestFailed(opt_statusCode) {
   getSingleForwardRequest().lastError_ =
       goog.labs.net.webChannel.ChannelRequest.Error.STATUS;
@@ -545,11 +545,11 @@ function responseActiveXBlocked() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {string} key
-***REMOVED*** @param {string} value
-***REMOVED*** @param {string=} opt_context
-***REMOVED***
+/**
+ * @param {string} key
+ * @param {string} value
+ * @param {string=} opt_context
+ */
 function sendMap(key, value, opt_context) {
   var map = new goog.structs.Map();
   map.set(key, value);
@@ -606,7 +606,7 @@ function testConnect_withServerHostPrefix() {
 function testConnect_withClientHostPrefix() {
   handler.correctHostPrefix = function(hostPrefix) {
     return 'clientHostPrefix';
- ***REMOVED*****REMOVED***
+  };
   connect();
   assertEquals('clientHostPrefix', channel.hostPrefix_);
 }
@@ -614,7 +614,7 @@ function testConnect_withClientHostPrefix() {
 function testConnect_overrideServerHostPrefix() {
   handler.correctHostPrefix = function(hostPrefix) {
     return 'clientHostPrefix';
- ***REMOVED*****REMOVED***
+  };
   connect(undefined, 'serverHostPrefix');
   assertEquals('clientHostPrefix', channel.hostPrefix_);
 }
@@ -772,10 +772,10 @@ function testTimingEvent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that dropping the forward channel retry limit below the retry count
-***REMOVED*** reports an error, and prevents another request from firing.
-***REMOVED***
+/**
+ * Make sure that dropping the forward channel retry limit below the retry count
+ * reports an error, and prevents another request from firing.
+ */
 function testSetFailFastWhileWaitingForRetry() {
   stubNetUtils();
 
@@ -836,10 +836,10 @@ function setFailFastWhileWaitingForRetry() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that dropping the forward channel retry limit below the retry count
-***REMOVED*** reports an error, and prevents another request from firing.
-***REMOVED***
+/**
+ * Make sure that dropping the forward channel retry limit below the retry count
+ * reports an error, and prevents another request from firing.
+ */
 function testSetFailFastWhileRetryXhrIsInFlight() {
   stubNetUtils();
 
@@ -911,9 +911,9 @@ function setFailFastWhileRetryXhrIsInFlight() {
 }
 
 
-***REMOVED***
-***REMOVED*** Makes sure that setting fail fast while not retrying doesn't cause a failure.
-***REMOVED***
+/**
+ * Makes sure that setting fail fast while not retrying doesn't cause a failure.
+ */
 function testSetFailFastAtRetryCount() {
   stubNetUtils();
 
@@ -1102,15 +1102,15 @@ function outgoingMapsAwaitsResponse() {
 
 
 function testUndeliveredMaps_doesNotNotifyWhenSuccessful() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @suppress {checkTypes} The callback function type declaration is skipped.
- ***REMOVED*****REMOVED***
+  /**
+   * @suppress {checkTypes} The callback function type declaration is skipped.
+   */
   handler.channelClosed = function(
       channel, opt_pendingMaps, opt_undeliveredMaps) {
     if (opt_pendingMaps || opt_undeliveredMaps) {
       fail('No pending or undelivered maps should be reported.');
     }
- ***REMOVED*****REMOVED***
+  };
 
   connect();
   sendMap('foo1', 'bar1');
@@ -1122,15 +1122,15 @@ function testUndeliveredMaps_doesNotNotifyWhenSuccessful() {
 
 
 function testUndeliveredMaps_doesNotNotifyIfNothingWasSent() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @suppress {checkTypes} The callback function type declaration is skipped.
- ***REMOVED*****REMOVED***
+  /**
+   * @suppress {checkTypes} The callback function type declaration is skipped.
+   */
   handler.channelClosed = function(
       channel, opt_pendingMaps, opt_undeliveredMaps) {
     if (opt_pendingMaps || opt_undeliveredMaps) {
       fail('No pending or undelivered maps should be reported.');
     }
- ***REMOVED*****REMOVED***
+  };
 
   connect();
   mockClock.tick(ALL_DAY_MS);
@@ -1300,7 +1300,7 @@ function testResponseWithArraysMissing() {
 
   assertEquals(1, channel.lastArrayId_);
   assertEquals(7, channel.lastPostResponseArrayId_);
-  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE * 2);
   assertEquals(
       goog.labs.net.webChannel.requestStats.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
@@ -1339,7 +1339,7 @@ function testOnlyRetryOnceBasedOnResponse() {
   assertEquals(1, channel.lastArrayId_);
   assertEquals(7, channel.lastPostResponseArrayId_);
   assertTrue(hasDeadBackChannelTimer());
-  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE * 2);
   assertEquals(
       goog.labs.net.webChannel.requestStats.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
@@ -1384,7 +1384,7 @@ function testResponseWithBigOutstandingData() {
   assertEquals(1, channel.lastArrayId_);
   assertEquals(7, channel.lastPostResponseArrayId_);
   assertFalse(hasDeadBackChannelTimer());
-  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE * 2);
   assertNotEquals(
       goog.labs.net.webChannel.requestStats.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
@@ -1401,7 +1401,7 @@ function testResponseInBufferedMode() {
   assertEquals(1, channel.lastArrayId_);
   assertEquals(7, channel.lastPostResponseArrayId_);
   assertFalse(hasDeadBackChannelTimer());
-  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE***REMOVED*** 2);
+  mockClock.tick(goog.labs.net.webChannel.WebChannelBase.RTT_ESTIMATE * 2);
   assertNotEquals(
       goog.labs.net.webChannel.requestStats.Stat.BACKCHANNEL_DEAD,
       lastStatEvent);
@@ -1414,7 +1414,7 @@ function testResponseWithGarbage() {
   channel.onRequestData(
       getSingleForwardRequest(),
       'garbage'
-***REMOVED***
+  );
   assertEquals(goog.labs.net.webChannel.WebChannelBase.State.CLOSED,
       channel.getState());
 }
@@ -1426,7 +1426,7 @@ function testResponseWithGarbageInArray() {
   channel.onRequestData(
       getSingleForwardRequest(),
       '["garbage"]'
-***REMOVED***
+  );
   assertEquals(goog.labs.net.webChannel.WebChannelBase.State.CLOSED,
       channel.getState());
 }
@@ -1495,7 +1495,7 @@ function testSpdyLimitOption() {
       webChannelDefault.getRuntimeProperties().getConcurrentRequestLimit());
   assertTrue(webChannelDefault.getRuntimeProperties().isSpdyEnabled());
 
-  var options = {'concurrentRequestLimit': 100***REMOVED***
+  var options = {'concurrentRequestLimit': 100};
 
   stubSpdyCheck(false);
   var webChannelDisabled = webChannelTransport.createWebChannel(

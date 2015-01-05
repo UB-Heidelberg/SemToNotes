@@ -18,11 +18,11 @@ goog.setTestOnly('goog.defineClassTest');
 goog.require('goog.testing.jsunit');
 
 function testSuper() {
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
-  function SomeSuper() {***REMOVED***
+  /** @constructor */
+  function SomeSuper() {};
 
   var SomeClass = goog.defineClass(SomeSuper, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {}
   });
 
@@ -32,7 +32,7 @@ function testSuper() {
 
 function testPrototypeProp() {
   var SomeClass = goog.defineClass(null, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {
     },
     trueMethod: function() { return true; }
@@ -44,7 +44,7 @@ function testPrototypeProp() {
 
 function testInstanceProp() {
   var SomeClass = goog.defineClass(null, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {
       this.falseProp = false;
     }
@@ -55,7 +55,7 @@ function testInstanceProp() {
 
 function testPrototypeProp() {
   var SomeClass = goog.defineClass(null, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {
     },
     trueMethod: function() {
@@ -69,7 +69,7 @@ function testPrototypeProp() {
 
 function testStaticProp() {
   var SomeClass = goog.defineClass(null, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {
     },
     statics: {
@@ -84,7 +84,7 @@ function testStaticProp() {
 
 function testStaticPropFn() {
   var SomeClass = goog.defineClass(null, {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     constructor: function() {
     },
     statics: function(cls) {

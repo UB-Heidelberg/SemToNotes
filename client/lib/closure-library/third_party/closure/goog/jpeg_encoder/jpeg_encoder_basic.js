@@ -1,5 +1,5 @@
-***REMOVED***
-***REMOVED*** @license
+/**
+ * @license
   Copyright (c) 2008, Adobe Systems Incorporated
   All rights reserved.
 
@@ -7,14 +7,14 @@
   modification, are permitted provided that the following conditions are
   met:
 
- ***REMOVED*** Redistributions of source code must retain the above copyright notice,
+  * Redistributions of source code must retain the above copyright notice,
     this list of conditions and the following disclaimer.
 
- ***REMOVED*** Redistributions in binary form must reproduce the above copyright
+  * Redistributions in binary form must reproduce the above copyright
     notice, this list of conditions and the following disclaimer in the
     documentation and/or other materials provided with the distribution.
 
- ***REMOVED*** Neither the name of Adobe Systems Incorporated nor the names of its
+  * Neither the name of Adobe Systems Incorporated nor the names of its
     contributors may be used to endorse or promote products derived from
     this software without specific prior written permission.
 
@@ -30,8 +30,8 @@
   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-***REMOVED***
-***REMOVED*** @license
+/**
+ * @license
 JPEG encoder ported to JavaScript and optimized by Andreas Ritter, www.bytestrom.eu, 11/2009
 
 Basic GUI blocking jpeg encoder
@@ -39,24 +39,24 @@ Basic GUI blocking jpeg encoder
 v 0.9
 */
 
-***REMOVED***
-***REMOVED*** @fileoverview This code was ported from
-***REMOVED*** http://www.bytestrom.eu/blog/2009/1120a_jpeg_encoder_for_javascript and
-***REMOVED*** modified slightly for Closure.
-***REMOVED***
+/**
+ * @fileoverview This code was ported from
+ * http://www.bytestrom.eu/blog/2009/1120a_jpeg_encoder_for_javascript and
+ * modified slightly for Closure.
+ */
 
 goog.provide('goog.crypt.JpegEncoder');
 
 goog.require('goog.crypt.base64');
 
-***REMOVED***
-***REMOVED*** Initializes the JpegEncoder.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {number=} opt_quality The compression quality. Default 50.
-***REMOVED***
+/**
+ * Initializes the JpegEncoder.
+ *
+ * @constructor
+ * @param {number=} opt_quality The compression quality. Default 50.
+ */
 goog.crypt.JpegEncoder = function(opt_quality) {
-***REMOVED***
+  var self = this;
   var fround = Math.round;
   var ffloor = Math.floor;
   var YTable = new Array(64);
@@ -197,8 +197,8 @@ goog.crypt.JpegEncoder = function(opt_quality) {
       {
         for (var col = 0; col < 8; col++)
         {
-          fdtbl_Y[k]  = (1.0 / (YTable [ZigZag[k]]***REMOVED*** aasf[row]***REMOVED*** aasf[col]***REMOVED*** 8.0));
-          fdtbl_UV[k] = (1.0 / (UVTable[ZigZag[k]]***REMOVED*** aasf[row]***REMOVED*** aasf[col]***REMOVED*** 8.0));
+          fdtbl_Y[k]  = (1.0 / (YTable [ZigZag[k]] * aasf[row] * aasf[col] * 8.0));
+          fdtbl_UV[k] = (1.0 / (UVTable[ZigZag[k]] * aasf[row] * aasf[col] * 8.0));
           k++;
         }
       }
@@ -255,14 +255,14 @@ goog.crypt.JpegEncoder = function(opt_quality) {
 
     function initRGBYUVTable() {
       for(var i = 0; i < 256;i++) {
-        RGB_YUV_TABLE[i]          =  19595***REMOVED*** i;
-        RGB_YUV_TABLE[(i+ 256)>>0]   =  38470***REMOVED*** i;
-        RGB_YUV_TABLE[(i+ 512)>>0]   =   7471***REMOVED*** i + 0x8000;
-        RGB_YUV_TABLE[(i+ 768)>>0]   = -11059***REMOVED*** i;
-        RGB_YUV_TABLE[(i+1024)>>0]   = -21709***REMOVED*** i;
-        RGB_YUV_TABLE[(i+1280)>>0]   =  32768***REMOVED*** i + 0x807FFF;
-        RGB_YUV_TABLE[(i+1536)>>0]   = -27439***REMOVED*** i;
-        RGB_YUV_TABLE[(i+1792)>>0]   = - 5329***REMOVED*** i;
+        RGB_YUV_TABLE[i]          =  19595 * i;
+        RGB_YUV_TABLE[(i+ 256)>>0]   =  38470 * i;
+        RGB_YUV_TABLE[(i+ 512)>>0]   =   7471 * i + 0x8000;
+        RGB_YUV_TABLE[(i+ 768)>>0]   = -11059 * i;
+        RGB_YUV_TABLE[(i+1024)>>0]   = -21709 * i;
+        RGB_YUV_TABLE[(i+1280)>>0]   =  32768 * i + 0x807FFF;
+        RGB_YUV_TABLE[(i+1536)>>0]   = -27439 * i;
+        RGB_YUV_TABLE[(i+1792)>>0]   = - 5329 * i;
       }
     }
 
@@ -306,7 +306,7 @@ goog.crypt.JpegEncoder = function(opt_quality) {
     function fDCTQuant(data, fdtbl)
     {
       var d0, d1, d2, d3, d4, d5, d6, d7;
-      /* Pass 1: process rows.***REMOVED***
+      /* Pass 1: process rows. */
       var dataOff=0;
       var i;
       var I8 = 8;
@@ -331,42 +331,42 @@ goog.crypt.JpegEncoder = function(opt_quality) {
         var tmp3 = d3 + d4;
         var tmp4 = d3 - d4;
 
-        /* Even part***REMOVED***
-        var tmp10 = tmp0 + tmp3;  /* phase 2***REMOVED***
+        /* Even part */
+        var tmp10 = tmp0 + tmp3;  /* phase 2 */
         var tmp13 = tmp0 - tmp3;
         var tmp11 = tmp1 + tmp2;
         var tmp12 = tmp1 - tmp2;
 
-        data[dataOff] = tmp10 + tmp11; /* phase 3***REMOVED***
+        data[dataOff] = tmp10 + tmp11; /* phase 3 */
         data[dataOff+4] = tmp10 - tmp11;
 
-        var z1 = (tmp12 + tmp13)***REMOVED*** 0.707106781; /* c4***REMOVED***
-        data[dataOff+2] = tmp13 + z1; /* phase 5***REMOVED***
+        var z1 = (tmp12 + tmp13) * 0.707106781; /* c4 */
+        data[dataOff+2] = tmp13 + z1; /* phase 5 */
         data[dataOff+6] = tmp13 - z1;
 
-        /* Odd part***REMOVED***
-        tmp10 = tmp4 + tmp5; /* phase 2***REMOVED***
+        /* Odd part */
+        tmp10 = tmp4 + tmp5; /* phase 2 */
         tmp11 = tmp5 + tmp6;
         tmp12 = tmp6 + tmp7;
 
-        /* The rotator is modified from fig 4-8 to avoid extra negations.***REMOVED***
-        var z5 = (tmp10 - tmp12)***REMOVED*** 0.382683433; /* c6***REMOVED***
-        var z2 = 0.541196100***REMOVED*** tmp10 + z5; /* c2-c6***REMOVED***
-        var z4 = 1.306562965***REMOVED*** tmp12 + z5; /* c2+c6***REMOVED***
-        var z3 = tmp11***REMOVED*** 0.707106781; /* c4***REMOVED***
+        /* The rotator is modified from fig 4-8 to avoid extra negations. */
+        var z5 = (tmp10 - tmp12) * 0.382683433; /* c6 */
+        var z2 = 0.541196100 * tmp10 + z5; /* c2-c6 */
+        var z4 = 1.306562965 * tmp12 + z5; /* c2+c6 */
+        var z3 = tmp11 * 0.707106781; /* c4 */
 
-        var z11 = tmp7 + z3;  /* phase 5***REMOVED***
+        var z11 = tmp7 + z3;  /* phase 5 */
         var z13 = tmp7 - z3;
 
-        data[dataOff+5] = z13 + z2;  /* phase 6***REMOVED***
+        data[dataOff+5] = z13 + z2;  /* phase 6 */
         data[dataOff+3] = z13 - z2;
         data[dataOff+1] = z11 + z4;
         data[dataOff+7] = z11 - z4;
 
-        dataOff += 8; /* advance pointer to next row***REMOVED***
+        dataOff += 8; /* advance pointer to next row */
       }
 
-      /* Pass 2: process columns.***REMOVED***
+      /* Pass 2: process columns. */
       dataOff = 0;
       for (i=0; i<I8; ++i)
       {
@@ -388,39 +388,39 @@ goog.crypt.JpegEncoder = function(opt_quality) {
         var tmp3p2 = d3 + d4;
         var tmp4p2 = d3 - d4;
 
-        /* Even part***REMOVED***
-        var tmp10p2 = tmp0p2 + tmp3p2;  /* phase 2***REMOVED***
+        /* Even part */
+        var tmp10p2 = tmp0p2 + tmp3p2;  /* phase 2 */
         var tmp13p2 = tmp0p2 - tmp3p2;
         var tmp11p2 = tmp1p2 + tmp2p2;
         var tmp12p2 = tmp1p2 - tmp2p2;
 
-        data[dataOff] = tmp10p2 + tmp11p2; /* phase 3***REMOVED***
+        data[dataOff] = tmp10p2 + tmp11p2; /* phase 3 */
         data[dataOff+32] = tmp10p2 - tmp11p2;
 
-        var z1p2 = (tmp12p2 + tmp13p2)***REMOVED*** 0.707106781; /* c4***REMOVED***
-        data[dataOff+16] = tmp13p2 + z1p2; /* phase 5***REMOVED***
+        var z1p2 = (tmp12p2 + tmp13p2) * 0.707106781; /* c4 */
+        data[dataOff+16] = tmp13p2 + z1p2; /* phase 5 */
         data[dataOff+48] = tmp13p2 - z1p2;
 
-        /* Odd part***REMOVED***
-        tmp10p2 = tmp4p2 + tmp5p2; /* phase 2***REMOVED***
+        /* Odd part */
+        tmp10p2 = tmp4p2 + tmp5p2; /* phase 2 */
         tmp11p2 = tmp5p2 + tmp6p2;
         tmp12p2 = tmp6p2 + tmp7p2;
 
-        /* The rotator is modified from fig 4-8 to avoid extra negations.***REMOVED***
-        var z5p2 = (tmp10p2 - tmp12p2)***REMOVED*** 0.382683433; /* c6***REMOVED***
-        var z2p2 = 0.541196100***REMOVED*** tmp10p2 + z5p2; /* c2-c6***REMOVED***
-        var z4p2 = 1.306562965***REMOVED*** tmp12p2 + z5p2; /* c2+c6***REMOVED***
-        var z3p2 = tmp11p2***REMOVED*** 0.707106781; /* c4***REMOVED***
+        /* The rotator is modified from fig 4-8 to avoid extra negations. */
+        var z5p2 = (tmp10p2 - tmp12p2) * 0.382683433; /* c6 */
+        var z2p2 = 0.541196100 * tmp10p2 + z5p2; /* c2-c6 */
+        var z4p2 = 1.306562965 * tmp12p2 + z5p2; /* c2+c6 */
+        var z3p2 = tmp11p2 * 0.707106781; /* c4 */
 
-        var z11p2 = tmp7p2 + z3p2;  /* phase 5***REMOVED***
+        var z11p2 = tmp7p2 + z3p2;  /* phase 5 */
         var z13p2 = tmp7p2 - z3p2;
 
-        data[dataOff+40] = z13p2 + z2p2; /* phase 6***REMOVED***
+        data[dataOff+40] = z13p2 + z2p2; /* phase 6 */
         data[dataOff+24] = z13p2 - z2p2;
         data[dataOff+ 8] = z11p2 + z4p2;
         data[dataOff+56] = z11p2 - z4p2;
 
-        dataOff++; /* advance pointer to next column***REMOVED***
+        dataOff++; /* advance pointer to next column */
       }
 
       // Quantize/descale the coefficients
@@ -564,7 +564,7 @@ goog.crypt.JpegEncoder = function(opt_quality) {
       }
       //Encode ACs
       var end0pos = 63; // was const... which is crazy
-      for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {***REMOVED***
+      for (; (end0pos>0)&&(DU[end0pos]==0); end0pos--) {};
       //end0pos = first element in reverse order !=0
       if ( end0pos == 0) {
         writeBits(EOB);
@@ -600,13 +600,13 @@ goog.crypt.JpegEncoder = function(opt_quality) {
       }
     }
 
-***REMOVED***
-***REMOVED*** Encodes ImageData to JPEG.
-***REMOVED***
-***REMOVED*** @param {ImageData} image
-***REMOVED*** @param {number=} opt_quality The compression quality.
-***REMOVED*** @return {string} base64-encoded JPEG data.
-***REMOVED***
+/**
+ * Encodes ImageData to JPEG.
+ *
+ * @param {ImageData} image
+ * @param {number=} opt_quality The compression quality.
+ * @return {string} base64-encoded JPEG data.
+ */
     this.encode = function(image,opt_quality) // image data object
     {
       if(opt_quality) setQuality(opt_quality);
@@ -649,15 +649,15 @@ goog.crypt.JpegEncoder = function(opt_quality) {
       while(y < height){
         x = 0;
         while(x < quadWidth){
-        start = quadWidth***REMOVED*** y + x;
+        start = quadWidth * y + x;
         p = start;
         col = -1;
         row = 0;
 
         for(pos=0; pos < 64; pos++){
           row = pos >> 3;// /8
-          col = ( pos & 7 )***REMOVED*** 4; // %8
-          p = start + ( row***REMOVED*** quadWidth ) + col;
+          col = ( pos & 7 ) * 4; // %8
+          p = start + ( row * quadWidth ) + col;
 
           if(y+row >= height){ // padding bottom
             p-= (quadWidth*(y+1+row-height));
@@ -676,7 +676,7 @@ goog.crypt.JpegEncoder = function(opt_quality) {
           YDU[pos]=((( 0.29900)*r+( 0.58700)*g+( 0.11400)*b))-128; //-0x80
           UDU[pos]=(((-0.16874)*r+(-0.33126)*g+( 0.50000)*b));
           VDU[pos]=((( 0.50000)*r+(-0.41869)*g+(-0.08131)*b));
-        ***REMOVED*****REMOVED***
+          */
 
           // use lookup table (slightly faster)
           YDU[pos] = ((RGB_YUV_TABLE[r]             + RGB_YUV_TABLE[(g +  256)>>0] + RGB_YUV_TABLE[(b +  512)>>0]) >> 16)-128;
@@ -748,4 +748,4 @@ goog.crypt.JpegEncoder = function(opt_quality) {
 
   init();
 
-***REMOVED***
+};

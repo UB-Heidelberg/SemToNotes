@@ -100,7 +100,7 @@ function testparseListSystemNewlines() {
   assertParsedList('a@b.com\r\nc@d.com', ['a@b.com', 'c@d.com'],
       'Failed to parse Windows newlines');
   assertParsedList('a@b.com\nc@d.com', ['a@b.com', 'c@d.com'],
-      'Failed to parse***REMOVED***nix newlines');
+      'Failed to parse *nix newlines');
   assertParsedList('a@b.com\n\rc@d.com', ['a@b.com', 'c@d.com'],
       'Failed to parse obsolete newlines');
   assertParsedList('a@b.com\rc@d.com', ['a@b.com', 'c@d.com'],
@@ -110,7 +110,7 @@ function testparseListSystemNewlines() {
 function testToString() {
   var f = function(str) {
     return goog.format.EmailAddress.parse(str).toString();
- ***REMOVED*****REMOVED***
+  };
 
   // No modification.
   assertEquals('JOHN Doe <john@gmail.com>',
@@ -193,14 +193,14 @@ function testIsValidDomainPart() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that parsing the inputString produces a list of email addresses
-***REMOVED*** containing the specified address strings, irrespective of their order.
-***REMOVED*** @param {string} inputString A raw address list.
-***REMOVED*** @param {Array.<string>} expectedList The expected results.
-***REMOVED*** @param {string=} opt_message An assertion message.
-***REMOVED*** @return {string} the resulting email address objects.
-***REMOVED***
+/**
+ * Asserts that parsing the inputString produces a list of email addresses
+ * containing the specified address strings, irrespective of their order.
+ * @param {string} inputString A raw address list.
+ * @param {Array.<string>} expectedList The expected results.
+ * @param {string=} opt_message An assertion message.
+ * @return {string} the resulting email address objects.
+ */
 function assertParsedList(inputString, expectedList, opt_message) {
   var message = opt_message || 'Should parse address correctly';
   var result = goog.format.EmailAddress.parseList(inputString);

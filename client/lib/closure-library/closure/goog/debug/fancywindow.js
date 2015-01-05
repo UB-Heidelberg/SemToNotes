@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the FancyWindow class. Please minimize
-***REMOVED*** dependencies this file has on other closure classes as any dependency it
-***REMOVED*** takes won't be able to use the logging infrastructure.
-***REMOVED***
-***REMOVED*** This is a pretty hacky implementation, aimed at making debugging of large
-***REMOVED*** applications more manageable.
-***REMOVED***
-***REMOVED*** @see ../demos/debug.html
-***REMOVED***
+/**
+ * @fileoverview Definition of the FancyWindow class. Please minimize
+ * dependencies this file has on other closure classes as any dependency it
+ * takes won't be able to use the logging infrastructure.
+ *
+ * This is a pretty hacky implementation, aimed at making debugging of large
+ * applications more manageable.
+ *
+ * @see ../demos/debug.html
+ */
 
 
 goog.provide('goog.debug.FancyWindow');
@@ -30,7 +30,7 @@ goog.require('goog.array');
 goog.require('goog.debug.DebugWindow');
 goog.require('goog.debug.LogManager');
 goog.require('goog.debug.Logger');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.safe');
 goog.require('goog.html.SafeHtml');
 goog.require('goog.object');
@@ -39,28 +39,28 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a Fancy extension to the DebugWindow class.  Allows filtering based
-***REMOVED*** on loggers and levels.
-***REMOVED***
-***REMOVED*** @param {string=} opt_identifier Idenitifier for this logging class.
-***REMOVED*** @param {string=} opt_prefix Prefix pre-pended to messages.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.DebugWindow}
-***REMOVED***
+/**
+ * Provides a Fancy extension to the DebugWindow class.  Allows filtering based
+ * on loggers and levels.
+ *
+ * @param {string=} opt_identifier Idenitifier for this logging class.
+ * @param {string=} opt_prefix Prefix pre-pended to messages.
+ * @constructor
+ * @extends {goog.debug.DebugWindow}
+ */
 goog.debug.FancyWindow = function(opt_identifier, opt_prefix) {
   this.readOptionsFromLocalStorage_();
   goog.debug.FancyWindow.base(this, 'constructor', opt_identifier, opt_prefix);
-***REMOVED***
+};
 goog.inherits(goog.debug.FancyWindow, goog.debug.DebugWindow);
 
 
-***REMOVED***
-***REMOVED*** Constant indicating if we are able to use localStorage to persist filters
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Constant indicating if we are able to use localStorage to persist filters
+ * @type {boolean}
+ */
 goog.debug.FancyWindow.HAS_LOCAL_STORE = (function() {
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     return !!window['localStorage'].getItem;
   } catch (e) {}
@@ -68,14 +68,14 @@ goog.debug.FancyWindow.HAS_LOCAL_STORE = (function() {
 })();
 
 
-***REMOVED***
-***REMOVED*** Constant defining the prefix to use when storing log levels
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Constant defining the prefix to use when storing log levels
+ * @type {string}
+ */
 goog.debug.FancyWindow.LOCAL_STORE_PREFIX = 'fancywindow.sel.';
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.FancyWindow.prototype.writeBufferToLog = function() {
   this.lastCall = goog.now();
   if (this.hasActiveWindow()) {
@@ -97,10 +97,10 @@ goog.debug.FancyWindow.prototype.writeBufferToLog = function() {
       logel.scrollTop = logel.scrollHeight;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.FancyWindow.prototype.writeInitialDocument = function() {
   if (!this.hasActiveWindow()) {
     return;
@@ -128,14 +128,14 @@ goog.debug.FancyWindow.prototype.writeInitialDocument = function() {
       goog.bind(this.exit_, this);
 
   this.writeSavedMessages();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show the options menu.
-***REMOVED*** @return {boolean} false.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Show the options menu.
+ * @return {boolean} false.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.openOptions_ = function() {
   var el = this.dh_.getElement('optionsarea');
   goog.dom.safe.setInnerHtml(el, goog.html.SafeHtml.EMPTY);
@@ -153,16 +153,16 @@ goog.debug.FancyWindow.prototype.openOptions_ = function() {
 
   this.dh_.getElement('options').style.display = 'block';
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Make a drop down for the log levels.
-***REMOVED*** @param {string} id Logger id.
-***REMOVED*** @param {string} selected What log level is currently selected.
-***REMOVED*** @return {Element} The newly created 'select' DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Make a drop down for the log levels.
+ * @param {string} id Logger id.
+ * @param {string} selected What log level is currently selected.
+ * @return {Element} The newly created 'select' DOM element.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.getDropDown_ = function(id, selected) {
   var dh = this.dh_;
   var sel = dh.createDom('select', {'id': id});
@@ -178,14 +178,14 @@ goog.debug.FancyWindow.prototype.getDropDown_ = function(id, selected) {
   sel.appendChild(dh.createDom('option',
       {'selected': selected == 'INHERIT'}, 'INHERIT'));
   return sel;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Close the options menu.
-***REMOVED*** @return {boolean} The value false.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Close the options menu.
+ * @return {boolean} The value false.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.closeOptions_ = function() {
   this.dh_.getElement('options').style.display = 'none';
   var loggers = goog.debug.FancyWindow.getLoggers_();
@@ -202,13 +202,13 @@ goog.debug.FancyWindow.prototype.closeOptions_ = function() {
   }
   this.writeOptionsToLocalStorage_();
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resizes the log elements
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Resizes the log elements
+ * @private
+ */
 goog.debug.FancyWindow.prototype.resizeStuff_ = function() {
   var dh = this.dh_;
   var logel = dh.getElement('log');
@@ -216,24 +216,24 @@ goog.debug.FancyWindow.prototype.resizeStuff_ = function() {
   logel.style.top = headel.offsetHeight + 'px';
   logel.style.height = (dh.getDocument().body.offsetHeight -
       headel.offsetHeight - (goog.userAgent.IE ? 4 : 0)) + 'px';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the user clicking the exit button, disabled the debug window and
-***REMOVED*** closes the popup.
-***REMOVED*** @param {Event} e Event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the user clicking the exit button, disabled the debug window and
+ * closes the popup.
+ * @param {Event} e Event object.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.exit_ = function(e) {
   this.setEnabled(false);
   if (this.win) {
     this.win.close();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.FancyWindow.prototype.getStyleRules = function() {
   return goog.debug.FancyWindow.base(this, 'getStyleRules') +
       'html,body{height:100%;width:100%;margin:0px;padding:0px;' +
@@ -255,14 +255,14 @@ goog.debug.FancyWindow.prototype.getStyleRules = function() {
       'pointer;position:absolute;top:0px;right:50px;font:x-small arial;}' +
       'select{font:x-small arial;margin-right:10px;}' +
       'hr{border:0;height:5px;background-color:#8c8;color:#8c8;}';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return the default HTML for the debug window
-***REMOVED*** @return {string} Html.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Return the default HTML for the debug window
+ * @return {string} Html.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.getHtml_ = function() {
   return '' +
       '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"' +
@@ -284,13 +284,13 @@ goog.debug.FancyWindow.prototype.getHtml_ = function() {
       '<span id="closebutton">save and close</span>' +
       '</div>' +
       '</body></html>';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Write logger levels to localStorage if possible.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Write logger levels to localStorage if possible.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.writeOptionsToLocalStorage_ = function() {
   if (!goog.debug.FancyWindow.HAS_LOCAL_STORE) {
     return;
@@ -310,13 +310,13 @@ goog.debug.FancyWindow.prototype.writeOptionsToLocalStorage_ = function() {
       window.localStorage.setItem(key, level.name);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sync logger levels with any values stored in localStorage.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sync logger levels with any values stored in localStorage.
+ * @private
+ */
 goog.debug.FancyWindow.prototype.readOptionsFromLocalStorage_ = function() {
   if (!goog.debug.FancyWindow.HAS_LOCAL_STORE) {
     return;
@@ -331,17 +331,17 @@ goog.debug.FancyWindow.prototype.readOptionsFromLocalStorage_ = function() {
       logger.setLevel(goog.debug.Logger.Level.getPredefinedLevel(storedLevel));
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to create a list of locally stored keys. Used to avoid
-***REMOVED*** expensive localStorage.getItem() calls.
-***REMOVED*** @return {!Object} List of keys.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function to create a list of locally stored keys. Used to avoid
+ * expensive localStorage.getItem() calls.
+ * @return {!Object} List of keys.
+ * @private
+ */
 goog.debug.FancyWindow.getStoredKeys_ = function() {
-  var storedKeys = {***REMOVED***
+  var storedKeys = {};
   for (var i = 0, len = window.localStorage.length; i < len; i++) {
     var key = window.localStorage.key(i);
     if (key != null && goog.string.startsWith(
@@ -350,25 +350,25 @@ goog.debug.FancyWindow.getStoredKeys_ = function() {
     }
   }
   return storedKeys;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a sorted array of all the loggers registered.
-***REMOVED*** @return {!Array.<!goog.debug.Logger>} Array of logger instances.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets a sorted array of all the loggers registered.
+ * @return {!Array.<!goog.debug.Logger>} Array of logger instances.
+ * @private
+ */
 goog.debug.FancyWindow.getLoggers_ = function() {
   var loggers = goog.object.getValues(goog.debug.LogManager.getLoggers());
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @param {!goog.debug.Logger} a
-  ***REMOVED*** @param {!goog.debug.Logger} b
-  ***REMOVED*** @return {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @param {!goog.debug.Logger} a
+   * @param {!goog.debug.Logger} b
+   * @return {number}
+   */
   var loggerSort = function(a, b) {
     return goog.array.defaultCompare(a.getName(), b.getName());
- ***REMOVED*****REMOVED***
+  };
   goog.array.sort(loggers, loggerSort);
   return loggers;
-***REMOVED***
+};

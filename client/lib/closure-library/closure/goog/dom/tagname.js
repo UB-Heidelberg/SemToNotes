@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines the goog.dom.TagName enum.  This enumerates
-***REMOVED*** all HTML tag names specified in either the the W3C HTML 4.01 index of
-***REMOVED*** elements or the HTML5 draft specification.
-***REMOVED***
-***REMOVED*** References:
-***REMOVED*** http://www.w3.org/TR/html401/index/elements.html
-***REMOVED*** http://dev.w3.org/html5/spec/section-index.html
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Defines the goog.dom.TagName enum.  This enumerates
+ * all HTML tag names specified in either the the W3C HTML 4.01 index of
+ * elements or the HTML5 draft specification.
+ *
+ * References:
+ * http://www.w3.org/TR/html401/index/elements.html
+ * http://dev.w3.org/html5/spec/section-index.html
+ *
+ */
 goog.provide('goog.dom.TagName');
 
 
-***REMOVED***
-***REMOVED*** Enum of all html tag names specified by the W3C HTML4.01 and HTML5
-***REMOVED*** specifications.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum of all html tag names specified by the W3C HTML4.01 and HTML5
+ * specifications.
+ * @enum {string}
+ */
 goog.dom.TagName = {
   A: 'A',
   ABBR: 'ABBR',
@@ -156,4 +156,4 @@ goog.dom.TagName = {
   VAR: 'VAR',
   VIDEO: 'VIDEO',
   WBR: 'WBR'
-***REMOVED***
+};

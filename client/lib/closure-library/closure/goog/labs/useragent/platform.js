@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Closure user agent platform detection.
-***REMOVED*** @see <a href="http://www.useragentstring.com/">User agent strings</a>
-***REMOVED*** For more information on browser brand, rendering engine, or device see the
-***REMOVED*** other sub-namespaces in goog.labs.userAgent (browser, engine, and device
-***REMOVED*** respectively).
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Closure user agent platform detection.
+ * @see <a href="http://www.useragentstring.com/">User agent strings</a>
+ * For more information on browser brand, rendering engine, or device see the
+ * other sub-namespaces in goog.labs.userAgent (browser, engine, and device
+ * respectively).
+ *
+ */
 
 goog.provide('goog.labs.userAgent.platform');
 
@@ -27,90 +27,90 @@ goog.require('goog.labs.userAgent.util');
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is Android.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is Android.
+ */
 goog.labs.userAgent.platform.isAndroid = function() {
   return goog.labs.userAgent.util.matchUserAgent('Android');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is iPod.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is iPod.
+ */
 goog.labs.userAgent.platform.isIpod = function() {
   return goog.labs.userAgent.util.matchUserAgent('iPod');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is iPhone.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is iPhone.
+ */
 goog.labs.userAgent.platform.isIphone = function() {
   return goog.labs.userAgent.util.matchUserAgent('iPhone') &&
       !goog.labs.userAgent.util.matchUserAgent('iPod');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is iPad.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is iPad.
+ */
 goog.labs.userAgent.platform.isIpad = function() {
   return goog.labs.userAgent.util.matchUserAgent('iPad');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is iOS.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is iOS.
+ */
 goog.labs.userAgent.platform.isIos = function() {
   return goog.labs.userAgent.platform.isIphone() ||
       goog.labs.userAgent.platform.isIpad() ||
       goog.labs.userAgent.platform.isIpod();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is Mac.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is Mac.
+ */
 goog.labs.userAgent.platform.isMacintosh = function() {
   return goog.labs.userAgent.util.matchUserAgent('Macintosh');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is Linux.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is Linux.
+ */
 goog.labs.userAgent.platform.isLinux = function() {
   return goog.labs.userAgent.util.matchUserAgent('Linux');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is Windows.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is Windows.
+ */
 goog.labs.userAgent.platform.isWindows = function() {
   return goog.labs.userAgent.util.matchUserAgent('Windows');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the platform is ChromeOS.
-***REMOVED***
+/**
+ * @return {boolean} Whether the platform is ChromeOS.
+ */
 goog.labs.userAgent.platform.isChromeOS = function() {
   return goog.labs.userAgent.util.matchUserAgent('CrOS');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The version of the platform. We only determine the version for Windows,
-***REMOVED*** Mac, and Chrome OS. It doesn't make much sense on Linux. For Windows, we only
-***REMOVED*** look at the NT version. Non-NT-based versions (e.g. 95, 98, etc.) are given
-***REMOVED*** version 0.0.
-***REMOVED***
-***REMOVED*** @return {string} The platform version or empty string if version cannot be
-***REMOVED***     determined.
-***REMOVED***
+/**
+ * The version of the platform. We only determine the version for Windows,
+ * Mac, and Chrome OS. It doesn't make much sense on Linux. For Windows, we only
+ * look at the NT version. Non-NT-based versions (e.g. 95, 98, etc.) are given
+ * version 0.0.
+ *
+ * @return {string} The platform version or empty string if version cannot be
+ *     determined.
+ */
 goog.labs.userAgent.platform.getVersion = function() {
   var userAgentString = goog.labs.userAgent.util.getUserAgent();
   var version = '', re;
@@ -143,15 +143,15 @@ goog.labs.userAgent.platform.getVersion = function() {
     version = match && match[1];
   }
   return version || '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string|number} version The version to check.
-***REMOVED*** @return {boolean} Whether the browser version is higher or the same as the
-***REMOVED***     given version.
-***REMOVED***
+/**
+ * @param {string|number} version The version to check.
+ * @return {boolean} Whether the browser version is higher or the same as the
+ *     given version.
+ */
 goog.labs.userAgent.platform.isVersionOrHigher = function(version) {
   return goog.string.compareVersions(goog.labs.userAgent.platform.getVersion(),
                                      version) >= 0;
-***REMOVED***
+};

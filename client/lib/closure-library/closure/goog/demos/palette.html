@@ -15,7 +15,7 @@ See the COPYING file for details.
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.ColorPalette');
@@ -36,7 +36,7 @@ See the COPYING file for details.
       cursor: pointer;
     }
 
-    /* Demo styles***REMOVED***
+    /* Demo styles */
     .simple-palette .goog-palette-active {
       border-color: #edf;
     }
@@ -189,13 +189,13 @@ See the COPYING file for details.
     p1.render(goog.dom.getElement('p1'));
     goog.dom.classlist.add(p1.getElement(), 'simple-palette');
 
-  ***REMOVED***p1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(p1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var palette = e.target;
           goog.dom.setTextContent(goog.dom.getElement('p1_value'),
               goog.dom.getTextContent(palette.getSelectedItem()));
         });
-  ***REMOVED***p1, EVENTS, logEvent);
+    goog.events.listen(p1, EVENTS, logEvent);
 
 
 
@@ -207,8 +207,8 @@ See the COPYING file for details.
       var cp = new goog.ui.ColorPalette(colors);
       cp.setSize(width); // If we only set the columns, the rows are calculated.
       cp.render(goog.dom.getElement('cp'));
-    ***REMOVED***cp, goog.ui.Component.EventType.ACTION, onColorEvent);
-    ***REMOVED***cp, EVENTS, logEvent);
+      goog.events.listen(cp, goog.ui.Component.EventType.ACTION, onColorEvent);
+      goog.events.listen(cp, EVENTS, logEvent);
       return cp;
     }
 
@@ -279,7 +279,7 @@ See the COPYING file for details.
     cp.setSize(6);
     cp.render(goog.dom.getElement('ccp'));
     goog.dom.classlist.add(cp.getElement(), 'color-picker');
-  ***REMOVED***cp, goog.ui.Component.EventType.ACTION,  function (e) {
+    goog.events.listen(cp, goog.ui.Component.EventType.ACTION,  function (e) {
       var palette = e.target;
       var color = palette.getSelectedColor();
       goog.style.setStyle(goog.dom.getElement('ccp_value'), 'background-color',
@@ -288,7 +288,7 @@ See the COPYING file for details.
       goog.dom.getElement('ccp_text').innerHTML =
           goog.color.parse(color).hex;
     });
-  ***REMOVED***cp, EVENTS, logEvent);
+    goog.events.listen(cp, EVENTS, logEvent);
 
     // Perf and clean up
 

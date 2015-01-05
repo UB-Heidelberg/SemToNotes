@@ -15,7 +15,7 @@ Author:  attila@google.com (Attila Bodis)
   <link rel="stylesheet" href="../testing/performancetable.css" />
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.events.EventTarget');
     goog.require('goog.pubsub.PubSub');
     goog.require('goog.testing.PerformanceTable');
@@ -73,10 +73,10 @@ Author:  attila@google.com (Attila Bodis)
     }
     Handler.prototype.handleAction = function() {
       actionCount++;
-   ***REMOVED*****REMOVED***
+    };
     Handler.prototype.handleChange = function() {
       changeCount++;
-   ***REMOVED*****REMOVED***
+    };
 
     // Generic publisher class that uses a global pubsub channel.
     function Publisher(pubsub, id) {
@@ -85,7 +85,7 @@ Author:  attila@google.com (Attila Bodis)
     }
     Publisher.prototype.publish = function(topic) {
       this.pubsub.publish(this.id + '.' + topic);
-   ***REMOVED*****REMOVED***
+    };
 
     // PubSub subclass; allows clients to subscribe and uses itself to publish.
     function PubSub() {
@@ -100,7 +100,7 @@ Author:  attila@google.com (Attila Bodis)
     goog.inherits(Target, goog.events.EventTarget);
     Target.prototype.fireEvent = function(type) {
       this.dispatchEvent(type);
-   ***REMOVED*****REMOVED***
+    };
 
     function initHandlers(count) {
       for (var i = 0; i < count; i++) {
@@ -130,9 +130,9 @@ Author:  attila@google.com (Attila Bodis)
       initHandlers(count);
       initTargets(count);
       for (var i = 0; i < count; i++) {
-      ***REMOVED***targets[i], ACTION, Handler.prototype.handleAction,
+        goog.events.listen(targets[i], ACTION, Handler.prototype.handleAction,
             false, handlers[i]);
-      ***REMOVED***targets[i], CHANGE, Handler.prototype.handleChange,
+        goog.events.listen(targets[i], CHANGE, Handler.prototype.handleChange,
             false, handlers[i]);
       }
     }
@@ -216,7 +216,7 @@ Author:  attila@google.com (Attila Bodis)
       table.run(
           goog.partial(createGlobalSubscriptions, pubsub, SAMPLES_PER_RUN),
           '1B: Create global subscriptions');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 2,
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 2,
           pubsub.getCount());
       assertEquals(0, actionCount);
       assertEquals(0, changeCount);
@@ -234,8 +234,8 @@ Author:  attila@google.com (Attila Bodis)
       createEventListeners(SAMPLES_PER_RUN);
       table.run(goog.partial(dispatchEvents, SAMPLES_PER_RUN),
           '2A: Dispatch events');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
     }
 
     function testPublishGlobalMessages() {
@@ -244,8 +244,8 @@ Author:  attila@google.com (Attila Bodis)
       table.run(
           goog.partial(publishGlobalMessages, SAMPLES_PER_RUN),
           '2B: Publish global messages');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
       pubsub.dispose();
     }
 
@@ -253,8 +253,8 @@ Author:  attila@google.com (Attila Bodis)
       createSubscriptions(SAMPLES_PER_RUN);
       table.run(goog.partial(publishMessages, SAMPLES_PER_RUN),
           '2C: Publish messages');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
     }
 
     function testEvents() {
@@ -262,8 +262,8 @@ Author:  attila@google.com (Attila Bodis)
         createEventListeners(SAMPLES_PER_RUN);
         dispatchEvents(SAMPLES_PER_RUN);
       }, '3A: Events');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
     }
 
     function testSinglePubSub() {
@@ -273,8 +273,8 @@ Author:  attila@google.com (Attila Bodis)
         publishGlobalMessages(SAMPLES_PER_RUN);
         pubsub.dispose();
       }, '3B: Single PubSub');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
     }
 
     function testMultiPubSub() {
@@ -282,8 +282,8 @@ Author:  attila@google.com (Attila Bodis)
         createSubscriptions(SAMPLES_PER_RUN);
         publishMessages(SAMPLES_PER_RUN);
       }, '3C: Multi PubSub');
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, actionCount);
-      assertEquals(SAMPLES_PER_RUN***REMOVED*** timer.getNumSamples()***REMOVED*** 5, changeCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, actionCount);
+      assertEquals(SAMPLES_PER_RUN * timer.getNumSamples() * 5, changeCount);
     }
   </script>
 </body>

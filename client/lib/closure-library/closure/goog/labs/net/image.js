@@ -12,33 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Simple image loader, used for preloading.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Simple image loader, used for preloading.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.labs.net.image');
 
 goog.require('goog.Promise');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.net.EventType');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Loads a single image.  Useful for preloading images.
-***REMOVED***
-***REMOVED*** @param {string} uri URI of the image.
-***REMOVED*** @param {(!Image|function(): !Image)=} opt_image If present, instead of
-***REMOVED***     creating a new Image instance the function will use the passed Image
-***REMOVED***     instance or the result of calling the Image factory respectively. This
-***REMOVED***     can be used to control exactly how Image instances are created, for
-***REMOVED***     example if they should be created in a particular document element, or
-***REMOVED***     have fields that will trigger CORS image fetches.
-***REMOVED*** @return {!goog.Promise.<!Image>} A Promise that will be resolved with the
-***REMOVED***     given image if the image successfully loads.
-***REMOVED***
+/**
+ * Loads a single image.  Useful for preloading images.
+ *
+ * @param {string} uri URI of the image.
+ * @param {(!Image|function(): !Image)=} opt_image If present, instead of
+ *     creating a new Image instance the function will use the passed Image
+ *     instance or the result of calling the Image factory respectively. This
+ *     can be used to control exactly how Image instances are created, for
+ *     example if they should be created in a particular document element, or
+ *     have fields that will trigger CORS image fetches.
+ * @return {!goog.Promise.<!Image>} A Promise that will be resolved with the
+ *     given image if the image successfully loads.
+ */
 goog.labs.net.image.load = function(uri, opt_image) {
   return new goog.Promise(function(resolve, reject) {
     var image;
@@ -91,4 +91,4 @@ goog.labs.net.image.load = function(uri, opt_image) {
     // Initiate the image request.
     image.src = uri;
   });
-***REMOVED***
+};

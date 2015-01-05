@@ -63,7 +63,7 @@ function testProtoFunctions() {
       fcalled++;
       return this.x + y;
     });
- ***REMOVED*****REMOVED***
+  };
   Class.prototype.g = goog.memoize(function(z) {
     gcalled++;
     return this.x - z;
@@ -97,7 +97,7 @@ function testCustomSerializer() {
   var called = 0;
   var serializer = function(this_context, args) {
     return String(args[0].getTime());
- ***REMOVED*****REMOVED***
+  };
   var getYear = goog.memoize(function(date) {
     called++;
     return date.getFullYear();

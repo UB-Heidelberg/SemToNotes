@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a element node
-***REMOVED*** implementation working on a binary XML model.
-***REMOVED***
+/**
+ * @fileoverview A class representing a element node
+ * implementation working on a binary XML model.
+ */
 
 goog.provide('xrx.node.ElementB');
 
@@ -16,150 +16,150 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a binary element node.
-***REMOVED***
-***REMOVED*** @param {!xrx.node.Document}
-***REMOVED*** @param {!integer} 
-***REMOVED***
-***REMOVED***
+/**
+ * Creates a binary element node.
+ *
+ * @param {!xrx.node.Document}
+ * @param {!integer} 
+ * @constructor
+ */
 xrx.node.ElementB = function(document, key) {
 
   goog.base(this, xrx.node.ELEMENT, document, key);
-***REMOVED***
+};
 goog.inherits(xrx.node.ElementB, xrx.node.Binary);
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getToken = function() {
   return this.getIndex().getTag(this.key_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getLabel = function() {
   return this.getIndex().getLabel(this.key_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getOffset = function() {
   return this.getRow().getOffset();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getLength = function() {
   return this.getRow().getLength1();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isSameAs = xrx.node.Element.prototype.isSameAs;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isBefore = xrx.node.Element.prototype.isBefore;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isAfter = xrx.node.Element.prototype.isAfter;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isAncestorOf = xrx.node.Element.prototype.isAncestorOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isAttributeOf = xrx.node.Element.prototype.isAttributeOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isChildOf = xrx.node.Element.prototype.isChildOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isDescendantOf = xrx.node.Element.prototype.isDescendantOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isFollowingOf = xrx.node.Element.prototype.isFollowingOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isFollowingSiblingOf = xrx.node.Element.prototype.isFollowingSiblingOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isParentOf = function(node) {
   if (node.getType() === xrx.node.ELEMENT) {
     return this.getKey() === node.getRow().getParent() && node.getKey() !== 0;
   } else {
     return this.getLabel().isParentOf(node.getLabel());
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isPrecedingOf = xrx.node.Element.prototype.isPrecedingOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.isPrecedingSiblingOf = xrx.node.Element.prototype.isPrecedingSiblingOf;
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.ElementB.prototype.getName = function() {
   var inst = this.getDocument().getInstance();
   var tag = inst.getIndex().getTag(this.key_);
@@ -167,25 +167,25 @@ xrx.node.ElementB.prototype.getName = function() {
   loc.offset += tag.offset();
 
   return loc.xml(inst.xml());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNamespaceUri = function(prefix) {
   var inst = this.getDocument().getInstance();
   var ns = inst.getIndex().getNamespace(this.getToken(), prefix);
 
   return ns ? ns.uri : '';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getStringValue = function() {
   if (this.getRow().getType() === xrx.token.EMPTY_TAG) return '';
 
@@ -200,16 +200,16 @@ xrx.node.ElementB.prototype.getStringValue = function() {
         this.getIndex().getLabel(key).sameAs(selfLabel)) break;
     string += xml.substr(row.getOffset() + row.getLength1(),
         row.getLength2() - row.getLength1());
- ***REMOVED*****REMOVED***
+  };
 
   return string;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getXml = function() {
 
   if (this.getRow().getType() === xrx.token.EMPTY_TAG) {
@@ -222,27 +222,27 @@ xrx.node.ElementB.prototype.getXml = function() {
     return this.getDocument().getInstance().xml().substring(this.getOffset(), row.getOffset() +
         row.getLength1());
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeAncestor = xrx.node.Element.prototype.getNodeAncestor;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getAttributes = xrx.node.Element.prototype.getAttributes;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
   var row = this.getRow();
@@ -255,66 +255,66 @@ xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
     a = locs[l];
     attr = new xrx.node.AttributeB(parseInt(l), this);
     if (test.matches(attr)) nodeset.add(attr);
- ***REMOVED*****REMOVED***
+  };
   return nodeset;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeChild = xrx.node.Element.prototype.getNodeChild;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeDescendant = xrx.node.Element.prototype.getNodeDescendant;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeFollowing = xrx.node.Element.prototype.getNodeFollowing;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeFollowingSibling = xrx.node.Element.prototype.getNodeFollowingSibling;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodeParent = xrx.node.Element.prototype.getNodeParent;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodePreceding = xrx.node.Element.prototype.getNodePreceding;
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.getNodePrecedingSibling = xrx.node.Element.prototype.getNodePrecedingSibling;
 
 
 
-***REMOVED***
-***REMOVED*** @param {!xrx.xml.Label}
-***REMOVED***
+/**
+ * @param {!xrx.xml.Label}
+ */
 xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
-***REMOVED***
+  var self = this;
   var index = this.getDocument().getInstance().getIndex();
   index.iterSetKey(this.key_);
   var row = index.iterGetRow();
@@ -332,7 +332,7 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
       break;
     default:
       break;
-   ***REMOVED*****REMOVED***
+    };
 
     if (needTextNode && row.getLength1() !== row.getLength2()) {
       self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
@@ -342,15 +342,15 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
         self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
 
   } while (row = index.iterNext());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @param {!xrx.xml.Label}
-***REMOVED***
+/**
+ * @param {!xrx.xml.Label}
+ */
 xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
-***REMOVED***
+  var self = this;
   var index = this.getIndex();
   index.iterSetKey(this.key_);
   var row = index.iterGetRow();
@@ -372,17 +372,17 @@ xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
       break;
     default:
       break;
-   ***REMOVED*****REMOVED***
+    };
 
     if (type === xrx.token.END_TAG &&
         self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
 
   } while (row = index.iterPrevious());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.node.ElementB.prototype.find = xrx.node.Node.prototype.find;

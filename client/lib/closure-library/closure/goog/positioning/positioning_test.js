@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.position.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.position.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.positioningTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.math.Box');
 goog.require('goog.math.Coordinate');
 goog.require('goog.math.Rect');
@@ -72,9 +72,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** This is used to round pixel values on FF3 Mac.
-***REMOVED***
+/**
+ * This is used to round pixel values on FF3 Mac.
+ */
 function assertRoundedEquals(a, b, c) {
   function round(x) {
     return goog.userAgent.GECKO && (goog.userAgent.MAC || goog.userAgent.X11) &&
@@ -1010,20 +1010,20 @@ function testPositionAtAnchorWithOverflowScrollOffsetParent() {
   var overflowDiv = goog.dom.createElement('div');
   overflowDiv.style.overflow = 'scroll';
   overflowDiv.style.position = 'relative';
-  goog.style.setSize(overflowDiv, 200 /* width***REMOVED***, 100 /* height***REMOVED***);
+  goog.style.setSize(overflowDiv, 200 /* width */, 100 /* height */);
 
   var anchor = goog.dom.createElement('div');
   anchor.style.position = 'absolute';
-  goog.style.setSize(anchor, 50 /* width***REMOVED***, 50 /* height***REMOVED***);
-  goog.style.setPosition(anchor, 300 /* left***REMOVED***, 300 /* top***REMOVED***);
+  goog.style.setSize(anchor, 50 /* width */, 50 /* height */);
+  goog.style.setPosition(anchor, 300 /* left */, 300 /* top */);
 
-  var popup = createPopupDiv(75 /* width***REMOVED***, 50 /* height***REMOVED***);
+  var popup = createPopupDiv(75 /* width */, 50 /* height */);
 
   goog.dom.append(testArea, overflowDiv, anchor);
   goog.dom.append(overflowDiv, popup);
 
   // Popup should always be positioned within the overflowDiv
-  goog.style.setPosition(overflowDiv, 0 /* left***REMOVED***, 0 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 0 /* left */, 0 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_LEFT, popup, corner.TOP_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1034,7 +1034,7 @@ function testPositionAtAnchorWithOverflowScrollOffsetParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 400 /* left***REMOVED***, 0 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 400 /* left */, 0 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_RIGHT, popup, corner.TOP_LEFT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1044,7 +1044,7 @@ function testPositionAtAnchorWithOverflowScrollOffsetParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 0 /* left***REMOVED***, 400 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 0 /* left */, 400 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.BOTTOM_LEFT, popup, corner.BOTTOM_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1054,7 +1054,7 @@ function testPositionAtAnchorWithOverflowScrollOffsetParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 400 /* left***REMOVED***, 400 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 400 /* left */, 400 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.BOTTOM_RIGHT, popup, corner.BOTTOM_LEFT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1065,7 +1065,7 @@ function testPositionAtAnchorWithOverflowScrollOffsetParent() {
       1);
 
   // No overflow.
-  goog.style.setPosition(overflowDiv, 300 - 50 /* left***REMOVED***, 300 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 300 - 50 /* left */, 300 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_LEFT, popup, corner.TOP_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1083,20 +1083,20 @@ function testPositionAtAnchorWithOverflowHiddenParent() {
   var overflowDiv = goog.dom.createElement('div');
   overflowDiv.style.overflow = 'hidden';
   overflowDiv.style.position = 'relative';
-  goog.style.setSize(overflowDiv, 200 /* width***REMOVED***, 100 /* height***REMOVED***);
+  goog.style.setSize(overflowDiv, 200 /* width */, 100 /* height */);
 
   var anchor = goog.dom.createElement('div');
   anchor.style.position = 'absolute';
-  goog.style.setSize(anchor, 50 /* width***REMOVED***, 50 /* height***REMOVED***);
-  goog.style.setPosition(anchor, 300 /* left***REMOVED***, 300 /* top***REMOVED***);
+  goog.style.setSize(anchor, 50 /* width */, 50 /* height */);
+  goog.style.setPosition(anchor, 300 /* left */, 300 /* top */);
 
-  var popup = createPopupDiv(75 /* width***REMOVED***, 50 /* height***REMOVED***);
+  var popup = createPopupDiv(75 /* width */, 50 /* height */);
 
   goog.dom.append(testArea, overflowDiv, anchor);
   goog.dom.append(overflowDiv, popup);
 
   // Popup should always be positioned within the overflowDiv
-  goog.style.setPosition(overflowDiv, 0 /* left***REMOVED***, 0 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 0 /* left */, 0 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_LEFT, popup, corner.TOP_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1106,7 +1106,7 @@ function testPositionAtAnchorWithOverflowHiddenParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 400 /* left***REMOVED***, 0 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 400 /* left */, 0 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_RIGHT, popup, corner.TOP_LEFT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1116,7 +1116,7 @@ function testPositionAtAnchorWithOverflowHiddenParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 0 /* left***REMOVED***, 400 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 0 /* left */, 400 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.BOTTOM_LEFT, popup, corner.BOTTOM_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1126,7 +1126,7 @@ function testPositionAtAnchorWithOverflowHiddenParent() {
       goog.style.getPageOffset(popup),
       1);
 
-  goog.style.setPosition(overflowDiv, 400 /* left***REMOVED***, 400 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 400 /* left */, 400 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.BOTTOM_RIGHT, popup, corner.BOTTOM_LEFT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1137,7 +1137,7 @@ function testPositionAtAnchorWithOverflowHiddenParent() {
       1);
 
   // No overflow.
-  goog.style.setPosition(overflowDiv, 300 - 50 /* left***REMOVED***, 300 /* top***REMOVED***);
+  goog.style.setPosition(overflowDiv, 300 - 50 /* left */, 300 /* top */);
   goog.positioning.positionAtAnchor(
       anchor, corner.TOP_LEFT, popup, corner.TOP_RIGHT, null, null,
       overflow.ADJUST_X | overflow.ADJUST_Y);
@@ -1152,7 +1152,7 @@ function createPopupDiv(width, height) {
   var popupDiv = goog.dom.createElement('div');
   popupDiv.style.position = 'absolute';
   goog.style.setSize(popupDiv, width, height);
-  goog.style.setPosition(popupDiv, 0 /* left***REMOVED***, 250 /* top***REMOVED***);
+  goog.style.setPosition(popupDiv, 0 /* left */, 250 /* top */);
   return popupDiv;
 }
 

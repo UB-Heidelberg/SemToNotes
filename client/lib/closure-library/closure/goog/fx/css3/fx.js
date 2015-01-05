@@ -12,51 +12,51 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A collection of CSS3 targeted animation, based on
-***REMOVED*** {@code goog.fx.css3.Transition}.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A collection of CSS3 targeted animation, based on
+ * {@code goog.fx.css3.Transition}.
+ *
+ */
 
 goog.provide('goog.fx.css3');
 
 goog.require('goog.fx.css3.Transition');
 
 
-***REMOVED***
-***REMOVED*** Creates a transition to fade the element.
-***REMOVED*** @param {Element} element The element to fade.
-***REMOVED*** @param {number} duration Duration in seconds.
-***REMOVED*** @param {string} timing The CSS3 timing function.
-***REMOVED*** @param {number} startOpacity Starting opacity.
-***REMOVED*** @param {number} endOpacity Ending opacity.
-***REMOVED*** @return {!goog.fx.css3.Transition} The transition object.
-***REMOVED***
+/**
+ * Creates a transition to fade the element.
+ * @param {Element} element The element to fade.
+ * @param {number} duration Duration in seconds.
+ * @param {string} timing The CSS3 timing function.
+ * @param {number} startOpacity Starting opacity.
+ * @param {number} endOpacity Ending opacity.
+ * @return {!goog.fx.css3.Transition} The transition object.
+ */
 goog.fx.css3.fade = function(
     element, duration, timing,  startOpacity, endOpacity) {
   return new goog.fx.css3.Transition(
       element, duration, {'opacity': startOpacity}, {'opacity': endOpacity},
       {property: 'opacity', duration: duration, timing: timing, delay: 0});
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a transition to fade in the element.
-***REMOVED*** @param {Element} element The element to fade in.
-***REMOVED*** @param {number} duration Duration in seconds.
-***REMOVED*** @return {!goog.fx.css3.Transition} The transition object.
-***REMOVED***
+/**
+ * Creates a transition to fade in the element.
+ * @param {Element} element The element to fade in.
+ * @param {number} duration Duration in seconds.
+ * @return {!goog.fx.css3.Transition} The transition object.
+ */
 goog.fx.css3.fadeIn = function(element, duration) {
   return goog.fx.css3.fade(element, duration, 'ease-out', 0, 1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a transition to fade out the element.
-***REMOVED*** @param {Element} element The element to fade out.
-***REMOVED*** @param {number} duration Duration in seconds.
-***REMOVED*** @return {!goog.fx.css3.Transition} The transition object.
-***REMOVED***
+/**
+ * Creates a transition to fade out the element.
+ * @param {Element} element The element to fade out.
+ * @param {number} duration Duration in seconds.
+ * @return {!goog.fx.css3.Transition} The transition object.
+ */
 goog.fx.css3.fadeOut = function(element, duration) {
   return goog.fx.css3.fade(element, duration, 'ease-in', 1, 0);
-***REMOVED***
+};

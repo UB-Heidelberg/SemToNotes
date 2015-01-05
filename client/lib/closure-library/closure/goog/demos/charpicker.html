@@ -54,10 +54,10 @@ See the COPYING file for details.
     var selectionAction = function() {
       goog.dom.setTextContent(goog.dom.getElement('p1_value'),
           picker.getSelectedChar());
-   ***REMOVED*****REMOVED***
+    };
 
     // Get selected locale from the char picker.
-  ***REMOVED***picker, 'action', function(e) { selectionAction(); });
+    goog.events.listen(picker, 'action', function(e) { selectionAction(); });
   </script>
   <p>
     <input type="button" value="Dispose" onclick="picker.dispose()">

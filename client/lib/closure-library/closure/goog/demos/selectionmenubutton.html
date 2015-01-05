@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.MenuItem');
@@ -25,7 +25,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="css/demo.css">
   <link rel="stylesheet" href="../css/menubutton.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -35,7 +35,7 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Format" icon.***REMOVED***
+    /* "Format" icon. */
     .format-icon{
       background-position: -64px;
     }
@@ -150,11 +150,11 @@ See the COPYING file for details.
     b1.setId('progSelectButton');
     b1.render(goog.dom.getElement('menuButtons'));
     b1.setTooltip('Select menu demo');
-  ***REMOVED***b1, EVENTS, logEvent);
+    goog.events.listen(b1, EVENTS, logEvent);
     b1.addItem(new goog.ui.MenuItem('Important'));
     b1.addItem(new goog.ui.MenuItem('Unimportant'));
 
-  ***REMOVED***goog.dom.getElement('b1_enable'),
+    goog.events.listen(goog.dom.getElement('b1_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           b1.setEnabled(e.target.checked);
@@ -165,19 +165,19 @@ See the COPYING file for details.
     // attached to the button.
     var selectButton = goog.ui.decorate(goog.dom.getElement('selectButton'));
 
-  ***REMOVED***goog.dom.getElement('selectButton_show'),
+    goog.events.listen(goog.dom.getElement('selectButton_show'),
         goog.events.EventType.CLICK,
         function(e) {
           selectButton.setVisible(e.target.checked);
         });
 
-  ***REMOVED***goog.dom.getElement('selectButton_enable'),
+    goog.events.listen(goog.dom.getElement('selectButton_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           selectButton.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***selectButton, EVENTS, logEvent);
+    goog.events.listen(selectButton, EVENTS, logEvent);
 
     goog.dom.setTextContent(goog.dom.getElement('perf'),
         (goog.now() - timer) + 'ms');

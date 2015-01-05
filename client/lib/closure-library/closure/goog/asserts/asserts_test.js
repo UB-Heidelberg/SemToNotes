@@ -84,7 +84,7 @@ function testString() {
 }
 
 function testFunction() {
-  function f() {***REMOVED***
+  function f() {};
   assertEquals(f, goog.asserts.assertFunction(f));
   assertThrows('assertFunction(null)',
       goog.partial(goog.asserts.assertFunction, null));
@@ -98,7 +98,7 @@ function testFunction() {
 }
 
 function testObject() {
-  var o = {***REMOVED***
+  var o = {};
   assertEquals(o, goog.asserts.assertObject(o));
   assertThrows('assertObject(null)',
       goog.partial(goog.asserts.assertObject, null));
@@ -150,8 +150,8 @@ function testElement() {
 }
 
 function testInstanceof() {
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
-  var F = function() {***REMOVED***
+  /** @constructor */
+  var F = function() {};
   goog.asserts.assertInstanceof(new F(), F);
   assertThrows('assertInstanceof({}, F)',
       goog.partial(goog.asserts.assertInstanceof, {}, F));

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.proto2.TextFormatSerializer.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.proto2.TextFormatSerializer.
+ *
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.proto2.TextFormatSerializerTest');
 
 goog.require('goog.proto2.ObjectSerializer');
@@ -135,7 +135,7 @@ function testSerializationOfUnknownParsedFromObject() {
       31: [301, 302],
       2000: 401
     }
- ***REMOVED*****REMOVED***
+  };
 
   // Deserialize that representation into a TestAllTypes message.
   var objectSerializer = new goog.proto2.ObjectSerializer();
@@ -155,19 +155,19 @@ function testSerializationOfUnknownParsedFromObject() {
       '  31: 302\n' +
       '  2000: 401\n' +
       '}\n'
-    ***REMOVED***
+      );
   assertEquals(expected, simplified);
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given string value parses into the given set of tokens.
-***REMOVED*** @param {string} value The string value to parse.
-***REMOVED*** @param {Array.<Object> | Object} tokens The tokens to check against. If not
-***REMOVED***     an array, a single token is expected.
-***REMOVED*** @param {boolean=} opt_ignoreWhitespace Whether whitespace tokens should be
-***REMOVED***     skipped by the tokenizer.
-***REMOVED***
+/**
+ * Asserts that the given string value parses into the given set of tokens.
+ * @param {string} value The string value to parse.
+ * @param {Array.<Object> | Object} tokens The tokens to check against. If not
+ *     an array, a single token is expected.
+ * @param {boolean=} opt_ignoreWhitespace Whether whitespace tokens should be
+ *     skipped by the tokenizer.
+ */
 function assertTokens(value, tokens, opt_ignoreWhitespace) {
   var tokenizer = new goog.proto2.TextFormatSerializer.Tokenizer_(
       value, opt_ignoreWhitespace);
@@ -475,7 +475,7 @@ function testDeserializationVariedNumbers() {
       'repeated_float: 123.0\n' +
       'repeated_float: -3.27\n' +
       'repeated_float: -35.5f\n'
-    ***REMOVED***
+      );
 
   new goog.proto2.TextFormatSerializer().deserializeTo(message, value);
 
@@ -535,7 +535,7 @@ function testDeserializationOfNumericalConstants() {
       'repeated_float: -inf\n' +
       'repeated_float: nan\n' +
       'repeated_float: 300.2\n'
-    ***REMOVED***
+      );
 
   new goog.proto2.TextFormatSerializer().deserializeTo(message, value);
 

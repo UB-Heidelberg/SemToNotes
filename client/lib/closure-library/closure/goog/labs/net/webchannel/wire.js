@@ -12,64 +12,64 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Interface and shared data structures for implementing
-***REMOVED*** different wire protocol versions.
-***REMOVED*** @visibility {//closure/goog/bin/sizetests:__pkg__}
-***REMOVED***
+/**
+ * @fileoverview Interface and shared data structures for implementing
+ * different wire protocol versions.
+ * @visibility {//closure/goog/bin/sizetests:__pkg__}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.Wire');
 
 
 
-***REMOVED***
-***REMOVED*** The interface class.
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED***
-goog.labs.net.webChannel.Wire = function() {***REMOVED***
+/**
+ * The interface class.
+ *
+ * @interface
+ */
+goog.labs.net.webChannel.Wire = function() {};
 
 
 goog.scope(function() {
 var Wire = goog.labs.net.webChannel.Wire;
 
 
-***REMOVED***
-***REMOVED*** The latest protocol version that this class supports. We request this version
-***REMOVED*** from the server when opening the connection. Should match
-***REMOVED*** LATEST_CHANNEL_VERSION on the server code.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The latest protocol version that this class supports. We request this version
+ * from the server when opening the connection. Should match
+ * LATEST_CHANNEL_VERSION on the server code.
+ * @type {number}
+ */
 Wire.LATEST_CHANNEL_VERSION = 8;
 
 
 
-***REMOVED***
-***REMOVED*** Simple container class for a (mapId, map) pair.
-***REMOVED*** @param {number} mapId The id for this map.
-***REMOVED*** @param {!Object|!goog.structs.Map} map The map itself.
-***REMOVED*** @param {!Object=} opt_context The context associated with the map.
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * Simple container class for a (mapId, map) pair.
+ * @param {number} mapId The id for this map.
+ * @param {!Object|!goog.structs.Map} map The map itself.
+ * @param {!Object=} opt_context The context associated with the map.
+ * @constructor
+ * @struct
+ */
 Wire.QueuedMap = function(mapId, map, opt_context) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The id for this map.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The id for this map.
+   * @type {number}
+   */
   this.mapId = mapId;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The map itself.
-  ***REMOVED*** @type {!Object|!goog.structs.Map}
- ***REMOVED*****REMOVED***
+  /**
+   * The map itself.
+   * @type {!Object|!goog.structs.Map}
+   */
   this.map = map;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The context for the map.
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * The context for the map.
+   * @type {Object}
+   */
   this.context = opt_context || null;
-***REMOVED***
+};
 });  // goog.scope

@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A collection of custom XRX++ XPath functions.
-***REMOVED***
+/**
+ * @fileoverview A collection of custom XRX++ XPath functions.
+ */
 
 goog.provide('xrx.func');
 
@@ -43,4 +43,4 @@ xrx.func = {
       function(ctx, expr) {
         return xrx.Util.createUUID();
       }, 0, 0)
-***REMOVED***
+};

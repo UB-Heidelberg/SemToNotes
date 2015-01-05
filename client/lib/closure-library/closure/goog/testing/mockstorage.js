@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a JS storage class implementing the HTML5 Storage
-***REMOVED*** interface.
-***REMOVED***
+/**
+ * @fileoverview Provides a JS storage class implementing the HTML5 Storage
+ * interface.
+ */
 
 
 goog.require('goog.structs.Map');
@@ -25,84 +25,84 @@ goog.provide('goog.testing.MockStorage');
 
 
 
-***REMOVED***
-***REMOVED*** A JS storage instance, implementing the HMTL5 Storage interface.
-***REMOVED*** See http://www.w3.org/TR/webstorage/ for details.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {Storage}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A JS storage instance, implementing the HMTL5 Storage interface.
+ * See http://www.w3.org/TR/webstorage/ for details.
+ *
+ * @constructor
+ * @implements {Storage}
+ * @final
+ */
 goog.testing.MockStorage = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying storage object.
-  ***REMOVED*** @type {goog.structs.Map}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying storage object.
+   * @type {goog.structs.Map}
+   * @private
+   */
   this.store_ = new goog.structs.Map();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of elements in the storage.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The number of elements in the storage.
+   * @type {number}
+   */
   this.length = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets an item to the storage.
-***REMOVED*** @param {string} key Storage key.
-***REMOVED*** @param {*} value Storage value. Must be convertible to string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets an item to the storage.
+ * @param {string} key Storage key.
+ * @param {*} value Storage value. Must be convertible to string.
+ * @override
+ */
 goog.testing.MockStorage.prototype.setItem = function(key, value) {
   this.store_.set(key, String(value));
   this.length = this.store_.getCount();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets an item from the storage.  The item returned is the "structured clone"
-***REMOVED*** of the value from setItem.  In practice this means it's the value cast to a
-***REMOVED*** string.
-***REMOVED*** @param {string} key Storage key.
-***REMOVED*** @return {?string} Storage value for key; null if does not exist.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Gets an item from the storage.  The item returned is the "structured clone"
+ * of the value from setItem.  In practice this means it's the value cast to a
+ * string.
+ * @param {string} key Storage key.
+ * @return {?string} Storage value for key; null if does not exist.
+ * @override
+ */
 goog.testing.MockStorage.prototype.getItem = function(key) {
   var val = this.store_.get(key);
   // Enforce that getItem returns string values.
-  return (val != null) ?***REMOVED*****REMOVED*** @type {string}***REMOVED*** (val) : null;
-***REMOVED***
+  return (val != null) ? /** @type {string} */ (val) : null;
+};
 
 
-***REMOVED***
-***REMOVED*** Removes and item from the storage.
-***REMOVED*** @param {string} key Storage key.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Removes and item from the storage.
+ * @param {string} key Storage key.
+ * @override
+ */
 goog.testing.MockStorage.prototype.removeItem = function(key) {
   this.store_.remove(key);
   this.length = this.store_.getCount();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the storage.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Clears the storage.
+ * @override
+ */
 goog.testing.MockStorage.prototype.clear = function() {
   this.store_.clear();
   this.length = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the key at the given index.
-***REMOVED*** @param {number} index The index for the key.
-***REMOVED*** @return {?string} Key at the given index, null if not found.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the key at the given index.
+ * @param {number} index The index for the key.
+ * @return {?string} Key at the given index, null if not found.
+ * @override
+ */
 goog.testing.MockStorage.prototype.key = function(index) {
   return this.store_.getKeys()[index] || null;
-***REMOVED***
+};

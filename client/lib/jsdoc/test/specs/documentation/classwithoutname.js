@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine***REMOVED***
+/*global describe, expect, it, jasmine */
 describe('class without a name', function() {
 	var docSet = jasmine.getDocSetFromFile('test/fixtures/classwithoutname.js').doclets
 		.filter(function(doclet) {

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An interface for Results whose eventual value depends on the
-***REMOVED***     value of one or more other Results.
-***REMOVED***
+/**
+ * @fileoverview An interface for Results whose eventual value depends on the
+ *     value of one or more other Results.
+ */
 
 goog.provide('goog.result.DependentResult');
 
@@ -23,23 +23,23 @@ goog.require('goog.result.Result');
 
 
 
-***REMOVED***
-***REMOVED*** A DependentResult represents a Result whose eventual value depends on the
-***REMOVED*** value of one or more other Results. For example, the Result returned by
-***REMOVED*** @see goog.result.chain or @see goog.result.combine is dependent on the
-***REMOVED*** Results given as arguments.
-***REMOVED*** @interface
-***REMOVED*** @extends {goog.result.Result}
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
-goog.result.DependentResult = function() {***REMOVED***
+/**
+ * A DependentResult represents a Result whose eventual value depends on the
+ * value of one or more other Results. For example, the Result returned by
+ * @see goog.result.chain or @see goog.result.combine is dependent on the
+ * Results given as arguments.
+ * @interface
+ * @extends {goog.result.Result}
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
+goog.result.DependentResult = function() {};
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @return {!Array.<!goog.result.Result>} A list of Results which will affect
-***REMOVED***     the eventual value of this Result. The returned Results may themselves
-***REMOVED***     have parent results, which would be grandparents of this Result;
-***REMOVED***     grandparents (and any other ancestors) are not included in this list.
-***REMOVED***
-goog.result.DependentResult.prototype.getParentResults = function() {***REMOVED***
+/**
+ *
+ * @return {!Array.<!goog.result.Result>} A list of Results which will affect
+ *     the eventual value of this Result. The returned Results may themselves
+ *     have parent results, which would be grandparents of this Result;
+ *     grandparents (and any other ancestors) are not included in this list.
+ */
+goog.result.DependentResult.prototype.getParentResults = function() {};

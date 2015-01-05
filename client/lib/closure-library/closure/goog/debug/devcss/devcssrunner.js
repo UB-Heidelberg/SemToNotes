@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Development CSS Compiler runtime execution.
-***REMOVED***
+/**
+ * @fileoverview Development CSS Compiler runtime execution.
+ */
 
 goog.provide('goog.debug.devCssRunner');
 

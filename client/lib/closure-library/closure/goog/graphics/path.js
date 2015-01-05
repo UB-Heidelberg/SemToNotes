@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Represents a path used with a Graphics implementation.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author glenning@google.com (Anthony Glenning)
-***REMOVED***
+/**
+ * @fileoverview Represents a path used with a Graphics implementation.
+ * @author arv@google.com (Erik Arvidsson)
+ * @author glenning@google.com (Anthony Glenning)
+ */
 
 goog.provide('goog.graphics.Path');
 goog.provide('goog.graphics.Path.Segment');
@@ -27,83 +27,83 @@ goog.require('goog.math');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a path object. A path is a sequence of segments and may be open or
-***REMOVED*** closed. Path uses the EVEN-ODD fill rule for determining the interior of the
-***REMOVED*** path. A path must start with a moveTo command.
-***REMOVED***
-***REMOVED*** A "simple" path does not contain any arcs and may be transformed using
-***REMOVED*** the {@code transform} method.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * Creates a path object. A path is a sequence of segments and may be open or
+ * closed. Path uses the EVEN-ODD fill rule for determining the interior of the
+ * path. A path must start with a moveTo command.
+ *
+ * A "simple" path does not contain any arcs and may be transformed using
+ * the {@code transform} method.
+ *
+ * @constructor
+ */
 goog.graphics.Path = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The segment types that constitute this path.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The segment types that constitute this path.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.segments_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of repeated segments of the current type.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The number of repeated segments of the current type.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.count_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The arguments corresponding to each of the segments.
-  ***REMOVED*** @type {!Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The arguments corresponding to each of the segments.
+   * @type {!Array.<number>}
+   * @private
+   */
   this.arguments_ = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The coordinates of the point which closes the path (the point of the
-***REMOVED*** last moveTo command).
-***REMOVED*** @type {Array.<number>?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The coordinates of the point which closes the path (the point of the
+ * last moveTo command).
+ * @type {Array.<number>?}
+ * @private
+ */
 goog.graphics.Path.prototype.closePoint_ = null;
 
 
-***REMOVED***
-***REMOVED*** The coordinates most recently added to the end of the path.
-***REMOVED*** @type {Array.<number>?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The coordinates most recently added to the end of the path.
+ * @type {Array.<number>?}
+ * @private
+ */
 goog.graphics.Path.prototype.currentPoint_ = null;
 
 
-***REMOVED***
-***REMOVED*** Flag for whether this is a simple path (contains no arc segments).
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag for whether this is a simple path (contains no arc segments).
+ * @type {boolean}
+ * @private
+ */
 goog.graphics.Path.prototype.simple_ = true;
 
 
-***REMOVED***
-***REMOVED*** Path segment types.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Path segment types.
+ * @enum {number}
+ */
 goog.graphics.Path.Segment = {
   MOVETO: 0,
   LINETO: 1,
   CURVETO: 2,
   ARCTO: 3,
   CLOSE: 4
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The number of points for each segment type.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The number of points for each segment type.
+ * @type {!Array.<number>}
+ * @private
+ */
 goog.graphics.Path.segmentArgCounts_ = (function() {
   var counts = [];
   counts[goog.graphics.Path.Segment.MOVETO] = 2;
@@ -115,23 +115,23 @@ goog.graphics.Path.segmentArgCounts_ = (function() {
 })();
 
 
-***REMOVED***
-***REMOVED*** Returns the number of points for a segment type.
-***REMOVED***
-***REMOVED*** @param {number} segment The segment type.
-***REMOVED*** @return {number} The number of points.
-***REMOVED***
+/**
+ * Returns the number of points for a segment type.
+ *
+ * @param {number} segment The segment type.
+ * @return {number} The number of points.
+ */
 goog.graphics.Path.getSegmentCount = function(segment) {
   return goog.graphics.Path.segmentArgCounts_[segment];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends another path to the end of this path.
-***REMOVED***
-***REMOVED*** @param {!goog.graphics.Path} path The path to append.
-***REMOVED*** @return {!goog.graphics.Path} This path.
-***REMOVED***
+/**
+ * Appends another path to the end of this path.
+ *
+ * @param {!goog.graphics.Path} path The path to append.
+ * @return {!goog.graphics.Path} This path.
+ */
 goog.graphics.Path.prototype.appendPath = function(path) {
   if (path.currentPoint_) {
     Array.prototype.push.apply(this.segments_, path.segments_);
@@ -142,14 +142,14 @@ goog.graphics.Path.prototype.appendPath = function(path) {
     this.simple_ = this.simple_ && path.simple_;
   }
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the path.
-***REMOVED***
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Clears the path.
+ *
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.clear = function() {
   this.segments_.length = 0;
   this.count_.length = 0;
@@ -158,17 +158,17 @@ goog.graphics.Path.prototype.clear = function() {
   delete this.currentPoint_;
   delete this.simple_;
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a point to the path by moving to the specified point. Repeated moveTo
-***REMOVED*** commands are collapsed into a single moveTo.
-***REMOVED***
-***REMOVED*** @param {number} x X coordinate of destination point.
-***REMOVED*** @param {number} y Y coordinate of destination point.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Adds a point to the path by moving to the specified point. Repeated moveTo
+ * commands are collapsed into a single moveTo.
+ *
+ * @param {number} x X coordinate of destination point.
+ * @param {number} y Y coordinate of destination point.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.moveTo = function(x, y) {
   if (goog.array.peek(this.segments_) == goog.graphics.Path.Segment.MOVETO) {
     this.arguments_.length -= 2;
@@ -179,16 +179,16 @@ goog.graphics.Path.prototype.moveTo = function(x, y) {
   this.arguments_.push(x, y);
   this.currentPoint_ = this.closePoint_ = [x, y];
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds points to the path by drawing a straight line to each point.
-***REMOVED***
-***REMOVED*** @param {...number} var_args The coordinates of each destination point as x, y
-***REMOVED***     value pairs.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Adds points to the path by drawing a straight line to each point.
+ *
+ * @param {...number} var_args The coordinates of each destination point as x, y
+ *     value pairs.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.lineTo = function(var_args) {
   var lastSegment = goog.array.peek(this.segments_);
   if (lastSegment == null) {
@@ -206,19 +206,19 @@ goog.graphics.Path.prototype.lineTo = function(var_args) {
   this.count_[this.count_.length - 1] += i / 2;
   this.currentPoint_ = [x, y];
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds points to the path by drawing cubic Bezier curves. Each curve is
-***REMOVED*** specified using 3 points (6 coordinates) - two control points and the end
-***REMOVED*** point of the curve.
-***REMOVED***
-***REMOVED*** @param {...number} var_args The coordinates specifiying each curve in sets of
-***REMOVED***     6 points: {@code [x1, y1]} the first control point, {@code [x2, y2]} the
-***REMOVED***     second control point and {@code [x, y]} the end point.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Adds points to the path by drawing cubic Bezier curves. Each curve is
+ * specified using 3 points (6 coordinates) - two control points and the end
+ * point of the curve.
+ *
+ * @param {...number} var_args The coordinates specifiying each curve in sets of
+ *     6 points: {@code [x1, y1]} the first control point, {@code [x2, y2]} the
+ *     second control point and {@code [x, y]} the end point.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.curveTo = function(var_args) {
   var lastSegment = goog.array.peek(this.segments_);
   if (lastSegment == null) {
@@ -237,15 +237,15 @@ goog.graphics.Path.prototype.curveTo = function(var_args) {
   this.count_[this.count_.length - 1] += i / 6;
   this.currentPoint_ = [x, y];
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a path command to close the path by connecting the
-***REMOVED*** last point to the first point.
-***REMOVED***
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Adds a path command to close the path by connecting the
+ * last point to the first point.
+ *
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.close = function() {
   var lastSegment = goog.array.peek(this.segments_);
   if (lastSegment == null) {
@@ -257,27 +257,27 @@ goog.graphics.Path.prototype.close = function() {
     this.currentPoint_ = this.closePoint_;
   }
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a path command to draw an arc centered at the point {@code (cx, cy)}
-***REMOVED*** with radius {@code rx} along the x-axis and {@code ry} along the y-axis from
-***REMOVED*** {@code startAngle} through {@code extent} degrees. Positive rotation is in
-***REMOVED*** the direction from positive x-axis to positive y-axis.
-***REMOVED***
-***REMOVED*** @param {number} cx X coordinate of center of ellipse.
-***REMOVED*** @param {number} cy Y coordinate of center of ellipse.
-***REMOVED*** @param {number} rx Radius of ellipse on x axis.
-***REMOVED*** @param {number} ry Radius of ellipse on y axis.
-***REMOVED*** @param {number} fromAngle Starting angle measured in degrees from the
-***REMOVED***     positive x-axis.
-***REMOVED*** @param {number} extent The span of the arc in degrees.
-***REMOVED*** @param {boolean} connect If true, the starting point of the arc is connected
-***REMOVED***     to the current point.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED*** @deprecated Use {@code arcTo} or {@code arcToAsCurves} instead.
-***REMOVED***
+/**
+ * Adds a path command to draw an arc centered at the point {@code (cx, cy)}
+ * with radius {@code rx} along the x-axis and {@code ry} along the y-axis from
+ * {@code startAngle} through {@code extent} degrees. Positive rotation is in
+ * the direction from positive x-axis to positive y-axis.
+ *
+ * @param {number} cx X coordinate of center of ellipse.
+ * @param {number} cy Y coordinate of center of ellipse.
+ * @param {number} rx Radius of ellipse on x axis.
+ * @param {number} ry Radius of ellipse on y axis.
+ * @param {number} fromAngle Starting angle measured in degrees from the
+ *     positive x-axis.
+ * @param {number} extent The span of the arc in degrees.
+ * @param {boolean} connect If true, the starting point of the arc is connected
+ *     to the current point.
+ * @return {!goog.graphics.Path} The path itself.
+ * @deprecated Use {@code arcTo} or {@code arcToAsCurves} instead.
+ */
 goog.graphics.Path.prototype.arc = function(cx, cy, rx, ry,
     fromAngle, extent, connect) {
   var startX = cx + goog.math.angleDx(fromAngle, rx);
@@ -291,24 +291,24 @@ goog.graphics.Path.prototype.arc = function(cx, cy, rx, ry,
     this.moveTo(startX, startY);
   }
   return this.arcTo(rx, ry, fromAngle, extent);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a path command to draw an arc starting at the path's current point,
-***REMOVED*** with radius {@code rx} along the x-axis and {@code ry} along the y-axis from
-***REMOVED*** {@code startAngle} through {@code extent} degrees. Positive rotation is in
-***REMOVED*** the direction from positive x-axis to positive y-axis.
-***REMOVED***
-***REMOVED*** This method makes the path non-simple.
-***REMOVED***
-***REMOVED*** @param {number} rx Radius of ellipse on x axis.
-***REMOVED*** @param {number} ry Radius of ellipse on y axis.
-***REMOVED*** @param {number} fromAngle Starting angle measured in degrees from the
-***REMOVED***     positive x-axis.
-***REMOVED*** @param {number} extent The span of the arc in degrees.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Adds a path command to draw an arc starting at the path's current point,
+ * with radius {@code rx} along the x-axis and {@code ry} along the y-axis from
+ * {@code startAngle} through {@code extent} degrees. Positive rotation is in
+ * the direction from positive x-axis to positive y-axis.
+ *
+ * This method makes the path non-simple.
+ *
+ * @param {number} rx Radius of ellipse on x axis.
+ * @param {number} ry Radius of ellipse on y axis.
+ * @param {number} fromAngle Starting angle measured in degrees from the
+ *     positive x-axis.
+ * @param {number} extent The span of the arc in degrees.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.arcTo = function(rx, ry, fromAngle, extent) {
   var cx = this.currentPoint_[0] - goog.math.angleDx(fromAngle, rx);
   var cy = this.currentPoint_[1] - goog.math.angleDy(fromAngle, ry);
@@ -320,89 +320,89 @@ goog.graphics.Path.prototype.arcTo = function(rx, ry, fromAngle, extent) {
   this.simple_ = false;
   this.currentPoint_ = [ex, ey];
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Same as {@code arcTo}, but approximates the arc using bezier curves.
+/**
+ * Same as {@code arcTo}, but approximates the arc using bezier curves.
 .* As a result, this method does not affect the simplified status of this path.
-***REMOVED*** The algorithm is adapted from {@code java.awt.geom.ArcIterator}.
-***REMOVED***
-***REMOVED*** @param {number} rx Radius of ellipse on x axis.
-***REMOVED*** @param {number} ry Radius of ellipse on y axis.
-***REMOVED*** @param {number} fromAngle Starting angle measured in degrees from the
-***REMOVED***     positive x-axis.
-***REMOVED*** @param {number} extent The span of the arc in degrees.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+ * The algorithm is adapted from {@code java.awt.geom.ArcIterator}.
+ *
+ * @param {number} rx Radius of ellipse on x axis.
+ * @param {number} ry Radius of ellipse on y axis.
+ * @param {number} fromAngle Starting angle measured in degrees from the
+ *     positive x-axis.
+ * @param {number} extent The span of the arc in degrees.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.arcToAsCurves = function(
     rx, ry, fromAngle, extent) {
   var cx = this.currentPoint_[0] - goog.math.angleDx(fromAngle, rx);
   var cy = this.currentPoint_[1] - goog.math.angleDy(fromAngle, ry);
   var extentRad = goog.math.toRadians(extent);
-  var arcSegs = Math.ceil(Math.abs(extentRad) / Math.PI***REMOVED*** 2);
+  var arcSegs = Math.ceil(Math.abs(extentRad) / Math.PI * 2);
   var inc = extentRad / arcSegs;
   var angle = goog.math.toRadians(fromAngle);
   for (var j = 0; j < arcSegs; j++) {
     var relX = Math.cos(angle);
     var relY = Math.sin(angle);
-    var z = 4 / 3***REMOVED*** Math.sin(inc / 2) / (1 + Math.cos(inc / 2));
-    var c0 = cx + (relX - z***REMOVED*** relY)***REMOVED*** rx;
-    var c1 = cy + (relY + z***REMOVED*** relX)***REMOVED*** ry;
+    var z = 4 / 3 * Math.sin(inc / 2) / (1 + Math.cos(inc / 2));
+    var c0 = cx + (relX - z * relY) * rx;
+    var c1 = cy + (relY + z * relX) * ry;
     angle += inc;
     relX = Math.cos(angle);
     relY = Math.sin(angle);
     this.curveTo(c0, c1,
-        cx + (relX + z***REMOVED*** relY)***REMOVED*** rx,
-        cy + (relY - z***REMOVED*** relX)***REMOVED*** ry,
-        cx + relX***REMOVED*** rx,
-        cy + relY***REMOVED*** ry);
+        cx + (relX + z * relY) * rx,
+        cy + (relY - z * relX) * ry,
+        cx + relX * rx,
+        cy + relY * ry);
   }
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Iterates over the path calling the supplied callback once for each path
-***REMOVED*** segment. The arguments to the callback function are the segment type and
-***REMOVED*** an array of its arguments.
-***REMOVED***
-***REMOVED*** The {@code LINETO} and {@code CURVETO} arrays can contain multiple
-***REMOVED*** segments of the same type. The number of segments is the length of the
-***REMOVED*** array divided by the segment length (2 for lines, 6 for  curves).
-***REMOVED***
-***REMOVED*** As a convenience the {@code ARCTO} segment also includes the end point as the
-***REMOVED*** last two arguments: {@code rx, ry, fromAngle, extent, x, y}.
-***REMOVED***
-***REMOVED*** @param {function(number, Array)} callback The function to call with each
-***REMOVED***     path segment.
-***REMOVED***
+/**
+ * Iterates over the path calling the supplied callback once for each path
+ * segment. The arguments to the callback function are the segment type and
+ * an array of its arguments.
+ *
+ * The {@code LINETO} and {@code CURVETO} arrays can contain multiple
+ * segments of the same type. The number of segments is the length of the
+ * array divided by the segment length (2 for lines, 6 for  curves).
+ *
+ * As a convenience the {@code ARCTO} segment also includes the end point as the
+ * last two arguments: {@code rx, ry, fromAngle, extent, x, y}.
+ *
+ * @param {function(number, Array)} callback The function to call with each
+ *     path segment.
+ */
 goog.graphics.Path.prototype.forEachSegment = function(callback) {
   var points = this.arguments_;
   var index = 0;
   for (var i = 0, length = this.segments_.length; i < length; i++) {
     var seg = this.segments_[i];
-    var n = goog.graphics.Path.segmentArgCounts_[seg]***REMOVED*** this.count_[i];
+    var n = goog.graphics.Path.segmentArgCounts_[seg] * this.count_[i];
     callback(seg, points.slice(index, index + n));
     index += n;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates most recently added to the end of the path.
-***REMOVED***
-***REMOVED*** @return {Array.<number>?} An array containing the ending coordinates of the
-***REMOVED***     path of the form {@code [x, y]}.
-***REMOVED***
+/**
+ * Returns the coordinates most recently added to the end of the path.
+ *
+ * @return {Array.<number>?} An array containing the ending coordinates of the
+ *     path of the form {@code [x, y]}.
+ */
 goog.graphics.Path.prototype.getCurrentPoint = function() {
   return this.currentPoint_ && this.currentPoint_.concat();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.graphics.Path} A copy of this path.
-***REMOVED***
+/**
+ * @return {!goog.graphics.Path} A copy of this path.
+ */
 goog.graphics.Path.prototype.clone = function() {
   var path = new this.constructor();
   path.segments_ = this.segments_.concat();
@@ -412,28 +412,28 @@ goog.graphics.Path.prototype.clone = function() {
   path.currentPoint_ = this.currentPoint_ && this.currentPoint_.concat();
   path.simple_ = this.simple_;
   return path;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if this path contains no arcs. Simplified paths can be
-***REMOVED*** created using {@code createSimplifiedPath}.
-***REMOVED***
-***REMOVED*** @return {boolean} True if the path contains no arcs.
-***REMOVED***
+/**
+ * Returns true if this path contains no arcs. Simplified paths can be
+ * created using {@code createSimplifiedPath}.
+ *
+ * @return {boolean} True if the path contains no arcs.
+ */
 goog.graphics.Path.prototype.isSimple = function() {
   return this.simple_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A map from segment type to the path function to call to simplify a path.
-***REMOVED*** @type {!Object}
-***REMOVED*** @private
-***REMOVED*** @suppress {deprecated} goog.graphics.Path is deprecated.
-***REMOVED***
+/**
+ * A map from segment type to the path function to call to simplify a path.
+ * @type {!Object}
+ * @private
+ * @suppress {deprecated} goog.graphics.Path is deprecated.
+ */
 goog.graphics.Path.simplifySegmentMap_ = (function() {
-  var map = {***REMOVED***
+  var map = {};
   map[goog.graphics.Path.Segment.MOVETO] = goog.graphics.Path.prototype.moveTo;
   map[goog.graphics.Path.Segment.LINETO] = goog.graphics.Path.prototype.lineTo;
   map[goog.graphics.Path.Segment.CLOSE] = goog.graphics.Path.prototype.close;
@@ -445,15 +445,15 @@ goog.graphics.Path.simplifySegmentMap_ = (function() {
 })();
 
 
-***REMOVED***
-***REMOVED*** Creates a copy of the given path, replacing {@code arcTo} with
-***REMOVED*** {@code arcToAsCurves}. The resulting path is simplified and can
-***REMOVED*** be transformed.
-***REMOVED***
-***REMOVED*** @param {!goog.graphics.Path} src The path to simplify.
-***REMOVED*** @return {!goog.graphics.Path} A new simplified path.
-***REMOVED*** @suppress {deprecated} goog.graphics is deprecated.
-***REMOVED***
+/**
+ * Creates a copy of the given path, replacing {@code arcTo} with
+ * {@code arcToAsCurves}. The resulting path is simplified and can
+ * be transformed.
+ *
+ * @param {!goog.graphics.Path} src The path to simplify.
+ * @return {!goog.graphics.Path} A new simplified path.
+ * @suppress {deprecated} goog.graphics is deprecated.
+ */
 goog.graphics.Path.createSimplifiedPath = function(src) {
   if (src.isSimple()) {
     return src.clone();
@@ -463,31 +463,31 @@ goog.graphics.Path.createSimplifiedPath = function(src) {
     goog.graphics.Path.simplifySegmentMap_[segment].apply(path, args);
   });
   return path;
-***REMOVED***
+};
 
 
 // TODO(chrisn): Delete this method
-***REMOVED***
-***REMOVED*** Creates a transformed copy of this path. The path is simplified
-***REMOVED*** {@see #createSimplifiedPath} prior to transformation.
-***REMOVED***
-***REMOVED*** @param {!goog.graphics.AffineTransform} tx The transformation to perform.
-***REMOVED*** @return {!goog.graphics.Path} A new, transformed path.
-***REMOVED***
+/**
+ * Creates a transformed copy of this path. The path is simplified
+ * {@see #createSimplifiedPath} prior to transformation.
+ *
+ * @param {!goog.graphics.AffineTransform} tx The transformation to perform.
+ * @return {!goog.graphics.Path} A new, transformed path.
+ */
 goog.graphics.Path.prototype.createTransformedPath = function(tx) {
   var path = goog.graphics.Path.createSimplifiedPath(this);
   path.transform(tx);
   return path;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Transforms the path. Only simple paths are transformable. Attempting
-***REMOVED*** to transform a non-simple path will throw an error.
-***REMOVED***
-***REMOVED*** @param {!goog.graphics.AffineTransform} tx The transformation to perform.
-***REMOVED*** @return {!goog.graphics.Path} The path itself.
-***REMOVED***
+/**
+ * Transforms the path. Only simple paths are transformable. Attempting
+ * to transform a non-simple path will throw an error.
+ *
+ * @param {!goog.graphics.AffineTransform} tx The transformation to perform.
+ * @return {!goog.graphics.Path} The path itself.
+ */
 goog.graphics.Path.prototype.transform = function(tx) {
   if (!this.isSimple()) {
     throw Error('Non-simple path');
@@ -501,12 +501,12 @@ goog.graphics.Path.prototype.transform = function(tx) {
     tx.transform(this.currentPoint_, 0, this.currentPoint_, 0, 1);
   }
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the path is empty.
-***REMOVED***
+/**
+ * @return {boolean} Whether the path is empty.
+ */
 goog.graphics.Path.prototype.isEmpty = function() {
   return this.segments_.length == 0;
-***REMOVED***
+};

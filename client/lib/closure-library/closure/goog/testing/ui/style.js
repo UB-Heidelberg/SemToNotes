@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tools for testing Closure renderers against static markup
-***REMOVED*** spec pages.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Tools for testing Closure renderers against static markup
+ * spec pages.
+ *
+ */
 
 goog.provide('goog.testing.ui.style');
 
@@ -27,38 +27,38 @@ goog.require('goog.dom.classlist');
 goog.require('goog.testing.asserts');
 
 
-***REMOVED***
-***REMOVED*** Uses document.write to add an iFrame to the page with the reference path in
-***REMOVED*** the src attribute. Used for loading an html file containing reference
-***REMOVED*** structures to test against into the page. Should be called within the body of
-***REMOVED*** the jsunit test page.
-***REMOVED*** @param {string} referencePath A path to a reference HTML file.
-***REMOVED***
+/**
+ * Uses document.write to add an iFrame to the page with the reference path in
+ * the src attribute. Used for loading an html file containing reference
+ * structures to test against into the page. Should be called within the body of
+ * the jsunit test page.
+ * @param {string} referencePath A path to a reference HTML file.
+ */
 goog.testing.ui.style.writeReferenceFrame = function(referencePath) {
   document.write('<iframe id="reference" name="reference" ' +
       'src="' + referencePath + '"></iframe>');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a reference to the first element child of a node with the given id
-***REMOVED*** from the page loaded into the reference iFrame. Used to retrieve a particular
-***REMOVED*** reference DOM structure to test against.
-***REMOVED*** @param {string} referenceId The id of a container element for a reference
-***REMOVED***   structure in the reference page.
-***REMOVED*** @return {Node} The root element of the reference structure.
-***REMOVED***
+/**
+ * Returns a reference to the first element child of a node with the given id
+ * from the page loaded into the reference iFrame. Used to retrieve a particular
+ * reference DOM structure to test against.
+ * @param {string} referenceId The id of a container element for a reference
+ *   structure in the reference page.
+ * @return {Node} The root element of the reference structure.
+ */
 goog.testing.ui.style.getReferenceNode = function(referenceId) {
   return goog.dom.getFirstElementChild(
       window.frames['reference'].document.getElementById(referenceId));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an array of all element children of a given node.
-***REMOVED*** @param {Node} element The node to get element children of.
-***REMOVED*** @return {!Array.<!Node>} An array of all the element children.
-***REMOVED***
+/**
+ * Returns an array of all element children of a given node.
+ * @param {Node} element The node to get element children of.
+ * @return {!Array.<!Node>} An array of all the element children.
+ */
 goog.testing.ui.style.getElementChildren = function(element) {
   var first = goog.dom.getFirstElementChild(element);
   if (!first) {
@@ -69,45 +69,45 @@ goog.testing.ui.style.getElementChildren = function(element) {
     children.push(next);
   }
   return children;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests whether a given node is a "content" node of a reference structure,
-***REMOVED*** which means it is allowed to have arbitrary children.
-***REMOVED*** @param {Node} element The node to test.
-***REMOVED*** @return {boolean} Whether the given node is a content node or not.
-***REMOVED***
+/**
+ * Tests whether a given node is a "content" node of a reference structure,
+ * which means it is allowed to have arbitrary children.
+ * @param {Node} element The node to test.
+ * @return {boolean} Whether the given node is a content node or not.
+ */
 goog.testing.ui.style.isContentNode = function(element) {
   return element.className.indexOf('content') != -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests that the structure, node names, and classes of the given element are
-***REMOVED*** the same as the reference structure with the given id. Throws an error if the
-***REMOVED*** element doesn't have the same nodes at each level of the DOM with the same
-***REMOVED*** classes on each. The test ignores all DOM structure within content nodes.
-***REMOVED*** @param {Node} element The root node of the DOM structure to test.
-***REMOVED*** @param {string} referenceId The id of the container for the reference
-***REMOVED***   structure to test against.
-***REMOVED***
+/**
+ * Tests that the structure, node names, and classes of the given element are
+ * the same as the reference structure with the given id. Throws an error if the
+ * element doesn't have the same nodes at each level of the DOM with the same
+ * classes on each. The test ignores all DOM structure within content nodes.
+ * @param {Node} element The root node of the DOM structure to test.
+ * @param {string} referenceId The id of the container for the reference
+ *   structure to test against.
+ */
 goog.testing.ui.style.assertStructureMatchesReference = function(element,
     referenceId) {
   goog.testing.ui.style.assertStructureMatchesReferenceInner_(element,
       goog.testing.ui.style.getReferenceNode(referenceId));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A recursive function for comparing structure, node names, and classes between
-***REMOVED*** a test and reference DOM structure. Throws an error if one of these things
-***REMOVED*** doesn't match. Used internally by
-***REMOVED*** {@link goog.testing.ui.style.assertStructureMatchesReference}.
-***REMOVED*** @param {Node} element DOM element to test.
-***REMOVED*** @param {Node} reference DOM element to use as a reference (test against).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A recursive function for comparing structure, node names, and classes between
+ * a test and reference DOM structure. Throws an error if one of these things
+ * doesn't match. Used internally by
+ * {@link goog.testing.ui.style.assertStructureMatchesReference}.
+ * @param {Node} element DOM element to test.
+ * @param {Node} reference DOM element to use as a reference (test against).
+ * @private
+ */
 goog.testing.ui.style.assertStructureMatchesReferenceInner_ = function(element,
     reference) {
   if (!element && !reference) {
@@ -137,4 +137,4 @@ goog.testing.ui.style.assertStructureMatchesReferenceInner_ = function(element,
           refChildren[i]);
     }
   }
-***REMOVED***
+};

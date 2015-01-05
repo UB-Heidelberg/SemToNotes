@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for toolbar buttons.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Renderer for toolbar buttons.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.ToolbarButtonRenderer');
 
@@ -24,34 +24,34 @@ goog.require('goog.ui.CustomButtonRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Toolbar-specific renderer for {@link goog.ui.Button}s, based on {@link
-***REMOVED*** goog.ui.CustomButtonRenderer}.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.CustomButtonRenderer}
-***REMOVED***
+/**
+ * Toolbar-specific renderer for {@link goog.ui.Button}s, based on {@link
+ * goog.ui.CustomButtonRenderer}.
+ * @constructor
+ * @extends {goog.ui.CustomButtonRenderer}
+ */
 goog.ui.ToolbarButtonRenderer = function() {
   goog.ui.CustomButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarButtonRenderer, goog.ui.CustomButtonRenderer);
 goog.addSingletonGetter(goog.ui.ToolbarButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of buttons rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of buttons rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ToolbarButtonRenderer.CSS_CLASS =
     goog.getCssName('goog-toolbar-button');
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of buttons rendered
-***REMOVED*** using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of buttons rendered
+ * using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.ToolbarButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.ToolbarButtonRenderer.CSS_CLASS;
-***REMOVED***
+};

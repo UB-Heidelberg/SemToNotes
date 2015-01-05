@@ -1,4 +1,4 @@
-***REMOVED***
+/**
     @module {ConnectServer} blog/server
 */
 
@@ -11,7 +11,7 @@ module.exports = require('connect').createServer(
   require('wheat')(__dirname)
 );
 
-***REMOVED***
+/**
     @member {number} module:blog/server.port
     @default 8080
 */

@@ -25,11 +25,11 @@ See the COPYING file for details.
 <input type="text" id="textInput" style="display:none">
 <script>
 
- ***REMOVED*****REMOVED*** Mock out the input element.***REMOVED***
+  /** Mock out the input element. */
   function MockElement() {
     goog.events.EventTarget.call(this);
-    this.setAttributeNS = function() {***REMOVED***
-    this.setAttribute = function(key, value) { this[key] = value;***REMOVED*****REMOVED***
+    this.setAttributeNS = function() {};
+    this.setAttribute = function(key, value) { this[key] = value; };
     this.focus = function() {}
     this.blur = function() {}
     this.ownerDocument = document;
@@ -43,26 +43,26 @@ See the COPYING file for details.
     this.setTokenWasCalled = false;
     this.selectHilitedWasCalled = false;
     this.dismissWasCalled = false;
-    this.getTarget = function() { return mockElement***REMOVED*****REMOVED***
-    this.setTarget = function() {***REMOVED*****REMOVED***
+    this.getTarget = function() { return mockElement };
+    this.setTarget = function() { };
     this.setToken = function(token) {
       this.setTokenWasCalled = true;
       this.setToken = token;
-   ***REMOVED*****REMOVED***
+    };
     this.selectHilited = function() {
       this.selectHilitedWasCalled = true;
       return true; // Success.
-   ***REMOVED*****REMOVED***
-    this.cancelDelayedDismiss = function() {***REMOVED*****REMOVED***
-    this.dismissOnDelay = function() {***REMOVED***
-    this.dismiss = function() { this.dismissWasCalled = true;***REMOVED*****REMOVED***
+    };
+    this.cancelDelayedDismiss = function() { };
+    this.dismissOnDelay = function() {};
+    this.dismiss = function() { this.dismissWasCalled = true; };
     this.isOpen = goog.functions.TRUE;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** MockInputHandler simulates key events for testing the IME behavior of
-  ***REMOVED*** InputHandler.
- ***REMOVED*****REMOVED***
+  /**
+   * MockInputHandler simulates key events for testing the IME behavior of
+   * InputHandler.
+   */
   function MockInputHandler() {
     goog.ui.ac.InputHandler.call(this);
 
@@ -73,26 +73,26 @@ See the COPYING file for details.
   }
   goog.inherits(MockInputHandler, goog.ui.ac.InputHandler);
 
- ***REMOVED*****REMOVED*** Checks for updates to the text area, should not happen during IME.***REMOVED***
+  /** Checks for updates to the text area, should not happen during IME. */
   MockInputHandler.prototype.update = function() {
     this.updates++;
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED*** Simulates key events.***REMOVED***
+  /** Simulates key events. */
   MockInputHandler.prototype.fireKeyEvents = function(
       keyCode, down, press, up, opt_properties) {
     if (down) this.fireEvent('keydown', keyCode, opt_properties);
     if (press) this.fireEvent('keypress', keyCode, opt_properties);
     if (up) this.fireEvent('keyup', keyCode, opt_properties);
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED*** Simulates an event.***REMOVED***
+  /** Simulates an event. */
   MockInputHandler.prototype.fireEvent = function(
       type, keyCode, opt_properties) {
-    var e = {***REMOVED***
+    var e = {};
     e.type = type;
     e.keyCode = keyCode;
-    e.preventDefault = function() {***REMOVED***
+    e.preventDefault = function() {};
     if (!goog.userAgent.IE) {
       e.which = type == 'keydown' ? keyCode : 0;
     }
@@ -101,15 +101,15 @@ See the COPYING file for details.
     }
     e = new goog.events.BrowserEvent(e);
     mockElement.dispatchEvent(e);
- ***REMOVED*****REMOVED***
+  };
 
   MockInputHandler.prototype.setCursorPosition = function(cursorPosition) {
     this.cursorPosition_ = cursorPosition;
- ***REMOVED*****REMOVED***
+  };
 
   MockInputHandler.prototype.getCursorPosition = function() {
     return this.cursorPosition_;
- ***REMOVED*****REMOVED***
+  };
 
   // Variables used by all test
   var mh = null;
@@ -145,7 +145,7 @@ See the COPYING file for details.
     mockElement.dispose();
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Windows/Firefox3***REMOVED***
+  /** Used to simulate behavior of Windows/Firefox3 */
   function simulateWinFirefox3() {
     goog.userAgent.MAC = false;
     goog.userAgent.WINDOWS = true;
@@ -156,7 +156,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = false;
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Windows/InternetExplorer7***REMOVED***
+  /** Used to simulate behavior of Windows/InternetExplorer7 */
   function simulateWinIe7() {
     goog.userAgent.MAC = false;
     goog.userAgent.WINDOWS = true;
@@ -167,7 +167,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = true;
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Windows/Chrome***REMOVED***
+  /** Used to simulate behavior of Windows/Chrome */
   function simulateWinChrome() {
     goog.userAgent.MAC = false;
     goog.userAgent.WINDOWS = true;
@@ -179,7 +179,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = true;
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Mac/Firefox3***REMOVED***
+  /** Used to simulate behavior of Mac/Firefox3 */
   function simulateMacFirefox3() {
     goog.userAgent.MAC = true;
     goog.userAgent.WINDOWS = false;
@@ -190,7 +190,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = true;
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Mac/Safari3***REMOVED***
+  /** Used to simulate behavior of Mac/Safari3 */
   function simulateMacSafari3() {
     goog.userAgent.MAC = true;
     goog.userAgent.WINDOWS = false;
@@ -202,7 +202,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = true;
   }
 
- ***REMOVED*****REMOVED*** Used to simulate behavior of Linux/Firefox3***REMOVED***
+  /** Used to simulate behavior of Linux/Firefox3 */
   function simulateLinuxFirefox3() {
     goog.userAgent.MAC = false;
     goog.userAgent.WINDOWS = false;
@@ -213,7 +213,7 @@ See the COPYING file for details.
     goog.events.KeyHandler.USES_KEYDOWN_ = true;
   }
 
- ***REMOVED*****REMOVED*** Test the normal, non-IME case***REMOVED***
+  /** Test the normal, non-IME case */
   function testRegularKey() {
     // Each key fires down, press, and up in that order, and each should
     // trigger an autocomplete update
@@ -226,11 +226,11 @@ See the COPYING file for details.
     assertFalse('IME should not be triggered by A', mh.waitingForIme_);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Windows/Firefox3.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Windows/Firefox3.
+   */
   function testImeWinFirefox3() {
     simulateWinFirefox3();
     mh.fireEvent('focus', '');
@@ -261,11 +261,11 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Windows/InternetExplorer7.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Windows/InternetExplorer7.
+   */
   function testImeWinIe7() {
     simulateWinIe7();
     mh.fireEvent('focus', '');
@@ -297,11 +297,11 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Windows/Chrome.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Windows/Chrome.
+   */
   function testImeWinChrome() {
     simulateWinChrome();
     mh.fireEvent('focus', '');
@@ -333,11 +333,11 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Mac/Firefox3.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Mac/Firefox3.
+   */
   function testImeMacFirefox3() {
     // TODO(user): Currently our code cannot distinguish preedit characters
     // from normal ones for Mac/Firefox3.
@@ -373,11 +373,11 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Mac/Safari3.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Mac/Safari3.
+   */
   function testImeMacSafari3() {
     simulateMacSafari3();
     mh.fireEvent('focus', '');
@@ -409,11 +409,11 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This test simulates the key inputs generated by pressing
-  ***REMOVED*** '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
-  ***REMOVED*** on Linux/Firefox3.
- ***REMOVED*****REMOVED***
+  /**
+   * This test simulates the key inputs generated by pressing
+   * '<ime_on>a<enter>i<ime_off>u' using the Japanese IME
+   * on Linux/Firefox3.
+   */
   function testImeLinuxFirefox3() {
     // TODO(user): Currently our code cannot distinguish preedit characters
     // from normal ones for Linux/Firefox3.
@@ -449,9 +449,9 @@ See the COPYING file for details.
     mh.fireEvent('blur', '');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Check attaching to an EventTarget instead of an element.
- ***REMOVED*****REMOVED***
+  /**
+   * Check attaching to an EventTarget instead of an element.
+   */
   function testAttachEventTarget() {
     var target = new goog.events.EventTarget();
 
@@ -465,9 +465,9 @@ See the COPYING file for details.
     mh.detachInput(target);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Make sure that the active element handling works.
- ***REMOVED*****REMOVED***
+  /**
+   * Make sure that the active element handling works.
+   */
   function testActiveElement() {
     assertNull(mh.activeElement_);
 
@@ -484,9 +484,9 @@ See the COPYING file for details.
     assertNull(mh.activeElement_);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** We can attach an EventTarget that isn't an element.
- ***REMOVED*****REMOVED***
+  /**
+   * We can attach an EventTarget that isn't an element.
+   */
   function testAttachEventTarget() {
     var target = new goog.events.EventTarget();
 
@@ -500,9 +500,9 @@ See the COPYING file for details.
     mh.detachInput(target);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Make sure an already-focused element becomes active immediately.
- ***REMOVED*****REMOVED***
+  /**
+   * Make sure an already-focused element becomes active immediately.
+   */
   function testActiveElementAlreadyFocused() {
     var element = document.getElementById('textInput');
     element.style.display = '';
@@ -526,7 +526,7 @@ See the COPYING file for details.
     ih.ac_ = mockAutoCompleter;
     ih.activeElement_ = mockElement;
 
-    var row = {***REMOVED***
+    var row = {};
     ih.selectRow(row, false);
 
     ih.update();
@@ -549,7 +549,7 @@ See the COPYING file for details.
     mockElement.value = 'bob, wal, joey';
     ih.setCursorPosition(8);
 
-    ih.setTokenText('waldo', true /* multi-row***REMOVED***);
+    ih.setTokenText('waldo', true /* multi-row */);
 
     assertEquals('bob, waldo, joey', mockElement.value);
   }
@@ -568,7 +568,7 @@ See the COPYING file for details.
     // Sets cursor position right before 'bar'
     ih.setCursorPosition(4);
 
-    ih.setTokenText('bar', true /* multi-row***REMOVED***);
+    ih.setTokenText('bar', true /* multi-row */);
 
     assertEquals('foo bar ', mockElement.value);
   }
@@ -675,7 +675,7 @@ See the COPYING file for details.
     mockElement.value = 'bob,wal';
     inputHandler.setCursorPosition(8);
 
-    inputHandler.setTokenText('waldo', true /* multi-row***REMOVED***);
+    inputHandler.setTokenText('waldo', true /* multi-row */);
 
     assertEquals('bob,waldo', mockElement.value);
   }

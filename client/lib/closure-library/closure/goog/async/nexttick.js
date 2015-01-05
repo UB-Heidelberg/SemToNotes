@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a function to schedule running a function as soon
-***REMOVED*** as possible after the current JS execution stops and yields to the event
-***REMOVED*** loop.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a function to schedule running a function as soon
+ * as possible after the current JS execution stops and yields to the event
+ * loop.
+ *
+ */
 
 goog.provide('goog.async.nextTick');
 goog.provide('goog.async.throwException');
@@ -26,28 +26,28 @@ goog.require('goog.debug.entryPointRegistry');
 goog.require('goog.functions');
 
 
-***REMOVED***
-***REMOVED*** Throw an item without interrupting the current execution context.  For
-***REMOVED*** example, if processing a group of items in a loop, sometimes it is useful
-***REMOVED*** to report an error while still allowing the rest of the batch to be
-***REMOVED*** processed.
-***REMOVED*** @param {*} exception
-***REMOVED***
+/**
+ * Throw an item without interrupting the current execution context.  For
+ * example, if processing a group of items in a loop, sometimes it is useful
+ * to report an error while still allowing the rest of the batch to be
+ * processed.
+ * @param {*} exception
+ */
 goog.async.throwException = function(exception) {
   // Each throw needs to be in its own context.
   goog.global.setTimeout(function() { throw exception; }, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Fires the provided callbacks as soon as possible after the current JS
-***REMOVED*** execution context. setTimeout(…, 0) always takes at least 5ms for legacy
-***REMOVED*** reasons.
-***REMOVED*** @param {function(this:SCOPE)} callback Callback function to fire as soon as
-***REMOVED***     possible.
-***REMOVED*** @param {SCOPE=} opt_context Object in whose scope to call the listener.
-***REMOVED*** @template SCOPE
-***REMOVED***
+/**
+ * Fires the provided callbacks as soon as possible after the current JS
+ * execution context. setTimeout(…, 0) always takes at least 5ms for legacy
+ * reasons.
+ * @param {function(this:SCOPE)} callback Callback function to fire as soon as
+ *     possible.
+ * @param {SCOPE=} opt_context Object in whose scope to call the listener.
+ * @template SCOPE
+ */
 goog.async.nextTick = function(callback, opt_context) {
   var cb = callback;
   if (opt_context) {
@@ -65,23 +65,23 @@ goog.async.nextTick = function(callback, opt_context) {
         goog.async.nextTick.getSetImmediateEmulator_();
   }
   goog.async.nextTick.setImmediate_(cb);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cache for the setImmediate implementation.
-***REMOVED*** @type {function(function())}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cache for the setImmediate implementation.
+ * @type {function(function())}
+ * @private
+ */
 goog.async.nextTick.setImmediate_;
 
 
-***REMOVED***
-***REMOVED*** Determines the best possible implementation to run a function as soon as
-***REMOVED*** the JS event loop is idle.
-***REMOVED*** @return {function(function())} The "setImmediate" implementation.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines the best possible implementation to run a function as soon as
+ * the JS event loop is idle.
+ * @return {function(function())} The "setImmediate" implementation.
+ * @private
+ */
 goog.async.nextTick.getSetImmediateEmulator_ = function() {
   // If native Promises are available in the browser, just schedule the callback
   // on a fulfilled promise, which is specified to be async, but as fast as
@@ -99,7 +99,7 @@ goog.async.nextTick.getSetImmediateEmulator_ = function() {
           goog.async.throwException(e);
         }
       });
-   ***REMOVED*****REMOVED***
+    };
   }
   // Create a private message channel and use it to postMessage empty messages
   // to ourselves.
@@ -110,7 +110,7 @@ goog.async.nextTick.getSetImmediateEmulator_ = function() {
   // synchronous postMessage implementation.
   if (typeof Channel === 'undefined' && typeof window !== 'undefined' &&
       window.postMessage && window.addEventListener) {
-   ***REMOVED*****REMOVED*** @constructor***REMOVED***
+    /** @constructor */
     Channel = function() {
       // Make an empty, invisible iframe.
       var iframe = document.createElement('iframe');
@@ -133,32 +133,32 @@ goog.async.nextTick.getSetImmediateEmulator_ = function() {
         this['port1'].onmessage();
       }, this);
       win.addEventListener('message', onmessage, false);
-      this['port1'] = {***REMOVED***
+      this['port1'] = {};
       this['port2'] = {
         postMessage: function() {
           win.postMessage(message, origin);
         }
-     ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+      };
+    };
   }
   if (typeof Channel !== 'undefined') {
     var channel = new Channel();
     // Use a fifo linked list to call callbacks in the right order.
-    var head = {***REMOVED***
+    var head = {};
     var tail = head;
     channel['port1'].onmessage = function() {
       head = head.next;
       var cb = head.cb;
       head.cb = null;
       cb();
-   ***REMOVED*****REMOVED***
+    };
     return function(cb) {
       tail.next = {
         cb: cb
-     ***REMOVED*****REMOVED***
+      };
       tail = tail.next;
       channel['port2'].postMessage(0);
-   ***REMOVED*****REMOVED***
+    };
   }
   // Implementation for IE6-8: Script elements fire an asynchronous
   // onreadystatechange event when inserted into the DOM.
@@ -173,25 +173,25 @@ goog.async.nextTick.getSetImmediateEmulator_ = function() {
         script = null;
         cb();
         cb = null;
-     ***REMOVED*****REMOVED***
+      };
       document.documentElement.appendChild(script);
-   ***REMOVED*****REMOVED***
+    };
   }
   // Fall back to setTimeout with 0. In browsers this creates a delay of 5ms
   // or more.
   return function(cb) {
     goog.global.setTimeout(cb, 0);
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function that is overrided to protect callbacks with entry point
-***REMOVED*** monitor if the application monitors entry points.
-***REMOVED*** @param {function()} callback Callback function to fire as soon as possible.
-***REMOVED*** @return {function()} The wrapped callback.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function that is overrided to protect callbacks with entry point
+ * monitor if the application monitors entry points.
+ * @param {function()} callback Callback function to fire as soon as possible.
+ * @return {function()} The wrapped callback.
+ * @private
+ */
 goog.async.nextTick.wrapCallback_ = goog.functions.identity;
 
 
@@ -199,10 +199,10 @@ goog.async.nextTick.wrapCallback_ = goog.functions.identity;
 // monitored for exception handling, etc. This has to be done in this file
 // since it requires special code to handle all browsers.
 goog.debug.entryPointRegistry.register(
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @param {function(!Function): !Function} transformer The transforming
-    ***REMOVED***     function.
-   ***REMOVED*****REMOVED***
+    /**
+     * @param {function(!Function): !Function} transformer The transforming
+     *     function.
+     */
     function(transformer) {
       goog.async.nextTick.wrapCallback_ = transformer;
     });

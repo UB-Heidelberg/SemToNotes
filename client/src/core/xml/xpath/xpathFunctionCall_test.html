@@ -11,7 +11,7 @@
 <script type="text/javascript" src="../../../../lib/jssaxparser/DefaultHandlers.js"></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.xpath.Test');
   goog.require('xrx');
   goog.require('xrx.mvc');
@@ -35,47 +35,47 @@ function test01FnBoolean() {
   xrx.xpath.Test.assertEquals(false, 'boolean(false())'); // boolean
   xrx.xpath.Test.assertEquals(true, 'boolean(/)'); // node-set
   // TODO xrx.xpath.Test.assertEquals(false, 'boolean()'); // node-set
-***REMOVED***
+};
 
 function test02FnCeiling() {
   xrx.xpath.Test.assertEquals(4, 'ceiling(3.14)');
-***REMOVED***
+};
 
 function test03FnConcat() {
   xrx.xpath.Test.assertEquals('XML', 'concat("XM", "L")');
-***REMOVED***
+};
 
 function test04FnContains() {
   xrx.xpath.Test.assertEquals(true, 'contains("XML","XM")');
   xrx.xpath.Test.assertEquals(false, 'contains("XML","XL")');
-***REMOVED***
+};
 
 function test05FnCount() {
   xrx.xpath.Test.assertEquals(1, 'count(/)');
-***REMOVED***
+};
 
 function test05_FnCurrentDateTime() {
   xrx.xpath.Test.assertTrue(function(result) {
     var test = result.match(/T+/g);
     return test && test.length >= 1;
     }, 'current-dateTime()');
-***REMOVED***
+};
 
 function test06FnFalse() {
   xrx.xpath.Test.assertEquals(false, 'false()');
-***REMOVED***
+};
 
 function test07FnFloor() {
   xrx.xpath.Test.assertEquals(3, 'floor(3.14)');
-***REMOVED***
+};
 
 function test08FnId() {
   // TODO
-***REMOVED***
+};
 
 function test09FnLang() {
   // TODO
-***REMOVED***
+};
 
 function test10FnFirstLast() {
   var xml = '<a><b/><c/><d/></a>';
@@ -95,7 +95,7 @@ function test10FnFirstLast() {
   assertEquals('<b/>', first.iterateNext().getXml());
   assertEquals('<c/>', second.iterateNext().getXml());
   assertEquals('<d/>', last.iterateNext().getXml());
-***REMOVED***
+};
 
 function getDocumentForNametest() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
@@ -103,7 +103,7 @@ function getDocumentForNametest() {
   goog.dom.setTextContent(element, xml);
   var instance = new xrx.mvc.Instance(element);
   return new xrx.node.DocumentB(instance.getId());
-***REMOVED***
+};
 
 function test11FnName() {
   var r1 = xrx.xpath.evaluate('name(/*/*[last()])', getDocumentForNametest(), null,
@@ -112,7 +112,7 @@ function test11FnName() {
   var r2 = xrx.xpath.evaluate('name(/*/*[1])', getDocumentForNametest(), null,
       xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals('y:y', r2.stringValue);
-***REMOVED***
+};
 
 function test12FnLocalName() {
   var r1 = xrx.xpath.evaluate('local-name(/*/*[last()])', getDocumentForNametest(), null, 
@@ -121,7 +121,7 @@ function test12FnLocalName() {
   var r2 = xrx.xpath.evaluate('local-name(/*/*[1])', getDocumentForNametest(), null, 
       xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals('y', r2.stringValue);
-***REMOVED***
+};
 
 function test13FnNamespaceUri() {
   var r1 = xrx.xpath.evaluate('namespace-uri(/*/*[last()])', getDocumentForNametest(), null,
@@ -130,11 +130,11 @@ function test13FnNamespaceUri() {
   var r2 = xrx.xpath.evaluate('namespace-uri(/*/*[1])', getDocumentForNametest(), null,
       xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals('http://example.org/y', r2.stringValue);
-***REMOVED***
+};
 
 function test14FnNormalizeSpace() {
   xrx.xpath.Test.assertEquals('The XML', 'normalize-space(" The   XML ")');
-***REMOVED***
+};
 
 function test15FnNot() {
   xrx.xpath.Test.assertEquals(false, 'not(1)'); // number
@@ -149,7 +149,7 @@ function test15FnNot() {
   xrx.xpath.Test.assertEquals(true, 'not(false())'); // boolean
   xrx.xpath.Test.assertEquals(false, 'not(/)'); // node-set
   // TODO xrx.xpath.Test.assertEquals(false, 'boolean()'); // node-set
-***REMOVED***
+};
 
 function test16FnNumber() {
   xrx.xpath.Test.assertEquals(-1, 'number(-1)'); // number
@@ -163,7 +163,7 @@ function test16FnNumber() {
   xrx.xpath.Test.assertEquals(0, 'number(false())'); // boolean
   // TODO xrx.xpath.Test.assertEquals(1, 'number(/)'); // node-set
   // TODO xrx.xpath.Test.assertEquals(false, 'boolean()'); // node-set
-***REMOVED***
+};
 
 function test17FnPosition() {
   var xml = '<x><a>1</a><b>2</b><c>3</c><d>4</d></x>';
@@ -174,15 +174,15 @@ function test17FnPosition() {
   var r = xrx.xpath.evaluate('sum(/x/*[position() <= 3]/text())', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals(6, r.numberValue);
-***REMOVED***
+};
 
 function test18FnRound() {
   xrx.xpath.Test.assertEquals(3, 'round(3.14)');
-***REMOVED***
+};
 
 function test19FnStartsWith() {
   xrx.xpath.Test.assertEquals(true, 'starts-with("XML","X")');
-***REMOVED***
+};
 
 function test20FnString() {
   xrx.xpath.Test.assertEquals('-1', 'string(-1)'); // number
@@ -196,24 +196,24 @@ function test20FnString() {
   xrx.xpath.Test.assertEquals('false', 'string(false())'); // boolean
   // TODO xrx.xpath.Test.assertEquals(1, 'string(/)'); // node-set
   // TODO xrx.xpath.Test.assertEquals(false, 'string()'); // node-set
-***REMOVED***
+};
 
 function test21FnStringLength() {
   xrx.xpath.Test.assertEquals(7, 'string-length("Beatles")');
-***REMOVED***
+};
 
 function test22FnSubString() {
   xrx.xpath.Test.assertEquals('Beat', 'substring("Beatles", 1, 4)');
   xrx.xpath.Test.assertEquals('eatles', 'substring("Beatles", 2)');
-***REMOVED***
+};
 
 function test23FnSubstringAfter() {
   xrx.xpath.Test.assertEquals('10', 'substring-after("12/10","/")');
-***REMOVED***
+};
 
 function test24FnSubstringBefore() {
   xrx.xpath.Test.assertEquals('12', 'substring-before("12/10","/")');
-***REMOVED***
+};
 
 function test25FnSum() {
   var xml = '<x><a>1</a><b>2</b><c>3</c></x>';
@@ -224,17 +224,17 @@ function test25FnSum() {
   var r = xrx.xpath.evaluate('sum(/x/*)', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
   assertEquals(6, r.numberValue);
-***REMOVED***
+};
 
 function test26FnTranslate() {
   xrx.xpath.Test.assertEquals('12:45', 'translate("12:30","30","45")');
   xrx.xpath.Test.assertEquals('12:45', 'translate("12:30","03","54")');
   xrx.xpath.Test.assertEquals('bc:da', 'translate("12:30","0123","abcd")');
-***REMOVED***
+};
 
 function test27FnTrue() {
   xrx.xpath.Test.assertEquals(true, 'true()');
-***REMOVED***
+};
 
 </script>
 </body>

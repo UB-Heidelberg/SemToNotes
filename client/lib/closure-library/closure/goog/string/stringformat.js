@@ -12,30 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Implementation of sprintf-like, python-%-operator-like,
-***REMOVED*** .NET-String.Format-like functionality. Uses JS string's replace method to
-***REMOVED*** extract format specifiers and sends those specifiers to a handler function,
-***REMOVED*** which then, based on conversion type part of the specifier, calls the
-***REMOVED*** appropriate function to handle the specific conversion.
-***REMOVED*** For specific functionality implemented, look at formatRe below, or look
-***REMOVED*** at the tests.
-***REMOVED***
+/**
+ * @fileoverview Implementation of sprintf-like, python-%-operator-like,
+ * .NET-String.Format-like functionality. Uses JS string's replace method to
+ * extract format specifiers and sends those specifiers to a handler function,
+ * which then, based on conversion type part of the specifier, calls the
+ * appropriate function to handle the specific conversion.
+ * For specific functionality implemented, look at formatRe below, or look
+ * at the tests.
+ */
 
 goog.provide('goog.string.format');
 
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Performs sprintf-like conversion, ie. puts the values in a template.
-***REMOVED*** DO NOT use it instead of built-in conversions in simple cases such as
-***REMOVED*** 'Cost: %.2f' as it would introduce unneccessary latency oposed to
-***REMOVED*** 'Cost: ' + cost.toFixed(2).
-***REMOVED*** @param {string} formatString Template string containing % specifiers.
-***REMOVED*** @param {...string|number} var_args Values formatString is to be filled with.
-***REMOVED*** @return {string} Formatted string.
-***REMOVED***
+/**
+ * Performs sprintf-like conversion, ie. puts the values in a template.
+ * DO NOT use it instead of built-in conversions in simple cases such as
+ * 'Cost: %.2f' as it would introduce unneccessary latency oposed to
+ * 'Cost: ' + cost.toFixed(2).
+ * @param {string} formatString Template string containing % specifiers.
+ * @param {...string|number} var_args Values formatString is to be filled with.
+ * @return {string} Formatted string.
+ */
 goog.string.format = function(formatString, var_args) {
 
   // Convert the arguments to an array (MDC recommended way).
@@ -50,19 +50,19 @@ goog.string.format = function(formatString, var_args) {
   // This re is used for matching, it also defines what is supported.
   var formatRe = /%([0\-\ \+]*)(\d+)?(\.(\d+))?([%sfdiu])/g;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Chooses which conversion function to call based on type conversion
-  ***REMOVED*** specifier.
-  ***REMOVED*** @param {string} match Contains the re matched string.
-  ***REMOVED*** @param {string} flags Formatting flags.
-  ***REMOVED*** @param {string} width Replacement string minimum width.
-  ***REMOVED*** @param {string} dotp Matched precision including a dot.
-  ***REMOVED*** @param {string} precision Specifies floating point precision.
-  ***REMOVED*** @param {string} type Type conversion specifier.
-  ***REMOVED*** @param {string} offset Matching location in the original string.
-  ***REMOVED*** @param {string} wholeString Has the actualString being searched.
-  ***REMOVED*** @return {string} Formatted parameter.
- ***REMOVED*****REMOVED***
+  /**
+   * Chooses which conversion function to call based on type conversion
+   * specifier.
+   * @param {string} match Contains the re matched string.
+   * @param {string} flags Formatting flags.
+   * @param {string} width Replacement string minimum width.
+   * @param {string} dotp Matched precision including a dot.
+   * @param {string} precision Specifies floating point precision.
+   * @param {string} type Type conversion specifier.
+   * @param {string} offset Matching location in the original string.
+   * @param {string} wholeString Has the actualString being searched.
+   * @return {string} Formatted parameter.
+   */
   function replacerDemuxer(match,
                            flags,
                            width,
@@ -93,29 +93,29 @@ goog.string.format = function(formatString, var_args) {
   }
 
   return template.replace(formatRe, replacerDemuxer);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Contains various conversion functions (to be filled in later on).
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.string.format.demuxes_ = {***REMOVED***
+/**
+ * Contains various conversion functions (to be filled in later on).
+ * @type {Object}
+ * @private
+ */
+goog.string.format.demuxes_ = {};
 
 
-***REMOVED***
-***REMOVED*** Processes %s conversion specifier.
-***REMOVED*** @param {string} value Contains the formatRe matched string.
-***REMOVED*** @param {string} flags Formatting flags.
-***REMOVED*** @param {string} width Replacement string minimum width.
-***REMOVED*** @param {string} dotp Matched precision including a dot.
-***REMOVED*** @param {string} precision Specifies floating point precision.
-***REMOVED*** @param {string} type Type conversion specifier.
-***REMOVED*** @param {string} offset Matching location in the original string.
-***REMOVED*** @param {string} wholeString Has the actualString being searched.
-***REMOVED*** @return {string} Replacement string.
-***REMOVED***
+/**
+ * Processes %s conversion specifier.
+ * @param {string} value Contains the formatRe matched string.
+ * @param {string} flags Formatting flags.
+ * @param {string} width Replacement string minimum width.
+ * @param {string} dotp Matched precision including a dot.
+ * @param {string} precision Specifies floating point precision.
+ * @param {string} type Type conversion specifier.
+ * @param {string} offset Matching location in the original string.
+ * @param {string} wholeString Has the actualString being searched.
+ * @return {string} Replacement string.
+ */
 goog.string.format.demuxes_['s'] = function(value,
                                             flags,
                                             width,
@@ -142,21 +142,21 @@ goog.string.format.demuxes_['s'] = function(value,
         goog.string.repeat(' ', width - replacement.length) + replacement;
   }
   return replacement;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes %f conversion specifier.
-***REMOVED*** @param {number} value Contains the formatRe matched string.
-***REMOVED*** @param {string} flags Formatting flags.
-***REMOVED*** @param {string} width Replacement string minimum width.
-***REMOVED*** @param {string} dotp Matched precision including a dot.
-***REMOVED*** @param {string} precision Specifies floating point precision.
-***REMOVED*** @param {string} type Type conversion specifier.
-***REMOVED*** @param {string} offset Matching location in the original string.
-***REMOVED*** @param {string} wholeString Has the actualString being searched.
-***REMOVED*** @return {string} Replacement string.
-***REMOVED***
+/**
+ * Processes %f conversion specifier.
+ * @param {number} value Contains the formatRe matched string.
+ * @param {string} flags Formatting flags.
+ * @param {string} width Replacement string minimum width.
+ * @param {string} dotp Matched precision including a dot.
+ * @param {string} precision Specifies floating point precision.
+ * @param {string} type Type conversion specifier.
+ * @param {string} offset Matching location in the original string.
+ * @param {string} wholeString Has the actualString being searched.
+ * @return {string} Replacement string.
+ */
 goog.string.format.demuxes_['f'] = function(value,
                                             flags,
                                             width,
@@ -215,21 +215,21 @@ goog.string.format.demuxes_['f'] = function(value,
   }
 
   return replacement;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Processes %d conversion specifier.
-***REMOVED*** @param {string} value Contains the formatRe matched string.
-***REMOVED*** @param {string} flags Formatting flags.
-***REMOVED*** @param {string} width Replacement string minimum width.
-***REMOVED*** @param {string} dotp Matched precision including a dot.
-***REMOVED*** @param {string} precision Specifies floating point precision.
-***REMOVED*** @param {string} type Type conversion specifier.
-***REMOVED*** @param {string} offset Matching location in the original string.
-***REMOVED*** @param {string} wholeString Has the actualString being searched.
-***REMOVED*** @return {string} Replacement string.
-***REMOVED***
+/**
+ * Processes %d conversion specifier.
+ * @param {string} value Contains the formatRe matched string.
+ * @param {string} flags Formatting flags.
+ * @param {string} width Replacement string minimum width.
+ * @param {string} dotp Matched precision including a dot.
+ * @param {string} precision Specifies floating point precision.
+ * @param {string} type Type conversion specifier.
+ * @param {string} offset Matching location in the original string.
+ * @param {string} wholeString Has the actualString being searched.
+ * @return {string} Replacement string.
+ */
 goog.string.format.demuxes_['d'] = function(value,
                                             flags,
                                             width,
@@ -239,10 +239,10 @@ goog.string.format.demuxes_['d'] = function(value,
                                             offset,
                                             wholeString) {
   return goog.string.format.demuxes_['f'](
-      parseInt(value, 10) /* value***REMOVED***,
-      flags, width, dotp, 0 /* precision***REMOVED***,
+      parseInt(value, 10) /* value */,
+      flags, width, dotp, 0 /* precision */,
       type, offset, wholeString);
-***REMOVED***
+};
 
 
 // These are additional aliases, for integer conversion.

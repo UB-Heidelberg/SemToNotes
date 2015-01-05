@@ -1,11 +1,11 @@
-/*global app, env***REMOVED***
-***REMOVED***
+/*global app, env */
+/**
     Define tags that are known in JSDoc.
     @module jsdoc/tag/dictionary/definitions
 
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var jsdoc = {
@@ -19,7 +19,7 @@ var jsdoc = {
     util: {
         logger: require('jsdoc/util/logger')
     }
-***REMOVED***
+};
 var path = require('jsdoc/path');
 var Syntax = require('jsdoc/src/syntax').Syntax;
 
@@ -59,7 +59,7 @@ function filepathMinusPrefix(filepath) {
     return result;
 }
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 function setDocletKindToTitle(doclet, tag) {
     doclet.addTag( 'kind', tag.title );
 }
@@ -147,13 +147,13 @@ function parseBorrows(doclet, tag) {
     var m = /^(\S+)(?:\s+as\s+(\S+))?$/.exec(tag.text);
     if (m) {
         if (m[1] && m[2]) {
-            return { target: m[1], source: m[2]***REMOVED*****REMOVED***
+            return { target: m[1], source: m[2] };
         }
         else if (m[1]) {
-            return { target: m[1]***REMOVED*****REMOVED***
+            return { target: m[1] };
         }
     } else {
-        return {***REMOVED***
+        return {};
     }
 }
 
@@ -163,7 +163,7 @@ function firstWordOf(string) {
     else { return ''; }
 }
 
-***REMOVED*** Populate the given dictionary with all known JSDoc tag definitions.
+/** Populate the given dictionary with all known JSDoc tag definitions.
     @param {module:jsdoc/tag/dictionary} dictionary
 */
 exports.defineTags = function(dictionary) {
@@ -200,14 +200,14 @@ exports.defineTags = function(dictionary) {
     // Special separator tag indicating that multiple doclets should be generated for the same
     // comment. Used internally (and by some JSDoc users, although it's not officially supported).
     //
-    // In the following example, the parser will replace `***REMOVED****REMOVED***` with an `@also` tag:
+    // In the following example, the parser will replace `//**` with an `@also` tag:
     //
-    ***REMOVED****REMOVED****REMOVED*****REMOVED***
-    // ***REMOVED*** Foo.
-    ***REMOVED****REMOVED****REMOVED*****REMOVED******REMOVED***
-    // ***REMOVED*** Foo with a param.
-    // ***REMOVED*** @param {string} bar
-    ***REMOVED****REMOVED****REMOVED*****REMOVED***
+    // /**
+    //  * Foo.
+    //  *//**
+    //  * Foo with a param.
+    //  * @param {string} bar
+    //  */
     //  function foo(bar) {}
     dictionary.defineTag('also', {
         onTagged: function(doclet, tag) {
@@ -759,7 +759,7 @@ exports.defineTags = function(dictionary) {
                         names: [
                             'function'
                         ]
-                   ***REMOVED*****REMOVED***
+                    };
                 }
                 else {
                     setDocletTypeToValueType(doclet, tag);
@@ -790,4 +790,4 @@ exports.defineTags = function(dictionary) {
             doclet.version = tag.value;
         }
     });
-***REMOVED***
+};

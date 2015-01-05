@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines error codes to be thrown by storage mechanisms.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Defines error codes to be thrown by storage mechanisms.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.ErrorCode');
 
 
-***REMOVED***
-***REMOVED*** Errors thrown by storage mechanisms.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Errors thrown by storage mechanisms.
+ * @enum {string}
+ */
 goog.storage.mechanism.ErrorCode = {
   INVALID_VALUE: 'Storage mechanism: Invalid value was encountered',
   QUOTA_EXCEEDED: 'Storage mechanism: Quota exceeded',
   STORAGE_DISABLED: 'Storage mechanism: Storage disabled'
-***REMOVED***
+};

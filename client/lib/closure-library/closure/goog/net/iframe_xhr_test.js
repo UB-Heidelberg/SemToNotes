@@ -19,9 +19,9 @@ goog.require('goog.Timer');
 goog.require('goog.debug.Console');
 goog.require('goog.debug.LogManager');
 goog.require('goog.debug.Logger');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.IframeIo');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
@@ -42,59 +42,59 @@ var iframeio;
 
 // Create an async test case
 var testCase = new goog.testing.AsyncTestCase(document.title);
-testCase.stepTimeout = 4***REMOVED*** 1000;
+testCase.stepTimeout = 4 * 1000;
 testCase.resultCount = 0;
 testCase.xhrCount = 0;
 testCase.error = null;
 
 
-***REMOVED***
-***REMOVED*** Set up the iframe io and request the test response page.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Set up the iframe io and request the test response page.
+ * @this {goog.testing.AsyncTestCase}
+ */
 testCase.setUpPage = function() {
   testCase.waitForAsync('setUpPage');
   iframeio = new goog.net.IframeIo();
-***REMOVED***
+  goog.events.listen(
       iframeio, 'incrementaldata', this.onIframeData, false, this);
-***REMOVED***
+  goog.events.listen(
       iframeio, 'ready', this.onIframeReady, false, this);
   iframeio.send(fileName);
-***REMOVED***
+};
 
 
-***REMOVED*** Disposes the iframe object.***REMOVED***
+/** Disposes the iframe object. */
 testCase.tearDownPage = function() {
   iframeio.dispose();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the packets received  from the Iframe incremental results.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Handles the packets received  from the Iframe incremental results.
+ * @this {goog.testing.AsyncTestCase}
+ */
 testCase.onIframeData = function(e) {
   this.log('Data received  : ' + e.data);
   this.resultCount++;
   goog.net.XhrIo.send(fileName, goog.bind(this.onXhrData, this));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the iframe becoming ready.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Handles the iframe becoming ready.
+ * @this {goog.testing.AsyncTestCase}
+ */
 testCase.onIframeReady = function(e) {
   this.log('Iframe ready');
   var me = this;
   goog.net.XhrIo.send(fileName, goog.bind(this.onXhrData, this));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the response from an Xhr request.
-***REMOVED*** @this {goog.testing.AsyncTestCase}
-***REMOVED***
+/**
+ * Handles the response from an Xhr request.
+ * @this {goog.testing.AsyncTestCase}
+ */
 testCase.onXhrData = function(e) {
   this.xhrCount++;
   // We access status directly so that XhrLite doesn't mask the error that
@@ -110,10 +110,10 @@ testCase.onXhrData = function(e) {
     this.log('Test set up finished, waiting 500ms for iframe disposal');
     goog.Timer.callOnce(goog.bind(this.continueTesting, this), 0);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** The main test function that validates the results were as expected.***REMOVED***
+/** The main test function that validates the results were as expected. */
 testCase.addNewTest('testResults', function() {
   assertEquals('There should be 3 data packets', 3, this.resultCount);
   // 3 results + 1 ready
@@ -127,13 +127,13 @@ testCase.addNewTest('testResults', function() {
 });
 
 
-***REMOVED*** This test only runs on GECKO browsers.***REMOVED***
+/** This test only runs on GECKO browsers. */
 if (goog.userAgent.GECKO) {
- ***REMOVED*****REMOVED*** Used by the JsUnit test runner.***REMOVED***
+  /** Used by the JsUnit test runner. */
   var testXhrMonitorWorksForIframeIoRequests = function() {
     testCase.reset();
     testCase.cycleTests();
- ***REMOVED*****REMOVED***
+  };
 }
 
 // Standalone Closure Test Runner.

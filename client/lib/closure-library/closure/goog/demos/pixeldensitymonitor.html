@@ -11,7 +11,7 @@ See the COPYING file for details.
   <script src="../base.js"></script>
   <script>
     goog.require('goog.debug.DivConsole');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.labs.style.PixelDensityMonitor');
     goog.require('goog.labs.style.PixelDensityMonitor.Density');
     goog.require('goog.log');
@@ -39,7 +39,7 @@ See the COPYING file for details.
         goog.labs.style.PixelDensityMonitor.Density.NORMAL, 'NORMAL',
         goog.labs.style.PixelDensityMonitor.Density.HIGH, 'HIGH');
 
-  ***REMOVED***monitor,
+    goog.events.listen(monitor,
         goog.labs.style.PixelDensityMonitor.EventType.CHANGE,
         function() {
           goog.log.info(logger, 'Density change: ' + densityMap[monitor.getDensity()]);

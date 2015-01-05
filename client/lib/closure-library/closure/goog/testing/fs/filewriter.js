@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock FileWriter object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Mock FileWriter object.
+ *
+ */
 
 goog.provide('goog.testing.fs.FileWriter');
 
@@ -28,126 +28,126 @@ goog.require('goog.testing.fs.ProgressEvent');
 
 
 
-***REMOVED***
-***REMOVED*** A mock FileWriter object. This emits the same events as
-***REMOVED*** {@link goog.fs.FileSaver} and {@link goog.fs.FileWriter}.
-***REMOVED***
-***REMOVED*** @param {!goog.testing.fs.FileEntry} fileEntry The file entry to write to.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A mock FileWriter object. This emits the same events as
+ * {@link goog.fs.FileSaver} and {@link goog.fs.FileWriter}.
+ *
+ * @param {!goog.testing.fs.FileEntry} fileEntry The file entry to write to.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.testing.fs.FileWriter = function(fileEntry) {
   goog.testing.fs.FileWriter.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The file entry to which to write.
-  ***REMOVED*** @type {!goog.testing.fs.FileEntry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The file entry to which to write.
+   * @type {!goog.testing.fs.FileEntry}
+   * @private
+   */
   this.fileEntry_ = fileEntry;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The file blob to write to.
-  ***REMOVED*** @type {!goog.testing.fs.File}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The file blob to write to.
+   * @type {!goog.testing.fs.File}
+   * @private
+   */
   this.file_ = fileEntry.fileSync();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current state of the writer.
-  ***REMOVED*** @type {goog.fs.FileSaver.ReadyState}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current state of the writer.
+   * @type {goog.fs.FileSaver.ReadyState}
+   * @private
+   */
   this.readyState_ = goog.fs.FileSaver.ReadyState.INIT;
-***REMOVED***
+};
 goog.inherits(goog.testing.fs.FileWriter, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** The most recent error experienced by this writer.
-***REMOVED*** @type {goog.fs.Error}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The most recent error experienced by this writer.
+ * @type {goog.fs.Error}
+ * @private
+ */
 goog.testing.fs.FileWriter.prototype.error_;
 
 
-***REMOVED***
-***REMOVED*** Whether the current operation has been aborted.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the current operation has been aborted.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.fs.FileWriter.prototype.aborted_ = false;
 
 
-***REMOVED***
-***REMOVED*** The current position in the file.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The current position in the file.
+ * @type {number}
+ * @private
+ */
 goog.testing.fs.FileWriter.prototype.position_ = 0;
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileSaver#getReadyState}
-***REMOVED*** @return {goog.fs.FileSaver.ReadyState} The ready state.
-***REMOVED***
+/**
+ * @see {goog.fs.FileSaver#getReadyState}
+ * @return {goog.fs.FileSaver.ReadyState} The ready state.
+ */
 goog.testing.fs.FileWriter.prototype.getReadyState = function() {
   return this.readyState_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileSaver#getError}
-***REMOVED*** @return {goog.fs.Error} The error.
-***REMOVED***
+/**
+ * @see {goog.fs.FileSaver#getError}
+ * @return {goog.fs.Error} The error.
+ */
 goog.testing.fs.FileWriter.prototype.getError = function() {
   return this.error_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileWriter#getPosition}
-***REMOVED*** @return {number} The position.
-***REMOVED***
+/**
+ * @see {goog.fs.FileWriter#getPosition}
+ * @return {number} The position.
+ */
 goog.testing.fs.FileWriter.prototype.getPosition = function() {
   return this.position_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileWriter#getLength}
-***REMOVED*** @return {number} The length.
-***REMOVED***
+/**
+ * @see {goog.fs.FileWriter#getLength}
+ * @return {number} The length.
+ */
 goog.testing.fs.FileWriter.prototype.getLength = function() {
   return this.file_.size;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileSaver#abort}
-***REMOVED***
+/**
+ * @see {goog.fs.FileSaver#abort}
+ */
 goog.testing.fs.FileWriter.prototype.abort = function() {
   if (this.readyState_ != goog.fs.FileSaver.ReadyState.WRITING) {
     var msg = 'aborting save of ' + this.fileEntry_.getFullPath();
     throw new goog.fs.Error(
-       ***REMOVED*****REMOVED*** @type {!FileError}***REMOVED*** ({'name': 'InvalidStateError'}),
+        /** @type {!FileError} */ ({'name': 'InvalidStateError'}),
         msg);
   }
 
   this.aborted_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileWriter#write}
-***REMOVED*** @param {!goog.testing.fs.Blob} blob The blob to write.
-***REMOVED***
+/**
+ * @see {goog.fs.FileWriter#write}
+ * @param {!goog.testing.fs.Blob} blob The blob to write.
+ */
 goog.testing.fs.FileWriter.prototype.write = function(blob) {
   if (this.readyState_ == goog.fs.FileSaver.ReadyState.WRITING) {
     var msg = 'writing to ' + this.fileEntry_.getFullPath();
     throw new goog.fs.Error(
-       ***REMOVED*****REMOVED*** @type {!FileError}***REMOVED*** ({'name': 'InvalidStateError'}),
+        /** @type {!FileError} */ ({'name': 'InvalidStateError'}),
         msg);
   }
 
@@ -171,18 +171,18 @@ goog.testing.fs.FileWriter.prototype.write = function(blob) {
     this.progressEvent_(
         goog.fs.FileSaver.EventType.WRITE_END, blob.size, blob.size);
   }, 0, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileWriter#truncate}
-***REMOVED*** @param {number} size The size to truncate to.
-***REMOVED***
+/**
+ * @see {goog.fs.FileWriter#truncate}
+ * @param {number} size The size to truncate to.
+ */
 goog.testing.fs.FileWriter.prototype.truncate = function(size) {
   if (this.readyState_ == goog.fs.FileSaver.ReadyState.WRITING) {
     var msg = 'truncating ' + this.fileEntry_.getFullPath();
     throw new goog.fs.Error(
-       ***REMOVED*****REMOVED*** @type {!FileError}***REMOVED*** ({'name': 'InvalidStateError'}),
+        /** @type {!FileError} */ ({'name': 'InvalidStateError'}),
         msg);
   }
 
@@ -208,18 +208,18 @@ goog.testing.fs.FileWriter.prototype.truncate = function(size) {
     this.readyState_ = goog.fs.FileSaver.ReadyState.DONE;
     this.progressEvent_(goog.fs.FileSaver.EventType.WRITE_END, size, size);
   }, 0, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @see {goog.fs.FileWriter#seek}
-***REMOVED*** @param {number} offset The offset to seek to.
-***REMOVED***
+/**
+ * @see {goog.fs.FileWriter#seek}
+ * @param {number} offset The offset to seek to.
+ */
 goog.testing.fs.FileWriter.prototype.seek = function(offset) {
   if (this.readyState_ == goog.fs.FileSaver.ReadyState.WRITING) {
     var msg = 'truncating ' + this.fileEntry_.getFullPath();
     throw new goog.fs.Error(
-       ***REMOVED*****REMOVED*** @type {!FileError}***REMOVED*** ({name: 'InvalidStateError'}),
+        /** @type {!FileError} */ ({name: 'InvalidStateError'}),
         msg);
   }
 
@@ -228,35 +228,35 @@ goog.testing.fs.FileWriter.prototype.seek = function(offset) {
   } else {
     this.position_ = Math.min(offset, this.file_.size);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Abort the current action and emit appropriate events.
-***REMOVED***
-***REMOVED*** @param {number} total The total data that was to be processed, in bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Abort the current action and emit appropriate events.
+ *
+ * @param {number} total The total data that was to be processed, in bytes.
+ * @private
+ */
 goog.testing.fs.FileWriter.prototype.abort_ = function(total) {
   this.error_ = new goog.fs.Error(
-     ***REMOVED*****REMOVED*** @type {!FileError}***REMOVED*** ({'name': 'AbortError'}),
+      /** @type {!FileError} */ ({'name': 'AbortError'}),
       'saving ' + this.fileEntry_.getFullPath());
   this.progressEvent_(goog.fs.FileSaver.EventType.ERROR, 0, total);
   this.progressEvent_(goog.fs.FileSaver.EventType.ABORT, 0, total);
   this.readyState_ = goog.fs.FileSaver.ReadyState.DONE;
   this.progressEvent_(goog.fs.FileSaver.EventType.WRITE_END, 0, total);
   this.aborted_ = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatch a progress event.
-***REMOVED***
-***REMOVED*** @param {goog.fs.FileSaver.EventType} type The type of the event.
-***REMOVED*** @param {number} loaded The number of bytes processed.
-***REMOVED*** @param {number} total The total data that was to be processed, in bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatch a progress event.
+ *
+ * @param {goog.fs.FileSaver.EventType} type The type of the event.
+ * @param {number} loaded The number of bytes processed.
+ * @param {number} total The total data that was to be processed, in bytes.
+ * @private
+ */
 goog.testing.fs.FileWriter.prototype.progressEvent_ = function(
     type, loaded, total) {
   // On write, update the last modified date to the current (real or mock) time.
@@ -265,4 +265,4 @@ goog.testing.fs.FileWriter.prototype.progressEvent_ = function(
   }
 
   this.dispatchEvent(new goog.testing.fs.ProgressEvent(type, loaded, total));
-***REMOVED***
+};

@@ -34,7 +34,7 @@ function getObject() {
     b: 1,
     c: 2,
     d: 3
- ***REMOVED*****REMOVED***
+  };
 }
 
 function testKeys() {
@@ -84,7 +84,7 @@ function testContainsValue() {
 }
 
 function testFindKey() {
-  var dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4***REMOVED***
+  var dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4};
   var key = goog.object.findKey(dict, function(v, k, d) {
     assertEquals('valid 3rd argument', dict, d);
     assertTrue('valid 1st argument', goog.object.containsValue(d, v));
@@ -95,12 +95,12 @@ function testFindKey() {
 
   var pred = function(value) {
     return value > 5;
- ***REMOVED*****REMOVED***
+  };
   assertUndefined('no match', goog.object.findKey(dict, pred));
 }
 
 function testFindValue() {
-  var dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4***REMOVED***
+  var dict = {'a': 1, 'b': 2, 'c': 3, 'd': 4};
   var value = goog.object.findValue(dict, function(v, k, d) {
     assertEquals('valid 3rd argument', dict, d);
     assertTrue('valid 1st argument', goog.object.containsValue(d, v));
@@ -111,7 +111,7 @@ function testFindValue() {
 
   var pred = function(value, key) {
     return key > 'd';
- ***REMOVED*****REMOVED***
+  };
   assertUndefined('no match', goog.object.findValue(dict, pred));
 }
 
@@ -140,7 +140,7 @@ function testUnsafeCloneObjectThatHasACloneMethod() {
   var original = {
     name: 'original',
     clone: goog.functions.constant({name: 'clone'})
- ***REMOVED*****REMOVED***
+  };
 
   var clone = goog.object.unsafeClone(original);
   assertEquals('original', original.name);
@@ -148,7 +148,7 @@ function testUnsafeCloneObjectThatHasACloneMethod() {
 }
 
 function testUnsafeCloneFlatObject() {
-  var original = {a: 1, b: 2, c: 3***REMOVED***
+  var original = {a: 1, b: 2, c: 3};
   var clone = goog.object.unsafeClone(original);
   assertNotEquals(original, clone);
   assertObjectEquals(original, clone);
@@ -159,7 +159,7 @@ function testUnsafeCloneDeepObject() {
     a: 1,
     b: {c: 2, d: 3},
     e: {f: {g: 4, h: 5}}
- ***REMOVED*****REMOVED***
+  };
   var clone = goog.object.unsafeClone(original);
 
   assertNotEquals(original, clone);
@@ -176,7 +176,7 @@ function testUnsafeCloneDeepObject() {
 function testUnsafeCloneFunctions() {
   var original = {
     f: goog.functions.constant('hi')
- ***REMOVED*****REMOVED***
+  };
   var clone = goog.object.unsafeClone(original);
 
   assertNotEquals(original, clone);
@@ -212,7 +212,7 @@ function testMap() {
   var m2 = goog.object.map(m, function(val, key, m3) {
     assertNotUndefined(key);
     assertEquals(m, m3);
-    return val***REMOVED*** val;
+    return val * val;
   });
   assertEquals(stringifyObject(m2), 'a0b1c4d9');
 }
@@ -256,7 +256,7 @@ function testContains() {
 }
 
 function testObjectProperties() {
-  var m = {***REMOVED***
+  var m = {};
 
   goog.object.set(m, 'toString', 'once');
   goog.object.set(m, 'valueOf', 'upon');
@@ -274,7 +274,7 @@ function testObjectProperties() {
 }
 
 function testSetDefault() {
-  var dict = {***REMOVED***
+  var dict = {};
   assertEquals(1, goog.object.setIfUndefined(dict, 'a', 1));
   assertEquals(1, dict['a']);
   assertEquals(1, goog.object.setIfUndefined(dict, 'a', 2));
@@ -291,34 +291,34 @@ function testTranspose() {
 }
 
 function testExtend() {
-  var o = {***REMOVED***
-  var o2 = {a: 0, b: 1***REMOVED***
+  var o = {};
+  var o2 = {a: 0, b: 1};
   goog.object.extend(o, o2);
   assertEquals(0, o.a);
   assertEquals(1, o.b);
   assertTrue('a' in o);
   assertTrue('b' in o);
 
-  o2 = {c: 2***REMOVED***
+  o2 = {c: 2};
   goog.object.extend(o, o2);
   assertEquals(2, o.c);
   assertTrue('c' in o);
 
-  o2 = {c: 3***REMOVED***
+  o2 = {c: 3};
   goog.object.extend(o, o2);
   assertEquals(3, o.c);
   assertTrue('c' in o);
 
-  o = {***REMOVED***
-  o2 = {c: 2***REMOVED***
-  var o3 = {c: 3***REMOVED***
+  o = {};
+  o2 = {c: 2};
+  var o3 = {c: 3};
   goog.object.extend(o, o2, o3);
   assertEquals(3, o.c);
   assertTrue('c' in o);
 
-  o = {***REMOVED***
-  o2 = {a: 0, b: 1***REMOVED***
-  o3 = {c: 2, d: 3***REMOVED***
+  o = {};
+  o2 = {a: 0, b: 1};
+  o3 = {c: 2, d: 3};
   goog.object.extend(o, o2, o3);
   assertEquals(0, o.a);
   assertEquals(1, o.b);
@@ -329,7 +329,7 @@ function testExtend() {
   assertTrue('c' in o);
   assertTrue('d' in o);
 
-  o = {***REMOVED***
+  o = {};
   o2 = {
     'constructor': 0,
     'hasOwnProperty': 1,
@@ -338,7 +338,7 @@ function testExtend() {
     'toLocaleString': 4,
     'toString': 5,
     'valueOf': 6
- ***REMOVED*****REMOVED***
+  };
   goog.object.extend(o, o2);
   assertEquals(0, o['constructor']);
   assertEquals(1, o['hasOwnProperty']);
@@ -394,10 +394,10 @@ function testCreateSet() {
 }
 
 function createTestDeepObject() {
-  var obj = {***REMOVED***
-  obj.a = {***REMOVED***
-  obj.a.b = {***REMOVED***
-  obj.a.b.c = {***REMOVED***
+  var obj = {};
+  obj.a = {};
+  obj.a.b = {};
+  obj.a.b.c = {};
   obj.a.b.c.fooArr = [5, 6, 7, 8];
   obj.a.b.c.knownNull = null;
   return obj;
@@ -433,7 +433,7 @@ function testGetValueByKeysArraySyntax() {
 
 function testImmutableView() {
   if (!Object.isFrozen) return;
-  var x = {propA: 3***REMOVED***
+  var x = {propA: 3};
   var y = goog.object.createImmutableView(x);
   x.propA = 4;
   x.propB = 6;
@@ -457,7 +457,7 @@ function testImmutableViewStrict() {
   'use strict';
 
   if (!Object.isFrozen) return;
-  var x = {propA: 3***REMOVED***
+  var x = {propA: 3};
   var y = goog.object.createImmutableView(x);
   assertThrows(function() {
     y.propA = 4;

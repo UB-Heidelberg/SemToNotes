@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An HSV (hue/saturation/value) color palette/picker
-***REMOVED*** implementation. Inspired by examples like
-***REMOVED*** http://johndyer.name/lab/colorpicker/ and the author's initial work. This
-***REMOVED*** control allows for more control in picking colors than a simple swatch-based
-***REMOVED*** palette. Without the styles from the demo css file, only a hex color label
-***REMOVED*** and input field show up.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author smcbride@google.com (Sean McBride)
-***REMOVED*** @author manucornet@google.com (Manu Cornet)
-***REMOVED*** @see ../demos/hsvpalette.html
-***REMOVED***
+/**
+ * @fileoverview An HSV (hue/saturation/value) color palette/picker
+ * implementation. Inspired by examples like
+ * http://johndyer.name/lab/colorpicker/ and the author's initial work. This
+ * control allows for more control in picking colors than a simple swatch-based
+ * palette. Without the styles from the demo css file, only a hex color label
+ * and input field show up.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @author smcbride@google.com (Sean McBride)
+ * @author manucornet@google.com (Manu Cornet)
+ * @see ../demos/hsvpalette.html
+ */
 
 goog.provide('goog.ui.HsvPalette');
 
 goog.require('goog.color');
 goog.require('goog.dom.TagName');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.style');
 goog.require('goog.style.bidi');
@@ -40,136 +40,136 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Creates an HSV palette. Allows a user to select the hue, saturation and
-***REMOVED*** value/brightness.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED*** @param {string=} opt_color Optional initial color (default is red).
-***REMOVED*** @param {string=} opt_class Optional base for creating classnames (default is
-***REMOVED***     goog.getCssName('goog-hsv-palette')).
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
-***REMOVED***
+/**
+ * Creates an HSV palette. Allows a user to select the hue, saturation and
+ * value/brightness.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @param {string=} opt_color Optional initial color (default is red).
+ * @param {string=} opt_class Optional base for creating classnames (default is
+ *     goog.getCssName('goog-hsv-palette')).
+ * @extends {goog.ui.Component}
+ * @constructor
+ */
 goog.ui.HsvPalette = function(opt_domHelper, opt_color, opt_class) {
   goog.ui.Component.call(this, opt_domHelper);
 
   this.setColorInternal(opt_color || '#f00');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The base class name for the component.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @protected
- ***REMOVED*****REMOVED***
+  /**
+   * The base class name for the component.
+   * @type {string}
+   * @protected
+   */
   this.className = opt_class || goog.getCssName('goog-hsv-palette');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The document which is being listened to.
-  ***REMOVED*** type {HTMLDocument}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The document which is being listened to.
+   * type {HTMLDocument}
+   * @private
+   */
   this.document_ = this.getDomHelper().getDocument();
-***REMOVED***
+};
 goog.inherits(goog.ui.HsvPalette, goog.ui.Component);
 // TODO(user): Make this inherit from goog.ui.Control and split this into
 // a control and a renderer.
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the hue/saturation background image.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * DOM element representing the hue/saturation background image.
+ * @type {Element}
+ * @private
+ */
 goog.ui.HsvPalette.prototype.hsImageEl_;
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the hue/saturation handle.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * DOM element representing the hue/saturation handle.
+ * @type {Element}
+ * @private
+ */
 goog.ui.HsvPalette.prototype.hsHandleEl_;
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the value background image.
-***REMOVED*** @type {Element}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * DOM element representing the value background image.
+ * @type {Element}
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.valueBackgroundImageElement;
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the value handle.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * DOM element representing the value handle.
+ * @type {Element}
+ * @private
+ */
 goog.ui.HsvPalette.prototype.vHandleEl_;
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the current color swatch.
-***REMOVED*** @type {Element}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * DOM element representing the current color swatch.
+ * @type {Element}
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.swatchElement;
 
 
-***REMOVED***
-***REMOVED*** DOM element representing the hex color input text field.
-***REMOVED*** @type {Element}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * DOM element representing the hex color input text field.
+ * @type {Element}
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.inputElement;
 
 
-***REMOVED***
-***REMOVED*** Input handler object for the hex value input field.
-***REMOVED*** @type {goog.events.InputHandler}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Input handler object for the hex value input field.
+ * @type {goog.events.InputHandler}
+ * @private
+ */
 goog.ui.HsvPalette.prototype.inputHandler_;
 
 
-***REMOVED***
-***REMOVED*** Listener key for the mousemove event (during a drag operation).
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Listener key for the mousemove event (during a drag operation).
+ * @type {goog.events.Key}
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.mouseMoveListener;
 
 
-***REMOVED***
-***REMOVED*** Listener key for the mouseup event (during a drag operation).
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Listener key for the mouseup event (during a drag operation).
+ * @type {goog.events.Key}
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.mouseUpListener;
 
 
-***REMOVED***
-***REMOVED*** Gets the color that is currently selected in this color picker.
-***REMOVED*** @return {string} The string of the selected color.
-***REMOVED***
+/**
+ * Gets the color that is currently selected in this color picker.
+ * @return {string} The string of the selected color.
+ */
 goog.ui.HsvPalette.prototype.getColor = function() {
   return this.color_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alpha transparency of the currently selected color, in [0, 1].
-***REMOVED*** For the HSV palette this always returns 1. The HSVA palette overrides
-***REMOVED*** this method.
-***REMOVED*** @return {number} The current alpha value.
-***REMOVED***
+/**
+ * Alpha transparency of the currently selected color, in [0, 1].
+ * For the HSV palette this always returns 1. The HSVA palette overrides
+ * this method.
+ * @return {number} The current alpha value.
+ */
 goog.ui.HsvPalette.prototype.getAlpha = function() {
   return 1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the text entry field.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Updates the text entry field.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.updateInput = function() {
   var parsed;
   try {
@@ -180,27 +180,27 @@ goog.ui.HsvPalette.prototype.updateInput = function() {
   if (this.color_ != parsed) {
     this.inputElement.value = this.color_;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets which color is selected and update the UI.
-***REMOVED*** @param {string} color The selected color.
-***REMOVED***
+/**
+ * Sets which color is selected and update the UI.
+ * @param {string} color The selected color.
+ */
 goog.ui.HsvPalette.prototype.setColor = function(color) {
   if (color != this.color_) {
     this.setColorInternal(color);
     this.updateUi();
     this.dispatchEvent(goog.ui.Component.EventType.ACTION);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets which color is selected.
-***REMOVED*** @param {string} color The selected color.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets which color is selected.
+ * @param {string} color The selected color.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.setColorInternal = function(color) {
   var rgbHex = goog.color.parse(color).hex;
   var rgbArray = goog.color.hexToRgb(rgbHex);
@@ -210,16 +210,16 @@ goog.ui.HsvPalette.prototype.setColorInternal = function(color) {
   // TODO(user): Fix this, see http://1324469 .
   this.hsv_[0] = this.hsv_[0] / 360;
   this.color_ = rgbHex;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alters the hue, saturation, and/or value of the currently selected color and
-***REMOVED*** updates the UI.
-***REMOVED*** @param {?number=} opt_hue (optional) hue in [0, 1].
-***REMOVED*** @param {?number=} opt_saturation (optional) saturation in [0, 1].
-***REMOVED*** @param {?number=} opt_value (optional) value in [0, 255].
-***REMOVED***
+/**
+ * Alters the hue, saturation, and/or value of the currently selected color and
+ * updates the UI.
+ * @param {?number=} opt_hue (optional) hue in [0, 1].
+ * @param {?number=} opt_saturation (optional) saturation in [0, 1].
+ * @param {?number=} opt_value (optional) value in [0, 255].
+ */
 goog.ui.HsvPalette.prototype.setHsv = function(opt_hue,
                                                opt_saturation,
                                                opt_value) {
@@ -228,16 +228,16 @@ goog.ui.HsvPalette.prototype.setHsv = function(opt_hue,
     this.updateUi();
     this.dispatchEvent(goog.ui.Component.EventType.ACTION);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alters the hue, saturation, and/or value of the currently selected color.
-***REMOVED*** @param {?number=} opt_hue (optional) hue in [0, 1].
-***REMOVED*** @param {?number=} opt_saturation (optional) saturation in [0, 1].
-***REMOVED*** @param {?number=} opt_value (optional) value in [0, 255].
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Alters the hue, saturation, and/or value of the currently selected color.
+ * @param {?number=} opt_hue (optional) hue in [0, 1].
+ * @param {?number=} opt_saturation (optional) saturation in [0, 1].
+ * @param {?number=} opt_value (optional) value in [0, 255].
+ * @private
+ */
 goog.ui.HsvPalette.prototype.setHsv_ = function(opt_hue,
                                                 opt_saturation,
                                                 opt_value) {
@@ -248,26 +248,26 @@ goog.ui.HsvPalette.prototype.setHsv_ = function(opt_hue,
   // currently incorrect.
   // TODO(user): Fix this, see http://1324469 .
   this.color_ = goog.color.hsvArrayToHex([
-    this.hsv_[0]***REMOVED*** 360,
+    this.hsv_[0] * 360,
     this.hsv_[1],
     this.hsv_[2]
   ]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** HsvPalettes cannot be used to decorate pre-existing html, since the
-***REMOVED*** structure they build is fairly complicated.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {boolean} Returns always false.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * HsvPalettes cannot be used to decorate pre-existing html, since the
+ * structure they build is fairly complicated.
+ * @param {Element} element Element to decorate.
+ * @return {boolean} Returns always false.
+ * @override
+ */
 goog.ui.HsvPalette.prototype.canDecorate = function(element) {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.HsvPalette.prototype.createDom = function() {
   var dom = this.getDomHelper();
   var noalpha = (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('7')) ?
@@ -313,14 +313,14 @@ goog.ui.HsvPalette.prototype.createDom = function() {
   this.setElementInternal(element);
 
   // TODO(arv): Set tabIndex
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Renders the color picker inside the provided element. This will override the
-***REMOVED*** current content of the element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Renders the color picker inside the provided element. This will override the
+ * current content of the element.
+ * @override
+ */
 goog.ui.HsvPalette.prototype.enterDocument = function() {
   goog.ui.HsvPalette.superClass_.enterDocument.call(this);
 
@@ -340,10 +340,10 @@ goog.ui.HsvPalette.prototype.enterDocument = function() {
 
   handler.listen(this.inputHandler_,
       goog.events.InputHandler.EventType.INPUT, this.handleInput);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.HsvPalette.prototype.disposeInternal = function() {
   goog.ui.HsvPalette.superClass_.disposeInternal.call(this);
 
@@ -359,21 +359,21 @@ goog.ui.HsvPalette.prototype.disposeInternal = function() {
   }
   goog.events.unlistenByKey(this.mouseMoveListener);
   goog.events.unlistenByKey(this.mouseUpListener);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the position, opacity, and styles for the UI representation of the
-***REMOVED*** palette.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Updates the position, opacity, and styles for the UI representation of the
+ * palette.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.updateUi = function() {
   if (this.isInDocument()) {
     var h = this.hsv_[0];
     var s = this.hsv_[1];
     var v = this.hsv_[2];
 
-    var left = this.hsImageEl_.offsetWidth***REMOVED*** h;
+    var left = this.hsImageEl_.offsetWidth * h;
 
     // We don't use a flipped gradient image in RTL, so we need to flip the
     // offset in RTL so that it still hovers over the correct color on the
@@ -386,7 +386,7 @@ goog.ui.HsvPalette.prototype.updateUi = function() {
     var handleOffset = Math.ceil(this.hsHandleEl_.offsetWidth / 2);
     left -= handleOffset;
 
-    var top = this.hsImageEl_.offsetHeight***REMOVED*** (1 - s);
+    var top = this.hsImageEl_.offsetHeight * (1 - s);
     // Account for the handle size.
     top -= Math.ceil(this.hsHandleEl_.offsetHeight / 2);
 
@@ -395,27 +395,27 @@ goog.ui.HsvPalette.prototype.updateUi = function() {
 
     top = this.valueBackgroundImageElement.offsetTop -
         Math.floor(this.vHandleEl_.offsetHeight / 2) +
-        this.valueBackgroundImageElement.offsetHeight***REMOVED*** ((255 - v) / 255);
+        this.valueBackgroundImageElement.offsetHeight * ((255 - v) / 255);
 
     this.vHandleEl_.style.top = top + 'px';
     goog.style.setOpacity(this.hsImageEl_, (v / 255));
 
     goog.style.setStyle(this.valueBackgroundImageElement, 'background-color',
-        goog.color.hsvToHex(this.hsv_[0]***REMOVED*** 360, this.hsv_[1], 255));
+        goog.color.hsvToHex(this.hsv_[0] * 360, this.hsv_[1], 255));
 
     goog.style.setStyle(this.swatchElement, 'background-color', this.color_);
     goog.style.setStyle(this.swatchElement, 'color',
                         (this.hsv_[2] > 255 / 2) ? '#000' : '#fff');
     this.updateInput();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mousedown events on palette UI elements.
-***REMOVED*** @param {goog.events.BrowserEvent} e Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles mousedown events on palette UI elements.
+ * @param {goog.events.BrowserEvent} e Event object.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.handleMouseDown = function(e) {
   if (e.target == this.valueBackgroundImageElement ||
       e.target == this.vHandleEl_) {
@@ -437,17 +437,17 @@ goog.ui.HsvPalette.prototype.handleMouseDown = function(e) {
     this.mouseUpListener = goog.events.listen(this.document_,
         goog.events.EventType.MOUSEUP, this.handleMouseUp, false, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mousemove events on the document once a drag operation on the value
-***REMOVED*** slider has started.
-***REMOVED*** @param {goog.math.Rect} b Boundaries of the value slider object at the start
-***REMOVED***     of the drag operation.
-***REMOVED*** @param {goog.events.BrowserEvent} e Event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles mousemove events on the document once a drag operation on the value
+ * slider has started.
+ * @param {goog.math.Rect} b Boundaries of the value slider object at the start
+ *     of the drag operation.
+ * @param {goog.events.BrowserEvent} e Event object.
+ * @private
+ */
 goog.ui.HsvPalette.prototype.handleMouseMoveV_ = function(b, e) {
   e.preventDefault();
   var vportPos = this.getDomHelper().getDocumentScroll();
@@ -457,20 +457,20 @@ goog.ui.HsvPalette.prototype.handleMouseMoveV_ = function(b, e) {
       b.top + b.height);
 
   var newV = Math.round(
-      255***REMOVED*** (b.top + b.height - height) / b.height);
+      255 * (b.top + b.height - height) / b.height);
 
   this.setHsv(null, null, newV);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mousemove events on the document once a drag operation on the
-***REMOVED*** hue/saturation slider has started.
-***REMOVED*** @param {goog.math.Rect} b Boundaries of the value slider object at the start
-***REMOVED***     of the drag operation.
-***REMOVED*** @param {goog.events.BrowserEvent} e Event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles mousemove events on the document once a drag operation on the
+ * hue/saturation slider has started.
+ * @param {goog.math.Rect} b Boundaries of the value slider object at the start
+ *     of the drag operation.
+ * @param {goog.events.BrowserEvent} e Event object.
+ * @private
+ */
 goog.ui.HsvPalette.prototype.handleMouseMoveHs_ = function(b, e) {
   e.preventDefault();
   var vportPos = this.getDomHelper().getDocumentScroll();
@@ -479,27 +479,27 @@ goog.ui.HsvPalette.prototype.handleMouseMoveHs_ = function(b, e) {
   var newS = (-Math.min(Math.max(vportPos.y + e.clientY, b.top),
       b.top + b.height) + b.top + b.height) / b.height;
   this.setHsv(newH, newS, null);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mouseup events on the document, which ends a drag operation.
-***REMOVED*** @param {goog.events.Event} e Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles mouseup events on the document, which ends a drag operation.
+ * @param {goog.events.Event} e Event object.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.handleMouseUp = function(e) {
   goog.events.unlistenByKey(this.mouseMoveListener);
   goog.events.unlistenByKey(this.mouseUpListener);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles input events on the hex value input field.
-***REMOVED*** @param {goog.events.Event} e Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles input events on the hex value input field.
+ * @param {goog.events.Event} e Event object.
+ * @protected
+ */
 goog.ui.HsvPalette.prototype.handleInput = function(e) {
   if (/^#?[0-9a-f]{6}$/i.test(this.inputElement.value)) {
     this.setColor(this.inputElement.value);
   }
-***REMOVED***
+};

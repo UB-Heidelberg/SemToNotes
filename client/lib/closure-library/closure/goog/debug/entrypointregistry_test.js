@@ -26,8 +26,8 @@ var errorFn;
 function setUp() {
   lastError = null;
   errorFn = function(message) {
-    throw {message: message***REMOVED***
- ***REMOVED*****REMOVED***
+    throw {message: message};
+  };
   errorHandler = new goog.debug.ErrorHandler(function(ex) {
     lastError = ex;
   });

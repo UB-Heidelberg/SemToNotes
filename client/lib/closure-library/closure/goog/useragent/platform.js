@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for getting details about the user's platform.
-***REMOVED***
+/**
+ * @fileoverview Utilities for getting details about the user's platform.
+ */
 
 goog.provide('goog.userAgent.platform');
 
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Detects the version of Windows or Mac OS that is running.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @return {string} The platform version.
-***REMOVED***
+/**
+ * Detects the version of Windows or Mac OS that is running.
+ *
+ * @private
+ * @return {string} The platform version.
+ */
 goog.userAgent.platform.determineVersion_ = function() {
   var version = '', re;
   if (goog.userAgent.WINDOWS) {
@@ -55,28 +55,28 @@ goog.userAgent.platform.determineVersion_ = function() {
   }
 
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The version of the platform. We only determine the version for Windows and
-***REMOVED*** Mac, since it doesn't make much sense on Linux. For Windows, we only look at
-***REMOVED*** the NT version. Non-NT-based versions (e.g. 95, 98, etc.) are given version
-***REMOVED*** 0.0
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The version of the platform. We only determine the version for Windows and
+ * Mac, since it doesn't make much sense on Linux. For Windows, we only look at
+ * the NT version. Non-NT-based versions (e.g. 95, 98, etc.) are given version
+ * 0.0
+ * @type {string}
+ */
 goog.userAgent.platform.VERSION = goog.userAgent.platform.determineVersion_();
 
 
-***REMOVED***
-***REMOVED*** Whether the user agent platform version is higher or the same as the given
-***REMOVED*** version.
-***REMOVED***
-***REMOVED*** @param {string|number} version The version to check.
-***REMOVED*** @return {boolean} Whether the user agent platform version is higher or the
-***REMOVED***     same as the given version.
-***REMOVED***
+/**
+ * Whether the user agent platform version is higher or the same as the given
+ * version.
+ *
+ * @param {string|number} version The version to check.
+ * @return {boolean} Whether the user agent platform version is higher or the
+ *     same as the given version.
+ */
 goog.userAgent.platform.isVersion = function(version) {
   return goog.string.compareVersions(
       goog.userAgent.platform.VERSION, version) >= 0;
-***REMOVED***
+};

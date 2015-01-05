@@ -19,7 +19,7 @@ goog.require('goog.array');
 goog.require('goog.async.Deferred');
 goog.require('goog.async.DeferredList');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fs');
 goog.require('goog.fs.DirectoryEntry');
 goog.require('goog.fs.Error');
@@ -127,7 +127,7 @@ function testReadFileUtf16() {
     return;
   }
   var str = 'test content';
-  var buf = new ArrayBuffer(str.length***REMOVED*** 2);
+  var buf = new ArrayBuffer(str.length * 2);
   var arr = new Uint16Array(buf);
   for (var i = 0; i < str.length; i++) {
     arr[i] = str.charCodeAt(i);
@@ -580,7 +580,7 @@ function testSliceBlob() {
     'slice': function(start, end) {
       return [start, end];
     }
- ***REMOVED*****REMOVED***
+  };
 
   // Simulate Firefox 13 that implements the new slice.
   var tmpStubs = new goog.testing.PropertyReplacer();
@@ -627,7 +627,7 @@ function testSliceBlob() {
   delete blob.slice;
   blob.mozSlice = function(start, end) {
     return ['moz', start, end];
- ***REMOVED*****REMOVED***
+  };
   tmpStubs.set(goog.userAgent, 'GECKO', true);
   tmpStubs.set(goog.userAgent, 'WEBKIT', false);
   tmpStubs.set(goog.userAgent, 'IE', false);
@@ -644,7 +644,7 @@ function testSliceBlob() {
   delete blob.mozSlice;
   blob.webkitSlice = function(start, end) {
     return ['webkit', start, end];
- ***REMOVED*****REMOVED***
+  };
   tmpStubs.set(goog.userAgent, 'GECKO', false);
   tmpStubs.set(goog.userAgent, 'WEBKIT', true);
   tmpStubs.set(goog.userAgent, 'IE', false);
@@ -674,7 +674,7 @@ function testBrowserSupportsObjectUrls() {
     assertEquals('This browser doesn\'t seem to support blob URLs', e.message);
   }
 
-  var objectUrl = {***REMOVED***
+  var objectUrl = {};
   function createObjectURL() { return objectUrl; }
   stubs.set(goog.global, 'createObjectURL', createObjectURL);
 
@@ -735,10 +735,10 @@ function testGetBlobWithPropertiesUsingBlobBuilder() {
     this.parts = [];
     this.append = function(value, endings) {
       this.parts.push({value: value, endings: endings});
-   ***REMOVED*****REMOVED***
+    };
     this.getBlob = function(type) {
-      return {type: type, builder: this***REMOVED***
-   ***REMOVED*****REMOVED***
+      return {type: type, builder: this};
+    };
   }
   stubs.set(goog.global, 'BlobBuilder', BlobBuilder);
 
@@ -838,5 +838,5 @@ function checkReadyState(expectedState, writer) {
 }
 
 function splitArgs(fn) {
-  return function(args) { return fn(args[0], args[1]);***REMOVED*****REMOVED***
+  return function(args) { return fn(args[0], args[1]); };
 }

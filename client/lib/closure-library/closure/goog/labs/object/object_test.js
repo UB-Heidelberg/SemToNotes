@@ -19,7 +19,7 @@ goog.require('goog.labs.object');
 goog.require('goog.testing.jsunit');
 
 function testIs() {
-  var object = {***REMOVED***
+  var object = {};
   assertTrue(goog.labs.object.is(object, object));
   assertFalse(goog.labs.object.is(object, {}));
 

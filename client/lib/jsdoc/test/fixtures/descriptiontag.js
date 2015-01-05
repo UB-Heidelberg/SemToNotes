@@ -1,7 +1,7 @@
-***REMOVED*** Blah Blah Blah
-***REMOVED*** @desc halb halb halb
-***REMOVED***
+/** Blah Blah Blah
+ * @desc halb halb halb
+ */
 var x;
 
-***REMOVED*** @description lkjasdf***REMOVED***
+/** @description lkjasdf */
 var y;

@@ -16,7 +16,7 @@ goog.provide('goog.testing.net.XhrIoTest');
 goog.setTestOnly('goog.testing.net.XhrIoTest');
 
 goog.require('goog.dom.xml');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.net.ErrorCode');
 goog.require('goog.net.EventType');
@@ -158,7 +158,7 @@ function testGetResponseText() {
   // Text response came.
   var called = false;
   var xhr = new goog.testing.net.XhrIo();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertEquals('text', e.target.getResponseText());
   });
@@ -170,7 +170,7 @@ function testGetResponseText() {
   var xhr = new goog.testing.net.XhrIo();
   var xml = goog.dom.xml.createDocument();
   xml.appendChild(xml.createElement('root'));
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     var text = e.target.getResponseText();
     assertTrue(/<root ?\/>/.test(text));
@@ -183,7 +183,7 @@ function testGetResponseJson() {
   // Valid JSON response came.
   var called = false;
   var xhr = new goog.testing.net.XhrIo();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertArrayEquals([0, 1], e.target.getResponseJson());
   });
@@ -193,7 +193,7 @@ function testGetResponseJson() {
   // Valid JSON response with XSSI prefix encoded came.
   var called = false;
   var xhr = new goog.testing.net.XhrIo();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertArrayEquals([0, 1], e.target.getResponseJson(')]}\', \n'));
   });
@@ -203,7 +203,7 @@ function testGetResponseJson() {
   // Invalid JSON response came.
   var called = false;
   var xhr = new goog.testing.net.XhrIo();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertThrows(e.target.getResponseJson);
   });
@@ -215,7 +215,7 @@ function testGetResponseJson() {
   var xhr = new goog.testing.net.XhrIo();
   var xml = goog.dom.xml.createDocument();
   xml.appendChild(xml.createElement('root'));
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertThrows(e.target.getResponseJson);
   });
@@ -227,7 +227,7 @@ function testGetResponseXml() {
   // Text response came.
   var called = false;
   var xhr = new goog.testing.net.XhrIo();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertNull(e.target.getResponseXml());
   });
@@ -239,7 +239,7 @@ function testGetResponseXml() {
   var xhr = new goog.testing.net.XhrIo();
   var xml = goog.dom.xml.createDocument();
   xml.appendChild(xml.createElement('root'));
-***REMOVED***xhr, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, function(e) {
     called = true;
     assertEquals(xml, e.target.getResponseXml());
   });
@@ -256,7 +256,7 @@ function testGetResponseHeaders_noHeadersPresent() {
         assertUndefined(e.target.getResponseHeader('XHR'));
       });
   mockControl.$replayAll();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
   xhr.simulateResponse(200, '');
 
   mockControl.$verifyAll();
@@ -273,7 +273,7 @@ function testGetResponseHeaders_headersPresent() {
         assertEquals(e.target.getResponseHeader('Pragma'), 'no-cache');
       });
   mockControl.$replayAll();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
   xhr.simulateResponse(200, '', {'Pragma': 'no-cache'});
 
   mockControl.$verifyAll();
@@ -285,11 +285,11 @@ function testAbort_WhenNoPendingSentRequests() {
   var eventListener = mockControl.createFunctionMock();
   mockControl.$replayAll();
 
-***REMOVED***xhr, goog.net.EventType.COMPLETE, eventListener);
-***REMOVED***xhr, goog.net.EventType.SUCCESS, eventListener);
-***REMOVED***xhr, goog.net.EventType.ABORT, eventListener);
-***REMOVED***xhr, goog.net.EventType.ERROR, eventListener);
-***REMOVED***xhr, goog.net.EventType.READY, eventListener);
+  goog.events.listen(xhr, goog.net.EventType.COMPLETE, eventListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, eventListener);
+  goog.events.listen(xhr, goog.net.EventType.ABORT, eventListener);
+  goog.events.listen(xhr, goog.net.EventType.ERROR, eventListener);
+  goog.events.listen(xhr, goog.net.EventType.READY, eventListener);
 
   xhr.abort();
 
@@ -322,11 +322,11 @@ function testAbort_PendingSentRequest() {
       });
   mockControl.$replayAll();
 
-***REMOVED***xhr, goog.net.EventType.COMPLETE, mockListener);
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
-***REMOVED***xhr, goog.net.EventType.ABORT, mockListener);
-***REMOVED***xhr, goog.net.EventType.ERROR, mockListener);
-***REMOVED***xhr, goog.net.EventType.READY, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.COMPLETE, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.ABORT, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.ERROR, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.READY, mockListener);
   xhr.send('dummyurl');
   xhr.abort();
 
@@ -368,13 +368,13 @@ function testEvents_Success() {
       });
   mockControl.$replayAll();
 
-***REMOVED***xhr, goog.net.EventType.READY_STATE_CHANGE,
+  goog.events.listen(xhr, goog.net.EventType.READY_STATE_CHANGE,
       readyStateListener);
-***REMOVED***xhr, goog.net.EventType.COMPLETE, mockListener);
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
-***REMOVED***xhr, goog.net.EventType.ABORT, mockListener);
-***REMOVED***xhr, goog.net.EventType.ERROR, mockListener);
-***REMOVED***xhr, goog.net.EventType.READY, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.COMPLETE, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.ABORT, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.ERROR, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.READY, mockListener);
   xhr.send('dummyurl');
   xhr.simulateResponse(200, null);
 
@@ -393,7 +393,7 @@ function testGetResponseHeaders() {
         assertEquals('bar', headers['test2']);
       });
   mockControl.$replayAll();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
 
   // Simulate an XHR with 2 headers.
   xhr.simulateResponse(200, '', {'test1': 'foo', 'test2': 'bar'});
@@ -412,7 +412,7 @@ function testGetResponseHeadersWithColonInValue() {
         assertEquals('f:o:o', headers['test1']);
       });
   mockControl.$replayAll();
-***REMOVED***xhr, goog.net.EventType.SUCCESS, mockListener);
+  goog.events.listen(xhr, goog.net.EventType.SUCCESS, mockListener);
 
   // Simulate an XHR with a colon in the http header value.
   xhr.simulateResponse(200, '', {'test1': 'f:o:o'});

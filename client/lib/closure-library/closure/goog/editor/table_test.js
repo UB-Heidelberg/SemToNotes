@@ -22,8 +22,8 @@ goog.require('goog.userAgent');
 
 function setUp() {
   var inputTables = document.getElementsByTagName('table');
-  testElements = {***REMOVED***
-  testObjects = {***REMOVED***
+  testElements = {};
+  testObjects = {};
   for (var i = 0; i < inputTables.length; i++) {
     var originalTable = inputTables[i];
     if (originalTable.id.substring(0, 5) == 'test-') {

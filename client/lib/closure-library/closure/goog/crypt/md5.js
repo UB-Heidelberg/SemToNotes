@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview MD5 cryptographic hash.
-***REMOVED*** Implementation of http://tools.ietf.org/html/rfc1321 with common
-***REMOVED*** optimizations and tweaks (see http://en.wikipedia.org/wiki/MD5).
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED***   var md5 = new goog.crypt.Md5();
-***REMOVED***   md5.update(bytes);
-***REMOVED***   var hash = md5.digest();
-***REMOVED***
-***REMOVED*** Performance:
-***REMOVED***   Chrome 23              ~680 Mbit/s
-***REMOVED***   Chrome 13 (in a VM)    ~250 Mbit/s
-***REMOVED***   Firefox 6.0 (in a VM)  ~100 Mbit/s
-***REMOVED***   IE9 (in a VM)           ~27 Mbit/s
-***REMOVED***   Firefox 3.6             ~15 Mbit/s
-***REMOVED***   IE8 (in a VM)           ~13 Mbit/s
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview MD5 cryptographic hash.
+ * Implementation of http://tools.ietf.org/html/rfc1321 with common
+ * optimizations and tweaks (see http://en.wikipedia.org/wiki/MD5).
+ *
+ * Usage:
+ *   var md5 = new goog.crypt.Md5();
+ *   md5.update(bytes);
+ *   var hash = md5.digest();
+ *
+ * Performance:
+ *   Chrome 23              ~680 Mbit/s
+ *   Chrome 13 (in a VM)    ~250 Mbit/s
+ *   Firefox 6.0 (in a VM)  ~100 Mbit/s
+ *   IE9 (in a VM)           ~27 Mbit/s
+ *   Firefox 3.6             ~15 Mbit/s
+ *   IE8 (in a VM)           ~13 Mbit/s
+ *
+ */
 
 goog.provide('goog.crypt.Md5');
 
@@ -38,73 +38,73 @@ goog.require('goog.crypt.Hash');
 
 
 
-***REMOVED***
-***REMOVED*** MD5 cryptographic hash constructor.
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Hash}
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * MD5 cryptographic hash constructor.
+ * @constructor
+ * @extends {goog.crypt.Hash}
+ * @final
+ * @struct
+ */
 goog.crypt.Md5 = function() {
   goog.crypt.Md5.base(this, 'constructor');
 
   this.blockSize = 512 / 8;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Holds the current values of accumulated A-D variables (MD buffer).
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Holds the current values of accumulated A-D variables (MD buffer).
+   * @type {Array.<number>}
+   * @private
+   */
   this.chain_ = new Array(4);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A buffer holding the data until the whole block can be processed.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A buffer holding the data until the whole block can be processed.
+   * @type {Array.<number>}
+   * @private
+   */
   this.block_ = new Array(this.blockSize);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The length of yet-unprocessed data as collected in the block.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The length of yet-unprocessed data as collected in the block.
+   * @type {number}
+   * @private
+   */
   this.blockLength_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The total length of the message so far.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The total length of the message so far.
+   * @type {number}
+   * @private
+   */
   this.totalLength_ = 0;
 
   this.reset();
-***REMOVED***
+};
 goog.inherits(goog.crypt.Md5, goog.crypt.Hash);
 
 
-***REMOVED***
-***REMOVED*** Integer rotation constants used by the abbreviated implementation.
-***REMOVED*** They are hardcoded in the unrolled implementation, so it is left
-***REMOVED*** here commented out.
-***REMOVED*** @type {Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Integer rotation constants used by the abbreviated implementation.
+ * They are hardcoded in the unrolled implementation, so it is left
+ * here commented out.
+ * @type {Array.<number>}
+ * @private
+ *
 goog.crypt.Md5.S_ = [
   7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
   5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
   4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
   6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
 ];
-***REMOVED***
+ */
 
-***REMOVED***
-***REMOVED*** Sine function constants used by the abbreviated implementation.
-***REMOVED*** They are hardcoded in the unrolled implementation, so it is left
-***REMOVED*** here commented out.
-***REMOVED*** @type {Array.<number>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sine function constants used by the abbreviated implementation.
+ * They are hardcoded in the unrolled implementation, so it is left
+ * here commented out.
+ * @type {Array.<number>}
+ * @private
+ *
 goog.crypt.Md5.T_ = [
   0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee,
   0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
@@ -123,10 +123,10 @@ goog.crypt.Md5.T_ = [
   0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
   0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391
 ];
-***REMOVED***
+ */
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Md5.prototype.reset = function() {
   this.chain_[0] = 0x67452301;
   this.chain_[1] = 0xefcdab89;
@@ -135,16 +135,16 @@ goog.crypt.Md5.prototype.reset = function() {
 
   this.blockLength_ = 0;
   this.totalLength_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal compress helper function. It takes a block of data (64 bytes)
-***REMOVED*** and updates the accumulator.
-***REMOVED*** @param {Array.<number>|Uint8Array|string} buf The block to compress.
-***REMOVED*** @param {number=} opt_offset Offset of the block in the buffer.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal compress helper function. It takes a block of data (64 bytes)
+ * and updates the accumulator.
+ * @param {Array.<number>|Uint8Array|string} buf The block to compress.
+ * @param {number=} opt_offset Offset of the block in the buffer.
+ * @private
+ */
 goog.crypt.Md5.prototype.compress_ = function(buf, opt_offset) {
   if (!opt_offset) {
     opt_offset = 0;
@@ -177,9 +177,9 @@ goog.crypt.Md5.prototype.compress_ = function(buf, opt_offset) {
   var sum = 0;
 
   /*
-  ***REMOVED*** This is an abbreviated implementation, it is left here commented out for
-  ***REMOVED*** reference purposes. See below for an unrolled version in use.
-  ***REMOVED***
+   * This is an abbreviated implementation, it is left here commented out for
+   * reference purposes. See below for an unrolled version in use.
+   *
   var f, n, tmp;
   for (var i = 0; i < 64; ++i) {
 
@@ -188,13 +188,13 @@ goog.crypt.Md5.prototype.compress_ = function(buf, opt_offset) {
       n = i;
     } else if (i < 32) {
       f = (C ^ (D & (B ^ C)));
-      n = (5***REMOVED*** i + 1) % 16;
+      n = (5 * i + 1) % 16;
     } else if (i < 48) {
       f = (B ^ C ^ D);
-      n = (3***REMOVED*** i + 5) % 16;
+      n = (3 * i + 5) % 16;
     } else {
       f = (C ^ (B | (~D)));
-      n = (7***REMOVED*** i) % 16;
+      n = (7 * i) % 16;
     }
 
     tmp = D;
@@ -205,14 +205,14 @@ goog.crypt.Md5.prototype.compress_ = function(buf, opt_offset) {
          (sum >>> (32 - goog.crypt.Md5.S_[i]));
     A = tmp;
   }
- ***REMOVED*****REMOVED***
+   */
 
   /*
-  ***REMOVED*** This is an unrolled MD5 implementation, which gives ~30% speedup compared
-  ***REMOVED*** to the abbreviated implementation above, as measured on Chrome 11. It is
-  ***REMOVED*** important to keep 32-bit croppings to minimum and inline the integer
-  ***REMOVED*** rotation.
- ***REMOVED*****REMOVED***
+   * This is an unrolled MD5 implementation, which gives ~30% speedup compared
+   * to the abbreviated implementation above, as measured on Chrome 11. It is
+   * important to keep 32-bit croppings to minimum and inline the integer
+   * rotation.
+   */
   sum = (A + (D ^ (B & (C ^ D))) + X[0] + 0xd76aa478) & 0xffffffff;
   A = B + (((sum << 7) & 0xffffffff) | (sum >>> 25));
   sum = (D + (C ^ (A & (B ^ C))) + X[1] + 0xe8c7b756) & 0xffffffff;
@@ -346,10 +346,10 @@ goog.crypt.Md5.prototype.compress_ = function(buf, opt_offset) {
   this.chain_[1] = (this.chain_[1] + B) & 0xffffffff;
   this.chain_[2] = (this.chain_[2] + C) & 0xffffffff;
   this.chain_[3] = (this.chain_[3] + D) & 0xffffffff;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Md5.prototype.update = function(bytes, opt_length) {
   if (!goog.isDef(opt_length)) {
     opt_length = bytes.length;
@@ -400,16 +400,16 @@ goog.crypt.Md5.prototype.update = function(bytes, opt_length) {
 
   this.blockLength_ = blockLength;
   this.totalLength_ += opt_length;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.crypt.Md5.prototype.digest = function() {
   // This must accommodate at least 1 padding byte (0x80), 8 bytes of
   // total bitlength, and must end at a 64-byte boundary.
   var pad = new Array((this.blockLength_ < 56 ?
                        this.blockSize :
-                       this.blockSize***REMOVED*** 2) - this.blockLength_);
+                       this.blockSize * 2) - this.blockLength_);
 
   // Add padding: 0x80 0x00*
   pad[0] = 0x80;
@@ -417,7 +417,7 @@ goog.crypt.Md5.prototype.digest = function() {
     pad[i] = 0;
   }
   // Add the total number of bits, little endian 64-bit integer.
-  var totalBits = this.totalLength_***REMOVED*** 8;
+  var totalBits = this.totalLength_ * 8;
   for (var i = pad.length - 8; i < pad.length; ++i) {
     pad[i] = totalBits & 0xff;
     totalBits /= 0x100; // Don't use bit-shifting here!
@@ -432,4 +432,4 @@ goog.crypt.Md5.prototype.digest = function() {
     }
   }
   return digest;
-***REMOVED***
+};

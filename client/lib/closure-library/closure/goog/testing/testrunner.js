@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The test runner is a singleton object that is used to execute
-***REMOVED*** a goog.testing.TestCases, display the results, and expose the results to
-***REMOVED*** Selenium for automation.  If a TestCase hasn't been registered with the
-***REMOVED*** runner by the time window.onload occurs, the testRunner will try to auto-
-***REMOVED*** discover JsUnit style test pages.
-***REMOVED***
-***REMOVED*** The hooks for selenium are (see http://go/selenium-hook-setup):-
-***REMOVED***  - Boolean G_testRunner.isFinished()
-***REMOVED***  - Boolean G_testRunner.isSuccess()
-***REMOVED***  - String G_testRunner.getReport()
-***REMOVED***  - number G_testRunner.getRunTime()
-***REMOVED***  - Object.<string, Array.<string>> G_testRunner.getTestResults()
-***REMOVED***
-***REMOVED*** Testing code should not have dependencies outside of goog.testing so as to
-***REMOVED*** reduce the chance of masking missing dependencies.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview The test runner is a singleton object that is used to execute
+ * a goog.testing.TestCases, display the results, and expose the results to
+ * Selenium for automation.  If a TestCase hasn't been registered with the
+ * runner by the time window.onload occurs, the testRunner will try to auto-
+ * discover JsUnit style test pages.
+ *
+ * The hooks for selenium are (see http://go/selenium-hook-setup):-
+ *  - Boolean G_testRunner.isFinished()
+ *  - Boolean G_testRunner.isSuccess()
+ *  - String G_testRunner.getReport()
+ *  - number G_testRunner.getRunTime()
+ *  - Object.<string, Array.<string>> G_testRunner.getTestResults()
+ *
+ * Testing code should not have dependencies outside of goog.testing so as to
+ * reduce the chance of masking missing dependencies.
+ *
+ */
 
 goog.provide('goog.testing.TestRunner');
 
@@ -37,155 +37,155 @@ goog.require('goog.testing.TestCase');
 
 
 
-***REMOVED***
-***REMOVED*** Construct a test runner.
-***REMOVED***
-***REMOVED*** NOTE(user): This is currently pretty weird, I'm essentially trying to
-***REMOVED*** create a wrapper that the Selenium test can hook into to query the state of
-***REMOVED*** the running test case, while making goog.testing.TestCase general.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * Construct a test runner.
+ *
+ * NOTE(user): This is currently pretty weird, I'm essentially trying to
+ * create a wrapper that the Selenium test can hook into to query the state of
+ * the running test case, while making goog.testing.TestCase general.
+ *
+ * @constructor
+ */
 goog.testing.TestRunner = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Errors that occurred in the window.
-  ***REMOVED*** @type {Array.<string>}
- ***REMOVED*****REMOVED***
+  /**
+   * Errors that occurred in the window.
+   * @type {Array.<string>}
+   */
   this.errors = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reference to the active test case.
-***REMOVED*** @type {goog.testing.TestCase?}
-***REMOVED***
+/**
+ * Reference to the active test case.
+ * @type {goog.testing.TestCase?}
+ */
 goog.testing.TestRunner.prototype.testCase = null;
 
 
-***REMOVED***
-***REMOVED*** Whether the test runner has been initialized yet.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the test runner has been initialized yet.
+ * @type {boolean}
+ */
 goog.testing.TestRunner.prototype.initialized = false;
 
 
-***REMOVED***
-***REMOVED*** Element created in the document to add test results to.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element created in the document to add test results to.
+ * @type {Element}
+ * @private
+ */
 goog.testing.TestRunner.prototype.logEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Function to use when filtering errors.
-***REMOVED*** @type {(function(string))?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Function to use when filtering errors.
+ * @type {(function(string))?}
+ * @private
+ */
 goog.testing.TestRunner.prototype.errorFilter_ = null;
 
 
-***REMOVED***
-***REMOVED*** Whether an empty test case counts as an error.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether an empty test case counts as an error.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.TestRunner.prototype.strict_ = true;
 
 
-***REMOVED***
-***REMOVED*** Initializes the test runner.
-***REMOVED*** @param {goog.testing.TestCase} testCase The test case to initialize with.
-***REMOVED***
+/**
+ * Initializes the test runner.
+ * @param {goog.testing.TestCase} testCase The test case to initialize with.
+ */
 goog.testing.TestRunner.prototype.initialize = function(testCase) {
   if (this.testCase && this.testCase.running) {
     throw Error('The test runner is already waiting for a test to complete');
   }
   this.testCase = testCase;
   this.initialized = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** By default, the test runner is strict, and fails if it runs an empty
-***REMOVED*** test case.
-***REMOVED*** @param {boolean} strict Whether the test runner should fail on an empty
-***REMOVED***     test case.
-***REMOVED***
+/**
+ * By default, the test runner is strict, and fails if it runs an empty
+ * test case.
+ * @param {boolean} strict Whether the test runner should fail on an empty
+ *     test case.
+ */
 goog.testing.TestRunner.prototype.setStrict = function(strict) {
   this.strict_ = strict;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the test runner should fail on an empty
-***REMOVED***     test case.
-***REMOVED***
+/**
+ * @return {boolean} Whether the test runner should fail on an empty
+ *     test case.
+ */
 goog.testing.TestRunner.prototype.isStrict = function() {
   return this.strict_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the test runner is initialized.
-***REMOVED*** Used by Selenium Hooks.
-***REMOVED*** @return {boolean} Whether the test runner is active.
-***REMOVED***
+/**
+ * Returns true if the test runner is initialized.
+ * Used by Selenium Hooks.
+ * @return {boolean} Whether the test runner is active.
+ */
 goog.testing.TestRunner.prototype.isInitialized = function() {
   return this.initialized;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the test runner is finished.
-***REMOVED*** Used by Selenium Hooks.
-***REMOVED*** @return {boolean} Whether the test runner is active.
-***REMOVED***
+/**
+ * Returns true if the test runner is finished.
+ * Used by Selenium Hooks.
+ * @return {boolean} Whether the test runner is active.
+ */
 goog.testing.TestRunner.prototype.isFinished = function() {
   return this.errors.length > 0 ||
       this.initialized && !!this.testCase && this.testCase.started &&
       !this.testCase.running;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the test case didn't fail.
-***REMOVED*** Used by Selenium Hooks.
-***REMOVED*** @return {boolean} Whether the current test returned successfully.
-***REMOVED***
+/**
+ * Returns true if the test case didn't fail.
+ * Used by Selenium Hooks.
+ * @return {boolean} Whether the current test returned successfully.
+ */
 goog.testing.TestRunner.prototype.isSuccess = function() {
   return !this.hasErrors() && !!this.testCase && this.testCase.isSuccess();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the test case runner has errors that were caught outside of
-***REMOVED*** the test case.
-***REMOVED*** @return {boolean} Whether there were JS errors.
-***REMOVED***
+/**
+ * Returns true if the test case runner has errors that were caught outside of
+ * the test case.
+ * @return {boolean} Whether there were JS errors.
+ */
 goog.testing.TestRunner.prototype.hasErrors = function() {
   return this.errors.length > 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs an error that occurred.  Used in the case of environment setting up
-***REMOVED*** an onerror handler.
-***REMOVED*** @param {string} msg Error message.
-***REMOVED***
+/**
+ * Logs an error that occurred.  Used in the case of environment setting up
+ * an onerror handler.
+ * @param {string} msg Error message.
+ */
 goog.testing.TestRunner.prototype.logError = function(msg) {
   if (!this.errorFilter_ || this.errorFilter_.call(null, msg)) {
     this.errors.push(msg);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Log failure in current running test.
-***REMOVED*** @param {Error} ex Exception.
-***REMOVED***
+/**
+ * Log failure in current running test.
+ * @param {Error} ex Exception.
+ */
 goog.testing.TestRunner.prototype.logTestFailure = function(ex) {
-  var testName =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (goog.testing.TestCase.currentTestName);
+  var testName = /** @type {string} */ (goog.testing.TestCase.currentTestName);
   if (this.testCase) {
     this.testCase.logError(testName, ex);
   } else {
@@ -193,25 +193,25 @@ goog.testing.TestRunner.prototype.logTestFailure = function(ex) {
     throw new Error('Test runner not initialized with a test case. Original ' +
                     'exception: ' + ex.message);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a function to use as a filter for errors.
-***REMOVED*** @param {function(string)} fn Filter function.
-***REMOVED***
+/**
+ * Sets a function to use as a filter for errors.
+ * @param {function(string)} fn Filter function.
+ */
 goog.testing.TestRunner.prototype.setErrorFilter = function(fn) {
   this.errorFilter_ = fn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a report of the test case that ran.
-***REMOVED*** Used by Selenium Hooks.
-***REMOVED*** @param {boolean=} opt_verbose If true results will include data about all
-***REMOVED***     tests, not just what failed.
-***REMOVED*** @return {string} A report summary of the test.
-***REMOVED***
+/**
+ * Returns a report of the test case that ran.
+ * Used by Selenium Hooks.
+ * @param {boolean=} opt_verbose If true results will include data about all
+ *     tests, not just what failed.
+ * @return {string} A report summary of the test.
+ */
 goog.testing.TestRunner.prototype.getReport = function(opt_verbose) {
   var report = [];
   if (this.testCase) {
@@ -223,31 +223,31 @@ goog.testing.TestRunner.prototype.getReport = function(opt_verbose) {
     report.push('\n');
   }
   return report.join('\n');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the amount of time it took for the test to run.
-***REMOVED*** Used by Selenium Hooks.
-***REMOVED*** @return {number} The run time, in milliseconds.
-***REMOVED***
+/**
+ * Returns the amount of time it took for the test to run.
+ * Used by Selenium Hooks.
+ * @return {number} The run time, in milliseconds.
+ */
 goog.testing.TestRunner.prototype.getRunTime = function() {
   return this.testCase ? this.testCase.getRunTime() : 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number of script files that were loaded in order to run the test.
-***REMOVED*** @return {number} The number of script files.
-***REMOVED***
+/**
+ * Returns the number of script files that were loaded in order to run the test.
+ * @return {number} The number of script files.
+ */
 goog.testing.TestRunner.prototype.getNumFilesLoaded = function() {
   return this.testCase ? this.testCase.getNumFilesLoaded() : 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Executes a test case and prints the results to the window.
-***REMOVED***
+/**
+ * Executes a test case and prints the results to the window.
+ */
 goog.testing.TestRunner.prototype.execute = function() {
   if (!this.testCase) {
     throw Error('The test runner must be initialized with a test case ' +
@@ -265,13 +265,13 @@ goog.testing.TestRunner.prototype.execute = function() {
 
   this.testCase.setCompletedCallback(goog.bind(this.onComplete_, this));
   this.testCase.runTests();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Writes the results to the document when the test case completes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Writes the results to the document when the test case completes.
+ * @private
+ */
 goog.testing.TestRunner.prototype.onComplete_ = function() {
   var log = this.testCase.getReport(true);
   if (this.errors.length > 0) {
@@ -301,13 +301,13 @@ goog.testing.TestRunner.prototype.onComplete_ = function() {
   }, this);
   runAgainLink.innerHTML = 'Run again without reloading';
   this.logEl_.appendChild(runAgainLink);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Writes a nicely formatted log out to the document.
-***REMOVED*** @param {string} log The string to write.
-***REMOVED***
+/**
+ * Writes a nicely formatted log out to the document.
+ * @param {string} log The string to write.
+ */
 goog.testing.TestRunner.prototype.writeLog = function(log) {
   var lines = log.split('\n');
   for (var i = 0; i < lines.length; i++) {
@@ -395,29 +395,29 @@ goog.testing.TestRunner.prototype.writeLog = function(log) {
     }
     this.logEl_.appendChild(div);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a message to the current test case.
-***REMOVED*** @param {string} s The text to output to the log.
-***REMOVED***
+/**
+ * Logs a message to the current test case.
+ * @param {string} s The text to output to the log.
+ */
 goog.testing.TestRunner.prototype.log = function(s) {
   if (this.testCase) {
     this.testCase.log(s);
   }
-***REMOVED***
+};
 
 
 // TODO(nnaze): Properly handle serving test results when multiple test cases
 // are run.
-***REMOVED***
-***REMOVED*** @return {Object.<string, !Array.<string>>} A map of test names to a list of
-***REMOVED*** test failures (if any) to provide formatted data for the test runner.
-***REMOVED***
+/**
+ * @return {Object.<string, !Array.<string>>} A map of test names to a list of
+ * test failures (if any) to provide formatted data for the test runner.
+ */
 goog.testing.TestRunner.prototype.getTestResults = function() {
   if (this.testCase) {
     return this.testCase.getTestResults();
   }
   return null;
-***REMOVED***
+};

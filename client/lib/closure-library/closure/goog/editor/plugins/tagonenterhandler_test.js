@@ -42,10 +42,10 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleting a BR that comes right before a block element works.
-***REMOVED*** @bug 1471096
-***REMOVED***
+/**
+ * Tests that deleting a BR that comes right before a block element works.
+ * @bug 1471096
+ */
 function testDeleteBrBeforeBlock() {
   // This test only works on Gecko, because it's testing for manual deletion of
   // BR tags, which is done only for Gecko. For other browsers we fall through
@@ -66,11 +66,11 @@ function testDeleteBrBeforeBlock() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that deleting a BR is working normally (that the workaround for the
-***REMOVED*** bug is not causing double deletes).
-***REMOVED*** @bug 1471096
-***REMOVED***
+/**
+ * Tests that deleting a BR is working normally (that the workaround for the
+ * bug is not causing double deletes).
+ * @bug 1471096
+ */
 function testDeleteBrNormal() {
   // This test only works on Gecko, because it's testing for manual deletion of
   // BR tags, which is done only for Gecko. For other browsers we fall through
@@ -92,15 +92,15 @@ function testDeleteBrNormal() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for http://b/1991234 . Tests that when you hit enter and it
-***REMOVED*** creates a blank line with whitespace and a BR, the cursor is placed in the
-***REMOVED*** whitespace text node instead of the BR, otherwise continuing to type will
-***REMOVED*** create adjacent text nodes, which causes browsers to mess up some
-***REMOVED*** execcommands. Fix is in a Gecko-only codepath, thus test runs only for Gecko.
-***REMOVED*** A full test for the entire sequence that reproed the bug is in
-***REMOVED*** javascript/apps/editor/tests/ponenter_robot.html .
-***REMOVED***
+/**
+ * Regression test for http://b/1991234 . Tests that when you hit enter and it
+ * creates a blank line with whitespace and a BR, the cursor is placed in the
+ * whitespace text node instead of the BR, otherwise continuing to type will
+ * create adjacent text nodes, which causes browsers to mess up some
+ * execcommands. Fix is in a Gecko-only codepath, thus test runs only for Gecko.
+ * A full test for the entire sequence that reproed the bug is in
+ * javascript/apps/editor/tests/ponenter_robot.html .
+ */
 function testEnterCreatesBlankLine() {
   if (goog.userAgent.GECKO) {
     field1.setHtml(false, '<p>one <br></p>');
@@ -126,14 +126,14 @@ function testEnterCreatesBlankLine() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for http://b/3051179 . Tests that when you hit enter and it
-***REMOVED*** creates a blank line with a BR and the cursor is placed in P.
-***REMOVED*** Splitting DOM causes to make an empty text node. Then if the cursor is placed
-***REMOVED*** at the text node the cursor is shown at wrong location.
-***REMOVED*** Therefore this test checks that the cursor is not placed at an empty node.
-***REMOVED*** Fix is in a Gecko-only codepath, thus test runs only for Gecko.
-***REMOVED***
+/**
+ * Regression test for http://b/3051179 . Tests that when you hit enter and it
+ * creates a blank line with a BR and the cursor is placed in P.
+ * Splitting DOM causes to make an empty text node. Then if the cursor is placed
+ * at the text node the cursor is shown at wrong location.
+ * Therefore this test checks that the cursor is not placed at an empty node.
+ * Fix is in a Gecko-only codepath, thus test runs only for Gecko.
+ */
 function testEnterNormalizeNodes() {
   if (goog.userAgent.GECKO) {
     field1.setHtml(false, '<p>one<br></p>');
@@ -153,12 +153,12 @@ function testEnterNormalizeNodes() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies
-***REMOVED*** goog.editor.plugins.TagOnEnterHandler.prototype.handleRegularEnterGecko_
-***REMOVED*** when we explicitly split anchor elements. This test runs only for Gecko
-***REMOVED*** since this is a Gecko-only codepath.
-***REMOVED***
+/**
+ * Verifies
+ * goog.editor.plugins.TagOnEnterHandler.prototype.handleRegularEnterGecko_
+ * when we explicitly split anchor elements. This test runs only for Gecko
+ * since this is a Gecko-only codepath.
+ */
 function testEnterAtBeginningOfLink() {
   if (goog.userAgent.GECKO) {
     field1.setHtml(false, '<a href="/">b<br></a>');
@@ -172,9 +172,9 @@ function testEnterAtBeginningOfLink() {
 }
 
 
-***REMOVED***
-***REMOVED*** Verifies correct handling of pressing enter in an empty list item.
-***REMOVED***
+/**
+ * Verifies correct handling of pressing enter in an empty list item.
+ */
 function testEnterInEmptyListItemInEmptyList() {
   if (goog.userAgent.GECKO) {
     field1.setHtml(false, '<ul><li>&nbsp;</li></ul>');
@@ -349,9 +349,9 @@ function testPrepareContentForDivOnEnter() {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that the prepared contents matches the expected.
-***REMOVED***
+/**
+ * Assert that the prepared contents matches the expected.
+ */
 function assertPreparedContents(expected, original, opt_tag) {
   var field = makeField('field1', opt_tag);
   field.makeEditable();
@@ -361,12 +361,12 @@ function assertPreparedContents(expected, original, opt_tag) {
 }
 
 
-***REMOVED***
-***REMOVED*** Selects the node at the given id, and simulates an ENTER keypress.
-***REMOVED*** @param {googe.editor.Field} field The field with the node.
-***REMOVED*** @param {string} id A DOM id.
-***REMOVED*** @return {boolean} Whether preventDefault was called on the event.
-***REMOVED***
+/**
+ * Selects the node at the given id, and simulates an ENTER keypress.
+ * @param {googe.editor.Field} field The field with the node.
+ * @param {string} id A DOM id.
+ * @return {boolean} Whether preventDefault was called on the event.
+ */
 function selectNodeAndHitEnter(field, id) {
   var cursor = field.getEditableDomHelper().getElement(id);
   goog.dom.Range.createFromNodeContents(cursor).select();
@@ -375,12 +375,12 @@ function selectNodeAndHitEnter(field, id) {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a field with only the enter handler plugged in, for testing.
-***REMOVED*** @param {string} id A DOM id.
-***REMOVED*** @param {boolean=} opt_tag The block tag to use.  Defaults to P.
-***REMOVED*** @return {goog.editor.Field} A field.
-***REMOVED***
+/**
+ * Creates a field with only the enter handler plugged in, for testing.
+ * @param {string} id A DOM id.
+ * @param {boolean=} opt_tag The block tag to use.  Defaults to P.
+ * @return {goog.editor.Field} A field.
+ */
 function makeField(id, opt_tag) {
   var field = new goog.editor.Field(id);
   field.registerPlugin(
@@ -389,18 +389,18 @@ function makeField(id, opt_tag) {
 }
 
 
-***REMOVED***
-***REMOVED*** Runs a test for splitting the dom.
-***REMOVED*** @param {number} offset Index into the text node to split.
-***REMOVED*** @param {string} firstHalfString What the html of the first half of the DOM
-***REMOVED***     should be.
-***REMOVED*** @param {string} secondHalfString What the html of the 2nd half of the DOM
-***REMOVED***     should be.
-***REMOVED*** @param {boolean} isAppend True if the second half should be appended to the
-***REMOVED***     DOM.
-***REMOVED*** @param {boolean=} opt_goToRoot True if the root argument for splitDom should
-***REMOVED***     be excluded.
-***REMOVED***
+/**
+ * Runs a test for splitting the dom.
+ * @param {number} offset Index into the text node to split.
+ * @param {string} firstHalfString What the html of the first half of the DOM
+ *     should be.
+ * @param {string} secondHalfString What the html of the 2nd half of the DOM
+ *     should be.
+ * @param {boolean} isAppend True if the second half should be appended to the
+ *     DOM.
+ * @param {boolean=} opt_goToRoot True if the root argument for splitDom should
+ *     be excluded.
+ */
 function helpTestSplit_(offset, firstHalfString, secondHalfString, isAppend,
     opt_goToBody) {
   var node = document.createElement('div');
@@ -437,11 +437,11 @@ function helpTestSplit_(offset, firstHalfString, secondHalfString, isAppend,
 }
 
 
-***REMOVED***
-***REMOVED*** Runs different cases of splitting the DOM.
-***REMOVED*** @param {function(number, string, string)} testFn Function that takes an
-***REMOVED***     offset, firstHalfString and secondHalfString as parameters.
-***REMOVED***
+/**
+ * Runs different cases of splitting the DOM.
+ * @param {function(number, string, string)} testFn Function that takes an
+ *     offset, firstHalfString and secondHalfString as parameters.
+ */
 function splitDomCases_(testFn) {
   testFn(3, '<b>begin bold<i>ita</i></b>', '<b><i>lic</i>end bold</b>');
   testFn(0, '<b>begin bold<i>&nbsp;</i></b>', '<b><i>italic</i>end bold</b>');

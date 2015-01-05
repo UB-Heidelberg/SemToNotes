@@ -1,4 +1,4 @@
-global.jsdocPluginsTest.plugin2 = {***REMOVED***
+global.jsdocPluginsTest.plugin2 = {};
 
 exports.handlers = {
     fileBegin: function() {
@@ -19,4 +19,4 @@ exports.handlers = {
     fileComplete: function() {
         global.jsdocPluginsTest.plugin2.fileComplete = true;
     }
-***REMOVED***
+};

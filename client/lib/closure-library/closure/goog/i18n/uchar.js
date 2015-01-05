@@ -12,133 +12,133 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Collection of unitility functions for Unicode character.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Collection of unitility functions for Unicode character.
+ *
+ */
 
 goog.provide('goog.i18n.uChar');
 
 
-***REMOVED***
-***REMOVED*** Map used for looking up the char data.  Will be created lazily.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Map used for looking up the char data.  Will be created lazily.
+ * @type {Object}
+ * @private
+ */
 goog.i18n.uChar.charData_ = null;
 
 
 // Constants for handling Unicode supplementary characters (surrogate pairs).
 
 
-***REMOVED***
-***REMOVED*** The minimum value for Supplementary code points.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The minimum value for Supplementary code points.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.SUPPLEMENTARY_CODE_POINT_MIN_VALUE_ = 0x10000;
 
 
-***REMOVED***
-***REMOVED*** The highest Unicode code point value (scalar value) according to the Unicode
-***REMOVED*** Standard.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The highest Unicode code point value (scalar value) according to the Unicode
+ * Standard.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.CODE_POINT_MAX_VALUE_ = 0x10FFFF;
 
 
-***REMOVED***
-***REMOVED*** Lead surrogate minimum value.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lead surrogate minimum value.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.LEAD_SURROGATE_MIN_VALUE_ = 0xD800;
 
 
-***REMOVED***
-***REMOVED*** Lead surrogate maximum value.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Lead surrogate maximum value.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.LEAD_SURROGATE_MAX_VALUE_ = 0xDBFF;
 
 
-***REMOVED***
-***REMOVED*** Trail surrogate minimum value.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Trail surrogate minimum value.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.TRAIL_SURROGATE_MIN_VALUE_ = 0xDC00;
 
 
-***REMOVED***
-***REMOVED*** Trail surrogate maximum value.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Trail surrogate maximum value.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.TRAIL_SURROGATE_MAX_VALUE_ = 0xDFFF;
 
 
-***REMOVED***
-***REMOVED*** The number of least significant bits of a supplementary code point that in
-***REMOVED*** UTF-16 become the least significant bits of the trail surrogate. The rest of
-***REMOVED*** the in-use bits of the supplementary code point become the least significant
-***REMOVED*** bits of the lead surrogate.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The number of least significant bits of a supplementary code point that in
+ * UTF-16 become the least significant bits of the trail surrogate. The rest of
+ * the in-use bits of the supplementary code point become the least significant
+ * bits of the lead surrogate.
+ * @type {number}
+ * @private
+ */
 goog.i18n.uChar.TRAIL_SURROGATE_BIT_COUNT_ = 10;
 
 
-***REMOVED***
-***REMOVED*** Gets the U+ notation string of a Unicode character. Ex: 'U+0041' for 'A'.
-***REMOVED*** @param {string} ch The given character.
-***REMOVED*** @return {string} The U+ notation of the given character.
-***REMOVED***
+/**
+ * Gets the U+ notation string of a Unicode character. Ex: 'U+0041' for 'A'.
+ * @param {string} ch The given character.
+ * @return {string} The U+ notation of the given character.
+ */
 goog.i18n.uChar.toHexString = function(ch) {
   var chCode = goog.i18n.uChar.toCharCode(ch);
   var chCodeStr = 'U+' + goog.i18n.uChar.padString_(
       chCode.toString(16).toUpperCase(), 4, '0');
 
   return chCodeStr;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a string padded with given character to get given size.
-***REMOVED*** @param {string} str The given string to be padded.
-***REMOVED*** @param {number} length The target size of the string.
-***REMOVED*** @param {string} ch The character to be padded with.
-***REMOVED*** @return {string} The padded string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets a string padded with given character to get given size.
+ * @param {string} str The given string to be padded.
+ * @param {number} length The target size of the string.
+ * @param {string} ch The character to be padded with.
+ * @return {string} The padded string.
+ * @private
+ */
 goog.i18n.uChar.padString_ = function(str, length, ch) {
   while (str.length < length) {
     str = ch + str;
   }
   return str;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets Unicode value of the given character.
-***REMOVED*** @param {string} ch The given character, which in the case of a supplementary
-***REMOVED*** character is actually a surrogate pair. The remainder of the string is
-***REMOVED*** ignored.
-***REMOVED*** @return {number} The Unicode value of the character.
-***REMOVED***
+/**
+ * Gets Unicode value of the given character.
+ * @param {string} ch The given character, which in the case of a supplementary
+ * character is actually a surrogate pair. The remainder of the string is
+ * ignored.
+ * @return {number} The Unicode value of the character.
+ */
 goog.i18n.uChar.toCharCode = function(ch) {
   return goog.i18n.uChar.getCodePointAround(ch, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a character from the given Unicode value. If the given code point is not
-***REMOVED*** a valid Unicode code point, null is returned.
-***REMOVED*** @param {number} code The Unicode value of the character.
-***REMOVED*** @return {?string} The character corresponding to the given Unicode value.
-***REMOVED***
+/**
+ * Gets a character from the given Unicode value. If the given code point is not
+ * a valid Unicode code point, null is returned.
+ * @param {number} code The Unicode value of the character.
+ * @return {?string} The character corresponding to the given Unicode value.
+ */
 goog.i18n.uChar.fromCharCode = function(code) {
   if (!goog.isDefAndNotNull(code) ||
       !(code >= 0 && code <= goog.i18n.uChar.CODE_POINT_MAX_VALUE_)) {
@@ -170,42 +170,42 @@ goog.i18n.uChar.fromCharCode = function(code) {
            String.fromCharCode(trailCodePoint);
   }
   return String.fromCharCode(code);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the Unicode code point at the specified index.
-***REMOVED***
-***REMOVED*** If the char value specified at the given index is in the leading-surrogate
-***REMOVED*** range, and the following index is less than the length of {@code string}, and
-***REMOVED*** the char value at the following index is in the trailing-surrogate range,
-***REMOVED*** then the supplementary code point corresponding to this surrogate pair is
-***REMOVED*** returned.
-***REMOVED***
-***REMOVED*** If the char value specified at the given index is in the trailing-surrogate
-***REMOVED*** range, and the preceding index is not before the start of {@code string}, and
-***REMOVED*** the char value at the preceding index is in the leading-surrogate range, then
-***REMOVED*** the negated supplementary code point corresponding to this surrogate pair is
-***REMOVED*** returned.
-***REMOVED***
-***REMOVED*** The negation allows the caller to differentiate between the case where the
-***REMOVED*** given index is at the leading surrogate and the one where it is at the
-***REMOVED*** trailing surrogate, and thus deduce where the next character starts and
-***REMOVED*** preceding character ends.
-***REMOVED***
-***REMOVED*** Otherwise, the char value at the given index is returned. Thus, a leading
-***REMOVED*** surrogate is returned when it is not followed by a trailing surrogate, and a
-***REMOVED*** trailing surrogate is returned when it is not preceded by a leading
-***REMOVED*** surrogate.
-***REMOVED***
-***REMOVED*** @param {!string} string The string.
-***REMOVED*** @param {number} index The index from which the code point is to be retrieved.
-***REMOVED*** @return {number} The code point at the given index. If the given index is
-***REMOVED*** that of the start (i.e. lead surrogate) of a surrogate pair, returns the code
-***REMOVED*** point encoded by the pair. If the given index is that of the end (i.e. trail
-***REMOVED*** surrogate) of a surrogate pair, returns the negated code pointed encoded by
-***REMOVED*** the pair.
-***REMOVED***
+/**
+ * Returns the Unicode code point at the specified index.
+ *
+ * If the char value specified at the given index is in the leading-surrogate
+ * range, and the following index is less than the length of {@code string}, and
+ * the char value at the following index is in the trailing-surrogate range,
+ * then the supplementary code point corresponding to this surrogate pair is
+ * returned.
+ *
+ * If the char value specified at the given index is in the trailing-surrogate
+ * range, and the preceding index is not before the start of {@code string}, and
+ * the char value at the preceding index is in the leading-surrogate range, then
+ * the negated supplementary code point corresponding to this surrogate pair is
+ * returned.
+ *
+ * The negation allows the caller to differentiate between the case where the
+ * given index is at the leading surrogate and the one where it is at the
+ * trailing surrogate, and thus deduce where the next character starts and
+ * preceding character ends.
+ *
+ * Otherwise, the char value at the given index is returned. Thus, a leading
+ * surrogate is returned when it is not followed by a trailing surrogate, and a
+ * trailing surrogate is returned when it is not preceded by a leading
+ * surrogate.
+ *
+ * @param {!string} string The string.
+ * @param {number} index The index from which the code point is to be retrieved.
+ * @return {number} The code point at the given index. If the given index is
+ * that of the start (i.e. lead surrogate) of a surrogate pair, returns the code
+ * point encoded by the pair. If the given index is that of the end (i.e. trail
+ * surrogate) of a surrogate pair, returns the negated code pointed encoded by
+ * the pair.
+ */
 goog.i18n.uChar.getCodePointAround = function(string, index) {
   var charCode = string.charCodeAt(index);
   if (goog.i18n.uChar.isLeadSurrogateCodePoint(charCode) &&
@@ -213,7 +213,7 @@ goog.i18n.uChar.getCodePointAround = function(string, index) {
     var trail = string.charCodeAt(index + 1);
     if (goog.i18n.uChar.isTrailSurrogateCodePoint(trail)) {
       // Part of a surrogate pair.
-      return***REMOVED*****REMOVED*** @type {number}***REMOVED*** (goog.i18n.uChar.
+      return /** @type {number} */ (goog.i18n.uChar.
           buildSupplementaryCodePoint(charCode, trail));
     }
   } else if (goog.i18n.uChar.isTrailSurrogateCodePoint(charCode) &&
@@ -221,70 +221,70 @@ goog.i18n.uChar.getCodePointAround = function(string, index) {
     var lead = string.charCodeAt(index - 1);
     if (goog.i18n.uChar.isLeadSurrogateCodePoint(lead)) {
       // Part of a surrogate pair.
-      return***REMOVED*****REMOVED*** @type {number}***REMOVED*** (-goog.i18n.uChar.
+      return /** @type {number} */ (-goog.i18n.uChar.
           buildSupplementaryCodePoint(lead, charCode));
     }
   }
   return charCode;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines the length of the string needed to represent the specified
-***REMOVED*** Unicode code point.
-***REMOVED*** @param {number} codePoint
-***REMOVED*** @return {number} 2 if codePoint is a supplementary character, 1 otherwise.
-***REMOVED***
+/**
+ * Determines the length of the string needed to represent the specified
+ * Unicode code point.
+ * @param {number} codePoint
+ * @return {number} 2 if codePoint is a supplementary character, 1 otherwise.
+ */
 goog.i18n.uChar.charCount = function(codePoint) {
   return goog.i18n.uChar.isSupplementaryCodePoint(codePoint) ? 2 : 1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether the specified Unicode code point is in the supplementary
-***REMOVED*** Unicode characters range.
-***REMOVED*** @param {number} codePoint
-***REMOVED*** @return {boolean} Whether then given code point is a supplementary character.
-***REMOVED***
+/**
+ * Determines whether the specified Unicode code point is in the supplementary
+ * Unicode characters range.
+ * @param {number} codePoint
+ * @return {boolean} Whether then given code point is a supplementary character.
+ */
 goog.i18n.uChar.isSupplementaryCodePoint = function(codePoint) {
   return codePoint >= goog.i18n.uChar.SUPPLEMENTARY_CODE_POINT_MIN_VALUE_ &&
          codePoint <= goog.i18n.uChar.CODE_POINT_MAX_VALUE_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets whether the given code point is a leading surrogate character.
-***REMOVED*** @param {number} codePoint
-***REMOVED*** @return {boolean} Whether the given code point is a leading surrogate
-***REMOVED*** character.
-***REMOVED***
+/**
+ * Gets whether the given code point is a leading surrogate character.
+ * @param {number} codePoint
+ * @return {boolean} Whether the given code point is a leading surrogate
+ * character.
+ */
 goog.i18n.uChar.isLeadSurrogateCodePoint = function(codePoint) {
   return codePoint >= goog.i18n.uChar.LEAD_SURROGATE_MIN_VALUE_ &&
          codePoint <= goog.i18n.uChar.LEAD_SURROGATE_MAX_VALUE_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets whether the given code point is a trailing surrogate character.
-***REMOVED*** @param {number} codePoint
-***REMOVED*** @return {boolean} Whether the given code point is a trailing surrogate
-***REMOVED*** character.
-***REMOVED***
+/**
+ * Gets whether the given code point is a trailing surrogate character.
+ * @param {number} codePoint
+ * @return {boolean} Whether the given code point is a trailing surrogate
+ * character.
+ */
 goog.i18n.uChar.isTrailSurrogateCodePoint = function(codePoint) {
   return codePoint >= goog.i18n.uChar.TRAIL_SURROGATE_MIN_VALUE_ &&
          codePoint <= goog.i18n.uChar.TRAIL_SURROGATE_MAX_VALUE_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Composes a supplementary Unicode code point from the given UTF-16 surrogate
-***REMOVED*** pair. If leadSurrogate isn't a leading surrogate code point or trailSurrogate
-***REMOVED*** isn't a trailing surrogate code point, null is returned.
-***REMOVED*** @param {number} lead The leading surrogate code point.
-***REMOVED*** @param {number} trail The trailing surrogate code point.
-***REMOVED*** @return {?number} The supplementary Unicode code point obtained by decoding
-***REMOVED*** the given UTF-16 surrogate pair.
-***REMOVED***
+/**
+ * Composes a supplementary Unicode code point from the given UTF-16 surrogate
+ * pair. If leadSurrogate isn't a leading surrogate code point or trailSurrogate
+ * isn't a trailing surrogate code point, null is returned.
+ * @param {number} lead The leading surrogate code point.
+ * @param {number} trail The trailing surrogate code point.
+ * @return {?number} The supplementary Unicode code point obtained by decoding
+ * the given UTF-16 surrogate pair.
+ */
 goog.i18n.uChar.buildSupplementaryCodePoint = function(lead, trail) {
   if (goog.i18n.uChar.isLeadSurrogateCodePoint(lead) &&
       goog.i18n.uChar.isTrailSurrogateCodePoint(trail)) {
@@ -297,14 +297,14 @@ goog.i18n.uChar.buildSupplementaryCodePoint = function(lead, trail) {
     return shiftedLeadOffset + trailOffset;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the name of a character, if available, returns null otherwise.
-***REMOVED*** @param {string} ch The character.
-***REMOVED*** @return {?string} The name of the character.
-***REMOVED***
+/**
+ * Gets the name of a character, if available, returns null otherwise.
+ * @param {string} ch The character.
+ * @return {?string} The name of the character.
+ */
 goog.i18n.uChar.toName = function(ch) {
   if (!goog.i18n.uChar.charData_) {
     goog.i18n.uChar.createCharData();
@@ -329,954 +329,954 @@ goog.i18n.uChar.toName = function(ch) {
       seqnum = chCode - 0xE00EF;
     }
 
-   ***REMOVED*****REMOVED*** @desc Variation selector with the sequence number.***REMOVED***
+    /** @desc Variation selector with the sequence number. */
     var MSG_VARIATION_SELECTOR_SEQNUM =
         goog.getMsg('Variation Selector - {$seqnum}', {'seqnum': seqnum});
     return MSG_VARIATION_SELECTOR_SEQNUM;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Following lines are programatically created.
-***REMOVED*** Details: https://sites/cibu/character-picker.
-***REMOVED****/
+/**
+ * Following lines are programatically created.
+ * Details: https://sites/cibu/character-picker.
+ **/
 
 
-***REMOVED***
-***REMOVED*** Sets up the character map, lazily.  Some characters are indexed by their
-***REMOVED*** decimal value.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets up the character map, lazily.  Some characters are indexed by their
+ * decimal value.
+ * @protected
+ */
 goog.i18n.uChar.createCharData = function() {
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARABIC_SIGN_SANAH = goog.getMsg('Arabic Sign Sanah');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_CANADIAN_SYLLABICS_HYPHEN =
       goog.getMsg('Canadian Syllabics Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARABIC_SIGN_SAFHA = goog.getMsg('Arabic Sign Safha');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARABIC_FOOTNOTE_MARKER = goog.getMsg('Arabic Footnote Marker');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_FOUR_PER_EM_SPACE = goog.getMsg('Four-per-em Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_THREE_PER_EM_SPACE = goog.getMsg('Three-per-em Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_FIGURE_SPACE = goog.getMsg('Figure Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MONGOLIAN_SOFT_HYPHEN = goog.getMsg('Mongolian Soft Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_THIN_SPACE = goog.getMsg('Thin Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SOFT_HYPHEN = goog.getMsg('Soft Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ZERO_WIDTH_SPACE = goog.getMsg('Zero Width Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARMENIAN_HYPHEN = goog.getMsg('Armenian Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ZERO_WIDTH_JOINER = goog.getMsg('Zero Width Joiner');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EM_SPACE = goog.getMsg('Em Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SYRIAC_ABBREVIATION_MARK = goog.getMsg('Syriac Abbreviation Mark');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MONGOLIAN_VOWEL_SEPARATOR =
       goog.getMsg('Mongolian Vowel Separator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_NON_BREAKING_HYPHEN = goog.getMsg('Non-breaking Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HYPHEN = goog.getMsg('Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EM_QUAD = goog.getMsg('Em Quad');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EN_SPACE = goog.getMsg('En Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HORIZONTAL_BAR = goog.getMsg('Horizontal Bar');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EM_DASH = goog.getMsg('Em Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_DOUBLE_OBLIQUE_HYPHEN = goog.getMsg('Double Oblique Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_END_PHRASE =
       goog.getMsg('Musical Symbol End Phrase');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MEDIUM_MATHEMATICAL_SPACE =
       goog.getMsg('Medium Mathematical Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_WAVE_DASH = goog.getMsg('Wave Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SPACE = goog.getMsg('Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HYPHEN_WITH_DIAERESIS = goog.getMsg('Hyphen With Diaeresis');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EN_QUAD = goog.getMsg('En Quad');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_RIGHT_TO_LEFT_EMBEDDING = goog.getMsg('Right-to-left Embedding');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SIX_PER_EM_SPACE = goog.getMsg('Six-per-em Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HYPHEN_MINUS = goog.getMsg('Hyphen-minus');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_POP_DIRECTIONAL_FORMATTING =
       goog.getMsg('Pop Directional Formatting');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_NARROW_NO_BREAK_SPACE = goog.getMsg('Narrow No-break Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_RIGHT_TO_LEFT_OVERRIDE = goog.getMsg('Right-to-left Override');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EM_DASH =
       goog.getMsg('Presentation Form For Vertical Em Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_WAVY_DASH = goog.getMsg('Wavy Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_PRESENTATION_FORM_FOR_VERTICAL_EN_DASH =
       goog.getMsg('Presentation Form For Vertical En Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_KHMER_VOWEL_INHERENT_AA = goog.getMsg('Khmer Vowel Inherent Aa');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_KHMER_VOWEL_INHERENT_AQ = goog.getMsg('Khmer Vowel Inherent Aq');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_PUNCTUATION_SPACE = goog.getMsg('Punctuation Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HALFWIDTH_HANGUL_FILLER = goog.getMsg('Halfwidth Hangul Filler');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_KAITHI_NUMBER_SIGN = goog.getMsg('Kaithi Number Sign');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_LEFT_TO_RIGHT_EMBEDDING = goog.getMsg('Left-to-right Embedding');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HEBREW_PUNCTUATION_MAQAF = goog.getMsg('Hebrew Punctuation Maqaf');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_IDEOGRAPHIC_SPACE = goog.getMsg('Ideographic Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HAIR_SPACE = goog.getMsg('Hair Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_NO_BREAK_SPACE = goog.getMsg('No-break Space');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_FULLWIDTH_HYPHEN_MINUS = goog.getMsg('Fullwidth Hyphen-minus');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_PARAGRAPH_SEPARATOR = goog.getMsg('Paragraph Separator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_LEFT_TO_RIGHT_OVERRIDE = goog.getMsg('Left-to-right Override');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SMALL_HYPHEN_MINUS = goog.getMsg('Small Hyphen-minus');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_COMBINING_GRAPHEME_JOINER =
       goog.getMsg('Combining Grapheme Joiner');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ZERO_WIDTH_NON_JOINER = goog.getMsg('Zero Width Non-joiner');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_BEGIN_PHRASE =
       goog.getMsg('Musical Symbol Begin Phrase');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARABIC_NUMBER_SIGN = goog.getMsg('Arabic Number Sign');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_RIGHT_TO_LEFT_MARK = goog.getMsg('Right-to-left Mark');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_OGHAM_SPACE_MARK = goog.getMsg('Ogham Space Mark');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_SMALL_EM_DASH = goog.getMsg('Small Em Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_LEFT_TO_RIGHT_MARK = goog.getMsg('Left-to-right Mark');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ARABIC_END_OF_AYAH = goog.getMsg('Arabic End Of Ayah');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HANGUL_CHOSEONG_FILLER = goog.getMsg('Hangul Choseong Filler');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HANGUL_FILLER = goog.getMsg('Hangul Filler');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_FUNCTION_APPLICATION = goog.getMsg('Function Application');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_HANGUL_JUNGSEONG_FILLER = goog.getMsg('Hangul Jungseong Filler');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INVISIBLE_SEPARATOR = goog.getMsg('Invisible Separator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INVISIBLE_TIMES = goog.getMsg('Invisible Times');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INVISIBLE_PLUS = goog.getMsg('Invisible Plus');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_WORD_JOINER = goog.getMsg('Word Joiner');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_LINE_SEPARATOR = goog.getMsg('Line Separator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_KATAKANA_HIRAGANA_DOUBLE_HYPHEN =
       goog.getMsg('Katakana-hiragana Double Hyphen');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_EN_DASH = goog.getMsg('En Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_BEGIN_BEAM =
       goog.getMsg('Musical Symbol Begin Beam');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_FIGURE_DASH = goog.getMsg('Figure Dash');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_BEGIN_TIE = goog.getMsg('Musical Symbol Begin Tie');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_END_BEAM = goog.getMsg('Musical Symbol End Beam');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_BEGIN_SLUR =
       goog.getMsg('Musical Symbol Begin Slur');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_END_TIE = goog.getMsg('Musical Symbol End Tie');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INTERLINEAR_ANNOTATION_ANCHOR =
       goog.getMsg('Interlinear Annotation Anchor');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_MUSICAL_SYMBOL_END_SLUR = goog.getMsg('Musical Symbol End Slur');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INTERLINEAR_ANNOTATION_TERMINATOR =
       goog.getMsg('Interlinear Annotation Terminator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_INTERLINEAR_ANNOTATION_SEPARATOR =
       goog.getMsg('Interlinear Annotation Separator');
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
-  ***REMOVED***   shown to a document editing user trying to insert a special character.
-  ***REMOVED***   The balloon help would appear while the user hovers over the character
-  ***REMOVED***   displayed. Newlines are not allowed; translation should be a noun and
-  ***REMOVED***   as consise as possible. More details:
-  ***REMOVED***   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Name for a symbol, character or a letter. Used in a pop-up balloon,
+   *   shown to a document editing user trying to insert a special character.
+   *   The balloon help would appear while the user hovers over the character
+   *   displayed. Newlines are not allowed; translation should be a noun and
+   *   as consise as possible. More details:
+   *   docs/fileview?id=0B8NbxddKsFtwYjExMGJjNzgtYjkzOS00NjdiLTlmOGQtOGVhZDkyZDU5YjM4.
+   */
   var MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE =
       goog.getMsg('Zero Width No-break Space');
 
@@ -1364,5 +1364,5 @@ goog.i18n.uChar.createCharData = function() {
     '\uFFFB': MSG_CP_INTERLINEAR_ANNOTATION_TERMINATOR,
     '\uFFFA': MSG_CP_INTERLINEAR_ANNOTATION_SEPARATOR,
     '\uFEFF': MSG_CP_ZERO_WIDTH_NO_BREAK_SPACE
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};

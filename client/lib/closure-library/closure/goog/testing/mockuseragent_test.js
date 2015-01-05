@@ -61,7 +61,7 @@ function testMockUserAgentGetAgent() {
 }
 
 function testMockUserAgentNavigator() {
-  var fakeNavigator = {***REMOVED***
+  var fakeNavigator = {};
 
   mockUserAgent = new goog.testing.MockUserAgent();
   mockUserAgent.setNavigator(fakeNavigator);

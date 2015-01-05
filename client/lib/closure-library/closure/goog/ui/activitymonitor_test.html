@@ -12,7 +12,7 @@ See the COPYING file for details.
 <script src="../base.js"></script>
 <script>
   goog.require('goog.events.Event');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events.EventType');
   goog.require('goog.dom');
   goog.require('goog.testing.PropertyReplacer');
   goog.require('goog.testing.MockClock');
@@ -66,7 +66,7 @@ See the COPYING file for details.
   function testEventFired() {
     var activityMonitor = new goog.ui.ActivityMonitor();
     var listener = goog.testing.recordFunction();
-  ***REMOVED***activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
+    goog.events.listen(activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
                        listener);
 
     mockClock.tick(1000);
@@ -88,7 +88,7 @@ See the COPYING file for details.
   function testEventFiredWhenPropagationStopped() {
     var activityMonitor = new goog.ui.ActivityMonitor();
     var listener = goog.testing.recordFunction();
-  ***REMOVED***activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
+    goog.events.listen(activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
                        listener);
 
     goog.events.listenOnce(mydiv, goog.events.EventType.CLICK,
@@ -101,7 +101,7 @@ See the COPYING file for details.
   function testEventNotFiredWhenPropagationStopped() {
     var activityMonitor = new goog.ui.ActivityMonitor(undefined, true);
     var listener = goog.testing.recordFunction();
-  ***REMOVED***activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
+    goog.events.listen(activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
                        listener);
 
     goog.events.listenOnce(mydiv, goog.events.EventType.CLICK,
@@ -114,7 +114,7 @@ See the COPYING file for details.
   function testTouchSequenceFired() {
     var activityMonitor = new goog.ui.ActivityMonitor();
     var listener = goog.testing.recordFunction();
-  ***REMOVED***activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
+    goog.events.listen(activityMonitor, goog.ui.ActivityMonitor.Event.ACTIVITY,
                        listener);
 
     mockClock.tick(1000);

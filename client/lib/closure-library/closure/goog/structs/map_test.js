@@ -122,7 +122,7 @@ function testRemove() {
   }
 
   for (var i = 0; i < 1000; i++) {
-    assertTrue(m.keys_.length <= 2***REMOVED*** m.getCount());
+    assertTrue(m.keys_.length <= 2 * m.getCount());
     m.remove(i);
   }
   assertTrue(m.isEmpty());
@@ -158,7 +158,7 @@ function testMap() {
   var m2 = goog.structs.map(m, function(val, key, m3) {
     assertNotUndefined(key);
     assertEquals(m, m3);
-    return val***REMOVED*** val;
+    return val * val;
   });
   assertEquals(stringifyMap(m2), 'a0b1c4d9');
 }
@@ -420,7 +420,7 @@ function testEqualsWithCustomEqualityFn() {
   map2.set('a', '0');
   map2.set('b', '1');
 
-  var equalsFn = function(a, b) { return a == b***REMOVED*****REMOVED***
+  var equalsFn = function(a, b) { return a == b };
 
   assertTrue('maps are equal with ==', map1.equals(map2, equalsFn));
 }

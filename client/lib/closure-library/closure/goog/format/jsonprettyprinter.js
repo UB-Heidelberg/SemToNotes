@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Creates a string of a JSON object, properly indented for
-***REMOVED*** display.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Creates a string of a JSON object, properly indented for
+ * display.
+ *
+ */
 
 goog.provide('goog.format.JsonPrettyPrinter');
 goog.provide('goog.format.JsonPrettyPrinter.HtmlDelimiters');
@@ -30,57 +30,57 @@ goog.require('goog.string.format');
 
 
 
-***REMOVED***
-***REMOVED*** Formats a JSON object as a string, properly indented for display.  Supports
-***REMOVED*** displaying the string as text or html.  Users can also specify their own
-***REMOVED*** set of delimiters for different environments.  For example, the JSON object:
-***REMOVED***
-***REMOVED*** <code>{"a": 1, "b": {"c": null, "d": true, "e": [1, 2]}}</code>
-***REMOVED***
-***REMOVED*** Will be displayed like this:
-***REMOVED***
-***REMOVED*** <code>{
-***REMOVED***   "a": 1,
-***REMOVED***   "b": {
-***REMOVED***     "c": null,
-***REMOVED***     "d": true,
-***REMOVED***     "e": [
-***REMOVED***       1,
-***REMOVED***       2
-***REMOVED***     ]
-***REMOVED***   }
-***REMOVED*** }</code>
-***REMOVED*** @param {goog.format.JsonPrettyPrinter.TextDelimiters} delimiters Container
-***REMOVED***     for the various strings to use to delimit objects, arrays, newlines, and
-***REMOVED***     other pieces of the output.
-***REMOVED***
-***REMOVED***
+/**
+ * Formats a JSON object as a string, properly indented for display.  Supports
+ * displaying the string as text or html.  Users can also specify their own
+ * set of delimiters for different environments.  For example, the JSON object:
+ *
+ * <code>{"a": 1, "b": {"c": null, "d": true, "e": [1, 2]}}</code>
+ *
+ * Will be displayed like this:
+ *
+ * <code>{
+ *   "a": 1,
+ *   "b": {
+ *     "c": null,
+ *     "d": true,
+ *     "e": [
+ *       1,
+ *       2
+ *     ]
+ *   }
+ * }</code>
+ * @param {goog.format.JsonPrettyPrinter.TextDelimiters} delimiters Container
+ *     for the various strings to use to delimit objects, arrays, newlines, and
+ *     other pieces of the output.
+ * @constructor
+ */
 goog.format.JsonPrettyPrinter = function(delimiters) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The set of characters to use as delimiters.
-  ***REMOVED*** @type {goog.format.JsonPrettyPrinter.TextDelimiters}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The set of characters to use as delimiters.
+   * @type {goog.format.JsonPrettyPrinter.TextDelimiters}
+   * @private
+   */
   this.delimiters_ = delimiters ||
       new goog.format.JsonPrettyPrinter.TextDelimiters();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Used to serialize property names and values.
-  ***REMOVED*** @type {goog.json.Serializer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Used to serialize property names and values.
+   * @type {goog.json.Serializer}
+   * @private
+   */
   this.jsonSerializer_ = new goog.json.Serializer();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a JSON object as a string, properly indented for display.
-***REMOVED*** @param {*} json The object to pretty print. It could be a JSON object, a
-***REMOVED***     string representing a JSON object, or any other type.
-***REMOVED*** @return {string} Returns a string of the JSON object, properly indented for
-***REMOVED***     display.
-***REMOVED***
+/**
+ * Formats a JSON object as a string, properly indented for display.
+ * @param {*} json The object to pretty print. It could be a JSON object, a
+ *     string representing a JSON object, or any other type.
+ * @return {string} Returns a string of the JSON object, properly indented for
+ *     display.
+ */
 goog.format.JsonPrettyPrinter.prototype.format = function(json) {
   // If input is undefined, null, or empty, return an empty string.
   if (!goog.isDefAndNotNull(json)) {
@@ -96,18 +96,18 @@ goog.format.JsonPrettyPrinter.prototype.format = function(json) {
   var outputBuffer = new goog.string.StringBuffer();
   this.printObject_(json, outputBuffer, 0);
   return outputBuffer.toString();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Formats a property value based on the type of the propery.
-***REMOVED*** @param {*} val The object to format.
-***REMOVED*** @param {goog.string.StringBuffer} outputBuffer The buffer to write the
-***REMOVED***     response to.
-***REMOVED*** @param {number} indent The number of spaces to indent each line of the
-***REMOVED***     output.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Formats a property value based on the type of the propery.
+ * @param {*} val The object to format.
+ * @param {goog.string.StringBuffer} outputBuffer The buffer to write the
+ *     response to.
+ * @param {number} indent The number of spaces to indent each line of the
+ *     output.
+ * @private
+ */
 goog.format.JsonPrettyPrinter.prototype.printObject_ = function(val,
     outputBuffer, indent) {
   var typeOf = goog.typeOf(val);
@@ -119,7 +119,7 @@ goog.format.JsonPrettyPrinter.prototype.printObject_ = function(val,
       // "null", "boolean", "number" and "string" properties are printed
       // directly to the output.
       this.printValue_(
-         ***REMOVED*****REMOVED*** @type {null|string|boolean|number}***REMOVED*** (val),
+          /** @type {null|string|boolean|number} */ (val),
           typeOf, outputBuffer);
       break;
     case 'array':
@@ -196,219 +196,219 @@ goog.format.JsonPrettyPrinter.prototype.printObject_ = function(val,
     default:
       this.printValue_('', 'unknown', outputBuffer);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prints a property name to the output.
-***REMOVED*** @param {string} name The property name.
-***REMOVED*** @param {goog.string.StringBuffer} outputBuffer The buffer to write the
-***REMOVED***     response to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Prints a property name to the output.
+ * @param {string} name The property name.
+ * @param {goog.string.StringBuffer} outputBuffer The buffer to write the
+ *     response to.
+ * @private
+ */
 goog.format.JsonPrettyPrinter.prototype.printName_ = function(name,
     outputBuffer) {
   outputBuffer.append(this.delimiters_.preName,
       this.jsonSerializer_.serialize(name), this.delimiters_.postName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Prints a property name to the output.
-***REMOVED*** @param {string|boolean|number|null} val The property value.
-***REMOVED*** @param {string} typeOf The type of the value.  Used to customize
-***REMOVED***     value-specific css in the display.  This allows clients to distinguish
-***REMOVED***     between different types in css.  For example, the client may define two
-***REMOVED***     classes: "goog-jsonprettyprinter-propertyvalue-string" and
-***REMOVED***     "goog-jsonprettyprinter-propertyvalue-number" to assign a different color
-***REMOVED***     to string and number values.
-***REMOVED*** @param {goog.string.StringBuffer} outputBuffer The buffer to write the
-***REMOVED***     response to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Prints a property name to the output.
+ * @param {string|boolean|number|null} val The property value.
+ * @param {string} typeOf The type of the value.  Used to customize
+ *     value-specific css in the display.  This allows clients to distinguish
+ *     between different types in css.  For example, the client may define two
+ *     classes: "goog-jsonprettyprinter-propertyvalue-string" and
+ *     "goog-jsonprettyprinter-propertyvalue-number" to assign a different color
+ *     to string and number values.
+ * @param {goog.string.StringBuffer} outputBuffer The buffer to write the
+ *     response to.
+ * @private
+ */
 goog.format.JsonPrettyPrinter.prototype.printValue_ = function(val,
     typeOf, outputBuffer) {
   outputBuffer.append(goog.string.format(this.delimiters_.preValue, typeOf),
       this.jsonSerializer_.serialize(val),
       goog.string.format(this.delimiters_.postValue, typeOf));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Print a number of space characters to the output.
-***REMOVED*** @param {number} indent The number of spaces to indent the line.
-***REMOVED*** @param {goog.string.StringBuffer} outputBuffer The buffer to write the
-***REMOVED***     response to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Print a number of space characters to the output.
+ * @param {number} indent The number of spaces to indent the line.
+ * @param {goog.string.StringBuffer} outputBuffer The buffer to write the
+ *     response to.
+ * @private
+ */
 goog.format.JsonPrettyPrinter.prototype.printSpaces_ = function(indent,
     outputBuffer) {
   outputBuffer.append(goog.string.repeat(this.delimiters_.space, indent));
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A container for the delimiting characters used to display the JSON string
-***REMOVED*** to a text display.  Each delimiter is a publicly accessible property of
-***REMOVED*** the object, which makes it easy to tweak delimiters to specific environments.
-***REMOVED***
-***REMOVED***
+/**
+ * A container for the delimiting characters used to display the JSON string
+ * to a text display.  Each delimiter is a publicly accessible property of
+ * the object, which makes it easy to tweak delimiters to specific environments.
+ * @constructor
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Represents a space character in the output.  Used to indent properties a
-***REMOVED*** certain number of spaces, and to separate property names from property
-***REMOVED*** values.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents a space character in the output.  Used to indent properties a
+ * certain number of spaces, and to separate property names from property
+ * values.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.space = ' ';
 
 
-***REMOVED***
-***REMOVED*** Represents a newline character in the output.  Used to begin a new line.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents a newline character in the output.  Used to begin a new line.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.lineBreak = '\n';
 
 
-***REMOVED***
-***REMOVED*** Represents the start of an object in the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the start of an object in the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.objectStart = '{';
 
 
-***REMOVED***
-***REMOVED*** Represents the end of an object in the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the end of an object in the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.objectEnd = '}';
 
 
-***REMOVED***
-***REMOVED*** Represents the start of an array in the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the start of an array in the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.arrayStart = '[';
 
 
-***REMOVED***
-***REMOVED*** Represents the end of an array in the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the end of an array in the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.arrayEnd = ']';
 
 
-***REMOVED***
-***REMOVED*** Represents the string used to separate properties in the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the string used to separate properties in the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.propertySeparator = ',';
 
 
-***REMOVED***
-***REMOVED*** Represents the string used to separate property names from property values in
-***REMOVED*** the output.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Represents the string used to separate property names from property values in
+ * the output.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.nameValueSeparator = ':';
 
 
-***REMOVED***
-***REMOVED*** A string that's placed before a property name in the output.  Useful for
-***REMOVED*** wrapping a property name in an html tag.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * A string that's placed before a property name in the output.  Useful for
+ * wrapping a property name in an html tag.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.preName = '';
 
 
-***REMOVED***
-***REMOVED*** A string that's placed after a property name in the output.  Useful for
-***REMOVED*** wrapping a property name in an html tag.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * A string that's placed after a property name in the output.  Useful for
+ * wrapping a property name in an html tag.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.postName = '';
 
 
-***REMOVED***
-***REMOVED*** A string that's placed before a property value in the output.  Useful for
-***REMOVED*** wrapping a property value in an html tag.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * A string that's placed before a property value in the output.  Useful for
+ * wrapping a property value in an html tag.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.preValue = '';
 
 
-***REMOVED***
-***REMOVED*** A string that's placed after a property value in the output.  Useful for
-***REMOVED*** wrapping a property value in an html tag.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * A string that's placed after a property value in the output.  Useful for
+ * wrapping a property value in an html tag.
+ * @type {string}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.postValue = '';
 
 
-***REMOVED***
-***REMOVED*** Represents the number of spaces to indent each sub-property of the JSON.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Represents the number of spaces to indent each sub-property of the JSON.
+ * @type {number}
+ */
 goog.format.JsonPrettyPrinter.TextDelimiters.prototype.indent = 2;
 
 
 
-***REMOVED***
-***REMOVED*** A container for the delimiting characters used to display the JSON string
-***REMOVED*** to an HTML <code>&lt;pre&gt;</code> or <code>&lt;code&gt;</code> element.
-***REMOVED***
-***REMOVED*** @extends {goog.format.JsonPrettyPrinter.TextDelimiters}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A container for the delimiting characters used to display the JSON string
+ * to an HTML <code>&lt;pre&gt;</code> or <code>&lt;code&gt;</code> element.
+ * @constructor
+ * @extends {goog.format.JsonPrettyPrinter.TextDelimiters}
+ * @final
+ */
 goog.format.JsonPrettyPrinter.HtmlDelimiters = function() {
   goog.format.JsonPrettyPrinter.TextDelimiters.call(this);
-***REMOVED***
+};
 goog.inherits(goog.format.JsonPrettyPrinter.HtmlDelimiters,
     goog.format.JsonPrettyPrinter.TextDelimiters);
 
 
-***REMOVED***
-***REMOVED*** A <code>span</code> tag thats placed before a property name.  Used to style
-***REMOVED*** property names with CSS.
-***REMOVED*** @type {string}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * A <code>span</code> tag thats placed before a property name.  Used to style
+ * property names with CSS.
+ * @type {string}
+ * @override
+ */
 goog.format.JsonPrettyPrinter.HtmlDelimiters.prototype.preName =
     '<span class="' +
     goog.getCssName('goog-jsonprettyprinter-propertyname') +
     '">';
 
 
-***REMOVED***
-***REMOVED*** A closing <code>span</code> tag that's placed after a property name.
-***REMOVED*** @type {string}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * A closing <code>span</code> tag that's placed after a property name.
+ * @type {string}
+ * @override
+ */
 goog.format.JsonPrettyPrinter.HtmlDelimiters.prototype.postName = '</span>';
 
 
-***REMOVED***
-***REMOVED*** A <code>span</code> tag thats placed before a property value.  Used to style
-***REMOVED*** property value with CSS.  The span tag's class is in the format
-***REMOVED*** goog-jsonprettyprinter-propertyvalue-{TYPE}, where {TYPE} is the JavaScript
-***REMOVED*** type of the object (the {TYPE} parameter is obtained from goog.typeOf).  This
-***REMOVED*** can be used to style different value types.
-***REMOVED*** @type {string}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * A <code>span</code> tag thats placed before a property value.  Used to style
+ * property value with CSS.  The span tag's class is in the format
+ * goog-jsonprettyprinter-propertyvalue-{TYPE}, where {TYPE} is the JavaScript
+ * type of the object (the {TYPE} parameter is obtained from goog.typeOf).  This
+ * can be used to style different value types.
+ * @type {string}
+ * @override
+ */
 goog.format.JsonPrettyPrinter.HtmlDelimiters.prototype.preValue =
     '<span class="' +
     goog.getCssName('goog-jsonprettyprinter-propertyvalue') +
     '-%s">';
 
 
-***REMOVED***
-***REMOVED*** A closing <code>span</code> tag that's placed after a property value.
-***REMOVED*** @type {string}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * A closing <code>span</code> tag that's placed after a property value.
+ * @type {string}
+ * @override
+ */
 goog.format.JsonPrettyPrinter.HtmlDelimiters.prototype.postValue = '</span>';

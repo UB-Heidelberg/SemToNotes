@@ -18,8 +18,8 @@ goog.require('goog.dom');
 goog.require('goog.editor.Command');
 goog.require('goog.editor.plugins.AbstractDialogPlugin');
 goog.require('goog.editor.range');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.log');
 goog.require('goog.ui.editor.AbstractDialog');
@@ -29,63 +29,63 @@ goog.require('goog.ui.equation.PaletteManager');
 
 
 
-***REMOVED***
-***REMOVED*** A plugin that opens the equation editor in a dialog window.
-***REMOVED*** @param {string=} opt_helpUrl A URL pointing to help documentation.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractDialogPlugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A plugin that opens the equation editor in a dialog window.
+ * @param {string=} opt_helpUrl A URL pointing to help documentation.
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractDialogPlugin}
+ * @final
+ */
 goog.editor.plugins.EquationEditorPlugin = function(opt_helpUrl) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The IMG element for the equation being edited, null if creating a new
-  ***REMOVED*** equation.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The IMG element for the equation being edited, null if creating a new
+   * equation.
+   * @type {Element}
+   * @private
+   */
   this.originalElement_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A URL pointing to help documentation.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A URL pointing to help documentation.
+   * @type {string}
+   * @private
+   */
   this.helpUrl_ = opt_helpUrl || '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The listener key for double click events.
-  ***REMOVED*** @type {goog.events.Key}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The listener key for double click events.
+   * @type {goog.events.Key}
+   * @private
+   */
   this.dblClickKey_;
 
   goog.editor.plugins.AbstractDialogPlugin.call(this,
       goog.editor.Command.EQUATION);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.EquationEditorPlugin,
     goog.editor.plugins.AbstractDialogPlugin);
 
 
-***REMOVED***
-***REMOVED*** The logger for the EquationEditorPlugin.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The logger for the EquationEditorPlugin.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.logger_ =
     goog.log.getLogger('goog.editor.plugins.EquationEditorPlugin');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.EquationEditorPlugin.prototype.getTrogClassId =
     goog.functions.constant('EquationEditorPlugin');
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.createDialog =
     function(dom, opt_arg) {
-  var equationImgEl =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (opt_arg || null);
+  var equationImgEl = /** @type {Element} */ (opt_arg || null);
 
   var equationStr = equationImgEl ?
       goog.ui.equation.ImageRenderer.getEquationFromImage(equationImgEl) : '';
@@ -98,35 +98,35 @@ goog.editor.plugins.EquationEditorPlugin.prototype.createDialog =
       false,
       this);
   return dialog;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Populates the context that this plugin runs in.
-***REMOVED*** @param {!goog.dom.DomHelper} domHelper The dom helper to be used for the
-***REMOVED***     palette manager.
-***REMOVED*** @return {!Object} The context that this plugin runs in.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Populates the context that this plugin runs in.
+ * @param {!goog.dom.DomHelper} domHelper The dom helper to be used for the
+ *     palette manager.
+ * @return {!Object} The context that this plugin runs in.
+ * @private
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.populateContext_ =
     function(domHelper) {
-  var context = {***REMOVED***
+  var context = {};
   context.paletteManager = new goog.ui.equation.PaletteManager(domHelper);
   return context;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the selected text in the editable field for using as initial
-***REMOVED*** equation string for the equation editor.
-***REMOVED***
-***REMOVED*** TODO(user): Sanity check the selected text and return it only if it
-***REMOVED***     reassembles a TeX equation and is not too long.
-***REMOVED***
-***REMOVED*** @return {string} Selected text in the editable field for using it as
-***REMOVED***     initial equation string for the equation editor.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the selected text in the editable field for using as initial
+ * equation string for the equation editor.
+ *
+ * TODO(user): Sanity check the selected text and return it only if it
+ *     reassembles a TeX equation and is not too long.
+ *
+ * @return {string} Selected text in the editable field for using it as
+ *     initial equation string for the equation editor.
+ * @private
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.getEquationFromSelection_ =
     function() {
   var range = this.getFieldObject().getRange();
@@ -135,10 +135,10 @@ goog.editor.plugins.EquationEditorPlugin.prototype.getEquationFromSelection_ =
   }
 
   return '';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.EquationEditorPlugin.prototype.enable =
     function(fieldObject) {
   goog.editor.plugins.EquationEditorPlugin.base(this, 'enable', fieldObject);
@@ -147,37 +147,37 @@ goog.editor.plugins.EquationEditorPlugin.prototype.enable =
         goog.events.EventType.DBLCLICK,
         goog.bind(this.handleDoubleClick_, this), false, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.EquationEditorPlugin.prototype.disable =
     function(fieldObject) {
   goog.editor.plugins.EquationEditorPlugin.base(this, 'disable', fieldObject);
   if (!this.isEnabled(fieldObject)) {
     goog.events.unlistenByKey(this.dblClickKey_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles double clicks in the field area.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles double clicks in the field area.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.handleDoubleClick_ =
     function(e) {
-  var node =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.target);
+  var node = /** @type {Node} */ (e.target);
   this.execCommand(goog.editor.Command.EQUATION, node);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when user clicks OK. Inserts the equation at cursor position in the
-***REMOVED*** active editable field.
-***REMOVED*** @param {goog.ui.editor.EquationEditorOkEvent} e The OK event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when user clicks OK. Inserts the equation at cursor position in the
+ * active editable field.
+ * @param {goog.ui.editor.EquationEditorOkEvent} e The OK event.
+ * @private
+ */
 goog.editor.plugins.EquationEditorPlugin.prototype.handleOk_ =
     function(e) {
   // First restore the selection so we can manipulate the editable field's
@@ -213,4 +213,4 @@ goog.editor.plugins.EquationEditorPlugin.prototype.handleOk_ =
   goog.editor.range.placeCursorNextTo(node, false);
 
   this.getFieldObject().dispatchChange();
-***REMOVED***
+};

@@ -13,16 +13,16 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Graphics utility functions and factory methods.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @see ../demos/graphics/advancedcoordinates.html
-***REMOVED*** @see ../demos/graphics/advancedcoordinates2.html
-***REMOVED*** @see ../demos/graphics/basicelements.html
-***REMOVED*** @see ../demos/graphics/events.html
-***REMOVED*** @see ../demos/graphics/modifyelements.html
-***REMOVED*** @see ../demos/graphics/tiger.html
-***REMOVED***
+/**
+ * @fileoverview Graphics utility functions and factory methods.
+ * @author arv@google.com (Erik Arvidsson)
+ * @see ../demos/graphics/advancedcoordinates.html
+ * @see ../demos/graphics/advancedcoordinates2.html
+ * @see ../demos/graphics/basicelements.html
+ * @see ../demos/graphics/events.html
+ * @see ../demos/graphics/modifyelements.html
+ * @see ../demos/graphics/tiger.html
+ */
 
 
 goog.provide('goog.graphics');
@@ -34,24 +34,24 @@ goog.require('goog.graphics.VmlGraphics');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
-***REMOVED*** for the current platform (A factory for the proper Graphics implementation)
-***REMOVED*** @param {string|number} width The width in pixels.  Strings
-***REMOVED***     expressing percentages of parent with (e.g. '80%') are also accepted.
-***REMOVED*** @param {string|number} height The height in pixels.  Strings
-***REMOVED***     expressing percentages of parent with (e.g. '80%') are also accepted.
-***REMOVED*** @param {?number=} opt_coordWidth The optional coordinate width - if
-***REMOVED***     omitted or null, defaults to same as width.
-***REMOVED*** @param {?number=} opt_coordHeight The optional coordinate height - if
-***REMOVED***     omitted or null, defaults to same as height.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DOM helper object for the
-***REMOVED***     document we want to render in.
-***REMOVED*** @return {!goog.graphics.AbstractGraphics} The created instance.
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
+/**
+ * Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
+ * for the current platform (A factory for the proper Graphics implementation)
+ * @param {string|number} width The width in pixels.  Strings
+ *     expressing percentages of parent with (e.g. '80%') are also accepted.
+ * @param {string|number} height The height in pixels.  Strings
+ *     expressing percentages of parent with (e.g. '80%') are also accepted.
+ * @param {?number=} opt_coordWidth The optional coordinate width - if
+ *     omitted or null, defaults to same as width.
+ * @param {?number=} opt_coordHeight The optional coordinate height - if
+ *     omitted or null, defaults to same as height.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DOM helper object for the
+ *     document we want to render in.
+ * @return {!goog.graphics.AbstractGraphics} The created instance.
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
 goog.graphics.createGraphics = function(width, height, opt_coordWidth,
     opt_coordHeight, opt_domHelper) {
   var graphics;
@@ -79,27 +79,27 @@ goog.graphics.createGraphics = function(width, height, opt_coordWidth,
   graphics.createDom();
 
   return graphics;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
-***REMOVED*** for the current platform (A factory for the proper Graphics implementation)
-***REMOVED*** @param {string|number} width The width in pixels.  Strings
-***REMOVED***     expressing percentages of parent with (e.g. '80%') are also accepted.
-***REMOVED*** @param {string|number} height The height in pixels.   Strings
-***REMOVED***     expressing percentages of parent with (e.g. '80%') are also accepted.
-***REMOVED*** @param {?number=} opt_coordWidth The optional coordinate width, defaults to
-***REMOVED***     same as width.
-***REMOVED*** @param {?number=} opt_coordHeight The optional coordinate height, defaults to
-***REMOVED***     same as height.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DOM helper object for the
-***REMOVED***     document we want to render in.
-***REMOVED*** @return {!goog.graphics.AbstractGraphics} The created instance.
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
+/**
+ * Returns an instance of goog.graphics.AbstractGraphics that knows how to draw
+ * for the current platform (A factory for the proper Graphics implementation)
+ * @param {string|number} width The width in pixels.  Strings
+ *     expressing percentages of parent with (e.g. '80%') are also accepted.
+ * @param {string|number} height The height in pixels.   Strings
+ *     expressing percentages of parent with (e.g. '80%') are also accepted.
+ * @param {?number=} opt_coordWidth The optional coordinate width, defaults to
+ *     same as width.
+ * @param {?number=} opt_coordHeight The optional coordinate height, defaults to
+ *     same as height.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DOM helper object for the
+ *     document we want to render in.
+ * @return {!goog.graphics.AbstractGraphics} The created instance.
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
 goog.graphics.createSimpleGraphics = function(width, height,
     opt_coordWidth, opt_coordHeight, opt_domHelper) {
   if (goog.userAgent.MAC && goog.userAgent.GECKO &&
@@ -115,16 +115,16 @@ goog.graphics.createSimpleGraphics = function(width, height,
   // Otherwise, defer to normal graphics object creation.
   return goog.graphics.createGraphics(width, height, opt_coordWidth,
       opt_coordHeight, opt_domHelper);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static function to check if the current browser has Graphics support.
-***REMOVED*** @return {boolean} True if the current browser has Graphics support.
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
+/**
+ * Static function to check if the current browser has Graphics support.
+ * @return {boolean} True if the current browser has Graphics support.
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
 goog.graphics.isBrowserSupported = function() {
   if (goog.userAgent.IE) {
     return goog.userAgent.isVersionOrHigher('5.5');
@@ -139,4 +139,4 @@ goog.graphics.isBrowserSupported = function() {
     return goog.userAgent.isVersionOrHigher('412');
   }
   return false;
-***REMOVED***
+};

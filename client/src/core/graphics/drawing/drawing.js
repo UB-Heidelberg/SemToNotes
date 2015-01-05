@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class providing enumerations and static functions for
-***REMOVED*** the drawing classes.
-***REMOVED***
+/**
+ * @fileoverview A class providing enumerations and static functions for
+ * the drawing classes.
+ */
 
 goog.provide('xrx.drawing');
 goog.provide('xrx.drawing.Mode');
@@ -9,32 +9,32 @@ goog.provide('xrx.drawing.State');
 
 
 
-***REMOVED***
-***REMOVED*** A static class providing enumerations for the drawing classes.
-***REMOVED***
-xrx.drawing = function() {***REMOVED***
+/**
+ * A static class providing enumerations for the drawing classes.
+ */
+xrx.drawing = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Enumeration for drawing states.
-***REMOVED*** @enum (number)
-***REMOVED***
+/**
+ * Enumeration for drawing states.
+ * @enum (number)
+ */
 xrx.drawing.State = {
   DRAG: 1,
   NONE: 2
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Enumeration for drawing modes.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enumeration for drawing modes.
+ * @enum {number}
+ */
 xrx.drawing.Mode = {
   VIEW: 1,
   MODIFY: 2,
   DELETE: 3,
   CREATE: 4,
   DISABLED: 5
-***REMOVED***
+};

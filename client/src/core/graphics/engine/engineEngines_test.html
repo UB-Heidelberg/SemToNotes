@@ -29,7 +29,7 @@ function methodsTest(impl, methods) {
           ' in engine ' + xrx.engine.VML + '.',
           !xrx[xrx.engine.VML][impl].prototype[e]);
   });
-***REMOVED***
+};
 
 function staticsTest(impl, methods) {
   goog.array.forEach(methods, function(e, i, a) {
@@ -43,7 +43,7 @@ function staticsTest(impl, methods) {
           ' in engine ' + xrx.engine.VML + '.',
           !e);
   });
-***REMOVED***
+};
 
 function test1Canvas() {
   var methods = [
@@ -58,7 +58,7 @@ function test1Canvas() {
   ];
   methodsTest('Canvas', methods);
   staticsTest('Canvas', statics);
-***REMOVED***
+};
 
 function test2Circle() {
   var methods = [
@@ -73,11 +73,11 @@ function test2Circle() {
   ];
   methodsTest('Circle', methods);
   staticsTest('Circle', statics);
-***REMOVED***
+};
 
 function test3Element() {
   // individual methods
-***REMOVED***
+};
 
 function test4Group() {
   var methods = [
@@ -92,7 +92,7 @@ function test4Group() {
   ];
   methodsTest('Group', methods);
   staticsTest('Group', statics);
-***REMOVED***
+};
 
 function test5Image() {
   var methods = [
@@ -107,7 +107,7 @@ function test5Image() {
   ];
   methodsTest('Image', methods);
   staticsTest('Image', statics);
-***REMOVED***
+};
 
 function test6Polyline() {
   var methods = [
@@ -121,7 +121,7 @@ function test6Polyline() {
   ];
   methodsTest('Polyline', methods);
   staticsTest('Polyline', statics);
-***REMOVED***
+};
 
 function test7Polygon() {
   var methods = [
@@ -135,7 +135,7 @@ function test7Polygon() {
   ];
   methodsTest('Polygon', methods);
   staticsTest('Polygon', statics);
-***REMOVED***
+};
 
 function test8Rect() {
   var methods = [
@@ -150,7 +150,7 @@ function test8Rect() {
   ];
   methodsTest('Rect', methods);
   staticsTest('Rect', statics);
-***REMOVED***
+};
 
 function test9Stylable() {
   var methods = [
@@ -161,7 +161,7 @@ function test9Stylable() {
       'setFillOpacity'
   ];
   methodsTest('Stylable', methods);
-***REMOVED***
+};
 
 </script>
 

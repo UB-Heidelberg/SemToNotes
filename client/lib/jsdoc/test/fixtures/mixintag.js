@@ -1,26 +1,26 @@
-***REMOVED***
-***REMOVED*** This provides methods used for event handling. It's not meant to
-***REMOVED*** be used directly, except as a provider of related methods.
-***REMOVED***
-***REMOVED*** @mixin
-***REMOVED***
+/**
+ * This provides methods used for event handling. It's not meant to
+ * be used directly, except as a provider of related methods.
+ *
+ * @mixin
+ */
 var Eventful = {
-   ***REMOVED*****REMOVED*** fires something.***REMOVED***
+    /** fires something. */
     fires: function () {},
-   ***REMOVED*****REMOVED*** handles a signal.***REMOVED***
+    /** handles a signal. */
     on: function () {}
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED***
-***REMOVED*** @mixes Eventful
-***REMOVED***
+/**
+ * @constructor
+ * @mixes Eventful
+ */
 var FormButton = function() {
-***REMOVED***
+};
 
-***REMOVED*** @mixin AnotherMixin*/
+/** @mixin AnotherMixin*/
 
-***REMOVED*** I mix in multiple things
-***REMOVED*** MyClass
-***REMOVED*** @mixes Eventful
-***REMOVED*** @mixes AnotherMixin***REMOVED***
+/** I mix in multiple things
+ * @constructor MyClass
+ * @mixes Eventful
+ * @mixes AnotherMixin */

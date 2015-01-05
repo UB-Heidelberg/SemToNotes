@@ -304,7 +304,7 @@ function testLinkifyNoOptions() {
   goog.testing.dom.assertHtmlContentsMatch(
       '<a href="http://www.google.com" target="_blank" rel="nofollow">' +
       'http://www.google.com<\/a>',
-      div, true /* opt_strictAttributes***REMOVED***);
+      div, true /* opt_strictAttributes */);
 }
 
 function testLinkifyOptionsNoAttributes() {
@@ -317,7 +317,7 @@ function testLinkifyOptionsNoAttributes() {
       'located somewhere in ' +
       '<a href="https://www.google.fr/?hl=en">https://www.google.fr/?hl=en' +
       '<\/a>, you should find it easily.',
-      div, true /* opt_strictAttributes***REMOVED***);
+      div, true /* opt_strictAttributes */);
 }
 
 function testLinkifyOptionsClassName() {
@@ -327,7 +327,7 @@ function testLinkifyOptionsClassName() {
   goog.testing.dom.assertHtmlContentsMatch(
       'Attribute with &lt;class&gt; name <a href="http://www.w3c.org" ' +
       'target="_blank" rel="nofollow" class="link-added">www.w3c.org<\/a>.',
-      div, true /* opt_strictAttributes***REMOVED***);
+      div, true /* opt_strictAttributes */);
 }
 
 function testFindFirstUrlNoScheme() {

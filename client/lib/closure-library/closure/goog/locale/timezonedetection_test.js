@@ -21,56 +21,56 @@ goog.require('goog.testing.jsunit');
 
 
 
-***REMOVED***
-***REMOVED*** Mock date class with simplified properties of Date class for testing.
-***REMOVED***
-***REMOVED***
+/**
+ * Mock date class with simplified properties of Date class for testing.
+ * @constructor
+ */
 function MockDate() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Time zone offset. For time zones with daylight saving, the different
-  ***REMOVED*** offsets are represented as array of offsets.
-  ***REMOVED*** @type {Array.<number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Time zone offset. For time zones with daylight saving, the different
+   * offsets are represented as array of offsets.
+   * @type {Array.<number>}
+   * @private
+   */
   this.timezoneOffset_ = [];
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Counter storing the index of next offset value to be returned from the
-  ***REMOVED*** array of offset values.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Counter storing the index of next offset value to be returned from the
+   * array of offset values.
+   * @type {number}
+   * @private
+   */
   this.offsetArrayCounter_ = 0;
 }
 
 
-***REMOVED***
-***REMOVED*** Does nothing because setting the time to calculate offset is not needed
-***REMOVED*** in the mock class.
-***REMOVED*** @param {number} ms Ignored.
-***REMOVED***
+/**
+ * Does nothing because setting the time to calculate offset is not needed
+ * in the mock class.
+ * @param {number} ms Ignored.
+ */
 MockDate.prototype.setTime = function(ms) {
   // Do nothing.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the time zone offset.
-***REMOVED*** @param {Array.<number>} offset Time zone offset.
-***REMOVED***
+/**
+ * Sets the time zone offset.
+ * @param {Array.<number>} offset Time zone offset.
+ */
 MockDate.prototype.setTimezoneOffset = function(offset) {
   this.timezoneOffset_ = offset;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns consecutive offsets from array of time zone offsets on each call.
-***REMOVED*** @return {number} Time zone offset.
-***REMOVED***
+/**
+ * Returns consecutive offsets from array of time zone offsets on each call.
+ * @return {number} Time zone offset.
+ */
 MockDate.prototype.getTimezoneOffset = function() {
   return this.timezoneOffset_.length > 1 ?
       this.timezoneOffset_[this.offsetArrayCounter_++] :
       this.timezoneOffset_[0];
-***REMOVED***
+};
 
 function testGetFingerprint() {
   var mockDate = new MockDate();

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Character Picker widget for picking any Unicode character.
-***REMOVED***
-***REMOVED*** @see ../demos/charpicker.html
-***REMOVED***
+/**
+ * @fileoverview Character Picker widget for picking any Unicode character.
+ *
+ * @see ../demos/charpicker.html
+ */
 
 goog.provide('goog.ui.CharPicker');
 
@@ -26,10 +26,10 @@ goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.KeyHandler');
@@ -50,276 +50,276 @@ goog.require('goog.ui.Tooltip');
 
 
 
-***REMOVED***
-***REMOVED*** Character Picker Class. This widget can be used to pick any Unicode
-***REMOVED*** character by traversing a category-subcategory structure or by inputing its
-***REMOVED*** hex value.
-***REMOVED***
-***REMOVED*** See charpicker.html demo for example usage.
-***REMOVED*** @param {goog.i18n.CharPickerData} charPickerData Category names and charlist.
-***REMOVED*** @param {!goog.i18n.uChar.NameFetcher} charNameFetcher Object which fetches
-***REMOVED***     the names of the characters that are shown in the widget. These names
-***REMOVED***     may be stored locally or come from an external source.
-***REMOVED*** @param {Array.<string>=} opt_recents List of characters to be displayed in
-***REMOVED***     resently selected characters area.
-***REMOVED*** @param {number=} opt_initCategory Sequence number of initial category.
-***REMOVED*** @param {number=} opt_initSubcategory Sequence number of initial subcategory.
-***REMOVED*** @param {number=} opt_rowCount Number of rows in the grid.
-***REMOVED*** @param {number=} opt_columnCount Number of columns in the grid.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Character Picker Class. This widget can be used to pick any Unicode
+ * character by traversing a category-subcategory structure or by inputing its
+ * hex value.
+ *
+ * See charpicker.html demo for example usage.
+ * @param {goog.i18n.CharPickerData} charPickerData Category names and charlist.
+ * @param {!goog.i18n.uChar.NameFetcher} charNameFetcher Object which fetches
+ *     the names of the characters that are shown in the widget. These names
+ *     may be stored locally or come from an external source.
+ * @param {Array.<string>=} opt_recents List of characters to be displayed in
+ *     resently selected characters area.
+ * @param {number=} opt_initCategory Sequence number of initial category.
+ * @param {number=} opt_initSubcategory Sequence number of initial subcategory.
+ * @param {number=} opt_rowCount Number of rows in the grid.
+ * @param {number=} opt_columnCount Number of columns in the grid.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ * @final
+ */
 goog.ui.CharPicker = function(charPickerData, charNameFetcher, opt_recents,
                               opt_initCategory, opt_initSubcategory,
                               opt_rowCount, opt_columnCount, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object used to retrieve character names.
-  ***REMOVED*** @type {!goog.i18n.uChar.NameFetcher}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Object used to retrieve character names.
+   * @type {!goog.i18n.uChar.NameFetcher}
+   * @private
+   */
   this.charNameFetcher_ = charNameFetcher;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object containing character lists and category names.
-  ***REMOVED*** @type {goog.i18n.CharPickerData}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Object containing character lists and category names.
+   * @type {goog.i18n.CharPickerData}
+   * @private
+   */
   this.data_ = charPickerData;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The category number to be used on widget init.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The category number to be used on widget init.
+   * @type {number}
+   * @private
+   */
   this.initCategory_ = opt_initCategory || 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The subcategory number to be used on widget init.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The subcategory number to be used on widget init.
+   * @type {number}
+   * @private
+   */
   this.initSubcategory_ = opt_initSubcategory || 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of columns in the grid.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of columns in the grid.
+   * @type {number}
+   * @private
+   */
   this.columnCount_ = opt_columnCount || 10;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of entries to be added to the grid.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.gridsize_ = (opt_rowCount || 10)***REMOVED*** this.columnCount_;
+  /**
+   * Number of entries to be added to the grid.
+   * @type {number}
+   * @private
+   */
+  this.gridsize_ = (opt_rowCount || 10) * this.columnCount_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of the recently selected characters displayed.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of the recently selected characters displayed.
+   * @type {number}
+   * @private
+   */
   this.recentwidth_ = this.columnCount_ + 1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** List of recently used characters.
-  ***REMOVED*** @type {Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * List of recently used characters.
+   * @type {Array.<string>}
+   * @private
+   */
   this.recents_ = opt_recents || [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Handler for events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.ui.CharPicker>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Handler for events.
+   * @type {goog.events.EventHandler.<!goog.ui.CharPicker>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Decompressor used to get the list of characters from a base88 encoded
-  ***REMOVED*** character list.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Decompressor used to get the list of characters from a base88 encoded
+   * character list.
+   * @type {Object}
+   * @private
+   */
   this.decompressor_ = new goog.i18n.CharListDecompressor();
-***REMOVED***
+};
 goog.inherits(goog.ui.CharPicker, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** The last selected character.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The last selected character.
+ * @type {?string}
+ * @private
+ */
 goog.ui.CharPicker.prototype.selectedChar_ = null;
 
 
-***REMOVED***
-***REMOVED*** Set of formatting characters whose display need to be swapped with nbsp
-***REMOVED*** to prevent layout issues.
-***REMOVED*** @type {goog.structs.Set}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Set of formatting characters whose display need to be swapped with nbsp
+ * to prevent layout issues.
+ * @type {goog.structs.Set}
+ * @private
+ */
 goog.ui.CharPicker.prototype.layoutAlteringChars_ = null;
 
 
-***REMOVED***
-***REMOVED*** The top category menu.
-***REMOVED*** @type {goog.ui.Menu}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The top category menu.
+ * @type {goog.ui.Menu}
+ * @private
+ */
 goog.ui.CharPicker.prototype.menu_ = null;
 
 
-***REMOVED***
-***REMOVED*** The top category menu button.
-***REMOVED*** @type {goog.ui.MenuButton}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The top category menu button.
+ * @type {goog.ui.MenuButton}
+ * @private
+ */
 goog.ui.CharPicker.prototype.menubutton_ = null;
 
 
-***REMOVED***
-***REMOVED*** The subcategory menu.
-***REMOVED*** @type {goog.ui.Menu}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The subcategory menu.
+ * @type {goog.ui.Menu}
+ * @private
+ */
 goog.ui.CharPicker.prototype.submenu_ = null;
 
 
-***REMOVED***
-***REMOVED*** The subcategory menu button.
-***REMOVED*** @type {goog.ui.MenuButton}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The subcategory menu button.
+ * @type {goog.ui.MenuButton}
+ * @private
+ */
 goog.ui.CharPicker.prototype.submenubutton_ = null;
 
 
-***REMOVED***
-***REMOVED*** The element representing the number of rows visible in the grid.
-***REMOVED*** This along with goog.ui.CharPicker.stick_ would help to create a scrollbar
-***REMOVED*** of right size.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The element representing the number of rows visible in the grid.
+ * This along with goog.ui.CharPicker.stick_ would help to create a scrollbar
+ * of right size.
+ * @type {Element}
+ * @private
+ */
 goog.ui.CharPicker.prototype.stickwrap_ = null;
 
 
-***REMOVED***
-***REMOVED*** The component containing all the buttons for each character in display.
-***REMOVED*** @type {goog.ui.Component}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The component containing all the buttons for each character in display.
+ * @type {goog.ui.Component}
+ * @private
+ */
 goog.ui.CharPicker.prototype.grid_ = null;
 
 
-***REMOVED***
-***REMOVED*** The component used for extra information about the character set displayed.
-***REMOVED*** @type {goog.ui.Component}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The component used for extra information about the character set displayed.
+ * @type {goog.ui.Component}
+ * @private
+ */
 goog.ui.CharPicker.prototype.notice_ = null;
 
 
-***REMOVED***
-***REMOVED*** Grid displaying recently selected characters.
-***REMOVED*** @type {goog.ui.Component}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Grid displaying recently selected characters.
+ * @type {goog.ui.Component}
+ * @private
+ */
 goog.ui.CharPicker.prototype.recentgrid_ = null;
 
 
-***REMOVED***
-***REMOVED*** Input field for entering the hex value of the character.
-***REMOVED*** @type {goog.ui.Component}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Input field for entering the hex value of the character.
+ * @type {goog.ui.Component}
+ * @private
+ */
 goog.ui.CharPicker.prototype.input_ = null;
 
 
-***REMOVED***
-***REMOVED*** OK button for entering hex value of the character.
-***REMOVED*** @type {goog.ui.Component}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * OK button for entering hex value of the character.
+ * @type {goog.ui.Component}
+ * @private
+ */
 goog.ui.CharPicker.prototype.okbutton_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element displaying character name in preview.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element displaying character name in preview.
+ * @type {Element}
+ * @private
+ */
 goog.ui.CharPicker.prototype.charNameEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element displaying character in preview.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element displaying character in preview.
+ * @type {Element}
+ * @private
+ */
 goog.ui.CharPicker.prototype.zoomEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Element displaying character number (codepoint) in preview.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Element displaying character number (codepoint) in preview.
+ * @type {Element}
+ * @private
+ */
 goog.ui.CharPicker.prototype.unicodeEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** Hover card for displaying the preview of a character.
-***REMOVED*** Preview would contain character in large size and its U+ notation. It would
-***REMOVED*** also display the name, if available.
-***REMOVED*** @type {goog.ui.HoverCard}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Hover card for displaying the preview of a character.
+ * Preview would contain character in large size and its U+ notation. It would
+ * also display the name, if available.
+ * @type {goog.ui.HoverCard}
+ * @private
+ */
 goog.ui.CharPicker.prototype.hc_ = null;
 
 
-***REMOVED***
-***REMOVED*** Gets the last selected character.
-***REMOVED*** @return {?string} The last selected character.
-***REMOVED***
+/**
+ * Gets the last selected character.
+ * @return {?string} The last selected character.
+ */
 goog.ui.CharPicker.prototype.getSelectedChar = function() {
   return this.selectedChar_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the list of characters user selected recently.
-***REMOVED*** @return {Array.<string>} The recent character list.
-***REMOVED***
+/**
+ * Gets the list of characters user selected recently.
+ * @return {Array.<string>} The recent character list.
+ */
 goog.ui.CharPicker.prototype.getRecentChars = function() {
   return this.recents_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.CharPicker.prototype.createDom = function() {
   goog.ui.CharPicker.superClass_.createDom.call(this);
 
   this.decorateInternal(this.getDomHelper().createElement('div'));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.CharPicker.prototype.disposeInternal = function() {
   goog.dispose(this.hc_);
   this.hc_ = null;
   goog.dispose(this.eventHandler_);
   this.eventHandler_ = null;
   goog.ui.CharPicker.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.CharPicker.prototype.decorateInternal = function(element) {
   goog.ui.CharPicker.superClass_.decorateInternal.call(this, element);
 
@@ -336,13 +336,13 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
   }
 
   this.menubutton_ = new goog.ui.MenuButton('Category Menu', this.menu_,
-      /* opt_renderer***REMOVED*** undefined, this.getDomHelper());
+      /* opt_renderer */ undefined, this.getDomHelper());
   this.addChild(this.menubutton_, true);
 
   this.submenu_ = new goog.ui.Menu(this.getDomHelper());
 
   this.submenubutton_ = new goog.ui.MenuButton('Subcategory Menu',
-      this.submenu_, /* opt_renderer***REMOVED*** undefined, this.getDomHelper());
+      this.submenu_, /* opt_renderer */ undefined, this.getDomHelper());
   this.addChild(this.submenubutton_, true);
 
   // The containing component for grid component and the scroller.
@@ -365,9 +365,9 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
   this.addChild(this.notice_, true);
 
   // The component used for displaying 'Recent Selections' label.
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc The text label above the list of recently selected characters.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc The text label above the list of recently selected characters.
+   */
   var MSG_CHAR_PICKER_RECENT_SELECTIONS = goog.getMsg('Recent Selections:');
   var recenttext = new goog.ui.Component(this.getDomHelper());
   recenttext.setElementInternal(this.getDomHelper().createDom('span', null,
@@ -382,16 +382,16 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
   uplus.setElementInternal(this.getDomHelper().createDom('span', null, 'U+'));
   this.addChild(uplus, true);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc The text inside the input box to specify the hex code of a character.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc The text inside the input box to specify the hex code of a character.
+   */
   var MSG_CHAR_PICKER_HEX_INPUT = goog.getMsg('Hex Input');
   this.input_ = new goog.ui.LabelInput(
       MSG_CHAR_PICKER_HEX_INPUT, this.getDomHelper());
   this.addChild(this.input_, true);
 
   this.okbutton_ = new goog.ui.Button(
-      'OK', /* opt_renderer***REMOVED*** undefined, this.getDomHelper());
+      'OK', /* opt_renderer */ undefined, this.getDomHelper());
   this.addChild(this.okbutton_, true);
   this.okbutton_.setEnabled(false);
 
@@ -409,13 +409,13 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
       this.zoomEl_, this.charNameEl_, this.unicodeEl_);
   goog.style.setElementShown(card, false);
   this.hc_ = new goog.ui.HoverCard({'DIV': 'char'},
-      /* opt_checkDescendants***REMOVED*** undefined, this.getDomHelper());
+      /* opt_checkDescendants */ undefined, this.getDomHelper());
   this.hc_.setElement(card);
-***REMOVED***
+  var self = this;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Function called by hover card just before it is visible to collect data.
- ***REMOVED*****REMOVED***
+  /**
+   * Function called by hover card just before it is visible to collect data.
+   */
   function onBeforeShow() {
     var trigger = self.hc_.getAnchorElement();
     var ch = self.getChar_(trigger);
@@ -433,7 +433,7 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
     }
   }
 
-***REMOVED***this.hc_, goog.ui.HoverCard.EventType.BEFORE_SHOW,
+  goog.events.listen(this.hc_, goog.ui.HoverCard.EventType.BEFORE_SHOW,
                      onBeforeShow);
   goog.asserts.assert(element);
   goog.dom.classlist.add(element, goog.getCssName('goog-char-picker'));
@@ -488,10 +488,10 @@ goog.ui.CharPicker.prototype.decorateInternal = function(element) {
   goog.dom.classlist.add(
       goog.asserts.assert(this.submenu_.getElement()),
       goog.getCssName('goog-char-picker-menu'));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.CharPicker.prototype.enterDocument = function() {
   goog.ui.CharPicker.superClass_.enterDocument.call(this);
   var inputkh = new goog.events.InputHandler(this.input_.getElement());
@@ -533,21 +533,21 @@ goog.ui.CharPicker.prototype.enterDocument = function() {
           goog.ui.Component.EventType.FOCUS,
           this.handleFocus_);
 
-***REMOVED***this.okbutton_.getElement(),
+  goog.events.listen(this.okbutton_.getElement(),
       goog.events.EventType.MOUSEDOWN, this.handleOkClick_, true, this);
 
-***REMOVED***this.stickwrap_, goog.events.EventType.SCROLL,
+  goog.events.listen(this.stickwrap_, goog.events.EventType.SCROLL,
       this.handleScroll_, true, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the button focus by updating the aria label with the character name
-***REMOVED*** so it becomes possible to get spoken feedback while tabbing through the
-***REMOVED*** visible symbols.
-***REMOVED*** @param {goog.events.Event} e The focus event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the button focus by updating the aria label with the character name
+ * so it becomes possible to get spoken feedback while tabbing through the
+ * visible symbols.
+ * @param {goog.events.Event} e The focus event.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleFocus_ = function(e) {
   var button = e.target;
   var element = button.getElement();
@@ -573,34 +573,34 @@ goog.ui.CharPicker.prototype.handleFocus_ = function(e) {
       }
     });
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** On scroll, updates the grid with characters correct to the scroll position.
-***REMOVED*** @param {goog.events.Event} e Scroll event to handle.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * On scroll, updates the grid with characters correct to the scroll position.
+ * @param {goog.events.Event} e Scroll event to handle.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleScroll_ = function(e) {
   var height = e.target.scrollHeight;
   var top = e.target.scrollTop;
-  var itempos = Math.ceil(top***REMOVED*** this.items.length / (this.columnCount_***REMOVED***
-      height))***REMOVED*** this.columnCount_;
+  var itempos = Math.ceil(top * this.items.length / (this.columnCount_ *
+      height)) * this.columnCount_;
   if (this.itempos != itempos) {
     this.itempos = itempos;
     this.modifyGridWithItems_(this.grid_, this.items, itempos);
   }
   e.stopPropagation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** On a menu click, sets correct character set in the grid; on a grid click
-***REMOVED*** accept the character as the selected one and adds to recent selection, if not
-***REMOVED*** already present.
-***REMOVED*** @param {goog.events.Event} e Event for the click on menus or grid.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * On a menu click, sets correct character set in the grid; on a grid click
+ * accept the character as the selected one and adds to recent selection, if not
+ * already present.
+ * @param {goog.events.Event} e Event for the click on menus or grid.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleSelectedItem_ = function(e) {
   if (e.target.getParent() == this.menu_) {
     this.menu_.setVisible(false);
@@ -615,15 +615,15 @@ goog.ui.CharPicker.prototype.handleSelectedItem_ = function(e) {
   } else if (e.target.getParent() == this.recentgrid_) {
     this.selectedChar_ = this.getChar_(e.target.getElement());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** When user types the characters displays the preview. Enables the OK button,
-***REMOVED*** if the character is valid.
-***REMOVED*** @param {goog.events.Event} e Event for typing in input field.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * When user types the characters displays the preview. Enables the OK button,
+ * if the character is valid.
+ * @param {goog.events.Event} e Event for typing in input field.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleInput_ = function(e) {
   var ch = this.getInputChar();
   if (ch) {
@@ -640,15 +640,15 @@ goog.ui.CharPicker.prototype.handleInput_ = function(e) {
     this.hc_.setVisible(false);
     this.okbutton_.setEnabled(false);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** On OK click accepts the character and updates the recent char list.
-***REMOVED*** @param {goog.events.Event=} opt_event Event for click on OK button.
-***REMOVED*** @return {boolean} Indicates whether to propagate event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * On OK click accepts the character and updates the recent char list.
+ * @param {goog.events.Event=} opt_event Event for click on OK button.
+ * @return {boolean} Indicates whether to propagate event.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleOkClick_ = function(opt_event) {
   var ch = this.getInputChar();
   if (ch && ch.charCodeAt(0)) {
@@ -657,55 +657,55 @@ goog.ui.CharPicker.prototype.handleOkClick_ = function(opt_event) {
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Behaves exactly like the OK button on Enter key.
-***REMOVED*** @param {goog.events.KeyEvent} e Event for enter on the input field.
-***REMOVED*** @return {boolean} Indicates whether to propagate event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Behaves exactly like the OK button on Enter key.
+ * @param {goog.events.KeyEvent} e Event for enter on the input field.
+ * @return {boolean} Indicates whether to propagate event.
+ * @private
+ */
 goog.ui.CharPicker.prototype.handleEnter_ = function(e) {
   if (e.keyCode == goog.events.KeyCodes.ENTER) {
     return this.handleOkClick_() ?
         this.dispatchEvent(goog.ui.Component.EventType.ACTION) : false;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the character from the event target.
-***REMOVED*** @param {Element} e Event target containing the 'char' attribute.
-***REMOVED*** @return {string} The character specified in the event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the character from the event target.
+ * @param {Element} e Event target containing the 'char' attribute.
+ * @return {string} The character specified in the event.
+ * @private
+ */
 goog.ui.CharPicker.prototype.getChar_ = function(e) {
   return e.getAttribute('char');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a menu entry for either the category listing or subcategory listing.
-***REMOVED*** @param {number} id Id to be used for the entry.
-***REMOVED*** @param {string} caption Text displayed for the menu item.
-***REMOVED*** @return {!goog.ui.MenuItem} Menu item to be added to the menu listing.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a menu entry for either the category listing or subcategory listing.
+ * @param {number} id Id to be used for the entry.
+ * @param {string} caption Text displayed for the menu item.
+ * @return {!goog.ui.MenuItem} Menu item to be added to the menu listing.
+ * @private
+ */
 goog.ui.CharPicker.prototype.createMenuItem_ = function(id, caption) {
-  var item = new goog.ui.MenuItem(caption, /* model***REMOVED*** id, this.getDomHelper());
+  var item = new goog.ui.MenuItem(caption, /* model */ id, this.getDomHelper());
   item.setVisible(true);
   return item;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the category and updates the submenu items and grid accordingly.
-***REMOVED*** @param {number} category Category index used to index the data tables.
-***REMOVED*** @param {number=} opt_subcategory Subcategory index used with category index.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the category and updates the submenu items and grid accordingly.
+ * @param {number} category Category index used to index the data tables.
+ * @param {number=} opt_subcategory Subcategory index used with category index.
+ * @private
+ */
 goog.ui.CharPicker.prototype.setSelectedCategory_ = function(category,
                                                              opt_subcategory) {
   this.category = category;
@@ -722,28 +722,28 @@ goog.ui.CharPicker.prototype.setSelectedCategory_ = function(category,
     this.submenu_.addChild(item, true);
   }
   this.setSelectedSubcategory_(opt_subcategory || 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the subcategory and updates the grid accordingly.
-***REMOVED*** @param {number} subcategory Sub-category index used to index the data tables.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets the subcategory and updates the grid accordingly.
+ * @param {number} subcategory Sub-category index used to index the data tables.
+ * @private
+ */
 goog.ui.CharPicker.prototype.setSelectedSubcategory_ = function(subcategory) {
   var subcategories = this.data_.subcategories;
   var name = subcategories[this.category][subcategory];
   this.submenubutton_.setCaption(name);
   this.setSelectedGrid_(this.category, subcategory);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the grid according to a given category and subcategory.
-***REMOVED*** @param {number} category Index to the category table.
-***REMOVED*** @param {number} subcategory Index to the subcategory table.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the grid according to a given category and subcategory.
+ * @param {number} category Index to the category table.
+ * @param {number} subcategory Index to the subcategory table.
+ * @private
+ */
 goog.ui.CharPicker.prototype.setSelectedGrid_ = function(category,
     subcategory) {
   var charLists = this.data_.charList;
@@ -751,22 +751,22 @@ goog.ui.CharPicker.prototype.setSelectedGrid_ = function(category,
   var content = this.decompressor_.toCharList(charListStr);
   this.charNameFetcher_.prefetch(charListStr);
   this.updateGrid_(this.grid_, content);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the grid with new character list.
-***REMOVED*** @param {goog.ui.Component} grid The grid which is updated with a new set of
-***REMOVED***     characters.
-***REMOVED*** @param {Array.<string>} items Characters to be added to the grid.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the grid with new character list.
+ * @param {goog.ui.Component} grid The grid which is updated with a new set of
+ *     characters.
+ * @param {Array.<string>} items Characters to be added to the grid.
+ * @private
+ */
 goog.ui.CharPicker.prototype.updateGrid_ = function(grid, items) {
   if (grid == this.grid_) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @desc The message used when there are invisible characters like space
-    ***REMOVED***     or format control characters.
-   ***REMOVED*****REMOVED***
+    /**
+     * @desc The message used when there are invisible characters like space
+     *     or format control characters.
+     */
     var MSG_PLEASE_HOVER =
         goog.getMsg('Please hover over each cell for the character name.');
 
@@ -776,30 +776,30 @@ goog.ui.CharPicker.prototype.updateGrid_ = function(grid, items) {
     this.items = items;
     if (this.stickwrap_.offsetHeight > 0) {
       this.stick_.style.height =
-          this.stickwrap_.offsetHeight***REMOVED*** items.length / this.gridsize_ + 'px';
+          this.stickwrap_.offsetHeight * items.length / this.gridsize_ + 'px';
     } else {
       // This is the last ditch effort if height is not avaialble.
       // Maximum of 3em is assumed to the the cell height. Extra space after
       // last character in the grid is OK.
-      this.stick_.style.height = 3***REMOVED*** this.columnCount_***REMOVED*** items.length /
+      this.stick_.style.height = 3 * this.columnCount_ * items.length /
           this.gridsize_ + 'em';
     }
     this.stickwrap_.scrollTop = 0;
   }
 
   this.modifyGridWithItems_(grid, items, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the grid with new character list for a given starting point.
-***REMOVED*** @param {goog.ui.Component} grid The grid which is updated with a new set of
-***REMOVED***     characters.
-***REMOVED*** @param {Array.<string>} items Characters to be added to the grid.
-***REMOVED*** @param {number} start The index from which the characters should be
-***REMOVED***     displayed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the grid with new character list for a given starting point.
+ * @param {goog.ui.Component} grid The grid which is updated with a new set of
+ *     characters.
+ * @param {Array.<string>} items Characters to be added to the grid.
+ * @param {number} start The index from which the characters should be
+ *     displayed.
+ * @private
+ */
 goog.ui.CharPicker.prototype.modifyGridWithItems_ = function(grid, items,
     start) {
   for (var buttonpos = 0, itempos = start;
@@ -811,15 +811,15 @@ goog.ui.CharPicker.prototype.modifyGridWithItems_ = function(grid, items,
   for (; buttonpos < grid.buttoncount; buttonpos++) {
     grid.getChildAt(buttonpos).setVisible(false);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the grid for characters to displayed for selection.
-***REMOVED*** @param {goog.ui.Component} grid The grid which is updated with a new set of
-***REMOVED***     characters.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the grid for characters to displayed for selection.
+ * @param {goog.ui.Component} grid The grid which is updated with a new set of
+ *     characters.
+ * @private
+ */
 goog.ui.CharPicker.prototype.populateGridWithButtons_ = function(grid) {
   for (var i = 0; i < grid.buttoncount; i++) {
     var button = new goog.ui.Button(' ',
@@ -840,29 +840,29 @@ goog.ui.CharPicker.prototype.populateGridWithButtons_ = function(grid) {
     // tabs through the cells.
     goog.a11y.aria.removeRole(buttonEl);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the grid cell with new character.
-***REMOVED*** @param {goog.ui.Component} button This button is proped up for new character.
-***REMOVED*** @param {string} ch Character to be displayed by the button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the grid cell with new character.
+ * @param {goog.ui.Component} button This button is proped up for new character.
+ * @param {string} ch Character to be displayed by the button.
+ * @private
+ */
 goog.ui.CharPicker.prototype.modifyCharNode_ = function(button, ch) {
   var text = this.displayChar_(ch);
   var buttonEl = button.getElement();
   goog.dom.setTextContent(buttonEl, text);
   buttonEl.setAttribute('char', ch);
   button.setVisible(true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a given character to the recent character list.
-***REMOVED*** @param {string} character Character to be added to the recent list.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds a given character to the recent character list.
+ * @param {string} character Character to be added to the recent list.
+ * @private
+ */
 goog.ui.CharPicker.prototype.updateRecents_ = function(character) {
   if (character && character.charCodeAt(0) &&
       !goog.array.contains(this.recents_, character)) {
@@ -872,26 +872,26 @@ goog.ui.CharPicker.prototype.updateRecents_ = function(character) {
     }
     this.updateGrid_(this.recentgrid_, this.recents_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the user inputed unicode character.
-***REMOVED*** @return {string} Unicode character inputed by user.
-***REMOVED***
+/**
+ * Gets the user inputed unicode character.
+ * @return {string} Unicode character inputed by user.
+ */
 goog.ui.CharPicker.prototype.getInputChar = function() {
   var text = this.input_.getValue();
   var code = parseInt(text, 16);
-  return***REMOVED*****REMOVED*** @type {string}***REMOVED*** (goog.i18n.uChar.fromCharCode(code));
-***REMOVED***
+  return /** @type {string} */ (goog.i18n.uChar.fromCharCode(code));
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the display character for the given character.
-***REMOVED*** @param {string} ch Character whose display is fetched.
-***REMOVED*** @return {string} The display of the given character.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the display character for the given character.
+ * @param {string} ch Character whose display is fetched.
+ * @return {string} The display of the given character.
+ * @private
+ */
 goog.ui.CharPicker.prototype.displayChar_ = function(ch) {
   return this.layoutAlteringChars_.contains(ch) ? '\u00A0' : ch;
-***REMOVED***
+};

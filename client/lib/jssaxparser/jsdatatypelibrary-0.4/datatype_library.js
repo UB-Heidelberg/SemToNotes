@@ -201,7 +201,7 @@ function DatatypeLibrary() {
     datatypeAllows :: Datatype -> ParamList -> String -> Context -> Bool
     datatypeAllows ("",  "string") [] _ _ = True
     datatypeAllows ("",  "token") [] _ _ = True
-  ***REMOVED*****REMOVED***
+    */
 DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string, context) {
     var value;
     if (datatype.uri === "http://www.w3.org/2001/XMLSchema-datatypes") {
@@ -209,7 +209,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         Date and duration checks
 
-      ***REMOVED*****REMOVED***
+        */
         switch (datatype.localName) {
             case "date":
                 value = this.whitespace(string, _COLLAPSE, paramList);
@@ -242,7 +242,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         primitive types
 
-      ***REMOVED*****REMOVED***
+        */
             case "boolean":
                 value = this.whitespace(string, _COLLAPSE, paramList);
                 return this.checkRegExpAndParams(_booleanRegExp, value, datatype, paramList);
@@ -273,7 +273,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         types derived from string
 
-      ***REMOVED*****REMOVED***
+        */
             case "string":
                 value = this.whitespace(string, _PRESERVE, paramList);
                 return this.checkParams(value, datatype, paramList);
@@ -302,7 +302,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         types derived from decimal
 
-      ***REMOVED*****REMOVED***
+        */
             case "decimal":
                 value = this.whitespace(string, _COLLAPSE, paramList);
                 return this.checkRegExpAndParams(_decimalRegExp, value, datatype, paramList);
@@ -325,7 +325,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         integer types
 
-      ***REMOVED*****REMOVED***
+        */
             case "negativeInteger":
                 value = this.whitespace(string, _COLLAPSE, paramList);
                 return this.checkIntegerRange(undefined, -1, value, datatype, paramList);
@@ -342,7 +342,7 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
 
         signed or unsigned numbers
 
-      ***REMOVED*****REMOVED***
+        */
             case "unsignedLong":
                 value = this.whitespace(string, _COLLAPSE, paramList);
                 return this.checkIntegerRange(0, _UNSIGNED_LONG_MAX, value, datatype, paramList);
@@ -363,13 +363,13 @@ DatatypeLibrary.prototype.datatypeAllows = function(datatype, paramList, string,
         value = this.whitespace(string, _COLLAPSE, paramList);
         return this.checkParams(value, datatype, paramList);
     }
-***REMOVED***
+};
 
 /*
     datatypeEqual :: Datatype -> String -> Context -> String -> Context -> Bool
     datatypeEqual ("",  "string") s1 _ s2 _ = (s1 == s2)
     datatypeEqual ("",  "token") s1 _ s2 _ = (normalizeWhitespace s1) == (normalizeWhitespace s2)
-  ***REMOVED*****REMOVED***
+    */
 DatatypeLibrary.prototype.datatypeEqual = function(datatype, patternString, patternContext, string, context) {
     var value, patternValue;
     if (datatype.uri === "http://www.w3.org/2001/XMLSchema-datatypes") {
@@ -466,7 +466,7 @@ DatatypeLibrary.prototype.datatypeEqual = function(datatype, patternString, patt
     } else {
         return new Empty();
     }
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.whitespace = function(string, wsDefault, paramList) {
     var wsParam = wsDefault;
@@ -487,7 +487,7 @@ DatatypeLibrary.prototype.whitespace = function(string, wsDefault, paramList) {
         return value.replace(/^ /, "").replace(/ $/, "");
     }
     return string;
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkIntegerRange = function(min, max, string, datatype, paramList) {
     var checkInteger = this.checkRegExp(_integerRegExp, string, datatype);
@@ -507,7 +507,7 @@ DatatypeLibrary.prototype.checkIntegerRange = function(min, max, string, datatyp
         }
     }
     return this.checkParams(string, datatype, paramList);
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkRegExpAndParams = function(regExp, string, datatype, paramList) {
     var check = this.checkRegExp(regExp, string, datatype);
@@ -515,24 +515,24 @@ DatatypeLibrary.prototype.checkRegExpAndParams = function(regExp, string, dataty
         return check;
     }
     return this.checkParams(string, datatype, paramList);
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkRegExp = function(regExp, string, datatype) {
     if (regExp.test(string)) {
         return new Empty();
     }
     return new NotAllowed("invalid " + datatype.localName, datatype, string, 10);
-***REMOVED***
+};
 
 /*
         negation of checkRegExp
-      ***REMOVED*****REMOVED***
+        */
 DatatypeLibrary.prototype.checkExclusiveRegExp = function(regExp, string, datatype) {
     if (regExp.test(string)) {
         return new NotAllowed("invalid " + datatype.localName, datatype, string, 10);
     }
     return new Empty();
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkPrefixDeclared = function(string, context, datatype) {
     if (string.match(":")) {
@@ -542,7 +542,7 @@ DatatypeLibrary.prototype.checkPrefixDeclared = function(string, context, dataty
         }
     }
     return new Empty();
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkParams = function(string, datatype, paramList) {
     var check;
@@ -566,7 +566,7 @@ DatatypeLibrary.prototype.checkParams = function(string, datatype, paramList) {
         }
     }
     return new Empty();
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkParam = function(string, param, datatype) {
     var number, value, check, regExp;
@@ -633,7 +633,7 @@ DatatypeLibrary.prototype.checkParam = function(string, param, datatype) {
         }
     }
     return new Empty();
-***REMOVED***
+};
 
 DatatypeLibrary.prototype.checkEnumeration = function(string, enumeration, datatype) {
     var value;
@@ -654,7 +654,7 @@ DatatypeLibrary.prototype.checkEnumeration = function(string, enumeration, datat
     }
     msg += "]";
     return new NotAllowed(msg, datatype, string, 10);
-***REMOVED***
+};
 
 
 this.DatatypeLibrary = DatatypeLibrary;

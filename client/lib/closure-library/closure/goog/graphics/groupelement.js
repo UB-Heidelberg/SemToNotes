@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A thin wrapper around the DOM element for graphics groups.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author yoah@google.com (Yoah Bar-David)
-***REMOVED***
+/**
+ * @fileoverview A thin wrapper around the DOM element for graphics groups.
+ * @author arv@google.com (Erik Arvidsson)
+ * @author yoah@google.com (Yoah Bar-David)
+ */
 
 
 goog.provide('goog.graphics.GroupElement');
@@ -26,34 +26,34 @@ goog.require('goog.graphics.Element');
 
 
 
-***REMOVED***
-***REMOVED*** Interface for a graphics group element.
-***REMOVED*** You should not construct objects from this constructor. The graphics
-***REMOVED*** will return the object for you.
-***REMOVED*** @param {Element} element The DOM element to wrap.
-***REMOVED*** @param {goog.graphics.AbstractGraphics} graphics The graphics creating
-***REMOVED***     this element.
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.Element}
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
+/**
+ * Interface for a graphics group element.
+ * You should not construct objects from this constructor. The graphics
+ * will return the object for you.
+ * @param {Element} element The DOM element to wrap.
+ * @param {goog.graphics.AbstractGraphics} graphics The graphics creating
+ *     this element.
+ * @constructor
+ * @extends {goog.graphics.Element}
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
 goog.graphics.GroupElement = function(element, graphics) {
   goog.graphics.Element.call(this, element, graphics);
-***REMOVED***
+};
 goog.inherits(goog.graphics.GroupElement, goog.graphics.Element);
 
 
-***REMOVED***
-***REMOVED*** Remove all drawing elements from the group.
-***REMOVED***
+/**
+ * Remove all drawing elements from the group.
+ */
 goog.graphics.GroupElement.prototype.clear = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Set the size of the group element.
-***REMOVED*** @param {number|string} width The width of the group element.
-***REMOVED*** @param {number|string} height The height of the group element.
-***REMOVED***
+/**
+ * Set the size of the group element.
+ * @param {number|string} width The width of the group element.
+ * @param {number|string} height The height of the group element.
+ */
 goog.graphics.GroupElement.prototype.setSize = goog.abstractMethod;

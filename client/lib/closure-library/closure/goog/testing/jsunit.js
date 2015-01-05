@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for working with JsUnit.  Writes out the JsUnit file
-***REMOVED*** that needs to be included in every unit test.
-***REMOVED***
-***REMOVED*** Testing code should not have dependencies outside of goog.testing so as to
-***REMOVED*** reduce the chance of masking missing dependencies.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Utilities for working with JsUnit.  Writes out the JsUnit file
+ * that needs to be included in every unit test.
+ *
+ * Testing code should not have dependencies outside of goog.testing so as to
+ * reduce the chance of masking missing dependencies.
+ *
+ */
 
 goog.provide('goog.testing.jsunit');
 
@@ -27,34 +27,34 @@ goog.require('goog.testing.TestCase');
 goog.require('goog.testing.TestRunner');
 
 
-***REMOVED***
-***REMOVED*** Base path for JsUnit app files, relative to Closure's base path.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Base path for JsUnit app files, relative to Closure's base path.
+ * @type {string}
+ */
 goog.testing.jsunit.BASE_PATH =
     '../../third_party/java/jsunit/core/app/';
 
 
-***REMOVED***
-***REMOVED*** Filename for the core JS Unit script.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Filename for the core JS Unit script.
+ * @type {string}
+ */
 goog.testing.jsunit.CORE_SCRIPT =
     goog.testing.jsunit.BASE_PATH + 'jsUnitCore.js';
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} If this code is being parsed by JsTestC, we let it disable
-***REMOVED*** the onload handler to avoid running the test in JsTestC.
-***REMOVED***
+/**
+ * @define {boolean} If this code is being parsed by JsTestC, we let it disable
+ * the onload handler to avoid running the test in JsTestC.
+ */
 goog.define('goog.testing.jsunit.AUTO_RUN_ONLOAD', true);
 
 
-***REMOVED***
-***REMOVED*** @define {number} Sets a delay in milliseconds after the window onload event
-***REMOVED*** and running the tests. Used to prevent interference with Selenium and give
-***REMOVED*** tests with asynchronous operations time to finish loading.
-***REMOVED***
+/**
+ * @define {number} Sets a delay in milliseconds after the window onload event
+ * and running the tests. Used to prevent interference with Selenium and give
+ * tests with asynchronous operations time to finish loading.
+ */
 goog.define('goog.testing.jsunit.AUTO_RUN_DELAY_IN_MS', 500);
 
 
@@ -65,7 +65,7 @@ goog.define('goog.testing.jsunit.AUTO_RUN_DELAY_IN_MS', 500);
 
   // Store a reference to the window's timeout so that it can't be overridden
   // by tests.
- ***REMOVED*****REMOVED*** @type {!Function}***REMOVED***
+  /** @type {!Function} */
   var realTimeout = window.setTimeout;
 
   // Check for JsUnit's test runner (need to check for >2.2 and <=2.2)
@@ -127,7 +127,7 @@ goog.define('goog.testing.jsunit.AUTO_RUN_DELAY_IN_MS', 500);
       } else {
         tr.logError('JS ERROR: ' + error + '\nURL: ' + url + '\nLine: ' + line);
       }
-   ***REMOVED*****REMOVED***
+    };
 
     // Create an onload handler, if the test runner hasn't been initialized then
     // no test has been registered with the test runner by the test file.  We
@@ -151,7 +151,7 @@ goog.define('goog.testing.jsunit.AUTO_RUN_DELAY_IN_MS', 500);
           tr.execute();
         }, goog.testing.jsunit.AUTO_RUN_DELAY_IN_MS);
         window.onload = null;
-     ***REMOVED*****REMOVED***
+      };
     }
   }
 })();

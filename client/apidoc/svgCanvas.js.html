@@ -25,122 +25,122 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview SVG rendering class representing a canvas.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview SVG rendering class representing a canvas.
+ */
 
 goog.provide('xrx.svg.Canvas');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Element');
 
 
 
-***REMOVED***
-***REMOVED*** SVG rendering class representing a canvas.
-***REMOVED*** @param {SVGElement} element The SVG element.
-***REMOVED***
-***REMOVED*** @extends xrx.svg.Element
-***REMOVED***
+/**
+ * SVG rendering class representing a canvas.
+ * @param {SVGElement} element The SVG element.
+ * @constructor
+ * @extends xrx.svg.Element
+ */
 xrx.svg.Canvas = function(element) {
 
-***REMOVED***
+  goog.base(this, element);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The child elements of the canvas.
-  ***REMOVED*** @type {xrx.svg.Element}
- ***REMOVED*****REMOVED***
+  /**
+   * The child elements of the canvas.
+   * @type {xrx.svg.Element}
+   */
   this.childs_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The canvas width.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The canvas width.
+   * @type {number}
+   */
   this.width_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The canvas height.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The canvas height.
+   * @type {number}
+   */
   this.height_ = 0;
-***REMOVED***
+};
 goog.inherits(xrx.svg.Canvas, xrx.svg.Element);
 
 
 
 xrx.svg.Canvas.prototype.getEventTarget = function() {
   return this.element_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the width of the canvas.
-***REMOVED*** @return {number} The width.
-***REMOVED***
+/**
+ * Returns the width of the canvas.
+ * @return {number} The width.
+ */
 xrx.svg.Canvas.prototype.getWidth = function() {
   return this.width_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the width of the canvas.
-***REMOVED*** @param {number} width the width.
-***REMOVED***
+/**
+ * Sets the width of the canvas.
+ * @param {number} width the width.
+ */
 xrx.svg.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
   this.element_.setAttribute('width', width);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the height of the canvas.
-***REMOVED*** @return {number} The height.
-***REMOVED***
+/**
+ * Returns the height of the canvas.
+ * @return {number} The height.
+ */
 xrx.svg.Canvas.prototype.getHeight = function() {
   return this.height_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets the height of the canvas.
-***REMOVED*** @param {number} width the height.
-***REMOVED***
+/**
+ * Sets the height of the canvas.
+ * @param {number} width the height.
+ */
 xrx.svg.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
   this.element_.setAttribute('height', height);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Adds a child element to the canvas.
-***REMOVED*** @param {Object} element The child element.
-***REMOVED***
+/**
+ * Adds a child element to the canvas.
+ * @param {Object} element The child element.
+ */
 xrx.svg.Canvas.prototype.addChild = function(element) {
   goog.dom.append(this.element_, element.getElement());
   element.draw();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new canvas.
-***REMOVED*** @param {Element} parent The parent HTML element to which the canvas
-***REMOVED***     shall be appended.
-***REMOVED***
+/**
+ * Creates a new canvas.
+ * @param {Element} parent The parent HTML element to which the canvas
+ *     shall be appended.
+ */
 xrx.svg.Canvas.create = function(parent) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'svg');
   var canvas = new xrx.svg.Canvas(element);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

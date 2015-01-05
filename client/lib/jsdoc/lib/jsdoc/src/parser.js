@@ -1,8 +1,8 @@
-/*global env, Packages***REMOVED***
-/*eslint no-script-url:0***REMOVED***
-***REMOVED***
-***REMOVED*** @module jsdoc/src/parser
-***REMOVED***
+/*global env, Packages */
+/*eslint no-script-url:0 */
+/**
+ * @module jsdoc/src/parser
+ */
 'use strict';
 
 var jsdoc = {
@@ -12,7 +12,7 @@ var jsdoc = {
         astnode: require('jsdoc/src/astnode'),
         syntax: require('jsdoc/src/syntax')
     }
-***REMOVED***
+};
 var logger = require('jsdoc/util/logger');
 var util = require('util');
 
@@ -25,17 +25,17 @@ var SCHEMA = 'javascript:';
 var PARSERS = exports.PARSERS = {
     esprima: 'jsdoc/src/parser',
     rhino: 'rhino/jsdoc/src/parser'
-***REMOVED***
+};
 
 // TODO: docs
 // TODO: not currently used
 function makeGlobalDoclet(globalScope) {
-    var doclet = new jsdoc.doclet.Doclet('***REMOVED*** Auto-generated doclet for global scope***REMOVED***', {});
+    var doclet = new jsdoc.doclet.Doclet('/** Auto-generated doclet for global scope */', {});
 
     if (globalScope) {
         // TODO: handle global aliases
         Object.keys(globalScope.ownedVariables).forEach(function(variable) {
-            doclet.meta.vars = doclet.meta.vars || {***REMOVED***
+            doclet.meta.vars = doclet.meta.vars || {};
             doclet.meta.vars[variable] = null;
         });
     }
@@ -67,16 +67,16 @@ exports.createParser = function(type) {
     catch (e) {
         logger.fatal('Unable to create the parser type "' + type + '": ' + e);
     }
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** @class
-***REMOVED*** @mixes module:events.EventEmitter
-***REMOVED***
-***REMOVED*** @example <caption>Create a new parser.</caption>
-***REMOVED*** var jsdocParser = new (require('jsdoc/src/parser').Parser)();
-***REMOVED***
+/**
+ * @class
+ * @mixes module:events.EventEmitter
+ *
+ * @example <caption>Create a new parser.</caption>
+ * var jsdocParser = new (require('jsdoc/src/parser').Parser)();
+ */
 var Parser = exports.Parser = function(builderInstance, visitorInstance, walkerInstance) {
     this.clear();
 
@@ -101,42 +101,42 @@ var Parser = exports.Parser = function(builderInstance, visitorInstance, walkerI
             }
         }
     });
-***REMOVED***
+};
 util.inherits(Parser, require('events').EventEmitter);
 
 // TODO: docs
 Parser.prototype.clear = function() {
     this._resultBuffer = [];
-    this.refs = {***REMOVED***
-    this.refs[jsdoc.src.astnode.GLOBAL_NODE_ID] = {***REMOVED***
-    this.refs[jsdoc.src.astnode.GLOBAL_NODE_ID].meta = {***REMOVED***
-***REMOVED***
+    this.refs = {};
+    this.refs[jsdoc.src.astnode.GLOBAL_NODE_ID] = {};
+    this.refs[jsdoc.src.astnode.GLOBAL_NODE_ID].meta = {};
+};
 
 // TODO: update docs
-***REMOVED***
-***REMOVED*** Parse the given source files for JSDoc comments.
-***REMOVED*** @param {Array.<string>} sourceFiles An array of filepaths to the JavaScript sources.
-***REMOVED*** @param {string} [encoding=utf8]
-***REMOVED***
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.parseBegin
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.fileBegin
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.jsdocCommentFound
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.symbolFound
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.newDoclet
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.fileComplete
-***REMOVED*** @fires module:jsdoc/src/parser.Parser.parseComplete
-***REMOVED***
-***REMOVED*** @example <caption>Parse two source files.</caption>
-***REMOVED*** var myFiles = ['file1.js', 'file2.js'];
-***REMOVED*** var docs = jsdocParser.parse(myFiles);
-***REMOVED***
+/**
+ * Parse the given source files for JSDoc comments.
+ * @param {Array.<string>} sourceFiles An array of filepaths to the JavaScript sources.
+ * @param {string} [encoding=utf8]
+ *
+ * @fires module:jsdoc/src/parser.Parser.parseBegin
+ * @fires module:jsdoc/src/parser.Parser.fileBegin
+ * @fires module:jsdoc/src/parser.Parser.jsdocCommentFound
+ * @fires module:jsdoc/src/parser.Parser.symbolFound
+ * @fires module:jsdoc/src/parser.Parser.newDoclet
+ * @fires module:jsdoc/src/parser.Parser.fileComplete
+ * @fires module:jsdoc/src/parser.Parser.parseComplete
+ *
+ * @example <caption>Parse two source files.</caption>
+ * var myFiles = ['file1.js', 'file2.js'];
+ * var docs = jsdocParser.parse(myFiles);
+ */
 Parser.prototype.parse = function(sourceFiles, encoding) {
     encoding = encoding || env.conf.encoding || 'utf8';
 
     var filename = '';
     var sourceCode = '';
     var parsedFiles = [];
-    var e = {***REMOVED***
+    var e = {};
 
     if (typeof sourceFiles === 'string') {
         sourceFiles = [sourceFiles];
@@ -177,35 +177,35 @@ Parser.prototype.parse = function(sourceFiles, encoding) {
     logger.debug('Finished parsing source files.');
 
     return this._resultBuffer;
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.fireProcessingComplete = function(doclets) {
     this.emit('processingComplete', { doclets: doclets });
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.results = function() {
     return this._resultBuffer;
-***REMOVED***
+};
 
 // TODO: update docs
-***REMOVED***
-***REMOVED*** @param {Object} o The parse result to add to the result buffer.
-***REMOVED***
+/**
+ * @param {Object} o The parse result to add to the result buffer.
+ */
 Parser.prototype.addResult = function(o) {
     this._resultBuffer.push(o);
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.addAstNodeVisitor = function(visitor) {
     this._visitor.addAstNodeVisitor(visitor);
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.getAstNodeVisitors = function() {
     return this._visitor.getAstNodeVisitors();
-***REMOVED***
+};
 
 // TODO: docs
 function pretreat(code) {
@@ -213,20 +213,20 @@ function pretreat(code) {
         // comment out hashbang at the top of the file, like: #!/usr/bin/env node
         .replace(/^(\#\![\S \t]+\r?\n)/, '// $1')
 
-        // to support code minifiers that preserve /*! comments, treat /*!* as equivalent to***REMOVED*****REMOVED***
-        .replace(/\/\*\!\*/g, '***REMOVED***')
+        // to support code minifiers that preserve /*! comments, treat /*!* as equivalent to /**
+        .replace(/\/\*\!\*/g, '/**')
         // merge adjacent doclets
         .replace(/\*\/\/\*\*+/g, '@also');
 }
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 Parser.prototype._parseSourceCode = function(sourceCode, sourceName) {
     var ast;
     var globalScope;
 
     var e = {
         filename: sourceName
-   ***REMOVED*****REMOVED***
+    };
 
     this.emit('fileBegin', e);
     logger.printInfo('Parsing %s ...', sourceName);
@@ -235,7 +235,7 @@ Parser.prototype._parseSourceCode = function(sourceCode, sourceName) {
         e = {
             filename: sourceName,
             source: sourceCode
-       ***REMOVED*****REMOVED***
+        };
         this.emit('beforeParse', e);
         sourceCode = e.source;
         sourceName = e.filename;
@@ -251,7 +251,7 @@ Parser.prototype._parseSourceCode = function(sourceCode, sourceName) {
 
     this.emit('fileComplete', e);
     logger.info('complete.');
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.addDocletRef = function(e) {
@@ -272,10 +272,10 @@ Parser.prototype.addDocletRef = function(e) {
                 meta: {
                     code: e.code
                 }
-           ***REMOVED*****REMOVED***
+            };
         }
     }
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype._getDoclet = function(id) {
@@ -284,18 +284,18 @@ Parser.prototype._getDoclet = function(id) {
     }
 
     return null;
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** @param {string} name - The symbol's longname.
-***REMOVED*** @return {string} The symbol's basename.
-***REMOVED***
+/**
+ * @param {string} name - The symbol's longname.
+ * @return {string} The symbol's basename.
+ */
 Parser.prototype.getBasename = function(name) {
     if (name !== undefined) {
         return name.replace(/^([$a-z_][$a-z_0-9]*).*?$/i, '$1');
     }
-***REMOVED***
+};
 
 // TODO: docs
 function definedInScope(doclet, basename) {
@@ -304,11 +304,11 @@ function definedInScope(doclet, basename) {
 }
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** Given a node, determine what the node is a member of.
-***REMOVED*** @param {node} node
-***REMOVED*** @returns {string} The long name of the node that this is a member of.
-***REMOVED***
+/**
+ * Given a node, determine what the node is a member of.
+ * @param {node} node
+ * @returns {string} The long name of the node that this is a member of.
+ */
 Parser.prototype.astnodeToMemberof = function(node) {
     var basename;
     var doclet;
@@ -365,14 +365,14 @@ Parser.prototype.astnodeToMemberof = function(node) {
     }
 
     return result;
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** Resolve what "this" refers to relative to a node.
-***REMOVED*** @param {node} node - The "this" node
-***REMOVED*** @returns {string} The longname of the enclosing node.
-***REMOVED***
+/**
+ * Resolve what "this" refers to relative to a node.
+ * @param {node} node - The "this" node
+ * @returns {string} The longname of the enclosing node.
+ */
 Parser.prototype.resolveThis = function(node) {
     var doclet;
     var result;
@@ -389,11 +389,11 @@ Parser.prototype.resolveThis = function(node) {
         else if (doclet['this']) {
             result = doclet['this'];
         }
-        // like: Foo.constructor = function(n) {***REMOVED*****REMOVED*** blah***REMOVED*** this.name = n; }
+        // like: Foo.constructor = function(n) { /** blah */ this.name = n; }
         else if (doclet.kind === 'function' && doclet.memberof) {
             result = doclet.memberof;
         }
-        // like: var foo = function(n) {***REMOVED*****REMOVED*** blah***REMOVED*** this.bar = n; }
+        // like: var foo = function(n) { /** blah */ this.bar = n; }
         else if ( doclet.kind === 'member' && jsdoc.src.astnode.isAssignment(node) ) {
             result = doclet.longname || doclet.name;
         }
@@ -422,12 +422,12 @@ Parser.prototype.resolveThis = function(node) {
     }
 
     return result;
-***REMOVED***
+};
 
 // TODO: docs
-***REMOVED***
-***REMOVED*** Given 'var foo = { x: 1 }', find foo from x.
-***REMOVED***
+/**
+ * Given 'var foo = { x: 1 }', find foo from x.
+ */
 Parser.prototype.resolvePropertyParent = function(node) {
     var doclet;
 
@@ -436,14 +436,14 @@ Parser.prototype.resolvePropertyParent = function(node) {
     }
 
     return doclet;
-***REMOVED***
+};
 
 // TODO docs
-***REMOVED***
-***REMOVED*** Resolve what function a var is limited to.
-***REMOVED*** @param {astnode} node
-***REMOVED*** @param {string} basename The leftmost name in the long name: in foo.bar.zip the basename is foo.
-***REMOVED***
+/**
+ * Resolve what function a var is limited to.
+ * @param {astnode} node
+ * @param {string} basename The leftmost name in the long name: in foo.bar.zip the basename is foo.
+ */
 Parser.prototype.resolveVar = function(node, basename) {
     var doclet;
     var result;
@@ -464,7 +464,7 @@ Parser.prototype.resolveVar = function(node, basename) {
     }
 
     return result;
-***REMOVED***
+};
 
 // TODO: docs
 Parser.prototype.resolveEnum = function(e) {
@@ -486,15 +486,15 @@ Parser.prototype.resolveEnum = function(e) {
         // add a copy of the doclet to the parent's properties
         doclet.properties.push( require('jsdoc/util/doop').doop(e.doclet) );
     }
-***REMOVED***
+};
 
 // TODO: document other events
-***REMOVED***
-***REMOVED*** Fired once for each JSDoc comment in the current source code.
-***REMOVED*** @event jsdocCommentFound
-***REMOVED*** @memberof module:jsdoc/src/parser.Parser
-***REMOVED*** @param {event} e
-***REMOVED*** @param {string} e.comment The text content of the JSDoc comment
-***REMOVED*** @param {number} e.lineno The line number associated with the found comment.
-***REMOVED*** @param {string} e.filename The file name associated with the found comment.
-***REMOVED***
+/**
+ * Fired once for each JSDoc comment in the current source code.
+ * @event jsdocCommentFound
+ * @memberof module:jsdoc/src/parser.Parser
+ * @param {event} e
+ * @param {string} e.comment The text content of the JSDoc comment
+ * @param {number} e.lineno The line number associated with the found comment.
+ * @param {string} e.filename The file name associated with the found comment.
+ */

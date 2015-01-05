@@ -23,15 +23,15 @@ goog.require('goog.testing.MockClock');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Test interval between sending uri requests to the server.
-***REMOVED***
+/**
+ * Test interval between sending uri requests to the server.
+ */
 var DELAY_INTERVAL_BETWEEN_URI_REQUESTS = 5;
 
 
-***REMOVED***
-***REMOVED*** Test interval before a response is received for a URI request.
-***REMOVED***
+/**
+ * Test interval before a response is received for a URI request.
+ */
 var DELAY_INTERVAL_FOR_URI_LOAD = 15;
 
 var clock;
@@ -53,16 +53,16 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Gets the successful bulkloader for the specified uris with some
-***REMOVED*** modifications for testability.
-***REMOVED*** <ul>
-***REMOVED***   <li> Added onSuccess methods to simulate success while loading uris.
-***REMOVED***   <li> The send function of the XhrManager used by the bulkloader
-***REMOVED***        calls the onSuccess function after a specified time interval.
-***REMOVED*** </ul>
-***REMOVED*** @param {Array.<string>} uris The URIs.
-***REMOVED***
+/**
+ * Gets the successful bulkloader for the specified uris with some
+ * modifications for testability.
+ * <ul>
+ *   <li> Added onSuccess methods to simulate success while loading uris.
+ *   <li> The send function of the XhrManager used by the bulkloader
+ *        calls the onSuccess function after a specified time interval.
+ * </ul>
+ * @param {Array.<string>} uris The URIs.
+ */
 function getSuccessfulBulkLoader(uris) {
   var bulkLoader = new goog.net.BulkLoader(uris);
   bulkLoader.load = function() {
@@ -76,21 +76,21 @@ function getSuccessfulBulkLoader(uris) {
       setTimeout(goog.bind(this.onSuccess, this, i, uris[i]),
           DELAY_INTERVAL_FOR_URI_LOAD);
     }
- ***REMOVED*****REMOVED***
+  };
 
   bulkLoader.onSuccess = function(id, uri) {
     var xhrIo = {
       getResponseText: function() {return uri;},
       isSuccess: function() {return true;},
       dispose: function() {}
-   ***REMOVED*****REMOVED***
+    };
     this.handleEvent_(id, new goog.events.Event(
         goog.net.EventType.COMPLETE, xhrIo));
- ***REMOVED*****REMOVED***
+  };
 
   var eventHandler = new goog.events.EventHandler();
   eventHandler.listen(bulkLoader,
-  ***REMOVED***
+      goog.net.EventType.SUCCESS,
       handleSuccess);
   eventHandler.listen(bulkLoader,
       goog.net.EventType.ERROR,
@@ -100,18 +100,18 @@ function getSuccessfulBulkLoader(uris) {
 }
 
 
-***REMOVED***
-***REMOVED*** Gets the non-successful bulkloader for the specified uris with some
-***REMOVED*** modifications for testability.
-***REMOVED*** <ul>
-***REMOVED***   <li> Added onSuccess and onError methods to simulate success and error
-***REMOVED***        while loading uris.
-***REMOVED***   <li> The send function of the XhrManager used by the bulkloader
-***REMOVED***        calls the onSuccess or onError function after a specified time
-***REMOVED***        interval.
-***REMOVED*** </ul>
-***REMOVED*** @param {Array.<string>} uris The URIs.
-***REMOVED***
+/**
+ * Gets the non-successful bulkloader for the specified uris with some
+ * modifications for testability.
+ * <ul>
+ *   <li> Added onSuccess and onError methods to simulate success and error
+ *        while loading uris.
+ *   <li> The send function of the XhrManager used by the bulkloader
+ *        calls the onSuccess or onError function after a specified time
+ *        interval.
+ * </ul>
+ * @param {Array.<string>} uris The URIs.
+ */
 function getNonSuccessfulBulkLoader(uris) {
   var bulkLoader = new goog.net.BulkLoader(uris);
   bulkLoader.load = function() {
@@ -132,31 +132,31 @@ function getNonSuccessfulBulkLoader(uris) {
             DELAY_INTERVAL_FOR_URI_LOAD);
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
   bulkLoader.onSuccess = function(id, uri) {
     var xhrIo = {
       getResponseText: function() {return uri;},
       isSuccess: function() {return true;},
       dispose: function() {}
-   ***REMOVED*****REMOVED***
+    };
     this.handleEvent_(id, new goog.events.Event(
         goog.net.EventType.COMPLETE, xhrIo));
- ***REMOVED*****REMOVED***
+  };
 
   bulkLoader.onError = function(id) {
     var xhrIo = {
       getResponseText: function() {return null;},
       isSuccess: function() {return false;},
       dispose: function() {}
-   ***REMOVED*****REMOVED***
+    };
     this.handleEvent_(id, new goog.events.Event(
         goog.net.EventType.ERROR, xhrIo));
- ***REMOVED*****REMOVED***
+  };
 
   var eventHandler = new goog.events.EventHandler();
   eventHandler.listen(bulkLoader,
-  ***REMOVED***
+      goog.net.EventType.SUCCESS,
       handleSuccess);
   eventHandler.listen(bulkLoader,
       goog.net.EventType.ERROR,
@@ -175,9 +175,9 @@ function handleError(e) {
 }
 
 
-***REMOVED***
-***REMOVED*** Test successful loading of URIs using the bulkloader.
-***REMOVED***
+/**
+ * Test successful loading of URIs using the bulkloader.
+ */
 function testBulkLoaderLoadSuccess() {
   var uris = ['a', 'b', 'c'];
   var bulkLoader = getSuccessfulBulkLoader(uris);
@@ -205,9 +205,9 @@ function testBulkLoaderLoadSuccess() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test error loading URIs using the bulkloader.
-***REMOVED***
+/**
+ * Test error loading URIs using the bulkloader.
+ */
 function testBulkLoaderLoadError() {
   var uris = ['a', 'b', 'c'];
   var bulkLoader = getNonSuccessfulBulkLoader(uris);

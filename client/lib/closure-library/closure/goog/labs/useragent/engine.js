@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Closure user agent detection.
-***REMOVED*** @see http://en.wikipedia.org/wiki/User_agent
-***REMOVED*** For more information on browser brand, platform, or device see the other
-***REMOVED*** sub-namespaces in goog.labs.userAgent (browser, platform, and device).
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Closure user agent detection.
+ * @see http://en.wikipedia.org/wiki/User_agent
+ * For more information on browser brand, platform, or device see the other
+ * sub-namespaces in goog.labs.userAgent (browser, platform, and device).
+ *
+ */
 
 goog.provide('goog.labs.userAgent.engine');
 
@@ -27,46 +27,46 @@ goog.require('goog.labs.userAgent.util');
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the rendering engine is Presto.
-***REMOVED***
+/**
+ * @return {boolean} Whether the rendering engine is Presto.
+ */
 goog.labs.userAgent.engine.isPresto = function() {
   return goog.labs.userAgent.util.matchUserAgent('Presto');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the rendering engine is Trident.
-***REMOVED***
+/**
+ * @return {boolean} Whether the rendering engine is Trident.
+ */
 goog.labs.userAgent.engine.isTrident = function() {
   // IE only started including the Trident token in IE8.
   return goog.labs.userAgent.util.matchUserAgent('Trident') ||
       goog.labs.userAgent.util.matchUserAgent('MSIE');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the rendering engine is WebKit.
-***REMOVED***
+/**
+ * @return {boolean} Whether the rendering engine is WebKit.
+ */
 goog.labs.userAgent.engine.isWebKit = function() {
   return goog.labs.userAgent.util.matchUserAgentIgnoreCase('WebKit');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the rendering engine is Gecko.
-***REMOVED***
+/**
+ * @return {boolean} Whether the rendering engine is Gecko.
+ */
 goog.labs.userAgent.engine.isGecko = function() {
   return goog.labs.userAgent.util.matchUserAgent('Gecko') &&
       !goog.labs.userAgent.engine.isWebKit() &&
       !goog.labs.userAgent.engine.isTrident();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The rendering engine's version or empty string if version
-***REMOVED***     can't be determined.
-***REMOVED***
+/**
+ * @return {string} The rendering engine's version or empty string if version
+ *     can't be determined.
+ */
 goog.labs.userAgent.engine.getVersion = function() {
   var userAgentString = goog.labs.userAgent.util.getUserAgent();
   if (userAgentString) {
@@ -98,27 +98,27 @@ goog.labs.userAgent.engine.getVersion = function() {
     }
   }
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {string|number} version The version to check.
-***REMOVED*** @return {boolean} Whether the rendering engine version is higher or the same
-***REMOVED***     as the given version.
-***REMOVED***
+/**
+ * @param {string|number} version The version to check.
+ * @return {boolean} Whether the rendering engine version is higher or the same
+ *     as the given version.
+ */
 goog.labs.userAgent.engine.isVersionOrHigher = function(version) {
   return goog.string.compareVersions(goog.labs.userAgent.engine.getVersion(),
                                      version) >= 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!Array.<!Array.<string>>} tuples Version tuples.
-***REMOVED*** @param {string} key The key to look for.
-***REMOVED*** @return {string} The version string of the given key, if present.
-***REMOVED***     Otherwise, the empty string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {!Array.<!Array.<string>>} tuples Version tuples.
+ * @param {string} key The key to look for.
+ * @return {string} The version string of the given key, if present.
+ *     Otherwise, the empty string.
+ * @private
+ */
 goog.labs.userAgent.engine.getVersionForKey_ = function(tuples, key) {
   // TODO(nnaze): Move to util if useful elsewhere.
 
@@ -127,4 +127,4 @@ goog.labs.userAgent.engine.getVersionForKey_ = function(tuples, key) {
   });
 
   return pair && pair[1] || '';
-***REMOVED***
+};

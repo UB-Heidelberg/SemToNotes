@@ -1,17 +1,17 @@
-/*global define: true***REMOVED***
+/*global define: true */
 define( [], function() {
     "use strict";
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** My example module.
-    ***REMOVED*** @exports exampleModule
-   ***REMOVED*****REMOVED***
+    /**
+     * My example module.
+     * @exports exampleModule
+     */
     let myModule = {
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** My example method.
-       ***REMOVED*****REMOVED***
+        /**
+         * My example method.
+         */
         exampleMethod: function() {}
-   ***REMOVED*****REMOVED***
+    };
 
     return myModule;
 } );

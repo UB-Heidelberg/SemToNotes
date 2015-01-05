@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Similiar to {@link goog.ui.FlatButtonRenderer},
-***REMOVED*** but underlines text instead of adds borders.
-***REMOVED***
-***REMOVED*** For accessibility reasons, it is best to use this with a goog.ui.Button
-***REMOVED*** instead of an A element for links that perform actions in the page.  Links
-***REMOVED*** that have an href and open a new page can and should remain as A elements.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Similiar to {@link goog.ui.FlatButtonRenderer},
+ * but underlines text instead of adds borders.
+ *
+ * For accessibility reasons, it is best to use this with a goog.ui.Button
+ * instead of an A element for links that perform actions in the page.  Links
+ * that have an href and open a new page can and should remain as A elements.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.ui.LinkButtonRenderer');
 
@@ -31,32 +31,32 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Link renderer for {@link goog.ui.Button}s.  Link buttons can contain
-***REMOVED*** almost arbitrary HTML content, will flow like inline elements, but can be
-***REMOVED*** styled like block-level elements.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.FlatButtonRenderer}
-***REMOVED***
+/**
+ * Link renderer for {@link goog.ui.Button}s.  Link buttons can contain
+ * almost arbitrary HTML content, will flow like inline elements, but can be
+ * styled like block-level elements.
+ * @constructor
+ * @extends {goog.ui.FlatButtonRenderer}
+ */
 goog.ui.LinkButtonRenderer = function() {
   goog.ui.FlatButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.LinkButtonRenderer, goog.ui.FlatButtonRenderer);
 goog.addSingletonGetter(goog.ui.LinkButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.LinkButtonRenderer.CSS_CLASS = goog.getCssName('goog-link-button');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.LinkButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.LinkButtonRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for Link Buttons.

@@ -19,14 +19,14 @@ goog.require('goog.ui.equation.Palette');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new comparison palette.
-***REMOVED*** @param {goog.ui.equation.PaletteManager} paletteManager The
-***REMOVED***     manager of the palette.
-***REMOVED*** @extends {goog.ui.equation.Palette}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new comparison palette.
+ * @param {goog.ui.equation.PaletteManager} paletteManager The
+ *     manager of the palette.
+ * @extends {goog.ui.equation.Palette}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.ComparisonPalette = function(paletteManager) {
   goog.ui.equation.Palette.call(this, paletteManager,
       goog.ui.equation.Palette.Type.COMPARISON,
@@ -53,5 +53,5 @@ goog.ui.equation.ComparisonPalette = function(paletteManager) {
        '\\ni',
        '\\notin']);
   this.setSize(new goog.math.Size(7, 3));
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.ComparisonPalette, goog.ui.equation.Palette);

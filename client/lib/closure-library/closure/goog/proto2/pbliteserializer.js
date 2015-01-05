@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol Buffer 2 Serializer which serializes messages
-***REMOVED***  into PB-Lite ("JsPbLite") format.
-***REMOVED***
-***REMOVED*** PB-Lite format is an array where each index corresponds to the associated tag
-***REMOVED*** number. For example, a message like so:
-***REMOVED***
-***REMOVED*** message Foo {
-***REMOVED***   optional int bar = 1;
-***REMOVED***   optional int baz = 2;
-***REMOVED***   optional int bop = 4;
-***REMOVED*** }
-***REMOVED***
-***REMOVED*** would be represented as such:
-***REMOVED***
-***REMOVED*** [, (bar data), (baz data), (nothing), (bop data)]
-***REMOVED***
-***REMOVED*** Note that since the array index is used to represent the tag number, sparsely
-***REMOVED*** populated messages with tag numbers that are not continuous (and/or are very
-***REMOVED*** large) will have many (empty) spots and thus, are inefficient.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Protocol Buffer 2 Serializer which serializes messages
+ *  into PB-Lite ("JsPbLite") format.
+ *
+ * PB-Lite format is an array where each index corresponds to the associated tag
+ * number. For example, a message like so:
+ *
+ * message Foo {
+ *   optional int bar = 1;
+ *   optional int baz = 2;
+ *   optional int bop = 4;
+ * }
+ *
+ * would be represented as such:
+ *
+ * [, (bar data), (baz data), (nothing), (bop data)]
+ *
+ * Note that since the array index is used to represent the tag number, sparsely
+ * populated messages with tag numbers that are not continuous (and/or are very
+ * large) will have many (empty) spots and thus, are inefficient.
+ *
+ *
+ */
 
 goog.provide('goog.proto2.PbLiteSerializer');
 
@@ -45,47 +45,47 @@ goog.require('goog.proto2.Serializer');
 
 
 
-***REMOVED***
-***REMOVED*** PB-Lite serializer.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.proto2.LazyDeserializer}
-***REMOVED***
-goog.proto2.PbLiteSerializer = function() {***REMOVED***
+/**
+ * PB-Lite serializer.
+ *
+ * @constructor
+ * @extends {goog.proto2.LazyDeserializer}
+ */
+goog.proto2.PbLiteSerializer = function() {};
 goog.inherits(goog.proto2.PbLiteSerializer, goog.proto2.LazyDeserializer);
 
 
-***REMOVED***
-***REMOVED*** If true, fields will be serialized with 0-indexed tags (i.e., the proto
-***REMOVED*** field with tag id 1 will have index 0 in the array).
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If true, fields will be serialized with 0-indexed tags (i.e., the proto
+ * field with tag id 1 will have index 0 in the array).
+ * @type {boolean}
+ * @private
+ */
 goog.proto2.PbLiteSerializer.prototype.zeroIndexing_ = false;
 
 
-***REMOVED***
-***REMOVED*** By default, the proto tag with id 1 will have index 1 in the serialized
-***REMOVED*** array.
-***REMOVED***
-***REMOVED*** If the serializer is set to use zero-indexing, the tag with id 1 will have
-***REMOVED*** index 0.
-***REMOVED***
-***REMOVED*** @param {boolean} zeroIndexing Whether this serializer should deal with
-***REMOVED***     0-indexed protos.
-***REMOVED***
+/**
+ * By default, the proto tag with id 1 will have index 1 in the serialized
+ * array.
+ *
+ * If the serializer is set to use zero-indexing, the tag with id 1 will have
+ * index 0.
+ *
+ * @param {boolean} zeroIndexing Whether this serializer should deal with
+ *     0-indexed protos.
+ */
 goog.proto2.PbLiteSerializer.prototype.setZeroIndexed = function(zeroIndexing) {
   this.zeroIndexing_ = zeroIndexing;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes a message to a PB-Lite object.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Message} message The message to be serialized.
-***REMOVED*** @return {!Array} The serialized form of the message.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Serializes a message to a PB-Lite object.
+ *
+ * @param {goog.proto2.Message} message The message to be serialized.
+ * @return {!Array} The serialized form of the message.
+ * @override
+ */
 goog.proto2.PbLiteSerializer.prototype.serialize = function(message) {
   var descriptor = message.getDescriptor();
   var fields = descriptor.getFields();
@@ -123,10 +123,10 @@ goog.proto2.PbLiteSerializer.prototype.serialize = function(message) {
   });
 
   return serialized;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.proto2.PbLiteSerializer.prototype.deserializeField =
     function(message, field, value) {
 
@@ -149,10 +149,10 @@ goog.proto2.PbLiteSerializer.prototype.deserializeField =
   } else {
     return this.getDeserializedValue(field, value);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.proto2.PbLiteSerializer.prototype.getSerializedValue =
     function(field, value) {
   if (field.getFieldType() == goog.proto2.FieldDescriptor.FieldType.BOOL) {
@@ -162,10 +162,10 @@ goog.proto2.PbLiteSerializer.prototype.getSerializedValue =
 
   return goog.proto2.Serializer.prototype.getSerializedValue.apply(this,
                                                                    arguments);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.proto2.PbLiteSerializer.prototype.getDeserializedValue =
     function(field, value) {
 
@@ -177,10 +177,10 @@ goog.proto2.PbLiteSerializer.prototype.getDeserializedValue =
 
   return goog.proto2.Serializer.prototype.getDeserializedValue.apply(this,
                                                                      arguments);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.proto2.PbLiteSerializer.prototype.deserialize =
     function(descriptor, data) {
   var toConvert = data;
@@ -194,4 +194,4 @@ goog.proto2.PbLiteSerializer.prototype.deserialize =
   }
   return goog.proto2.PbLiteSerializer.base(
       this, 'deserialize', descriptor, toConvert);
-***REMOVED***
+};

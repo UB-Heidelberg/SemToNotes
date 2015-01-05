@@ -13,11 +13,11 @@
 // limitations under the License.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract API for TrogEdit plugins.
-***REMOVED***
-***REMOVED*** @see ../demos/editor/editor.html
-***REMOVED***
+/**
+ * @fileoverview Abstract API for TrogEdit plugins.
+ *
+ * @see ../demos/editor/editor.html
+ */
 
 goog.provide('goog.editor.Plugin');
 
@@ -32,111 +32,111 @@ goog.require('goog.reflect');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract API for trogedit plugins.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Abstract API for trogedit plugins.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.editor.Plugin = function() {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether this plugin is enabled for the registered field object.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether this plugin is enabled for the registered field object.
+   * @type {boolean}
+   * @private
+   */
   this.enabled_ = this.activeOnUneditableFields();
-***REMOVED***
+};
 goog.inherits(goog.editor.Plugin, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** The field object this plugin is attached to.
-***REMOVED*** @type {goog.editor.Field}
-***REMOVED*** @protected
-***REMOVED*** @deprecated Use goog.editor.Plugin.getFieldObject and
-***REMOVED***     goog.editor.Plugin.setFieldObject.
-***REMOVED***
+/**
+ * The field object this plugin is attached to.
+ * @type {goog.editor.Field}
+ * @protected
+ * @deprecated Use goog.editor.Plugin.getFieldObject and
+ *     goog.editor.Plugin.setFieldObject.
+ */
 goog.editor.Plugin.prototype.fieldObject = null;
 
 
-***REMOVED***
-***REMOVED*** @return {goog.dom.DomHelper?} The dom helper object associated with the
-***REMOVED***     currently active field.
-***REMOVED***
+/**
+ * @return {goog.dom.DomHelper?} The dom helper object associated with the
+ *     currently active field.
+ */
 goog.editor.Plugin.prototype.getFieldDomHelper = function() {
   return this.getFieldObject() && this.getFieldObject().getEditableDomHelper();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Indicates if this plugin should be automatically disposed when the
-***REMOVED*** registered field is disposed. This should be changed to false for
-***REMOVED*** plugins used as multi-field plugins.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Indicates if this plugin should be automatically disposed when the
+ * registered field is disposed. This should be changed to false for
+ * plugins used as multi-field plugins.
+ * @type {boolean}
+ * @private
+ */
 goog.editor.Plugin.prototype.autoDispose_ = true;
 
 
-***REMOVED***
-***REMOVED*** The logger for this plugin.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * The logger for this plugin.
+ * @type {goog.log.Logger}
+ * @protected
+ */
 goog.editor.Plugin.prototype.logger =
     goog.log.getLogger('goog.editor.Plugin');
 
 
-***REMOVED***
-***REMOVED*** Sets the field object for use with this plugin.
-***REMOVED*** @return {goog.editor.Field} The editable field object.
-***REMOVED*** @protected
-***REMOVED*** @suppress {deprecated} Until fieldObject can be made private.
-***REMOVED***
+/**
+ * Sets the field object for use with this plugin.
+ * @return {goog.editor.Field} The editable field object.
+ * @protected
+ * @suppress {deprecated} Until fieldObject can be made private.
+ */
 goog.editor.Plugin.prototype.getFieldObject = function() {
   return this.fieldObject;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the field object for use with this plugin.
-***REMOVED*** @param {goog.editor.Field} fieldObject The editable field object.
-***REMOVED*** @protected
-***REMOVED*** @suppress {deprecated} Until fieldObject can be made private.
-***REMOVED***
+/**
+ * Sets the field object for use with this plugin.
+ * @param {goog.editor.Field} fieldObject The editable field object.
+ * @protected
+ * @suppress {deprecated} Until fieldObject can be made private.
+ */
 goog.editor.Plugin.prototype.setFieldObject = function(fieldObject) {
   this.fieldObject = fieldObject;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers the field object for use with this plugin.
-***REMOVED*** @param {goog.editor.Field} fieldObject The editable field object.
-***REMOVED***
+/**
+ * Registers the field object for use with this plugin.
+ * @param {goog.editor.Field} fieldObject The editable field object.
+ */
 goog.editor.Plugin.prototype.registerFieldObject = function(fieldObject) {
   this.setFieldObject(fieldObject);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unregisters and disables this plugin for the current field object.
-***REMOVED*** @param {goog.editor.Field} fieldObj The field object. For single-field
-***REMOVED***     plugins, this parameter is ignored.
-***REMOVED***
+/**
+ * Unregisters and disables this plugin for the current field object.
+ * @param {goog.editor.Field} fieldObj The field object. For single-field
+ *     plugins, this parameter is ignored.
+ */
 goog.editor.Plugin.prototype.unregisterFieldObject = function(fieldObj) {
   if (this.getFieldObject()) {
     this.disable(this.getFieldObject());
     this.setFieldObject(null);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables this plugin for the specified, registered field object. A field
-***REMOVED*** object should only be enabled when it is loaded.
-***REMOVED*** @param {goog.editor.Field} fieldObject The field object.
-***REMOVED***
+/**
+ * Enables this plugin for the specified, registered field object. A field
+ * object should only be enabled when it is loaded.
+ * @param {goog.editor.Field} fieldObject The field object.
+ */
 goog.editor.Plugin.prototype.enable = function(fieldObject) {
   if (this.getFieldObject() == fieldObject) {
     this.enabled_ = true;
@@ -144,13 +144,13 @@ goog.editor.Plugin.prototype.enable = function(fieldObject) {
     goog.log.error(this.logger, 'Trying to enable an unregistered field with ' +
         'this plugin.');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disables this plugin for the specified, registered field object.
-***REMOVED*** @param {goog.editor.Field} fieldObject The field object.
-***REMOVED***
+/**
+ * Disables this plugin for the specified, registered field object.
+ * @param {goog.editor.Field} fieldObject The field object.
+ */
 goog.editor.Plugin.prototype.disable = function(fieldObject) {
   if (this.getFieldObject() == fieldObject) {
     this.enabled_ = false;
@@ -158,76 +158,76 @@ goog.editor.Plugin.prototype.disable = function(fieldObject) {
     goog.log.error(this.logger, 'Trying to disable an unregistered field ' +
         'with this plugin.');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether this plugin is enabled for the field object.
-***REMOVED***
-***REMOVED*** @param {goog.editor.Field} fieldObject The field object.
-***REMOVED*** @return {boolean} Whether this plugin is enabled for the field object.
-***REMOVED***
+/**
+ * Returns whether this plugin is enabled for the field object.
+ *
+ * @param {goog.editor.Field} fieldObject The field object.
+ * @return {boolean} Whether this plugin is enabled for the field object.
+ */
 goog.editor.Plugin.prototype.isEnabled = function(fieldObject) {
   return this.getFieldObject() == fieldObject ? this.enabled_ : false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set if this plugin should automatically be disposed when the registered
-***REMOVED*** field is disposed.
-***REMOVED*** @param {boolean} autoDispose Whether to autoDispose.
-***REMOVED***
+/**
+ * Set if this plugin should automatically be disposed when the registered
+ * field is disposed.
+ * @param {boolean} autoDispose Whether to autoDispose.
+ */
 goog.editor.Plugin.prototype.setAutoDispose = function(autoDispose) {
   this.autoDispose_ = autoDispose;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether or not this plugin should automatically be disposed
-***REMOVED***     when it's registered field is disposed.
-***REMOVED***
+/**
+ * @return {boolean} Whether or not this plugin should automatically be disposed
+ *     when it's registered field is disposed.
+ */
 goog.editor.Plugin.prototype.isAutoDispose = function() {
   return this.autoDispose_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} If true, field will not disable the command
-***REMOVED***     when the field becomes uneditable.
-***REMOVED***
+/**
+ * @return {boolean} If true, field will not disable the command
+ *     when the field becomes uneditable.
+ */
 goog.editor.Plugin.prototype.activeOnUneditableFields = goog.functions.FALSE;
 
 
-***REMOVED***
-***REMOVED*** @param {string} command The command to check.
-***REMOVED*** @return {boolean} If true, field will not dispatch change events
-***REMOVED***     for commands of this type. This is useful for "seamless" plugins like
-***REMOVED***     dialogs and lorem ipsum.
-***REMOVED***
+/**
+ * @param {string} command The command to check.
+ * @return {boolean} If true, field will not dispatch change events
+ *     for commands of this type. This is useful for "seamless" plugins like
+ *     dialogs and lorem ipsum.
+ */
 goog.editor.Plugin.prototype.isSilentCommand = goog.functions.FALSE;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.Plugin.prototype.disposeInternal = function() {
   if (this.getFieldObject()) {
     this.unregisterFieldObject(this.getFieldObject());
   }
 
   goog.editor.Plugin.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The ID unique to this plugin class. Note that different
-***REMOVED***     instances off the plugin share the same classId.
-***REMOVED***
+/**
+ * @return {string} The ID unique to this plugin class. Note that different
+ *     instances off the plugin share the same classId.
+ */
 goog.editor.Plugin.prototype.getTrogClassId;
 
 
-***REMOVED***
-***REMOVED*** An enum of operations that plugins may support.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * An enum of operations that plugins may support.
+ * @enum {number}
+ */
 goog.editor.Plugin.Op = {
   KEYDOWN: 1,
   KEYPRESS: 2,
@@ -239,13 +239,13 @@ goog.editor.Plugin.Op = {
   PREPARE_CONTENTS_HTML: 8,
   CLEAN_CONTENTS_HTML: 10,
   CLEAN_CONTENTS_DOM: 11
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A map from plugin operations to the names of the methods that
-***REMOVED*** invoke those operations.
-***REMOVED***
+/**
+ * A map from plugin operations to the names of the methods that
+ * invoke those operations.
+ */
 goog.editor.Plugin.OPCODE = goog.object.transpose(
     goog.reflect.object(goog.editor.Plugin, {
       handleKeyDown: goog.editor.Plugin.Op.KEYDOWN,
@@ -261,93 +261,93 @@ goog.editor.Plugin.OPCODE = goog.object.transpose(
     }));
 
 
-***REMOVED***
-***REMOVED*** A set of op codes that run even on disabled plugins.
-***REMOVED***
+/**
+ * A set of op codes that run even on disabled plugins.
+ */
 goog.editor.Plugin.IRREPRESSIBLE_OPS = goog.object.createSet(
     goog.editor.Plugin.Op.PREPARE_CONTENTS_HTML,
     goog.editor.Plugin.Op.CLEAN_CONTENTS_HTML,
     goog.editor.Plugin.Op.CLEAN_CONTENTS_DOM);
 
 
-***REMOVED***
-***REMOVED*** Handles keydown. It is run before handleKeyboardShortcut and if it returns
-***REMOVED*** true handleKeyboardShortcut will not be called.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @return {boolean} Whether the event was handled and thus should***REMOVED***not* be
-***REMOVED***     propagated to other plugins or handleKeyboardShortcut.
-***REMOVED***
+/**
+ * Handles keydown. It is run before handleKeyboardShortcut and if it returns
+ * true handleKeyboardShortcut will not be called.
+ * @param {!goog.events.BrowserEvent} e The browser event.
+ * @return {boolean} Whether the event was handled and thus should *not* be
+ *     propagated to other plugins or handleKeyboardShortcut.
+ */
 goog.editor.Plugin.prototype.handleKeyDown;
 
 
-***REMOVED***
-***REMOVED*** Handles keypress. It is run before handleKeyboardShortcut and if it returns
-***REMOVED*** true handleKeyboardShortcut will not be called.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @return {boolean} Whether the event was handled and thus should***REMOVED***not* be
-***REMOVED***     propagated to other plugins or handleKeyboardShortcut.
-***REMOVED***
+/**
+ * Handles keypress. It is run before handleKeyboardShortcut and if it returns
+ * true handleKeyboardShortcut will not be called.
+ * @param {!goog.events.BrowserEvent} e The browser event.
+ * @return {boolean} Whether the event was handled and thus should *not* be
+ *     propagated to other plugins or handleKeyboardShortcut.
+ */
 goog.editor.Plugin.prototype.handleKeyPress;
 
 
-***REMOVED***
-***REMOVED*** Handles keyup.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @return {boolean} Whether the event was handled and thus should***REMOVED***not* be
-***REMOVED***     propagated to other plugins.
-***REMOVED***
+/**
+ * Handles keyup.
+ * @param {!goog.events.BrowserEvent} e The browser event.
+ * @return {boolean} Whether the event was handled and thus should *not* be
+ *     propagated to other plugins.
+ */
 goog.editor.Plugin.prototype.handleKeyUp;
 
 
-***REMOVED***
-***REMOVED*** Handles selection change.
-***REMOVED*** @param {!goog.events.BrowserEvent=} opt_e The browser event.
-***REMOVED*** @param {!Node=} opt_target The node the selection changed to.
-***REMOVED*** @return {boolean} Whether the event was handled and thus should***REMOVED***not* be
-***REMOVED***     propagated to other plugins.
-***REMOVED***
+/**
+ * Handles selection change.
+ * @param {!goog.events.BrowserEvent=} opt_e The browser event.
+ * @param {!Node=} opt_target The node the selection changed to.
+ * @return {boolean} Whether the event was handled and thus should *not* be
+ *     propagated to other plugins.
+ */
 goog.editor.Plugin.prototype.handleSelectionChange;
 
 
-***REMOVED***
-***REMOVED*** Handles keyboard shortcuts.  Preferred to using handleKey* as it will use
-***REMOVED*** the proper event based on browser and will be more performant. If
-***REMOVED*** handleKeyPress/handleKeyDown returns true, this will not be called. If the
-***REMOVED*** plugin handles the shortcut, it is responsible for dispatching appropriate
-***REMOVED*** events (change, selection change at the time of this comment). If the plugin
-***REMOVED*** calls execCommand on the editable field, then execCommand already takes care
-***REMOVED*** of dispatching events.
-***REMOVED*** NOTE: For performance reasons this is only called when any key is pressed
-***REMOVED*** in conjunction with ctrl/meta keys OR when a small subset of keys (defined
-***REMOVED*** in goog.editor.Field.POTENTIAL_SHORTCUT_KEYCODES_) are pressed without
-***REMOVED*** ctrl/meta keys. We specifically don't invoke it when altKey is pressed since
-***REMOVED*** alt key is used in many i8n UIs to enter certain characters.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The browser event.
-***REMOVED*** @param {string} key The key pressed.
-***REMOVED*** @param {boolean} isModifierPressed Whether the ctrl/meta key was pressed or
-***REMOVED***     not.
-***REMOVED*** @return {boolean} Whether the event was handled and thus should***REMOVED***not* be
-***REMOVED***     propagated to other plugins. We also call preventDefault on the event if
-***REMOVED***     the return value is true.
-***REMOVED***
+/**
+ * Handles keyboard shortcuts.  Preferred to using handleKey* as it will use
+ * the proper event based on browser and will be more performant. If
+ * handleKeyPress/handleKeyDown returns true, this will not be called. If the
+ * plugin handles the shortcut, it is responsible for dispatching appropriate
+ * events (change, selection change at the time of this comment). If the plugin
+ * calls execCommand on the editable field, then execCommand already takes care
+ * of dispatching events.
+ * NOTE: For performance reasons this is only called when any key is pressed
+ * in conjunction with ctrl/meta keys OR when a small subset of keys (defined
+ * in goog.editor.Field.POTENTIAL_SHORTCUT_KEYCODES_) are pressed without
+ * ctrl/meta keys. We specifically don't invoke it when altKey is pressed since
+ * alt key is used in many i8n UIs to enter certain characters.
+ * @param {!goog.events.BrowserEvent} e The browser event.
+ * @param {string} key The key pressed.
+ * @param {boolean} isModifierPressed Whether the ctrl/meta key was pressed or
+ *     not.
+ * @return {boolean} Whether the event was handled and thus should *not* be
+ *     propagated to other plugins. We also call preventDefault on the event if
+ *     the return value is true.
+ */
 goog.editor.Plugin.prototype.handleKeyboardShortcut;
 
 
-***REMOVED***
-***REMOVED*** Handles execCommand. This default implementation handles dispatching
-***REMOVED*** BEFORECHANGE, CHANGE, and SELECTIONCHANGE events, and calls
-***REMOVED*** execCommandInternal to perform the actual command. Plugins that want to
-***REMOVED*** do their own event dispatching should override execCommand, otherwise
-***REMOVED*** it is preferred to only override execCommandInternal.
-***REMOVED***
-***REMOVED*** This version of execCommand will only work for single field plugins.
-***REMOVED*** Multi-field plugins must override execCommand.
-***REMOVED***
-***REMOVED*** @param {string} command The command to execute.
-***REMOVED*** @param {...*} var_args Any additional parameters needed to
-***REMOVED***     execute the command.
-***REMOVED*** @return {*} The result of the execCommand, if any.
-***REMOVED***
+/**
+ * Handles execCommand. This default implementation handles dispatching
+ * BEFORECHANGE, CHANGE, and SELECTIONCHANGE events, and calls
+ * execCommandInternal to perform the actual command. Plugins that want to
+ * do their own event dispatching should override execCommand, otherwise
+ * it is preferred to only override execCommandInternal.
+ *
+ * This version of execCommand will only work for single field plugins.
+ * Multi-field plugins must override execCommand.
+ *
+ * @param {string} command The command to execute.
+ * @param {...*} var_args Any additional parameters needed to
+ *     execute the command.
+ * @return {*} The result of the execCommand, if any.
+ */
 goog.editor.Plugin.prototype.execCommand = function(command, var_args) {
   // TODO(user): Replace all uses of isSilentCommand with plugins that just
   // override this base execCommand method.
@@ -383,81 +383,81 @@ goog.editor.Plugin.prototype.execCommand = function(command, var_args) {
   }
 
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles execCommand. This default implementation does nothing, and is
-***REMOVED*** called by execCommand, which handles event dispatching. This method should
-***REMOVED*** be overriden by plugins that don't need to do their own event dispatching.
-***REMOVED*** If custom event dispatching is needed, execCommand shoul be overriden
-***REMOVED*** instead.
-***REMOVED***
-***REMOVED*** @param {string} command The command to execute.
-***REMOVED*** @param {...*} var_args Any additional parameters needed to
-***REMOVED***     execute the command.
-***REMOVED*** @return {*} The result of the execCommand, if any.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles execCommand. This default implementation does nothing, and is
+ * called by execCommand, which handles event dispatching. This method should
+ * be overriden by plugins that don't need to do their own event dispatching.
+ * If custom event dispatching is needed, execCommand shoul be overriden
+ * instead.
+ *
+ * @param {string} command The command to execute.
+ * @param {...*} var_args Any additional parameters needed to
+ *     execute the command.
+ * @return {*} The result of the execCommand, if any.
+ * @protected
+ */
 goog.editor.Plugin.prototype.execCommandInternal;
 
 
-***REMOVED***
-***REMOVED*** Gets the state of this command if this plugin serves that command.
-***REMOVED*** @param {string} command The command to check.
-***REMOVED*** @return {*} The value of the command.
-***REMOVED***
+/**
+ * Gets the state of this command if this plugin serves that command.
+ * @param {string} command The command to check.
+ * @return {*} The value of the command.
+ */
 goog.editor.Plugin.prototype.queryCommandValue;
 
 
-***REMOVED***
-***REMOVED*** Prepares the given HTML for editing. Strips out content that should not
-***REMOVED*** appear in an editor, and normalizes content as appropriate. The inverse
-***REMOVED*** of cleanContentsHtml.
-***REMOVED***
-***REMOVED*** This op is invoked even on disabled plugins.
-***REMOVED***
-***REMOVED*** @param {string} originalHtml The original HTML.
-***REMOVED*** @param {Object} styles A map of strings. If the plugin wants to add
-***REMOVED***     any styles to the field element, it should add them as key-value
-***REMOVED***     pairs to this object.
-***REMOVED*** @return {string} New HTML that's ok for editing.
-***REMOVED***
+/**
+ * Prepares the given HTML for editing. Strips out content that should not
+ * appear in an editor, and normalizes content as appropriate. The inverse
+ * of cleanContentsHtml.
+ *
+ * This op is invoked even on disabled plugins.
+ *
+ * @param {string} originalHtml The original HTML.
+ * @param {Object} styles A map of strings. If the plugin wants to add
+ *     any styles to the field element, it should add them as key-value
+ *     pairs to this object.
+ * @return {string} New HTML that's ok for editing.
+ */
 goog.editor.Plugin.prototype.prepareContentsHtml;
 
 
-***REMOVED***
-***REMOVED*** Cleans the contents of the node passed to it. The node contents are modified
-***REMOVED*** directly, and the modifications will subsequently be used, for operations
-***REMOVED*** such as saving the innerHTML of the editor etc. Since the plugins act on
-***REMOVED*** the DOM directly, this method can be very expensive.
-***REMOVED***
-***REMOVED*** This op is invoked even on disabled plugins.
-***REMOVED***
-***REMOVED*** @param {!Element} fieldCopy The copy of the editable field which
-***REMOVED***     needs to be cleaned up.
-***REMOVED***
+/**
+ * Cleans the contents of the node passed to it. The node contents are modified
+ * directly, and the modifications will subsequently be used, for operations
+ * such as saving the innerHTML of the editor etc. Since the plugins act on
+ * the DOM directly, this method can be very expensive.
+ *
+ * This op is invoked even on disabled plugins.
+ *
+ * @param {!Element} fieldCopy The copy of the editable field which
+ *     needs to be cleaned up.
+ */
 goog.editor.Plugin.prototype.cleanContentsDom;
 
 
-***REMOVED***
-***REMOVED*** Cleans the html contents of Trogedit. Both cleanContentsDom and
-***REMOVED*** and cleanContentsHtml will be called on contents extracted from Trogedit.
-***REMOVED*** The inverse of prepareContentsHtml.
-***REMOVED***
-***REMOVED*** This op is invoked even on disabled plugins.
-***REMOVED***
-***REMOVED*** @param {string} originalHtml The trogedit HTML.
-***REMOVED*** @return {string} Cleaned-up HTML.
-***REMOVED***
+/**
+ * Cleans the html contents of Trogedit. Both cleanContentsDom and
+ * and cleanContentsHtml will be called on contents extracted from Trogedit.
+ * The inverse of prepareContentsHtml.
+ *
+ * This op is invoked even on disabled plugins.
+ *
+ * @param {string} originalHtml The trogedit HTML.
+ * @return {string} Cleaned-up HTML.
+ */
 goog.editor.Plugin.prototype.cleanContentsHtml;
 
 
-***REMOVED***
-***REMOVED*** Whether the string corresponds to a command this plugin handles.
-***REMOVED*** @param {string} command Command string to check.
-***REMOVED*** @return {boolean} Whether the plugin handles this type of command.
-***REMOVED***
+/**
+ * Whether the string corresponds to a command this plugin handles.
+ * @param {string} command Command string to check.
+ * @return {boolean} Whether the plugin handles this type of command.
+ */
 goog.editor.Plugin.prototype.isSupportedCommand = function(command) {
   return false;
-***REMOVED***
+};

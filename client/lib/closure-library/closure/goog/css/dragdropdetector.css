@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Styling for the drag drop detector.
-***REMOVED***
-***REMOVED*** Author: robbyw@google.com (Robby Walker)
-***REMOVED*** Author: wcrosby@google.com (Wayne Crosby)
-***REMOVED***
+ * Styling for the drag drop detector.
+ *
+ * Author: robbyw@google.com (Robby Walker)
+ * Author: wcrosby@google.com (Wayne Crosby)
+ */
 
 .goog-dragdrop-w3c-editable-iframe {
   position: absolute;

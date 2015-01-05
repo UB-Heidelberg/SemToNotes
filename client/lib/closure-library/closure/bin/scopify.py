@@ -136,10 +136,10 @@ def Transform(lines):
           not re.search(REQUIRES_RE, line) and
           not line.isspace()):
         # There should be two blank lines before goog.scope
-        result += ['\n']***REMOVED*** 2
+        result += ['\n'] * 2
         result.append('goog.scope(function() {\n')
         insertion_index = len(result)
-        result += ['\n']***REMOVED*** num_blank_lines
+        result += ['\n'] * num_blank_lines
         mode = IN_SCOPE
       elif line.isspace():
         # Keep track of the number of blank lines before each block of code so
@@ -147,7 +147,7 @@ def Transform(lines):
         num_blank_lines += 1
       else:
         # Print the blank lines we saw before this code block
-        result += ['\n']***REMOVED*** num_blank_lines
+        result += ['\n'] * num_blank_lines
         num_blank_lines = 0
         result.append(line)
 

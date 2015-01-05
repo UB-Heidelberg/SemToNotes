@@ -20,19 +20,19 @@ var toDir = exports.toDir = function(_path) {
     } else {
         return path.dirname(_path);
     }
-***REMOVED***
+};
 
-exports.mkPath = function(***REMOVED***Array*/ _path) {
+exports.mkPath = function(/**Array*/ _path) {
     if ( Array.isArray(_path) ) {
         _path = _path.join('');
     }
 
     wrench.mkdirSyncRecursive(_path);
-***REMOVED***
+};
 
 // adapted from http://procbits.com/2011/11/15/synchronous-file-copy-in-node-js
 exports.copyFileSync = function(inFile, outDir, fileName) {
-    var BUF_LENGTH = 64***REMOVED*** 1024;
+    var BUF_LENGTH = 64 * 1024;
 
     var read;
     var write;
@@ -54,7 +54,7 @@ exports.copyFileSync = function(inFile, outDir, fileName) {
 
     fs.closeSync(read);
     return fs.closeSync(write);
-***REMOVED***
+};
 
 Object.keys(fs).forEach(function(key) {
     exports[key] = fs[key];

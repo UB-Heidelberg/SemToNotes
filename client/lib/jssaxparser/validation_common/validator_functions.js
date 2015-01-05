@@ -46,7 +46,7 @@ ValidatorFunctions.prototype.debug = function(message, pattern, childNode) {
     if (this.relaxNGValidator.debug) {
         recordStep(message, pattern, childNode);
     }
-***REMOVED***
+};
     
     
     /*
@@ -57,7 +57,7 @@ ValidatorFunctions.prototype.debug = function(message, pattern, childNode) {
     contains (NsNameExcept ns1 nc) (QName ns2 ln) = ns1 == ns2 && not (contains nc (QName ns2 ln))
     contains (Name ns1 ln1) (QName ns2 ln2) = (ns1 == ns2) && (ln1 == ln2)
     contains (NameClassChoice nc1 nc2) n = (contains nc1 n) || (contains nc2 n)
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.contains = function(nameClass, qName) {
     if (nameClass instanceof AnyName) {
         return true;
@@ -73,7 +73,7 @@ ValidatorFunctions.prototype.contains = function(nameClass, qName) {
         return this.contains(nameClass.nameClass1, qName) || this.contains(nameClass.nameClass2, qName);
     }
     throw new Error('Unexpected result for ValidatorFunctions.contains() ' + nameClass.toString());
-***REMOVED***
+};
 
     /*
     nullable:: Pattern -> Bool
@@ -91,7 +91,7 @@ ValidatorFunctions.prototype.contains = function(nameClass, qName) {
     nullable Empty = True
     nullable Text = True
     nullable (After _ _) = False
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.nullable = function(pattern) {
     if (pattern instanceof Group) {
         return this.nullable(pattern.pattern1) && this.nullable(pattern.pattern2);
@@ -123,7 +123,7 @@ ValidatorFunctions.prototype.nullable = function(pattern) {
         return false;
     } 
     throw new Error('Unexpected result for ValidatorFunctions.nullable() ' + pattern);
-***REMOVED***
+};
     
     /*
     childDeriv :: Context -> Pattern -> ChildNode -> Pattern
@@ -134,7 +134,7 @@ ValidatorFunctions.prototype.nullable = function(pattern) {
           p3 = startTagCloseDeriv p2
           p4 = childrenDeriv cx p3 children
       in endTagDeriv p4
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.childDeriv = function(context, pattern, childNode) {
     if (childNode instanceof TextNode) {
         this.debug("validation of text node", pattern, childNode);
@@ -152,7 +152,7 @@ ValidatorFunctions.prototype.childDeriv = function(context, pattern, childNode) 
         return this.endTagDeriv(p4, childNode);
     }
     throw new Error('Unexpected result for ValidatorFunctions.childDeriv()' + childNode);
-***REMOVED***
+};
 
     /*
     textDeriv :: Context -> Pattern -> String -> Pattern
@@ -173,7 +173,7 @@ ValidatorFunctions.prototype.childDeriv = function(context, pattern, childNode) 
     textDeriv cx (List p) s =
       if nullable (listDeriv cx p (words s)) then Empty else NotAllowed
     textDeriv _ _ _ = NotAllowed
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.textDeriv = function(context, pattern, string, childNode) {
     var choice1, choice2, group1;
     if (pattern instanceof Choice) {
@@ -225,34 +225,34 @@ ValidatorFunctions.prototype.textDeriv = function(context, pattern, string, chil
     } else {
         return new NotAllowed("invalid pattern", pattern, childNode);
     }
-***REMOVED***
+};
 
     /*
     reverse the order of the array in order to use the function pop()
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.words = function(string) {
     return string.split(/\s+/).reverse();
-***REMOVED***
+};
 
     /*
     listDeriv :: Context -> Pattern -> [String] -> Pattern
     listDeriv _ p [] = p
     listDeriv cx p (h:t) = listDeriv cx (textDeriv cx p h) t
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.listDeriv = function(context, pattern, strings, childNode) {
     if (strings.length === 0) {
         return pattern;
     } else {
         return this.listDeriv(context, this.textDeriv(context, pattern, strings.pop(), childNode), strings);
     }
-***REMOVED***
+};
 
     /*
     choice :: Pattern -> Pattern -> Pattern
     choice p NotAllowed = p
     choice NotAllowed p = p
     choice p1 p2 = Choice p1 p2
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.choice = function(pattern1, pattern2) {
     // in that case choose between NotAllowed according to their priority
     if (pattern1 instanceof NotAllowed && pattern2 instanceof NotAllowed) {
@@ -272,7 +272,7 @@ ValidatorFunctions.prototype.choice = function(pattern1, pattern2) {
     } else {
         return new Choice(pattern1, pattern2);
     }
-***REMOVED***
+};
 
     /*
     group :: Pattern -> Pattern -> Pattern
@@ -281,7 +281,7 @@ ValidatorFunctions.prototype.choice = function(pattern1, pattern2) {
     group p Empty = p
     group Empty p = p
     group p1 p2 = Group p1 p2
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.group = function(pattern1, pattern2) {
     if (pattern1 instanceof NotAllowed) {
         return pattern1;
@@ -294,7 +294,7 @@ ValidatorFunctions.prototype.group = function(pattern1, pattern2) {
     } else {
         return new Group(pattern1, pattern2);
     }
-***REMOVED***
+};
 
     /*
     interleave :: Pattern -> Pattern -> Pattern
@@ -303,7 +303,7 @@ ValidatorFunctions.prototype.group = function(pattern1, pattern2) {
     interleave p Empty = p
     interleave Empty p = p
     interleave p1 p2 = Interleave p1 p2
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.interleave = function(pattern1, pattern2) {
     if (pattern1 instanceof NotAllowed) {
         return pattern1;
@@ -316,14 +316,14 @@ ValidatorFunctions.prototype.interleave = function(pattern1, pattern2) {
     } else {
         return new Interleave(pattern1, pattern2);
     }
-***REMOVED***
+};
 
     /*
     after :: Pattern -> Pattern -> Pattern
     after p NotAllowed = NotAllowed
     after NotAllowed p = NotAllowed
     after p1 p2 = After p1 p2
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.after = function(pattern1, pattern2) {
     if (pattern2 instanceof NotAllowed) {
         return pattern2;
@@ -332,13 +332,13 @@ ValidatorFunctions.prototype.after = function(pattern1, pattern2) {
     } else {
         return new After(pattern1, pattern2);
     }
-***REMOVED***
+};
 
     /*
     datatypeAllows :: Datatype -> ParamList -> String -> Context -> Bool
     datatypeAllows ("",  "string") [] _ _ = True
     datatypeAllows ("",  "token") [] _ _ = True
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.datatypeAllows = function(datatype, paramList, string, context) {
     if (datatype.uri == "") {
         if (datatype.localName === "string" && paramList.length === 0) {
@@ -353,13 +353,13 @@ ValidatorFunctions.prototype.datatypeAllows = function(datatype, paramList, stri
     } else {
         return this.datatypeLibrary.datatypeAllows(datatype, paramList, string, context);
     }
-***REMOVED***
+};
 
     /*
     datatypeEqual :: Datatype -> String -> Context -> String -> Context -> Bool
     datatypeEqual ("",  "string") s1 _ s2 _ = (s1 == s2)
     datatypeEqual ("",  "token") s1 _ s2 _ = (normalizeWhitespace s1) == (normalizeWhitespace s2)
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.datatypeEqual = function(datatype, string1, context1, string2, context2) {
     if (datatype.uri == "") {
         if (datatype.localName == "string") {
@@ -379,22 +379,22 @@ ValidatorFunctions.prototype.datatypeEqual = function(datatype, string1, context
         return new Empty();
     }
     return this.datatypeLibrary.datatypeEqual(datatype, string1, context1, string2, context2);
-***REMOVED***
+};
 
     /*
     normalizeWhitespace :: String -> String
     normalizeWhitespace s = unwords (words s)
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.normalizeWhitespace = function(string) {
     return string.split(/\s+/).join(" ");
-***REMOVED***
+};
 
     /*
     applyAfter :: (Pattern -> Pattern) -> Pattern -> Pattern
     applyAfter f (After p1 p2) = after p1 (f p2)
     applyAfter f (Choice p1 p2) = choice (applyAfter f p1) (applyAfter f p2)
     applyAfter f NotAllowed = NotAllowed
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.applyAfter = function(funct, pattern) {
     if (pattern instanceof After) {
         return this.after(pattern.pattern1, funct.apply(pattern.pattern2));
@@ -404,7 +404,7 @@ ValidatorFunctions.prototype.applyAfter = function(funct, pattern) {
         return pattern;
     }
     throw new Error('Unexpected result for ValidatorFunctions.applyAfter() ' + pattern);
-***REMOVED***
+};
 
     /*
     startTagOpenDeriv :: Pattern -> QName -> Pattern
@@ -426,7 +426,7 @@ ValidatorFunctions.prototype.applyAfter = function(funct, pattern) {
     startTagOpenDeriv (After p1 p2) qn =
       applyAfter (flip after p2) (startTagOpenDeriv p1 qn)
     startTagOpenDeriv _ qn = NotAllowed
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.startTagOpenDeriv = function(pattern, qName, childNode) {
     var choice1, choice2, p1Deriv, p2Deriv;
     if (pattern instanceof Choice) {
@@ -465,18 +465,18 @@ ValidatorFunctions.prototype.startTagOpenDeriv = function(pattern, qName, childN
     } else {
         return new NotAllowed("invalid pattern", pattern, childNode);
     }
-***REMOVED***
+};
 
     /*
     We make use of the standard Haskell function flip  which flips the order of the arguments of a function of two arguments. Thus,  flip applied to a function of two arguments f and an argument x returns a function of one argument g such that g(y) = f(y,  x). 
-  ***REMOVED*****REMOVED***
+    */
 function flip(funct, arg2) {
     this.funct = funct;
     this.arg2 = arg2;
 }
 flip.prototype.apply = function(arg1) {
     return this.funct(arg1, this.arg2);
-***REMOVED***
+};
 
 function notFlip(funct, arg1) {
     this.funct = funct;
@@ -484,13 +484,13 @@ function notFlip(funct, arg1) {
 }
 notFlip.prototype.apply = function(arg2) {
     return this.funct(this.arg1, arg2);
-***REMOVED***
+};
 
     /*
     attsDeriv :: Context -> Pattern -> [AttributeNode] -> Pattern
     attsDeriv cx p [] = p
     attsDeriv cx p ((AttributeNode qn s):t) = attsDeriv cx (attDeriv cx p (AttributeNode qn s)) t
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.attsDeriv = function(context, pattern, attributeNodes) {
     if (attributeNodes.length === 0) {
         return pattern;
@@ -499,7 +499,7 @@ ValidatorFunctions.prototype.attsDeriv = function(context, pattern, attributeNod
         var attsDerivResult = this.attsDeriv(context, attDerivResult, attributeNodes);
         return attsDerivResult;
     }
-***REMOVED***
+};
 
     /*
     attDeriv :: Context -> Pattern -> AttributeNode -> Pattern
@@ -518,7 +518,7 @@ ValidatorFunctions.prototype.attsDeriv = function(context, pattern, attributeNod
     attDeriv cx (Attribute nc p) (AttributeNode qn s) =
       if contains nc qn && valueMatch cx p s then Empty else NotAllowed
     attDeriv _ _ _ = NotAllowed
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.attDeriv = function(context, pattern, attributeNode) {
     var choice1, choice2, attDeriv1, attDeriv2;
     if (pattern instanceof After) {
@@ -560,12 +560,12 @@ ValidatorFunctions.prototype.attDeriv = function(context, pattern, attributeNode
     } else {
         return new NotAllowed("invalid attributeNode", pattern, attributeNode);
     }
-***REMOVED***
+};
 
     /*
     valueMatch :: Context -> Pattern -> String -> Bool
     valueMatch cx p s = (nullable p && whitespace s) || nullable (textDeriv cx p s)
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.valueMatch = function(context, pattern, string, childNode) {
     var nullable = this.nullable(pattern);
     var isWhitespace = this.whitespace(string);
@@ -579,7 +579,7 @@ ValidatorFunctions.prototype.valueMatch = function(context, pattern, string, chi
     } else {
         return textDerivResult;
     }
-***REMOVED***
+};
 
     /*
     startTagCloseDeriv :: Pattern -> Pattern
@@ -595,7 +595,7 @@ ValidatorFunctions.prototype.valueMatch = function(context, pattern, string, chi
       oneOrMore (startTagCloseDeriv p)
     startTagCloseDeriv (Attribute _ _) = NotAllowed
     startTagCloseDeriv p = p
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.startTagCloseDeriv = function(pattern, childNode) {
     if (pattern instanceof After) {
         return this.after(this.startTagCloseDeriv(pattern.pattern1, childNode), pattern.pattern2);
@@ -622,20 +622,20 @@ ValidatorFunctions.prototype.startTagCloseDeriv = function(pattern, childNode) {
     } else {
         return pattern;
     }
-***REMOVED***
+};
 
     /*
     oneOrMore :: Pattern -> Pattern
     oneOrMore NotAllowed = NotAllowed
     oneOrMore p = OneOrMore p
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.oneOrMore = function(pattern) {
     if (pattern instanceof NotAllowed) {
         return pattern;
     } else {
         return new OneOrMore(pattern);
     }
-***REMOVED***
+};
 
     /*
     childrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
@@ -644,7 +644,7 @@ ValidatorFunctions.prototype.oneOrMore = function(pattern) {
         let p1 = childDeriv cx p (TextNode s)
         in if whitespace s then choice p p1 else p1
     childrenDeriv cx p children = stripChildrenDeriv cx p children
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.childrenDeriv = function(context, pattern, childNodes) {
     if (childNodes.length === 0) {
         return pattern;
@@ -659,13 +659,13 @@ ValidatorFunctions.prototype.childrenDeriv = function(context, pattern, childNod
         //in order to use pop(), reverse the order of the children
         return this.stripChildrenDeriv(context, pattern, childNodes.reverse());
     }
-***REMOVED***
+};
 
     /*
     stripChildrenDeriv :: Context -> Pattern -> [ChildNode] -> Pattern
     stripChildrenDeriv _ p [] = p
     stripChildrenDeriv cx p (h:t) = stripChildrenDeriv cx (if strip h then p else (childDeriv cx p h)) t
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.stripChildrenDeriv = function(context, pattern, childNodes) {
     if (childNodes.length === 0) {
         return pattern;
@@ -678,35 +678,35 @@ ValidatorFunctions.prototype.stripChildrenDeriv = function(context, pattern, chi
         }
         return this.stripChildrenDeriv(context, p, childNodesCloned);
     }
-***REMOVED***
+};
     
     /*
     strip :: ChildNode -> Bool
     strip (TextNode s) = whitespace s
     strip _ = False
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.strip = function(childNode) {
     if (childNode instanceof TextNode) {
         return this.whitespace(childNode.string);
     } else {
         return false;
     }
-***REMOVED***
+};
     
     /*
     whitespace :: String -> Bool
     whitespace s = all isSpace s
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.whitespace = function(string) {
     return !(/[^\t\n\r ]/.test(string));
-***REMOVED***
+};
 
     /*
     endTagDeriv :: Pattern -> Pattern
     endTagDeriv (Choice p1 p2) = choice (endTagDeriv p1) (endTagDeriv p2)
     endTagDeriv (After p1 p2) = if nullable p1 then p2 else NotAllowed
     endTagDeriv _ = NotAllowed
-  ***REMOVED*****REMOVED***
+    */
 ValidatorFunctions.prototype.endTagDeriv = function(pattern, childNode) {
     if (pattern instanceof Choice) {
         var choice1 = this.endTagDeriv(pattern.pattern1, childNode);
@@ -723,4 +723,4 @@ ValidatorFunctions.prototype.endTagDeriv = function(pattern, childNode) {
     } else {
         return new NotAllowed("invalid pattern", pattern, childNode);
     }
-***REMOVED***
+};

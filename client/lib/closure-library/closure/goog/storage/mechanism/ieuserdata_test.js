@@ -16,9 +16,9 @@ goog.provide('goog.storage.mechanism.IEUserDataTest');
 goog.setTestOnly('goog.storage.mechanism.IEUserDataTest');
 
 goog.require('goog.storage.mechanism.IEUserData');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSeparationTester');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSharingTester');
 goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
@@ -28,7 +28,7 @@ function setUp() {
   if (ieUserData.isAvailable()) {
     mechanism = ieUserData;
     // There should be at least 32 KiB.
-    minimumQuota = 32***REMOVED*** 1024;
+    minimumQuota = 32 * 1024;
     mechanism_shared = new goog.storage.mechanism.IEUserData('test');
     mechanism_separate = new goog.storage.mechanism.IEUserData('test2');
   }

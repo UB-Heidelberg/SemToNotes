@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.geometry.Path');
 
@@ -10,13 +10,13 @@ goog.require('xrx.geometry');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.geometry.Path = function() {
 
   this.coords = [];
-***REMOVED***
+};
 
 
 
@@ -33,9 +33,9 @@ xrx.geometry.Path.prototype.containsPoint = function(point) {
     xj = coords[j][0], yj = coords[j][1];
 
     intersect = ((yi > y) != (yj > y))
-        && (x < (xj - xi)***REMOVED*** (y - yi) / (yj - yi) + xi);
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
     if (intersect) inside = !inside;
   }
 
   return inside;
-***REMOVED***
+};

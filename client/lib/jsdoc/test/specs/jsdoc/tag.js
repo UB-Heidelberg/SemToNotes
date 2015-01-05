@@ -1,10 +1,10 @@
-/*global afterEach, beforeEach, describe, env, expect, it, spyOn***REMOVED***
+/*global afterEach, beforeEach, describe, env, expect, it, spyOn */
 describe("jsdoc/tag", function() {
     var jsdoc = {
         tag: require('jsdoc/tag'),
         dictionary: require('jsdoc/tag/dictionary'),
         type: require('jsdoc/tag/type')
-   ***REMOVED*****REMOVED***
+    };
     var logger = require('jsdoc/util/logger');
 
     it('should exist', function() {
@@ -18,7 +18,7 @@ describe("jsdoc/tag", function() {
     });
 
     describe('Tag', function() {
-        var meta = {lineno: 1, filename: 'asdf.js'***REMOVED***
+        var meta = {lineno: 1, filename: 'asdf.js'};
         var desc = 'lalblakd lkjasdlib\n  lija';
         var text = '{!number} [foo=1] - ' + desc;
         var exampleRaw = [

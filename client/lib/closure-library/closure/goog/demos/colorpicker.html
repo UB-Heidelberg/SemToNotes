@@ -27,7 +27,7 @@ See the COPYING file for details.
     var picker02 = new goog.ui.ColorPicker.createSimpleColorGrid();
     picker02.render(goog.dom.getElement('colorpicker02'));
 
-  ***REMOVED***picker02, goog.ui.ColorPicker.EventType.CHANGE,
+    goog.events.listen(picker02, goog.ui.ColorPicker.EventType.CHANGE,
       function(event) {
         var color = event.target.getSelectedColor() || '#000000';
         var el = goog.dom.getElement('picker02message');

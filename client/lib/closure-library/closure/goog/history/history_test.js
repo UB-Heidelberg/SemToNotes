@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.history.History.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.history.History.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.HistoryTest');
 
 goog.require('goog.History');

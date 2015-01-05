@@ -1,5 +1,5 @@
 /*global afterEach: true, beforeEach: true, describe: true, expect: true, it: true, spyOn: true,
-xdescribe: true***REMOVED***
+xdescribe: true */
 
 describe('jsdoc/path', function() {
     var os = require('os');

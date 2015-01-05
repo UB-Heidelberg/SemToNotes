@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match a sequence of other patterns.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match a sequence of other patterns.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.Sequence');
 
@@ -26,61 +26,61 @@ goog.require('goog.dom.pattern.MatchType');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches a sequence of other patterns.
-***REMOVED***
-***REMOVED*** @param {Array.<goog.dom.pattern.AbstractPattern>} patterns Ordered array of
-***REMOVED***     patterns to match.
-***REMOVED*** @param {boolean=} opt_ignoreWhitespace Optional flag to ignore text nodes
-***REMOVED***     consisting entirely of whitespace.  The default is to not ignore them.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.AbstractPattern}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Pattern object that matches a sequence of other patterns.
+ *
+ * @param {Array.<goog.dom.pattern.AbstractPattern>} patterns Ordered array of
+ *     patterns to match.
+ * @param {boolean=} opt_ignoreWhitespace Optional flag to ignore text nodes
+ *     consisting entirely of whitespace.  The default is to not ignore them.
+ * @constructor
+ * @extends {goog.dom.pattern.AbstractPattern}
+ * @final
+ */
 goog.dom.pattern.Sequence = function(patterns, opt_ignoreWhitespace) {
   this.patterns = patterns;
   this.ignoreWhitespace_ = !!opt_ignoreWhitespace;
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.Sequence, goog.dom.pattern.AbstractPattern);
 
 
-***REMOVED***
-***REMOVED*** Ordered array of patterns to match.
-***REMOVED***
-***REMOVED*** @type {Array.<goog.dom.pattern.AbstractPattern>}
-***REMOVED***
+/**
+ * Ordered array of patterns to match.
+ *
+ * @type {Array.<goog.dom.pattern.AbstractPattern>}
+ */
 goog.dom.pattern.Sequence.prototype.patterns;
 
 
-***REMOVED***
-***REMOVED*** Position in the patterns array we have reached by successful matches.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Position in the patterns array we have reached by successful matches.
+ *
+ * @type {number}
+ * @private
+ */
 goog.dom.pattern.Sequence.prototype.currentPosition_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Whether or not to ignore whitespace only Text nodes.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether or not to ignore whitespace only Text nodes.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.dom.pattern.Sequence.prototype.ignoreWhitespace_ = false;
 
 
-***REMOVED***
-***REMOVED*** Test whether the given token starts, continues, or finishes the sequence
-***REMOVED*** of patterns given in the constructor.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} <code>MATCH</code> if the pattern
-***REMOVED***     matches, <code>MATCHING</code> if the pattern starts a match, and
-***REMOVED***     <code>NO_MATCH</code> if the pattern does not match.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Test whether the given token starts, continues, or finishes the sequence
+ * of patterns given in the constructor.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} <code>MATCH</code> if the pattern
+ *     matches, <code>MATCHING</code> if the pattern starts a match, and
+ *     <code>NO_MATCH</code> if the pattern does not match.
+ * @override
+ */
 goog.dom.pattern.Sequence.prototype.matchToken = function(token, type) {
   // If the option is set, ignore any whitespace only text nodes
   if (this.ignoreWhitespace_ && token.nodeType == goog.dom.NodeType.TEXT &&
@@ -127,16 +127,16 @@ goog.dom.pattern.Sequence.prototype.matchToken = function(token, type) {
       this.reset();
       return goog.dom.pattern.MatchType.NO_MATCH;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset any internal state this pattern keeps.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Reset any internal state this pattern keeps.
+ * @override
+ */
 goog.dom.pattern.Sequence.prototype.reset = function() {
   if (this.patterns[this.currentPosition_]) {
     this.patterns[this.currentPosition_].reset();
   }
   this.currentPosition_ = 0;
-***REMOVED***
+};

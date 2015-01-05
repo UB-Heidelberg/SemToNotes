@@ -27,7 +27,7 @@ See the COPYING file for details.
 <script src="../base.js"></script>
 <script>
   goog.require('goog.dom');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.Event');
   goog.require('goog.math');
   goog.require('goog.testing.events');
@@ -55,17 +55,17 @@ function tearDown() {
   element.parentNode.replaceChild(clonedMenuDom, element);
 }
 
-***REMOVED*** @bug 1463524***REMOVED***
+/** @bug 1463524 */
 function testMouseupDoesntActivateMenuItemImmediately() {
   menu.decorate(goog.dom.getElement('demoMenu'));
 
-  var fakeEvent = {clientX: 42, clientY: 42***REMOVED***
+  var fakeEvent = {clientX: 42, clientY: 42};
   var itemElem = goog.dom.getElement('menuItem2');
   var coords = new goog.math.Coordinate(42, 42);
 
   var menuItem = menu.getChildAt(1);
   var actionDispatched = false;
-***REMOVED***menuItem, goog.ui.Component.EventType.ACTION,
+  goog.events.listen(menuItem, goog.ui.Component.EventType.ACTION,
       function(e) {
         actionDispatched = true;
       });

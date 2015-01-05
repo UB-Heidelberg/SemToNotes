@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base TestChannel implementation.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Base TestChannel implementation.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.BaseTestChannel');
@@ -27,99 +27,99 @@ goog.require('goog.labs.net.webChannel.requestStats.Stat');
 
 
 
-***REMOVED***
-***REMOVED*** A TestChannel is used during the first part of channel negotiation
-***REMOVED*** with the server to create the channel. It helps us determine whether we're
-***REMOVED*** behind a buffering proxy.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @param {!goog.labs.net.webChannel.Channel} channel The channel
-***REMOVED***     that owns this test channel.
-***REMOVED*** @param {!goog.labs.net.webChannel.WebChannelDebug} channelDebug A
-***REMOVED***     WebChannelDebug instance to use for logging.
-***REMOVED*** @implements {goog.labs.net.webChannel.Channel}
-***REMOVED***
+/**
+ * A TestChannel is used during the first part of channel negotiation
+ * with the server to create the channel. It helps us determine whether we're
+ * behind a buffering proxy.
+ *
+ * @constructor
+ * @struct
+ * @param {!goog.labs.net.webChannel.Channel} channel The channel
+ *     that owns this test channel.
+ * @param {!goog.labs.net.webChannel.WebChannelDebug} channelDebug A
+ *     WebChannelDebug instance to use for logging.
+ * @implements {goog.labs.net.webChannel.Channel}
+ */
 goog.labs.net.webChannel.BaseTestChannel = function(channel, channelDebug) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel that owns this test channel
-  ***REMOVED*** @private {!goog.labs.net.webChannel.Channel}
- ***REMOVED*****REMOVED***
+  /**
+   * The channel that owns this test channel
+   * @private {!goog.labs.net.webChannel.Channel}
+   */
   this.channel_ = channel;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel debug to use for logging
-  ***REMOVED*** @private {!goog.labs.net.webChannel.WebChannelDebug}
- ***REMOVED*****REMOVED***
+  /**
+   * The channel debug to use for logging
+   * @private {!goog.labs.net.webChannel.WebChannelDebug}
+   */
   this.channelDebug_ = channelDebug;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Extra HTTP headers to add to all the requests sent to the server.
-  ***REMOVED*** @private {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * Extra HTTP headers to add to all the requests sent to the server.
+   * @private {Object}
+   */
   this.extraHeaders_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The test request.
-  ***REMOVED*** @private {goog.labs.net.webChannel.ChannelRequest}
- ***REMOVED*****REMOVED***
+  /**
+   * The test request.
+   * @private {goog.labs.net.webChannel.ChannelRequest}
+   */
   this.request_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we have received the first result as an intermediate result. This
-  ***REMOVED*** helps us determine whether we're behind a buffering proxy.
-  ***REMOVED*** @private {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we have received the first result as an intermediate result. This
+   * helps us determine whether we're behind a buffering proxy.
+   * @private {boolean}
+   */
   this.receivedIntermediateResult_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The time when the test request was started. We use timing in IE as
-  ***REMOVED*** a heuristic for whether we're behind a buffering proxy.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * The time when the test request was started. We use timing in IE as
+   * a heuristic for whether we're behind a buffering proxy.
+   * @private {?number}
+   */
   this.startTime_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The time for of the first result part. We use timing in IE as a
-  ***REMOVED*** heuristic for whether we're behind a buffering proxy.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * The time for of the first result part. We use timing in IE as a
+   * heuristic for whether we're behind a buffering proxy.
+   * @private {?number}
+   */
   this.firstTime_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The time for of the last result part. We use timing in IE as a
-  ***REMOVED*** heuristic for whether we're behind a buffering proxy.
-  ***REMOVED*** @private {?number}
- ***REMOVED*****REMOVED***
+  /**
+   * The time for of the last result part. We use timing in IE as a
+   * heuristic for whether we're behind a buffering proxy.
+   * @private {?number}
+   */
   this.lastTime_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The relative path for test requests.
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The relative path for test requests.
+   * @private {?string}
+   */
   this.path_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The last status code received.
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The last status code received.
+   * @private {number}
+   */
   this.lastStatusCode_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A subdomain prefix for using a subdomain in IE for the backchannel
-  ***REMOVED*** requests.
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * A subdomain prefix for using a subdomain in IE for the backchannel
+   * requests.
+   * @private {?string}
+   */
   this.hostPrefix_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The effective client protocol as indicated by the initial handshake
-  ***REMOVED*** response via the x-client-wire-protocol header.
-  ***REMOVED***
-  ***REMOVED*** @private {?string}
- ***REMOVED*****REMOVED***
+  /**
+   * The effective client protocol as indicated by the initial handshake
+   * response via the x-client-wire-protocol header.
+   *
+   * @private {?string}
+   */
   this.clientProtocol_ = null;
-***REMOVED***
+};
 
 
 goog.scope(function() {
@@ -130,59 +130,59 @@ var requestStats = goog.labs.net.webChannel.requestStats;
 var Channel = goog.labs.net.webChannel.Channel;
 
 
-***REMOVED***
-***REMOVED*** Enum type for the test channel state machine
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Enum type for the test channel state machine
+ * @enum {number}
+ * @private
+ */
 BaseTestChannel.State_ = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The state for the TestChannel state machine where we making the
-  ***REMOVED*** initial call to get the server configured parameters.
- ***REMOVED*****REMOVED***
+  /**
+   * The state for the TestChannel state machine where we making the
+   * initial call to get the server configured parameters.
+   */
   INIT: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The  state for the TestChannel state machine where we're checking to
-  ***REMOVED*** se if we're behind a buffering proxy.
- ***REMOVED*****REMOVED***
+  /**
+   * The  state for the TestChannel state machine where we're checking to
+   * se if we're behind a buffering proxy.
+   */
   CONNECTION_TESTING: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The state of the state machine for this object.
-***REMOVED***
-***REMOVED*** @private {?BaseTestChannel.State_}
-***REMOVED***
+/**
+ * The state of the state machine for this object.
+ *
+ * @private {?BaseTestChannel.State_}
+ */
 BaseTestChannel.prototype.state_ = null;
 
 
-***REMOVED***
-***REMOVED*** Time between chunks in the test connection that indicates that we
-***REMOVED*** are not behind a buffering proxy. This value should be less than or
-***REMOVED*** equals to the time between chunks sent from the server.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Time between chunks in the test connection that indicates that we
+ * are not behind a buffering proxy. This value should be less than or
+ * equals to the time between chunks sent from the server.
+ * @type {number}
+ * @private
+ */
 BaseTestChannel.MIN_TIME_EXPECTED_BETWEEN_DATA_ = 500;
 
 
-***REMOVED***
-***REMOVED*** Sets extra HTTP headers to add to all the requests sent to the server.
-***REMOVED***
-***REMOVED*** @param {Object} extraHeaders The HTTP headers.
-***REMOVED***
+/**
+ * Sets extra HTTP headers to add to all the requests sent to the server.
+ *
+ * @param {Object} extraHeaders The HTTP headers.
+ */
 BaseTestChannel.prototype.setExtraHeaders = function(extraHeaders) {
   this.extraHeaders_ = extraHeaders;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the test channel. This initiates connections to the server.
-***REMOVED***
-***REMOVED*** @param {string} path The relative uri for the test connection.
-***REMOVED***
+/**
+ * Starts the test channel. This initiates connections to the server.
+ *
+ * @param {string} path The relative uri for the test connection.
+ */
 BaseTestChannel.prototype.connect = function(path) {
   this.path_ = path;
   var sendDataUri = this.channel_.getForwardChannelUri(this.path_);
@@ -203,20 +203,20 @@ BaseTestChannel.prototype.connect = function(path) {
   sendDataUri.setParameterValues('MODE', 'init');
   this.request_ = ChannelRequest.createChannelRequest(this, this.channelDebug_);
   this.request_.setExtraHeaders(this.extraHeaders_);
-  this.request_.xmlHttpGet(sendDataUri, false /* decodeChunks***REMOVED***,
-      null /* hostPrefix***REMOVED***, true /* opt_noClose***REMOVED***);
+  this.request_.xmlHttpGet(sendDataUri, false /* decodeChunks */,
+      null /* hostPrefix */, true /* opt_noClose */);
   this.state_ = BaseTestChannel.State_.INIT;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Begins the second stage of the test channel where we test to see if we're
-***REMOVED*** behind a buffering proxy. The server sends back a multi-chunked response
-***REMOVED*** with the first chunk containing the content '1' and then two seconds later
-***REMOVED*** sending the second chunk containing the content '2'. Depending on how we
-***REMOVED*** receive the content, we can tell if we're behind a buffering proxy.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Begins the second stage of the test channel where we test to see if we're
+ * behind a buffering proxy. The server sends back a multi-chunked response
+ * with the first chunk containing the content '1' and then two seconds later
+ * sending the second chunk containing the content '2'. Depending on how we
+ * receive the content, we can tell if we're behind a buffering proxy.
+ * @private
+ */
 BaseTestChannel.prototype.checkBufferingProxy_ = function() {
   this.channelDebug_.debug('TestConnection: starting stage 2');
 
@@ -240,7 +240,7 @@ BaseTestChannel.prototype.checkBufferingProxy_ = function() {
   this.request_ = ChannelRequest.createChannelRequest(this, this.channelDebug_);
   this.request_.setExtraHeaders(this.extraHeaders_);
   var recvDataUri = this.channel_.getBackChannelUri(this.hostPrefix_,
-     ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.path_));
+      /** @type {string} */ (this.path_));
 
   requestStats.notifyStatEvent(requestStats.Stat.TEST_STAGE_TWO_START);
   if (!ChannelRequest.supportsXhrStreaming()) {
@@ -248,51 +248,51 @@ BaseTestChannel.prototype.checkBufferingProxy_ = function() {
     this.request_.tridentGet(recvDataUri, Boolean(this.hostPrefix_));
   } else {
     recvDataUri.setParameterValues('TYPE', 'xmlhttp');
-    this.request_.xmlHttpGet(recvDataUri, false***REMOVED*****REMOVED*** decodeChunks***REMOVED***,
-        this.hostPrefix_, false***REMOVED*****REMOVED*** opt_noClose***REMOVED***);
+    this.request_.xmlHttpGet(recvDataUri, false /** decodeChunks */,
+        this.hostPrefix_, false /** opt_noClose */);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.createXhrIo = function(hostPrefix) {
   return this.channel_.createXhrIo(hostPrefix);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Aborts the test channel.
-***REMOVED***
+/**
+ * Aborts the test channel.
+ */
 BaseTestChannel.prototype.abort = function() {
   if (this.request_) {
     this.request_.cancel();
     this.request_ = null;
   }
   this.lastStatusCode_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the test channel is closed. The ChannelRequest object expects
-***REMOVED*** this method to be implemented on its handler.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the channel is closed.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns whether the test channel is closed. The ChannelRequest object expects
+ * this method to be implemented on its handler.
+ *
+ * @return {boolean} Whether the channel is closed.
+ * @override
+ */
 BaseTestChannel.prototype.isClosed = function() {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback from ChannelRequest for when new data is received
-***REMOVED***
-***REMOVED*** @param {ChannelRequest} req The request object.
-***REMOVED*** @param {string} responseText The text of the response.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Callback from ChannelRequest for when new data is received
+ *
+ * @param {ChannelRequest} req The request object.
+ * @param {string} responseText The text of the response.
+ * @override
+ */
 BaseTestChannel.prototype.onRequestData = function(req, responseText) {
   this.lastStatusCode_ = req.getLastStatusCode();
   if (this.state_ == BaseTestChannel.State_.INIT) {
@@ -303,7 +303,7 @@ BaseTestChannel.prototype.onRequestData = function(req, responseText) {
       this.channel_.testConnectionFailure(this, ChannelRequest.Error.BAD_DATA);
       return;
     }
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       var respArray = this.channel_.getWireCodec().decodeMessage(responseText);
     } catch (e) {
@@ -341,15 +341,15 @@ BaseTestChannel.prototype.onRequestData = function(req, responseText) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback from ChannelRequest that indicates a request has completed.
-***REMOVED***
-***REMOVED*** @param {!ChannelRequest} req The request object.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Callback from ChannelRequest that indicates a request has completed.
+ *
+ * @param {!ChannelRequest} req The request object.
+ * @override
+ */
 BaseTestChannel.prototype.onRequestComplete = function(req) {
   this.lastStatusCode_ = this.request_.getLastStatusCode();
   if (!this.request_.getSuccess()) {
@@ -361,7 +361,7 @@ BaseTestChannel.prototype.onRequestComplete = function(req) {
       requestStats.notifyStatEvent(requestStats.Stat.TEST_STAGE_TWO_FAILED);
     }
     this.channel_.testConnectionFailure(this,
-       ***REMOVED*****REMOVED*** @type {ChannelRequest.Error}***REMOVED***
+        /** @type {ChannelRequest.Error} */
         (this.request_.getLastError()));
     return;
   }
@@ -405,65 +405,65 @@ BaseTestChannel.prototype.onRequestComplete = function(req) {
       this.channel_.testConnectionFinished(this, false);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Record the client protocol header from the initial handshake response.
-***REMOVED***
-***REMOVED*** @param {!ChannelRequest} req The request object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Record the client protocol header from the initial handshake response.
+ *
+ * @param {!ChannelRequest} req The request object.
+ * @private
+ */
 BaseTestChannel.prototype.recordClientProtocol_ = function(req) {
   var xmlHttp = req.getXhr();
   if (xmlHttp) {
     var protocolHeader = xmlHttp.getResponseHeader('x-client-wire-protocol');
     this.clientProtocol_ = protocolHeader ? protocolHeader : null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {?string} The client protocol as recorded with the init handshake
-***REMOVED***     request.
-***REMOVED***
+/**
+ * @return {?string} The client protocol as recorded with the init handshake
+ *     request.
+ */
 BaseTestChannel.prototype.getClientProtocol = function() {
   return this.clientProtocol_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the last status code received for a request.
-***REMOVED*** @return {number} The last status code received for a request.
-***REMOVED***
+/**
+ * Returns the last status code received for a request.
+ * @return {number} The last status code received for a request.
+ */
 BaseTestChannel.prototype.getLastStatusCode = function() {
   return this.lastStatusCode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether we should be using secondary domains when the
-***REMOVED***     server instructs us to do so.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {boolean} Whether we should be using secondary domains when the
+ *     server instructs us to do so.
+ * @override
+ */
 BaseTestChannel.prototype.shouldUseSecondaryDomains = function() {
   return this.channel_.shouldUseSecondaryDomains();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.isActive = function() {
   return this.channel_.isActive();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if test stage 2 detected a non-buffered
-***REMOVED***     channel early and early no buffering detection is enabled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @return {boolean} True if test stage 2 detected a non-buffered
+ *     channel early and early no buffering detection is enabled.
+ * @private
+ */
 BaseTestChannel.prototype.checkForEarlyNonBuffered_ = function() {
   var ms = this.firstTime_ - this.startTime_;
 
@@ -473,47 +473,47 @@ BaseTestChannel.prototype.checkForEarlyNonBuffered_ = function() {
   // have been sent. For all other browser's we skip the timing test.
   return ChannelRequest.supportsXhrStreaming() ||
       ms < BaseTestChannel.MIN_TIME_EXPECTED_BETWEEN_DATA_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.getForwardChannelUri = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.getBackChannelUri = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.correctHostPrefix = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.createDataUri = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.testConnectionFinished = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.testConnectionFailure = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 BaseTestChannel.prototype.getConnectionState = goog.abstractMethod;
 });  // goog.scope

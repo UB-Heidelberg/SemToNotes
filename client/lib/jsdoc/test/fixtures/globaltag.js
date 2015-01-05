@@ -1,12 +1,12 @@
-***REMOVED***
+/**
     @global
     @constructor
-***REMOVED***
+ */
 window.Bar = new Function('', a, b, c);
 
 (function() {
 
-   ***REMOVED*****REMOVED*** @global***REMOVED***
+    /** @global */
     var foo;
 
     foo = 'hello foo';

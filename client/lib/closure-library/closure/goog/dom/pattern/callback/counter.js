@@ -12,48 +12,48 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Callback object that counts matches.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Callback object that counts matches.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.callback.Counter');
 
 
 
-***REMOVED***
-***REMOVED*** Callback class for counting matches.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Callback class for counting matches.
+ * @constructor
+ * @final
+ */
 goog.dom.pattern.callback.Counter = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The count of objects matched so far.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The count of objects matched so far.
+ *
+ * @type {number}
+ */
 goog.dom.pattern.callback.Counter.prototype.count = 0;
 
 
-***REMOVED***
-***REMOVED*** The callback function.  Suitable as a callback for
-***REMOVED*** {@link goog.dom.pattern.Matcher}.
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The callback function.  Suitable as a callback for
+ * {@link goog.dom.pattern.Matcher}.
+ * @type {Function}
+ * @private
+ */
 goog.dom.pattern.callback.Counter.prototype.callback_ = null;
 
 
-***REMOVED***
-***REMOVED*** Get a bound callback function that is suitable as a callback for
-***REMOVED*** {@link goog.dom.pattern.Matcher}.
-***REMOVED***
-***REMOVED*** @return {!Function} A callback function.
-***REMOVED***
+/**
+ * Get a bound callback function that is suitable as a callback for
+ * {@link goog.dom.pattern.Matcher}.
+ *
+ * @return {!Function} A callback function.
+ */
 goog.dom.pattern.callback.Counter.prototype.getCallback = function() {
   if (!this.callback_) {
     this.callback_ = goog.bind(function() {
@@ -62,12 +62,12 @@ goog.dom.pattern.callback.Counter.prototype.getCallback = function() {
     }, this);
   }
   return this.callback_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset the counter.
-***REMOVED***
+/**
+ * Reset the counter.
+ */
 goog.dom.pattern.callback.Counter.prototype.reset = function() {
   this.count = 0;
-***REMOVED***
+};

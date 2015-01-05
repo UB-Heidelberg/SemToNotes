@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2010 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2010 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Styling for link buttons created by goog.ui.LinkButtonRenderer.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+ * Styling for link buttons created by goog.ui.LinkButtonRenderer.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 .goog-link-button {
   position: relative;
@@ -18,7 +18,7 @@
   cursor: pointer;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-link-button-disabled {
   color: #888;
   text-decoration: none;

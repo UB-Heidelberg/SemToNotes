@@ -1,11 +1,11 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: pupius@google.com (Daniel Pupius)***REMOVED***
+/* Author: pupius@google.com (Daniel Pupius) */
 
 .goog-testrunner {
   background-color: #EEE;
@@ -45,7 +45,7 @@
   border: 1px solid #999;
   font: normal medium monospace;
   padding: 5px;
-  overflow: auto;  /* Opera doesn't support overflow-y.***REMOVED***
+  overflow: auto;  /* Opera doesn't support overflow-y. */
   overflow-y: scroll;
   overflow-x: auto;
 }

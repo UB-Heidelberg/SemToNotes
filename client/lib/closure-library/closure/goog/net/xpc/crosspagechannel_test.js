@@ -16,7 +16,7 @@ goog.provide('goog.net.xpc.CrossPageChannelTest');
 goog.setTestOnly('goog.net.xpc.CrossPageChannelTest');
 
 goog.require('goog.Disposable');
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.async.Deferred');
 goog.require('goog.dom');
 goog.require('goog.log');
@@ -47,7 +47,7 @@ var accessCheckIframes = [];
 
 function setUpPage() {
   // This test is insanely slow on IE8 for some reason.
-  asyncTestCase.stepTimeout = 20***REMOVED*** 1000;
+  asyncTestCase.stepTimeout = 20 * 1000;
 
   // Show debug log
   var debugDiv = goog.dom.getElement('debugDiv');
@@ -126,7 +126,7 @@ function testCreateIframeRandomId() {
 
 
 function testGetRole() {
-  var cfg = {***REMOVED***
+  var cfg = {};
   cfg[goog.net.xpc.CfgFields.ROLE] = goog.net.xpc.CrossPageChannelRole.OUTER;
   var channel = new goog.net.xpc.CrossPageChannel(cfg);
   // If the configured role is ignored, this will cause the dynamicly
@@ -139,14 +139,14 @@ function testGetRole() {
 
 
 // The following batch of tests:
-***REMOVED****REMOVED****REMOVED*** Establishes a peer iframe
-***REMOVED****REMOVED****REMOVED*** Connects an XPC channel between the frames
-***REMOVED****REMOVED****REMOVED*** From the connection callback in each frame, sends an 'echo' request, and
+// * Establishes a peer iframe
+// * Connects an XPC channel between the frames
+// * From the connection callback in each frame, sends an 'echo' request, and
 //   expects a 'response' response.
-***REMOVED****REMOVED****REMOVED*** Reconnects the inner frame, sends an 'echo', expects a 'response'.
-***REMOVED****REMOVED****REMOVED*** Optionally, reconnects the outer frame, sends an 'echo', expects a
+// * Reconnects the inner frame, sends an 'echo', expects a 'response'.
+// * Optionally, reconnects the outer frame, sends an 'echo', expects a
 //   'response'.
-***REMOVED****REMOVED****REMOVED*** Optionally, reconnects the inner frame, but first reconfigures it to the
+// * Optionally, reconnects the inner frame, but first reconfigures it to the
 //   alternate protocol version, simulating an inner frame navigation that
 //   picks up a new/old version.
 //
@@ -165,177 +165,177 @@ function testGetRole() {
 
 function testLifeCycle_v1_v1() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v1_v1_rev() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v1_v1_onesided() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v1_v1_onesided_rev() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v1_v2() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v1_v2_rev() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v1_v2_onesided() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v1_v2_onesided_rev() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v2_v1() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v2_v1_rev() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v2_v1_onesided() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v2_v1_onesided_rev() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      true /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      true /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v2_v2() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      false /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v2_v2_rev() {
   checkLifeCycle(
-      false /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* outerFrameReconnectSupported***REMOVED***,
-      false /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
 function testLifeCycle_v2_v2_onesided() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      false /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
 function testLifeCycle_v2_v2_onesided_rev() {
   checkLifeCycle(
-      true /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      false /* innerFrameMigrationSupported***REMOVED***,
-      true /* reverse***REMOVED***);
+      true /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      true /* reverse */);
 }
 
 
@@ -344,84 +344,84 @@ function checkLifeCycle(oneSidedHandshake, innerProtocolVersion,
     innerFrameMigrationSupported, reverse) {
   driver.createPeerIframe('new_iframe', oneSidedHandshake,
       innerProtocolVersion, outerProtocolVersion);
-  driver.connect(true /* fullLifeCycleTest***REMOVED***, outerFrameReconnectSupported,
+  driver.connect(true /* fullLifeCycleTest */, outerFrameReconnectSupported,
       innerFrameMigrationSupported, reverse);
 }
 
 
 function testConnectMismatchedNames_v1_v1() {
   checkConnectMismatchedNames(
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* reverse***REMOVED***);
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v1_v1_rev() {
   checkConnectMismatchedNames(
-      1 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* reverse***REMOVED***);
+      1 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v1_v2() {
   checkConnectMismatchedNames(
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* reverse***REMOVED***);
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v1_v2_rev() {
   checkConnectMismatchedNames(
-      1 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* reverse***REMOVED***);
+      1 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v2_v1() {
   checkConnectMismatchedNames(
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      false /* reverse***REMOVED***);
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      false /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v2_v1_rev() {
   checkConnectMismatchedNames(
-      2 /* innerProtocolVersion***REMOVED***,
-      1 /* outerProtocolVersion***REMOVED***,
-      true /* reverse***REMOVED***);
+      2 /* innerProtocolVersion */,
+      1 /* outerProtocolVersion */,
+      true /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v2_v2() {
   checkConnectMismatchedNames(
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      false /* reverse***REMOVED***);
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      false /* reverse */);
 }
 
 
 function testConnectMismatchedNames_v2_v2_rev() {
   checkConnectMismatchedNames(
-      2 /* innerProtocolVersion***REMOVED***,
-      2 /* outerProtocolVersion***REMOVED***,
-      true /* reverse***REMOVED***);
+      2 /* innerProtocolVersion */,
+      2 /* outerProtocolVersion */,
+      true /* reverse */);
 }
 
 
 function checkConnectMismatchedNames(innerProtocolVersion,
     outerProtocolVersion, reverse) {
-  driver.createPeerIframe('new_iframe', false /* oneSidedHandshake***REMOVED***,
+  driver.createPeerIframe('new_iframe', false /* oneSidedHandshake */,
       innerProtocolVersion,
-      outerProtocolVersion, true /* opt_randomChannelNames***REMOVED***);
-  driver.connect(false /* fullLifeCycleTest***REMOVED***,
-      false /* outerFrameReconnectSupported***REMOVED***,
-      false /* innerFrameMigrationSupported***REMOVED***,
-      false /* reverse***REMOVED***);
+      outerProtocolVersion, true /* opt_randomChannelNames */);
+  driver.connect(false /* fullLifeCycleTest */,
+      false /* outerFrameReconnectSupported */,
+      false /* innerFrameMigrationSupported */,
+      false /* reverse */);
 }
 
 
@@ -490,96 +490,96 @@ function testUnescapeServiceName() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the case where the channel is disposed before it is fully connected.
-***REMOVED***
+/**
+ * Tests the case where the channel is disposed before it is fully connected.
+ */
 function testDisposeBeforeConnect() {
   asyncTestCase.waitForAsync('Checking disposal before connection.');
-  driver.createPeerIframe('new_iframe', false /* oneSidedHandshake***REMOVED***,
-      2 /* innerProtocolVersion***REMOVED***, 2 /* outerProtocolVersion***REMOVED***,
-      true /* opt_randomChannelNames***REMOVED***);
+  driver.createPeerIframe('new_iframe', false /* oneSidedHandshake */,
+      2 /* innerProtocolVersion */, 2 /* outerProtocolVersion */,
+      true /* opt_randomChannelNames */);
   driver.connectOuterAndDispose();
 }
 
 
 
-***REMOVED***
-***REMOVED*** Driver for the tests for CrossPageChannel.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
+/**
+ * Driver for the tests for CrossPageChannel.
+ *
+ * @constructor
+ * @extends {goog.Disposable}
+ */
 Driver = function() {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The peer iframe.
-  ***REMOVED*** @type {!Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The peer iframe.
+   * @type {!Element}
+   * @private
+   */
   this.iframe_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel to use.
-  ***REMOVED*** @type {goog.net.xpc.CrossPageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The channel to use.
+   * @type {goog.net.xpc.CrossPageChannel}
+   * @private
+   */
   this.channel_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Outer frame configuration object.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Outer frame configuration object.
+   * @type {Object}
+   * @private
+   */
   this.outerFrameCfg_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The initial name of the outer channel.
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The initial name of the outer channel.
+   * @type {?string}
+   * @private
+   */
   this.initialOuterChannelName_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Inner frame configuration object.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Inner frame configuration object.
+   * @type {Object}
+   * @private
+   */
   this.innerFrameCfg_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The contents of the payload of the 'echo' request sent by the inner frame.
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The contents of the payload of the 'echo' request sent by the inner frame.
+   * @type {?string}
+   * @private
+   */
   this.innerFrameEchoPayload_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The contents of the payload of the 'echo' request sent by the outer frame.
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The contents of the payload of the 'echo' request sent by the outer frame.
+   * @type {?string}
+   * @private
+   */
   this.outerFrameEchoPayload_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A deferred which fires when the inner frame receives its echo response.
-  ***REMOVED*** @type {goog.async.Deferred}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A deferred which fires when the inner frame receives its echo response.
+   * @type {goog.async.Deferred}
+   * @private
+   */
   this.innerFrameResponseReceived_ = new goog.async.Deferred();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A deferred which fires when the outer frame receives its echo response.
-  ***REMOVED*** @type {goog.async.Deferred}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A deferred which fires when the outer frame receives its echo response.
+   * @type {goog.async.Deferred}
+   * @private
+   */
   this.outerFrameResponseReceived_ = new goog.async.Deferred();
 
-***REMOVED***
+};
 goog.inherits(Driver, goog.Disposable);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 Driver.prototype.disposeInternal = function() {
   // Required to make this test perform acceptably (and pass) on slow browsers,
   // esp IE8.
@@ -593,40 +593,40 @@ Driver.prototype.disposeInternal = function() {
   this.outerFrameResponseReceived_.cancel();
   this.outerFrameResponseReceived_ = null;
   goog.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the child peer's window object.
-***REMOVED*** @return {Window} Child peer's window.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the child peer's window object.
+ * @return {Window} Child peer's window.
+ * @private
+ */
 Driver.prototype.getInnerPeer_ = function() {
   return this.iframe_.contentWindow;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets up the configuration objects for the inner and outer frames.
-***REMOVED*** @param {string=} opt_iframeId If present, the ID of the iframe to use,
-***REMOVED***     otherwise, tells the channel to generate an iframe ID.
-***REMOVED*** @param {boolean=} opt_oneSidedHandshake Whether the one sided handshake
-***REMOVED***     config option should be set.
-***REMOVED*** @param {string=} opt_channelName The name of the channel to use, or null
-***REMOVED***     to generate one.
-***REMOVED*** @param {number=} opt_innerProtocolVersion The native transport protocol
-***REMOVED***     version used in the inner iframe.
-***REMOVED*** @param {number=} opt_outerProtocolVersion The native transport protocol
-***REMOVED***     version used in the outer iframe.
-***REMOVED*** @param {boolean=} opt_randomChannelNames Whether the different ends of the
-***REMOVED***     channel should be allowed to pick differing, random names.
-***REMOVED*** @return {string} The name of the created channel.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets up the configuration objects for the inner and outer frames.
+ * @param {string=} opt_iframeId If present, the ID of the iframe to use,
+ *     otherwise, tells the channel to generate an iframe ID.
+ * @param {boolean=} opt_oneSidedHandshake Whether the one sided handshake
+ *     config option should be set.
+ * @param {string=} opt_channelName The name of the channel to use, or null
+ *     to generate one.
+ * @param {number=} opt_innerProtocolVersion The native transport protocol
+ *     version used in the inner iframe.
+ * @param {number=} opt_outerProtocolVersion The native transport protocol
+ *     version used in the outer iframe.
+ * @param {boolean=} opt_randomChannelNames Whether the different ends of the
+ *     channel should be allowed to pick differing, random names.
+ * @return {string} The name of the created channel.
+ * @private
+ */
 Driver.prototype.setConfiguration_ = function(opt_iframeId,
     opt_oneSidedHandshake, opt_channelName, opt_innerProtocolVersion,
     opt_outerProtocolVersion, opt_randomChannelNames) {
-  var cfg = {***REMOVED***
+  var cfg = {};
   if (opt_iframeId) {
     cfg[goog.net.xpc.CfgFields.IFRAME_ID] = opt_iframeId;
   }
@@ -652,13 +652,13 @@ Driver.prototype.setConfiguration_ = function(opt_iframeId,
   this.innerFrameCfg_[
       goog.net.xpc.CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] =
       opt_innerProtocolVersion;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an outer frame channel object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates an outer frame channel object.
+ * @private
+ */
 Driver.prototype.createChannel_ = function() {
   if (this.channel_) {
     this.channel_.dispose();
@@ -670,13 +670,13 @@ Driver.prototype.createChannel_ = function() {
       goog.bind(this.responseHandler_, this));
 
   return this.channel_.name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks the names of the inner and outer frames meet expectations.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Checks the names of the inner and outer frames meet expectations.
+ * @private
+ */
 Driver.prototype.checkChannelNames_ = function() {
   var outerName = this.channel_.name;
   var innerName = this.getInnerPeer_().channel.name;
@@ -692,33 +692,33 @@ Driver.prototype.checkChannelNames_ = function() {
   // The names of both ends of the channel should match.
   assertEquals(innerName, outerName);
   G_testRunner.log('Channel name: ' + innerName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the configuration of the xpc.
-***REMOVED*** @return {?Object} The configuration of the xpc.
-***REMOVED***
+/**
+ * Returns the configuration of the xpc.
+ * @return {?Object} The configuration of the xpc.
+ */
 Driver.prototype.getInnerFrameConfiguration = function() {
   return this.innerFrameCfg_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the peer iframe.
-***REMOVED*** @param {string=} opt_iframeId If present, the ID of the iframe to create,
-***REMOVED***     otherwise, generates an iframe ID.
-***REMOVED*** @param {boolean=} opt_oneSidedHandshake Whether a one sided handshake is
-***REMOVED***     specified.
-***REMOVED*** @param {number=} opt_innerProtocolVersion The native transport protocol
-***REMOVED***     version used in the inner iframe.
-***REMOVED*** @param {number=} opt_outerProtocolVersion The native transport protocol
-***REMOVED***     version used in the outer iframe.
-***REMOVED*** @param {boolean=} opt_randomChannelNames Whether the ends of the channel
-***REMOVED***     should be allowed to pick differing, random names.
-***REMOVED*** @return {!Array.<string>} The id of the created iframe and the name of the
-***REMOVED***     created channel.
-***REMOVED***
+/**
+ * Creates the peer iframe.
+ * @param {string=} opt_iframeId If present, the ID of the iframe to create,
+ *     otherwise, generates an iframe ID.
+ * @param {boolean=} opt_oneSidedHandshake Whether a one sided handshake is
+ *     specified.
+ * @param {number=} opt_innerProtocolVersion The native transport protocol
+ *     version used in the inner iframe.
+ * @param {number=} opt_outerProtocolVersion The native transport protocol
+ *     version used in the outer iframe.
+ * @param {boolean=} opt_randomChannelNames Whether the ends of the channel
+ *     should be allowed to pick differing, random names.
+ * @return {!Array.<string>} The id of the created iframe and the name of the
+ *     created channel.
+ */
 Driver.prototype.createPeerIframe = function(opt_iframeId,
     opt_oneSidedHandshake, opt_innerProtocolVersion, opt_outerProtocolVersion,
     opt_randomChannelNames) {
@@ -737,30 +737,30 @@ Driver.prototype.createPeerIframe = function(opt_iframeId,
       goog.dom.getElement(expectedIframeId));
 
   this.setConfiguration_(opt_iframeId, opt_oneSidedHandshake,
-      undefined /* opt_channelName***REMOVED***, opt_innerProtocolVersion,
+      undefined /* opt_channelName */, opt_innerProtocolVersion,
       opt_outerProtocolVersion, opt_randomChannelNames);
   var channelName = this.createChannel_();
   this.initialOuterChannelName_ = channelName;
   this.iframe_ = this.channel_.createPeerIframe(document.body);
 
   assertEquals(expectedIframeId, this.iframe_.id);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the peer iframe has been created.
-***REMOVED***
+/**
+ * Checks if the peer iframe has been created.
+ */
 Driver.prototype.checkPeerIframe = function() {
   assertNotNull(this.iframe_);
   var peer = this.getInnerPeer_();
   assertNotNull(peer);
   assertNotNull(peer.document);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts the connection. The connection happens asynchronously.
-***REMOVED***
+/**
+ * Starts the connection. The connection happens asynchronously.
+ */
 Driver.prototype.connect = function(fullLifeCycleTest,
     outerFrameReconnectSupported, innerFrameMigrationSupported, reverse) {
   if (!this.isTransportTestable_()) {
@@ -787,7 +787,7 @@ Driver.prototype.connect = function(fullLifeCycleTest,
   }
 
   this.continueConnect_(reverse);
-***REMOVED***
+};
 
 
 Driver.prototype.continueConnect_ = function(reverse) {
@@ -813,77 +813,77 @@ Driver.prototype.continueConnect_ = function(reverse) {
   // problems that reliably occur when there is a short delay.
   window.setTimeout(connectFromOuterFrame, reverse ? 1 : 10);
   window.setTimeout(connectFromInnerFrame, reverse ? 10 : 1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called by the outer frame connection callback.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called by the outer frame connection callback.
+ * @private
+ */
 Driver.prototype.outerFrameConnected_ = function() {
   var payload = this.outerFrameEchoPayload_ =
       goog.net.xpc.getRandomString(10);
   this.channel_.send('echo', payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called by the inner frame connection callback.
-***REMOVED***
+/**
+ * Called by the inner frame connection callback.
+ */
 Driver.prototype.innerFrameConnected = function() {
   var payload = this.innerFrameEchoPayload_ =
       goog.net.xpc.getRandomString(10);
   this.getInnerPeer_().sendEcho(payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The handler function for incoming echo requests.
-***REMOVED*** @param {string} payload The message payload.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The handler function for incoming echo requests.
+ * @param {string} payload The message payload.
+ * @private
+ */
 Driver.prototype.echoHandler_ = function(payload) {
   assertTrue('outer frame should be connected', this.channel_.isConnected());
   var peer = this.getInnerPeer_();
   assertTrue('child should be connected', peer.isConnected());
   this.channel_.send('response', payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The handler function for incoming echo responses.
-***REMOVED*** @param {string} payload The message payload.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The handler function for incoming echo responses.
+ * @param {string} payload The message payload.
+ * @private
+ */
 Driver.prototype.responseHandler_ = function(payload) {
   assertTrue('outer frame should be connected', this.channel_.isConnected());
   var peer = this.getInnerPeer_();
   assertTrue('child should be connected', peer.isConnected());
   assertEquals(this.outerFrameEchoPayload_, payload);
   this.outerFrameResponseReceived_.callback(true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The handler function for incoming echo replies.
-***REMOVED*** @param {string} payload The message payload.
-***REMOVED***
+/**
+ * The handler function for incoming echo replies.
+ * @param {string} payload The message payload.
+ */
 Driver.prototype.innerFrameGotResponse = function(payload) {
   assertTrue('outer frame should be connected', this.channel_.isConnected());
   var peer = this.getInnerPeer_();
   assertTrue('child should be connected', peer.isConnected());
   assertEquals(this.innerFrameEchoPayload_, payload);
   this.innerFrameResponseReceived_.callback(true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The second phase of the standard test, where reconnections of both the inner
-***REMOVED*** and outer frames are performed.
-***REMOVED*** @param {boolean} outerFrameReconnectSupported Whether outer frame reconnects
-***REMOVED***     are supported, and should be tested.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The second phase of the standard test, where reconnections of both the inner
+ * and outer frames are performed.
+ * @param {boolean} outerFrameReconnectSupported Whether outer frame reconnects
+ *     are supported, and should be tested.
+ * @private
+ */
 Driver.prototype.testReconnects_ = function(outerFrameReconnectSupported,
     innerFrameMigrationSupported) {
   G_testRunner.log('Performing inner frame reconnect');
@@ -904,14 +904,14 @@ Driver.prototype.testReconnects_ = function(outerFrameReconnectSupported,
   }
 
   this.performInnerFrameReconnect_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the deferreds and clears the echo payloads, ready for another
-***REMOVED*** sub-test.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Initializes the deferreds and clears the echo payloads, ready for another
+ * sub-test.
+ * @private
+ */
 Driver.prototype.reinitializeDeferreds_ = function() {
   this.innerFrameEchoPayload_ = null;
   this.outerFrameEchoPayload_ = null;
@@ -919,23 +919,23 @@ Driver.prototype.reinitializeDeferreds_ = function() {
   this.innerFrameResponseReceived_ = new goog.async.Deferred();
   this.outerFrameResponseReceived_.cancel();
   this.outerFrameResponseReceived_ = new goog.async.Deferred();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the inner frame to reconnect, and repeat the echo test.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the inner frame to reconnect, and repeat the echo test.
+ * @private
+ */
 Driver.prototype.performInnerFrameReconnect_ = function() {
   var peer = this.getInnerPeer_();
   peer.instantiateChannel(this.innerFrameCfg_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the outer frame to reconnect, and repeat the echo test.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the outer frame to reconnect, and repeat the echo test.
+ * @private
+ */
 Driver.prototype.performOuterFrameReconnect_ = function(
     innerFrameMigrationSupported) {
   G_testRunner.log('Reconnecting outer frame');
@@ -951,13 +951,13 @@ Driver.prototype.performOuterFrameReconnect_ = function(
   }
   this.createChannel_();
   this.channel_.connect(goog.bind(this.outerFrameConnected_, this));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Migrate the inner frame to the alternate protocol version and reconnect it.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Migrate the inner frame to the alternate protocol version and reconnect it.
+ * @private
+ */
 Driver.prototype.migrateInnerFrame_ = function() {
   G_testRunner.log('Migrating inner frame');
   this.reinitializeDeferreds_();
@@ -971,16 +971,16 @@ Driver.prototype.migrateInnerFrame_ = function() {
       goog.net.xpc.CfgFields.NATIVE_TRANSPORT_PROTOCOL_VERSION] =
       innerFrameProtoVersion == 1 ? 2 : 1;
   this.performInnerFrameReconnect_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the transport type for the channel is testable.
-***REMOVED*** Some transports are misusing global state or making other
-***REMOVED*** assumptions that cause connections to fail.
-***REMOVED*** @return {boolean} Whether the transport is testable.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines if the transport type for the channel is testable.
+ * Some transports are misusing global state or making other
+ * assumptions that cause connections to fail.
+ * @return {boolean} Whether the transport is testable.
+ * @private
+ */
 Driver.prototype.isTransportTestable_ = function() {
   var testable = false;
 
@@ -999,25 +999,25 @@ Driver.prototype.isTransportTestable_ = function() {
   }
 
   return testable;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Connect the outer channel but not the inner one.  Wait a short time, then
-***REMOVED*** dispose the outer channel and make sure it was torn down properly.
-***REMOVED***
+/**
+ * Connect the outer channel but not the inner one.  Wait a short time, then
+ * dispose the outer channel and make sure it was torn down properly.
+ */
 Driver.prototype.connectOuterAndDispose = function() {
   this.channel_.connect();
   window.setTimeout(goog.bind(this.disposeAndCheck_, this), 2000);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispose the cross-page channel. Check that the transport was also
-***REMOVED*** disposed, and allow to run briefly to make sure no timers which will cause
-***REMOVED*** failures are still running.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispose the cross-page channel. Check that the transport was also
+ * disposed, and allow to run briefly to make sure no timers which will cause
+ * failures are still running.
+ * @private
+ */
 Driver.prototype.disposeAndCheck_ = function() {
   assertFalse(this.channel_.isConnected());
   var transport = this.channel_.transport_;
@@ -1029,4 +1029,4 @@ Driver.prototype.disposeAndCheck_ = function() {
   // Let any errors caused by erroneous retries happen.
   window.setTimeout(goog.bind(asyncTestCase.continueTesting, asyncTestCase),
       2000);
-***REMOVED***
+};

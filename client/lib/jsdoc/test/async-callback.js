@@ -1,6 +1,6 @@
-/*global jasmine: true***REMOVED***
+/*global jasmine: true */
 (function() {
-  var withoutAsync = {***REMOVED***
+  var withoutAsync = {};
 
   ["it", "beforeEach", "afterEach"].forEach(function(jasmineFunction) {
     withoutAsync[jasmineFunction] = jasmine.Env.prototype[jasmineFunction];
@@ -18,7 +18,7 @@
         });
       }
       return withoutAsync[jasmineFunction].apply(this, args);
-   ***REMOVED*****REMOVED***
+    };
   });
 
   function isLastArgumentATimeout(args)

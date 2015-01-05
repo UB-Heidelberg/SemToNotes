@@ -1,4 +1,4 @@
-/*global afterEach, beforeEach, describe, expect, env, it, jasmine, spyOn***REMOVED***
+/*global afterEach, beforeEach, describe, expect, env, it, jasmine, spyOn */
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
 describe("jsdoc/util/templateHelper", function() {
@@ -360,7 +360,7 @@ describe("jsdoc/util/templateHelper", function() {
             { A: true }
         ];
         var matches = array.slice(0, 3);
-        var spec = { number: [1, 2, 3], A: [true, 'maybe']***REMOVED*****REMOVED***
+        var spec = { number: [1, 2, 3], A: [true, 'maybe'] };
 
         it('should find the requested items', function() {
             expect( helper.find(taffy(array), spec) ).toEqual(matches);
@@ -479,7 +479,7 @@ describe("jsdoc/util/templateHelper", function() {
         var doc, attribs;
 
         it('should return an array of strings', function() {
-            doc = new doclet.Doclet('***REMOVED*** ljklajsdf***REMOVED***', {});
+            doc = new doclet.Doclet('/** ljklajsdf */', {});
             attribs = helper.getAttribs(doc);
             expect(Array.isArray(attribs)).toBe(true);
         });
@@ -490,7 +490,7 @@ describe("jsdoc/util/templateHelper", function() {
         function doTests(tests, whatNotToContain) {
             for (var src in tests) {
                 if (tests.hasOwnProperty(src)) {
-                    doc = new doclet.Doclet('***REMOVED*** ' + src + '***REMOVED***', {});
+                    doc = new doclet.Doclet('/** ' + src + ' */', {});
                     attribs = helper.getAttribs(doc);
                     if (tests[src]) {
                         expect(attribs).toContain(tests[src]);
@@ -511,7 +511,7 @@ describe("jsdoc/util/templateHelper", function() {
             var tests = {
                 'My constant. \n @virtual': 'abstract',
                 'asdf': false
-           ***REMOVED*****REMOVED***
+            };
             doTests(tests);
         });
 
@@ -523,7 +523,7 @@ describe("jsdoc/util/templateHelper", function() {
                  '@public': false,
                  '@access public': false,
                  'asdf': false
-           ***REMOVED*****REMOVED***
+            };
             doTests(tests);
         });
 
@@ -547,7 +547,7 @@ describe("jsdoc/util/templateHelper", function() {
                 // these are not functions or members or constants, they should not have their scope recorded.
                 '@namespace Fdsa\n@inner': false,
                 '@class asdf': false
-           ***REMOVED*****REMOVED***
+            };
             doTests(tests, ['inner', 'static', 'global', 'instance']);
         });
 
@@ -560,7 +560,7 @@ describe("jsdoc/util/templateHelper", function() {
                 '@const asdf\n@readonly': 'constant',
                 '@function asdf\n@readonly': false,
                 '@function Asdf#bar\n@readonly': false
-           ***REMOVED*****REMOVED***
+            };
             doTests(tests, 'readonly');
         });
 
@@ -569,12 +569,12 @@ describe("jsdoc/util/templateHelper", function() {
                 'Enum. @enum\n@constant': 'constant',
                 '@function Foo#BAR\n@const': 'constant',
                 '@const Asdf': 'constant'
-           ***REMOVED*****REMOVED***
+            };
             doTests(tests, 'constant');
         });
 
         it("should detect multiple attributes", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @const module:fdsa~FOO\n@readonly\n@private***REMOVED***', {});
+            var doc = new doclet.Doclet('/** @const module:fdsa~FOO\n@readonly\n@private */', {});
             attribs = helper.getAttribs(doc);
             expect(attribs).toContain('private');
             //expect(attribs).toContain('readonly'); // kind is 'constant' not 'member'.
@@ -586,7 +586,7 @@ describe("jsdoc/util/templateHelper", function() {
     describe("getSignatureTypes", function() {
         // returns links to allowed types for a doclet.
         it("returns an empty array if the doclet has no specified type", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @const ASDF***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @const ASDF */', {}),
                 types = helper.getSignatureTypes(doc);
 
             expect(Array.isArray(types)).toBe(true);
@@ -594,7 +594,7 @@ describe("jsdoc/util/templateHelper", function() {
         });
 
         it("returns a string array of the doclet's types", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @const {number|Array.<boolean>} ASDF***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @const {number|Array.<boolean>} ASDF */', {}),
                 types = helper.getSignatureTypes(doc);
 
             expect(types.length).toBe(2);
@@ -606,7 +606,7 @@ describe("jsdoc/util/templateHelper", function() {
             // make some links.
             helper.longnameToUrl.MyClass = 'MyClass.html';
 
-            var doc = new doclet.Doclet('***REMOVED*** @const {MyClass} ASDF***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @const {MyClass} ASDF */', {}),
                 types = helper.getSignatureTypes(doc);
             expect(types.length).toBe(1);
             expect(types).toContain('<a href="MyClass.html">MyClass</a>');
@@ -618,7 +618,7 @@ describe("jsdoc/util/templateHelper", function() {
             // make some links.
             helper.longnameToUrl.MyClass = 'MyClass.html';
 
-            var doc = new doclet.Doclet('***REMOVED*** @const {MyClass} ASDF***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @const {MyClass} ASDF */', {}),
                 types = helper.getSignatureTypes(doc, 'myCSSClass');
             expect(types.length).toBe(1);
             expect(types).toContain('<a href="MyClass.html" class="myCSSClass">MyClass</a>');
@@ -631,14 +631,14 @@ describe("jsdoc/util/templateHelper", function() {
         // retrieves parameter names.
         // if css class is provided, optional parameters are wrapped in a <span> with that class.
         it("returns an empty array if the doclet has no specified type", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @function myFunction */', {}),
                 params = helper.getSignatureParams(doc);
             expect(Array.isArray(params)).toBe(true);
             expect(params.length).toBe(0);
         });
 
         it("returns a string array of the doclet's parameter names", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction\n @param {string} foo - asdf.***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @function myFunction\n @param {string} foo - asdf. */', {}),
                 params = helper.getSignatureParams(doc);
             expect(params.length).toBe(1);
             expect(params).toContain('foo');
@@ -646,11 +646,11 @@ describe("jsdoc/util/templateHelper", function() {
 
         it("wraps optional parameters in <span class=..> if optClass is provided", function() {
             var doc = new doclet.Doclet(
-                '***REMOVED*** @function myFunction\n' +
-                '***REMOVED*** @param {boolean} foo - explanation.\n' +
-                '***REMOVED*** @param {number} [bar=1] - another explanation.\n' +
-                '***REMOVED*** @param {string} [baz] - another explanation.\n' +
-                '***REMOVED***', {}),
+                '/** @function myFunction\n' +
+                ' * @param {boolean} foo - explanation.\n' +
+                ' * @param {number} [bar=1] - another explanation.\n' +
+                ' * @param {string} [baz] - another explanation.\n' +
+                ' */', {}),
                 params = helper.getSignatureParams(doc, 'cssClass');
 
             expect(params.length).toBe(3);
@@ -661,11 +661,11 @@ describe("jsdoc/util/templateHelper", function() {
 
         it("doesn't wrap optional parameters in <span class=..> if optClass is not provided", function() {
             var doc = new doclet.Doclet(
-                '***REMOVED*** @function myFunction\n' +
-                '***REMOVED*** @param {boolean} foo - explanation.\n' +
-                '***REMOVED*** @param {number} [bar=1] - another explanation.\n' +
-                '***REMOVED*** @param {string} [baz] - another explanation.\n' +
-                '***REMOVED***', {}),
+                '/** @function myFunction\n' +
+                ' * @param {boolean} foo - explanation.\n' +
+                ' * @param {number} [bar=1] - another explanation.\n' +
+                ' * @param {string} [baz] - another explanation.\n' +
+                ' */', {}),
                 params = helper.getSignatureParams(doc);
 
             expect(params.length).toBe(3);
@@ -689,7 +689,7 @@ describe("jsdoc/util/templateHelper", function() {
                         }
                     }
                 ]
-           ***REMOVED*****REMOVED***
+            };
 
             var html = helper.getSignatureReturns(mockDoclet);
             expect(html).not.toContain('Array.<string>');
@@ -697,7 +697,7 @@ describe("jsdoc/util/templateHelper", function() {
         });
 
         it("returns an empty array if the doclet has no returns", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction***REMOVED***', {}),
+            var doc = new doclet.Doclet('/** @function myFunction */', {}),
                 returns = helper.getSignatureReturns(doc);
 
             expect(Array.isArray(returns)).toBe(true);
@@ -705,7 +705,7 @@ describe("jsdoc/util/templateHelper", function() {
         });
 
         it("returns an empty array if the doclet has @returns but with no type", function() {
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction\n@returns an interesting result.*/', {}),
+            var doc = new doclet.Doclet('/** @function myFunction\n@returns an interesting result.*/', {}),
                 returns = helper.getSignatureReturns(doc);
 
             expect(Array.isArray(returns)).toBe(true);
@@ -716,7 +716,7 @@ describe("jsdoc/util/templateHelper", function() {
             // make some links.
             helper.longnameToUrl.MyClass = 'MyClass.html';
 
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction\n@returns {number|MyClass} an interesting result.*/', {}),
+            var doc = new doclet.Doclet('/** @function myFunction\n@returns {number|MyClass} an interesting result.*/', {}),
                 returns = helper.getSignatureReturns(doc);
 
             expect(returns.length).toBe(2);
@@ -730,7 +730,7 @@ describe("jsdoc/util/templateHelper", function() {
             // make some links.
             helper.longnameToUrl.MyClass = 'MyClass.html';
 
-            var doc = new doclet.Doclet('***REMOVED*** @function myFunction\n@returns {number|MyClass} an interesting result.*/', {}),
+            var doc = new doclet.Doclet('/** @function myFunction\n@returns {number|MyClass} an interesting result.*/', {}),
                 returns = helper.getSignatureReturns(doc, 'myCssClass');
 
             expect(returns.length).toBe(2);
@@ -743,10 +743,10 @@ describe("jsdoc/util/templateHelper", function() {
 
     describe("getAncestorLinks", function() {
         // make a hierarchy.
-        var lackeys = new doclet.Doclet('***REMOVED*** @member lackeys\n@memberof module:mafia/gangs.Sharks~Henchman\n@instance*/', {}),
-            henchman = new doclet.Doclet('***REMOVED*** @class Henchman\n@memberof module:mafia/gangs.Sharks\n@inner***REMOVED***', {}),
-            gang = new doclet.Doclet('***REMOVED*** @namespace module:mafia/gangs.Sharks***REMOVED***', {}),
-            mafia = new doclet.Doclet('***REMOVED*** @module mafia/gangs***REMOVED***', {}),
+        var lackeys = new doclet.Doclet('/** @member lackeys\n@memberof module:mafia/gangs.Sharks~Henchman\n@instance*/', {}),
+            henchman = new doclet.Doclet('/** @class Henchman\n@memberof module:mafia/gangs.Sharks\n@inner */', {}),
+            gang = new doclet.Doclet('/** @namespace module:mafia/gangs.Sharks */', {}),
+            mafia = new doclet.Doclet('/** @module mafia/gangs */', {}),
             data = taffy([lackeys, henchman, gang, mafia]);
 
         // register some links
@@ -1019,7 +1019,7 @@ describe("jsdoc/util/templateHelper", function() {
     // them back to the originals later.
     function setConfTemplatesVariables(hash) {
         var keys = Object.keys(hash);
-        var storage = {***REMOVED***
+        var storage = {};
         for (var i = 0; i < keys.length; ++i) {
             storage[keys[i]] = env.conf.templates[keys[i]];
             // works because hash[key] is a scalar not an array/object
@@ -1287,7 +1287,7 @@ describe("jsdoc/util/templateHelper", function() {
             longname: 'ns1.ns2.foo',
             name: 'foo',
             memberof: 'ns1.ns2'
-       ***REMOVED*****REMOVED***
+        };
         var nestedNamespaceUrl;
 
         it('should create a url for a member of a nested namespace.', function() {
@@ -1319,7 +1319,7 @@ describe("jsdoc/util/templateHelper", function() {
                 kind: 'function',
                 longname: 'module:bar',
                 name: 'module:bar'
-           ***REMOVED*****REMOVED***
+            };
             var url = helper.createLink(mockDoclet);
 
             expect(url).toEqual('module-bar.html');
@@ -1330,12 +1330,12 @@ describe("jsdoc/util/templateHelper", function() {
                 kind: 'module',
                 longname: 'module:baz',
                 name: 'module:baz'
-           ***REMOVED*****REMOVED***
+            };
             var badDoclet = {
                 kind: 'member',
                 longname: 'module:baz',
                 name: 'module:baz'
-           ***REMOVED*****REMOVED***
+            };
 
             var moduleDocletUrl = helper.createLink(moduleDoclet);
             var badDocletUrl = helper.createLink(badDoclet);
@@ -1349,14 +1349,14 @@ describe("jsdoc/util/templateHelper", function() {
                 kind: 'member',
                 longname: 'module:qux',
                 name: 'module:qux'
-           ***REMOVED*****REMOVED***
+            };
             var memberDoclet = {
                 kind: 'function',
                 name: 'frozzle',
                 memberof: 'module:qux',
                 scope: 'instance',
                 longname: 'module:qux#frozzle'
-           ***REMOVED*****REMOVED***
+            };
 
             var badModuleDocletUrl = helper.createLink(badModuleDoclet);
             var memberDocletUrl = helper.createLink(memberDoclet);
@@ -1370,7 +1370,7 @@ describe("jsdoc/util/templateHelper", function() {
                 kind: 'package',
                 name: undefined,
                 longname: 'package:undefined'
-           ***REMOVED*****REMOVED***
+            };
 
             var packageDocletUrl = helper.createLink(packageDoclet);
 
@@ -1380,7 +1380,7 @@ describe("jsdoc/util/templateHelper", function() {
 
     describe("resolveAuthorLinks", function() {
         // convert Jane Doe <jdoe@example.org> to a mailto link.
-        it('should convert email addresses in angle brackets***REMOVED***after* a name to mailto links', function() {
+        it('should convert email addresses in angle brackets *after* a name to mailto links', function() {
             var str = ' John Doe  <asdf.fdsa-2@gmail.com> ',
                 out = helper.resolveAuthorLinks(str);
             expect(out).toBe('<a href="mailto:asdf.fdsa-2@gmail.com">John Doe</a>');

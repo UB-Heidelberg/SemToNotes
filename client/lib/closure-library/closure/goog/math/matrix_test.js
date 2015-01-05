@@ -171,7 +171,7 @@ function testSetValueAt() {
   var m = new goog.math.Matrix(3, 3);
   for (var x = 0; x < 3; x++) {
     for (var y = 0; y < 3; y++) {
-      m.setValueAt(x, y, 3***REMOVED*** x - y);
+      m.setValueAt(x, y, 3 * x - y);
     }
   }
   assertArrayEquals([[0, -1, -2], [3, 2, 1], [6, 5, 4]], m.toArray());
@@ -184,7 +184,7 @@ function testGetValueAt() {
     for (var y = 0; y < 3; y++) {
       assertEquals(
           'Value at (x, y) should equal 3x - y',
-          3***REMOVED*** x - y, m.getValueAt(x, y));
+          3 * x - y, m.getValueAt(x, y));
     }
   }
   assertNull('Out of bounds value should be null', m.getValueAt(-1, 2));
@@ -252,13 +252,13 @@ function testScalarMultiplication() {
 function testMatrixMultiplication() {
   var m1 = new goog.math.Matrix([[1, 2], [3, 4]]);
   var m2 = new goog.math.Matrix([[3, 4], [5, 6]]);
-  // m1***REMOVED*** m2
-  assertArrayEquals([[1***REMOVED*** 3 + 2***REMOVED*** 5, 1***REMOVED*** 4 + 2***REMOVED*** 6],
-                     [3***REMOVED*** 3 + 4***REMOVED*** 5, 3***REMOVED*** 4 + 4***REMOVED*** 6]],
+  // m1 * m2
+  assertArrayEquals([[1 * 3 + 2 * 5, 1 * 4 + 2 * 6],
+                     [3 * 3 + 4 * 5, 3 * 4 + 4 * 6]],
                     m1.multiply(m2).toArray());
-  // m2***REMOVED*** m1 != m1***REMOVED*** m2
-  assertArrayEquals([[3***REMOVED*** 1 + 4***REMOVED*** 3, 3***REMOVED*** 2 + 4***REMOVED*** 4],
-                     [5***REMOVED*** 1 + 6***REMOVED*** 3, 5***REMOVED*** 2 + 6***REMOVED*** 4]],
+  // m2 * m1 != m1 * m2
+  assertArrayEquals([[3 * 1 + 4 * 3, 3 * 2 + 4 * 4],
+                     [5 * 1 + 6 * 3, 5 * 2 + 6 * 4]],
                     m2.multiply(m1).toArray());
   var m3 = new goog.math.Matrix([[1, 2, 3, 4],
                                  [5, 6, 7, 8]]);
@@ -266,13 +266,13 @@ function testMatrixMultiplication() {
                                  [4, 5, 6],
                                  [7, 8, 9],
                                  [10, 11, 12]]);
-  // m3***REMOVED*** m4
-  assertArrayEquals([[1***REMOVED*** 1 + 2***REMOVED*** 4 + 3***REMOVED*** 7 + 4***REMOVED*** 10,
-                      1***REMOVED*** 2 + 2***REMOVED*** 5 + 3***REMOVED*** 8 + 4***REMOVED*** 11,
-                      1***REMOVED*** 3 + 2***REMOVED*** 6 + 3***REMOVED*** 9 + 4***REMOVED*** 12],
-  [5***REMOVED*** 1 + 6***REMOVED*** 4 + 7***REMOVED*** 7 + 8***REMOVED*** 10,
-   5***REMOVED*** 2 + 6***REMOVED*** 5 + 7***REMOVED*** 8 + 8***REMOVED*** 11,
-   5***REMOVED*** 3 + 6***REMOVED*** 6 + 7***REMOVED*** 9 + 8***REMOVED*** 12]],
+  // m3 * m4
+  assertArrayEquals([[1 * 1 + 2 * 4 + 3 * 7 + 4 * 10,
+                      1 * 2 + 2 * 5 + 3 * 8 + 4 * 11,
+                      1 * 3 + 2 * 6 + 3 * 9 + 4 * 12],
+  [5 * 1 + 6 * 4 + 7 * 7 + 8 * 10,
+   5 * 2 + 6 * 5 + 7 * 8 + 8 * 11,
+   5 * 3 + 6 * 6 + 7 * 9 + 8 * 12]],
   m3.multiply(m4).toArray());
   assertThrows('Matrix dimensions should not line up.',
                function() { m4.multiply(m3); });

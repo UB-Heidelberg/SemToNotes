@@ -13,26 +13,26 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines an interface for parsing strings into objects.
-***REMOVED***
+/**
+ * @fileoverview Defines an interface for parsing strings into objects.
+ */
 
 goog.provide('goog.string.Parser');
 
 
 
-***REMOVED***
-***REMOVED*** An interface for parsing strings into objects.
-***REMOVED*** @interface
-***REMOVED***
-goog.string.Parser = function() {***REMOVED***
+/**
+ * An interface for parsing strings into objects.
+ * @interface
+ */
+goog.string.Parser = function() {};
 
 
-***REMOVED***
-***REMOVED*** Parses a string into an object and returns the result.
-***REMOVED*** Agnostic to the format of string and object.
-***REMOVED***
-***REMOVED*** @param {string} s The string to parse.
-***REMOVED*** @return {*} The object generated from the string.
-***REMOVED***
+/**
+ * Parses a string into an object and returns the result.
+ * Agnostic to the format of string and object.
+ *
+ * @param {string} s The string to parse.
+ * @return {*} The object generated from the string.
+ */
 goog.string.Parser.prototype.parse;

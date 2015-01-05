@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Emoji Palette renderer implementation.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Emoji Palette renderer implementation.
+ *
+ */
 
 goog.provide('goog.ui.emoji.EmojiPaletteRenderer');
 
@@ -29,58 +29,58 @@ goog.require('goog.ui.emoji.Emoji');
 
 
 
-***REMOVED***
-***REMOVED*** Renders an emoji palette.
-***REMOVED***
-***REMOVED*** @param {?string} defaultImgUrl Url of the img that should be used to fill up
-***REMOVED***     the cells in the emoji table, to prevent jittering. Will be stretched
-***REMOVED***     to the emoji cell size. A good image is a transparent dot.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.PaletteRenderer}
-***REMOVED***
+/**
+ * Renders an emoji palette.
+ *
+ * @param {?string} defaultImgUrl Url of the img that should be used to fill up
+ *     the cells in the emoji table, to prevent jittering. Will be stretched
+ *     to the emoji cell size. A good image is a transparent dot.
+ * @constructor
+ * @extends {goog.ui.PaletteRenderer}
+ */
 goog.ui.emoji.EmojiPaletteRenderer = function(defaultImgUrl) {
   goog.ui.PaletteRenderer.call(this);
 
   this.defaultImgUrl_ = defaultImgUrl;
-***REMOVED***
+};
 goog.inherits(goog.ui.emoji.EmojiPaletteRenderer, goog.ui.PaletteRenderer);
 
 
-***REMOVED***
-***REMOVED*** Globally unique ID sequence for cells rendered by this renderer class.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Globally unique ID sequence for cells rendered by this renderer class.
+ * @type {number}
+ * @private
+ */
 goog.ui.emoji.EmojiPaletteRenderer.cellId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Url of the img that should be used for cells in the emoji palette that are
-***REMOVED*** not filled with emoji, i.e., after all the emoji have already been placed
-***REMOVED*** on a page.
-***REMOVED***
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Url of the img that should be used for cells in the emoji palette that are
+ * not filled with emoji, i.e., after all the emoji have already been placed
+ * on a page.
+ *
+ * @type {?string}
+ * @private
+ */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.defaultImgUrl_ = null;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.emoji.EmojiPaletteRenderer.getCssClass = function() {
   return goog.getCssName('goog-ui-emojipalette');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a palette item from the given emoji data.
-***REMOVED***
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for constructing DOM elements.
-***REMOVED*** @param {string} id Goomoji id for the emoji.
-***REMOVED*** @param {goog.ui.emoji.SpriteInfo} spriteInfo Spriting info for the emoji.
-***REMOVED*** @param {string} displayUrl URL of the image served for this cell, whether
-***REMOVED***     an individual emoji image or a sprite.
-***REMOVED*** @return {HTMLDivElement} The palette item for this emoji.
-***REMOVED***
+/**
+ * Creates a palette item from the given emoji data.
+ *
+ * @param {goog.dom.DomHelper} dom DOM helper for constructing DOM elements.
+ * @param {string} id Goomoji id for the emoji.
+ * @param {goog.ui.emoji.SpriteInfo} spriteInfo Spriting info for the emoji.
+ * @param {string} displayUrl URL of the image served for this cell, whether
+ *     an individual emoji image or a sprite.
+ * @return {HTMLDivElement} The palette item for this emoji.
+ */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.createPaletteItem =
     function(dom, id, spriteInfo, displayUrl) {
   var el;
@@ -99,24 +99,24 @@ goog.ui.emoji.EmojiPaletteRenderer.prototype.createPaletteItem =
   var outerdiv =
       dom.createDom('div', goog.getCssName('goog-palette-cell-wrapper'), el);
   outerdiv.setAttribute(goog.ui.emoji.Emoji.ATTRIBUTE, id);
-  return***REMOVED*****REMOVED*** @type {HTMLDivElement}***REMOVED*** (outerdiv);
-***REMOVED***
+  return /** @type {HTMLDivElement} */ (outerdiv);
+};
 
 
-***REMOVED***
-***REMOVED*** Modifies a palette item containing an animated emoji, in response to the
-***REMOVED*** animated emoji being successfully downloaded.
-***REMOVED***
-***REMOVED*** @param {Element} item The palette item to update.
-***REMOVED*** @param {Image} animatedImg An Image object containing the animated emoji.
-***REMOVED***
+/**
+ * Modifies a palette item containing an animated emoji, in response to the
+ * animated emoji being successfully downloaded.
+ *
+ * @param {Element} item The palette item to update.
+ * @param {Image} animatedImg An Image object containing the animated emoji.
+ */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.updateAnimatedPaletteItem =
     function(item, animatedImg) {
   // An animated emoji is one that had sprite info for a static version and is
   // now being updated. See createPaletteItem for the structure of the palette
   // items we're modifying.
 
-  var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (item.firstChild);
+  var inner = /** @type {Element} */ (item.firstChild);
   goog.asserts.assert(inner);
   // The first case is a palette item with a CSS class representing the sprite,
   // and an animated emoji.
@@ -131,18 +131,18 @@ goog.ui.emoji.EmojiPaletteRenderer.prototype.updateAnimatedPaletteItem =
     'background-image': 'url(' + animatedImg.src + ')',
     'background-position': '0 0'
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds the inner contents of a palette item out of sprite metadata.
-***REMOVED***
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for constructing DOM elements.
-***REMOVED*** @param {goog.ui.emoji.SpriteInfo} spriteInfo The metadata to create the css
-***REMOVED***     for the sprite.
-***REMOVED*** @param {string} displayUrl The URL of the image for this cell.
-***REMOVED*** @return {HTMLDivElement} The inner element for a palette item.
-***REMOVED***
+/**
+ * Builds the inner contents of a palette item out of sprite metadata.
+ *
+ * @param {goog.dom.DomHelper} dom DOM helper for constructing DOM elements.
+ * @param {goog.ui.emoji.SpriteInfo} spriteInfo The metadata to create the css
+ *     for the sprite.
+ * @param {string} displayUrl The URL of the image for this cell.
+ * @return {HTMLDivElement} The inner element for a palette item.
+ */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.buildElementFromSpriteMetadata =
     function(dom, spriteInfo, displayUrl) {
   var width = spriteInfo.getWidthCssValue();
@@ -159,11 +159,11 @@ goog.ui.emoji.EmojiPaletteRenderer.prototype.buildElementFromSpriteMetadata =
     'background-position': x + ' ' + y
   });
 
-  return***REMOVED*****REMOVED*** @type {HTMLDivElement}***REMOVED*** (el);
-***REMOVED***
+  return /** @type {HTMLDivElement} */ (el);
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.createCell = function(node, dom) {
   // Create a cell with  the default img if we're out of items, in order to
   // prevent jitter in the table. If there's no default img url, just create an
@@ -184,17 +184,17 @@ goog.ui.emoji.EmojiPaletteRenderer.prototype.createCell = function(node, dom) {
   }, node);
   goog.a11y.aria.setRole(cell, 'gridcell');
   return cell;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the item corresponding to the given node, or null if the node is
-***REMOVED*** neither a palette cell nor part of a palette item.
-***REMOVED*** @param {goog.ui.Palette} palette Palette in which to look for the item.
-***REMOVED*** @param {Node} node Node to look for.
-***REMOVED*** @return {Node} The corresponding palette item (null if not found).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the item corresponding to the given node, or null if the node is
+ * neither a palette cell nor part of a palette item.
+ * @param {goog.ui.Palette} palette Palette in which to look for the item.
+ * @param {Node} node Node to look for.
+ * @return {Node} The corresponding palette item (null if not found).
+ * @override
+ */
 goog.ui.emoji.EmojiPaletteRenderer.prototype.getContainingItem =
     function(palette, node) {
   var root = palette.getElement();
@@ -206,4 +206,4 @@ goog.ui.emoji.EmojiPaletteRenderer.prototype.getContainingItem =
   }
 
   return null;
-***REMOVED***
+};

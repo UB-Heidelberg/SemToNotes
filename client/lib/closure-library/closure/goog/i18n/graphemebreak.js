@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Detect Grapheme Cluster Break in a pair of codepoints. Follows
-***REMOVED*** Unicode 5.1 UAX#29. Tailoring for Virama × Indic Consonants is used.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Detect Grapheme Cluster Break in a pair of codepoints. Follows
+ * Unicode 5.1 UAX#29. Tailoring for Virama × Indic Consonants is used.
+ *
+ */
 
 goog.provide('goog.i18n.GraphemeBreak');
 goog.require('goog.structs.InversionMap');
 
 
-***REMOVED***
-***REMOVED*** Enum for all Grapheme Cluster Break properties.
-***REMOVED*** These enums directly corresponds to Grapheme_Cluster_Break property values
-***REMOVED*** mentioned in http://unicode.org/reports/tr29 table 2. VIRAMA and
-***REMOVED*** INDIC_CONSONANT are for the Virama × Base tailoring mentioned in the notes.
-***REMOVED***
-***REMOVED*** CR and LF are moved to the bottom of the list because they occur only once
-***REMOVED*** and so good candidates to take 2 decimal digit values.
-***REMOVED*** @enum {number}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Enum for all Grapheme Cluster Break properties.
+ * These enums directly corresponds to Grapheme_Cluster_Break property values
+ * mentioned in http://unicode.org/reports/tr29 table 2. VIRAMA and
+ * INDIC_CONSONANT are for the Virama × Base tailoring mentioned in the notes.
+ *
+ * CR and LF are moved to the bottom of the list because they occur only once
+ * and so good candidates to take 2 decimal digit values.
+ * @enum {number}
+ * @protected
+ */
 goog.i18n.GraphemeBreak.property = {
   ANY: 0,
   CONTROL: 1,
@@ -49,28 +49,28 @@ goog.i18n.GraphemeBreak.property = {
   CR: 12,
   LF: 13,
   REGIONAL_INDICATOR: 14
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Grapheme Cluster Break property values for all codepoints as inversion map.
-***REMOVED*** Constructed lazily.
-***REMOVED***
-***REMOVED*** @type {goog.structs.InversionMap}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Grapheme Cluster Break property values for all codepoints as inversion map.
+ * Constructed lazily.
+ *
+ * @type {goog.structs.InversionMap}
+ * @private
+ */
 goog.i18n.GraphemeBreak.inversions_ = null;
 
 
-***REMOVED***
-***REMOVED*** There are two kinds of grapheme clusters: 1) Legacy 2)Extended. This method
-***REMOVED*** is to check for legacy rules.
-***REMOVED***
-***REMOVED*** @param {number} prop_a The property enum value of the first character.
-***REMOVED*** @param {number} prop_b The property enum value of the second character.
-***REMOVED*** @return {boolean} True if a & b do not form a cluster; False otherwise.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * There are two kinds of grapheme clusters: 1) Legacy 2)Extended. This method
+ * is to check for legacy rules.
+ *
+ * @param {number} prop_a The property enum value of the first character.
+ * @param {number} prop_b The property enum value of the second character.
+ * @return {boolean} True if a & b do not form a cluster; False otherwise.
+ * @private
+ */
 goog.i18n.GraphemeBreak.applyLegacyBreakRules_ = function(prop_a, prop_b) {
 
   var prop = goog.i18n.GraphemeBreak.property;
@@ -103,16 +103,16 @@ goog.i18n.GraphemeBreak.applyLegacyBreakRules_ = function(prop_a, prop_b) {
     return false;
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Method to return property enum value of the codepoint. If it is Hangul LV or
-***REMOVED*** LVT, then it is computed; for the rest it is picked from the inversion map.
-***REMOVED*** @param {number} acode The code point value of the character.
-***REMOVED*** @return {number} Property enum value of codepoint.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Method to return property enum value of the codepoint. If it is Hangul LV or
+ * LVT, then it is computed; for the rest it is picked from the inversion map.
+ * @param {number} acode The code point value of the character.
+ * @return {number} Property enum value of codepoint.
+ * @private
+ */
 goog.i18n.GraphemeBreak.getBreakProp_ = function(acode) {
   if (0xAC00 <= acode && acode <= 0xD7A3) {
     var prop = goog.i18n.GraphemeBreak.property;
@@ -187,21 +187,21 @@ goog.i18n.GraphemeBreak.getBreakProp_ = function(acode) {
            2],
           true);
     }
-    return***REMOVED*****REMOVED*** @type {number}***REMOVED*** (
+    return /** @type {number} */ (
         goog.i18n.GraphemeBreak.inversions_.at(acode));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** There are two kinds of grapheme clusters: 1) Legacy 2)Extended. This method
-***REMOVED*** is to check for both using a boolean flag to switch between them.
-***REMOVED*** @param {number} a The code point value of the first character.
-***REMOVED*** @param {number} b The code point value of the second character.
-***REMOVED*** @param {boolean=} opt_extended If true, indicates extended grapheme cluster;
-***REMOVED***     If false, indicates legacy cluster.
-***REMOVED*** @return {boolean} True if a & b do not form a cluster; False otherwise.
-***REMOVED***
+/**
+ * There are two kinds of grapheme clusters: 1) Legacy 2)Extended. This method
+ * is to check for both using a boolean flag to switch between them.
+ * @param {number} a The code point value of the first character.
+ * @param {number} b The code point value of the second character.
+ * @param {boolean=} opt_extended If true, indicates extended grapheme cluster;
+ *     If false, indicates legacy cluster.
+ * @return {boolean} True if a & b do not form a cluster; False otherwise.
+ */
 goog.i18n.GraphemeBreak.hasGraphemeBreak = function(a, b, opt_extended) {
 
   var prop_a = goog.i18n.GraphemeBreak.getBreakProp_(a);
@@ -211,4 +211,4 @@ goog.i18n.GraphemeBreak.hasGraphemeBreak = function(a, b, opt_extended) {
   return goog.i18n.GraphemeBreak.applyLegacyBreakRules_(prop_a, prop_b) &&
       !(opt_extended &&
           (prop_a == prop.PREPEND || prop_b == prop.SPACING_MARK));
-***REMOVED***
+};

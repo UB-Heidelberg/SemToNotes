@@ -124,22 +124,22 @@ var emojiGroup3 = [
   var sprite = '../../demos/emoji/sprite.png';
   var sprite2 = '../../demos/emoji/sprite2.png';
 
-***REMOVED***
-***REMOVED*** Creates a SpriteInfo object with the specified properties. If the image is
-***REMOVED*** sprited via CSS, then only the first parameter needs a value. If the image
-***REMOVED*** is sprited via metadata, then the first parameter should be left null.
-***REMOVED***
-***REMOVED*** @param {?string} cssClass CSS class to properly display the sprited image.
-***REMOVED*** @param {string=} opt_url Url of the sprite image.
-***REMOVED*** @param {number=} opt_width Width of the image being sprited.
-***REMOVED*** @param {number=} opt_height Height of the image being sprited.
-***REMOVED*** @param {number=} opt_xOffset Positive x offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {number=} opt_yOffset Positive y offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {boolean=} opt_animated Whether the sprite info is for an animated
-***REMOVED***     emoji.
-***REMOVED***
+/**
+ * Creates a SpriteInfo object with the specified properties. If the image is
+ * sprited via CSS, then only the first parameter needs a value. If the image
+ * is sprited via metadata, then the first parameter should be left null.
+ *
+ * @param {?string} cssClass CSS class to properly display the sprited image.
+ * @param {string=} opt_url Url of the sprite image.
+ * @param {number=} opt_width Width of the image being sprited.
+ * @param {number=} opt_height Height of the image being sprited.
+ * @param {number=} opt_xOffset Positive x offset of the image being sprited
+ *     within the sprite.
+ * @param {number=} opt_yOffset Positive y offset of the image being sprited
+ *     within the sprite.
+ * @param {boolean=} opt_animated Whether the sprite info is for an animated
+ *     emoji.
+ */
 function si(cssClass, opt_url, opt_width, opt_height, opt_xOffset,
             opt_yOffset, opt_animated) {
   return new goog.ui.emoji.SpriteInfo(cssClass, opt_url, opt_width,
@@ -304,17 +304,17 @@ function testAdjustNumRowsIfNecessaryIsCorrect() {
   picker.setNumRows(2);
   picker.adjustNumRowsIfNecessary_();
   assertEquals(3, picker.getNumRows());
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Helper for testDelayedLoad. Returns true if the two paths end with the same
-***REMOVED*** file.
-***REMOVED***
-***REMOVED*** E.g., ('../../cool.gif', 'file:///home/usr/somewhere/cool.gif') --> true
-***REMOVED***
-***REMOVED*** @param {string} path1 First url
-***REMOVED*** @param {string} path2 Second url
-***REMOVED***
+/**
+ * Helper for testDelayedLoad. Returns true if the two paths end with the same
+ * file.
+ *
+ * E.g., ('../../cool.gif', 'file:///home/usr/somewhere/cool.gif') --> true
+ *
+ * @param {string} path1 First url
+ * @param {string} path2 Second url
+ */
 function checkPathsEndWithSameFile(path1, path2) {
   var pieces1 = path1.split('/');
   var file1 = pieces1[pieces1.length - 1];
@@ -324,14 +324,14 @@ function checkPathsEndWithSameFile(path1, path2) {
   return file1 == file2;
 }
 
-***REMOVED***
-***REMOVED*** Gets the emoji URL from a palette element. Palette elements are divs or
-***REMOVED*** imgs wrapped in an outer div. The returns the background-image if it's a div,
-***REMOVED*** or the src attribute if it's an image.
-***REMOVED***
-***REMOVED*** @param {Element} element Element to get the image url for
-***REMOVED*** @return string
-***REMOVED***
+/**
+ * Gets the emoji URL from a palette element. Palette elements are divs or
+ * imgs wrapped in an outer div. The returns the background-image if it's a div,
+ * or the src attribute if it's an image.
+ *
+ * @param {Element} element Element to get the image url for
+ * @return string
+ */
 function getImageUrl(element) {
   element = element.firstChild;  // get the wrapped element
   if (element.tagName == 'IMG') {
@@ -344,13 +344,13 @@ function getImageUrl(element) {
   }
 }
 
-***REMOVED***
-***REMOVED*** Checks that the content of an emojipicker page is all images pointing to
-***REMOVED*** the default img.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} page The page of the picker to check
-***REMOVED*** @param {string} defaultImgUrl The url of the default img
-***REMOVED***
+/**
+ * Checks that the content of an emojipicker page is all images pointing to
+ * the default img.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} page The page of the picker to check
+ * @param {string} defaultImgUrl The url of the default img
+ */
 function checkContentIsDefaultImg(page, defaultImgUrl) {
   var content = page.getContent();
 
@@ -363,15 +363,15 @@ function checkContentIsDefaultImg(page, defaultImgUrl) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks that the content of an emojipicker page is the specified emoji and
-***REMOVED*** the default img after the emoji are all used.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} page The page of the picker to check
-***REMOVED*** @param {Array.<Array.<string>>} emojiList List of emoji that should be in the
-***REMOVED***     palette
-***REMOVED*** @param {string} defaultImgUrl The url of the default img
-***REMOVED***
+/**
+ * Checks that the content of an emojipicker page is the specified emoji and
+ * the default img after the emoji are all used.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} page The page of the picker to check
+ * @param {Array.<Array.<string>>} emojiList List of emoji that should be in the
+ *     palette
+ * @param {string} defaultImgUrl The url of the default img
+ */
 function checkContentIsEmojiImages(page, emojiList, defaultImg) {
   var content = page.getContent();
 
@@ -540,13 +540,13 @@ function testGetSelectedEmoji_shiftClick() {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks and verifies the structure of a non-progressively-rendered
-***REMOVED*** emojipicker.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
-***REMOVED*** @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
-***REMOVED***
+/**
+ * Checks and verifies the structure of a non-progressively-rendered
+ * emojipicker.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
+ * @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
+ */
 function checkStructureForNonProgressivePicker(palette, emoji) {
   // We can hackily check the items by selecting an item and then getting the
   // selected item.
@@ -554,7 +554,7 @@ function checkStructureForNonProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     var emojiInfo = emoji[1][i];
     var cell = palette.getSelectedItem();
-    var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (cell.firstChild);
+    var inner = /** @type {Element} */ (cell.firstChild);
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
@@ -596,12 +596,12 @@ function checkStructureForNonProgressivePicker(palette, emoji) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks and verifies the structure of a progressively-rendered emojipicker.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
-***REMOVED*** @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
-***REMOVED***
+/**
+ * Checks and verifies the structure of a progressively-rendered emojipicker.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
+ * @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
+ */
 function checkStructureForProgressivePicker(palette, emoji) {
   // We can hackily check the items by selecting an item and then getting the
   // selected item.
@@ -609,7 +609,7 @@ function checkStructureForProgressivePicker(palette, emoji) {
     palette.setSelectedIndex(i);
     var emojiInfo = emoji[1][i];
     var cell = palette.getSelectedItem();
-    var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (cell.firstChild);
+    var inner = /** @type {Element} */ (cell.firstChild);
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
@@ -656,19 +656,19 @@ function checkStructureForProgressivePicker(palette, emoji) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks and verifies the structure of a non-progressive fast-loading picker
-***REMOVED*** after the animated emoji have loaded.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
-***REMOVED*** @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
-***REMOVED***
+/**
+ * Checks and verifies the structure of a non-progressive fast-loading picker
+ * after the animated emoji have loaded.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
+ * @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
+ */
 function checkPostLoadStructureForFastLoadNonProgressivePicker(palette, emoji) {
  for (var i = 0; i < emoji[1].length; i++) {
     palette.setSelectedIndex(i);
     var emojiInfo = emoji[1][i];
     var cell = palette.getSelectedItem();
-    var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (cell.firstChild);
+    var inner = /** @type {Element} */ (cell.firstChild);
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute
@@ -726,19 +726,19 @@ function checkPostLoadStructureForFastLoadNonProgressivePicker(palette, emoji) {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks and verifies the structure of a progressive fast-loading picker
-***REMOVED*** after the animated emoji have loaded.
-***REMOVED***
-***REMOVED*** @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
-***REMOVED*** @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
-***REMOVED***
+/**
+ * Checks and verifies the structure of a progressive fast-loading picker
+ * after the animated emoji have loaded.
+ *
+ * @param {goog.ui.emoji.EmojiPalette} palette Emoji palette to check.
+ * @param {Array.<Array.<string>>} emoji Emoji that should be in the palette.
+ */
 function checkPostLoadStructureForFastLoadProgressivePicker(palette, emoji) {
   for (var i = 0; i < emoji[1].length; i++) {
     palette.setSelectedIndex(i);
     var emojiInfo = emoji[1][i];
     var cell = palette.getSelectedItem();
-    var inner =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (cell.firstChild);
+    var inner = /** @type {Element} */ (cell.firstChild);
 
     // Check that the cell is a div wrapped around something else, and that the
     // outer div contains the goomoji attribute

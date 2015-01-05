@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Handles applying header styles to text.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Handles applying header styles to text.
+ *
+ */
 
 goog.provide('goog.editor.plugins.HeaderFormatter');
 
@@ -25,22 +25,22 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Applies header styles to text.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Applies header styles to text.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.HeaderFormatter = function() {
   goog.editor.Plugin.call(this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.HeaderFormatter, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.HeaderFormatter.prototype.getTrogClassId = function() {
   return 'HeaderFormatter';
-***REMOVED***
+};
 
 // TODO(user):  Move execCommand functionality from basictextformatter into
 // here for headers.  I'm not doing this now because it depends on the
@@ -48,21 +48,21 @@ goog.editor.plugins.HeaderFormatter.prototype.getTrogClassId = function() {
 // in order to seperate out any of the functions from basictextformatter.
 
 
-***REMOVED***
-***REMOVED*** Commands that can be passed as the optional argument to execCommand.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands that can be passed as the optional argument to execCommand.
+ * @enum {string}
+ */
 goog.editor.plugins.HeaderFormatter.HEADER_COMMAND = {
   H1: 'H1',
   H2: 'H2',
   H3: 'H3',
   H4: 'H4'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.editor.plugins.HeaderFormatter.prototype.handleKeyboardShortcut = function(
     e, key, isModifierPressed) {
   if (!isModifierPressed) {
@@ -93,4 +93,4 @@ goog.editor.plugins.HeaderFormatter.prototype.handleKeyboardShortcut = function(
     return true;
   }
   return false;
-***REMOVED***
+};

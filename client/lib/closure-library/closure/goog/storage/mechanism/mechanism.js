@@ -12,45 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Abstract interface for storing and retrieving data using
-***REMOVED*** some persistence mechanism.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Abstract interface for storing and retrieving data using
+ * some persistence mechanism.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.Mechanism');
 
 
 
-***REMOVED***
-***REMOVED*** Basic interface for all storage mechanisms.
-***REMOVED***
-***REMOVED***
-***REMOVED***
-goog.storage.mechanism.Mechanism = function() {***REMOVED***
+/**
+ * Basic interface for all storage mechanisms.
+ *
+ * @constructor
+ */
+goog.storage.mechanism.Mechanism = function() {};
 
 
-***REMOVED***
-***REMOVED*** Set a value for a key.
-***REMOVED***
-***REMOVED*** @param {string} key The key to set.
-***REMOVED*** @param {string} value The string to save.
-***REMOVED***
+/**
+ * Set a value for a key.
+ *
+ * @param {string} key The key to set.
+ * @param {string} value The string to save.
+ */
 goog.storage.mechanism.Mechanism.prototype.set = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Get the value stored under a key.
-***REMOVED***
-***REMOVED*** @param {string} key The key to get.
-***REMOVED*** @return {?string} The corresponding value, null if not found.
-***REMOVED***
+/**
+ * Get the value stored under a key.
+ *
+ * @param {string} key The key to get.
+ * @return {?string} The corresponding value, null if not found.
+ */
 goog.storage.mechanism.Mechanism.prototype.get = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Remove a key and its value.
-***REMOVED***
-***REMOVED*** @param {string} key The key to remove.
-***REMOVED***
+/**
+ * Remove a key and its value.
+ *
+ * @param {string} key The key to remove.
+ */
 goog.storage.mechanism.Mechanism.prototype.remove = goog.abstractMethod;

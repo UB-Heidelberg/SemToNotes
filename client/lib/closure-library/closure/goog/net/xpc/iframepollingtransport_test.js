@@ -33,7 +33,7 @@ var outerChannel = null;
 var innerChannel = null;
 
 function setUp() {
-  mockClock = new goog.testing.MockClock(true /* opt_autoInstall***REMOVED***);
+  mockClock = new goog.testing.MockClock(true /* opt_autoInstall */);
 
   // Create the peer windows.
   var outerPeerHostName = 'https://www.youtube.com';
@@ -57,7 +57,7 @@ function tearDown() {
 }
 
 
-***REMOVED*** Tests that connection happens normally and callbacks are invoked.***REMOVED***
+/** Tests that connection happens normally and callbacks are invoked. */
 function testConnect() {
   var outerConnectCallback = goog.testing.recordFunction();
   var innerConnectCallback = goog.testing.recordFunction();
@@ -75,7 +75,7 @@ function testConnect() {
 }
 
 
-***REMOVED*** Tests that messages are successfully delivered to the inner peer.***REMOVED***
+/** Tests that messages are successfully delivered to the inner peer. */
 function testSend_outerToInner() {
   var serviceCallback = goog.testing.recordFunction();
 
@@ -99,7 +99,7 @@ function testSend_outerToInner() {
 }
 
 
-***REMOVED*** Tests that messages are successfully delivered to the outer peer.***REMOVED***
+/** Tests that messages are successfully delivered to the outer peer. */
 function testSend_innerToOuter() {
   var serviceCallback = goog.testing.recordFunction();
 
@@ -123,7 +123,7 @@ function testSend_innerToOuter() {
 }
 
 
-***REMOVED*** Tests that closing the outer peer does not cause an error.***REMOVED***
+/** Tests that closing the outer peer does not cause an error. */
 function testSend_outerPeerClosed() {
   // Connect the inner channel.
   innerChannel.connect();
@@ -137,7 +137,7 @@ function testSend_outerPeerClosed() {
 }
 
 
-***REMOVED*** Tests that closing the inner peer does not cause an error.***REMOVED***
+/** Tests that closing the inner peer does not cause an error. */
 function testSend_innerPeerClosed() {
   // Connect the outer channel.
   outerChannel.connect();
@@ -151,7 +151,7 @@ function testSend_innerPeerClosed() {
 }
 
 
-***REMOVED*** Tests that partially closing the outer peer does not cause an error.***REMOVED***
+/** Tests that partially closing the outer peer does not cause an error. */
 function testSend_outerPeerClosing() {
   // Connect the inner channel.
   innerChannel.connect();
@@ -167,7 +167,7 @@ function testSend_outerPeerClosing() {
 }
 
 
-***REMOVED*** Tests that partially closing the inner peer does not cause an error.***REMOVED***
+/** Tests that partially closing the inner peer does not cause an error. */
 function testSend_innerPeerClosing() {
   // Connect the outer channel.
   outerChannel.connect();
@@ -183,15 +183,15 @@ function testSend_innerPeerClosing() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a channel with the specified configuration, using frame polling.
-***REMOVED*** @param {!goog.net.xpc.CrossPageChannelRole} role The channel role.
-***REMOVED*** @param {string} channelName The channel name.
-***REMOVED*** @param {string} fromHostName The host name of the window hosting the channel.
-***REMOVED*** @param {!Object} fromWindow The window hosting the channel.
-***REMOVED*** @param {string} toHostName The host name of the peer window.
-***REMOVED*** @param {!Object} toWindow The peer window.
-***REMOVED***
+/**
+ * Creates a channel with the specified configuration, using frame polling.
+ * @param {!goog.net.xpc.CrossPageChannelRole} role The channel role.
+ * @param {string} channelName The channel name.
+ * @param {string} fromHostName The host name of the window hosting the channel.
+ * @param {!Object} fromWindow The window hosting the channel.
+ * @param {string} toHostName The host name of the peer window.
+ * @param {!Object} toWindow The peer window.
+ */
 function createChannel(role, channelName, fromHostName, fromWindow, toHostName,
     toWindow) {
 
@@ -221,11 +221,11 @@ function createChannel(role, channelName, fromHostName, fromWindow, toHostName,
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a mock window to use as a peer. The peer window will host the frame
-***REMOVED*** elements.
-***REMOVED*** @param {string} url The peer window's initial URL.
-***REMOVED***
+/**
+ * Creates a mock window to use as a peer. The peer window will host the frame
+ * elements.
+ * @param {string} url The peer window's initial URL.
+ */
 function createMockPeerWindow(url) {
   var mockPeer = createMockWindow(url);
 
@@ -234,22 +234,22 @@ function createMockPeerWindow(url) {
     assertEquals(goog.dom.TagName.IFRAME, el.tagName);
     mockPeer.frames[el.name] = createMockWindow(el.src);
     mockPeer.document.body.element.appendChild(el);
- ***REMOVED*****REMOVED***
+  };
 
   return mockPeer;
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a mock window.
-***REMOVED*** @param {string} url The window's initial URL.
-***REMOVED***
+/**
+ * Creates a mock window.
+ * @param {string} url The window's initial URL.
+ */
 function createMockWindow(url) {
   // Create the mock window, document and body.
-  var mockWindow = {***REMOVED***
-  var mockDocument = {***REMOVED***
-  var mockBody = {***REMOVED***
-  var mockLocation = {***REMOVED***
+  var mockWindow = {};
+  var mockDocument = {};
+  var mockBody = {};
+  var mockLocation = {};
 
   // Configure the mock window's document body.
   mockBody.element = goog.dom.createDom(goog.dom.TagName.BODY);
@@ -259,11 +259,11 @@ function createMockWindow(url) {
 
   // Configure the mock window's location.
   mockLocation.href = url;
-  mockLocation.replace = function(value) { mockLocation.href = value;***REMOVED*****REMOVED***
+  mockLocation.replace = function(value) { mockLocation.href = value; };
 
   // Configure the mock window.
   mockWindow.document = mockDocument;
-  mockWindow.frames = {***REMOVED***
+  mockWindow.frames = {};
   mockWindow.location = mockLocation;
   mockWindow.setTimeout = goog.Timer.callOnce;
 
@@ -271,10 +271,10 @@ function createMockWindow(url) {
 }
 
 
-***REMOVED***
-***REMOVED*** Emulates closing the specified window by clearing frames, document and
-***REMOVED*** location.
-***REMOVED***
+/**
+ * Emulates closing the specified window by clearing frames, document and
+ * location.
+ */
 function closeWindow(targetWindow) {
   // Close any child frame windows.
   for (var frameName in targetWindow.frames) {

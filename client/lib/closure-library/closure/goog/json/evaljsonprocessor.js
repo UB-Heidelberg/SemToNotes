@@ -13,9 +13,9 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines a class for parsing JSON using eval.
-***REMOVED***
+/**
+ * @fileoverview Defines a class for parsing JSON using eval.
+ */
 
 goog.provide('goog.json.EvalJsonProcessor');
 
@@ -25,43 +25,43 @@ goog.require('goog.json.Serializer');
 
 
 
-***REMOVED***
-***REMOVED*** A class that parses and stringifies JSON using eval (as implemented in
-***REMOVED*** goog.json).
-***REMOVED*** Adapts {@code goog.json} to the {@code goog.json.Processor} interface.
-***REMOVED***
-***REMOVED*** @param {?goog.json.Replacer=} opt_replacer An optional replacer to use during
-***REMOVED***     serialization.
-***REMOVED*** @param {?boolean=} opt_useUnsafeParsing Whether to use goog.json.unsafeParse
-***REMOVED***     for parsing. Safe parsing is very slow on large strings. On the other
-***REMOVED***     hand, unsafe parsing uses eval() without checking whether the string is
-***REMOVED***     valid, so it should only be used if you trust the source of the string.
-***REMOVED***
-***REMOVED*** @implements {goog.json.Processor}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A class that parses and stringifies JSON using eval (as implemented in
+ * goog.json).
+ * Adapts {@code goog.json} to the {@code goog.json.Processor} interface.
+ *
+ * @param {?goog.json.Replacer=} opt_replacer An optional replacer to use during
+ *     serialization.
+ * @param {?boolean=} opt_useUnsafeParsing Whether to use goog.json.unsafeParse
+ *     for parsing. Safe parsing is very slow on large strings. On the other
+ *     hand, unsafe parsing uses eval() without checking whether the string is
+ *     valid, so it should only be used if you trust the source of the string.
+ * @constructor
+ * @implements {goog.json.Processor}
+ * @final
+ */
 goog.json.EvalJsonProcessor = function(opt_replacer, opt_useUnsafeParsing) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {goog.json.Serializer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {goog.json.Serializer}
+   * @private
+   */
   this.serializer_ = new goog.json.Serializer(opt_replacer);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {function(string):***REMOVED***}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {function(string): *}
+   * @private
+   */
   this.parser_ = opt_useUnsafeParsing ? goog.json.unsafeParse : goog.json.parse;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.EvalJsonProcessor.prototype.stringify = function(object) {
   return this.serializer_.serialize(object);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.json.EvalJsonProcessor.prototype.parse = function(s) {
   return this.parser_(s);
-***REMOVED***
+};

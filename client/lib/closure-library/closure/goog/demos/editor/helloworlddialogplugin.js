@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An example of how to write a dialog plugin.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An example of how to write a dialog plugin.
+ *
+ */
 
 goog.provide('goog.demos.editor.HelloWorldDialogPlugin');
 goog.provide('goog.demos.editor.HelloWorldDialogPlugin.Command');
@@ -28,49 +28,49 @@ goog.require('goog.functions');
 goog.require('goog.ui.editor.AbstractDialog');
 
 
-***REMOVED****REMOVED****REMOVED***** Public interface***REMOVED******************************************************* //
+// *** Public interface ***************************************************** //
 
 
 
-***REMOVED***
-***REMOVED*** A plugin that opens the hello world dialog.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.AbstractDialogPlugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A plugin that opens the hello world dialog.
+ * @constructor
+ * @extends {goog.editor.plugins.AbstractDialogPlugin}
+ * @final
+ */
 goog.demos.editor.HelloWorldDialogPlugin = function() {
   goog.editor.plugins.AbstractDialogPlugin.call(this,
       goog.demos.editor.HelloWorldDialogPlugin.Command.HELLO_WORLD_DIALOG);
-***REMOVED***
+};
 goog.inherits(goog.demos.editor.HelloWorldDialogPlugin,
               goog.editor.plugins.AbstractDialogPlugin);
 
 
-***REMOVED***
-***REMOVED*** Commands implemented by this plugin.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands implemented by this plugin.
+ * @enum {string}
+ */
 goog.demos.editor.HelloWorldDialogPlugin.Command = {
   HELLO_WORLD_DIALOG: 'helloWorldDialog'
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.demos.editor.HelloWorldDialogPlugin.prototype.getTrogClassId =
     goog.functions.constant('HelloWorldDialog');
 
 
-***REMOVED****REMOVED****REMOVED***** Protected interface***REMOVED**************************************************** //
+// *** Protected interface ************************************************** //
 
 
-***REMOVED***
-***REMOVED*** Creates a new instance of the dialog and registers for the relevant events.
-***REMOVED*** @param {goog.dom.DomHelper} dialogDomHelper The dom helper to be used to
-***REMOVED***     create the dialog.
-***REMOVED*** @return {goog.demos.editor.HelloWorldDialog} The dialog.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Creates a new instance of the dialog and registers for the relevant events.
+ * @param {goog.dom.DomHelper} dialogDomHelper The dom helper to be used to
+ *     create the dialog.
+ * @return {goog.demos.editor.HelloWorldDialog} The dialog.
+ * @override
+ * @protected
+ */
 goog.demos.editor.HelloWorldDialogPlugin.prototype.createDialog = function(
     dialogDomHelper) {
   var dialog = new goog.demos.editor.HelloWorldDialog(dialogDomHelper);
@@ -79,18 +79,18 @@ goog.demos.editor.HelloWorldDialogPlugin.prototype.createDialog = function(
                           false,
                           this);
   return dialog;
-***REMOVED***
+};
 
 
-***REMOVED****REMOVED****REMOVED***** Private implementation***REMOVED************************************************* //
+// *** Private implementation *********************************************** //
 
 
-***REMOVED***
-***REMOVED*** Handles the OK event from the dialog by inserting the hello world message
-***REMOVED*** into the field.
-***REMOVED*** @param {goog.demos.editor.HelloWorldDialog.OkEvent} e OK event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the OK event from the dialog by inserting the hello world message
+ * into the field.
+ * @param {goog.demos.editor.HelloWorldDialog.OkEvent} e OK event object.
+ * @private
+ */
 goog.demos.editor.HelloWorldDialogPlugin.prototype.handleOk_ = function(e) {
   // First restore the selection so we can manipulate the field's content
   // according to what was selected.
@@ -114,4 +114,4 @@ goog.demos.editor.HelloWorldDialogPlugin.prototype.handleOk_ = function(e) {
   this.getFieldObject().dispatchSelectionChangeEvent();
   // Notify listeners that the field's contents have changed.
   this.getFieldObject().dispatchChange();
-***REMOVED***
+};

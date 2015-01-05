@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A button rendered via {@link goog.ui.CustomButtonRenderer}.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview A button rendered via {@link goog.ui.CustomButtonRenderer}.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.CustomButton');
 
@@ -26,27 +26,27 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** A custom button control.  Identical to {@link goog.ui.Button}, except it
-***REMOVED*** defaults its renderer to {@link goog.ui.CustomButtonRenderer}.  One could
-***REMOVED*** just as easily pass {@code goog.ui.CustomButtonRenderer.getInstance()} to
-***REMOVED*** the {@link goog.ui.Button} constructor and get the same result.  Provided
-***REMOVED*** for convenience.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or existing DOM
-***REMOVED***    structure to display as the button's caption.
-***REMOVED*** @param {goog.ui.ButtonRenderer=} opt_renderer Optional renderer used to
-***REMOVED***    render or decorate the button; defaults to
-***REMOVED***    {@link goog.ui.CustomButtonRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
-***REMOVED***    document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Button}
-***REMOVED***
+/**
+ * A custom button control.  Identical to {@link goog.ui.Button}, except it
+ * defaults its renderer to {@link goog.ui.CustomButtonRenderer}.  One could
+ * just as easily pass {@code goog.ui.CustomButtonRenderer.getInstance()} to
+ * the {@link goog.ui.Button} constructor and get the same result.  Provided
+ * for convenience.
+ *
+ * @param {goog.ui.ControlContent} content Text caption or existing DOM
+ *    structure to display as the button's caption.
+ * @param {goog.ui.ButtonRenderer=} opt_renderer Optional renderer used to
+ *    render or decorate the button; defaults to
+ *    {@link goog.ui.CustomButtonRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
+ *    document interaction.
+ * @constructor
+ * @extends {goog.ui.Button}
+ */
 goog.ui.CustomButton = function(content, opt_renderer, opt_domHelper) {
   goog.ui.Button.call(this, content, opt_renderer ||
       goog.ui.CustomButtonRenderer.getInstance(), opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.CustomButton, goog.ui.Button);
 
 

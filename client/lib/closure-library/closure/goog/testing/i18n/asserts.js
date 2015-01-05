@@ -12,33 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Assert functions that account for locale data changes.
-***REMOVED***
-***REMOVED*** The locale data gets updated from CLDR (http://cldr.unicode.org/),
-***REMOVED*** and CLDR gets an update about twice per year.
-***REMOVED*** So the locale data are expected to change.
-***REMOVED*** This can make unit tests quite fragile:
-***REMOVED***   assertEquals("Dec 31, 2013, 1:23pm", format);
-***REMOVED*** Now imagine that the decision is made to add a dot after abbreviations,
-***REMOVED*** and a comma between date and time.
-***REMOVED*** The previous assert will fail, because the string is now
-***REMOVED***   "Dec. 31 2013, 1:23pm"
-***REMOVED***
-***REMOVED*** One option is to not unit test the results of the formatters client side,
-***REMOVED*** and just trust that CLDR and closure/i18n takes care of that.
-***REMOVED*** The other option is to be a more flexible when testing.
-***REMOVED*** This is the role of assertI18nEquals, to centralize all the small
-***REMOVED*** differences between hard-coded values in unit tests and the current result.
-***REMOVED*** It allows some decupling, so that the closure/i18n can be updated without
-***REMOVED*** breaking all the clients using it.
-***REMOVED*** For the example above, this will succeed:
-***REMOVED***   assertI18nEquals("Dec 31, 2013, 1:23pm", "Dec. 31, 2013 1:23pm");
-***REMOVED*** It does this by white-listing, no "guessing" involved.
-***REMOVED***
-***REMOVED*** But I would say that the best practice is the first option: trust the
-***REMOVED*** library, stop unit-testing it.
-***REMOVED***
+/**
+ * @fileoverview Assert functions that account for locale data changes.
+ *
+ * The locale data gets updated from CLDR (http://cldr.unicode.org/),
+ * and CLDR gets an update about twice per year.
+ * So the locale data are expected to change.
+ * This can make unit tests quite fragile:
+ *   assertEquals("Dec 31, 2013, 1:23pm", format);
+ * Now imagine that the decision is made to add a dot after abbreviations,
+ * and a comma between date and time.
+ * The previous assert will fail, because the string is now
+ *   "Dec. 31 2013, 1:23pm"
+ *
+ * One option is to not unit test the results of the formatters client side,
+ * and just trust that CLDR and closure/i18n takes care of that.
+ * The other option is to be a more flexible when testing.
+ * This is the role of assertI18nEquals, to centralize all the small
+ * differences between hard-coded values in unit tests and the current result.
+ * It allows some decupling, so that the closure/i18n can be updated without
+ * breaking all the clients using it.
+ * For the example above, this will succeed:
+ *   assertI18nEquals("Dec 31, 2013, 1:23pm", "Dec. 31, 2013 1:23pm");
+ * It does this by white-listing, no "guessing" involved.
+ *
+ * But I would say that the best practice is the first option: trust the
+ * library, stop unit-testing it.
+ */
 
 goog.provide('goog.testing.i18n.asserts');
 goog.setTestOnly('goog.testing.i18n.asserts');
@@ -46,23 +46,23 @@ goog.setTestOnly('goog.testing.i18n.asserts');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** A map of known tests where locale data changed, but the old values are
-***REMOVED*** still tested for by various clients.
-***REMOVED*** @const {!Object.<string, string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A map of known tests where locale data changed, but the old values are
+ * still tested for by various clients.
+ * @const {!Object.<string, string>}
+ * @private
+ */
 goog.testing.i18n.asserts.EXPECTED_VALUE_MAP_ = {
   // Data to test the assert itself, old string as key, new string as value
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the two values are "almost equal" from i18n perspective
-***REMOVED*** (based on a manually maintained and validated whitelist).
-***REMOVED*** @param {string} expected The expected value.
-***REMOVED*** @param {string} actual The actual value.
-***REMOVED***
+/**
+ * Asserts that the two values are "almost equal" from i18n perspective
+ * (based on a manually maintained and validated whitelist).
+ * @param {string} expected The expected value.
+ * @param {string} actual The actual value.
+ */
 goog.testing.i18n.asserts.assertI18nEquals = function(expected, actual) {
   if (expected == actual) {
     return;
@@ -74,4 +74,4 @@ goog.testing.i18n.asserts.assertI18nEquals = function(expected, actual) {
   }
 
   assertEquals(expected, actual);
-***REMOVED***
+};

@@ -1,4 +1,4 @@
-/*global describe, expect, it***REMOVED***
+/*global describe, expect, it */
 'use strict';
 
 function buildText(type, name, desc) {
@@ -29,7 +29,7 @@ describe('jsdoc/tag/type', function() {
         tag: {
             type: require('jsdoc/tag/type')
         }
-   ***REMOVED*****REMOVED***
+    };
 
     it('should exist', function() {
         expect(jsdoc.tag.type).toBeDefined();

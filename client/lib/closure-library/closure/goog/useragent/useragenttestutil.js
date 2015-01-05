@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared test function to reset the constants in
-***REMOVED*** goog.userAgent.*
-***REMOVED***
+/**
+ * @fileoverview Shared test function to reset the constants in
+ * goog.userAgent.*
+ */
 
 goog.provide('goog.userAgentTestUtil');
 goog.provide('goog.userAgentTestUtil.UserAgents');
@@ -26,16 +26,16 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.keyboard');
 goog.require('goog.userAgent.platform');
 goog.require('goog.userAgent.product');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.userAgent.product.isVersion');
 
 goog.setTestOnly('goog.userAgentTestUtil');
 
 
-***REMOVED***
-***REMOVED*** Rerun the initialization code to set all of the goog.userAgent constants.
-***REMOVED*** @suppress {accessControls}
-***REMOVED***
+/**
+ * Rerun the initialization code to set all of the goog.userAgent constants.
+ * @suppress {accessControls}
+ */
 goog.userAgentTestUtil.reinitializeUserAgent = function() {
   // Unfortunately we can't isolate the useragent setting in a function
   // we can call, because things rely on it compiling to nothing when
@@ -80,26 +80,26 @@ goog.userAgentTestUtil.reinitializeUserAgent = function() {
   // goog.userAgent.keyboard
   goog.userAgent.keyboard.MAC_KEYBOARD =
       goog.userAgent.keyboard.determineMacKeyboard_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Browser definitions.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Browser definitions.
+ * @enum {string}
+ */
 goog.userAgentTestUtil.UserAgents = {
   GECKO: 'GECKO',
   IE: 'IE',
   OPERA: 'OPERA',
   WEBKIT: 'WEBKIT'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return whether a given user agent has been detected.
-***REMOVED*** @param {string} agent Value in UserAgents.
-***REMOVED*** @return {boolean} Whether the user agent has been detected.
-***REMOVED***
+/**
+ * Return whether a given user agent has been detected.
+ * @param {string} agent Value in UserAgents.
+ * @return {boolean} Whether the user agent has been detected.
+ */
 goog.userAgentTestUtil.getUserAgentDetected = function(agent) {
   switch (agent) {
     case goog.userAgentTestUtil.UserAgents.GECKO:
@@ -113,4 +113,4 @@ goog.userAgentTestUtil.getUserAgentDetected = function(agent) {
   }
 
   throw Error('Unrecognized user agent');
-***REMOVED***
+};

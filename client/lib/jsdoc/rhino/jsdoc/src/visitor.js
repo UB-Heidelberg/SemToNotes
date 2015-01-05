@@ -18,18 +18,18 @@ var Visitor = exports.Visitor = function(parser) {
     this.addAstNodeVisitor({
         visitNode: this._visitRhinoNode.bind(this)
     });
-***REMOVED***
+};
 require('util').inherits(Visitor, require('jsdoc/src/visitor').Visitor);
 
 // TODO: docs (deprecated)
 Visitor.prototype.addRhinoNodeVisitor = function(visitor) {
     this._rhinoNodeVisitors.push(visitor);
-***REMOVED***
+};
 
 // TODO: docs (deprecated)
 Visitor.prototype.getRhinoNodeVisitors = function() {
     return this._rhinoNodeVisitors;
-***REMOVED***
+};
 
 // TODO: docs (deprecated)
 Visitor.prototype._visitRhinoNode = function(astNode, e, parser, filename) {
@@ -54,4 +54,4 @@ Visitor.prototype._visitRhinoNode = function(astNode, e, parser, filename) {
             }
         }
     }
-***REMOVED***
+};

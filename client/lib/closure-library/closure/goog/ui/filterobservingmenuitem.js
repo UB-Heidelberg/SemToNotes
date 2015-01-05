@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Menu item observing the filter text in a
-***REMOVED*** {@link goog.ui.FilteredMenu}. The observer method is called when the filter
-***REMOVED*** text changes and allows the menu item to update its content and state based
-***REMOVED*** on the filter.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Menu item observing the filter text in a
+ * {@link goog.ui.FilteredMenu}. The observer method is called when the filter
+ * text changes and allows the menu item to update its content and state based
+ * on the filter.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.ui.FilterObservingMenuItem');
 
@@ -29,61 +29,61 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a filter observing menu item.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to
-***REMOVED***     display as the content of the item (use to add icons or styling to
-***REMOVED***     menus).
-***REMOVED*** @param {*=} opt_model Data/model associated with the menu item.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
-***REMOVED***     document interactions.
-***REMOVED*** @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuItem}
-***REMOVED***
+/**
+ * Class representing a filter observing menu item.
+ *
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to
+ *     display as the content of the item (use to add icons or styling to
+ *     menus).
+ * @param {*=} opt_model Data/model associated with the menu item.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper used for
+ *     document interactions.
+ * @param {goog.ui.MenuItemRenderer=} opt_renderer Optional renderer.
+ * @constructor
+ * @extends {goog.ui.MenuItem}
+ */
 goog.ui.FilterObservingMenuItem = function(content, opt_model, opt_domHelper,
                                            opt_renderer) {
   goog.ui.MenuItem.call(this, content, opt_model, opt_domHelper,
       opt_renderer || new goog.ui.FilterObservingMenuItemRenderer());
-***REMOVED***
+};
 goog.inherits(goog.ui.FilterObservingMenuItem, goog.ui.MenuItem);
 
 
-***REMOVED***
-***REMOVED*** Function called when the filter text changes.
-***REMOVED*** @type {Function} function(goog.ui.FilterObservingMenuItem, string)
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Function called when the filter text changes.
+ * @type {Function} function(goog.ui.FilterObservingMenuItem, string)
+ * @private
+ */
 goog.ui.FilterObservingMenuItem.prototype.observer_ = null;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilterObservingMenuItem.prototype.enterDocument = function() {
   goog.ui.FilterObservingMenuItem.superClass_.enterDocument.call(this);
   this.callObserver();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the observer functions.
-***REMOVED*** @param {Function} f function(goog.ui.FilterObservingMenuItem, string).
-***REMOVED***
+/**
+ * Sets the observer functions.
+ * @param {Function} f function(goog.ui.FilterObservingMenuItem, string).
+ */
 goog.ui.FilterObservingMenuItem.prototype.setObserver = function(f) {
   this.observer_ = f;
   this.callObserver();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the observer function if one has been specified.
-***REMOVED*** @param {?string=} opt_str Filter string.
-***REMOVED***
+/**
+ * Calls the observer function if one has been specified.
+ * @param {?string=} opt_str Filter string.
+ */
 goog.ui.FilterObservingMenuItem.prototype.callObserver = function(opt_str) {
   if (this.observer_) {
     this.observer_(this, opt_str || '');
   }
-***REMOVED***
+};
 
 
 // Register a decorator factory function for

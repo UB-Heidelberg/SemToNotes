@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2012 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2012 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** styling for goog.ui.menuBar and child buttons.
-***REMOVED***
-***REMOVED*** @author tvykruta@google.com (Tomas Vykruta)
-***REMOVED***
+ * styling for goog.ui.menuBar and child buttons.
+ *
+ * @author tvykruta@google.com (Tomas Vykruta)
+ */
 
 
 .goog-menubar {
@@ -26,7 +26,7 @@
   outline: none;
   border: none;
   background: #fff;
-  /* @alternate***REMOVED*** border: 1px solid #fff;
+  /* @alternate */ border: 1px solid #fff;
 }
 
 .goog-menubar .goog-menu-button-dropdown {

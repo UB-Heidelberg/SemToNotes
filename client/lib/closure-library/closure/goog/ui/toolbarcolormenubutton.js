@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A toolbar color menu button control.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @author ssaviano@google.com (Steven Saviano)
-***REMOVED***
+/**
+ * @fileoverview A toolbar color menu button control.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @author ssaviano@google.com (Steven Saviano)
+ */
 
 goog.provide('goog.ui.ToolbarColorMenuButton');
 
@@ -27,26 +27,26 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** A color menu button control for a toolbar.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or existing DOM
-***REMOVED***     structure to display as the button's caption.
-***REMOVED*** @param {goog.ui.Menu=} opt_menu Menu to render under the button when clicked;
-***REMOVED***     should contain at least one {@link goog.ui.ColorPalette} if present.
-***REMOVED*** @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Optional
-***REMOVED***     renderer used to render or decorate the button; defaults to
-***REMOVED***     {@link goog.ui.ToolbarColorMenuButtonRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ColorMenuButton}
-***REMOVED***
+/**
+ * A color menu button control for a toolbar.
+ *
+ * @param {goog.ui.ControlContent} content Text caption or existing DOM
+ *     structure to display as the button's caption.
+ * @param {goog.ui.Menu=} opt_menu Menu to render under the button when clicked;
+ *     should contain at least one {@link goog.ui.ColorPalette} if present.
+ * @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Optional
+ *     renderer used to render or decorate the button; defaults to
+ *     {@link goog.ui.ToolbarColorMenuButtonRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM hepler, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.ColorMenuButton}
+ */
 goog.ui.ToolbarColorMenuButton = function(
     content, opt_menu, opt_renderer, opt_domHelper) {
   goog.ui.ColorMenuButton.call(this, content, opt_menu, opt_renderer ||
       goog.ui.ToolbarColorMenuButtonRenderer.getInstance(), opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarColorMenuButton, goog.ui.ColorMenuButton);
 
 

@@ -1,21 +1,21 @@
-***REMOVED***
-***REMOVED*** @param {requestResponseCallback} cb
-***REMOVED***
+/**
+ * @param {requestResponseCallback} cb
+ */
 function makeSpecialRequest(cb) {
 }
 
-***REMOVED***
-***REMOVED*** @param {wrongTypeCallback} cb
-***REMOVED***
+/**
+ * @param {wrongTypeCallback} cb
+ */
 function makeExtraSpecialRequest(cb) {
 }
 
-***REMOVED***
-***REMOVED*** @callback requestResponseCallback
-***REMOVED*** @param {number} responseCode
-***REMOVED*** @param {string} responseText
-***REMOVED***
+/**
+ * @callback requestResponseCallback
+ * @param {number} responseCode
+ * @param {string} responseText
+ */
 
-***REMOVED***
-***REMOVED*** @callback {(object|string)} wrongTypeCallback
-***REMOVED***
+/**
+ * @callback {(object|string)} wrongTypeCallback
+ */

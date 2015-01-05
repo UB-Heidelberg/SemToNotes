@@ -30,13 +30,13 @@ var asyncTestCase =
     goog.testing.AsyncTestCase.createAndInstall(document.title);
 
 
-***REMOVED***
-***REMOVED*** Uses window.setTimeout() to perform asynchronous behaviour and uses
-***REMOVED*** asyncTestCase.waitForAsync() and asyncTestCase.continueTesting() to mark
-***REMOVED*** the beginning and end of it.
-***REMOVED*** @param {number} numAsyncCalls The number of asynchronous calls to make.
-***REMOVED*** @param {string} name The name of the current step.
-***REMOVED***
+/**
+ * Uses window.setTimeout() to perform asynchronous behaviour and uses
+ * asyncTestCase.waitForAsync() and asyncTestCase.continueTesting() to mark
+ * the beginning and end of it.
+ * @param {number} numAsyncCalls The number of asynchronous calls to make.
+ * @param {string} name The name of the current step.
+ */
 function doAsyncStuff(numAsyncCalls, name) {
   if (numAsyncCalls > 0) {
     curTestIsDone = false;
@@ -56,7 +56,7 @@ function setUpPage() {
   // Don't do anything asynchronously.
   window.setTimeout = function(callback, time) {
     callback();
- ***REMOVED*****REMOVED***
+  };
   doAsyncStuff(3, 'setUpPage');
 }
 function setUp() {
@@ -81,11 +81,11 @@ function test3() {
 var callback = function() {
   curTestIsDone = true;
   asyncTestCase.signal();
-***REMOVED***
+};
 var doAsyncSignals = function() {
   curTestIsDone = false;
   window.setTimeout(callback, 0);
-***REMOVED***
+};
 function testSignalsReturn() {
   doAsyncSignals();
   doAsyncSignals();

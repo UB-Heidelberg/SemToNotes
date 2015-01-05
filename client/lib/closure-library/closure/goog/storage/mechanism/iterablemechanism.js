@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Interface for storing, retieving and scanning data using some
-***REMOVED*** persistence mechanism.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Interface for storing, retieving and scanning data using some
+ * persistence mechanism.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.IterableMechanism');
 
@@ -28,27 +28,27 @@ goog.require('goog.storage.mechanism.Mechanism');
 
 
 
-***REMOVED***
-***REMOVED*** Interface for all iterable storage mechanisms.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.Mechanism}
-***REMOVED***
+/**
+ * Interface for all iterable storage mechanisms.
+ *
+ * @constructor
+ * @extends {goog.storage.mechanism.Mechanism}
+ */
 goog.storage.mechanism.IterableMechanism = function() {
   goog.storage.mechanism.IterableMechanism.base(this, 'constructor');
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.IterableMechanism,
               goog.storage.mechanism.Mechanism);
 
 
-***REMOVED***
-***REMOVED*** Get the number of stored key-value pairs.
-***REMOVED***
-***REMOVED*** Could be overridden in a subclass, as the default implementation is not very
-***REMOVED*** efficient - it iterates over all keys.
-***REMOVED***
-***REMOVED*** @return {number} Number of stored elements.
-***REMOVED***
+/**
+ * Get the number of stored key-value pairs.
+ *
+ * Could be overridden in a subclass, as the default implementation is not very
+ * efficient - it iterates over all keys.
+ *
+ * @return {number} Number of stored elements.
+ */
 goog.storage.mechanism.IterableMechanism.prototype.getCount = function() {
   var count = 0;
   goog.iter.forEach(this.__iterator__(true), function(key) {
@@ -56,31 +56,31 @@ goog.storage.mechanism.IterableMechanism.prototype.getCount = function() {
     count++;
   });
   return count;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an iterator that iterates over the elements in the storage. Will
-***REMOVED*** throw goog.iter.StopIteration after the last element.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_keys True to iterate over the keys. False to iterate
-***REMOVED***     over the values.  The default value is false.
-***REMOVED*** @return {!goog.iter.Iterator} The iterator.
-***REMOVED***
+/**
+ * Returns an iterator that iterates over the elements in the storage. Will
+ * throw goog.iter.StopIteration after the last element.
+ *
+ * @param {boolean=} opt_keys True to iterate over the keys. False to iterate
+ *     over the values.  The default value is false.
+ * @return {!goog.iter.Iterator} The iterator.
+ */
 goog.storage.mechanism.IterableMechanism.prototype.__iterator__ =
     goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Remove all key-value pairs.
-***REMOVED***
-***REMOVED*** Could be overridden in a subclass, as the default implementation is not very
-***REMOVED*** efficient - it iterates over all keys.
-***REMOVED***
+/**
+ * Remove all key-value pairs.
+ *
+ * Could be overridden in a subclass, as the default implementation is not very
+ * efficient - it iterates over all keys.
+ */
 goog.storage.mechanism.IterableMechanism.prototype.clear = function() {
   var keys = goog.iter.toArray(this.__iterator__(true));
   var selfObj = this;
   goog.array.forEach(keys, function(key) {
     selfObj.remove(key);
   });
-***REMOVED***
+};

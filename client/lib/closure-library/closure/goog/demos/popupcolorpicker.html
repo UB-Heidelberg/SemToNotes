@@ -41,7 +41,7 @@ See the COPYING file for details.
     picker.attach(document.getElementById('button1'));
     picker.attach(document.getElementById('button2'));
 
-  ***REMOVED***picker, 'change', function(e) {
+    goog.events.listen(picker, 'change', function(e) {
       picker.getLastTarget().style.backgroundColor = picker.getSelectedColor();
     });
   </script>

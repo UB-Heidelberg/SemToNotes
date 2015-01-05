@@ -17,7 +17,7 @@ goog.setTestOnly('goog.dom.FontSizeMonitorTest');
 
 goog.require('goog.dom');
 goog.require('goog.dom.FontSizeMonitor');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.events');
@@ -48,7 +48,7 @@ function testFontSizeNoChange() {
   // does not trigger the event.
 
   var fired = false;
-***REMOVED***monitor, goog.dom.FontSizeMonitor.EventType.CHANGE,
+  goog.events.listen(monitor, goog.dom.FontSizeMonitor.EventType.CHANGE,
                      function(e) {
                        fired = true;
                      });
@@ -66,7 +66,7 @@ function testFontSizeChanged() {
   // size changed.
 
   var fired = false;
-***REMOVED***monitor, goog.dom.FontSizeMonitor.EventType.CHANGE,
+  goog.events.listen(monitor, goog.dom.FontSizeMonitor.EventType.CHANGE,
                      function(e) {
                        fired = true;
                      });
@@ -171,7 +171,7 @@ function testEnsureThatDocIsOpenedForGecko() {
       }
     },
     attachEvent: function() {}
- ***REMOVED*****REMOVED***
+  };
 
   pr.set(goog.dom, 'getFrameContentWindow', function() {
     return instance;
@@ -197,7 +197,7 @@ function testFirefox2WorkAroundFirefox3() {
   try {
     // 1.9 should clear iframes
     pr.set(goog.userAgent, 'VERSION', '1.9');
-    goog.userAgent.isVersionOrHigherCache_ = {***REMOVED***
+    goog.userAgent.isVersionOrHigherCache_ = {};
 
     var frameCount = window.frames.length;
     var iframeElementCount = document.getElementsByTagName('iframe').length;
@@ -231,7 +231,7 @@ function testFirefox2WorkAroundFirefox2() {
   try {
     // 1.8 should NOT clear iframes
     pr.set(goog.userAgent, 'VERSION', '1.8');
-    goog.userAgent.isVersionOrHigherCache_ = {***REMOVED***
+    goog.userAgent.isVersionOrHigherCache_ = {};
 
     var frameCount = window.frames.length;
     var iframeElementCount = document.getElementsByTagName('iframe').length;

@@ -62,7 +62,7 @@ function testHashing() {
 }
 
 
-***REMOVED*** Check that the code checks for bad input***REMOVED***
+/** Check that the code checks for bad input */
 function testBadInput() {
   assertThrows('Bad input', function() {
     new goog.crypt.Sha256().update({});

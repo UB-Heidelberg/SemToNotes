@@ -13,9 +13,9 @@
 // limitations under the License.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @fileoverview File #1 of module A.
-***REMOVED***
+/**
+ * @fileoverview File #1 of module A.
+ */
 
 goog.provide('goog.module.testdata.modA_1');
 

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility for making the browser submit a hidden form, which can
-***REMOVED*** be used to effect a POST from JavaScript.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Utility for making the browser submit a hidden form, which can
+ * be used to effect a POST from JavaScript.
+ *
+ */
 
 goog.provide('goog.ui.FormPost');
 
@@ -28,37 +28,37 @@ goog.require('goog.ui.Component');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a formpost object.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED*** @param {goog.dom.DomHelper=} opt_dom The DOM helper.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a formpost object.
+ * @constructor
+ * @extends {goog.ui.Component}
+ * @param {goog.dom.DomHelper=} opt_dom The DOM helper.
+ * @final
+ */
 goog.ui.FormPost = function(opt_dom) {
   goog.ui.Component.call(this, opt_dom);
-***REMOVED***
+};
 goog.inherits(goog.ui.FormPost, goog.ui.Component);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FormPost.prototype.createDom = function() {
   this.setElementInternal(this.getDomHelper().createDom(goog.dom.TagName.FORM,
       {'method': 'POST', 'style': 'display:none'}));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constructs a POST request and directs the browser as if a form were
-***REMOVED*** submitted.
-***REMOVED*** @param {Object} parameters Object with parameter values. Values can be
-***REMOVED***     strings, numbers, or arrays of strings or numbers.
-***REMOVED*** @param {string=} opt_url The destination URL. If not specified, uses the
-***REMOVED***     current URL for window for the DOM specified in the constructor.
-***REMOVED*** @param {string=} opt_target An optional name of a window in which to open the
-***REMOVED***     URL. If not specified, uses the window for the DOM specified in the
-***REMOVED***     constructor.
-***REMOVED***
+/**
+ * Constructs a POST request and directs the browser as if a form were
+ * submitted.
+ * @param {Object} parameters Object with parameter values. Values can be
+ *     strings, numbers, or arrays of strings or numbers.
+ * @param {string=} opt_url The destination URL. If not specified, uses the
+ *     current URL for window for the DOM specified in the constructor.
+ * @param {string=} opt_target An optional name of a window in which to open the
+ *     URL. If not specified, uses the window for the DOM specified in the
+ *     constructor.
+ */
 goog.ui.FormPost.prototype.post = function(parameters, opt_url, opt_target) {
   var form = this.getElement();
   if (!form) {
@@ -69,16 +69,16 @@ goog.ui.FormPost.prototype.post = function(parameters, opt_url, opt_target) {
   form.target = opt_target || '';
   this.setParameters_(form, parameters);
   form.submit();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates hidden inputs in a form to match parameters.
-***REMOVED*** @param {!Element} form The form element.
-***REMOVED*** @param {Object} parameters Object with parameter values. Values can be
-***REMOVED***     strings, numbers, or arrays of strings or numbers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates hidden inputs in a form to match parameters.
+ * @param {!Element} form The form element.
+ * @param {Object} parameters Object with parameter values. Values can be
+ *     strings, numbers, or arrays of strings or numbers.
+ * @private
+ */
 goog.ui.FormPost.prototype.setParameters_ = function(form, parameters) {
   var name, value, html = [];
   for (name in parameters) {
@@ -92,17 +92,17 @@ goog.ui.FormPost.prototype.setParameters_ = function(form, parameters) {
     }
   }
   goog.dom.safe.setInnerHtml(form, goog.html.SafeHtml.concat(html));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a hidden <input> tag.
-***REMOVED*** @param {string} name The name of the input.
-***REMOVED*** @param {string} value The value of the input.
-***REMOVED*** @return {!goog.html.SafeHtml}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a hidden <input> tag.
+ * @param {string} name The name of the input.
+ * @param {string} value The value of the input.
+ * @return {!goog.html.SafeHtml}
+ * @private
+ */
 goog.ui.FormPost.prototype.createInput_ = function(name, value) {
   return goog.html.SafeHtml.create('input',
       {'type': 'hidden', 'name': name, 'value': value});
-***REMOVED***
+};

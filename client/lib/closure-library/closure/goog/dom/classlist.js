@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for detecting, adding and removing classes.  Prefer
-***REMOVED*** this over goog.dom.classes for new code since it attempts to use classList
-***REMOVED*** (DOMTokenList: http://dom.spec.whatwg.org/#domtokenlist) which is faster
-***REMOVED*** and requires less code.
-***REMOVED***
-***REMOVED*** Note: these utilities are meant to operate on HTMLElements
-***REMOVED*** and may have unexpected behavior on elements with differing interfaces
-***REMOVED*** (such as SVGElements).
-***REMOVED***
+/**
+ * @fileoverview Utilities for detecting, adding and removing classes.  Prefer
+ * this over goog.dom.classes for new code since it attempts to use classList
+ * (DOMTokenList: http://dom.spec.whatwg.org/#domtokenlist) which is faster
+ * and requires less code.
+ *
+ * Note: these utilities are meant to operate on HTMLElements
+ * and may have unexpected behavior on elements with differing interfaces
+ * (such as SVGElements).
+ */
 
 
 goog.provide('goog.dom.classlist');
@@ -29,18 +29,18 @@ goog.provide('goog.dom.classlist');
 goog.require('goog.array');
 
 
-***REMOVED***
-***REMOVED*** Override this define at build-time if you know your target supports it.
-***REMOVED*** @define {boolean} Whether to use the classList property (DOMTokenList).
-***REMOVED***
+/**
+ * Override this define at build-time if you know your target supports it.
+ * @define {boolean} Whether to use the classList property (DOMTokenList).
+ */
 goog.define('goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST', false);
 
 
-***REMOVED***
-***REMOVED*** Gets an array-like object of class names on an element.
-***REMOVED*** @param {Element} element DOM node to get the classes of.
-***REMOVED*** @return {!goog.array.ArrayLike} Class names on {@code element}.
-***REMOVED***
+/**
+ * Gets an array-like object of class names on an element.
+ * @param {Element} element DOM node to get the classes of.
+ * @return {!goog.array.ArrayLike} Class names on {@code element}.
+ */
 goog.dom.classlist.get = function(element) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     return element.classList;
@@ -51,41 +51,41 @@ goog.dom.classlist.get = function(element) {
   // Furthermore, in Firefox, className is not a string when the element is
   // an SVG element.
   return goog.isString(className) && className.match(/\S+/g) || [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the entire class name of an element.
-***REMOVED*** @param {Element} element DOM node to set class of.
-***REMOVED*** @param {string} className Class name(s) to apply to element.
-***REMOVED***
+/**
+ * Sets the entire class name of an element.
+ * @param {Element} element DOM node to set class of.
+ * @param {string} className Class name(s) to apply to element.
+ */
 goog.dom.classlist.set = function(element, className) {
   element.className = className;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if an element has a class.  This method may throw a DOM
-***REMOVED*** exception for an invalid or empty class name if DOMTokenList is used.
-***REMOVED*** @param {Element} element DOM node to test.
-***REMOVED*** @param {string} className Class name to test for.
-***REMOVED*** @return {boolean} Whether element has the class.
-***REMOVED***
+/**
+ * Returns true if an element has a class.  This method may throw a DOM
+ * exception for an invalid or empty class name if DOMTokenList is used.
+ * @param {Element} element DOM node to test.
+ * @param {string} className Class name to test for.
+ * @return {boolean} Whether element has the class.
+ */
 goog.dom.classlist.contains = function(element, className) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     return element.classList.contains(className);
   }
   return goog.array.contains(goog.dom.classlist.get(element), className);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a class to an element.  Does not add multiples of class names.  This
-***REMOVED*** method may throw a DOM exception for an invalid or empty class name if
-***REMOVED*** DOMTokenList is used.
-***REMOVED*** @param {Element} element DOM node to add class to.
-***REMOVED*** @param {string} className Class name to add.
-***REMOVED***
+/**
+ * Adds a class to an element.  Does not add multiples of class names.  This
+ * method may throw a DOM exception for an invalid or empty class name if
+ * DOMTokenList is used.
+ * @param {Element} element DOM node to add class to.
+ * @param {string} className Class name to add.
+ */
 goog.dom.classlist.add = function(element, className) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     element.classList.add(className);
@@ -97,17 +97,17 @@ goog.dom.classlist.add = function(element, className) {
     element.className += element.className.length > 0 ?
         (' ' + className) : className;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Convenience method to add a number of class names at once.
-***REMOVED*** @param {Element} element The element to which to add classes.
-***REMOVED*** @param {goog.array.ArrayLike.<string>} classesToAdd An array-like object
-***REMOVED*** containing a collection of class names to add to the element.
-***REMOVED*** This method may throw a DOM exception if classesToAdd contains invalid
-***REMOVED*** or empty class names.
-***REMOVED***
+/**
+ * Convenience method to add a number of class names at once.
+ * @param {Element} element The element to which to add classes.
+ * @param {goog.array.ArrayLike.<string>} classesToAdd An array-like object
+ * containing a collection of class names to add to the element.
+ * This method may throw a DOM exception if classesToAdd contains invalid
+ * or empty class names.
+ */
 goog.dom.classlist.addAll = function(element, classesToAdd) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     goog.array.forEach(classesToAdd, function(className) {
@@ -116,7 +116,7 @@ goog.dom.classlist.addAll = function(element, classesToAdd) {
     return;
   }
 
-  var classMap = {***REMOVED***
+  var classMap = {};
 
   // Get all current class names into a map.
   goog.array.forEach(goog.dom.classlist.get(element),
@@ -136,15 +136,15 @@ goog.dom.classlist.addAll = function(element, classesToAdd) {
     element.className += element.className.length > 0 ?
         (' ' + className) : className;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a class from an element.  This method may throw a DOM exception
-***REMOVED*** for an invalid or empty class name if DOMTokenList is used.
-***REMOVED*** @param {Element} element DOM node to remove class from.
-***REMOVED*** @param {string} className Class name to remove.
-***REMOVED***
+/**
+ * Removes a class from an element.  This method may throw a DOM exception
+ * for an invalid or empty class name if DOMTokenList is used.
+ * @param {Element} element DOM node to remove class from.
+ * @param {string} className Class name to remove.
+ */
 goog.dom.classlist.remove = function(element, className) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     element.classList.remove(className);
@@ -159,19 +159,19 @@ goog.dom.classlist.remove = function(element, className) {
           return c != className;
         }).join(' ');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a set of classes from an element.  Prefer this call to
-***REMOVED*** repeatedly calling {@code goog.dom.classlist.remove} if you want to remove
-***REMOVED*** a large set of class names at once.
-***REMOVED*** @param {Element} element The element from which to remove classes.
-***REMOVED*** @param {goog.array.ArrayLike.<string>} classesToRemove An array-like object
-***REMOVED*** containing a collection of class names to remove from the element.
-***REMOVED*** This method may throw a DOM exception if classesToRemove contains invalid
-***REMOVED*** or empty class names.
-***REMOVED***
+/**
+ * Removes a set of classes from an element.  Prefer this call to
+ * repeatedly calling {@code goog.dom.classlist.remove} if you want to remove
+ * a large set of class names at once.
+ * @param {Element} element The element from which to remove classes.
+ * @param {goog.array.ArrayLike.<string>} classesToRemove An array-like object
+ * containing a collection of class names to remove from the element.
+ * This method may throw a DOM exception if classesToRemove contains invalid
+ * or empty class names.
+ */
 goog.dom.classlist.removeAll = function(element, classesToRemove) {
   if (goog.dom.classlist.ALWAYS_USE_DOM_TOKEN_LIST || element.classList) {
     goog.array.forEach(classesToRemove, function(className) {
@@ -187,53 +187,53 @@ goog.dom.classlist.removeAll = function(element, classesToRemove) {
         // add it to the array of new class names.
         return !goog.array.contains(classesToRemove, className);
       }).join(' ');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds or removes a class depending on the enabled argument.  This method
-***REMOVED*** may throw a DOM exception for an invalid or empty class name if DOMTokenList
-***REMOVED*** is used.
-***REMOVED*** @param {Element} element DOM node to add or remove the class on.
-***REMOVED*** @param {string} className Class name to add or remove.
-***REMOVED*** @param {boolean} enabled Whether to add or remove the class (true adds,
-***REMOVED***     false removes).
-***REMOVED***
+/**
+ * Adds or removes a class depending on the enabled argument.  This method
+ * may throw a DOM exception for an invalid or empty class name if DOMTokenList
+ * is used.
+ * @param {Element} element DOM node to add or remove the class on.
+ * @param {string} className Class name to add or remove.
+ * @param {boolean} enabled Whether to add or remove the class (true adds,
+ *     false removes).
+ */
 goog.dom.classlist.enable = function(element, className, enabled) {
   if (enabled) {
     goog.dom.classlist.add(element, className);
   } else {
     goog.dom.classlist.remove(element, className);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds or removes a set of classes depending on the enabled argument.  This
-***REMOVED*** method may throw a DOM exception for an invalid or empty class name if
-***REMOVED*** DOMTokenList is used.
-***REMOVED*** @param {!Element} element DOM node to add or remove the class on.
-***REMOVED*** @param {goog.array.ArrayLike.<string>} classesToEnable An array-like object
-***REMOVED***     containing a collection of class names to add or remove from the element.
-***REMOVED*** @param {boolean} enabled Whether to add or remove the classes (true adds,
-***REMOVED***     false removes).
-***REMOVED***
+/**
+ * Adds or removes a set of classes depending on the enabled argument.  This
+ * method may throw a DOM exception for an invalid or empty class name if
+ * DOMTokenList is used.
+ * @param {!Element} element DOM node to add or remove the class on.
+ * @param {goog.array.ArrayLike.<string>} classesToEnable An array-like object
+ *     containing a collection of class names to add or remove from the element.
+ * @param {boolean} enabled Whether to add or remove the classes (true adds,
+ *     false removes).
+ */
 goog.dom.classlist.enableAll = function(element, classesToEnable, enabled) {
   var f = enabled ? goog.dom.classlist.addAll :
       goog.dom.classlist.removeAll;
   f(element, classesToEnable);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Switches a class on an element from one to another without disturbing other
-***REMOVED*** classes. If the fromClass isn't removed, the toClass won't be added.  This
-***REMOVED*** method may throw a DOM exception if the class names are empty or invalid.
-***REMOVED*** @param {Element} element DOM node to swap classes on.
-***REMOVED*** @param {string} fromClass Class to remove.
-***REMOVED*** @param {string} toClass Class to add.
-***REMOVED*** @return {boolean} Whether classes were switched.
-***REMOVED***
+/**
+ * Switches a class on an element from one to another without disturbing other
+ * classes. If the fromClass isn't removed, the toClass won't be added.  This
+ * method may throw a DOM exception if the class names are empty or invalid.
+ * @param {Element} element DOM node to swap classes on.
+ * @param {string} fromClass Class to remove.
+ * @param {string} toClass Class to add.
+ * @return {boolean} Whether classes were switched.
+ */
 goog.dom.classlist.swap = function(element, fromClass, toClass) {
   if (goog.dom.classlist.contains(element, fromClass)) {
     goog.dom.classlist.remove(element, fromClass);
@@ -241,37 +241,37 @@ goog.dom.classlist.swap = function(element, fromClass, toClass) {
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a class if an element has it, and adds it the element doesn't have
-***REMOVED*** it.  Won't affect other classes on the node.  This method may throw a DOM
-***REMOVED*** exception if the class name is empty or invalid.
-***REMOVED*** @param {Element} element DOM node to toggle class on.
-***REMOVED*** @param {string} className Class to toggle.
-***REMOVED*** @return {boolean} True if class was added, false if it was removed
-***REMOVED***     (in other words, whether element has the class after this function has
-***REMOVED***     been called).
-***REMOVED***
+/**
+ * Removes a class if an element has it, and adds it the element doesn't have
+ * it.  Won't affect other classes on the node.  This method may throw a DOM
+ * exception if the class name is empty or invalid.
+ * @param {Element} element DOM node to toggle class on.
+ * @param {string} className Class to toggle.
+ * @return {boolean} True if class was added, false if it was removed
+ *     (in other words, whether element has the class after this function has
+ *     been called).
+ */
 goog.dom.classlist.toggle = function(element, className) {
   var add = !goog.dom.classlist.contains(element, className);
   goog.dom.classlist.enable(element, className, add);
   return add;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds and removes a class of an element.  Unlike
-***REMOVED*** {@link goog.dom.classlist.swap}, this method adds the classToAdd regardless
-***REMOVED*** of whether the classToRemove was present and had been removed.  This method
-***REMOVED*** may throw a DOM exception if the class names are empty or invalid.
-***REMOVED***
-***REMOVED*** @param {Element} element DOM node to swap classes on.
-***REMOVED*** @param {string} classToRemove Class to remove.
-***REMOVED*** @param {string} classToAdd Class to add.
-***REMOVED***
+/**
+ * Adds and removes a class of an element.  Unlike
+ * {@link goog.dom.classlist.swap}, this method adds the classToAdd regardless
+ * of whether the classToRemove was present and had been removed.  This method
+ * may throw a DOM exception if the class names are empty or invalid.
+ *
+ * @param {Element} element DOM node to swap classes on.
+ * @param {string} classToRemove Class to remove.
+ * @param {string} classToAdd Class to add.
+ */
 goog.dom.classlist.addRemove = function(element, classToRemove, classToAdd) {
   goog.dom.classlist.remove(element, classToRemove);
   goog.dom.classlist.add(element, classToAdd);
-***REMOVED***
+};

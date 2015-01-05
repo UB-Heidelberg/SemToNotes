@@ -13,13 +13,13 @@
 // limitations under the License.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview Static functions for writing the contents of an iframe-based
-***REMOVED*** editable field. These vary significantly from browser to browser. Uses
-***REMOVED*** strings and document.write instead of DOM manipulation, because
-***REMOVED*** iframe-loading is a performance bottleneck.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Static functions for writing the contents of an iframe-based
+ * editable field. These vary significantly from browser to browser. Uses
+ * strings and document.write instead of DOM manipulation, because
+ * iframe-loading is a performance bottleneck.
+ *
+ */
 
 goog.provide('goog.editor.icontent');
 goog.provide('goog.editor.icontent.FieldFormatInfo');
@@ -31,70 +31,70 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A data structure for storing simple rendering info about a field.
-***REMOVED***
-***REMOVED*** @param {string} fieldId The id of the field.
-***REMOVED*** @param {boolean} standards Whether the field should be rendered in
-***REMOVED***     standards mode.
-***REMOVED*** @param {boolean} blended Whether the field is in blended mode.
-***REMOVED*** @param {boolean} fixedHeight Whether the field is in fixedHeight mode.
-***REMOVED*** @param {Object=} opt_extraStyles Other style attributes for the field,
-***REMOVED***     represented as a map of strings.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A data structure for storing simple rendering info about a field.
+ *
+ * @param {string} fieldId The id of the field.
+ * @param {boolean} standards Whether the field should be rendered in
+ *     standards mode.
+ * @param {boolean} blended Whether the field is in blended mode.
+ * @param {boolean} fixedHeight Whether the field is in fixedHeight mode.
+ * @param {Object=} opt_extraStyles Other style attributes for the field,
+ *     represented as a map of strings.
+ * @constructor
+ * @final
+ */
 goog.editor.icontent.FieldFormatInfo = function(fieldId, standards, blended,
     fixedHeight, opt_extraStyles) {
   this.fieldId_ = fieldId;
   this.standards_ = standards;
   this.blended_ = blended;
   this.fixedHeight_ = fixedHeight;
-  this.extraStyles_ = opt_extraStyles || {***REMOVED***
-***REMOVED***
+  this.extraStyles_ = opt_extraStyles || {};
+};
 
 
 
-***REMOVED***
-***REMOVED*** A data structure for storing simple info about the styles of a field.
-***REMOVED*** Only needed in Firefox/Blended mode.
-***REMOVED*** @param {Element} wrapper The wrapper div around a field.
-***REMOVED*** @param {string} css The css for a field.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A data structure for storing simple info about the styles of a field.
+ * Only needed in Firefox/Blended mode.
+ * @param {Element} wrapper The wrapper div around a field.
+ * @param {string} css The css for a field.
+ * @constructor
+ * @final
+ */
 goog.editor.icontent.FieldStyleInfo = function(wrapper, css) {
   this.wrapper_ = wrapper;
   this.css_ = css;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether to always use standards-mode iframes.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to always use standards-mode iframes.
+ * @type {boolean}
+ * @private
+ */
 goog.editor.icontent.useStandardsModeIframes_ = false;
 
 
-***REMOVED***
-***REMOVED*** Sets up goog.editor.icontent to always use standards-mode iframes.
-***REMOVED***
+/**
+ * Sets up goog.editor.icontent to always use standards-mode iframes.
+ */
 goog.editor.icontent.forceStandardsModeIframes = function() {
   goog.editor.icontent.useStandardsModeIframes_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generate the initial iframe content.
-***REMOVED*** @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
-***REMOVED***     the field.
-***REMOVED*** @param {string} bodyHtml The HTML to insert as the iframe body.
-***REMOVED*** @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
-***REMOVED***     the field, if needed.
-***REMOVED*** @return {string} The initial IFRAME content HTML.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Generate the initial iframe content.
+ * @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
+ *     the field.
+ * @param {string} bodyHtml The HTML to insert as the iframe body.
+ * @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
+ *     the field, if needed.
+ * @return {string} The initial IFRAME content HTML.
+ * @private
+ */
 goog.editor.icontent.getInitialIframeContent_ =
     function(info, bodyHtml, style) {
   var html = [];
@@ -209,18 +209,18 @@ goog.editor.icontent.getInitialIframeContent_ =
   html.push('">', bodyHtml, '</body></html>');
 
   return html.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Write the initial iframe content in normal mode.
-***REMOVED*** @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
-***REMOVED***     the field.
-***REMOVED*** @param {string} bodyHtml The HTML to insert as the iframe body.
-***REMOVED*** @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
-***REMOVED***     the field, if needed.
-***REMOVED*** @param {HTMLIFrameElement} iframe The iframe.
-***REMOVED***
+/**
+ * Write the initial iframe content in normal mode.
+ * @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
+ *     the field.
+ * @param {string} bodyHtml The HTML to insert as the iframe body.
+ * @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
+ *     the field, if needed.
+ * @param {HTMLIFrameElement} iframe The iframe.
+ */
 goog.editor.icontent.writeNormalInitialBlendedIframe =
     function(info, bodyHtml, style, iframe) {
   // Firefox blended needs to inherit all the css from the original page.
@@ -246,18 +246,18 @@ goog.editor.icontent.writeNormalInitialBlendedIframe =
 
   goog.editor.icontent.writeNormalInitialIframe(
       info, bodyHtml, style, iframe);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Write the initial iframe content in normal mode.
-***REMOVED*** @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
-***REMOVED***     the field.
-***REMOVED*** @param {string} bodyHtml The HTML to insert as the iframe body.
-***REMOVED*** @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
-***REMOVED***     the field, if needed.
-***REMOVED*** @param {HTMLIFrameElement} iframe The iframe.
-***REMOVED***
+/**
+ * Write the initial iframe content in normal mode.
+ * @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
+ *     the field.
+ * @param {string} bodyHtml The HTML to insert as the iframe body.
+ * @param {goog.editor.icontent.FieldStyleInfo?} style Style info about
+ *     the field, if needed.
+ * @param {HTMLIFrameElement} iframe The iframe.
+ */
 goog.editor.icontent.writeNormalInitialIframe =
     function(info, bodyHtml, style, iframe) {
 
@@ -268,16 +268,16 @@ goog.editor.icontent.writeNormalInitialIframe =
   doc.open();
   doc.write(html);
   doc.close();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Write the initial iframe content in IE/HTTPS mode.
-***REMOVED*** @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
-***REMOVED***     the field.
-***REMOVED*** @param {Document} doc The iframe document.
-***REMOVED*** @param {string} bodyHtml The HTML to insert as the iframe body.
-***REMOVED***
+/**
+ * Write the initial iframe content in IE/HTTPS mode.
+ * @param {goog.editor.icontent.FieldFormatInfo} info Formatting info about
+ *     the field.
+ * @param {Document} doc The iframe document.
+ * @param {string} bodyHtml The HTML to insert as the iframe body.
+ */
 goog.editor.icontent.writeHttpsInitialIframe = function(info, doc, bodyHtml) {
   var body = doc.body;
 
@@ -294,5 +294,5 @@ goog.editor.icontent.writeHttpsInitialIframe = function(info, doc, bodyHtml) {
 
   goog.style.setStyle(body, info.extraStyles_);
   body.innerHTML = bodyHtml;
-***REMOVED***
+};
 

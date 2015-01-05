@@ -17,9 +17,9 @@ goog.setTestOnly('goog.storage.mechanism.PrefixedMechanismTest');
 
 goog.require('goog.storage.mechanism.HTML5LocalStorage');
 goog.require('goog.storage.mechanism.PrefixedMechanism');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSeparationTester');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.storage.mechanism.mechanismSharingTester');
 goog.require('goog.testing.jsunit');
 

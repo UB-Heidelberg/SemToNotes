@@ -12,32 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Input Method Editors (IMEs) are OS-level widgets that make
-***REMOVED*** it easier to type non-ascii characters on ascii keyboards (in particular,
-***REMOVED*** characters that require more than one keystroke).
-***REMOVED***
-***REMOVED*** When the user wants to type such a character, a modal menu pops up and
-***REMOVED*** suggests possible "next" characters in the IME character sequence. After
-***REMOVED*** typing N characters, the user hits "enter" to commit the IME to the field.
-***REMOVED*** N differs from language to language.
-***REMOVED***
-***REMOVED*** This class offers high-level events for how the user is interacting with the
-***REMOVED*** IME in editable regions.
-***REMOVED***
-***REMOVED*** Known Issues:
-***REMOVED***
-***REMOVED*** Firefox always fires an extra pair of compositionstart/compositionend events.
-***REMOVED*** We do not normalize for this.
-***REMOVED***
-***REMOVED*** Opera does not fire any IME events.
-***REMOVED***
-***REMOVED*** Spurious UPDATE events are common on all browsers.
-***REMOVED***
-***REMOVED*** We currently do a bad job detecting when the IME closes on IE, and
-***REMOVED*** make a "best effort" guess on when we know it's closed.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Input Method Editors (IMEs) are OS-level widgets that make
+ * it easier to type non-ascii characters on ascii keyboards (in particular,
+ * characters that require more than one keystroke).
+ *
+ * When the user wants to type such a character, a modal menu pops up and
+ * suggests possible "next" characters in the IME character sequence. After
+ * typing N characters, the user hits "enter" to commit the IME to the field.
+ * N differs from language to language.
+ *
+ * This class offers high-level events for how the user is interacting with the
+ * IME in editable regions.
+ *
+ * Known Issues:
+ *
+ * Firefox always fires an extra pair of compositionstart/compositionend events.
+ * We do not normalize for this.
+ *
+ * Opera does not fire any IME events.
+ *
+ * Spurious UPDATE events are common on all browsers.
+ *
+ * We currently do a bad job detecting when the IME closes on IE, and
+ * make a "best effort" guess on when we know it's closed.
+ *
+ */
 
 goog.provide('goog.events.ImeHandler');
 goog.provide('goog.events.ImeHandler.Event');
@@ -46,42 +46,42 @@ goog.provide('goog.events.ImeHandler.EventType');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Dispatches high-level events for IMEs.
-***REMOVED*** @param {Element} el The element to listen on.
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Dispatches high-level events for IMEs.
+ * @param {Element} el The element to listen on.
+ * @extends {goog.events.EventTarget}
+ * @constructor
+ * @final
+ */
 goog.events.ImeHandler = function(el) {
   goog.events.ImeHandler.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element to listen on.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The element to listen on.
+   * @type {Element}
+   * @private
+   */
   this.el_ = el;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tracks the keyup event only, because it has a different life-cycle from
-  ***REMOVED*** other events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.events.ImeHandler>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tracks the keyup event only, because it has a different life-cycle from
+   * other events.
+   * @type {goog.events.EventHandler.<!goog.events.ImeHandler>}
+   * @private
+   */
   this.keyUpHandler_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tracks all the browser events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.events.ImeHandler>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tracks all the browser events.
+   * @type {goog.events.EventHandler.<!goog.events.ImeHandler>}
+   * @private
+   */
   this.handler_ = new goog.events.EventHandler(this);
 
   if (goog.events.ImeHandler.USES_COMPOSITION_EVENTS) {
@@ -95,15 +95,15 @@ goog.events.ImeHandler = function(el) {
       listen(el, 'textInput', this.handleTextInput_).
       listen(el, 'text', this.handleTextModifyingInput_).
       listen(el, goog.events.EventType.KEYDOWN, this.handleKeyDown_);
-***REMOVED***
+};
 goog.inherits(goog.events.ImeHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Event types fired by ImeHandler. These events do not make any guarantees
-***REMOVED*** about whether they were fired before or after the event in question.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event types fired by ImeHandler. These events do not make any guarantees
+ * about whether they were fired before or after the event in question.
+ * @enum {string}
+ */
 goog.events.ImeHandler.EventType = {
   // After the IME opens.
   START: 'startIme',
@@ -114,103 +114,103 @@ goog.events.ImeHandler.EventType = {
 
   // After the IME closes.
   END: 'endIme'
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** An event fired by ImeHandler.
-***REMOVED*** @param {goog.events.ImeHandler.EventType} type The type.
-***REMOVED*** @param {goog.events.BrowserEvent} reason The trigger for this event.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * An event fired by ImeHandler.
+ * @param {goog.events.ImeHandler.EventType} type The type.
+ * @param {goog.events.BrowserEvent} reason The trigger for this event.
+ * @constructor
+ * @extends {goog.events.Event}
+ * @final
+ */
 goog.events.ImeHandler.Event = function(type, reason) {
   goog.events.ImeHandler.Event.base(this, 'constructor', type);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The event that triggered this.
-  ***REMOVED*** @type {goog.events.BrowserEvent}
- ***REMOVED*****REMOVED***
+  /**
+   * The event that triggered this.
+   * @type {goog.events.BrowserEvent}
+   */
   this.reason = reason;
-***REMOVED***
+};
 goog.inherits(goog.events.ImeHandler.Event, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Whether to use the composition events.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to use the composition events.
+ * @type {boolean}
+ */
 goog.events.ImeHandler.USES_COMPOSITION_EVENTS =
     goog.userAgent.GECKO ||
     (goog.userAgent.WEBKIT && goog.userAgent.isVersionOrHigher(532));
 
 
-***REMOVED***
-***REMOVED*** Stores whether IME mode is active.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stores whether IME mode is active.
+ * @type {boolean}
+ * @private
+ */
 goog.events.ImeHandler.prototype.imeMode_ = false;
 
 
-***REMOVED***
-***REMOVED*** The keyCode value of the last keyDown event. This value is used for
-***REMOVED*** identiying whether or not a textInput event is sent by an IME.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The keyCode value of the last keyDown event. This value is used for
+ * identiying whether or not a textInput event is sent by an IME.
+ * @type {number}
+ * @private
+ */
 goog.events.ImeHandler.prototype.lastKeyCode_ = 0;
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether an IME is active.
-***REMOVED***
+/**
+ * @return {boolean} Whether an IME is active.
+ */
 goog.events.ImeHandler.prototype.isImeMode = function() {
   return this.imeMode_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the compositionstart event.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the compositionstart event.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleCompositionStart_ =
     function(e) {
   this.handleImeActivate_(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the compositionend event.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the compositionend event.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleCompositionEnd_ = function(e) {
   this.handleImeDeactivate_(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the compositionupdate and text events.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the compositionupdate and text events.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleTextModifyingInput_ =
     function(e) {
   if (this.isImeMode()) {
     this.processImeComposition_(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles IME activation.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles IME activation.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleImeActivate_ = function(e) {
   if (this.imeMode_) {
     return;
@@ -235,40 +235,40 @@ goog.events.ImeHandler.prototype.handleImeActivate_ = function(e) {
   this.dispatchEvent(
       new goog.events.ImeHandler.Event(
           goog.events.ImeHandler.EventType.START, e));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the IME compose changes.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the IME compose changes.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.processImeComposition_ = function(e) {
   this.dispatchEvent(
       new goog.events.ImeHandler.Event(
           goog.events.ImeHandler.EventType.UPDATE, e));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles IME deactivation.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles IME deactivation.
+ * @param {goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleImeDeactivate_ = function(e) {
   this.imeMode_ = false;
   this.keyUpHandler_.removeAll();
   this.dispatchEvent(
       new goog.events.ImeHandler.Event(
           goog.events.ImeHandler.EventType.END, e));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a key down event.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a key down event.
+ * @param {!goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleKeyDown_ = function(e) {
   // Firefox and Chrome have a separate event for IME composition ('text'
   // and 'compositionupdate', respectively), other browsers do not.
@@ -292,14 +292,14 @@ goog.events.ImeHandler.prototype.handleKeyDown_ = function(e) {
   if (goog.events.ImeHandler.isImeDeactivateKeyEvent_(e)) {
     this.lastKeyCode_ = e.keyCode;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a textInput event.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a textInput event.
+ * @param {!goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleTextInput_ = function(e) {
   // Some WebKit-based browsers including Safari 4 don't send composition
   // events. So, we turn down IME mode when it's still there.
@@ -309,15 +309,15 @@ goog.events.ImeHandler.prototype.handleTextInput_ = function(e) {
       this.isImeMode()) {
     this.handleImeDeactivate_(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the key up event for any IME activity. This handler is just used to
-***REMOVED*** prevent activating IME unnecessary in Safari at this time.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the key up event for any IME activity. This handler is just used to
+ * prevent activating IME unnecessary in Safari at this time.
+ * @param {!goog.events.BrowserEvent} e The event.
+ * @private
+ */
 goog.events.ImeHandler.prototype.handleKeyUpSafari4_ = function(e) {
   if (this.isImeMode()) {
     switch (e.keyCode) {
@@ -331,16 +331,16 @@ goog.events.ImeHandler.prototype.handleKeyUpSafari4_ = function(e) {
         break;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the given event should be treated as an IME
-***REMOVED*** deactivation trigger.
-***REMOVED*** @param {!goog.events.Event} e The event.
-***REMOVED*** @return {boolean} Whether the given event is an IME deactivate trigger.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns whether the given event should be treated as an IME
+ * deactivation trigger.
+ * @param {!goog.events.Event} e The event.
+ * @return {boolean} Whether the given event is an IME deactivate trigger.
+ * @private
+ */
 goog.events.ImeHandler.isImeDeactivateKeyEvent_ = function(e) {
   // Which key events involve IME deactivation depends on the user's
   // environment (i.e. browsers, platforms, and IMEs). Usually Shift key
@@ -353,13 +353,13 @@ goog.events.ImeHandler.isImeDeactivateKeyEvent_ = function(e) {
     default:
       return true;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.ImeHandler.prototype.disposeInternal = function() {
   this.handler_.dispose();
   this.keyUpHandler_.dispose();
   this.el_ = null;
   goog.events.ImeHandler.base(this, 'disposeInternal');
-***REMOVED***
+};

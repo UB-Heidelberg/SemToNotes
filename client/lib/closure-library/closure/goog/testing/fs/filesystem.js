@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock filesystem object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Mock filesystem object.
+ *
+ */
 
 goog.provide('goog.testing.fs.FileSystem');
 
@@ -24,41 +24,41 @@ goog.require('goog.testing.fs.DirectoryEntry');
 
 
 
-***REMOVED***
-***REMOVED*** A mock filesystem object.
-***REMOVED***
-***REMOVED*** @param {string=} opt_name The name of the filesystem.
-***REMOVED***
-***REMOVED*** @implements {goog.fs.FileSystem}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A mock filesystem object.
+ *
+ * @param {string=} opt_name The name of the filesystem.
+ * @constructor
+ * @implements {goog.fs.FileSystem}
+ * @final
+ */
 goog.testing.fs.FileSystem = function(opt_name) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The name of the filesystem.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The name of the filesystem.
+   * @type {string}
+   * @private
+   */
   this.name_ = opt_name || 'goog.testing.fs.FileSystem';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The root entry of the filesystem.
-  ***REMOVED*** @type {!goog.testing.fs.DirectoryEntry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The root entry of the filesystem.
+   * @type {!goog.testing.fs.DirectoryEntry}
+   * @private
+   */
   this.root_ = new goog.testing.fs.DirectoryEntry(this, null, '', {});
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.fs.FileSystem.prototype.getName = function() {
   return this.name_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @return {!goog.testing.fs.DirectoryEntry}
-***REMOVED***
+/**
+ * @override
+ * @return {!goog.testing.fs.DirectoryEntry}
+ */
 goog.testing.fs.FileSystem.prototype.getRoot = function() {
   return this.root_;
-***REMOVED***
+};

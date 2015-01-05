@@ -20,7 +20,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="css/emojipicker.css">
   <link rel="stylesheet" href="css/emojisprite.css">
   <style type="text/css">
-    /* TabPane styles***REMOVED***
+    /* TabPane styles */
     .goog-tabpane {
       background: threedface;
       padding-left: 1px;
@@ -63,7 +63,7 @@ See the COPYING file for details.
       font-weight: bold;
     }
 
-    /* Emojipicker styles***REMOVED***
+    /* Emojipicker styles */
     .singlePagePicker .goog-palette {
       border: 1px solid black;
     }
@@ -207,22 +207,22 @@ emoji inserts a pseudo image tag into the text area with the id of that emoji.
   var sprite = 'emoji/sprite.png';
   var sprite2 = 'emoji/sprite2.png';
 
-***REMOVED***
-***REMOVED*** Creates a SpriteInfo object with the specified properties. If the image is
-***REMOVED*** sprited via CSS, then only the first parameter needs a value. If the image
-***REMOVED*** is sprited via metadata, then the first parameter should be left null.
-***REMOVED***
-***REMOVED*** @param {?string} cssClass CSS class to properly display the sprited image.
-***REMOVED*** @param {string=} opt_url Url of the sprite image.
-***REMOVED*** @param {number=} opt_width Width of the image being sprited.
-***REMOVED*** @param {number=} opt_height Height of the image being sprited.
-***REMOVED*** @param {number=} opt_xOffset Positive x offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {number=} opt_yOffset Positive y offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {boolean=} opt_animated Whether the sprite info is for an animated
-***REMOVED***     emoji.
-***REMOVED***
+/**
+ * Creates a SpriteInfo object with the specified properties. If the image is
+ * sprited via CSS, then only the first parameter needs a value. If the image
+ * is sprited via metadata, then the first parameter should be left null.
+ *
+ * @param {?string} cssClass CSS class to properly display the sprited image.
+ * @param {string=} opt_url Url of the sprite image.
+ * @param {number=} opt_width Width of the image being sprited.
+ * @param {number=} opt_height Height of the image being sprited.
+ * @param {number=} opt_xOffset Positive x offset of the image being sprited
+ *     within the sprite.
+ * @param {number=} opt_yOffset Positive y offset of the image being sprited
+ *     within the sprite.
+ * @param {boolean=} opt_animated Whether the sprite info is for an animated
+ *     emoji.
+ */
   function si(cssClass, opt_url, opt_width, opt_height, opt_xOffset,
               opt_yOffset, opt_animated) {
     return new goog.ui.emoji.SpriteInfo(cssClass, opt_url, opt_width,
@@ -305,25 +305,25 @@ emoji inserts a pseudo image tag into the text area with the id of that emoji.
         emoji.getId() + '">\n';
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Creates a new emoji picker according to the desired specifications.
-  ***REMOVED***
-  ***REMOVED*** @param {boolean} popup Whether the emojipicker should be a popup.
-  ***REMOVED*** @param {Array.<Object>} emojiGroups Emoji groups to add to the picker.
-  ***REMOVED*** @param {string} defaultImgUrl URL of the default image for the picker.
-  ***REMOVED*** @param {string} elementId Id of the element to attach the popup picker to,
-  ***REMOVED***     or to append the docked picker to.
-  ***REMOVED*** @param {boolean=} opt_delayedLoad Whether the emojipicker should use
-  ***REMOVED***     delayed image loading.
-  ***REMOVED*** @param {number=} opt_numRows Optional number of rows to specify for the
-  ***REMOVED***     emojipicker's palette.
-  ***REMOVED*** @param {number=} opt_numCols Optional number of columns to specify for the
-  ***REMOVED***     emojipicker's palette.
-  ***REMOVED*** @param {boolean=} opt_progressiveRender Whether to render the sprited
-  ***REMOVED***     emojipicker progressively.
-  ***REMOVED*** @return {goog.ui.emoji.EmojiPicker|goog.ui.emoji.PopupEmojiPicker} The
-  ***REMOVED***     constructed and rendered emojipicker.
- ***REMOVED*****REMOVED***
+  /**
+   * Creates a new emoji picker according to the desired specifications.
+   *
+   * @param {boolean} popup Whether the emojipicker should be a popup.
+   * @param {Array.<Object>} emojiGroups Emoji groups to add to the picker.
+   * @param {string} defaultImgUrl URL of the default image for the picker.
+   * @param {string} elementId Id of the element to attach the popup picker to,
+   *     or to append the docked picker to.
+   * @param {boolean=} opt_delayedLoad Whether the emojipicker should use
+   *     delayed image loading.
+   * @param {number=} opt_numRows Optional number of rows to specify for the
+   *     emojipicker's palette.
+   * @param {number=} opt_numCols Optional number of columns to specify for the
+   *     emojipicker's palette.
+   * @param {boolean=} opt_progressiveRender Whether to render the sprited
+   *     emojipicker progressively.
+   * @return {goog.ui.emoji.EmojiPicker|goog.ui.emoji.PopupEmojiPicker} The
+   *     constructed and rendered emojipicker.
+   */
   function createEmojiPicker(popup, emojiGroups, defaultImgUrl, elementId,
                              opt_delayedLoad, opt_numRows, opt_numCols,
                              opt_progressiveRender) {
@@ -354,7 +354,7 @@ emoji inserts a pseudo image tag into the text area with the id of that emoji.
     } else {
       elem.appendChild(picker.getElement());
     }
-  ***REMOVED***
+    goog.events.listen(
         picker, goog.ui.Component.EventType.ACTION, onEmojiSelected);
     return picker;
   }

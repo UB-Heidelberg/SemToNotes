@@ -26,16 +26,16 @@ var complexObject;
 var dataChangeEvents;
 
 function setUp() {
-  simpleObject = {Name: 'Jon Doe', Email: 'jon.doe@gmail.com'***REMOVED***
+  simpleObject = {Name: 'Jon Doe', Email: 'jon.doe@gmail.com'};
   complexObject = {Name: 'Jon Doe', Email: 'jon.doe@gmail.com',
     Emails: [{Address: 'jon.doe@gmail.com', Type: 'Home'},
              {Address: 'jon.doe@workplace.com', Type: 'Work'}],
-    GroupIds: [23, 42]***REMOVED***
+    GroupIds: [23, 42]};
   var dm = goog.ds.DataManager.getInstance();
   dataChangeEvents = [];
   dm.fireDataChange = function(dataPath) {
     dataChangeEvents.push(dataPath);
- ***REMOVED*****REMOVED***
+  };
 }
 
 function tearDown() {

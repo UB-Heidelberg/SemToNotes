@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.CustomButton');
@@ -32,7 +32,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/menuseparator.css">
   <link rel="stylesheet" href="../css/menubutton.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -42,7 +42,7 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Format" icon.***REMOVED***
+    /* "Format" icon. */
     .format-icon {
       background-position: -64px;
     }
@@ -147,9 +147,9 @@ See the COPYING file for details.
     b1.setId('FileButton');
     b1.render(goog.dom.getElement('menuButtons'));
     b1.setTooltip('File menu demo');
-  ***REMOVED***b1, EVENTS, logEvent);
+    goog.events.listen(b1, EVENTS, logEvent);
 
-  ***REMOVED***b1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(b1, goog.ui.Component.EventType.ACTION,
         function(e) {
           if (e.target && e.target.getCaption() == 'Change label...') {
             var label = window.prompt('Enter new menu label:', b1.getCaption());

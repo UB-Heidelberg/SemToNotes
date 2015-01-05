@@ -13,21 +13,21 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview The file contains generated enumerations for ARIA roles
-***REMOVED*** as defined by W3C ARIA standard: http://www.w3.org/TR/wai-aria/.
-***REMOVED***
-***REMOVED*** This is auto-generated code. Do not manually edit! For more details
-***REMOVED*** about how to edit it via the generator check go/closure-ariagen.
-***REMOVED***
+/**
+ * @fileoverview The file contains generated enumerations for ARIA roles
+ * as defined by W3C ARIA standard: http://www.w3.org/TR/wai-aria/.
+ *
+ * This is auto-generated code. Do not manually edit! For more details
+ * about how to edit it via the generator check go/closure-ariagen.
+ */
 
 goog.provide('goog.a11y.aria.Role');
 
 
-***REMOVED***
-***REMOVED*** ARIA role values.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * ARIA role values.
+ * @enum {string}
+ */
 goog.a11y.aria.Role = {
   // ARIA role for an alert element that doesn't need to be explicitly closed.
   ALERT: 'alert',
@@ -213,4 +213,4 @@ goog.a11y.aria.Role = {
 
   // ARIA role for a tree item that sometimes may be expanded or collapsed.
   TREEITEM: 'treeitem'
-***REMOVED***
+};

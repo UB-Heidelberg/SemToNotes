@@ -13,7 +13,7 @@ See the COPYING file for details.
   <script>
     goog.require('goog.a11y.aria');
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.events.KeyCodes');
     goog.require('goog.testing.events.Event');
     goog.require('goog.testing.jsunit');
@@ -45,7 +45,7 @@ See the COPYING file for details.
     function testAfterHighlightListener() {
       palette.setHighlightedIndex(0);
       var handler = new goog.testing.recordFunction();
-    ***REMOVED***palette,
+      goog.events.listen(palette,
           goog.ui.Palette.EventType.AFTER_HIGHLIGHT, handler);
       palette.setHighlightedIndex(2);
       assertEquals(1, handler.getCallCount())
@@ -86,7 +86,7 @@ See the COPYING file for details.
       var handleEvent = function(e) {
         events.push(e);
         targetElements.push(e.target.getElement());
-     ***REMOVED*****REMOVED***
+      };
       palette.getHandler().listen(palette, [
             this, goog.ui.Component.EventType.HIGHLIGHT,
             this, goog.ui.Component.EventType.UNHIGHLIGHT
@@ -138,10 +138,10 @@ See the COPYING file for details.
       palette.setHighlightedIndex(0);
       var createKeyEvent = function(keyCode) {
         return new goog.events.KeyEvent(keyCode,
-            0 /* charCode***REMOVED***,
-            false /* repeat***REMOVED***,
+            0 /* charCode */,
+            false /* repeat */,
             new goog.testing.events.Event(goog.events.EventType.KEYDOWN));
-     ***REMOVED*****REMOVED***
+      };
       palette.handleKeyEvent(createKeyEvent(goog.events.KeyCodes.LEFT));
       assertEquals(nodes.length - 1, palette.getHighlightedIndex());
 

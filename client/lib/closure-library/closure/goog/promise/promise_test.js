@@ -40,8 +40,8 @@ var unhandledRejections;
 
 
 // Simple shared objects used as test values.
-var dummy = {toString: goog.functions.constant('[object dummy]')***REMOVED***
-var sentinel = {toString: goog.functions.constant('[object sentinel]')***REMOVED***
+var dummy = {toString: goog.functions.constant('[object dummy]')};
+var sentinel = {toString: goog.functions.constant('[object sentinel]')};
 
 
 function setUpPage() {
@@ -78,11 +78,11 @@ function continueTesting() {
 }
 
 
-***REMOVED***
-***REMOVED*** Dummy onfulfilled or onrejected function that should not be called.
-***REMOVED***
-***REMOVED*** @param {*} result The result passed into the callback.
-***REMOVED***
+/**
+ * Dummy onfulfilled or onrejected function that should not be called.
+ *
+ * @param {*} result The result passed into the callback.
+ */
 function shouldNotCall(result) {
   fail('This should not have been called (result: ' + String(result) + ')');
 }
@@ -579,7 +579,7 @@ function testBranching() {
 
   p.then(function(value) {
     assertEquals('then functions should see the same value', 2, value);
-    return value***REMOVED*** 2;
+    return value * 2;
   }).then(function(value) {
     assertEquals('branch should receive the returned value', 4, value);
     asyncTestCase.signal();
@@ -660,7 +660,7 @@ function testBlockingThenableFulfilled() {
   asyncTestCase.waitForAsync();
   var thenable = {
     then: function(onFulfill, onReject) { onFulfill(sentinel); }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.resolve(thenable).
       then(function(reason) {
@@ -673,7 +673,7 @@ function testBlockingThenableRejected() {
   asyncTestCase.waitForAsync();
   var thenable = {
     then: function(onFulfill, onReject) { onReject(sentinel); }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.resolve(thenable).
       then(shouldNotCall, function(reason) {
@@ -686,7 +686,7 @@ function testBlockingThenableThrows() {
   asyncTestCase.waitForAsync();
   var thenable = {
     then: function(onFulfill, onReject) { throw sentinel; }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.resolve(thenable).
       then(shouldNotCall, function(reason) {
@@ -704,7 +704,7 @@ function testBlockingThenableMisbehaves() {
       onReject(dummy);
       throw dummy;
     }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.resolve(thenable).
       then(function(value) {
@@ -719,13 +719,13 @@ function testNestingThenables() {
   asyncTestCase.waitForAsync();
   var thenableA = {
     then: function(onFulfill, onReject) { onFulfill(sentinel); }
- ***REMOVED*****REMOVED***
+  };
   var thenableB = {
     then: function(onFulfill, onReject) { onFulfill(thenableA); }
- ***REMOVED*****REMOVED***
+  };
   var thenableC = {
     then: function(onFulfill, onReject) { onFulfill(thenableB); }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.resolve(thenableC).
       then(function(value) {
@@ -740,13 +740,13 @@ function testNestingThenablesRejected() {
   asyncTestCase.waitForAsync();
   var thenableA = {
     then: function(onFulfill, onReject) { onReject(sentinel); }
- ***REMOVED*****REMOVED***
+  };
   var thenableB = {
     then: function(onFulfill, onReject) { onReject(thenableA); }
- ***REMOVED*****REMOVED***
+  };
   var thenableC = {
     then: function(onFulfill, onReject) { onReject(thenableB); }
- ***REMOVED*****REMOVED***
+  };
 
   var p = goog.Promise.reject(thenableC).
       then(shouldNotCall, function(reason) {
@@ -1397,7 +1397,7 @@ function testThenableInterface() {
   assertFalse(goog.Thenable.isImplementedBy({then: function() {}}));
 
   function T() {}
-  T.prototype.then = function(opt_a, opt_b, opt_c) {***REMOVED***
+  T.prototype.then = function(opt_a, opt_b, opt_c) {};
   goog.Thenable.addImplementation(T);
   assertTrue(goog.Thenable.isImplementedBy(new T));
 
@@ -1405,7 +1405,7 @@ function testThenableInterface() {
   try {
     COMPIlED = true;
     function C() {}
-    C.prototype.then = function(opt_a, opt_b, opt_c) {***REMOVED***
+    C.prototype.then = function(opt_a, opt_b, opt_c) {};
     goog.Thenable.addImplementation(C);
     assertTrue(goog.Thenable.isImplementedBy(new C));
   } finally {

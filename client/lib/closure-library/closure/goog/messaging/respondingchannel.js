@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of goog.messaging.RespondingChannel, which wraps a
-***REMOVED*** MessageChannel and allows the user to get the response from the services.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of goog.messaging.RespondingChannel, which wraps a
+ * MessageChannel and allows the user to get the response from the services.
+ *
+ */
 
 
 goog.provide('goog.messaging.RespondingChannel');
@@ -29,49 +29,49 @@ goog.require('goog.messaging.MultiChannel.VirtualChannel');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new RespondingChannel wrapping a single MessageChannel.
-***REMOVED*** @param {goog.messaging.MessageChannel} messageChannel The messageChannel to
-***REMOVED***     to wrap and allow for responses. This channel must not have any existing
-***REMOVED***     services registered. All service registration must be done through the
-***REMOVED***     {@link RespondingChannel#registerService} api instead. The other end of
-***REMOVED***     channel must also be a RespondingChannel.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
+/**
+ * Creates a new RespondingChannel wrapping a single MessageChannel.
+ * @param {goog.messaging.MessageChannel} messageChannel The messageChannel to
+ *     to wrap and allow for responses. This channel must not have any existing
+ *     services registered. All service registration must be done through the
+ *     {@link RespondingChannel#registerService} api instead. The other end of
+ *     channel must also be a RespondingChannel.
+ * @constructor
+ * @extends {goog.Disposable}
+ */
 goog.messaging.RespondingChannel = function(messageChannel) {
   goog.messaging.RespondingChannel.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The message channel wrapped in a MultiChannel so we can send private and
-  ***REMOVED*** public messages on it.
-  ***REMOVED*** @type {goog.messaging.MultiChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The message channel wrapped in a MultiChannel so we can send private and
+   * public messages on it.
+   * @type {goog.messaging.MultiChannel}
+   * @private
+   */
   this.messageChannel_ = new goog.messaging.MultiChannel(messageChannel);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Map of invocation signatures to function callbacks. These are used to keep
-  ***REMOVED*** track of the asyncronous service invocations so the result of a service
-  ***REMOVED*** call can be passed back to a callback in the calling frame.
-  ***REMOVED*** @type {Object.<number, function(Object)>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.sigCallbackMap_ = {***REMOVED***
+  /**
+   * Map of invocation signatures to function callbacks. These are used to keep
+   * track of the asyncronous service invocations so the result of a service
+   * call can be passed back to a callback in the calling frame.
+   * @type {Object.<number, function(Object)>}
+   * @private
+   */
+  this.sigCallbackMap_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The virtual channel to send private messages on.
-  ***REMOVED*** @type {goog.messaging.MultiChannel.VirtualChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The virtual channel to send private messages on.
+   * @type {goog.messaging.MultiChannel.VirtualChannel}
+   * @private
+   */
   this.privateChannel_ = this.messageChannel_.createVirtualChannel(
       goog.messaging.RespondingChannel.PRIVATE_CHANNEL_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The virtual channel to send public messages on.
-  ***REMOVED*** @type {goog.messaging.MultiChannel.VirtualChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The virtual channel to send public messages on.
+   * @type {goog.messaging.MultiChannel.VirtualChannel}
+   * @private
+   */
   this.publicChannel_ = this.messageChannel_.createVirtualChannel(
       goog.messaging.RespondingChannel.PUBLIC_CHANNEL_);
 
@@ -79,65 +79,65 @@ goog.messaging.RespondingChannel = function(messageChannel) {
       goog.messaging.RespondingChannel.CALLBACK_SERVICE_,
       goog.bind(this.callbackServiceHandler_, this),
       true);
-***REMOVED***
+};
 goog.inherits(goog.messaging.RespondingChannel, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** The name of the method invocation callback service (used internally).
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the method invocation callback service (used internally).
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.RespondingChannel.CALLBACK_SERVICE_ = 'mics';
 
 
-***REMOVED***
-***REMOVED*** The name of the channel to send private control messages on.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the channel to send private control messages on.
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.RespondingChannel.PRIVATE_CHANNEL_ = 'private';
 
 
-***REMOVED***
-***REMOVED*** The name of the channel to send public messages on.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the channel to send public messages on.
+ * @type {string}
+ * @const
+ * @private
+ */
 goog.messaging.RespondingChannel.PUBLIC_CHANNEL_ = 'public';
 
 
-***REMOVED***
-***REMOVED*** The next signature index to save the callback against.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The next signature index to save the callback against.
+ * @type {number}
+ * @private
+ */
 goog.messaging.RespondingChannel.prototype.nextSignatureIndex_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Logger object for goog.messaging.RespondingChannel.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger object for goog.messaging.RespondingChannel.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.messaging.RespondingChannel.prototype.logger_ =
     goog.log.getLogger('goog.messaging.RespondingChannel');
 
 
-***REMOVED***
-***REMOVED*** Gets a random number to use for method invocation results.
-***REMOVED*** @return {number} A unique random signature.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets a random number to use for method invocation results.
+ * @return {number} A unique random signature.
+ * @private
+ */
 goog.messaging.RespondingChannel.prototype.getNextSignature_ = function() {
   return this.nextSignatureIndex_++;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.RespondingChannel.prototype.disposeInternal = function() {
   goog.dispose(this.messageChannel_);
   delete this.messageChannel_;
@@ -145,18 +145,18 @@ goog.messaging.RespondingChannel.prototype.disposeInternal = function() {
   //     this.messageChannel_
   delete this.publicChannel_;
   delete this.privateChannel_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sends a message over the channel.
-***REMOVED*** @param {string} serviceName The name of the service this message should be
-***REMOVED***     delivered to.
-***REMOVED*** @param {string|!Object} payload The value of the message. If this is an
-***REMOVED***     Object, it is serialized to a string before sending if necessary.
-***REMOVED*** @param {function(?Object)} callback The callback invoked with
-***REMOVED***     the result of the service call.
-***REMOVED***
+/**
+ * Sends a message over the channel.
+ * @param {string} serviceName The name of the service this message should be
+ *     delivered to.
+ * @param {string|!Object} payload The value of the message. If this is an
+ *     Object, it is serialized to a string before sending if necessary.
+ * @param {function(?Object)} callback The callback invoked with
+ *     the result of the service call.
+ */
 goog.messaging.RespondingChannel.prototype.send = function(
     serviceName,
     payload,
@@ -165,20 +165,20 @@ goog.messaging.RespondingChannel.prototype.send = function(
   var signature = this.getNextSignature_();
   this.sigCallbackMap_[signature] = callback;
 
-  var message = {***REMOVED***
+  var message = {};
   message['signature'] = signature;
   message['data'] = payload;
 
   this.publicChannel_.send(serviceName, message);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Receives the results of the peer's service results.
-***REMOVED*** @param {!Object|string} message The results from the remote service
-***REMOVED***     invocation.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Receives the results of the peer's service results.
+ * @param {!Object|string} message The results from the remote service
+ *     invocation.
+ * @private
+ */
 goog.messaging.RespondingChannel.prototype.callbackServiceHandler_ = function(
     message) {
 
@@ -186,44 +186,44 @@ goog.messaging.RespondingChannel.prototype.callbackServiceHandler_ = function(
   var result = message['data'];
 
   if (signature in this.sigCallbackMap_) {
-    var callback =***REMOVED*****REMOVED*** @type {function(Object)}***REMOVED*** (this.sigCallbackMap_[
+    var callback = /** @type {function(Object)} */ (this.sigCallbackMap_[
         signature]);
     callback(result);
     delete this.sigCallbackMap_[signature];
   } else {
     goog.log.warning(this.logger_, 'Received signature is invalid');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Registers a service to be called when a message is received.
-***REMOVED*** @param {string} serviceName The name of the service.
-***REMOVED*** @param {function(!Object)} callback The callback to process the
-***REMOVED***     incoming messages. Passed the payload.
-***REMOVED***
+/**
+ * Registers a service to be called when a message is received.
+ * @param {string} serviceName The name of the service.
+ * @param {function(!Object)} callback The callback to process the
+ *     incoming messages. Passed the payload.
+ */
 goog.messaging.RespondingChannel.prototype.registerService = function(
     serviceName, callback) {
   this.publicChannel_.registerService(
       serviceName,
       goog.bind(this.callbackProxy_, this, callback),
       true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A intermediary proxy for service callbacks to be invoked and return their
-***REMOVED*** their results to the remote caller's callback.
-***REMOVED*** @param {function((string|!Object))} callback The callback to process the
-***REMOVED***     incoming messages. Passed the payload.
-***REMOVED*** @param {!Object|string} message The message containing the signature and
-***REMOVED***     the data to invoke the service callback with.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A intermediary proxy for service callbacks to be invoked and return their
+ * their results to the remote caller's callback.
+ * @param {function((string|!Object))} callback The callback to process the
+ *     incoming messages. Passed the payload.
+ * @param {!Object|string} message The message containing the signature and
+ *     the data to invoke the service callback with.
+ * @private
+ */
 goog.messaging.RespondingChannel.prototype.callbackProxy_ = function(
     callback, message) {
 
-  var resultMessage = {***REMOVED***
+  var resultMessage = {};
   resultMessage['data'] = callback(message['data']);
   resultMessage['signature'] = message['signature'];
   // The callback invoked above may have disposed the channel so check if it
@@ -233,4 +233,4 @@ goog.messaging.RespondingChannel.prototype.callbackProxy_ = function(
         goog.messaging.RespondingChannel.CALLBACK_SERVICE_,
         resultMessage);
   }
-***REMOVED***
+};

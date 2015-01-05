@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview Canvas super class.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Canvas super class.
+ */
 
 goog.provide('xrx.canvas.Element');
 
@@ -37,45 +37,45 @@ goog.require('xrx.canvas');
 
 
 
-***REMOVED***
-***REMOVED*** Canvas super class.
-***REMOVED*** @param {xrx.canvas.Canvas} canvas The parent canvas object.
-***REMOVED***
-***REMOVED***
+/**
+ * Canvas super class.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
+ * @constructor
+ */
 xrx.canvas.Element = function(canvas) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent canvas object.
-  ***REMOVED*** @type {xrx.canvas.Canvas}
- ***REMOVED*****REMOVED***
+  /**
+   * The parent canvas object.
+   * @type {xrx.canvas.Canvas}
+   */
   this.canvas_ = canvas;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The rendering context.
-  ***REMOVED*** @type {CanvasRenderingContext2D}
- ***REMOVED*****REMOVED***
+  /**
+   * The rendering context.
+   * @type {CanvasRenderingContext2D}
+   */
   this.context_ = canvas.getElement().getContext('2d');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the parent canvas object.
-***REMOVED*** @return {xrx.canvas.Canvas} The parent canvas object.
-***REMOVED***
+/**
+ * Returns the parent canvas object.
+ * @return {xrx.canvas.Canvas} The parent canvas object.
+ */
 xrx.canvas.Element.prototype.getCanvas = function() {
   return this.canvas_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the HTML canvas rendering context.
-***REMOVED*** @return {CanvasRenderingContext2D} The rendering context.
-***REMOVED***
+/**
+ * Returns the HTML canvas rendering context.
+ * @return {CanvasRenderingContext2D} The rendering context.
+ */
 xrx.canvas.Element.prototype.getContext = function() {
   return this.context_;
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

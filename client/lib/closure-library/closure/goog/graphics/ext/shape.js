@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A thick wrapper around shapes with custom paths.
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview A thick wrapper around shapes with custom paths.
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.graphics.ext.Shape');
@@ -27,16 +27,16 @@ goog.require('goog.math.Rect');
 
 
 
-***REMOVED***
-***REMOVED*** Wrapper for a graphics shape element.
-***REMOVED*** @param {goog.graphics.ext.Group} group Parent for this element.
-***REMOVED*** @param {!goog.graphics.ext.Path} path  The path to draw.
-***REMOVED*** @param {boolean=} opt_autoSize Optional flag to specify the path should
-***REMOVED***     automatically resize to fit the element.  Defaults to false.
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.ext.StrokeAndFillElement}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wrapper for a graphics shape element.
+ * @param {goog.graphics.ext.Group} group Parent for this element.
+ * @param {!goog.graphics.ext.Path} path  The path to draw.
+ * @param {boolean=} opt_autoSize Optional flag to specify the path should
+ *     automatically resize to fit the element.  Defaults to false.
+ * @constructor
+ * @extends {goog.graphics.ext.StrokeAndFillElement}
+ * @final
+ */
 goog.graphics.ext.Shape = function(group, path, opt_autoSize) {
   this.autoSize_ = !!opt_autoSize;
 
@@ -45,56 +45,56 @@ goog.graphics.ext.Shape = function(group, path, opt_autoSize) {
       group.getWrapper());
   goog.graphics.ext.StrokeAndFillElement.call(this, group, wrapper);
   this.setPath(path);
-***REMOVED***
+};
 goog.inherits(goog.graphics.ext.Shape, goog.graphics.ext.StrokeAndFillElement);
 
 
-***REMOVED***
-***REMOVED*** Whether or not to automatically resize the shape's path when the element
-***REMOVED*** itself is resized.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether or not to automatically resize the shape's path when the element
+ * itself is resized.
+ * @type {boolean}
+ * @private
+ */
 goog.graphics.ext.Shape.prototype.autoSize_ = false;
 
 
-***REMOVED***
-***REMOVED*** The original path, specified by the caller.
-***REMOVED*** @type {goog.graphics.Path}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The original path, specified by the caller.
+ * @type {goog.graphics.Path}
+ * @private
+ */
 goog.graphics.ext.Shape.prototype.path_;
 
 
-***REMOVED***
-***REMOVED*** The bounding box of the original path.
-***REMOVED*** @type {goog.math.Rect?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The bounding box of the original path.
+ * @type {goog.math.Rect?}
+ * @private
+ */
 goog.graphics.ext.Shape.prototype.boundingBox_ = null;
 
 
-***REMOVED***
-***REMOVED*** The scaled path.
-***REMOVED*** @type {goog.graphics.Path}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The scaled path.
+ * @type {goog.graphics.Path}
+ * @private
+ */
 goog.graphics.ext.Shape.prototype.scaledPath_;
 
 
-***REMOVED***
-***REMOVED*** Get the path drawn by this shape.
-***REMOVED*** @return {goog.graphics.Path?} The path drawn by this shape.
-***REMOVED***
+/**
+ * Get the path drawn by this shape.
+ * @return {goog.graphics.Path?} The path drawn by this shape.
+ */
 goog.graphics.ext.Shape.prototype.getPath = function() {
   return this.path_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the path to draw.
-***REMOVED*** @param {goog.graphics.ext.Path} path The path to draw.
-***REMOVED***
+/**
+ * Set the path to draw.
+ * @param {goog.graphics.ext.Path} path The path to draw.
+ */
 goog.graphics.ext.Shape.prototype.setPath = function(path) {
   this.path_ = path;
 
@@ -103,13 +103,13 @@ goog.graphics.ext.Shape.prototype.setPath = function(path) {
   }
 
   this.scaleAndSetPath_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Scale the internal path to fit.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Scale the internal path to fit.
+ * @private
+ */
 goog.graphics.ext.Shape.prototype.scaleAndSetPath_ = function() {
   this.scaledPath_ = this.boundingBox_ ? this.path_.clone().modifyBounds(
       -this.boundingBox_.left, -this.boundingBox_.top,
@@ -120,28 +120,28 @@ goog.graphics.ext.Shape.prototype.scaleAndSetPath_ = function() {
   if (wrapper) {
     wrapper.setPath(this.scaledPath_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Redraw the ellipse.  Called when the coordinate system is changed.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Redraw the ellipse.  Called when the coordinate system is changed.
+ * @protected
+ * @override
+ */
 goog.graphics.ext.Shape.prototype.redraw = function() {
   goog.graphics.ext.Shape.superClass_.redraw.call(this);
   if (this.autoSize_) {
     this.scaleAndSetPath_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the shape is parent dependent.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {boolean} Whether the shape is parent dependent.
+ * @protected
+ * @override
+ */
 goog.graphics.ext.Shape.prototype.checkParentDependent = function() {
   return this.autoSize_ ||
       goog.graphics.ext.Shape.superClass_.checkParentDependent.call(this);
-***REMOVED***
+};

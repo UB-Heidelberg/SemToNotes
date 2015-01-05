@@ -2,10 +2,10 @@
 // Modifications Copyright 2009 The Closure Library Authors. All Rights Reserved.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @license Portions of this code are from the google-caja project, received by
-***REMOVED*** Google under the Apache license (http://code.google.com/p/google-caja/).
-***REMOVED*** All other code is Copyright 2009 Google, Inc. All Rights Reserved.
+/**
+ * @license Portions of this code are from the google-caja project, received by
+ * Google under the Apache license (http://code.google.com/p/google-caja/).
+ * All other code is Copyright 2009 Google, Inc. All Rights Reserved.
 
 // Copyright (C) 2006 Google Inc.
 //
@@ -21,26 +21,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
+ */
 
-***REMOVED***
-***REMOVED*** @fileoverview A Html SAX parser.
-***REMOVED***
-***REMOVED*** Examples of usage of the {@code goog.string.html.HtmlParser}:
-***REMOVED*** <pre>
-***REMOVED***   var handler = new MyCustomHtmlVisitorHandlerThatExtendsHtmlSaxHandler();
-***REMOVED***   var parser = new goog.string.html.HtmlParser();
-***REMOVED***   parser.parse(handler, '<html><a href="google.com">link found!</a></html>');
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** TODO(user, msamuel): validate sanitizer regex against the HTML5 grammar at
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/multipage/tokenization.html
-***REMOVED*** http://www.whatwg.org/specs/web-apps/current-work/multipage/tree-construction.html
-***REMOVED***
-***REMOVED*** @supported IE6, IE7, IE8, FF1.5, FF2, FF3, Chrome 3.0, Safari and Opera 10.
-***REMOVED***
+/**
+ * @fileoverview A Html SAX parser.
+ *
+ * Examples of usage of the {@code goog.string.html.HtmlParser}:
+ * <pre>
+ *   var handler = new MyCustomHtmlVisitorHandlerThatExtendsHtmlSaxHandler();
+ *   var parser = new goog.string.html.HtmlParser();
+ *   parser.parse(handler, '<html><a href="google.com">link found!</a></html>');
+ * </pre>
+ *
+ * TODO(user, msamuel): validate sanitizer regex against the HTML5 grammar at
+ * http://www.whatwg.org/specs/web-apps/current-work/multipage/syntax.html
+ * http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html
+ * http://www.whatwg.org/specs/web-apps/current-work/multipage/tokenization.html
+ * http://www.whatwg.org/specs/web-apps/current-work/multipage/tree-construction.html
+ *
+ * @supported IE6, IE7, IE8, FF1.5, FF2, FF3, Chrome 3.0, Safari and Opera 10.
+ */
 
 goog.provide('goog.string.html.HtmlParser');
 goog.provide('goog.string.html.HtmlParser.EFlags');
@@ -49,21 +49,21 @@ goog.provide('goog.string.html.HtmlParser.Entities');
 goog.provide('goog.string.html.HtmlSaxHandler');
 
 
-***REMOVED***
-***REMOVED*** An Html parser: {@code parse} takes a string and calls methods on
-***REMOVED*** {@code goog.string.html.HtmlSaxHandler} while it is visiting it.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * An Html parser: {@code parse} takes a string and calls methods on
+ * {@code goog.string.html.HtmlSaxHandler} while it is visiting it.
+ *
+ * @constructor
+ */
 goog.string.html.HtmlParser = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** HTML entities that are encoded/decoded.
-***REMOVED*** TODO(user): use {@code goog.string.htmlEncode} instead.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * HTML entities that are encoded/decoded.
+ * TODO(user): use {@code goog.string.htmlEncode} instead.
+ * @enum {string}
+ */
 goog.string.html.HtmlParser.Entities = {
   lt: '<',
   gt: '>',
@@ -71,13 +71,13 @@ goog.string.html.HtmlParser.Entities = {
   nbsp: '\240',
   quot: '"',
   apos: '\''
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The html eflags, used internally on the parser.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * The html eflags, used internally on the parser.
+ * @enum {number}
+ */
 goog.string.html.HtmlParser.EFlags = {
   OPTIONAL_ENDTAG: 1,
   EMPTY: 2,
@@ -85,13 +85,13 @@ goog.string.html.HtmlParser.EFlags = {
   RCDATA: 8,
   UNSAFE: 16,
   FOLDABLE: 32
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A map of element to a bitmap of flags it has, used internally on the parser.
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * A map of element to a bitmap of flags it has, used internally on the parser.
+ * @type {Object}
+ */
 goog.string.html.HtmlParser.Elements = {
   'a': 0,
   'abbr': 0,
@@ -203,95 +203,95 @@ goog.string.html.HtmlParser.Elements = {
   'u': 0,
   'ul': 0,
   'var': 0
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches &s.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches &s.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.AMP_RE_ = /&/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches loose &s.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches loose &s.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.LOOSE_AMP_RE_ =
     /&([^a-z#]|#(?:[^0-9x]|x(?:[^0-9a-f]|$)|$)|$)/gi;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches <.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches <.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.LT_RE_ = /</g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches >.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches >.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.GT_RE_ = />/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches ".
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches ".
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.QUOTE_RE_ = /\"/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches =.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches =.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.EQUALS_RE_ = /=/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches null characters.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches null characters.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.NULL_RE_ = /\0/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches entities.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches entities.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.ENTITY_RE_ = /&(#\d+|#x[0-9A-Fa-f]+|\w+);/g;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches decimal numbers.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches decimal numbers.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.DECIMAL_ESCAPE_RE_ = /^#(\d+)$/;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches hexadecimal numbers.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches hexadecimal numbers.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.HEX_ESCAPE_RE_ = /^#x([0-9A-Fa-f]+)$/;
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches the next token to be processed.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches the next token to be processed.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.INSIDE_TAG_TOKEN_ = new RegExp(
     // Don't capture space.
     '^\\s*(?:' +
@@ -328,12 +328,12 @@ goog.string.html.HtmlParser.INSIDE_TAG_TOKEN_ = new RegExp(
     'i');
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches the next token to be processed when we are
-***REMOVED*** outside a tag.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches the next token to be processed when we are
+ * outside a tag.
+ * @type {RegExp}
+ * @private
+ */
 goog.string.html.HtmlParser.OUTSIDE_TAG_TOKEN_ = new RegExp(
     '^(?:' +
     // Entity captured in group 1.
@@ -349,15 +349,15 @@ goog.string.html.HtmlParser.OUTSIDE_TAG_TOKEN_ = new RegExp(
     'i');
 
 
-***REMOVED***
-***REMOVED*** Given a SAX-like {@code goog.string.html.HtmlSaxHandler} parses a
-***REMOVED*** {@code htmlText} and lets the {@code handler} know the structure while
-***REMOVED*** visiting the nodes.
-***REMOVED***
-***REMOVED*** @param {goog.string.html.HtmlSaxHandler} handler The HtmlSaxHandler that will
-***REMOVED***     receive the events.
-***REMOVED*** @param {string} htmlText The html text.
-***REMOVED***
+/**
+ * Given a SAX-like {@code goog.string.html.HtmlSaxHandler} parses a
+ * {@code htmlText} and lets the {@code handler} know the structure while
+ * visiting the nodes.
+ *
+ * @param {goog.string.html.HtmlSaxHandler} handler The HtmlSaxHandler that will
+ *     receive the events.
+ * @param {string} htmlText The html text.
+ */
 goog.string.html.HtmlParser.prototype.parse = function(handler, htmlText) {
   var htmlLower = null;
   var inTag = false;  // True iff we're currently processing a tag.
@@ -405,11 +405,11 @@ goog.string.html.HtmlParser.prototype.parse = function(handler, htmlText) {
         if (eflags !== void 0) {  // False if not in whitelist.
           if (openTag) {
             if (handler.startTag) {
-              handler.startTag(***REMOVED*** @type {string}***REMOVED*** (tagName), attribs);
+              handler.startTag(/** @type {string} */ (tagName), attribs);
             }
           } else {
             if (handler.endTag) {
-              handler.endTag(***REMOVED*** @type {string}***REMOVED*** (tagName));
+              handler.endTag(/** @type {string} */ (tagName));
             }
           }
         }
@@ -465,16 +465,16 @@ goog.string.html.HtmlParser.prototype.parse = function(handler, htmlText) {
 
   // Lets the handler know that we are done parsing the document.
   handler.endDoc();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decodes an HTML entity.
-***REMOVED***
-***REMOVED*** @param {string} name The content between the '&' and the ';'.
-***REMOVED*** @return {string} A single unicode code-point as a string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Decodes an HTML entity.
+ *
+ * @param {string} name The content between the '&' and the ';'.
+ * @return {string} A single unicode code-point as a string.
+ * @private
+ */
 goog.string.html.HtmlParser.prototype.lookupEntity_ = function(name) {
   // TODO(goto): use {goog.string.htmlDecode} instead ?
   // TODO(goto): &pi; is different from &Pi;
@@ -490,57 +490,57 @@ goog.string.html.HtmlParser.prototype.lookupEntity_ = function(name) {
     return String.fromCharCode(parseInt(m[1], 16));
   }
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes null characters on the string.
-***REMOVED*** @param {string} s The string to have the null characters removed.
-***REMOVED*** @return {string} A string without null characters.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes null characters on the string.
+ * @param {string} s The string to have the null characters removed.
+ * @return {string} A string without null characters.
+ * @private
+ */
 goog.string.html.HtmlParser.prototype.stripNULs_ = function(s) {
   return s.replace(goog.string.html.HtmlParser.NULL_RE_, '');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The plain text of a chunk of HTML CDATA which possibly containing.
-***REMOVED***
-***REMOVED*** TODO(goto): use {@code goog.string.unescapeEntities} instead ?
-***REMOVED*** @param {string} s A chunk of HTML CDATA.  It must not start or end inside
-***REMOVED***   an HTML entity.
-***REMOVED*** @return {string} The unescaped entities.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The plain text of a chunk of HTML CDATA which possibly containing.
+ *
+ * TODO(goto): use {@code goog.string.unescapeEntities} instead ?
+ * @param {string} s A chunk of HTML CDATA.  It must not start or end inside
+ *   an HTML entity.
+ * @return {string} The unescaped entities.
+ * @private
+ */
 goog.string.html.HtmlParser.prototype.unescapeEntities_ = function(s) {
   return s.replace(
       goog.string.html.HtmlParser.ENTITY_RE_,
       goog.bind(this.lookupEntity_, this));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Escape entities in RCDATA that can be escaped without changing the meaning.
-***REMOVED*** @param {string} rcdata The RCDATA string we want to normalize.
-***REMOVED*** @return {string} A normalized version of RCDATA.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Escape entities in RCDATA that can be escaped without changing the meaning.
+ * @param {string} rcdata The RCDATA string we want to normalize.
+ * @return {string} A normalized version of RCDATA.
+ * @private
+ */
 goog.string.html.HtmlParser.prototype.normalizeRCData_ = function(rcdata) {
   return rcdata.
       replace(goog.string.html.HtmlParser.LOOSE_AMP_RE_, '&amp;$1').
       replace(goog.string.html.HtmlParser.LT_RE_, '&lt;').
       replace(goog.string.html.HtmlParser.GT_RE_, '&gt;');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** TODO(goto): why isn't this in the string package ? does this solves any
-***REMOVED*** real problem ? move it to the goog.string package if it does.
-***REMOVED***
-***REMOVED*** @param {string} str The string to lower case.
-***REMOVED*** @return {string} The str in lower case format.
-***REMOVED***
+/**
+ * TODO(goto): why isn't this in the string package ? does this solves any
+ * real problem ? move it to the goog.string package if it does.
+ *
+ * @param {string} str The string to lower case.
+ * @return {string} The str in lower case format.
+ */
 goog.string.html.toLowerCase = function(str) {
   // The below may not be true on browsers in the Turkish locale.
   if ('script' === 'SCRIPT'.toLowerCase()) {
@@ -550,62 +550,62 @@ goog.string.html.toLowerCase = function(str) {
       return String.fromCharCode(ch.charCodeAt(0) | 32);
     });
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An interface to the {@code goog.string.html.HtmlParser} visitor, that gets
-***REMOVED*** called while the HTML is being parsed.
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * An interface to the {@code goog.string.html.HtmlParser} visitor, that gets
+ * called while the HTML is being parsed.
+ *
+ * @constructor
+ */
 goog.string.html.HtmlSaxHandler = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler called when the parser found a new tag.
-***REMOVED*** @param {string} name The name of the tag that is starting.
-***REMOVED*** @param {Array.<string>} attributes The attributes of the tag.
-***REMOVED***
+/**
+ * Handler called when the parser found a new tag.
+ * @param {string} name The name of the tag that is starting.
+ * @param {Array.<string>} attributes The attributes of the tag.
+ */
 goog.string.html.HtmlSaxHandler.prototype.startTag = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when the parser found a closing tag.
-***REMOVED*** @param {string} name The name of the tag that is ending.
-***REMOVED***
+/**
+ * Handler called when the parser found a closing tag.
+ * @param {string} name The name of the tag that is ending.
+ */
 goog.string.html.HtmlSaxHandler.prototype.endTag = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when PCDATA is found.
-***REMOVED*** @param {string} text The PCDATA text found.
-***REMOVED***
+/**
+ * Handler called when PCDATA is found.
+ * @param {string} text The PCDATA text found.
+ */
 goog.string.html.HtmlSaxHandler.prototype.pcdata = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when RCDATA is found.
-***REMOVED*** @param {string} text The RCDATA text found.
-***REMOVED***
+/**
+ * Handler called when RCDATA is found.
+ * @param {string} text The RCDATA text found.
+ */
 goog.string.html.HtmlSaxHandler.prototype.rcdata = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when CDATA is found.
-***REMOVED*** @param {string} text The CDATA text found.
-***REMOVED***
+/**
+ * Handler called when CDATA is found.
+ * @param {string} text The CDATA text found.
+ */
 goog.string.html.HtmlSaxHandler.prototype.cdata = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when the parser is starting to parse the document.
-***REMOVED***
+/**
+ * Handler called when the parser is starting to parse the document.
+ */
 goog.string.html.HtmlSaxHandler.prototype.startDoc = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Handler called when the parsing is done.
-***REMOVED***
+/**
+ * Handler called when the parsing is done.
+ */
 goog.string.html.HtmlSaxHandler.prototype.endDoc = goog.abstractMethod;

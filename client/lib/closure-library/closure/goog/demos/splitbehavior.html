@@ -13,7 +13,7 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Checkbox');
@@ -127,8 +127,8 @@ See the COPYING file for details.
   var menuButton = new goog.ui.MenuButton(null, menu);
   var s1 = new goog.ui.SplitBehavior(button, menuButton);
   s1.render(goog.dom.getElement('split'), true);
-***REMOVED***button, EVENTS, logEvent);
-***REMOVED***menuButton, EVENTS, logEvent);
+  goog.events.listen(button, EVENTS, logEvent);
+  goog.events.listen(menuButton, EVENTS, logEvent);
 
   // Create the second SplitBehavior.
   var button2 = new goog.ui.CustomButton('apply');
@@ -137,27 +137,27 @@ See the COPYING file for details.
     target.setEnabled(e.target.getChecked());
   }, goog.ui.Component.EventType.CHANGE);
   s2.render(goog.dom.getElement('split2'), true);
-***REMOVED***button2, EVENTS, logEvent);
-***REMOVED***checkbox, EVENTS, logEvent);
+  goog.events.listen(button2, EVENTS, logEvent);
+  goog.events.listen(checkbox, EVENTS, logEvent);
 
   var s3 = goog.ui.decorate(goog.dom.getElement('split3'));
 
   var button3 = new goog.ui.ColorButton('Text');
   var s4 = new goog.ui.ColorSplitBehavior(button3);
   s4.render(goog.dom.getElement('split4'), true);
-***REMOVED***button3, EVENTS, logEvent);
+  goog.events.listen(button3, EVENTS, logEvent);
 
   // Render a simple color button.
   var colorButton = new goog.ui.ColorButton('color')
   colorButton.render(goog.dom.getElement('colorbutton'));
   colorButton.setValue('green');
-***REMOVED***colorButton, EVENTS, logEvent);
+  goog.events.listen(colorButton, EVENTS, logEvent);
 
   // Decorate a color button
   var colorButton2 = goog.ui.decorate(goog.dom.getElement('colorbutton2'));
   colorButton2.setValue('blue');
-***REMOVED***colorButton, EVENTS, logEvent);
-***REMOVED***colorButton2, EVENTS, logEvent);
+  goog.events.listen(colorButton, EVENTS, logEvent);
+  goog.events.listen(colorButton2, EVENTS, logEvent);
 </script>
 </body>
 </html>

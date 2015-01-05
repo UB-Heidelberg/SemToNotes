@@ -3,14 +3,14 @@
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
 function mapDependencies(index) {
-    var doclets, doc, len, dependencies = {***REMOVED***
+    var doclets, doc, len, dependencies = {};
 
     Object.keys(index).forEach(function(name) {
         doclets = index[name];
         for (var i = 0, ii = doclets.length; i < ii; ++i) {
             doc = doclets[i];
             if (doc.kind === 'class' || doc.kind === 'external') {
-                dependencies[name] = {***REMOVED***
+                dependencies[name] = {};
                 len = doc.augments && doc.augments.length || 0;
                 for (var j = 0; j < len; ++j) {
                     dependencies[name][doc.augments[j]] = true;
@@ -24,12 +24,12 @@ function mapDependencies(index) {
 
 function Sorter(dependencies) {
     this.dependencies = dependencies;
-    this.visited = {***REMOVED***
+    this.visited = {};
     this.sorted = [];
 }
 
 Sorter.prototype.visit = function(key) {
-  ***REMOVED***
+    var self = this;
 
     if (!(key in this.visited)) {
         this.visited[key] = true;
@@ -42,17 +42,17 @@ Sorter.prototype.visit = function(key) {
 
         this.sorted.push(key);
     }
-***REMOVED***
+};
 
 Sorter.prototype.sort = function() {
-  ***REMOVED***
+    var self = this;
 
     Object.keys(this.dependencies).forEach(function(key) {
         self.visit(key);
     });
 
     return this.sorted;
-***REMOVED***
+};
 
 function sort(dependencies) {
     var sorter = new Sorter(dependencies);
@@ -141,4 +141,4 @@ exports.addInherited = function(docs) {
             docs.push(doc);
         });
     });
-***REMOVED***
+};

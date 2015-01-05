@@ -33,9 +33,9 @@ var vocabulary = ['test', 'words', 'a', 'few', 'missspelling', 'iggnore'];
 // uses.
 var rseed = 1;
 function random(range) {
-  rseed = (rseed***REMOVED*** 1103515245 + 12345) & 0xffffffff;
+  rseed = (rseed * 1103515245 + 12345) & 0xffffffff;
   return ((rseed >> 16) & 0x7fff) % range;
-***REMOVED***
+};
 
 function localSpellCheckingFunction(words, spellChecker, callback) {
   var len = words.length;
@@ -58,7 +58,7 @@ function localSpellCheckingFunction(words, spellChecker, callback) {
     }
   }
   callback.call(spellChecker, results);
-***REMOVED***
+};
 
 function generateRandomSpace() {
   var string = '';
@@ -67,7 +67,7 @@ function generateRandomSpace() {
     string += ' ';
   }
   return string;
-***REMOVED***
+};
 
 function generateRandomString(maxWords) {
   var string = '';
@@ -77,7 +77,7 @@ function generateRandomString(maxWords) {
     string += generateRandomSpace();
   }
   return string;
-***REMOVED***
+};
 
 function generateRandomHtml(rootNode, branchFactor, attributes, numAttr) {
   if (numAttr == 0) {
@@ -106,7 +106,7 @@ function generateRandomHtml(rootNode, branchFactor, attributes, numAttr) {
           break;
         ++index;
         --rand;
-     ***REMOVED*****REMOVED***
+      };
 
       var attr = attributes[index];
       var el = document.createElement(attr);
@@ -120,7 +120,7 @@ function generateRandomHtml(rootNode, branchFactor, attributes, numAttr) {
       attributes[index] = attr;
     }
   }
-***REMOVED***
+};
 
 var timerQueue = [];
 function processTimerQueue() {
@@ -128,7 +128,7 @@ function processTimerQueue() {
     var fn = timerQueue.shift();
     fn();
   }
-***REMOVED***
+};
 
 function localTimer(fn, delay, obj) {
   if (obj) {
@@ -136,7 +136,7 @@ function localTimer(fn, delay, obj) {
   }
   timerQueue.push(fn);
   return timerQueue.length;
-***REMOVED***
+};
 
 function testDocumentIntegrity() {
   var handler = new goog.spell.SpellCheck(localSpellCheckingFunction);
@@ -165,7 +165,7 @@ function testDocumentIntegrity() {
   assertEquals('Spell checker run should not change the underlying element.',
                el2.innerHTML, el.innerHTML);
   s.dispose();
-***REMOVED***
+};
 
 function testExcludeMarkers() {
   var handler = new goog.spell.SpellCheck(localSpellCheckingFunction);
@@ -212,7 +212,7 @@ function testBiggerDocument() {
   assertEquals('Spell checker run should not change the underlying element.',
                el2.innerHTML, el.innerHTML);
   s.dispose();
-***REMOVED***
+};
 
 function testElementOverflow() {
   var handler = new goog.spell.SpellCheck(localSpellCheckingFunction);
@@ -240,7 +240,7 @@ function testElementOverflow() {
   assertEquals('Spell checker run should not change the underlying element.',
                el2.innerHTML, el.innerHTML);
   s.dispose();
-***REMOVED***
+};
 
 </script>
 </body>

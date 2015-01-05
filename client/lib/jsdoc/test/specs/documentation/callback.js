@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe('callback tag', function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/callbacktag.js');
 

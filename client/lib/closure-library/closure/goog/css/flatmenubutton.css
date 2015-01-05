@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for buttons created by goog.ui.FlatMenuButtonRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @author tlb@google.com (Thierry Le Boulenge)
-***REMOVED***
+ * Standard styling for buttons created by goog.ui.FlatMenuButtonRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @author tlb@google.com (Thierry Le Boulenge)
+ */
 
 
 .goog-flat-menu-button {
@@ -28,14 +28,14 @@
   vertical-align: middle;
 }
 
-.goog-flat-menu-button-disabled***REMOVED*** {
+.goog-flat-menu-button-disabled * {
   border-color: #ccc;
   color: #999;
   cursor: default;
 }
 
 .goog-flat-menu-button-hover {
-  border-color: #9cf #69e #69e #7af !important; /* Hover border wins.***REMOVED***
+  border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
 
 .goog-flat-menu-button-active {
@@ -53,7 +53,7 @@
 }
 
 .goog-flat-menu-button-dropdown {
-  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  /* Client apps may override the URL at which they serve the sprite. */
   background: url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -388px 0;
   position: absolute;
   right: 2px;

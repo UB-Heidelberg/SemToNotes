@@ -12,39 +12,39 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This class manages the network connectivity state.
-***REMOVED***
-***REMOVED*** Some of the connectivity state may be exposed to the client code in future,
-***REMOVED*** e.g. the initial handshake state, in order to save one RTT when a channel
-***REMOVED*** has to be reestablished. TODO(user).
-***REMOVED***
-***REMOVED*** @visibility {:internal}
-***REMOVED***
+/**
+ * @fileoverview This class manages the network connectivity state.
+ *
+ * Some of the connectivity state may be exposed to the client code in future,
+ * e.g. the initial handshake state, in order to save one RTT when a channel
+ * has to be reestablished. TODO(user).
+ *
+ * @visibility {:internal}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.ConnectionState');
 
 
 
-***REMOVED***
-***REMOVED*** The connectivity state of the channel.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * The connectivity state of the channel.
+ *
+ * @constructor
+ * @struct
+ */
 goog.labs.net.webChannel.ConnectionState = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Handshake result.
-  ***REMOVED*** @type {Array.<string>}
- ***REMOVED*****REMOVED***
+  /**
+   * Handshake result.
+   * @type {Array.<string>}
+   */
   this.handshakeResult = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The result of checking if there is a buffering proxy in the network.
-  ***REMOVED*** True means the connection is buffered, False means unbuffered,
-  ***REMOVED*** null means that the result is not available.
-  ***REMOVED*** @type {?boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * The result of checking if there is a buffering proxy in the network.
+   * True means the connection is buffered, False means unbuffered,
+   * null means that the result is not available.
+   * @type {?boolean}
+   */
   this.bufferingProxyResult = null;
-***REMOVED***
+};

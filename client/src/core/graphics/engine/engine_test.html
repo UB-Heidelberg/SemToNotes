@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.engine.Engines');
 </script>
 <style>
@@ -80,7 +80,7 @@ height: 100;
 
 function isOldIE() {
   return !document.createElementNS;
-***REMOVED***
+};
 
 function getCanvasSvg(id) {
   var divSvg = goog.dom.getElement(id);
@@ -88,7 +88,7 @@ function getCanvasSvg(id) {
   svgCanvas.setWidth(100);
   svgCanvas.setHeight(100);
   return svgCanvas;
-***REMOVED***
+};
 
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
@@ -96,7 +96,7 @@ function getCanvasCanvas(id) {
   canvasCanvas.setWidth(100);
   canvasCanvas.setHeight(100);
   return canvasCanvas;
-***REMOVED***
+};
 
 function getCanvasVml(id) {
   var divCanvas = goog.dom.getElement(id);
@@ -104,14 +104,14 @@ function getCanvasVml(id) {
   vmlCanvas.setWidth(100);
   vmlCanvas.setHeight(100);
   return vmlCanvas;
-***REMOVED***
+};
 
 function makeStyle(shape) {
   shape.setStrokeColor('red');
   shape.setStrokeWidth(2);
   shape.setFillColor('green');
   shape.setFillOpacity(.5);
-***REMOVED***
+};
 
 function getRect(graphics, opt_canvas) {
   var rect = graphics.Rect.create(opt_canvas);
@@ -121,7 +121,7 @@ function getRect(graphics, opt_canvas) {
   rect.setHeight(10);
   makeStyle(rect);
   return rect;
-***REMOVED***
+};
 
 function getPolygon(graphics, opt_canvas) {
   var coords = new Array(3);
@@ -132,7 +132,7 @@ function getPolygon(graphics, opt_canvas) {
   polygon.setCoords(coords);
   makeStyle(polygon);
   return polygon;
-***REMOVED***
+};
 
 function getPolyline(graphics, opt_canvas) {
   var coords = new Array(3);
@@ -146,7 +146,7 @@ function getPolyline(graphics, opt_canvas) {
   polyline.setFillColor('');
   polyline.setFillOpacity(0);
   return polyline;
-***REMOVED***
+};
 
 function getCircle(graphics, opt_canvas) {
   var circle = graphics.Circle.create(opt_canvas);
@@ -154,12 +154,12 @@ function getCircle(graphics, opt_canvas) {
   circle.setCenter(50,50);
   makeStyle(circle);
   return circle;
-***REMOVED***
+};
 
 function getImage(graphics, img, opt_canvas) {
   var image = graphics.Image.create(img, opt_canvas);
   return image;
-***REMOVED***
+};
 
 function test1Shapes() {
   var shapes = ['Circle', 'Polygon', 'Polyline', 'Rect'];
@@ -179,7 +179,7 @@ function test1Shapes() {
     var vmlShape = this['get' + shape](xrx.vml, vmlCanvas);
     vmlCanvas.addChild(vmlShape);
   }
-***REMOVED***
+};
 
 function test2Image() {
   var image = goog.dom.getElement('testImage');
@@ -195,7 +195,7 @@ function test2Image() {
   var vmlCanvas = getCanvasVml('vmlImage');
   var vmlImage = getImage(xrx.vml, image, vmlCanvas);
   vmlCanvas.addChild(vmlImage);
-***REMOVED***
+};
 
 function test3Group() {
   if (!isOldIE()) {
@@ -234,7 +234,7 @@ function test3Group() {
   vmlGroup.addChildren([vmlPolygon, vmlCircle]);
   // 
   vmlCanvas.addChild(vmlGroup);
-***REMOVED***
+};
 
 // make sure that Raphael components are not rendered before
 // function addChild(), respectively addChildren() is called
@@ -261,7 +261,7 @@ function test4Vml() {
   var vmlPolygon = getPolygon(xrx.vml, vmlCanvas);
   var vmlCircle = getCircle(xrx.vml, vmlCanvas);
   var vmlImage = getImage(xrx.vml, image, vmlCanvas);
-***REMOVED***
+};
 
 </script>
 </body>

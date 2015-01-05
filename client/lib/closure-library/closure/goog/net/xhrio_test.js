@@ -15,15 +15,15 @@
 goog.provide('goog.net.XhrIoTest');
 goog.setTestOnly('goog.net.XhrIoTest');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.debug.EntryPointMonitor');
 goog.require('goog.debug.ErrorHandler');
 goog.require('goog.debug.entryPointRegistry');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.net.EventType');
 goog.require('goog.net.WrapperXmlHttpFactory');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.net.XmlHttp');
 goog.require('goog.object');
 goog.require('goog.string');
@@ -34,11 +34,11 @@ goog.require('goog.testing.net.XhrIo');
 goog.require('goog.testing.recordFunction');
 
 function MockXmlHttp() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The headers for this XmlHttpRequest.
-  ***REMOVED*** @type {!Object.<string>}
- ***REMOVED*****REMOVED***
-  this.headers = {***REMOVED***
+  /**
+   * The headers for this XmlHttpRequest.
+   * @type {!Object.<string>}
+   */
+  this.headers = {};
 }
 
 MockXmlHttp.prototype.readyState = goog.net.XmlHttp.ReadyState.UNINITIALIZED;
@@ -54,7 +54,7 @@ MockXmlHttp.prototype.send = function(opt_data) {
     this.complete();
   }
 
-***REMOVED***
+};
 
 MockXmlHttp.prototype.complete = function() {
   this.readyState = goog.net.XmlHttp.ReadyState.LOADING;
@@ -68,17 +68,17 @@ MockXmlHttp.prototype.complete = function() {
 
   this.readyState = goog.net.XmlHttp.ReadyState.COMPLETE;
   this.onreadystatechange();
-***REMOVED***
+};
 
 
 MockXmlHttp.prototype.open = function(verb, uri, async) {
-***REMOVED***
+};
 
-MockXmlHttp.prototype.abort = function() {***REMOVED***
+MockXmlHttp.prototype.abort = function() {};
 
 MockXmlHttp.prototype.setRequestHeader = function(key, value) {
   this.headers[key] = value;
-***REMOVED***
+};
 
 var lastMockXmlHttp;
 goog.net.XmlHttp.setGlobalFactory(new goog.net.WrapperXmlHttpFactory(
@@ -87,7 +87,7 @@ goog.net.XmlHttp.setGlobalFactory(new goog.net.WrapperXmlHttpFactory(
       return lastMockXmlHttp;
     },
     function() {
-      return {***REMOVED***
+      return {};
     }));
 
 
@@ -113,7 +113,7 @@ function testSyncSend() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertTrue('Should be succesful', e.target.isSuccess());
     count++;
@@ -134,7 +134,7 @@ function testSyncSendFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -156,7 +156,7 @@ function testSendRelativeZeroStatus() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertEquals('Should be the same as ', e.target.isSuccess(),
         window.location.href.toLowerCase().indexOf('file:') == 0);
@@ -179,7 +179,7 @@ function testSendRelativeUriZeroStatus() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertEquals('Should be the same as ', e.target.isSuccess(),
         window.location.href.toLowerCase().indexOf('file:') == 0);
@@ -202,7 +202,7 @@ function testSendHttpZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -224,7 +224,7 @@ function testSendHttpUpperZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -246,7 +246,7 @@ function testSendHttpUpperUriZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -268,7 +268,7 @@ function testSendHttpUriZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -290,7 +290,7 @@ function testSendHttpUriZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -312,7 +312,7 @@ function testSendHttpsZeroStatusFailure() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertFalse('Should not be succesful', e.target.isSuccess());
     count++;
@@ -334,7 +334,7 @@ function testSendFileUpperZeroStatusSuccess() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertTrue('Should not be succesful', e.target.isSuccess());
     count++;
@@ -356,7 +356,7 @@ function testSendFileUriZeroStatusSuccess() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertTrue('Should not be succesful', e.target.isSuccess());
     count++;
@@ -378,7 +378,7 @@ function testSendDummyUriZeroStatusSuccess() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertTrue('Should not be succesful', e.target.isSuccess());
     count++;
@@ -400,7 +400,7 @@ function testSendFileUpperUriZeroStatusSuccess() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertFalse('Should not fire complete from inside send', inSend);
     assertTrue('Should not be succesful', e.target.isSuccess());
     count++;
@@ -422,7 +422,7 @@ function testSendFromListener() {
   var count = 0;
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     count++;
 
     var e = assertThrows(function() {
@@ -445,21 +445,21 @@ function testStatesDuringEvents() {
 
   var x = new goog.net.XhrIo;
   var readyState = goog.net.XmlHttp.ReadyState.UNINITIALIZED;
-***REMOVED***x, goog.net.EventType.READY_STATE_CHANGE, function(e) {
+  goog.events.listen(x, goog.net.EventType.READY_STATE_CHANGE, function(e) {
     readyState++;
     assertObjectEquals(e.target, x);
     assertEquals(x.getReadyState(), readyState);
     assertTrue(x.isActive());
   });
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     assertObjectEquals(e.target, x);
     assertTrue(x.isActive());
   });
-***REMOVED***x, goog.net.EventType.SUCCESS, function(e) {
+  goog.events.listen(x, goog.net.EventType.SUCCESS, function(e) {
     assertObjectEquals(e.target, x);
     assertTrue(x.isActive());
   });
-***REMOVED***x, goog.net.EventType.READY, function(e) {
+  goog.events.listen(x, goog.net.EventType.READY, function(e) {
     assertObjectEquals(e.target, x);
     assertFalse(x.isActive());
   });
@@ -481,7 +481,7 @@ function testProtectEntryPointCalledOnAsyncSend() {
   goog.net.XhrIo.protectEntryPoints(errorHandler);
 
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.READY_STATE_CHANGE, function(e) {
+  goog.events.listen(x, goog.net.EventType.READY_STATE_CHANGE, function(e) {
     throw Error();
   });
 
@@ -499,7 +499,7 @@ function testXHRIsDiposedEvenIfAListenerThrowsAnExceptionOnComplete() {
 
   var x = new goog.net.XhrIo;
 
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     throw Error();
   }, false, x);
 
@@ -520,9 +520,9 @@ function testDisposeInternalDoesNotAbortXhrRequestObjectWhenActiveIsFalse() {
   var abortCalled = false;
   var x = new goog.net.XhrIo;
 
-  goog.net.XmlHttp.prototype.abort = function() { abortCalled = true;***REMOVED*****REMOVED***
+  goog.net.XmlHttp.prototype.abort = function() { abortCalled = true; };
 
-***REMOVED***x, goog.net.EventType.COMPLETE, function(e) {
+  goog.events.listen(x, goog.net.EventType.COMPLETE, function(e) {
     this.active_ = false;
     this.dispose();
   }, false, x);
@@ -536,7 +536,7 @@ function testDisposeInternalDoesNotAbortXhrRequestObjectWhenActiveIsFalse() {
 
 function testCallingAbortFromWithinAbortCallbackDoesntLoop() {
   var x = new goog.net.XhrIo;
-***REMOVED***x, goog.net.EventType.ABORT, function(e) {
+  goog.events.listen(x, goog.net.EventType.ABORT, function(e) {
     x.abort(); // Shouldn't get a stack overflow
   });
   x.send('url');
@@ -618,7 +618,7 @@ function testFactoryInjection() {
       },
       function() {
         optionsFactoryCalled++;
-        return {***REMOVED***
+        return {};
       });
   var xhrIo = new goog.net.XhrIo(wrapperFactory);
 
@@ -646,14 +646,14 @@ function testGoogTestingNetXhrIoIsInSync() {
       // Ignore all other type of properties.
       return true;
     }
- ***REMOVED*****REMOVED***
+  };
 
   goog.object.every(xhrIo, propertyComparator, testingXhrIo);
 }
 
 function testEntryPointRegistry() {
   var monitor = new goog.debug.EntryPointMonitor();
-  var replacement = function() {***REMOVED***
+  var replacement = function() {};
   monitor.wrap = goog.testing.recordFunction(
       goog.functions.constant(replacement));
 
@@ -699,7 +699,7 @@ function testGetResponse() {
   assertEquals(null, x.getResponse());
 
   // XHR with no .response and no response type, gets text.
-  x.xhr_ = {***REMOVED***
+  x.xhr_ = {};
   x.xhr_.responseText = 'text';
   assertEquals('text', x.getResponse());
 

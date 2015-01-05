@@ -1,11 +1,11 @@
-***REMOVED***
-***REMOVED*** @module bookshelf
-***REMOVED***
+/**
+ * @module bookshelf
+ */
 
-***REMOVED***
-***REMOVED*** @class
-***REMOVED***
+/**
+ * @class
+ */
 this.Book = function(title) {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     this.title = title;
 }

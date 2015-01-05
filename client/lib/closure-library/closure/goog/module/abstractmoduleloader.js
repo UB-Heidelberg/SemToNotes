@@ -12,45 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An interface for module loading.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An interface for module loading.
+ *
+ */
 
 goog.provide('goog.module.AbstractModuleLoader');
 
 
 
-***REMOVED***
-***REMOVED*** An interface that loads JavaScript modules.
-***REMOVED*** @interface
-***REMOVED***
-goog.module.AbstractModuleLoader = function() {***REMOVED***
+/**
+ * An interface that loads JavaScript modules.
+ * @interface
+ */
+goog.module.AbstractModuleLoader = function() {};
 
 
-***REMOVED***
-***REMOVED*** Loads a list of JavaScript modules.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} ids The module ids in dependency order.
-***REMOVED*** @param {Object} moduleInfoMap A mapping from module id to ModuleInfo object.
-***REMOVED*** @param {function()?=} opt_successFn The callback if module loading is a
-***REMOVED***     success.
-***REMOVED*** @param {function(?number)?=} opt_errorFn The callback if module loading is an
-***REMOVED***     error.
-***REMOVED*** @param {function()?=} opt_timeoutFn The callback if module loading times out.
-***REMOVED*** @param {boolean=} opt_forceReload Whether to bypass cache while loading the
-***REMOVED***     module.
-***REMOVED***
+/**
+ * Loads a list of JavaScript modules.
+ *
+ * @param {Array.<string>} ids The module ids in dependency order.
+ * @param {Object} moduleInfoMap A mapping from module id to ModuleInfo object.
+ * @param {function()?=} opt_successFn The callback if module loading is a
+ *     success.
+ * @param {function(?number)?=} opt_errorFn The callback if module loading is an
+ *     error.
+ * @param {function()?=} opt_timeoutFn The callback if module loading times out.
+ * @param {boolean=} opt_forceReload Whether to bypass cache while loading the
+ *     module.
+ */
 goog.module.AbstractModuleLoader.prototype.loadModules = function(
     ids, moduleInfoMap, opt_successFn, opt_errorFn, opt_timeoutFn,
-    opt_forceReload) {***REMOVED***
+    opt_forceReload) {};
 
 
-***REMOVED***
-***REMOVED*** Pre-fetches a JavaScript module.
-***REMOVED***
-***REMOVED*** @param {string} id The module id.
-***REMOVED*** @param {!goog.module.ModuleInfo} moduleInfo The module info.
-***REMOVED***
+/**
+ * Pre-fetches a JavaScript module.
+ *
+ * @param {string} id The module id.
+ * @param {!goog.module.ModuleInfo} moduleInfo The module info.
+ */
 goog.module.AbstractModuleLoader.prototype.prefetchModule = function(
-    id, moduleInfo) {***REMOVED***
+    id, moduleInfo) {};

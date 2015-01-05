@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class implementing UIDL validation.
-***REMOVED***
+/**
+ * @fileoverview A class implementing UIDL validation.
+ */
 
 goog.provide('xrx.mvc.Uidl');
 goog.provide('xrx.mvc.Validate');
@@ -9,13 +9,13 @@ goog.provide('xrx.mvc.Validate');
 
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.Uidl = function(tagName, className, opt_choice) {
 
   this['tagName'] = tagName;
@@ -23,29 +23,29 @@ xrx.mvc.Uidl = function(tagName, className, opt_choice) {
   this['className'] = className;
 
   this['choice'] = opt_choice;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.Validate = function() {
 
   this.stack_ = [];
-***REMOVED***
+};
 
 
 
 xrx.mvc.Validate.prototype.push = function(message) {
   this.stack_.push(message);
-***REMOVED***
+};
 
 
 
 xrx.mvc.Validate.prototype.empty = function() {
   this.stack_ = [];
-***REMOVED***
+};
 
 
 
@@ -57,19 +57,19 @@ xrx.mvc.Validate.prototype.report = function() {
     s += ' ';
   }
   return s;
-***REMOVED***
+};
 
 
 
 xrx.mvc.Validate.prototype.isValid = function() {
   return this.stack_.length === 0;
-***REMOVED***
+};
 
 
 
 xrx.mvc.Validate.prototype.assert = function(test, message) {
   if (test !== true) this.push(message);
-***REMOVED***
+};
 
 
 
@@ -79,7 +79,7 @@ xrx.mvc.Validate.prototype.tagName = function() {
   this.assert(n1 === n2,
       'Wrong tag-name, "' + n1 + '". "' + n2 + '" expected.');
   return n1 === n2;
-***REMOVED***
+};
 
 
 
@@ -88,7 +88,7 @@ xrx.mvc.Validate.prototype.className = function() {
   var test = goog.dom.classes.has(this.element_, n);
   this.assert(test, 'Missing class-name "' + n + '"');
   return test;
-***REMOVED***
+};
 
 
 
@@ -97,7 +97,7 @@ xrx.mvc.Validate.prototype.dataset = function(key) {
   var test = goog.dom.dataset.has(this.element_, key);
   this.assert(test, 'Missing dataset, "' + key + '" expected.');
   return test;
-***REMOVED***
+};
 
 
 
@@ -107,7 +107,7 @@ xrx.mvc.Validate.prototype.text = function(flag) {
       ((flag === false) && (goog.dom.getTextContent(this.element_) === ''));
   this.assert(test, 'Missing text-content.');
   return test;
-***REMOVED***
+};
 
 
 
@@ -126,16 +126,16 @@ xrx.mvc.Validate.prototype.choice = function() {
     } else {
       if (this[validate](arg) === true) count += 1;
     }
- ***REMOVED*****REMOVED***
+  };
   this.assert(count === 1, 'Invalid choice, one of the last ' + c.length +
     ' conditions are required.');
   if (count === 1) {
     for (var i = 0; i < c.length; i++) {
       this.stack_.pop();
-   ***REMOVED*****REMOVED***
+    };
   }
   return count === 1;
-***REMOVED***
+};
 
 
 
@@ -147,4 +147,4 @@ xrx.mvc.Validate.prototype.validate = function() {
   if (!this.isValid()) throw Error('UIDL (' + this.element_.id + '): '
       + this.report());
   this.empty();
-***REMOVED***
+};

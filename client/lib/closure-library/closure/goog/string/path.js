@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for dealing with POSIX path strings. Based on
-***REMOVED*** Python's os.path and posixpath.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Utilities for dealing with POSIX path strings. Based on
+ * Python's os.path and posixpath.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.string.path');
 
@@ -24,35 +24,35 @@ goog.require('goog.array');
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Returns the final component of a pathname.
-***REMOVED*** See http://docs.python.org/library/os.path.html#os.path.basename
-***REMOVED*** @param {string} path A pathname.
-***REMOVED*** @return {string} path The final component of a pathname, i.e. everything
-***REMOVED***     after the final slash.
-***REMOVED***
+/**
+ * Returns the final component of a pathname.
+ * See http://docs.python.org/library/os.path.html#os.path.basename
+ * @param {string} path A pathname.
+ * @return {string} path The final component of a pathname, i.e. everything
+ *     after the final slash.
+ */
 goog.string.path.baseName = function(path) {
   var i = path.lastIndexOf('/') + 1;
   return path.slice(i);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alias to goog.string.path.baseName.
-***REMOVED*** @param {string} path A pathname.
-***REMOVED*** @return {string} path The final component of a pathname.
-***REMOVED*** @deprecated Use goog.string.path.baseName.
-***REMOVED***
+/**
+ * Alias to goog.string.path.baseName.
+ * @param {string} path A pathname.
+ * @return {string} path The final component of a pathname.
+ * @deprecated Use goog.string.path.baseName.
+ */
 goog.string.path.basename = goog.string.path.baseName;
 
 
-***REMOVED***
-***REMOVED*** Returns the directory component of a pathname.
-***REMOVED*** See http://docs.python.org/library/os.path.html#os.path.dirname
-***REMOVED*** @param {string} path A pathname.
-***REMOVED*** @return {string} The directory component of a pathname, i.e. everything
-***REMOVED***     leading up to the final slash.
-***REMOVED***
+/**
+ * Returns the directory component of a pathname.
+ * See http://docs.python.org/library/os.path.html#os.path.dirname
+ * @param {string} path A pathname.
+ * @return {string} The directory component of a pathname, i.e. everything
+ *     leading up to the final slash.
+ */
 goog.string.path.dirname = function(path) {
   var i = path.lastIndexOf('/') + 1;
   var head = path.slice(0, i);
@@ -61,30 +61,30 @@ goog.string.path.dirname = function(path) {
     head = head.replace(/\/+$/, '');
   }
   return head;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Extracts the extension part of a pathname.
-***REMOVED*** @param {string} path The path name to process.
-***REMOVED*** @return {string} The extension if any, otherwise the empty string.
-***REMOVED***
+/**
+ * Extracts the extension part of a pathname.
+ * @param {string} path The path name to process.
+ * @return {string} The extension if any, otherwise the empty string.
+ */
 goog.string.path.extension = function(path) {
   var separator = '.';
   // Combining all adjacent periods in the basename to a single period.
   var baseName = goog.string.path.baseName(path).replace(/\.+/g, separator);
   var separatorIndex = baseName.lastIndexOf(separator);
   return separatorIndex <= 0 ? '' : baseName.substr(separatorIndex + 1);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Joins one or more path components (e.g. 'foo/' and 'bar' make 'foo/bar').
-***REMOVED*** An absolute component will discard all previous component.
-***REMOVED*** See http://docs.python.org/library/os.path.html#os.path.join
-***REMOVED*** @param {...string} var_args One of more path components.
-***REMOVED*** @return {string} The path components joined.
-***REMOVED***
+/**
+ * Joins one or more path components (e.g. 'foo/' and 'bar' make 'foo/bar').
+ * An absolute component will discard all previous component.
+ * See http://docs.python.org/library/os.path.html#os.path.join
+ * @param {...string} var_args One of more path components.
+ * @return {string} The path components joined.
+ */
 goog.string.path.join = function(var_args) {
   var path = arguments[0];
 
@@ -100,16 +100,16 @@ goog.string.path.join = function(var_args) {
   }
 
   return path;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes a pathname by collapsing duplicate separators, parent directory
-***REMOVED*** references ('..'), and current directory references ('.').
-***REMOVED*** See http://docs.python.org/library/os.path.html#os.path.normpath
-***REMOVED*** @param {string} path One or more path components.
-***REMOVED*** @return {string} The path after normalization.
-***REMOVED***
+/**
+ * Normalizes a pathname by collapsing duplicate separators, parent directory
+ * references ('..'), and current directory references ('.').
+ * See http://docs.python.org/library/os.path.html#os.path.normpath
+ * @param {string} path One or more path components.
+ * @return {string} The path after normalization.
+ */
 goog.string.path.normalizePath = function(path) {
   if (path == '') {
     return '.';
@@ -150,20 +150,20 @@ goog.string.path.normalizePath = function(path) {
 
   var returnPath = initialSlashes + newParts.join('/');
   return returnPath || '.';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a pathname into "dirname" and "baseName" components, where "baseName"
-***REMOVED*** is everything after the final slash. Either part may return an empty string.
-***REMOVED*** See http://docs.python.org/library/os.path.html#os.path.split
-***REMOVED*** @param {string} path A pathname.
-***REMOVED*** @return {!Array.<string>} An array of [dirname, basename].
-***REMOVED***
+/**
+ * Splits a pathname into "dirname" and "baseName" components, where "baseName"
+ * is everything after the final slash. Either part may return an empty string.
+ * See http://docs.python.org/library/os.path.html#os.path.split
+ * @param {string} path A pathname.
+ * @return {!Array.<string>} An array of [dirname, basename].
+ */
 goog.string.path.split = function(path) {
   var head = goog.string.path.dirname(path);
   var tail = goog.string.path.baseName(path);
   return [head, tail];
-***REMOVED***
+};
 
 // TODO(nnaze): Implement other useful functions from os.path

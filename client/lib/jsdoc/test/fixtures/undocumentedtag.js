@@ -1,3 +1,3 @@
-***REMOVED*** Undocumented doclet.
-***REMOVED*** @undocumented***REMOVED***
+/** Undocumented doclet.
+ * @undocumented */
 var x;

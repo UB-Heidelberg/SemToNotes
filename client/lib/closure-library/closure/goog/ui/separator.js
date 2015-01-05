@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A class for representing a separator, with renderers for both
-***REMOVED*** horizontal (menu) and vertical (toolbar) separators.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview A class for representing a separator, with renderers for both
+ * horizontal (menu) and vertical (toolbar) separators.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.Separator');
 
@@ -30,17 +30,17 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a separator.  Although it extends {@link goog.ui.Control},
-***REMOVED*** the Separator class doesn't allocate any event handlers, nor does it change
-***REMOVED*** its appearance on mouseover, etc.
-***REMOVED*** @param {goog.ui.MenuSeparatorRenderer=} opt_renderer Renderer to render or
-***REMOVED***    decorate the separator; defaults to {@link goog.ui.MenuSeparatorRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***    document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Control}
-***REMOVED***
+/**
+ * Class representing a separator.  Although it extends {@link goog.ui.Control},
+ * the Separator class doesn't allocate any event handlers, nor does it change
+ * its appearance on mouseover, etc.
+ * @param {goog.ui.MenuSeparatorRenderer=} opt_renderer Renderer to render or
+ *    decorate the separator; defaults to {@link goog.ui.MenuSeparatorRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *    document interaction.
+ * @constructor
+ * @extends {goog.ui.Control}
+ */
 goog.ui.Separator = function(opt_renderer, opt_domHelper) {
   goog.ui.Control.call(this, null, opt_renderer ||
       goog.ui.MenuSeparatorRenderer.getInstance(), opt_domHelper);
@@ -52,23 +52,23 @@ goog.ui.Separator = function(opt_renderer, opt_domHelper) {
 
   // Separators are always considered disabled.
   this.setStateInternal(goog.ui.Component.State.DISABLED);
-***REMOVED***
+};
 goog.inherits(goog.ui.Separator, goog.ui.Control);
 
 
-***REMOVED***
-***REMOVED*** Configures the component after its DOM has been rendered.  Overrides
-***REMOVED*** {@link goog.ui.Control#enterDocument} by making sure no event handler
-***REMOVED*** is allocated.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Configures the component after its DOM has been rendered.  Overrides
+ * {@link goog.ui.Control#enterDocument} by making sure no event handler
+ * is allocated.
+ * @override
+ */
 goog.ui.Separator.prototype.enterDocument = function() {
   goog.ui.Separator.superClass_.enterDocument.call(this);
   var element = this.getElement();
   goog.asserts.assert(element,
       'The DOM element for the separator cannot be null.');
   goog.a11y.aria.setRole(element, 'separator');
-***REMOVED***
+};
 
 
 // Register a decorator factory function for goog.ui.MenuSeparators.

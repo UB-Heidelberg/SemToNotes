@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A wrapper for the HTML5 FileSaver object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A wrapper for the HTML5 FileSaver object.
+ *
+ */
 
 goog.provide('goog.fs.FileSaver');
 goog.provide('goog.fs.FileSaver.EventType');
@@ -28,27 +28,27 @@ goog.require('goog.fs.ProgressEvent');
 
 
 
-***REMOVED***
-***REMOVED*** An object for monitoring the saving of files. This emits ProgressEvents of
-***REMOVED*** the types listed in {@link goog.fs.FileSaver.EventType}.
-***REMOVED***
-***REMOVED*** This should not be instantiated directly. Instead, its subclass
-***REMOVED*** {@link goog.fs.FileWriter} should be accessed via
-***REMOVED*** {@link goog.fs.FileEntry#createWriter}.
-***REMOVED***
-***REMOVED*** @param {!FileSaver} fileSaver The underlying FileSaver object.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * An object for monitoring the saving of files. This emits ProgressEvents of
+ * the types listed in {@link goog.fs.FileSaver.EventType}.
+ *
+ * This should not be instantiated directly. Instead, its subclass
+ * {@link goog.fs.FileWriter} should be accessed via
+ * {@link goog.fs.FileEntry#createWriter}.
+ *
+ * @param {!FileSaver} fileSaver The underlying FileSaver object.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.fs.FileSaver = function(fileSaver) {
   goog.fs.FileSaver.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying FileSaver object.
-  ***REMOVED***
-  ***REMOVED*** @type {!FileSaver}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying FileSaver object.
+   *
+   * @type {!FileSaver}
+   * @private
+   */
   this.saver_ = fileSaver;
 
   this.saver_.onwritestart = goog.bind(this.dispatchProgressEvent_, this);
@@ -57,120 +57,120 @@ goog.fs.FileSaver = function(fileSaver) {
   this.saver_.onabort = goog.bind(this.dispatchProgressEvent_, this);
   this.saver_.onerror = goog.bind(this.dispatchProgressEvent_, this);
   this.saver_.onwriteend = goog.bind(this.dispatchProgressEvent_, this);
-***REMOVED***
+};
 goog.inherits(goog.fs.FileSaver, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Possible states for a FileSaver.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Possible states for a FileSaver.
+ *
+ * @enum {number}
+ */
 goog.fs.FileSaver.ReadyState = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The object has been constructed, but there is no pending write.
- ***REMOVED*****REMOVED***
+  /**
+   * The object has been constructed, but there is no pending write.
+   */
   INIT: 0,
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Data is being written.
- ***REMOVED*****REMOVED***
+  /**
+   * Data is being written.
+   */
   WRITING: 1,
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The data has been written to the file, the write was aborted, or an error
-  ***REMOVED*** occurred.
- ***REMOVED*****REMOVED***
+  /**
+   * The data has been written to the file, the write was aborted, or an error
+   * occurred.
+   */
   DONE: 2
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Events emitted by a FileSaver.
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Events emitted by a FileSaver.
+ *
+ * @enum {string}
+ */
 goog.fs.FileSaver.EventType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when the writing begins. readyState will be WRITING.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when the writing begins. readyState will be WRITING.
+   */
   WRITE_START: 'writestart',
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when progress has been made in saving the file. readyState will be
-  ***REMOVED*** WRITING.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when progress has been made in saving the file. readyState will be
+   * WRITING.
+   */
   PROGRESS: 'progress',
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when the data has been successfully written. readyState will be
-  ***REMOVED*** WRITING.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when the data has been successfully written. readyState will be
+   * WRITING.
+   */
   WRITE: 'write',
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when the writing has been aborted. readyState will be WRITING.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when the writing has been aborted. readyState will be WRITING.
+   */
   ABORT: 'abort',
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when an error is encountered or the writing has been aborted.
-  ***REMOVED*** readyState will be WRITING.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when an error is encountered or the writing has been aborted.
+   * readyState will be WRITING.
+   */
   ERROR: 'error',
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Emitted when the writing is finished, whether successfully or not.
-  ***REMOVED*** readyState will be DONE.
- ***REMOVED*****REMOVED***
+  /**
+   * Emitted when the writing is finished, whether successfully or not.
+   * readyState will be DONE.
+   */
   WRITE_END: 'writeend'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Abort the writing of the file.
-***REMOVED***
+/**
+ * Abort the writing of the file.
+ */
 goog.fs.FileSaver.prototype.abort = function() {
   try {
     this.saver_.abort();
   } catch (e) {
     throw new goog.fs.Error(e, 'aborting save');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.fs.FileSaver.ReadyState} The current state of the FileSaver.
-***REMOVED***
+/**
+ * @return {goog.fs.FileSaver.ReadyState} The current state of the FileSaver.
+ */
 goog.fs.FileSaver.prototype.getReadyState = function() {
-  return***REMOVED*****REMOVED*** @type {goog.fs.FileSaver.ReadyState}***REMOVED*** (this.saver_.readyState);
-***REMOVED***
+  return /** @type {goog.fs.FileSaver.ReadyState} */ (this.saver_.readyState);
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.fs.Error} The error encountered while writing, if any.
-***REMOVED***
+/**
+ * @return {goog.fs.Error} The error encountered while writing, if any.
+ */
 goog.fs.FileSaver.prototype.getError = function() {
   return this.saver_.error &&
       new goog.fs.Error(this.saver_.error, 'saving file');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wrap a progress event emitted by the underlying file saver and re-emit it.
-***REMOVED***
-***REMOVED*** @param {!ProgressEvent} event The underlying event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Wrap a progress event emitted by the underlying file saver and re-emit it.
+ *
+ * @param {!ProgressEvent} event The underlying event.
+ * @private
+ */
 goog.fs.FileSaver.prototype.dispatchProgressEvent_ = function(event) {
   this.dispatchEvent(new goog.fs.ProgressEvent(event, this));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.FileSaver.prototype.disposeInternal = function() {
   delete this.saver_;
   goog.fs.FileSaver.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A wrapper for the progress events emitted by the FileSaver.
-***REMOVED***
-***REMOVED*** @deprecated Use {goog.fs.ProgressEvent}.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A wrapper for the progress events emitted by the FileSaver.
+ *
+ * @deprecated Use {goog.fs.ProgressEvent}.
+ * @final
+ */
 goog.fs.FileSaver.ProgressEvent = goog.fs.ProgressEvent;

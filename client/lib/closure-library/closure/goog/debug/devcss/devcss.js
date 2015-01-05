@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Runtime development CSS Compiler emulation, via javascript.
-***REMOVED*** This class provides an approximation to CSSCompiler's functionality by
-***REMOVED*** hacking the live CSSOM.
-***REMOVED*** This code is designed  to be inserted in the DOM immediately after the last
-***REMOVED*** style block in HEAD when in development mode, i.e. you are not using a
-***REMOVED*** running instance of a CSS Compiler to pass your CSS through.
-***REMOVED***
+/**
+ * @fileoverview Runtime development CSS Compiler emulation, via javascript.
+ * This class provides an approximation to CSSCompiler's functionality by
+ * hacking the live CSSOM.
+ * This code is designed  to be inserted in the DOM immediately after the last
+ * style block in HEAD when in development mode, i.e. you are not using a
+ * running instance of a CSS Compiler to pass your CSS through.
+ */
 
 
 goog.provide('goog.debug.DevCss');
@@ -28,23 +28,23 @@ goog.provide('goog.debug.DevCss.UserAgent');
 goog.require('goog.asserts');
 goog.require('goog.cssom');
 goog.require('goog.dom.classlist');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.string');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A class for solving development CSS issues/emulating the CSS Compiler.
-***REMOVED*** @param {goog.debug.DevCss.UserAgent=} opt_userAgent The user agent, if not
-***REMOVED***     passed in, will be determined using goog.userAgent.
-***REMOVED*** @param {number|string=} opt_userAgentVersion The user agent's version.
-***REMOVED***     If not passed in, will be determined using goog.userAgent.
-***REMOVED*** @throws {Error} When userAgent detection fails.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A class for solving development CSS issues/emulating the CSS Compiler.
+ * @param {goog.debug.DevCss.UserAgent=} opt_userAgent The user agent, if not
+ *     passed in, will be determined using goog.userAgent.
+ * @param {number|string=} opt_userAgentVersion The user agent's version.
+ *     If not passed in, will be determined using goog.userAgent.
+ * @throws {Error} When userAgent detection fails.
+ * @constructor
+ * @final
+ */
 goog.debug.DevCss = function(opt_userAgent, opt_userAgentVersion) {
   if (!opt_userAgent) {
     // Walks through the known goog.userAgents.
@@ -73,50 +73,50 @@ goog.debug.DevCss = function(opt_userAgent, opt_userAgentVersion) {
       throw Error('Could not determine the user agent from known UserAgents');
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** One of goog.debug.DevCss.UserAgent.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * One of goog.debug.DevCss.UserAgent.
+   * @type {string}
+   * @private
+   */
   this.userAgent_ = opt_userAgent;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.userAgentTokens_ = {***REMOVED***
+  /**
+   * @type {Object}
+   * @private
+   */
+  this.userAgentTokens_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number|string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number|string}
+   * @private
+   */
   this.userAgentVersion_ = opt_userAgentVersion || goog.userAgent.VERSION;
   this.generateUserAgentTokens_();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {boolean}
+   * @private
+   */
   this.isIe6OrLess_ = this.userAgent_ == goog.debug.DevCss.UserAgent.IE &&
       goog.string.compareVersions('7', this.userAgentVersion_) > 0;
 
   if (this.isIe6OrLess_) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @type {Array.<{classNames,combinedClassName,els}>}
-    ***REMOVED*** @private
-   ***REMOVED*****REMOVED***
+    /**
+     * @type {Array.<{classNames,combinedClassName,els}>}
+     * @private
+     */
     this.ie6CombinedMatches_ = [];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Rewrites the CSSOM as needed to activate any useragent-specific selectors.
-***REMOVED*** @param {boolean=} opt_enableIe6ReadyHandler If true(the default), and the
-***REMOVED***     userAgent is ie6, we set a document "ready" event handler to walk the DOM
-***REMOVED***     and make combined selector className changes. Having this parameter also
-***REMOVED***     aids unit testing.
-***REMOVED***
+/**
+ * Rewrites the CSSOM as needed to activate any useragent-specific selectors.
+ * @param {boolean=} opt_enableIe6ReadyHandler If true(the default), and the
+ *     userAgent is ie6, we set a document "ready" event handler to walk the DOM
+ *     and make combined selector className changes. Having this parameter also
+ *     aids unit testing.
+ */
 goog.debug.DevCss.prototype.activateBrowserSpecificCssRules = function(
     opt_enableIe6ReadyHandler) {
   var enableIe6EventHandler = goog.isDef(opt_enableIe6ReadyHandler) ?
@@ -140,16 +140,16 @@ goog.debug.DevCss.prototype.activateBrowserSpecificCssRules = function(
   // Add an event listener for document ready to rewrite any necessary
   // combined classnames in IE6.
   if (this.isIe6OrLess_ && enableIe6EventHandler) {
-  ***REMOVED***document, goog.events.EventType.LOAD, goog.bind(
+    goog.events.listen(document, goog.events.EventType.LOAD, goog.bind(
         this.addIe6CombinedClassNames_, this));
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A list of possible user agent strings.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * A list of possible user agent strings.
+ * @enum {string}
+ */
 goog.debug.DevCss.UserAgent = {
   OPERA: 'OPERA',
   IE: 'IE',
@@ -158,14 +158,14 @@ goog.debug.DevCss.UserAgent = {
   WEBKIT: 'WEBKIT',
   SAFARI: 'WEBKIT',
   MOBILE: 'MOBILE'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A list of strings that may be used for matching in CSS files/development.
-***REMOVED*** @enum {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A list of strings that may be used for matching in CSS files/development.
+ * @enum {string}
+ * @private
+ */
 goog.debug.DevCss.CssToken_ = {
   USERAGENT: 'USERAGENT',
   SEPARATOR: '-',
@@ -175,16 +175,16 @@ goog.debug.DevCss.CssToken_ = {
   GREATER_THAN_OR_EQUAL: 'GTE',
   IE6_SELECTOR_TEXT: 'goog-ie6-selector',
   IE6_COMBINED_GLUE: '_'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generates user agent token match strings with comparison and version bits.
-***REMOVED*** For example:
-***REMOVED***   userAgentTokens_.ANY will be like 'GECKO'
-***REMOVED***   userAgentTokens_.LESS_THAN will be like 'GECKO-LT3' etc...
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Generates user agent token match strings with comparison and version bits.
+ * For example:
+ *   userAgentTokens_.ANY will be like 'GECKO'
+ *   userAgentTokens_.LESS_THAN will be like 'GECKO-LT3' etc...
+ * @private
+ */
 goog.debug.DevCss.prototype.generateUserAgentTokens_ = function() {
   this.userAgentTokens_.ANY = goog.debug.DevCss.CssToken_.USERAGENT +
       goog.debug.DevCss.CssToken_.SEPARATOR + this.userAgent_;
@@ -202,16 +202,16 @@ goog.debug.DevCss.prototype.generateUserAgentTokens_ = function() {
   this.userAgentTokens_.GREATER_THAN_OR_EQUAL = this.userAgentTokens_.ANY +
       goog.debug.DevCss.CssToken_.SEPARATOR +
       goog.debug.DevCss.CssToken_.GREATER_THAN_OR_EQUAL;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the version number bit from a selector matching userAgentToken.
-***REMOVED*** @param {string} selectorText The selector text of a CSS rule.
-***REMOVED*** @param {string} userAgentToken Includes the LTE/GTE bit to see if it matches.
-***REMOVED*** @return {string|undefined} The version number.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the version number bit from a selector matching userAgentToken.
+ * @param {string} selectorText The selector text of a CSS rule.
+ * @param {string} userAgentToken Includes the LTE/GTE bit to see if it matches.
+ * @return {string|undefined} The version number.
+ * @private
+ */
 goog.debug.DevCss.prototype.getVersionNumberFromSelectorText_ = function(
     selectorText, userAgentToken) {
   var regex = new RegExp(userAgentToken + '([\\d\\.]+)');
@@ -219,19 +219,19 @@ goog.debug.DevCss.prototype.getVersionNumberFromSelectorText_ = function(
   if (matches && matches.length == 2) {
     return matches[1];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Extracts a rule version from the selector text, and if it finds one, calls
-***REMOVED*** compareVersions against it and the passed in token string to provide the
-***REMOVED*** value needed to determine if we have a match or not.
-***REMOVED*** @param {CSSRule} cssRule The rule to test against.
-***REMOVED*** @param {string} token The match token to test against the rule.
-***REMOVED*** @return {!Array|undefined} A tuple with the result of the compareVersions
-***REMOVED***     call and the matched ruleVersion.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Extracts a rule version from the selector text, and if it finds one, calls
+ * compareVersions against it and the passed in token string to provide the
+ * value needed to determine if we have a match or not.
+ * @param {CSSRule} cssRule The rule to test against.
+ * @param {string} token The match token to test against the rule.
+ * @return {!Array|undefined} A tuple with the result of the compareVersions
+ *     call and the matched ruleVersion.
+ * @private
+ */
 goog.debug.DevCss.prototype.getRuleVersionAndCompare_ = function(cssRule,
     token) {
   if (!cssRule.selectorText.match(token)) {
@@ -246,17 +246,17 @@ goog.debug.DevCss.prototype.getRuleVersionAndCompare_ = function(cssRule,
   var comparison = goog.string.compareVersions(this.userAgentVersion_,
       ruleVersion);
   return [comparison, ruleVersion];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces a CSS selector if we have matches based on our useragent/version.
-***REMOVED*** Example: With a selector like ".USERAGENT-IE-LTE6 .class { prop: value }" if
-***REMOVED*** we are running IE6 we'll end up with ".class { prop: value }", thereby
-***REMOVED*** "activating" the selector.
-***REMOVED*** @param {CSSRule} cssRule The cssRule to potentially replace.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces a CSS selector if we have matches based on our useragent/version.
+ * Example: With a selector like ".USERAGENT-IE-LTE6 .class { prop: value }" if
+ * we are running IE6 we'll end up with ".class { prop: value }", thereby
+ * "activating" the selector.
+ * @param {CSSRule} cssRule The cssRule to potentially replace.
+ * @private
+ */
 goog.debug.DevCss.prototype.replaceBrowserSpecificClassNames_ = function(
     cssRule) {
 
@@ -340,18 +340,18 @@ goog.debug.DevCss.prototype.replaceBrowserSpecificClassNames_ = function(
   if (newCssText != currentCssText) {
     goog.cssom.replaceCssRule(cssRule, newCssText);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces IE6 combined selector rules with a workable development alternative.
-***REMOVED*** IE6 actually parses .class1.class2 {} to simply .class2 {} which is nasty.
-***REMOVED*** To fully support combined selectors in IE6 this function needs to be paired
-***REMOVED*** with a call to replace the relevant DOM elements classNames as well.
-***REMOVED*** @see {this.addIe6CombinedClassNames_}
-***REMOVED*** @param {CSSRule} cssRule The rule to potentially fix.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces IE6 combined selector rules with a workable development alternative.
+ * IE6 actually parses .class1.class2 {} to simply .class2 {} which is nasty.
+ * To fully support combined selectors in IE6 this function needs to be paired
+ * with a call to replace the relevant DOM elements classNames as well.
+ * @see {this.addIe6CombinedClassNames_}
+ * @param {CSSRule} cssRule The rule to potentially fix.
+ * @private
+ */
 goog.debug.DevCss.prototype.replaceIe6CombinedSelectors_ = function(cssRule) {
   // This match only ever works in IE because other UA's won't have our
   // IE6_SELECTOR_TEXT in the cssText property.
@@ -365,21 +365,21 @@ goog.debug.DevCss.prototype.replaceIe6CombinedSelectors_ = function(cssRule) {
       goog.cssom.replaceCssRule(cssRule, newCssText);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the appropriate new combined selector text for IE6.
-***REMOVED*** Also adds an entry onto ie6CombinedMatches_ with relevant info for the
-***REMOVED*** likely following call to walk the DOM and rewrite the class attribute.
-***REMOVED*** Example: With a selector like
-***REMOVED***     ".class2 { -goog-ie6-selector: .class1.class2; prop: value }".
-***REMOVED*** this function will return:
-***REMOVED***     ".class1_class2 { prop: value }".
-***REMOVED*** @param {string} cssText The CSS selector text and css rule text combined.
-***REMOVED*** @return {?string} The rewritten css rule text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the appropriate new combined selector text for IE6.
+ * Also adds an entry onto ie6CombinedMatches_ with relevant info for the
+ * likely following call to walk the DOM and rewrite the class attribute.
+ * Example: With a selector like
+ *     ".class2 { -goog-ie6-selector: .class1.class2; prop: value }".
+ * this function will return:
+ *     ".class1_class2 { prop: value }".
+ * @param {string} cssText The CSS selector text and css rule text combined.
+ * @return {?string} The rewritten css rule text.
+ * @private
+ */
 goog.debug.DevCss.prototype.getIe6CombinedSelectorText_ = function(cssText) {
   var regex = new RegExp(goog.debug.DevCss.CssToken_.IE6_SELECTOR_TEXT +
       '\\s*:\\s*\\"([^\\"]+)\\"', 'gi');
@@ -398,20 +398,20 @@ goog.debug.DevCss.prototype.getIe6CombinedSelectorText_ = function(cssText) {
         classNames: classNames,
         combinedClassName: combinedClassName,
         els: []
-     ***REMOVED*****REMOVED***
+      };
       this.ie6CombinedMatches_.push(entry);
     }
     return combinedSelectorText;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds combined selectors with underscores to make them "work" in IE6.
-***REMOVED*** @see {this.replaceIe6CombinedSelectors_}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds combined selectors with underscores to make them "work" in IE6.
+ * @see {this.replaceIe6CombinedSelectors_}
+ * @private
+ */
 goog.debug.DevCss.prototype.addIe6CombinedClassNames_ = function() {
   if (!this.ie6CombinedMatches_.length) {
     return;
@@ -444,4 +444,4 @@ goog.debug.DevCss.prototype.addIe6CombinedClassNames_ = function() {
       }
     }
   }
-***REMOVED***
+};

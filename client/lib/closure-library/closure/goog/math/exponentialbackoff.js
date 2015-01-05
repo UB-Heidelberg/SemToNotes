@@ -13,13 +13,13 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility class to manage the mathematics behind computing an
-***REMOVED*** exponential backoff model.  Given an initial backoff value and a maximum
-***REMOVED*** backoff value, every call to backoff() will double the value until maximum
-***REMOVED*** backoff value is reached.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Utility class to manage the mathematics behind computing an
+ * exponential backoff model.  Given an initial backoff value and a maximum
+ * backoff value, every call to backoff() will double the value until maximum
+ * backoff value is reached.
+ *
+ */
 
 
 goog.provide('goog.math.ExponentialBackoff');
@@ -28,76 +28,76 @@ goog.require('goog.asserts');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {number} initialValue The initial backoff value.
-***REMOVED*** @param {number} maxValue The maximum backoff value.
-***REMOVED***
+/**
+ * @constructor
+ *
+ * @param {number} initialValue The initial backoff value.
+ * @param {number} maxValue The maximum backoff value.
+ */
 goog.math.ExponentialBackoff = function(initialValue, maxValue) {
   goog.asserts.assert(initialValue > 0,
       'Initial value must be greater than zero.');
   goog.asserts.assert(maxValue >= initialValue,
       'Max value should be at least as large as initial value.');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.initialValue_ = initialValue;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.maxValue_ = maxValue;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current backoff value.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current backoff value.
+   * @type {number}
+   * @private
+   */
   this.currValue_ = initialValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The number of backoffs that have happened.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The number of backoffs that have happened.
+ * @type {number}
+ * @private
+ */
 goog.math.ExponentialBackoff.prototype.currCount_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Resets the backoff value to its initial value.
-***REMOVED***
+/**
+ * Resets the backoff value to its initial value.
+ */
 goog.math.ExponentialBackoff.prototype.reset = function() {
   this.currValue_ = this.initialValue_;
   this.currCount_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The current backoff value.
-***REMOVED***
+/**
+ * @return {number} The current backoff value.
+ */
 goog.math.ExponentialBackoff.prototype.getValue = function() {
   return this.currValue_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The number of times this class has backed off.
-***REMOVED***
+/**
+ * @return {number} The number of times this class has backed off.
+ */
 goog.math.ExponentialBackoff.prototype.getBackoffCount = function() {
   return this.currCount_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initiates a backoff.
-***REMOVED***
+/**
+ * Initiates a backoff.
+ */
 goog.math.ExponentialBackoff.prototype.backoff = function() {
-  this.currValue_ = Math.min(this.maxValue_, this.currValue_***REMOVED*** 2);
+  this.currValue_ = Math.min(this.maxValue_, this.currValue_ * 2);
   this.currCount_++;
-***REMOVED***
+};

@@ -16,7 +16,7 @@ goog.provide('goog.fx.AbstractDragDropTest');
 goog.setTestOnly('goog.fx.AbstractDragDropTest');
 
 goog.require('goog.array');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.fx.AbstractDragDrop');
 goog.require('goog.fx.DragDropItem');
@@ -50,10 +50,10 @@ var targets3 = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Test the utility function which tells how two one dimensional ranges
-***REMOVED*** overlap.
-***REMOVED***
+/**
+ * Test the utility function which tells how two one dimensional ranges
+ * overlap.
+ */
 function testRangeOverlap() {
   assertEquals(RangeOverlap.LEFT, rangeOverlap(1, 2, 3, 4));
   assertEquals(RangeOverlap.LEFT, rangeOverlap(2, 3, 3, 4));
@@ -68,10 +68,10 @@ function testRangeOverlap() {
 }
 
 
-***REMOVED***
-***REMOVED*** An enum describing how two ranges overlap (non-symmetrical relation).
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * An enum describing how two ranges overlap (non-symmetrical relation).
+ * @enum {number}
+ */
 RangeOverlap = {
   LEFT: 1,      // First range is placed to the left of the second.
   LEFT_IN: 2,   // First range overlaps on the left side of the second.
@@ -79,18 +79,18 @@ RangeOverlap = {
   RIGHT_IN: 4,  // First range overlaps on the right side of the second.
   RIGHT: 5,     // First range is placed to the right side of the second.
   CONTAINS: 6   // First range contains the second.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes how two one dimentional ranges overlap.
-***REMOVED***
-***REMOVED*** @param {number} left1 Left inclusive bound of the first range.
-***REMOVED*** @param {number} right1 Right exclusive bound of the first range.
-***REMOVED*** @param {number} left2 Left inclusive bound of the second range.
-***REMOVED*** @param {number} right2 Right exclusive bound of the second range.
-***REMOVED*** @return {RangeOverlap} The enum value describing the type of the overlap.
-***REMOVED***
+/**
+ * Computes how two one dimentional ranges overlap.
+ *
+ * @param {number} left1 Left inclusive bound of the first range.
+ * @param {number} right1 Right exclusive bound of the first range.
+ * @param {number} left2 Left inclusive bound of the second range.
+ * @param {number} right2 Right exclusive bound of the second range.
+ * @return {RangeOverlap} The enum value describing the type of the overlap.
+ */
 function rangeOverlap(left1, right1, left2, right2) {
   if (right1 <= left2) return RangeOverlap.LEFT;
   if (left1 >= right2) return RangeOverlap.RIGHT;
@@ -103,13 +103,13 @@ function rangeOverlap(left1, right1, left2, right2) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tells whether two boxes overlap.
-***REMOVED***
-***REMOVED*** @param {goog.math.Box} box1 First box in question.
-***REMOVED*** @param {goog.math.Box} box2 Second box in question.
-***REMOVED*** @return {boolean} Whether boxes overlap in any way.
-***REMOVED***
+/**
+ * Tells whether two boxes overlap.
+ *
+ * @param {goog.math.Box} box1 First box in question.
+ * @param {goog.math.Box} box2 Second box in question.
+ * @return {boolean} Whether boxes overlap in any way.
+ */
 function boxOverlaps(box1, box2) {
   var horizontalOverlap = rangeOverlap(
       box1.left, box1.right, box2.left, box2.right);
@@ -122,9 +122,9 @@ function boxOverlaps(box1, box2) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests if the utility function to compute box overlapping functions properly.
-***REMOVED***
+/**
+ * Tests if the utility function to compute box overlapping functions properly.
+ */
 function testBoxOverlaps() {
   // Overlapping tests.
   var box2 = new goog.math.Box(1, 4, 4, 1);
@@ -207,14 +207,14 @@ function testBoxOverlaps() {
 }
 
 
-***REMOVED***
-***REMOVED*** Checks whether a given box overlaps any of given DnD target boxes.
-***REMOVED***
-***REMOVED*** @param {goog.math.Box} box The box to check.
-***REMOVED*** @param {Array.<Object>} targets The array of targets with boxes to check
-***REMOVED***     if they overlap with the given box.
-***REMOVED*** @return {boolean} Whether the box overlaps any of the target boxes.
-***REMOVED***
+/**
+ * Checks whether a given box overlaps any of given DnD target boxes.
+ *
+ * @param {goog.math.Box} box The box to check.
+ * @param {Array.<Object>} targets The array of targets with boxes to check
+ *     if they overlap with the given box.
+ * @return {boolean} Whether the box overlaps any of the target boxes.
+ */
 function boxOverlapsTargets(box, targets) {
   return goog.array.some(targets, function(target) {
     return boxOverlaps(box, target.box_);
@@ -550,13 +550,13 @@ function testScrollBeforeMoveDrag() {
     'type': goog.events.EventType.MOUSEMOVE,
     'relatedTarget': childEl,
     'preventDefault': function() {}
- ***REMOVED*****REMOVED***
+  };
   group.startDrag(moveEvent, item);
 
   // Simulate scrolling before the first move drag event.
   var scrollEvent = {
     'target': container
- ***REMOVED*****REMOVED***
+  };
   assertNotThrows(goog.bind(group.containerScrollHandler_, group, scrollEvent));
 }
 
@@ -579,16 +579,16 @@ function testMouseMove_mouseOutBeforeThreshold() {
   var draggedItem = null;
   add.startDrag = function(event, item) {
     draggedItem = item;
- ***REMOVED*****REMOVED***
+  };
 
   var event = {'clientX': 8, 'clientY': 10, // Drag distance is only 2
-    'type': goog.events.EventType.MOUSEOUT, 'target': childEl***REMOVED***
+    'type': goog.events.EventType.MOUSEOUT, 'target': childEl};
   item.mouseMove_(event);
   assertEquals('DragStart should not be fired for mouseout on child element.',
       null, draggedItem);
 
   var event = {'clientX': 8, 'clientY': 10, // Drag distance is only 2
-    'type': goog.events.EventType.MOUSEOUT, 'target': itemEl***REMOVED***
+    'type': goog.events.EventType.MOUSEOUT, 'target': itemEl};
   item.mouseMove_(event);
   assertEquals('DragStart should be fired for mouseout on main element.',
       item, draggedItem);
@@ -626,10 +626,10 @@ function drawTargets(targets, multiplier) {
   for (var i = 0; i < targets.length; i++) {
     var box = targets[i].box_;
     var el = document.createElement('div');
-    el.style.top = (box.top***REMOVED*** multiplier) + 'px';
-    el.style.left = (box.left***REMOVED*** multiplier) + 'px';
-    el.style.width = ((box.right - box.left)***REMOVED*** multiplier) + 'px';
-    el.style.height = ((box.bottom - box.top)***REMOVED*** multiplier) + 'px';
+    el.style.top = (box.top * multiplier) + 'px';
+    el.style.left = (box.left * multiplier) + 'px';
+    el.style.width = ((box.right - box.left) * multiplier) + 'px';
+    el.style.height = ((box.bottom - box.top) * multiplier) + 'px';
     el.style.backgroundColor = colors[i];
     cont.appendChild(el);
   }

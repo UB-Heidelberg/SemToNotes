@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Datastructure: Priority Pool.
-***REMOVED***
-***REMOVED***
-***REMOVED*** An extending of Pool that handles queueing and prioritization.
-***REMOVED***
+/**
+ * @fileoverview Datastructure: Priority Pool.
+ *
+ *
+ * An extending of Pool that handles queueing and prioritization.
+ */
 
 
 goog.provide('goog.structs.PriorityPool');
@@ -27,25 +27,25 @@ goog.require('goog.structs.PriorityQueue');
 
 
 
-***REMOVED***
-***REMOVED*** A generic pool class. If max is greater than min, an error is thrown.
-***REMOVED*** @param {number=} opt_minCount Min. number of objects (Default: 1).
-***REMOVED*** @param {number=} opt_maxCount Max. number of objects (Default: 10).
-***REMOVED***
-***REMOVED*** @extends {goog.structs.Pool.<VALUE>}
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * A generic pool class. If max is greater than min, an error is thrown.
+ * @param {number=} opt_minCount Min. number of objects (Default: 1).
+ * @param {number=} opt_maxCount Max. number of objects (Default: 10).
+ * @constructor
+ * @extends {goog.structs.Pool.<VALUE>}
+ * @template VALUE
+ */
 goog.structs.PriorityPool = function(opt_minCount, opt_maxCount) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The key for the most recent timeout created.
-  ***REMOVED*** @private {number|undefined}
- ***REMOVED*****REMOVED***
+  /**
+   * The key for the most recent timeout created.
+   * @private {number|undefined}
+   */
   this.delayTimeout_ = undefined;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Queue of requests for pool objects.
-  ***REMOVED*** @private {goog.structs.PriorityQueue.<VALUE>}
- ***REMOVED*****REMOVED***
+  /**
+   * Queue of requests for pool objects.
+   * @private {goog.structs.PriorityQueue.<VALUE>}
+   */
   this.requestQueue_ = new goog.structs.PriorityQueue();
 
   // Must break convention of putting the super-class's constructor first. This
@@ -53,19 +53,19 @@ goog.structs.PriorityPool = function(opt_minCount, opt_maxCount) {
   // class overrides. In this class's implementation, it assumes that there
   // is a requestQueue_, and will error if not present.
   goog.structs.Pool.call(this, opt_minCount, opt_maxCount);
-***REMOVED***
+};
 goog.inherits(goog.structs.PriorityPool, goog.structs.Pool);
 
 
-***REMOVED***
-***REMOVED*** Default priority for pool objects requests.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Default priority for pool objects requests.
+ * @type {number}
+ * @private
+ */
 goog.structs.PriorityPool.DEFAULT_PRIORITY_ = 100;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.structs.PriorityPool.prototype.setDelay = function(delay) {
   goog.structs.PriorityPool.base(this, 'setDelay', delay);
 
@@ -81,21 +81,21 @@ goog.structs.PriorityPool.prototype.setDelay = function(delay) {
 
   // Handle all requests.
   this.handleQueueRequests_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get a new object from the the pool, if there is one available, otherwise
-***REMOVED*** return undefined.
-***REMOVED*** @param {Function=} opt_callback The function to callback when an object is
-***REMOVED***     available. This could be immediately. If this is not present, then an
-***REMOVED***     object is immediately returned if available, or undefined if not.
-***REMOVED*** @param {number=} opt_priority The priority of the request. A smaller value
-***REMOVED***     means a higher priority.
-***REMOVED*** @return {VALUE|undefined} The new object from the pool if there is one
-***REMOVED***     available and a callback is not given. Otherwise, undefined.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Get a new object from the the pool, if there is one available, otherwise
+ * return undefined.
+ * @param {Function=} opt_callback The function to callback when an object is
+ *     available. This could be immediately. If this is not present, then an
+ *     object is immediately returned if available, or undefined if not.
+ * @param {number=} opt_priority The priority of the request. A smaller value
+ *     means a higher priority.
+ * @return {VALUE|undefined} The new object from the pool if there is one
+ *     available and a callback is not given. Otherwise, undefined.
+ * @override
+ */
 goog.structs.PriorityPool.prototype.getObject = function(opt_callback,
                                                          opt_priority) {
   if (!opt_callback) {
@@ -116,14 +116,14 @@ goog.structs.PriorityPool.prototype.getObject = function(opt_callback,
   this.handleQueueRequests_();
 
   return undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the request queue. Tries to fires off as many queued requests as
-***REMOVED*** possible.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the request queue. Tries to fires off as many queued requests as
+ * possible.
+ * @private
+ */
 goog.structs.PriorityPool.prototype.handleQueueRequests_ = function() {
   var requestQueue = this.requestQueue_;
   while (requestQueue.getCount() > 0) {
@@ -136,47 +136,47 @@ goog.structs.PriorityPool.prototype.handleQueueRequests_ = function() {
       requestCallback.apply(this, [obj]);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an object to the collection of objects that are free. If the object can
-***REMOVED*** not be added, then it is disposed.
-***REMOVED***
-***REMOVED*** NOTE: This method does not remove the object from the in use collection.
-***REMOVED***
-***REMOVED*** @param {VALUE} obj The object to add to the collection of free objects.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Adds an object to the collection of objects that are free. If the object can
+ * not be added, then it is disposed.
+ *
+ * NOTE: This method does not remove the object from the in use collection.
+ *
+ * @param {VALUE} obj The object to add to the collection of free objects.
+ * @override
+ */
 goog.structs.PriorityPool.prototype.addFreeObject = function(obj) {
   goog.structs.PriorityPool.superClass_.addFreeObject.call(this, obj);
 
   // Handle all requests.
   this.handleQueueRequests_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adjusts the objects held in the pool to be within the min/max constraints.
-***REMOVED***
-***REMOVED*** NOTE: It is possible that the number of objects in the pool will still be
-***REMOVED*** greater than the maximum count of objects allowed. This will be the case
-***REMOVED*** if no more free objects can be disposed of to get below the minimum count
-***REMOVED*** (i.e., all objects are in use).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Adjusts the objects held in the pool to be within the min/max constraints.
+ *
+ * NOTE: It is possible that the number of objects in the pool will still be
+ * greater than the maximum count of objects allowed. This will be the case
+ * if no more free objects can be disposed of to get below the minimum count
+ * (i.e., all objects are in use).
+ * @override
+ */
 goog.structs.PriorityPool.prototype.adjustForMinMax = function() {
   goog.structs.PriorityPool.superClass_.adjustForMinMax.call(this);
 
   // Handle all requests.
   this.handleQueueRequests_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.structs.PriorityPool.prototype.disposeInternal = function() {
   goog.structs.PriorityPool.superClass_.disposeInternal.call(this);
   goog.global.clearTimeout(this.delayTimeout_);
   this.requestQueue_.clear();
   this.requestQueue_ = null;
-***REMOVED***
+};

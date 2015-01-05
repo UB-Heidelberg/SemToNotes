@@ -14,7 +14,7 @@ describe("var statements", function() {
         });
 
         it("attach the docs to the first constant", function() {
-            expect(found[0][0].comment).toEqual('***REMOVED*** document me***REMOVED***');
+            expect(found[0][0].comment).toEqual('/** document me */');
         });
 
         it("should have a correct short name", function() {
@@ -40,7 +40,7 @@ describe("var statements", function() {
 
     describe('When a member of a series of vars are documented.', function() {
         it("should attach the docs to the correct var", function() {
-            expect(found[4][0].comment).toEqual('***REMOVED*** document me***REMOVED***');
+            expect(found[4][0].comment).toEqual('/** document me */');
         });
 
         it("should hav a correct short name", function() {

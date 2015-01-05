@@ -1,10 +1,10 @@
-***REMOVED*** (scope tags for global objects do not override globalness hence need a container class)
-***REMOVED*** @module scopetags***REMOVED***
-***REMOVED*** @inner***REMOVED***
+/** (scope tags for global objects do not override globalness hence need a container class)
+ * @module scopetags */
+/** @inner */
 var myInner;
 
-***REMOVED*** @instance***REMOVED***
+/** @instance */
 var myInstance;
 
-***REMOVED*** @static***REMOVED***
+/** @static */
 var myStatic;

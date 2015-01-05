@@ -38,7 +38,7 @@ function setUp() {
   tabHandler.handleTabKey = function(e) {
     handleTabKeyCalled = true;
     return true;
- ***REMOVED*****REMOVED***
+  };
 }
 
 function tearDown() {

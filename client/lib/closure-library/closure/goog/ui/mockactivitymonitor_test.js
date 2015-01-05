@@ -13,15 +13,15 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for goog.ui.MockActivityMonitorTest.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Tests for goog.ui.MockActivityMonitorTest.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.ui.MockActivityMonitorTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.testing.jsunit');
 goog.require('goog.testing.recordFunction');
@@ -39,7 +39,7 @@ function setUp() {
   monitor = new goog.ui.MockActivityMonitor();
   recordedFunction = goog.testing.recordFunction();
 
-***REMOVED***
+  goog.events.listen(
       monitor,
       goog.ui.ActivityMonitor.Event.ACTIVITY,
       recordedFunction);
@@ -83,7 +83,7 @@ function testDispatchEventPreventDefault() {
       recordedFunction);
 
   // Listen with a function that cancels the event.
-***REMOVED***
+  goog.events.listen(
       monitor,
       goog.ui.ActivityMonitor.Event.ACTIVITY,
       function(e) {

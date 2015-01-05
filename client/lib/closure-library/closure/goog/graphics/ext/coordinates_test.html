@@ -49,7 +49,7 @@ See the COPYING file for details.
   function testGenericGetValue() {
     var getValue = goog.graphics.ext.coordinates.getValue;
 
-    var cache = {***REMOVED***
+    var cache = {};
 
     assertEquals('Testing 50%', 50,
         getValue('50%', false, 100, 2, cache));
@@ -64,7 +64,7 @@ See the COPYING file for details.
     assertEquals('Testing cache usage', 'OVERWRITE',
         getValue('50%', false, 100, 2, cache));
 
-    cache = {***REMOVED***
+    cache = {};
 
     assertEquals('Testing 0%', 0,
         getValue('0%', false, 100, 2, cache));

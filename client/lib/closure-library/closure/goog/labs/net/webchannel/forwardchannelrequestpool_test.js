@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for
-***REMOVED*** goog.labs.net.webChannel.ForwardChannelRequestPool.
-***REMOVED*** @suppress {accessControls} Private methods are accessed for test purposes.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for
+ * goog.labs.net.webChannel.ForwardChannelRequestPool.
+ * @suppress {accessControls} Private methods are accessed for test purposes.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.forwardChannelRequestPoolTest');

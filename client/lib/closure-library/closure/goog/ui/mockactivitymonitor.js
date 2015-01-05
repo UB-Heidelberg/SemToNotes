@@ -12,43 +12,43 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of goog.ui.MockActivityMonitor.
-***REMOVED***
+/**
+ * @fileoverview Definition of goog.ui.MockActivityMonitor.
+ */
 
 goog.provide('goog.ui.MockActivityMonitor');
 
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.ui.ActivityMonitor');
 
 
 
-***REMOVED***
-***REMOVED*** A mock implementation of goog.ui.ActivityMonitor for unit testing. Clients
-***REMOVED*** of this class should override goog.now to return a synthetic time from
-***REMOVED*** the unit test.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ActivityMonitor}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A mock implementation of goog.ui.ActivityMonitor for unit testing. Clients
+ * of this class should override goog.now to return a synthetic time from
+ * the unit test.
+ * @constructor
+ * @extends {goog.ui.ActivityMonitor}
+ * @final
+ */
 goog.ui.MockActivityMonitor = function() {
   goog.ui.MockActivityMonitor.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tracks whether an event has been fired. Used by simulateEvent.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Tracks whether an event has been fired. Used by simulateEvent.
+   * @type {boolean}
+   * @private
+   */
   this.eventFired_ = false;
-***REMOVED***
+};
 goog.inherits(goog.ui.MockActivityMonitor, goog.ui.ActivityMonitor);
 
 
-***REMOVED***
-***REMOVED*** Simulates an event that updates the user to being non-idle.
-***REMOVED*** @param {goog.events.EventType=} opt_type The type of event that made the user
-***REMOVED***     not idle. If not specified, defaults to MOUSEMOVE.
-***REMOVED***
+/**
+ * Simulates an event that updates the user to being non-idle.
+ * @param {goog.events.EventType=} opt_type The type of event that made the user
+ *     not idle. If not specified, defaults to MOUSEMOVE.
+ */
 goog.ui.MockActivityMonitor.prototype.simulateEvent = function(opt_type) {
   var eventTime = goog.now();
   var eventType = opt_type || goog.events.EventType.MOUSEMOVE;
@@ -59,14 +59,14 @@ goog.ui.MockActivityMonitor.prototype.simulateEvent = function(opt_type) {
   if (!this.eventFired_) {
     this.dispatchEvent(goog.ui.ActivityMonitor.Event.ACTIVITY);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.ui.MockActivityMonitor.prototype.dispatchEvent = function(e) {
   var rv = goog.ui.MockActivityMonitor.base(this, 'dispatchEvent', e);
   this.eventFired_ = true;
   return rv;
-***REMOVED***
+};

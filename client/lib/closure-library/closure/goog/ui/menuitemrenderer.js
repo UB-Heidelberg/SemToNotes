@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.MenuItem}s.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.MenuItem}s.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.MenuItemRenderer');
 
@@ -30,61 +30,61 @@ goog.require('goog.ui.ControlRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.MenuItem}s.  Each item has the following
-***REMOVED*** structure:
-***REMOVED*** <pre>
-***REMOVED***   <div class="goog-menuitem">
-***REMOVED***     <div class="goog-menuitem-content">
-***REMOVED***       ...(menu item contents)...
-***REMOVED***     </div>
-***REMOVED***   </div>
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ControlRenderer}
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.MenuItem}s.  Each item has the following
+ * structure:
+ * <pre>
+ *   <div class="goog-menuitem">
+ *     <div class="goog-menuitem-content">
+ *       ...(menu item contents)...
+ *     </div>
+ *   </div>
+ * </pre>
+ * @constructor
+ * @extends {goog.ui.ControlRenderer}
+ */
 goog.ui.MenuItemRenderer = function() {
   goog.ui.ControlRenderer.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Commonly used CSS class names, cached here for convenience (and to avoid
-  ***REMOVED*** unnecessary string concatenation).
-  ***REMOVED*** @type {!Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Commonly used CSS class names, cached here for convenience (and to avoid
+   * unnecessary string concatenation).
+   * @type {!Array.<string>}
+   * @private
+   */
   this.classNameCache_ = [];
-***REMOVED***
+};
 goog.inherits(goog.ui.MenuItemRenderer, goog.ui.ControlRenderer);
 goog.addSingletonGetter(goog.ui.MenuItemRenderer);
 
 
-***REMOVED***
-***REMOVED*** CSS class name the renderer applies to menu item elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS class name the renderer applies to menu item elements.
+ * @type {string}
+ */
 goog.ui.MenuItemRenderer.CSS_CLASS = goog.getCssName('goog-menuitem');
 
 
-***REMOVED***
-***REMOVED*** Constants for referencing composite CSS classes.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Constants for referencing composite CSS classes.
+ * @enum {number}
+ * @private
+ */
 goog.ui.MenuItemRenderer.CompositeCssClassIndex_ = {
   HOVER: 0,
   CHECKBOX: 1,
   CONTENT: 2
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the composite CSS class by using the cached value or by constructing
-***REMOVED*** the value from the base CSS class and the passed index.
-***REMOVED*** @param {goog.ui.MenuItemRenderer.CompositeCssClassIndex_} index Index for the
-***REMOVED***     CSS class - could be highlight, checkbox or content in usual cases.
-***REMOVED*** @return {string} The composite CSS class.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the composite CSS class by using the cached value or by constructing
+ * the value from the base CSS class and the passed index.
+ * @param {goog.ui.MenuItemRenderer.CompositeCssClassIndex_} index Index for the
+ *     CSS class - could be highlight, checkbox or content in usual cases.
+ * @return {string} The composite CSS class.
+ * @private
+ */
 goog.ui.MenuItemRenderer.prototype.getCompositeCssClass_ = function(index) {
   var result = this.classNameCache_[index];
   if (!result) {
@@ -103,22 +103,22 @@ goog.ui.MenuItemRenderer.prototype.getCompositeCssClass_ = function(index) {
   }
 
   return result;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.MenuItemRenderer.prototype.getAriaRole = function() {
   return goog.a11y.aria.Role.MENU_ITEM;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#createDom} by adding extra markup
-***REMOVED*** and stying to the menu item's element if it is selectable or checkable.
-***REMOVED*** @param {goog.ui.Control} item Menu item to render.
-***REMOVED*** @return {Element} Root element for the item.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#createDom} by adding extra markup
+ * and stying to the menu item's element if it is selectable or checkable.
+ * @param {goog.ui.Control} item Menu item to render.
+ * @return {Element} Root element for the item.
+ * @override
+ */
 goog.ui.MenuItemRenderer.prototype.createDom = function(item) {
   var element = item.getDomHelper().createDom(
       'div', this.getClassNames(item).join(' '),
@@ -129,24 +129,24 @@ goog.ui.MenuItemRenderer.prototype.createDom = function(item) {
   this.setAriaStates(item, element);
   this.correctAriaRole(item, element);
   return element;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.MenuItemRenderer.prototype.getContentElement = function(element) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (element && element.firstChild);
-***REMOVED***
+  return /** @type {Element} */ (element && element.firstChild);
+};
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#decorate} by initializing the
-***REMOVED*** menu item to checkable based on whether the element to be decorated has
-***REMOVED*** extra stying indicating that it should be.
-***REMOVED*** @param {goog.ui.Control} item Menu item instance to decorate the element.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {Element} Decorated element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#decorate} by initializing the
+ * menu item to checkable based on whether the element to be decorated has
+ * extra stying indicating that it should be.
+ * @param {goog.ui.Control} item Menu item instance to decorate the element.
+ * @param {Element} element Element to decorate.
+ * @return {Element} Decorated element.
+ * @override
+ */
 goog.ui.MenuItemRenderer.prototype.decorate = function(item, element) {
   goog.asserts.assert(element);
   if (!this.hasContentStructure(element)) {
@@ -154,24 +154,24 @@ goog.ui.MenuItemRenderer.prototype.decorate = function(item, element) {
         this.createContent(element.childNodes, item.getDomHelper()));
   }
   if (goog.dom.classlist.contains(element, goog.getCssName('goog-option'))) {
-    (***REMOVED*** @type {goog.ui.MenuItem}***REMOVED*** (item)).setCheckable(true);
+    (/** @type {goog.ui.MenuItem} */ (item)).setCheckable(true);
     this.setCheckable(item, element, true);
   }
   return goog.ui.MenuItemRenderer.superClass_.decorate.call(this, item,
       element);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a menu item's root element, and sets its content to the given text
-***REMOVED*** caption or DOM structure.  Overrides the superclass immplementation by
-***REMOVED*** making sure that the checkbox structure (for selectable/checkable menu
-***REMOVED*** items) is preserved.
-***REMOVED*** @param {Element} element The item's root element.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to be
-***REMOVED***     set as the item's content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a menu item's root element, and sets its content to the given text
+ * caption or DOM structure.  Overrides the superclass immplementation by
+ * making sure that the checkbox structure (for selectable/checkable menu
+ * items) is preserved.
+ * @param {Element} element The item's root element.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to be
+ *     set as the item's content.
+ * @override
+ */
 goog.ui.MenuItemRenderer.prototype.setContent = function(element, content) {
   // Save the checkbox element, if present.
   var contentElement = this.getContentElement(element);
@@ -183,83 +183,83 @@ goog.ui.MenuItemRenderer.prototype.setContent = function(element, content) {
     contentElement.insertBefore(checkBoxElement,
         contentElement.firstChild || null);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the element appears to have a proper menu item structure by
-***REMOVED*** checking whether its first child has the appropriate structural class name.
-***REMOVED*** @param {Element} element Element to check.
-***REMOVED*** @return {boolean} Whether the element appears to have a proper menu item DOM.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns true if the element appears to have a proper menu item structure by
+ * checking whether its first child has the appropriate structural class name.
+ * @param {Element} element Element to check.
+ * @return {boolean} Whether the element appears to have a proper menu item DOM.
+ * @protected
+ */
 goog.ui.MenuItemRenderer.prototype.hasContentStructure = function(element) {
   var child = goog.dom.getFirstElementChild(element);
   var contentClassName = this.getCompositeCssClass_(
       goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT);
   return !!child && goog.dom.classlist.contains(child, contentClassName);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wraps the given text caption or existing DOM node(s) in a structural element
-***REMOVED*** containing the menu item's contents.
-***REMOVED*** @param {goog.ui.ControlContent} content Menu item contents.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper for document interaction.
-***REMOVED*** @return {Element} Menu item content element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Wraps the given text caption or existing DOM node(s) in a structural element
+ * containing the menu item's contents.
+ * @param {goog.ui.ControlContent} content Menu item contents.
+ * @param {goog.dom.DomHelper} dom DOM helper for document interaction.
+ * @return {Element} Menu item content element.
+ * @protected
+ */
 goog.ui.MenuItemRenderer.prototype.createContent = function(content, dom) {
   var contentClassName = this.getCompositeCssClass_(
       goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CONTENT);
   return dom.createDom('div', contentClassName, content);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables/disables radio button semantics on the menu item.
-***REMOVED*** @param {goog.ui.Control} item Menu item to update.
-***REMOVED*** @param {Element} element Menu item element to update (may be null if the
-***REMOVED***     item hasn't been rendered yet).
-***REMOVED*** @param {boolean} selectable Whether the item should be selectable.
-***REMOVED***
+/**
+ * Enables/disables radio button semantics on the menu item.
+ * @param {goog.ui.Control} item Menu item to update.
+ * @param {Element} element Menu item element to update (may be null if the
+ *     item hasn't been rendered yet).
+ * @param {boolean} selectable Whether the item should be selectable.
+ */
 goog.ui.MenuItemRenderer.prototype.setSelectable = function(item, element,
     selectable) {
   if (element) {
     goog.a11y.aria.setRole(element,
         selectable ?
         goog.a11y.aria.Role.MENU_ITEM_RADIO :
-       ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.getAriaRole()));
+        /** @type {string} */ (this.getAriaRole()));
     this.setEnableCheckBoxStructure(item, element, selectable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enables/disables checkbox semantics on the menu item.
-***REMOVED*** @param {goog.ui.Control} item Menu item to update.
-***REMOVED*** @param {Element} element Menu item element to update (may be null if the
-***REMOVED***     item hasn't been rendered yet).
-***REMOVED*** @param {boolean} checkable Whether the item should be checkable.
-***REMOVED***
+/**
+ * Enables/disables checkbox semantics on the menu item.
+ * @param {goog.ui.Control} item Menu item to update.
+ * @param {Element} element Menu item element to update (may be null if the
+ *     item hasn't been rendered yet).
+ * @param {boolean} checkable Whether the item should be checkable.
+ */
 goog.ui.MenuItemRenderer.prototype.setCheckable = function(item, element,
     checkable) {
   if (element) {
     goog.a11y.aria.setRole(element,
         checkable ?
         goog.a11y.aria.Role.MENU_ITEM_CHECKBOX :
-       ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (this.getAriaRole()));
+        /** @type {string} */ (this.getAriaRole()));
     this.setEnableCheckBoxStructure(item, element, checkable);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether the item contains a checkbox element.
-***REMOVED*** @param {Element} element Menu item root element.
-***REMOVED*** @return {boolean} Whether the element contains a checkbox element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Determines whether the item contains a checkbox element.
+ * @param {Element} element Menu item root element.
+ * @return {boolean} Whether the element contains a checkbox element.
+ * @protected
+ */
 goog.ui.MenuItemRenderer.prototype.hasCheckBoxStructure = function(element) {
   var contentElement = this.getContentElement(element);
   if (contentElement) {
@@ -267,22 +267,22 @@ goog.ui.MenuItemRenderer.prototype.hasCheckBoxStructure = function(element) {
     var checkboxClassName = this.getCompositeCssClass_(
         goog.ui.MenuItemRenderer.CompositeCssClassIndex_.CHECKBOX);
     return !!child && goog.dom.isElement(child) &&
-        goog.dom.classlist.contains(***REMOVED*** @type {!Element}***REMOVED*** (child),
+        goog.dom.classlist.contains(/** @type {!Element} */ (child),
             checkboxClassName);
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds or removes extra markup and CSS styling to the menu item to make it
-***REMOVED*** selectable or non-selectable, depending on the value of the
-***REMOVED*** {@code selectable} argument.
-***REMOVED*** @param {goog.ui.Control} item Menu item to update.
-***REMOVED*** @param {Element} element Menu item element to update.
-***REMOVED*** @param {boolean} enable Whether to add or remove the checkbox structure.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Adds or removes extra markup and CSS styling to the menu item to make it
+ * selectable or non-selectable, depending on the value of the
+ * {@code selectable} argument.
+ * @param {goog.ui.Control} item Menu item to update.
+ * @param {Element} element Menu item element to update.
+ * @param {boolean} enable Whether to add or remove the checkbox structure.
+ * @protected
+ */
 goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function(item,
     element, enable) {
   goog.asserts.assert(element);
@@ -301,19 +301,19 @@ goog.ui.MenuItemRenderer.prototype.setEnableCheckBoxStructure = function(item,
       contentElement.removeChild(contentElement.firstChild);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a single {@link goog.ui.Component.State}, and returns the
-***REMOVED*** corresponding CSS class name (null if none).  Overrides the superclass
-***REMOVED*** implementation by using 'highlight' as opposed to 'hover' as the CSS
-***REMOVED*** class name suffix for the HOVER state, for backwards compatibility.
-***REMOVED*** @param {goog.ui.Component.State} state Component state.
-***REMOVED*** @return {string|undefined} CSS class representing the given state
-***REMOVED***     (undefined if none).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a single {@link goog.ui.Component.State}, and returns the
+ * corresponding CSS class name (null if none).  Overrides the superclass
+ * implementation by using 'highlight' as opposed to 'hover' as the CSS
+ * class name suffix for the HOVER state, for backwards compatibility.
+ * @param {goog.ui.Component.State} state Component state.
+ * @return {string|undefined} CSS class representing the given state
+ *     (undefined if none).
+ * @override
+ */
 goog.ui.MenuItemRenderer.prototype.getClassForState = function(state) {
   switch (state) {
     case goog.ui.Component.State.HOVER:
@@ -329,20 +329,20 @@ goog.ui.MenuItemRenderer.prototype.getClassForState = function(state) {
       return goog.ui.MenuItemRenderer.superClass_.getClassForState.call(this,
           state);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a single CSS class name which may represent a component state, and
-***REMOVED*** returns the corresponding component state (0x00 if none).  Overrides the
-***REMOVED*** superclass implementation by treating 'goog-option-selected' as special,
-***REMOVED*** for backwards compatibility.
-***REMOVED*** @param {string} className CSS class name, possibly representing a component
-***REMOVED***     state.
-***REMOVED*** @return {goog.ui.Component.State} state Component state corresponding
-***REMOVED***     to the given CSS class (0x00 if none).
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a single CSS class name which may represent a component state, and
+ * returns the corresponding component state (0x00 if none).  Overrides the
+ * superclass implementation by treating 'goog-option-selected' as special,
+ * for backwards compatibility.
+ * @param {string} className CSS class name, possibly representing a component
+ *     state.
+ * @return {goog.ui.Component.State} state Component state corresponding
+ *     to the given CSS class (0x00 if none).
+ * @override
+ */
 goog.ui.MenuItemRenderer.prototype.getStateFromClass = function(className) {
   var hoverClassName = this.getCompositeCssClass_(
       goog.ui.MenuItemRenderer.CompositeCssClassIndex_.HOVER);
@@ -355,20 +355,20 @@ goog.ui.MenuItemRenderer.prototype.getStateFromClass = function(className) {
       return goog.ui.MenuItemRenderer.superClass_.getStateFromClass.call(this,
           className);
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.MenuItemRenderer.prototype.getCssClass = function() {
   return goog.ui.MenuItemRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Corrects the ARIA role based on checkable and selectable.
-***REMOVED*** @param {goog.ui.Control} item The owner menu item.
-***REMOVED*** @param {Element} element The element.
-***REMOVED***
+/**
+ * Corrects the ARIA role based on checkable and selectable.
+ * @param {goog.ui.Control} item The owner menu item.
+ * @param {Element} element The element.
+ */
 goog.ui.MenuItemRenderer.prototype.correctAriaRole = function(item, element) {
   if (item.isSupportedState(goog.ui.Component.State.SELECTED) ||
       item.isSupportedState(goog.ui.Component.State.CHECKED)) {
@@ -377,4 +377,4 @@ goog.ui.MenuItemRenderer.prototype.correctAriaRole = function(item, element) {
         goog.a11y.aria.Role.MENU_ITEM_CHECKBOX :
         goog.a11y.aria.Role.MENU_ITEM_RADIO);
   }
-***REMOVED***
+};

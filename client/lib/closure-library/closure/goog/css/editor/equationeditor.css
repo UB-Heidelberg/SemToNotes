@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** The CSS definition for everything inside equation editor dialog.
-***REMOVED***
-***REMOVED*** Author: yoah@google.com (Yoah Bar-David)
-***REMOVED*** Author: kfk@google.com (Ming Zhang)
-***REMOVED***
+ * The CSS definition for everything inside equation editor dialog.
+ *
+ * Author: yoah@google.com (Yoah Bar-David)
+ * Author: kfk@google.com (Ming Zhang)
+ */
 
 .ee-modal-dialog {
   width: 475px;

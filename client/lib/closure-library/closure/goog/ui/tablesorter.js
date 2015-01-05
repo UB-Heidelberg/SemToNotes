@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A table sorting decorator.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @see ../demos/tablesorter.html
-***REMOVED***
+/**
+ * @fileoverview A table sorting decorator.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @see ../demos/tablesorter.html
+ */
 
 goog.provide('goog.ui.TableSorter');
 goog.provide('goog.ui.TableSorter.EventType');
@@ -26,98 +26,98 @@ goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.ui.Component');
 
 
 
-***REMOVED***
-***REMOVED*** A table sorter allows for sorting of a table by column.  This component can
-***REMOVED*** be used to decorate an already existing TABLE element with sorting
-***REMOVED*** features.
-***REMOVED***
-***REMOVED*** The TABLE should use a THEAD containing TH elements for the table column
-***REMOVED*** headers.
-***REMOVED***
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***     document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * A table sorter allows for sorting of a table by column.  This component can
+ * be used to decorate an already existing TABLE element with sorting
+ * features.
+ *
+ * The TABLE should use a THEAD containing TH elements for the table column
+ * headers.
+ *
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *     document interaction.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.TableSorter = function(opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current sort header of the table, or null if none.
-  ***REMOVED*** @type {HTMLTableCellElement}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current sort header of the table, or null if none.
+   * @type {HTMLTableCellElement}
+   * @private
+   */
   this.header_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the last sort was in reverse.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the last sort was in reverse.
+   * @type {boolean}
+   * @private
+   */
   this.reversed_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The default sorting function.
-  ***REMOVED*** @type {function(*,***REMOVED***) : number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The default sorting function.
+   * @type {function(*, *) : number}
+   * @private
+   */
   this.defaultSortFunction_ = goog.ui.TableSorter.numericSort;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of custom sorting functions per colun.
-  ***REMOVED*** @type {Array.<function(*,***REMOVED***) : number>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array of custom sorting functions per colun.
+   * @type {Array.<function(*, *) : number>}
+   * @private
+   */
   this.sortFunctions_ = [];
-***REMOVED***
+};
 goog.inherits(goog.ui.TableSorter, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** Row number (in <thead>) to use for sorting.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Row number (in <thead>) to use for sorting.
+ * @type {number}
+ * @private
+ */
 goog.ui.TableSorter.prototype.sortableHeaderRowIndex_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Sets the row index (in <thead>) to be used for sorting.
-***REMOVED*** By default, the first row (index 0) is used.
-***REMOVED*** Must be called before decorate() is called.
-***REMOVED*** @param {number} index The row index.
-***REMOVED***
+/**
+ * Sets the row index (in <thead>) to be used for sorting.
+ * By default, the first row (index 0) is used.
+ * Must be called before decorate() is called.
+ * @param {number} index The row index.
+ */
 goog.ui.TableSorter.prototype.setSortableHeaderRowIndex = function(index) {
   if (this.isInDocument()) {
     throw Error(goog.ui.Component.Error.ALREADY_RENDERED);
   }
   this.sortableHeaderRowIndex_ = index;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Table sorter events.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Table sorter events.
+ * @enum {string}
+ */
 goog.ui.TableSorter.EventType = {
   BEFORESORT: 'beforesort',
   SORT: 'sort'
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.TableSorter.prototype.canDecorate = function(element) {
   return element.tagName == goog.dom.TagName.TABLE;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.TableSorter.prototype.enterDocument = function() {
   goog.ui.TableSorter.superClass_.enterDocument.call(this);
 
@@ -125,75 +125,75 @@ goog.ui.TableSorter.prototype.enterDocument = function() {
   var headerRow = table.tHead.rows[this.sortableHeaderRowIndex_];
 
   this.getHandler().listen(headerRow, goog.events.EventType.CLICK, this.sort_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The current sort column of the table, or -1 if none.
-***REMOVED***
+/**
+ * @return {number} The current sort column of the table, or -1 if none.
+ */
 goog.ui.TableSorter.prototype.getSortColumn = function() {
   return this.header_ ? this.header_.cellIndex : -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the last sort was in reverse.
-***REMOVED***
+/**
+ * @return {boolean} Whether the last sort was in reverse.
+ */
 goog.ui.TableSorter.prototype.isSortReversed = function() {
   return this.reversed_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {function(*,***REMOVED***) : number} The default sort function to be used by
-***REMOVED***     all columns.
-***REMOVED***
+/**
+ * @return {function(*, *) : number} The default sort function to be used by
+ *     all columns.
+ */
 goog.ui.TableSorter.prototype.getDefaultSortFunction = function() {
   return this.defaultSortFunction_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the default sort function to be used by all columns.  If not set
-***REMOVED*** explicitly, this defaults to numeric sorting.
-***REMOVED*** @param {function(*,***REMOVED***) : number} sortFunction The new default sort function.
-***REMOVED***
+/**
+ * Sets the default sort function to be used by all columns.  If not set
+ * explicitly, this defaults to numeric sorting.
+ * @param {function(*, *) : number} sortFunction The new default sort function.
+ */
 goog.ui.TableSorter.prototype.setDefaultSortFunction = function(sortFunction) {
   this.defaultSortFunction_ = sortFunction;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the sort function to be used by the given column.  Returns the default
-***REMOVED*** sort function if no sort function is explicitly set for this column.
-***REMOVED*** @param {number} column The column index.
-***REMOVED*** @return {function(*,***REMOVED***) : number} The sort function used by the column.
-***REMOVED***
+/**
+ * Gets the sort function to be used by the given column.  Returns the default
+ * sort function if no sort function is explicitly set for this column.
+ * @param {number} column The column index.
+ * @return {function(*, *) : number} The sort function used by the column.
+ */
 goog.ui.TableSorter.prototype.getSortFunction = function(column) {
   return this.sortFunctions_[column] || this.defaultSortFunction_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the sort function for the given column, overriding the default sort
-***REMOVED*** function.
-***REMOVED*** @param {number} column The column index.
-***REMOVED*** @param {function(*,***REMOVED***) : number} sortFunction The new sort function.
-***REMOVED***
+/**
+ * Set the sort function for the given column, overriding the default sort
+ * function.
+ * @param {number} column The column index.
+ * @param {function(*, *) : number} sortFunction The new sort function.
+ */
 goog.ui.TableSorter.prototype.setSortFunction = function(column, sortFunction) {
   this.sortFunctions_[column] = sortFunction;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sort the table contents by the values in the given column.
-***REMOVED*** @param {goog.events.BrowserEvent} e The click event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sort the table contents by the values in the given column.
+ * @param {goog.events.BrowserEvent} e The click event.
+ * @private
+ */
 goog.ui.TableSorter.prototype.sort_ = function(e) {
   // Determine what column was clicked.
   // TODO(robbyw): If this table cell contains another table, this could break.
-  var target =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.target);
+  var target = /** @type {Node} */ (e.target);
   var th = goog.dom.getAncestorByTagNameAndClass(target,
       goog.dom.TagName.TH);
 
@@ -207,15 +207,15 @@ goog.ui.TableSorter.prototype.sort_ = function(e) {
       this.dispatchEvent(goog.ui.TableSorter.EventType.SORT);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sort the table contents by the values in the given column.
-***REMOVED*** @param {number} column The column to sort by.
-***REMOVED*** @param {boolean=} opt_reverse Whether to sort in reverse.
-***REMOVED*** @return {boolean} Whether the sort was executed.
-***REMOVED***
+/**
+ * Sort the table contents by the values in the given column.
+ * @param {number} column The column to sort by.
+ * @param {boolean=} opt_reverse Whether to sort in reverse.
+ * @return {boolean} Whether the sort was executed.
+ */
 goog.ui.TableSorter.prototype.sort = function(column, opt_reverse) {
   var sortFunction = this.getSortFunction(column);
   if (sortFunction === goog.ui.TableSorter.noSort) {
@@ -234,8 +234,8 @@ goog.ui.TableSorter.prototype.sort = function(column, opt_reverse) {
   this.reversed_ = !!opt_reverse;
   var multiplier = this.reversed_ ? -1 : 1;
   var cmpFn = function(a, b) {
-    return multiplier***REMOVED*** sortFunction(a[0], b[0]) || a[1] - b[1];
- ***REMOVED*****REMOVED***
+    return multiplier * sortFunction(a[0], b[0]) || a[1] - b[1];
+  };
 
   // Sort all tBodies
   var table = this.getElement();
@@ -270,46 +270,46 @@ goog.ui.TableSorter.prototype.sort = function(column, opt_reverse) {
       goog.getCssName('goog-tablesorter-sorted'));
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disables sorting on the specified column
-***REMOVED*** @param {*} a First sort value.
-***REMOVED*** @param {*} b Second sort value.
-***REMOVED*** @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
-***REMOVED***
+/**
+ * Disables sorting on the specified column
+ * @param {*} a First sort value.
+ * @param {*} b Second sort value.
+ * @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
+ */
 goog.ui.TableSorter.noSort = goog.functions.error('no sort');
 
 
-***REMOVED***
-***REMOVED*** A numeric sort function.
-***REMOVED*** @param {*} a First sort value.
-***REMOVED*** @param {*} b Second sort value.
-***REMOVED*** @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
-***REMOVED***
+/**
+ * A numeric sort function.
+ * @param {*} a First sort value.
+ * @param {*} b Second sort value.
+ * @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
+ */
 goog.ui.TableSorter.numericSort = function(a, b) {
   return parseFloat(a) - parseFloat(b);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Alphabetic sort function.
-***REMOVED*** @param {*} a First sort value.
-***REMOVED*** @param {*} b Second sort value.
-***REMOVED*** @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
-***REMOVED***
+/**
+ * Alphabetic sort function.
+ * @param {*} a First sort value.
+ * @param {*} b Second sort value.
+ * @return {number} Negative if a < b, 0 if a = b, and positive if a > b.
+ */
 goog.ui.TableSorter.alphaSort = goog.array.defaultCompare;
 
 
-***REMOVED***
-***REMOVED*** Returns a function that is the given sort function in reverse.
-***REMOVED*** @param {function(*,***REMOVED***) : number} sortFunction The original sort function.
-***REMOVED*** @return {function(*,***REMOVED***) : number} A new sort function that reverses the
-***REMOVED***     given sort function.
-***REMOVED***
+/**
+ * Returns a function that is the given sort function in reverse.
+ * @param {function(*, *) : number} sortFunction The original sort function.
+ * @return {function(*, *) : number} A new sort function that reverses the
+ *     given sort function.
+ */
 goog.ui.TableSorter.createReverseSort = function(sortFunction) {
   return function(a, b) {
-    return -1***REMOVED*** sortFunction(a, b);
- ***REMOVED*****REMOVED***
-***REMOVED***
+    return -1 * sortFunction(a, b);
+  };
+};

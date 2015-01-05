@@ -14,7 +14,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.mvc.Instance');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.token');
   goog.require('xrx.token.StartTag');
   goog.require('xrx.xpath');
@@ -28,7 +28,7 @@
 
 function test01nameFunctions() {
   // always ''
-***REMOVED***
+};
 
 function test02identityFunctions() {
   var xml = '<a>1<b/>2<c id="test"/>3<d/>4</a>';
@@ -62,7 +62,7 @@ function test02identityFunctions() {
   assertEquals(true, dS.isBefore(eS));
   assertEquals(true, eS.isChildOf(dS));
   assertEquals(true, eS.isDescendantOf(dS));
-***REMOVED***
+};
 
 function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
@@ -81,7 +81,7 @@ function test03contentFunctions() {
 
   assertEquals('<a>1<b>2</b>3<c/>4<d/></a>', dS.getXml());
   assertEquals('1234', dS.getStringValue());
-***REMOVED***
+};
 
 function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
@@ -119,7 +119,7 @@ function axisTest(key, func, expected) {
   assertEquals(expected.text, test.text.getLength());
   assertEquals(expected.attribute, test.attribute.getLength());
 
-***REMOVED***
+};
 
 
 function test04nodeFunctions() {
@@ -148,7 +148,7 @@ function test04nodeFunctions() {
   // preceding sibling
   axisTest(8, 'getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 
-***REMOVED***
+};
 
 </script>
 </body>

@@ -15,7 +15,7 @@
 goog.provide('goog.fx.DragDropGroupTest');
 goog.setTestOnly('goog.fx.DragDropGroupTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fx.DragDropGroup');
 goog.require('goog.testing.jsunit');
 

@@ -1,11 +1,11 @@
-***REMOVED***
-***REMOVED*** Enum for tri-state values.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum for tri-state values.
+ * @enum {number}
+ */
 var TriState = {
-   ***REMOVED*****REMOVED*** true***REMOVED***
+    /** true */
     TRUE: 1,
     FALSE: -1,
-   ***REMOVED*****REMOVED*** @type {boolean}***REMOVED***
+    /** @type {boolean} */
     MAYBE: true
-***REMOVED***
+};

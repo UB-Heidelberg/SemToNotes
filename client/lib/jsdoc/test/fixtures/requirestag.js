@@ -1,20 +1,20 @@
-***REMOVED***
-***REMOVED*** @requires module:foo/helper
-***REMOVED***
+/**
+ * @requires module:foo/helper
+ */
 function foo() {
 }
 
-***REMOVED***
-***REMOVED*** @requires foo
-***REMOVED*** @requires Pez#blat this text is ignored
-***REMOVED***
+/**
+ * @requires foo
+ * @requires Pez#blat this text is ignored
+ */
 function bar() {
 }
 
-***REMOVED***
-***REMOVED*** @requires {@link module:zest}
-***REMOVED*** @requires {@linkplain module:zing}
-***REMOVED*** @requires {@linkstupid module:pizzazz}
-***REMOVED***
+/**
+ * @requires {@link module:zest}
+ * @requires {@linkplain module:zing}
+ * @requires {@linkstupid module:pizzazz}
+ */
 function baz() {
 }

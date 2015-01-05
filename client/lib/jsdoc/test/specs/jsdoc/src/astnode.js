@@ -1,4 +1,4 @@
-/*global afterEach, beforeEach, describe, env, expect, it***REMOVED***
+/*global afterEach, beforeEach, describe, env, expect, it */
 'use strict';
 
 describe('jsdoc/src/astnode', function() {
@@ -10,7 +10,7 @@ describe('jsdoc/src/astnode', function() {
     // we need this in Esprima <1.1.0 for some node types
     var opts = {
         raw: true
-   ***REMOVED*****REMOVED***
+    };
 
     // create the AST nodes we'll be testing
     var assignmentExpression = esprima.parse('foo = 1;').body[0].expression;
@@ -19,20 +19,20 @@ describe('jsdoc/src/astnode', function() {
     var functionDeclaration1a = esprima.parse('function bar() {}').body[0];
     var functionDeclaration2 = esprima.parse('function foo(bar) {}').body[0];
     var functionDeclaration3 = esprima.parse('function foo(bar, baz, qux) {}').body[0];
-    var functionExpression1 = esprima.parse('var foo = function() {***REMOVED***').body[0].declarations[0]
+    var functionExpression1 = esprima.parse('var foo = function() {};').body[0].declarations[0]
         .init;
-    var functionExpression2 = esprima.parse('var foo = function(bar) {***REMOVED***').body[0].declarations[0]
+    var functionExpression2 = esprima.parse('var foo = function(bar) {};').body[0].declarations[0]
         .init;
     var identifier = esprima.parse('foo;').body[0].expression;
     var literal = esprima.parse('1;').body[0].expression;
     var memberExpression = esprima.parse('foo.bar;').body[0].expression;
     var memberExpressionComputed1 = esprima.parse('foo["bar"];', opts).body[0].expression;
     var memberExpressionComputed2 = esprima.parse('foo[\'bar\'];', opts).body[0].expression;
-    var propertyGet = esprima.parse('var foo = { get bar() {}***REMOVED*****REMOVED***').body[0].declarations[0].init
+    var propertyGet = esprima.parse('var foo = { get bar() {} };').body[0].declarations[0].init
         .properties[0];
-    var propertyInit = esprima.parse('var foo = { bar: {}***REMOVED*****REMOVED***').body[0].declarations[0].init
+    var propertyInit = esprima.parse('var foo = { bar: {} };').body[0].declarations[0].init
         .properties[0];
-    var propertySet = esprima.parse('var foo = { set bar(a) {}***REMOVED*****REMOVED***').body[0].declarations[0].init
+    var propertySet = esprima.parse('var foo = { set bar(a) {} };').body[0].declarations[0].init
         .properties[0];
     var thisExpression = esprima.parse('this;').body[0].expression;
     var unaryExpression1 = esprima.parse('+1;').body[0].expression;
@@ -310,7 +310,7 @@ describe('jsdoc/src/astnode', function() {
         });
 
         it('should not overwrite an existing parent', function() {
-            var parent = {***REMOVED***
+            var parent = {};
             var node = astnode.addNodeProperties({parent: parent});
 
             expect(node.parent).toBe(parent);
@@ -368,7 +368,7 @@ describe('jsdoc/src/astnode', function() {
         });
 
         it('should not overwrite an existing enclosingScope', function() {
-            var enclosingScope = {***REMOVED***
+            var enclosingScope = {};
             var node = astnode.addNodeProperties({enclosingScope: enclosingScope});
 
             expect(node.enclosingScope).toBe(enclosingScope);
@@ -428,7 +428,7 @@ describe('jsdoc/src/astnode', function() {
         });
 
         it('should copy known variables from the enclosing scope', function() {
-            var enclosingScope = {knownVariables: {foo: 1}***REMOVED***
+            var enclosingScope = {knownVariables: {foo: 1}};
             var node = astnode.addNodeProperties({enclosingScope: enclosingScope});
 
             expect(Object.keys(node.knownVariables).length).toBe(1);
@@ -457,7 +457,7 @@ describe('jsdoc/src/astnode', function() {
         });
 
         it('should copy known aliases from the enclosing scope', function() {
-            var enclosingScope = {knownAliases: {foo: []}***REMOVED***
+            var enclosingScope = {knownAliases: {foo: []}};
             var node = astnode.addNodeProperties({enclosingScope: enclosingScope});
 
             expect(Object.keys(node.knownAliases).length).toBe(1);

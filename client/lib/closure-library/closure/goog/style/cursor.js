@@ -12,78 +12,78 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions to create special cursor styles, like "draggable"
-***REMOVED*** (open hand) or "dragging" (closed hand).
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Functions to create special cursor styles, like "draggable"
+ * (open hand) or "dragging" (closed hand).
+ *
+ */
 
 goog.provide('goog.style.cursor');
 
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** The file name for the open-hand (draggable) cursor.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The file name for the open-hand (draggable) cursor.
+ * @type {string}
+ */
 goog.style.cursor.OPENHAND_FILE = 'openhand.cur';
 
 
-***REMOVED***
-***REMOVED*** The file name for the close-hand (dragging) cursor.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The file name for the close-hand (dragging) cursor.
+ * @type {string}
+ */
 goog.style.cursor.CLOSEDHAND_FILE = 'closedhand.cur';
 
 
-***REMOVED***
-***REMOVED*** Create the style for the draggable cursor based on browser and OS.
-***REMOVED*** The value can be extended to be '!important' if needed.
-***REMOVED***
-***REMOVED*** @param {string} absoluteDotCurFilePath The absolute base path of
-***REMOVED***     'openhand.cur' file to be used if the browser supports it.
-***REMOVED*** @param {boolean=} opt_obsolete Just for compiler backward compatibility.
-***REMOVED*** @return {string} The "draggable" mouse cursor style value.
-***REMOVED***
+/**
+ * Create the style for the draggable cursor based on browser and OS.
+ * The value can be extended to be '!important' if needed.
+ *
+ * @param {string} absoluteDotCurFilePath The absolute base path of
+ *     'openhand.cur' file to be used if the browser supports it.
+ * @param {boolean=} opt_obsolete Just for compiler backward compatibility.
+ * @return {string} The "draggable" mouse cursor style value.
+ */
 goog.style.cursor.getDraggableCursorStyle = function(
     absoluteDotCurFilePath, opt_obsolete) {
   return goog.style.cursor.getCursorStyle_(
       '-moz-grab',
       absoluteDotCurFilePath + goog.style.cursor.OPENHAND_FILE,
       'default');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create the style for the dragging cursor based on browser and OS.
-***REMOVED*** The value can be extended to be '!important' if needed.
-***REMOVED***
-***REMOVED*** @param {string} absoluteDotCurFilePath The absolute base path of
-***REMOVED***     'closedhand.cur' file to be used if the browser supports it.
-***REMOVED*** @param {boolean=} opt_obsolete Just for compiler backward compatibility.
-***REMOVED*** @return {string} The "dragging" mouse cursor style value.
-***REMOVED***
+/**
+ * Create the style for the dragging cursor based on browser and OS.
+ * The value can be extended to be '!important' if needed.
+ *
+ * @param {string} absoluteDotCurFilePath The absolute base path of
+ *     'closedhand.cur' file to be used if the browser supports it.
+ * @param {boolean=} opt_obsolete Just for compiler backward compatibility.
+ * @return {string} The "dragging" mouse cursor style value.
+ */
 goog.style.cursor.getDraggingCursorStyle = function(
     absoluteDotCurFilePath, opt_obsolete) {
   return goog.style.cursor.getCursorStyle_(
       '-moz-grabbing',
       absoluteDotCurFilePath + goog.style.cursor.CLOSEDHAND_FILE,
       'move');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create the style for the cursor based on browser and OS.
-***REMOVED***
-***REMOVED*** @param {string} geckoNonWinBuiltInStyleValue The Gecko on non-Windows OS,
-***REMOVED***     built in cursor style.
-***REMOVED*** @param {string} absoluteDotCurFilePath The .cur file absolute file to be
-***REMOVED***     used if the browser supports it.
-***REMOVED*** @param {string} defaultStyle The default fallback cursor style.
-***REMOVED*** @return {string} The computed mouse cursor style value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Create the style for the cursor based on browser and OS.
+ *
+ * @param {string} geckoNonWinBuiltInStyleValue The Gecko on non-Windows OS,
+ *     built in cursor style.
+ * @param {string} absoluteDotCurFilePath The .cur file absolute file to be
+ *     used if the browser supports it.
+ * @param {string} defaultStyle The default fallback cursor style.
+ * @return {string} The computed mouse cursor style value.
+ * @private
+ */
 goog.style.cursor.getCursorStyle_ = function(geckoNonWinBuiltInStyleValue,
     absoluteDotCurFilePath, defaultStyle) {
   // Use built in cursors for Gecko on non Windows OS.
@@ -111,5 +111,5 @@ goog.style.cursor.getCursorStyle_ = function(geckoNonWinBuiltInStyleValue,
   // Add default cursor fallback.
   cursorStyleValue += ', ' + defaultStyle;
   return cursorStyleValue;
-***REMOVED***
+};
 

@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.mvc.ComponentModel');
 
@@ -37,17 +37,17 @@ goog.require('xrx.mvc.Component');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.ComponentModel = function(element) {
 
-***REMOVED***
+  goog.base(this, element);
 
   xrx.mvc.addModelComponent(this.getId(), this);
 
   this.mvcRecalculate();
-***REMOVED***
+};
 goog.inherits(xrx.mvc.ComponentModel, xrx.mvc.Component);
 </code></pre>
         </article>

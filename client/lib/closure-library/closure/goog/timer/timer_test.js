@@ -16,17 +16,17 @@ goog.provide('goog.TimerTest');
 goog.setTestOnly('goog.TimerTest');
 
 goog.require('goog.Timer');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.jsunit');
 
-var intervalIds = {***REMOVED***
+var intervalIds = {};
 var intervalIdCounter = 0;
 var mockClock;
-var maxDuration = 60***REMOVED*** 1000; // 60s
+var maxDuration = 60 * 1000; // 60s
 
 function setUp() {
-  mockClock = new goog.testing.MockClock(true /* install***REMOVED***);
+  mockClock = new goog.testing.MockClock(true /* install */);
 }
 
 function tearDown() {
@@ -37,7 +37,7 @@ function tearDown() {
 function runTest(string, ticks, number) {
   var t = new goog.Timer(ticks);
   var count = 0;
-***REMOVED***t, 'tick', function(evt) {
+  goog.events.listen(t, 'tick', function(evt) {
     count++;
   });
   t.start();
@@ -93,7 +93,7 @@ function testCallOnce() {
   assertEquals('callOnce should return the timeout ID',
       mockClock.getTimeoutsMade(), actualTimeoutId);
 
-  var obj = {c: 0***REMOVED***
+  var obj = {c: 0};
   goog.Timer.callOnce(function() {
     if (this.c > 0) {
       assertTrue('callOnce should only be called once', false);

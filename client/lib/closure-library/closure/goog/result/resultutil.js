@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file provides primitives and tools (wait, transform,
-***REMOVED***     chain, combine) that make it easier to work with Results. This section
-***REMOVED***     gives an overview of their functionality along with some examples and the
-***REMOVED***     actual definitions have detailed descriptions next to them.
-***REMOVED***
-***REMOVED***
-***REMOVED*** NOTE: goog.result is soft deprecated - we expect to replace this and
-***REMOVED*** goog.async.Deferred with a wrapper around W3C Promises:
-***REMOVED*** http://dom.spec.whatwg.org/#promises.
-***REMOVED***
+/**
+ * @fileoverview This file provides primitives and tools (wait, transform,
+ *     chain, combine) that make it easier to work with Results. This section
+ *     gives an overview of their functionality along with some examples and the
+ *     actual definitions have detailed descriptions next to them.
+ *
+ *
+ * NOTE: goog.result is soft deprecated - we expect to replace this and
+ * goog.async.Deferred with a wrapper around W3C Promises:
+ * http://dom.spec.whatwg.org/#promises.
+ */
 
 goog.provide('goog.result');
 
@@ -32,128 +32,128 @@ goog.require('goog.result.Result');
 goog.require('goog.result.SimpleResult');
 
 
-***REMOVED***
-***REMOVED*** Returns a successful result containing the provided value.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var value = 'some-value';
-***REMOVED*** var result = goog.result.immediateResult(value);
-***REMOVED*** assertEquals(goog.result.Result.State.SUCCESS, result.getState());
-***REMOVED*** assertEquals(value, result.getValue());
-***REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {*} value The value of the result.
-***REMOVED*** @return {!goog.result.Result} A Result object that has already been resolved
-***REMOVED***     to the supplied value.
-***REMOVED***
+/**
+ * Returns a successful result containing the provided value.
+ *
+ * Example:
+ * <pre>
+ *
+ * var value = 'some-value';
+ * var result = goog.result.immediateResult(value);
+ * assertEquals(goog.result.Result.State.SUCCESS, result.getState());
+ * assertEquals(value, result.getValue());
+ *
+ * </pre>
+ *
+ * @param {*} value The value of the result.
+ * @return {!goog.result.Result} A Result object that has already been resolved
+ *     to the supplied value.
+ */
 goog.result.successfulResult = function(value) {
   var result = new goog.result.SimpleResult();
   result.setValue(value);
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a failed result with the optional error slug set.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var error = new Error('something-failed');
-***REMOVED*** var result = goog.result.failedResult(error);
-***REMOVED*** assertEquals(goog.result.Result.State.ERROR, result.getState());
-***REMOVED*** assertEquals(error, result.getError());
-***REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {*=} opt_error The error to which the result should resolve.
-***REMOVED*** @return {!goog.result.Result} A Result object that has already been resolved
-***REMOVED***     to the supplied Error.
-***REMOVED***
+/**
+ * Returns a failed result with the optional error slug set.
+ *
+ * Example:
+ * <pre>
+ *
+ * var error = new Error('something-failed');
+ * var result = goog.result.failedResult(error);
+ * assertEquals(goog.result.Result.State.ERROR, result.getState());
+ * assertEquals(error, result.getError());
+ *
+ * </pre>
+ *
+ * @param {*=} opt_error The error to which the result should resolve.
+ * @return {!goog.result.Result} A Result object that has already been resolved
+ *     to the supplied Error.
+ */
 goog.result.failedResult = function(opt_error) {
   var result = new goog.result.SimpleResult();
   result.setError(opt_error);
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a canceled result.
-***REMOVED*** The result will be resolved to an error of type CancelError.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result = goog.result.canceledResult();
-***REMOVED*** assertEquals(goog.result.Result.State.ERROR, result.getState());
-***REMOVED*** var error = result.getError();
-***REMOVED*** assertTrue(error instanceof goog.result.Result.CancelError);
-***REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @return {!goog.result.Result} A canceled Result.
-***REMOVED***
+/**
+ * Returns a canceled result.
+ * The result will be resolved to an error of type CancelError.
+ *
+ * Example:
+ * <pre>
+ *
+ * var result = goog.result.canceledResult();
+ * assertEquals(goog.result.Result.State.ERROR, result.getState());
+ * var error = result.getError();
+ * assertTrue(error instanceof goog.result.Result.CancelError);
+ *
+ * </pre>
+ *
+ * @return {!goog.result.Result} A canceled Result.
+ */
 goog.result.canceledResult = function() {
   var result = new goog.result.SimpleResult();
   result.cancel();
   return result;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the handler on resolution of the result (success or failure).
-***REMOVED*** The handler is passed the result object as the only parameter. The call will
-***REMOVED*** be immediate if the result is no longer pending.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Wait for the result to be resolved and alert it's state.
-***REMOVED*** goog.result.wait(result, function(result) {
-***REMOVED***   alert('State: ' + result.getState());
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result The result to install the handlers.
-***REMOVED*** @param {function(this:T, !goog.result.Result)} handler The handler to be
-***REMOVED***     called. The handler is passed the result object as the only parameter.
-***REMOVED*** @param {!T=} opt_scope Optional scope for the handler.
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * Calls the handler on resolution of the result (success or failure).
+ * The handler is passed the result object as the only parameter. The call will
+ * be immediate if the result is no longer pending.
+ *
+ * Example:
+ * <pre>
+ *
+ * var result = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Wait for the result to be resolved and alert it's state.
+ * goog.result.wait(result, function(result) {
+ *   alert('State: ' + result.getState());
+ * });
+ * </pre>
+ *
+ * @param {!goog.result.Result} result The result to install the handlers.
+ * @param {function(this:T, !goog.result.Result)} handler The handler to be
+ *     called. The handler is passed the result object as the only parameter.
+ * @param {!T=} opt_scope Optional scope for the handler.
+ * @template T
+ */
 goog.result.wait = function(result, handler, opt_scope) {
   result.wait(handler, opt_scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the handler if the result succeeds. The result object is the only
-***REMOVED*** parameter passed to the handler. The call will be immediate if the result
-***REMOVED*** has already succeeded.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // attach a success handler.
-***REMOVED*** goog.result.waitOnSuccess(result, function(resultValue, result) {
-***REMOVED***   var datavalue = result.getvalue();
-***REMOVED***   alert('value: ' + datavalue + ' == ' + resultValue);
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result The result to install the handlers.
-***REMOVED*** @param {function(this:T, ?, !goog.result.Result)} handler The handler to be
-***REMOVED***     called. The handler is passed the result value and the result as
-***REMOVED***     parameters.
-***REMOVED*** @param {!T=} opt_scope Optional scope for the handler.
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * Calls the handler if the result succeeds. The result object is the only
+ * parameter passed to the handler. The call will be immediate if the result
+ * has already succeeded.
+ *
+ * Example:
+ * <pre>
+ *
+ * var result = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // attach a success handler.
+ * goog.result.waitOnSuccess(result, function(resultValue, result) {
+ *   var datavalue = result.getvalue();
+ *   alert('value: ' + datavalue + ' == ' + resultValue);
+ * });
+ * </pre>
+ *
+ * @param {!goog.result.Result} result The result to install the handlers.
+ * @param {function(this:T, ?, !goog.result.Result)} handler The handler to be
+ *     called. The handler is passed the result value and the result as
+ *     parameters.
+ * @param {!T=} opt_scope Optional scope for the handler.
+ * @template T
+ */
 goog.result.waitOnSuccess = function(result, handler, opt_scope) {
   goog.result.wait(result, function(res) {
     if (res.getState() == goog.result.Result.State.SUCCESS) {
@@ -161,33 +161,33 @@ goog.result.waitOnSuccess = function(result, handler, opt_scope) {
       handler.call(this, res.getValue(), res);
     }
   }, opt_scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls the handler if the result action errors. The result object is passed as
-***REMOVED*** the only parameter to the handler. The call will be immediate if the result
-***REMOVED*** object has already resolved to an error.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Attach a failure handler.
-***REMOVED*** goog.result.waitOnError(result, function(error) {
-***REMOVED***  // Failed asynchronous call!
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result The result to install the handlers.
-***REMOVED*** @param {function(this:T, ?, !goog.result.Result)} handler The handler to be
-***REMOVED***     called. The handler is passed the error and the result object as
-***REMOVED***     parameters.
-***REMOVED*** @param {!T=} opt_scope Optional scope for the handler.
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * Calls the handler if the result action errors. The result object is passed as
+ * the only parameter to the handler. The call will be immediate if the result
+ * object has already resolved to an error.
+ *
+ * Example:
+ *
+ * <pre>
+ *
+ * var result = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Attach a failure handler.
+ * goog.result.waitOnError(result, function(error) {
+ *  // Failed asynchronous call!
+ * });
+ * </pre>
+ *
+ * @param {!goog.result.Result} result The result to install the handlers.
+ * @param {function(this:T, ?, !goog.result.Result)} handler The handler to be
+ *     called. The handler is passed the error and the result object as
+ *     parameters.
+ * @param {!T=} opt_scope Optional scope for the handler.
+ * @template T
+ */
 goog.result.waitOnError = function(result, handler, opt_scope) {
   goog.result.wait(result, function(res) {
     if (res.getState() == goog.result.Result.State.ERROR) {
@@ -195,46 +195,46 @@ goog.result.waitOnError = function(result, handler, opt_scope) {
       handler.call(this, res.getError(), res);
     }
   }, opt_scope);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Given a result and a transform function, returns a new result whose value,
-***REMOVED*** on success, will be the value of the given result after having been passed
-***REMOVED*** through the transform function.
-***REMOVED***
-***REMOVED*** If the given result is an error, the returned result is also an error and the
-***REMOVED*** transform will not be called.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result = xhr.getJson('testdata/xhr_test_json.data');
-***REMOVED***
-***REMOVED*** // Transform contents of returned data using 'processJson' and create a
-***REMOVED*** // transformed result to use returned JSON.
-***REMOVED*** var transformedResult = goog.result.transform(result, processJson);
-***REMOVED***
-***REMOVED*** // Attach success and failure handlers to the tranformed result.
-***REMOVED*** goog.result.waitOnSuccess(transformedResult, function(resultValue, result) {
-***REMOVED***   var jsonData = resultValue;
-***REMOVED***   assertEquals('ok', jsonData['stat']);
-***REMOVED*** });
-***REMOVED***
-***REMOVED*** goog.result.waitOnError(transformedResult, function(error) {
-***REMOVED***   // Failed getJson call
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result The result whose value will be
-***REMOVED***     transformed.
-***REMOVED*** @param {function(?):?} transformer The transformer
-***REMOVED***     function. The return value of this function will become the value of the
-***REMOVED***     returned result.
-***REMOVED***
-***REMOVED*** @return {!goog.result.DependentResult} A new Result whose eventual value will
-***REMOVED***     be the returned value of the transformer function.
-***REMOVED***
+/**
+ * Given a result and a transform function, returns a new result whose value,
+ * on success, will be the value of the given result after having been passed
+ * through the transform function.
+ *
+ * If the given result is an error, the returned result is also an error and the
+ * transform will not be called.
+ *
+ * Example:
+ * <pre>
+ *
+ * var result = xhr.getJson('testdata/xhr_test_json.data');
+ *
+ * // Transform contents of returned data using 'processJson' and create a
+ * // transformed result to use returned JSON.
+ * var transformedResult = goog.result.transform(result, processJson);
+ *
+ * // Attach success and failure handlers to the tranformed result.
+ * goog.result.waitOnSuccess(transformedResult, function(resultValue, result) {
+ *   var jsonData = resultValue;
+ *   assertEquals('ok', jsonData['stat']);
+ * });
+ *
+ * goog.result.waitOnError(transformedResult, function(error) {
+ *   // Failed getJson call
+ * });
+ * </pre>
+ *
+ * @param {!goog.result.Result} result The result whose value will be
+ *     transformed.
+ * @param {function(?):?} transformer The transformer
+ *     function. The return value of this function will become the value of the
+ *     returned result.
+ *
+ * @return {!goog.result.DependentResult} A new Result whose eventual value will
+ *     be the returned value of the transformer function.
+ */
 goog.result.transform = function(result, transformer) {
   var returnedResult = new goog.result.DependentResultImpl_([result]);
 
@@ -247,78 +247,78 @@ goog.result.transform = function(result, transformer) {
   });
 
   return returnedResult;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The chain function aids in chaining of asynchronous Results. This provides a
-***REMOVED*** convenience for use cases where asynchronous operations must happen serially
-***REMOVED*** i.e. subsequent asynchronous operations are dependent on data returned by
-***REMOVED*** prior asynchronous operations.
-***REMOVED***
-***REMOVED*** It accepts a result and an action callback as arguments and returns a
-***REMOVED*** result. The action callback is called when the first result succeeds and is
-***REMOVED*** supposed to return a second result. The returned result is resolved when one
-***REMOVED*** of both of the results resolve (depending on their success or failure.) The
-***REMOVED*** state and value of the returned result in the various cases is documented
-***REMOVED*** below:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** First Result State:    Second Result State:    Returned Result State:
-***REMOVED*** SUCCESS                SUCCESS                 SUCCESS
-***REMOVED*** SUCCESS                ERROR                   ERROR
-***REMOVED*** ERROR                  Not created             ERROR
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** The value of the returned result, in the case both results succeed, is the
-***REMOVED*** value of the second result (the result returned by the action callback.)
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var testDataResult = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Chain this result to perform another asynchronous operation when this
-***REMOVED*** // Result is resolved.
-***REMOVED*** var chainedResult = goog.result.chain(testDataResult,
-***REMOVED***     function(testDataResult) {
-***REMOVED***
-***REMOVED***       // The result value of testDataResult is the URL for JSON data.
-***REMOVED***       var jsonDataUrl = testDataResult.getValue();
-***REMOVED***
-***REMOVED***       // Create a new Result object when the original result is resolved.
-***REMOVED***       var jsonResult = xhr.getJson(jsonDataUrl);
-***REMOVED***
-***REMOVED***       // Return the newly created Result.
-***REMOVED***       return jsonResult;
-***REMOVED***     });
-***REMOVED***
-***REMOVED*** // The chained result resolves to success when both results resolve to
-***REMOVED*** // success.
-***REMOVED*** goog.result.waitOnSuccess(chainedResult, function(resultValue, result) {
-***REMOVED***
-***REMOVED***   // At this point, both results have succeeded and we can use the JSON
-***REMOVED***   // data returned by the second asynchronous call.
-***REMOVED***   var jsonData = resultValue;
-***REMOVED***   assertEquals('ok', jsonData['stat']);
-***REMOVED*** });
-***REMOVED***
-***REMOVED*** // Attach the error handler to be called when either Result fails.
-***REMOVED*** goog.result.waitOnError(chainedResult, function(result) {
-***REMOVED***   alert('chained result failed!');
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result The result to chain.
-***REMOVED*** @param {function(this:T, !goog.result.Result):!goog.result.Result}
-***REMOVED***     actionCallback The callback called when the result is resolved. This
-***REMOVED***     callback must return a Result.
-***REMOVED*** @param {T=} opt_scope Optional scope for the action callback.
-***REMOVED*** @return {!goog.result.DependentResult} A result that is resolved when both
-***REMOVED***     the given Result and the Result returned by the actionCallback have
-***REMOVED***     resolved.
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * The chain function aids in chaining of asynchronous Results. This provides a
+ * convenience for use cases where asynchronous operations must happen serially
+ * i.e. subsequent asynchronous operations are dependent on data returned by
+ * prior asynchronous operations.
+ *
+ * It accepts a result and an action callback as arguments and returns a
+ * result. The action callback is called when the first result succeeds and is
+ * supposed to return a second result. The returned result is resolved when one
+ * of both of the results resolve (depending on their success or failure.) The
+ * state and value of the returned result in the various cases is documented
+ * below:
+ * <pre>
+ *
+ * First Result State:    Second Result State:    Returned Result State:
+ * SUCCESS                SUCCESS                 SUCCESS
+ * SUCCESS                ERROR                   ERROR
+ * ERROR                  Not created             ERROR
+ * </pre>
+ *
+ * The value of the returned result, in the case both results succeed, is the
+ * value of the second result (the result returned by the action callback.)
+ *
+ * Example:
+ * <pre>
+ *
+ * var testDataResult = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Chain this result to perform another asynchronous operation when this
+ * // Result is resolved.
+ * var chainedResult = goog.result.chain(testDataResult,
+ *     function(testDataResult) {
+ *
+ *       // The result value of testDataResult is the URL for JSON data.
+ *       var jsonDataUrl = testDataResult.getValue();
+ *
+ *       // Create a new Result object when the original result is resolved.
+ *       var jsonResult = xhr.getJson(jsonDataUrl);
+ *
+ *       // Return the newly created Result.
+ *       return jsonResult;
+ *     });
+ *
+ * // The chained result resolves to success when both results resolve to
+ * // success.
+ * goog.result.waitOnSuccess(chainedResult, function(resultValue, result) {
+ *
+ *   // At this point, both results have succeeded and we can use the JSON
+ *   // data returned by the second asynchronous call.
+ *   var jsonData = resultValue;
+ *   assertEquals('ok', jsonData['stat']);
+ * });
+ *
+ * // Attach the error handler to be called when either Result fails.
+ * goog.result.waitOnError(chainedResult, function(result) {
+ *   alert('chained result failed!');
+ * });
+ * </pre>
+ *
+ * @param {!goog.result.Result} result The result to chain.
+ * @param {function(this:T, !goog.result.Result):!goog.result.Result}
+ *     actionCallback The callback called when the result is resolved. This
+ *     callback must return a Result.
+ * @param {T=} opt_scope Optional scope for the action callback.
+ * @return {!goog.result.DependentResult} A result that is resolved when both
+ *     the given Result and the Result returned by the actionCallback have
+ *     resolved.
+ * @template T
+ */
 goog.result.chain = function(result, actionCallback, opt_scope) {
   var dependentResult = new goog.result.DependentResultImpl_([result]);
 
@@ -347,117 +347,117 @@ goog.result.chain = function(result, actionCallback, opt_scope) {
   });
 
   return dependentResult;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a result that waits on all given results to resolve. Once all have
-***REMOVED*** resolved, the returned result will succeed (and never error).
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result1 = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Get a second independent Result.
-***REMOVED*** var result2 = xhr.getJson('testdata/xhr_test_json.data');
-***REMOVED***
-***REMOVED*** // Create a Result that resolves when both prior results resolve.
-***REMOVED*** var combinedResult = goog.result.combine(result1, result2);
-***REMOVED***
-***REMOVED*** // Process data after resolution of both results.
-***REMOVED*** goog.result.waitOnSuccess(combinedResult, function(results) {
-***REMOVED***   goog.array.forEach(results, function(result) {
-***REMOVED***       alert(result.getState());
-***REMOVED***   });
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {...!goog.result.Result} var_args The results to wait on.
-***REMOVED***
-***REMOVED*** @return {!goog.result.DependentResult} A new Result whose eventual value will
-***REMOVED***     be the resolved given Result objects.
-***REMOVED***
+/**
+ * Returns a result that waits on all given results to resolve. Once all have
+ * resolved, the returned result will succeed (and never error).
+ *
+ * Example:
+ * <pre>
+ *
+ * var result1 = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Get a second independent Result.
+ * var result2 = xhr.getJson('testdata/xhr_test_json.data');
+ *
+ * // Create a Result that resolves when both prior results resolve.
+ * var combinedResult = goog.result.combine(result1, result2);
+ *
+ * // Process data after resolution of both results.
+ * goog.result.waitOnSuccess(combinedResult, function(results) {
+ *   goog.array.forEach(results, function(result) {
+ *       alert(result.getState());
+ *   });
+ * });
+ * </pre>
+ *
+ * @param {...!goog.result.Result} var_args The results to wait on.
+ *
+ * @return {!goog.result.DependentResult} A new Result whose eventual value will
+ *     be the resolved given Result objects.
+ */
 goog.result.combine = function(var_args) {
- ***REMOVED*****REMOVED*** @type {!Array.<!goog.result.Result>}***REMOVED***
+  /** @type {!Array.<!goog.result.Result>} */
   var results = goog.array.clone(arguments);
   var combinedResult = new goog.result.DependentResultImpl_(results);
 
   var isResolved = function(res) {
     return res.getState() != goog.result.Result.State.PENDING;
- ***REMOVED*****REMOVED***
+  };
 
   var checkResults = function() {
     if (combinedResult.getState() == goog.result.Result.State.PENDING &&
         goog.array.every(results, isResolved)) {
       combinedResult.setValue(results);
     }
- ***REMOVED*****REMOVED***
+  };
 
   goog.array.forEach(results, function(result) {
     goog.result.wait(result, checkResults);
   });
 
   return combinedResult;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a result that waits on all given results to resolve. Once all have
-***REMOVED*** resolved, the returned result will succeed if and only if all given results
-***REMOVED*** succeeded. Otherwise it will error.
-***REMOVED***
-***REMOVED*** Example:
-***REMOVED*** <pre>
-***REMOVED***
-***REMOVED*** var result1 = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Get a second independent Result.
-***REMOVED*** var result2 = xhr.getJson('testdata/xhr_test_json.data');
-***REMOVED***
-***REMOVED*** // Create a Result that resolves when both prior results resolve.
-***REMOVED*** var combinedResult = goog.result.combineOnSuccess(result1, result2);
-***REMOVED***
-***REMOVED*** // Process data after successful resolution of both results.
-***REMOVED*** goog.result.waitOnSuccess(combinedResult, function(results) {
-***REMOVED***   var textData = results[0].getValue();
-***REMOVED***   var jsonData = results[1].getValue();
-***REMOVED***   assertEquals('Just some data.', textData);
-***REMOVED***   assertEquals('ok', jsonData['stat']);
-***REMOVED*** });
-***REMOVED***
-***REMOVED*** // Handle errors when either or both results failed.
-***REMOVED*** goog.result.waitOnError(combinedResult, function(combined) {
-***REMOVED***   var results = combined.getError();
-***REMOVED***
-***REMOVED***   if (results[0].getState() == goog.result.Result.State.ERROR) {
-***REMOVED***     alert('result1 failed');
-***REMOVED***   }
-***REMOVED***
-***REMOVED***   if (results[1].getState() == goog.result.Result.State.ERROR) {
-***REMOVED***     alert('result2 failed');
-***REMOVED***   }
-***REMOVED*** });
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {...!goog.result.Result} var_args The results to wait on.
-***REMOVED***
-***REMOVED*** @return {!goog.result.DependentResult} A new Result whose eventual value will
-***REMOVED***     be an array of values of the given Result objects.
-***REMOVED***
+/**
+ * Returns a result that waits on all given results to resolve. Once all have
+ * resolved, the returned result will succeed if and only if all given results
+ * succeeded. Otherwise it will error.
+ *
+ * Example:
+ * <pre>
+ *
+ * var result1 = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Get a second independent Result.
+ * var result2 = xhr.getJson('testdata/xhr_test_json.data');
+ *
+ * // Create a Result that resolves when both prior results resolve.
+ * var combinedResult = goog.result.combineOnSuccess(result1, result2);
+ *
+ * // Process data after successful resolution of both results.
+ * goog.result.waitOnSuccess(combinedResult, function(results) {
+ *   var textData = results[0].getValue();
+ *   var jsonData = results[1].getValue();
+ *   assertEquals('Just some data.', textData);
+ *   assertEquals('ok', jsonData['stat']);
+ * });
+ *
+ * // Handle errors when either or both results failed.
+ * goog.result.waitOnError(combinedResult, function(combined) {
+ *   var results = combined.getError();
+ *
+ *   if (results[0].getState() == goog.result.Result.State.ERROR) {
+ *     alert('result1 failed');
+ *   }
+ *
+ *   if (results[1].getState() == goog.result.Result.State.ERROR) {
+ *     alert('result2 failed');
+ *   }
+ * });
+ * </pre>
+ *
+ * @param {...!goog.result.Result} var_args The results to wait on.
+ *
+ * @return {!goog.result.DependentResult} A new Result whose eventual value will
+ *     be an array of values of the given Result objects.
+ */
 goog.result.combineOnSuccess = function(var_args) {
   var results = goog.array.clone(arguments);
   var combinedResult = new goog.result.DependentResultImpl_(results);
 
   var resolvedSuccessfully = function(res) {
     return res.getState() == goog.result.Result.State.SUCCESS;
- ***REMOVED*****REMOVED***
+  };
 
   goog.result.wait(
       goog.result.combine.apply(goog.result.combine, results),
       // The combined result never ERRORs
       function(res) {
-        var results =***REMOVED*****REMOVED*** @type {Array.<!goog.result.Result>}***REMOVED*** (
+        var results = /** @type {Array.<!goog.result.Result>} */ (
             res.getValue());
         if (goog.array.every(results, resolvedSuccessfully)) {
           combinedResult.setValue(results);
@@ -467,42 +467,42 @@ goog.result.combineOnSuccess = function(var_args) {
       });
 
   return combinedResult;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Given a DependentResult, cancels the Results it depends on (that is, the
-***REMOVED*** results returned by getParentResults). This function does not recurse,
-***REMOVED*** so e.g. parents of parents are not canceled; only the immediate parents of
-***REMOVED*** the given Result are canceled.
-***REMOVED***
-***REMOVED*** Example using @see goog.result.combine:
-***REMOVED*** <pre>
-***REMOVED*** var result1 = xhr.get('testdata/xhr_test_text.data');
-***REMOVED***
-***REMOVED*** // Get a second independent Result.
-***REMOVED*** var result2 = xhr.getJson('testdata/xhr_test_json.data');
-***REMOVED***
-***REMOVED*** // Create a Result that resolves when both prior results resolve.
-***REMOVED*** var combinedResult = goog.result.combineOnSuccess(result1, result2);
-***REMOVED***
-***REMOVED*** combinedResult.wait(function() {
-***REMOVED***   if (combinedResult.isCanceled()) {
-***REMOVED***     goog.result.cancelParentResults(combinedResult);
-***REMOVED***   }
-***REMOVED*** });
-***REMOVED***
-***REMOVED*** // Now, canceling combinedResult will cancel both result1 and result2.
-***REMOVED*** combinedResult.cancel();
-***REMOVED*** </pre>
-***REMOVED*** @param {!goog.result.DependentResult} dependentResult A Result that is
-***REMOVED***     dependent on the values of other Results (for example the Result of a
-***REMOVED***     goog.result.combine, goog.result.chain, or goog.result.transform call).
-***REMOVED*** @return {boolean} True if any results were successfully canceled; otherwise
-***REMOVED***     false.
-***REMOVED*** TODO(user): Implement a recursive version of this that cancels all
-***REMOVED*** ancestor results.
-***REMOVED***
+/**
+ * Given a DependentResult, cancels the Results it depends on (that is, the
+ * results returned by getParentResults). This function does not recurse,
+ * so e.g. parents of parents are not canceled; only the immediate parents of
+ * the given Result are canceled.
+ *
+ * Example using @see goog.result.combine:
+ * <pre>
+ * var result1 = xhr.get('testdata/xhr_test_text.data');
+ *
+ * // Get a second independent Result.
+ * var result2 = xhr.getJson('testdata/xhr_test_json.data');
+ *
+ * // Create a Result that resolves when both prior results resolve.
+ * var combinedResult = goog.result.combineOnSuccess(result1, result2);
+ *
+ * combinedResult.wait(function() {
+ *   if (combinedResult.isCanceled()) {
+ *     goog.result.cancelParentResults(combinedResult);
+ *   }
+ * });
+ *
+ * // Now, canceling combinedResult will cancel both result1 and result2.
+ * combinedResult.cancel();
+ * </pre>
+ * @param {!goog.result.DependentResult} dependentResult A Result that is
+ *     dependent on the values of other Results (for example the Result of a
+ *     goog.result.combine, goog.result.chain, or goog.result.transform call).
+ * @return {boolean} True if any results were successfully canceled; otherwise
+ *     false.
+ * TODO(user): Implement a recursive version of this that cancels all
+ * ancestor results.
+ */
 goog.result.cancelParentResults = function(dependentResult) {
   var anyCanceled = false;
   var results = dependentResult.getParentResults();
@@ -510,47 +510,47 @@ goog.result.cancelParentResults = function(dependentResult) {
     anyCanceled |= results[n].cancel();
   }
   return !!anyCanceled;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A DependentResult represents a Result whose eventual value depends on the
-***REMOVED*** value of one or more other Results. For example, the Result returned by
-***REMOVED*** @see goog.result.chain or @see goog.result.combine is dependent on the
-***REMOVED*** Results given as arguments.
-***REMOVED***
-***REMOVED*** @param {!Array.<!goog.result.Result>} parentResults A list of Results that
-***REMOVED***     will affect the eventual value of this Result.
-***REMOVED***
-***REMOVED*** @implements {goog.result.DependentResult}
-***REMOVED*** @extends {goog.result.SimpleResult}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A DependentResult represents a Result whose eventual value depends on the
+ * value of one or more other Results. For example, the Result returned by
+ * @see goog.result.chain or @see goog.result.combine is dependent on the
+ * Results given as arguments.
+ *
+ * @param {!Array.<!goog.result.Result>} parentResults A list of Results that
+ *     will affect the eventual value of this Result.
+ * @constructor
+ * @implements {goog.result.DependentResult}
+ * @extends {goog.result.SimpleResult}
+ * @private
+ */
 goog.result.DependentResultImpl_ = function(parentResults) {
   goog.result.DependentResultImpl_.base(this, 'constructor');
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A list of Results that will affect the eventual value of this Result.
-  ***REMOVED*** @type {!Array.<!goog.result.Result>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A list of Results that will affect the eventual value of this Result.
+   * @type {!Array.<!goog.result.Result>}
+   * @private
+   */
   this.parentResults_ = parentResults;
-***REMOVED***
+};
 goog.inherits(goog.result.DependentResultImpl_, goog.result.SimpleResult);
 
 
-***REMOVED***
-***REMOVED*** Adds a Result to the list of Results that affect this one.
-***REMOVED*** @param {!goog.result.Result} parentResult A result whose value affects the
-***REMOVED***     value of this Result.
-***REMOVED***
+/**
+ * Adds a Result to the list of Results that affect this one.
+ * @param {!goog.result.Result} parentResult A result whose value affects the
+ *     value of this Result.
+ */
 goog.result.DependentResultImpl_.prototype.addParentResult = function(
     parentResult) {
   this.parentResults_.push(parentResult);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.result.DependentResultImpl_.prototype.getParentResults = function() {
   return this.parentResults_;
-***REMOVED***
+};

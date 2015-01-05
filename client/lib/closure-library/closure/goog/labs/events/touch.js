@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities to abstract mouse and touch events.
-***REMOVED***
+/**
+ * @fileoverview Utilities to abstract mouse and touch events.
+ */
 
 
 goog.provide('goog.labs.events.touch');
@@ -22,30 +22,30 @@ goog.provide('goog.labs.events.touch.TouchData');
 
 goog.require('goog.array');
 goog.require('goog.asserts');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Description the geometry and target of an event.
-***REMOVED***
-***REMOVED*** @typedef {{
-***REMOVED***   clientX: number,
-***REMOVED***   clientY: number,
-***REMOVED***   screenX: number,
-***REMOVED***   screenY: number,
-***REMOVED***   target: EventTarget
-***REMOVED*** }}
-***REMOVED***
+/**
+ * Description the geometry and target of an event.
+ *
+ * @typedef {{
+ *   clientX: number,
+ *   clientY: number,
+ *   screenX: number,
+ *   screenY: number,
+ *   target: EventTarget
+ * }}
+ */
 goog.labs.events.touch.TouchData;
 
 
-***REMOVED***
-***REMOVED*** Takes a mouse or touch event and returns the relevent geometry and target
-***REMOVED*** data.
-***REMOVED*** @param {!Event} e A mouse or touch event.
-***REMOVED*** @return {!goog.labs.events.touch.TouchData}
-***REMOVED***
+/**
+ * Takes a mouse or touch event and returns the relevent geometry and target
+ * data.
+ * @param {!Event} e A mouse or touch event.
+ * @return {!goog.labs.events.touch.TouchData}
+ */
 goog.labs.events.touch.getTouchData = function(e) {
 
   var source = e;
@@ -77,6 +77,6 @@ goog.labs.events.touch.getTouchData = function(e) {
     screenX: source['screenX'],
     screenY: source['screenY'],
     target: source['target']
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 

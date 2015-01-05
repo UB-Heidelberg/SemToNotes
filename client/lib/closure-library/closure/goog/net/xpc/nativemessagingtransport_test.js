@@ -16,7 +16,7 @@ goog.provide('goog.net.xpc.NativeMessagingTransportTest');
 goog.setTestOnly('goog.net.xpc.NativeMessagingTransportTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.xpc');
 goog.require('goog.net.xpc.CfgFields');
 goog.require('goog.net.xpc.CrossPageChannel');
@@ -30,7 +30,7 @@ goog.require('goog.testing.jsunit');
 
 
 function tearDown() {
-  goog.net.xpc.NativeMessagingTransport.activeCount_ = {***REMOVED***
+  goog.net.xpc.NativeMessagingTransport.activeCount_ = {};
   goog.events.removeAll(window.postMessage ? window : document, 'message');
 }
 
@@ -39,13 +39,13 @@ function testConstructor() {
   var xpc = getTestChannel();
 
   var t = new goog.net.xpc.NativeMessagingTransport(xpc, 'http://g.com:80',
-      undefined /* opt_domHelper***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      undefined /* opt_domHelper */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   assertEquals('http://g.com:80', t.peerHostname_);
 
   var t = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, undefined /* opt_domHelper***REMOVED***,
-      false /* opt_oneSidedHandshake***REMOVED***, 2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, undefined /* opt_domHelper */,
+      false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
   assertEquals('*', t.peerHostname_);
   t.dispose();
 }
@@ -56,12 +56,12 @@ function testConstructorDom() {
 
   var t = new goog.net.xpc.NativeMessagingTransport(
       xpc, 'http://g.com:80', goog.dom.getDomHelper(),
-      false /* opt_oneSidedHandshake***REMOVED***, 2 /* opt_protocolVersion***REMOVED***);
+      false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
   assertEquals('http://g.com:80', t.peerHostname_);
 
   var t = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   assertEquals('*', t.peerHostname_);
   t.dispose();
 }
@@ -72,25 +72,25 @@ function testDispose() {
   var listenedObj = window.postMessage ? window : document;
 
   var t0 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
   t0.dispose();
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
 
   var t1 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   t1.connect();
   t1.dispose();
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
 
   var t2 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   var t3 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   t2.connect();
   t3.connect();
   t2.dispose();
@@ -103,25 +103,25 @@ function testDisposeWithDom() {
   var listenedObj = window.postMessage ? window : document;
 
   var t0 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
   t0.dispose();
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
 
   var t1 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   t1.connect();
   t1.dispose();
   assertEquals(0, goog.events.removeAll(listenedObj, 'message'));
 
   var t2 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   var t3 = new goog.net.xpc.NativeMessagingTransport(xpc,
-      null /* peerHostName***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      null /* peerHostName */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
   t2.connect();
   t3.connect();
   t2.dispose();
@@ -148,17 +148,17 @@ function testSendingMessagesToUnconnectedInnerPeer() {
   xpc.xpcDeliver = function(service, payload) {
     serviceResult = service;
     payloadResult = payload;
- ***REMOVED*****REMOVED***
+  };
 
   // Construct an unconnected inner peer.
   xpc.getRole = function() {
     return goog.net.xpc.CrossPageChannelRole.INNER;
- ***REMOVED*****REMOVED***
+  };
   xpc.isConnected = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
   var t = new goog.net.xpc.NativeMessagingTransport(xpc, 'http://g.com',
-      false /* opt_oneSidedHandshake***REMOVED***, 2 /* opt_protocolVersion***REMOVED***);
+      false /* opt_oneSidedHandshake */, 2 /* opt_protocolVersion */);
 
   // Test a valid message.
   var e = createMockEvent('test_channel|test_service:test_payload');
@@ -182,26 +182,26 @@ function testSendingMessagesToUnconnectedInnerPeer() {
 
 
 function testSignalConnected_innerFrame() {
-  checkSignalConnected(false /* oneSidedHandshake***REMOVED***,
-      true /* innerFrame***REMOVED***);
+  checkSignalConnected(false /* oneSidedHandshake */,
+      true /* innerFrame */);
 }
 
 
 function testSignalConnected_outerFrame() {
-  checkSignalConnected(false /* oneSidedHandshake***REMOVED***,
-      false /* innerFrame***REMOVED***);
+  checkSignalConnected(false /* oneSidedHandshake */,
+      false /* innerFrame */);
 }
 
 
 function testSignalConnected_singleSided_innerFrame() {
-  checkSignalConnected(true /* oneSidedHandshake***REMOVED***,
-      true /* innerFrame***REMOVED***);
+  checkSignalConnected(true /* oneSidedHandshake */,
+      true /* innerFrame */);
 }
 
 
 function testSignalConnected_singleSided_outerFrame() {
-  checkSignalConnected(true /* oneSidedHandshake***REMOVED***,
-      false /* innerFrame***REMOVED***);
+  checkSignalConnected(true /* oneSidedHandshake */,
+      false /* innerFrame */);
 }
 
 
@@ -215,24 +215,24 @@ function checkSignalConnected(oneSidedHandshake, innerFrame,
     } else {
       connected = true;
     }
- ***REMOVED*****REMOVED***
+  };
   xpc.getRole = function() {
     return innerFrame ? goog.net.xpc.CrossPageChannelRole.INNER :
         goog.net.xpc.CrossPageChannelRole.OUTER;
- ***REMOVED*****REMOVED***
+  };
   xpc.isConnected = function() {
     return false;
- ***REMOVED*****REMOVED***
+  };
 
   var transport = new goog.net.xpc.NativeMessagingTransport(xpc, 'http://g.com',
-      undefined /* opt_domHelper***REMOVED***,
-      oneSidedHandshake /* opt_oneSidedHandshake***REMOVED***,
-      2 /* protocolVerion***REMOVED***);
+      undefined /* opt_domHelper */,
+      oneSidedHandshake /* opt_oneSidedHandshake */,
+      2 /* protocolVerion */);
   var sentPayloads = [];
   transport.send = function(service, payload) {
     assertEquals(goog.net.xpc.TRANSPORT_SERVICE_, service);
     sentPayloads.push(payload);
- ***REMOVED*****REMOVED***
+  };
   function assertSent(payloads) {
     assertArrayEquals(payloads, sentPayloads);
     sentPayloads = [];
@@ -285,16 +285,16 @@ function checkSignalConnected(oneSidedHandshake, innerFrame,
 
 
 function createMockEvent(data) {
-  var event = {***REMOVED***
-  event.getBrowserEvent = function() { return {data: data}***REMOVED*****REMOVED***
+  var event = {};
+  event.getBrowserEvent = function() { return {data: data} };
   return event;
 }
 
 
 function getTestChannel(opt_domHelper) {
-  var cfg = {***REMOVED***
+  var cfg = {};
   cfg[goog.net.xpc.CfgFields.CHANNEL_NAME] = 'test_channel';
   return new goog.net.xpc.CrossPageChannel(cfg, opt_domHelper,
-      undefined /* opt_domHelper***REMOVED***, false /* opt_oneSidedHandshake***REMOVED***,
-      2 /* opt_protocolVersion***REMOVED***);
+      undefined /* opt_domHelper */, false /* opt_oneSidedHandshake */,
+      2 /* opt_protocolVersion */);
 }

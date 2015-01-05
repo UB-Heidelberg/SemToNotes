@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing number literals.
-***REMOVED***
+/**
+ * @fileoverview A class representing number literals.
+ */
 
 goog.provide('xrx.xpath.Number');
 
@@ -8,37 +8,37 @@ goog.require('xrx.xpath.Expr');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a number expression.
-***REMOVED***
-***REMOVED*** @param {number} value The number value.
-***REMOVED***
-***REMOVED*** @extends {xrx.xpath.Expr}
-***REMOVED***
+/**
+ * Constructs a number expression.
+ *
+ * @param {number} value The number value.
+ * @constructor
+ * @extends {xrx.xpath.Expr}
+ */
 xrx.xpath.Number = function(value) {
   xrx.xpath.Expr.call(this, xrx.xpath.DataType.NUMBER);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.value_ = value;
-***REMOVED***
+};
 goog.inherits(xrx.xpath.Number, xrx.xpath.Expr);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @return {number} The number result.
-***REMOVED***
+/**
+ * @override
+ * @return {number} The number result.
+ */
 xrx.xpath.Number.prototype.evaluate = function(ctx) {
   return this.value_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.Number.prototype.toString = function() {
   return 'Number: ' + this.value_;
-***REMOVED***
+};

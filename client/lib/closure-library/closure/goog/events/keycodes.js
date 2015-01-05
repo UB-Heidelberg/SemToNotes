@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Constant declarations for common key codes.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/keyhandler.html
-***REMOVED***
+/**
+ * @fileoverview Constant declarations for common key codes.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/keyhandler.html
+ */
 
 goog.provide('goog.events.KeyCodes');
 
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Key codes for common characters.
-***REMOVED***
-***REMOVED*** This list is not localized and therefore some of the key codes are not
-***REMOVED*** correct for non US keyboard layouts. See comments below.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Key codes for common characters.
+ *
+ * This list is not localized and therefore some of the key codes are not
+ * correct for non US keyboard layouts. See comments below.
+ *
+ * @enum {number}
+ */
 goog.events.KeyCodes = {
   WIN_KEY_FF_LINUX: 0,
   MAC_ENTER: 3,
@@ -158,14 +158,14 @@ goog.events.KeyCodes = {
   // indicates a hardware/bios problem.
   // http://en.community.dell.com/support-forums/laptop/f/3518/p/19285957/19523128.aspx
   PHANTOM: 255
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the event contains a text modifying key.
-***REMOVED*** @param {goog.events.BrowserEvent} e A key event.
-***REMOVED*** @return {boolean} Whether it's a text modifying key.
-***REMOVED***
+/**
+ * Returns true if the event contains a text modifying key.
+ * @param {goog.events.BrowserEvent} e A key event.
+ * @return {boolean} Whether it's a text modifying key.
+ */
 goog.events.KeyCodes.isTextModifyingKeyEvent = function(e) {
   if (e.altKey && !e.ctrlKey ||
       e.metaKey ||
@@ -210,36 +210,36 @@ goog.events.KeyCodes.isTextModifyingKeyEvent = function(e) {
       return e.keyCode < goog.events.KeyCodes.FIRST_MEDIA_KEY ||
           e.keyCode > goog.events.KeyCodes.LAST_MEDIA_KEY;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the key fires a keypress event in the current browser.
-***REMOVED***
-***REMOVED*** Accoridng to MSDN [1] IE only fires keypress events for the following keys:
-***REMOVED*** - Letters: A - Z (uppercase and lowercase)
-***REMOVED*** - Numerals: 0 - 9
-***REMOVED*** - Symbols: ! @ # $ % ^ &***REMOVED*** ( ) _ - + = < [ ] { } , . / ? \ | ' ` " ~
-***REMOVED*** - System: ESC, SPACEBAR, ENTER
-***REMOVED***
-***REMOVED*** That's not entirely correct though, for instance there's no distinction
-***REMOVED*** between upper and lower case letters.
-***REMOVED***
-***REMOVED*** [1] http://msdn2.microsoft.com/en-us/library/ms536939(VS.85).aspx)
-***REMOVED***
-***REMOVED*** Safari is similar to IE, but does not fire keypress for ESC.
-***REMOVED***
-***REMOVED*** Additionally, IE6 does not fire keydown or keypress events for letters when
-***REMOVED*** the control or alt keys are held down and the shift key is not. IE7 does
-***REMOVED*** fire keydown in these cases, though, but not keypress.
-***REMOVED***
-***REMOVED*** @param {number} keyCode A key code.
-***REMOVED*** @param {number=} opt_heldKeyCode Key code of a currently-held key.
-***REMOVED*** @param {boolean=} opt_shiftKey Whether the shift key is held down.
-***REMOVED*** @param {boolean=} opt_ctrlKey Whether the control key is held down.
-***REMOVED*** @param {boolean=} opt_altKey Whether the alt key is held down.
-***REMOVED*** @return {boolean} Whether it's a key that fires a keypress event.
-***REMOVED***
+/**
+ * Returns true if the key fires a keypress event in the current browser.
+ *
+ * Accoridng to MSDN [1] IE only fires keypress events for the following keys:
+ * - Letters: A - Z (uppercase and lowercase)
+ * - Numerals: 0 - 9
+ * - Symbols: ! @ # $ % ^ & * ( ) _ - + = < [ ] { } , . / ? \ | ' ` " ~
+ * - System: ESC, SPACEBAR, ENTER
+ *
+ * That's not entirely correct though, for instance there's no distinction
+ * between upper and lower case letters.
+ *
+ * [1] http://msdn2.microsoft.com/en-us/library/ms536939(VS.85).aspx)
+ *
+ * Safari is similar to IE, but does not fire keypress for ESC.
+ *
+ * Additionally, IE6 does not fire keydown or keypress events for letters when
+ * the control or alt keys are held down and the shift key is not. IE7 does
+ * fire keydown in these cases, though, but not keypress.
+ *
+ * @param {number} keyCode A key code.
+ * @param {number=} opt_heldKeyCode Key code of a currently-held key.
+ * @param {boolean=} opt_shiftKey Whether the shift key is held down.
+ * @param {boolean=} opt_ctrlKey Whether the control key is held down.
+ * @param {boolean=} opt_altKey Whether the alt key is held down.
+ * @return {boolean} Whether it's a key that fires a keypress event.
+ */
 goog.events.KeyCodes.firesKeyPressEvent = function(keyCode, opt_heldKeyCode,
     opt_shiftKey, opt_ctrlKey, opt_altKey) {
   if (!goog.userAgent.IE &&
@@ -304,16 +304,16 @@ goog.events.KeyCodes.firesKeyPressEvent = function(keyCode, opt_heldKeyCode,
   }
 
   return goog.events.KeyCodes.isCharacterKey(keyCode);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the key produces a character.
-***REMOVED*** This does not cover characters on non-US keyboards (Russian, Hebrew, etc.).
-***REMOVED***
-***REMOVED*** @param {number} keyCode A key code.
-***REMOVED*** @return {boolean} Whether it's a character key.
-***REMOVED***
+/**
+ * Returns true if the key produces a character.
+ * This does not cover characters on non-US keyboards (Russian, Hebrew, etc.).
+ *
+ * @param {number} keyCode A key code.
+ * @return {boolean} Whether it's a character key.
+ */
 goog.events.KeyCodes.isCharacterKey = function(keyCode) {
   if (keyCode >= goog.events.KeyCodes.ZERO &&
       keyCode <= goog.events.KeyCodes.NINE) {
@@ -359,14 +359,14 @@ goog.events.KeyCodes.isCharacterKey = function(keyCode) {
     default:
       return false;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes key codes from OS/Browser-specific value to the general one.
-***REMOVED*** @param {number} keyCode The native key code.
-***REMOVED*** @return {number} The normalized key code.
-***REMOVED***
+/**
+ * Normalizes key codes from OS/Browser-specific value to the general one.
+ * @param {number} keyCode The native key code.
+ * @return {number} The normalized key code.
+ */
 goog.events.KeyCodes.normalizeKeyCode = function(keyCode) {
   if (goog.userAgent.GECKO) {
     return goog.events.KeyCodes.normalizeGeckoKeyCode(keyCode);
@@ -375,14 +375,14 @@ goog.events.KeyCodes.normalizeKeyCode = function(keyCode) {
   } else {
     return keyCode;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes key codes from their Gecko-specific value to the general one.
-***REMOVED*** @param {number} keyCode The native key code.
-***REMOVED*** @return {number} The normalized key code.
-***REMOVED***
+/**
+ * Normalizes key codes from their Gecko-specific value to the general one.
+ * @param {number} keyCode The native key code.
+ * @return {number} The normalized key code.
+ */
 goog.events.KeyCodes.normalizeGeckoKeyCode = function(keyCode) {
   switch (keyCode) {
     case goog.events.KeyCodes.FF_EQUALS:
@@ -398,14 +398,14 @@ goog.events.KeyCodes.normalizeGeckoKeyCode = function(keyCode) {
     default:
       return keyCode;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Normalizes key codes from their Mac WebKit-specific value to the general one.
-***REMOVED*** @param {number} keyCode The native key code.
-***REMOVED*** @return {number} The normalized key code.
-***REMOVED***
+/**
+ * Normalizes key codes from their Mac WebKit-specific value to the general one.
+ * @param {number} keyCode The native key code.
+ * @return {number} The normalized key code.
+ */
 goog.events.KeyCodes.normalizeMacWebKitKeyCode = function(keyCode) {
   switch (keyCode) {
     case goog.events.KeyCodes.MAC_WK_CMD_RIGHT:  // 93
@@ -413,4 +413,4 @@ goog.events.KeyCodes.normalizeMacWebKitKeyCode = function(keyCode) {
     default:
       return keyCode;
   }
-***REMOVED***
+};

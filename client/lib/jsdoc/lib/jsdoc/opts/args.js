@@ -1,9 +1,9 @@
-***REMOVED***
-***REMOVED*** @module jsdoc/opts/args
-***REMOVED*** @requires jsdoc/opts/argparser
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/**
+ * @module jsdoc/opts/args
+ * @requires jsdoc/opts/argparser
+ * @author Michael Mathews <micmath@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 'use strict';
 
 var ArgParser = require('jsdoc/opts/argparser');
@@ -96,11 +96,11 @@ argParser.addOption(null, 'nocolor',    false, 'Do not use color in console outp
 // Options that are no longer supported and should be ignored
 argParser.addIgnoredOption('l', 'lenient'); // removed in JSDoc 3.3.0
 
-***REMOVED***
-***REMOVED*** Set the options for this app.
-***REMOVED*** @throws {Error} Illegal arguments will throw errors.
-***REMOVED*** @param {string|String[]} args The command line arguments for this app.
-***REMOVED***
+/**
+ * Set the options for this app.
+ * @throws {Error} Illegal arguments will throw errors.
+ * @param {string|String[]} args The command line arguments for this app.
+ */
 exports.parse = function(args) {
     args = args || [];
 
@@ -111,23 +111,23 @@ exports.parse = function(args) {
     ourOptions = argParser.parse(args);
 
     return ourOptions;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve help message for options.
-***REMOVED***
+/**
+ * Retrieve help message for options.
+ */
 exports.help = function() {
     return argParser.help();
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get a named option.
-***REMOVED*** @param {string} name The name of the option.
-***REMOVED*** @return {string} The value associated with the given name.
-***REMOVED******REMOVED***
-***REMOVED*** Get all the options for this app.
-***REMOVED*** @return {Object} A collection of key/values representing all the options.
-***REMOVED***
+/**
+ * Get a named option.
+ * @param {string} name The name of the option.
+ * @return {string} The value associated with the given name.
+ *//**
+ * Get all the options for this app.
+ * @return {Object} A collection of key/values representing all the options.
+ */
 exports.get = function(name) {
     if (typeof name === 'undefined') {
         return ourOptions;
@@ -135,4 +135,4 @@ exports.get = function(name) {
     else if ( hasOwnProp.call(ourOptions, name) ) {
         return ourOptions[name];
     }
-***REMOVED***
+};

@@ -107,7 +107,7 @@ var americaLosAngelesData = {
   'names': ['PST', 'Pacific Standard Time', 'PDT', 'Pacific Daylight Time'],
   'id': 'America/Los_Angeles',
   'std_offset': -480
-***REMOVED***
+};
 
 var europeBerlinData = {
   'transitions': [
@@ -135,7 +135,7 @@ var europeBerlinData = {
             'MESZ', 'Mitteleurop\u00e4ische Sommerzeit'],
   'id': 'Europe/Berlin',
   'std_offset': 60
-***REMOVED***
+};
 
 var date;
 

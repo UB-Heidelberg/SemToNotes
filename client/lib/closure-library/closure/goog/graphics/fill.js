@@ -13,34 +13,34 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Represents a fill goog.graphics.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Represents a fill goog.graphics.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 goog.provide('goog.graphics.Fill');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a fill object
-***REMOVED***
-***REMOVED*** @deprecated goog.graphics is deprecated. It existed to abstract over browser
-***REMOVED***     differences before the canvas tag was widely supported.  See
-***REMOVED***     http://en.wikipedia.org/wiki/Canvas_element for details.
-***REMOVED***
-goog.graphics.Fill = function() {***REMOVED***
+/**
+ * Creates a fill object
+ * @constructor
+ * @deprecated goog.graphics is deprecated. It existed to abstract over browser
+ *     differences before the canvas tag was widely supported.  See
+ *     http://en.wikipedia.org/wiki/Canvas_element for details.
+ */
+goog.graphics.Fill = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The start color of a gradient fill.
-***REMOVED***
+/**
+ * @return {string} The start color of a gradient fill.
+ */
 goog.graphics.Fill.prototype.getColor1 = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {string} The end color of a gradient fill.
-***REMOVED***
+/**
+ * @return {string} The end color of a gradient fill.
+ */
 goog.graphics.Fill.prototype.getColor2 = goog.abstractMethod;
 

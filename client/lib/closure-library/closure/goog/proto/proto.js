@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol buffer serializer.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Protocol buffer serializer.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 goog.provide('goog.proto');
 
@@ -23,22 +23,22 @@ goog.provide('goog.proto');
 goog.require('goog.proto.Serializer');
 
 
-***REMOVED***
-***REMOVED*** Instance of the serializer object.
-***REMOVED*** @type {goog.proto.Serializer}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Instance of the serializer object.
+ * @type {goog.proto.Serializer}
+ * @private
+ */
 goog.proto.serializer_ = null;
 
 
-***REMOVED***
-***REMOVED*** Serializes an object or a value to a protocol buffer string.
-***REMOVED*** @param {Object} object The object to serialize.
-***REMOVED*** @return {string} The serialized protocol buffer string.
-***REMOVED***
+/**
+ * Serializes an object or a value to a protocol buffer string.
+ * @param {Object} object The object to serialize.
+ * @return {string} The serialized protocol buffer string.
+ */
 goog.proto.serialize = function(object) {
   if (!goog.proto.serializer_) {
     goog.proto.serializer_ = new goog.proto.Serializer;
   }
   return goog.proto.serializer_.serialize(object);
-***REMOVED***
+};

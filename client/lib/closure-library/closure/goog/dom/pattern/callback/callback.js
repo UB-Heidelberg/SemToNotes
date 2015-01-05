@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Useful callback functions for the DOM matcher.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Useful callback functions for the DOM matcher.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.callback');
 
@@ -25,16 +25,16 @@ goog.require('goog.dom.TagWalkType');
 goog.require('goog.iter');
 
 
-***REMOVED***
-***REMOVED*** Callback function for use in {@link goog.dom.pattern.Matcher.addPattern}
-***REMOVED*** that removes the matched node from the tree.  Should be used in conjunciton
-***REMOVED*** with a {@link goog.dom.pattern.StartTag} pattern.
-***REMOVED***
-***REMOVED*** @param {Node} node The node matched by the pattern.
-***REMOVED*** @param {goog.dom.TagIterator} position The position where the match
-***REMOVED***     finished.
-***REMOVED*** @return {boolean} Returns true to indicate tree changes were made.
-***REMOVED***
+/**
+ * Callback function for use in {@link goog.dom.pattern.Matcher.addPattern}
+ * that removes the matched node from the tree.  Should be used in conjunciton
+ * with a {@link goog.dom.pattern.StartTag} pattern.
+ *
+ * @param {Node} node The node matched by the pattern.
+ * @param {goog.dom.TagIterator} position The position where the match
+ *     finished.
+ * @return {boolean} Returns true to indicate tree changes were made.
+ */
 goog.dom.pattern.callback.removeNode = function(node, position) {
   // Find out which position would be next.
   position.setPosition(node, goog.dom.TagWalkType.END_TAG);
@@ -49,20 +49,20 @@ goog.dom.pattern.callback.removeNode = function(node, position) {
 
   // Indicate that we made position/tree changes.
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Callback function for use in {@link goog.dom.pattern.Matcher.addPattern}
-***REMOVED*** that removes the matched node from the tree and replaces it with its
-***REMOVED*** children.  Should be used in conjunction with a
-***REMOVED*** {@link goog.dom.pattern.StartTag} pattern.
-***REMOVED***
-***REMOVED*** @param {Element} node The node matched by the pattern.
-***REMOVED*** @param {goog.dom.TagIterator} position The position where the match
-***REMOVED***     finished.
-***REMOVED*** @return {boolean} Returns true to indicate tree changes were made.
-***REMOVED***
+/**
+ * Callback function for use in {@link goog.dom.pattern.Matcher.addPattern}
+ * that removes the matched node from the tree and replaces it with its
+ * children.  Should be used in conjunction with a
+ * {@link goog.dom.pattern.StartTag} pattern.
+ *
+ * @param {Element} node The node matched by the pattern.
+ * @param {goog.dom.TagIterator} position The position where the match
+ *     finished.
+ * @return {boolean} Returns true to indicate tree changes were made.
+ */
 goog.dom.pattern.callback.flattenElement = function(node, position) {
   // Find out which position would be next.
   position.setPosition(node, node.firstChild ?
@@ -79,4 +79,4 @@ goog.dom.pattern.callback.flattenElement = function(node, position) {
 
   // Indicate that we made position/tree changes.
   return true;
-***REMOVED***
+};

@@ -23,23 +23,23 @@ goog.require('goog.testing.jsunit');
 
 
 
-***REMOVED***
-***REMOVED*** A minimal WebStorage implementation that throws exceptions for disabled
-***REMOVED*** storage. Since we cannot have unit tests running in Safari private mode to
-***REMOVED*** test this, we need to mock an exception throwing when trying to set a value.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_isStorageDisabled If true, throws exceptions emulating
-***REMOVED***     Private browsing mode.  If false, storage quota will be marked as
-***REMOVED***     exceeded.
-***REMOVED***
-***REMOVED***
+/**
+ * A minimal WebStorage implementation that throws exceptions for disabled
+ * storage. Since we cannot have unit tests running in Safari private mode to
+ * test this, we need to mock an exception throwing when trying to set a value.
+ *
+ * @param {boolean=} opt_isStorageDisabled If true, throws exceptions emulating
+ *     Private browsing mode.  If false, storage quota will be marked as
+ *     exceeded.
+ * @constructor
+ */
 goog.storage.mechanism.MockThrowableStorage = function(opt_isStorageDisabled) {
   this.isStorageDisabled_ = !!opt_isStorageDisabled;
   this.length = opt_isStorageDisabled ? 0 : 1;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.MockThrowableStorage.prototype.setItem =
     function(key, value) {
   if (this.isStorageDisabled_) {
@@ -47,37 +47,37 @@ goog.storage.mechanism.MockThrowableStorage.prototype.setItem =
   } else {
     throw goog.storage.mechanism.ErrorCode.QUOTA_EXCEEDED;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.mechanism.MockThrowableStorage.prototype.removeItem =
-    function(key) {***REMOVED***
+    function(key) {};
 
 
-***REMOVED***
-***REMOVED*** A very simple, dummy implementation of key(), merely to verify that calls to
-***REMOVED*** HTML5WebStorage#key are proxied through.
-***REMOVED*** @param {number} index A key index.
-***REMOVED*** @return {string} The key associated with that index.
-***REMOVED***
+/**
+ * A very simple, dummy implementation of key(), merely to verify that calls to
+ * HTML5WebStorage#key are proxied through.
+ * @param {number} index A key index.
+ * @return {string} The key associated with that index.
+ */
 goog.storage.mechanism.MockThrowableStorage.prototype.key = function(index) {
   return 'dummyKey';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Provides an HTML5WebStorage wrapper for MockThrowableStorage.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.HTML5WebStorage}
-***REMOVED***
+/**
+ * Provides an HTML5WebStorage wrapper for MockThrowableStorage.
+ *
+ * @constructor
+ * @extends {goog.storage.mechanism.HTML5WebStorage}
+ */
 goog.storage.mechanism.HTML5MockStorage = function(opt_isStorageDisabled) {
   goog.base(
       this,
       new goog.storage.mechanism.MockThrowableStorage(opt_isStorageDisabled));
-***REMOVED***
+};
 goog.inherits(goog.storage.mechanism.HTML5MockStorage,
               goog.storage.mechanism.HTML5WebStorage);
 

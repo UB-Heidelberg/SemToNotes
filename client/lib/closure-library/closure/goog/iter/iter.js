@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Python style iteration utilities.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Python style iteration utilities.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 goog.provide('goog.iter');
@@ -29,78 +29,78 @@ goog.require('goog.functions');
 goog.require('goog.math');
 
 
-***REMOVED***
-***REMOVED*** @typedef {goog.iter.Iterator|{length:number}|{__iterator__}}
-***REMOVED***
+/**
+ * @typedef {goog.iter.Iterator|{length:number}|{__iterator__}}
+ */
 goog.iter.Iterable;
 
 
 // For script engines that already support iterators.
 if ('StopIteration' in goog.global) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Singleton Error object that is used to terminate iterations.
-  ***REMOVED*** @type {Error}
- ***REMOVED*****REMOVED***
+  /**
+   * Singleton Error object that is used to terminate iterations.
+   * @type {Error}
+   */
   goog.iter.StopIteration = goog.global['StopIteration'];
 } else {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Singleton Error object that is used to terminate iterations.
-  ***REMOVED*** @type {Error}
-  ***REMOVED*** @suppress {duplicate}
- ***REMOVED*****REMOVED***
+  /**
+   * Singleton Error object that is used to terminate iterations.
+   * @type {Error}
+   * @suppress {duplicate}
+   */
   goog.iter.StopIteration = Error('StopIteration');
 }
 
 
 
-***REMOVED***
-***REMOVED*** Class/interface for iterators.  An iterator needs to implement a {@code next}
-***REMOVED*** method and it needs to throw a {@code goog.iter.StopIteration} when the
-***REMOVED*** iteration passes beyond the end.  Iterators have no {@code hasNext} method.
-***REMOVED*** It is recommended to always use the helper functions to iterate over the
-***REMOVED*** iterator or in case you are only targeting JavaScript 1.7 for in loops.
-***REMOVED***
-***REMOVED*** @template VALUE
-***REMOVED***
-goog.iter.Iterator = function() {***REMOVED***
+/**
+ * Class/interface for iterators.  An iterator needs to implement a {@code next}
+ * method and it needs to throw a {@code goog.iter.StopIteration} when the
+ * iteration passes beyond the end.  Iterators have no {@code hasNext} method.
+ * It is recommended to always use the helper functions to iterate over the
+ * iterator or in case you are only targeting JavaScript 1.7 for in loops.
+ * @constructor
+ * @template VALUE
+ */
+goog.iter.Iterator = function() {};
 
 
-***REMOVED***
-***REMOVED*** Returns the next value of the iteration.  This will throw the object
-***REMOVED*** {@see goog.iter#StopIteration} when the iteration passes the end.
-***REMOVED*** @return {VALUE} Any object or value.
-***REMOVED***
+/**
+ * Returns the next value of the iteration.  This will throw the object
+ * {@see goog.iter#StopIteration} when the iteration passes the end.
+ * @return {VALUE} Any object or value.
+ */
 goog.iter.Iterator.prototype.next = function() {
   throw goog.iter.StopIteration;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the {@code Iterator} object itself.  This is used to implement
-***REMOVED*** the iterator protocol in JavaScript 1.7
-***REMOVED*** @param {boolean=} opt_keys  Whether to return the keys or values. Default is
-***REMOVED***     to only return the values.  This is being used by the for-in loop (true)
-***REMOVED***     and the for-each-in loop (false).  Even though the param gives a hint
-***REMOVED***     about what the iterator will return there is no guarantee that it will
-***REMOVED***     return the keys when true is passed.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} The object itself.
-***REMOVED***
+/**
+ * Returns the {@code Iterator} object itself.  This is used to implement
+ * the iterator protocol in JavaScript 1.7
+ * @param {boolean=} opt_keys  Whether to return the keys or values. Default is
+ *     to only return the values.  This is being used by the for-in loop (true)
+ *     and the for-each-in loop (false).  Even though the param gives a hint
+ *     about what the iterator will return there is no guarantee that it will
+ *     return the keys when true is passed.
+ * @return {!goog.iter.Iterator.<VALUE>} The object itself.
+ */
 goog.iter.Iterator.prototype.__iterator__ = function(opt_keys) {
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an iterator that knows how to iterate over the values in the object.
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable  If the
-***REMOVED***     object is an iterator it will be returned as is.  If the object has an
-***REMOVED***     {@code __iterator__} method that will be called to get the value
-***REMOVED***     iterator.  If the object is an array-like object we create an iterator
-***REMOVED***     for that.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} An iterator that knows how to iterate
-***REMOVED***     over the values in {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Returns an iterator that knows how to iterate over the values in the object.
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable  If the
+ *     object is an iterator it will be returned as is.  If the object has an
+ *     {@code __iterator__} method that will be called to get the value
+ *     iterator.  If the object is an array-like object we create an iterator
+ *     for that.
+ * @return {!goog.iter.Iterator.<VALUE>} An iterator that knows how to iterate
+ *     over the values in {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.toIterator = function(iterable) {
   if (iterable instanceof goog.iter.Iterator) {
     return iterable;
@@ -123,41 +123,41 @@ goog.iter.toIterator = function(iterable) {
         }
         return iterable[i++];
       }
-   ***REMOVED*****REMOVED***
+    };
     return newIter;
   }
 
 
   // TODO(arv): Should we fall back on goog.structs.getValues()?
   throw Error('Not implemented');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls a function for each element in the iterator with the element of the
-***REMOVED*** iterator passed as argument.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable  The iterator
-***REMOVED***     to iterate over. If the iterable is an object {@code toIterator} will be
-***REMOVED***     called on it.
-***REMOVED*** @param {function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>)|
-***REMOVED***         function(this:THIS,number,undefined,goog.iter.Iterator.<VALUE>)} f
-***REMOVED***     The function to call for every element.  This function takes 3 arguments
-***REMOVED***     (the element, undefined, and the iterator) and the return value is
-***REMOVED***     irrelevant.  The reason for passing undefined as the second argument is
-***REMOVED***     so that the same function can be used in {@see goog.array#forEach} as
-***REMOVED***     well as others.
-***REMOVED*** @param {THIS=} opt_obj  The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Calls a function for each element in the iterator with the element of the
+ * iterator passed as argument.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable  The iterator
+ *     to iterate over. If the iterable is an object {@code toIterator} will be
+ *     called on it.
+ * @param {function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>)|
+ *         function(this:THIS,number,undefined,goog.iter.Iterator.<VALUE>)} f
+ *     The function to call for every element.  This function takes 3 arguments
+ *     (the element, undefined, and the iterator) and the return value is
+ *     irrelevant.  The reason for passing undefined as the second argument is
+ *     so that the same function can be used in {@see goog.array#forEach} as
+ *     well as others.
+ * @param {THIS=} opt_obj  The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @template THIS, VALUE
+ */
 goog.iter.forEach = function(iterable, f, opt_obj) {
   if (goog.isArrayLike(iterable)) {
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       // NOTES: this passes the index number to the second parameter
       // of the callback contrary to the documentation above.
-      goog.array.forEach(***REMOVED*** @type {goog.array.ArrayLike}***REMOVED***(iterable), f,
+      goog.array.forEach(/** @type {goog.array.ArrayLike} */(iterable), f,
                          opt_obj);
     } catch (ex) {
       if (ex !== goog.iter.StopIteration) {
@@ -166,7 +166,7 @@ goog.iter.forEach = function(iterable, f, opt_obj) {
     }
   } else {
     iterable = goog.iter.toIterator(iterable);
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       while (true) {
         f.call(opt_obj, iterable.next(), undefined, iterable);
@@ -177,27 +177,27 @@ goog.iter.forEach = function(iterable, f, opt_obj) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls a function for every element in the iterator, and if the function
-***REMOVED*** returns true adds the element to a new iterator.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     to iterate over.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every element. This function takes 3 arguments
-***REMOVED***     (the element, undefined, and the iterator) and should return a boolean.
-***REMOVED***     If the return value is true the element will be included in the returned
-***REMOVED***     iterator.  If it is false the element is not included.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator in which only elements
-***REMOVED***     that passed the test are present.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Calls a function for every element in the iterator, and if the function
+ * returns true adds the element to a new iterator.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     to iterate over.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every element. This function takes 3 arguments
+ *     (the element, undefined, and the iterator) and should return a boolean.
+ *     If the return value is true the element will be included in the returned
+ *     iterator.  If it is false the element is not included.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator in which only elements
+ *     that passed the test are present.
+ * @template THIS, VALUE
+ */
 goog.iter.filter = function(iterable, f, opt_obj) {
   var iterator = goog.iter.toIterator(iterable);
   var newIter = new goog.iter.Iterator;
@@ -208,52 +208,52 @@ goog.iter.filter = function(iterable, f, opt_obj) {
         return val;
       }
     }
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calls a function for every element in the iterator, and if the function
-***REMOVED*** returns false adds the element to a new iterator.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     to iterate over.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every element. This function takes 3 arguments
-***REMOVED***     (the element, undefined, and the iterator) and should return a boolean.
-***REMOVED***     If the return value is false the element will be included in the returned
-***REMOVED***     iterator.  If it is true the element is not included.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator in which only elements
-***REMOVED***     that did not pass the test are present.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Calls a function for every element in the iterator, and if the function
+ * returns false adds the element to a new iterator.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     to iterate over.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every element. This function takes 3 arguments
+ *     (the element, undefined, and the iterator) and should return a boolean.
+ *     If the return value is false the element will be included in the returned
+ *     iterator.  If it is true the element is not included.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator in which only elements
+ *     that did not pass the test are present.
+ * @template THIS, VALUE
+ */
 goog.iter.filterFalse = function(iterable, f, opt_obj) {
   return goog.iter.filter(iterable, goog.functions.not(f), opt_obj);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a new iterator that returns the values in a range.  This function
-***REMOVED*** can take 1, 2 or 3 arguments:
-***REMOVED*** <pre>
-***REMOVED*** range(5) same as range(0, 5, 1)
-***REMOVED*** range(2, 5) same as range(2, 5, 1)
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {number} startOrStop  The stop value if only one argument is provided.
-***REMOVED***     The start value if 2 or more arguments are provided.  If only one
-***REMOVED***     argument is used the start value is 0.
-***REMOVED*** @param {number=} opt_stop  The stop value.  If left out then the first
-***REMOVED***     argument is used as the stop value.
-***REMOVED*** @param {number=} opt_step  The number to increment with between each call to
-***REMOVED***     next.  This can be negative.
-***REMOVED*** @return {!goog.iter.Iterator.<number>} A new iterator that returns the values
-***REMOVED***     in the range.
-***REMOVED***
+/**
+ * Creates a new iterator that returns the values in a range.  This function
+ * can take 1, 2 or 3 arguments:
+ * <pre>
+ * range(5) same as range(0, 5, 1)
+ * range(2, 5) same as range(2, 5, 1)
+ * </pre>
+ *
+ * @param {number} startOrStop  The stop value if only one argument is provided.
+ *     The start value if 2 or more arguments are provided.  If only one
+ *     argument is used the start value is 0.
+ * @param {number=} opt_stop  The stop value.  If left out then the first
+ *     argument is used as the stop value.
+ * @param {number=} opt_step  The number to increment with between each call to
+ *     next.  This can be negative.
+ * @return {!goog.iter.Iterator.<number>} A new iterator that returns the values
+ *     in the range.
+ */
 goog.iter.range = function(startOrStop, opt_stop, opt_step) {
   var start = 0;
   var stop = startOrStop;
@@ -274,98 +274,98 @@ goog.iter.range = function(startOrStop, opt_stop, opt_step) {
     var rv = start;
     start += step;
     return rv;
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Joins the values in a iterator with a delimiter.
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     to get the values from.
-***REMOVED*** @param {string} deliminator  The text to put between the values.
-***REMOVED*** @return {string} The joined value string.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Joins the values in a iterator with a delimiter.
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     to get the values from.
+ * @param {string} deliminator  The text to put between the values.
+ * @return {string} The joined value string.
+ * @template VALUE
+ */
 goog.iter.join = function(iterable, deliminator) {
   return goog.iter.toArray(iterable).join(deliminator);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** For every element in the iterator call a function and return a new iterator
-***REMOVED*** with that value.
-***REMOVED***
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterator to iterate over.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,!goog.iter.Iterator.<VALUE>):RESULT} f
-***REMOVED***     The function to call for every element.  This function takes 3 arguments
-***REMOVED***     (the element, undefined, and the iterator) and should return a new value.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {!goog.iter.Iterator.<RESULT>} A new iterator that returns the
-***REMOVED***     results of applying the function to each element in the original
-***REMOVED***     iterator.
-***REMOVED*** @template THIS, VALUE, RESULT
-***REMOVED***
+/**
+ * For every element in the iterator call a function and return a new iterator
+ * with that value.
+ *
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterator to iterate over.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,!goog.iter.Iterator.<VALUE>):RESULT} f
+ *     The function to call for every element.  This function takes 3 arguments
+ *     (the element, undefined, and the iterator) and should return a new value.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {!goog.iter.Iterator.<RESULT>} A new iterator that returns the
+ *     results of applying the function to each element in the original
+ *     iterator.
+ * @template THIS, VALUE, RESULT
+ */
 goog.iter.map = function(iterable, f, opt_obj) {
   var iterator = goog.iter.toIterator(iterable);
   var newIter = new goog.iter.Iterator;
   newIter.next = function() {
     var val = iterator.next();
     return f.call(opt_obj, val, undefined, iterator);
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Passes every element of an iterator into a function and accumulates the
-***REMOVED*** result.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     to iterate over.
-***REMOVED*** @param {function(this:THIS,VALUE,VALUE):VALUE} f The function to call for
-***REMOVED***     every element. This function takes 2 arguments (the function's previous
-***REMOVED***     result or the initial value, and the value of the current element).
-***REMOVED***     function(previousValue, currentElement) : newValue.
-***REMOVED*** @param {VALUE} val The initial value to pass into the function on the first
-***REMOVED***     call.
-***REMOVED*** @param {THIS=} opt_obj  The object to be used as the value of 'this' within
-***REMOVED***     f.
-***REMOVED*** @return {VALUE} Result of evaluating f repeatedly across the values of
-***REMOVED***     the iterator.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Passes every element of an iterator into a function and accumulates the
+ * result.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     to iterate over.
+ * @param {function(this:THIS,VALUE,VALUE):VALUE} f The function to call for
+ *     every element. This function takes 2 arguments (the function's previous
+ *     result or the initial value, and the value of the current element).
+ *     function(previousValue, currentElement) : newValue.
+ * @param {VALUE} val The initial value to pass into the function on the first
+ *     call.
+ * @param {THIS=} opt_obj  The object to be used as the value of 'this' within
+ *     f.
+ * @return {VALUE} Result of evaluating f repeatedly across the values of
+ *     the iterator.
+ * @template THIS, VALUE
+ */
 goog.iter.reduce = function(iterable, f, val, opt_obj) {
   var rval = val;
   goog.iter.forEach(iterable, function(val) {
     rval = f.call(opt_obj, rval, val);
   });
   return rval;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Goes through the values in the iterator. Calls f for each of these, and if
-***REMOVED*** any of them returns true, this returns true (without checking the rest). If
-***REMOVED*** all return false this will return false.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     object.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every value. This function takes 3 arguments
-***REMOVED***     (the value, undefined, and the iterator) and should return a boolean.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {boolean} true if any value passes the test.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Goes through the values in the iterator. Calls f for each of these, and if
+ * any of them returns true, this returns true (without checking the rest). If
+ * all return false this will return false.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     object.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every value. This function takes 3 arguments
+ *     (the value, undefined, and the iterator) and should return a boolean.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {boolean} true if any value passes the test.
+ * @template THIS, VALUE
+ */
 goog.iter.some = function(iterable, f, opt_obj) {
   iterable = goog.iter.toIterator(iterable);
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     while (true) {
       if (f.call(opt_obj, iterable.next(), undefined, iterable)) {
@@ -378,28 +378,28 @@ goog.iter.some = function(iterable, f, opt_obj) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Goes through the values in the iterator. Calls f for each of these and if any
-***REMOVED*** of them returns false this returns false (without checking the rest). If all
-***REMOVED*** return true this will return true.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     object.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every value. This function takes 3 arguments
-***REMOVED***     (the value, undefined, and the iterator) and should return a boolean.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {boolean} true if every value passes the test.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Goes through the values in the iterator. Calls f for each of these and if any
+ * of them returns false this returns false (without checking the rest). If all
+ * return true this will return true.
+ *
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     object.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every value. This function takes 3 arguments
+ *     (the value, undefined, and the iterator) and should return a boolean.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {boolean} true if every value passes the test.
+ * @template THIS, VALUE
+ */
 goog.iter.every = function(iterable, f, opt_obj) {
   iterable = goog.iter.toIterator(iterable);
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     while (true) {
       if (!f.call(opt_obj, iterable.next(), undefined, iterable)) {
@@ -412,18 +412,18 @@ goog.iter.every = function(iterable, f, opt_obj) {
     }
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes zero or more iterables and returns one iterator that will iterate over
-***REMOVED*** them in the order chained.
-***REMOVED*** @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
-***REMOVED***     number of iterable objects.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} Returns a new iterator that will
-***REMOVED***     iterate over all the given iterables' contents.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Takes zero or more iterables and returns one iterator that will iterate over
+ * them in the order chained.
+ * @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
+ *     number of iterable objects.
+ * @return {!goog.iter.Iterator.<VALUE>} Returns a new iterator that will
+ *     iterate over all the given iterables' contents.
+ * @template VALUE
+ */
 goog.iter.chain = function(var_args) {
   var iterator = goog.iter.toIterator(arguments);
   var iter = new goog.iter.Iterator();
@@ -444,42 +444,42 @@ goog.iter.chain = function(var_args) {
         current = null;
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a single iterable containing zero or more iterables and returns one
-***REMOVED*** iterator that will iterate over each one in the order given.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.chain.from_iterable
-***REMOVED*** @param {goog.iter.Iterable} iterable The iterable of iterables to chain.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} Returns a new iterator that will
-***REMOVED***     iterate over all the contents of the iterables contained within
-***REMOVED***     {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Takes a single iterable containing zero or more iterables and returns one
+ * iterator that will iterate over each one in the order given.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.chain.from_iterable
+ * @param {goog.iter.Iterable} iterable The iterable of iterables to chain.
+ * @return {!goog.iter.Iterator.<VALUE>} Returns a new iterator that will
+ *     iterate over all the contents of the iterables contained within
+ *     {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.chainFromIterable = function(iterable) {
   return goog.iter.chain.apply(undefined, iterable);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds a new iterator that iterates over the original, but skips elements as
-***REMOVED*** long as a supplied function returns true.
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     object.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every value. This function takes 3 arguments
-***REMOVED***     (the value, undefined, and the iterator) and should return a boolean.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator that drops elements from
-***REMOVED***     the original iterator as long as {@code f} is true.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Builds a new iterator that iterates over the original, but skips elements as
+ * long as a supplied function returns true.
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     object.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every value. This function takes 3 arguments
+ *     (the value, undefined, and the iterator) and should return a boolean.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator that drops elements from
+ *     the original iterator as long as {@code f} is true.
+ * @template THIS, VALUE
+ */
 goog.iter.dropWhile = function(iterable, f, opt_obj) {
   var iterator = goog.iter.toIterator(iterable);
   var newIter = new goog.iter.Iterator;
@@ -494,25 +494,25 @@ goog.iter.dropWhile = function(iterable, f, opt_obj) {
       }
       return val;
     }
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Builds a new iterator that iterates over the original, but only as long as a
-***REMOVED*** supplied function returns true.
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     object.
-***REMOVED*** @param {
-***REMOVED***     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
-***REMOVED***     The function to call for every value. This function takes 3 arguments
-***REMOVED***     (the value, undefined, and the iterator) and should return a boolean.
-***REMOVED*** @param {THIS=} opt_obj This is used as the 'this' object in f when called.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator that keeps elements in
-***REMOVED***     the original iterator as long as the function is true.
-***REMOVED*** @template THIS, VALUE
-***REMOVED***
+/**
+ * Builds a new iterator that iterates over the original, but only as long as a
+ * supplied function returns true.
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     object.
+ * @param {
+ *     function(this:THIS,VALUE,undefined,goog.iter.Iterator.<VALUE>):boolean} f
+ *     The function to call for every value. This function takes 3 arguments
+ *     (the value, undefined, and the iterator) and should return a boolean.
+ * @param {THIS=} opt_obj This is used as the 'this' object in f when called.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator that keeps elements in
+ *     the original iterator as long as the function is true.
+ * @template THIS, VALUE
+ */
 goog.iter.takeWhile = function(iterable, f, opt_obj) {
   var iterator = goog.iter.toIterator(iterable);
   var newIter = new goog.iter.Iterator;
@@ -530,22 +530,22 @@ goog.iter.takeWhile = function(iterable, f, opt_obj) {
         throw goog.iter.StopIteration;
       }
     }
- ***REMOVED*****REMOVED***
+  };
   return newIter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts the iterator to an array
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
-***REMOVED***     to convert to an array.
-***REMOVED*** @return {!Array.<VALUE>} An array of the elements the iterator iterates over.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Converts the iterator to an array
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterator
+ *     to convert to an array.
+ * @return {!Array.<VALUE>} An array of the elements the iterator iterates over.
+ * @template VALUE
+ */
 goog.iter.toArray = function(iterable) {
   // Fast path for array-like.
   if (goog.isArrayLike(iterable)) {
-    return goog.array.toArray(***REMOVED*** @type {!goog.array.ArrayLike}***REMOVED***(iterable));
+    return goog.array.toArray(/** @type {!goog.array.ArrayLike} */(iterable));
   }
   iterable = goog.iter.toIterator(iterable);
   var array = [];
@@ -553,39 +553,39 @@ goog.iter.toArray = function(iterable) {
     array.push(val);
   });
   return array;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Iterates over two iterables and returns true if they contain the same
-***REMOVED*** sequence of elements and have the same length.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable1 The first
-***REMOVED***     iterable object.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable2 The second
-***REMOVED***     iterable object.
-***REMOVED*** @return {boolean} true if the iterables contain the same sequence of elements
-***REMOVED***     and have the same length.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Iterates over two iterables and returns true if they contain the same
+ * sequence of elements and have the same length.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable1 The first
+ *     iterable object.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable2 The second
+ *     iterable object.
+ * @return {boolean} true if the iterables contain the same sequence of elements
+ *     and have the same length.
+ * @template VALUE
+ */
 goog.iter.equals = function(iterable1, iterable2) {
-  var fillValue = {***REMOVED***
+  var fillValue = {};
   var pairs = goog.iter.zipLongest(fillValue, iterable1, iterable2);
   return goog.iter.every(pairs, function(pair) {
     return pair[0] == pair[1];
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Advances the iterator to the next position, returning the given default value
-***REMOVED*** instead of throwing an exception if the iterator has no more entries.
-***REMOVED*** @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterable
-***REMOVED***     object.
-***REMOVED*** @param {VALUE} defaultValue The value to return if the iterator is empty.
-***REMOVED*** @return {VALUE} The next item in the iteration, or defaultValue if the
-***REMOVED***     iterator was empty.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Advances the iterator to the next position, returning the given default value
+ * instead of throwing an exception if the iterator has no more entries.
+ * @param {goog.iter.Iterator.<VALUE>|goog.iter.Iterable} iterable The iterable
+ *     object.
+ * @param {VALUE} defaultValue The value to return if the iterator is empty.
+ * @return {VALUE} The next item in the iteration, or defaultValue if the
+ *     iterator was empty.
+ * @template VALUE
+ */
 goog.iter.nextOrValue = function(iterable, defaultValue) {
   try {
     return goog.iter.toIterator(iterable).next();
@@ -595,20 +595,20 @@ goog.iter.nextOrValue = function(iterable, defaultValue) {
     }
     return defaultValue;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cartesian product of zero or more sets.  Gives an iterator that gives every
-***REMOVED*** combination of one element chosen from each set.  For example,
-***REMOVED*** ([1, 2], [3, 4]) gives ([1, 3], [1, 4], [2, 3], [2, 4]).
-***REMOVED*** @see http://docs.python.org/library/itertools.html#itertools.product
-***REMOVED*** @param {...!goog.array.ArrayLike.<VALUE>} var_args Zero or more sets, as
-***REMOVED***     arrays.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} An iterator that gives each
-***REMOVED***     n-tuple (as an array).
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Cartesian product of zero or more sets.  Gives an iterator that gives every
+ * combination of one element chosen from each set.  For example,
+ * ([1, 2], [3, 4]) gives ([1, 3], [1, 4], [2, 3], [2, 4]).
+ * @see http://docs.python.org/library/itertools.html#itertools.product
+ * @param {...!goog.array.ArrayLike.<VALUE>} var_args Zero or more sets, as
+ *     arrays.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} An iterator that gives each
+ *     n-tuple (as an array).
+ * @template VALUE
+ */
 goog.iter.product = function(var_args) {
   var someArrayEmpty = goog.array.some(arguments, function(arr) {
     return !arr.length;
@@ -657,22 +657,22 @@ goog.iter.product = function(var_args) {
     }
 
     throw goog.iter.StopIteration;
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create an iterator to cycle over the iterable's elements indefinitely.
-***REMOVED*** For example, ([1, 2, 3]) would return : 1, 2, 3, 1, 2, 3, ...
-***REMOVED*** @see: http://docs.python.org/library/itertools.html#itertools.cycle.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable object.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} An iterator that iterates indefinitely
-***REMOVED***     over the values in {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Create an iterator to cycle over the iterable's elements indefinitely.
+ * For example, ([1, 2, 3]) would return : 1, 2, 3, 1, 2, 3, ...
+ * @see: http://docs.python.org/library/itertools.html#itertools.cycle.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable object.
+ * @return {!goog.iter.Iterator.<VALUE>} An iterator that iterates indefinitely
+ *     over the values in {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.cycle = function(iterable) {
   var baseIterator = goog.iter.toIterator(iterable);
 
@@ -715,21 +715,21 @@ goog.iter.cycle = function(iterable) {
     cacheIndex = (cacheIndex + 1) % cache.length;
 
     return returnElement;
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that counts indefinitely from a starting value.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.count
-***REMOVED*** @param {number=} opt_start The starting value. Default is 0.
-***REMOVED*** @param {number=} opt_step The number to increment with between each call to
-***REMOVED***     next. Negative and floating point numbers are allowed. Default is 1.
-***REMOVED*** @return {!goog.iter.Iterator.<number>} A new iterator that returns the values
-***REMOVED***     in the series.
-***REMOVED***
+/**
+ * Creates an iterator that counts indefinitely from a starting value.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.count
+ * @param {number=} opt_start The starting value. Default is 0.
+ * @param {number=} opt_step The number to increment with between each call to
+ *     next. Negative and floating point numbers are allowed. Default is 1.
+ * @return {!goog.iter.Iterator.<number>} A new iterator that returns the values
+ *     in the series.
+ */
 goog.iter.count = function(opt_start, opt_step) {
   var counter = opt_start || 0;
   var step = goog.isDef(opt_step) ? opt_step : 1;
@@ -739,38 +739,38 @@ goog.iter.count = function(opt_start, opt_step) {
     var returnValue = counter;
     counter += step;
     return returnValue;
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns the same object or value repeatedly.
-***REMOVED*** @param {VALUE} value Any object or value to repeat.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator that returns the
-***REMOVED***     repeated value.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns the same object or value repeatedly.
+ * @param {VALUE} value Any object or value to repeat.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator that returns the
+ *     repeated value.
+ * @template VALUE
+ */
 goog.iter.repeat = function(value) {
   var iter = new goog.iter.Iterator();
 
   iter.next = goog.functions.constant(value);
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns running totals from the numbers in
-***REMOVED*** {@code iterable}. For example, the array {@code [1, 2, 3, 4, 5]} yields
-***REMOVED*** {@code 1 -> 3 -> 6 -> 10 -> 15}.
-***REMOVED*** @see http://docs.python.org/3.2/library/itertools.html#itertools.accumulate
-***REMOVED*** @param {!goog.iter.Iterable.<number>} iterable The iterable of numbers to
-***REMOVED***     accumulate.
-***REMOVED*** @return {!goog.iter.Iterator.<number>} A new iterator that returns the
-***REMOVED***     numbers in the series.
-***REMOVED***
+/**
+ * Creates an iterator that returns running totals from the numbers in
+ * {@code iterable}. For example, the array {@code [1, 2, 3, 4, 5]} yields
+ * {@code 1 -> 3 -> 6 -> 10 -> 15}.
+ * @see http://docs.python.org/3.2/library/itertools.html#itertools.accumulate
+ * @param {!goog.iter.Iterable.<number>} iterable The iterable of numbers to
+ *     accumulate.
+ * @return {!goog.iter.Iterator.<number>} A new iterator that returns the
+ *     numbers in the series.
+ */
 goog.iter.accumulate = function(iterable) {
   var iterator = goog.iter.toIterator(iterable);
   var total = 0;
@@ -779,25 +779,25 @@ goog.iter.accumulate = function(iterable) {
   iter.next = function() {
     total += iterator.next();
     return total;
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns arrays containing the ith elements from the
-***REMOVED*** provided iterables. The returned arrays will be the same size as the number
-***REMOVED*** of iterables given in {@code var_args}. Once the shortest iterable is
-***REMOVED*** exhausted, subsequent calls to {@code next()} will throw
-***REMOVED*** {@code goog.iter.StopIteration}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.izip
-***REMOVED*** @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
-***REMOVED***     number of iterable objects.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator that returns
-***REMOVED***     arrays of elements from the provided iterables.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns arrays containing the ith elements from the
+ * provided iterables. The returned arrays will be the same size as the number
+ * of iterables given in {@code var_args}. Once the shortest iterable is
+ * exhausted, subsequent calls to {@code next()} will throw
+ * {@code goog.iter.StopIteration}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.izip
+ * @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
+ *     number of iterable objects.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator that returns
+ *     arrays of elements from the provided iterables.
+ * @template VALUE
+ */
 goog.iter.zip = function(var_args) {
   var args = arguments;
   var iter = new goog.iter.Iterator();
@@ -809,27 +809,27 @@ goog.iter.zip = function(var_args) {
         return it.next();
       });
       return arr;
-   ***REMOVED*****REMOVED***
+    };
   }
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns arrays containing the ith elements from the
-***REMOVED*** provided iterables. The returned arrays will be the same size as the number
-***REMOVED*** of iterables given in {@code var_args}. Shorter iterables will be extended
-***REMOVED*** with {@code fillValue}. Once the longest iterable is exhausted, subsequent
-***REMOVED*** calls to {@code next()} will throw {@code goog.iter.StopIteration}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.izip_longest
-***REMOVED*** @param {VALUE} fillValue The object or value used to fill shorter iterables.
-***REMOVED*** @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
-***REMOVED***     number of iterable objects.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator that returns
-***REMOVED***     arrays of elements from the provided iterables.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns arrays containing the ith elements from the
+ * provided iterables. The returned arrays will be the same size as the number
+ * of iterables given in {@code var_args}. Shorter iterables will be extended
+ * with {@code fillValue}. Once the longest iterable is exhausted, subsequent
+ * calls to {@code next()} will throw {@code goog.iter.StopIteration}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.izip_longest
+ * @param {VALUE} fillValue The object or value used to fill shorter iterables.
+ * @param {...!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} var_args Any
+ *     number of iterable objects.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator that returns
+ *     arrays of elements from the provided iterables.
+ * @template VALUE
+ */
 goog.iter.zipLongest = function(fillValue, var_args) {
   var args = goog.array.slice(arguments, 1);
   var iter = new goog.iter.Iterator();
@@ -859,92 +859,92 @@ goog.iter.zipLongest = function(fillValue, var_args) {
         throw goog.iter.StopIteration;
       }
       return arr;
-   ***REMOVED*****REMOVED***
+    };
   }
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that filters {@code iterable} based on a series of
-***REMOVED*** {@code selectors}. On each call to {@code next()}, one item is taken from
-***REMOVED*** both the {@code iterable} and {@code selectors} iterators. If the item from
-***REMOVED*** {@code selectors} evaluates to true, the item from {@code iterable} is given.
-***REMOVED*** Otherwise, it is skipped. Once either {@code iterable} or {@code selectors}
-***REMOVED*** is exhausted, subsequent calls to {@code next()} will throw
-***REMOVED*** {@code goog.iter.StopIteration}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.compress
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to filter.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} selectors An
-***REMOVED***     iterable of items to be evaluated in a boolean context to determine if
-***REMOVED***     the corresponding element in {@code iterable} should be included in the
-***REMOVED***     result.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator that returns the
-***REMOVED***     filtered values.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that filters {@code iterable} based on a series of
+ * {@code selectors}. On each call to {@code next()}, one item is taken from
+ * both the {@code iterable} and {@code selectors} iterators. If the item from
+ * {@code selectors} evaluates to true, the item from {@code iterable} is given.
+ * Otherwise, it is skipped. Once either {@code iterable} or {@code selectors}
+ * is exhausted, subsequent calls to {@code next()} will throw
+ * {@code goog.iter.StopIteration}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.compress
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to filter.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} selectors An
+ *     iterable of items to be evaluated in a boolean context to determine if
+ *     the corresponding element in {@code iterable} should be included in the
+ *     result.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator that returns the
+ *     filtered values.
+ * @template VALUE
+ */
 goog.iter.compress = function(iterable, selectors) {
   var selectorIterator = goog.iter.toIterator(selectors);
 
   return goog.iter.filter(iterable, function() {
     return !!selectorIterator.next();
   });
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Implements the {@code goog.iter.groupBy} iterator.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to group.
-***REMOVED*** @param {function(...[VALUE]): KEY=} opt_keyFunc  Optional function for
-***REMOVED***     determining the key value for each group in the {@code iterable}. Default
-***REMOVED***     is the identity function.
-***REMOVED***
-***REMOVED*** @extends {goog.iter.Iterator.<!Array>}
-***REMOVED*** @template KEY, VALUE
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Implements the {@code goog.iter.groupBy} iterator.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to group.
+ * @param {function(...[VALUE]): KEY=} opt_keyFunc  Optional function for
+ *     determining the key value for each group in the {@code iterable}. Default
+ *     is the identity function.
+ * @constructor
+ * @extends {goog.iter.Iterator.<!Array>}
+ * @template KEY, VALUE
+ * @private
+ */
 goog.iter.GroupByIterator_ = function(iterable, opt_keyFunc) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The iterable to group, coerced to an iterator.
-  ***REMOVED*** @type {!goog.iter.Iterator}
- ***REMOVED*****REMOVED***
+  /**
+   * The iterable to group, coerced to an iterator.
+   * @type {!goog.iter.Iterator}
+   */
   this.iterator = goog.iter.toIterator(iterable);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A function for determining the key value for each element in the iterable.
-  ***REMOVED*** If no function is provided, the identity function is used and returns the
-  ***REMOVED*** element unchanged.
-  ***REMOVED*** @type {function(...[VALUE]): KEY}
- ***REMOVED*****REMOVED***
+  /**
+   * A function for determining the key value for each element in the iterable.
+   * If no function is provided, the identity function is used and returns the
+   * element unchanged.
+   * @type {function(...[VALUE]): KEY}
+   */
   this.keyFunc = opt_keyFunc || goog.functions.identity;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The target key for determining the start of a group.
-  ***REMOVED*** @type {KEY}
- ***REMOVED*****REMOVED***
+  /**
+   * The target key for determining the start of a group.
+   * @type {KEY}
+   */
   this.targetKey;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current key visited during iteration.
-  ***REMOVED*** @type {KEY}
- ***REMOVED*****REMOVED***
+  /**
+   * The current key visited during iteration.
+   * @type {KEY}
+   */
   this.currentKey;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current value being added to the group.
-  ***REMOVED*** @type {VALUE}
- ***REMOVED*****REMOVED***
+  /**
+   * The current value being added to the group.
+   * @type {VALUE}
+   */
   this.currentValue;
-***REMOVED***
+};
 goog.inherits(goog.iter.GroupByIterator_, goog.iter.Iterator);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.iter.GroupByIterator_.prototype.next = function() {
   while (this.currentKey == this.targetKey) {
     this.currentValue = this.iterator.next();  // Exits on StopIteration
@@ -952,15 +952,15 @@ goog.iter.GroupByIterator_.prototype.next = function() {
   }
   this.targetKey = this.currentKey;
   return [this.currentKey, this.groupItems_(this.targetKey)];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs the grouping of objects using the given key.
-***REMOVED*** @param {KEY} targetKey  The target key object for the group.
-***REMOVED*** @return {!Array.<VALUE>} An array of grouped objects.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Performs the grouping of objects using the given key.
+ * @param {KEY} targetKey  The target key object for the group.
+ * @return {!Array.<VALUE>} An array of grouped objects.
+ * @private
+ */
 goog.iter.GroupByIterator_.prototype.groupItems_ = function(targetKey) {
   var arr = [];
   while (this.currentKey == targetKey) {
@@ -976,53 +976,53 @@ goog.iter.GroupByIterator_.prototype.groupItems_ = function(targetKey) {
     this.currentKey = this.keyFunc(this.currentValue);
   }
   return arr;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns arrays containing elements from the
-***REMOVED*** {@code iterable} grouped by a key value. For iterables with repeated
-***REMOVED*** elements (i.e. sorted according to a particular key function), this function
-***REMOVED*** has a {@code uniq}-like effect. For example, grouping the array:
-***REMOVED*** {@code [A, B, B, C, C, A]} produces
-***REMOVED*** {@code [A, [A]], [B, [B, B]], [C, [C, C]], [A, [A]]}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.groupby
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to group.
-***REMOVED*** @param {function(...[VALUE]): KEY=} opt_keyFunc  Optional function for
-***REMOVED***     determining the key value for each group in the {@code iterable}. Default
-***REMOVED***     is the identity function.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array>} A new iterator that returns arrays of
-***REMOVED***     consecutive key and groups.
-***REMOVED*** @template KEY, VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns arrays containing elements from the
+ * {@code iterable} grouped by a key value. For iterables with repeated
+ * elements (i.e. sorted according to a particular key function), this function
+ * has a {@code uniq}-like effect. For example, grouping the array:
+ * {@code [A, B, B, C, C, A]} produces
+ * {@code [A, [A]], [B, [B, B]], [C, [C, C]], [A, [A]]}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.groupby
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to group.
+ * @param {function(...[VALUE]): KEY=} opt_keyFunc  Optional function for
+ *     determining the key value for each group in the {@code iterable}. Default
+ *     is the identity function.
+ * @return {!goog.iter.Iterator.<!Array>} A new iterator that returns arrays of
+ *     consecutive key and groups.
+ * @template KEY, VALUE
+ */
 goog.iter.groupBy = function(iterable, opt_keyFunc) {
   return new goog.iter.GroupByIterator_(iterable, opt_keyFunc);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gives an iterator that gives the result of calling the given function
-***REMOVED*** <code>f</code> with the arguments taken from the next element from
-***REMOVED*** <code>iterable</code> (the elements are expected to also be iterables).
-***REMOVED***
-***REMOVED*** Similar to {@see goog.iter#map} but allows the function to accept multiple
-***REMOVED*** arguments from the iterable.
-***REMOVED***
-***REMOVED*** @param {!goog.iter.Iterable.<!goog.iter.Iterable>} iterable The iterable of
-***REMOVED***     iterables to iterate over.
-***REMOVED*** @param {function(this:THIS,...[*]):RESULT} f The function to call for every
-***REMOVED***     element.  This function takes N+2 arguments, where N represents the
-***REMOVED***     number of items from the next element of the iterable. The two
-***REMOVED***     additional arguments passed to the function are undefined and the
-***REMOVED***     iterator itself. The function should return a new value.
-***REMOVED*** @param {THIS=} opt_obj The object to be used as the value of 'this' within
-***REMOVED***     {@code f}.
-***REMOVED*** @return {!goog.iter.Iterator.<RESULT>} A new iterator that returns the
-***REMOVED***     results of applying the function to each element in the original
-***REMOVED***     iterator.
-***REMOVED*** @template THIS, RESULT
-***REMOVED***
+/**
+ * Gives an iterator that gives the result of calling the given function
+ * <code>f</code> with the arguments taken from the next element from
+ * <code>iterable</code> (the elements are expected to also be iterables).
+ *
+ * Similar to {@see goog.iter#map} but allows the function to accept multiple
+ * arguments from the iterable.
+ *
+ * @param {!goog.iter.Iterable.<!goog.iter.Iterable>} iterable The iterable of
+ *     iterables to iterate over.
+ * @param {function(this:THIS,...[*]):RESULT} f The function to call for every
+ *     element.  This function takes N+2 arguments, where N represents the
+ *     number of items from the next element of the iterable. The two
+ *     additional arguments passed to the function are undefined and the
+ *     iterator itself. The function should return a new value.
+ * @param {THIS=} opt_obj The object to be used as the value of 'this' within
+ *     {@code f}.
+ * @return {!goog.iter.Iterator.<RESULT>} A new iterator that returns the
+ *     results of applying the function to each element in the original
+ *     iterator.
+ * @template THIS, RESULT
+ */
 goog.iter.starMap = function(iterable, f, opt_obj) {
   var iterator = goog.iter.toIterator(iterable);
   var iter = new goog.iter.Iterator();
@@ -1030,22 +1030,22 @@ goog.iter.starMap = function(iterable, f, opt_obj) {
   iter.next = function() {
     var args = goog.iter.toArray(iterator.next());
     return f.apply(opt_obj, goog.array.concat(args, undefined, iterator));
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an array of iterators each of which can iterate over the values in
-***REMOVED*** {@code iterable} without advancing the others.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.tee
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to tee.
-***REMOVED*** @param {number=} opt_num  The number of iterators to create. Default is 2.
-***REMOVED*** @return {!Array.<goog.iter.Iterator.<VALUE>>} An array of iterators.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Returns an array of iterators each of which can iterate over the values in
+ * {@code iterable} without advancing the others.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.tee
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to tee.
+ * @param {number=} opt_num  The number of iterators to create. Default is 2.
+ * @return {!Array.<goog.iter.Iterator.<VALUE>>} An array of iterators.
+ * @template VALUE
+ */
 goog.iter.tee = function(iterable, opt_num) {
   var iterator = goog.iter.toIterator(iterable);
   var num = goog.isNumber(opt_num) ? opt_num : 2;
@@ -1058,7 +1058,7 @@ goog.iter.tee = function(iterable, opt_num) {
     goog.array.forEach(buffers, function(buffer) {
       buffer.push(val);
     });
- ***REMOVED*****REMOVED***
+  };
 
   var createIterator = function(buffer) {
     // Each tee'd iterator has an associated buffer (initially empty). When a
@@ -1074,43 +1074,43 @@ goog.iter.tee = function(iterable, opt_num) {
       }
       goog.asserts.assert(!goog.array.isEmpty(buffer));
       return buffer.shift();
-   ***REMOVED*****REMOVED***
+    };
 
     return iter;
- ***REMOVED*****REMOVED***
+  };
 
   return goog.array.map(buffers, createIterator);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns arrays containing a count and an element
-***REMOVED*** obtained from the given {@code iterable}.
-***REMOVED*** @see http://docs.python.org/2/library/functions.html#enumerate
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to enumerate.
-***REMOVED*** @param {number=} opt_start  Optional starting value. Default is 0.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array>} A new iterator containing count/item
-***REMOVED***     pairs.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns arrays containing a count and an element
+ * obtained from the given {@code iterable}.
+ * @see http://docs.python.org/2/library/functions.html#enumerate
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to enumerate.
+ * @param {number=} opt_start  Optional starting value. Default is 0.
+ * @return {!goog.iter.Iterator.<!Array>} A new iterator containing count/item
+ *     pairs.
+ * @template VALUE
+ */
 goog.iter.enumerate = function(iterable, opt_start) {
   return goog.iter.zip(goog.iter.count(opt_start), iterable);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns the first {@code limitSize} elements from an
-***REMOVED*** iterable. If this number is greater than the number of elements in the
-***REMOVED*** iterable, all the elements are returned.
-***REMOVED*** @see http://goo.gl/V0sihp Inspired by the limit iterator in Guava.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to limit.
-***REMOVED*** @param {number} limitSize  The maximum number of elements to return.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator containing
-***REMOVED***     {@code limitSize} elements.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns the first {@code limitSize} elements from an
+ * iterable. If this number is greater than the number of elements in the
+ * iterable, all the elements are returned.
+ * @see http://goo.gl/V0sihp Inspired by the limit iterator in Guava.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to limit.
+ * @param {number} limitSize  The maximum number of elements to return.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator containing
+ *     {@code limitSize} elements.
+ * @template VALUE
+ */
 goog.iter.limit = function(iterable, limitSize) {
   goog.asserts.assert(goog.math.isInt(limitSize) && limitSize >= 0);
 
@@ -1124,24 +1124,24 @@ goog.iter.limit = function(iterable, limitSize) {
       return iterator.next();
     }
     throw goog.iter.StopIteration;
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that is advanced {@code count} steps ahead. Consumed
-***REMOVED*** values are silently discarded. If {@code count} is greater than the number
-***REMOVED*** of elements in {@code iterable}, an empty iterator is returned. Subsequent
-***REMOVED*** calls to {@code next()} will throw {@code goog.iter.StopIteration}.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to consume.
-***REMOVED*** @param {number} count  The number of elements to consume from the iterator.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} An iterator advanced zero or more steps
-***REMOVED***     ahead.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that is advanced {@code count} steps ahead. Consumed
+ * values are silently discarded. If {@code count} is greater than the number
+ * of elements in {@code iterable}, an empty iterator is returned. Subsequent
+ * calls to {@code next()} will throw {@code goog.iter.StopIteration}.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to consume.
+ * @param {number} count  The number of elements to consume from the iterator.
+ * @return {!goog.iter.Iterator.<VALUE>} An iterator advanced zero or more steps
+ *     ahead.
+ * @template VALUE
+ */
 goog.iter.consume = function(iterable, count) {
   goog.asserts.assert(goog.math.isInt(count) && count >= 0);
 
@@ -1152,21 +1152,21 @@ goog.iter.consume = function(iterable, count) {
   }
 
   return iterator;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns a range of elements from an iterable.
-***REMOVED*** Similar to {@see goog.array#slice} but does not support negative indexes.
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to slice.
-***REMOVED*** @param {number} start  The index of the first element to return.
-***REMOVED*** @param {number=} opt_end  The index after the last element to return. If
-***REMOVED***     defined, must be greater than or equal to {@code start}.
-***REMOVED*** @return {!goog.iter.Iterator.<VALUE>} A new iterator containing a slice of
-***REMOVED***     the original.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns a range of elements from an iterable.
+ * Similar to {@see goog.array#slice} but does not support negative indexes.
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to slice.
+ * @param {number} start  The index of the first element to return.
+ * @param {number=} opt_end  The index after the last element to return. If
+ *     defined, must be greater than or equal to {@code start}.
+ * @return {!goog.iter.Iterator.<VALUE>} A new iterator containing a slice of
+ *     the original.
+ * @template VALUE
+ */
 goog.iter.slice = function(iterable, start, opt_end) {
   goog.asserts.assert(goog.math.isInt(start) && start >= 0);
 
@@ -1174,47 +1174,47 @@ goog.iter.slice = function(iterable, start, opt_end) {
 
   if (goog.isNumber(opt_end)) {
     goog.asserts.assert(
-        goog.math.isInt(***REMOVED*** @type {number}***REMOVED*** (opt_end)) && opt_end >= start);
-    iterator = goog.iter.limit(iterator, opt_end - start /* limitSize***REMOVED***);
+        goog.math.isInt(/** @type {number} */ (opt_end)) && opt_end >= start);
+    iterator = goog.iter.limit(iterator, opt_end - start /* limitSize */);
   }
 
   return iterator;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks an array for duplicate elements.
-***REMOVED*** @param {Array.<VALUE>|goog.array.ArrayLike} arr The array to check for
-***REMOVED***     duplicates.
-***REMOVED*** @return {boolean} True, if the array contains duplicates, false otherwise.
-***REMOVED*** @private
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Checks an array for duplicate elements.
+ * @param {Array.<VALUE>|goog.array.ArrayLike} arr The array to check for
+ *     duplicates.
+ * @return {boolean} True, if the array contains duplicates, false otherwise.
+ * @private
+ * @template VALUE
+ */
 // TODO(user): Consider moving this into goog.array as a public function.
 goog.iter.hasDuplicates_ = function(arr) {
   var deduped = [];
   goog.array.removeDuplicates(arr, deduped);
   return arr.length != deduped.length;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns permutations of elements in
-***REMOVED*** {@code iterable}.
-***REMOVED***
-***REMOVED*** Permutations are obtained by taking the Cartesian product of
-***REMOVED*** {@code opt_length} iterables and filtering out those with repeated
-***REMOVED*** elements. For example, the permutations of {@code [1,2,3]} are
-***REMOVED*** {@code [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.permutations
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable from which to generate permutations.
-***REMOVED*** @param {number=} opt_length Length of each permutation. If omitted, defaults
-***REMOVED***     to the length of {@code iterable}.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing the
-***REMOVED***     permutations of {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns permutations of elements in
+ * {@code iterable}.
+ *
+ * Permutations are obtained by taking the Cartesian product of
+ * {@code opt_length} iterables and filtering out those with repeated
+ * elements. For example, the permutations of {@code [1,2,3]} are
+ * {@code [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.permutations
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable from which to generate permutations.
+ * @param {number=} opt_length Length of each permutation. If omitted, defaults
+ *     to the length of {@code iterable}.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing the
+ *     permutations of {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.permutations = function(iterable, opt_length) {
   var elements = goog.iter.toArray(iterable);
   var length = goog.isNumber(opt_length) ? opt_length : elements.length;
@@ -1225,25 +1225,25 @@ goog.iter.permutations = function(iterable, opt_length) {
   return goog.iter.filter(product, function(arr) {
     return !goog.iter.hasDuplicates_(arr);
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns combinations of elements from
-***REMOVED*** {@code iterable}.
-***REMOVED***
-***REMOVED*** Combinations are obtained by taking the {@see goog.iter#permutations} of
-***REMOVED*** {@code iterable} and filtering those whose elements appear in the order they
-***REMOVED*** are encountered in {@code iterable}. For example, the 3-length combinations
-***REMOVED*** of {@code [0,1,2,3]} are {@code [[0,1,2], [0,1,3], [0,2,3], [1,2,3]]}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.combinations
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable from which to generate combinations.
-***REMOVED*** @param {number} length The length of each combination.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing
-***REMOVED***     combinations from the {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns combinations of elements from
+ * {@code iterable}.
+ *
+ * Combinations are obtained by taking the {@see goog.iter#permutations} of
+ * {@code iterable} and filtering those whose elements appear in the order they
+ * are encountered in {@code iterable}. For example, the 3-length combinations
+ * of {@code [0,1,2,3]} are {@code [[0,1,2], [0,1,3], [0,2,3], [1,2,3]]}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.combinations
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable from which to generate combinations.
+ * @param {number} length The length of each combination.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing
+ *     combinations from the {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.combinations = function(iterable, length) {
   var elements = goog.iter.toArray(iterable);
   var indexes = goog.iter.range(elements.length);
@@ -1262,31 +1262,31 @@ goog.iter.combinations = function(iterable, length) {
 
   iter.next = function() {
     return goog.array.map(
-       ***REMOVED*****REMOVED*** @type {!Array.<number>}***REMOVED***
+        /** @type {!Array.<number>} */
         (sortedIndexIterator.next()), getIndexFromElements);
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an iterator that returns combinations of elements from
-***REMOVED*** {@code iterable}, with repeated elements possible.
-***REMOVED***
-***REMOVED*** Combinations are obtained by taking the Cartesian product of {@code length}
-***REMOVED*** iterables and filtering those whose elements appear in the order they are
-***REMOVED*** encountered in {@code iterable}. For example, the 2-length combinations of
-***REMOVED*** {@code [1,2,3]} are {@code [[1,1], [1,2], [1,3], [2,2], [2,3], [3,3]]}.
-***REMOVED*** @see http://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement
-***REMOVED*** @see http://en.wikipedia.org/wiki/Combination#Number_of_combinations_with_repetition
-***REMOVED*** @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
-***REMOVED***     iterable to combine.
-***REMOVED*** @param {number} length The length of each combination.
-***REMOVED*** @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing
-***REMOVED***     combinations from the {@code iterable}.
-***REMOVED*** @template VALUE
-***REMOVED***
+/**
+ * Creates an iterator that returns combinations of elements from
+ * {@code iterable}, with repeated elements possible.
+ *
+ * Combinations are obtained by taking the Cartesian product of {@code length}
+ * iterables and filtering those whose elements appear in the order they are
+ * encountered in {@code iterable}. For example, the 2-length combinations of
+ * {@code [1,2,3]} are {@code [[1,1], [1,2], [1,3], [2,2], [2,3], [3,3]]}.
+ * @see http://docs.python.org/2/library/itertools.html#itertools.combinations_with_replacement
+ * @see http://en.wikipedia.org/wiki/Combination#Number_of_combinations_with_repetition
+ * @param {!goog.iter.Iterator.<VALUE>|!goog.iter.Iterable} iterable The
+ *     iterable to combine.
+ * @param {number} length The length of each combination.
+ * @return {!goog.iter.Iterator.<!Array.<VALUE>>} A new iterator containing
+ *     combinations from the {@code iterable}.
+ * @template VALUE
+ */
 goog.iter.combinationsWithReplacement = function(iterable, length) {
   var elements = goog.iter.toArray(iterable);
   var indexes = goog.array.range(elements.length);
@@ -1306,9 +1306,9 @@ goog.iter.combinationsWithReplacement = function(iterable, length) {
 
   iter.next = function() {
     return goog.array.map(
-       ***REMOVED*****REMOVED*** @type {!Array.<number>}***REMOVED***
+        /** @type {!Array.<number>} */
         (sortedIndexIterator.next()), getIndexFromElements);
- ***REMOVED*****REMOVED***
+  };
 
   return iter;
-***REMOVED***
+};

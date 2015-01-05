@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An XhrIo pool that uses a single mock XHR object for testing.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An XhrIo pool that uses a single mock XHR object for testing.
+ *
+ */
 
 goog.provide('goog.testing.net.XhrIoPool');
 
@@ -24,42 +24,42 @@ goog.require('goog.testing.net.XhrIo');
 
 
 
-***REMOVED***
-***REMOVED*** A pool containing a single mock XhrIo object.
-***REMOVED***
-***REMOVED*** @param {goog.testing.net.XhrIo=} opt_xhr The mock XhrIo object.
-***REMOVED***
-***REMOVED*** @extends {goog.net.XhrIoPool}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A pool containing a single mock XhrIo object.
+ *
+ * @param {goog.testing.net.XhrIo=} opt_xhr The mock XhrIo object.
+ * @constructor
+ * @extends {goog.net.XhrIoPool}
+ * @final
+ */
 goog.testing.net.XhrIoPool = function(opt_xhr) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The mock XhrIo object.
-  ***REMOVED*** @type {!goog.testing.net.XhrIo}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The mock XhrIo object.
+   * @type {!goog.testing.net.XhrIo}
+   * @private
+   */
   this.xhr_ = opt_xhr || new goog.testing.net.XhrIo();
 
   // Run this after setting xhr_ because xhr_ is used to initialize the pool.
   goog.testing.net.XhrIoPool.base(this, 'constructor', undefined, 1, 1);
-***REMOVED***
+};
 goog.inherits(goog.testing.net.XhrIoPool, goog.net.XhrIoPool);
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @suppress {invalidCasts}
-***REMOVED***
+/**
+ * @override
+ * @suppress {invalidCasts}
+ */
 goog.testing.net.XhrIoPool.prototype.createObject = function() {
-  return (***REMOVED*** @type {!goog.net.XhrIo}***REMOVED*** (this.xhr_));
-***REMOVED***
+  return (/** @type {!goog.net.XhrIo} */ (this.xhr_));
+};
 
 
-***REMOVED***
-***REMOVED*** Get the mock XhrIo used by this pool.
-***REMOVED***
-***REMOVED*** @return {!goog.testing.net.XhrIo} The mock XhrIo.
-***REMOVED***
+/**
+ * Get the mock XhrIo used by this pool.
+ *
+ * @return {!goog.testing.net.XhrIo} The mock XhrIo.
+ */
 goog.testing.net.XhrIoPool.prototype.getXhr = function() {
   return this.xhr_;
-***REMOVED***
+};

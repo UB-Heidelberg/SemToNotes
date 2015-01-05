@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class for rendering the results of an auto complete and
-***REMOVED*** allow the user to select an row.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class for rendering the results of an auto complete and
+ * allow the user to select an row.
+ *
+ */
 
 goog.provide('goog.ui.ac.Renderer');
 goog.provide('goog.ui.ac.Renderer.CustomRenderer');
@@ -30,9 +30,9 @@ goog.require('goog.dispose');
 goog.require('goog.dom');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.fx.dom.FadeInAndShow');
 goog.require('goog.fx.dom.FadeOutAndHide');
 goog.require('goog.positioning');
@@ -45,368 +45,368 @@ goog.require('goog.ui.ac.AutoComplete');
 
 
 
-***REMOVED***
-***REMOVED*** Class for rendering the results of an auto-complete in a drop down list.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @param {Element=} opt_parentNode optional reference to the parent element
-***REMOVED***     that will hold the autocomplete elements. goog.dom.getDocument().body
-***REMOVED***     will be used if this is null.
-***REMOVED*** @param {?({renderRow}|{render})=} opt_customRenderer Custom full renderer to
-***REMOVED***     render each row. Should be something with a renderRow or render method.
-***REMOVED*** @param {boolean=} opt_rightAlign Determines if the autocomplete will always
-***REMOVED***     be right aligned. False by default.
-***REMOVED*** @param {boolean=} opt_useStandardHighlighting Determines if standard
-***REMOVED***     highlighting should be applied to each row of data. Standard highlighting
-***REMOVED***     bolds every matching substring for a given token in each row. True by
-***REMOVED***     default.
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Class for rendering the results of an auto-complete in a drop down list.
+ *
+ * @constructor
+ * @param {Element=} opt_parentNode optional reference to the parent element
+ *     that will hold the autocomplete elements. goog.dom.getDocument().body
+ *     will be used if this is null.
+ * @param {?({renderRow}|{render})=} opt_customRenderer Custom full renderer to
+ *     render each row. Should be something with a renderRow or render method.
+ * @param {boolean=} opt_rightAlign Determines if the autocomplete will always
+ *     be right aligned. False by default.
+ * @param {boolean=} opt_useStandardHighlighting Determines if standard
+ *     highlighting should be applied to each row of data. Standard highlighting
+ *     bolds every matching substring for a given token in each row. True by
+ *     default.
+ * @extends {goog.events.EventTarget}
+ */
 goog.ui.ac.Renderer = function(opt_parentNode, opt_customRenderer,
     opt_rightAlign, opt_useStandardHighlighting) {
   goog.ui.ac.Renderer.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Reference to the parent element that will hold the autocomplete elements
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Reference to the parent element that will hold the autocomplete elements
+   * @type {Element}
+   * @private
+   */
   this.parent_ = opt_parentNode || goog.dom.getDocument().body;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dom helper for the parent element's document.
-  ***REMOVED*** @type {goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Dom helper for the parent element's document.
+   * @type {goog.dom.DomHelper}
+   * @private
+   */
   this.dom_ = goog.dom.getDomHelper(this.parent_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to reposition the autocomplete UI below the target node
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to reposition the autocomplete UI below the target node
+   * @type {boolean}
+   * @private
+   */
   this.reposition_ = !opt_parentNode;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Reference to the main element that controls the rendered autocomplete
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Reference to the main element that controls the rendered autocomplete
+   * @type {Element}
+   * @private
+   */
   this.element_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The current token that has been entered
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The current token that has been entered
+   * @type {string}
+   * @private
+   */
   this.token_ = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array used to store the current set of rows being displayed
-  ***REMOVED*** @type {Array}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array used to store the current set of rows being displayed
+   * @type {Array}
+   * @private
+   */
   this.rows_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of the node divs that hold each result that is being displayed.
-  ***REMOVED*** @type {Array.<Element>}
-  ***REMOVED*** @protected
-  ***REMOVED*** @suppress {underscore|visibility}
- ***REMOVED*****REMOVED***
+  /**
+   * Array of the node divs that hold each result that is being displayed.
+   * @type {Array.<Element>}
+   * @protected
+   * @suppress {underscore|visibility}
+   */
   this.rowDivs_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The index of the currently highlighted row
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @protected
-  ***REMOVED*** @suppress {underscore|visibility}
- ***REMOVED*****REMOVED***
+  /**
+   * The index of the currently highlighted row
+   * @type {number}
+   * @protected
+   * @suppress {underscore|visibility}
+   */
   this.hilitedRow_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The time that the rendering of the menu rows started
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @protected
-  ***REMOVED*** @suppress {underscore|visibility}
- ***REMOVED*****REMOVED***
+  /**
+   * The time that the rendering of the menu rows started
+   * @type {number}
+   * @protected
+   * @suppress {underscore|visibility}
+   */
   this.startRenderingRows_ = -1;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Store the current state for the renderer
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Store the current state for the renderer
+   * @type {boolean}
+   * @private
+   */
   this.visible_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Classname for the main element.  This must be a single valid class name.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Classname for the main element.  This must be a single valid class name.
+   * @type {string}
+   */
   this.className = goog.getCssName('ac-renderer');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Classname for row divs.  This must be a single valid class name.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Classname for row divs.  This must be a single valid class name.
+   * @type {string}
+   */
   this.rowClassName = goog.getCssName('ac-row');
 
   // TODO(gboyer): Remove this as soon as we remove references and ensure that
   // no groups are pushing javascript using this.
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The old class name for active row.  This name is deprecated because its
-  ***REMOVED*** name is generic enough that a typical implementation would require a
-  ***REMOVED*** descendant selector.
-  ***REMOVED*** Active row will have rowClassName & activeClassName &
-  ***REMOVED*** legacyActiveClassName.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The old class name for active row.  This name is deprecated because its
+   * name is generic enough that a typical implementation would require a
+   * descendant selector.
+   * Active row will have rowClassName & activeClassName &
+   * legacyActiveClassName.
+   * @type {string}
+   * @private
+   */
   this.legacyActiveClassName_ = goog.getCssName('active');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Class name for active row div.  This must be a single valid class name.
-  ***REMOVED*** Active row will have rowClassName & activeClassName &
-  ***REMOVED*** legacyActiveClassName.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Class name for active row div.  This must be a single valid class name.
+   * Active row will have rowClassName & activeClassName &
+   * legacyActiveClassName.
+   * @type {string}
+   */
   this.activeClassName = goog.getCssName('ac-active');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Class name for the bold tag highlighting the matched part of the text.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Class name for the bold tag highlighting the matched part of the text.
+   * @type {string}
+   */
   this.highlightedClassName = goog.getCssName('ac-highlighted');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Custom full renderer
-  ***REMOVED*** @type {?({renderRow}|{render})}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Custom full renderer
+   * @type {?({renderRow}|{render})}
+   * @private
+   */
   this.customRenderer_ = opt_customRenderer || null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Flag to indicate whether standard highlighting should be applied.
-  ***REMOVED*** this is set to true if left unspecified to retain existing
-  ***REMOVED*** behaviour for autocomplete clients
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Flag to indicate whether standard highlighting should be applied.
+   * this is set to true if left unspecified to retain existing
+   * behaviour for autocomplete clients
+   * @type {boolean}
+   * @private
+   */
   this.useStandardHighlighting_ = opt_useStandardHighlighting != null ?
       opt_useStandardHighlighting : true;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Flag to indicate whether matches should be done on whole words instead
-  ***REMOVED*** of any string.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Flag to indicate whether matches should be done on whole words instead
+   * of any string.
+   * @type {boolean}
+   * @private
+   */
   this.matchWordBoundary_ = true;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Flag to set all tokens as highlighted in the autocomplete row.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Flag to set all tokens as highlighted in the autocomplete row.
+   * @type {boolean}
+   * @private
+   */
   this.highlightAllTokens_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Determines if the autocomplete will always be right aligned
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Determines if the autocomplete will always be right aligned
+   * @type {boolean}
+   * @private
+   */
   this.rightAlign_ = !!opt_rightAlign;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to align with top of target field
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to align with top of target field
+   * @type {boolean}
+   * @private
+   */
   this.topAlign_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Duration (in msec) of fade animation when menu is shown/hidden.
-  ***REMOVED*** Setting to 0 (default) disables animation entirely.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Duration (in msec) of fade animation when menu is shown/hidden.
+   * Setting to 0 (default) disables animation entirely.
+   * @type {number}
+   * @private
+   */
   this.menuFadeDuration_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we should limit the dropdown from extending past the bottom of the
-  ***REMOVED*** screen and instead show a scrollbar on the dropdown.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we should limit the dropdown from extending past the bottom of the
+   * screen and instead show a scrollbar on the dropdown.
+   * @type {boolean}
+   * @private
+   */
   this.showScrollbarsIfTooLarge_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Animation in progress, if any.
-  ***REMOVED*** @type {goog.fx.Animation|undefined}
- ***REMOVED*****REMOVED***
+  /**
+   * Animation in progress, if any.
+   * @type {goog.fx.Animation|undefined}
+   */
   this.animation_;
-***REMOVED***
+};
 goog.inherits(goog.ui.ac.Renderer, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** The anchor element to position the rendered autocompleter against.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The anchor element to position the rendered autocompleter against.
+ * @type {Element}
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.anchorElement_;
 
 
-***REMOVED***
-***REMOVED*** The element on which to base the width of the autocomplete.
-***REMOVED*** @type {Node}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The element on which to base the width of the autocomplete.
+ * @type {Node}
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.widthProvider_;
 
 
-***REMOVED***
-***REMOVED*** The delay before mouseover events are registered, in milliseconds
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The delay before mouseover events are registered, in milliseconds
+ * @type {number}
+ * @const
+ */
 goog.ui.ac.Renderer.DELAY_BEFORE_MOUSEOVER = 300;
 
 
-***REMOVED***
-***REMOVED*** Gets the renderer's element.
-***REMOVED*** @return {Element} The  main element that controls the rendered autocomplete.
-***REMOVED***
+/**
+ * Gets the renderer's element.
+ * @return {Element} The  main element that controls the rendered autocomplete.
+ */
 goog.ui.ac.Renderer.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the width provider element. The provider is only used on redraw and as
-***REMOVED*** such will not automatically update on resize.
-***REMOVED*** @param {Node} widthProvider The element whose width should be mirrored.
-***REMOVED***
+/**
+ * Sets the width provider element. The provider is only used on redraw and as
+ * such will not automatically update on resize.
+ * @param {Node} widthProvider The element whose width should be mirrored.
+ */
 goog.ui.ac.Renderer.prototype.setWidthProvider = function(widthProvider) {
   this.widthProvider_ = widthProvider;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether to align autocomplete to top of target element
-***REMOVED*** @param {boolean} align If true, align to top.
-***REMOVED***
+/**
+ * Set whether to align autocomplete to top of target element
+ * @param {boolean} align If true, align to top.
+ */
 goog.ui.ac.Renderer.prototype.setTopAlign = function(align) {
   this.topAlign_ = align;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether we should be aligning to the top of
-***REMOVED***     the target element.
-***REMOVED***
+/**
+ * @return {boolean} Whether we should be aligning to the top of
+ *     the target element.
+ */
 goog.ui.ac.Renderer.prototype.getTopAlign = function() {
   return this.topAlign_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether to align autocomplete to the right of the target element.
-***REMOVED*** @param {boolean} align If true, align to right.
-***REMOVED***
+/**
+ * Set whether to align autocomplete to the right of the target element.
+ * @param {boolean} align If true, align to right.
+ */
 goog.ui.ac.Renderer.prototype.setRightAlign = function(align) {
   this.rightAlign_ = align;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the autocomplete menu should be right aligned.
-***REMOVED***
+/**
+ * @return {boolean} Whether the autocomplete menu should be right aligned.
+ */
 goog.ui.ac.Renderer.prototype.getRightAlign = function() {
   return this.rightAlign_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {boolean} show Whether we should limit the dropdown from extending
-***REMOVED***     past the bottom of the screen and instead show a scrollbar on the
-***REMOVED***     dropdown.
-***REMOVED***
+/**
+ * @param {boolean} show Whether we should limit the dropdown from extending
+ *     past the bottom of the screen and instead show a scrollbar on the
+ *     dropdown.
+ */
 goog.ui.ac.Renderer.prototype.setShowScrollbarsIfTooLarge = function(show) {
   this.showScrollbarsIfTooLarge_ = show;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether or not standard highlighting should be used when rendering rows.
-***REMOVED*** @param {boolean} useStandardHighlighting true if standard highlighting used.
-***REMOVED***
+/**
+ * Set whether or not standard highlighting should be used when rendering rows.
+ * @param {boolean} useStandardHighlighting true if standard highlighting used.
+ */
 goog.ui.ac.Renderer.prototype.setUseStandardHighlighting =
     function(useStandardHighlighting) {
   this.useStandardHighlighting_ = useStandardHighlighting;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {boolean} matchWordBoundary Determines whether matches should be
-***REMOVED***     higlighted only when the token matches text at a whole-word boundary.
-***REMOVED***     True by default.
-***REMOVED***
+/**
+ * @param {boolean} matchWordBoundary Determines whether matches should be
+ *     higlighted only when the token matches text at a whole-word boundary.
+ *     True by default.
+ */
 goog.ui.ac.Renderer.prototype.setMatchWordBoundary =
     function(matchWordBoundary) {
   this.matchWordBoundary_ = matchWordBoundary;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether or not to highlight all matching tokens rather than just the
-***REMOVED*** first.
-***REMOVED*** @param {boolean} highlightAllTokens Whether to highlight all matching tokens
-***REMOVED***     rather than just the first.
-***REMOVED***
+/**
+ * Set whether or not to highlight all matching tokens rather than just the
+ * first.
+ * @param {boolean} highlightAllTokens Whether to highlight all matching tokens
+ *     rather than just the first.
+ */
 goog.ui.ac.Renderer.prototype.setHighlightAllTokens =
     function(highlightAllTokens) {
   this.highlightAllTokens_ = highlightAllTokens;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the duration (in msec) of the fade animation when menu is shown/hidden.
-***REMOVED*** Setting to 0 (default) disables animation entirely.
-***REMOVED*** @param {number} duration Duration (in msec) of the fade animation (or 0 for
-***REMOVED***     no animation).
-***REMOVED***
+/**
+ * Sets the duration (in msec) of the fade animation when menu is shown/hidden.
+ * Setting to 0 (default) disables animation entirely.
+ * @param {number} duration Duration (in msec) of the fade animation (or 0 for
+ *     no animation).
+ */
 goog.ui.ac.Renderer.prototype.setMenuFadeDuration = function(duration) {
   this.menuFadeDuration_ = duration;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the anchor element for the subsequent call to renderRows.
-***REMOVED*** @param {Element} anchor The anchor element.
-***REMOVED***
+/**
+ * Sets the anchor element for the subsequent call to renderRows.
+ * @param {Element} anchor The anchor element.
+ */
 goog.ui.ac.Renderer.prototype.setAnchorElement = function(anchor) {
   this.anchorElement_ = anchor;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The anchor element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {Element} The anchor element.
+ * @protected
+ */
 goog.ui.ac.Renderer.prototype.getAnchorElement = function() {
   return this.anchorElement_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Render the autocomplete UI
-***REMOVED***
-***REMOVED*** @param {Array} rows Matching UI rows.
-***REMOVED*** @param {string} token Token we are currently matching against.
-***REMOVED*** @param {Element=} opt_target Current HTML node, will position popup beneath
-***REMOVED***     this node.
-***REMOVED***
+/**
+ * Render the autocomplete UI
+ *
+ * @param {Array} rows Matching UI rows.
+ * @param {string} token Token we are currently matching against.
+ * @param {Element=} opt_target Current HTML node, will position popup beneath
+ *     this node.
+ */
 goog.ui.ac.Renderer.prototype.renderRows = function(rows, token, opt_target) {
   this.token_ = token;
   this.rows_ = rows;
@@ -415,12 +415,12 @@ goog.ui.ac.Renderer.prototype.renderRows = function(rows, token, opt_target) {
   this.target_ = opt_target;
   this.rowDivs_ = [];
   this.redraw();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hide the object.
-***REMOVED***
+/**
+ * Hide the object.
+ */
 goog.ui.ac.Renderer.prototype.dismiss = function() {
   if (this.target_) {
     goog.a11y.aria.setActiveDescendant(this.target_, null);
@@ -444,12 +444,12 @@ goog.ui.ac.Renderer.prototype.dismiss = function() {
       goog.style.setElementShown(this.element_, false);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show the object.
-***REMOVED***
+/**
+ * Show the object.
+ */
 goog.ui.ac.Renderer.prototype.show = function() {
   if (!this.visible_) {
     this.visible_ = true;
@@ -475,28 +475,28 @@ goog.ui.ac.Renderer.prototype.show = function() {
       goog.style.setElementShown(this.element_, true);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} True if the object is visible.
-***REMOVED***
+/**
+ * @return {boolean} True if the object is visible.
+ */
 goog.ui.ac.Renderer.prototype.isVisible = function() {
   return this.visible_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the 'active' class of the nth item.
-***REMOVED*** @param {number} index Index of the item to highlight.
-***REMOVED***
+/**
+ * Sets the 'active' class of the nth item.
+ * @param {number} index Index of the item to highlight.
+ */
 goog.ui.ac.Renderer.prototype.hiliteRow = function(index) {
   var row = index >= 0 && index < this.rows_.length ?
       this.rows_[index] : undefined;
   var rowDiv = index >= 0 && index < this.rowDivs_.length ?
       this.rowDivs_[index] : undefined;
 
-  var evtObj =***REMOVED*****REMOVED*** @lends {goog.events.Event.prototype}***REMOVED*** ({
+  var evtObj = /** @lends {goog.events.Event.prototype} */ ({
     type: goog.ui.ac.AutoComplete.EventType.ROW_HILITE,
     rowNode: rowDiv,
     row: row ? row.data : null
@@ -513,26 +513,26 @@ goog.ui.ac.Renderer.prototype.hiliteRow = function(index) {
       goog.style.scrollIntoContainerView(rowDiv, this.element_);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the 'active' class from the currently selected row.
-***REMOVED***
+/**
+ * Removes the 'active' class from the currently selected row.
+ */
 goog.ui.ac.Renderer.prototype.hiliteNone = function() {
   if (this.hilitedRow_ >= 0) {
     goog.dom.classlist.removeAll(
         goog.asserts.assert(this.rowDivs_[this.hilitedRow_]),
         [this.activeClassName, this.legacyActiveClassName_]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the 'active' class of the item with a given id.
-***REMOVED*** @param {number} id Id of the row to hilight. If id is -1 then no rows get
-***REMOVED***     hilited.
-***REMOVED***
+/**
+ * Sets the 'active' class of the item with a given id.
+ * @param {number} id Id of the row to hilight. If id is -1 then no rows get
+ *     hilited.
+ */
 goog.ui.ac.Renderer.prototype.hiliteId = function(id) {
   if (id == -1) {
     this.hiliteRow(-1);
@@ -544,28 +544,28 @@ goog.ui.ac.Renderer.prototype.hiliteId = function(id) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets CSS classes on autocomplete conatainer element.
-***REMOVED***
-***REMOVED*** @param {Element} elem The container element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets CSS classes on autocomplete conatainer element.
+ *
+ * @param {Element} elem The container element.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.setMenuClasses_ = function(elem) {
   goog.asserts.assert(elem);
   // Legacy clients may set the renderer's className to a space-separated list
   // or even have a trailing space.
   goog.dom.classlist.addAll(elem, goog.string.trim(this.className).split(' '));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If the main HTML element hasn't been made yet, creates it and appends it
-***REMOVED*** to the parent.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If the main HTML element hasn't been made yet, creates it and appends it
+ * to the parent.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.maybeCreateElement_ = function() {
   if (!this.element_) {
     // Make element and add it to the parent
@@ -584,20 +584,20 @@ goog.ui.ac.Renderer.prototype.maybeCreateElement_ = function() {
     this.dom_.appendChild(this.parent_, el);
 
     // Add this object as an event handler
-  ***REMOVED***el, goog.events.EventType.CLICK,
+    goog.events.listen(el, goog.events.EventType.CLICK,
                        this.handleClick_, false, this);
-  ***REMOVED***el, goog.events.EventType.MOUSEDOWN,
+    goog.events.listen(el, goog.events.EventType.MOUSEDOWN,
                        this.handleMouseDown_, false, this);
-  ***REMOVED***el, goog.events.EventType.MOUSEOVER,
+    goog.events.listen(el, goog.events.EventType.MOUSEOVER,
                        this.handleMouseOver_, false, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Redraw (or draw if this is the first call) the rendered auto-complete drop
-***REMOVED*** down.
-***REMOVED***
+/**
+ * Redraw (or draw if this is the first call) the rendered auto-complete drop
+ * down.
+ */
 goog.ui.ac.Renderer.prototype.redraw = function() {
   // Create the element if it doesn't yet exist
   this.maybeCreateElement_();
@@ -649,13 +649,13 @@ goog.ui.ac.Renderer.prototype.redraw = function() {
   // Make the autocompleter unselectable, so that it
   // doesn't steal focus from the input field when clicked.
   goog.style.setUnselectable(this.element_, true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.positioning.Corner} The anchor corner to position the popup at.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {goog.positioning.Corner} The anchor corner to position the popup at.
+ * @protected
+ */
 goog.ui.ac.Renderer.prototype.getAnchorCorner = function() {
   var anchorCorner = this.rightAlign_ ?
       goog.positioning.Corner.BOTTOM_RIGHT :
@@ -664,13 +664,13 @@ goog.ui.ac.Renderer.prototype.getAnchorCorner = function() {
     anchorCorner = goog.positioning.flipCornerVertical(anchorCorner);
   }
   return anchorCorner;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Repositions the auto complete popup relative to the location node, if it
-***REMOVED*** exists and the auto position has been set.
-***REMOVED***
+/**
+ * Repositions the auto complete popup relative to the location node, if it
+ * exists and the auto position has been set.
+ */
 goog.ui.ac.Renderer.prototype.reposition = function() {
   if (this.target_ && this.reposition_) {
     var anchorElement = this.anchorElement_ || this.target_;
@@ -700,42 +700,42 @@ goog.ui.ac.Renderer.prototype.reposition = function() {
       this.element_.style.visibility = 'visible';
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the renderer should try to determine where to position the
-***REMOVED*** drop down.
-***REMOVED*** @param {boolean} auto Whether to autoposition the drop down.
-***REMOVED***
+/**
+ * Sets whether the renderer should try to determine where to position the
+ * drop down.
+ * @param {boolean} auto Whether to autoposition the drop down.
+ */
 goog.ui.ac.Renderer.prototype.setAutoPosition = function(auto) {
   this.reposition_ = auto;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the drop down will be autopositioned.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {boolean} Whether the drop down will be autopositioned.
+ * @protected
+ */
 goog.ui.ac.Renderer.prototype.getAutoPosition = function() {
   return this.reposition_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The target element.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {Element} The target element.
+ * @protected
+ */
 goog.ui.ac.Renderer.prototype.getTarget = function() {
   return this.target_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disposes of the renderer and its associated HTML.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Disposes of the renderer and its associated HTML.
+ * @override
+ * @protected
+ */
 goog.ui.ac.Renderer.prototype.disposeInternal = function() {
   if (this.element_) {
     goog.events.unlisten(this.element_, goog.events.EventType.CLICK,
@@ -753,37 +753,37 @@ goog.ui.ac.Renderer.prototype.disposeInternal = function() {
   this.parent_ = null;
 
   goog.ui.ac.Renderer.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generic function that takes a row and renders a DOM structure for that row.
-***REMOVED***
-***REMOVED*** Normally this will only be matching a maximum of 20 or so items.  Even with
-***REMOVED*** 40 rows, DOM this building is fine.
-***REMOVED***
-***REMOVED*** @param {Object} row Object representing row.
-***REMOVED*** @param {string} token Token to highlight.
-***REMOVED*** @param {Node} node The node to render into.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Generic function that takes a row and renders a DOM structure for that row.
+ *
+ * Normally this will only be matching a maximum of 20 or so items.  Even with
+ * 40 rows, DOM this building is fine.
+ *
+ * @param {Object} row Object representing row.
+ * @param {string} token Token to highlight.
+ * @param {Node} node The node to render into.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.renderRowContents_ =
     function(row, token, node) {
   goog.dom.setTextContent(node, row.data.toString());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Goes through a node and all of its child nodes, replacing HTML text that
-***REMOVED*** matches a token with <b>token</b>.
-***REMOVED***
-***REMOVED*** @param {Node} node Node to match.
-***REMOVED*** @param {string|Array.<string>} tokenOrArray Token to match or array of tokens
-***REMOVED***     to match.  By default, only the first match will be highlighted.  If
-***REMOVED***     highlightAllTokens is set, then all tokens appearing at the start of a
-***REMOVED***     word, in whatever order and however many times, will be highlighted.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Goes through a node and all of its child nodes, replacing HTML text that
+ * matches a token with <b>token</b>.
+ *
+ * @param {Node} node Node to match.
+ * @param {string|Array.<string>} tokenOrArray Token to match or array of tokens
+ *     to match.  By default, only the first match will be highlighted.  If
+ *     highlightAllTokens is set, then all tokens appearing at the start of a
+ *     word, in whatever order and however many times, will be highlighted.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.hiliteMatchingText_ =
     function(node, tokenOrArray) {
   if (node.nodeType == goog.dom.NodeType.TEXT) {
@@ -841,7 +841,7 @@ goog.ui.ac.Renderer.prototype.hiliteMatchingText_ =
     if (textNodes.length > 1) {
       var maxNumToBold = !this.highlightAllTokens_ ? 1 : numMatches;
       for (var i = 0; i < maxNumToBold; i++) {
-        var idx = 2***REMOVED*** i;
+        var idx = 2 * i;
 
         node.nodeValue = textNodes[idx];
         var boldTag = this.dom_.createElement('b');
@@ -855,7 +855,7 @@ goog.ui.ac.Renderer.prototype.hiliteMatchingText_ =
       }
 
       // Append the remaining text nodes to the end.
-      var remainingTextNodes = goog.array.slice(textNodes, maxNumToBold***REMOVED*** 2);
+      var remainingTextNodes = goog.array.slice(textNodes, maxNumToBold * 2);
       node.nodeValue = remainingTextNodes.join('');
     } else if (rest) {
       this.hiliteMatchingText_(node, rest);
@@ -868,17 +868,17 @@ goog.ui.ac.Renderer.prototype.hiliteMatchingText_ =
       child = nextChild;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Transforms a token into a string ready to be put into the regular expression
-***REMOVED*** in hiliteMatchingText_.
-***REMOVED*** @param {string|Array.<string>} tokenOrArray The token or array to get the
-***REMOVED***     regex string from.
-***REMOVED*** @return {string} The regex-ready token.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Transforms a token into a string ready to be put into the regular expression
+ * in hiliteMatchingText_.
+ * @param {string|Array.<string>} tokenOrArray The token or array to get the
+ *     regex string from.
+ * @return {string} The regex-ready token.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.getTokenRegExp_ = function(tokenOrArray) {
   var token = '';
 
@@ -928,17 +928,17 @@ goog.ui.ac.Renderer.prototype.getTokenRegExp_ = function(tokenOrArray) {
   }
 
   return token;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Render a row by creating a div and then calling row rendering callback or
-***REMOVED*** default row handler
-***REMOVED***
-***REMOVED*** @param {Object} row Object representing row.
-***REMOVED*** @param {string} token Token to highlight.
-***REMOVED*** @return {!Element} An element with the rendered HTML.
-***REMOVED***
+/**
+ * Render a row by creating a div and then calling row rendering callback or
+ * default row handler
+ *
+ * @param {Object} row Object representing row.
+ * @param {string} token Token to highlight.
+ * @return {!Element} An element with the rendered HTML.
+ */
 goog.ui.ac.Renderer.prototype.renderRowHtml = function(row, token) {
   // Create and return the element.
   var elem = this.dom_.createDom('div', {
@@ -959,65 +959,65 @@ goog.ui.ac.Renderer.prototype.renderRowHtml = function(row, token) {
   goog.dom.classlist.add(elem, this.rowClassName);
   this.rowDivs_.push(elem);
   return elem;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Given an event target looks up through the parents till it finds a div.  Once
-***REMOVED*** found it will then look to see if that is one of the childnodes, if it is
-***REMOVED*** then the index is returned, otherwise -1 is returned.
-***REMOVED*** @param {Element} et HtmlElement.
-***REMOVED*** @return {number} Index corresponding to event target.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Given an event target looks up through the parents till it finds a div.  Once
+ * found it will then look to see if that is one of the childnodes, if it is
+ * then the index is returned, otherwise -1 is returned.
+ * @param {Element} et HtmlElement.
+ * @return {number} Index corresponding to event target.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.getRowFromEventTarget_ = function(et) {
   while (et && et != this.element_ &&
       !goog.dom.classlist.contains(et, this.rowClassName)) {
-    et =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (et.parentNode);
+    et = /** @type {Element} */ (et.parentNode);
   }
   return et ? goog.array.indexOf(this.rowDivs_, et) : -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle the click events.  These are redirected to the AutoComplete object
-***REMOVED*** which then makes a callback to select the correct row.
-***REMOVED*** @param {goog.events.Event} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handle the click events.  These are redirected to the AutoComplete object
+ * which then makes a callback to select the correct row.
+ * @param {goog.events.Event} e Browser event object.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.handleClick_ = function(e) {
-  var index = this.getRowFromEventTarget_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var index = this.getRowFromEventTarget_(/** @type {Element} */ (e.target));
   if (index >= 0) {
-    this.dispatchEvent(***REMOVED*** @lends {goog.events.Event.prototype}***REMOVED*** ({
+    this.dispatchEvent(/** @lends {goog.events.Event.prototype} */ ({
       type: goog.ui.ac.AutoComplete.EventType.SELECT,
       row: this.rows_[index].id
     }));
   }
   e.stopPropagation();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle the mousedown event and prevent the AC from losing focus.
-***REMOVED*** @param {goog.events.Event} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handle the mousedown event and prevent the AC from losing focus.
+ * @param {goog.events.Event} e Browser event object.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.handleMouseDown_ = function(e) {
   e.stopPropagation();
   e.preventDefault();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle the mousing events.  These are redirected to the AutoComplete object
-***REMOVED*** which then makes a callback to set the correctly highlighted row.  This is
-***REMOVED*** because the AutoComplete can move the focus as well, and there is no sense
-***REMOVED*** duplicating the code
-***REMOVED*** @param {goog.events.Event} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handle the mousing events.  These are redirected to the AutoComplete object
+ * which then makes a callback to set the correctly highlighted row.  This is
+ * because the AutoComplete can move the focus as well, and there is no sense
+ * duplicating the code
+ * @param {goog.events.Event} e Browser event object.
+ * @private
+ */
 goog.ui.ac.Renderer.prototype.handleMouseOver_ = function(e) {
-  var index = this.getRowFromEventTarget_(***REMOVED*** @type {Element}***REMOVED*** (e.target));
+  var index = this.getRowFromEventTarget_(/** @type {Element} */ (e.target));
   if (index >= 0) {
     if ((goog.now() - this.startRenderingRows_) <
         goog.ui.ac.Renderer.DELAY_BEFORE_MOUSEOVER) {
@@ -1029,45 +1029,45 @@ goog.ui.ac.Renderer.prototype.handleMouseOver_ = function(e) {
       row: this.rows_[index].id
     });
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class allowing different implementations to custom render the autocomplete.
-***REMOVED*** Extending classes should override the render function.
-***REMOVED***
-***REMOVED***
+/**
+ * Class allowing different implementations to custom render the autocomplete.
+ * Extending classes should override the render function.
+ * @constructor
+ */
 goog.ui.ac.Renderer.CustomRenderer = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Renders the autocomplete box. May be set to null.
-***REMOVED***
-***REMOVED*** Because of the type, this function cannot be documented with param JSDoc.
-***REMOVED***
-***REMOVED*** The function expects the following parameters:
-***REMOVED***
-***REMOVED*** renderer, goog.ui.ac.Renderer: The autocomplete renderer.
-***REMOVED*** element, Element: The main element that controls the rendered autocomplete.
-***REMOVED*** rows, Array: The current set of rows being displayed.
-***REMOVED*** token, string: The current token that has been entered.***REMOVED***
-***REMOVED***
-***REMOVED*** @type {function(goog.ui.ac.Renderer, Element, Array, string)|
-***REMOVED***        null|undefined}
-***REMOVED***
+/**
+ * Renders the autocomplete box. May be set to null.
+ *
+ * Because of the type, this function cannot be documented with param JSDoc.
+ *
+ * The function expects the following parameters:
+ *
+ * renderer, goog.ui.ac.Renderer: The autocomplete renderer.
+ * element, Element: The main element that controls the rendered autocomplete.
+ * rows, Array: The current set of rows being displayed.
+ * token, string: The current token that has been entered. *
+ *
+ * @type {function(goog.ui.ac.Renderer, Element, Array, string)|
+ *        null|undefined}
+ */
 goog.ui.ac.Renderer.CustomRenderer.prototype.render = function(
     renderer, element, rows, token) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generic function that takes a row and renders a DOM structure for that row.
-***REMOVED*** @param {Object} row Object representing row.
-***REMOVED*** @param {string} token Token to highlight.
-***REMOVED*** @param {Node} node The node to render into.
-***REMOVED***
+/**
+ * Generic function that takes a row and renders a DOM structure for that row.
+ * @param {Object} row Object representing row.
+ * @param {string} token Token to highlight.
+ * @param {Node} node The node to render into.
+ */
 goog.ui.ac.Renderer.CustomRenderer.prototype.renderRow =
     function(row, token, node) {
-***REMOVED***
+};

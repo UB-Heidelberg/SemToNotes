@@ -15,45 +15,45 @@ See the COPYING file for details.
   goog.require('goog.debug');
   goog.require('goog.debug.FancyWindow');
   goog.require('goog.log');
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Person - a sample person object.
-  ***REMOVED*** @param {string} name The name
-  ***REMOVED*** @param {number} age The age
- ***REMOVED*****REMOVED***
+  /**
+   * Person - a sample person object.
+   * @param {string} name The name
+   * @param {number} age The age
+   */
   var Person = function(name, age) {
     this.name_ = name;
     this.age_ = age;
     this.address_ = null;
     this.kids_ = [];
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Set the address.
-    ***REMOVED*** @param {string} address The address to set
-   ***REMOVED*****REMOVED***
+    /**
+     * Set the address.
+     * @param {string} address The address to set
+     */
     this.setAddress = function(address) {
       this.address_ = address;
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Add a child.
-    ***REMOVED*** @param {Object} child The child to add
-   ***REMOVED*****REMOVED***
+    /**
+     * Add a child.
+     * @param {Object} child The child to add
+     */
     this.addChild = function(child) {
       this.kids_.push(child);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Create a string representation of the object.
-    ***REMOVED*** @return {string} The object as a string
-   ***REMOVED*****REMOVED***
+    /**
+     * Create a string representation of the object.
+     * @return {string} The object as a string
+     */
     this.toString = function() {
       return 'Person name: ' + this.name_ + ' Age: ' + this.age_;
     }
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Demonstrate the debug options.
- ***REMOVED*****REMOVED***
+  /**
+   * Demonstrate the debug options.
+   */
   var demoDebug = function() {
     // Create the debug window.
     var debugWindow = new goog.debug.FancyWindow('main');
@@ -69,7 +69,7 @@ See the COPYING file for details.
         'age': 33,
         'gender': 'm',
         'kids': ['jen', 'sam', 'oliver'],
-        'address': '233 Great Road, Axtonhammer, MD'***REMOVED***
+        'address': '233 Great Road, Axtonhammer, MD'};
 
     // Show the object, note that it will output '[object Object]'.
     goog.log.info(theLogger, someone);

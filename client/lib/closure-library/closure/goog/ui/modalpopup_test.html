@@ -18,7 +18,7 @@ See the COPYING file for details.
   goog.require('goog.ui.ModalPopup');
   goog.require('goog.dispose');
   goog.require('goog.dom');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.EventTarget');
   goog.require('goog.fx.css3');
   goog.require('goog.string');
@@ -34,7 +34,7 @@ See the COPYING file for details.
 
 
 var popup;
-var main =***REMOVED*****REMOVED*** @type {!Element}*/ (goog.dom.getElement('main'));
+var main = /** @type {!Element}*/ (goog.dom.getElement('main'));
 var mockClock;
 
 
@@ -151,17 +151,17 @@ function testEventFiredOnShow() {
   var beforeShowCallCount = 0;
   var beforeShowHandler = function() {
     beforeShowCallCount++;
- ***REMOVED*****REMOVED***
+  };
   var showCallCount = false;
   var showHandler = function() {
     assertEquals('BEFORE_SHOW is not dispatched before SHOW',
         1, beforeShowCallCount);
     showCallCount++;
- ***REMOVED*****REMOVED***
+  };
 
-***REMOVED***
+  goog.events.listen(
       popup, goog.ui.PopupBase.EventType.BEFORE_SHOW, beforeShowHandler);
-***REMOVED***popup, goog.ui.PopupBase.EventType.SHOW, showHandler);
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.SHOW, showHandler);
 
   popup.setVisible(true);
 
@@ -178,17 +178,17 @@ function testEventFiredOnHide() {
   var beforeHideCallCount = 0;
   var beforeHideHandler = function() {
     beforeHideCallCount++;
- ***REMOVED*****REMOVED***
+  };
   var hideCallCount = false;
   var hideHandler = function() {
     assertEquals('BEFORE_HIDE is not dispatched before HIDE',
         1, beforeHideCallCount);
     hideCallCount++;
- ***REMOVED*****REMOVED***
+  };
 
-***REMOVED***
+  goog.events.listen(
       popup, goog.ui.PopupBase.EventType.BEFORE_HIDE, beforeHideHandler);
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, hideHandler);
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, hideHandler);
 
   popup.setVisible(false);
 
@@ -202,7 +202,7 @@ function testShowEventFiredWithNoTransition() {
   popup.render();
 
   var showHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.SHOW, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.SHOW, function() {
     showHandlerCalled = true;
   });
 
@@ -215,7 +215,7 @@ function testHideEventFiredWithNoTransition() {
   popup.render();
 
   var hideHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     hideHandlerCalled = true;
   });
 
@@ -234,7 +234,7 @@ function testTransitionsPlayedOnShow() {
   var mockBgHideTransition = new MockTransition();
 
   var showHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.SHOW, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.SHOW, function() {
     showHandlerCalled = true;
   });
 
@@ -263,7 +263,7 @@ function testTransitionsPlayedOnHide() {
   var mockBgHideTransition = new MockTransition();
 
   var hideHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     hideHandlerCalled = true;
   });
 
@@ -287,18 +287,18 @@ function testTransitionsAndDisposingOnHideWorks() {
   popup = new goog.ui.ModalPopup();
   popup.render();
 
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     popup.dispose();
   });
 
   var popupShowTransition = goog.fx.css3.fadeIn(popup.getElement(),
-      0.1 /* duration***REMOVED***);
+      0.1 /* duration */);
   var popupHideTransition = goog.fx.css3.fadeOut(popup.getElement(),
-      0.1 /* duration***REMOVED***);
+      0.1 /* duration */);
   var bgShowTransition = goog.fx.css3.fadeIn(popup.getElement(),
-      0.1 /* duration***REMOVED***);
+      0.1 /* duration */);
   var bgHideTransition = goog.fx.css3.fadeOut(popup.getElement(),
-      0.1 /* duration***REMOVED***);
+      0.1 /* duration */);
 
   popup.setTransition(popupShowTransition, popupHideTransition,
       bgShowTransition, bgHideTransition);
@@ -347,10 +347,10 @@ function testTransitionsDisposed() {
   popup = new goog.ui.ModalPopup();
   popup.render();
 
-  var transition = goog.fx.css3.fadeIn(popup.getElement(), 0.1 /* duration***REMOVED***);
+  var transition = goog.fx.css3.fadeIn(popup.getElement(), 0.1 /* duration */);
 
   var hideHandlerCalled = false;
-***REMOVED***popup, goog.ui.PopupBase.EventType.HIDE, function() {
+  goog.events.listen(popup, goog.ui.PopupBase.EventType.HIDE, function() {
     hideHandlerCalled = true;
   });
 
@@ -365,8 +365,8 @@ function testTransitionsDisposed() {
 function testBackgroundHeight() {
   // Insert an absolutely-positioned element larger than the viewport.
   var viewportSize = goog.dom.getViewportSize();
-  var w = viewportSize.width***REMOVED*** 2;
-  var h = viewportSize.height***REMOVED*** 2;
+  var w = viewportSize.width * 2;
+  var h = viewportSize.height * 2;
   var dummy = goog.dom.createElement('div');
   dummy.style.position = 'absolute';
   goog.style.setSize(dummy, w, h);
@@ -396,14 +396,14 @@ function testSetupBackwardTabWrapResetsFlagAfterTimeout() {
 }
 
 
-***REMOVED***
-***REMOVED*** @implements {goog.fx.Transition}
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * @implements {goog.fx.Transition}
+ * @extends {goog.events.EventTarget}
+ */
 var MockTransition = function() {
   goog.base(this);
   this.wasPlayed = false;
-***REMOVED***
+};
 goog.inherits(MockTransition, goog.events.EventTarget);
 
 

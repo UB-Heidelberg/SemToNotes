@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Factory class to create a simple autocomplete that will match
-***REMOVED*** from an array of data provided via ajax.
-***REMOVED***
-***REMOVED*** @see ../../demos/autocompleteremote.html
-***REMOVED***
+/**
+ * @fileoverview Factory class to create a simple autocomplete that will match
+ * from an array of data provided via ajax.
+ *
+ * @see ../../demos/autocompleteremote.html
+ */
 
 goog.provide('goog.ui.ac.Remote');
 
@@ -28,18 +28,18 @@ goog.require('goog.ui.ac.Renderer');
 
 
 
-***REMOVED***
-***REMOVED*** Factory class for building a remote autocomplete widget that autocompletes
-***REMOVED*** an inputbox or text area from a data array provided via ajax.
-***REMOVED*** @param {string} url The Uri which generates the auto complete matches.
-***REMOVED*** @param {Element} input Input element or text area.
-***REMOVED*** @param {boolean=} opt_multi Whether to allow multiple entries; defaults
-***REMOVED***     to false.
-***REMOVED*** @param {boolean=} opt_useSimilar Whether to use similar matches; e.g.
-***REMOVED***     "gost" => "ghost".
-***REMOVED***
-***REMOVED*** @extends {goog.ui.ac.AutoComplete}
-***REMOVED***
+/**
+ * Factory class for building a remote autocomplete widget that autocompletes
+ * an inputbox or text area from a data array provided via ajax.
+ * @param {string} url The Uri which generates the auto complete matches.
+ * @param {Element} input Input element or text area.
+ * @param {boolean=} opt_multi Whether to allow multiple entries; defaults
+ *     to false.
+ * @param {boolean=} opt_useSimilar Whether to use similar matches; e.g.
+ *     "gost" => "ghost".
+ * @constructor
+ * @extends {goog.ui.ac.AutoComplete}
+ */
 goog.ui.ac.Remote = function(url, input, opt_multi, opt_useSimilar) {
   var matcher = new goog.ui.ac.RemoteArrayMatcher(url, !opt_useSimilar);
   this.matcher_ = matcher;
@@ -52,63 +52,63 @@ goog.ui.ac.Remote = function(url, input, opt_multi, opt_useSimilar) {
 
   inputhandler.attachAutoComplete(this);
   inputhandler.attachInputs(input);
-***REMOVED***
+};
 goog.inherits(goog.ui.ac.Remote, goog.ui.ac.AutoComplete);
 
 
-***REMOVED***
-***REMOVED*** Set whether or not standard highlighting should be used when rendering rows.
-***REMOVED*** @param {boolean} useStandardHighlighting true if standard highlighting used.
-***REMOVED***
+/**
+ * Set whether or not standard highlighting should be used when rendering rows.
+ * @param {boolean} useStandardHighlighting true if standard highlighting used.
+ */
 goog.ui.ac.Remote.prototype.setUseStandardHighlighting =
     function(useStandardHighlighting) {
   this.renderer_.setUseStandardHighlighting(useStandardHighlighting);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the attached InputHandler object.
-***REMOVED*** @return {goog.ui.ac.InputHandler} The input handler.
-***REMOVED***
+/**
+ * Gets the attached InputHandler object.
+ * @return {goog.ui.ac.InputHandler} The input handler.
+ */
 goog.ui.ac.Remote.prototype.getInputHandler = function() {
-  return***REMOVED*****REMOVED*** @type {goog.ui.ac.InputHandler}***REMOVED*** (
+  return /** @type {goog.ui.ac.InputHandler} */ (
       this.selectionHandler_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the send method ("GET", "POST") for the matcher.
-***REMOVED*** @param {string} method The send method; default: GET.
-***REMOVED***
+/**
+ * Set the send method ("GET", "POST") for the matcher.
+ * @param {string} method The send method; default: GET.
+ */
 goog.ui.ac.Remote.prototype.setMethod = function(method) {
   this.matcher_.setMethod(method);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the post data for the matcher.
-***REMOVED*** @param {string} content Post data.
-***REMOVED***
+/**
+ * Set the post data for the matcher.
+ * @param {string} content Post data.
+ */
 goog.ui.ac.Remote.prototype.setContent = function(content) {
   this.matcher_.setContent(content);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the HTTP headers for the matcher.
-***REMOVED*** @param {Object|goog.structs.Map} headers Map of headers to add to the
-***REMOVED***     request.
-***REMOVED***
+/**
+ * Set the HTTP headers for the matcher.
+ * @param {Object|goog.structs.Map} headers Map of headers to add to the
+ *     request.
+ */
 goog.ui.ac.Remote.prototype.setHeaders = function(headers) {
   this.matcher_.setHeaders(headers);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the timeout interval for the matcher.
-***REMOVED*** @param {number} interval Number of milliseconds after which an
-***REMOVED***     incomplete request will be aborted; 0 means no timeout is set.
-***REMOVED***
+/**
+ * Set the timeout interval for the matcher.
+ * @param {number} interval Number of milliseconds after which an
+ *     incomplete request will be aborted; 0 means no timeout is set.
+ */
 goog.ui.ac.Remote.prototype.setTimeoutInterval = function(interval) {
   this.matcher_.setTimeoutInterval(interval);
-***REMOVED***
+};

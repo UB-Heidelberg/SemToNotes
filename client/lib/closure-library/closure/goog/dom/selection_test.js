@@ -47,9 +47,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests getStart routine in both input and textarea.
-***REMOVED***
+/**
+ * Tests getStart routine in both input and textarea.
+ */
 function testGetStartInput() {
   getStartHelper(input, hiddenInput);
 }
@@ -67,10 +67,10 @@ function getStartHelper(field, hiddenField) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the setText routine for both input and textarea
-***REMOVED*** with a single line of text.
-***REMOVED***
+/**
+ * Tests the setText routine for both input and textarea
+ * with a single line of text.
+ */
 function testSetTextInput() {
   setTextHelper(input);
 }
@@ -89,9 +89,9 @@ function setTextHelper(field) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the setText routine for textarea with multiple lines of text.
-***REMOVED***
+/**
+ * Tests the setText routine for textarea with multiple lines of text.
+ */
 function testSetTextMultipleLines() {
   select(textarea);
   assertEquals('', goog.dom.selection.getText(textarea));
@@ -116,9 +116,9 @@ function testSetTextMultipleLines() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the setCursor routine for both input and textarea.
-***REMOVED***
+/**
+ * Tests the setCursor routine for both input and textarea.
+ */
 function testSetCursorInput() {
   setCursorHelper(input);
 }
@@ -151,10 +151,10 @@ function setCursorHelper(field) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the getText and setText routines acting on selected text in
-***REMOVED*** both input and textarea.
-***REMOVED***
+/**
+ * Tests the getText and setText routines acting on selected text in
+ * both input and textarea.
+ */
 function testGetAndSetSelectedTextInput() {
   getAndSetSelectedTextHelper(input);
 }
@@ -179,9 +179,9 @@ function getAndSetSelectedTextHelper(field) {
 }
 
 
-***REMOVED***
-***REMOVED*** Test setStart on hidden input and hidden textarea.
-***REMOVED***
+/**
+ * Test setStart on hidden input and hidden textarea.
+ */
 function testSetCursorOnHiddenInput() {
   setCursorOnHiddenInputHelper(hiddenInput);
 }
@@ -196,10 +196,10 @@ function setCursorOnHiddenInputHelper(hiddenField) {
 }
 
 
-***REMOVED***
-***REMOVED*** Test setStart, setEnd, getStart and getEnd in textarea with text
-***REMOVED*** containing line breaks.
-***REMOVED***
+/**
+ * Test setStart, setEnd, getStart and getEnd in textarea with text
+ * containing line breaks.
+ */
 function testSetAndGetCursorWithLineBreaks() {
   select(textarea);
   var newline = goog.userAgent.IE ? '\r\n' : '\n';
@@ -264,10 +264,10 @@ function testSetAndGetCursorWithLineBreaks() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test to make sure there's no error when getting the range of an unselected
-***REMOVED*** textarea. See bug 1274027.
-***REMOVED***
+/**
+ * Test to make sure there's no error when getting the range of an unselected
+ * textarea. See bug 1274027.
+ */
 function testGetStartOnUnfocusedTextarea() {
   input.value = 'White Blood Cells';
   input.focus();
@@ -281,11 +281,11 @@ function testGetStartOnUnfocusedTextarea() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test to make sure there's no error setting cursor position within a
-***REMOVED*** textarea after a newline. This is problematic on IE because of the
-***REMOVED*** '\r\n' vs '\n' issue.
-***REMOVED***
+/**
+ * Test to make sure there's no error setting cursor position within a
+ * textarea after a newline. This is problematic on IE because of the
+ * '\r\n' vs '\n' issue.
+ */
 function testSetCursorPositionTextareaWithNewlines() {
   textarea.value = 'Hello\nWorld';
   textarea.focus();
@@ -308,17 +308,17 @@ function testSetCursorPositionTextareaWithNewlines() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to clear the textfield contents.
-***REMOVED***
+/**
+ * Helper function to clear the textfield contents.
+ */
 function clearField(field) {
   field.value = '';
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to set the start and end and assert the getter values.
-***REMOVED***
+/**
+ * Helper function to set the start and end and assert the getter values.
+ */
 function checkSetAndGetTextarea(start, end) {
   goog.dom.selection.setStart(textarea, start);
   goog.dom.selection.setEnd(textarea, end);
@@ -327,10 +327,10 @@ function checkSetAndGetTextarea(start, end) {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to focus and select a field. In IE8, selected
-***REMOVED*** fields need focus.
-***REMOVED***
+/**
+ * Helper function to focus and select a field. In IE8, selected
+ * fields need focus.
+ */
 function select(field) {
   field.focus();
   field.select();

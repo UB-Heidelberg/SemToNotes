@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview
+ */
 
 goog.provide('xrx.geometry.Rect');
 
@@ -38,9 +38,9 @@ goog.require('goog.math.Box');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.geometry.Rect = function() {
 
   this.x = 0;
@@ -50,21 +50,21 @@ xrx.geometry.Rect = function() {
   this.width = 0;
 
   this.height = 0;
-***REMOVED***
+};
 
 
 
 xrx.geometry.Rect.prototype.getBox = function() {
   return new goog.math.Box(this.y, this.x + this.width, this.y + this.height,
       this.x);
-***REMOVED***
+};
 
 
 
 xrx.geometry.Rect.prototype.containsPoint = function(point) {
   return point[0] >= this.x &amp;&amp; point[1] >= this.y &amp;&amp;
       point[0] &lt;= this.x + this.width &amp;&amp; point[1] &lt;= this.y + this.height; 
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

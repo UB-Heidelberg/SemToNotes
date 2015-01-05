@@ -1,4 +1,4 @@
-/*global describe: true, env: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, env: true, expect: true, it: true, jasmine: true */
 describe("jsdoc/doclet", function() {
     // TODO: more tests
     var Doclet = require('jsdoc/doclet').Doclet;
@@ -18,7 +18,7 @@ describe("jsdoc/doclet", function() {
     describe('setScope', function() {
         it('should accept the correct scope names', function() {
             function setScope(scopeName) {
-                var doclet = new Doclet('***REMOVED*** Huzzah, a doclet!***REMOVED***', {});
+                var doclet = new Doclet('/** Huzzah, a doclet! */', {});
                 doclet.setScope(scopeName);
             }
 
@@ -29,7 +29,7 @@ describe("jsdoc/doclet", function() {
 
         it('should throw an error for invalid scope names', function() {
             function setScope() {
-                var doclet = new Doclet('***REMOVED*** Woe betide this doclet.***REMOVED***', {});
+                var doclet = new Doclet('/** Woe betide this doclet. */', {});
                 doclet.setScope('fiddlesticks');
             }
 

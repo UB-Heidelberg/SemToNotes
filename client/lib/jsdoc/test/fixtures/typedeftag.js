@@ -1,11 +1,11 @@
-***REMOVED*** @typedef {(string|number)} calc.NumberLike***REMOVED***
+/** @typedef {(string|number)} calc.NumberLike */
 
-***REMOVED*** @typedef {string}***REMOVED***
+/** @typedef {string} */
 calc.Operator;
 
-***REMOVED*** @typedef {calc.NumberLike} calc.Result***REMOVED***
+/** @typedef {calc.NumberLike} calc.Result */
 calc.Outcome;
 
-***REMOVED*** @param {calc.NumberLike} x A number or a string.***REMOVED***
+/** @param {calc.NumberLike} x A number or a string. */
 calc.readNumber = function(x) {
-***REMOVED***
+};

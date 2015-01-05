@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("When a getter or setter is the child of an object literal", function () {
     var docSet = jasmine.getDocSetFromFile("test/fixtures/getset.js");
     var foundName = docSet.getByLongname("Person#name");

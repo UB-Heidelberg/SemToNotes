@@ -54,7 +54,7 @@ var americaLosAngelesData = {
   'names': ['PST', 'Pacific Standard Time', 'PDT', 'Pacific Daylight Time'],
   'id': 'America/Los_Angeles',
   'std_offset': -480
-***REMOVED***
+};
 
 function testIsDaylightTime() {
   var usPacific = goog.i18n.TimeZone.createTimeZone(americaLosAngelesData);

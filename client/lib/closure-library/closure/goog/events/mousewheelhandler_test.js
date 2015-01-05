@@ -16,7 +16,7 @@ goog.provide('goog.events.MouseWheelHandlerTest');
 goog.setTestOnly('goog.events.MouseWheelHandlerTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.MouseWheelEvent');
 goog.require('goog.events.MouseWheelHandler');
@@ -63,7 +63,7 @@ function tearDownPage() {
   // Create interactive demo.
   mouseWheelHandler = new goog.events.MouseWheelHandler(document.body);
 
-***REMOVED***mouseWheelHandler,
+  goog.events.listen(mouseWheelHandler,
       goog.events.MouseWheelHandler.EventType.MOUSEWHEEL,
       function(e) {
         log.innerHTML += goog.string.subs('<br />(deltaX, deltaY): (%s, %s)',
@@ -78,7 +78,7 @@ function testIeStyleMouseWheel() {
     GECKO: false,
     CAMINO: false,
     WEBKIT: false
- ***REMOVED*****REMOVED***
+  };
 
   createHandlerAndListen();
 
@@ -100,8 +100,8 @@ function testNullBody() {
     GECKO: false,
     CAMINO: false,
     WEBKIT: false
- ***REMOVED*****REMOVED***
-  var documentObjectWithNoBody = {***REMOVED*****REMOVED***
+  };
+  var documentObjectWithNoBody = { };
   goog.testing.events.mixinListenable(documentObjectWithNoBody);
   mouseWheelHandler =
       new goog.events.MouseWheelHandler(documentObjectWithNoBody);
@@ -114,7 +114,7 @@ function testGeckoStyleMouseWheel() {
     GECKO: true,
     CAMINO: false,
     WEBKIT: false
- ***REMOVED*****REMOVED***
+  };
 
   createHandlerAndListen();
 
@@ -150,7 +150,7 @@ function testWebkitStyleMouseWheel_ieStyle() {
     CAMINO: false,
     WEBKIT: true,
     WINDOWS: true
- ***REMOVED*****REMOVED***
+  };
 
   createHandlerAndListen();
 
@@ -180,7 +180,7 @@ function testWebkitStyleMouseWheel_ieStyleOnLinux() {
     WEBKIT: true,
     WINDOWS: false,
     LINUX: true
- ***REMOVED*****REMOVED***
+  };
   runWebKitContinousAndDiscreteEventsTest();
 }
 
@@ -193,7 +193,7 @@ function testWebkitStyleMouseWheel_ieStyleOnMac() {
     WEBKIT: true,
     WINDOWS: false,
     MAC: true
- ***REMOVED*****REMOVED***
+  };
   runWebKitContinousAndDiscreteEventsTest();
 }
 
@@ -227,7 +227,7 @@ function testWebkitStyleMouseWheel_nonIeStyle() {
     CAMINO: false,
     WEBKIT: true,
     WINDOWS: false
- ***REMOVED*****REMOVED***
+  };
 
   goog.userAgent.isVersionOrHigher = goog.functions.FALSE;
 
@@ -258,7 +258,7 @@ function testMaxDeltaX() {
     CAMINO: false,
     WEBKIT: true,
     WINDOWS: true
- ***REMOVED*****REMOVED***
+  };
 
   createHandlerAndListen();
 
@@ -288,7 +288,7 @@ function testMaxDeltaY() {
     CAMINO: false,
     WEBKIT: true,
     WINDOWS: true
- ***REMOVED*****REMOVED***
+  };
 
   createHandlerAndListen();
 
@@ -315,14 +315,14 @@ function createHandlerAndListen() {
   mouseWheelHandler = new goog.events.MouseWheelHandler(
       goog.dom.getElement('foo'));
 
-***REMOVED***mouseWheelHandler,
+  goog.events.listen(mouseWheelHandler,
       goog.events.MouseWheelHandler.EventType.MOUSEWHEEL,
       function(e) { mouseWheelEvent = e; });
 
   mouseWheelHandlerRtl = new goog.events.MouseWheelHandler(
       goog.dom.getElement('fooRtl'));
 
-***REMOVED***mouseWheelHandlerRtl,
+  goog.events.listen(mouseWheelHandlerRtl,
       goog.events.MouseWheelHandler.EventType.MOUSEWHEEL,
       function(e) { mouseWheelEventRtl = e; });
 }
@@ -372,7 +372,7 @@ function createFakeMouseWheelEvent(type, opt_wheelDelta, opt_detail,
     // our simulations of other browsers.
     HORIZONTAL_AXIS: HORIZONTAL,
     VERTICAL_AXIS: VERTICAL
- ***REMOVED*****REMOVED***
+  };
   return new goog.events.BrowserEvent(event);
 }
 

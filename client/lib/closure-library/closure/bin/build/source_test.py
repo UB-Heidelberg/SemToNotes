@@ -76,13 +76,13 @@ class SourceTestCase(unittest.TestCase):
 
 _TEST_SOURCE = """// Fake copyright notice
 
-***REMOVED*** Very important comment.***REMOVED***
+/** Very important comment. */
 
 goog.provide('foo');
 goog.provide('foo.test');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events.EventType');
 
 function foo() {
   // Set bar to seventeen to increase performance.
@@ -96,7 +96,7 @@ goog.provide('foo');
 
 /*
 goog.provide('foo.test');
-***REMOVED***
+ */
 
 /*
 goog.require('goog.dom');
@@ -104,7 +104,7 @@ goog.require('goog.dom');
 
 // goog.require('goog.dom');
 
-***REMOVED***
+goog.require('goog.events.EventType');
 
 function bar() {
   this.baz = 55;
@@ -112,19 +112,19 @@ function bar() {
 """
 
 _TEST_BASE_SOURCE = """
-***REMOVED***
-***REMOVED*** @fileoverview The base file.
-***REMOVED*** @provideGoog
-***REMOVED***
+/**
+ * @fileoverview The base file.
+ * @provideGoog
+ */
 
-var goog = goog || {***REMOVED***
+var goog = goog || {};
 """
 
 _TEST_BAD_BASE_SOURCE = """
-***REMOVED***
-***REMOVED*** @fileoverview The base file.
-***REMOVED*** @provideGoog
-***REMOVED***
+/**
+ * @fileoverview The base file.
+ * @provideGoog
+ */
 
 goog.provide('goog');
 """

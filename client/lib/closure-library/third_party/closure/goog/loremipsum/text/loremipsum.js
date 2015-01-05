@@ -1,10 +1,10 @@
 //   Copyright 2009 The Closure Library Authors. All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview A generator of lorem ipsum text based on the python
-***REMOVED*** implementation at http://code.google.com/p/lorem-ipsum-generator/.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A generator of lorem ipsum text based on the python
+ * implementation at http://code.google.com/p/lorem-ipsum-generator/.
+ *
+ */
 
 goog.provide('goog.text.LoremIpsum');
 
@@ -15,114 +15,114 @@ goog.require('goog.structs.Map');
 goog.require('goog.structs.Set');
 
 
-***REMOVED***
-***REMOVED*** Generates random strings of "lorem ipsum" text, based on the word
-***REMOVED*** distribution of a sample text, using the words in a dictionary.
-***REMOVED***
-***REMOVED***
+/**
+ * Generates random strings of "lorem ipsum" text, based on the word
+ * distribution of a sample text, using the words in a dictionary.
+ * @constructor
+ */
 goog.text.LoremIpsum = function() {
   this.generateChains_(this.sample_);
   this.generateStatistics_(this.sample_);
 
   this.initializeDictionary_(this.dictionary_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Delimiters that end sentences.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiters that end sentences.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.text.LoremIpsum.DELIMITERS_SENTENCES_ = ['.', '?', '!'];
 
 
-***REMOVED***
-***REMOVED*** Regular expression for spliting a text into sentences.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for spliting a text into sentences.
+ * @type {RegExp}
+ * @private
+ */
 goog.text.LoremIpsum.SENTENCE_SPLIT_REGEX_ = /[\.\?\!]/;
 
 
-***REMOVED***
-***REMOVED*** Delimiters that end words.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiters that end words.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.text.LoremIpsum.DELIMITERS_WORDS_ = [',', '.', '?', '!'];
 
 
-***REMOVED***
-***REMOVED*** Regular expression for spliting text into words.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression for spliting text into words.
+ * @type {RegExp}
+ * @private
+ */
 goog.text.LoremIpsum.WORD_SPLIT_REGEX_ = /\s/;
 
 
-***REMOVED***
-***REMOVED*** Words that can be used in the generated output.
-***REMOVED*** Maps a word-length to a list of words of that length.
-***REMOVED*** @type {goog.structs.Map}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Words that can be used in the generated output.
+ * Maps a word-length to a list of words of that length.
+ * @type {goog.structs.Map}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.words_;
 
 
-***REMOVED***
-***REMOVED*** Chains of three words that appear in the sample text
-***REMOVED*** Maps a pair of word-lengths to a third word-length and an optional
-***REMOVED*** piece of trailing punctuation (for example, a period, comma, etc.).
-***REMOVED*** @type {goog.structs.Map}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Chains of three words that appear in the sample text
+ * Maps a pair of word-lengths to a third word-length and an optional
+ * piece of trailing punctuation (for example, a period, comma, etc.).
+ * @type {goog.structs.Map}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.chains_;
 
 
-***REMOVED***
-***REMOVED*** Pairs of word-lengths that can appear at the beginning of sentences.
-***REMOVED*** @type {Array}
-***REMOVED***
+/**
+ * Pairs of word-lengths that can appear at the beginning of sentences.
+ * @type {Array}
+ */
 goog.text.LoremIpsum.prototype.starts_;
 
 
-***REMOVED***
-***REMOVED*** Averange sentence length in words.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Averange sentence length in words.
+ * @type {number}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.sentenceMean_;
 
 
-***REMOVED***
-***REMOVED*** Sigma (sqrt of variance) for the sentence length in words.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sigma (sqrt of variance) for the sentence length in words.
+ * @type {number}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.sentenceSigma_;
 
 
-***REMOVED***
-***REMOVED*** Averange paragraph length in sentences.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Averange paragraph length in sentences.
+ * @type {number}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.paragraphMean_;
 
 
-***REMOVED***
-***REMOVED*** Sigma (sqrt of variance) for the paragraph length in sentences.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sigma (sqrt of variance) for the paragraph length in sentences.
+ * @type {number}
+ * @private
+ */
 goog.text.LoremIpsum.prototype.paragraphSigma_;
 
 
-***REMOVED***
-***REMOVED*** Generates the chains and starts values required for sentence generation.
-***REMOVED*** @param {string} sample The same text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Generates the chains and starts values required for sentence generation.
+ * @param {string} sample The same text.
+ * @private
+ */
 goog.text.LoremIpsum.prototype.generateChains_ = function(sample) {
   var words = goog.text.LoremIpsum.splitWords_(sample);
   var wordInfo = goog.array.map(words, goog.text.LoremIpsum.getWordInfo_);
@@ -131,7 +131,7 @@ goog.text.LoremIpsum.prototype.generateChains_ = function(sample) {
   var previousKey = previous.join('-');
   var chains = new goog.structs.Map();
   var starts = [previousKey];
-  var chainKeys = {***REMOVED***
+  var chainKeys = {};
 
   goog.array.forEach(wordInfo, function(pair) {
     var chain = chains.get(previousKey);
@@ -158,26 +158,26 @@ goog.text.LoremIpsum.prototype.generateChains_ = function(sample) {
   } else {
     throw Error('Could not generate chains from sample text.');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates the mean and standard deviation of sentence and paragraph lengths.
-***REMOVED*** @param {string} sample The same text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculates the mean and standard deviation of sentence and paragraph lengths.
+ * @param {string} sample The same text.
+ * @private
+ */
 goog.text.LoremIpsum.prototype.generateStatistics_ = function(sample) {
   this.generateSentenceStatistics_(sample);
   this.generateParagraphStatistics_(sample);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates the mean and standard deviation of the lengths of sentences
-***REMOVED*** (in words) in a sample text.
-***REMOVED*** @param {string} sample The same text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculates the mean and standard deviation of the lengths of sentences
+ * (in words) in a sample text.
+ * @param {string} sample The same text.
+ * @private
+ */
 goog.text.LoremIpsum.prototype.generateSentenceStatistics_ = function(sample) {
   var sentences = goog.array.filter(
       goog.text.LoremIpsum.splitSentences_(sample),
@@ -189,15 +189,15 @@ goog.text.LoremIpsum.prototype.generateSentenceStatistics_ = function(sample) {
   this.sentenceMean_ = goog.math.average.apply(null, sentenceLengths);
   this.sentenceSigma_ = goog.math.standardDeviation.apply(
       null, sentenceLengths);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates the mean and standard deviation of the lengths of paragraphs
-***REMOVED*** (in sentences) in a sample text.
-***REMOVED*** @param {string} sample The same text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculates the mean and standard deviation of the lengths of paragraphs
+ * (in sentences) in a sample text.
+ * @param {string} sample The same text.
+ * @private
+ */
 goog.text.LoremIpsum.prototype.generateParagraphStatistics_ = function(sample) {
   var paragraphs = goog.array.filter(
       goog.text.LoremIpsum.splitParagraphs_(sample),
@@ -210,14 +210,14 @@ goog.text.LoremIpsum.prototype.generateParagraphStatistics_ = function(sample) {
   this.paragraphMean_ = goog.math.average.apply(null, paragraphLengths);
   this.paragraphSigma_ = goog.math.standardDeviation.apply(
       null, paragraphLengths);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the generator to use a given selection of words for generating
-***REMOVED*** sentences with.
-***REMOVED*** @param {string} dictionary The dictionary to use.
-***REMOVED***
+/**
+ * Sets the generator to use a given selection of words for generating
+ * sentences with.
+ * @param {string} dictionary The dictionary to use.
+ */
 goog.text.LoremIpsum.prototype.initializeDictionary_ = function(dictionary) {
   var dictionaryWords = goog.text.LoremIpsum.splitWords_(dictionary);
 
@@ -232,26 +232,26 @@ goog.text.LoremIpsum.prototype.initializeDictionary_ = function(dictionary) {
   });
 
   this.words_ = words;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Picks a random starting chain.
-***REMOVED*** @return {Array.<string>} The starting key.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Picks a random starting chain.
+ * @return {Array.<string>} The starting key.
+ * @private
+ */
 goog.text.LoremIpsum.prototype.chooseRandomStart_ = function() {
   var key = goog.text.LoremIpsum.randomChoice_(this.starts_);
   return this.chainKeys_[key];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generates a single sentence, of random length.
-***REMOVED*** @param {boolean} opt_startWithLorem Whether to start the setnence with the
-***REMOVED***     standard "Lorem ipsum..." first sentence.
-***REMOVED*** @return {string} The generated sentence.
-***REMOVED***
+/**
+ * Generates a single sentence, of random length.
+ * @param {boolean} opt_startWithLorem Whether to start the setnence with the
+ *     standard "Lorem ipsum..." first sentence.
+ * @return {string} The generated sentence.
+ */
 goog.text.LoremIpsum.prototype.generateSentence = function(opt_startWithLorem) {
   if (this.chains_.getCount() == 0 || this.starts_.length == 0) {
     throw Error('No chains created');
@@ -298,8 +298,8 @@ goog.text.LoremIpsum.prototype.generateSentence = function(opt_startWithLorem) {
     // Choose the next "chain" to go to. This determines the next word
     // length we'll use, and whether there is e.g. a comma at the end of
     // the word.
-    var chain =***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (goog.text.LoremIpsum.randomChoice_(
-       ***REMOVED*****REMOVED*** @type {Array}***REMOVED*** (this.chains_.get(previousKey))));
+    var chain = /** @type {Array} */ (goog.text.LoremIpsum.randomChoice_(
+        /** @type {Array} */ (this.chains_.get(previousKey))));
     var wordLength = chain[0];
 
     // If the word delimiter contained in the chain is also a sentence
@@ -334,14 +334,14 @@ goog.text.LoremIpsum.prototype.generateSentence = function(opt_startWithLorem) {
     sentence = sentence.slice(0, sentence.length - 1);
   }
   return sentence + '.';
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Generates a single lorem ipsum paragraph, of random length.
-***REMOVED*** @param {boolean} opt_startWithLorem Whether to start the sentence with the
-***REMOVED***     standard "Lorem ipsum..." first sentence.
-***REMOVED*** @return {string} The generated sentence.
-***REMOVED***
+/**
+ * Generates a single lorem ipsum paragraph, of random length.
+ * @param {boolean} opt_startWithLorem Whether to start the sentence with the
+ *     standard "Lorem ipsum..." first sentence.
+ * @return {string} The generated sentence.
+ */
 goog.text.LoremIpsum.prototype.generateParagraph = function(
     opt_startWithLorem) {
   // The length of the paragraph is a normally distributed random variable.
@@ -361,74 +361,74 @@ goog.text.LoremIpsum.prototype.generateParagraph = function(
   // Form the paragraph into a string.
   paragraph = paragraph.join(' ')
   return paragraph
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a piece of text into paragraphs.
-***REMOVED*** @param {string} text The text to split.
-***REMOVED*** @return {Array.<string>} An array of paragraphs.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits a piece of text into paragraphs.
+ * @param {string} text The text to split.
+ * @return {Array.<string>} An array of paragraphs.
+ * @private
+ */
 goog.text.LoremIpsum.splitParagraphs_ = function(text) {
   return text.split('\n')
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a piece of text into sentences.
-***REMOVED*** @param {string} text The text to split.
-***REMOVED*** @return {Array.<string>} An array of sentences.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits a piece of text into sentences.
+ * @param {string} text The text to split.
+ * @return {Array.<string>} An array of sentences.
+ * @private
+ */
 goog.text.LoremIpsum.splitSentences_ = function(text) {
   return goog.array.filter(
       text.split(goog.text.LoremIpsum.SENTENCE_SPLIT_REGEX_),
       goog.text.LoremIpsum.isNotEmptyOrWhitepace_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a piece of text into words..
-***REMOVED*** @param {string} text The text to split.
-***REMOVED*** @return {Array.<string>} An array of words.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits a piece of text into words..
+ * @param {string} text The text to split.
+ * @return {Array.<string>} An array of words.
+ * @private
+ */
 goog.text.LoremIpsum.splitWords_ = function(text) {
   return goog.array.filter(
       text.split(goog.text.LoremIpsum.WORD_SPLIT_REGEX_),
       goog.text.LoremIpsum.isNotEmptyOrWhitepace_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the text is not empty or just whitespace.
-***REMOVED*** @param {string} text The text to check.
-***REMOVED*** @return {boolean} Whether the text is nether empty nor whitespace.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the text is not empty or just whitespace.
+ * @param {string} text The text to check.
+ * @return {boolean} Whether the text is nether empty nor whitespace.
+ * @private
+ */
 goog.text.LoremIpsum.isNotEmptyOrWhitepace_ = function(text) {
   return goog.string.trim(text).length > 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the length of an array. Written as a function so it can be used
-***REMOVED*** as a function parameter.
-***REMOVED*** @param {Array} array The array to check.
-***REMOVED*** @return {number} The length of the array.
-***REMOVED***
+/**
+ * Returns the length of an array. Written as a function so it can be used
+ * as a function parameter.
+ * @param {Array} array The array to check.
+ * @return {number} The length of the array.
+ */
 goog.text.LoremIpsum.arrayLength_ = function(array) {
   return array.length;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Find the number in the list of values that is closest to the target.
-***REMOVED*** @param {Array.<number>} values The values.
-***REMOVED*** @param {number} target The target value.
-***REMOVED*** @return {number} The closest value.
-***REMOVED***
+/**
+ * Find the number in the list of values that is closest to the target.
+ * @param {Array.<number>} values The values.
+ * @param {number} target The target value.
+ * @return {number} The closest value.
+ */
 goog.text.LoremIpsum.chooseClosest = function(values, target) {
   var closest = values[0];
   goog.array.forEach(values, function(value) {
@@ -438,15 +438,15 @@ goog.text.LoremIpsum.chooseClosest = function(values, target) {
   });
 
   return closest;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Gets info about a word used as part of the lorem ipsum algorithm.
-***REMOVED*** @param {string} word The word to check.
-***REMOVED*** @return {Array} A two element array. The first element is the size of the
-***REMOVED***    word. The second element is the delimter used in the word.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets info about a word used as part of the lorem ipsum algorithm.
+ * @param {string} word The word to check.
+ * @return {Array} A two element array. The first element is the size of the
+ *    word. The second element is the delimter used in the word.
+ * @private
+ */
 goog.text.LoremIpsum.getWordInfo_ = function(word) {
   var ret;
   goog.array.some(goog.text.LoremIpsum.DELIMITERS_WORDS_,
@@ -457,55 +457,55 @@ goog.text.LoremIpsum.getWordInfo_ = function(word) {
         }
         return false;
       }
-***REMOVED***
+  );
   return ret || [word.length, ''];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constant used for {@link #randomNormal_}.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
-goog.text.LoremIpsum.NV_MAGICCONST_ = 4***REMOVED*** Math.exp(-0.5) / Math.sqrt(2.0);
+/**
+ * Constant used for {@link #randomNormal_}.
+ * @type {number}
+ * @private
+ */
+goog.text.LoremIpsum.NV_MAGICCONST_ = 4 * Math.exp(-0.5) / Math.sqrt(2.0);
 
 
-***REMOVED***
-***REMOVED*** Generates a random number for a normal distribution with the specified
-***REMOVED*** mean and sigma.
-***REMOVED*** @param {number} mu The mean of the distribution.
-***REMOVED*** @param {number} sigma The sigma of the distribution.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Generates a random number for a normal distribution with the specified
+ * mean and sigma.
+ * @param {number} mu The mean of the distribution.
+ * @param {number} sigma The sigma of the distribution.
+ * @private
+ */
 goog.text.LoremIpsum.randomNormal_ = function(mu, sigma) {
   while (true) {
     var u1 = Math.random();
     var u2 = 1.0 - Math.random();
-    var z = goog.text.LoremIpsum.NV_MAGICCONST_***REMOVED*** (u1 - 0.5) / u2;
-    var zz = z***REMOVED*** z / 4.0;
+    var z = goog.text.LoremIpsum.NV_MAGICCONST_ * (u1 - 0.5) / u2;
+    var zz = z * z / 4.0;
     if (zz <= -Math.log(u2)) {
       break;
     }
   }
-  return mu + z***REMOVED*** sigma;
-***REMOVED***
+  return mu + z * sigma;
+};
 
 
-***REMOVED***
-***REMOVED*** Picks a random element of the array.
-***REMOVED*** @param {Array} array The array to pick from.
-***REMOVED*** @return {*} An element from the array.
-***REMOVED***
+/**
+ * Picks a random element of the array.
+ * @param {Array} array The array to pick from.
+ * @return {*} An element from the array.
+ */
 goog.text.LoremIpsum.randomChoice_ = function(array) {
   return array[goog.math.randomInt(array.length)];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dictionary of words for lorem ipsum.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dictionary of words for lorem ipsum.
+ * @type {string}
+ * @private
+ */
 goog.text.LoremIpsum.DICT_ =
     'a ac accumsan ad adipiscing aenean aliquam aliquet amet ante ' +
     'aptent arcu at auctor augue bibendum blandit class commodo ' +
@@ -531,12 +531,12 @@ goog.text.LoremIpsum.DICT_ =
     'volutpat vulputate';
 
 
-***REMOVED***
-***REMOVED*** A sample to use for generating the distribution of word and sentence lengths
-***REMOVED*** in lorem ipsum.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A sample to use for generating the distribution of word and sentence lengths
+ * in lorem ipsum.
+ * @type {string}
+ * @private
+ */
 goog.text.LoremIpsum.SAMPLE_ =
     'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean ' +
     'commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus ' +
@@ -698,15 +698,15 @@ goog.text.LoremIpsum.SAMPLE_ =
     'quam. Quisque id odio. Praesent venenatis metus at tortor pulvinar ' +
     'varius.\n\n';
 
-***REMOVED***
-***REMOVED*** Sample that the generated text is based on .
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Sample that the generated text is based on .
+ * @type {string}
+ */
 goog.text.LoremIpsum.prototype.sample_ = goog.text.LoremIpsum.SAMPLE_;
 
 
-***REMOVED***
-***REMOVED*** Dictionary of words.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Dictionary of words.
+ * @type {string}
+ */
 goog.text.LoremIpsum.prototype.dictionary_ = goog.text.LoremIpsum.DICT_;

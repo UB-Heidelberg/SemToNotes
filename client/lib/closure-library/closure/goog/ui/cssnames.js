@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Common CSS class name constants.
-***REMOVED***
-***REMOVED*** @author mkretzschmar@google.com (Martin Kretzschmar)
-***REMOVED***
+/**
+ * @fileoverview Common CSS class name constants.
+ *
+ * @author mkretzschmar@google.com (Martin Kretzschmar)
+ */
 
 goog.provide('goog.ui.INLINE_BLOCK_CLASSNAME');
 
 
-***REMOVED***
-***REMOVED*** CSS class name for applying the "display: inline-block" property in a
-***REMOVED*** cross-browser way.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS class name for applying the "display: inline-block" property in a
+ * cross-browser way.
+ * @type {string}
+ */
 goog.ui.INLINE_BLOCK_CLASSNAME = goog.getCssName('goog-inline-block');

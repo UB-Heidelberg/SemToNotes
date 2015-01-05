@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol Buffer 2 Serializer which serializes messages
-***REMOVED***  into anonymous, simplified JSON objects.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Protocol Buffer 2 Serializer which serializes messages
+ *  into anonymous, simplified JSON objects.
+ *
+ */
 
 goog.provide('goog.proto2.ObjectSerializer');
 
@@ -26,53 +26,53 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** ObjectSerializer, a serializer which turns Messages into simplified
-***REMOVED*** ECMAScript objects.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.ObjectSerializer.KeyOption=} opt_keyOption If specified,
-***REMOVED***     which key option to use when serializing/deserializing.
-***REMOVED***
-***REMOVED*** @extends {goog.proto2.Serializer}
-***REMOVED***
+/**
+ * ObjectSerializer, a serializer which turns Messages into simplified
+ * ECMAScript objects.
+ *
+ * @param {goog.proto2.ObjectSerializer.KeyOption=} opt_keyOption If specified,
+ *     which key option to use when serializing/deserializing.
+ * @constructor
+ * @extends {goog.proto2.Serializer}
+ */
 goog.proto2.ObjectSerializer = function(opt_keyOption) {
   this.keyOption_ = opt_keyOption;
-***REMOVED***
+};
 goog.inherits(goog.proto2.ObjectSerializer, goog.proto2.Serializer);
 
 
-***REMOVED***
-***REMOVED*** An enumeration of the options for how to emit the keys in
-***REMOVED*** the generated simplified object.
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * An enumeration of the options for how to emit the keys in
+ * the generated simplified object.
+ *
+ * @enum {number}
+ */
 goog.proto2.ObjectSerializer.KeyOption = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Use the tag of the field as the key (default)
- ***REMOVED*****REMOVED***
+  /**
+   * Use the tag of the field as the key (default)
+   */
   TAG: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Use the name of the field as the key. Unknown fields
-  ***REMOVED*** will still use their tags as keys.
- ***REMOVED*****REMOVED***
+  /**
+   * Use the name of the field as the key. Unknown fields
+   * will still use their tags as keys.
+   */
   NAME: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes a message to an object.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Message} message The message to be serialized.
-***REMOVED*** @return {!Object} The serialized form of the message.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Serializes a message to an object.
+ *
+ * @param {goog.proto2.Message} message The message to be serialized.
+ * @return {!Object} The serialized form of the message.
+ * @override
+ */
 goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
   var descriptor = message.getDescriptor();
   var fields = descriptor.getFields();
 
-  var objectValue = {***REMOVED***
+  var objectValue = {};
 
   // Add the defined fields, recursively.
   for (var i = 0; i < fields.length; i++) {
@@ -104,18 +104,18 @@ goog.proto2.ObjectSerializer.prototype.serialize = function(message) {
   });
 
   return objectValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deserializes a message from an object and places the
-***REMOVED*** data in the message.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Message} message The message in which to
-***REMOVED***     place the information.
-***REMOVED*** @param {*} data The data of the message.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Deserializes a message from an object and places the
+ * data in the message.
+ *
+ * @param {goog.proto2.Message} message The message in which to
+ *     place the information.
+ * @param {*} data The data of the message.
+ * @override
+ */
 goog.proto2.ObjectSerializer.prototype.deserializeTo = function(message, data) {
   var descriptor = message.getDescriptor();
 
@@ -156,4 +156,4 @@ goog.proto2.ObjectSerializer.prototype.deserializeTo = function(message, data) {
       }
     }
   }
-***REMOVED***
+};

@@ -1,23 +1,23 @@
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 var constructor = {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     toString: function(){}
-***REMOVED***
+};
 
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 var prototype = {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     valueOf: function(){}
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** This is Object
-***REMOVED*** @namespace Object
-***REMOVED***
+/**
+ * This is Object
+ * @namespace Object
+ */
 
-***REMOVED***
-***REMOVED*** This is Object.hasOwnProperty
-***REMOVED*** @method Object.hasOwnProperty
-***REMOVED***
+/**
+ * This is Object.hasOwnProperty
+ * @method Object.hasOwnProperty
+ */
 
 // NOTE: you can't document a prototype of an object in JSDoc -- seriously, you just can't

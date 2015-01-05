@@ -58,8 +58,8 @@ function testNormalRequest() {
           goog.log.log(goog.net.CrossDomainRpc.logger_, goog.log.Level.FINE,
               elapsed + 'ms: [' + responseData.result.length + '] ' +
               print(responseData)
-        ***REMOVED***
-          assertEquals(16***REMOVED*** 1024, responseData.result.length);
+          );
+          assertEquals(16 * 1024, responseData.result.length);
           assertEquals(e.target.status, 123);
           assertEquals(e.target.responseHeaders.a, 1);
           assertEquals(e.target.responseHeaders.b, '2');
@@ -71,7 +71,7 @@ function testNormalRequest() {
       },
       'POST',
       {xyz: '01234567891123456789'}
-***REMOVED***
+  );
 }
 
 
@@ -88,7 +88,7 @@ function testErrorRequest() {
       },
       'POST',
       {xyz: '01234567891123456789'}
-***REMOVED***
+  );
 }
 
 

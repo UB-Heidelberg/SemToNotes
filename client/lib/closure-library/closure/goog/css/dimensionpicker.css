@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Styling for dimension pickers rendered by goog.ui.DimensionPickerRenderer.
-***REMOVED***
-***REMOVED*** Author: robbyw@google.com (Robby Walker)
-***REMOVED*** Author: abefettig@google.com (Abe Fettig)
-***REMOVED***
+ * Styling for dimension pickers rendered by goog.ui.DimensionPickerRenderer.
+ *
+ * Author: robbyw@google.com (Robby Walker)
+ * Author: abefettig@google.com (Abe Fettig)
+ */
 
 .goog-dimension-picker {
   font-size: 18px;
@@ -22,8 +22,8 @@
 }
 
 .goog-dimension-picker div.goog-dimension-picker-highlighted {
-/* Client apps must provide the URL at which they serve the image.***REMOVED***
-  /* background: url(dimension-highlighted.png);***REMOVED***
+/* Client apps must provide the URL at which they serve the image. */
+  /* background: url(dimension-highlighted.png); */
   left: 0;
   overflow: hidden;
   position: absolute;
@@ -31,8 +31,8 @@
 }
 
 .goog-dimension-picker-unhighlighted {
-  /* Client apps must provide the URL at which they serve the image.***REMOVED***
-  /* background: url(dimension-unhighlighted.png);***REMOVED***
+  /* Client apps must provide the URL at which they serve the image. */
+  /* background: url(dimension-unhighlighted.png); */
 }
 
 .goog-dimension-picker-status {

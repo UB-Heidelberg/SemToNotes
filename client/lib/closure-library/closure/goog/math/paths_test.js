@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.math.paths.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.math.paths.
+ */
 
 goog.provide('goog.math.pathsTest');
 

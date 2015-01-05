@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An alternative custom button renderer that uses even more CSS
-***REMOVED*** voodoo than the default implementation to render custom buttons with fake
-***REMOVED*** rounded corners and dimensionality (via a subtle flat shadow on the bottom
-***REMOVED*** half of the button) without the use of images.
-***REMOVED***
-***REMOVED*** Based on the Custom Buttons 3.1 visual specification, see
-***REMOVED*** http://go/custombuttons
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @author dalewis@google.com (Darren Lewis)
-***REMOVED*** @see ../demos/imagelessmenubutton.html
-***REMOVED***
+/**
+ * @fileoverview An alternative custom button renderer that uses even more CSS
+ * voodoo than the default implementation to render custom buttons with fake
+ * rounded corners and dimensionality (via a subtle flat shadow on the bottom
+ * half of the button) without the use of images.
+ *
+ * Based on the Custom Buttons 3.1 visual specification, see
+ * http://go/custombuttons
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @author dalewis@google.com (Darren Lewis)
+ * @see ../demos/imagelessmenubutton.html
+ */
 
 goog.provide('goog.ui.ImagelessMenuButtonRenderer');
 
@@ -38,42 +38,42 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Custom renderer for {@link goog.ui.MenuButton}s. Imageless buttons can
-***REMOVED*** contain almost arbitrary HTML content, will flow like inline elements, but
-***REMOVED*** can be styled like block-level elements.
-***REMOVED***
-***REMOVED*** @deprecated These contain a lot of unnecessary DOM for modern user agents.
-***REMOVED***     Please use a simpler button renderer like css3buttonrenderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuButtonRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Custom renderer for {@link goog.ui.MenuButton}s. Imageless buttons can
+ * contain almost arbitrary HTML content, will flow like inline elements, but
+ * can be styled like block-level elements.
+ *
+ * @deprecated These contain a lot of unnecessary DOM for modern user agents.
+ *     Please use a simpler button renderer like css3buttonrenderer.
+ * @constructor
+ * @extends {goog.ui.MenuButtonRenderer}
+ * @final
+ */
 goog.ui.ImagelessMenuButtonRenderer = function() {
   goog.ui.MenuButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ImagelessMenuButtonRenderer, goog.ui.MenuButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** The singleton instance of this renderer class.
-***REMOVED*** @type {goog.ui.ImagelessMenuButtonRenderer?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The singleton instance of this renderer class.
+ * @type {goog.ui.ImagelessMenuButtonRenderer?}
+ * @private
+ */
 goog.ui.ImagelessMenuButtonRenderer.instance_ = null;
 goog.addSingletonGetter(goog.ui.ImagelessMenuButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ImagelessMenuButtonRenderer.CSS_CLASS =
     goog.getCssName('goog-imageless-button');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ImagelessMenuButtonRenderer.prototype.getContentElement = function(
     element) {
   if (element) {
@@ -82,47 +82,47 @@ goog.ui.ImagelessMenuButtonRenderer.prototype.getContentElement = function(
     return captionElem;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if this renderer can decorate the element.  Overrides
-***REMOVED*** {@link goog.ui.MenuButtonRenderer#canDecorate} by returning true if the
-***REMOVED*** element is a DIV, false otherwise.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {boolean} Whether the renderer can decorate the element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns true if this renderer can decorate the element.  Overrides
+ * {@link goog.ui.MenuButtonRenderer#canDecorate} by returning true if the
+ * element is a DIV, false otherwise.
+ * @param {Element} element Element to decorate.
+ * @return {boolean} Whether the renderer can decorate the element.
+ * @override
+ */
 goog.ui.ImagelessMenuButtonRenderer.prototype.canDecorate = function(element) {
   return element.tagName == goog.dom.TagName.DIV;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a text caption or existing DOM structure, and returns the content
-***REMOVED*** wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
-***REMOVED***  <div class="goog-inline-block goog-imageless-button">
-***REMOVED***    <div class="goog-inline-block goog-imageless-button-outer-box">
-***REMOVED***      <div class="goog-imageless-button-inner-box">
-***REMOVED***        <div class="goog-imageless-button-pos-box">
-***REMOVED***          <div class="goog-imageless-button-top-shadow">&nbsp;</div>
-***REMOVED***          <div class="goog-imageless-button-content
-***REMOVED***                      goog-imageless-menubutton-caption">Contents...
-***REMOVED***          </div>
-***REMOVED***          <div class="goog-imageless-menubutton-dropdown"></div>
-***REMOVED***        </div>
-***REMOVED***      </div>
-***REMOVED***    </div>
-***REMOVED***  </div>
+/**
+ * Takes a text caption or existing DOM structure, and returns the content
+ * wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
+ *  <div class="goog-inline-block goog-imageless-button">
+ *    <div class="goog-inline-block goog-imageless-button-outer-box">
+ *      <div class="goog-imageless-button-inner-box">
+ *        <div class="goog-imageless-button-pos-box">
+ *          <div class="goog-imageless-button-top-shadow">&nbsp;</div>
+ *          <div class="goog-imageless-button-content
+ *                      goog-imageless-menubutton-caption">Contents...
+ *          </div>
+ *          <div class="goog-imageless-menubutton-dropdown"></div>
+ *        </div>
+ *      </div>
+ *    </div>
+ *  </div>
 
-***REMOVED*** Used by both {@link #createDom} and {@link #decorate}.  To be overridden
-***REMOVED*** by subclasses.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
-***REMOVED***     in a box.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
-***REMOVED*** @return {!Element} Pseudo-rounded-corner box containing the content.
-***REMOVED*** @override
-***REMOVED***
+ * Used by both {@link #createDom} and {@link #decorate}.  To be overridden
+ * by subclasses.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
+ *     in a box.
+ * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
+ * @return {!Element} Pseudo-rounded-corner box containing the content.
+ * @override
+ */
 goog.ui.ImagelessMenuButtonRenderer.prototype.createButton = function(content,
                                                                       dom) {
   var baseClass = this.getCssClass();
@@ -140,18 +140,18 @@ goog.ui.ImagelessMenuButtonRenderer.prototype.createButton = function(content,
                             content),
               dom.createDom('div', [goog.getCssName(baseClass, 'dropdown'),
                                     goog.getCssName('goog-inline-block')]))));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Check if the button's element has a box structure.
-***REMOVED*** @param {goog.ui.Button} button Button instance whose structure is being
-***REMOVED***     checked.
-***REMOVED*** @param {Element} element Element of the button.
-***REMOVED*** @return {boolean} Whether the element has a box structure.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Check if the button's element has a box structure.
+ * @param {goog.ui.Button} button Button instance whose structure is being
+ *     checked.
+ * @param {Element} element Element of the button.
+ * @return {boolean} Whether the element has a box structure.
+ * @protected
+ * @override
+ */
 goog.ui.ImagelessMenuButtonRenderer.prototype.hasBoxStructure = function(
     button, element) {
   var outer = button.getDomHelper().getFirstElementChild(element);
@@ -184,18 +184,18 @@ goog.ui.ImagelessMenuButtonRenderer.prototype.hasBoxStructure = function(
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of components
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of components
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.ImagelessMenuButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.ImagelessMenuButtonRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for

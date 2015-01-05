@@ -52,7 +52,7 @@ function testMockRandomRandom() {
 }
 
 function testRandomStrictlyFromSequence() {
-  var random = new goog.testing.MockRandom([], /* install***REMOVED*** true);
+  var random = new goog.testing.MockRandom([], /* install */ true);
   random.setStrictlyFromSequence(true);
   assertFalse(random.hasMoreValues());
   assertThrows(function() {

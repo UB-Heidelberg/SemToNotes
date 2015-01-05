@@ -27,7 +27,7 @@ var baseTime = new Date(2009, 2, 23, 14, 31, 6).getTime();
 // Ensure goog.now returns a constant timestamp.
 goog.now = function() {
   return baseTime;
-***REMOVED***
+};
 
 
 function testFormatRelativeForPastDates() {
@@ -121,37 +121,37 @@ function testGetDateString() {
   var fn = goog.date.relative.getDateString;
 
   assertEquals('2:21 PM (10 minutes ago)',
-               fn(new Date(baseTime - 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime - 10 * 60 * 1000)));
   assertEquals('4:31 AM (10 hours ago)',
-               fn(new Date(baseTime - 10***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime - 10 * 60 * 60 * 1000)));
   assertEquals('Friday, March 13, 2009 (10 days ago)',
-               fn(new Date(baseTime - 10***REMOVED*** 24***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime - 10 * 24 * 60 * 60 * 1000)));
   assertEquals('Tuesday, March 3, 2009',
-               fn(new Date(baseTime - 20***REMOVED*** 24***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime - 20 * 24 * 60 * 60 * 1000)));
 
   // Test that goog.date.DateTime can also be accepted as input.
   assertEquals('2:21 PM (10 minutes ago)',
-               fn(gdatetime(baseTime - 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime - 10 * 60 * 1000)));
   assertEquals('4:31 AM (10 hours ago)',
-               fn(gdatetime(baseTime - 10***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime - 10 * 60 * 60 * 1000)));
   assertEquals('Friday, March 13, 2009 (10 days ago)',
-               fn(gdatetime(baseTime - 10***REMOVED*** 24***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime - 10 * 24 * 60 * 60 * 1000)));
   assertEquals('Tuesday, March 3, 2009',
-               fn(gdatetime(baseTime - 20***REMOVED*** 24***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime - 20 * 24 * 60 * 60 * 1000)));
 }
 
 function testGetPastDateString() {
   var fn = goog.date.relative.getPastDateString;
   assertEquals('2:21 PM (10 minutes ago)',
-               fn(new Date(baseTime - 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime - 10 * 60 * 1000)));
   assertEquals('2:41 PM (0 minutes ago)',
-               fn(new Date(baseTime + 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(new Date(baseTime + 10 * 60 * 1000)));
 
   // Test that goog.date.DateTime can also be accepted as input.
   assertEquals('2:21 PM (10 minutes ago)',
-               fn(gdatetime(baseTime - 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime - 10 * 60 * 1000)));
   assertEquals('2:41 PM (0 minutes ago)',
-               fn(gdatetime(baseTime + 10***REMOVED*** 60***REMOVED*** 1000)));
+               fn(gdatetime(baseTime + 10 * 60 * 1000)));
 }
 
 function gdatetime(timestamp) {

@@ -96,15 +96,15 @@ a:hover {
       .addTests(_allTests);
   testRunner.render(document.getElementById('runner'));
 
-***REMOVED***hidePassesInput, 'click', function(e) {
+  goog.events.listen(hidePassesInput, 'click', function(e) {
     testRunner.setHidePasses(e.target.checked);
   });
 
-***REMOVED***parallelInput, 'click', function(e) {
+  goog.events.listen(parallelInput, 'click', function(e) {
     testRunner.setPoolSize(e.target.checked ? 8 : 1);
   });
 
-***REMOVED***filterInput, 'keyup', setFilterFunction);
+  goog.events.listen(filterInput, 'keyup', setFilterFunction);
   setFilterFunction();
 </script>
 </body>

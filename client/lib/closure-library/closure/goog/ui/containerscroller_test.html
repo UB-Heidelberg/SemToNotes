@@ -29,7 +29,7 @@ Author:  gboyer@google.com (Garrett Boyer)
   overflow-x: hidden;
   position: relative;
   /* Give a border and margin to ensure ContainerScroller is tolerant to
-  ***REMOVED*** them.  It is, however, not tolerant to padding.***REMOVED***
+   * them.  It is, however, not tolerant to padding. */
   border: 11px solid #666;
   margin: 7px 13px 17px 19px;
 }
@@ -205,7 +205,7 @@ function testHidingMenuItemsDoesntAffectContainerScroller() {
   container.getElement = function() {
     fail('getElement() must not be called when a control in the container is ' +
          'being hidden');
- ***REMOVED*****REMOVED***
+  };
   container.getChildAt(0).setVisible(false);
 }
 

@@ -26,7 +26,7 @@ function fillLinkedMap(m) {
   m.set('d', 3);
 }
 
-var someObj = {***REMOVED***
+var someObj = {};
 
 function testLinkedMap() {
   var m = new goog.structs.LinkedMap();
@@ -131,7 +131,7 @@ function testForEach() {
   fillLinkedMap(m);
 
   m.forEach(function(val, key, linkedMap) {
-    linkedMap.set(key, val***REMOVED*** 2);
+    linkedMap.set(key, val * 2);
     assertEquals('forEach should run in provided context.', someObj, this);
   }, someObj);
 

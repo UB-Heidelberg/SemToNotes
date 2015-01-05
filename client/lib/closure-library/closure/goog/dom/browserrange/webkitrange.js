@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the WebKit specific range wrapper.  Inherits most
-***REMOVED*** functionality from W3CRange, but adds exceptions as necessary.
-***REMOVED***
-***REMOVED*** DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Definition of the WebKit specific range wrapper.  Inherits most
+ * functionality from W3CRange, but adds exceptions as necessary.
+ *
+ * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.dom.browserrange.WebKitRange');
@@ -30,48 +30,48 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** The constructor for WebKit specific browser ranges.
-***REMOVED*** @param {Range} range The range object.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.browserrange.W3cRange}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The constructor for WebKit specific browser ranges.
+ * @param {Range} range The range object.
+ * @constructor
+ * @extends {goog.dom.browserrange.W3cRange}
+ * @final
+ */
 goog.dom.browserrange.WebKitRange = function(range) {
   goog.dom.browserrange.W3cRange.call(this, range);
-***REMOVED***
+};
 goog.inherits(goog.dom.browserrange.WebKitRange,
               goog.dom.browserrange.W3cRange);
 
 
-***REMOVED***
-***REMOVED*** Creates a range object that selects the given node's text.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @return {!goog.dom.browserrange.WebKitRange} A WebKit range wrapper object.
-***REMOVED***
+/**
+ * Creates a range object that selects the given node's text.
+ * @param {Node} node The node to select.
+ * @return {!goog.dom.browserrange.WebKitRange} A WebKit range wrapper object.
+ */
 goog.dom.browserrange.WebKitRange.createFromNodeContents = function(node) {
   return new goog.dom.browserrange.WebKitRange(
       goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a range object that selects between the given nodes.
-***REMOVED*** @param {Node} startNode The node to start with.
-***REMOVED*** @param {number} startOffset The offset within the start node.
-***REMOVED*** @param {Node} endNode The node to end with.
-***REMOVED*** @param {number} endOffset The offset within the end node.
-***REMOVED*** @return {!goog.dom.browserrange.WebKitRange} A wrapper object.
-***REMOVED***
+/**
+ * Creates a range object that selects between the given nodes.
+ * @param {Node} startNode The node to start with.
+ * @param {number} startOffset The offset within the start node.
+ * @param {Node} endNode The node to end with.
+ * @param {number} endOffset The offset within the end node.
+ * @return {!goog.dom.browserrange.WebKitRange} A wrapper object.
+ */
 goog.dom.browserrange.WebKitRange.createFromNodes = function(startNode,
     startOffset, endNode, endOffset) {
   return new goog.dom.browserrange.WebKitRange(
       goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(startNode,
           startOffset, endNode, endOffset));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.WebKitRange.prototype.compareBrowserRangeEndpoints =
     function(range, thisEndpoint, otherEndpoint) {
   // Webkit pre-528 has some bugs where compareBoundaryPoints() doesn't work the
@@ -91,11 +91,11 @@ goog.dom.browserrange.WebKitRange.prototype.compareBrowserRangeEndpoints =
           (thisEndpoint == goog.dom.RangeEndpoint.START ?
               goog.global['Range'].START_TO_END : // Sense reversed
               goog.global['Range'].END_TO_END),
-     ***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (range));
-***REMOVED***
+      /** @type {Range} */ (range));
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.WebKitRange.prototype.selectInternal = function(
     selection, reversed) {
   // Unselect everything. This addresses a bug in Webkit where it sometimes
@@ -110,4 +110,4 @@ goog.dom.browserrange.WebKitRange.prototype.selectInternal = function(
     selection.setBaseAndExtent(this.getStartNode(), this.getStartOffset(),
         this.getEndNode(), this.getEndOffset());
   }
-***REMOVED***
+};

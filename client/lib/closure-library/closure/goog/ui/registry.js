@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Global renderer and decorator registry.
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Global renderer and decorator registry.
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.registry');
 
@@ -23,21 +23,21 @@ goog.require('goog.asserts');
 goog.require('goog.dom.classlist');
 
 
-***REMOVED***
-***REMOVED*** Given a {@link goog.ui.Component} constructor, returns an instance of its
-***REMOVED*** default renderer.  If the default renderer is a singleton, returns the
-***REMOVED*** singleton instance; otherwise returns a new instance of the renderer class.
-***REMOVED*** @param {Function} componentCtor Component constructor function (for example
-***REMOVED***     {@code goog.ui.Button}).
-***REMOVED*** @return {goog.ui.ControlRenderer?} Renderer instance (for example the
-***REMOVED***     singleton instance of {@code goog.ui.ButtonRenderer}), or null if
-***REMOVED***     no default renderer was found.
-***REMOVED***
+/**
+ * Given a {@link goog.ui.Component} constructor, returns an instance of its
+ * default renderer.  If the default renderer is a singleton, returns the
+ * singleton instance; otherwise returns a new instance of the renderer class.
+ * @param {Function} componentCtor Component constructor function (for example
+ *     {@code goog.ui.Button}).
+ * @return {goog.ui.ControlRenderer?} Renderer instance (for example the
+ *     singleton instance of {@code goog.ui.ButtonRenderer}), or null if
+ *     no default renderer was found.
+ */
 goog.ui.registry.getDefaultRenderer = function(componentCtor) {
   // Locate the default renderer based on the constructor's unique ID.  If no
   // renderer is registered for this class, walk up the superClass_ chain.
   var key;
- ***REMOVED*****REMOVED*** @type {Function|undefined}***REMOVED*** var rendererCtor;
+  /** @type {Function|undefined} */ var rendererCtor;
   while (componentCtor) {
     key = goog.getUid(componentCtor);
     if ((rendererCtor = goog.ui.registry.defaultRenderers_[key])) {
@@ -55,18 +55,18 @@ goog.ui.registry.getDefaultRenderer = function(componentCtor) {
   }
 
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the default renderer for the given {@link goog.ui.Component}
-***REMOVED*** constructor.
-***REMOVED*** @param {Function} componentCtor Component constructor function (for example
-***REMOVED***     {@code goog.ui.Button}).
-***REMOVED*** @param {Function} rendererCtor Renderer constructor function (for example
-***REMOVED***     {@code goog.ui.ButtonRenderer}).
-***REMOVED*** @throws {Error} If the arguments aren't functions.
-***REMOVED***
+/**
+ * Sets the default renderer for the given {@link goog.ui.Component}
+ * constructor.
+ * @param {Function} componentCtor Component constructor function (for example
+ *     {@code goog.ui.Button}).
+ * @param {Function} rendererCtor Renderer constructor function (for example
+ *     {@code goog.ui.ButtonRenderer}).
+ * @throws {Error} If the arguments aren't functions.
+ */
 goog.ui.registry.setDefaultRenderer = function(componentCtor, rendererCtor) {
   // In this case, explicit validation has negligible overhead (since each
   // renderer is only registered once), and helps catch subtle bugs.
@@ -80,31 +80,31 @@ goog.ui.registry.setDefaultRenderer = function(componentCtor, rendererCtor) {
   // Map the component constructor's unique ID to the renderer constructor.
   var key = goog.getUid(componentCtor);
   goog.ui.registry.defaultRenderers_[key] = rendererCtor;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the {@link goog.ui.Component} instance created by the decorator
-***REMOVED*** factory function registered for the given CSS class name, or null if no
-***REMOVED*** decorator factory function was found.
-***REMOVED*** @param {string} className CSS class name.
-***REMOVED*** @return {goog.ui.Component?} Component instance.
-***REMOVED***
+/**
+ * Returns the {@link goog.ui.Component} instance created by the decorator
+ * factory function registered for the given CSS class name, or null if no
+ * decorator factory function was found.
+ * @param {string} className CSS class name.
+ * @return {goog.ui.Component?} Component instance.
+ */
 goog.ui.registry.getDecoratorByClassName = function(className) {
   return className in goog.ui.registry.decoratorFunctions_ ?
       goog.ui.registry.decoratorFunctions_[className]() : null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Maps a CSS class name to a function that returns a new instance of
-***REMOVED*** {@link goog.ui.Component} or a subclass, suitable to decorate an element
-***REMOVED*** that has the specified CSS class.
-***REMOVED*** @param {string} className CSS class name.
-***REMOVED*** @param {Function} decoratorFn No-argument function that returns a new
-***REMOVED***     instance of a {@link goog.ui.Component} to decorate an element.
-***REMOVED*** @throws {Error} If the class name or the decorator function is invalid.
-***REMOVED***
+/**
+ * Maps a CSS class name to a function that returns a new instance of
+ * {@link goog.ui.Component} or a subclass, suitable to decorate an element
+ * that has the specified CSS class.
+ * @param {string} className CSS class name.
+ * @param {Function} decoratorFn No-argument function that returns a new
+ *     instance of a {@link goog.ui.Component} to decorate an element.
+ * @throws {Error} If the class name or the decorator function is invalid.
+ */
 goog.ui.registry.setDecoratorByClassName = function(className, decoratorFn) {
   // In this case, explicit validation has negligible overhead (since each
   // decorator  is only registered once), and helps catch subtle bugs.
@@ -116,19 +116,19 @@ goog.ui.registry.setDecoratorByClassName = function(className, decoratorFn) {
   }
 
   goog.ui.registry.decoratorFunctions_[className] = decoratorFn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an instance of {@link goog.ui.Component} or a subclass suitable to
-***REMOVED*** decorate the given element, based on its CSS class.
-***REMOVED***
-***REMOVED*** TODO(nnaze): Type of element should be {!Element}.
-***REMOVED***
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {goog.ui.Component?} Component to decorate the element (null if
-***REMOVED***     none).
-***REMOVED***
+/**
+ * Returns an instance of {@link goog.ui.Component} or a subclass suitable to
+ * decorate the given element, based on its CSS class.
+ *
+ * TODO(nnaze): Type of element should be {!Element}.
+ *
+ * @param {Element} element Element to decorate.
+ * @return {goog.ui.Component?} Component to decorate the element (null if
+ *     none).
+ */
 goog.ui.registry.getDecorator = function(element) {
   var decorator;
   goog.asserts.assert(element);
@@ -139,34 +139,34 @@ goog.ui.registry.getDecorator = function(element) {
     }
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the global renderer and decorator registry.
-***REMOVED***
+/**
+ * Resets the global renderer and decorator registry.
+ */
 goog.ui.registry.reset = function() {
-  goog.ui.registry.defaultRenderers_ = {***REMOVED***
-  goog.ui.registry.decoratorFunctions_ = {***REMOVED***
-***REMOVED***
+  goog.ui.registry.defaultRenderers_ = {};
+  goog.ui.registry.decoratorFunctions_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Map of {@link goog.ui.Component} constructor unique IDs to the constructors
-***REMOVED*** of their default {@link goog.ui.Renderer}s.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.ui.registry.defaultRenderers_ = {***REMOVED***
+/**
+ * Map of {@link goog.ui.Component} constructor unique IDs to the constructors
+ * of their default {@link goog.ui.Renderer}s.
+ * @type {Object}
+ * @private
+ */
+goog.ui.registry.defaultRenderers_ = {};
 
 
-***REMOVED***
-***REMOVED*** Map of CSS class names to registry factory functions.  The keys are
-***REMOVED*** class names.  The values are function objects that return new instances
-***REMOVED*** of {@link goog.ui.registry} or one of its subclasses, suitable to
-***REMOVED*** decorate elements marked with the corresponding CSS class.  Used by
-***REMOVED*** containers while decorating their children.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.ui.registry.decoratorFunctions_ = {***REMOVED***
+/**
+ * Map of CSS class names to registry factory functions.  The keys are
+ * class names.  The values are function objects that return new instances
+ * of {@link goog.ui.registry} or one of its subclasses, suitable to
+ * decorate elements marked with the corresponding CSS class.  Used by
+ * containers while decorating their children.
+ * @type {Object}
+ * @private
+ */
+goog.ui.registry.decoratorFunctions_ = {};

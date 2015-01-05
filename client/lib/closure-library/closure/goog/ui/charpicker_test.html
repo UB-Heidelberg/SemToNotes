@@ -34,7 +34,7 @@ See the COPYING file for details.
     function setUp() {
       mockControl = new goog.testing.MockControl();
       charNameFetcherMock = mockControl.createLooseMock(
-          goog.i18n.uChar.NameFetcher, true /* opt_ignoreUnexpectedCalls***REMOVED***);
+          goog.i18n.uChar.NameFetcher, true /* opt_ignoreUnexpectedCalls */);
 
       charPickerData = new goog.i18n.CharPickerData();
       charPickerElement = goog.dom.getElement('charpicker');

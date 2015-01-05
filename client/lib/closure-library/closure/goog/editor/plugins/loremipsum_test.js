@@ -58,7 +58,7 @@ function testUpdateLoremIpsum() {
   FIELD.makeEditable();
   var content = '<div>foo</div>';
 
-  FIELD.setHtml(false, '', false, /* Don't update lorem***REMOVED*** false);
+  FIELD.setHtml(false, '', false, /* Don't update lorem */ false);
   assertFalse('Field started with content, lorem must not be enabled.',
       FIELD.queryCommandValue(goog.editor.Command.USING_LOREM));
   FIELD.execCommand(goog.editor.Command.UPDATE_LOREM);
@@ -67,8 +67,8 @@ function testUpdateLoremIpsum() {
 
   FIELD.unregisterPlugin(loremPlugin);
   FIELD.setHtml(false, content, false,
-      /* Update (turn off) lorem***REMOVED*** true);
-  FIELD.setHtml(false, '', false, /* Don't update lorem***REMOVED*** false);
+      /* Update (turn off) lorem */ true);
+  FIELD.setHtml(false, '', false, /* Don't update lorem */ false);
   FIELD.execCommand(goog.editor.Command.UPDATE_LOREM);
   assertFalse('Field with no lorem message must not use lorem ipsum',
       FIELD.queryCommandValue(goog.editor.Command.USING_LOREM));
@@ -106,14 +106,14 @@ function testLoremIpsumAndGetCleanContents() {
   assertEquals('field reported wrong contents', 'This is a field', contents);
 
   // set field html, but explicitly forbid converting to lorem ipsum text
-  FIELD.setHtml(false, '&nbsp;', true, false /* no lorem***REMOVED***);
+  FIELD.setHtml(false, '&nbsp;', true, false /* no lorem */);
   assertEquals('field contains unexpected contents', getNbsp(),
       FIELD.getElement().innerHTML);
   assertEquals('field reported wrong contents', getNbsp(),
       FIELD.getCleanContents());
 
   // now set field html allowing lorem
-  FIELD.setHtml(false, '&nbsp;', true, true /* lorem***REMOVED***);
+  FIELD.setHtml(false, '&nbsp;', true, true /* lorem */);
   assertEquals('field reported wrong contents', goog.string.Unicode.NBSP,
       FIELD.getCleanContents());
   assertEquals('field contains unexpected contents', UPPERCASE_CONTENTS,

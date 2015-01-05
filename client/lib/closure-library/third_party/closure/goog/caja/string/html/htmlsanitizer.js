@@ -2,10 +2,10 @@
 // Modifications Copyright 2009 The Closure Library Authors. All Rights Reserved.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @license Portions of this code are from the google-caja project, received by
-***REMOVED*** Google under the Apache license (http://code.google.com/p/google-caja/).
-***REMOVED*** All other code is Copyright 2009 Google, Inc. All Rights Reserved.
+/**
+ * @license Portions of this code are from the google-caja project, received by
+ * Google under the Apache license (http://code.google.com/p/google-caja/).
+ * All other code is Copyright 2009 Google, Inc. All Rights Reserved.
 
 // Copyright (C) 2006 Google Inc.
 //
@@ -21,30 +21,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
+ */
 
-***REMOVED***
-***REMOVED*** @fileoverview An HTML sanitizer that can satisfy a variety of security
-***REMOVED*** policies. The HTML sanitizer is built around a SAX parser and HTML element
-***REMOVED*** and attributes schemas.
-***REMOVED***
-***REMOVED*** This package provides html sanitizing and parsing functions.
-***REMOVED*** {@code goog.string.htmlSanitize} is basically just using a custom written
-***REMOVED*** {@code goog.string.HtmlSaxHandler} that outputs safe html as the unsafe
-***REMOVED*** html content is parsed by {@code goog.string.HtmlParser}.
-***REMOVED***
-***REMOVED*** Examples of usage of the static {@code goog.string.htmlSanitize}:
-***REMOVED*** <pre>
-***REMOVED***   var safeHtml = goog.string.html.htmlSanitize('<script src="xss.js" />');
-***REMOVED***   el.innerHTML = safeHtml;
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** We use {@code goog.string.StringBuffer} for fast string concatenation, since
-***REMOVED*** htmlSanitize is relatively heavy considering that it is designed to parse
-***REMOVED*** large html files.
-***REMOVED***
-***REMOVED*** @supported IE6, IE7, IE8, FF1.5, FF2, FF3, Chrome 4.0, Safari and Opera 10.
-***REMOVED***
+/**
+ * @fileoverview An HTML sanitizer that can satisfy a variety of security
+ * policies. The HTML sanitizer is built around a SAX parser and HTML element
+ * and attributes schemas.
+ *
+ * This package provides html sanitizing and parsing functions.
+ * {@code goog.string.htmlSanitize} is basically just using a custom written
+ * {@code goog.string.HtmlSaxHandler} that outputs safe html as the unsafe
+ * html content is parsed by {@code goog.string.HtmlParser}.
+ *
+ * Examples of usage of the static {@code goog.string.htmlSanitize}:
+ * <pre>
+ *   var safeHtml = goog.string.html.htmlSanitize('<script src="xss.js" />');
+ *   el.innerHTML = safeHtml;
+ * </pre>
+ *
+ * We use {@code goog.string.StringBuffer} for fast string concatenation, since
+ * htmlSanitize is relatively heavy considering that it is designed to parse
+ * large html files.
+ *
+ * @supported IE6, IE7, IE8, FF1.5, FF2, FF3, Chrome 4.0, Safari and Opera 10.
+ */
 
 goog.provide('goog.string.html.HtmlSanitizer');
 goog.provide('goog.string.html.HtmlSanitizer.AttributeType');
@@ -58,16 +58,16 @@ goog.require('goog.string.html.HtmlParser.Elements');
 goog.require('goog.string.html.HtmlSaxHandler');
 
 
-***REMOVED***
-***REMOVED*** Strips unsafe tags and attributes from HTML.
-***REMOVED***
-***REMOVED*** @param {string} htmlText The HTML text to sanitize.
-***REMOVED*** @param {function(string): string=} opt_urlPolicy A transform to apply to URL
-***REMOVED***     attribute values.
-***REMOVED*** @param {function(string): string=} opt_nmTokenPolicy A transform to apply to
-***REMOVED***     names, IDs, and classes.
-***REMOVED*** @return {string} A sanitized HTML, safe to be embedded on the page.
-***REMOVED***
+/**
+ * Strips unsafe tags and attributes from HTML.
+ *
+ * @param {string} htmlText The HTML text to sanitize.
+ * @param {function(string): string=} opt_urlPolicy A transform to apply to URL
+ *     attribute values.
+ * @param {function(string): string=} opt_nmTokenPolicy A transform to apply to
+ *     names, IDs, and classes.
+ * @return {string} A sanitized HTML, safe to be embedded on the page.
+ */
 goog.string.html.htmlSanitize = function(
     htmlText, opt_urlPolicy, opt_nmTokenPolicy) {
   var stringBuffer = new goog.string.StringBuffer();
@@ -76,72 +76,72 @@ goog.string.html.htmlSanitize = function(
   var parser = new goog.string.html.HtmlParser();
   parser.parse(handler, htmlText);
   return stringBuffer.toString();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An implementation of the {@code goog.string.HtmlSaxHandler} interface that
-***REMOVED*** will take each of the html tags and sanitize it.
-***REMOVED***
-***REMOVED*** @param {goog.string.StringBuffer} stringBuffer A string buffer, used to
-***REMOVED***     output the html as we sanitize it.
-***REMOVED*** @param {?function(string):string} opt_urlPolicy An optional function to be
-***REMOVED***     applied in URLs.
-***REMOVED*** @param {?function(string):string} opt_nmTokenPolicy An optional function to
-***REMOVED***     be applied in names.
-***REMOVED***
-***REMOVED*** @extends {goog.string.html.HtmlSaxHandler}
-***REMOVED***
+/**
+ * An implementation of the {@code goog.string.HtmlSaxHandler} interface that
+ * will take each of the html tags and sanitize it.
+ *
+ * @param {goog.string.StringBuffer} stringBuffer A string buffer, used to
+ *     output the html as we sanitize it.
+ * @param {?function(string):string} opt_urlPolicy An optional function to be
+ *     applied in URLs.
+ * @param {?function(string):string} opt_nmTokenPolicy An optional function to
+ *     be applied in names.
+ * @constructor
+ * @extends {goog.string.html.HtmlSaxHandler}
+ */
 goog.string.html.HtmlSanitizer = function(
     stringBuffer, opt_urlPolicy, opt_nmTokenPolicy) {
   goog.string.html.HtmlSaxHandler.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The string buffer that holds the sanitized version of the html. Used
-  ***REMOVED*** during the parse time.
-  ***REMOVED*** @type {goog.string.StringBuffer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The string buffer that holds the sanitized version of the html. Used
+   * during the parse time.
+   * @type {goog.string.StringBuffer}
+   * @private
+   */
   this.stringBuffer_ = stringBuffer;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A stack that holds how the handler is being called.
-  ***REMOVED*** @type {Array}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A stack that holds how the handler is being called.
+   * @type {Array}
+   * @private
+   */
   this.stack_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether we are ignoring what is being processed or not.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether we are ignoring what is being processed or not.
+   * @type {boolean}
+   * @private
+   */
   this.ignoring_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A function to be applied to urls found on the parsing process.
-  ***REMOVED*** @type {?function(string):string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A function to be applied to urls found on the parsing process.
+   * @type {?function(string):string}
+   * @private
+   */
   this.urlPolicy_ = opt_urlPolicy;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A function to be applied to names fround on the parsing process.
-  ***REMOVED*** @type {?function(string):string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A function to be applied to names fround on the parsing process.
+   * @type {?function(string):string}
+   * @private
+   */
   this.nmTokenPolicy_ = opt_nmTokenPolicy;
-***REMOVED***
+};
 goog.inherits(
     goog.string.html.HtmlSanitizer,
     goog.string.html.HtmlSaxHandler);
 
 
 
-***REMOVED***
-***REMOVED*** The HTML types the parser supports.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * The HTML types the parser supports.
+ * @enum {number}
+ */
 goog.string.html.HtmlSanitizer.AttributeType = {
   NONE: 0,
   URI: 1,
@@ -155,13 +155,13 @@ goog.string.html.HtmlSanitizer.AttributeType = {
   LOCAL_NAME: 8,
   CLASSES: 9,
   FRAME_TARGET: 10
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A map of attributes to types it has.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * A map of attributes to types it has.
+ * @enum {number}
+ */
 goog.string.html.HtmlSanitizer.Attributes = {
   '*::class': goog.string.html.HtmlSanitizer.AttributeType.CLASSES,
   '*::dir': 0,
@@ -386,12 +386,12 @@ goog.string.html.HtmlSanitizer.Attributes = {
   'tr::valign': 0,
   'ul::compact': 0,
   'ul::type': 0
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.startTag =
     function(tagName, attribs) {
   if (this.ignoring_) {
@@ -424,12 +424,12 @@ goog.string.html.HtmlSanitizer.prototype.startTag =
     }
     this.stringBuffer_.append('>');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.endTag = function(tagName) {
   if (this.ignoring_) {
     this.ignoring_ = false;
@@ -473,67 +473,67 @@ goog.string.html.HtmlSanitizer.prototype.endTag = function(tagName) {
     this.stack_.length = index;
     this.stringBuffer_.append('</', tagName, '>');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.pcdata = function(text) {
   if (!this.ignoring_) {
     this.stringBuffer_.append(text);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.rcdata = function(text) {
   if (!this.ignoring_) {
     this.stringBuffer_.append(text);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.cdata = function(text) {
   if (!this.ignoring_) {
     this.stringBuffer_.append(text);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.startDoc = function() {
   this.stack_ = [];
   this.ignoring_ = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.string.html.HtmlSanitizer.prototype.endDoc = function() {
   for (var i = this.stack_.length; --i >= 0;) {
     this.stringBuffer_.append('</', this.stack_[i], '>');
   }
   this.stack_.length = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Escapes HTML special characters in attribute values as HTML entities.
-***REMOVED***
-***REMOVED*** TODO(user): use {@code goog.string.htmlEscape} instead ?
-***REMOVED*** @param {string} s The string to be escaped.
-***REMOVED*** @return {string} An escaped version of {@code s}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Escapes HTML special characters in attribute values as HTML entities.
+ *
+ * TODO(user): use {@code goog.string.htmlEscape} instead ?
+ * @param {string} s The string to be escaped.
+ * @return {string} An escaped version of {@code s}.
+ * @private
+ */
 goog.string.html.HtmlSanitizer.prototype.escapeAttrib_ = function(s) {
   // Escaping '=' defangs many UTF-7 and SGML short-tag attacks.
   return s.replace(goog.string.html.HtmlParser.AMP_RE_, '&amp;').
@@ -541,17 +541,17 @@ goog.string.html.HtmlSanitizer.prototype.escapeAttrib_ = function(s) {
       replace(goog.string.html.HtmlParser.GT_RE_, '&gt;').
       replace(goog.string.html.HtmlParser.QUOTE_RE_, '&#34;').
       replace(goog.string.html.HtmlParser.EQUALS_RE_, '&#61;');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sanitizes attributes found on html entities.
-***REMOVED*** @param {string} tagName The name of the tag in which the {@code attribs} were
-***REMOVED***     found.
-***REMOVED*** @param {Array.<?string>} attribs An array of attributes.
-***REMOVED*** @return {Array.<?string>} A sanitized version of the {@code attribs}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sanitizes attributes found on html entities.
+ * @param {string} tagName The name of the tag in which the {@code attribs} were
+ *     found.
+ * @param {Array.<?string>} attribs An array of attributes.
+ * @return {Array.<?string>} A sanitized version of the {@code attribs}.
+ * @private
+ */
 goog.string.html.HtmlSanitizer.prototype.sanitizeAttributes_ =
     function(tagName, attribs) {
   for (var i = 0; i < attribs.length; i += 2) {
@@ -578,11 +578,11 @@ goog.string.html.HtmlSanitizer.prototype.sanitizeAttributes_ =
         case goog.string.html.HtmlSanitizer.AttributeType.LOCAL_NAME:
         case goog.string.html.HtmlSanitizer.AttributeType.CLASSES:
           value = this.nmTokenPolicy_ ?
-            this.nmTokenPolicy_(***REMOVED*** @type {string}***REMOVED*** (value)) : value;
+            this.nmTokenPolicy_(/** @type {string} */ (value)) : value;
           break;
         case goog.string.html.HtmlSanitizer.AttributeType.URI:
           value = this.urlPolicy_ && this.urlPolicy_(
-             ***REMOVED*****REMOVED*** @type {string}***REMOVED*** (value));
+              /** @type {string} */ (value));
           break;
         case goog.string.html.HtmlSanitizer.AttributeType.URI_FRAGMENT:
           if (value && '#' === value.charAt(0)) {
@@ -602,4 +602,4 @@ goog.string.html.HtmlSanitizer.prototype.sanitizeAttributes_ =
     attribs[i + 1] = value;
   }
   return attribs;
-***REMOVED***
+};

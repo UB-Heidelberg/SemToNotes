@@ -20,13 +20,13 @@ function test01attribute() {
       xrx.xml.Serialize.attributeNs('x', 'x:attr', 'http://example.org/x'));
   assertEquals(' xmlns:x="http://example.org/x" x:attr=""',
       xrx.xml.Serialize.attributeNs(undefined, 'x:attr', 'http://example.org/x'));
-***REMOVED***
+};
 
 
 
 function test02comment() {
   assertEquals('<!-- comment -->', xrx.xml.Serialize.comment(' comment '));
-***REMOVED***
+};
 
 
 
@@ -38,7 +38,7 @@ function test03emptyTag() {
       xrx.xml.Serialize.emptyTagNs('xmlns:a', 'a', 'http://example.org/a'));
   assertEquals('<a xmlns="http://example.org/a"/>',
       xrx.xml.Serialize.emptyTagNs(undefined, 'a', 'http://example.org/a'));
-***REMOVED***
+};
 
 
 
@@ -50,7 +50,7 @@ function test04endTag() {
       xrx.xml.Serialize.endTagNs('xmlns:a', 'a', 'http://example.org/a'));
   assertEquals('</a>',
       xrx.xml.Serialize.endTagNs(undefined, 'a', 'http://example.org/a'));
-***REMOVED***
+};
 
 
 
@@ -59,7 +59,7 @@ function test05namespace() {
       xrx.xml.Serialize.namespace('xmlns:n', 'http://example.org/n'));
   assertEquals(' xmlns="http://example.org/m"',
       xrx.xml.Serialize.namespace('xmlns', 'http://example.org/m'));
-***REMOVED***
+};
 
 
 
@@ -67,7 +67,7 @@ function test06processingInstruction() {
   assertEquals('<?xml-stylesheet href="shakes.xsl" type="text/xsl"?>',
       xrx.xml.Serialize.processingInstruction('xml-stylesheet',
           'href="shakes.xsl" type="text/xsl"'));
-***REMOVED***
+};
 
 
 
@@ -79,7 +79,7 @@ function test07startEmptyTag() {
       xrx.xml.Serialize.startEmptyTagNs('xmlns:a', 'a', 'http://example.org/a'));
   assertEquals('<a xmlns="http://example.org/a"',
       xrx.xml.Serialize.startEmptyTagNs(undefined, 'a', 'http://example.org/a'));
-***REMOVED***
+};
 
 
 
@@ -91,7 +91,7 @@ function test08startTag() {
       xrx.xml.Serialize.startTagNs('xmlns:a', 'a', 'http://example.org/a'));
   assertEquals('<a xmlns="http://example.org/a">',
       xrx.xml.Serialize.startTagNs(undefined, 'a', 'http://example.org/a'));
-***REMOVED***
+};
 
 
 

@@ -1,37 +1,37 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @module jsdoc/src/scanner
     @requires module:fs
 
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var fs = require('jsdoc/fs');
 var logger = require('jsdoc/util/logger');
 var path = require('jsdoc/path');
 
-***REMOVED***
+/**
     @constructor
     @mixes module:events
-***REMOVED***
-exports.Scanner = function() {***REMOVED***
+ */
+exports.Scanner = function() {};
 exports.Scanner.prototype = Object.create( require('events').EventEmitter.prototype );
 
-***REMOVED***
+/**
     Recursively searches the given searchPaths for js files.
     @param {Array.<string>} searchPaths
     @param {number} [depth=1]
     @fires sourceFileFound
-***REMOVED***
+ */
 exports.Scanner.prototype.scan = function(searchPaths, depth, filter) {
     var currentFile;
     var isFile;
 
     var filePaths = [];
     var pwd = env.pwd;
-  ***REMOVED***
+    var self = this;
 
     searchPaths = searchPaths || [];
     depth = depth || 1;
@@ -60,11 +60,11 @@ exports.Scanner.prototype.scan = function(searchPaths, depth, filter) {
     });
 
     filePaths = filePaths.filter(function($) {
-        var e = { fileName: $***REMOVED*****REMOVED***
+        var e = { fileName: $ };
         self.emit('sourceFileFound', e);
 
         return !e.defaultPrevented;
     });
 
     return filePaths;
-***REMOVED***
+};

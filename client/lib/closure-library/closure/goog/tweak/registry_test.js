@@ -18,7 +18,7 @@ goog.setTestOnly('goog.tweak.RegistryTest');
 goog.require('goog.asserts.AssertionError');
 goog.require('goog.testing.jsunit');
 goog.require('goog.tweak');
-***REMOVED*** @suppress {extraRequire} needed for createRegistryEntries.***REMOVED***
+/** @suppress {extraRequire} needed for createRegistryEntries. */
 goog.require('goog.tweak.testhelpers');
 
 var registry;

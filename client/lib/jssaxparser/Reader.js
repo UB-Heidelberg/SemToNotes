@@ -9,13 +9,13 @@ function Reader (lock) {
 }
 Reader.prototype.close = function () {
     throw 'The Reader close() method is abstract';
-***REMOVED***
+};
 Reader.prototype.mark = function (readAheadLimit) { // int
 
-***REMOVED***
+};
 Reader.prototype.markSupported = function () {
 
-***REMOVED***
+};
 Reader.prototype.read = function (cbuf, off, len) { // (char[] (, int, int))
     if (arguments.length > 4 || arguments.length === 2) {
         throw "Reader's read() method expects 0, 1, or 3 arguments";
@@ -27,16 +27,16 @@ Reader.prototype.read = function (cbuf, off, len) { // (char[] (, int, int))
         
     }
     throw 'The Reader read() method with 3 arguments (char[], int, and int) is abstract.';
-***REMOVED***
+};
 Reader.prototype.ready = function () {
 
-***REMOVED***
+};
 Reader.prototype.reset = function () {
 
-***REMOVED***
+};
 Reader.prototype.skip = function (n) { // long
 
-***REMOVED***
+};
 
 // http://java.sun.com/j2se/1.4.2/docs/api/java/io/StringReader.html
 // Note: Can't put into "java.io" namespace since "java" is reserved for LiveConnect
@@ -51,13 +51,13 @@ function StringReader (s) { // String
 StringReader.prototype = new Reader(); // Effectively overrides all methods, however (and lock field has to be redefined anyways)
 StringReader.prototype.constructor = StringReader;
 StringReader.prototype.close = function () {
-***REMOVED***
+};
 StringReader.prototype.mark = function (readAheadLimit) { // int not supported for StringReader
     this.markIdx = this.nextIdx;
-***REMOVED***
+};
 StringReader.prototype.markSupported = function () {
     return true;
-***REMOVED***
+};
 StringReader.prototype.read = function (cbuf, off, len) { // (char[] (, int, int))
     if (arguments.length === 0) {
         if (this.nextIdx >= this.length) {
@@ -80,15 +80,15 @@ StringReader.prototype.read = function (cbuf, off, len) { // (char[] (, int, int
     cbuf = this.s.substr(this.nextIdx, len);
     this.nextIdx += len;
     return cbuf;
-***REMOVED***
+};
 StringReader.prototype.ready = function () {
     return true;
-***REMOVED***
+};
 StringReader.prototype.reset = function () {
     this.nextIdx = this.markIdx;
-***REMOVED***
+};
 StringReader.prototype.skip = function (n) { // long
     this.nextIdx += n;
     return n;
-***REMOVED***
+};
 

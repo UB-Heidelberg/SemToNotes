@@ -116,7 +116,7 @@ function testArrayForEachWithArrayLikeObject() {
     '0': 0,
     '100': 100,
     '101': 102
- ***REMOVED*****REMOVED***
+  };
   goog.array.forEach(a, counter);
   assertEquals('Number of calls should not exceed the value of its length', 1,
       counter.getCallCount());
@@ -136,7 +136,7 @@ function testArrayForEachOmitsDeleted() {
 }
 
 function testArrayForEachScope() {
-  var scope = {***REMOVED***
+  var scope = {};
   var a = ['a', 'b', 'c', 'd'];
   goog.array.forEach(a, function(val, index, a2) {
     assertEquals(a, a2);
@@ -210,7 +210,7 @@ function testArrayMap() {
   var result = goog.array.map(a, function(val, index, a2) {
     assertEquals(a, a2);
     assertEquals('index is not a number', 'number', typeof index);
-    return val***REMOVED*** val;
+    return val * val;
   });
   assertArrayEquals([0, 1, 4, 9], result);
 }
@@ -223,7 +223,7 @@ function testArrayMapOmitsDeleted() {
     assertEquals(a, a2);
     assertEquals('number', typeof val);
     assertEquals('index is not a number', 'number', typeof index);
-    return val***REMOVED*** val;
+    return val * val;
   });
   var expected = [0, 1, 4, 9];
   delete expected[1];
@@ -251,7 +251,7 @@ function testArrayReduce() {
       this.last = r + v;
       return this.last + l;
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals(10, goog.array.reduce(a, scope.testFn, 0, scope));
 }
@@ -275,7 +275,7 @@ function testArrayReduceOmitDeleted() {
       this.last = r + v;
       return this.last + l;
     }
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals(2, goog.array.reduce(a, scope.testFn, 0, scope));
 }
@@ -297,7 +297,7 @@ function testArrayReduceRight() {
       this.last = v;
       return r + v + l;
     }
- ***REMOVED*****REMOVED***
+  };
 
   a = ['a', 'b', 'c'];
   assertEquals('_cbcab', goog.array.reduceRight(a, scope.testFn, '_', scope));
@@ -322,7 +322,7 @@ function testArrayReduceRightOmitsDeleted() {
       this.last = v;
       return r + v + l;
     }
- ***REMOVED*****REMOVED***
+  };
 
   a = ['a', 'b', 'c', 'd'];
   delete a[1];
@@ -593,7 +593,7 @@ function testArrayEveryOmitsDeleted() {
 
 function testArrayCount() {
   var a = [0, 1, 2, 3, 4];
-  var context = {***REMOVED***
+  var context = {};
   assertEquals(3, goog.array.count(a, function(element, index, array) {
     assertTrue(goog.isNumber(index));
     assertEquals(a, array);
@@ -735,7 +735,7 @@ function testArrayClone() {
   var a2 = goog.array.clone(a);
   assertArrayEquals('clone, should be equal', a, a2);
 
-  var b = {0: 0, 1: 1, 2: 2, 3: 3, length: 4***REMOVED***
+  var b = {0: 0, 1: 1, 2: 2, 3: 3, length: 4};
   var b2 = goog.array.clone(b);
   for (var i = 0; i < b.length; i++) {
     assertEquals('clone, should be equal', b[i], b2[i]);
@@ -747,7 +747,7 @@ function testToArray() {
   var a2 = goog.array.toArray(a);
   assertArrayEquals('toArray, should be equal', a, a2);
 
-  var b = {0: 0, 1: 1, 2: 2, 3: 3, length: 4***REMOVED***
+  var b = {0: 0, 1: 1, 2: 2, 3: 3, length: 4};
   var b2 = goog.array.toArray(b);
   for (var i = 0; i < b.length; i++) {
     assertEquals('toArray, should be equal', b[i], b2[i]);
@@ -755,11 +755,11 @@ function testToArray() {
 }
 
 function testToArrayOnNonArrayLike() {
-  var nonArrayLike = {***REMOVED***
+  var nonArrayLike = {};
   assertArrayEquals('toArray on non ArrayLike should return an empty array',
                     [], goog.array.toArray(nonArrayLike));
 
-  var nonArrayLike2 = {length: 'hello world'***REMOVED***
+  var nonArrayLike2 = {length: 'hello world'};
   assertArrayEquals('toArray on non ArrayLike should return an empty array',
                     [], goog.array.toArray(nonArrayLike2));
 }
@@ -791,18 +791,18 @@ function testExtend() {
   assertArrayEquals('extend, should be equal', c, c2);
 
   var d = [0, 1];
-  var arrayLikeObject = {0: 2, 1: 3, length: 2***REMOVED***
+  var arrayLikeObject = {0: 2, 1: 3, length: 2};
   goog.array.extend(d, arrayLikeObject);
   var d2 = [0, 1, 2, 3];
   assertArrayEquals('extend, should be equal', d, d2);
 
   var e = [0, 1];
-  var emptyArrayLikeObject = {length: 0***REMOVED***
+  var emptyArrayLikeObject = {length: 0};
   goog.array.extend(e, emptyArrayLikeObject);
   assertArrayEquals('extend, should be equal', e, e);
 
   var f = [0, 1];
-  var length3ArrayLikeObject = {0: 2, 1: 4, 2: 8, length: 3***REMOVED***
+  var length3ArrayLikeObject = {0: 2, 1: 4, 2: 8, length: 3};
   goog.array.extend(f, length3ArrayLikeObject, length3ArrayLikeObject);
   var f2 = [0, 1, 2, 4, 8, 2, 4, 8];
   assertArrayEquals('extend, should be equal', f2, f);
@@ -870,7 +870,7 @@ function testRemoveDuplicates() {
       ['abc', 'hasOwnProperty', 'toString'],
       ['abc', 'hasOwnProperty', 'toString', 'abc']);
 
-  var o1 = {}, o2 = {}, o3 = {}, o4 = {***REMOVED***
+  var o1 = {}, o2 = {}, o3 = {}, o4 = {};
   assertRemovedDuplicates([o1, o2, o3, o4], [o1, o1, o2, o3, o2, o4]);
 
   // Mixed object types.
@@ -880,21 +880,21 @@ function testRemoveDuplicates() {
   assertRemovedDuplicates(['foo'], [String('foo'), 'foo']);
   assertRemovedDuplicates([12], [Number(12), 12]);
 
-  var obj = {***REMOVED***
+  var obj = {};
   var uid = goog.getUid(obj);
   assertRemovedDuplicates([obj, uid], [obj, uid]);
 }
 
 function testRemoveDuplicates_customHashFn() {
-  var object1 = {key: 'foo'***REMOVED***
-  var object2 = {key: 'bar'***REMOVED***
-  var dupeObject = {key: 'foo'***REMOVED***
+  var object1 = {key: 'foo'};
+  var object2 = {key: 'bar'};
+  var dupeObject = {key: 'foo'};
   var array = [object1, object2, dupeObject, 'bar'];
   var hashFn = function(object) {
     return goog.isObject(object) ? object.key :
         (typeof object).charAt(0) + object;
- ***REMOVED*****REMOVED***
-  goog.array.removeDuplicates(array, /* opt_rv***REMOVED*** undefined, hashFn);
+  };
+  goog.array.removeDuplicates(array, /* opt_rv */ undefined, hashFn);
   assertArrayEquals([object1, object2, 'bar'], array);
 }
 
@@ -905,7 +905,7 @@ function testBinaryInsertRemove() {
       assertEquals(expectResult, result);
       assertArrayEquals(expectArray, array);
     }
- ***REMOVED*****REMOVED***
+  };
 
   var a = [];
   var check = makeChecker(a, goog.array.binaryInsert);
@@ -925,7 +925,7 @@ function testBinaryInsertRemove() {
   check(2, false, []);
 
   // test with custom comparison function, which reverse orders numbers
-  var revNumCompare = function(a, b) { return b - a;***REMOVED*****REMOVED***
+  var revNumCompare = function(a, b) { return b - a; };
 
   check = makeChecker(a, goog.array.binaryInsert, revNumCompare);
   check(3, true, [3]);
@@ -945,7 +945,7 @@ function testBinaryInsertRemove() {
 }
 
 function testBinarySearch() {
-  var insertionPoint = function(position) { return -(position + 1)***REMOVED***
+  var insertionPoint = function(position) { return -(position + 1)};
   var pos;
 
   // test default comparison on array of String(s)
@@ -1024,7 +1024,7 @@ function testBinarySearch() {
       insertionPoint(pos));
 
   // test with custom comparison function, which reverse orders numbers
-  var revNumCompare = function(a, b) { return b - a;***REMOVED*****REMOVED***
+  var revNumCompare = function(a, b) { return b - a; };
 
   var e = [54254, 453, 342, 334, 142.88888708, 5, 0.31255, 0, 0, 0, -3,
            -9, -324, -1321.3124, -321434.58758, -897123.9];
@@ -1112,16 +1112,16 @@ function testBinarySearchPerformance() {
 
 
 function testBinarySelect() {
-  var insertionPoint = function(position) { return -(position + 1)***REMOVED***
+  var insertionPoint = function(position) { return -(position + 1)};
   var numbers = [-897123.9, -321434.58758, -1321.3124, -324, -9, -3, 0, 0, 0,
                  0.31255, 5, 142.88888708, 334, 342, 453, 54254];
-  var objects = goog.array.map(numbers, function(n) {return {n: n***REMOVED***});
+  var objects = goog.array.map(numbers, function(n) {return {n: n};});
   function makeEvaluator(target) {
     return function(obj, i, arr) {
       assertEquals(objects, arr);
       assertEquals(obj, arr[i]);
       return target - obj.n;
-   ***REMOVED*****REMOVED***
+    };
   }
   assertEquals('{n:-897123.9} should be found at index 0', 0,
       goog.array.binarySelect(objects, makeEvaluator(-897123.9)));
@@ -1168,7 +1168,7 @@ function testArrayEquals() {
   assertFalse('[{}] == [{}]', goog.array.equals([{}], [{}]));
 
   // Test with custom comparison function.
-  var cmp = function(a, b) { return typeof a == typeof b;***REMOVED*****REMOVED***
+  var cmp = function(a, b) { return typeof a == typeof b; };
   assertTrue('[] cmp []', goog.array.equals([], [], cmp));
   assertTrue('[1] cmp [1]', goog.array.equals([1], [1], cmp));
   assertTrue('[1] cmp [2]', goog.array.equals([1], [2], cmp));
@@ -1219,7 +1219,7 @@ function testArrayCompare3Basic() {
 function testArrayCompare3ComparatorFn() {
   function cmp(a, b) {
     return a - b;
- ***REMOVED*****REMOVED***
+  };
   assertEquals(0, goog.array.compare3([], [], cmp));
   assertEquals(0, goog.array.compare3([8, 4], [8, 4], cmp));
   assertEquals(-1, goog.array.compare3([4, 3], [5, 0]));
@@ -1290,11 +1290,11 @@ function testSort() {
   // an overriden toString
   function ComparedObject(value) {
     this.value = value;
- ***REMOVED*****REMOVED***
+  };
 
   ComparedObject.prototype.toString = function() {
     return this.value;
- ***REMOVED*****REMOVED***
+  };
 
   var co1 = new ComparedObject('a');
   var co2 = new ComparedObject('b');
@@ -1389,7 +1389,7 @@ function testStableSort() {
 
 function testArrayBucketModulus() {
   // bucket things by modulus
-  var a = {***REMOVED***
+  var a = {};
   var b = [];
 
   function modFive(num) {
@@ -1435,7 +1435,7 @@ function testArrayBucketUsingThisObject() {
 
   var obj = {
     specialValue: 2
- ***REMOVED*****REMOVED***
+  };
 
   function isSpecialValue(value, index, array) {
     return value == this.specialValue ? 1 : 0;
@@ -1526,7 +1526,7 @@ function testSortObjectsByKeyWithCompareFunction() {
 
   function descCompare(a, b) {
     return a < b ? 1 : a > b ? -1 : 0;
- ***REMOVED*****REMOVED***
+  };
 
   goog.array.sortObjectsByKey(objects, 'name', descCompare);
   validateObjectArray(descSortedArray, objects);
@@ -1620,7 +1620,7 @@ function testMoveItemWithArgumentsObject() {
   var f = function() {
     goog.array.moveItem(arguments, 0, 1);
     return arguments;
- ***REMOVED*****REMOVED***
+  };
   assertArrayEquals([1, 0], goog.array.toArray(f(0, 1)));
 }
 
@@ -1642,7 +1642,7 @@ function testConcatWithNoSecondArg() {
 
 function testConcatWithNonArrayArgs() {
   var a1 = [1, 2, 3, 4];
-  var o = {0: 'a', 1: 'b', length: 2***REMOVED***
+  var o = {0: 'a', 1: 'b', length: 2};
   var a2 = goog.array.concat(a1, 5, '10', o);
   assertArrayEquals([1, 2, 3, 4, 5, '10', o], a2);
 }
@@ -1674,7 +1674,7 @@ function testShuffle() {
   // (for array sizes that we work with here).
   var noChangeShuffleFunction = function() {
     return .999999;
- ***REMOVED*****REMOVED***
+  };
   goog.array.shuffle(testArray, noChangeShuffleFunction);
   assertArrayEquals(testArrayCopy, testArray);
 
@@ -1683,7 +1683,7 @@ function testShuffle() {
   // original order of the array.
   var testShuffleFunction = function() {
     return 0;
- ***REMOVED*****REMOVED***
+  };
   goog.array.shuffle(testArray, testShuffleFunction);
   assertArrayEquals([2, 3, 4, 5, 1], testArray);
 

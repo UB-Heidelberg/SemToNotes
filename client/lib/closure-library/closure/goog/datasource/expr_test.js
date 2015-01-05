@@ -54,7 +54,7 @@ var jsObj = {
       }
     ]
   }
-***REMOVED***
+};
 
 function setUp() {
   jsDs = new goog.ds.JsDataSource(jsObj, 'JS', null);

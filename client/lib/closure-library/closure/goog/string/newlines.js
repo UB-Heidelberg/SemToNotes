@@ -12,119 +12,119 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for string newlines.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Utilities for string newlines.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for string utilities
-***REMOVED***
+/**
+ * Namespace for string utilities
+ */
 goog.provide('goog.string.newlines');
 goog.provide('goog.string.newlines.Line');
 
 goog.require('goog.array');
 
 
-***REMOVED***
-***REMOVED*** Splits a string into lines, properly handling universal newlines.
-***REMOVED*** @param {string} str String to split.
-***REMOVED*** @param {boolean=} opt_keepNewlines Whether to keep the newlines in the
-***REMOVED***     resulting strings. Defaults to false.
-***REMOVED*** @return {!Array.<string>} String split into lines.
-***REMOVED***
+/**
+ * Splits a string into lines, properly handling universal newlines.
+ * @param {string} str String to split.
+ * @param {boolean=} opt_keepNewlines Whether to keep the newlines in the
+ *     resulting strings. Defaults to false.
+ * @return {!Array.<string>} String split into lines.
+ */
 goog.string.newlines.splitLines = function(str, opt_keepNewlines) {
   var lines = goog.string.newlines.getLines(str);
   return goog.array.map(lines, function(line) {
     return opt_keepNewlines ? line.getFullLine() : line.getContent();
   });
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Line metadata class that records the start/end indicies of lines
-***REMOVED*** in a string.  Can be used to implement common newline use cases such as
-***REMOVED*** splitLines() or determining line/column of an index in a string.
-***REMOVED*** Also implements methods to get line contents.
-***REMOVED***
-***REMOVED*** Indexes are expressed as string indicies into string.substring(), inclusive
-***REMOVED*** at the start, exclusive at the end.
-***REMOVED***
-***REMOVED*** Create an array of these with goog.string.newlines.getLines().
-***REMOVED*** @param {string} string The original string.
-***REMOVED*** @param {number} startLineIndex The index of the start of the line.
-***REMOVED*** @param {number} endContentIndex The index of the end of the line, excluding
-***REMOVED***     newlines.
-***REMOVED*** @param {number} endLineIndex The index of the end of the line, index
-***REMOVED***     newlines.
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Line metadata class that records the start/end indicies of lines
+ * in a string.  Can be used to implement common newline use cases such as
+ * splitLines() or determining line/column of an index in a string.
+ * Also implements methods to get line contents.
+ *
+ * Indexes are expressed as string indicies into string.substring(), inclusive
+ * at the start, exclusive at the end.
+ *
+ * Create an array of these with goog.string.newlines.getLines().
+ * @param {string} string The original string.
+ * @param {number} startLineIndex The index of the start of the line.
+ * @param {number} endContentIndex The index of the end of the line, excluding
+ *     newlines.
+ * @param {number} endLineIndex The index of the end of the line, index
+ *     newlines.
+ * @constructor
+ * @struct
+ * @final
+ */
 goog.string.newlines.Line = function(string, startLineIndex,
                                      endContentIndex, endLineIndex) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The original string.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The original string.
+   * @type {string}
+   */
   this.string = string;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Index of the start of the line.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Index of the start of the line.
+   * @type {number}
+   */
   this.startLineIndex = startLineIndex;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Index of the end of the line, excluding any newline characters.
-  ***REMOVED*** Index is the first character after the line, suitable for
-  ***REMOVED*** String.substring().
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Index of the end of the line, excluding any newline characters.
+   * Index is the first character after the line, suitable for
+   * String.substring().
+   * @type {number}
+   */
   this.endContentIndex = endContentIndex;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Index of the end of the line, excluding any newline characters.
-  ***REMOVED*** Index is the first character after the line, suitable for
-  ***REMOVED*** String.substring().
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Index of the end of the line, excluding any newline characters.
+   * Index is the first character after the line, suitable for
+   * String.substring().
+   * @type {number}
+   */
 
   this.endLineIndex = endLineIndex;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The content of the line, excluding any newline characters.
-***REMOVED***
+/**
+ * @return {string} The content of the line, excluding any newline characters.
+ */
 goog.string.newlines.Line.prototype.getContent = function() {
   return this.string.substring(this.startLineIndex, this.endContentIndex);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The full line, including any newline characters.
-***REMOVED***
+/**
+ * @return {string} The full line, including any newline characters.
+ */
 goog.string.newlines.Line.prototype.getFullLine = function() {
   return this.string.substring(this.startLineIndex, this.endLineIndex);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The newline characters, if any ('\n', \r', '\r\n', '', etc).
-***REMOVED***
+/**
+ * @return {string} The newline characters, if any ('\n', \r', '\r\n', '', etc).
+ */
 goog.string.newlines.Line.prototype.getNewline = function() {
   return this.string.substring(this.endContentIndex, this.endLineIndex);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a string into an array of line metadata.
-***REMOVED*** @param {string} str String to split.
-***REMOVED*** @return {!Array.<!goog.string.newlines.Line>} Array of line metadata.
-***REMOVED***
+/**
+ * Splits a string into an array of line metadata.
+ * @param {string} str String to split.
+ * @return {!Array.<!goog.string.newlines.Line>} Array of line metadata.
+ */
 goog.string.newlines.getLines = function(str) {
   // We use the constructor because literals are evaluated only once in
   // < ES 3.1.
@@ -151,4 +151,4 @@ goog.string.newlines.getLines = function(str) {
   }
 
   return lines;
-***REMOVED***
+};

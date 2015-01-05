@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility functions for managing networking, such as
-***REMOVED*** testing network connectivity.
-***REMOVED***
-***REMOVED*** @visibility {:internal}
-***REMOVED***
+/**
+ * @fileoverview Utility functions for managing networking, such as
+ * testing network connectivity.
+ *
+ * @visibility {:internal}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.netUtils');
 
-***REMOVED***
+goog.require('goog.Uri');
 goog.require('goog.labs.net.webChannel.WebChannelDebug');
 
 goog.scope(function() {
@@ -30,24 +30,24 @@ var netUtils = goog.labs.net.webChannel.netUtils;
 var WebChannelDebug = goog.labs.net.webChannel.WebChannelDebug;
 
 
-***REMOVED***
-***REMOVED*** Default timeout to allow for URI pings.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Default timeout to allow for URI pings.
+ * @type {number}
+ */
 netUtils.NETWORK_TIMEOUT = 10000;
 
 
-***REMOVED***
-***REMOVED*** Pings the network with an image URI to check if an error is a server error
-***REMOVED*** or user's network error.
-***REMOVED***
-***REMOVED*** The caller needs to add a 'rand' parameter to make sure the response is
-***REMOVED*** not fulfilled by browser cache.
-***REMOVED***
-***REMOVED*** @param {function(boolean)} callback The function to call back with results.
-***REMOVED*** @param {goog.Uri=} opt_imageUri The URI (of an image) to use for the network
-***REMOVED***     test.
-***REMOVED***
+/**
+ * Pings the network with an image URI to check if an error is a server error
+ * or user's network error.
+ *
+ * The caller needs to add a 'rand' parameter to make sure the response is
+ * not fulfilled by browser cache.
+ *
+ * @param {function(boolean)} callback The function to call back with results.
+ * @param {goog.Uri=} opt_imageUri The URI (of an image) to use for the network
+ *     test.
+ */
 netUtils.testNetwork = function(callback, opt_imageUri) {
   var uri = opt_imageUri;
   if (!uri) {
@@ -57,18 +57,18 @@ netUtils.testNetwork = function(callback, opt_imageUri) {
   }
 
   netUtils.testLoadImage(uri.toString(), netUtils.NETWORK_TIMEOUT, callback);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test loading the given image, retrying if necessary.
-***REMOVED*** @param {string} url URL to the image.
-***REMOVED*** @param {number} timeout Milliseconds before giving up.
-***REMOVED*** @param {function(boolean)} callback Function to call with results.
-***REMOVED*** @param {number} retries The number of times to retry.
-***REMOVED*** @param {number=} opt_pauseBetweenRetriesMS Optional number of milliseconds
-***REMOVED***     between retries - defaults to 0.
-***REMOVED***
+/**
+ * Test loading the given image, retrying if necessary.
+ * @param {string} url URL to the image.
+ * @param {number} timeout Milliseconds before giving up.
+ * @param {function(boolean)} callback Function to call with results.
+ * @param {number} retries The number of times to retry.
+ * @param {number=} opt_pauseBetweenRetriesMS Optional number of milliseconds
+ *     between retries - defaults to 0.
+ */
 netUtils.testLoadImageWithRetries = function(url, timeout, callback,
     retries, opt_pauseBetweenRetriesMS) {
   var channelDebug = new WebChannelDebug();
@@ -92,15 +92,15 @@ netUtils.testLoadImageWithRetries = function(url, timeout, callback,
       }, pauseBetweenRetries);
     }
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test loading the given image.
-***REMOVED*** @param {string} url URL to the image.
-***REMOVED*** @param {number} timeout Milliseconds before giving up.
-***REMOVED*** @param {function(boolean)} callback Function to call with results.
-***REMOVED***
+/**
+ * Test loading the given image.
+ * @param {string} url URL to the image.
+ * @param {number} timeout Milliseconds before giving up.
+ * @param {function(boolean)} callback Function to call with results.
+ */
 netUtils.testLoadImage = function(url, timeout, callback) {
   var channelDebug = new WebChannelDebug();
   channelDebug.debug('TestLoadImage: loading ' + url);
@@ -120,18 +120,18 @@ netUtils.testLoadImage = function(url, timeout, callback) {
     }
   }, timeout);
   img.src = url;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wrap the image callback with debug and cleanup logic.
-***REMOVED*** @param {!WebChannelDebug} channelDebug The WebChannelDebug object.
-***REMOVED*** @param {!Image} img The image element.
-***REMOVED*** @param {string} debugText The debug text.
-***REMOVED*** @param {boolean} result The result of image loading.
-***REMOVED*** @param {function(boolean)} callback The image callback.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Wrap the image callback with debug and cleanup logic.
+ * @param {!WebChannelDebug} channelDebug The WebChannelDebug object.
+ * @param {!Image} img The image element.
+ * @param {string} debugText The debug text.
+ * @param {boolean} result The result of image loading.
+ * @param {function(boolean)} callback The image callback.
+ * @private
+ */
 netUtils.imageCallback_ = function(channelDebug, img, debugText, result,
     callback) {
   try {
@@ -141,18 +141,18 @@ netUtils.imageCallback_ = function(channelDebug, img, debugText, result,
   } catch (e) {
     channelDebug.dumpException(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears handlers to avoid memory leaks.
-***REMOVED*** @param {Image} img The image to clear handlers from.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears handlers to avoid memory leaks.
+ * @param {Image} img The image to clear handlers from.
+ * @private
+ */
 netUtils.clearImageCallbacks_ = function(img) {
   img.onload = null;
   img.onerror = null;
   img.onabort = null;
   img.ontimeout = null;
-***REMOVED***
+};
 });  // goog.scope

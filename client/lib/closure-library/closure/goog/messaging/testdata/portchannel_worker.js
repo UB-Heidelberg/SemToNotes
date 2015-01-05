@@ -3,11 +3,11 @@
 // Use of this source code is governed by the Apache License, Version 2.0.
 // See the COPYING file for details.
 
-***REMOVED***
-***REMOVED*** @fileoverview A web worker for integration testing the PortChannel class.
-***REMOVED***
-***REMOVED*** @nocompile
-***REMOVED***
+/**
+ * @fileoverview A web worker for integration testing the PortChannel class.
+ *
+ * @nocompile
+ */
 
 self.CLOSURE_BASE_PATH = '../../';
 importScripts('../../bootstrap/webworkers.js');

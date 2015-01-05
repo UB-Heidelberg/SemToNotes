@@ -1,4 +1,4 @@
-/*global env: true***REMOVED***
+/*global env: true */
 var fs = require('jsdoc/fs');
 var path = require('jsdoc/path');
 var runtime = require('jsdoc/util/runtime');
@@ -26,12 +26,12 @@ var createSpecObj = function(_path, root) {
         filename: function() {
             return _path.replace(/^.*[\\\/]/, '');
         }
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};
 
 var clearSpecs = exports.clearSpecs = function() {
     specs.splice(0, specs.length);
-***REMOVED***
+};
 
 function addSpec(file, target) {
     target = target || specs;
@@ -86,8 +86,8 @@ exports.load = function(loadpath, matcher, clear) {
             addSpec(file);
         }
     }
-***REMOVED***
+};
 
 exports.getSpecs = function() {
     return specs.concat(finalSpecs);
-***REMOVED***
+};

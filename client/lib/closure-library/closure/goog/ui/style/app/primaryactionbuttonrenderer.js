@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.Button}s in App style. This
-***REMOVED*** type of button is typically used for an application's "primary action," eg
-***REMOVED*** in Gmail, it's "Compose," in Calendar, it's "Create Event".
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.Button}s in App style. This
+ * type of button is typically used for an application's "primary action," eg
+ * in Gmail, it's "Compose," in Calendar, it's "Create Event".
+ *
+ */
 
 goog.provide('goog.ui.style.app.PrimaryActionButtonRenderer');
 
@@ -27,37 +27,37 @@ goog.require('goog.ui.style.app.ButtonRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Custom renderer for {@link goog.ui.Button}s. This renderer supports the
-***REMOVED*** "primary action" style for buttons.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.style.app.ButtonRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Custom renderer for {@link goog.ui.Button}s. This renderer supports the
+ * "primary action" style for buttons.
+ *
+ * @constructor
+ * @extends {goog.ui.style.app.ButtonRenderer}
+ * @final
+ */
 goog.ui.style.app.PrimaryActionButtonRenderer = function() {
   goog.ui.style.app.ButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.style.app.PrimaryActionButtonRenderer,
     goog.ui.style.app.ButtonRenderer);
 goog.addSingletonGetter(goog.ui.style.app.PrimaryActionButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS =
     'goog-primaryactionbutton';
 
 
-***REMOVED***
-***REMOVED*** Array of arrays of CSS classes that we want composite classes added and
-***REMOVED*** removed for in IE6 and lower as a workaround for lack of multi-class CSS
-***REMOVED*** selector support.
-***REMOVED*** @type {Array.<Array.<string>>}
-***REMOVED***
+/**
+ * Array of arrays of CSS classes that we want composite classes added and
+ * removed for in IE6 and lower as a workaround for lack of multi-class CSS
+ * selector support.
+ * @type {Array.<Array.<string>>}
+ */
 goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS = [
   ['goog-button-base-disabled', 'goog-primaryactionbutton'],
   ['goog-button-base-focused', 'goog-primaryactionbutton'],
@@ -65,18 +65,18 @@ goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS = [
 ];
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.PrimaryActionButtonRenderer.prototype.getCssClass =
     function() {
   return goog.ui.style.app.PrimaryActionButtonRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.PrimaryActionButtonRenderer.prototype.
     getIe6ClassCombinations = function() {
   return goog.ui.style.app.PrimaryActionButtonRenderer.IE6_CLASS_COMBINATIONS;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for

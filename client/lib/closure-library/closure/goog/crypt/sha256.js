@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview SHA-256 cryptographic hash.
-***REMOVED***
-***REMOVED*** Usage:
-***REMOVED***   var sha256 = new goog.crypt.Sha256();
-***REMOVED***   sha256.update(bytes);
-***REMOVED***   var hash = sha256.digest();
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview SHA-256 cryptographic hash.
+ *
+ * Usage:
+ *   var sha256 = new goog.crypt.Sha256();
+ *   sha256.update(bytes);
+ *   var hash = sha256.digest();
+ *
+ */
 
 goog.provide('goog.crypt.Sha256');
 
@@ -28,22 +28,22 @@ goog.require('goog.crypt.Sha2');
 
 
 
-***REMOVED***
-***REMOVED*** SHA-256 cryptographic hash constructor.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.crypt.Sha2}
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED***
+/**
+ * SHA-256 cryptographic hash constructor.
+ *
+ * @constructor
+ * @extends {goog.crypt.Sha2}
+ * @final
+ * @struct
+ */
 goog.crypt.Sha256 = function() {
   goog.crypt.Sha256.base(this, 'constructor',
       8, goog.crypt.Sha256.INIT_HASH_BLOCK_);
-***REMOVED***
+};
 goog.inherits(goog.crypt.Sha256, goog.crypt.Sha2);
 
 
-***REMOVED*** @private {Array.<number>}***REMOVED***
+/** @private {Array.<number>} */
 goog.crypt.Sha256.INIT_HASH_BLOCK_ = [
   0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
   0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];

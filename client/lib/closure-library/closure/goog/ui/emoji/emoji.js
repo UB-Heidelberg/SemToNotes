@@ -12,62 +12,62 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Emoji implementation.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Emoji implementation.
+ *
+ */
 
 goog.provide('goog.ui.emoji.Emoji');
 
 
 
-***REMOVED***
-***REMOVED*** Creates an emoji.
-***REMOVED***
-***REMOVED*** A simple wrapper for an emoji.
-***REMOVED***
-***REMOVED*** @param {string} url URL pointing to the source image for the emoji.
-***REMOVED*** @param {string} id The id of the emoji, e.g., 'std.1'.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates an emoji.
+ *
+ * A simple wrapper for an emoji.
+ *
+ * @param {string} url URL pointing to the source image for the emoji.
+ * @param {string} id The id of the emoji, e.g., 'std.1'.
+ * @constructor
+ * @final
+ */
 goog.ui.emoji.Emoji = function(url, id) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The URL pointing to the source image for the emoji
-  ***REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The URL pointing to the source image for the emoji
+   *
+   * @type {string}
+   * @private
+   */
   this.url_ = url;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The id of the emoji
-  ***REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The id of the emoji
+   *
+   * @type {string}
+   * @private
+   */
   this.id_ = id;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The name of the goomoji attribute, used for emoji image elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The name of the goomoji attribute, used for emoji image elements.
+ * @type {string}
+ */
 goog.ui.emoji.Emoji.ATTRIBUTE = 'goomoji';
 
 
-***REMOVED***
-***REMOVED*** @return {string} The URL for this emoji.
-***REMOVED***
+/**
+ * @return {string} The URL for this emoji.
+ */
 goog.ui.emoji.Emoji.prototype.getUrl = function() {
   return this.url_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The id of this emoji.
-***REMOVED***
+/**
+ * @return {string} The id of this emoji.
+ */
 goog.ui.emoji.Emoji.prototype.getId = function() {
   return this.id_;
-***REMOVED***
+};

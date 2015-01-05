@@ -12,81 +12,81 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Class for managing the interactions between an
-***REMOVED*** auto-complete object and a text-input or textarea.
-***REMOVED***
-***REMOVED*** IME note:
-***REMOVED***
-***REMOVED*** We used to suspend autocomplete while there are IME preedit characters, but
-***REMOVED*** now for parity with Search we do not. We still detect the beginning and end
-***REMOVED*** of IME entry because we need to listen to more events while an IME commit is
-***REMOVED*** happening, but we update continuously as the user types.
-***REMOVED***
-***REMOVED*** IMEs vary across operating systems, browsers, and even input languages. This
-***REMOVED*** class tries to handle IME for:
-***REMOVED*** - Windows x {FF3, IE7, Chrome} x MS IME 2002 (Japanese)
-***REMOVED*** - Mac     x {FF3, Safari3}     x Kotoeri (Japanese)
-***REMOVED*** - Linux   x {FF3}              x UIM + Anthy (Japanese)
-***REMOVED***
-***REMOVED*** TODO(user): We cannot handle {Mac, Linux} x FF3 correctly.
-***REMOVED*** TODO(user): We need to support Windows x Google IME.
-***REMOVED***
-***REMOVED*** This class was tested with hiragana input. The event sequence when inputting
-***REMOVED*** 'ai<enter>' with IME on (which commits two characters) is as follows:
-***REMOVED***
-***REMOVED*** Notation: [key down code, key press, key up code]
-***REMOVED***           key code or +: event fired
-***REMOVED***           -: event not fired
-***REMOVED***
-***REMOVED*** - Win/FF3: [WIN_IME, +, A], [-, -, ENTER]
-***REMOVED***            Note: No events are fired for 'i'.
-***REMOVED***
-***REMOVED*** - Win/IE7: [WIN_IME, -, A], [WIN_IME, -, I], [WIN_IME, -, ENTER]
-***REMOVED***
-***REMOVED*** - Win/Chrome: Same as Win/IE7
-***REMOVED***
-***REMOVED*** - Mac/FF3: [A, -, A], [I, -, I], [ENTER, -, ENTER]
-***REMOVED***
-***REMOVED*** - Mac/Safari3: Same as Win/IE7
-***REMOVED***
-***REMOVED*** - Linux/FF3: No events are generated.
-***REMOVED***
-***REMOVED*** With IME off,
-***REMOVED***
-***REMOVED*** - ALL: [A, +, A], [I, +, I], [ENTER, +, ENTER]
-***REMOVED***        Note: Key code of key press event varies across configuration.
-***REMOVED***
-***REMOVED*** With Microsoft Pinyin IME 3.0 (Simplified Chinese),
-***REMOVED***
-***REMOVED*** - Win/IE7: Same as Win/IE7 with MS IME 2002 (Japanese)
-***REMOVED***
-***REMOVED***   The issue with this IME is that the key sequence that ends preedit is not
-***REMOVED***   a single ENTER key up.
-***REMOVED***   - ENTER key up following either ENTER or SPACE ends preedit.
-***REMOVED***   - SPACE key up following even number of LEFT, RIGHT, or SPACE (any
-***REMOVED***     combination) ends preedit.
-***REMOVED***   TODO(user): We only support SPACE-then-ENTER sequence.
-***REMOVED***   TODO(mpd): With the change to autocomplete during IME, this might not be an
-***REMOVED***   issue. Remove this comment once tested.
-***REMOVED***
-***REMOVED*** With Microsoft Korean IME 2002,
-***REMOVED***
-***REMOVED*** - Win/IE7: Same as Win/IE7 with MS IME 2002 (Japanese), but there is no
-***REMOVED***   sequence that ends the preedit.
-***REMOVED***
-***REMOVED*** The following is the algorithm we use to detect IME preedit:
-***REMOVED***
-***REMOVED*** - WIN_IME key down starts predit.
-***REMOVED*** - (1) ENTER key up or (2) CTRL-M key up ends preedit.
-***REMOVED*** - Any key press not immediately following WIN_IME key down signifies that
-***REMOVED***   preedit has ended.
-***REMOVED***
-***REMOVED*** If you need to change this algorithm, please note the OS, browser, language,
-***REMOVED*** and behavior above so that we can avoid regressions. Contact mpd or yuzo
-***REMOVED*** if you have questions or concerns.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Class for managing the interactions between an
+ * auto-complete object and a text-input or textarea.
+ *
+ * IME note:
+ *
+ * We used to suspend autocomplete while there are IME preedit characters, but
+ * now for parity with Search we do not. We still detect the beginning and end
+ * of IME entry because we need to listen to more events while an IME commit is
+ * happening, but we update continuously as the user types.
+ *
+ * IMEs vary across operating systems, browsers, and even input languages. This
+ * class tries to handle IME for:
+ * - Windows x {FF3, IE7, Chrome} x MS IME 2002 (Japanese)
+ * - Mac     x {FF3, Safari3}     x Kotoeri (Japanese)
+ * - Linux   x {FF3}              x UIM + Anthy (Japanese)
+ *
+ * TODO(user): We cannot handle {Mac, Linux} x FF3 correctly.
+ * TODO(user): We need to support Windows x Google IME.
+ *
+ * This class was tested with hiragana input. The event sequence when inputting
+ * 'ai<enter>' with IME on (which commits two characters) is as follows:
+ *
+ * Notation: [key down code, key press, key up code]
+ *           key code or +: event fired
+ *           -: event not fired
+ *
+ * - Win/FF3: [WIN_IME, +, A], [-, -, ENTER]
+ *            Note: No events are fired for 'i'.
+ *
+ * - Win/IE7: [WIN_IME, -, A], [WIN_IME, -, I], [WIN_IME, -, ENTER]
+ *
+ * - Win/Chrome: Same as Win/IE7
+ *
+ * - Mac/FF3: [A, -, A], [I, -, I], [ENTER, -, ENTER]
+ *
+ * - Mac/Safari3: Same as Win/IE7
+ *
+ * - Linux/FF3: No events are generated.
+ *
+ * With IME off,
+ *
+ * - ALL: [A, +, A], [I, +, I], [ENTER, +, ENTER]
+ *        Note: Key code of key press event varies across configuration.
+ *
+ * With Microsoft Pinyin IME 3.0 (Simplified Chinese),
+ *
+ * - Win/IE7: Same as Win/IE7 with MS IME 2002 (Japanese)
+ *
+ *   The issue with this IME is that the key sequence that ends preedit is not
+ *   a single ENTER key up.
+ *   - ENTER key up following either ENTER or SPACE ends preedit.
+ *   - SPACE key up following even number of LEFT, RIGHT, or SPACE (any
+ *     combination) ends preedit.
+ *   TODO(user): We only support SPACE-then-ENTER sequence.
+ *   TODO(mpd): With the change to autocomplete during IME, this might not be an
+ *   issue. Remove this comment once tested.
+ *
+ * With Microsoft Korean IME 2002,
+ *
+ * - Win/IE7: Same as Win/IE7 with MS IME 2002 (Japanese), but there is no
+ *   sequence that ends the preedit.
+ *
+ * The following is the algorithm we use to detect IME preedit:
+ *
+ * - WIN_IME key down starts predit.
+ * - (1) ENTER key up or (2) CTRL-M key up ends preedit.
+ * - Any key press not immediately following WIN_IME key down signifies that
+ *   preedit has ended.
+ *
+ * If you need to change this algorithm, please note the OS, browser, language,
+ * and behavior above so that we can avoid regressions. Contact mpd or yuzo
+ * if you have questions or concerns.
+ *
+ */
 
 
 goog.provide('goog.ui.ac.InputHandler');
@@ -97,7 +97,7 @@ goog.require('goog.a11y.aria');
 goog.require('goog.dom');
 goog.require('goog.dom.selection');
 goog.require('goog.events.EventHandler');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.KeyHandler');
 goog.require('goog.string');
@@ -106,342 +106,342 @@ goog.require('goog.userAgent.product');
 
 
 
-***REMOVED***
-***REMOVED*** Class for managing the interaction between an auto-complete object and a
-***REMOVED*** text-input or textarea.
-***REMOVED***
-***REMOVED*** @param {?string=} opt_separators Separators to split multiple entries.
-***REMOVED***     If none passed, uses ',' and ';'.
-***REMOVED*** @param {?string=} opt_literals Characters used to delimit text literals.
-***REMOVED*** @param {?boolean=} opt_multi Whether to allow multiple entries
-***REMOVED***     (Default: true).
-***REMOVED*** @param {?number=} opt_throttleTime Number of milliseconds to throttle
-***REMOVED***     keyevents with (Default: 150). Use -1 to disable updates on typing. Note
-***REMOVED***     that typing the separator will update autocomplete suggestions.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
+/**
+ * Class for managing the interaction between an auto-complete object and a
+ * text-input or textarea.
+ *
+ * @param {?string=} opt_separators Separators to split multiple entries.
+ *     If none passed, uses ',' and ';'.
+ * @param {?string=} opt_literals Characters used to delimit text literals.
+ * @param {?boolean=} opt_multi Whether to allow multiple entries
+ *     (Default: true).
+ * @param {?number=} opt_throttleTime Number of milliseconds to throttle
+ *     keyevents with (Default: 150). Use -1 to disable updates on typing. Note
+ *     that typing the separator will update autocomplete suggestions.
+ * @constructor
+ * @extends {goog.Disposable}
+ */
 goog.ui.ac.InputHandler = function(opt_separators, opt_literals,
     opt_multi, opt_throttleTime) {
   goog.Disposable.call(this);
   var throttleTime = opt_throttleTime || 150;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether this input accepts multiple values
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether this input accepts multiple values
+   * @type {boolean}
+   * @private
+   */
   this.multi_ = opt_multi != null ? opt_multi : true;
 
   // Set separators depends on this.multi_ being set correctly
   this.setSeparators(opt_separators ||
       goog.ui.ac.InputHandler.STANDARD_LIST_SEPARATORS);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Characters that are used to delimit literal text. Separarator characters
-  ***REMOVED*** found within literal text are not processed as separators
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Characters that are used to delimit literal text. Separarator characters
+   * found within literal text are not processed as separators
+   * @type {string}
+   * @private
+   */
   this.literals_ = opt_literals || '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to prevent the default behavior (moving focus to another element)
-  ***REMOVED*** when tab is pressed.  This occurs by default only for multi-value mode.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to prevent the default behavior (moving focus to another element)
+   * when tab is pressed.  This occurs by default only for multi-value mode.
+   * @type {boolean}
+   * @private
+   */
   this.preventDefaultOnTab_ = this.multi_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A timer object used to monitor for changes when an element is active.
-  ***REMOVED***
-  ***REMOVED*** TODO(user): Consider tuning the throttle time, so that it takes into
-  ***REMOVED*** account the length of the token.  When the token is short it is likely to
-  ***REMOVED*** match lots of rows, therefore we want to check less frequently.  Even
-  ***REMOVED*** something as simple as <3-chars = 150ms, then 100ms otherwise.
-  ***REMOVED***
-  ***REMOVED*** @type {goog.Timer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A timer object used to monitor for changes when an element is active.
+   *
+   * TODO(user): Consider tuning the throttle time, so that it takes into
+   * account the length of the token.  When the token is short it is likely to
+   * match lots of rows, therefore we want to check less frequently.  Even
+   * something as simple as <3-chars = 150ms, then 100ms otherwise.
+   *
+   * @type {goog.Timer}
+   * @private
+   */
   this.timer_ = throttleTime > 0 ? new goog.Timer(throttleTime) : null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event handler used by the input handler to manage events.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.ui.ac.InputHandler>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Event handler used by the input handler to manage events.
+   * @type {goog.events.EventHandler.<!goog.ui.ac.InputHandler>}
+   * @private
+   */
   this.eh_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event handler to help us find an input element that already has the focus.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.ui.ac.InputHandler>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Event handler to help us find an input element that already has the focus.
+   * @type {goog.events.EventHandler.<!goog.ui.ac.InputHandler>}
+   * @private
+   */
   this.activateHandler_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The keyhandler used for listening on most key events.  This takes care of
-  ***REMOVED*** abstracting away some of the browser differences.
-  ***REMOVED*** @type {goog.events.KeyHandler}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The keyhandler used for listening on most key events.  This takes care of
+   * abstracting away some of the browser differences.
+   * @type {goog.events.KeyHandler}
+   * @private
+   */
   this.keyHandler_ = new goog.events.KeyHandler();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The last key down key code.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The last key down key code.
+   * @type {number}
+   * @private
+   */
   this.lastKeyCode_ = -1;  // Initialize to a non-existent value.
-***REMOVED***
+};
 goog.inherits(goog.ui.ac.InputHandler, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Whether or not we need to pause the execution of the blur handler in order
-***REMOVED*** to allow the execution of the selection handler to run first. This is
-***REMOVED*** currently true when running on IOS version prior to 4.2, since we need
-***REMOVED*** some special logic for these devices to handle bug 4484488.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether or not we need to pause the execution of the blur handler in order
+ * to allow the execution of the selection handler to run first. This is
+ * currently true when running on IOS version prior to 4.2, since we need
+ * some special logic for these devices to handle bug 4484488.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.REQUIRES_ASYNC_BLUR_ =
     (goog.userAgent.product.IPHONE || goog.userAgent.product.IPAD) &&
         // Check the webkit version against the version for iOS 4.2.1.
         !goog.userAgent.isVersionOrHigher('533.17.9');
 
 
-***REMOVED***
-***REMOVED*** Standard list separators.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Standard list separators.
+ * @type {string}
+ * @const
+ */
 goog.ui.ac.InputHandler.STANDARD_LIST_SEPARATORS = ',;';
 
 
-***REMOVED***
-***REMOVED*** Literals for quotes.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Literals for quotes.
+ * @type {string}
+ * @const
+ */
 goog.ui.ac.InputHandler.QUOTE_LITERALS = '"';
 
 
-***REMOVED***
-***REMOVED*** The AutoComplete instance this inputhandler is associated with.
-***REMOVED*** @type {goog.ui.ac.AutoComplete}
-***REMOVED***
+/**
+ * The AutoComplete instance this inputhandler is associated with.
+ * @type {goog.ui.ac.AutoComplete}
+ */
 goog.ui.ac.InputHandler.prototype.ac_;
 
 
-***REMOVED***
-***REMOVED*** Characters that can be used to split multiple entries in an input string
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Characters that can be used to split multiple entries in an input string
+ * @type {string}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.separators_;
 
 
-***REMOVED***
-***REMOVED*** The separator we use to reconstruct the string
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The separator we use to reconstruct the string
+ * @type {string}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.defaultSeparator_;
 
 
-***REMOVED***
-***REMOVED*** Regular expression used from trimming tokens or null for no trimming.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression used from trimming tokens or null for no trimming.
+ * @type {RegExp}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.trimmer_;
 
 
-***REMOVED***
-***REMOVED*** Regular expression to test whether a separator exists
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression to test whether a separator exists
+ * @type {RegExp}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.separatorCheck_;
 
 
-***REMOVED***
-***REMOVED*** Should auto-completed tokens be wrapped in whitespace?  Used in selectRow.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Should auto-completed tokens be wrapped in whitespace?  Used in selectRow.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.whitespaceWrapEntries_ = true;
 
 
-***REMOVED***
-***REMOVED*** Should the occurrence of a literal indicate a token boundary?
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Should the occurrence of a literal indicate a token boundary?
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.generateNewTokenOnLiteral_ = true;
 
 
-***REMOVED***
-***REMOVED*** Whether to flip the orientation of up & down for hiliting next
-***REMOVED*** and previous autocomplete entries.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to flip the orientation of up & down for hiliting next
+ * and previous autocomplete entries.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.upsideDown_ = false;
 
 
-***REMOVED***
-***REMOVED*** If we're in 'multi' mode, does typing a separator force the updating of
-***REMOVED*** suggestions?
-***REMOVED*** For example, if somebody finishes typing "obama, hillary,", should the last
-***REMOVED*** comma trigger updating suggestions in a guaranteed manner? Especially useful
-***REMOVED*** when the suggestions depend on complete keywords. Note that "obama, hill"
-***REMOVED*** (a leading sub-string of "obama, hillary" will lead to different and possibly
-***REMOVED*** irrelevant suggestions.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If we're in 'multi' mode, does typing a separator force the updating of
+ * suggestions?
+ * For example, if somebody finishes typing "obama, hillary,", should the last
+ * comma trigger updating suggestions in a guaranteed manner? Especially useful
+ * when the suggestions depend on complete keywords. Note that "obama, hill"
+ * (a leading sub-string of "obama, hillary" will lead to different and possibly
+ * irrelevant suggestions.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.separatorUpdates_ = true;
 
 
-***REMOVED***
-***REMOVED*** If we're in 'multi' mode, does typing a separator force the current term to
-***REMOVED*** autocomplete?
-***REMOVED*** For example, if 'tomato' is a suggested completion and the user has typed
-***REMOVED*** 'to,', do we autocomplete to turn that into 'tomato,'?
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If we're in 'multi' mode, does typing a separator force the current term to
+ * autocomplete?
+ * For example, if 'tomato' is a suggested completion and the user has typed
+ * 'to,', do we autocomplete to turn that into 'tomato,'?
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.separatorSelects_ = true;
 
 
-***REMOVED***
-***REMOVED*** The id of the currently active timeout, so it can be cleared if required.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The id of the currently active timeout, so it can be cleared if required.
+ * @type {?number}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.activeTimeoutId_ = null;
 
 
-***REMOVED***
-***REMOVED*** The element that is currently active.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The element that is currently active.
+ * @type {Element}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.activeElement_ = null;
 
 
-***REMOVED***
-***REMOVED*** The previous value of the active element.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The previous value of the active element.
+ * @type {string}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.lastValue_ = '';
 
 
-***REMOVED***
-***REMOVED*** Flag used to indicate that the IME key has been seen and we need to wait for
-***REMOVED*** the up event.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag used to indicate that the IME key has been seen and we need to wait for
+ * the up event.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.waitingForIme_ = false;
 
 
-***REMOVED***
-***REMOVED*** Flag used to indicate that the user just selected a row and we should
-***REMOVED*** therefore ignore the change of the input value.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag used to indicate that the user just selected a row and we should
+ * therefore ignore the change of the input value.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.rowJustSelected_ = false;
 
 
-***REMOVED***
-***REMOVED*** Flag indicating whether the result list should be updated continuously
-***REMOVED*** during typing or only after a short pause.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag indicating whether the result list should be updated continuously
+ * during typing or only after a short pause.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.updateDuringTyping_ = true;
 
 
-***REMOVED***
-***REMOVED*** Attach an instance of an AutoComplete
-***REMOVED*** @param {goog.ui.ac.AutoComplete} ac Autocomplete object.
-***REMOVED***
+/**
+ * Attach an instance of an AutoComplete
+ * @param {goog.ui.ac.AutoComplete} ac Autocomplete object.
+ */
 goog.ui.ac.InputHandler.prototype.attachAutoComplete = function(ac) {
   this.ac_ = ac;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the associated autocomplete instance.
-***REMOVED*** @return {goog.ui.ac.AutoComplete} The associated autocomplete instance.
-***REMOVED***
+/**
+ * Returns the associated autocomplete instance.
+ * @return {goog.ui.ac.AutoComplete} The associated autocomplete instance.
+ */
 goog.ui.ac.InputHandler.prototype.getAutoComplete = function() {
   return this.ac_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the current active element.
-***REMOVED*** @return {Element} The currently active element.
-***REMOVED***
+/**
+ * Returns the current active element.
+ * @return {Element} The currently active element.
+ */
 goog.ui.ac.InputHandler.prototype.getActiveElement = function() {
   return this.activeElement_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the value of the current active element.
-***REMOVED*** @return {string} The value of the current active element.
-***REMOVED***
+/**
+ * Returns the value of the current active element.
+ * @return {string} The value of the current active element.
+ */
 goog.ui.ac.InputHandler.prototype.getValue = function() {
   return this.activeElement_.value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the value of the current active element.
-***REMOVED*** @param {string} value The new value.
-***REMOVED***
+/**
+ * Sets the value of the current active element.
+ * @param {string} value The new value.
+ */
 goog.ui.ac.InputHandler.prototype.setValue = function(value) {
   this.activeElement_.value = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the current cursor position.
-***REMOVED*** @return {number} The index of the cursor position.
-***REMOVED***
+/**
+ * Returns the current cursor position.
+ * @return {number} The index of the cursor position.
+ */
 goog.ui.ac.InputHandler.prototype.getCursorPosition = function() {
   return goog.dom.selection.getStart(this.activeElement_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the cursor at the given position.
-***REMOVED*** @param {number} pos The index of the cursor position.
-***REMOVED***
+/**
+ * Sets the cursor at the given position.
+ * @param {number} pos The index of the cursor position.
+ */
 goog.ui.ac.InputHandler.prototype.setCursorPosition = function(pos) {
   goog.dom.selection.setStart(this.activeElement_, pos);
   goog.dom.selection.setEnd(this.activeElement_, pos);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches the input handler to a target element. The target element
-***REMOVED*** should be a textarea, input box, or other focusable element with the
-***REMOVED*** same interface.
-***REMOVED*** @param {Element|goog.events.EventTarget} target An element to attach the
-***REMOVED***     input handler too.
-***REMOVED***
+/**
+ * Attaches the input handler to a target element. The target element
+ * should be a textarea, input box, or other focusable element with the
+ * same interface.
+ * @param {Element|goog.events.EventTarget} target An element to attach the
+ *     input handler too.
+ */
 goog.ui.ac.InputHandler.prototype.attachInput = function(target) {
   if (goog.dom.isElement(target)) {
-    var el =***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (target);
+    var el = /** @type {!Element} */ (target);
     goog.a11y.aria.setState(el, 'haspopup', true);
   }
 
@@ -456,20 +456,20 @@ goog.ui.ac.InputHandler.prototype.attachInput = function(target) {
     // Don't wait for a focus event if the element already has focus.
     if (goog.dom.isElement(target)) {
       var ownerDocument = goog.dom.getOwnerDocument(
-         ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (target));
+          /** @type {Element} */ (target));
       if (goog.dom.getActiveElement(ownerDocument) == target) {
-        this.processFocus(***REMOVED*** @type {Element}***REMOVED*** (target));
+        this.processFocus(/** @type {Element} */ (target));
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Detaches the input handler from the provided element.
-***REMOVED*** @param {Element|goog.events.EventTarget} target An element to detach the
-***REMOVED***     input handler from.
-***REMOVED***
+/**
+ * Detaches the input handler from the provided element.
+ * @param {Element|goog.events.EventTarget} target An element to detach the
+ *     input handler from.
+ */
 goog.ui.ac.InputHandler.prototype.detachInput = function(target) {
   if (target == this.activeElement_) {
     this.handleBlur();
@@ -482,54 +482,54 @@ goog.ui.ac.InputHandler.prototype.detachInput = function(target) {
         target, goog.events.EventType.KEYDOWN,
         this.onKeyDownOnInactiveElement_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches the input handler to multiple elements.
-***REMOVED*** @param {...Element} var_args Elements to attach the input handler too.
-***REMOVED***
+/**
+ * Attaches the input handler to multiple elements.
+ * @param {...Element} var_args Elements to attach the input handler too.
+ */
 goog.ui.ac.InputHandler.prototype.attachInputs = function(var_args) {
   for (var i = 0; i < arguments.length; i++) {
     this.attachInput(arguments[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Detaches the input handler from multuple elements.
-***REMOVED*** @param {...Element} var_args Variable arguments for elements to unbind from.
-***REMOVED***
+/**
+ * Detaches the input handler from multuple elements.
+ * @param {...Element} var_args Variable arguments for elements to unbind from.
+ */
 goog.ui.ac.InputHandler.prototype.detachInputs = function(var_args) {
   for (var i = 0; i < arguments.length; i++) {
     this.detachInput(arguments[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects the given row.  Implements the SelectionHandler interface.
-***REMOVED*** @param {Object} row The row to select.
-***REMOVED*** @param {boolean=} opt_multi Should this be treated as a single or multi-token
-***REMOVED***     auto-complete?  Overrides previous setting of opt_multi on constructor.
-***REMOVED*** @return {boolean} Whether to suppress the update event.
-***REMOVED***
+/**
+ * Selects the given row.  Implements the SelectionHandler interface.
+ * @param {Object} row The row to select.
+ * @param {boolean=} opt_multi Should this be treated as a single or multi-token
+ *     auto-complete?  Overrides previous setting of opt_multi on constructor.
+ * @return {boolean} Whether to suppress the update event.
+ */
 goog.ui.ac.InputHandler.prototype.selectRow = function(row, opt_multi) {
   if (this.activeElement_) {
     this.setTokenText(row.toString(), opt_multi);
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the text of the current token without updating the autocomplete
-***REMOVED*** choices.
-***REMOVED*** @param {string} tokenText The text for the current token.
-***REMOVED*** @param {boolean=} opt_multi Should this be treated as a single or multi-token
-***REMOVED***     auto-complete?  Overrides previous setting of opt_multi on constructor.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets the text of the current token without updating the autocomplete
+ * choices.
+ * @param {string} tokenText The text for the current token.
+ * @param {boolean=} opt_multi Should this be treated as a single or multi-token
+ *     auto-complete?  Overrides previous setting of opt_multi on constructor.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.setTokenText =
     function(tokenText, opt_multi) {
   if (goog.isDef(opt_multi) ? opt_multi : this.multi_) {
@@ -599,10 +599,10 @@ goog.ui.ac.InputHandler.prototype.setTokenText =
 
   // Avoid triggering an autocomplete just because the value changed.
   this.rowJustSelected_ = true;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ac.InputHandler.prototype.disposeInternal = function() {
   goog.ui.ac.InputHandler.superClass_.disposeInternal.call(this);
   if (this.activeTimeoutId_ != null) {
@@ -614,15 +614,15 @@ goog.ui.ac.InputHandler.prototype.disposeInternal = function() {
   this.activateHandler_.dispose();
   this.keyHandler_.dispose();
   goog.dispose(this.timer_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the entry separator characters.
-***REMOVED***
-***REMOVED*** @param {string} separators The separator characters to set.
-***REMOVED*** @param {string=} opt_defaultSeparators The defaultSeparator character to set.
-***REMOVED***
+/**
+ * Sets the entry separator characters.
+ *
+ * @param {string} separators The separator characters to set.
+ * @param {string=} opt_defaultSeparators The defaultSeparator character to set.
+ */
 goog.ui.ac.InputHandler.prototype.setSeparators =
     function(separators, opt_defaultSeparators) {
   this.separators_ = separators;
@@ -634,106 +634,106 @@ goog.ui.ac.InputHandler.prototype.setSeparators =
 
   this.trimmer_ = new RegExp('^' + wspaceExp + '|' + wspaceExp + '$', 'g');
   this.separatorCheck_ = new RegExp('\\s*[' + this.separators_ + ']$');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether to flip the orientation of up & down for hiliting next
-***REMOVED*** and previous autocomplete entries.
-***REMOVED*** @param {boolean} upsideDown Whether the orientation is upside down.
-***REMOVED***
+/**
+ * Sets whether to flip the orientation of up & down for hiliting next
+ * and previous autocomplete entries.
+ * @param {boolean} upsideDown Whether the orientation is upside down.
+ */
 goog.ui.ac.InputHandler.prototype.setUpsideDown = function(upsideDown) {
   this.upsideDown_ = upsideDown;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether auto-completed tokens should be wrapped with whitespace.
-***REMOVED*** @param {boolean} newValue boolean value indicating whether or not
-***REMOVED***     auto-completed tokens should be wrapped with whitespace.
-***REMOVED***
+/**
+ * Sets whether auto-completed tokens should be wrapped with whitespace.
+ * @param {boolean} newValue boolean value indicating whether or not
+ *     auto-completed tokens should be wrapped with whitespace.
+ */
 goog.ui.ac.InputHandler.prototype.setWhitespaceWrapEntries =
     function(newValue) {
   this.whitespaceWrapEntries_ = newValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether new tokens should be generated from literals.  That is, should
-***REMOVED*** hello'world be two tokens, assuming ' is a literal?
-***REMOVED*** @param {boolean} newValue boolean value indicating whether or not
-***REMOVED*** new tokens should be generated from literals.
-***REMOVED***
+/**
+ * Sets whether new tokens should be generated from literals.  That is, should
+ * hello'world be two tokens, assuming ' is a literal?
+ * @param {boolean} newValue boolean value indicating whether or not
+ * new tokens should be generated from literals.
+ */
 goog.ui.ac.InputHandler.prototype.setGenerateNewTokenOnLiteral =
     function(newValue) {
   this.generateNewTokenOnLiteral_ = newValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the regular expression used to trim the tokens before passing them to
-***REMOVED*** the matcher:  every substring that matches the given regular expression will
-***REMOVED*** be removed.  This can also be set to null to disable trimming.
-***REMOVED*** @param {RegExp} trimmer Regexp to use for trimming or null to disable it.
-***REMOVED***
+/**
+ * Sets the regular expression used to trim the tokens before passing them to
+ * the matcher:  every substring that matches the given regular expression will
+ * be removed.  This can also be set to null to disable trimming.
+ * @param {RegExp} trimmer Regexp to use for trimming or null to disable it.
+ */
 goog.ui.ac.InputHandler.prototype.setTrimmingRegExp = function(trimmer) {
   this.trimmer_ = trimmer;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether we will prevent the default input behavior (moving focus to the
-***REMOVED*** next focusable  element) on TAB.
-***REMOVED*** @param {boolean} newValue Whether to preventDefault on TAB.
-***REMOVED***
+/**
+ * Sets whether we will prevent the default input behavior (moving focus to the
+ * next focusable  element) on TAB.
+ * @param {boolean} newValue Whether to preventDefault on TAB.
+ */
 goog.ui.ac.InputHandler.prototype.setPreventDefaultOnTab = function(newValue) {
   this.preventDefaultOnTab_ = newValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether separators perform autocomplete.
-***REMOVED*** @param {boolean} newValue Whether to autocomplete on separators.
-***REMOVED***
+/**
+ * Sets whether separators perform autocomplete.
+ * @param {boolean} newValue Whether to autocomplete on separators.
+ */
 goog.ui.ac.InputHandler.prototype.setSeparatorCompletes = function(newValue) {
   this.separatorUpdates_ = newValue;
   this.separatorSelects_ = newValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether separators perform autocomplete.
-***REMOVED*** @param {boolean} newValue Whether to autocomplete on separators.
-***REMOVED***
+/**
+ * Sets whether separators perform autocomplete.
+ * @param {boolean} newValue Whether to autocomplete on separators.
+ */
 goog.ui.ac.InputHandler.prototype.setSeparatorSelects = function(newValue) {
   this.separatorSelects_ = newValue;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the time to wait before updating the results. If the update during
-***REMOVED*** typing flag is switched on, this delay counts from the last update,
-***REMOVED*** otherwise from the last keypress.
-***REMOVED*** @return {number} Throttle time in milliseconds.
-***REMOVED***
+/**
+ * Gets the time to wait before updating the results. If the update during
+ * typing flag is switched on, this delay counts from the last update,
+ * otherwise from the last keypress.
+ * @return {number} Throttle time in milliseconds.
+ */
 goog.ui.ac.InputHandler.prototype.getThrottleTime = function() {
   return this.timer_ ? this.timer_.getInterval() : -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether a row has just been selected.
-***REMOVED*** @param {boolean} justSelected Whether or not the row has just been selected.
-***REMOVED***
+/**
+ * Sets whether a row has just been selected.
+ * @param {boolean} justSelected Whether or not the row has just been selected.
+ */
 goog.ui.ac.InputHandler.prototype.setRowJustSelected = function(justSelected) {
   this.rowJustSelected_ = justSelected;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the time to wait before updating the results.
-***REMOVED*** @param {number} time New throttle time in milliseconds.
-***REMOVED***
+/**
+ * Sets the time to wait before updating the results.
+ * @param {number} time New throttle time in milliseconds.
+ */
 goog.ui.ac.InputHandler.prototype.setThrottleTime = function(time) {
   if (time < 0) {
     this.timer_.dispose();
@@ -745,33 +745,33 @@ goog.ui.ac.InputHandler.prototype.setThrottleTime = function(time) {
   } else {
     this.timer_ = new goog.Timer(time);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets whether the result list is updated during typing.
-***REMOVED*** @return {boolean} Value of the flag.
-***REMOVED***
+/**
+ * Gets whether the result list is updated during typing.
+ * @return {boolean} Value of the flag.
+ */
 goog.ui.ac.InputHandler.prototype.getUpdateDuringTyping = function() {
   return this.updateDuringTyping_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the result list should be updated during typing.
-***REMOVED*** @param {boolean} value New value of the flag.
-***REMOVED***
+/**
+ * Sets whether the result list should be updated during typing.
+ * @param {boolean} value New value of the flag.
+ */
 goog.ui.ac.InputHandler.prototype.setUpdateDuringTyping = function(value) {
   this.updateDuringTyping_ = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a key event.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @return {boolean} True if the key event was handled.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles a key event.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @return {boolean} True if the key event was handled.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.handleKeyEvent = function(e) {
   switch (e.keyCode) {
 
@@ -860,15 +860,15 @@ goog.ui.ac.InputHandler.prototype.handleKeyEvent = function(e) {
   }
 
   return this.handleSeparator_(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a key event for a separator key.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @return {boolean} True if the key event was handled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a key event for a separator key.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @return {boolean} True if the key event was handled.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.handleSeparator_ = function(e) {
   var isSeparatorKey = this.multi_ && e.charCode &&
       this.separators_.indexOf(String.fromCharCode(e.charCode)) != -1;
@@ -882,33 +882,33 @@ goog.ui.ac.InputHandler.prototype.handleSeparator_ = function(e) {
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether this inputhandler need to listen on key-up.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {boolean} Whether this inputhandler need to listen on key-up.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.needKeyUpListener = function() {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the key up event. Registered only if needKeyUpListener returns true.
-***REMOVED*** @param {goog.events.Event} e The keyup event.
-***REMOVED*** @return {boolean} Whether an action was taken or not.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles the key up event. Registered only if needKeyUpListener returns true.
+ * @param {goog.events.Event} e The keyup event.
+ * @return {boolean} Whether an action was taken or not.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.handleKeyUp = function(e) {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the necessary input event handlers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds the necessary input event handlers.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.addEventHandlers_ = function() {
   this.keyHandler_.attach(this.activeElement_);
   this.eh_.listen(
@@ -925,13 +925,13 @@ goog.ui.ac.InputHandler.prototype.addEventHandlers_ = function() {
     this.eh_.listen(this.activeElement_,
         goog.events.EventType.KEYPRESS, this.onIeKeyPress_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the necessary input event handlers.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes the necessary input event handlers.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.removeEventHandlers_ = function() {
   this.eh_.unlisten(
       this.keyHandler_, goog.events.KeyHandler.EventType.KEY, this.onKey_);
@@ -949,24 +949,24 @@ goog.ui.ac.InputHandler.prototype.removeEventHandlers_ = function() {
   if (this.waitingForIme_) {
     this.stopWaitingForIme_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an element getting focus.
-***REMOVED*** @param {goog.events.Event} e Browser event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles an element getting focus.
+ * @param {goog.events.Event} e Browser event object.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.handleFocus = function(e) {
-  this.processFocus(***REMOVED*** @type {Element}***REMOVED*** (e.target || null));
-***REMOVED***
+  this.processFocus(/** @type {Element} */ (e.target || null));
+};
 
 
-***REMOVED***
-***REMOVED*** Registers handlers for the active element when it receives focus.
-***REMOVED*** @param {Element} target The element to focus.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Registers handlers for the active element when it receives focus.
+ * @param {Element} target The element to focus.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.processFocus = function(target) {
   this.activateHandler_.removeAll();
 
@@ -985,14 +985,14 @@ goog.ui.ac.InputHandler.prototype.processFocus = function(target) {
     this.lastValue_ = this.getValue();
     this.addEventHandlers_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles an element blurring.
-***REMOVED*** @param {goog.events.Event=} opt_e Browser event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles an element blurring.
+ * @param {goog.events.Event=} opt_e Browser event object.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.handleBlur = function(opt_e) {
   // Phones running iOS prior to version 4.2.
   if (goog.ui.ac.InputHandler.REQUIRES_ASYNC_BLUR_) {
@@ -1007,13 +1007,13 @@ goog.ui.ac.InputHandler.prototype.handleBlur = function(opt_e) {
   } else {
     this.processBlur();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function that does the logic to handle an element blurring.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helper function that does the logic to handle an element blurring.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.processBlur = function() {
   // it's possible that a blur event could fire when there's no active element,
   // in the case where attachInput was called on an input that already had
@@ -1033,98 +1033,98 @@ goog.ui.ac.InputHandler.prototype.processBlur = function() {
       this.ac_.dismissOnDelay();
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the timer's tick event.  Calculates the current token, and reports
-***REMOVED*** any update to the autocomplete.
-***REMOVED*** @param {goog.events.Event} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the timer's tick event.  Calculates the current token, and reports
+ * any update to the autocomplete.
+ * @param {goog.events.Event} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onTick_ = function(e) {
   this.update();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles typing in an inactive input element. Activate it.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles typing in an inactive input element. Activate it.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onKeyDownOnInactiveElement_ = function(e) {
   this.handleFocus(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles typing in the active input element.  Checks if the key is a special
-***REMOVED*** key and does the relevent action as appropriate.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles typing in the active input element.  Checks if the key is a special
+ * key and does the relevent action as appropriate.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onKey_ = function(e) {
   this.lastKeyCode_ = e.keyCode;
   if (this.ac_) {
     this.handleKeyEvent(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles a KEYPRESS event generated by typing in the active input element.
-***REMOVED*** Checks if IME input is ended.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles a KEYPRESS event generated by typing in the active input element.
+ * Checks if IME input is ended.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onKeyPress_ = function(e) {
   if (this.waitingForIme_ &&
       this.lastKeyCode_ != goog.events.KeyCodes.WIN_IME) {
     this.stopWaitingForIme_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the key-up event.  This is only ever used by Mac FF or when we are in
-***REMOVED*** an IME entry scenario.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the key-up event.  This is only ever used by Mac FF or when we are in
+ * an IME entry scenario.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onKeyUp_ = function(e) {
   if (this.waitingForIme_ &&
       (e.keyCode == goog.events.KeyCodes.ENTER ||
        (e.keyCode == goog.events.KeyCodes.M && e.ctrlKey))) {
     this.stopWaitingForIme_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-down event.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles mouse-down event.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onMouseDown_ = function(e) {
   if (this.ac_) {
     this.handleMouseDown(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** For subclasses to override to handle the mouse-down event.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * For subclasses to override to handle the mouse-down event.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.handleMouseDown = function(e) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Starts waiting for IME.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Starts waiting for IME.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.startWaitingForIme_ = function() {
   if (this.waitingForIme_) {
     return;
@@ -1134,13 +1134,13 @@ goog.ui.ac.InputHandler.prototype.startWaitingForIme_ = function() {
   this.eh_.listen(
       this.activeElement_, goog.events.EventType.KEYPRESS, this.onKeyPress_);
   this.waitingForIme_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stops waiting for IME.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stops waiting for IME.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.stopWaitingForIme_ = function() {
   if (!this.waitingForIme_) {
     return;
@@ -1150,25 +1150,25 @@ goog.ui.ac.InputHandler.prototype.stopWaitingForIme_ = function() {
       this.activeElement_, goog.events.EventType.KEYPRESS, this.onKeyPress_);
   this.eh_.unlisten(
       this.activeElement_, goog.events.EventType.KEYUP, this.onKeyUp_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the key-press event for IE, checking to see if the user typed a
-***REMOVED*** separator character.
-***REMOVED*** @param {goog.events.BrowserEvent} e Browser event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the key-press event for IE, checking to see if the user typed a
+ * separator character.
+ * @param {goog.events.BrowserEvent} e Browser event object.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.onIeKeyPress_ = function(e) {
   this.handleSeparator_(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if an update has occurred and notified the autocomplete of the new
-***REMOVED*** token.
-***REMOVED*** @param {boolean=} opt_force If true the menu will be forced to update.
-***REMOVED***
+/**
+ * Checks if an update has occurred and notified the autocomplete of the new
+ * token.
+ * @param {boolean=} opt_force If true the menu will be forced to update.
+ */
 goog.ui.ac.InputHandler.prototype.update = function(opt_force) {
   if (this.activeElement_ &&
       (opt_force || this.getValue() != this.lastValue_)) {
@@ -1183,69 +1183,69 @@ goog.ui.ac.InputHandler.prototype.update = function(opt_force) {
     this.lastValue_ = this.getValue();
   }
   this.rowJustSelected_ = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a text area or input box for the currently highlighted token.
-***REMOVED*** @return {string} Token to complete.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Parses a text area or input box for the currently highlighted token.
+ * @return {string} Token to complete.
+ * @protected
+ */
 goog.ui.ac.InputHandler.prototype.parseToken = function() {
   return this.parseToken_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Moves hilite up.  May hilite next or previous depending on orientation.
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Moves hilite up.  May hilite next or previous depending on orientation.
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.moveUp_ = function() {
   return this.upsideDown_ ? this.ac_.hiliteNext() : this.ac_.hilitePrev();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Moves hilite down.  May hilite next or previous depending on orientation.
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Moves hilite down.  May hilite next or previous depending on orientation.
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.moveDown_ = function() {
   return this.upsideDown_ ? this.ac_.hilitePrev() : this.ac_.hiliteNext();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a text area or input box for the currently highlighted token.
-***REMOVED*** @return {string} Token to complete.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses a text area or input box for the currently highlighted token.
+ * @return {string} Token to complete.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.parseToken_ = function() {
   var caret = this.getCursorPosition();
   var text = this.getValue();
   return this.trim_(this.splitInput_(text)[this.getTokenIndex_(text, caret)]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Trims a token of characters that we want to ignore
-***REMOVED*** @param {string} text string to trim.
-***REMOVED*** @return {string} Trimmed string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Trims a token of characters that we want to ignore
+ * @param {string} text string to trim.
+ * @return {string} Trimmed string.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.trim_ = function(text) {
   return this.trimmer_ ? String(text).replace(this.trimmer_, '') : text;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the index of the currently highlighted token
-***REMOVED*** @param {string} text string to parse.
-***REMOVED*** @param {number} caret Position of cursor in string.
-***REMOVED*** @return {number} Index of token.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the index of the currently highlighted token
+ * @param {string} text string to parse.
+ * @param {number} caret Position of cursor in string.
+ * @return {number} Index of token.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.getTokenIndex_ = function(text, caret) {
   // Split up the input string into multiple entries
   var entries = this.splitInput_(text);
@@ -1262,21 +1262,21 @@ goog.ui.ac.InputHandler.prototype.getTokenIndex_ = function(text, caret) {
 
   // Get the token for the current item
   return current;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits an input string of text at the occurance of a character in
-***REMOVED*** {@link goog.ui.ac.InputHandler.prototype.separators_} and creates
-***REMOVED*** an array of tokens.  Each token may contain additional whitespace and
-***REMOVED*** formatting marks.  If necessary use
-***REMOVED*** {@link goog.ui.ac.InputHandler.prototype.trim_} to clean up the
-***REMOVED*** entries.
-***REMOVED***
-***REMOVED*** @param {string} text Input text.
-***REMOVED*** @return {!Array} Parsed array.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Splits an input string of text at the occurance of a character in
+ * {@link goog.ui.ac.InputHandler.prototype.separators_} and creates
+ * an array of tokens.  Each token may contain additional whitespace and
+ * formatting marks.  If necessary use
+ * {@link goog.ui.ac.InputHandler.prototype.trim_} to clean up the
+ * entries.
+ *
+ * @param {string} text Input text.
+ * @return {!Array} Parsed array.
+ * @private
+ */
 goog.ui.ac.InputHandler.prototype.splitInput_ = function(text) {
   if (!this.multi_) {
     return [text];
@@ -1307,4 +1307,4 @@ goog.ui.ac.InputHandler.prototype.splitInput_ = function(text) {
   parts.push(cache.join(''));
 
   return parts;
-***REMOVED***
+};

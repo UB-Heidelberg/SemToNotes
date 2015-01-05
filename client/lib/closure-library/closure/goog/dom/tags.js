@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for HTML element tag names.
-***REMOVED***
+/**
+ * @fileoverview Utilities for HTML element tag names.
+ */
 goog.provide('goog.dom.tags');
 
 goog.require('goog.object');
 
 
-***REMOVED***
-***REMOVED*** The void elements specified by
-***REMOVED*** http://www.w3.org/TR/html-markup/syntax.html#void-elements.
-***REMOVED*** @const
-***REMOVED*** @type {!Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The void elements specified by
+ * http://www.w3.org/TR/html-markup/syntax.html#void-elements.
+ * @const
+ * @type {!Object}
+ * @private
+ */
 goog.dom.tags.VOID_TAGS_ = goog.object.createSet(('area,base,br,col,command,' +
     'embed,hr,img,input,keygen,link,meta,param,source,track,wbr').split(','));
 
 
-***REMOVED***
-***REMOVED*** Checks whether the tag is void (with no contents allowed and no legal end
-***REMOVED*** tag), for example 'br'.
-***REMOVED*** @param {string} tagName The tag name in lower case.
-***REMOVED*** @return {boolean}
-***REMOVED***
+/**
+ * Checks whether the tag is void (with no contents allowed and no legal end
+ * tag), for example 'br'.
+ * @param {string} tagName The tag name in lower case.
+ * @return {boolean}
+ */
 goog.dom.tags.isVoidTag = function(tagName) {
   return goog.dom.tags.VOID_TAGS_[tagName] === true;
-***REMOVED***
+};

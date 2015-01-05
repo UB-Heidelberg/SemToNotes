@@ -1,11 +1,11 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @module jsdoc/tag/validator
     @requires jsdoc/tag/dictionary
 
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var dictionary = require('jsdoc/tag/dictionary');
@@ -21,9 +21,9 @@ function buildMessage(tagName, meta, desc) {
     return result;
 }
 
-***REMOVED***
-***REMOVED*** Validate the given tag.
-***REMOVED***
+/**
+ * Validate the given tag.
+ */
 exports.validate = function(tag, tagDef, meta) {
     // check for errors that make the tag useless
     if (!tagDef && !env.conf.tags.allowUnknownTags) {
@@ -42,4 +42,4 @@ exports.validate = function(tag, tagDef, meta) {
         logger.warn( buildMessage(tag.title, meta,
             'does not permit a description; the description will be ignored') );
     }
-***REMOVED***
+};

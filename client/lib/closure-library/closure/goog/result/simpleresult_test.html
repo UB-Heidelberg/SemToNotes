@@ -72,7 +72,7 @@ function testHandlersCalledOnSuccess() {
 
 function testCustomHandlerScope() {
   result.wait(resultCallback1);
-  var scope = {***REMOVED***
+  var scope = {};
   result.wait(resultCallback2, scope);
 
   result.setValue(2);
@@ -121,7 +121,7 @@ function testAttachingHandlerOnSuccessfulResult() {
 }
 
 function testAttachingHandlerOnErrorResult() {
-  var error = { code: -1, errorString: "Invalid JSON"***REMOVED*****REMOVED***
+  var error = { code: -1, errorString: "Invalid JSON" };
   result.setError(error);
   assertEquals(goog.result.Result.State.ERROR, result.getState());
   assertEquals(error, result.getError());
@@ -342,7 +342,7 @@ function testResolvingPromiseBlocksResult() {
 function testRejectingPromiseBlocksResult() {
   var err;
   goog.Promise.reject(new Error('oops')).then(
-    undefined /* opt_onResolved***REMOVED***,
+    undefined /* opt_onResolved */,
     function(reason) {
       result.setError(reason);
     });
@@ -358,7 +358,7 @@ function testPromiseFromCanceledResult() {
   var reason;
   result.cancel();
   result.then(
-    undefined /* opt_onResolved***REMOVED***,
+    undefined /* opt_onResolved */,
     function(r) {
       reason = r;
     });

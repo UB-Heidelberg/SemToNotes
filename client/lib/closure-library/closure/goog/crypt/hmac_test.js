@@ -41,19 +41,19 @@ function hexToBytes(str) {
 
 function bytesToHex(b) {
   var hexchars = '0123456789abcdef';
-  var hexrep = new Array(b.length***REMOVED*** 2);
+  var hexrep = new Array(b.length * 2);
 
   for (var i = 0; i < b.length; ++i) {
-    hexrep[i***REMOVED*** 2] = hexchars.charAt((b[i] >> 4) & 15);
-    hexrep[i***REMOVED*** 2 + 1] = hexchars.charAt(b[i] & 15);
+    hexrep[i * 2] = hexchars.charAt((b[i] >> 4) & 15);
+    hexrep[i * 2 + 1] = hexchars.charAt(b[i] & 15);
   }
   return hexrep.join('');
 }
 
 
-***REMOVED***
-***REMOVED*** helper to get an hmac of the given message with the given key.
-***REMOVED***
+/**
+ * helper to get an hmac of the given message with the given key.
+ */
 function getHmac(key, message, opt_blockSize) {
   var hasher = new goog.crypt.Sha1();
   var hmacer = new goog.crypt.Hmac(hasher, key, opt_blockSize);
@@ -124,7 +124,7 @@ function testHmac() {
 }
 
 
-***REMOVED*** Regression test for Bug 12863104***REMOVED***
+/** Regression test for Bug 12863104 */
 function testUpdateWithLongKey() {
   // Calling update() then digest() should give the same result as just
   // calling getHmac()

@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED*** Adapted version of Node.js' `util` module.
-***REMOVED*** @module util
-***REMOVED*** @see http://nodejs.org/api/util.html
-***REMOVED*** @see https://github.com/joyent/node/blob/85090734/lib/util.js
-***REMOVED*** @license MIT
-***REMOVED***
+/**
+ * Adapted version of Node.js' `util` module.
+ * @module util
+ * @see http://nodejs.org/api/util.html
+ * @see https://github.com/joyent/node/blob/85090734/lib/util.js
+ * @license MIT
+ */
 
 function hasOwnProp(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
@@ -13,20 +13,20 @@ function hasOwnProp(obj, prop) {
 // placate JSHint
 var stylizeNoColor, stylizeWithColor, formatValue, formatPrimitive;
 
-***REMOVED***
-***REMOVED*** Echoes the value of a value. Trys to print the value out
-***REMOVED*** in the best way possible given the different types.
-***REMOVED***
-***REMOVED*** @param {Object} obj The object to print out.
-***REMOVED*** @param {Object} opts Optional options object that alters the output.
-***REMOVED***
+/**
+ * Echoes the value of a value. Trys to print the value out
+ * in the best way possible given the different types.
+ *
+ * @param {Object} obj The object to print out.
+ * @param {Object} opts Optional options object that alters the output.
+ */
 /* legacy: obj, showHidden, depth, colors*/
 function inspect(obj, opts) {
   // default options
   var ctx = {
     seen: [],
     stylize: stylizeNoColor
- ***REMOVED*****REMOVED***
+  };
   // legacy...
   if (arguments.length >= 3) {
     ctx.depth = arguments[2];
@@ -76,7 +76,7 @@ inspect.colors = {
   'magenta' : [35, 39],
   'red' : [31, 39],
   'yellow' : [33, 39]
-***REMOVED***
+};
 
 // Don't use 'blue' not visible on cmd.exe
 inspect.styles = {
@@ -89,7 +89,7 @@ inspect.styles = {
   'date': 'magenta',
   // "name": intentionally not styling
   'regexp': 'red'
-***REMOVED***
+};
 
 stylizeWithColor = function(str, styleType) {
   var style = inspect.styles[styleType];
@@ -100,11 +100,11 @@ stylizeWithColor = function(str, styleType) {
   } else {
     return str;
   }
-***REMOVED***
+};
 
 stylizeNoColor = function(str, styleType) {
   return str;
-***REMOVED***
+};
 
 var formatRegExp = /%[sdj%]/g;
 exports.format = function(f) {
@@ -144,7 +144,7 @@ exports.format = function(f) {
     }
   }
   return str;
-***REMOVED***
+};
 
 // Mark that a method should not be used.
 // Returns a modified function which warns once by default.
@@ -168,35 +168,35 @@ exports.deprecate = function(fn, msg) {
   }
 
   return deprecated;
-***REMOVED***
+};
 
 exports.print = function() {
   var args = Array.prototype.slice.call(arguments, 0);
   for (var i = 0, len = args.length; i < len; ++i) {
     process.stdout.write(String(args[i]));
   }
-***REMOVED***
+};
 
 exports.puts = function() {
   var args = Array.prototype.slice.call(arguments, 0);
   for (var i = 0, len = args.length; i < len; ++i) {
     process.stdout.write(args[i] + '\n');
   }
-***REMOVED***
+};
 
 exports.debug = function(x) {
   process.stderr.write('DEBUG: ' + x + '\n');
-***REMOVED***
+};
 
 var error = exports.error = function(x) {
   var args = Array.prototype.slice.call(arguments, 0);
   for (var i = 0, len = args.length; i < len; ++i) {
     process.stderr.write(args[i] + '\n');
   }
-***REMOVED***
+};
 
 function arrayToHash(array) {
-  var hash = {***REMOVED***
+  var hash = {};
 
   array.forEach(function(val, idx) {
     hash[val] = true;
@@ -211,7 +211,7 @@ function formatError(value) {
 
 function formatProperty(ctx, value, recurseTimes, visibleKeys, key, array) {
   var name, str, desc;
-  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key]***REMOVED*****REMOVED***
+  desc = Object.getOwnPropertyDescriptor(value, key) || { value: value[key] };
   if (desc.get) {
     if (desc.set) {
       str = ctx.stylize('[Getter/Setter]', 'special');
@@ -432,7 +432,7 @@ formatValue = function(ctx, value, recurseTimes) {
   ctx.seen.pop();
 
   return reduceToSingleString(output, base, braces);
-***REMOVED***
+};
 
 formatPrimitive = function(ctx, value) {
   switch (typeof value) {
@@ -455,7 +455,7 @@ formatPrimitive = function(ctx, value) {
   if (value === null) {
     return ctx.stylize('null', 'null');
   }
-***REMOVED***
+};
 
 exports.p = exports.deprecate(function() {
   var args = Array.prototype.slice.call(arguments, 0);
@@ -482,29 +482,29 @@ function timestamp() {
 
 exports.log = function(msg) {
   exports.puts(timestamp() + ' - ' + msg.toString());
-***REMOVED***
+};
 
 exports.exec = function() {
   throw new Error('util.exec() is not implemented on Rhino (and was deprecated in Node.js 0.2)');
-***REMOVED***
+};
 
 exports.pump = function() {
   throw new Error('util.pump() is not implemented on Rhino (and was deprecated in Node.js 0.8');
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Inherit the prototype methods from one constructor into another.
-***REMOVED***
-***REMOVED*** The Function.prototype.inherits from lang.js rewritten as a standalone
-***REMOVED*** function (not on Function.prototype). NOTE: If this file is to be loaded
-***REMOVED*** during bootstrapping this function needs to be rewritten using some native
-***REMOVED*** functions as prototype setup using normal JavaScript does not work as
-***REMOVED*** expected during bootstrapping (see mirror.js in r114903).
-***REMOVED***
-***REMOVED*** @param {function} ctor Constructor function which needs to inherit the
-***REMOVED***     prototype.
-***REMOVED*** @param {function} superCtor Constructor function to inherit prototype from.
-***REMOVED***
+/**
+ * Inherit the prototype methods from one constructor into another.
+ *
+ * The Function.prototype.inherits from lang.js rewritten as a standalone
+ * function (not on Function.prototype). NOTE: If this file is to be loaded
+ * during bootstrapping this function needs to be rewritten using some native
+ * functions as prototype setup using normal JavaScript does not work as
+ * expected during bootstrapping (see mirror.js in r114903).
+ *
+ * @param {function} ctor Constructor function which needs to inherit the
+ *     prototype.
+ * @param {function} superCtor Constructor function to inherit prototype from.
+ */
 exports.inherits = function(ctor, superCtor) {
   ctor.super_ = superCtor;
   ctor.prototype = Object.create(superCtor.prototype, {
@@ -515,7 +515,7 @@ exports.inherits = function(ctor, superCtor) {
       configurable: true
     }
   });
-***REMOVED***
+};
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -529,4 +529,4 @@ exports._extend = function(origin, add) {
     origin[keys[i]] = add[keys[i]];
   }
   return origin;
-***REMOVED***
+};

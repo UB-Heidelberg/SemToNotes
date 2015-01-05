@@ -1,13 +1,13 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: pupius@google.com (Daniel Pupius)***REMOVED***
+/* Author: pupius@google.com (Daniel Pupius) */
 
-/* goog.ui.TriStateMenuItem***REMOVED***
+/* goog.ui.TriStateMenuItem */
 
 .goog-tristatemenuitem {
   padding: 2px 5px;

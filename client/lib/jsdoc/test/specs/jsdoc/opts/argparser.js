@@ -1,4 +1,4 @@
-/*global afterEach, beforeEach, describe, expect, it***REMOVED***
+/*global afterEach, beforeEach, describe, expect, it */
 'use strict';
 
 describe('jsdoc/opts/argparser', function() {
@@ -110,7 +110,7 @@ describe('jsdoc/opts/argparser', function() {
                 var defaults = {
                     strict: false,
                     name: 'Hello world!'
-               ***REMOVED*****REMOVED***
+                };
 
                 ourOptions = argParser.parse(['-s', true], defaults);
 

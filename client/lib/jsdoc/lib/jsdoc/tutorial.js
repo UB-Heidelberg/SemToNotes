@@ -1,17 +1,17 @@
-***REMOVED***
+/**
     @overview
     @author Rafał Wrzeszcz <rafal.wrzeszcz@wrzasq.pl>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var markdown = require('jsdoc/util/markdown');
 
-***REMOVED*** Removes child tutorial from the parent. Does***REMOVED***not* unset child.parent though.
+/** Removes child tutorial from the parent. Does *not* unset child.parent though.
     @param {Tutorial} parent - parent tutorial.
     @param {Tutorial} child - Old child.
     @private
-***REMOVED***
+ */
 function removeChild(parent, child) {
     var index = parent.children.indexOf(child);
     if (index !== -1) {
@@ -19,26 +19,26 @@ function removeChild(parent, child) {
     }
 }
 
-***REMOVED*** Adds a child to the parent tutorial. Does***REMOVED***not* set child.parent though.
+/** Adds a child to the parent tutorial. Does *not* set child.parent though.
     @param {Tutorial} parent - parent tutorial.
     @param {Tutorial} child - New child.
     @private
-***REMOVED***
+ */
 function addChild(parent, child) {
     parent.children.push(child);
 }
 
-***REMOVED***
+/**
     @module jsdoc/tutorial
-***REMOVED***
+ */
 
-***REMOVED***
+/**
     @class
     @classdesc Represents a single JSDoc tutorial.
     @param {string} name - Tutorial name.
     @param {string} content - Text content.
     @param {number} type - Source formating.
-***REMOVED***
+ */
 exports.Tutorial = function(name, content, type) {
     this.title = this.name = name;
     this.content = content;
@@ -47,11 +47,11 @@ exports.Tutorial = function(name, content, type) {
     // default values
     this.parent = null;
     this.children = [];
-***REMOVED***
+};
 
-***REMOVED*** Moves children from current parent to different one.
+/** Moves children from current parent to different one.
     @param {?Tutorial} parent - New parent. If null, the tutorial has no parent.
-***REMOVED***
+ */
 exports.Tutorial.prototype.setParent = function(parent) {
     // removes node from old parent
     if (this.parent) {
@@ -62,25 +62,25 @@ exports.Tutorial.prototype.setParent = function(parent) {
     if (parent) {
         addChild(parent, this);
     }
-***REMOVED***
+};
 
-***REMOVED*** Removes children from current node.
+/** Removes children from current node.
     @param {Tutorial} child - Old child.
-***REMOVED***
+ */
 exports.Tutorial.prototype.removeChild = function(child) {
     child.setParent(null);
-***REMOVED***
+};
 
-***REMOVED*** Adds new children to current node.
+/** Adds new children to current node.
     @param {Tutorial} child - New child.
-***REMOVED***
+ */
 exports.Tutorial.prototype.addChild = function(child) {
     child.setParent(this);
-***REMOVED***
+};
 
-***REMOVED*** Prepares source.
+/** Prepares source.
     @return {string} HTML source.
-***REMOVED***
+ */
 exports.Tutorial.prototype.parse = function() {
     switch (this.type) {
         // nothing to do
@@ -100,12 +100,12 @@ exports.Tutorial.prototype.parse = function() {
         default:
             return this.content;
     }
-***REMOVED***
+};
 
-***REMOVED*** Tutorial source types.
+/** Tutorial source types.
     @enum {number}
-***REMOVED***
+ */
 exports.TYPES = {
     HTML: 1,
     MARKDOWN: 2
-***REMOVED***
+};

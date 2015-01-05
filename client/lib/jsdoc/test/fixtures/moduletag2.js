@@ -1,9 +1,9 @@
-***REMOVED*** @module color/mixer***REMOVED***
+/** @module color/mixer */
 
 module.exports = {
-   ***REMOVED*****REMOVED*** Blend two colors together.***REMOVED***
+    /** Blend two colors together. */
     blend: function(color1, color2) { }
 }
 
-***REMOVED*** Darken a color by the given shade.***REMOVED***
+/** Darken a color by the given shade. */
 exports.darken = function(color, shade) { }

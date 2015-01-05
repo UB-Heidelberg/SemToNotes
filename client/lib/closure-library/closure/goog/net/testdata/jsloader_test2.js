@@ -13,9 +13,9 @@
 // limitations under the License.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @fileoverview Test #2 of jsloader.
-***REMOVED***
+/**
+ * @fileoverview Test #2 of jsloader.
+ */
 
 goog.provide('goog.net.testdata.jsloader_test2');
 goog.setTestOnly('jsloader_test2');

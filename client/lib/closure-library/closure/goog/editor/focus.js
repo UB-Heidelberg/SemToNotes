@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilties to handle focusing related to rich text editing.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Utilties to handle focusing related to rich text editing.
+ *
+ */
 
 goog.provide('goog.editor.focus');
 
 goog.require('goog.dom.selection');
 
 
-***REMOVED***
-***REMOVED*** Change focus to the given input field and set cursor to end of current text.
-***REMOVED*** @param {Element} inputElem Input DOM element.
-***REMOVED***
+/**
+ * Change focus to the given input field and set cursor to end of current text.
+ * @param {Element} inputElem Input DOM element.
+ */
 goog.editor.focus.focusInputField = function(inputElem) {
   inputElem.focus();
   goog.dom.selection.setCursorPosition(inputElem, inputElem.value.length);
-***REMOVED***
+};

@@ -20,15 +20,15 @@ See the COPYING file for details.
 <script type="text/javascript">
 goog.require('goog.debug.Logger');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.net.xpc.CrossPageChannel');
 </script>
 <script type="text/javascript">
 var channel;
 var queuedMessage;
 
-var OBJECT_RESULT_FROM_SERVICE = {'favorites': 'pie'***REMOVED***
+var OBJECT_RESULT_FROM_SERVICE = {'favorites': 'pie'};
 
 function clearDebug() {
   document.getElementById('debugDiv').innerHTML = '';

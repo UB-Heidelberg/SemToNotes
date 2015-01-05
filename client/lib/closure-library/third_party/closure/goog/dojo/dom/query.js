@@ -2,10 +2,10 @@
 // Modifications Copyright 2008 The Closure Library Authors.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @license Portions of this code are from the Dojo Toolkit, received by
-***REMOVED*** The Closure Library Authors under the BSD license. All other code is
-***REMOVED*** Copyright 2005-2009 The Closure Library Authors. All Rights Reserved.
+/**
+ * @license Portions of this code are from the Dojo Toolkit, received by
+ * The Closure Library Authors under the BSD license. All other code is
+ * Copyright 2005-2009 The Closure Library Authors. All Rights Reserved.
 
 The "New" BSD License:
 
@@ -15,12 +15,12 @@ All rights reserved.
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
- ***REMOVED*** Redistributions of source code must retain the above copyright notice, this
+  * Redistributions of source code must retain the above copyright notice, this
     list of conditions and the following disclaimer.
- ***REMOVED*** Redistributions in binary form must reproduce the above copyright notice,
+  * Redistributions in binary form must reproduce the above copyright notice,
     this list of conditions and the following disclaimer in the documentation
     and/or other materials provided with the distribution.
- ***REMOVED*** Neither the name of the Dojo Foundation nor the names of its contributors
+  * Neither the name of the Dojo Foundation nor the names of its contributors
     may be used to endorse or promote products derived from this software
     without specific prior written permission.
 
@@ -36,39 +36,39 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-***REMOVED***
-***REMOVED*** @fileoverview This code was ported from the Dojo Toolkit
+/**
+ * @fileoverview This code was ported from the Dojo Toolkit
    http://dojotoolkit.org and modified slightly for Closure.
-***REMOVED***
-***REMOVED***  goog.dom.query is a relatively full-featured CSS3 query function. It is
-***REMOVED***  designed to take any valid CSS3 selector and return the nodes matching
-***REMOVED***  the selector. To do this quickly, it processes queries in several
-***REMOVED***  steps, applying caching where profitable.
-***REMOVED***    The steps (roughly in reverse order of the way they appear in the code):
-***REMOVED***    1.) check to see if we already have a "query dispatcher"
-***REMOVED***      - if so, use that with the given parameterization. Skip to step 4.
-***REMOVED***    2.) attempt to determine which branch to dispatch the query to:
-***REMOVED***      - JS (optimized DOM iteration)
-***REMOVED***      - native (FF3.1, Safari 3.2+, Chrome, some IE 8 doctypes). If native,
-***REMOVED***        skip to step 4, using a stub dispatcher for QSA queries.
-***REMOVED***    3.) tokenize and convert to executable "query dispatcher"
-***REMOVED***        assembled as a chain of "yes/no" test functions pertaining to
-***REMOVED***        a section of a simple query statement (".blah:nth-child(odd)"
-***REMOVED***        but not "div div", which is 2 simple statements).
-***REMOVED***    4.) the resulting query dispatcher is called in the passed scope
-***REMOVED***        (by default the top-level document)
-***REMOVED***      - for DOM queries, this results in a recursive, top-down
-***REMOVED***        evaluation of nodes based on each simple query section
-***REMOVED***      - querySelectorAll is used instead of DOM where possible. If a query
-***REMOVED***        fails in this mode, it is re-run against the DOM evaluator and all
-***REMOVED***        future queries using the same selector evaluate against the DOM branch
-***REMOVED***        too.
-***REMOVED***    5.) matched nodes are pruned to ensure they are unique
-***REMOVED*** @deprecated This is an all-software query selector. When developing for
-***REMOVED***     recent browsers, use document.querySelector. See information at
-***REMOVED***     http://caniuse.com/queryselector and
-***REMOVED***     https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector .
-***REMOVED***
+ *
+ *  goog.dom.query is a relatively full-featured CSS3 query function. It is
+ *  designed to take any valid CSS3 selector and return the nodes matching
+ *  the selector. To do this quickly, it processes queries in several
+ *  steps, applying caching where profitable.
+ *    The steps (roughly in reverse order of the way they appear in the code):
+ *    1.) check to see if we already have a "query dispatcher"
+ *      - if so, use that with the given parameterization. Skip to step 4.
+ *    2.) attempt to determine which branch to dispatch the query to:
+ *      - JS (optimized DOM iteration)
+ *      - native (FF3.1, Safari 3.2+, Chrome, some IE 8 doctypes). If native,
+ *        skip to step 4, using a stub dispatcher for QSA queries.
+ *    3.) tokenize and convert to executable "query dispatcher"
+ *        assembled as a chain of "yes/no" test functions pertaining to
+ *        a section of a simple query statement (".blah:nth-child(odd)"
+ *        but not "div div", which is 2 simple statements).
+ *    4.) the resulting query dispatcher is called in the passed scope
+ *        (by default the top-level document)
+ *      - for DOM queries, this results in a recursive, top-down
+ *        evaluation of nodes based on each simple query section
+ *      - querySelectorAll is used instead of DOM where possible. If a query
+ *        fails in this mode, it is re-run against the DOM evaluator and all
+ *        future queries using the same selector evaluate against the DOM branch
+ *        too.
+ *    5.) matched nodes are pruned to ensure they are unique
+ * @deprecated This is an all-software query selector. When developing for
+ *     recent browsers, use document.querySelector. See information at
+ *     http://caniuse.com/queryselector and
+ *     https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector .
+ */
 
 goog.provide('goog.dom.query');
 
@@ -78,126 +78,126 @@ goog.require('goog.functions');
 goog.require('goog.string');
 goog.require('goog.userAgent');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns nodes which match the given CSS3 selector, searching the
-  ***REMOVED*** entire document by default but optionally taking a node to scope
-  ***REMOVED*** the search by.
-  ***REMOVED***
-  ***REMOVED*** dojo.query() is the swiss army knife of DOM node manipulation in
-  ***REMOVED*** Dojo. Much like Prototype's "$$" (bling-bling) function or JQuery's
-  ***REMOVED*** "$" function, dojo.query provides robust, high-performance
-  ***REMOVED*** CSS-based node selector support with the option of scoping searches
-  ***REMOVED*** to a particular sub-tree of a document.
-  ***REMOVED***
-  ***REMOVED*** Supported Selectors:
-  ***REMOVED*** --------------------
-  ***REMOVED***
-  ***REMOVED*** dojo.query() supports a rich set of CSS3 selectors, including:
-  ***REMOVED***
-  ***REMOVED***  ***REMOVED*** class selectors (e.g., `.foo`)
-  ***REMOVED***  ***REMOVED*** node type selectors like `span`
-  ***REMOVED***  ***REMOVED*** ` ` descendant selectors
-  ***REMOVED***  ***REMOVED*** `>` child element selectors
-  ***REMOVED***  ***REMOVED*** `#foo` style ID selectors
-  ***REMOVED***  ***REMOVED*** `*` universal selector
-  ***REMOVED***  ***REMOVED*** `~`, the immediately preceded-by sibling selector
-  ***REMOVED***  ***REMOVED*** `+`, the preceded-by sibling selector
-  ***REMOVED***  ***REMOVED*** attribute queries:
-  ***REMOVED***   | ***REMOVED*** `[foo]` attribute presence selector
-  ***REMOVED***   | ***REMOVED*** `[foo='bar']` attribute value exact match
-  ***REMOVED***   | ***REMOVED*** `[foo~='bar']` attribute value list item match
-  ***REMOVED***   | ***REMOVED*** `[foo^='bar']` attribute start match
-  ***REMOVED***   | ***REMOVED*** `[foo$='bar']` attribute end match
-  ***REMOVED***   | ***REMOVED*** `[foo*='bar']` attribute substring match
-  ***REMOVED***  ***REMOVED*** `:first-child`, `:last-child` positional selectors
-  ***REMOVED***  ***REMOVED*** `:empty` content empty selector
-  ***REMOVED***  ***REMOVED*** `:empty` content empty selector
-  ***REMOVED***  ***REMOVED*** `:nth-child(n)`, `:nth-child(2n+1)` style positional calculations
-  ***REMOVED***  ***REMOVED*** `:nth-child(even)`, `:nth-child(odd)` positional selectors
-  ***REMOVED***  ***REMOVED*** `:not(...)` negation pseudo selectors
-  ***REMOVED***
-  ***REMOVED*** Any legal combination of these selectors will work with
-  ***REMOVED*** `dojo.query()`, including compound selectors ("," delimited).
-  ***REMOVED*** Very complex and useful searches can be constructed with this
-  ***REMOVED*** palette of selectors.
-  ***REMOVED***
-  ***REMOVED*** Unsupported Selectors:
-  ***REMOVED*** ----------------------
-  ***REMOVED***
-  ***REMOVED*** While dojo.query handles many CSS3 selectors, some fall outside of
-  ***REMOVED*** what's reasonable for a programmatic node querying engine to
-  ***REMOVED*** handle. Currently unsupported selectors include:
-  ***REMOVED***
-  ***REMOVED***  ***REMOVED*** namespace-differentiated selectors of any form
-  ***REMOVED***  ***REMOVED*** all `::` pseudo-element selectors
-  ***REMOVED***  ***REMOVED*** certain pseudo-selectors which don't get a lot of day-to-day use:
-  ***REMOVED***   | ***REMOVED*** `:root`, `:lang()`, `:target`, `:focus`
-  ***REMOVED***  ***REMOVED*** all visual and state selectors:
-  ***REMOVED***   | ***REMOVED*** `:root`, `:active`, `:hover`, `:visited`, `:link`,
-  ***REMOVED***       `:enabled`, `:disabled`, `:checked`
-  ***REMOVED***  ***REMOVED*** `:*-of-type` pseudo selectors
-  ***REMOVED***
-  ***REMOVED*** dojo.query and XML Documents:
-  ***REMOVED*** -----------------------------
-  ***REMOVED***
-  ***REMOVED*** `dojo.query` currently only supports searching XML documents
-  ***REMOVED*** whose tags and attributes are 100% lower-case. This is a known
-  ***REMOVED*** limitation and will [be addressed soon]
-  ***REMOVED*** (http://trac.dojotoolkit.org/ticket/3866)
-  ***REMOVED***
-  ***REMOVED*** Non-selector Queries:
-  ***REMOVED*** ---------------------
-  ***REMOVED***
-  ***REMOVED*** If something other than a String is passed for the query,
-  ***REMOVED*** `dojo.query` will return a new array constructed from
-  ***REMOVED*** that parameter alone and all further processing will stop. This
-  ***REMOVED*** means that if you have a reference to a node or array or nodes, you
-  ***REMOVED*** can quickly construct a new array of nodes from the original by
-  ***REMOVED*** calling `dojo.query(node)` or `dojo.query(array)`.
-  ***REMOVED***
-  ***REMOVED*** example:
-  ***REMOVED***   search the entire document for elements with the class "foo":
-  ***REMOVED*** |  dojo.query(".foo");
-  ***REMOVED***   these elements will match:
-  ***REMOVED*** |  <span class="foo"></span>
-  ***REMOVED*** |  <span class="foo bar"></span>
-  ***REMOVED*** |  <p class="thud foo"></p>
-  ***REMOVED*** example:
-  ***REMOVED***   search the entire document for elements with the classes "foo"***REMOVED***and*
-  ***REMOVED***   "bar":
-  ***REMOVED*** |  dojo.query(".foo.bar");
-  ***REMOVED***   these elements will match:
-  ***REMOVED*** |  <span class="foo bar"></span>
-  ***REMOVED***   while these will not:
-  ***REMOVED*** |  <span class="foo"></span>
-  ***REMOVED*** |  <p class="thud foo"></p>
-  ***REMOVED*** example:
-  ***REMOVED***   find `<span>` elements which are descendants of paragraphs and
-  ***REMOVED***   which have a "highlighted" class:
-  ***REMOVED*** |  dojo.query("p span.highlighted");
-  ***REMOVED***   the innermost span in this fragment matches:
-  ***REMOVED*** |  <p class="foo">
-  ***REMOVED*** |    <span>...
-  ***REMOVED*** |      <span class="highlighted foo bar">...</span>
-  ***REMOVED*** |    </span>
-  ***REMOVED*** |  </p>
-  ***REMOVED*** example:
-  ***REMOVED***   find all odd table rows inside of the table
-  ***REMOVED***   `#tabular_data`, using the `>` (direct child) selector to avoid
-  ***REMOVED***   affecting any nested tables:
-  ***REMOVED*** |  dojo.query("#tabular_data > tbody > tr:nth-child(odd)");
-  ***REMOVED***
-  ***REMOVED*** @param {string|Array} query The CSS3 expression to match against.
-  ***REMOVED***     For details on the syntax of CSS3 selectors, see
-  ***REMOVED***     http://www.w3.org/TR/css3-selectors/#selectors.
-  ***REMOVED*** @param {(string|Node)=} opt_root A Node (or node id) to scope the search
-  ***REMOVED***     from (optional).
-  ***REMOVED*** @return { {length: number} } The elements that matched the query.
-  ***REMOVED***
-  ***REMOVED*** @deprecated This is an all-software query selector. Use
-  ***REMOVED***     document.querySelector. See
-  ***REMOVED***     https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector .
- ***REMOVED*****REMOVED***
+  /**
+   * Returns nodes which match the given CSS3 selector, searching the
+   * entire document by default but optionally taking a node to scope
+   * the search by.
+   *
+   * dojo.query() is the swiss army knife of DOM node manipulation in
+   * Dojo. Much like Prototype's "$$" (bling-bling) function or JQuery's
+   * "$" function, dojo.query provides robust, high-performance
+   * CSS-based node selector support with the option of scoping searches
+   * to a particular sub-tree of a document.
+   *
+   * Supported Selectors:
+   * --------------------
+   *
+   * dojo.query() supports a rich set of CSS3 selectors, including:
+   *
+   *   * class selectors (e.g., `.foo`)
+   *   * node type selectors like `span`
+   *   * ` ` descendant selectors
+   *   * `>` child element selectors
+   *   * `#foo` style ID selectors
+   *   * `*` universal selector
+   *   * `~`, the immediately preceded-by sibling selector
+   *   * `+`, the preceded-by sibling selector
+   *   * attribute queries:
+   *   |  * `[foo]` attribute presence selector
+   *   |  * `[foo='bar']` attribute value exact match
+   *   |  * `[foo~='bar']` attribute value list item match
+   *   |  * `[foo^='bar']` attribute start match
+   *   |  * `[foo$='bar']` attribute end match
+   *   |  * `[foo*='bar']` attribute substring match
+   *   * `:first-child`, `:last-child` positional selectors
+   *   * `:empty` content empty selector
+   *   * `:empty` content empty selector
+   *   * `:nth-child(n)`, `:nth-child(2n+1)` style positional calculations
+   *   * `:nth-child(even)`, `:nth-child(odd)` positional selectors
+   *   * `:not(...)` negation pseudo selectors
+   *
+   * Any legal combination of these selectors will work with
+   * `dojo.query()`, including compound selectors ("," delimited).
+   * Very complex and useful searches can be constructed with this
+   * palette of selectors.
+   *
+   * Unsupported Selectors:
+   * ----------------------
+   *
+   * While dojo.query handles many CSS3 selectors, some fall outside of
+   * what's reasonable for a programmatic node querying engine to
+   * handle. Currently unsupported selectors include:
+   *
+   *   * namespace-differentiated selectors of any form
+   *   * all `::` pseudo-element selectors
+   *   * certain pseudo-selectors which don't get a lot of day-to-day use:
+   *   |  * `:root`, `:lang()`, `:target`, `:focus`
+   *   * all visual and state selectors:
+   *   |  * `:root`, `:active`, `:hover`, `:visited`, `:link`,
+   *       `:enabled`, `:disabled`, `:checked`
+   *   * `:*-of-type` pseudo selectors
+   *
+   * dojo.query and XML Documents:
+   * -----------------------------
+   *
+   * `dojo.query` currently only supports searching XML documents
+   * whose tags and attributes are 100% lower-case. This is a known
+   * limitation and will [be addressed soon]
+   * (http://trac.dojotoolkit.org/ticket/3866)
+   *
+   * Non-selector Queries:
+   * ---------------------
+   *
+   * If something other than a String is passed for the query,
+   * `dojo.query` will return a new array constructed from
+   * that parameter alone and all further processing will stop. This
+   * means that if you have a reference to a node or array or nodes, you
+   * can quickly construct a new array of nodes from the original by
+   * calling `dojo.query(node)` or `dojo.query(array)`.
+   *
+   * example:
+   *   search the entire document for elements with the class "foo":
+   * |  dojo.query(".foo");
+   *   these elements will match:
+   * |  <span class="foo"></span>
+   * |  <span class="foo bar"></span>
+   * |  <p class="thud foo"></p>
+   * example:
+   *   search the entire document for elements with the classes "foo" *and*
+   *   "bar":
+   * |  dojo.query(".foo.bar");
+   *   these elements will match:
+   * |  <span class="foo bar"></span>
+   *   while these will not:
+   * |  <span class="foo"></span>
+   * |  <p class="thud foo"></p>
+   * example:
+   *   find `<span>` elements which are descendants of paragraphs and
+   *   which have a "highlighted" class:
+   * |  dojo.query("p span.highlighted");
+   *   the innermost span in this fragment matches:
+   * |  <p class="foo">
+   * |    <span>...
+   * |      <span class="highlighted foo bar">...</span>
+   * |    </span>
+   * |  </p>
+   * example:
+   *   find all odd table rows inside of the table
+   *   `#tabular_data`, using the `>` (direct child) selector to avoid
+   *   affecting any nested tables:
+   * |  dojo.query("#tabular_data > tbody > tr:nth-child(odd)");
+   *
+   * @param {string|Array} query The CSS3 expression to match against.
+   *     For details on the syntax of CSS3 selectors, see
+   *     http://www.w3.org/TR/css3-selectors/#selectors.
+   * @param {(string|Node)=} opt_root A Node (or node id) to scope the search
+   *     from (optional).
+   * @return { {length: number} } The elements that matched the query.
+   *
+   * @deprecated This is an all-software query selector. Use
+   *     document.querySelector. See
+   *     https://developer.mozilla.org/en-US/docs/DOM/Document.querySelector .
+   */
 goog.dom.query = (function() {
   ////////////////////////////////////////////////////////////////////////
   // Global utilities
@@ -205,7 +205,7 @@ goog.dom.query = (function() {
 
   var cssCaseBug = (goog.userAgent.WEBKIT &&
                      ((goog.dom.getDocument().compatMode) == 'BackCompat')
-                 ***REMOVED***
+                   );
 
   // On browsers that support the "children" collection we can avoid a lot of
   // iteration on chaff (non-element) nodes.
@@ -248,7 +248,7 @@ goog.dom.query = (function() {
     if (specials.indexOf(query.slice(-1)) >= 0) {
       // If we end with a ">", "+", or "~", that means we're implicitly
       // searching all children, so make it explicit.
-      query += '***REMOVED*** '
+      query += ' * '
     } else {
       // if you have not provided a terminator, one will be provided for
       // you...
@@ -261,7 +261,7 @@ goog.dom.query = (function() {
       // take an index to start a string slice from and an end position
       // and return a trimmed copy of that sub-string
       return goog.string.trim(query.slice(s, e));
-   ***REMOVED*****REMOVED***
+    };
 
     // The overall data graph of the full query, as represented by queryPart
     // objects.
@@ -311,7 +311,7 @@ goog.dom.query = (function() {
         }
         inTag = -1;
       }
-   ***REMOVED*****REMOVED***
+    };
 
     var endId = function() {
       // Called when the tokenizer might be at the end of an ID portion of a
@@ -320,7 +320,7 @@ goog.dom.query = (function() {
         currentPart.id = ts(inId, x).replace(/\\/g, '');
         inId = -1;
       }
-   ***REMOVED*****REMOVED***
+    };
 
     var endClass = function() {
       // Called when the tokenizer might be at the end of a class name
@@ -330,12 +330,12 @@ goog.dom.query = (function() {
         currentPart.classes.push(ts(inClass + 1, x).replace(/\\/g, ''));
         inClass = -1;
       }
-   ***REMOVED*****REMOVED***
+    };
 
     var endAll = function() {
       // at the end of a simple fragment, so wall off the matches
       endId(); endTag(); endClass();
-   ***REMOVED*****REMOVED***
+    };
 
     var endPart = function() {
       endAll();
@@ -437,7 +437,7 @@ goog.dom.query = (function() {
           getTag: function() {
             return (caseSensitive) ? this.otag : this.tag;
           }
-       ***REMOVED*****REMOVED***
+        };
 
         // if we don't have a part, we assume we're going to start at
         // the beginning of a match, which should be a tag name. This
@@ -512,7 +512,7 @@ goog.dom.query = (function() {
           /*=====
           attr: null, type: null, matchFor: null
           =====*/
-       ***REMOVED*****REMOVED***
+        };
       } else if (cc == '(') {
         // we really only care if we've entered a parenthetical
         // expression if we're already inside a pseudo-selector match
@@ -535,7 +535,7 @@ goog.dom.query = (function() {
       }
     }
     return queryParts;
- ***REMOVED*****REMOVED***
+  };
 
 
   ////////////////////////////////////////////////////////////////////////
@@ -557,11 +557,11 @@ goog.dom.query = (function() {
     return function() {
       return first.apply(window, arguments) && second.apply(window, arguments);
     }
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @param {Array=} opt_arr
- ***REMOVED*****REMOVED***
+  /**
+   * @param {Array=} opt_arr
+   */
   function getArr(i, opt_arr) {
     // helps us avoid array alloc when we don't need it
     var r = opt_arr || [];
@@ -569,11 +569,11 @@ goog.dom.query = (function() {
       r.push(i);
     }
     return r;
- ***REMOVED*****REMOVED***
+  };
 
   var isElement = function(n) {
     return (1 == n.nodeType);
- ***REMOVED*****REMOVED***
+  };
 
   // FIXME: need to coalesce getAttr with defaultGetter
   var blank = '';
@@ -592,7 +592,7 @@ goog.dom.query = (function() {
     }
     return (caseSensitive ? elem.getAttribute(attr) :
         elem.getAttribute(attr, 2)) || blank;
- ***REMOVED*****REMOVED***
+  };
 
   var attrs = {
     '*=': function(attr, value) {
@@ -644,7 +644,7 @@ goog.dom.query = (function() {
         return (
           (ea == value) ||
           (ea.indexOf(value + '-') == 0)
-      ***REMOVED***
+        );
       }
     },
     '=': function(attr, value) {
@@ -652,13 +652,13 @@ goog.dom.query = (function() {
         return (getAttr(elem, attr) == value);
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
   // avoid testing for node type if we can. Defining this in the negative
   // here to avoid negation in the fast path.
   var noNextElementSibling = (
     typeof goog.dom.getDocument().firstChild.nextElementSibling == 'undefined'
-***REMOVED***
+  );
   var nSibling = !noNextElementSibling ? 'nextElementSibling' : 'nextSibling';
   var pSibling = !noNextElementSibling ?
                     'previousElementSibling' :
@@ -672,7 +672,7 @@ goog.dom.query = (function() {
       }
     }
     return true;
- ***REMOVED*****REMOVED***
+  };
 
   var _lookRight = function(node) {
     while (node = node[nSibling]) {
@@ -681,7 +681,7 @@ goog.dom.query = (function() {
       }
     }
     return true;
- ***REMOVED*****REMOVED***
+  };
 
   var getNodeIndex = function(node) {
     var root = node.parentNode;
@@ -724,15 +724,15 @@ goog.dom.query = (function() {
       }
     }
     return ci;
- ***REMOVED*****REMOVED***
+  };
 
   var isEven = function(elem) {
     return !((getNodeIndex(elem)) % 2);
- ***REMOVED*****REMOVED***
+  };
 
   var isOdd = function(elem) {
     return (getNodeIndex(elem)) % 2;
- ***REMOVED*****REMOVED***
+  };
 
   var pseudos = {
     'checked': function(name, condition) {
@@ -755,7 +755,7 @@ goog.dom.query = (function() {
           return false;
         }
         return true;
-     ***REMOVED*****REMOVED***
+      };
     },
     'empty': function(name, condition) {
       return function(elem) {
@@ -784,7 +784,7 @@ goog.dom.query = (function() {
     },
     'not': function(name, condition) {
       var p = getQueryParts(condition)[0];
-      var ignores = { el: 1***REMOVED*****REMOVED***
+      var ignores = { el: 1 };
       if (p.tag != '*') {
         ignores.tag = 1;
       }
@@ -822,7 +822,7 @@ goog.dom.query = (function() {
             idx = idx % pred;
           }
         } else if (pred < 0) {
-          pred***REMOVED***= -1;
+          pred *= -1;
           // idx has to be greater than 0 when pred is negative;
           // shall we throw an error here?
           if (idx > 0) {
@@ -844,7 +844,7 @@ goog.dom.query = (function() {
         return (getNodeIndex(elem) == ncount);
       }
     }
- ***REMOVED*****REMOVED***
+  };
 
   var defaultGetter = (goog.userAgent.IE) ? function(cond) {
     var clc = cond.toLowerCase();
@@ -858,7 +858,7 @@ goog.dom.query = (function() {
     return function(elem) {
       return elem && elem.getAttribute && elem.hasAttribute(cond);
     }
- ***REMOVED*****REMOVED***
+  };
 
   var getSimpleFilterFunc = function(query, ignores) {
     // Generates a node tester function based on the passed query part. The
@@ -870,7 +870,7 @@ goog.dom.query = (function() {
     if (!query) {
       return goog.functions.TRUE;
     }
-    ignores = ignores || {***REMOVED***
+    ignores = ignores || {};
 
     var ff = null;
 
@@ -936,7 +936,7 @@ goog.dom.query = (function() {
       }
     }
     return ff;
- ***REMOVED*****REMOVED***
+  };
 
   var nextSiblingIterator = function(filterFunc) {
     return function(node, ret, bag) {
@@ -953,8 +953,8 @@ goog.dom.query = (function() {
         break;
       }
       return ret;
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    };
+  };
 
   var nextSiblingsIterator = function(filterFunc) {
     return function(root, ret, bag) {
@@ -971,10 +971,10 @@ goog.dom.query = (function() {
         te = te[nSibling];
       }
       return ret;
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    };
+  };
 
-  // Get an array of child***REMOVED***elements*, skipping text and comment nodes
+  // Get an array of child *elements*, skipping text and comment nodes
   var _childElements = function(filterFunc) {
     filterFunc = filterFunc || goog.functions.TRUE;
     return function(root, ret, bag) {
@@ -989,8 +989,8 @@ goog.dom.query = (function() {
         }
       }
       return ret;
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    };
+  };
 
   // test to see if node is below root
   var _isDescendant = function(node, root) {
@@ -1002,9 +1002,9 @@ goog.dom.query = (function() {
       pn = pn.parentNode;
     }
     return !!pn;
- ***REMOVED*****REMOVED***
+  };
 
-  var _getElementsFuncCache = {***REMOVED***
+  var _getElementsFuncCache = {};
 
   var getElementsFunc = function(query) {
     var retFunc = _getElementsFuncCache[query.query];
@@ -1122,7 +1122,7 @@ goog.dom.query = (function() {
             }
           }
           return ret;
-       ***REMOVED*****REMOVED***
+        };
 
       } else if (!wildcardTag && !query.loops) {
         // it's tag only. Fast-path it.
@@ -1133,7 +1133,7 @@ goog.dom.query = (function() {
             ret.push(te);
           }
           return ret;
-       ***REMOVED*****REMOVED***
+        };
       } else {
         // the common case:
         //    a descendant selector without a fast path. By now it's got
@@ -1150,12 +1150,12 @@ goog.dom.query = (function() {
             }
           }
           return ret;
-       ***REMOVED*****REMOVED***
+        };
       }
     } else {
       // the query is scoped in some way. Instead of querying by tag we
       // use some other collection to find candidate nodes
-      var skipFilters = { el: 1***REMOVED*****REMOVED***
+      var skipFilters = { el: 1 };
       if (wildcardTag) {
         skipFilters.tag = 1;
       }
@@ -1170,7 +1170,7 @@ goog.dom.query = (function() {
     }
     // cache it and return
     return _getElementsFuncCache[query.query] = retFunc;
- ***REMOVED*****REMOVED***
+  };
 
   var filterDown = function(root, queryParts) {
     // NOTE:
@@ -1188,7 +1188,7 @@ goog.dom.query = (function() {
         // hash to use for checking group membership but tell the
         // system not to post-filter us since we will already have been
         // guaranteed to be unique
-        bag = {***REMOVED***
+        bag = {};
         ret.nozip = true;
       }
       var gef = getElementsFunc(qp);
@@ -1204,7 +1204,7 @@ goog.dom.query = (function() {
       candidates = ret;
     }
     return ret;
- ***REMOVED*****REMOVED***
+  };
 
   ////////////////////////////////////////////////////////////////////////
   // the query runner
@@ -1214,7 +1214,7 @@ goog.dom.query = (function() {
   // dispatcher functions are generated then stored here for hash lookup in
   // the future
   var _queryFuncCacheDOM = {},
-    _queryFuncCacheQSA = {***REMOVED***
+    _queryFuncCacheQSA = {};
 
   // this is the second level of splitting, from full-length queries (e.g.,
   // 'div.foo .bar') into simple query expressions (e.g., ['div.foo',
@@ -1241,12 +1241,12 @@ goog.dom.query = (function() {
     return function(root) {
       return filterDown(root, qparts);
     }
- ***REMOVED*****REMOVED***
+  };
 
   // NOTES:
-  // ***REMOVED*** we can't trust QSA for anything but document-rooted queries, so
+  //  * we can't trust QSA for anything but document-rooted queries, so
   //    caching is split into DOM query evaluators and QSA query evaluators
-  // ***REMOVED*** caching query results is dirty and leak-prone (or, at a minimum,
+  //  * caching query results is dirty and leak-prone (or, at a minimum,
   //    prone to unbounded growth). Other toolkits may go this route, but
   //    they totally destroy their own ability to manage their memory
   //    footprint. If we implement it, it should only ever be with a fixed
@@ -1255,7 +1255,7 @@ goog.dom.query = (function() {
   //    potentially problematic, but even on large documents the size of the
   //    query evaluators is often < 100 function objects per evaluator (and
   //    LRU can be applied if it's ever shown to be an issue).
-  // ***REMOVED*** since IE's QSA support is currently only for HTML documents and even
+  //  * since IE's QSA support is currently only for HTML documents and even
   //    then only in IE 8's 'standards mode', we have to detect our dispatch
   //    route at query time and keep 2 separate caches. Ugg.
 
@@ -1267,9 +1267,9 @@ goog.dom.query = (function() {
     !!goog.dom.getDocument()[qsa] &&
     // see #5832
     (!goog.userAgent.WEBKIT || goog.userAgent.isVersionOrHigher('526'))
-***REMOVED***
+  );
 
- ***REMOVED*****REMOVED*** @param {boolean=} opt_forceDOM***REMOVED***
+  /** @param {boolean=} opt_forceDOM */
   var getQueryFunc = function(query, opt_forceDOM) {
 
     if (qsaAvail) {
@@ -1316,7 +1316,7 @@ goog.dom.query = (function() {
       //    figure out which aren't good
       (query.indexOf(':contains') == -1) &&
       (query.indexOf('|=') == -1) // some browsers don't understand it
-  ***REMOVED***
+    );
 
     // TODO:
     //    if we've got a descendant query (e.g., '> .thinger' instead of
@@ -1328,7 +1328,7 @@ goog.dom.query = (function() {
 
     if (useQSA) {
       var tq = (specials.indexOf(query.charAt(query.length - 1)) >= 0) ?
-            (query + '***REMOVED***') : query;
+            (query + ' *') : query;
       return _queryFuncCacheQSA[query] = function(root) {
         try {
           // the QSA system contains an egregious spec bug which
@@ -1367,7 +1367,7 @@ goog.dom.query = (function() {
         // if not a compound query (e.g., '.foo, .bar'), cache and return a
         // dispatcher
         getStepQueryFunc(query) :
-        // if it***REMOVED***is* a complex query, break it up into its
+        // if it *is* a complex query, break it up into its
         // constituent parts and return a dispatcher that will
         // merge the parts when run
         function(root) {
@@ -1379,9 +1379,9 @@ goog.dom.query = (function() {
           }
           return ret;
         }
-    ***REMOVED***
+      );
     }
- ***REMOVED*****REMOVED***
+  };
 
   var _zipIdx = 0;
 
@@ -1400,7 +1400,7 @@ goog.dom.query = (function() {
   } :
   function(node) {
     return (node['_uid'] || (node['_uid'] = ++_zipIdx));
- ***REMOVED*****REMOVED***
+  };
 
   // determine if a node in is unique in a 'bag'. In this case we don't want
   // to flatten a list of unique items, but rather just tell if the item in
@@ -1416,7 +1416,7 @@ goog.dom.query = (function() {
       return bag[id] = 1;
     }
     return 0;
- ***REMOVED*****REMOVED***
+  };
 
   // attempt to efficiently determine if an item in a list is a dupe,
   // returning a list of 'uniques', hopefully in document order
@@ -1439,7 +1439,7 @@ goog.dom.query = (function() {
     _zipIdx++;
 
     // we have to fork here for IE and XML docs because we can't set
-    // expandos on their nodes (apparently).***REMOVED***sigh*
+    // expandos on their nodes (apparently). *sigh*
     if (goog.userAgent.IE && caseSensitive) {
       var szidx = _zipIdx + '';
       arr[0].setAttribute(_zipIdxName, szidx);
@@ -1456,7 +1456,7 @@ goog.dom.query = (function() {
             ret.push(te);
           }
         }
-      } catch (e) { /* squelch***REMOVED*** }
+      } catch (e) { /* squelch */ }
     } else {
       if (arr[0]) {
         arr[0][_zipIdxName] = _zipIdx;
@@ -1469,14 +1469,14 @@ goog.dom.query = (function() {
       }
     }
     return ret;
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The main executor. Type specification from above.
-  ***REMOVED*** @param {string|Array} query The query.
-  ***REMOVED*** @param {(string|Node)=} root The root.
-  ***REMOVED*** @return {!Array} The elements that matched the query.
- ***REMOVED*****REMOVED***
+  /**
+   * The main executor. Type specification from above.
+   * @param {string|Array} query The query.
+   * @param {(string|Node)=} root The root.
+   * @return {!Array} The elements that matched the query.
+   */
   var query = function(query, root) {
     // NOTE: elementsById is not currently supported
     // NOTE: ignores xpath-ish queries for now
@@ -1489,7 +1489,7 @@ goog.dom.query = (function() {
     }
 
     if (query.constructor == Array) {
-      return***REMOVED*****REMOVED*** @type {!Array}***REMOVED*** (query);
+      return /** @type {!Array} */ (query);
     }
 
     if (!goog.isString(query)) {

@@ -1,4 +1,4 @@
-/*global SAXNotSupportedException***REMOVED***
+/*global SAXNotSupportedException */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -37,7 +37,7 @@ knowledge of the CeCILL license and that you accept its terms.
 
 (function () { // Begin namespace
 
-/* Supporting functions and exceptions***REMOVED***
+/* Supporting functions and exceptions */
 /*
 FIELDS
 static java.lang.String 	NSDECL
@@ -70,7 +70,7 @@ Method Summary
           Reset this Namespace support object for reuse.
  void 	setNamespaceDeclUris(boolean value)
           Controls whether namespace declaration attributes are placed into the NSDECL namespace by processName().
-***REMOVED****/
+ **/
 
 // http://www.saxproject.org/apidoc/org/xml/sax/SAXException.html
 function PrefixNotFoundException(prefix) { // java.lang.Exception
@@ -85,7 +85,7 @@ function NamespaceSupport () {
 NamespaceSupport.prototype.declarePrefix = function (prefix, uri) {
     var namespacesOfThatLevel = this.namespaces[this.namespaces.length - 1];
     namespacesOfThatLevel[prefix] = uri;
-***REMOVED***
+};
 NamespaceSupport.prototype.getDeclaredPrefixes = function () {
     var declaredPrefixes = [];
     var i = this.namespaces.length;
@@ -95,7 +95,7 @@ NamespaceSupport.prototype.getDeclaredPrefixes = function () {
         }
     }
     return declaredPrefixes;
-***REMOVED***
+};
 NamespaceSupport.prototype.getPrefix = function (uri) {
     var i = this.namespaces.length;
     while (i--) {
@@ -107,13 +107,13 @@ NamespaceSupport.prototype.getPrefix = function (uri) {
         }
     }
     return null;
-***REMOVED***
+};
 NamespaceSupport.prototype.getPrefixes = function () {
     throw new SAXNotSupportedException("NamespaceSupport.getPrefixes()");
-***REMOVED***
+};
 NamespaceSupport.prototype.getPrefixes = function (uri) {
     throw new SAXNotSupportedException("NamespaceSupport.getPrefixes(uri)");
-***REMOVED***
+};
 NamespaceSupport.prototype.getURI = function (prefix) {
     // if attribute, prefix may be null, then namespaceURI is null
     if (prefix === null) {
@@ -131,31 +131,31 @@ NamespaceSupport.prototype.getURI = function (prefix) {
         return null;
     }
     throw new PrefixNotFoundException(prefix);
-***REMOVED***
+};
 
 NamespaceSupport.prototype.isNamespaceDeclUris = function () {
     throw new SAXNotSupportedException("NamespaceSupport.isNamespaceDeclUris()");
-***REMOVED***
+};
 NamespaceSupport.prototype.popContext = function () {
     return this.namespaces.pop();
-***REMOVED***
+};
 NamespaceSupport.prototype.processName = function (qName, parts, isAttribute) {
     throw new SAXNotSupportedException("NamespaceSupport.processName(qName, parts, isAttribute)");
-***REMOVED***
+};
 NamespaceSupport.prototype.pushContext = function () {
-    var namespacesOfThatLevel = {***REMOVED***
+    var namespacesOfThatLevel = {};
     this.namespaces.push(namespacesOfThatLevel);
-***REMOVED***
+};
 NamespaceSupport.prototype.reset = function () {
-    /* for each depth, a map of namespaces***REMOVED***
+    /* for each depth, a map of namespaces */
     this.namespaces = [];
-    var xmlNamespace = {***REMOVED***
+    var xmlNamespace = {};
     xmlNamespace.xml = NamespaceSupport.XMLNS;
     this.namespaces.push(xmlNamespace);
-***REMOVED***
+};
 NamespaceSupport.prototype.setNamespaceDeclUris = function (value) {
     throw new SAXNotSupportedException("NamespaceSupport.setNamespaceDeclUris(value)");
-***REMOVED***
+};
 NamespaceSupport.NSDECL = 'http://www.w3.org/xmlns/2000/'; // NS of xmlns, xmlns:html, etc.
 NamespaceSupport.XMLNS = 'http://www.w3.org/XML/1998/namespace'; // e.g., NS for xml:lang, etc.
 

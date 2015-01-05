@@ -15,7 +15,7 @@
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.node');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.node.Nodes');
   goog.require('xrx.mvc.Instance');
   goog.require('xrx.xpath');
 </script>
@@ -42,7 +42,7 @@ function test01Text() {
   assertEquals('5', result.iterateNext().getToken().xml(instance.xml()));
   assertEquals('6', result.iterateNext().getToken().xml(instance.xml()));
   
-***REMOVED***
+};
 
 function test02Node() {
   var expr = '//node()';
@@ -67,15 +67,15 @@ function test02Node() {
   assertEquals('5', result.iterateNext().getToken().xml(instance.xml()));
   assertEquals('6', result.iterateNext().getToken().xml(instance.xml()));
   assertEquals('<d id="test"/>', result.iterateNext().getToken().xml(instance.xml()));
-***REMOVED***
+};
 
 function test03Comment() {
   //TODO: implement this
-***REMOVED***
+};
 
 function test03ProcessingInstruction() {
   //TODO: implement this
-***REMOVED***
+};
 
 </script>
 </body>

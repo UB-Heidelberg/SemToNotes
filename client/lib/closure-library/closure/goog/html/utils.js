@@ -13,26 +13,26 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview HTML processing utilities for HTML in string form.
-***REMOVED***
+/**
+ * @fileoverview HTML processing utilities for HTML in string form.
+ */
 
 goog.provide('goog.html.utils');
 
 goog.require('goog.string');
 
 
-***REMOVED***
-***REMOVED*** Extracts text from HTML.
-***REMOVED*** Block-level elements such as div are surrounded with whitespace,
-***REMOVED*** but inline elements are not. Span is treated as a block level element
-***REMOVED*** because it is often used as a container.
-***REMOVED*** Breaking spaces are compressed and trimmed.
-***REMOVED***
-***REMOVED*** @param {string} value The input HTML to have tags removed.
-***REMOVED*** @return {string} A representation of value without tags, HTML comments, or
-***REMOVED***     other non-text content.
-***REMOVED***
+/**
+ * Extracts text from HTML.
+ * Block-level elements such as div are surrounded with whitespace,
+ * but inline elements are not. Span is treated as a block level element
+ * because it is often used as a container.
+ * Breaking spaces are compressed and trimmed.
+ *
+ * @param {string} value The input HTML to have tags removed.
+ * @return {string} A representation of value without tags, HTML comments, or
+ *     other non-text content.
+ */
 goog.html.utils.stripHtmlTags = function(value) {
   // TODO(user): Make a version that extracts text attributes such as alt.
   return goog.string.unescapeEntities(goog.string.trim(value.replace(
@@ -40,26 +40,26 @@ goog.html.utils.stripHtmlTags = function(value) {
         return goog.html.utils.INLINE_HTML_TAG_REGEX_.test(tagName) ? '' : ' ';
       }).
       replace(/[\t\n ]+/g, ' ')));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Matches all tags that do not require extra space.
-***REMOVED***
-***REMOVED*** @const
-***REMOVED*** @private {RegExp}
-***REMOVED***
+/**
+ * Matches all tags that do not require extra space.
+ *
+ * @const
+ * @private {RegExp}
+ */
 goog.html.utils.INLINE_HTML_TAG_REGEX_ =
     /^(?:abbr|acronym|address|b|em|i|small|strong|su[bp]|u)$/i;
 
 
-***REMOVED***
-***REMOVED*** Matches all tags, HTML comments, and DOCTYPEs in tag soup HTML.
-***REMOVED*** By removing these, and replacing any '<' or '>' characters with
-***REMOVED*** entities we guarantee that the result can be embedded into
-***REMOVED*** an attribute without introducing a tag boundary.
-***REMOVED***
-***REMOVED*** @private {RegExp}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Matches all tags, HTML comments, and DOCTYPEs in tag soup HTML.
+ * By removing these, and replacing any '<' or '>' characters with
+ * entities we guarantee that the result can be embedded into
+ * an attribute without introducing a tag boundary.
+ *
+ * @private {RegExp}
+ * @const
+ */
 goog.html.utils.HTML_TAG_REGEX_ = /<[!\/]?([a-z0-9]+)([\/ ][^>]*)?>/gi;

@@ -1,3 +1,3 @@
-***REMOVED*** @name dimensions***REMOVED***
+/** @name dimensions */
 
 var width = 12

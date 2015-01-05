@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern to match any children of a tag, and
-***REMOVED*** specifically collect those that match a child pattern.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern to match any children of a tag, and
+ * specifically collect those that match a child pattern.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.ChildMatches');
 
@@ -26,71 +26,71 @@ goog.require('goog.dom.pattern.MatchType');
 
 
 
-***REMOVED***
-***REMOVED*** Pattern object that matches any nodes at or below the current tree depth.
-***REMOVED***
-***REMOVED*** @param {goog.dom.pattern.AbstractPattern} childPattern Pattern to collect
-***REMOVED***     child matches of.
-***REMOVED*** @param {number=} opt_minimumMatches Enforce a minimum nuber of matches.
-***REMOVED***     Defaults to 0.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.pattern.AllChildren}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Pattern object that matches any nodes at or below the current tree depth.
+ *
+ * @param {goog.dom.pattern.AbstractPattern} childPattern Pattern to collect
+ *     child matches of.
+ * @param {number=} opt_minimumMatches Enforce a minimum nuber of matches.
+ *     Defaults to 0.
+ * @constructor
+ * @extends {goog.dom.pattern.AllChildren}
+ * @final
+ */
 goog.dom.pattern.ChildMatches = function(childPattern, opt_minimumMatches) {
   this.childPattern_ = childPattern;
   this.matches = [];
   this.minimumMatches_ = opt_minimumMatches || 0;
   goog.dom.pattern.AllChildren.call(this);
-***REMOVED***
+};
 goog.inherits(goog.dom.pattern.ChildMatches, goog.dom.pattern.AllChildren);
 
 
-***REMOVED***
-***REMOVED*** Array of matched child nodes.
-***REMOVED***
-***REMOVED*** @type {Array.<Node>}
-***REMOVED***
+/**
+ * Array of matched child nodes.
+ *
+ * @type {Array.<Node>}
+ */
 goog.dom.pattern.ChildMatches.prototype.matches;
 
 
-***REMOVED***
-***REMOVED*** Minimum number of matches.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Minimum number of matches.
+ *
+ * @type {number}
+ * @private
+ */
 goog.dom.pattern.ChildMatches.prototype.minimumMatches_ = 0;
 
 
-***REMOVED***
-***REMOVED*** The child pattern to collect matches from.
-***REMOVED***
-***REMOVED*** @type {goog.dom.pattern.AbstractPattern}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The child pattern to collect matches from.
+ *
+ * @type {goog.dom.pattern.AbstractPattern}
+ * @private
+ */
 goog.dom.pattern.ChildMatches.prototype.childPattern_;
 
 
-***REMOVED***
-***REMOVED*** Whether the pattern has recently matched or failed to match and will need to
-***REMOVED*** be reset when starting a new round of matches.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the pattern has recently matched or failed to match and will need to
+ * be reset when starting a new round of matches.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.dom.pattern.ChildMatches.prototype.needsReset_ = false;
 
 
-***REMOVED***
-***REMOVED*** Test whether the given token is on the same level.
-***REMOVED***
-***REMOVED*** @param {Node} token Token to match against.
-***REMOVED*** @param {goog.dom.TagWalkType} type The type of token.
-***REMOVED*** @return {goog.dom.pattern.MatchType} {@code MATCHING} if the token is on the
-***REMOVED***     same level or deeper and {@code BACKTRACK_MATCH} if not.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Test whether the given token is on the same level.
+ *
+ * @param {Node} token Token to match against.
+ * @param {goog.dom.TagWalkType} type The type of token.
+ * @return {goog.dom.pattern.MatchType} {@code MATCHING} if the token is on the
+ *     same level or deeper and {@code BACKTRACK_MATCH} if not.
+ * @override
+ */
 goog.dom.pattern.ChildMatches.prototype.matchToken = function(token, type) {
   // Defer resets so we maintain our matches array until the last possible time.
   if (this.needsReset_) {
@@ -140,16 +140,16 @@ goog.dom.pattern.ChildMatches.prototype.matchToken = function(token, type) {
       this.needsReset_ = true;
       return status;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reset any internal state this pattern keeps.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Reset any internal state this pattern keeps.
+ * @override
+ */
 goog.dom.pattern.ChildMatches.prototype.reset = function() {
   this.needsReset_ = false;
   this.matches.length = 0;
   this.childPattern_.reset();
   goog.dom.pattern.AllChildren.prototype.reset.call(this);
-***REMOVED***
+};

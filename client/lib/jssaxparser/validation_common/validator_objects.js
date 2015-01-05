@@ -95,8 +95,8 @@ data QName = QName Uri LocalName
 
 An XML document is represented as a ChildNode. There are two kinds of child node:
 
-   ***REMOVED*** a TextNode containing a string;
-   ***REMOVED*** an ElementNode containing a name (of type QName), a Context, a set of attributes (represented as a list of AttributeNodes, each of which will be an AttributeNode), and a list of children (represented as a list of ChildNodes).
+    * a TextNode containing a string;
+    * an ElementNode containing a name (of type QName), a Context, a set of attributes (represented as a list of AttributeNodes, each of which will be an AttributeNode), and a list of children (represented as a list of ChildNodes).
 
 data ChildNode = ElementNode QName Context [AttributeNode] [ChildNode]
                  | TextNode String
@@ -112,10 +112,10 @@ function Param(localName, string) {
 }
 Param.prototype.toHTML = function() {
     return "<table><tr><th>Param</th></tr><tr><td>localName</td><td>" + this.localName + "</td></tr><tr><td>string</td><td>" + this.string + "</td></tr></table>";
-***REMOVED***
+};
 Param.prototype.toString = function() {
     return "Param";
-***REMOVED***
+};
 
 /*
 map is an array of [(Prefix, Uri)] mappings
@@ -130,10 +130,10 @@ Context.prototype.toHTML = function() {
         string += "<tr><td>" + i + "</td><td>" + this.map[i] + "</td></tr>";
     }
     return string + "</table></td></tr></table>";
-***REMOVED***
+};
 Context.prototype.toString = function() {
     return "Context";
-***REMOVED***
+};
 
 function Datatype(uri, localName) {
     this.uri = uri;
@@ -141,10 +141,10 @@ function Datatype(uri, localName) {
 }
 Datatype.prototype.toHTML = function() {
     return "<table><tr><th>Datatype</th></tr><tr><td>uri</td><td>" + this.uri + "</td></tr><tr><td>localName</td><td>" + this.localName + "</td></tr></table>";
-***REMOVED***
+};
 Datatype.prototype.toString = function() {
     return "Datatype";
-***REMOVED***
+};
 
 /*
 data NameClass = AnyName
@@ -157,20 +157,20 @@ data NameClass = AnyName
 function AnyName() {}
 AnyName.prototype.toHTML = function() {
     return "<table><tr><th>AnyName</th></tr></table>";
-***REMOVED***
+};
 AnyName.prototype.toString = function() {
     return "AnyName";
-***REMOVED***
+};
 
 function AnyNameExcept(nameClass) {
     this.nameClass = nameClass;
 }
 AnyNameExcept.prototype.toHTML = function() {
     return "AnyNameExcept";
-***REMOVED***
+};
 AnyNameExcept.prototype.toString = function() {
     return "AnyNameExcept";
-***REMOVED***
+};
 
 function Name(uri, localName) {
     this.uri = uri;
@@ -178,30 +178,30 @@ function Name(uri, localName) {
 }
 Name.prototype.toHTML = function() {
     return "<table><tr><th>Name</th></tr><tr><td>uri</td><td>" + this.uri + "</td></tr><tr><td>localName</td><td>" + this.localName + "</td></tr></table>";
-***REMOVED***
+};
 Name.prototype.toString = function() {
     return "Name";
-***REMOVED***
+};
 
 function NsName(uri) {
     this.uri = uri;
 }
 NsName.prototype.toHTML = function() {
     return "<table><tr><th>NsName</th></tr><tr><td>uri</td><td>" + this.uri + "</td></tr></table>";
-***REMOVED***
+};
 NsName.prototype.toString = function() {
     return "NsName";
-***REMOVED***
+};
 function NsNameExcept(uri, nameClass) {
     this.uri = uri;
     this.nameClass = nameClass;
 }
 NsNameExcept.prototype.toHTML = function() {
     return "<table><tr><th>NsNameExcept</th></tr><tr><td>uri</td><td>" + this.uri + "</td></tr><tr><td>nameClass</td><td>" + this.nameClass.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 NsNameExcept.prototype.toString = function() {
     return "NsNameExcept";
-***REMOVED***
+};
 
 function NameClassChoice(nameClass1, nameClass2) {
     this.nameClass1 = nameClass1;
@@ -209,10 +209,10 @@ function NameClassChoice(nameClass1, nameClass2) {
 }
 NameClassChoice.prototype.toHTML = function() {
     return "<table><tr><th>NameClassChoice</th></tr><tr><td>nameClass1</td><td>" + this.nameClass1.toHTML() + "</td></tr><tr><td>nameClass2</td><td>" + this.nameClass2.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 NameClassChoice.prototype.toString = function() {
     return "NameClassChoice";
-***REMOVED***
+};
 
 
 /*
@@ -234,10 +234,10 @@ data Pattern = Empty
 function Empty() {}
 Empty.prototype.toHTML = function() {
     return "<table><tr><th>Empty</th></tr></table>";
-***REMOVED***
+};
 Empty.prototype.toString = function() {
     return "Empty";
-***REMOVED***
+};
 
 /*
 priority gives a rank of pertinence between NotAllowed message
@@ -257,10 +257,10 @@ NotAllowed.prototype.toHTML = function() {
         string += this.childNode;
     }
     return string + "</td></tr></table>";
-***REMOVED***
+};
 NotAllowed.prototype.toString = function() {
     return "NotAllowed";
-***REMOVED***
+};
 
 function MissingContent(message, pattern, childNode, priority) {
     this.message = message;
@@ -279,18 +279,18 @@ MissingContent.prototype.toHTML = function() {
         string += this.childNode;
     }
     return string + "</td></tr></table>";
-***REMOVED***
+};
 MissingContent.prototype.toString = function() {
     return "MissingContent";
-***REMOVED***
+};
 
 function Text() {}
 Text.prototype.toHTML = function() {
     return "<table><tr><th>Text</th></tr></table>";
-***REMOVED***
+};
 Text.prototype.toString = function() {
     return "Text";
-***REMOVED***
+};
 
 function Choice(pattern1, pattern2) {
     this.pattern1 = pattern1;
@@ -298,10 +298,10 @@ function Choice(pattern1, pattern2) {
 }
 Choice.prototype.toHTML = function() {
     return "<table><tr><th>Choice</th></tr><tr><td>pattern1</td><td>" + this.pattern1.toHTML() + "</td></tr><tr><td>pattern2</td><td>" + this.pattern2.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 Choice.prototype.toString = function() {
     return "Choice";
-***REMOVED***
+};
 
 function Interleave(pattern1, pattern2) {
     this.pattern1 = pattern1;
@@ -309,10 +309,10 @@ function Interleave(pattern1, pattern2) {
 }
 Interleave.prototype.toHTML = function() {
     return "<table><tr><th>Interleave</th></tr><tr><td>pattern1</td><td>" + this.pattern1.toHTML() + "</td></tr><tr><td>pattern2</td><td>" + this.pattern2.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 Interleave.prototype.toString = function() {
     return "Interleave";
-***REMOVED***
+};
 
 function Group(pattern1, pattern2) {
     this.pattern1 = pattern1;
@@ -320,30 +320,30 @@ function Group(pattern1, pattern2) {
 }
 Group.prototype.toHTML = function() {
     return "<table><tr><th>Group</th></tr><tr><td>pattern1</td><td>" + this.pattern1.toHTML() + "</td></tr><tr><td>pattern2</td><td>" + this.pattern2.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 Group.prototype.toString = function() {
     return "Group";
-***REMOVED***
+};
 
 function OneOrMore(pattern) {
     this.pattern = pattern;
 }
 OneOrMore.prototype.toHTML = function() {
     return "<table><tr><th>OneOrMore</th></tr><tr><td>pattern</td><td>" + this.pattern.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 OneOrMore.prototype.toString = function() {
     return "OneOrMore";
-***REMOVED***
+};
 
 function List(pattern) {
     this.pattern = pattern;
 }
 List.prototype.toHTML = function() {
     return "<table><tr><th>List</th></tr><tr><td>pattern</td><td>" + this.pattern.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 List.prototype.toString = function() {
     return "List";
-***REMOVED***
+};
 
 function Data(datatype, paramList) {
     this.datatype = datatype;
@@ -356,10 +356,10 @@ Data.prototype.toHTML = function() {
         string += "<tr><td>" + this.paramList[i].toHTML() + "</td></tr>";
     }
     return string + "</table></td></tr></table>";
-***REMOVED***
+};
 Data.prototype.toString = function() {
     return "Data";
-***REMOVED***
+};
 
 function DataExcept(datatype, paramList, pattern) {
     this.datatype = datatype;
@@ -373,10 +373,10 @@ DataExcept.prototype.toHTML = function() {
         string += "<tr><td>" + this.paramList[i].toHTML() + "</td></tr>";
     }
     return string + "</table></td></tr><tr><td>pattern</td><td>" + this.pattern.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 DataExcept.prototype.toString = function() {
     return "DataExcept";
-***REMOVED***
+};
 
 function Value(datatype, string, context) {
     this.datatype = datatype;
@@ -385,10 +385,10 @@ function Value(datatype, string, context) {
 }
 Value.prototype.toHTML = function() {
     return "<table><tr><th>Data</th></tr><tr><td>datatype</td><td>" + this.datatype.toHTML() + "</td></tr><tr><td>string</td><td>" + this.string + "</td></tr><tr><td>context</td><td>" + this.context.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 Value.prototype.toString = function() {
     return "Value";
-***REMOVED***
+};
 
 /*
 defaultValue must be an instance of Value
@@ -404,10 +404,10 @@ Attribute.prototype.toHTML = function() {
         string += "</td></tr><tr><td>defaultValue</td><td>" + this.defaultValue.toHTML();
     }
     return string + "</td></tr></table>";
-***REMOVED***
+};
 Attribute.prototype.toString = function() {
     return "Attribute";
-***REMOVED***
+};
 
 function Element(nameClass, pattern) {
     this.nameClass = nameClass;
@@ -415,10 +415,10 @@ function Element(nameClass, pattern) {
 }
 Element.prototype.toHTML = function() {
     return "<table><tr><th>Element</th></tr><tr><td>nameClass</td><td>" + this.nameClass.toHTML() + "</td></tr><tr><td>pattern</td><td>" + this.pattern.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 Element.prototype.toString = function() {
     return "Element";
-***REMOVED***
+};
 
 function After(pattern1, pattern2) {
     this.pattern1 = pattern1;
@@ -426,10 +426,10 @@ function After(pattern1, pattern2) {
 }
 After.prototype.toHTML = function() {
     return "<table><tr><th>After</th></tr><tr><td>pattern1</td><td>" + this.pattern1.toHTML() + "</td></tr><tr><td>pattern2</td><td>" + this.pattern2.toHTML() + "</td></tr></table>";
-***REMOVED***
+};
 After.prototype.toString = function() {
     return "After";
-***REMOVED***
+};
 
 
 function QName(uri, localName) {
@@ -438,10 +438,10 @@ function QName(uri, localName) {
 }
 QName.prototype.toHTML = function() {
     return "<table><tr><th>QName</th></tr><tr><td>uri</td><td>" + this.uri + "</td></tr><tr><td>localName</td><td>" + this.localName + "</td></tr></table>";
-***REMOVED***
+};
 QName.prototype.toString = function() {
     return "QName";
-***REMOVED***
+};
 
 /*
 data ChildNode = ElementNode QName Context [AttributeNode] [ChildNode]
@@ -455,11 +455,11 @@ function ElementNode(qName, context, attributeNodes, childNodes) {
 }
 ElementNode.prototype.setParentNode = function(parentNode) {
     this.parentNode = parentNode;
-***REMOVED***
+};
 /*
 used for augmenting the XML instance, by default does not do anything
 */
-ElementNode.prototype.addAttribute = function(pattern) {***REMOVED***
+ElementNode.prototype.addAttribute = function(pattern) {};
 
 ElementNode.prototype.toHTML = function() {
     var string = "<table><tr><th>ElementNode</th></tr><tr><td>qName</td><td>" + this.qName.toHTML() + "</td></tr><tr><td>context</td><td>" + this.context.toHTML() + "</td></tr><tr><td>attributeNodes</td><td><table>";
@@ -475,20 +475,20 @@ ElementNode.prototype.toHTML = function() {
         string += "</td></tr><tr><td>parentNode</td><td>" + this.parentNode.qName.localName;
     }
     return string + "</td></tr></table>";
-***REMOVED***
+};
 ElementNode.prototype.toString = function() {
     return "ElementNode";
-***REMOVED***
+};
 
 function TextNode(string) {
     this.string = string;
 }
 TextNode.prototype.toHTML = function() {
     return "<table><tr><th>TextNode</th></tr><tr><td>string</td><td>[" + this.string + "]</td></tr></table>";
-***REMOVED***
+};
 TextNode.prototype.toString = function() {
     return "TextNode";
-***REMOVED***
+};
 
 function AttributeNode(qName, string) {
     this.qName = qName;
@@ -497,10 +497,10 @@ function AttributeNode(qName, string) {
 /*
 used for augmenting the XML instance, by default does not do anything
 */
-AttributeNode.prototype.setType = function(type) {***REMOVED***
+AttributeNode.prototype.setType = function(type) {};
 AttributeNode.prototype.toHTML = function() {
     return "<table><tr><th>AttributeNode</th></tr><tr><td>qName</td><td>" + this.qName.toHTML() + "</td></tr><tr><td>string</td><td>" + this.string + "</td></tr></table>";
-***REMOVED***
+};
 AttributeNode.prototype.toString = function() {
     return "AttributeNode";
-***REMOVED***
+};

@@ -22,31 +22,31 @@ function InputSource(input) {
 }
 InputSource.prototype.getByteStream = function () {
     return this.byteStream || null; // InputStream
-***REMOVED***
+};
 InputSource.prototype.getCharacterStream = function () { // Should apparently not have a byte-order mark (see constructor)
     return this.characterStream || null; // Reader
-***REMOVED***
+};
 InputSource.prototype.getEncoding = function () {
     return this.encoding || null; // String
-***REMOVED***
+};
 InputSource.prototype.getPublicId = function () {
     return this.publicId || null; // String
-***REMOVED***
+};
 InputSource.prototype.getSystemId = function () {
     return this.systemId || null; // String
-***REMOVED***
+};
 InputSource.prototype.setByteStream = function (byteStream) { // InputStream
     this.byteStream = byteStream;
-***REMOVED***
+};
 InputSource.prototype.setCharacterStream = function (characterStream) { // Reader
     this.characterStream = characterStream;
-***REMOVED***
+};
 InputSource.prototype.setEncoding = function (encoding) { // No effect on character stream
     this.encoding = encoding;
-***REMOVED***
+};
 InputSource.prototype.setPublicId = function (publicId) { // String
     this.publicId = publicId;
-***REMOVED***
+};
 InputSource.prototype.setSystemId = function (systemId) { // String
     this.systemId = systemId;
-***REMOVED***
+};

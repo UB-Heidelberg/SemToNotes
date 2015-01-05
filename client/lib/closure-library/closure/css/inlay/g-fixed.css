@@ -1,21 +1,21 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-***REMOVED***
-***REMOVED*** CSS Inlay
-***REMOVED*** Fixed templates
-***REMOVED*** @author ddiaz@google.com (Dustin Diaz)
-***REMOVED*** @author elsigh@google.com (Lindsey Simon)
-***REMOVED*** @fileoverview
-***REMOVED*** The nature of these templates is to have one unit be a fixed width
-***REMOVED*** and the supplementary unit to take up the rest of the width
-***REMOVED*** of its parents' container.
-***REMOVED***
-***REMOVED*** Sample Usage:
+/**
+ * CSS Inlay
+ * Fixed templates
+ * @author ddiaz@google.com (Dustin Diaz)
+ * @author elsigh@google.com (Lindsey Simon)
+ * @fileoverview
+ * The nature of these templates is to have one unit be a fixed width
+ * and the supplementary unit to take up the rest of the width
+ * of its parents' container.
+ *
+ * Sample Usage:
   <div class="g-section g-tpl-180">
     <div class="g-unit g-first">
       <p>
@@ -28,43 +28,43 @@
       </p>
     </div>
   </div>
-***REMOVED***
+ */
 
-/* Document container designed for 1024x768***REMOVED***
-/* TODO(ux-webdev): convert this to a straight px value - em assumes reset.***REMOVED***
+/* Document container designed for 1024x768 */
+/* TODO(ux-webdev): convert this to a straight px value - em assumes reset. */
 .g-doc-1024 {
   width: 73.074em;
-  min-width: 950px; /* min-width doesn't work in IE6***REMOVED***
+  min-width: 950px; /* min-width doesn't work in IE6 */
   margin: 0 auto;
   text-align: left;
 }
-/* IE 6***REMOVED***
+/* IE 6 */
 * html .g-doc-1024 {
   width: 71.313em;
 }
-/* IE 7***REMOVED***
+/* IE 7 */
 *+html .g-doc-1024 {
   width: 71.313em;
 }
 
-/* Document container designed for 800x600***REMOVED***
-/* TODO(ux-webdev): convert this to a straight px value - em assumes reset.***REMOVED***
+/* Document container designed for 800x600 */
+/* TODO(ux-webdev): convert this to a straight px value - em assumes reset. */
 .g-doc-800 {
   width: 57.69em;
-  min-width: 750px; /* min-width doesn't work in IE6***REMOVED***
+  min-width: 750px; /* min-width doesn't work in IE6 */
   margin: 0 auto;
   text-align: left;
 }
-/* IE 6***REMOVED***
+/* IE 6 */
 * html .g-doc-800 {
   width: 56.3em;
 }
-/* IE 7***REMOVED***
+/* IE 7 */
 *+html .g-doc-800 {
   width: 56.3em;
 }
 
-/* 160px***REMOVED***
+/* 160px */
 .g-tpl-160 .g-unit,
 .g-unit .g-tpl-160 .g-unit,
 .g-unit .g-unit .g-tpl-160 .g-unit,
@@ -82,7 +82,7 @@
   float: left;
 }
 
-/* 160px alt***REMOVED***
+/* 160px alt */
 .g-tpl-160-alt .g-unit,
 .g-unit .g-tpl-160-alt .g-unit,
 .g-unit .g-unit .g-tpl-160-alt .g-unit,
@@ -100,7 +100,7 @@
   float: right;
 }
 
-/* 180px***REMOVED***
+/* 180px */
 .g-tpl-180 .g-unit,
 .g-unit .g-tpl-180 .g-unit,
 .g-unit .g-unit .g-tpl-180 .g-unit,
@@ -118,7 +118,7 @@
   float: left;
 }
 
-/* 180px alt***REMOVED***
+/* 180px alt */
 .g-tpl-180-alt .g-unit,
 .g-unit .g-tpl-180-alt .g-unit,
 .g-unit .g-unit .g-tpl-180-alt .g-unit,
@@ -136,7 +136,7 @@
   float: right;
 }
 
-/* 300px***REMOVED***
+/* 300px */
 .g-tpl-300 .g-unit,
 .g-unit .g-tpl-300 .g-unit,
 .g-unit .g-unit .g-tpl-300 .g-unit,
@@ -154,7 +154,7 @@
   float: left;
 }
 
-/* 300px alt***REMOVED***
+/* 300px alt */
 .g-tpl-300-alt .g-unit,
 .g-unit .g-tpl-300-alt .g-unit,
 .g-unit .g-unit .g-tpl-300-alt .g-unit,

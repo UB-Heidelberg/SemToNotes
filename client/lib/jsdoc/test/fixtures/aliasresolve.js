@@ -1,19 +1,19 @@
-***REMOVED***
-***REMOVED*** @namespace
-***REMOVED***
-var A = {***REMOVED***
+/**
+ * @namespace
+ */
+var A = {};
 
 (function(ns) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @namespace
-    ***REMOVED*** @alias A.F
-   ***REMOVED*****REMOVED***
-    var f = {***REMOVED***
+    /**
+     * @namespace
+     * @alias A.F
+     */
+    var f = {};
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {String}
-   ***REMOVED*****REMOVED***
-    f.method = function(){***REMOVED***
+    /**
+     * @return {String}
+     */
+    f.method = function(){};
 
     ns.F = f;
 })(A);

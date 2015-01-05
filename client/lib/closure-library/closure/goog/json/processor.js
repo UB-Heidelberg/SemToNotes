@@ -13,9 +13,9 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines an interface for JSON parsing and serialization.
-***REMOVED***
+/**
+ * @fileoverview Defines an interface for JSON parsing and serialization.
+ */
 
 goog.provide('goog.json.Processor');
 
@@ -24,10 +24,10 @@ goog.require('goog.string.Stringifier');
 
 
 
-***REMOVED***
-***REMOVED*** An interface for JSON parsing and serialization.
-***REMOVED*** @interface
-***REMOVED*** @extends {goog.string.Parser}
-***REMOVED*** @extends {goog.string.Stringifier}
-***REMOVED***
-goog.json.Processor = function() {***REMOVED***
+/**
+ * An interface for JSON parsing and serialization.
+ * @interface
+ * @extends {goog.string.Parser}
+ * @extends {goog.string.Stringifier}
+ */
+goog.json.Processor = function() {};

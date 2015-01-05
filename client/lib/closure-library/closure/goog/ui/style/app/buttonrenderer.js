@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.Button}s in App style.
-***REMOVED***
-***REMOVED*** Based on ImagelessButtonRender. Uses even more CSS voodoo than the default
-***REMOVED*** implementation to render custom buttons with fake rounded corners and
-***REMOVED*** dimensionality (via a subtle flat shadow on the bottom half of the button)
-***REMOVED*** without the use of images.
-***REMOVED***
-***REMOVED*** Based on the Custom Buttons 3.1 visual specification, see
-***REMOVED*** http://go/custombuttons
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.Button}s in App style.
+ *
+ * Based on ImagelessButtonRender. Uses even more CSS voodoo than the default
+ * implementation to render custom buttons with fake rounded corners and
+ * dimensionality (via a subtle flat shadow on the bottom half of the button)
+ * without the use of images.
+ *
+ * Based on the Custom Buttons 3.1 visual specification, see
+ * http://go/custombuttons
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.ui.style.app.ButtonRenderer');
 
@@ -36,82 +36,82 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Custom renderer for {@link goog.ui.Button}s. Imageless buttons can contain
-***REMOVED*** almost arbitrary HTML content, will flow like inline elements, but can be
-***REMOVED*** styled like block-level elements.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.ui.CustomButtonRenderer}
-***REMOVED***
+/**
+ * Custom renderer for {@link goog.ui.Button}s. Imageless buttons can contain
+ * almost arbitrary HTML content, will flow like inline elements, but can be
+ * styled like block-level elements.
+ *
+ * @constructor
+ * @extends {goog.ui.CustomButtonRenderer}
+ */
 goog.ui.style.app.ButtonRenderer = function() {
   goog.ui.CustomButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.style.app.ButtonRenderer, goog.ui.CustomButtonRenderer);
 goog.addSingletonGetter(goog.ui.style.app.ButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.style.app.ButtonRenderer.CSS_CLASS = goog.getCssName('goog-button');
 
 
-***REMOVED***
-***REMOVED*** Array of arrays of CSS classes that we want composite classes added and
-***REMOVED*** removed for in IE6 and lower as a workaround for lack of multi-class CSS
-***REMOVED*** selector support.
-***REMOVED*** @type {Array.<Array.<string>>}
-***REMOVED***
+/**
+ * Array of arrays of CSS classes that we want composite classes added and
+ * removed for in IE6 and lower as a workaround for lack of multi-class CSS
+ * selector support.
+ * @type {Array.<Array.<string>>}
+ */
 goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS = [];
 
 
-***REMOVED***
-***REMOVED*** Returns the button's contents wrapped in the following DOM structure:
-***REMOVED***    <div class="goog-inline-block goog-button-base goog-button">
-***REMOVED***      <div class="goog-inline-block goog-button-base-outer-box">
-***REMOVED***        <div class="goog-button-base-inner-box">
-***REMOVED***          <div class="goog-button-base-pos">
-***REMOVED***            <div class="goog-button-base-top-shadow">&nbsp;</div>
-***REMOVED***            <div class="goog-button-base-content">Contents...</div>
-***REMOVED***          </div>
-***REMOVED***        </div>
-***REMOVED***      </div>
-***REMOVED***    </div>
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the button's contents wrapped in the following DOM structure:
+ *    <div class="goog-inline-block goog-button-base goog-button">
+ *      <div class="goog-inline-block goog-button-base-outer-box">
+ *        <div class="goog-button-base-inner-box">
+ *          <div class="goog-button-base-pos">
+ *            <div class="goog-button-base-top-shadow">&nbsp;</div>
+ *            <div class="goog-button-base-content">Contents...</div>
+ *          </div>
+ *        </div>
+ *      </div>
+ *    </div>
+ * @override
+ */
 goog.ui.style.app.ButtonRenderer.prototype.createDom;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.ButtonRenderer.prototype.getContentElement = function(
     element) {
-  return element &&***REMOVED*****REMOVED*** @type {Element}***REMOVED***(
+  return element && /** @type {Element} */(
       element.firstChild.firstChild.firstChild.lastChild);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a text caption or existing DOM structure, and returns the content
-***REMOVED*** wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
-***REMOVED***  <div class="goog-inline-block goog-button-base-outer-box">
-***REMOVED***    <div class="goog-inline-block goog-button-base-inner-box">
-***REMOVED***      <div class="goog-button-base-pos">
-***REMOVED***        <div class="goog-button-base-top-shadow">&nbsp;</div>
-***REMOVED***        <div class="goog-button-base-content">Contents...</div>
-***REMOVED***      </div>
-***REMOVED***    </div>
-***REMOVED***  </div>
-***REMOVED*** Used by both {@link #createDom} and {@link #decorate}.  To be overridden
-***REMOVED*** by subclasses.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
-***REMOVED***     in a box.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
-***REMOVED*** @return {Element} Pseudo-rounded-corner box containing the content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a text caption or existing DOM structure, and returns the content
+ * wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
+ *  <div class="goog-inline-block goog-button-base-outer-box">
+ *    <div class="goog-inline-block goog-button-base-inner-box">
+ *      <div class="goog-button-base-pos">
+ *        <div class="goog-button-base-top-shadow">&nbsp;</div>
+ *        <div class="goog-button-base-content">Contents...</div>
+ *      </div>
+ *    </div>
+ *  </div>
+ * Used by both {@link #createDom} and {@link #decorate}.  To be overridden
+ * by subclasses.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
+ *     in a box.
+ * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
+ * @return {Element} Pseudo-rounded-corner box containing the content.
+ * @override
+ */
 goog.ui.style.app.ButtonRenderer.prototype.createButton = function(content,
     dom) {
   var baseClass = this.getStructuralCssClass();
@@ -125,18 +125,18 @@ goog.ui.style.app.ButtonRenderer.prototype.createButton = function(content,
                   'div', goog.getCssName(baseClass, 'top-shadow'), '\u00A0'),
               dom.createDom(
                   'div', goog.getCssName(baseClass, 'content'), content))));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Check if the button's element has a box structure.
-***REMOVED*** @param {goog.ui.Button} button Button instance whose structure is being
-***REMOVED***     checked.
-***REMOVED*** @param {Element} element Element of the button.
-***REMOVED*** @return {boolean} Whether the element has a box structure.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Check if the button's element has a box structure.
+ * @param {goog.ui.Button} button Button instance whose structure is being
+ *     checked.
+ * @param {Element} element Element of the button.
+ * @return {boolean} Whether the element has a box structure.
+ * @protected
+ * @override
+ */
 goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function(
     button, element) {
 
@@ -169,27 +169,27 @@ goog.ui.style.app.ButtonRenderer.prototype.hasBoxStructure = function(
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.ButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.style.app.ButtonRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.ButtonRenderer.prototype.getStructuralCssClass = function() {
   // TODO(user): extract to a constant.
   return goog.getCssName('goog-button-base');
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.style.app.ButtonRenderer.prototype.getIe6ClassCombinations =
     function() {
   return goog.ui.style.app.ButtonRenderer.IE6_CLASS_COMBINATIONS;
-***REMOVED***
+};
 
 
 

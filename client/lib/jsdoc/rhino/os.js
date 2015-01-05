@@ -1,9 +1,9 @@
-***REMOVED***
-***REMOVED*** Partial Rhino implementation of Node.js' `os` module.
-***REMOVED*** @module os
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED*** @see http://nodejs.org/api/os.html
-***REMOVED***
+/**
+ * Partial Rhino implementation of Node.js' `os` module.
+ * @module os
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ * @see http://nodejs.org/api/os.html
+ */
 'use strict';
 
 exports.EOL = String( java.lang.System.getProperty('line.separator') );
@@ -16,4 +16,4 @@ exports.platform = function() {
     else {
         return 'linux';
     }
-***REMOVED***
+};

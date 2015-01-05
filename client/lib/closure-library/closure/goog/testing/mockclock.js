@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock Clock implementation for working with setTimeout,
-***REMOVED*** setInterval, clearTimeout and clearInterval within unit tests.
-***REMOVED***
-***REMOVED*** Derived from jsUnitMockTimeout.js, contributed to JsUnit by
-***REMOVED*** Pivotal Computer Systems, www.pivotalsf.com
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Mock Clock implementation for working with setTimeout,
+ * setInterval, clearTimeout and clearInterval within unit tests.
+ *
+ * Derived from jsUnitMockTimeout.js, contributed to JsUnit by
+ * Pivotal Computer Systems, www.pivotalsf.com
+ *
+ */
 
 goog.provide('goog.testing.MockClock');
 
@@ -31,123 +31,123 @@ goog.require('goog.testing.watchers');
 
 
 
-***REMOVED***
-***REMOVED*** Class for unit testing code that uses setTimeout and clearTimeout.
-***REMOVED***
-***REMOVED*** NOTE: If you are using MockClock to test code that makes use of
-***REMOVED***       goog.fx.Animation, then you must either:
-***REMOVED***
-***REMOVED*** 1. Install and dispose of the MockClock in setUpPage() and tearDownPage()
-***REMOVED***    respectively (rather than setUp()/tearDown()).
-***REMOVED***
-***REMOVED*** or
-***REMOVED***
-***REMOVED*** 2. Ensure that every test clears the animation queue by calling
-***REMOVED***    mockClock.tick(x) at the end of each test function (where `x` is large
-***REMOVED***    enough to complete all animations).
-***REMOVED***
-***REMOVED*** Otherwise, if any animation is left pending at the time that
-***REMOVED*** MockClock.dispose() is called, that will permanently prevent any future
-***REMOVED*** animations from playing on the page.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_autoInstall Install the MockClock at construction time.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for unit testing code that uses setTimeout and clearTimeout.
+ *
+ * NOTE: If you are using MockClock to test code that makes use of
+ *       goog.fx.Animation, then you must either:
+ *
+ * 1. Install and dispose of the MockClock in setUpPage() and tearDownPage()
+ *    respectively (rather than setUp()/tearDown()).
+ *
+ * or
+ *
+ * 2. Ensure that every test clears the animation queue by calling
+ *    mockClock.tick(x) at the end of each test function (where `x` is large
+ *    enough to complete all animations).
+ *
+ * Otherwise, if any animation is left pending at the time that
+ * MockClock.dispose() is called, that will permanently prevent any future
+ * animations from playing on the page.
+ *
+ * @param {boolean=} opt_autoInstall Install the MockClock at construction time.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.testing.MockClock = function(opt_autoInstall) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Reverse-order queue of timers to fire.
-  ***REMOVED***
-  ***REMOVED*** The last item of the queue is popped off.  Insertion happens from the
-  ***REMOVED*** right.  For example, the expiration times for each element of the queue
-  ***REMOVED*** might be in the order 300, 200, 200.
-  ***REMOVED***
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Reverse-order queue of timers to fire.
+   *
+   * The last item of the queue is popped off.  Insertion happens from the
+   * right.  For example, the expiration times for each element of the queue
+   * might be in the order 300, 200, 200.
+   *
+   * @type {Array.<Object>}
+   * @private
+   */
   this.queue_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Set of timeouts that should be treated as cancelled.
-  ***REMOVED***
-  ***REMOVED*** Rather than removing cancelled timers directly from the queue, this set
-  ***REMOVED*** simply marks them as deleted so that they can be ignored when their
-  ***REMOVED*** turn comes up.  The keys are the timeout keys that are cancelled, each
-  ***REMOVED*** mapping to true.
-  ***REMOVED***
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.deletedKeys_ = {***REMOVED***
+  /**
+   * Set of timeouts that should be treated as cancelled.
+   *
+   * Rather than removing cancelled timers directly from the queue, this set
+   * simply marks them as deleted so that they can be ignored when their
+   * turn comes up.  The keys are the timeout keys that are cancelled, each
+   * mapping to true.
+   *
+   * @type {Object}
+   * @private
+   */
+  this.deletedKeys_ = {};
 
   if (opt_autoInstall) {
     this.install();
   }
-***REMOVED***
+};
 goog.inherits(goog.testing.MockClock, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Default wait timeout for mocking requestAnimationFrame (in milliseconds).
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * Default wait timeout for mocking requestAnimationFrame (in milliseconds).
+ *
+ * @type {number}
+ * @const
+ */
 goog.testing.MockClock.REQUEST_ANIMATION_FRAME_TIMEOUT = 20;
 
 
-***REMOVED***
-***REMOVED*** Count of the number of timeouts made.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Count of the number of timeouts made.
+ * @type {number}
+ * @private
+ */
 goog.testing.MockClock.prototype.timeoutsMade_ = 0;
 
 
-***REMOVED***
-***REMOVED*** PropertyReplacer instance which overwrites and resets setTimeout,
-***REMOVED*** setInterval, etc. or null if the MockClock is not installed.
-***REMOVED*** @type {goog.testing.PropertyReplacer}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * PropertyReplacer instance which overwrites and resets setTimeout,
+ * setInterval, etc. or null if the MockClock is not installed.
+ * @type {goog.testing.PropertyReplacer}
+ * @private
+ */
 goog.testing.MockClock.prototype.replacer_ = null;
 
 
-***REMOVED***
-***REMOVED*** Map of deleted keys.  These keys represents keys that were deleted in a
-***REMOVED*** clearInterval, timeoutid -> object.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Map of deleted keys.  These keys represents keys that were deleted in a
+ * clearInterval, timeoutid -> object.
+ * @type {Object}
+ * @private
+ */
 goog.testing.MockClock.prototype.deletedKeys_ = null;
 
 
-***REMOVED***
-***REMOVED*** The current simulated time in milliseconds.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The current simulated time in milliseconds.
+ * @type {number}
+ * @private
+ */
 goog.testing.MockClock.prototype.nowMillis_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Additional delay between the time a timeout was set to fire, and the time
-***REMOVED*** it actually fires.  Useful for testing workarounds for this Firefox 2 bug:
-***REMOVED*** https://bugzilla.mozilla.org/show_bug.cgi?id=291386
-***REMOVED*** May be negative.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Additional delay between the time a timeout was set to fire, and the time
+ * it actually fires.  Useful for testing workarounds for this Firefox 2 bug:
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=291386
+ * May be negative.
+ * @type {number}
+ * @private
+ */
 goog.testing.MockClock.prototype.timeoutDelay_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Installs the MockClock by overriding the global object's implementation of
-***REMOVED*** setTimeout, setInterval, clearTimeout and clearInterval.
-***REMOVED***
+/**
+ * Installs the MockClock by overriding the global object's implementation of
+ * setTimeout, setInterval, clearTimeout and clearInterval.
+ */
 goog.testing.MockClock.prototype.install = function() {
   if (!this.replacer_) {
     var r = this.replacer_ = new goog.testing.PropertyReplacer();
@@ -164,13 +164,13 @@ goog.testing.MockClock.prototype.install = function() {
     this.oldGoogNow_ = goog.now;
     goog.now = goog.bind(this.getCurrentTime, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Installs the mocks for requestAnimationFrame and cancelRequestAnimationFrame.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Installs the mocks for requestAnimationFrame and cancelRequestAnimationFrame.
+ * @private
+ */
 goog.testing.MockClock.prototype.replaceRequestAnimationFrame_ = function() {
   var r = this.replacer_;
   var requestFuncs = ['requestAnimationFrame',
@@ -198,13 +198,13 @@ goog.testing.MockClock.prototype.replaceRequestAnimationFrame_ = function() {
           goog.bind(this.cancelRequestAnimationFrame_, this));
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the MockClock's hooks into the global object's functions and revert
-***REMOVED*** to their original values.
-***REMOVED***
+/**
+ * Removes the MockClock's hooks into the global object's functions and revert
+ * to their original values.
+ */
 goog.testing.MockClock.prototype.uninstall = function() {
   if (this.replacer_) {
     this.replacer_.reset();
@@ -213,69 +213,69 @@ goog.testing.MockClock.prototype.uninstall = function() {
   }
 
   this.fireResetEvent();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.MockClock.prototype.disposeInternal = function() {
   this.uninstall();
   this.queue_ = null;
   this.deletedKeys_ = null;
   goog.testing.MockClock.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the MockClock, removing all timeouts that are scheduled and resets
-***REMOVED*** the fake timer count.
-***REMOVED***
+/**
+ * Resets the MockClock, removing all timeouts that are scheduled and resets
+ * the fake timer count.
+ */
 goog.testing.MockClock.prototype.reset = function() {
   this.queue_ = [];
-  this.deletedKeys_ = {***REMOVED***
+  this.deletedKeys_ = {};
   this.nowMillis_ = 0;
   this.timeoutsMade_ = 0;
   this.timeoutDelay_ = 0;
 
   this.fireResetEvent();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Signals that the mock clock has been reset, allowing objects that
-***REMOVED*** maintain their own internal state to reset.
-***REMOVED***
+/**
+ * Signals that the mock clock has been reset, allowing objects that
+ * maintain their own internal state to reset.
+ */
 goog.testing.MockClock.prototype.fireResetEvent = function() {
   goog.testing.watchers.signalClockReset();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the amount of time between when a timeout is scheduled to fire and when
-***REMOVED*** it actually fires.
-***REMOVED*** @param {number} delay The delay in milliseconds.  May be negative.
-***REMOVED***
+/**
+ * Sets the amount of time between when a timeout is scheduled to fire and when
+ * it actually fires.
+ * @param {number} delay The delay in milliseconds.  May be negative.
+ */
 goog.testing.MockClock.prototype.setTimeoutDelay = function(delay) {
   this.timeoutDelay_ = delay;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} delay The amount of time between when a timeout is
-***REMOVED***     scheduled to fire and when it actually fires, in milliseconds.  May
-***REMOVED***     be negative.
-***REMOVED***
+/**
+ * @return {number} delay The amount of time between when a timeout is
+ *     scheduled to fire and when it actually fires, in milliseconds.  May
+ *     be negative.
+ */
 goog.testing.MockClock.prototype.getTimeoutDelay = function() {
   return this.timeoutDelay_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Increments the MockClock's time by a given number of milliseconds, running
-***REMOVED*** any functions that are now overdue.
-***REMOVED*** @param {number=} opt_millis Number of milliseconds to increment the counter.
-***REMOVED***     If not specified, clock ticks 1 millisecond.
-***REMOVED*** @return {number} Current mock time in milliseconds.
-***REMOVED***
+/**
+ * Increments the MockClock's time by a given number of milliseconds, running
+ * any functions that are now overdue.
+ * @param {number=} opt_millis Number of milliseconds to increment the counter.
+ *     If not specified, clock ticks 1 millisecond.
+ * @return {number} Current mock time in milliseconds.
+ */
 goog.testing.MockClock.prototype.tick = function(opt_millis) {
   if (typeof opt_millis != 'number') {
     opt_millis = 1;
@@ -284,45 +284,45 @@ goog.testing.MockClock.prototype.tick = function(opt_millis) {
   this.runFunctionsWithinRange_(endTime);
   this.nowMillis_ = endTime;
   return endTime;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The number of timeouts that have been scheduled.
-***REMOVED***
+/**
+ * @return {number} The number of timeouts that have been scheduled.
+ */
 goog.testing.MockClock.prototype.getTimeoutsMade = function() {
   return this.timeoutsMade_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The MockClock's current time in milliseconds.
-***REMOVED***
+/**
+ * @return {number} The MockClock's current time in milliseconds.
+ */
 goog.testing.MockClock.prototype.getCurrentTime = function() {
   return this.nowMillis_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} timeoutKey The timeout key.
-***REMOVED*** @return {boolean} Whether the timer has been set and not cleared,
-***REMOVED***     independent of the timeout's expiration.  In other words, the timeout
-***REMOVED***     could have passed or could be scheduled for the future.  Either way,
-***REMOVED***     this function returns true or false depending only on whether the
-***REMOVED***     provided timeoutKey represents a timeout that has been set and not
-***REMOVED***     cleared.
-***REMOVED***
+/**
+ * @param {number} timeoutKey The timeout key.
+ * @return {boolean} Whether the timer has been set and not cleared,
+ *     independent of the timeout's expiration.  In other words, the timeout
+ *     could have passed or could be scheduled for the future.  Either way,
+ *     this function returns true or false depending only on whether the
+ *     provided timeoutKey represents a timeout that has been set and not
+ *     cleared.
+ */
 goog.testing.MockClock.prototype.isTimeoutSet = function(timeoutKey) {
   return timeoutKey <= this.timeoutsMade_ && !this.deletedKeys_[timeoutKey];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Runs any function that is scheduled before a certain time.  Timeouts can
-***REMOVED*** be made to fire early or late if timeoutDelay_ is non-0.
-***REMOVED*** @param {number} endTime The latest time in the range, in milliseconds.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Runs any function that is scheduled before a certain time.  Timeouts can
+ * be made to fire early or late if timeoutDelay_ is non-0.
+ * @param {number} endTime The latest time in the range, in milliseconds.
+ * @private
+ */
 goog.testing.MockClock.prototype.runFunctionsWithinRange_ = function(
     endTime) {
   var adjustedEndTime = endTime - this.timeoutDelay_;
@@ -345,17 +345,17 @@ goog.testing.MockClock.prototype.runFunctionsWithinRange_ = function(
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a function to be run at a certain time.
-***REMOVED*** @param {number} timeoutKey The timeout key.
-***REMOVED*** @param {Function} funcToCall The function to call.
-***REMOVED*** @param {number} millis The number of milliseconds to call it in.
-***REMOVED*** @param {boolean} recurring Whether to function call should recur.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a function to be run at a certain time.
+ * @param {number} timeoutKey The timeout key.
+ * @param {Function} funcToCall The function to call.
+ * @param {number} millis The number of milliseconds to call it in.
+ * @param {boolean} recurring Whether to function call should recur.
+ * @private
+ */
 goog.testing.MockClock.prototype.scheduleFunction_ = function(
     timeoutKey, funcToCall, millis, recurring) {
   if (!goog.isFunction(funcToCall)) {
@@ -370,24 +370,24 @@ goog.testing.MockClock.prototype.scheduleFunction_ = function(
     recurring: recurring,
     timeoutKey: timeoutKey,
     millis: millis
- ***REMOVED*****REMOVED***
+  };
 
   goog.testing.MockClock.insert_(timeout, this.queue_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts a timer descriptor into a descending-order queue.
-***REMOVED***
-***REMOVED*** Later-inserted duplicates appear at lower indices.  For example, the
-***REMOVED*** asterisk in (5,4,*,3,2,1) would be the insertion point for 3.
-***REMOVED***
-***REMOVED*** @param {Object} timeout The timeout to insert, with numerical runAtMillis
-***REMOVED***     property.
-***REMOVED*** @param {Array.<Object>} queue The queue to insert into, with each element
-***REMOVED***     having a numerical runAtMillis property.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Inserts a timer descriptor into a descending-order queue.
+ *
+ * Later-inserted duplicates appear at lower indices.  For example, the
+ * asterisk in (5,4,*,3,2,1) would be the insertion point for 3.
+ *
+ * @param {Object} timeout The timeout to insert, with numerical runAtMillis
+ *     property.
+ * @param {Array.<Object>} queue The queue to insert into, with each element
+ *     having a numerical runAtMillis property.
+ * @private
+ */
 goog.testing.MockClock.insert_ = function(timeout, queue) {
   // Although insertion of N items is quadratic, requiring goog.structs.Heap
   // from a unit test will make tests more prone to breakage.  Since unit
@@ -406,30 +406,30 @@ goog.testing.MockClock.insert_ = function(timeout, queue) {
   }
 
   queue[i] = timeout;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Maximum 32-bit signed integer.
-***REMOVED***
-***REMOVED*** Timeouts over this time return immediately in many browsers, due to integer
-***REMOVED*** overflow.  Such known browsers include Firefox, Chrome, and Safari, but not
-***REMOVED*** IE.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum 32-bit signed integer.
+ *
+ * Timeouts over this time return immediately in many browsers, due to integer
+ * overflow.  Such known browsers include Firefox, Chrome, and Safari, but not
+ * IE.
+ *
+ * @type {number}
+ * @private
+ */
 goog.testing.MockClock.MAX_INT_ = 2147483647;
 
 
-***REMOVED***
-***REMOVED*** Schedules a function to be called after {@code millis} milliseconds.
-***REMOVED*** Mock implementation for setTimeout.
-***REMOVED*** @param {Function} funcToCall The function to call.
-***REMOVED*** @param {number} millis The number of milliseconds to call it after.
-***REMOVED*** @return {number} The number of timeouts created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a function to be called after {@code millis} milliseconds.
+ * Mock implementation for setTimeout.
+ * @param {Function} funcToCall The function to call.
+ * @param {number} millis The number of milliseconds to call it after.
+ * @return {number} The number of timeouts created.
+ * @private
+ */
 goog.testing.MockClock.prototype.setTimeout_ = function(funcToCall, millis) {
   if (millis > goog.testing.MockClock.MAX_INT_) {
     throw Error(
@@ -440,31 +440,31 @@ goog.testing.MockClock.prototype.setTimeout_ = function(funcToCall, millis) {
   this.timeoutsMade_ = this.timeoutsMade_ + 1;
   this.scheduleFunction_(this.timeoutsMade_, funcToCall, millis, false);
   return this.timeoutsMade_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a function to be called every {@code millis} milliseconds.
-***REMOVED*** Mock implementation for setInterval.
-***REMOVED*** @param {Function} funcToCall The function to call.
-***REMOVED*** @param {number} millis The number of milliseconds between calls.
-***REMOVED*** @return {number} The number of timeouts created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a function to be called every {@code millis} milliseconds.
+ * Mock implementation for setInterval.
+ * @param {Function} funcToCall The function to call.
+ * @param {number} millis The number of milliseconds between calls.
+ * @return {number} The number of timeouts created.
+ * @private
+ */
 goog.testing.MockClock.prototype.setInterval_ = function(funcToCall, millis) {
   this.timeoutsMade_ = this.timeoutsMade_ + 1;
   this.scheduleFunction_(this.timeoutsMade_, funcToCall, millis, true);
   return this.timeoutsMade_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a function to be called when an animation frame is triggered.
-***REMOVED*** Mock implementation for requestAnimationFrame.
-***REMOVED*** @param {Function} funcToCall The function to call.
-***REMOVED*** @return {number} The number of timeouts created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a function to be called when an animation frame is triggered.
+ * Mock implementation for requestAnimationFrame.
+ * @param {Function} funcToCall The function to call.
+ * @return {number} The number of timeouts created.
+ * @private
+ */
 goog.testing.MockClock.prototype.requestAnimationFrame_ = function(funcToCall) {
   return this.setTimeout_(goog.bind(function() {
     if (funcToCall) {
@@ -475,28 +475,28 @@ goog.testing.MockClock.prototype.requestAnimationFrame_ = function(funcToCall) {
       goog.testing.events.fireBrowserEvent(event);
     }
   }, this), goog.testing.MockClock.REQUEST_ANIMATION_FRAME_TIMEOUT);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Schedules a function to be called immediately after the current JS
-***REMOVED*** execution.
-***REMOVED*** Mock implementation for setImmediate.
-***REMOVED*** @param {Function} funcToCall The function to call.
-***REMOVED*** @return {number} The number of timeouts created.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Schedules a function to be called immediately after the current JS
+ * execution.
+ * Mock implementation for setImmediate.
+ * @param {Function} funcToCall The function to call.
+ * @return {number} The number of timeouts created.
+ * @private
+ */
 goog.testing.MockClock.prototype.setImmediate_ = function(funcToCall) {
   return this.setTimeout_(funcToCall, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears a timeout.
-***REMOVED*** Mock implementation for clearTimeout.
-***REMOVED*** @param {number} timeoutKey The timeout key to clear.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears a timeout.
+ * Mock implementation for clearTimeout.
+ * @param {number} timeoutKey The timeout key to clear.
+ * @private
+ */
 goog.testing.MockClock.prototype.clearTimeout_ = function(timeoutKey) {
   // Some common libraries register static state with timers.
   // This is bad. It leads to all sorts of crazy test problems where
@@ -515,27 +515,27 @@ goog.testing.MockClock.prototype.clearTimeout_ = function(timeoutKey) {
   if (this.isTimeoutSet(timeoutKey)) {
     this.deletedKeys_[timeoutKey] = true;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears an interval.
-***REMOVED*** Mock implementation for clearInterval.
-***REMOVED*** @param {number} timeoutKey The interval key to clear.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears an interval.
+ * Mock implementation for clearInterval.
+ * @param {number} timeoutKey The interval key to clear.
+ * @private
+ */
 goog.testing.MockClock.prototype.clearInterval_ = function(timeoutKey) {
   this.clearTimeout_(timeoutKey);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears a requestAnimationFrame.
-***REMOVED*** Mock implementation for cancelRequestAnimationFrame.
-***REMOVED*** @param {number} timeoutKey The requestAnimationFrame key to clear.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears a requestAnimationFrame.
+ * Mock implementation for cancelRequestAnimationFrame.
+ * @param {number} timeoutKey The requestAnimationFrame key to clear.
+ * @private
+ */
 goog.testing.MockClock.prototype.cancelRequestAnimationFrame_ =
     function(timeoutKey) {
   this.clearTimeout_(timeoutKey);
-***REMOVED***
+};

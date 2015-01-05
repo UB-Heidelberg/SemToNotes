@@ -15,7 +15,7 @@
 goog.provide('goog.testing.ContinuationTestCaseTest');
 goog.setTestOnly('goog.testing.ContinuationTestCaseTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventTarget');
 goog.require('goog.testing.ContinuationTestCase');
 goog.require('goog.testing.MockClock');
@@ -23,13 +23,13 @@ goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.TestCase');
 goog.require('goog.testing.jsunit');
 
-***REMOVED***
-***REMOVED*** @fileoverview This test file uses the ContinuationTestCase to test itself,
-***REMOVED*** which is a little confusing. It's also difficult to write a truly effective
-***REMOVED*** test, since testing a failure causes an actual failure in the test runner.
-***REMOVED*** All tests have been manually verified using a sophisticated combination of
-***REMOVED*** alerts and false assertions.
-***REMOVED***
+/**
+ * @fileoverview This test file uses the ContinuationTestCase to test itself,
+ * which is a little confusing. It's also difficult to write a truly effective
+ * test, since testing a failure causes an actual failure in the test runner.
+ * All tests have been manually verified using a sophisticated combination of
+ * alerts and false assertions.
+ */
 
 var testCase = new goog.testing.ContinuationTestCase('Continuation Test Case');
 testCase.autoDiscoverTests();
@@ -50,10 +50,10 @@ function setUpPage() {
 }
 
 
-***REMOVED***
-***REMOVED*** Resets the mock clock. Includes a wait step to verify that setUp routines
-***REMOVED*** can contain continuations.
-***REMOVED***
+/**
+ * Resets the mock clock. Includes a wait step to verify that setUp routines
+ * can contain continuations.
+ */
 function setUp() {
   waitForTimeout(function() {
     // Pointless assertion to verify that setUp methods can contain waits.
@@ -64,10 +64,10 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Uninstalls the mock clock if it was installed, and restores the Step timeout
-***REMOVED*** functions to the default window implementations.
-***REMOVED***
+/**
+ * Uninstalls the mock clock if it was installed, and restores the Step timeout
+ * functions to the default window implementations.
+ */
 function tearDown() {
   clock.uninstall();
   stubs.reset();
@@ -79,10 +79,10 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Installs the Mock Clock and replaces the Step timeouts with the mock
-***REMOVED*** implementations.
-***REMOVED***
+/**
+ * Installs the Mock Clock and replaces the Step timeouts with the mock
+ * implementations.
+ */
 function installMockClock() {
   clock.install();
 
@@ -96,19 +96,19 @@ function installMockClock() {
 }
 
 
-***REMOVED***
-***REMOVED*** @return {goog.testing.ContinuationTestCase.Step} A generic step in a
-***REMOVED***     continuation test.
-***REMOVED***
+/**
+ * @return {goog.testing.ContinuationTestCase.Step} A generic step in a
+ *     continuation test.
+ */
 function getSampleStep() {
   return new goog.testing.ContinuationTestCase.Step('test', function() {});
 }
 
 
-***REMOVED***
-***REMOVED*** @return {goog.testing.ContinuationTestCase.Test} A simple continuation test
-***REMOVED***     with generic setUp, test, and tearDown functions.
-***REMOVED***
+/**
+ * @return {goog.testing.ContinuationTestCase.Test} A simple continuation test
+ *     with generic setUp, test, and tearDown functions.
+ */
 function getSampleTest() {
   var setupStep = new goog.testing.TestCase.Test('setup', function() {});
   var testStep = new goog.testing.TestCase.Test('test', function() {});
@@ -260,7 +260,7 @@ function testWaitForEvent() {
   var et = new goog.events.EventTarget();
 
   var eventFired = false;
-***REMOVED***et, 'testPrefire', function() {
+  goog.events.listen(et, 'testPrefire', function() {
     eventFired = true;
     et.dispatchEvent('test');
   });
@@ -297,10 +297,10 @@ function testOutOfOrderWaits() {
 
 
 /*
-***REMOVED*** Any of the test functions below (except the condition check passed into
-***REMOVED*** waitForCondition) can raise an assertion successfully. Any level of nested
-***REMOVED*** test steps should be possible, in any configuration.
-***REMOVED***
+ * Any of the test functions below (except the condition check passed into
+ * waitForCondition) can raise an assertion successfully. Any level of nested
+ * test steps should be possible, in any configuration.
+ */
 
 var testObj;
 
@@ -310,7 +310,7 @@ function testCrazyNestedWaitFunction() {
     lock: true,
     et: new goog.events.EventTarget(),
     steps: 0
- ***REMOVED*****REMOVED***
+  };
 
   waitForTimeout(handleTimeout, 10);
   waitForEvent(testObj.et, 'test', handleEvent);

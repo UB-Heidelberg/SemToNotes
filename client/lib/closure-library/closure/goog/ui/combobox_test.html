@@ -23,7 +23,7 @@ See the COPYING file for details.
   goog.require('goog.dom');
   goog.require('goog.dom.TagName');
   goog.require('goog.dom.classlist');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.KeyCodes');
   goog.require('goog.testing.MockClock');
   goog.require('goog.testing.events');
@@ -233,7 +233,7 @@ function testSetFormatFromToken() {
 }
 
 function testSetValue() {
-  var clock = new goog.testing.MockClock(/* autoInstall***REMOVED*** true);
+  var clock = new goog.testing.MockClock(/* autoInstall */ true);
 
   // Get the input focus. Note that both calls are needed to correctly
   // simulate the focus (and setting document.activeElement) across all
@@ -284,7 +284,7 @@ function testSetValue() {
   assertEquals('All items should be displayed',
       comboBox.getMenu().getItemCount(), comboBox.getNumberOfVisibleItems_());
   assertEquals('The last item set should be highlighted',
-      /* Blue=***REMOVED*** 3, comboBox.getMenu().getHighlightedIndex());
+      /* Blue= */ 3, comboBox.getMenu().getHighlightedIndex());
 
   clock.uninstall();
 }

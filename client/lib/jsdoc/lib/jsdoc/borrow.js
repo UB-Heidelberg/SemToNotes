@@ -1,9 +1,9 @@
-***REMOVED***
+/**
     A collection of functions relating to resolving @borrows tags in JSDoc symbols.
     @module jsdoc/borrow
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 'use strict';
 
 var doop = require('jsdoc/util/doop');
@@ -12,7 +12,7 @@ var logger = require('jsdoc/util/logger');
 var hasOwnProp = Object.prototype.hasOwnProperty;
 
 exports.indexAll = function(docs) {
-    var lookupTable = {***REMOVED***
+    var lookupTable = {};
 
     docs.forEach(function(doc) {
         if ( !hasOwnProp.call(lookupTable, doc.longname) ) {
@@ -21,17 +21,17 @@ exports.indexAll = function(docs) {
         lookupTable[doc.longname].push(doc);
     });
     docs.index = lookupTable;
-***REMOVED***
+};
 
 // requires docs to have been indexed: docs.index must be defined here
-***REMOVED***
+/**
     Take a copy of the docs for borrowed symbols and attach them to the
     docs for the borrowing symbol. This process changes the symbols involved,
     moving docs from the "borrowed" array and into the general docs, then
     deleting the "borrowed" array.
-***REMOVED***
+ */
 exports.resolveBorrows = function(docs) {
-    /*eslint max-nested-callbacks:[2, 3]***REMOVED***
+    /*eslint max-nested-callbacks:[2, 3] */
     if (!docs.index) {
         logger.error('Unable to resolve borrowed symbols, because the docs have not been indexed.');
         return;
@@ -67,4 +67,4 @@ exports.resolveBorrows = function(docs) {
             delete doc.borrowed;
         }
     });
-***REMOVED***
+};

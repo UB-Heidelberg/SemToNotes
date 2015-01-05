@@ -134,7 +134,7 @@ Author:  attila@google.com (Attila Bodis)
 
     function testHighlightOnEnterPreventable() {
       container.decorate(containerElement);
-    ***REMOVED***container, goog.ui.Component.EventType.ENTER,
+      goog.events.listen(container, goog.ui.Component.EventType.ENTER,
           function(event) {
             event.preventDefault();
           });
@@ -172,7 +172,7 @@ Author:  attila@google.com (Attila Bodis)
       container.decorate(containerElement);
       container.setVisible(false);
       var eventFired = false;
-    ***REMOVED***container, goog.ui.Component.EventType.SHOW,
+      goog.events.listen(container, goog.ui.Component.EventType.SHOW,
           function() {
             assertFalse('Container must not be visible when SHOW event is ' +
                         'fired',
@@ -187,7 +187,7 @@ Author:  attila@google.com (Attila Bodis)
       container.decorate(containerElement);
       container.setVisible(false);
       var eventFired = false;
-    ***REMOVED***container, goog.ui.Container.EventType.AFTER_SHOW,
+      goog.events.listen(container, goog.ui.Container.EventType.AFTER_SHOW,
           function() {
             assertTrue('Container must be visible when AFTER_SHOW event is ' +
                        'fired',
@@ -203,14 +203,14 @@ Author:  attila@google.com (Attila Bodis)
       container.decorate(containerElement);
       container.setVisible(true);
       var eventFired = false;
-    ***REMOVED***container, goog.ui.Component.EventType.HIDE,
+      goog.events.listen(container, goog.ui.Component.EventType.HIDE,
           function(e) {
             assertTrue(
                 'Container must be visible when HIDE event is fired',
                 container.isVisible());
             events.push(e.type);
           });
-    ***REMOVED***container, goog.ui.Container.EventType.AFTER_HIDE,
+      goog.events.listen(container, goog.ui.Container.EventType.AFTER_HIDE,
           function(e) {
             assertFalse(
                 'Container must not be visible when AFTER_HIDE event is fired',
@@ -224,18 +224,18 @@ Author:  attila@google.com (Attila Bodis)
           ], events);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Test container to which the elements have to be added with
-    ***REMOVED*** {@code container.addChild(element, false)}
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @extends {goog.ui.Container}
-   ***REMOVED*****REMOVED***
+    /**
+     * Test container to which the elements have to be added with
+     * {@code container.addChild(element, false)}
+     * @constructor
+     * @extends {goog.ui.Container}
+     */
     function ListContainer() {
       goog.ui.Container.call(this);
     }
     goog.inherits(ListContainer, goog.ui.Container);
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     ListContainer.prototype.createDom = function() {
       ListContainer.superClass_.createDom.call(this);
       var ul = this.getDomHelper().createDom('ul');
@@ -245,7 +245,7 @@ Author:  attila@google.com (Attila Bodis)
         ul.appendChild(this.getDomHelper().createDom('li', {}, childEl));
       }, this);
       this.getContentElement().appendChild(ul);
-   ***REMOVED*****REMOVED***
+    };
 
     function testGetOwnerControlWithNoRenderingInAddChild() {
       listContainer = new ListContainer();
@@ -258,22 +258,22 @@ Author:  attila@google.com (Attila Bodis)
           control, ownerControl);
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Test container for tracking key events being handled.
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @extends {goog.ui.Container}
-   ***REMOVED*****REMOVED***
+    /**
+     * Test container for tracking key events being handled.
+     * @constructor
+     * @extends {goog.ui.Container}
+     */
     function KeyHandlingContainer() {
       goog.ui.Container.call(this);
       this.keyEventsHandled = 0;
     }
     goog.inherits(KeyHandlingContainer, goog.ui.Container);
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     KeyHandlingContainer.prototype.handleKeyEventInternal = function() {
       this.keyEventsHandled++;
       return false;
-   ***REMOVED*****REMOVED***
+    };
 
     function testHandleKeyEvent_onlyHandlesWhenVisible() {
       keyContainer = new KeyHandlingContainer();

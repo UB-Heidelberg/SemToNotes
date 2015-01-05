@@ -1,30 +1,30 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a set-value action.
-***REMOVED***
+/**
+ * @fileoverview A class representing a set-value action.
+ */
 
 goog.provide('xrx.mvc.Update');
 
 
 
-***REMOVED***
+goog.require('xrx.mvc.ComponentModel');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.Update = function(element) {
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.mvc.Update, xrx.mvc.ComponentModel);
 
 
 
-xrx.mvc.Update.prototype.mvcRecalculate = function() {***REMOVED***
+xrx.mvc.Update.prototype.mvcRecalculate = function() {};
 
 
 
 xrx.mvc.Update.prototype.execute = function() {
   xrx.mvc.Controller.updateNode(this, this.getNode(0), this.getValue());
-***REMOVED***
+};

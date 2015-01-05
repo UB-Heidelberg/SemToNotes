@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED*****REMOVED***
-***REMOVED*** @fileoverview An abstract class representing a XML node.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code> /**
+ * @fileoverview An abstract class representing a XML node.
+ */
 
 goog.provide('xrx.node.Node');
 
@@ -40,129 +40,129 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** Base class for all XML nodes.
-***REMOVED*** 
-***REMOVED*** @param {!integer} type The node type.
-***REMOVED*** @param {!xrx.node.Document} document The document node.
-***REMOVED***
-***REMOVED***
+/**
+ * Base class for all XML nodes.
+ * 
+ * @param {!integer} type The node type.
+ * @param {!xrx.node.Document} document The document node.
+ * @constructor
+ */
 xrx.node.Node = function(type, document) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.node}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.node}
+   * @private
+   */
   this.type_ = type;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {xrx.node.Document}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {xrx.node.Document}
+   * @private
+   */
   this.document_ = document;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the the node's document.
-***REMOVED*** @return {!xrx.node.Document} The document.
-***REMOVED***
+/**
+ * Returns the the node's document.
+ * @return {!xrx.node.Document} The document.
+ */
 xrx.node.Node.prototype.getInstance = function() {
   return this.document_.getInstance();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the the node's document.
-***REMOVED*** @return {!xrx.node.Document} The document.
-***REMOVED***
+/**
+ * Returns the the node's document.
+ * @return {!xrx.node.Document} The document.
+ */
 xrx.node.Node.prototype.getDocument = function() {
-***REMOVED***
-***REMOVED***
+  return this.document_;
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the type of the node.
-***REMOVED*** @return {!integer} The type.
-***REMOVED***
+/**
+ * Returns the type of the node.
+ * @return {!integer} The type.
+ */
 xrx.node.Node.prototype.getType = function() {
   return this.type_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.Node.prototype.getNameLocal = function() {
   return xrx.node.getNameLocal(this.getName());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.Node.prototype.getNamePrefix = function() {
   return xrx.node.getNamePrefix(this.getName());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.node.Node.prototype.getNameExpanded = function() {
   return xrx.node.getNameExpanded(this.getNamespaceUri(),
     this.getNameLocal(this.getName()));
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the string-value of the required type from a node.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to get value from.
-***REMOVED*** @return {string} The value required.
-***REMOVED***
+/**
+ * Returns the string-value of the required type from a node.
+ *
+ * @param {!xrx.node} node The node to get value from.
+ * @return {string} The value required.
+ */
 xrx.node.Node.prototype.getValueAsString = function() {
   return this.getStringValue();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the string-value of the required type from a node, casted to number.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to get value from.
-***REMOVED*** @return {number} The value required.
-***REMOVED***
+/**
+ * Returns the string-value of the required type from a node, casted to number.
+ *
+ * @param {!xrx.node} node The node to get value from.
+ * @return {number} The value required.
+ */
 xrx.node.Node.prototype.getValueAsNumber = function() {
   return +this.getValueAsString();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the string-value of the required type from a node, casted to boolean.
-***REMOVED***
-***REMOVED*** @param {!xrx.node} node The node to get value from.
-***REMOVED*** @return {boolean} The value required.
-***REMOVED***
+/**
+ * Returns the string-value of the required type from a node, casted to boolean.
+ *
+ * @param {!xrx.node} node The node to get value from.
+ * @return {boolean} The value required.
+ */
 xrx.node.Node.prototype.getValueAsBool = function() {
   return !!this.getValueAsString();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.node.Node.prototype.find = function(test, axisTest, reverse, stop) {
-***REMOVED***
+  var self = this;
   var selfLabel = self.getLabel();
   var nodeset = new xrx.xpath.NodeSet();
 
@@ -171,35 +171,35 @@ xrx.node.Node.prototype.find = function(test, axisTest, reverse, stop) {
         test.matches(node)) {
       reverse ? nodeset.unshift(node) : nodeset.add(node);
     }
- ***REMOVED*****REMOVED***
+  };
   
   reverse ? this.backward(stop, test.needsTextNode()) : 
       this.forward(stop, test.needsTextNode());
   return nodeset;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Interface.
-***REMOVED*** Each node implementation and each node type must implement 
-***REMOVED*** the functions below.
-***REMOVED***
+/**
+ * Interface.
+ * Each node implementation and each node type must implement 
+ * the functions below.
+ */
 
 
 
-***REMOVED***
-***REMOVED*** Identity and positional functions
-***REMOVED***
+/**
+ * Identity and positional functions
+ */
 xrx.node.Node.prototype.isSameAs = goog.abstractMethod;
 xrx.node.Node.prototype.isBefore = goog.abstractMethod;
 xrx.node.Node.prototype.isAfter = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** Axis functions
-***REMOVED***
+/**
+ * Axis functions
+ */
 xrx.node.Node.prototype.isAncestorOf = goog.abstractMethod;
 xrx.node.Node.prototype.isAttributeOf = goog.abstractMethod;
 xrx.node.Node.prototype.isChildOf = goog.abstractMethod;
@@ -212,25 +212,25 @@ xrx.node.Node.prototype.isPrecedingSiblingOf = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** Name functions
-***REMOVED***
+/**
+ * Name functions
+ */
 xrx.node.Node.prototype.getName = goog.abstractMethod;
 xrx.node.Node.prototype.getNamespaceUri = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** Content functions
-***REMOVED***
+/**
+ * Content functions
+ */
 xrx.node.Node.prototype.getStringValue = goog.abstractMethod;
 xrx.node.Node.prototype.getXml = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** Node access functions
-***REMOVED***
+/**
+ * Node access functions
+ */
 xrx.node.Node.prototype.getNodeAncestor = goog.abstractMethod;
 xrx.node.Node.prototype.getNodeAttribute = goog.abstractMethod;
 xrx.node.Node.prototype.getNodeChild = goog.abstractMethod;

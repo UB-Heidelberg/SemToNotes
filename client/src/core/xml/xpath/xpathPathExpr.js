@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing operations on path expressions.
-***REMOVED***
+/**
+ * @fileoverview A class representing operations on path expressions.
+ */
 
 goog.provide('xrx.xpath.PathExpr');
 
@@ -13,27 +13,27 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED*** Constructor for PathExpr.
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.Expr} filter A filter expression.
-***REMOVED*** @param {!Array.<!xrx.xpath.Step>} steps The steps in the location path.
-***REMOVED*** @extends {xrx.xpath.Expr}
-***REMOVED***
-***REMOVED***
+/**
+ * Constructor for PathExpr.
+ *
+ * @param {!xrx.xpath.Expr} filter A filter expression.
+ * @param {!Array.<!xrx.xpath.Step>} steps The steps in the location path.
+ * @extends {xrx.xpath.Expr}
+ * @constructor
+ */
 xrx.xpath.PathExpr = function(filter, steps) {
   xrx.xpath.Expr.call(this, filter.getDataType());
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!xrx.xpath.Expr}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!xrx.xpath.Expr}
+   * @private
+   */
   this.filter_ = filter;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!Array.<!xrx.xpath.Step>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!Array.<!xrx.xpath.Step>}
+   * @private
+   */
   this.steps_ = steps;
 
   this.setNeedContextPosition(filter.doesNeedContextPosition());
@@ -51,98 +51,98 @@ xrx.xpath.PathExpr = function(filter, steps) {
       }
     }
   }
-***REMOVED***
+};
 goog.inherits(xrx.xpath.PathExpr, xrx.xpath.Expr);
 
 
 
-***REMOVED***
-***REMOVED*** Constructor for RootHelperExpr.
-***REMOVED***
-***REMOVED*** @extends {xrx.xpath.Expr}
-***REMOVED***
-***REMOVED***
+/**
+ * Constructor for RootHelperExpr.
+ *
+ * @extends {xrx.xpath.Expr}
+ * @constructor
+ */
 xrx.xpath.PathExpr.RootHelperExpr = function() {
   xrx.xpath.Expr.call(this, xrx.xpath.DataType.NODESET);
-***REMOVED***
+};
 goog.inherits(xrx.xpath.PathExpr.RootHelperExpr, xrx.xpath.Expr);
 
 
-***REMOVED***
-***REMOVED*** Evaluates the root-node helper expression.
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.Context} ctx The context to evaluate the expression in.
-***REMOVED*** @return {!xrx.xpath.NodeSet} The evaluation result.
-***REMOVED***
+/**
+ * Evaluates the root-node helper expression.
+ *
+ * @param {!xrx.xpath.Context} ctx The context to evaluate the expression in.
+ * @return {!xrx.xpath.NodeSet} The evaluation result.
+ */
 xrx.xpath.PathExpr.RootHelperExpr.prototype.evaluate = function(ctx) {
   var nodeset = new xrx.xpath.NodeSet();
   var node = ctx.getNode();
   if (node.getType() === xrx.node.DOCUMENT) {
     nodeset.add(node);
   } else {
-    nodeset.add(***REMOVED*** @type {!Node}***REMOVED*** (node.ownerDocument));
+    nodeset.add(/** @type {!Node} */ (node.ownerDocument));
   }
   return nodeset;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.PathExpr.RootHelperExpr.prototype.toString = function() {
   return 'Root Helper Expression';
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Constructor for ContextHelperExpr.
-***REMOVED***
-***REMOVED*** @extends {xrx.xpath.Expr}
-***REMOVED***
-***REMOVED***
+/**
+ * Constructor for ContextHelperExpr.
+ *
+ * @extends {xrx.xpath.Expr}
+ * @constructor
+ */
 xrx.xpath.PathExpr.ContextHelperExpr = function() {
   xrx.xpath.Expr.call(this, xrx.xpath.DataType.NODESET);
-***REMOVED***
+};
 goog.inherits(xrx.xpath.PathExpr.ContextHelperExpr, xrx.xpath.Expr);
 
 
-***REMOVED***
-***REMOVED*** Evaluates the context-node helper expression.
-***REMOVED***
-***REMOVED*** @param {!xrx.xpath.Context} ctx The context to evaluate the expression in.
-***REMOVED*** @return {!xrx.xpath.NodeSet} The evaluation result.
-***REMOVED***
+/**
+ * Evaluates the context-node helper expression.
+ *
+ * @param {!xrx.xpath.Context} ctx The context to evaluate the expression in.
+ * @return {!xrx.xpath.NodeSet} The evaluation result.
+ */
 xrx.xpath.PathExpr.ContextHelperExpr.prototype.evaluate = function(ctx) {
   var nodeset = new xrx.xpath.NodeSet();
   nodeset.add(ctx.getNode());
   return nodeset;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.PathExpr.ContextHelperExpr.prototype.toString = function() {
   return 'Context Helper Expression';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the token is a valid PathExpr operator.
-***REMOVED***
-***REMOVED*** @param {string} token The token to be checked.
-***REMOVED*** @return {boolean} Whether the token is a valid operator.
-***REMOVED***
+/**
+ * Returns whether the token is a valid PathExpr operator.
+ *
+ * @param {string} token The token to be checked.
+ * @return {boolean} Whether the token is a valid operator.
+ */
 xrx.xpath.PathExpr.isValidOp = function(token) {
   return token == '/' || token == '//';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @return {!xrx.xpath.NodeSet} The nodeset result.
-***REMOVED***
+/**
+ * @override
+ * @return {!xrx.xpath.NodeSet} The nodeset result.
+ */
 xrx.xpath.PathExpr.prototype.evaluate = function(ctx) {
   var nodeset = this.filter_.evaluate(ctx);
   if (!(nodeset instanceof xrx.xpath.NodeSet)) {
@@ -161,37 +161,37 @@ xrx.xpath.PathExpr.prototype.evaluate = function(ctx) {
         if (node.contains && !node.contains(next)) {
           break;
         } else {
-          if (!(next.compareDocumentPosition(***REMOVED*** @type {!Node}***REMOVED*** (node)) &
+          if (!(next.compareDocumentPosition(/** @type {!Node} */ (node)) &
               8)) {
             break;
           }
         }
       }
       nodeset = step.evaluate(new
-          xrx.xpath.Context(***REMOVED*** @type {xrx.node}***REMOVED*** (node)));
+          xrx.xpath.Context(/** @type {xrx.node} */ (node)));
     } else if (!step.doesNeedContextPosition() &&
         step.getAxis() == xrx.xpath.Step.Axis.PRECEDING) {
       node = iter.next();
       nodeset = step.evaluate(new
-          xrx.xpath.Context(***REMOVED*** @type {xrx.node}***REMOVED*** (node)));
+          xrx.xpath.Context(/** @type {xrx.node} */ (node)));
     } else {
       node = iter.next();
       nodeset = step.evaluate(new
-          xrx.xpath.Context(***REMOVED*** @type {xrx.node}***REMOVED*** (node)));
+          xrx.xpath.Context(/** @type {xrx.node} */ (node)));
       while ((node = iter.next()) != null) {
         var result = step.evaluate(new
-            xrx.xpath.Context(***REMOVED*** @type {xrx.node}***REMOVED*** (node)));
+            xrx.xpath.Context(/** @type {xrx.node} */ (node)));
         nodeset = xrx.xpath.NodeSet.merge(nodeset, result);
       }
     }
   }
-  return***REMOVED*****REMOVED*** @type {!xrx.xpath.NodeSet}***REMOVED*** (nodeset);
-***REMOVED***
+  return /** @type {!xrx.xpath.NodeSet} */ (nodeset);
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 xrx.xpath.PathExpr.prototype.toString = function() {
   var text = 'Path Expression:';
   text += xrx.xpath.Expr.indent(this.filter_);
@@ -202,4 +202,4 @@ xrx.xpath.PathExpr.prototype.toString = function() {
     text += xrx.xpath.Expr.indent(steps);
   }
   return text;
-***REMOVED***
+};

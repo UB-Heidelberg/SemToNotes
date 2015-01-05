@@ -12,46 +12,46 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Additional asserts for testing ControlRenderers.
-***REMOVED***
-***REMOVED*** @author mkretzschmar@google.com (Martin Kretzschmar)
-***REMOVED***
+/**
+ * @fileoverview Additional asserts for testing ControlRenderers.
+ *
+ * @author mkretzschmar@google.com (Martin Kretzschmar)
+ */
 
 goog.provide('goog.testing.ui.rendererasserts');
 
 goog.require('goog.testing.asserts');
 
 
-***REMOVED***
-***REMOVED*** Assert that a control renderer constructor doesn't call getCssClass.
-***REMOVED***
-***REMOVED*** @param {?function(new:goog.ui.ControlRenderer)} rendererClassUnderTest The
-***REMOVED***     renderer constructor to test.
-***REMOVED***
+/**
+ * Assert that a control renderer constructor doesn't call getCssClass.
+ *
+ * @param {?function(new:goog.ui.ControlRenderer)} rendererClassUnderTest The
+ *     renderer constructor to test.
+ */
 goog.testing.ui.rendererasserts.assertNoGetCssClassCallsInConstructor =
     function(rendererClassUnderTest) {
   var getCssClassCalls = 0;
 
- ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @extends {goog.ui.ControlRenderer}
-  ***REMOVED*** @final
- ***REMOVED*****REMOVED***
+  /**
+   * @constructor
+   * @extends {goog.ui.ControlRenderer}
+   * @final
+   */
   function TestControlRenderer() {
     rendererClassUnderTest.call(this);
   }
   goog.inherits(TestControlRenderer, rendererClassUnderTest);
 
- ***REMOVED*****REMOVED*** @override***REMOVED***
+  /** @override */
   TestControlRenderer.prototype.getCssClass = function() {
     getCssClassCalls++;
     return TestControlRenderer.superClass_.getCssClass.call(this);
- ***REMOVED*****REMOVED***
+  };
 
   var testControlRenderer = new TestControlRenderer();
 
   assertEquals('Constructors should not call getCssClass, ' +
       'getCustomRenderer must be able to override it post construction.',
       0, getCssClassCalls);
-***REMOVED***
+};

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.net.webChannel.WebChannelBase.
-***REMOVED*** @suppress {accessControls} Private methods are accessed for test purposes.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.net.webChannel.WebChannelBase.
+ * @suppress {accessControls} Private methods are accessed for test purposes.
+ *
+ */
 
 
 goog.provide('goog.labs.net.webChannel.webChannelBaseTransportTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.labs.net.webChannel.WebChannelBaseTransport');
 goog.require('goog.net.WebChannel');
 goog.require('goog.testing.jsunit');
@@ -46,7 +46,7 @@ function testOpenWithUrl() {
   webChannel = webChannelTransport.createWebChannel(channelUrl);
 
   var eventFired = false;
-***REMOVED***webChannel, goog.net.WebChannel.EventType.OPEN,
+  goog.events.listen(webChannel, goog.net.WebChannel.EventType.OPEN,
       function(e) {
         eventFired = true;
       });
@@ -64,7 +64,7 @@ function testOpenWithUrl() {
 function testOpenWithTestUrl() {
   var webChannelTransport =
       new goog.labs.net.webChannel.WebChannelBaseTransport();
-  var options = {'testUrl': channelUrl + '/footest'***REMOVED***
+  var options = {'testUrl': channelUrl + '/footest'};
   webChannel = webChannelTransport.createWebChannel(channelUrl, options);
   webChannel.open();
 
@@ -75,7 +75,7 @@ function testOpenWithTestUrl() {
 function testOpenWithCustomHeaders() {
   var webChannelTransport =
       new goog.labs.net.webChannel.WebChannelBaseTransport();
-  var options = {'messageHeaders': {'foo-key': 'foo-value'}***REMOVED***
+  var options = {'messageHeaders': {'foo-key': 'foo-value'}};
   webChannel = webChannelTransport.createWebChannel(channelUrl, options);
   webChannel.open();
 
@@ -86,7 +86,7 @@ function testOpenWithCustomHeaders() {
 function testOpenWithCustomParams() {
   var webChannelTransport =
       new goog.labs.net.webChannel.WebChannelBaseTransport();
-  var options = {'messageUrlParams': {'foo-key': 'foo-value'}***REMOVED***
+  var options = {'messageUrlParams': {'foo-key': 'foo-value'}};
   webChannel = webChannelTransport.createWebChannel(channelUrl, options);
   webChannel.open();
 
@@ -97,7 +97,7 @@ function testOpenWithCustomParams() {
 function testOpenWithCorsEnabled() {
   var webChannelTransport =
       new goog.labs.net.webChannel.WebChannelBaseTransport();
-  var options = {'supportsCrossDomainXhr': true***REMOVED***
+  var options = {'supportsCrossDomainXhr': true};
   webChannel = webChannelTransport.createWebChannel(channelUrl, options);
   webChannel.open();
 
@@ -110,7 +110,7 @@ function testOpenThenCloseChannel() {
   webChannel = webChannelTransport.createWebChannel(channelUrl);
 
   var eventFired = false;
-***REMOVED***webChannel, goog.net.WebChannel.EventType.CLOSE,
+  goog.events.listen(webChannel, goog.net.WebChannel.EventType.CLOSE,
       function(e) {
         eventFired = true;
       });
@@ -132,7 +132,7 @@ function testChannelError() {
   webChannel = webChannelTransport.createWebChannel(channelUrl);
 
   var eventFired = false;
-***REMOVED***webChannel, goog.net.WebChannel.EventType.ERROR,
+  goog.events.listen(webChannel, goog.net.WebChannel.EventType.ERROR,
       function(e) {
         eventFired = true;
         assertEquals(goog.net.WebChannel.ErrorStatus.NETWORK_ERROR, e.status);
@@ -156,7 +156,7 @@ function testChannelMessage() {
 
   var eventFired = false;
   var data = 'foo';
-***REMOVED***webChannel, goog.net.WebChannel.EventType.MESSAGE,
+  goog.events.listen(webChannel, goog.net.WebChannel.EventType.MESSAGE,
       function(e) {
         eventFired = true;
         assertEquals(e.data, data);
@@ -173,41 +173,41 @@ function testChannelMessage() {
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the WebChannelBase firing the open event for the given channel.
-***REMOVED*** @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
-***REMOVED***
+/**
+ * Simulates the WebChannelBase firing the open event for the given channel.
+ * @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
+ */
 function simulateOpenEvent(channel) {
   assertNotNull(channel.getHandler());
   channel.getHandler().channelOpened();
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the WebChannelBase firing the close event for the given channel.
-***REMOVED*** @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
-***REMOVED***
+/**
+ * Simulates the WebChannelBase firing the close event for the given channel.
+ * @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
+ */
 function simulateCloseEvent(channel) {
   assertNotNull(channel.getHandler());
   channel.getHandler().channelClosed();
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the WebChannelBase firing the error event for the given channel.
-***REMOVED*** @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
-***REMOVED***
+/**
+ * Simulates the WebChannelBase firing the error event for the given channel.
+ * @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
+ */
 function simulateErrorEvent(channel) {
   assertNotNull(channel.getHandler());
   channel.getHandler().channelError();
 }
 
 
-***REMOVED***
-***REMOVED*** Simulates the WebChannelBase firing the message event for the given channel.
-***REMOVED*** @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
-***REMOVED*** @param {String} data The message data.
-***REMOVED***
+/**
+ * Simulates the WebChannelBase firing the message event for the given channel.
+ * @param {!goog.labs.net.webChannel.WebChannelBase} channel The WebChannelBase.
+ * @param {String} data The message data.
+ */
 function simulateMessageEvent(channel, data) {
   assertNotNull(channel.getHandler());
   channel.getHandler().channelHandleArray(channel, data);

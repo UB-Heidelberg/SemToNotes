@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Menu where items can be filtered based on user keyboard input.
-***REMOVED*** If a filter is specified only the items matching it will be displayed.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/filteredmenu.html
-***REMOVED***
+/**
+ * @fileoverview Menu where items can be filtered based on user keyboard input.
+ * If a filter is specified only the items matching it will be displayed.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/filteredmenu.html
+ */
 
 
 goog.provide('goog.ui.FilteredMenu');
@@ -27,8 +27,8 @@ goog.require('goog.a11y.aria');
 goog.require('goog.a11y.aria.AutoCompleteValues');
 goog.require('goog.a11y.aria.State');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.events.InputHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.object');
@@ -42,122 +42,122 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Filtered menu class.
-***REMOVED*** @param {goog.ui.MenuRenderer=} opt_renderer Renderer used to render filtered
-***REMOVED***     menu; defaults to {@link goog.ui.MenuRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Menu}
-***REMOVED***
+/**
+ * Filtered menu class.
+ * @param {goog.ui.MenuRenderer=} opt_renderer Renderer used to render filtered
+ *     menu; defaults to {@link goog.ui.MenuRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Menu}
+ */
 goog.ui.FilteredMenu = function(opt_renderer, opt_domHelper) {
   goog.ui.Menu.call(this, opt_domHelper, opt_renderer);
-***REMOVED***
+};
 goog.inherits(goog.ui.FilteredMenu, goog.ui.Menu);
 
 
-***REMOVED***
-***REMOVED*** Events fired by component.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Events fired by component.
+ * @enum {string}
+ */
 goog.ui.FilteredMenu.EventType = {
- ***REMOVED*****REMOVED*** Dispatched after the component filter criteria has been changed.***REMOVED***
+  /** Dispatched after the component filter criteria has been changed. */
   FILTER_CHANGED: 'filterchange'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Filter menu element ids.
-***REMOVED*** @enum {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Filter menu element ids.
+ * @enum {string}
+ * @private
+ */
 goog.ui.FilteredMenu.Id_ = {
   CONTENT_ELEMENT: 'content-el'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Filter input element.
-***REMOVED*** @type {Element|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Filter input element.
+ * @type {Element|undefined}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.filterInput_;
 
 
-***REMOVED***
-***REMOVED*** The input handler that provides the input event.
-***REMOVED*** @type {goog.events.InputHandler|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The input handler that provides the input event.
+ * @type {goog.events.InputHandler|undefined}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.inputHandler_;
 
 
-***REMOVED***
-***REMOVED*** Maximum number of characters for filter input.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maximum number of characters for filter input.
+ * @type {number}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.maxLength_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Label displayed in the filter input when no text has been entered.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Label displayed in the filter input when no text has been entered.
+ * @type {string}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.label_ = '';
 
 
-***REMOVED***
-***REMOVED*** Label element.
-***REMOVED*** @type {Element|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Label element.
+ * @type {Element|undefined}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.labelEl_;
 
 
-***REMOVED***
-***REMOVED*** Whether multiple items can be entered comma separated.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether multiple items can be entered comma separated.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.allowMultiple_ = false;
 
 
-***REMOVED***
-***REMOVED*** List of items entered in the search box if multiple entries are allowed.
-***REMOVED*** @type {Array.<string>|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * List of items entered in the search box if multiple entries are allowed.
+ * @type {Array.<string>|undefined}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.enteredItems_;
 
 
-***REMOVED***
-***REMOVED*** Index of first item that should be affected by the filter. Menu items with
-***REMOVED*** a lower index will not be affected by the filter.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Index of first item that should be affected by the filter. Menu items with
+ * a lower index will not be affected by the filter.
+ * @type {number}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.filterFromIndex_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Filter applied to the menu.
-***REMOVED*** @type {string|undefined|null}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Filter applied to the menu.
+ * @type {string|undefined|null}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.filterStr_;
 
 
-***REMOVED***
-***REMOVED*** Map of child nodes that shouldn't be affected by filtering.
-***REMOVED*** @type {Object|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Map of child nodes that shouldn't be affected by filtering.
+ * @type {Object|undefined}
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.persistentChildren_;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilteredMenu.prototype.createDom = function() {
   goog.ui.FilteredMenu.superClass_.createDom.call(this);
 
@@ -182,13 +182,13 @@ goog.ui.FilteredMenu.prototype.createDom = function() {
       contentElementId);
   goog.a11y.aria.setState(this.filterInput_, goog.a11y.aria.State.EXPANDED,
       true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method that initializes the filter input element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper method that initializes the filter input element.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.initFilterInput_ = function() {
   this.setFocusable(true);
   this.setKeyEventTarget(this.filterInput_);
@@ -201,35 +201,35 @@ goog.ui.FilteredMenu.prototype.initFilterInput_ = function() {
   if (this.maxLength_) {
     this.filterInput_.maxLength = this.maxLength_;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets up listeners and prepares the filter functionality.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets up listeners and prepares the filter functionality.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.setUpFilterListeners_ = function() {
   if (!this.inputHandler_ && this.filterInput_) {
     this.inputHandler_ = new goog.events.InputHandler(
-       ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.filterInput_));
+        /** @type {Element} */ (this.filterInput_));
     goog.style.setUnselectable(this.filterInput_, false);
-  ***REMOVED***this.inputHandler_,
+    goog.events.listen(this.inputHandler_,
                        goog.events.InputHandler.EventType.INPUT,
                        this.handleFilterEvent, false, this);
-  ***REMOVED***this.filterInput_.parentNode,
+    goog.events.listen(this.filterInput_.parentNode,
                        goog.events.EventType.CLICK,
                        this.onFilterLabelClick_, false, this);
     if (this.allowMultiple_) {
       this.enteredItems_ = [];
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tears down listeners and resets the filter functionality.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tears down listeners and resets the filter functionality.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.tearDownFilterListeners_ = function() {
   if (this.inputHandler_) {
     goog.events.unlisten(this.inputHandler_,
@@ -243,10 +243,10 @@ goog.ui.FilteredMenu.prototype.tearDownFilterListeners_ = function() {
     this.inputHandler_ = undefined;
     this.enteredItems_ = undefined;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilteredMenu.prototype.setVisible = function(show, opt_force, opt_e) {
   var visibilityChanged = goog.ui.FilteredMenu.superClass_.setVisible.call(this,
       show, opt_force, opt_e);
@@ -258,137 +258,137 @@ goog.ui.FilteredMenu.prototype.setVisible = function(show, opt_force, opt_e) {
   }
 
   return visibilityChanged;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilteredMenu.prototype.disposeInternal = function() {
   this.tearDownFilterListeners_();
   this.filterInput_ = undefined;
   this.labelEl_ = undefined;
   goog.ui.FilteredMenu.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the filter label (the label displayed in the filter input element if no
-***REMOVED*** text has been entered).
-***REMOVED*** @param {?string} label Label text.
-***REMOVED***
+/**
+ * Sets the filter label (the label displayed in the filter input element if no
+ * text has been entered).
+ * @param {?string} label Label text.
+ */
 goog.ui.FilteredMenu.prototype.setFilterLabel = function(label) {
   this.label_ = label || '';
   if (this.labelEl_) {
     goog.dom.setTextContent(this.labelEl_, this.label_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The filter label.
-***REMOVED***
+/**
+ * @return {string} The filter label.
+ */
 goog.ui.FilteredMenu.prototype.getFilterLabel = function() {
   return this.label_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the filter string.
-***REMOVED*** @param {?string} str Filter string.
-***REMOVED***
+/**
+ * Sets the filter string.
+ * @param {?string} str Filter string.
+ */
 goog.ui.FilteredMenu.prototype.setFilter = function(str) {
   if (this.filterInput_) {
     this.filterInput_.value = str;
     this.filterItems_(str);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the filter string.
-***REMOVED*** @return {string} Current filter or an an empty string.
-***REMOVED***
+/**
+ * Returns the filter string.
+ * @return {string} Current filter or an an empty string.
+ */
 goog.ui.FilteredMenu.prototype.getFilter = function() {
   return this.filterInput_ && goog.isString(this.filterInput_.value) ?
       this.filterInput_.value : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the index of first item that should be affected by the filter. Menu
-***REMOVED*** items with a lower index will not be affected by the filter.
-***REMOVED*** @param {number} index Index of first item that should be affected by filter.
-***REMOVED***
+/**
+ * Sets the index of first item that should be affected by the filter. Menu
+ * items with a lower index will not be affected by the filter.
+ * @param {number} index Index of first item that should be affected by filter.
+ */
 goog.ui.FilteredMenu.prototype.setFilterFromIndex = function(index) {
   this.filterFromIndex_ = index;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the index of first item that is affected by the filter.
-***REMOVED*** @return {number} Index of first item that is affected by filter.
-***REMOVED***
+/**
+ * Returns the index of first item that is affected by the filter.
+ * @return {number} Index of first item that is affected by filter.
+ */
 goog.ui.FilteredMenu.prototype.getFilterFromIndex = function() {
   return this.filterFromIndex_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets a list of items entered in the search box.
-***REMOVED*** @return {!Array.<string>} The entered items.
-***REMOVED***
+/**
+ * Gets a list of items entered in the search box.
+ * @return {!Array.<string>} The entered items.
+ */
 goog.ui.FilteredMenu.prototype.getEnteredItems = function() {
   return this.enteredItems_ || [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether multiple items can be entered comma separated.
-***REMOVED*** @param {boolean} b Whether multiple items can be entered.
-***REMOVED***
+/**
+ * Sets whether multiple items can be entered comma separated.
+ * @param {boolean} b Whether multiple items can be entered.
+ */
 goog.ui.FilteredMenu.prototype.setAllowMultiple = function(b) {
   this.allowMultiple_ = b;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether multiple items can be entered comma separated.
-***REMOVED***
+/**
+ * @return {boolean} Whether multiple items can be entered comma separated.
+ */
 goog.ui.FilteredMenu.prototype.getAllowMultiple = function() {
   return this.allowMultiple_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the specified child should be affected (shown/hidden) by the
-***REMOVED*** filter criteria.
-***REMOVED*** @param {goog.ui.Component} child Child to change.
-***REMOVED*** @param {boolean} persistent Whether the child should be persistent.
-***REMOVED***
+/**
+ * Sets whether the specified child should be affected (shown/hidden) by the
+ * filter criteria.
+ * @param {goog.ui.Component} child Child to change.
+ * @param {boolean} persistent Whether the child should be persistent.
+ */
 goog.ui.FilteredMenu.prototype.setPersistentVisibility = function(child,
                                                                   persistent) {
   if (!this.persistentChildren_) {
-    this.persistentChildren_ = {***REMOVED***
+    this.persistentChildren_ = {};
   }
   this.persistentChildren_[child.getId()] = persistent;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the specified child should be affected (shown/hidden) by the
-***REMOVED*** filter criteria.
-***REMOVED*** @param {goog.ui.Component} child Menu item to check.
-***REMOVED*** @return {boolean} Whether the menu item is persistent.
-***REMOVED***
+/**
+ * Returns whether the specified child should be affected (shown/hidden) by the
+ * filter criteria.
+ * @param {goog.ui.Component} child Menu item to check.
+ * @return {boolean} Whether the menu item is persistent.
+ */
 goog.ui.FilteredMenu.prototype.hasPersistentVisibility = function(child) {
   return !!(this.persistentChildren_ &&
             this.persistentChildren_[child.getId()]);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles filter input events.
-***REMOVED*** @param {goog.events.BrowserEvent} e The event object.
-***REMOVED***
+/**
+ * Handles filter input events.
+ * @param {goog.events.BrowserEvent} e The event object.
+ */
 goog.ui.FilteredMenu.prototype.handleFilterEvent = function(e) {
   this.filterItems_(this.filterInput_.value);
 
@@ -398,14 +398,14 @@ goog.ui.FilteredMenu.prototype.handleFilterEvent = function(e) {
     this.highlightFirst();
   }
   this.dispatchEvent(goog.ui.FilteredMenu.EventType.FILTER_CHANGED);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shows/hides elements based on the supplied filter.
-***REMOVED*** @param {?string} str Filter string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Shows/hides elements based on the supplied filter.
+ * @param {?string} str Filter string.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.filterItems_ = function(str) {
   // Do nothing unless the filter string has changed.
   if (this.filterStr_ == str) {
@@ -481,17 +481,17 @@ goog.ui.FilteredMenu.prototype.filterItems_ = function(str) {
     }
   }
   this.filterStr_ = str;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the content of the given menu item, bolding the part of its caption
-***REMOVED*** from start and through the next len characters.
-***REMOVED*** @param {!goog.ui.Control} child The control to bold content on.
-***REMOVED*** @param {number} start The index at which to start bolding.
-***REMOVED*** @param {number} len How many characters to bold.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the content of the given menu item, bolding the part of its caption
+ * from start and through the next len characters.
+ * @param {!goog.ui.Control} child The control to bold content on.
+ * @param {number} start The index at which to start bolding.
+ * @param {number} len How many characters to bold.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.boldContent_ = function(child, start, len) {
   var caption = child.getCaption();
   var boldedCaption;
@@ -515,16 +515,16 @@ goog.ui.FilteredMenu.prototype.boldContent_ = function(child, start, len) {
   } else {
     child.setContent(boldedCaption);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the menu's behavior for a key event. The highlighted menu item will
-***REMOVED*** be given the opportunity to handle the key behavior.
-***REMOVED*** @param {goog.events.KeyEvent} e A browser event.
-***REMOVED*** @return {boolean} Whether the event was handled.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles the menu's behavior for a key event. The highlighted menu item will
+ * be given the opportunity to handle the key behavior.
+ * @param {goog.events.KeyEvent} e A browser event.
+ * @return {boolean} Whether the event was handled.
+ * @override
+ */
 goog.ui.FilteredMenu.prototype.handleKeyEventInternal = function(e) {
   // Home, end and the arrow keys are normally used to change the selected menu
   // item. Return false here to prevent the menu from preventing the default
@@ -541,15 +541,15 @@ goog.ui.FilteredMenu.prototype.handleKeyEventInternal = function(e) {
   }
 
   return goog.ui.FilteredMenu.superClass_.handleKeyEventInternal.call(this, e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the highlighted index, unless the HIGHLIGHT event is intercepted and
-***REMOVED*** cancelled.  -1 = no highlight. Also scrolls the menu item into view.
-***REMOVED*** @param {number} index Index of menu item to highlight.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets the highlighted index, unless the HIGHLIGHT event is intercepted and
+ * cancelled.  -1 = no highlight. Also scrolls the menu item into view.
+ * @param {number} index Index of menu item to highlight.
+ * @override
+ */
 goog.ui.FilteredMenu.prototype.setHighlightedIndex = function(index) {
   goog.ui.FilteredMenu.superClass_.setHighlightedIndex.call(this, index);
   var contentEl = this.getContentElement();
@@ -576,35 +576,35 @@ goog.ui.FilteredMenu.prototype.setHighlightedIndex = function(index) {
     diff = contentEl.scrollTop - (el.offsetTop - contentTop) + 1;
     contentEl.scrollTop -= Math.max(diff, 0);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles clicks on the filter label. Focuses the input element.
-***REMOVED*** @param {goog.events.BrowserEvent} e A browser event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles clicks on the filter label. Focuses the input element.
+ * @param {goog.events.BrowserEvent} e A browser event.
+ * @private
+ */
 goog.ui.FilteredMenu.prototype.onFilterLabelClick_ = function(e) {
   this.filterInput_.focus();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilteredMenu.prototype.getContentElement = function() {
   return this.contentElement_ || this.getElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the filter input element.
-***REMOVED*** @return {Element} Input element.
-***REMOVED***
+/**
+ * Returns the filter input element.
+ * @return {Element} Input element.
+ */
 goog.ui.FilteredMenu.prototype.getFilterInputElement = function() {
   return this.filterInput_ || null;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.FilteredMenu.prototype.decorateInternal = function(element) {
   this.setElementInternal(element);
 
@@ -623,4 +623,4 @@ goog.ui.FilteredMenu.prototype.decorateInternal = function(element) {
       this.contentElement_);
 
   this.initFilterInput_();
-***REMOVED***
+};

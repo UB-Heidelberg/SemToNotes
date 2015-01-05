@@ -1,8 +1,8 @@
-***REMOVED*** document me***REMOVED***
+/** document me */
 var position = {
     axis: {
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         x: 0,
         y: 0
     }
-***REMOVED***
+};

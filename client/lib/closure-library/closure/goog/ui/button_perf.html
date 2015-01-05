@@ -16,9 +16,9 @@ Author:  attila@google.com (Attila Bodis)
   <script src="../base.js"></script>
   <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.events.EventHandler');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.testing.PerformanceTable');
     goog.require('goog.testing.jsunit');
     goog.require('goog.ui.Button');
@@ -134,17 +134,17 @@ Author:  attila@google.com (Attila Bodis)
           'Render ' + SAMPLES_PER_RUN + ' buttons (default)');
       cleanUpAfterRenderTest();
       assertEquals('The expected number of buttons must have been rendered',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(), renderIndex);
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(), renderIndex);
     }
 
     function testDecorate() {
-      setUpDecorateTest(SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples());
+      setUpDecorateTest(SAMPLES_PER_RUN * table.getTimer().getNumSamples());
       table.run(
           goog.partial(decorateButtons, SAMPLES_PER_RUN, true),
           'Decorate ' + SAMPLES_PER_RUN + ' buttons (default)');
       cleanUpAfterDecorateTest();
       assertEquals('The expected number of buttons must have been decorated',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(),
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(),
           decorateIndex);
       assertNull('All buttons must have been decorated', elementToDecorate);
     }
@@ -156,18 +156,18 @@ Author:  attila@google.com (Attila Bodis)
           'Render ' + SAMPLES_PER_RUN + ' buttons (no BiDi auto-detect)');
       cleanUpAfterRenderTest();
       assertEquals('The expected number of buttons must have been rendered',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(),
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(),
           renderIndex);
     }
 
     function testDecorateNoBiDiAutoDetect() {
-      setUpDecorateTest(SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples());
+      setUpDecorateTest(SAMPLES_PER_RUN * table.getTimer().getNumSamples());
       table.run(
           goog.partial(decorateButtons, SAMPLES_PER_RUN, false),
           'Decorate ' + SAMPLES_PER_RUN + ' buttons (no BiDi auto-detect)');
       cleanUpAfterDecorateTest();
       assertEquals('The expected number of buttons must have been decorated',
-          SAMPLES_PER_RUN***REMOVED*** table.getTimer().getNumSamples(),
+          SAMPLES_PER_RUN * table.getTimer().getNumSamples(),
           decorateIndex);
       assertNull('All buttons must have been decorated', elementToDecorate);
     }

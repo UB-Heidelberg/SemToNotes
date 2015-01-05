@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.SafeHtml and its builders.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.SafeHtml and its builders.
+ */
 
 goog.provide('goog.html.safeHtmlTest');
 
@@ -55,12 +55,12 @@ function testSafeHtml() {
 }
 
 
-***REMOVED*** @suppress {checkTypes}***REMOVED***
+/** @suppress {checkTypes} */
 function testUnwrap() {
-  var evil = {***REMOVED***
+  var evil = {};
   evil.safeHtmlValueWithSecurityContract__googHtmlSecurityPrivate_ =
       '<script>evil()</script';
-  evil.SAFE_HTML_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {***REMOVED***
+  evil.SAFE_HTML_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {};
 
   var exception = assertThrows(function() {
     goog.html.SafeHtml.unwrap(evil);
@@ -129,8 +129,8 @@ function testSafeHtmlCreate() {
   assertSameHtml('<a href="?a&amp;b"></a>',
       goog.html.SafeHtml.create('a', {'href': href}));
 
-  var style = goog.html.testing.newSafeStyleForTest('border: /* "***REMOVED*** 0;');
-  assertSameHtml('<hr style="border: /* &quot;***REMOVED*** 0;">',
+  var style = goog.html.testing.newSafeStyleForTest('border: /* " */ 0;');
+  assertSameHtml('<hr style="border: /* &quot; */ 0;">',
       goog.html.SafeHtml.create('hr', {'style': style}));
 
   assertEquals(goog.i18n.bidi.Dir.NEUTRAL,

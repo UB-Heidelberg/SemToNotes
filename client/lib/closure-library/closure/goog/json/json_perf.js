@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview JSON performance tests.
-***REMOVED***
+/**
+ * @fileoverview JSON performance tests.
+ */
 
 goog.provide('goog.jsonPerf');
 
@@ -67,12 +67,12 @@ function testParse() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {!Object} obj The object to add properties to.
-***REMOVED*** @param {number} numProperties The number of properties to add.
-***REMOVED*** @param {number} depth The depth at which to recursively add properties.
-***REMOVED*** @return {!Object} The object given in obj (for convenience).
-***REMOVED***
+/**
+ * @param {!Object} obj The object to add properties to.
+ * @param {number} numProperties The number of properties to add.
+ * @param {number} depth The depth at which to recursively add properties.
+ * @return {!Object} The object given in obj (for convenience).
+ */
 function populateObject(obj, numProperties, depth) {
   if (depth == 0) {
     return randomLiteral();

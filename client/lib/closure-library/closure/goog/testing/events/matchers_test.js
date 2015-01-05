@@ -29,7 +29,7 @@ function testEventMatcher() {
   assertTrue(matcher.matches(new goog.events.Event('foo')));
   var FooEvent = function() {
     goog.events.Event.call(this, 'foo');
- ***REMOVED*****REMOVED***
+  };
   goog.inherits(FooEvent, goog.events.Event);
   assertTrue(matcher.matches(new FooEvent()));
 }

@@ -119,8 +119,8 @@ function testSubscribeUnsubscribeWithContext() {
   function bar() {
   }
 
-  var contextA = {***REMOVED***
-  var contextB = {***REMOVED***
+  var contextA = {};
+  var contextB = {};
 
   assertEquals('Topic "X" must not have any subscribers', 0,
       pubsub.getCount('X'));
@@ -169,7 +169,7 @@ function testSubscribeOnce() {
       pubsub.getCount('someTopic'));
   assertTrue('Subscriber must have been called', called);
 
-  context = {called: false***REMOVED***
+  context = {called: false};
   pubsub.subscribeOnce('someTopic', function() {
     this.called = true;
   }, context);
@@ -182,7 +182,7 @@ function testSubscribeOnce() {
       pubsub.getCount('someTopic'));
   assertTrue('Subscriber must have been called', context.called);
 
-  context = {called: false, value: 0***REMOVED***
+  context = {called: false, value: 0};
   pubsub.subscribeOnce('someTopic', function(value) {
     this.called = true;
     this.value = value;
@@ -200,7 +200,7 @@ function testSubscribeOnce() {
 }
 
 function testSubscribeOnce_boundFn() {
-  var context = {called: false, value: 0***REMOVED***
+  var context = {called: false, value: 0};
 
   function subscriber(value) {
     this.called = true;
@@ -329,7 +329,7 @@ function testSubscribeUnsubscribeMultiple() {
   function bar() {
   }
 
-  var context = {***REMOVED***
+  var context = {};
 
   assertEquals('Pubsub channel must not have any subscribers', 0,
       pubsub.getCount());
@@ -389,7 +389,7 @@ function testSubscribeUnsubscribeMultiple() {
 }
 
 function testPublish() {
-  var context = {***REMOVED***
+  var context = {};
   var fooCalled = false;
   var barCalled = false;
 

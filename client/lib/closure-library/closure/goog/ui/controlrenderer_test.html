@@ -37,15 +37,15 @@ Author: attila@google.com (Attila Bodis)
     var sandbox = goog.dom.getElement('sandbox');
     var expectedFailures = new goog.testing.ExpectedFailures();
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A subclass of ControlRenderer that overrides {@code getAriaRole} and
-    ***REMOVED*** {@code getStructuralCssClass} for testing purposes.
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @extends {goog.ui.ControlRenderer}
-   ***REMOVED*****REMOVED***
+    /**
+     * A subclass of ControlRenderer that overrides {@code getAriaRole} and
+     * {@code getStructuralCssClass} for testing purposes.
+     * @constructor
+     * @extends {goog.ui.ControlRenderer}
+     */
     function TestRenderer() {
       goog.ui.ControlRenderer.call(this);
-   ***REMOVED*****REMOVED***
+    };
     goog.inherits(TestRenderer, goog.ui.ControlRenderer);
     goog.addSingletonGetter(TestRenderer);
 
@@ -58,37 +58,37 @@ Author: attila@google.com (Attila Bodis)
        'goog-button']
     ];
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestRenderer.prototype.getAriaRole = function() {
       return goog.a11y.aria.Role.BUTTON;
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestRenderer.prototype.getCssClass = function() {
       return TestRenderer.CSS_CLASS;
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestRenderer.prototype.getStructuralCssClass = function() {
       return 'goog-base';
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestRenderer.prototype.getIe6ClassCombinations = function() {
       return TestRenderer.IE6_CLASS_COMBINATIONS;
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on Mac Safari 3.x.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on Mac Safari 3.x.
+     */
     function isMacSafari3() {
       return goog.userAgent.WEBKIT && goog.userAgent.MAC &&
           !goog.userAgent.isVersionOrHigher('527');
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @return {boolean} Whether we're on IE6 or lower.
-   ***REMOVED*****REMOVED***
+    /**
+     * @return {boolean} Whether we're on IE6 or lower.
+     */
     function isIe6() {
       return goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('7');
     }
@@ -269,7 +269,7 @@ Author: attila@google.com (Attila Bodis)
       // Replace setRightToLeft().
       renderer.setRightToLeft = function() {
         fail('setRightToLeft() must not be called');
-     ***REMOVED*****REMOVED***
+      };
 
       // When a control with default render direction enters the document,
       // setRightToLeft() must not be called.
@@ -294,7 +294,7 @@ Author: attila@google.com (Attila Bodis)
       // Replace setRightToLeft().
       renderer.setRightToLeft = function() {
         fail('setRightToLeft() must not be called');
-     ***REMOVED*****REMOVED***
+      };
 
       sandbox.innerHTML = '<div id="foo" class="goog-control">Foo</div>';
 
@@ -321,7 +321,7 @@ Author: attila@google.com (Attila Bodis)
       // Replace setFocusable().
       renderer.setFocusable = function() {
         fail('setFocusable() must not be called');
-     ***REMOVED*****REMOVED***
+      };
 
       // When a disabled control enters the document, setFocusable() must not
       // be called.
@@ -343,7 +343,7 @@ Author: attila@google.com (Attila Bodis)
       // Replace setFocusable().
       renderer.setFocusable = function() {
         fail('setFocusable() must not be called');
-     ***REMOVED*****REMOVED***
+      };
 
       sandbox.innerHTML =
           '<div dir="rtl">\n' +

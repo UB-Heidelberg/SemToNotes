@@ -1,22 +1,22 @@
-***REMOVED***
-***REMOVED*** @fileoverview A static class providing functions for XML indentation.
-***REMOVED***
+/**
+ * @fileoverview A static class providing functions for XML indentation.
+ */
 
 goog.provide('xrx.xml.Indent');
 
 
 
-***REMOVED***
-***REMOVED*** A static class providing functions for XML indentation.
-***REMOVED***
-xrx.xml.Indent = function() {***REMOVED***
+/**
+ * A static class providing functions for XML indentation.
+ */
+xrx.xml.Indent = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Serialize a XML fragment with indentation in forward direction.
-***REMOVED*** @return {string} The indented XML fragment.
-***REMOVED***
+/**
+ * Serialize a XML fragment with indentation in forward direction.
+ * @return {string} The indented XML fragment.
+ */
 xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
   var traverse = new xrx.xml.Traverse(xml);
   var lastToken = opt_start ? opt_start.type() : xrx.token.UNDEFINED;
@@ -30,24 +30,24 @@ xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
     if (length1 !== length2) {
       output += traverse.xml().substr(offset + length1, length2 - length1);
     }
- ***REMOVED*****REMOVED***
+  };
   
   var newLine = function(label, offset, length1, length2) {
     var level = label.length() - 1;
 
     output += '\n';
 
-    for(var i = 0, ind = level***REMOVED*** indent; i < ind; i++) {
+    for(var i = 0, ind = level * indent; i < ind; i++) {
       output += ' ';
     }
     line(label, offset, length1, length2);
     if (opt_maxLines && (++lines >= opt_maxLines)) traverse.stop();
- ***REMOVED*****REMOVED***
+  };
 
   var inLine = function(label, offset, length1, length2) {
 
     line(label, offset, length1, length2);
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowStartTag = function(label, offset, length1, length2) {
 
@@ -55,11 +55,11 @@ xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
       newLine(label, offset, length1, length2);
     } else {
       inLine(label, offset, length1, length2);
-   ***REMOVED*****REMOVED***
+    };
 
     length1 !== length2 ? lastToken = xrx.token.NOT_TAG : 
         lastToken = xrx.token.START_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
 
@@ -67,11 +67,11 @@ xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
       newLine(label, offset, length1, length2);
     } else {
       inLine(label, offset, length1, length2);
-   ***REMOVED*****REMOVED***
+    };
 
     length1 !== length2 ? lastToken = xrx.token.NOT_TAG : 
       lastToken = xrx.token.END_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowEndTag = function(label, offset, length1, length2) {
 
@@ -83,19 +83,19 @@ xrx.xml.Indent.forward = function(xml, indent, opt_start, opt_maxLines) {
 
     length1 !== length2 ? lastToken = xrx.token.NOT_TAG : 
       lastToken = xrx.token.END_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.forward(opt_start);
   
   return output;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Serialize a XML fragment with indentation in backward direction.
-***REMOVED*** @return {string} The indented XML fragment.
-***REMOVED***
+/**
+ * Serialize a XML fragment with indentation in backward direction.
+ * @return {string} The indented XML fragment.
+ */
 xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
   var traverse = new xrx.xml.Traverse(xml);
   var lastToken = opt_start ? opt_start.type() : xrx.token.UNDEFINED;
@@ -109,12 +109,12 @@ xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
     }
 
     output = traverse.xml().substr(offset, length1) + output;
- ***REMOVED*****REMOVED***
+  };
   
   var newLine = function(label, offset, length1, length2) {
     var level = label.length() - 1;
 
-    for(var i = 0, ind = level***REMOVED*** indent; i < ind; i++) {
+    for(var i = 0, ind = level * indent; i < ind; i++) {
       output = ' ' + output;
     }
 
@@ -123,12 +123,12 @@ xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
     line(label, offset, length1, length2);
 
     if (opt_maxLines && (++lines >= opt_maxLines)) traverse.stop();
- ***REMOVED*****REMOVED***
+  };
 
   var inLine = function(label, offset, length1, length2) {
 
     line(label, offset, length1, length2);
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowStartTag = function(label, offset, length1, length2) {
 
@@ -140,7 +140,7 @@ xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
     }
 
     lastToken = xrx.token.START_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
 
@@ -152,7 +152,7 @@ xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
     }
 
     lastToken = xrx.token.START_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.rowEndTag = function(label, offset, length1, length2) {
 
@@ -166,9 +166,9 @@ xrx.xml.Indent.backward = function(xml, indent, opt_start, opt_maxLines) {
     }
 
     lastToken = xrx.token.END_TAG;
- ***REMOVED*****REMOVED***
+  };
   
   traverse.backward(opt_start);
   
   return output;
-***REMOVED***
+};

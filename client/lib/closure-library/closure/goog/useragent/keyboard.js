@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Constants for determining keyboard support.
-***REMOVED***
+/**
+ * @fileoverview Constants for determining keyboard support.
+ */
 
 goog.provide('goog.userAgent.keyboard');
 
@@ -22,29 +22,29 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.product');
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether the user agent is running with in an environment
-***REMOVED*** that should use Mac-based keyboard shortcuts (Meta instead of Ctrl, etc.).
-***REMOVED***
+/**
+ * @define {boolean} Whether the user agent is running with in an environment
+ * that should use Mac-based keyboard shortcuts (Meta instead of Ctrl, etc.).
+ */
 goog.define('goog.userAgent.keyboard.ASSUME_MAC_KEYBOARD', false);
 
 
-***REMOVED***
-***REMOVED*** Determines whether Mac-based keyboard shortcuts should be used.
-***REMOVED*** @return {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines whether Mac-based keyboard shortcuts should be used.
+ * @return {boolean}
+ * @private
+ */
 goog.userAgent.keyboard.determineMacKeyboard_ = function() {
   return goog.userAgent.MAC || goog.userAgent.product.IPAD ||
       goog.userAgent.product.IPHONE;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the user agent is running in an environment that uses Mac-based
-***REMOVED*** keyboard shortcuts.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the user agent is running in an environment that uses Mac-based
+ * keyboard shortcuts.
+ * @type {boolean}
+ */
 goog.userAgent.keyboard.MAC_KEYBOARD =
     goog.userAgent.keyboard.ASSUME_MAC_KEYBOARD ||
     goog.userAgent.keyboard.determineMacKeyboard_();

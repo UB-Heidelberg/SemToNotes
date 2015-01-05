@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A utility class for making layout assertions. This is a port
-***REMOVED*** of http://go/layoutbot.java
-***REMOVED*** See {@link http://go/layouttesting}.
-***REMOVED***
+/**
+ * @fileoverview A utility class for making layout assertions. This is a port
+ * of http://go/layoutbot.java
+ * See {@link http://go/layouttesting}.
+ */
 
 goog.provide('goog.testing.style.layoutasserts');
 
@@ -25,13 +25,13 @@ goog.require('goog.testing.asserts');
 goog.require('goog.testing.style');
 
 
-***REMOVED***
-***REMOVED*** Asserts that an element has:
-***REMOVED***   1 - a CSS rendering the makes the element visible.
-***REMOVED***   2 - a non-zero width and height.
-***REMOVED*** @param {Element|string} a The element or optionally the comment string.
-***REMOVED*** @param {Element=} opt_b The element when a comment string is present.
-***REMOVED***
+/**
+ * Asserts that an element has:
+ *   1 - a CSS rendering the makes the element visible.
+ *   2 - a non-zero width and height.
+ * @param {Element|string} a The element or optionally the comment string.
+ * @param {Element=} opt_b The element when a comment string is present.
+ */
 var assertIsVisible = function(a, opt_b) {
   _validateArguments(1, arguments);
   var element = nonCommentArg(1, 1, arguments);
@@ -40,14 +40,14 @@ var assertIsVisible = function(a, opt_b) {
       goog.testing.style.isVisible(element) &&
       goog.testing.style.hasVisibleDimensions(element),
       'Specified element should be visible.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The counter assertion of assertIsVisible().
-***REMOVED*** @param {Element|string} a The element or optionally the comment string.
-***REMOVED*** @param {Element=} opt_b The element when a comment string is present.
-***REMOVED***
+/**
+ * The counter assertion of assertIsVisible().
+ * @param {Element|string} a The element or optionally the comment string.
+ * @param {Element=} opt_b The element when a comment string is present.
+ */
 var assertNotVisible = function(a, opt_b) {
   _validateArguments(1, arguments);
   var element = nonCommentArg(1, 1, arguments);
@@ -59,16 +59,16 @@ var assertNotVisible = function(a, opt_b) {
       !goog.testing.style.isVisible(element) ||
       !goog.testing.style.hasVisibleDimensions(element),
       'Specified element should not be visible.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the two specified elements intersect.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the two specified elements intersect.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertIntersect = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -77,16 +77,16 @@ var assertIntersect = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       goog.testing.style.intersects(element, otherElement),
       'Elements should intersect.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the two specified elements do not intersect.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the two specified elements do not intersect.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertNoIntersect = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -95,16 +95,16 @@ var assertNoIntersect = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       !goog.testing.style.intersects(element, otherElement),
       'Elements should not intersect.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the element must have the specified width.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the element must have the specified width.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertWidth = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -114,21 +114,21 @@ var assertWidth = function(a, b, opt_c) {
 
   _assert(commentArg(1, arguments),
       goog.testing.style.layoutasserts.isWithinThreshold_(
-          width, elementWidth, 0 /* tolerance***REMOVED***),
+          width, elementWidth, 0 /* tolerance */),
       'Element should have width ' + width + ' but was ' + elementWidth + '.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the element must have the specified width within the specified
-***REMOVED*** tolerance.
-***REMOVED*** @param {Element|string} a The element or optionally the comment string.
-***REMOVED*** @param {number|Element} b The height or the element if comment string is
-***REMOVED***     present.
-***REMOVED*** @param {number} c The tolerance or the height if comment string is
-***REMOVED***     present.
-***REMOVED*** @param {number=} opt_d The tolerance if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the element must have the specified width within the specified
+ * tolerance.
+ * @param {Element|string} a The element or optionally the comment string.
+ * @param {number|Element} b The height or the element if comment string is
+ *     present.
+ * @param {number} c The tolerance or the height if comment string is
+ *     present.
+ * @param {number=} opt_d The tolerance if comment string is present.
+ */
 var assertWidthWithinTolerance = function(a, b, c, opt_d) {
   _validateArguments(3, arguments);
   var element = nonCommentArg(1, 3, arguments);
@@ -142,16 +142,16 @@ var assertWidthWithinTolerance = function(a, b, c, opt_d) {
           width, elementWidth, tolerance),
       'Element width(' + elementWidth + ') should be within given width(' +
       width + ') with tolerance value of ' + tolerance + '.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the element must have the specified height.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the element must have the specified height.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertHeight = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -161,21 +161,21 @@ var assertHeight = function(a, b, opt_c) {
 
   _assert(commentArg(1, arguments),
       goog.testing.style.layoutasserts.isWithinThreshold_(
-          height, elementHeight, 0 /* tolerance***REMOVED***),
+          height, elementHeight, 0 /* tolerance */),
       'Element should have height ' + height + '.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the element must have the specified height within the specified
-***REMOVED*** tolerance.
-***REMOVED*** @param {Element|string} a The element or optionally the comment string.
-***REMOVED*** @param {number|Element} b The height or the element if comment string is
-***REMOVED***     present.
-***REMOVED*** @param {number} c The tolerance or the height if comment string is
-***REMOVED***     present.
-***REMOVED*** @param {number=} opt_d The tolerance if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the element must have the specified height within the specified
+ * tolerance.
+ * @param {Element|string} a The element or optionally the comment string.
+ * @param {number|Element} b The height or the element if comment string is
+ *     present.
+ * @param {number} c The tolerance or the height if comment string is
+ *     present.
+ * @param {number=} opt_d The tolerance if comment string is present.
+ */
 var assertHeightWithinTolerance = function(a, b, c, opt_d) {
   _validateArguments(3, arguments);
   var element = nonCommentArg(1, 3, arguments);
@@ -189,16 +189,16 @@ var assertHeightWithinTolerance = function(a, b, c, opt_d) {
           height, elementHeight, tolerance),
       'Element width(' + elementHeight + ') should be within given width(' +
       height + ') with tolerance value of ' + tolerance + '.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the first element is to the left of the second element.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the first element is to the left of the second element.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertIsLeftOf = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -209,16 +209,16 @@ var assertIsLeftOf = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       elementRect.left < otherElementRect.left,
       'Elements should be left to right.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the first element is strictly left of the second element.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the first element is strictly left of the second element.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertIsStrictlyLeftOf = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -229,16 +229,16 @@ var assertIsStrictlyLeftOf = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       elementRect.left + elementRect.width < otherElementRect.left,
       'Elements should be strictly left to right.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the first element is higher than the second element.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the first element is higher than the second element.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertIsAbove = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -249,16 +249,16 @@ var assertIsAbove = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       elementRect.top < otherElementRect.top,
       'Elements should be top to bottom.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the first element is strictly higher than the second element.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the first element is strictly higher than the second element.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertIsStrictlyAbove = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -269,17 +269,17 @@ var assertIsStrictlyAbove = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       elementRect.top + elementRect.height < otherElementRect.top,
       'Elements should be strictly top to bottom.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the first element's bounds contain the bounds of the second
-***REMOVED*** element.
-***REMOVED*** @param {Element|string} a The first element or optionally the comment string.
-***REMOVED*** @param {Element} b The second element or the first element if comment string
-***REMOVED***     is present.
-***REMOVED*** @param {Element=} opt_c The second element if comment string is present.
-***REMOVED***
+/**
+ * Asserts that the first element's bounds contain the bounds of the second
+ * element.
+ * @param {Element|string} a The first element or optionally the comment string.
+ * @param {Element} b The second element or the first element if comment string
+ *     is present.
+ * @param {Element=} opt_c The second element if comment string is present.
+ */
 var assertContained = function(a, b, opt_c) {
   _validateArguments(2, arguments);
   var element = nonCommentArg(1, 2, arguments);
@@ -290,21 +290,21 @@ var assertContained = function(a, b, opt_c) {
   _assert(commentArg(1, arguments),
       elementRect.contains(otherElementRect),
       'Element should be contained within the other element.');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the difference between val1 and val2 is less than or equal to
-***REMOVED*** the threashold.
-***REMOVED*** @param {number} val1 The first value.
-***REMOVED*** @param {number} val2 The second value.
-***REMOVED*** @param {number} threshold The threshold value.
-***REMOVED*** @return {boolean} Whether or not the the values are within the threshold.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns true if the difference between val1 and val2 is less than or equal to
+ * the threashold.
+ * @param {number} val1 The first value.
+ * @param {number} val2 The second value.
+ * @param {number} threshold The threshold value.
+ * @return {boolean} Whether or not the the values are within the threshold.
+ * @private
+ */
 goog.testing.style.layoutasserts.isWithinThreshold_ = function(
     val1, val2, threshold) {
   return Math.abs(val1 - val2) <= threshold;
-***REMOVED***
+};
 
 

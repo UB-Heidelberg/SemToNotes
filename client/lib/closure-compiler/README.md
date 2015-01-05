@@ -3,8 +3,8 @@
 The [Closure Compiler](https://developers.google.com/closure/compiler/) is a tool for making JavaScript download and run faster. It is a true compiler for JavaScript. Instead of compiling from a source language to machine code, it compiles from JavaScript to better JavaScript. It parses your JavaScript, analyzes it, removes dead code and rewrites and minimizes what's left. It also checks syntax, variable references, and types, and warns about common JavaScript pitfalls.
 
 ## Getting Started
-***REMOVED*** [Download the latest version](http://dl.google.com/closure-compiler/compiler-latest.zip)
-***REMOVED*** See the [Google Developers Site](https://developers.google.com/closure/compiler/docs/gettingstarted_app) for documentation including instructions for running the compiler from the command line.
+ * [Download the latest version](http://dl.google.com/closure-compiler/compiler-latest.zip)
+ * See the [Google Developers Site](https://developers.google.com/closure/compiler/docs/gettingstarted_app) for documentation including instructions for running the compiler from the command line.
 
 ## Options for Getting Help
 1. Post in the [Closure Compiler Discuss Group] (https://groups.google.com/forum/#!forum/closure-compiler-discuss)
@@ -84,11 +84,11 @@ You can also use minimatch-style globs.
 
 ```bash
 # Recursively include all js files in subdirs
-java -jar compiler.jar --js_output_file=out.js 'src***REMOVED***.js'
+java -jar compiler.jar --js_output_file=out.js 'src/**.js'
 
 # Recursively include all js files in subdirs, exclusing test files.
 # Use single-quotes, so that bash doesn't try to expand the '!'
-java -jar compiler.jar --js_output_file=out.js 'src***REMOVED***.js' '!**_test.js'
+java -jar compiler.jar --js_output_file=out.js 'src/**.js' '!**_test.js'
 ```
 
 The Closure Compiler will concatenate the files in the order they're passed at
@@ -103,9 +103,9 @@ will re-order the inputs automatically.
 ## How to Contribute
 ### Reporting a bug
 1. First make sure that it is really a bug and not simply the way that Closure Compiler works (especially true for ADVANCED_OPTIMIZATIONS).
-***REMOVED*** Check the [official documentation](https://developers.google.com/closure/compiler/)
-***REMOVED*** Consult the [FAQ](https://github.com/google/closure-compiler/wiki/FAQ)
-***REMOVED*** Search on [Stack Overflow](http://stackoverflow.com/questions/tagged/google-closure-compiler) and in the [Closure Compiler Discuss Group](https://groups.google.com/forum/#!forum/closure-compiler-discuss)
+ * Check the [official documentation](https://developers.google.com/closure/compiler/)
+ * Consult the [FAQ](https://github.com/google/closure-compiler/wiki/FAQ)
+ * Search on [Stack Overflow](http://stackoverflow.com/questions/tagged/google-closure-compiler) and in the [Closure Compiler Discuss Group](https://groups.google.com/forum/#!forum/closure-compiler-discuss)
 2. If you still think you have found a bug, make sure someone hasn't already reported it. See the list of [known issues](https://github.com/google/closure-compiler/issues).
 3. If it hasn't been reported yet, post a new issue. Make sure to add enough detail so that the bug can be recreated. The smaller the reproduction code, the better.
 

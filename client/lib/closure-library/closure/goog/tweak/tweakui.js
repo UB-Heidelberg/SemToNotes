@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A UI for editing tweak settings / clicking tweak actions.
-***REMOVED***
-***REMOVED*** @author agrieve@google.com (Andrew Grieve)
-***REMOVED***
+/**
+ * @fileoverview A UI for editing tweak settings / clicking tweak actions.
+ *
+ * @author agrieve@google.com (Andrew Grieve)
+ */
 
 goog.provide('goog.tweak.EntriesPanel');
 goog.provide('goog.tweak.TweakUi');
 
 goog.require('goog.array');
 goog.require('goog.asserts');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.object');
 goog.require('goog.style');
 goog.require('goog.tweak');
@@ -32,88 +32,88 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A UI for editing tweak settings / clicking tweak actions.
-***REMOVED*** @param {!goog.tweak.Registry} registry The registry to render.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A UI for editing tweak settings / clicking tweak actions.
+ * @param {!goog.tweak.Registry} registry The registry to render.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
+ * @constructor
+ * @final
+ */
 goog.tweak.TweakUi = function(registry, opt_domHelper) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The registry to create a UI from.
-  ***REMOVED*** @type {!goog.tweak.Registry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The registry to create a UI from.
+   * @type {!goog.tweak.Registry}
+   * @private
+   */
   this.registry_ = registry;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element to display when the UI is visible.
-  ***REMOVED*** @type {goog.tweak.EntriesPanel|undefined}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The element to display when the UI is visible.
+   * @type {goog.tweak.EntriesPanel|undefined}
+   * @private
+   */
   this.entriesPanel_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The DomHelper to render with.
-  ***REMOVED*** @type {!goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The DomHelper to render with.
+   * @type {!goog.dom.DomHelper}
+   * @private
+   */
   this.domHelper_ = opt_domHelper || goog.dom.getDomHelper();
 
   // Listen for newly registered entries (happens with lazy-loaded modules).
   registry.addOnRegisterListener(goog.bind(this.onNewRegisteredEntry_, this));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The CSS class name unique to the root tweak panel div.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The CSS class name unique to the root tweak panel div.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.ROOT_PANEL_CLASS_ = goog.getCssName('goog-tweak-root');
 
 
-***REMOVED***
-***REMOVED*** The CSS class name unique to the tweak entry div.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The CSS class name unique to the tweak entry div.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.ENTRY_CSS_CLASS_ = goog.getCssName('goog-tweak-entry');
 
 
-***REMOVED***
-***REMOVED*** The CSS classes for each tweak entry div.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The CSS classes for each tweak entry div.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.ENTRY_CSS_CLASSES_ = goog.tweak.TweakUi.ENTRY_CSS_CLASS_ +
     ' ' + goog.getCssName('goog-inline-block');
 
 
-***REMOVED***
-***REMOVED*** The CSS classes for each namespace tweak entry div.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The CSS classes for each namespace tweak entry div.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.ENTRY_GROUP_CSS_CLASSES_ =
     goog.tweak.TweakUi.ENTRY_CSS_CLASS_;
 
 
-***REMOVED***
-***REMOVED*** Marker that the style sheet has already been installed.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Marker that the style sheet has already been installed.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.STYLE_SHEET_INSTALLED_MARKER_ =
     '__closure_tweak_installed_';
 
 
-***REMOVED***
-***REMOVED*** CSS used by TweakUI.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * CSS used by TweakUI.
+ * @type {string}
+ * @private
+ */
 goog.tweak.TweakUi.CSS_STYLES_ = (function() {
   var MOBILE = goog.userAgent.MOBILE;
   var IE = goog.userAgent.IE;
@@ -134,12 +134,12 @@ goog.tweak.TweakUi.CSS_STYLES_ = (function() {
 })();
 
 
-***REMOVED***
-***REMOVED*** Creates a TweakUi if tweaks are enabled.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
-***REMOVED*** @return {!Element|undefined} The root UI element or undefined if tweaks are
-***REMOVED***     not enabled.
-***REMOVED***
+/**
+ * Creates a TweakUi if tweaks are enabled.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
+ * @return {!Element|undefined} The root UI element or undefined if tweaks are
+ *     not enabled.
+ */
 goog.tweak.TweakUi.create = function(opt_domHelper) {
   var registry = goog.tweak.getRegistry();
   if (registry) {
@@ -147,15 +147,15 @@ goog.tweak.TweakUi.create = function(opt_domHelper) {
     ui.render();
     return ui.getRootElement();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a TweakUi inside of a show/hide link.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
-***REMOVED*** @return {!Element|undefined} The root UI element or undefined if tweaks are
-***REMOVED***     not enabled.
-***REMOVED***
+/**
+ * Creates a TweakUi inside of a show/hide link.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
+ * @return {!Element|undefined} The root UI element or undefined if tweaks are
+ *     not enabled.
+ */
 goog.tweak.TweakUi.createCollapsible = function(opt_domHelper) {
   var registry = goog.tweak.getRegistry();
   if (registry) {
@@ -170,7 +170,7 @@ goog.tweak.TweakUi.createCollapsible = function(opt_domHelper) {
     var lazyCreate = function() {
       // Lazily render the UI.
       var ui = new goog.tweak.TweakUi(
-         ***REMOVED*****REMOVED*** @type {!goog.tweak.Registry}***REMOVED*** (registry), dh);
+          /** @type {!goog.tweak.Registry} */ (registry), dh);
       ui.render();
       // Put the hide link on the same line as the "Show Descriptions" link.
       // Set the style lazily because we can.
@@ -179,21 +179,21 @@ goog.tweak.TweakUi.createCollapsible = function(opt_domHelper) {
       tweakElem.insertBefore(hideLink, tweakElem.firstChild);
       ret.appendChild(tweakElem);
       return tweakElem;
-   ***REMOVED*****REMOVED***
-    new goog.ui.Zippy(showLink, lazyCreate, false /* expanded***REMOVED***, hideLink);
+    };
+    new goog.ui.Zippy(showLink, lazyCreate, false /* expanded */, hideLink);
     return ret;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compares the given entries. Orders alphabetically and groups buttons and
-***REMOVED*** expandable groups.
-***REMOVED*** @param {goog.tweak.BaseEntry} a The first entry to compare.
-***REMOVED*** @param {goog.tweak.BaseEntry} b The second entry to compare.
-***REMOVED*** @return {number} Refer to goog.array.defaultCompare.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compares the given entries. Orders alphabetically and groups buttons and
+ * expandable groups.
+ * @param {goog.tweak.BaseEntry} a The first entry to compare.
+ * @param {goog.tweak.BaseEntry} b The second entry to compare.
+ * @return {number} Refer to goog.array.defaultCompare.
+ * @private
+ */
 goog.tweak.TweakUi.entryCompare_ = function(a, b) {
   return (
       goog.array.defaultCompare(a instanceof goog.tweak.NamespaceEntry_,
@@ -204,74 +204,74 @@ goog.tweak.TweakUi.entryCompare_ = function(a, b) {
           b instanceof goog.tweak.ButtonAction) ||
       goog.array.defaultCompare(a.label, b.label) ||
       goog.array.defaultCompare(a.getId(), b.getId()));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {boolean} Returns whether the given entry contains sub-entries.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {!goog.tweak.BaseEntry} entry The entry.
+ * @return {boolean} Returns whether the given entry contains sub-entries.
+ * @private
+ */
 goog.tweak.TweakUi.isGroupEntry_ = function(entry) {
   return entry instanceof goog.tweak.NamespaceEntry_ ||
       entry instanceof goog.tweak.BooleanGroup;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the list of entries from the given boolean group.
-***REMOVED*** @param {!goog.tweak.BooleanGroup} group The group to get the entries from.
-***REMOVED*** @return {!Array.<!goog.tweak.BaseEntry>} The sorted entries.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the list of entries from the given boolean group.
+ * @param {!goog.tweak.BooleanGroup} group The group to get the entries from.
+ * @return {!Array.<!goog.tweak.BaseEntry>} The sorted entries.
+ * @private
+ */
 goog.tweak.TweakUi.extractBooleanGroupEntries_ = function(group) {
   var ret = goog.object.getValues(group.getChildEntries());
   ret.sort(goog.tweak.TweakUi.entryCompare_);
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {string} Returns the namespace for the entry, or '' if it is not
-***REMOVED***     namespaced.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {!goog.tweak.BaseEntry} entry The entry.
+ * @return {string} Returns the namespace for the entry, or '' if it is not
+ *     namespaced.
+ * @private
+ */
 goog.tweak.TweakUi.extractNamespace_ = function(entry) {
   var namespaceMatch = /.+(?=\.)/.exec(entry.getId());
   return namespaceMatch ? namespaceMatch[0] : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {string} Returns the part of the label after the last period, unless
-***REMOVED***     the label has been explicly set (it is different from the ID).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {!goog.tweak.BaseEntry} entry The entry.
+ * @return {string} Returns the part of the label after the last period, unless
+ *     the label has been explicly set (it is different from the ID).
+ * @private
+ */
 goog.tweak.TweakUi.getNamespacedLabel_ = function(entry) {
   var label = entry.label;
   if (label == entry.getId()) {
     label = label.substr(label.lastIndexOf('.') + 1);
   }
   return label;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Element} The root element. Must not be called before render().
-***REMOVED***
+/**
+ * @return {!Element} The root element. Must not be called before render().
+ */
 goog.tweak.TweakUi.prototype.getRootElement = function() {
   goog.asserts.assert(this.entriesPanel_,
       'TweakUi.getRootElement called before render().');
   return this.entriesPanel_.getRootElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Reloads the page with query parameters set by the UI.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reloads the page with query parameters set by the UI.
+ * @private
+ */
 goog.tweak.TweakUi.prototype.restartWithAppliedTweaks_ = function() {
   var queryString = this.registry_.makeUrlQuery();
   var wnd = this.domHelper_.getWindow();
@@ -280,13 +280,13 @@ goog.tweak.TweakUi.prototype.restartWithAppliedTweaks_ = function() {
   } else {
     wnd.location.reload();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Installs the required CSS styles.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Installs the required CSS styles.
+ * @private
+ */
 goog.tweak.TweakUi.prototype.installStyles_ = function() {
   // Use an marker to install the styles only once per document.
   // Styles are injected via JS instead of in a separate style sheet so that
@@ -297,13 +297,13 @@ goog.tweak.TweakUi.prototype.installStyles_ = function() {
         goog.tweak.TweakUi.CSS_STYLES_, doc);
     doc[goog.tweak.TweakUi.STYLE_SHEET_INSTALLED_MARKER_] = true;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the element to display when the UI is visible.
-***REMOVED*** @return {!Element} The root element.
-***REMOVED***
+/**
+ * Creates the element to display when the UI is visible.
+ * @return {!Element} The root element.
+ */
 goog.tweak.TweakUi.prototype.render = function() {
   this.installStyles_();
   var dh = this.domHelper_;
@@ -317,33 +317,33 @@ goog.tweak.TweakUi.prototype.render = function() {
   rootPanelDiv.className += ' ' + goog.tweak.TweakUi.ROOT_PANEL_CLASS_;
   this.entriesPanel_ = rootPanel;
 
-  var entries = this.registry_.extractEntries(true /* excludeChildEntries***REMOVED***,
-      false /* excludeNonSettings***REMOVED***);
+  var entries = this.registry_.extractEntries(true /* excludeChildEntries */,
+      false /* excludeNonSettings */);
   for (var i = 0, entry; entry = entries[i]; i++) {
     this.insertEntry_(entry);
   }
 
   return rootPanelDiv;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the UI with the given entry.
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The newly registered entry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the UI with the given entry.
+ * @param {!goog.tweak.BaseEntry} entry The newly registered entry.
+ * @private
+ */
 goog.tweak.TweakUi.prototype.onNewRegisteredEntry_ = function(entry) {
   if (this.entriesPanel_) {
     this.insertEntry_(entry);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the UI with the given entry.
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The newly registered entry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Updates the UI with the given entry.
+ * @param {!goog.tweak.BaseEntry} entry The newly registered entry.
+ * @private
+ */
 goog.tweak.TweakUi.prototype.insertEntry_ = function(entry) {
   var panel = this.entriesPanel_;
   var namespace = goog.tweak.TweakUi.extractNamespace_(entry);
@@ -366,98 +366,98 @@ goog.tweak.TweakUi.prototype.insertEntry_ = function(entry) {
   }
   goog.asserts.assert(panel, 'Missing panel for entry %s', entry.getId());
   panel.insertEntry(entry);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** The body of the tweaks UI and also used for BooleanGroup.
-***REMOVED*** @param {!Array.<!goog.tweak.BaseEntry>} entries The entries to show in the
-***REMOVED***     panel.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The body of the tweaks UI and also used for BooleanGroup.
+ * @param {!Array.<!goog.tweak.BaseEntry>} entries The entries to show in the
+ *     panel.
+ * @param {goog.dom.DomHelper=} opt_domHelper The DomHelper to render with.
+ * @constructor
+ * @final
+ */
 goog.tweak.EntriesPanel = function(entries, opt_domHelper) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The entries to show in the panel.
-  ***REMOVED*** @type {!Array.<!goog.tweak.BaseEntry>} entries
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The entries to show in the panel.
+   * @type {!Array.<!goog.tweak.BaseEntry>} entries
+   * @private
+   */
   this.entries_ = entries;
 
-***REMOVED***
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The bound onclick handler for the help question marks.
-  ***REMOVED*** @this {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  var self = this;
+  /**
+   * The bound onclick handler for the help question marks.
+   * @this {Element}
+   * @private
+   */
   this.boundHelpOnClickHandler_ = function() {
     self.onHelpClick_(this.parentNode);
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element that contains the UI.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The element that contains the UI.
+   * @type {Element}
+   * @private
+   */
   this.rootElem_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element that contains all of the settings and the endElement.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The element that contains all of the settings and the endElement.
+   * @type {Element}
+   * @private
+   */
   this.mainPanel_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Flips between true/false each time the "Toggle Descriptions" link is
-  ***REMOVED*** clicked.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Flips between true/false each time the "Toggle Descriptions" link is
+   * clicked.
+   * @type {boolean}
+   * @private
+   */
   this.showAllDescriptionsState_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The DomHelper to render with.
-  ***REMOVED*** @type {!goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The DomHelper to render with.
+   * @type {!goog.dom.DomHelper}
+   * @private
+   */
   this.domHelper_ = opt_domHelper || goog.dom.getDomHelper();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Map of tweak ID -> EntriesPanel for child panels (BooleanGroups).
-  ***REMOVED*** @type {!Object.<!goog.tweak.EntriesPanel>}
- ***REMOVED*****REMOVED***
-  this.childPanels = {***REMOVED***
-***REMOVED***
+  /**
+   * Map of tweak ID -> EntriesPanel for child panels (BooleanGroups).
+   * @type {!Object.<!goog.tweak.EntriesPanel>}
+   */
+  this.childPanels = {};
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!Element} Returns the expanded element. Must not be called before
-***REMOVED***     render().
-***REMOVED***
+/**
+ * @return {!Element} Returns the expanded element. Must not be called before
+ *     render().
+ */
 goog.tweak.EntriesPanel.prototype.getRootElement = function() {
   goog.asserts.assert(this.rootElem_,
       'EntriesPanel.getRootElement called before render().');
-  return***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (this.rootElem_);
-***REMOVED***
+  return /** @type {!Element} */ (this.rootElem_);
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns the expanded element.
-***REMOVED*** The markup looks like:
-***REMOVED*** <div>
-***REMOVED***   <a>Show Descriptions</a>
-***REMOVED***   <div>
-***REMOVED***      ...
-***REMOVED***      {endElement}
-***REMOVED***   </div>
-***REMOVED*** </div>
-***REMOVED*** @param {Element|DocumentFragment=} opt_endElement Element to insert after all
-***REMOVED***     tweak entries.
-***REMOVED*** @return {!Element} The root element for the panel.
-***REMOVED***
+/**
+ * Creates and returns the expanded element.
+ * The markup looks like:
+ * <div>
+ *   <a>Show Descriptions</a>
+ *   <div>
+ *      ...
+ *      {endElement}
+ *   </div>
+ * </div>
+ * @param {Element|DocumentFragment=} opt_endElement Element to insert after all
+ *     tweak entries.
+ * @return {!Element} The root element for the panel.
+ */
 goog.tweak.EntriesPanel.prototype.render = function(opt_endElement) {
   var dh = this.domHelper_;
   var entries = this.entries_;
@@ -481,14 +481,14 @@ goog.tweak.EntriesPanel.prototype.render = function(opt_endElement) {
   }
   ret.appendChild(mainPanel);
   this.rootElem_ = ret;
-  return***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (ret);
-***REMOVED***
+  return /** @type {!Element} */ (ret);
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts the given entry into the panel.
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry to insert.
-***REMOVED***
+/**
+ * Inserts the given entry into the panel.
+ * @param {!goog.tweak.BaseEntry} entry The entry to insert.
+ */
 goog.tweak.EntriesPanel.prototype.insertEntry = function(entry) {
   var insertIndex = -goog.array.binarySearch(this.entries_, entry,
       goog.tweak.TweakUi.entryCompare_) - 1;
@@ -499,15 +499,15 @@ goog.tweak.EntriesPanel.prototype.insertEntry = function(entry) {
       this.createEntryElem_(entry),
       // IE doesn't like 'undefined' here.
       this.mainPanel_.childNodes[insertIndex] || null);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns a form element for the given entry.
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {!Element} The root DOM element for the entry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates and returns a form element for the given entry.
+ * @param {!goog.tweak.BaseEntry} entry The entry.
+ * @return {!Element} The root DOM element for the entry.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createEntryElem_ = function(entry) {
   var dh = this.domHelper_;
   var isGroupEntry = goog.tweak.TweakUi.isGroupEntry_(entry);
@@ -525,39 +525,39 @@ goog.tweak.EntriesPanel.prototype.createEntryElem_ = function(entry) {
       // Add the expandable help question mark.
       this.createHelpElem_(entry));
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Click handler for the help link.
-***REMOVED*** @param {Node} entryDiv The div that contains the tweak.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Click handler for the help link.
+ * @param {Node} entryDiv The div that contains the tweak.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.onHelpClick_ = function(entryDiv) {
   this.showDescription_(entryDiv, !entryDiv.style.display);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Twiddle the DOM so that the entry within the given span is shown/hidden.
-***REMOVED*** @param {Node} entryDiv The div that contains the tweak.
-***REMOVED*** @param {boolean} show True to show, false to hide.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Twiddle the DOM so that the entry within the given span is shown/hidden.
+ * @param {Node} entryDiv The div that contains the tweak.
+ * @param {boolean} show True to show, false to hide.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.showDescription_ =
     function(entryDiv, show) {
   var descriptionElem = entryDiv.lastChild.lastChild;
-  goog.style.setElementShown(***REMOVED*** @type {Element}***REMOVED*** (descriptionElem), show);
+  goog.style.setElementShown(/** @type {Element} */ (descriptionElem), show);
   entryDiv.style.display = show ? 'block' : '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns a help element for the given entry.
-***REMOVED*** @param {goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {!Element} The root element of the created DOM.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates and returns a help element for the given entry.
+ * @param {goog.tweak.BaseEntry} entry The entry.
+ * @return {!Element} The root element of the created DOM.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createHelpElem_ = function(entry) {
   // The markup looks like:
   // <span onclick=...><b>?</b><span>{description}</span></span>
@@ -566,19 +566,19 @@ goog.tweak.EntriesPanel.prototype.createHelpElem_ = function(entry) {
       '<span style="display:none;color:#666"></span>';
   ret.onclick = this.boundHelpOnClickHandler_;
   var descriptionElem = ret.lastChild;
-  goog.dom.setTextContent(***REMOVED*** @type {Element}***REMOVED*** (descriptionElem),
+  goog.dom.setTextContent(/** @type {Element} */ (descriptionElem),
       entry.description);
   if (!entry.isRestartRequired()) {
     descriptionElem.innerHTML +=
         ' <span style="color:blue">(no restart required)</span>';
   }
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show all entry descriptions (has the same effect as clicking on all ?'s).
-***REMOVED***
+/**
+ * Show all entry descriptions (has the same effect as clicking on all ?'s).
+ */
 goog.tweak.EntriesPanel.prototype.toggleAllDescriptions = function() {
   var show = !this.showAllDescriptionsState_;
   this.showAllDescriptionsState_ = show;
@@ -587,18 +587,18 @@ goog.tweak.EntriesPanel.prototype.toggleAllDescriptions = function() {
   for (var i = 0, div; div = entryDivs[i]; i++) {
     this.showDescription_(div, show);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM element to control the given enum setting.
-***REMOVED*** @param {!goog.tweak.StringSetting|!goog.tweak.NumericSetting} tweak The
-***REMOVED***     setting.
-***REMOVED*** @param {string} label The label for the entry.
-***REMOVED*** @param {!Function} onchangeFunc onchange event handler.
-***REMOVED*** @return {!DocumentFragment} The DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM element to control the given enum setting.
+ * @param {!goog.tweak.StringSetting|!goog.tweak.NumericSetting} tweak The
+ *     setting.
+ * @param {string} label The label for the entry.
+ * @param {!Function} onchangeFunc onchange event handler.
+ * @return {!DocumentFragment} The DOM element.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createComboBoxDom_ =
     function(tweak, label, onchangeFunc) {
   // The markup looks like:
@@ -625,16 +625,16 @@ goog.tweak.EntriesPanel.prototype.createComboBoxDom_ =
     selectElem.value = tweak.getNewValue();
   });
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM element to control the given boolean setting.
-***REMOVED*** @param {!goog.tweak.BooleanSetting} tweak The setting.
-***REMOVED*** @param {string} label The label for the entry.
-***REMOVED*** @return {!DocumentFragment} The DOM elements.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM element to control the given boolean setting.
+ * @param {!goog.tweak.BooleanSetting} tweak The setting.
+ * @param {string} label The label for the entry.
+ * @return {!DocumentFragment} The DOM elements.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createBooleanSettingDom_ =
     function(tweak, label) {
   var dh = this.domHelper_;
@@ -650,23 +650,23 @@ goog.tweak.EntriesPanel.prototype.createBooleanSettingDom_ =
   checkbox.checked = tweak.getNewValue();
   checkbox.onchange = function() {
     tweak.setValue(checkbox.checked);
- ***REMOVED*****REMOVED***
+  };
   tweak.addCallback(function() {
     checkbox.checked = tweak.getNewValue();
   });
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM for a BooleanGroup or NamespaceEntry.
-***REMOVED*** @param {!goog.tweak.BooleanGroup|!goog.tweak.NamespaceEntry_} entry The
-***REMOVED***     entry.
-***REMOVED*** @param {string} label The label for the entry.
-***REMOVED*** @param {!Array.<goog.tweak.BaseEntry>} childEntries The child entries.
-***REMOVED*** @return {!DocumentFragment} The DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM for a BooleanGroup or NamespaceEntry.
+ * @param {!goog.tweak.BooleanGroup|!goog.tweak.NamespaceEntry_} entry The
+ *     entry.
+ * @param {string} label The label for the entry.
+ * @param {!Array.<goog.tweak.BaseEntry>} childEntries The child entries.
+ * @return {!DocumentFragment} The DOM element.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createSubPanelDom_ = function(entry, label,
     childEntries) {
   var dh = this.domHelper_;
@@ -687,25 +687,25 @@ goog.tweak.EntriesPanel.prototype.createSubPanelDom_ = function(entry, label,
       dh.createDom('legend', null, toggleLink2, descriptionsLink),
       elem);
 
-  new goog.ui.Zippy(toggleLink, childrenElem, false /* expanded***REMOVED***,
+  new goog.ui.Zippy(toggleLink, childrenElem, false /* expanded */,
       toggleLink2);
 
   var ret = dh.getDocument().createDocumentFragment();
   ret.appendChild(toggleLink);
   ret.appendChild(childrenElem);
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM element to control the given string setting.
-***REMOVED*** @param {!goog.tweak.StringSetting|!goog.tweak.NumericSetting} tweak The
-***REMOVED***     setting.
-***REMOVED*** @param {string} label The label for the entry.
-***REMOVED*** @param {!Function} onchangeFunc onchange event handler.
-***REMOVED*** @return {!DocumentFragment} The DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM element to control the given string setting.
+ * @param {!goog.tweak.StringSetting|!goog.tweak.NumericSetting} tweak The
+ *     setting.
+ * @param {string} label The label for the entry.
+ * @param {!Function} onchangeFunc onchange event handler.
+ * @return {!DocumentFragment} The DOM element.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createTextBoxDom_ =
     function(tweak, label, onchangeFunc) {
   var dh = this.domHelper_;
@@ -722,30 +722,30 @@ goog.tweak.EntriesPanel.prototype.createTextBoxDom_ =
     textBox.value = tweak.getNewValue();
   });
   return ret;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM element to control the given button action.
-***REMOVED*** @param {!goog.tweak.ButtonAction} tweak The action.
-***REMOVED*** @param {string} label The label for the entry.
-***REMOVED*** @return {!Element} The DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM element to control the given button action.
+ * @param {!goog.tweak.ButtonAction} tweak The action.
+ * @param {string} label The label for the entry.
+ * @return {!Element} The DOM element.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createButtonActionDom_ =
     function(tweak, label) {
   return this.domHelper_.createDom('button', {
     onclick: goog.bind(tweak.fireCallbacks, tweak)
   }, label);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates the DOM element to control the given entry.
-***REMOVED*** @param {!goog.tweak.BaseEntry} entry The entry.
-***REMOVED*** @return {!Element|!DocumentFragment} The DOM element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates the DOM element to control the given entry.
+ * @param {!goog.tweak.BaseEntry} entry The entry.
+ * @return {!Element|!DocumentFragment} The DOM element.
+ * @private
+ */
 goog.tweak.EntriesPanel.prototype.createTweakEntryDom_ = function(entry) {
   var label = goog.tweak.TweakUi.getNamespacedLabel_(entry);
   if (entry instanceof goog.tweak.BooleanSetting) {
@@ -754,10 +754,10 @@ goog.tweak.EntriesPanel.prototype.createTweakEntryDom_ = function(entry) {
     var childEntries = goog.tweak.TweakUi.extractBooleanGroupEntries_(entry);
     return this.createSubPanelDom_(entry, label, childEntries);
   } else if (entry instanceof goog.tweak.StringSetting) {
-   ***REMOVED*****REMOVED*** @this {Element}***REMOVED***
+    /** @this {Element} */
     var setValueFunc = function() {
       entry.setValue(this.value);
-   ***REMOVED*****REMOVED***
+    };
     return entry.getValidValues() ?
         this.createComboBoxDom_(entry, label, setValueFunc) :
         this.createTextBoxDom_(entry, label, setValueFunc);
@@ -769,7 +769,7 @@ goog.tweak.EntriesPanel.prototype.createTweakEntryDom_ = function(entry) {
       } else {
         entry.setValue(+this.value);
       }
-   ***REMOVED*****REMOVED***
+    };
     return entry.getValidValues() ?
         this.createComboBoxDom_(entry, label, setValueFunc) :
         this.createTextBoxDom_(entry, label, setValueFunc);
@@ -779,41 +779,41 @@ goog.tweak.EntriesPanel.prototype.createTweakEntryDom_ = function(entry) {
   goog.asserts.assertInstanceof(entry, goog.tweak.ButtonAction,
       'invalid entry: %s', entry);
   return this.createButtonActionDom_(
-     ***REMOVED*****REMOVED*** @type {!goog.tweak.ButtonAction}***REMOVED*** (entry), label);
-***REMOVED***
+      /** @type {!goog.tweak.ButtonAction} */ (entry), label);
+};
 
 
 
-***REMOVED***
-***REMOVED*** Entries used to represent the collapsible namespace links. These entries are
-***REMOVED*** never registered with the TweakRegistry, but are contained within the
-***REMOVED*** collection of entries within TweakPanels.
-***REMOVED*** @param {string} namespace The namespace for the entry.
-***REMOVED*** @param {!Array.<!goog.tweak.BaseEntry>} entries Entries within the namespace.
-***REMOVED***
-***REMOVED*** @extends {goog.tweak.BaseEntry}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Entries used to represent the collapsible namespace links. These entries are
+ * never registered with the TweakRegistry, but are contained within the
+ * collection of entries within TweakPanels.
+ * @param {string} namespace The namespace for the entry.
+ * @param {!Array.<!goog.tweak.BaseEntry>} entries Entries within the namespace.
+ * @constructor
+ * @extends {goog.tweak.BaseEntry}
+ * @private
+ */
 goog.tweak.NamespaceEntry_ = function(namespace, entries) {
   goog.tweak.BaseEntry.call(this,
       goog.tweak.NamespaceEntry_.ID_PREFIX + namespace,
       'Tweaks within the ' + namespace + ' namespace.');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Entries within this namespace.
-  ***REMOVED*** @type {!Array.<!goog.tweak.BaseEntry>}
- ***REMOVED*****REMOVED***
+  /**
+   * Entries within this namespace.
+   * @type {!Array.<!goog.tweak.BaseEntry>}
+   */
   this.entries = entries;
 
   this.label = namespace;
-***REMOVED***
+};
 goog.inherits(goog.tweak.NamespaceEntry_, goog.tweak.BaseEntry);
 
 
-***REMOVED***
-***REMOVED*** Prefix for the IDs of namespace entries used to ensure that they do not
-***REMOVED*** conflict with regular entries.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Prefix for the IDs of namespace entries used to ensure that they do not
+ * conflict with regular entries.
+ * @type {string}
+ */
 goog.tweak.NamespaceEntry_.ID_PREFIX = '!';
 

@@ -22,17 +22,17 @@ goog.require('goog.ui.equation.TexEditor');
 
 
 
-***REMOVED***
-***REMOVED*** Equation editor dialog (based on goog.ui.editor.AbstractDialog).
-***REMOVED*** @param {Object} context The context that this dialog runs in.
-***REMOVED*** @param {goog.dom.DomHelper} domHelper DomHelper to be used to create the
-***REMOVED***     dialog's dom structure.
-***REMOVED*** @param {string} equation Initial equation.
-***REMOVED*** @param {string} helpUrl URL pointing to help documentation.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.editor.AbstractDialog}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Equation editor dialog (based on goog.ui.editor.AbstractDialog).
+ * @param {Object} context The context that this dialog runs in.
+ * @param {goog.dom.DomHelper} domHelper DomHelper to be used to create the
+ *     dialog's dom structure.
+ * @param {string} equation Initial equation.
+ * @param {string} helpUrl URL pointing to help documentation.
+ * @constructor
+ * @extends {goog.ui.editor.AbstractDialog}
+ * @final
+ */
 goog.ui.editor.EquationEditorDialog = function(context, domHelper,
     equation, helpUrl) {
   goog.ui.editor.AbstractDialog.call(this, domHelper);
@@ -42,47 +42,47 @@ goog.ui.editor.EquationEditorDialog = function(context, domHelper,
   this.equationEditor_.setEquation(equation);
   this.equationEditor_.addEventListener(goog.editor.Command.EQUATION,
       this.onChange_, false, this);
-***REMOVED***
+};
 goog.inherits(goog.ui.editor.EquationEditorDialog,
     goog.ui.editor.AbstractDialog);
 
 
-***REMOVED***
-***REMOVED*** The equation editor actual UI.
-***REMOVED*** @type {goog.ui.equation.TexEditor}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The equation editor actual UI.
+ * @type {goog.ui.equation.TexEditor}
+ * @private
+ */
 goog.ui.editor.EquationEditorDialog.prototype.equationEditor_;
 
 
-***REMOVED***
-***REMOVED*** The dialog's OK button element.
-***REMOVED*** @type {Element?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The dialog's OK button element.
+ * @type {Element?}
+ * @private
+ */
 goog.ui.editor.EquationEditorDialog.prototype.okButton_;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.editor.EquationEditorDialog.prototype.createDialogControl =
     function() {
   var builder = new goog.ui.editor.AbstractDialog.Builder(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc The title of the equation editor dialog.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc The title of the equation editor dialog.
+   */
   var MSG_EE_DIALOG_TITLE = goog.getMsg('Equation Editor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Button label for the equation editor dialog for adding
-  ***REMOVED*** a new equation.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Button label for the equation editor dialog for adding
+   * a new equation.
+   */
   var MSG_EE_BUTTON_SAVE_NEW = goog.getMsg('Insert equation');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @desc Button label for the equation editor dialog for saving
-  ***REMOVED*** a modified equation.
- ***REMOVED*****REMOVED***
+  /**
+   * @desc Button label for the equation editor dialog for saving
+   * a modified equation.
+   */
   var MSG_EE_BUTTON_SAVE_MODIFY = goog.getMsg('Save changes');
 
   var okButtonText = this.equationEditor_.getEquation() ?
@@ -94,12 +94,12 @@ goog.ui.editor.EquationEditorDialog.prototype.createDialogControl =
     .addCancelButton();
 
   return builder.build();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.ui.editor.EquationEditorDialog.prototype.createOkEvent = function(e) {
   if (this.equationEditor_.isValid()) {
     // Equation is not valid, don't close the dialog.
@@ -107,18 +107,18 @@ goog.ui.editor.EquationEditorDialog.prototype.createOkEvent = function(e) {
   }
   var equationHtml = this.equationEditor_.getHtml();
   return new goog.ui.editor.EquationEditorOkEvent(equationHtml);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles CHANGE event fired when user changes equation.
-***REMOVED*** @param {goog.ui.equation.ChangeEvent} e The event object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles CHANGE event fired when user changes equation.
+ * @param {goog.ui.equation.ChangeEvent} e The event object.
+ * @private
+ */
 goog.ui.editor.EquationEditorDialog.prototype.onChange_ = function(e) {
   if (!this.okButton_) {
     this.okButton_ = this.getButtonElement(
         goog.ui.Dialog.DefaultButtonKeys.OK);
   }
   this.okButton_.disabled = !e.isValid;
-***REMOVED***
+};

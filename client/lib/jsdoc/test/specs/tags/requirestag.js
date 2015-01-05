@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("@requires tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/requirestag.js');
     var foo = docSet.getByLongname('foo')[0];

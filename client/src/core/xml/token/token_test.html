@@ -27,7 +27,7 @@ function test00getNative() {
   assertEquals(true, token.label().sameAs(newToken.label()));
   assertEquals(4, token.offset());
   assertEquals(10, token.length());
-***REMOVED***
+};
 
 
 
@@ -83,7 +83,7 @@ function test01SameAs() {
   
   // attribute
   assertEquals(true, attribute.sameAs(attribute, label));
-***REMOVED***
+};
 
 
 
@@ -130,7 +130,7 @@ function test02Compare() {
   assertEquals(true, tag.compare(xrx.token.EMPTY_TAG, label));
   assertEquals(true, tag.compare(xrx.token.START_EMPTY_TAG, label));
   assertEquals(true, tag.compare(xrx.token.TAG, label));
-***REMOVED***
+};
 
 
 
@@ -144,14 +144,14 @@ function test03IsBeforeSameLabel() {
   var matrix = new Array(token.length);
   for(var t = 0; t < token.length; t++) {
     matrix[t] = new Array(token.length);
- ***REMOVED*****REMOVED***
+  };
 
                         // start      empty       end        not       attr
-  /* start***REMOVED*** matrix[0] = [false,     undefined,  true,      true,     false   ];
-  /* empty***REMOVED*** matrix[1] = [undefined, false,      undefined, true,     false   ];
-  /* end***REMOVED***   matrix[2] = [false,     undefined,  false,     true,     false   ];
-  /* not***REMOVED***   matrix[3] = [false,     false,      false,     false,    false   ];
-  /* attr***REMOVED***  matrix[4] = [true,      true,       true,      true,     false   ];
+  /* start */ matrix[0] = [false,     undefined,  true,      true,     false   ];
+  /* empty */ matrix[1] = [undefined, false,      undefined, true,     false   ];
+  /* end */   matrix[2] = [false,     undefined,  false,     true,     false   ];
+  /* not */   matrix[3] = [false,     false,      false,     false,    false   ];
+  /* attr */  matrix[4] = [true,      true,       true,      true,     false   ];
 
   for(var x = 0; x < token.length; x++) {
     var tx = new xrx.token[token[x]](label);
@@ -161,9 +161,9 @@ function test03IsBeforeSameLabel() {
       if (expected !== undefined)
           assertEquals(token[x] + ' is before ' + token[y] + ' ' + tx.isAfter(ty),
               expected, tx.isBefore(ty));
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+  };
+};
 
 
 
@@ -177,14 +177,14 @@ function test04IsAfterSameLabel() {
   var matrix = new Array(token.length);
   for(var t = 0; t < token.length; t++) {
     matrix[t] = new Array(token.length);
- ***REMOVED*****REMOVED***
+  };
 
                         // start      empty       end        not       attr
-  /* start***REMOVED*** matrix[0] = [false,     undefined,  false,     false,    true    ];
-  /* empty***REMOVED*** matrix[1] = [undefined, false,      undefined, false,    true    ];
-  /* end***REMOVED***   matrix[2] = [true,      undefined,  false,     false,    true    ];
-  /* not***REMOVED***   matrix[3] = [true,      true,       true,      false,    true    ];
-  /* attr***REMOVED***  matrix[4] = [false,     false,      false,     false,    false   ];
+  /* start */ matrix[0] = [false,     undefined,  false,     false,    true    ];
+  /* empty */ matrix[1] = [undefined, false,      undefined, false,    true    ];
+  /* end */   matrix[2] = [true,      undefined,  false,     false,    true    ];
+  /* not */   matrix[3] = [true,      true,       true,      false,    true    ];
+  /* attr */  matrix[4] = [false,     false,      false,     false,    false   ];
 
   for(var x = 0; x < token.length; x++) {
     var tx = new xrx.token[token[x]](label);
@@ -194,9 +194,9 @@ function test04IsAfterSameLabel() {
       if (expected !== undefined)
           assertEquals(token[x] + ' is after ' + token[y] + ' ' + tx.isAfter(ty),
               expected, tx.isAfter(ty));
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+  };
+};
 
 
 

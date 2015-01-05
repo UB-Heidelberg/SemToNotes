@@ -30,11 +30,11 @@ function setUp() {
   describeFn = new goog.testing.recordFunction();
 
   successTestMatcher = function() {
-    return { matches: successMatchesFn, describe: describeFn***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    return { matches: successMatchesFn, describe: describeFn };
+  };
   failureTestMatcher = function() {
-    return { matches: failureMatchesFn, describe: describeFn***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
+    return { matches: failureMatchesFn, describe: describeFn };
+  };
 }
 
 function testAssertthatAlwaysCallsMatches() {

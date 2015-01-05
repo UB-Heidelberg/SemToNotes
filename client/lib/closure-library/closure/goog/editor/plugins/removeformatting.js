@@ -13,10 +13,10 @@
 // limitations under the License.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview Plugin to handle Remove Formatting.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Plugin to handle Remove Formatting.
+ *
+ */
 
 goog.provide('goog.editor.plugins.RemoveFormatting');
 
@@ -33,96 +33,96 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A plugin to handle removing formatting from selected text.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A plugin to handle removing formatting from selected text.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.RemoveFormatting = function() {
   goog.editor.Plugin.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Optional function to perform remove formatting in place of the
-  ***REMOVED*** provided removeFormattingWorker_.
-  ***REMOVED*** @type {?function(string): string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Optional function to perform remove formatting in place of the
+   * provided removeFormattingWorker_.
+   * @type {?function(string): string}
+   * @private
+   */
   this.optRemoveFormattingFunc_ = null;
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.RemoveFormatting, goog.editor.Plugin);
 
 
-***REMOVED***
-***REMOVED*** The editor command this plugin in handling.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The editor command this plugin in handling.
+ * @type {string}
+ */
 goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND =
     '+removeFormat';
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches a block tag name.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches a block tag name.
+ * @type {RegExp}
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.BLOCK_RE_ =
     /^(DIV|TR|LI|BLOCKQUOTE|H\d|PRE|XMP)/;
 
 
-***REMOVED***
-***REMOVED*** Appends a new line to a string buffer.
-***REMOVED*** @param {Array.<string>} sb The string buffer to add to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Appends a new line to a string buffer.
+ * @param {Array.<string>} sb The string buffer to add to.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.appendNewline_ = function(sb) {
   sb.push('<br>');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range delimited by the start point of the first range and
-***REMOVED*** the end point of the second range.
-***REMOVED*** @param {goog.dom.AbstractRange} startRange Use the start point of this
-***REMOVED***    range as the beginning of the new range.
-***REMOVED*** @param {goog.dom.AbstractRange} endRange Use the end point of this
-***REMOVED***    range as the end of the new range.
-***REMOVED*** @return {!goog.dom.AbstractRange} The new range.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Create a new range delimited by the start point of the first range and
+ * the end point of the second range.
+ * @param {goog.dom.AbstractRange} startRange Use the start point of this
+ *    range as the beginning of the new range.
+ * @param {goog.dom.AbstractRange} endRange Use the end point of this
+ *    range as the end of the new range.
+ * @return {!goog.dom.AbstractRange} The new range.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.createRangeDelimitedByRanges_ = function(
     startRange, endRange) {
   return goog.dom.Range.createFromNodes(
       startRange.getStartNode(), startRange.getStartOffset(),
       endRange.getEndNode(), endRange.getEndOffset());
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.RemoveFormatting.prototype.getTrogClassId = function() {
   return 'RemoveFormatting';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.RemoveFormatting.prototype.isSupportedCommand = function(
     command) {
   return command ==
       goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.RemoveFormatting.prototype.execCommandInternal =
     function(command, var_args) {
   if (command ==
       goog.editor.plugins.RemoveFormatting.REMOVE_FORMATTING_COMMAND) {
     this.removeFormatting_();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut =
     function(e, key, isModifierPressed) {
   if (!isModifierPressed) {
@@ -136,17 +136,17 @@ goog.editor.plugins.RemoveFormatting.prototype.handleKeyboardShortcut =
   }
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes formatting from the current selection.  Removes basic formatting
-***REMOVED*** (B/I/U) using the browser's execCommand.  Then extracts the html from the
-***REMOVED*** selection to convert, calls either a client's specified removeFormattingFunc
-***REMOVED*** callback or trogedit's general built-in removeFormattingWorker_,
-***REMOVED*** and then replaces the current selection with the converted text.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes formatting from the current selection.  Removes basic formatting
+ * (B/I/U) using the browser's execCommand.  Then extracts the html from the
+ * selection to convert, calls either a client's specified removeFormattingFunc
+ * callback or trogedit's general built-in removeFormattingWorker_,
+ * and then replaces the current selection with the converted text.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
   var range = this.getFieldObject().getRange();
   if (range.isCollapsed()) {
@@ -179,15 +179,15 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormatting_ = function() {
       return text.replace(nbspRegExp, ' ');
     });
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Finds the nearest ancestor of the node that is a table.
-***REMOVED*** @param {Node} nodeToCheck Node to search from.
-***REMOVED*** @return {Node} The table, or null if one was not found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Finds the nearest ancestor of the node that is a table.
+ * @param {Node} nodeToCheck Node to search from.
+ * @return {Node} The table, or null if one was not found.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function(
     nodeToCheck) {
   var fieldElement = this.getFieldObject().getElement();
@@ -198,20 +198,20 @@ goog.editor.plugins.RemoveFormatting.prototype.getTableAncestor_ = function(
     nodeToCheck = nodeToCheck.parentNode;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Replaces the contents of the selection with html. Does its best to maintain
-***REMOVED*** the original selection. Also does its best to result in a valid DOM.
-***REMOVED***
-***REMOVED*** TODO(user): See if there's any way to make this work on Ranges, and then
-***REMOVED*** move it into goog.editor.range. The Firefox implementation uses execCommand
-***REMOVED*** on the document, so must work on the actual selection.
-***REMOVED***
-***REMOVED*** @param {string} html The html string to insert into the range.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Replaces the contents of the selection with html. Does its best to maintain
+ * the original selection. Also does its best to result in a valid DOM.
+ *
+ * TODO(user): See if there's any way to make this work on Ranges, and then
+ * move it into goog.editor.range. The Firefox implementation uses execCommand
+ * on the document, so must work on the actual selection.
+ *
+ * @param {string} html The html string to insert into the range.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
   var range = this.getFieldObject().getRange();
 
@@ -321,21 +321,21 @@ goog.editor.plugins.RemoveFormatting.prototype.pasteHtml_ = function(html) {
       endSpan.childNodes.length).select();
   goog.dom.removeNode(startSpan);
   goog.dom.removeNode(endSpan);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the html inside the selection to send off for further processing.
-***REMOVED***
-***REMOVED*** TODO(user): Make this general so that it can be moved into
-***REMOVED*** goog.editor.range.  The main reason it can't be moved is becuase we need to
-***REMOVED*** get the range before we do the execCommand and continue to operate on that
-***REMOVED*** same range (reasons are documented above).
-***REMOVED***
-***REMOVED*** @param {goog.dom.AbstractRange} range The selection.
-***REMOVED*** @return {string} The html string to format.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the html inside the selection to send off for further processing.
+ *
+ * TODO(user): Make this general so that it can be moved into
+ * goog.editor.range.  The main reason it can't be moved is becuase we need to
+ * get the range before we do the execCommand and continue to operate on that
+ * same range (reasons are documented above).
+ *
+ * @param {goog.dom.AbstractRange} range The selection.
+ * @return {string} The html string to format.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function(range) {
   var div = this.getFieldDomHelper().createDom('div');
   var textRange = range.getBrowserRangeObject();
@@ -372,18 +372,18 @@ goog.editor.plugins.RemoveFormatting.prototype.getHtmlText_ = function(range) {
   // Get the innerHTML of the node instead of just returning the text above
   // so that its properly html escaped.
   return div.innerHTML;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Move the range so that it doesn't include any partially selected tables.
-***REMOVED*** @param {goog.dom.AbstractRange} range The range to adjust.
-***REMOVED*** @param {Node} startInTable Table node that the range starts in.
-***REMOVED*** @param {Node} endInTable Table node that the range ends in.
-***REMOVED*** @return {!goog.dom.SavedCaretRange} Range to use to restore the
-***REMOVED***     selection after we run our custom remove formatting.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Move the range so that it doesn't include any partially selected tables.
+ * @param {goog.dom.AbstractRange} range The range to adjust.
+ * @param {Node} startInTable Table node that the range starts in.
+ * @param {Node} endInTable Table node that the range ends in.
+ * @return {!goog.dom.SavedCaretRange} Range to use to restore the
+ *     selection after we run our custom remove formatting.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ =
     function(range, startInTable, endInTable) {
   // Create placeholders for the current selection so we can restore it
@@ -415,17 +415,17 @@ goog.editor.plugins.RemoveFormatting.prototype.adjustRangeForTables_ =
       endNode, endOffset).select();
 
   return savedCaretRange;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Remove a caret from the dom and hide it in a safe place, so it can
-***REMOVED*** be restored later via restoreCaretsFromCave.
-***REMOVED*** @param {goog.dom.SavedCaretRange} caretRange The caret range to
-***REMOVED***     get the carets from.
-***REMOVED*** @param {boolean} isStart Whether this is the start or end caret.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Remove a caret from the dom and hide it in a safe place, so it can
+ * be restored later via restoreCaretsFromCave.
+ * @param {goog.dom.SavedCaretRange} caretRange The caret range to
+ *     get the carets from.
+ * @param {boolean} isStart Whether this is the start or end caret.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function(
     caretRange, isStart) {
   var cavedCaret = goog.dom.removeNode(caretRange.getCaret(isStart));
@@ -434,18 +434,18 @@ goog.editor.plugins.RemoveFormatting.prototype.putCaretInCave_ = function(
   } else {
     this.endCaretInCave_ = cavedCaret;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Restore carets that were hidden away by adding them back into the dom.
-***REMOVED*** Note: this does not restore to the original dom location, as that
-***REMOVED*** will likely have been modified with remove formatting.  The only
-***REMOVED*** guarentees here are that start will still be before end, and that
-***REMOVED*** they will be in the editable region.  This should only be used when
-***REMOVED*** you don't actually intend to USE the caret again.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Restore carets that were hidden away by adding them back into the dom.
+ * Note: this does not restore to the original dom location, as that
+ * will likely have been modified with remove formatting.  The only
+ * guarentees here are that start will still be before end, and that
+ * they will be in the editable region.  This should only be used when
+ * you don't actually intend to USE the caret again.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ =
     function() {
   // To keep start before end, we put the end caret at the bottom of the field
@@ -459,17 +459,17 @@ goog.editor.plugins.RemoveFormatting.prototype.restoreCaretsFromCave_ =
     field.appendChild(this.endCaretInCave_);
     this.endCaretInCave_ = null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the html inside the current selection, passes it through the given
-***REMOVED*** conversion function, and puts it back into the selection.
-***REMOVED***
-***REMOVED*** @param {function(string): string} convertFunc A conversion function that
-***REMOVED***    transforms an html string to new html string.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the html inside the current selection, passes it through the given
+ * conversion function, and puts it back into the selection.
+ *
+ * @param {function(string): string} convertFunc A conversion function that
+ *    transforms an html string to new html string.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
     function(convertFunc) {
   var range = this.getFieldObject().getRange();
@@ -566,20 +566,20 @@ goog.editor.plugins.RemoveFormatting.prototype.convertSelectedHtmlText_ =
     restoredRange.select();
     savedCaretRange.dispose();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Does a best-effort attempt at clobbering all formatting that the
-***REMOVED*** browser's execCommand couldn't clobber without being totally inefficient.
-***REMOVED*** Attempts to convert visual line breaks to BRs. Leaves anchors that contain an
-***REMOVED*** href and images.
-***REMOVED*** Adapted from Gmail's MessageUtil's htmlToPlainText. http://go/messageutil.js
-***REMOVED*** @param {string} html The original html of the message.
-***REMOVED*** @return {string} The unformatted html, which is just text, br's, anchors and
-***REMOVED***     images.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Does a best-effort attempt at clobbering all formatting that the
+ * browser's execCommand couldn't clobber without being totally inefficient.
+ * Attempts to convert visual line breaks to BRs. Leaves anchors that contain an
+ * href and images.
+ * Adapted from Gmail's MessageUtil's htmlToPlainText. http://go/messageutil.js
+ * @param {string} html The original html of the message.
+ * @return {string} The unformatted html, which is just text, br's, anchors and
+ *     images.
+ * @private
+ */
 goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
     function(html) {
   var el = goog.dom.createElement('div');
@@ -749,32 +749,32 @@ goog.editor.plugins.RemoveFormatting.prototype.removeFormattingWorker_ =
 
   // Replace &nbsp; with white space.
   return goog.string.normalizeSpaces(sb.join(''));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handle per node special processing if neccessary. If this function returns
-***REMOVED*** null then standard cleanup is applied. Otherwise this node and all children
-***REMOVED*** are assumed to be cleaned.
-***REMOVED*** NOTE(user): If an alternate RemoveFormatting processor is provided
-***REMOVED*** (setRemoveFormattingFunc()), this will no longer work.
-***REMOVED*** @param {Element} node The node to clean.
-***REMOVED*** @return {?string} The HTML strig representation of the cleaned data.
-***REMOVED***
+/**
+ * Handle per node special processing if neccessary. If this function returns
+ * null then standard cleanup is applied. Otherwise this node and all children
+ * are assumed to be cleaned.
+ * NOTE(user): If an alternate RemoveFormatting processor is provided
+ * (setRemoveFormattingFunc()), this will no longer work.
+ * @param {Element} node The node to clean.
+ * @return {?string} The HTML strig representation of the cleaned data.
+ */
 goog.editor.plugins.RemoveFormatting.prototype.getValueForNode = function(
     node) {
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets a function to be used for remove formatting.
-***REMOVED*** @param {function(string): string} removeFormattingFunc - A function that
-***REMOVED***     takes  a string of html and returns a string of html that does any other
-***REMOVED***     formatting changes desired.  Use this only if trogedit's behavior doesn't
-***REMOVED***     meet your needs.
-***REMOVED***
+/**
+ * Sets a function to be used for remove formatting.
+ * @param {function(string): string} removeFormattingFunc - A function that
+ *     takes  a string of html and returns a string of html that does any other
+ *     formatting changes desired.  Use this only if trogedit's behavior doesn't
+ *     meet your needs.
+ */
 goog.editor.plugins.RemoveFormatting.prototype.setRemoveFormattingFunc =
     function(removeFormattingFunc) {
   this.optRemoveFormattingFunc_ = removeFormattingFunc;
-***REMOVED***
+};

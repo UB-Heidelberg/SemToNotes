@@ -18,7 +18,7 @@ goog.setTestOnly('goog.testing.style.layoutassertsTest');
 goog.require('goog.dom');
 goog.require('goog.style');
 goog.require('goog.testing.jsunit');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.testing.style.layoutasserts');
 
 var div1;
@@ -59,9 +59,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertIsVisible.
-***REMOVED***
+/**
+ * Tests assertIsVisible.
+ */
 function testAssertIsVisible() {
   assertThrows('Exception should be thrown when asserting visibility.',
       goog.bind(assertIsVisible, null, null)); // assertIsVisible(null)
@@ -72,7 +72,7 @@ function testAssertIsVisible() {
 
   // Tests with hidden element
   failed = false;
-  goog.style.setElementShown(div1, false /* display***REMOVED***);
+  goog.style.setElementShown(div1, false /* display */);
   assertThrows('Exception should be thrown when asserting visibility.',
       goog.bind(assertIsVisible, null, div1));
 
@@ -81,9 +81,9 @@ function testAssertIsVisible() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertNotVisible.
-***REMOVED***
+/**
+ * Tests assertNotVisible.
+ */
 function testAssertNotVisible() {
   // Tests null as a parameter.
   var element = null;
@@ -99,9 +99,9 @@ function testAssertNotVisible() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertIsIntersect.
-***REMOVED***
+/**
+ * Tests assertIsIntersect.
+ */
 function testAssertIntersect() {
   document.body.appendChild(div1);
   document.body.appendChild(div2);
@@ -129,9 +129,9 @@ function testAssertIntersect() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertWidth.
-***REMOVED***
+/**
+ * Tests assertWidth.
+ */
 function testAssertWidth() {
   document.body.appendChild(div1);
 
@@ -152,9 +152,9 @@ function testAssertWidth() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertHeight.
-***REMOVED***
+/**
+ * Tests assertHeight.
+ */
 function testAssertHeight() {
   document.body.appendChild(div1);
 
@@ -175,9 +175,9 @@ function testAssertHeight() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertIsLeftOf.
-***REMOVED***
+/**
+ * Tests assertIsLeftOf.
+ */
 function testAssertIsLeftOf() {
   document.body.appendChild(div1);
   document.body.appendChild(div2);
@@ -216,9 +216,9 @@ function testAssertIsLeftOf() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests assertIsAbove.
-***REMOVED***
+/**
+ * Tests assertIsAbove.
+ */
 function testAssertIsAbove() {
   document.body.appendChild(div1);
   document.body.appendChild(div2);

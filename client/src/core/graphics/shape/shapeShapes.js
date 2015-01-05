@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Utility class to include all shape classes at once.
-***REMOVED***
+/**
+ * @fileoverview Utility class to include all shape classes at once.
+ */
 
 goog.provide('xrx.shape.Shapes');
 
@@ -17,8 +17,8 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
-***REMOVED***
-***REMOVED*** Utility class to include all shape classes at once.
-***REMOVED***
-***REMOVED***
-xrx.shape.Shapes = function() {***REMOVED***
+/**
+ * Utility class to include all shape classes at once.
+ * @constructor
+ */
+xrx.shape.Shapes = function() {};

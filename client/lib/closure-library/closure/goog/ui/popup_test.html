@@ -36,9 +36,9 @@ See the COPYING file for details.
   </div>
 <script>
 
-***REMOVED***
-***REMOVED*** This is used to round pixel values on FF3 Mac.
-***REMOVED***
+/**
+ * This is used to round pixel values on FF3 Mac.
+ */
 function assertRoundedEquals(a, b, c) {
   function round(x) {
     return goog.userAgent.GECKO && (goog.userAgent.MAC || goog.userAgent.X11) &&

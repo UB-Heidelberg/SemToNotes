@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview 
-***REMOVED***
+/**
+ * @fileoverview 
+ */
 
 goog.provide('xrx.html5.Component');
 
@@ -8,7 +8,7 @@ goog.provide('xrx.html5.Component');
 
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 
@@ -16,12 +16,12 @@ goog.require('xrx.mvc.ComponentView');
 
 xrx.html5.Component = function(element) {
 
-***REMOVED***
+  goog.base(this, element);
 
   this.first_ = true;
 
   this.registerEvents();
-***REMOVED***
+};
 goog.inherits(xrx.html5.Component, xrx.mvc.ComponentView);
 
 
@@ -31,7 +31,7 @@ xrx.html5.Component.prototype.registerClick = function(element) {
     e.preventDefault();
     xrx.mvc.getModelComponent(element.id).execute();
   }, false, this);
-***REMOVED***
+};
 
 
 
@@ -51,6 +51,6 @@ xrx.html5.Component.prototype.registerEvents = function() {
     default:
       throw Error('Unkown event "' + ev + '".');
       break; 
-   ***REMOVED*****REMOVED***
- ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+  };
+};

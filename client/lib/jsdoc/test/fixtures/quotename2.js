@@ -1,10 +1,10 @@
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 var contacts = {
 
-   ***REMOVED*****REMOVED*** @namespace***REMOVED***
+    /** @namespace */
     'say-"hello"@example.com': {
 
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         "username": 'Sue Smart'
     }
 }

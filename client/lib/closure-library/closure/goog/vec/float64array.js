@@ -13,91 +13,91 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Supplies a Float64Array implementation that implements
-***REMOVED*** most of the Float64Array spec and that can be used when a built-in
-***REMOVED*** implementation is not available.
-***REMOVED***
-***REMOVED*** Note that if no existing Float64Array implementation is found then this
-***REMOVED*** class and all its public properties are exported as Float64Array.
-***REMOVED***
-***REMOVED*** Adding support for the other TypedArray classes here does not make sense
-***REMOVED*** since this vector math library only needs Float32Array and Float64Array.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Supplies a Float64Array implementation that implements
+ * most of the Float64Array spec and that can be used when a built-in
+ * implementation is not available.
+ *
+ * Note that if no existing Float64Array implementation is found then this
+ * class and all its public properties are exported as Float64Array.
+ *
+ * Adding support for the other TypedArray classes here does not make sense
+ * since this vector math library only needs Float32Array and Float64Array.
+ *
+ */
 goog.provide('goog.vec.Float64Array');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new Float64Array. The new array is initialized to all zeros.
-***REMOVED***
-***REMOVED*** @param {goog.vec.Float64Array|Array|ArrayBuffer|number} p0
-***REMOVED***     The length of the array, or an array to initialize the contents of the
-***REMOVED***     new Float64Array.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new Float64Array. The new array is initialized to all zeros.
+ *
+ * @param {goog.vec.Float64Array|Array|ArrayBuffer|number} p0
+ *     The length of the array, or an array to initialize the contents of the
+ *     new Float64Array.
+ * @constructor
+ * @final
+ */
 goog.vec.Float64Array = function(p0) {
-  this.length =***REMOVED*****REMOVED*** @type {number}***REMOVED*** (p0.length || p0);
+  this.length = /** @type {number} */ (p0.length || p0);
   for (var i = 0; i < this.length; i++) {
     this[i] = p0[i] || 0;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The number of bytes in an element (as defined by the Typed Array
-***REMOVED*** specification).
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of bytes in an element (as defined by the Typed Array
+ * specification).
+ *
+ * @type {number}
+ */
 goog.vec.Float64Array.BYTES_PER_ELEMENT = 8;
 
 
-***REMOVED***
-***REMOVED*** The number of bytes in an element (as defined by the Typed Array
-***REMOVED*** specification).
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of bytes in an element (as defined by the Typed Array
+ * specification).
+ *
+ * @type {number}
+ */
 goog.vec.Float64Array.prototype.BYTES_PER_ELEMENT = 8;
 
 
-***REMOVED***
-***REMOVED*** Sets elements of the array.
-***REMOVED*** @param {Array.<number>|Float64Array} values The array of values.
-***REMOVED*** @param {number=} opt_offset The offset in this array to start.
-***REMOVED***
+/**
+ * Sets elements of the array.
+ * @param {Array.<number>|Float64Array} values The array of values.
+ * @param {number=} opt_offset The offset in this array to start.
+ */
 goog.vec.Float64Array.prototype.set = function(values, opt_offset) {
   opt_offset = opt_offset || 0;
   for (var i = 0; i < values.length && opt_offset + i < this.length; i++) {
     this[opt_offset + i] = values[i];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a string representation of this array.
-***REMOVED*** @return {string} The string version of this array.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Creates a string representation of this array.
+ * @return {string} The string version of this array.
+ * @override
+ */
 goog.vec.Float64Array.prototype.toString = Array.prototype.join;
 
 
-***REMOVED***
-***REMOVED*** Note that we cannot implement the subarray() or (deprecated) slice()
-***REMOVED*** methods properly since doing so would require being able to overload
-***REMOVED*** the [] operator which is not possible in javascript.  So we leave
-***REMOVED*** them unimplemented.  Any attempt to call these methods will just result
-***REMOVED*** in a javascript error since we leave them undefined.
-***REMOVED***
+/**
+ * Note that we cannot implement the subarray() or (deprecated) slice()
+ * methods properly since doing so would require being able to overload
+ * the [] operator which is not possible in javascript.  So we leave
+ * them unimplemented.  Any attempt to call these methods will just result
+ * in a javascript error since we leave them undefined.
+ */
 
 
-***REMOVED***
-***REMOVED*** If no existing Float64Array implementation is found then we export
-***REMOVED*** goog.vec.Float64Array as Float64Array.
-***REMOVED***
+/**
+ * If no existing Float64Array implementation is found then we export
+ * goog.vec.Float64Array as Float64Array.
+ */
 if (typeof Float64Array == 'undefined') {
   try {
     goog.exportProperty(goog.vec.Float64Array, 'BYTES_PER_ELEMENT',

@@ -48,7 +48,7 @@ var CLOSE_SUPER;
 var MOCK_BLOCKQUOTE_STYLE = 'border-left: 1px solid gray;';
 var MOCK_GET_BLOCKQUOTE_STYLES = function() {
   return MOCK_BLOCKQUOTE_STYLE;
-***REMOVED***
+};
 
 var REAL_FIELD;
 var REAL_PLUGIN;
@@ -341,7 +341,7 @@ function setUpLinkTests(url, isEditable) {
         goog.testing.mockmatchers.isObject).$returns(undefined);
     FORMATTER.focusField_ = function() {
       throw 'Field should not be re-focused';
-   ***REMOVED*****REMOVED***
+    };
   }
 
   FIELDMOCK.getElement().$anyTimes().$returns(ROOT);
@@ -505,7 +505,7 @@ function setUpFontSizeTests() {
     '56': 5,
     '6': null,
     '7': 16
- ***REMOVED*****REMOVED***
+  };
   assertFontSizes('Assertion failed on default font sizes!', {});
 }
 
@@ -517,16 +517,16 @@ function tearDownFontSizeTests() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the text nodes set up by setUpFontSizeTests() have had their
-***REMOVED*** font sizes changed as described by sizeChangesMap.
-***REMOVED*** @param {string} msg Assertion error message.
-***REMOVED*** @param {Object.<string, number|null>} sizeChangesMap Maps the text content
-***REMOVED***     of a text node to be measured to its expected font size in pixels, or
-***REMOVED***     null if that text node should not be present in the document (i.e.
-***REMOVED***     because it was split into two). Only the text nodes that have changed
-***REMOVED***     from their default need to be specified.
-***REMOVED***
+/**
+ * Asserts that the text nodes set up by setUpFontSizeTests() have had their
+ * font sizes changed as described by sizeChangesMap.
+ * @param {string} msg Assertion error message.
+ * @param {Object.<string, number|null>} sizeChangesMap Maps the text content
+ *     of a text node to be measured to its expected font size in pixels, or
+ *     null if that text node should not be present in the document (i.e.
+ *     because it was split into two). Only the text nodes that have changed
+ *     from their default need to be specified.
+ */
 function assertFontSizes(msg, sizeChangesMap) {
   goog.object.extend(defaultFontSizeMap, sizeChangesMap);
   for (var k in defaultFontSizeMap) {
@@ -543,11 +543,11 @@ function assertFontSizes(msg, sizeChangesMap) {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for {@bug 1286408}. Tests that when you change the font
-***REMOVED*** size of a selection, any font size styles that were nested inside are
-***REMOVED*** removed.
-***REMOVED***
+/**
+ * Regression test for {@bug 1286408}. Tests that when you change the font
+ * size of a selection, any font size styles that were nested inside are
+ * removed.
+ */
 function testFontSizeOverridesStyleAttr() {
   setUpFontSizeTests();
   FIELDMOCK.$replay();
@@ -570,10 +570,10 @@ function testFontSizeOverridesStyleAttr() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure the style stripping works when the selection starts and stops in
-***REMOVED*** different nodes that both contain font size styles.
-***REMOVED***
+/**
+ * Make sure the style stripping works when the selection starts and stops in
+ * different nodes that both contain font size styles.
+ */
 function testFontSizeOverridesStyleAttrMultiNode() {
   setUpFontSizeTests();
   FIELDMOCK.$replay();
@@ -606,10 +606,10 @@ function testFontSizeOverridesStyleAttrMultiNode() {
 }
 
 
-***REMOVED***
-***REMOVED*** Makes sure the font size style is not removed when only a part of the
-***REMOVED*** element with font size style is selected during the font size command.
-***REMOVED***
+/**
+ * Makes sure the font size style is not removed when only a part of the
+ * element with font size style is selected during the font size command.
+ */
 function testFontSizeDoesntOverrideStyleAttr() {
   setUpFontSizeTests();
   FIELDMOCK.$replay();
@@ -626,11 +626,11 @@ function testFontSizeDoesntOverrideStyleAttr() {
 }
 
 
-***REMOVED***
-***REMOVED*** Makes sure the font size style is not removed when only a part of the
-***REMOVED*** element with font size style is selected during the font size command, but
-***REMOVED*** is removed for another element that is fully selected.
-***REMOVED***
+/**
+ * Makes sure the font size style is not removed when only a part of the
+ * element with font size style is selected during the font size command, but
+ * is removed for another element that is fully selected.
+ */
 function testFontSizeDoesntOverrideStyleAttrMultiNode() {
   setUpFontSizeTests();
   FIELDMOCK.$replay();
@@ -648,20 +648,20 @@ function testFontSizeDoesntOverrideStyleAttrMultiNode() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper to make sure the precondition that executing the font size command
-***REMOVED*** wraps the content in font tags instead of modifying the style attribute is
-***REMOVED*** maintained by the browser even if the selection is already text that is
-***REMOVED*** wrapped in a tag with a font size style. We test this with several
-***REMOVED*** permutations of how the selection looks: selecting the text in the text
-***REMOVED*** node, selecting the whole text node as a unit, or selecting the whole span
-***REMOVED*** node as a unit. Sometimes the browser wraps the text node with the font
-***REMOVED*** tag, sometimes it wraps the span with the font tag. Either one is ok as
-***REMOVED*** long as a font tag is actually being used instead of just modifying the
-***REMOVED*** span's style, because our fix for {@bug 1286408} would remove that style.
-***REMOVED*** @param {function} doSelect Function to select the "23" text in the test
-***REMOVED***     content.
-***REMOVED***
+/**
+ * Helper to make sure the precondition that executing the font size command
+ * wraps the content in font tags instead of modifying the style attribute is
+ * maintained by the browser even if the selection is already text that is
+ * wrapped in a tag with a font size style. We test this with several
+ * permutations of how the selection looks: selecting the text in the text
+ * node, selecting the whole text node as a unit, or selecting the whole span
+ * node as a unit. Sometimes the browser wraps the text node with the font
+ * tag, sometimes it wraps the span with the font tag. Either one is ok as
+ * long as a font tag is actually being used instead of just modifying the
+ * span's style, because our fix for {@bug 1286408} would remove that style.
+ * @param {function} doSelect Function to select the "23" text in the test
+ *     content.
+ */
 function doTestFontSizeStyledSpan(doSelect) {
   // Make sure no new browsers start getting this bad behavior. If they do,
   // this test will unexpectedly pass.
@@ -748,7 +748,7 @@ function tearDownConvertBreaksToDivTests() {
 }
 
 
-***REMOVED*** @bug 1414941***REMOVED***
+/** @bug 1414941 */
 function testConvertBreaksToDivsKeepsP() {
   if (goog.editor.BrowserFeature.CAN_LISTIFY_BR) {
     return;
@@ -770,7 +770,7 @@ function testConvertBreaksToDivsKeepsP() {
 }
 
 
-***REMOVED***
+/**
 * @bug 1414937
 * @bug 934535
 */
@@ -816,7 +816,7 @@ function testConvertBreaksToDivsSelection() {
 }
 
 
-***REMOVED*** @bug 1414937***REMOVED***
+/** @bug 1414937 */
 function testConvertBreaksToDivsInsertList() {
   setUpConvertBreaksToDivTests();
   FIELDMOCK.$replay();
@@ -830,11 +830,11 @@ function testConvertBreaksToDivsInsertList() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for {@bug 1939883}, where if a br has an id, it causes
-***REMOVED*** the convert br code to throw a js error. This goes a step further and
-***REMOVED*** ensures that the id is preserved in the resulting div element.
-***REMOVED***
+/**
+ * Regression test for {@bug 1939883}, where if a br has an id, it causes
+ * the convert br code to throw a js error. This goes a step further and
+ * ensures that the id is preserved in the resulting div element.
+ */
 function testConvertBreaksToDivsKeepsId() {
   if (goog.editor.BrowserFeature.CAN_LISTIFY_BR) {
     return;
@@ -859,9 +859,9 @@ function testConvertBreaksToDivsKeepsId() {
 }
 
 
-***REMOVED***
-***REMOVED*** @bug 2420054
-***REMOVED***
+/**
+ * @bug 2420054
+ */
 var JUSTIFICATION_COMMANDS = [
   goog.editor.plugins.BasicTextFormatter.COMMAND.JUSTIFY_LEFT,
   goog.editor.plugins.BasicTextFormatter.COMMAND.JUSTIFY_RIGHT,
@@ -904,12 +904,12 @@ function testIsJustificationFull() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for {@bug 1414813}, where all 3 justification buttons are
-***REMOVED*** considered "on" when you first tab into the editable field. In this
-***REMOVED*** situation, when lorem ipsum is the only node in the editable field iframe
-***REMOVED*** body, mockField.getRange() returns an empty range.
-***REMOVED***
+/**
+ * Regression test for {@bug 1414813}, where all 3 justification buttons are
+ * considered "on" when you first tab into the editable field. In this
+ * situation, when lorem ipsum is the only node in the editable field iframe
+ * body, mockField.getRange() returns an empty range.
+ */
 function testIsJustificationEmptySelection() {
   var mockField = new goog.testing.LooseMock(goog.editor.Field);
 
@@ -1028,7 +1028,7 @@ function testIsJustificationComplete5() {
 }
 
 
-***REMOVED*** @bug 2472589***REMOVED***
+/** @bug 2472589 */
 function doTestIsJustificationPInDiv(useCss, align, command) {
   setUpRealField();
   var html = '<div ' + (useCss ? 'style="text-align:' : 'align="') +
@@ -1102,7 +1102,7 @@ function testScrubImagesRemovesCustomAttributes() {
   fieldElem.innerHTML = '';
   var attrs = {'src': 'http://www.google.com/foo.jpg',
     'tabIndex': '0',
-    'tabIndexSet': '0'***REMOVED***
+    'tabIndexSet': '0'};
   attrs[goog.HASH_CODE_PROPERTY_] = '0';
   goog.dom.appendChild(fieldElem,
       goog.dom.createDom('img', attrs));
@@ -1155,9 +1155,9 @@ function testIEExecCommandFixes() {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that the prepared contents matches the expected.
-***REMOVED***
+/**
+ * Assert that the prepared contents matches the expected.
+ */
 function assertPreparedContents(expected, original) {
   assertEquals(expected,
       REAL_FIELD.reduceOp_(
@@ -1165,18 +1165,18 @@ function assertPreparedContents(expected, original) {
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that sanitization doesn't affect the given text.
-***REMOVED***
+/**
+ * Assert that sanitization doesn't affect the given text.
+ */
 function assertNotPreparedContents(text) {
   assertPreparedContents(text, text);
 }
 
 
-***REMOVED***
-***REMOVED*** Assert that only BR elements expected to persist after convertBreaksToDivs_
-***REMOVED*** are in the HTML.
-***REMOVED***
+/**
+ * Assert that only BR elements expected to persist after convertBreaksToDivs_
+ * are in the HTML.
+ */
 function assertNotBadBrElements(html) {
   if (goog.userAgent.IE) {
     assertNotContains('There should not be <br> elements', '<br', html);

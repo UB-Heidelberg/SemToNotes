@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides the enum for the role of the CrossPageChannel.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides the enum for the role of the CrossPageChannel.
+ *
+ */
 
 goog.provide('goog.net.xpc.CrossPageChannelRole');
 
 
-***REMOVED***
-***REMOVED*** The role of the peer.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * The role of the peer.
+ * @enum {number}
+ */
 goog.net.xpc.CrossPageChannelRole = {
   OUTER: 0,
   INNER: 1
-***REMOVED***
+};

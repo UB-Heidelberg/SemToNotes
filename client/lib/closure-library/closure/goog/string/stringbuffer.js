@@ -12,60 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility for fast string concatenation.
-***REMOVED***
+/**
+ * @fileoverview Utility for fast string concatenation.
+ */
 
 goog.provide('goog.string.StringBuffer');
 
 
 
-***REMOVED***
-***REMOVED*** Utility class to facilitate string concatenation.
-***REMOVED***
-***REMOVED*** @param {*=} opt_a1 Optional first initial item to append.
-***REMOVED*** @param {...*} var_args Other initial items to
-***REMOVED***     append, e.g., new goog.string.StringBuffer('foo', 'bar').
-***REMOVED***
-***REMOVED***
+/**
+ * Utility class to facilitate string concatenation.
+ *
+ * @param {*=} opt_a1 Optional first initial item to append.
+ * @param {...*} var_args Other initial items to
+ *     append, e.g., new goog.string.StringBuffer('foo', 'bar').
+ * @constructor
+ */
 goog.string.StringBuffer = function(opt_a1, var_args) {
   if (opt_a1 != null) {
     this.append.apply(this, arguments);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Internal buffer for the string to be concatenated.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Internal buffer for the string to be concatenated.
+ * @type {string}
+ * @private
+ */
 goog.string.StringBuffer.prototype.buffer_ = '';
 
 
-***REMOVED***
-***REMOVED*** Sets the contents of the string buffer object, replacing what's currently
-***REMOVED*** there.
-***REMOVED***
-***REMOVED*** @param {*} s String to set.
-***REMOVED***
+/**
+ * Sets the contents of the string buffer object, replacing what's currently
+ * there.
+ *
+ * @param {*} s String to set.
+ */
 goog.string.StringBuffer.prototype.set = function(s) {
   this.buffer_ = '' + s;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Appends one or more items to the buffer.
-***REMOVED***
-***REMOVED*** Calling this with null, undefined, or empty arguments is an error.
-***REMOVED***
-***REMOVED*** @param {*} a1 Required first string.
-***REMOVED*** @param {*=} opt_a2 Optional second string.
-***REMOVED*** @param {...*} var_args Other items to append,
-***REMOVED***     e.g., sb.append('foo', 'bar', 'baz').
-***REMOVED*** @return {!goog.string.StringBuffer} This same StringBuffer object.
-***REMOVED*** @suppress {duplicate}
-***REMOVED***
+/**
+ * Appends one or more items to the buffer.
+ *
+ * Calling this with null, undefined, or empty arguments is an error.
+ *
+ * @param {*} a1 Required first string.
+ * @param {*=} opt_a2 Optional second string.
+ * @param {...*} var_args Other items to append,
+ *     e.g., sb.append('foo', 'bar', 'baz').
+ * @return {!goog.string.StringBuffer} This same StringBuffer object.
+ * @suppress {duplicate}
+ */
 goog.string.StringBuffer.prototype.append = function(a1, opt_a2, var_args) {
   // Use a1 directly to avoid arguments instantiation for single-arg case.
   this.buffer_ += a1;
@@ -75,29 +75,29 @@ goog.string.StringBuffer.prototype.append = function(a1, opt_a2, var_args) {
     }
   }
   return this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the internal buffer.
-***REMOVED***
+/**
+ * Clears the internal buffer.
+ */
 goog.string.StringBuffer.prototype.clear = function() {
   this.buffer_ = '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} the length of the current contents of the buffer.
-***REMOVED***
+/**
+ * @return {number} the length of the current contents of the buffer.
+ */
 goog.string.StringBuffer.prototype.getLength = function() {
   return this.buffer_.length;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The concatenated string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} The concatenated string.
+ * @override
+ */
 goog.string.StringBuffer.prototype.toString = function() {
   return this.buffer_;
-***REMOVED***
+};

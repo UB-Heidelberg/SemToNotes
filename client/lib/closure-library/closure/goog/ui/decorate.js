@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a function that decorates an element based on its CSS
-***REMOVED*** class name.
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+/**
+ * @fileoverview Provides a function that decorates an element based on its CSS
+ * class name.
+ * @author attila@google.com (Attila Bodis)
+ */
 
 goog.provide('goog.ui.decorate');
 
 goog.require('goog.ui.registry');
 
 
-***REMOVED***
-***REMOVED*** Decorates the element with a suitable {@link goog.ui.Component} instance, if
-***REMOVED*** a matching decorator is found.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {goog.ui.Component?} New component instance, decorating the element.
-***REMOVED***
+/**
+ * Decorates the element with a suitable {@link goog.ui.Component} instance, if
+ * a matching decorator is found.
+ * @param {Element} element Element to decorate.
+ * @return {goog.ui.Component?} New component instance, decorating the element.
+ */
 goog.ui.decorate = function(element) {
   var decorator = goog.ui.registry.getDecorator(element);
   if (decorator) {
     decorator.decorate(element);
   }
   return decorator;
-***REMOVED***
+};

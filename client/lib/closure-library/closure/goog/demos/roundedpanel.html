@@ -23,9 +23,9 @@ See the COPYING file for details.
     var INT_BASE = 10;
     var rp;
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Decorates roundedPanel node through a RoundedPanel instance.
-   ***REMOVED*****REMOVED***
+    /**
+     * Decorates roundedPanel node through a RoundedPanel instance.
+     */
     function decorateRoundedPanel() {
       // Obtain the values from the 'input' and 'select' elements.
       var panelWidth = goog.dom.getElement('panelWidth').value;
@@ -64,13 +64,13 @@ See the COPYING file for details.
       var debugNode = goog.dom.getElement('debug');
       debugNode.innerHTML = 'Rendering time: ' +
           (endTime - startTime) + 'ms';
-   ***REMOVED*****REMOVED***
+    };
 
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Sets event handlers on the 'input' and 'select' elements containing
-    ***REMOVED*** values needed to create the rounded panel.
-   ***REMOVED*****REMOVED***
+    /**
+     * Sets event handlers on the 'input' and 'select' elements containing
+     * values needed to create the rounded panel.
+     */
     function init() {
       // Set the event handler for the 'select' element to update the panel
       // when onchange fires.
@@ -85,7 +85,7 @@ See the COPYING file for details.
       }
 
       decorateRoundedPanel();
-   ***REMOVED*****REMOVED***
+    };
   </script>
 </head>
 <body>

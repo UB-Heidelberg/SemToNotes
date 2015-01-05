@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.CustomButton');
@@ -31,7 +31,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="../css/menuseparator.css">
   <link rel="stylesheet" href="../css/menubutton.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -41,7 +41,7 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Format" icon.***REMOVED***
+    /* "Format" icon. */
     .format-icon {
       background-position: -64px;
     }
@@ -215,15 +215,15 @@ See the COPYING file for details.
     b1.setId('FileButton');
     b1.render(goog.dom.getElement('menuButtons'));
     b1.setTooltip('File menu demo');
-  ***REMOVED***b1, EVENTS, logEvent);
+    goog.events.listen(b1, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('b1_enable'),
+    goog.events.listen(goog.dom.getElement('b1_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           b1.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***b1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(b1, goog.ui.Component.EventType.ACTION,
         function(e) {
           if (e.target && e.target.getCaption() == 'Change label...') {
             var label = window.prompt('Enter new menu label:', b1.getCaption());
@@ -253,9 +253,9 @@ See the COPYING file for details.
     b2.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
     b2.render(goog.dom.getElement('menuButtons'));
     b2.setTooltip('Edit menu demo');
-  ***REMOVED***b2, EVENTS, logEvent);
+    goog.events.listen(b2, EVENTS, logEvent);
 
-  ***REMOVED***goog.dom.getElement('b2_show'),
+    goog.events.listen(goog.dom.getElement('b2_show'),
         goog.events.EventType.CLICK,
         function(e) {
           b2.setVisible(e.target.checked);
@@ -289,26 +289,26 @@ See the COPYING file for details.
     b3.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
     b3.render(goog.dom.getElement('menuButtons'));
     b3.setTooltip('Windowm menu demo');
-  ***REMOVED***b3, EVENTS, logEvent);
+    goog.events.listen(b3, EVENTS, logEvent);
 
     // Decorate a menu button.  Note that since one of the child nodes of the
     // menu button element can be decorated as a menu, it is auto-decorated and
     // attached to the button.
     var formatButton = goog.ui.decorate(goog.dom.getElement('formatButton'));
 
-  ***REMOVED***goog.dom.getElement('formatButton_show'),
+    goog.events.listen(goog.dom.getElement('formatButton_show'),
         goog.events.EventType.CLICK,
         function(e) {
           formatButton.setVisible(e.target.checked);
         });
 
-  ***REMOVED***goog.dom.getElement('formatButton_enable'),
+    goog.events.listen(goog.dom.getElement('formatButton_enable'),
         goog.events.EventType.CLICK,
         function(e) {
           formatButton.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***formatButton, EVENTS, logEvent);
+    goog.events.listen(formatButton, EVENTS, logEvent);
 
 
     // Create a combo button with a custom button and a menu button.
@@ -333,14 +333,14 @@ See the COPYING file for details.
     cbmb1.setId('ComboMenuButton');
     cbmb1.render(goog.dom.getElement('comboButtons'));
     cbmb1.setTooltip('Combo button');
-  ***REMOVED***cbmb1, EVENTS, logEvent);
+    goog.events.listen(cbmb1, EVENTS, logEvent);
 
 
     // Create two buttons with menus for the positioning demo inside the
     // positioning iframe.
     var positioningFrame = goog.dom.getElement('positioning-frame');
     var shortPosButton, longPosButton;
-  ***REMOVED***positioningFrame, 'load', function() {
+    goog.events.listen(positioningFrame, 'load', function() {
       var frameDocument = goog.dom.getFrameContentDocument(positioningFrame);
       var frameDomHelper = new goog.dom.DomHelper(frameDocument);
 
@@ -369,7 +369,7 @@ See the COPYING file for details.
       shortPosButton.setScrollOnOverflow(checked);
       longPosButton.setScrollOnOverflow(checked);
     }
-  ***REMOVED***goog.dom.getElement('pos_option_scroll'), 'click',
+    goog.events.listen(goog.dom.getElement('pos_option_scroll'), 'click',
         updateScrollOption);
 
 

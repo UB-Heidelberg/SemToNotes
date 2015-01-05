@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Control');
@@ -24,7 +24,7 @@ See the COPYING file for details.
   </script>
   <link rel="stylesheet" href="css/demo.css">
   <style>
-    /* Demo styles for goog.ui.Control.***REMOVED***
+    /* Demo styles for goog.ui.Control. */
     .goog-control {
       position: relative;
       width: 20ex;
@@ -63,7 +63,7 @@ See the COPYING file for details.
       border-color: orange;
     }
 
-    /* Custom control styles.***REMOVED***
+    /* Custom control styles. */
     .goog-custom-control {
       position: relative;
       width: 25ex;
@@ -128,7 +128,7 @@ See the COPYING file for details.
       border-color: orange;
     }
 
-    /* "Insert" button styles.***REMOVED***
+    /* "Insert" button styles. */
     .goog-edit-insert-icon {
       height: 16px;
       width: 16px;
@@ -147,7 +147,7 @@ See the COPYING file for details.
       font-weight: bold;
     }
 
-    /* Extra CSS styles.***REMOVED***
+    /* Extra CSS styles. */
     .extra-red {
       border: 1px solid red;
       background-color: #fcc;
@@ -305,7 +305,7 @@ See the COPYING file for details.
             goog.dom.createDom('b', null, 'world'),
             '!'));
     c1.render(goog.dom.getElement('c1'));
-  ***REMOVED***c1, EVENTS, logEvent);
+    goog.events.listen(c1, EVENTS, logEvent);
 
     // Create the second control by decorating an existing element.  We can
     // use goog.ui.decorate to get a Control instance and have it
@@ -313,7 +313,7 @@ See the COPYING file for details.
     // appropriate "marker" class name.
     var c2 = goog.ui.decorate(goog.dom.getElement('c2'));
     c2.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-  ***REMOVED***c2, EVENTS, logEvent);
+    goog.events.listen(c2, EVENTS, logEvent);
 
     // Define a simple custom renderer for the third control.
     function SampleCustomRenderer() {
@@ -331,7 +331,7 @@ See the COPYING file for details.
               dom.createDom('div', baseClass + '-inner-box',
                   dom.createDom('div', baseClass + '-content',
                       control.getContent()))));
-   ***REMOVED*****REMOVED***
+    };
 
     // See goog.ui.ControlRenderer#decorate for documentation.
     SampleCustomRenderer.prototype.decorate = function(control, element) {
@@ -344,7 +344,7 @@ See the COPYING file for details.
                       element.childNodes))));
       return SampleCustomRenderer.superClass_.decorate.call(this, control,
           element);
-   ***REMOVED*****REMOVED***
+    };
 
     // See goog.ui.ControlRenderer#getContent for documentation.
     SampleCustomRenderer.prototype.getContent = function(element) {
@@ -354,7 +354,7 @@ See the COPYING file for details.
                 this.getCssClass() + '-content', element)[0]);
       }
       return null;
-   ***REMOVED*****REMOVED***
+    };
 
     // See goog.ui.ControlRenderer#setContent for documentation.
     SampleCustomRenderer.prototype.setContent = function(element, content) {
@@ -364,12 +364,12 @@ See the COPYING file for details.
                 this.getCssClass() + '-content', element)[0],
             content);
       }
-   ***REMOVED*****REMOVED***
+    };
 
     // See goog.ui.ControlRenderer#getCssClass for documentation.
     SampleCustomRenderer.prototype.getCssClass = function() {
       return 'goog-custom-control';
-   ***REMOVED*****REMOVED***
+    };
 
     // Create the singleton instance of our custom renderer.
     var customRenderer = new SampleCustomRenderer();
@@ -377,7 +377,7 @@ See the COPYING file for details.
     // Create the third control using the custom renderer.
     var c3 = new goog.ui.Control('Custom Renderer', customRenderer);
     c3.render(goog.dom.getElement('c3'));
-  ***REMOVED***c3, EVENTS, logEvent);
+    goog.events.listen(c3, EVENTS, logEvent);
 
     // Register a decorator factory function for controls to be decorated using
     // our custom renderer.
@@ -395,76 +395,76 @@ See the COPYING file for details.
     c4.addClassName('extra-red');
     c4.addClassName('extra-thick-border');
     c4.decorate(customElem);
-  ***REMOVED***c4, EVENTS, logEvent);
+    goog.events.listen(c4, EVENTS, logEvent);
 
     var c5 = new goog.ui.Control('Custom Red');
     c5.addClassName('extra-red');
     c5.render(goog.dom.getElement('c5'));
-  ***REMOVED***c5, EVENTS, logEvent);
+    goog.events.listen(c5, EVENTS, logEvent);
 
     var c6 = new goog.ui.Control('Custom Blue');
     c6.addClassName('extra-blue');
     c6.render(goog.dom.getElement('c6'));
     c6.addClassName('extra-thick-border');
-  ***REMOVED***c6, EVENTS, logEvent);
+    goog.events.listen(c6, EVENTS, logEvent);
 
     // BiDi examples:
     var c7 = new goog.ui.Control('Hello, world');
     c7.addClassName('goog-inline-block');
     c7.render(goog.dom.getElement('bidi'));
-  ***REMOVED***c7, EVENTS, logEvent);
+    goog.events.listen(c7, EVENTS, logEvent);
 
     var c8 = new goog.ui.Control('Sample control');
     c8.addClassName('goog-inline-block');
     c8.render(goog.dom.getElement('bidi'));
-  ***REMOVED***c8, EVENTS, logEvent);
+    goog.events.listen(c8, EVENTS, logEvent);
 
     var c9 = goog.ui.decorate(goog.dom.getElement('c9'));
-  ***REMOVED***c9, EVENTS, logEvent);
+    goog.events.listen(c9, EVENTS, logEvent);
 
     var c10 = goog.ui.decorate(goog.dom.getElement('c10'));
-  ***REMOVED***c10, EVENTS, logEvent);
+    goog.events.listen(c10, EVENTS, logEvent);
 
     // Add some event handling to the second control, which dispatches state
     // transition events.
 
-  ***REMOVED***c2, goog.ui.Component.EventType.HIGHLIGHT,
+    goog.events.listen(c2, goog.ui.Component.EventType.HIGHLIGHT,
         function(e) {
           goog.dom.setTextContent(goog.dom.getElement('hint'),
               'Click to activate.');
         });
 
-  ***REMOVED***c2, [goog.ui.Component.EventType.ENABLE,
+    goog.events.listen(c2, [goog.ui.Component.EventType.ENABLE,
       goog.ui.Component.EventType.UNHIGHLIGHT],
         function(e) {
           goog.dom.setTextContent(goog.dom.getElement('hint'),
               'Mouse over for instructions.');
         });
 
-  ***REMOVED***c2, goog.ui.Component.EventType.DISABLE,
+    goog.events.listen(c2, goog.ui.Component.EventType.DISABLE,
         function(e) {
           goog.dom.setTextContent(goog.dom.getElement('hint'),
               'You need to enable this component first.');
         });
 
-  ***REMOVED***c2, goog.ui.Component.EventType.ACTIVATE,
+    goog.events.listen(c2, goog.ui.Component.EventType.ACTIVATE,
         function(e) {
           goog.dom.setTextContent(goog.dom.getElement('hint'),
               'Release the mouse button to deactivate.');
         });
 
-  ***REMOVED***c2, goog.ui.Component.EventType.DEACTIVATE,
+    goog.events.listen(c2, goog.ui.Component.EventType.DEACTIVATE,
         function(e) {
           goog.dom.setTextContent(goog.dom.getElement('hint'), 'You got it!');
         });
 
-  ***REMOVED***goog.dom.getElement('enable'),
+    goog.events.listen(goog.dom.getElement('enable'),
         goog.events.EventType.CLICK,
         function(e) {
           c2.setEnabled(e.target.checked);
         });
 
-  ***REMOVED***goog.dom.getElement('visible'),
+    goog.events.listen(goog.dom.getElement('visible'),
         goog.events.EventType.CLICK,
         function(e) {
           c2.setVisible(e.target.checked);

@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview 
-***REMOVED***
+/**
+ * @fileoverview 
+ */
 
 goog.provide('xrx.widget.Shape');
 
@@ -11,17 +11,17 @@ goog.require('xrx.widget.Canvas');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.widget.Shape = function(element) {
 
   this.drawing_;
 
   this.shape_;
 
-***REMOVED***
-***REMOVED***
+  goog.base(this, element);
+};
 goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 
 
@@ -31,19 +31,19 @@ xrx.widget.Shape.prototype.findDrawing_ = function() {
   var canvasComponent = xrx.mvc.getViewComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
   this.drawing_ = canvasComponent.getDrawing();
   return this.drawing_;
-***REMOVED***
+};
 
 
 
 xrx.widget.Shape.prototype.getDrawing = function() {
   return this.drawing_ ||  this.findDrawing_();
-***REMOVED***
+};
 
 
 
 xrx.widget.Shape.prototype.getShape = function() {
   return this.shape_;
-***REMOVED***
+};
 
 
 
@@ -58,7 +58,7 @@ xrx.widget.Shape.prototype.parseCoords = function(str) {
     coords.push(coord);
   }
   return coords;
-***REMOVED***
+};
 
 
 
@@ -71,4 +71,4 @@ xrx.widget.Shape.prototype.serializeCoords = function(coords) {
     if (i <= len - 2) str += ' ';
   }
   return str;
-***REMOVED***
+};

@@ -20,7 +20,7 @@ See the COPYING file for details.
   goog.require('goog.a11y.aria.State');
   goog.require('goog.dom');
   goog.require('goog.dom.classlist');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.events.Event');
   goog.require('goog.testing.events');
   goog.require('goog.testing.jsunit');
@@ -119,27 +119,27 @@ function assertButtonsEqual() {
       decoratedButton.getElement().innerHTML);
 }
 
-***REMOVED***
-***REMOVED*** Render the given button as a child of 'parent'.
-***REMOVED*** @param {goog.ui.Button} button A button with content 'Foo'.
-***REMOVED***
+/**
+ * Render the given button as a child of 'parent'.
+ * @param {goog.ui.Button} button A button with content 'Foo'.
+ */
 function renderOnParent(button) {
   button.render(goog.dom.getElement('parent'));
 }
 
-***REMOVED***
-***REMOVED*** Decaorate the button with id 'button'.
-***REMOVED*** @param {goog.ui.Button} button A button with no content.
-***REMOVED***
+/**
+ * Decaorate the button with id 'button'.
+ * @param {goog.ui.Button} button A button with no content.
+ */
 function decorateDemoButton(button) {
   button.decorate(goog.dom.getElement('decoratedButton'));
 }
 
-***REMOVED***
-***REMOVED*** Verify that the button's caption is never the direct
-***REMOVED*** child of an inline-block element.
-***REMOVED*** @param {goog.ui.Button} button A button.
-***REMOVED***
+/**
+ * Verify that the button's caption is never the direct
+ * child of an inline-block element.
+ * @param {goog.ui.Button} button A button.
+ */
 function checkButtonCaption(button) {
   var contentElement = button.getContentElement();
   assertEquals('Foo', contentElement.innerHTML);
@@ -153,10 +153,10 @@ function checkButtonCaption(button) {
   assert(hasInlineBlock(contentElement.parentNode));
 }
 
-***REMOVED***
-***REMOVED*** Verify that the menu button has the correct ARIA attributes
-***REMOVED*** @param {goog.ui.Button} button A button.
-***REMOVED***
+/**
+ * Verify that the menu button has the correct ARIA attributes
+ * @param {goog.ui.Button} button A button.
+ */
 function checkAriaState(button) {
   assertEquals('menu buttons should have default aria-expanded == false', 'false',
   goog.a11y.aria.getState(button.getElement(), goog.a11y.aria.State.EXPANDED));

@@ -27,10 +27,10 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that focusInputField() puts focus in the input field and sets the
-***REMOVED*** cursor to the end of the text cointained inside.
-***REMOVED***
+/**
+ * Tests that focusInputField() puts focus in the input field and sets the
+ * cursor to the end of the text cointained inside.
+ */
 function testFocusInputField() {
   var input = document.getElementById('myInput');
   assertNotEquals('Input should not be focused initially',

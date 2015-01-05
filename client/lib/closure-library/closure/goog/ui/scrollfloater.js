@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview  Class for making an element detach and float to remain visible
-***REMOVED*** even when the viewport has been scrolled.
-***REMOVED*** <p>
-***REMOVED*** The element remains at its normal position in the layout until scrolling
-***REMOVED*** would cause its top edge to scroll off the top of the viewport; at that
-***REMOVED*** point, the element is replaced with an invisible placeholder (to keep the
-***REMOVED*** layout stable), reattached in the dom tree to a new parent (the body element
-***REMOVED*** by default), and set to "fixed" positioning (emulated for IE < 7) so that it
-***REMOVED*** remains at its original X position while staying fixed to the top of the
-***REMOVED*** viewport in the Y dimension.
-***REMOVED*** <p>
-***REMOVED*** When the window is scrolled up past the point where the original element
-***REMOVED*** would be fully visible again, the element snaps back into place, replacing
-***REMOVED*** the placeholder.
-***REMOVED***
-***REMOVED*** @see ../demos/scrollfloater.html
-***REMOVED***
-***REMOVED*** Adapted from http://go/elementfloater.js
-***REMOVED***
+/**
+ * @fileoverview  Class for making an element detach and float to remain visible
+ * even when the viewport has been scrolled.
+ * <p>
+ * The element remains at its normal position in the layout until scrolling
+ * would cause its top edge to scroll off the top of the viewport; at that
+ * point, the element is replaced with an invisible placeholder (to keep the
+ * layout stable), reattached in the dom tree to a new parent (the body element
+ * by default), and set to "fixed" positioning (emulated for IE < 7) so that it
+ * remains at its original X position while staying fixed to the top of the
+ * viewport in the Y dimension.
+ * <p>
+ * When the window is scrolled up past the point where the original element
+ * would be fully visible again, the element snaps back into place, replacing
+ * the placeholder.
+ *
+ * @see ../demos/scrollfloater.html
+ *
+ * Adapted from http://go/elementfloater.js
+ */
 
 
 goog.provide('goog.ui.ScrollFloater');
@@ -41,25 +41,25 @@ goog.require('goog.array');
 goog.require('goog.asserts');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.style');
 goog.require('goog.ui.Component');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a ScrollFloater; see file overview for details.
-***REMOVED***
-***REMOVED*** @param {Element=} opt_parentElement Where to attach the element when it's
-***REMOVED***     floating.  Default is the document body.  If the floating element
-***REMOVED***     contains form inputs, it will be necessary to attach it to the
-***REMOVED***     corresponding form element, or to an element in the DOM subtree under
-***REMOVED***     the form element.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * Creates a ScrollFloater; see file overview for details.
+ *
+ * @param {Element=} opt_parentElement Where to attach the element when it's
+ *     floating.  Default is the document body.  If the floating element
+ *     contains form inputs, it will be necessary to attach it to the
+ *     corresponding form element, or to an element in the DOM subtree under
+ *     the form element.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.ScrollFloater = function(opt_parentElement, opt_domHelper) {
   // If a parentElement is supplied, we want to use its domHelper,
   // ignoring the caller-supplied one.
@@ -68,184 +68,184 @@ goog.ui.ScrollFloater = function(opt_parentElement, opt_domHelper) {
 
   goog.ui.ScrollFloater.base(this, 'constructor', domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element to which the scroll-floated element will be attached
-  ***REMOVED*** when it is floating.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The element to which the scroll-floated element will be attached
+   * when it is floating.
+   * @type {Element}
+   * @private
+   */
   this.parentElement_ =
       opt_parentElement || this.getDomHelper().getDocument().body;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The original styles applied to the element before it began floating;
-  ***REMOVED*** used to restore those styles when the element stops floating.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.originalStyles_ = {***REMOVED***
+  /**
+   * The original styles applied to the element before it began floating;
+   * used to restore those styles when the element stops floating.
+   * @type {Object}
+   * @private
+   */
+  this.originalStyles_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A vertical offset from which to start floating the element.  This is
-  ***REMOVED*** useful in cases when there are 'position:fixed' elements covering up
-  ***REMOVED*** part of the viewport.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A vertical offset from which to start floating the element.  This is
+   * useful in cases when there are 'position:fixed' elements covering up
+   * part of the viewport.
+   * @type {number}
+   * @private
+   */
   this.viewportTopOffset_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An element used to define the boundaries within which the floater can
-  ***REMOVED*** be positioned.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An element used to define the boundaries within which the floater can
+   * be positioned.
+   * @type {Element}
+   * @private
+   */
   this.containerElement_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Container element's bounding rectangle.
-  ***REMOVED*** @type {goog.math.Rect}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Container element's bounding rectangle.
+   * @type {goog.math.Rect}
+   * @private
+   */
   this.containerBounds_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Element's original bounding rectangle.
-  ***REMOVED*** @type {goog.math.Rect}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Element's original bounding rectangle.
+   * @type {goog.math.Rect}
+   * @private
+   */
   this.originalBounds_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Element's top offset when it's not floated or pinned.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Element's top offset when it's not floated or pinned.
+   * @type {number}
+   * @private
+   */
   this.originalTopOffset_ = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The placeholder element dropped in to hold the layout for
-  ***REMOVED*** the floated element.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The placeholder element dropped in to hold the layout for
+   * the floated element.
+   * @type {Element}
+   * @private
+   */
   this.placeholder_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether scrolling is enabled for this element; true by default.
-  ***REMOVED*** The {@link #setScrollingEnabled} method can be used to change this value.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether scrolling is enabled for this element; true by default.
+   * The {@link #setScrollingEnabled} method can be used to change this value.
+   * @type {boolean}
+   * @private
+   */
   this.scrollingEnabled_ = true;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A flag indicating whether this instance is currently pinned to the bottom
-  ***REMOVED*** of the container element.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A flag indicating whether this instance is currently pinned to the bottom
+   * of the container element.
+   * @type {boolean}
+   * @private
+   */
   this.pinned_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A flag indicating whether this instance is currently floating.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A flag indicating whether this instance is currently floating.
+   * @type {boolean}
+   * @private
+   */
   this.floating_ = false;
-***REMOVED***
+};
 goog.inherits(goog.ui.ScrollFloater, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** Events dispatched by this component.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Events dispatched by this component.
+ * @enum {string}
+ */
 goog.ui.ScrollFloater.EventType = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched when the component starts floating. The event is
-  ***REMOVED*** cancellable.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched when the component starts floating. The event is
+   * cancellable.
+   */
   FLOAT: 'float',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched when the component returns to its original state.
-  ***REMOVED*** The event is cancellable.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched when the component returns to its original state.
+   * The event is cancellable.
+   */
   DOCK: 'dock',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched when the component gets pinned to the bottom of the
-  ***REMOVED*** container element.  This event is cancellable.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched when the component gets pinned to the bottom of the
+   * container element.  This event is cancellable.
+   */
   PIN: 'pin'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The element can float at different positions on the page.
-***REMOVED*** @enum {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The element can float at different positions on the page.
+ * @enum {number}
+ * @private
+ */
 goog.ui.ScrollFloater.FloatMode_ = {
   TOP: 0,
   BOTTOM: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The style properties which are stored when we float an element, so they
-***REMOVED*** can be restored when it 'docks' again.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The style properties which are stored when we float an element, so they
+ * can be restored when it 'docks' again.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.ui.ScrollFloater.STORED_STYLE_PROPS_ = [
   'position', 'top', 'left', 'width', 'cssFloat'];
 
 
-***REMOVED***
-***REMOVED*** The style elements managed for the placeholder object.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The style elements managed for the placeholder object.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.ui.ScrollFloater.PLACEHOLDER_STYLE_PROPS_ = [
   'position', 'top', 'left', 'display', 'cssFloat',
   'marginTop', 'marginLeft', 'marginRight', 'marginBottom'];
 
 
-***REMOVED***
-***REMOVED*** The class name applied to the floating element.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The class name applied to the floating element.
+ * @type {string}
+ * @private
+ */
 goog.ui.ScrollFloater.CSS_CLASS_ = goog.getCssName('goog-scrollfloater');
 
 
-***REMOVED***
-***REMOVED*** Delegates dom creation to superclass, then constructs and
-***REMOVED*** decorates required DOM elements.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Delegates dom creation to superclass, then constructs and
+ * decorates required DOM elements.
+ * @override
+ */
 goog.ui.ScrollFloater.prototype.createDom = function() {
   goog.ui.ScrollFloater.base(this, 'createDom');
 
   this.decorateInternal(this.getElement());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decorates the floated element with the standard ScrollFloater CSS class.
-***REMOVED*** @param {Element} element The element to decorate.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Decorates the floated element with the standard ScrollFloater CSS class.
+ * @param {Element} element The element to decorate.
+ * @override
+ */
 goog.ui.ScrollFloater.prototype.decorateInternal = function(element) {
   goog.ui.ScrollFloater.base(this, 'decorateInternal', element);
   goog.asserts.assert(element);
   goog.dom.classlist.add(element, goog.ui.ScrollFloater.CSS_CLASS_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ScrollFloater.prototype.enterDocument = function() {
   goog.ui.ScrollFloater.base(this, 'enterDocument');
 
@@ -261,14 +261,14 @@ goog.ui.ScrollFloater.prototype.enterDocument = function() {
   this.getHandler().
       listen(win, goog.events.EventType.SCROLL, this.handleScroll_).
       listen(win, goog.events.EventType.RESIZE, this.update);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Forces the component to update the cached element positions and sizes and
-***REMOVED*** to re-evaluate whether the the component should be docked, floated or
-***REMOVED*** pinned.
-***REMOVED***
+/**
+ * Forces the component to update the cached element positions and sizes and
+ * to re-evaluate whether the the component should be docked, floated or
+ * pinned.
+ */
 goog.ui.ScrollFloater.prototype.update = function() {
   if (!this.isInDocument()) {
     return;
@@ -283,21 +283,21 @@ goog.ui.ScrollFloater.prototype.update = function() {
   this.originalBounds_ = goog.style.getBounds(this.getElement());
   this.originalTopOffset_ = goog.style.getPageOffset(this.getElement()).y;
   this.handleScroll_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ScrollFloater.prototype.disposeInternal = function() {
   goog.ui.ScrollFloater.base(this, 'disposeInternal');
 
   this.placeholder_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the element should be floated if it scrolls out of view.
-***REMOVED*** @param {boolean} enable Whether floating is enabled for this element.
-***REMOVED***
+/**
+ * Sets whether the element should be floated if it scrolls out of view.
+ * @param {boolean} enable Whether floating is enabled for this element.
+ */
 goog.ui.ScrollFloater.prototype.setScrollingEnabled = function(enable) {
   this.scrollingEnabled_ = enable;
 
@@ -307,67 +307,67 @@ goog.ui.ScrollFloater.prototype.setScrollingEnabled = function(enable) {
   } else {
     this.dock_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the component is enabled for scroll-floating.
-***REMOVED***
+/**
+ * @return {boolean} Whether the component is enabled for scroll-floating.
+ */
 goog.ui.ScrollFloater.prototype.isScrollingEnabled = function() {
   return this.scrollingEnabled_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the component is currently scroll-floating.
-***REMOVED***
+/**
+ * @return {boolean} Whether the component is currently scroll-floating.
+ */
 goog.ui.ScrollFloater.prototype.isFloating = function() {
   return this.floating_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the component is currently pinned to the bottom
-***REMOVED***     of the container.
-***REMOVED***
+/**
+ * @return {boolean} Whether the component is currently pinned to the bottom
+ *     of the container.
+ */
 goog.ui.ScrollFloater.prototype.isPinned = function() {
   return this.pinned_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} offset A vertical offset from the top of the viewport, from
-***REMOVED***    which to start floating the element. Default is 0. This is useful in cases
-***REMOVED***    when there are 'position:fixed' elements covering up part of the viewport.
-***REMOVED***
+/**
+ * @param {number} offset A vertical offset from the top of the viewport, from
+ *    which to start floating the element. Default is 0. This is useful in cases
+ *    when there are 'position:fixed' elements covering up part of the viewport.
+ */
 goog.ui.ScrollFloater.prototype.setViewportTopOffset = function(offset) {
   this.viewportTopOffset_ = offset;
   this.update();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {Element} container An element used to define the boundaries within
-***REMOVED***     which the floater can be positioned. If not specified, scrolling the page
-***REMOVED***     down far enough may result in the floated element extending past the
-***REMOVED***     containing element as it is being scrolled out of the viewport. In some
-***REMOVED***     cases, such as a list with a sticky header, this may be undesirable. If
-***REMOVED***     the container element is specified and the floated element extends past
-***REMOVED***     the bottom of the container, the element will be pinned to the bottom of
-***REMOVED***     the container.
-***REMOVED***
+/**
+ * @param {Element} container An element used to define the boundaries within
+ *     which the floater can be positioned. If not specified, scrolling the page
+ *     down far enough may result in the floated element extending past the
+ *     containing element as it is being scrolled out of the viewport. In some
+ *     cases, such as a list with a sticky header, this may be undesirable. If
+ *     the container element is specified and the floated element extends past
+ *     the bottom of the container, the element will be pinned to the bottom of
+ *     the container.
+ */
 goog.ui.ScrollFloater.prototype.setContainerElement = function(container) {
   this.containerElement_ = container;
   this.update();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** When a scroll event occurs, compares the element's position to the current
-***REMOVED*** document scroll position, and stops or starts floating behavior if needed.
-***REMOVED*** @param {goog.events.Event=} opt_e The event, which is ignored.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * When a scroll event occurs, compares the element's position to the current
+ * document scroll position, and stops or starts floating behavior if needed.
+ * @param {goog.events.Event=} opt_e The event, which is ignored.
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.handleScroll_ = function(opt_e) {
   if (this.scrollingEnabled_) {
     var scrollTop = this.getDomHelper().getDocumentScroll().y;
@@ -412,14 +412,14 @@ goog.ui.ScrollFloater.prototype.handleScroll_ = function(opt_e) {
       this.float_(goog.ui.ScrollFloater.FloatMode_.BOTTOM);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Pins the element to the bottom of the container, making as much of the
-***REMOVED*** element visible as possible without extending past it.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Pins the element to the bottom of the container, making as much of the
+ * element visible as possible without extending past it.
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.pin_ = function() {
   if (this.floating_ && !this.dock_()) {
     return;
@@ -440,18 +440,18 @@ goog.ui.ScrollFloater.prototype.pin_ = function() {
       this.originalBounds_.top + this.containerBounds_.top + 'px';
 
   this.pinned_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Begins floating behavior, making the element position:fixed (or IE hacked
-***REMOVED*** equivalent) and inserting a placeholder where it used to be to keep the
-***REMOVED*** layout from shifting around. For IE < 7 users, we only support floating at
-***REMOVED*** the top.
-***REMOVED*** @param {goog.ui.ScrollFloater.FloatMode_} floatMode The position at which we
-***REMOVED***     should float.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Begins floating behavior, making the element position:fixed (or IE hacked
+ * equivalent) and inserting a placeholder where it used to be to keep the
+ * layout from shifting around. For IE < 7 users, we only support floating at
+ * the top.
+ * @param {goog.ui.ScrollFloater.FloatMode_} floatMode The position at which we
+ *     should float.
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.float_ = function(floatMode) {
   var isTop = floatMode == goog.ui.ScrollFloater.FloatMode_.TOP;
   if (this.pinned_ && !this.dock_()) {
@@ -512,15 +512,15 @@ goog.ui.ScrollFloater.prototype.float_ = function(floatMode) {
   }
 
   this.floating_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stops floating behavior, returning element to its original state.
-***REMOVED*** @return {boolean} True if the the element has been docked.  False if the
-***REMOVED***     element is already docked or the event was cancelled.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stops floating behavior, returning element to its original state.
+ * @return {boolean} True if the the element has been docked.  False if the
+ *     element is already docked or the event was cancelled.
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.dock_ = function() {
   // Ignore if the component is docked or the DOCK event is cancelled.
   if (!(this.floating_ || this.pinned_) ||
@@ -554,15 +554,15 @@ goog.ui.ScrollFloater.prototype.dock_ = function() {
   this.floating_ = this.pinned_ = false;
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.storeOriginalStyles_ = function() {
   var elem = this.getElement();
-  this.originalStyles_ = {***REMOVED***
+  this.originalStyles_ = {};
 
   // Store styles while not floating so we can restore them when the
   // element stops floating.
@@ -582,43 +582,43 @@ goog.ui.ScrollFloater.prototype.storeOriginalStyles_ = function() {
                                goog.style.getComputedStyle(elem, property);
                      },
                      this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.restoreOriginalStyles_ = function() {
   var elem = this.getElement();
   for (var prop in this.originalStyles_) {
     elem.style[prop] = this.originalStyles_[prop];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether we need to apply the position hack to emulated position:
-***REMOVED*** fixed on this browser.
-***REMOVED*** @return {boolean} Whether the current browser needs the position hack.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Determines whether we need to apply the position hack to emulated position:
+ * fixed on this browser.
+ * @return {boolean} Whether the current browser needs the position hack.
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.needsIePositionHack_ = function() {
   return goog.userAgent.IE &&
       !(goog.userAgent.isVersionOrHigher('7') &&
           this.getDomHelper().isCss1CompatMode());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets some magic CSS properties that make float-scrolling work smoothly
-***REMOVED*** in IE6 (and IE7 in quirks mode). Without this hack, the floating element
-***REMOVED*** will appear jumpy when you scroll the document. This involves modifying
-***REMOVED*** the background of the HTML element (or BODY in quirks mode). If there's
-***REMOVED*** already a background image in use this is not required.
-***REMOVED*** For further reading, see
-***REMOVED*** http://annevankesteren.nl/2005/01/position-fixed-in-ie
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets some magic CSS properties that make float-scrolling work smoothly
+ * in IE6 (and IE7 in quirks mode). Without this hack, the floating element
+ * will appear jumpy when you scroll the document. This involves modifying
+ * the background of the HTML element (or BODY in quirks mode). If there's
+ * already a background image in use this is not required.
+ * For further reading, see
+ * http://annevankesteren.nl/2005/01/position-fixed-in-ie
+ * @private
+ */
 goog.ui.ScrollFloater.prototype.applyIeBgHack_ = function() {
   if (this.needsIePositionHack_()) {
     var doc = this.getDomHelper().getDocument();
@@ -633,4 +633,4 @@ goog.ui.ScrollFloater.prototype.applyIeBgHack_ = function() {
       topLevelElement.style.backgroundAttachment = 'fixed';
     }
   }
-***REMOVED***
+};

@@ -1,12 +1,12 @@
-***REMOVED***
-***REMOVED*** @overview
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/**
+ * @overview
+ * @author Michael Mathews <micmath@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 
-***REMOVED***
-***REMOVED*** @module jsdoc/doclet
-***REMOVED***
+/**
+ * @module jsdoc/doclet
+ */
 'use strict';
 
 var _ = require('underscore');
@@ -23,7 +23,7 @@ var jsdoc = {
     util: {
         doop: require('jsdoc/util/doop')
     }
-***REMOVED***
+};
 var path = require('jsdoc/path');
 var Syntax = jsdoc.src.Syntax;
 var util = require('util');
@@ -114,10 +114,10 @@ function split(docletSrc) {
     return tagSrcs;
 }
 
-***REMOVED***
-***REMOVED*** Convert the raw source of the doclet comment into an array of Tag objects.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Convert the raw source of the doclet comment into an array of Tag objects.
+ * @private
+ */
 function toTags(docletSrc) {
     var tags = [];
     var tagSrcs = split(docletSrc);
@@ -136,16 +136,16 @@ function fixDescription(docletSrc) {
     return docletSrc;
 }
 
-***REMOVED***
-***REMOVED*** @class
-***REMOVED*** @classdesc Represents a single JSDoc comment.
-***REMOVED*** @param {string} docletSrc - The raw source code of the jsdoc comment.
-***REMOVED*** @param {object=} meta - Properties describing the code related to this comment.
-***REMOVED***
+/**
+ * @class
+ * @classdesc Represents a single JSDoc comment.
+ * @param {string} docletSrc - The raw source code of the jsdoc comment.
+ * @param {object=} meta - Properties describing the code related to this comment.
+ */
 var Doclet = exports.Doclet = function(docletSrc, meta) {
     var newTags = [];
 
-   ***REMOVED*****REMOVED*** The original text of the comment from the source code.***REMOVED***
+    /** The original text of the comment from the source code. */
     this.comment = docletSrc;
     this.setMeta(meta);
 
@@ -159,9 +159,9 @@ var Doclet = exports.Doclet = function(docletSrc, meta) {
     }
 
     this.postProcess();
-***REMOVED***
+};
 
-***REMOVED*** Called once after all tags have been added.***REMOVED***
+/** Called once after all tags have been added. */
 Doclet.prototype.postProcess = function() {
     var i;
     var l;
@@ -192,14 +192,14 @@ Doclet.prototype.postProcess = function() {
             }
         }
     }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Add a tag to the doclet.
-***REMOVED***
-***REMOVED*** @param {string} title - The title of the tag being added.
-***REMOVED*** @param {string} [text] - The text of the tag being added.
-***REMOVED***
+/**
+ * Add a tag to the doclet.
+ *
+ * @param {string} title - The title of the tag being added.
+ * @param {string} [text] - The text of the tag being added.
+ */
 Doclet.prototype.addTag = function(title, text) {
     var tagDef = jsdoc.tag.dictionary.lookUp(title),
         newTag = new jsdoc.tag.Tag(title, text, this.meta);
@@ -214,7 +214,7 @@ Doclet.prototype.addTag = function(title, text) {
     }
 
     applyTag(this, newTag);
-***REMOVED***
+};
 
 function removeGlobal(longname) {
     var globalRegexp = new RegExp('^' + jsdoc.name.GLOBAL_LONGNAME + '\\.?');
@@ -222,44 +222,44 @@ function removeGlobal(longname) {
     return longname.replace(globalRegexp, '');
 }
 
-***REMOVED***
-***REMOVED*** Set the doclet's `memberof` property.
-***REMOVED***
-***REMOVED*** @param {string} sid - The longname of the doclet's parent symbol.
-***REMOVED***
+/**
+ * Set the doclet's `memberof` property.
+ *
+ * @param {string} sid - The longname of the doclet's parent symbol.
+ */
 Doclet.prototype.setMemberof = function(sid) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** The longname of the symbol that contains this one, if any.
-    ***REMOVED*** @type string
-   ***REMOVED*****REMOVED***
+    /**
+     * The longname of the symbol that contains this one, if any.
+     * @type string
+     */
     this.memberof = removeGlobal(sid)
         .replace(/\.prototype/g, jsdoc.name.INSTANCE);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Set the doclet's `longname` property.
-***REMOVED***
-***REMOVED*** @param {string} name - The longname for the doclet.
-***REMOVED***
+/**
+ * Set the doclet's `longname` property.
+ *
+ * @param {string} name - The longname for the doclet.
+ */
 Doclet.prototype.setLongname = function(name) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** The fully resolved symbol name.
-    ***REMOVED*** @type string
-   ***REMOVED*****REMOVED***
+    /**
+     * The fully resolved symbol name.
+     * @type string
+     */
     this.longname = removeGlobal(name);
     if (jsdoc.tag.dictionary.isNamespace(this.kind)) {
         this.longname = jsdoc.name.applyNamespace(this.longname, this.kind);
     }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Get the full path to the source file that is associated with a doclet.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {module:jsdoc/doclet.Doclet} The doclet to check for a filepath.
-***REMOVED*** @return {string} The path to the doclet's source file, or an empty string if the path is not
-***REMOVED*** available.
-***REMOVED***
+/**
+ * Get the full path to the source file that is associated with a doclet.
+ *
+ * @private
+ * @param {module:jsdoc/doclet.Doclet} The doclet to check for a filepath.
+ * @return {string} The path to the doclet's source file, or an empty string if the path is not
+ * available.
+ */
 function getFilepath(doclet) {
     if (!doclet || !doclet.meta || !doclet.meta.filename) {
         return '';
@@ -268,14 +268,14 @@ function getFilepath(doclet) {
     return path.join(doclet.meta.path || '', doclet.meta.filename);
 }
 
-***REMOVED***
-***REMOVED*** Set the doclet's `scope` property. Must correspond to a scope name that is defined in
-***REMOVED*** {@link module:jsdoc/name.SCOPE_NAMES}.
-***REMOVED***
-***REMOVED*** @param {module:jsdoc/name.SCOPE_NAMES} scope - The scope for the doclet relative to the symbol's
-***REMOVED*** parent.
-***REMOVED*** @throws {Error} If the scope name is not recognized.
-***REMOVED***
+/**
+ * Set the doclet's `scope` property. Must correspond to a scope name that is defined in
+ * {@link module:jsdoc/name.SCOPE_NAMES}.
+ *
+ * @param {module:jsdoc/name.SCOPE_NAMES} scope - The scope for the doclet relative to the symbol's
+ * parent.
+ * @throws {Error} If the scope name is not recognized.
+ */
 Doclet.prototype.setScope = function(scope) {
     var errorMessage;
     var filepath;
@@ -294,83 +294,83 @@ Doclet.prototype.setScope = function(scope) {
     }
 
     this.scope = scope;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Add a symbol to this doclet's `borrowed` array.
-***REMOVED***
-***REMOVED*** @param {string} source - The longname of the symbol that is the source.
-***REMOVED*** @param {string} target - The name the symbol is being assigned to.
-***REMOVED***
+/**
+ * Add a symbol to this doclet's `borrowed` array.
+ *
+ * @param {string} source - The longname of the symbol that is the source.
+ * @param {string} target - The name the symbol is being assigned to.
+ */
 Doclet.prototype.borrow = function(source, target) {
-    var about = { from: source***REMOVED*****REMOVED***
+    var about = { from: source };
     if (target) {
         about.as = target;
     }
 
     if (!this.borrowed) {
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** A list of symbols that are borrowed by this one, if any.
-        ***REMOVED*** @type Array.<string>
-       ***REMOVED*****REMOVED***
+        /**
+         * A list of symbols that are borrowed by this one, if any.
+         * @type Array.<string>
+         */
         this.borrowed = [];
     }
     this.borrowed.push(about);
-***REMOVED***
+};
 
 Doclet.prototype.mix = function(source) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A list of symbols that are mixed into this one, if any.
-    ***REMOVED*** @type Array.<string>
-   ***REMOVED*****REMOVED***
+    /**
+     * A list of symbols that are mixed into this one, if any.
+     * @type Array.<string>
+     */
     this.mixes = this.mixes || [];
     this.mixes.push(source);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Add a symbol to the doclet's `augments` array.
-***REMOVED***
-***REMOVED*** @param {string} base - The longname of the base symbol.
-***REMOVED***
+/**
+ * Add a symbol to the doclet's `augments` array.
+ *
+ * @param {string} base - The longname of the base symbol.
+ */
 Doclet.prototype.augment = function(base) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A list of symbols that are augmented by this one, if any.
-    ***REMOVED*** @type Array.<string>
-   ***REMOVED*****REMOVED***
+    /**
+     * A list of symbols that are augmented by this one, if any.
+     * @type Array.<string>
+     */
     this.augments = this.augments || [];
     this.augments.push(base);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Set the `meta` property of this doclet.
-***REMOVED***
-***REMOVED*** @param {object} meta
-***REMOVED***
+/**
+ * Set the `meta` property of this doclet.
+ *
+ * @param {object} meta
+ */
 Doclet.prototype.setMeta = function(meta) {
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Information about the source code associated with this doclet.
-    ***REMOVED*** @namespace
-   ***REMOVED*****REMOVED***
-    this.meta = this.meta || {***REMOVED***
+    /**
+     * Information about the source code associated with this doclet.
+     * @namespace
+     */
+    this.meta = this.meta || {};
 
     if (meta.range) {
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** The positions of the first and last characters of the code associated with this doclet.
-        ***REMOVED*** @type Array.<number>
-       ***REMOVED*****REMOVED***
+        /**
+         * The positions of the first and last characters of the code associated with this doclet.
+         * @type Array.<number>
+         */
         this.meta.range = meta.range.slice(0);
     }
 
     if (meta.lineno) {
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** The name of the file containing the code associated with this doclet.
-        ***REMOVED*** @type string
-       ***REMOVED*****REMOVED***
+        /**
+         * The name of the file containing the code associated with this doclet.
+         * @type string
+         */
         this.meta.filename = path.basename(meta.filename);
-       ***REMOVED*****REMOVED***
-        ***REMOVED*** The line number of the code associated with this doclet.
-        ***REMOVED*** @type number
-       ***REMOVED*****REMOVED***
+        /**
+         * The line number of the code associated with this doclet.
+         * @type number
+         */
         this.meta.lineno = meta.lineno;
 
         var pathname = path.dirname(meta.filename);
@@ -379,19 +379,19 @@ Doclet.prototype.setMeta = function(meta) {
         }
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Information about the code symbol.
-    ***REMOVED*** @namespace
-   ***REMOVED*****REMOVED***
-    this.meta.code = this.meta.code || {***REMOVED***
+    /**
+     * Information about the code symbol.
+     * @namespace
+     */
+    this.meta.code = this.meta.code || {};
     if (meta.id) { this.meta.code.id = meta.id; }
     if (meta.code) {
         if (meta.code.name) {
-           ***REMOVED*****REMOVED*** The name of the symbol in the source code.***REMOVED***
+            /** The name of the symbol in the source code. */
             this.meta.code.name = meta.code.name;
         }
         if (meta.code.type) {
-           ***REMOVED*****REMOVED*** The type of the symbol in the source code.***REMOVED***
+            /** The type of the symbol in the source code. */
             this.meta.code.type = meta.code.type;
         }
         if (meta.code.node) {
@@ -401,11 +401,11 @@ Doclet.prototype.setMeta = function(meta) {
             this.meta.code.funcscope = meta.code.funcscope;
         }
         if (meta.code.value) {
-           ***REMOVED*****REMOVED*** The value of the symbol in the source code.***REMOVED***
+            /** The value of the symbol in the source code. */
             this.meta.code.value = meta.code.value;
         }
         if (meta.code.paramnames) {
             this.meta.code.paramnames = meta.code.paramnames.slice(0);
         }
     }
-***REMOVED***
+};

@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a base class for custom Error objects such that the
-***REMOVED*** stack is correctly maintained.
-***REMOVED***
-***REMOVED*** You should never need to throw goog.debug.Error(msg) directly, Error(msg) is
-***REMOVED*** sufficient.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a base class for custom Error objects such that the
+ * stack is correctly maintained.
+ *
+ * You should never need to throw goog.debug.Error(msg) directly, Error(msg) is
+ * sufficient.
+ *
+ */
 
 goog.provide('goog.debug.Error');
 
 
 
-***REMOVED***
-***REMOVED*** Base class for custom error objects.
-***REMOVED*** @param {*=} opt_msg The message associated with the error.
-***REMOVED***
-***REMOVED*** @extends {Error}
-***REMOVED***
+/**
+ * Base class for custom error objects.
+ * @param {*=} opt_msg The message associated with the error.
+ * @constructor
+ * @extends {Error}
+ */
 goog.debug.Error = function(opt_msg) {
 
   // Attempt to ensure there is a stack trace.
@@ -46,9 +46,9 @@ goog.debug.Error = function(opt_msg) {
   if (opt_msg) {
     this.message = String(opt_msg);
   }
-***REMOVED***
+};
 goog.inherits(goog.debug.Error, Error);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.Error.prototype.name = 'CustomError';

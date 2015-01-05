@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
  describe("@augments tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/augmentstag.js');
     var docSet2 = jasmine.getDocSetFromFile('test/fixtures/augmentstag2.js');

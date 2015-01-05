@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of various formatters for logging. Please minimize
-***REMOVED*** dependencies this file has on other closure classes as any dependency it
-***REMOVED*** takes won't be able to use the logging infrastructure.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of various formatters for logging. Please minimize
+ * dependencies this file has on other closure classes as any dependency it
+ * takes won't be able to use the logging infrastructure.
+ *
+ */
 
 goog.provide('goog.debug.Formatter');
 goog.provide('goog.debug.HtmlFormatter');
@@ -28,110 +28,110 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Base class for Formatters. A Formatter is used to format a LogRecord into
-***REMOVED*** something that can be displayed to the user.
-***REMOVED***
-***REMOVED*** @param {string=} opt_prefix The prefix to place before text records.
-***REMOVED***
-***REMOVED***
+/**
+ * Base class for Formatters. A Formatter is used to format a LogRecord into
+ * something that can be displayed to the user.
+ *
+ * @param {string=} opt_prefix The prefix to place before text records.
+ * @constructor
+ */
 goog.debug.Formatter = function(opt_prefix) {
   this.prefix_ = opt_prefix || '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A provider that returns the relative start time.
-  ***REMOVED*** @type {goog.debug.RelativeTimeProvider}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A provider that returns the relative start time.
+   * @type {goog.debug.RelativeTimeProvider}
+   * @private
+   */
   this.startTimeProvider_ =
       goog.debug.RelativeTimeProvider.getDefaultInstance();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether to append newlines to the end of formatted log records.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to append newlines to the end of formatted log records.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.appendNewline = true;
 
 
-***REMOVED***
-***REMOVED*** Whether to show absolute time in the DebugWindow.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to show absolute time in the DebugWindow.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.showAbsoluteTime = true;
 
 
-***REMOVED***
-***REMOVED*** Whether to show relative time in the DebugWindow.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to show relative time in the DebugWindow.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.showRelativeTime = true;
 
 
-***REMOVED***
-***REMOVED*** Whether to show the logger name in the DebugWindow.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to show the logger name in the DebugWindow.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.showLoggerName = true;
 
 
-***REMOVED***
-***REMOVED*** Whether to show the logger exception text.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to show the logger exception text.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.showExceptionText = false;
 
 
-***REMOVED***
-***REMOVED*** Whether to show the severity level.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether to show the severity level.
+ * @type {boolean}
+ */
 goog.debug.Formatter.prototype.showSeverityLevel = false;
 
 
-***REMOVED***
-***REMOVED*** Formats a record.
-***REMOVED*** @param {goog.debug.LogRecord} logRecord the logRecord to format.
-***REMOVED*** @return {string} The formatted string.
-***REMOVED***
+/**
+ * Formats a record.
+ * @param {goog.debug.LogRecord} logRecord the logRecord to format.
+ * @return {string} The formatted string.
+ */
 goog.debug.Formatter.prototype.formatRecord = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Sets the start time provider. By default, this is the default instance
-***REMOVED*** but can be changed.
-***REMOVED*** @param {goog.debug.RelativeTimeProvider} provider The provider to use.
-***REMOVED***
+/**
+ * Sets the start time provider. By default, this is the default instance
+ * but can be changed.
+ * @param {goog.debug.RelativeTimeProvider} provider The provider to use.
+ */
 goog.debug.Formatter.prototype.setStartTimeProvider = function(provider) {
   this.startTimeProvider_ = provider;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the start time provider. By default, this is the default instance
-***REMOVED*** but can be changed.
-***REMOVED*** @return {goog.debug.RelativeTimeProvider} The start time provider.
-***REMOVED***
+/**
+ * Returns the start time provider. By default, this is the default instance
+ * but can be changed.
+ * @return {goog.debug.RelativeTimeProvider} The start time provider.
+ */
 goog.debug.Formatter.prototype.getStartTimeProvider = function() {
   return this.startTimeProvider_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the start relative time.
-***REMOVED***
+/**
+ * Resets the start relative time.
+ */
 goog.debug.Formatter.prototype.resetRelativeTimeStart = function() {
   this.startTimeProvider_.reset();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a string for the time/date of the LogRecord.
-***REMOVED*** @param {goog.debug.LogRecord} logRecord The record to get a time stamp for.
-***REMOVED*** @return {string} A string representation of the time/date of the LogRecord.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a string for the time/date of the LogRecord.
+ * @param {goog.debug.LogRecord} logRecord The record to get a time stamp for.
+ * @return {string} A string representation of the time/date of the LogRecord.
+ * @private
+ */
 goog.debug.Formatter.getDateTimeStamp_ = function(logRecord) {
   var time = new Date(logRecord.getMillis());
   return goog.debug.Formatter.getTwoDigitString_((time.getFullYear() - 2000)) +
@@ -142,34 +142,34 @@ goog.debug.Formatter.getDateTimeStamp_ = function(logRecord) {
          goog.debug.Formatter.getTwoDigitString_(time.getSeconds()) + '.' +
          goog.debug.Formatter.getTwoDigitString_(
              Math.floor(time.getMilliseconds() / 10));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the number as a two-digit string, meaning it prepends a 0 if the
-***REMOVED*** number if less than 10.
-***REMOVED*** @param {number} n The number to format.
-***REMOVED*** @return {string} A two-digit string representation of {@code n}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the number as a two-digit string, meaning it prepends a 0 if the
+ * number if less than 10.
+ * @param {number} n The number to format.
+ * @return {string} A two-digit string representation of {@code n}.
+ * @private
+ */
 goog.debug.Formatter.getTwoDigitString_ = function(n) {
   if (n < 10) {
     return '0' + n;
   }
   return String(n);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a string for the number of seconds relative to the start time.
-***REMOVED*** Prepads with spaces so that anything less than 1000 seconds takes up the
-***REMOVED*** same number of characters for better formatting.
-***REMOVED*** @param {goog.debug.LogRecord} logRecord The log to compare time to.
-***REMOVED*** @param {number} relativeTimeStart The start time to compare to.
-***REMOVED*** @return {string} The number of seconds of the LogRecord relative to the
-***REMOVED***     start time.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a string for the number of seconds relative to the start time.
+ * Prepads with spaces so that anything less than 1000 seconds takes up the
+ * same number of characters for better formatting.
+ * @param {goog.debug.LogRecord} logRecord The log to compare time to.
+ * @param {number} relativeTimeStart The start time to compare to.
+ * @return {string} The number of seconds of the LogRecord relative to the
+ *     start time.
+ * @private
+ */
 goog.debug.Formatter.getRelativeTime_ = function(logRecord,
                                                  relativeTimeStart) {
   var ms = logRecord.getMillis() - relativeTimeStart;
@@ -182,45 +182,45 @@ goog.debug.Formatter.getRelativeTime_ = function(logRecord,
   } else {
     while (sec < 100) {
       spacesToPrepend++;
-      sec***REMOVED***= 10;
+      sec *= 10;
     }
   }
   while (spacesToPrepend-- > 0) {
     str = ' ' + str;
   }
   return str;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Formatter that returns formatted html. See formatRecord for the classes
-***REMOVED*** it uses for various types of formatted output.
-***REMOVED***
-***REMOVED*** @param {string=} opt_prefix The prefix to place before text records.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Formatter}
-***REMOVED***
+/**
+ * Formatter that returns formatted html. See formatRecord for the classes
+ * it uses for various types of formatted output.
+ *
+ * @param {string=} opt_prefix The prefix to place before text records.
+ * @constructor
+ * @extends {goog.debug.Formatter}
+ */
 goog.debug.HtmlFormatter = function(opt_prefix) {
   goog.debug.Formatter.call(this, opt_prefix);
-***REMOVED***
+};
 goog.inherits(goog.debug.HtmlFormatter, goog.debug.Formatter);
 
 
-***REMOVED***
-***REMOVED*** Whether to show the logger exception text
-***REMOVED*** @type {boolean}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Whether to show the logger exception text
+ * @type {boolean}
+ * @override
+ */
 goog.debug.HtmlFormatter.prototype.showExceptionText = true;
 
 
-***REMOVED***
-***REMOVED*** Formats a record
-***REMOVED*** @param {goog.debug.LogRecord} logRecord the logRecord to format.
-***REMOVED*** @return {string} The formatted string as html.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Formats a record
+ * @param {goog.debug.LogRecord} logRecord the logRecord to format.
+ * @return {string} The formatted string as html.
+ * @override
+ */
 goog.debug.HtmlFormatter.prototype.formatRecord = function(logRecord) {
   var className;
   switch (logRecord.getLevel().value) {
@@ -277,30 +277,30 @@ goog.debug.HtmlFormatter.prototype.formatRecord = function(logRecord) {
   }
 
   return sb.join('');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Formatter that returns formatted plain text
-***REMOVED***
-***REMOVED*** @param {string=} opt_prefix The prefix to place before text records.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Formatter}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Formatter that returns formatted plain text
+ *
+ * @param {string=} opt_prefix The prefix to place before text records.
+ * @constructor
+ * @extends {goog.debug.Formatter}
+ * @final
+ */
 goog.debug.TextFormatter = function(opt_prefix) {
   goog.debug.Formatter.call(this, opt_prefix);
-***REMOVED***
+};
 goog.inherits(goog.debug.TextFormatter, goog.debug.Formatter);
 
 
-***REMOVED***
-***REMOVED*** Formats a record as text
-***REMOVED*** @param {goog.debug.LogRecord} logRecord the logRecord to format.
-***REMOVED*** @return {string} The formatted string.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Formats a record as text
+ * @param {goog.debug.LogRecord} logRecord the logRecord to format.
+ * @return {string} The formatted string.
+ * @override
+ */
 goog.debug.TextFormatter.prototype.formatRecord = function(logRecord) {
   // Build message html
   var sb = [];
@@ -327,4 +327,4 @@ goog.debug.TextFormatter.prototype.formatRecord = function(logRecord) {
     sb.push('\n');
   }
   return sb.join('');
-***REMOVED***
+};

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A wrapper for the HTML5 FileError object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A wrapper for the HTML5 FileError object.
+ *
+ */
 
 goog.provide('goog.fs.Error');
 goog.provide('goog.fs.Error.ErrorCode');
@@ -26,32 +26,32 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** A filesystem error. Since the filesystem API is asynchronous, stack traces
-***REMOVED*** are less useful for identifying where errors come from, so this includes a
-***REMOVED*** large amount of metadata in the message.
-***REMOVED***
-***REMOVED*** @param {!DOMError} error
-***REMOVED*** @param {string} action The action being undertaken when the error was raised.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A filesystem error. Since the filesystem API is asynchronous, stack traces
+ * are less useful for identifying where errors come from, so this includes a
+ * large amount of metadata in the message.
+ *
+ * @param {!DOMError} error
+ * @param {string} action The action being undertaken when the error was raised.
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ */
 goog.fs.Error = function(error, action) {
- ***REMOVED*****REMOVED*** @type {string}***REMOVED***
+  /** @type {string} */
   this.name;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {goog.fs.Error.ErrorCode}
-  ***REMOVED*** @deprecated Use the 'name' or 'message' field instead.
- ***REMOVED*****REMOVED***
+  /**
+   * @type {goog.fs.Error.ErrorCode}
+   * @deprecated Use the 'name' or 'message' field instead.
+   */
   this.code;
 
   if (goog.isDef(error.name)) {
     this.name = error.name;
     // TODO(user): Remove warning suppression after JSCompiler stops
     // firing a spurious warning here.
-   ***REMOVED*****REMOVED*** @suppress {deprecated}***REMOVED***
+    /** @suppress {deprecated} */
     this.code = goog.fs.Error.getCodeFromName_(error.name);
   } else {
     this.code = error.code;
@@ -59,19 +59,19 @@ goog.fs.Error = function(error, action) {
   }
   goog.fs.Error.base(this, 'constructor',
       goog.string.subs('%s %s', this.name, action));
-***REMOVED***
+};
 goog.inherits(goog.fs.Error, goog.debug.Error);
 
 
-***REMOVED***
-***REMOVED*** Names of errors that may be thrown by the File API, the File System API, or
-***REMOVED*** the File Writer API.
-***REMOVED***
-***REMOVED*** @see http://dev.w3.org/2006/webapi/FileAPI/#ErrorAndException
-***REMOVED*** @see http://www.w3.org/TR/file-system-api/#definitions
-***REMOVED*** @see http://dev.w3.org/2009/dap/file-system/file-writer.html#definitions
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Names of errors that may be thrown by the File API, the File System API, or
+ * the File Writer API.
+ *
+ * @see http://dev.w3.org/2006/webapi/FileAPI/#ErrorAndException
+ * @see http://www.w3.org/TR/file-system-api/#definitions
+ * @see http://dev.w3.org/2009/dap/file-system/file-writer.html#definitions
+ * @enum {string}
+ */
 goog.fs.Error.ErrorName = {
   ABORT: 'AbortError',
   ENCODING: 'EncodingError',
@@ -85,16 +85,16 @@ goog.fs.Error.ErrorName = {
   SECURITY: 'SecurityError',
   SYNTAX: 'SyntaxError',
   TYPE_MISMATCH: 'TypeMismatchError'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Error codes for file errors.
-***REMOVED*** @see http://www.w3.org/TR/file-system-api/#idl-def-FileException
-***REMOVED***
-***REMOVED*** @enum {number}
-***REMOVED*** @deprecated Use the 'name' or 'message' attribute instead.
-***REMOVED***
+/**
+ * Error codes for file errors.
+ * @see http://www.w3.org/TR/file-system-api/#idl-def-FileException
+ *
+ * @enum {number}
+ * @deprecated Use the 'name' or 'message' attribute instead.
+ */
 goog.fs.Error.ErrorCode = {
   NOT_FOUND: 1,
   SECURITY: 2,
@@ -108,14 +108,14 @@ goog.fs.Error.ErrorCode = {
   QUOTA_EXCEEDED: 10,
   TYPE_MISMATCH: 11,
   PATH_EXISTS: 12
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {goog.fs.Error.ErrorCode} code
-***REMOVED*** @return {string} name
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @param {goog.fs.Error.ErrorCode} code
+ * @return {string} name
+ * @private
+ */
 goog.fs.Error.getNameFromCode_ = function(code) {
   var name = goog.object.findKey(goog.fs.Error.NameToCodeMap_, function(c) {
     return code == c;
@@ -124,25 +124,25 @@ goog.fs.Error.getNameFromCode_ = function(code) {
     throw new Error('Invalid code: ' + code);
   }
   return name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the code that corresponds to the given name.
-***REMOVED*** @param {string} name
-***REMOVED*** @return {goog.fs.Error.ErrorCode} code
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the code that corresponds to the given name.
+ * @param {string} name
+ * @return {goog.fs.Error.ErrorCode} code
+ * @private
+ */
 goog.fs.Error.getCodeFromName_ = function(name) {
   return goog.fs.Error.NameToCodeMap_[name];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mapping from error names to values from the ErrorCode enum.
-***REMOVED*** @see http://www.w3.org/TR/file-system-api/#definitions.
-***REMOVED*** @private {!Object.<string, goog.fs.Error.ErrorCode>}
-***REMOVED***
+/**
+ * Mapping from error names to values from the ErrorCode enum.
+ * @see http://www.w3.org/TR/file-system-api/#definitions.
+ * @private {!Object.<string, goog.fs.Error.ErrorCode>}
+ */
 goog.fs.Error.NameToCodeMap_ = goog.object.create(
     goog.fs.Error.ErrorName.ABORT,
     goog.fs.Error.ErrorCode.ABORT,

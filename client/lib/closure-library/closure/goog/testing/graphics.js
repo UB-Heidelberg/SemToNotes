@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Testing utilities for DOM related tests.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Testing utilities for DOM related tests.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.testing.graphics');
 
@@ -24,11 +24,11 @@ goog.require('goog.graphics.Path.Segment');
 goog.require('goog.testing.asserts');
 
 
-***REMOVED***
-***REMOVED*** Array mapping numeric segment constant to a descriptive character.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array mapping numeric segment constant to a descriptive character.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.testing.graphics.SEGMENT_NAMES_ = function() {
   var arr = [];
   arr[goog.graphics.Path.Segment.MOVETO] = 'M';
@@ -40,12 +40,12 @@ goog.testing.graphics.SEGMENT_NAMES_ = function() {
 }();
 
 
-***REMOVED***
-***REMOVED*** Test if the given path matches the expected array of commands and parameters.
-***REMOVED*** @param {Array.<string|number>} expected The expected array of commands and
-***REMOVED***     parameters.
-***REMOVED*** @param {goog.graphics.Path} path The path to test against.
-***REMOVED***
+/**
+ * Test if the given path matches the expected array of commands and parameters.
+ * @param {Array.<string|number>} expected The expected array of commands and
+ *     parameters.
+ * @param {goog.graphics.Path} path The path to test against.
+ */
 goog.testing.graphics.assertPathEquals = function(expected, path) {
   var actual = [];
   path.forEachSegment(function(seg, args) {
@@ -61,4 +61,4 @@ goog.testing.graphics.assertPathEquals = function(expected, path) {
       assertEquals(expected[i], actual[i]);
     }
   }
-***REMOVED***
+};

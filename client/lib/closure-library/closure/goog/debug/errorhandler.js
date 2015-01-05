@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Error handling utilities.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Error handling utilities.
+ *
+ */
 
 goog.provide('goog.debug.ErrorHandler');
 goog.provide('goog.debug.ErrorHandler.ProtectedFunctionError');
@@ -27,121 +27,121 @@ goog.require('goog.debug.Trace');
 
 
 
-***REMOVED***
-***REMOVED*** The ErrorHandler can be used to to wrap functions with a try/catch
-***REMOVED*** statement. If an exception is thrown, the given error handler function will
-***REMOVED*** be called.
-***REMOVED***
-***REMOVED*** When this object is disposed, it will stop handling exceptions and tracing.
-***REMOVED*** It will also try to restore window.setTimeout and window.setInterval
-***REMOVED*** if it wrapped them. Notice that in the general case, it is not technically
-***REMOVED*** possible to remove the wrapper, because functions have no knowledge of
-***REMOVED*** what they have been assigned to. So the app is responsible for other
-***REMOVED*** forms of unwrapping.
-***REMOVED***
-***REMOVED*** @param {Function} handler Handler for exceptions.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @implements {goog.debug.EntryPointMonitor}
-***REMOVED***
+/**
+ * The ErrorHandler can be used to to wrap functions with a try/catch
+ * statement. If an exception is thrown, the given error handler function will
+ * be called.
+ *
+ * When this object is disposed, it will stop handling exceptions and tracing.
+ * It will also try to restore window.setTimeout and window.setInterval
+ * if it wrapped them. Notice that in the general case, it is not technically
+ * possible to remove the wrapper, because functions have no knowledge of
+ * what they have been assigned to. So the app is responsible for other
+ * forms of unwrapping.
+ *
+ * @param {Function} handler Handler for exceptions.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @implements {goog.debug.EntryPointMonitor}
+ */
 goog.debug.ErrorHandler = function(handler) {
   goog.debug.ErrorHandler.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Handler for exceptions, which can do logging, reporting, etc.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Handler for exceptions, which can do logging, reporting, etc.
+   * @type {Function}
+   * @private
+   */
   this.errorHandlerFn_ = handler;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether errors should be wrapped in
-  ***REMOVED*** goog.debug.ErrorHandler.ProtectedFunctionError before rethrowing.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether errors should be wrapped in
+   * goog.debug.ErrorHandler.ProtectedFunctionError before rethrowing.
+   * @type {boolean}
+   * @private
+   */
   this.wrapErrors_ = true;  // TODO(user) Change default.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to add a prefix to all error messages. The prefix is
-  ***REMOVED*** goog.debug.ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX. This option
-  ***REMOVED*** only has an effect if this.wrapErrors_  is set to false.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to add a prefix to all error messages. The prefix is
+   * goog.debug.ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX. This option
+   * only has an effect if this.wrapErrors_  is set to false.
+   * @type {boolean}
+   * @private
+   */
   this.prefixErrorMessages_ = false;
-***REMOVED***
+};
 goog.inherits(goog.debug.ErrorHandler, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Whether to add tracers when instrumenting entry points.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether to add tracers when instrumenting entry points.
+ * @type {boolean}
+ * @private
+ */
 goog.debug.ErrorHandler.prototype.addTracersToProtectedFunctions_ = false;
 
 
-***REMOVED***
-***REMOVED*** Enable tracers when instrumenting entry points.
-***REMOVED*** @param {boolean} newVal See above.
-***REMOVED***
+/**
+ * Enable tracers when instrumenting entry points.
+ * @param {boolean} newVal See above.
+ */
 goog.debug.ErrorHandler.prototype.setAddTracersToProtectedFunctions =
     function(newVal) {
   this.addTracersToProtectedFunctions_ = newVal;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.ErrorHandler.prototype.wrap = function(fn) {
   return this.protectEntryPoint(goog.asserts.assertFunction(fn));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.ErrorHandler.prototype.unwrap = function(fn) {
   goog.asserts.assertFunction(fn);
   return fn[this.getFunctionIndex_(false)] || fn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Private helper function to return a span that can be clicked on to display
-***REMOVED*** an alert with the current stack trace. Newlines are replaced with a
-***REMOVED*** placeholder so that they will not be html-escaped.
-***REMOVED*** @param {string} stackTrace The stack trace to create a span for.
-***REMOVED*** @return {string} A span which can be clicked on to show the stack trace.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private helper function to return a span that can be clicked on to display
+ * an alert with the current stack trace. Newlines are replaced with a
+ * placeholder so that they will not be html-escaped.
+ * @param {string} stackTrace The stack trace to create a span for.
+ * @return {string} A span which can be clicked on to show the stack trace.
+ * @private
+ */
 goog.debug.ErrorHandler.prototype.getStackTraceHolder_ = function(stackTrace) {
   var buffer = [];
   buffer.push('##PE_STACK_START##');
   buffer.push(stackTrace.replace(/(\r\n|\r|\n)/g, '##STACK_BR##'));
   buffer.push('##PE_STACK_END##');
   return buffer.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the index for a function. Used for internal indexing.
-***REMOVED*** @param {boolean} wrapper True for the wrapper; false for the wrapped.
-***REMOVED*** @return {string} The index where we should store the function in its
-***REMOVED***     wrapper/wrapped function.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the index for a function. Used for internal indexing.
+ * @param {boolean} wrapper True for the wrapper; false for the wrapped.
+ * @return {string} The index where we should store the function in its
+ *     wrapper/wrapped function.
+ * @private
+ */
 goog.debug.ErrorHandler.prototype.getFunctionIndex_ = function(wrapper) {
   return (wrapper ? '__wrapper_' : '__protected_') + goog.getUid(this) + '__';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Installs exception protection for an entry point function. When an exception
-***REMOVED*** is thrown from a protected function, a handler will be invoked to handle it.
-***REMOVED***
-***REMOVED*** @param {Function} fn An entry point function to be protected.
-***REMOVED*** @return {!Function} A protected wrapper function that calls the entry point
-***REMOVED***     function.
-***REMOVED***
+/**
+ * Installs exception protection for an entry point function. When an exception
+ * is thrown from a protected function, a handler will be invoked to handle it.
+ *
+ * @param {Function} fn An entry point function to be protected.
+ * @return {!Function} A protected wrapper function that calls the entry point
+ *     function.
+ */
 goog.debug.ErrorHandler.prototype.protectEntryPoint = function(fn) {
   var protectedFnName = this.getFunctionIndex_(true);
   if (!fn[protectedFnName]) {
@@ -149,19 +149,19 @@ goog.debug.ErrorHandler.prototype.protectEntryPoint = function(fn) {
     wrapper[this.getFunctionIndex_(false)] = fn;
   }
   return fn[protectedFnName];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helps {@link #protectEntryPoint} by actually creating the protected
-***REMOVED*** wrapper function, after {@link #protectEntryPoint} determines that one does
-***REMOVED*** not already exist for the given function.  Can be overriden by subclasses
-***REMOVED*** that may want to implement different error handling, or add additional
-***REMOVED*** entry point hooks.
-***REMOVED*** @param {!Function} fn An entry point function to be protected.
-***REMOVED*** @return {!Function} protected wrapper function.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helps {@link #protectEntryPoint} by actually creating the protected
+ * wrapper function, after {@link #protectEntryPoint} determines that one does
+ * not already exist for the given function.  Can be overriden by subclasses
+ * that may want to implement different error handling, or add additional
+ * entry point hooks.
+ * @param {!Function} fn An entry point function to be protected.
+ * @return {!Function} protected wrapper function.
+ * @protected
+ */
 goog.debug.ErrorHandler.prototype.getProtectedFunction = function(fn) {
   var that = this;
   var tracers = this.addTracersToProtectedFunctions_;
@@ -216,35 +216,35 @@ goog.debug.ErrorHandler.prototype.getProtectedFunction = function(fn) {
         goog.debug.Trace.stopTracer(tracer);
       }
     }
- ***REMOVED*****REMOVED***
+  };
   googDebugErrorHandlerProtectedFunction[this.getFunctionIndex_(false)] = fn;
   return googDebugErrorHandlerProtectedFunction;
-***REMOVED***
+};
 
 
 // TODO(user): Allow these functions to take in the window to protect.
-***REMOVED***
-***REMOVED*** Installs exception protection for window.setTimeout to handle exceptions.
-***REMOVED***
+/**
+ * Installs exception protection for window.setTimeout to handle exceptions.
+ */
 goog.debug.ErrorHandler.prototype.protectWindowSetTimeout =
     function() {
   this.protectWindowFunctionsHelper_('setTimeout');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Install exception protection for window.setInterval to handle exceptions.
-***REMOVED***
+/**
+ * Install exception protection for window.setInterval to handle exceptions.
+ */
 goog.debug.ErrorHandler.prototype.protectWindowSetInterval =
     function() {
   this.protectWindowFunctionsHelper_('setInterval');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Install exception protection for window.requestAnimationFrame to handle
-***REMOVED*** exceptions.
-***REMOVED***
+/**
+ * Install exception protection for window.requestAnimationFrame to handle
+ * exceptions.
+ */
 goog.debug.ErrorHandler.prototype.protectWindowRequestAnimationFrame =
     function() {
   var win = goog.getObjectByName('window');
@@ -260,15 +260,15 @@ goog.debug.ErrorHandler.prototype.protectWindowRequestAnimationFrame =
       this.protectWindowFunctionsHelper_(fnName);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for protecting a function that causes a function to be
-***REMOVED*** asynchronously called, for example setTimeout or requestAnimationFrame.
-***REMOVED*** @param {string} fnName The name of the function to protect.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper function for protecting a function that causes a function to be
+ * asynchronously called, for example setTimeout or requestAnimationFrame.
+ * @param {string} fnName The name of the function to protect.
+ * @private
+ */
 goog.debug.ErrorHandler.prototype.protectWindowFunctionsHelper_ =
     function(fnName) {
   var win = goog.getObjectByName('window');
@@ -290,34 +290,34 @@ goog.debug.ErrorHandler.prototype.protectWindowFunctionsHelper_ =
     } else {
       return originalFn(fn, time);
     }
- ***REMOVED*****REMOVED***
+  };
   win[fnName][this.getFunctionIndex_(false)] = originalFn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether to wrap errors that occur in protected functions in a
-***REMOVED*** goog.debug.ErrorHandler.ProtectedFunctionError.
-***REMOVED*** @param {boolean} wrapErrors Whether to wrap errors.
-***REMOVED***
+/**
+ * Set whether to wrap errors that occur in protected functions in a
+ * goog.debug.ErrorHandler.ProtectedFunctionError.
+ * @param {boolean} wrapErrors Whether to wrap errors.
+ */
 goog.debug.ErrorHandler.prototype.setWrapErrors = function(wrapErrors) {
   this.wrapErrors_ = wrapErrors;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set whether to add a prefix to all error messages that occur in protected
-***REMOVED*** functions.
-***REMOVED*** @param {boolean} prefixErrorMessages Whether to add a prefix to error
-***REMOVED***     messages.
-***REMOVED***
+/**
+ * Set whether to add a prefix to all error messages that occur in protected
+ * functions.
+ * @param {boolean} prefixErrorMessages Whether to add a prefix to error
+ *     messages.
+ */
 goog.debug.ErrorHandler.prototype.setPrefixErrorMessages =
     function(prefixErrorMessages) {
   this.prefixErrorMessages_ = prefixErrorMessages;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.debug.ErrorHandler.prototype.disposeInternal = function() {
   // Try to unwrap window.setTimeout and window.setInterval.
   var win = goog.getObjectByName('window');
@@ -325,41 +325,41 @@ goog.debug.ErrorHandler.prototype.disposeInternal = function() {
   win.setInterval = this.unwrap(win.setInterval);
 
   goog.debug.ErrorHandler.base(this, 'disposeInternal');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Error thrown to the caller of a protected entry point if the entry point
-***REMOVED*** throws an error.
-***REMOVED*** @param {*} cause The error thrown by the entry point.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Error thrown to the caller of a protected entry point if the entry point
+ * throws an error.
+ * @param {*} cause The error thrown by the entry point.
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ */
 goog.debug.ErrorHandler.ProtectedFunctionError = function(cause) {
   var message = goog.debug.ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX +
       (cause && cause.message ? String(cause.message) : String(cause));
   goog.debug.ErrorHandler.ProtectedFunctionError.base(
       this, 'constructor', message);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The error thrown by the entry point.
-  ***REMOVED*** @type {*}
- ***REMOVED*****REMOVED***
+  /**
+   * The error thrown by the entry point.
+   * @type {*}
+   */
   this.cause = cause;
 
   var stack = cause && cause.stack;
   if (stack && goog.isString(stack)) {
-    this.stack =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (stack);
+    this.stack = /** @type {string} */ (stack);
   }
-***REMOVED***
+};
 goog.inherits(goog.debug.ErrorHandler.ProtectedFunctionError, goog.debug.Error);
 
 
-***REMOVED***
-***REMOVED*** Text to prefix the message with.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Text to prefix the message with.
+ * @type {string}
+ */
 goog.debug.ErrorHandler.ProtectedFunctionError.MESSAGE_PREFIX =
     'Error in protected function: ';

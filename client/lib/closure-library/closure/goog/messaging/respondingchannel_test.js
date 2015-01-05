@@ -20,10 +20,10 @@ goog.require('goog.testing.MockControl');
 goog.require('goog.testing.jsunit');
 goog.require('goog.testing.messaging.MockMessageChannel');
 
-var CH1_REQUEST = {'request': 'quux1'***REMOVED***
-var CH2_REQUEST = {'request': 'quux2'***REMOVED***
-var CH1_RESPONSE = {'response': 'baz1'***REMOVED***
-var CH2_RESPONSE = {'response': 'baz2'***REMOVED***
+var CH1_REQUEST = {'request': 'quux1'};
+var CH2_REQUEST = {'request': 'quux2'};
+var CH1_RESPONSE = {'response': 'baz1'};
+var CH2_RESPONSE = {'response': 'baz2'};
 var SERVICE_NAME = 'serviceName';
 
 var mockControl;
@@ -51,22 +51,22 @@ function tearDown() {
 function testSendWithSignature() {
   // 1 to 2 and back.
   var message1Ch1Request = {'data': CH1_REQUEST,
-    'signature': 0***REMOVED***
+    'signature': 0};
   var message1Ch2Response = {'data': CH2_RESPONSE,
-    'signature': 0***REMOVED***
+    'signature': 0};
   var message2Ch1Request = {'data': CH1_REQUEST,
-    'signature': 1***REMOVED***
+    'signature': 1};
   var message2Ch2Response = {'data': CH2_RESPONSE,
-    'signature': 1***REMOVED***
+    'signature': 1};
   // 2 to 1 and back.
   var message3Ch2Request = {'data': CH2_REQUEST,
-    'signature': 0***REMOVED***
+    'signature': 0};
   var message3Ch1Response = {'data': CH1_RESPONSE,
-    'signature': 0***REMOVED***
+    'signature': 0};
   var message4Ch2Request = {'data': CH2_REQUEST,
-    'signature': 1***REMOVED***
+    'signature': 1};
   var message4Ch1Response = {'data': CH1_RESPONSE,
-    'signature': 1***REMOVED***
+    'signature': 1};
 
   // 1 to 2 and back.
   ch1.send(
@@ -107,23 +107,23 @@ function testSendWithSignature() {
     hasInvokedCh1 = true;
     assertObjectEquals(CH2_REQUEST, message);
     return CH1_RESPONSE;
- ***REMOVED*****REMOVED***
+  };
 
   var serviceCallback2 = function(message) {
     hasInvokedCh2 = true;
     assertObjectEquals(CH1_REQUEST, message);
     return CH2_RESPONSE;
- ***REMOVED*****REMOVED***
+  };
 
   var invocationCallback1 = function(message) {
     hasReturnedFromCh2 = true;
     assertObjectEquals(CH2_RESPONSE, message);
- ***REMOVED*****REMOVED***
+  };
 
   var invocationCallback2 = function(message) {
     hasReturnedFromCh1 = true;
     assertObjectEquals(CH1_RESPONSE, message);
- ***REMOVED*****REMOVED***
+  };
 
   respondingCh1.registerService(SERVICE_NAME, serviceCallback1);
   respondingCh2.registerService(SERVICE_NAME, serviceCallback2);

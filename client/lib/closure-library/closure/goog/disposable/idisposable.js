@@ -12,34 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the disposable interface.  A disposable object
-***REMOVED*** has a dispose method to to clean up references and resources.
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Definition of the disposable interface.  A disposable object
+ * has a dispose method to to clean up references and resources.
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 
 goog.provide('goog.disposable.IDisposable');
 
 
 
-***REMOVED***
-***REMOVED*** Interface for a disposable object.  If a instance requires cleanup
-***REMOVED*** (references COM objects, DOM notes, or other disposable objects), it should
-***REMOVED*** implement this interface (it may subclass goog.Disposable).
-***REMOVED*** @interface
-***REMOVED***
-goog.disposable.IDisposable = function() {***REMOVED***
+/**
+ * Interface for a disposable object.  If a instance requires cleanup
+ * (references COM objects, DOM notes, or other disposable objects), it should
+ * implement this interface (it may subclass goog.Disposable).
+ * @interface
+ */
+goog.disposable.IDisposable = function() {};
 
 
-***REMOVED***
-***REMOVED*** Disposes of the object and its resources.
-***REMOVED*** @return {void} Nothing.
-***REMOVED***
+/**
+ * Disposes of the object and its resources.
+ * @return {void} Nothing.
+ */
 goog.disposable.IDisposable.prototype.dispose = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the object has been disposed of.
-***REMOVED***
+/**
+ * @return {boolean} Whether the object has been disposed of.
+ */
 goog.disposable.IDisposable.prototype.isDisposed = goog.abstractMethod;

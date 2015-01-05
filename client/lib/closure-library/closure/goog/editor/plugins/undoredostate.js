@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Code for an UndoRedoState interface representing an undo and
-***REMOVED*** redo action for a particular state change. To be used by
-***REMOVED*** {@link goog.editor.plugins.UndoRedoManager}.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Code for an UndoRedoState interface representing an undo and
+ * redo action for a particular state change. To be used by
+ * {@link goog.editor.plugins.UndoRedoManager}.
+ *
+ */
 
 
 goog.provide('goog.editor.plugins.UndoRedoState');
@@ -26,61 +26,61 @@ goog.require('goog.events.EventTarget');
 
 
 
-***REMOVED***
-***REMOVED*** Represents an undo and redo action for a particular state transition.
-***REMOVED***
-***REMOVED*** @param {boolean} asynchronous Whether the undo or redo actions for this
-***REMOVED***     state complete asynchronously. If true, then this state must fire
-***REMOVED***     an ACTION_COMPLETED event when undo or redo is complete.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Represents an undo and redo action for a particular state transition.
+ *
+ * @param {boolean} asynchronous Whether the undo or redo actions for this
+ *     state complete asynchronously. If true, then this state must fire
+ *     an ACTION_COMPLETED event when undo or redo is complete.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.editor.plugins.UndoRedoState = function(asynchronous) {
   goog.editor.plugins.UndoRedoState.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Indicates if the undo or redo actions for this state complete
-  ***REMOVED*** asynchronously.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Indicates if the undo or redo actions for this state complete
+   * asynchronously.
+   * @type {boolean}
+   * @private
+   */
   this.asynchronous_ = asynchronous;
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.UndoRedoState, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Event type for events indicating that this state has completed an undo or
-***REMOVED*** redo operation.
-***REMOVED***
+/**
+ * Event type for events indicating that this state has completed an undo or
+ * redo operation.
+ */
 goog.editor.plugins.UndoRedoState.ACTION_COMPLETED = 'action_completed';
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether or not the undo and redo actions of this state
-***REMOVED***     complete asynchronously. If true, the state will fire an ACTION_COMPLETED
-***REMOVED***     event when an undo or redo action is complete.
-***REMOVED***
+/**
+ * @return {boolean} Whether or not the undo and redo actions of this state
+ *     complete asynchronously. If true, the state will fire an ACTION_COMPLETED
+ *     event when an undo or redo action is complete.
+ */
 goog.editor.plugins.UndoRedoState.prototype.isAsynchronous = function() {
   return this.asynchronous_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Undoes the action represented by this state.
-***REMOVED***
+/**
+ * Undoes the action represented by this state.
+ */
 goog.editor.plugins.UndoRedoState.prototype.undo = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Redoes the action represented by this state.
-***REMOVED***
+/**
+ * Redoes the action represented by this state.
+ */
 goog.editor.plugins.UndoRedoState.prototype.redo = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Checks if two undo-redo states are the same.
-***REMOVED*** @param {goog.editor.plugins.UndoRedoState} state The state to compare.
-***REMOVED*** @return {boolean} Wether the two states are equal.
-***REMOVED***
+/**
+ * Checks if two undo-redo states are the same.
+ * @param {goog.editor.plugins.UndoRedoState} state The state to compare.
+ * @return {boolean} Wether the two states are equal.
+ */
 goog.editor.plugins.UndoRedoState.prototype.equals = goog.abstractMethod;

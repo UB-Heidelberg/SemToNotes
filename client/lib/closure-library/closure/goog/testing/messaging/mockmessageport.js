@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A simple dummy class for representing message ports in tests.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A simple dummy class for representing message ports in tests.
+ *
+ */
 
 goog.provide('goog.testing.messaging.MockMessagePort');
 
@@ -23,64 +23,64 @@ goog.require('goog.events.EventTarget');
 
 
 
-***REMOVED***
-***REMOVED*** Class for unit-testing code that uses MessagePorts.
-***REMOVED*** @param {*} id An opaque identifier, used because message ports otherwise have
-***REMOVED***     no distinguishing characteristics.
-***REMOVED*** @param {goog.testing.MockControl} mockControl The mock control used to create
-***REMOVED***     the method mock for #postMessage.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for unit-testing code that uses MessagePorts.
+ * @param {*} id An opaque identifier, used because message ports otherwise have
+ *     no distinguishing characteristics.
+ * @param {goog.testing.MockControl} mockControl The mock control used to create
+ *     the method mock for #postMessage.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.testing.messaging.MockMessagePort = function(id, mockControl) {
   goog.testing.messaging.MockMessagePort.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An opaque identifier, used because message ports otherwise have no
-  ***REMOVED*** distinguishing characteristics.
-  ***REMOVED*** @type {*}
- ***REMOVED*****REMOVED***
+  /**
+   * An opaque identifier, used because message ports otherwise have no
+   * distinguishing characteristics.
+   * @type {*}
+   */
   this.id = id;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether or not the port has been started.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether or not the port has been started.
+   * @type {boolean}
+   */
   this.started = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether or not the port has been closed.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether or not the port has been closed.
+   * @type {boolean}
+   */
   this.closed = false;
 
   mockControl.createMethodMock(this, 'postMessage');
-***REMOVED***
+};
 goog.inherits(goog.testing.messaging.MockMessagePort, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** A mock postMessage funciton. Actually an instance of
-***REMOVED*** {@link goog.testing.FunctionMock}.
-***REMOVED*** @param {*} message The message to send.
-***REMOVED*** @param {Array.<MessagePort>=} opt_ports Ports to send with the message.
-***REMOVED***
+/**
+ * A mock postMessage funciton. Actually an instance of
+ * {@link goog.testing.FunctionMock}.
+ * @param {*} message The message to send.
+ * @param {Array.<MessagePort>=} opt_ports Ports to send with the message.
+ */
 goog.testing.messaging.MockMessagePort.prototype.postMessage = function(
-    message, opt_ports) {***REMOVED***
+    message, opt_ports) {};
 
 
-***REMOVED***
-***REMOVED*** Starts the port.
-***REMOVED***
+/**
+ * Starts the port.
+ */
 goog.testing.messaging.MockMessagePort.prototype.start = function() {
   this.started = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Closes the port.
-***REMOVED***
+/**
+ * Closes the port.
+ */
 goog.testing.messaging.MockMessagePort.prototype.close = function() {
   this.closed = true;
-***REMOVED***
+};

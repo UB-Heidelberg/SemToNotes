@@ -19,14 +19,14 @@ goog.require('goog.ui.equation.Palette');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new arrows palette.
-***REMOVED*** @param {goog.ui.equation.PaletteManager} paletteManager The
-***REMOVED***     manager of the palette.
-***REMOVED*** @extends {goog.ui.equation.Palette}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Constructs a new arrows palette.
+ * @param {goog.ui.equation.PaletteManager} paletteManager The
+ *     manager of the palette.
+ * @extends {goog.ui.equation.Palette}
+ * @constructor
+ * @final
+ */
 goog.ui.equation.ArrowPalette = function(paletteManager) {
   goog.ui.equation.Palette.call(this, paletteManager,
       goog.ui.equation.Palette.Type.ARROW,
@@ -44,5 +44,5 @@ goog.ui.equation.ArrowPalette = function(paletteManager) {
        '\\Downarrow',
        '\\Updownarrow']);
   this.setSize(new goog.math.Size(12, 1));
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.ArrowPalette, goog.ui.equation.Palette);

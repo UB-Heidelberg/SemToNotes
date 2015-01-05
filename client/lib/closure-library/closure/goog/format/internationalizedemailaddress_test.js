@@ -20,15 +20,15 @@ goog.require('goog.format.InternationalizedEmailAddress');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Asserts that the given validation function generates the expected outcome for
-***REMOVED*** a set of expected valid and a second set of expected invalid addresses.
-***REMOVED*** containing the specified address strings, irrespective of their order.
-***REMOVED*** @param {function(string):boolean} testFunc Validation function to be tested.
-***REMOVED*** @param {!Array.<string>} valid List of addresses that should be valid.
-***REMOVED*** @param {!Array.<string>} invalid List of addresses that should be invalid.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Asserts that the given validation function generates the expected outcome for
+ * a set of expected valid and a second set of expected invalid addresses.
+ * containing the specified address strings, irrespective of their order.
+ * @param {function(string):boolean} testFunc Validation function to be tested.
+ * @param {!Array.<string>} valid List of addresses that should be valid.
+ * @param {!Array.<string>} invalid List of addresses that should be invalid.
+ * @private
+ */
 function doIsValidTest(testFunc, valid, invalid) {
   goog.array.forEach(valid, function(str) {
     assertTrue('"' + str + '" should be valid.', testFunc(str));
@@ -39,14 +39,14 @@ function doIsValidTest(testFunc, valid, invalid) {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that parsing the inputString produces a list of email addresses
-***REMOVED*** containing the specified address strings, irrespective of their order.
-***REMOVED*** @param {string} inputString A raw address list.
-***REMOVED*** @param {!Array.<string>} expectedList The expected results.
-***REMOVED*** @param {string=} opt_message An assertion message.
-***REMOVED*** @return {string} the resulting email address objects.
-***REMOVED***
+/**
+ * Asserts that parsing the inputString produces a list of email addresses
+ * containing the specified address strings, irrespective of their order.
+ * @param {string} inputString A raw address list.
+ * @param {!Array.<string>} expectedList The expected results.
+ * @param {string=} opt_message An assertion message.
+ * @return {string} the resulting email address objects.
+ */
 function assertParsedList(inputString, expectedList, opt_message) {
   var message = opt_message || 'Should parse address correctly';
   var result = goog.format.InternationalizedEmailAddress.parseList(inputString);

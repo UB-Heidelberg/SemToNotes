@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the Opera specific range wrapper.  Inherits most
-***REMOVED*** functionality from W3CRange, but adds exceptions as necessary.
-***REMOVED***
-***REMOVED*** DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of the Opera specific range wrapper.  Inherits most
+ * functionality from W3CRange, but adds exceptions as necessary.
+ *
+ * DO NOT USE THIS FILE DIRECTLY.  Use goog.dom.Range instead.
+ *
+ */
 
 
 goog.provide('goog.dom.browserrange.OperaRange');
@@ -27,47 +27,47 @@ goog.require('goog.dom.browserrange.W3cRange');
 
 
 
-***REMOVED***
-***REMOVED*** The constructor for Opera specific browser ranges.
-***REMOVED*** @param {Range} range The range object.
-***REMOVED***
-***REMOVED*** @extends {goog.dom.browserrange.W3cRange}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * The constructor for Opera specific browser ranges.
+ * @param {Range} range The range object.
+ * @constructor
+ * @extends {goog.dom.browserrange.W3cRange}
+ * @final
+ */
 goog.dom.browserrange.OperaRange = function(range) {
   goog.dom.browserrange.W3cRange.call(this, range);
-***REMOVED***
+};
 goog.inherits(goog.dom.browserrange.OperaRange, goog.dom.browserrange.W3cRange);
 
 
-***REMOVED***
-***REMOVED*** Creates a range object that selects the given node's text.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @return {!goog.dom.browserrange.OperaRange} A Opera range wrapper object.
-***REMOVED***
+/**
+ * Creates a range object that selects the given node's text.
+ * @param {Node} node The node to select.
+ * @return {!goog.dom.browserrange.OperaRange} A Opera range wrapper object.
+ */
 goog.dom.browserrange.OperaRange.createFromNodeContents = function(node) {
   return new goog.dom.browserrange.OperaRange(
       goog.dom.browserrange.W3cRange.getBrowserRangeForNode(node));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a range object that selects between the given nodes.
-***REMOVED*** @param {Node} startNode The node to start with.
-***REMOVED*** @param {number} startOffset The offset within the node to start.
-***REMOVED*** @param {Node} endNode The node to end with.
-***REMOVED*** @param {number} endOffset The offset within the node to end.
-***REMOVED*** @return {!goog.dom.browserrange.OperaRange} A wrapper object.
-***REMOVED***
+/**
+ * Creates a range object that selects between the given nodes.
+ * @param {Node} startNode The node to start with.
+ * @param {number} startOffset The offset within the node to start.
+ * @param {Node} endNode The node to end with.
+ * @param {number} endOffset The offset within the node to end.
+ * @return {!goog.dom.browserrange.OperaRange} A wrapper object.
+ */
 goog.dom.browserrange.OperaRange.createFromNodes = function(startNode,
     startOffset, endNode, endOffset) {
   return new goog.dom.browserrange.OperaRange(
       goog.dom.browserrange.W3cRange.getBrowserRangeForNodes(startNode,
           startOffset, endNode, endOffset));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.dom.browserrange.OperaRange.prototype.selectInternal = function(
     selection, reversed) {
   // Avoid using addRange as we have to removeAllRanges first, which
@@ -81,4 +81,4 @@ goog.dom.browserrange.OperaRange.prototype.selectInternal = function(
   if (selection.rangeCount == 0) {
     selection.addRange(this.range_);
   }
-***REMOVED***
+};

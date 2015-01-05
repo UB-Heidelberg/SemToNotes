@@ -9,8 +9,8 @@ See the COPYING file for details.
   <title>Event Test</title>
   <script type="text/javascript" src="../base.js"></script>
   <script type="text/javascript">
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
   </script>
 </head>
 <body>
@@ -65,13 +65,13 @@ See the COPYING file for details.
     }
 
     function addListeners() {
-    ***REMOVED***$('link1'), 'click', one);
-    ***REMOVED***$('link1'), 'click', two);
-    ***REMOVED***$('link1'), 'click', three);
+      goog.events.listen($('link1'), 'click', one);
+      goog.events.listen($('link1'), 'click', two);
+      goog.events.listen($('link1'), 'click', three);
 
-    ***REMOVED***$('link2'), 'click', handleEventB);
-    ***REMOVED***$('link3'), 'click', handleEventB);
-    ***REMOVED***$('link4'), 'click', handleEventB);
+      goog.events.listen($('link2'), 'click', handleEventB);
+      goog.events.listen($('link3'), 'click', handleEventB);
+      goog.events.listen($('link4'), 'click', handleEventB);
     }
 
     function removeListeners() {
@@ -83,9 +83,9 @@ See the COPYING file for details.
 
     addListeners();
 
-  ***REMOVED***$('test1'), goog.events.EventType.CLICK, handleEventC,
+    goog.events.listen($('test1'), goog.events.EventType.CLICK, handleEventC,
                        true, $('test3'));
-  ***REMOVED***$('test1'), goog.events.EventType.CLICK, handleEventB,
+    goog.events.listen($('test1'), goog.events.EventType.CLICK, handleEventB,
                        false, $('test3'));
 
     alert('howdy');

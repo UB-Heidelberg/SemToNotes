@@ -88,7 +88,7 @@ function testTrieFromObject() {
     'zero' : 0,
     'null' : null,
     'hello, world' : 2,
-    'world' : {}***REMOVED***
+    'world' : {}};
   var trie = new goog.structs.Trie(someObject);
   checkTrie(trie);
 }

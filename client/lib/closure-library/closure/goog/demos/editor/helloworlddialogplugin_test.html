@@ -76,9 +76,9 @@ See the COPYING file for details.
     goog.dom.getElement('myField').innerHTML = '';
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that the plugin's dialog is properly created.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that the plugin's dialog is properly created.
+   */
   function testCreateDialog() {
     mockField.$replay();
 
@@ -92,9 +92,9 @@ See the COPYING file for details.
     mockField.$verify();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that when the OK event fires the editable field is properly updated.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that when the OK event fires the editable field is properly updated.
+   */
   function testOk() {
     mockField.focus();
     mockField.dispatchBeforeChange();
@@ -127,10 +127,10 @@ See the COPYING file for details.
     mockCtrl.$verifyAll();
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Setup a real editable field (instead of a mock) and register the plugin to
-  ***REMOVED*** it.
- ***REMOVED*****REMOVED***
+  /**
+   * Setup a real editable field (instead of a mock) and register the plugin to
+   * it.
+   */
   function setUpRealEditableField() {
     fieldObj = new goog.editor.Field('myField', document);
     fieldObj.makeEditable();
@@ -139,9 +139,9 @@ See the COPYING file for details.
     fieldObj.registerPlugin(plugin);
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tear down the real editable field.
- ***REMOVED*****REMOVED***
+  /**
+   * Tear down the real editable field.
+   */
   function tearDownRealEditableField() {
     if (fieldObj) {
       fieldObj.makeUneditable();
@@ -149,10 +149,10 @@ See the COPYING file for details.
     }
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Tests that the selection is cleared when the dialog opens and is
-  ***REMOVED*** correctly restored after ok is clicked.
- ***REMOVED*****REMOVED***
+  /**
+   * Tests that the selection is cleared when the dialog opens and is
+   * correctly restored after ok is clicked.
+   */
   function testRestoreSelectionOnOk() {
     setUpRealEditableField();
 

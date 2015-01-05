@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Listener object.
-***REMOVED*** @see ../demos/events.html
-***REMOVED***
+/**
+ * @fileoverview Listener object.
+ * @see ../demos/events.html
+ */
 
 goog.provide('goog.events.Listener');
 
@@ -23,109 +23,109 @@ goog.require('goog.events.ListenableKey');
 
 
 
-***REMOVED***
-***REMOVED*** Simple class that stores information about a listener
-***REMOVED*** @param {!Function} listener Callback function.
-***REMOVED*** @param {Function} proxy Wrapper for the listener that patches the event.
-***REMOVED*** @param {EventTarget|goog.events.Listenable} src Source object for
-***REMOVED***     the event.
-***REMOVED*** @param {string} type Event type.
-***REMOVED*** @param {boolean} capture Whether in capture or bubble phase.
-***REMOVED*** @param {Object=} opt_handler Object in whose context to execute the callback.
-***REMOVED*** @implements {goog.events.ListenableKey}
-***REMOVED***
-***REMOVED***
+/**
+ * Simple class that stores information about a listener
+ * @param {!Function} listener Callback function.
+ * @param {Function} proxy Wrapper for the listener that patches the event.
+ * @param {EventTarget|goog.events.Listenable} src Source object for
+ *     the event.
+ * @param {string} type Event type.
+ * @param {boolean} capture Whether in capture or bubble phase.
+ * @param {Object=} opt_handler Object in whose context to execute the callback.
+ * @implements {goog.events.ListenableKey}
+ * @constructor
+ */
 goog.events.Listener = function(
     listener, proxy, src, type, capture, opt_handler) {
   if (goog.events.Listener.ENABLE_MONITORING) {
     this.creationStack = new Error().stack;
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Callback function.
-  ***REMOVED*** @type {Function}
- ***REMOVED*****REMOVED***
+  /**
+   * Callback function.
+   * @type {Function}
+   */
   this.listener = listener;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A wrapper over the original listener. This is used solely to
-  ***REMOVED*** handle native browser events (it is used to simulate the capture
-  ***REMOVED*** phase and to patch the event object).
-  ***REMOVED*** @type {Function}
- ***REMOVED*****REMOVED***
+  /**
+   * A wrapper over the original listener. This is used solely to
+   * handle native browser events (it is used to simulate the capture
+   * phase and to patch the event object).
+   * @type {Function}
+   */
   this.proxy = proxy;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object or node that callback is listening to
-  ***REMOVED*** @type {EventTarget|goog.events.Listenable}
- ***REMOVED*****REMOVED***
+  /**
+   * Object or node that callback is listening to
+   * @type {EventTarget|goog.events.Listenable}
+   */
   this.src = src;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The event type.
-  ***REMOVED*** @const {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The event type.
+   * @const {string}
+   */
   this.type = type;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the listener is being called in the capture or bubble phase
-  ***REMOVED*** @const {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the listener is being called in the capture or bubble phase
+   * @const {boolean}
+   */
   this.capture = !!capture;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Optional object whose context to execute the listener in
-  ***REMOVED*** @type {Object|undefined}
- ***REMOVED*****REMOVED***
+  /**
+   * Optional object whose context to execute the listener in
+   * @type {Object|undefined}
+   */
   this.handler = opt_handler;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The key of the listener.
-  ***REMOVED*** @const {number}
-  ***REMOVED*** @override
- ***REMOVED*****REMOVED***
+  /**
+   * The key of the listener.
+   * @const {number}
+   * @override
+   */
   this.key = goog.events.ListenableKey.reserveKey();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether to remove the listener after it has been called.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether to remove the listener after it has been called.
+   * @type {boolean}
+   */
   this.callOnce = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the listener has been removed.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the listener has been removed.
+   * @type {boolean}
+   */
   this.removed = false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to enable the monitoring of the
-***REMOVED***     goog.events.Listener instances. Switching on the monitoring is only
-***REMOVED***     recommended for debugging because it has a significant impact on
-***REMOVED***     performance and memory usage. If switched off, the monitoring code
-***REMOVED***     compiles down to 0 bytes.
-***REMOVED***
+/**
+ * @define {boolean} Whether to enable the monitoring of the
+ *     goog.events.Listener instances. Switching on the monitoring is only
+ *     recommended for debugging because it has a significant impact on
+ *     performance and memory usage. If switched off, the monitoring code
+ *     compiles down to 0 bytes.
+ */
 goog.define('goog.events.Listener.ENABLE_MONITORING', false);
 
 
-***REMOVED***
-***REMOVED*** If monitoring the goog.events.Listener instances is enabled, stores the
-***REMOVED*** creation stack trace of the Disposable instance.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * If monitoring the goog.events.Listener instances is enabled, stores the
+ * creation stack trace of the Disposable instance.
+ * @type {string}
+ */
 goog.events.Listener.prototype.creationStack;
 
 
-***REMOVED***
-***REMOVED*** Marks this listener as removed. This also remove references held by
-***REMOVED*** this listener object (such as listener and event source).
-***REMOVED***
+/**
+ * Marks this listener as removed. This also remove references held by
+ * this listener object (such as listener and event source).
+ */
 goog.events.Listener.prototype.markAsRemoved = function() {
   this.removed = true;
   this.listener = null;
   this.proxy = null;
   this.src = null;
   this.handler = null;
-***REMOVED***
+};

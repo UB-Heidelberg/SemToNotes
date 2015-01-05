@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED*** @module jsdoc/tag/type
-***REMOVED***
-***REMOVED*** @author Michael Mathews <micmath@gmail.com>
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/**
+ * @module jsdoc/tag/type
+ *
+ * @author Michael Mathews <micmath@gmail.com>
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 'use strict';
 
 var catharsis = require('catharsis');
@@ -13,31 +13,31 @@ var jsdoc = {
     tag: {
         inline: require('jsdoc/tag/inline')
     }
-***REMOVED***
+};
 var util = require('util');
 
-***REMOVED***
-***REMOVED*** Information about a type expression extracted from tag text.
-***REMOVED***
-***REMOVED*** @typedef TypeExpressionInfo
-***REMOVED*** @memberof module:jsdoc/tag/type
-***REMOVED*** @property {string} expression - The type expression.
-***REMOVED*** @property {string} text - The updated tag text.
-***REMOVED***
+/**
+ * Information about a type expression extracted from tag text.
+ *
+ * @typedef TypeExpressionInfo
+ * @memberof module:jsdoc/tag/type
+ * @property {string} expression - The type expression.
+ * @property {string} text - The updated tag text.
+ */
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 function unescapeBraces(text) {
     return text.replace(/\\\{/g, '{')
         .replace(/\\\}/g, '}');
 }
 
-***REMOVED***
-***REMOVED*** Extract a type expression from the tag text.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {string} string - The tag text.
-***REMOVED*** @return {module:jsdoc/tag/type.TypeExpressionInfo} The type expression and updated tag text.
-***REMOVED***
+/**
+ * Extract a type expression from the tag text.
+ *
+ * @private
+ * @param {string} string - The tag text.
+ * @return {module:jsdoc/tag/type.TypeExpressionInfo} The type expression and updated tag text.
+ */
  function extractTypeExpression(string) {
     var completeExpression;
     var count = 0;
@@ -82,10 +82,10 @@ function unescapeBraces(text) {
     return {
         expression: unescapeBraces(expression),
         newString: string.trim()
-   ***REMOVED*****REMOVED***
+    };
 }
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 function getTagInfo(tagValue, canHaveName, canHaveType) {
     var name = '';
     var typeExpression = '';
@@ -119,38 +119,38 @@ function getTagInfo(tagValue, canHaveName, canHaveType) {
         name: name,
         typeExpression: typeExpression,
         text: text
-   ***REMOVED*****REMOVED***
+    };
 }
 
-***REMOVED***
-***REMOVED*** Information provided in a JSDoc tag.
-***REMOVED***
-***REMOVED*** @typedef {Object} TagInfo
-***REMOVED*** @memberof module:jsdoc/tag/type
-***REMOVED*** @property {string} TagInfo.defaultvalue - The default value of the member.
-***REMOVED*** @property {string} TagInfo.name - The name of the member (for example, `myParamName`).
-***REMOVED*** @property {boolean} TagInfo.nullable - Indicates whether the member can be set to `null` or
-***REMOVED*** `undefined`.
-***REMOVED*** @property {boolean} TagInfo.optional - Indicates whether the member is optional.
-***REMOVED*** @property {string} TagInfo.text - Descriptive text for the member (for example, `The user's email
-***REMOVED*** address.`).
-***REMOVED*** @property {Array.<string>} TagInfo.type - The type or types that the member can contain (for
-***REMOVED*** example, `string` or `MyNamespace.MyClass`).
-***REMOVED*** @property {string} TagInfo.typeExpression - The type expression that was parsed to identify the
-***REMOVED*** types.
-***REMOVED*** @property {boolean} TagInfo.variable - Indicates whether the number of members that are provided
-***REMOVED*** can vary (for example, in a function that accepts any number of parameters).
-***REMOVED***
+/**
+ * Information provided in a JSDoc tag.
+ *
+ * @typedef {Object} TagInfo
+ * @memberof module:jsdoc/tag/type
+ * @property {string} TagInfo.defaultvalue - The default value of the member.
+ * @property {string} TagInfo.name - The name of the member (for example, `myParamName`).
+ * @property {boolean} TagInfo.nullable - Indicates whether the member can be set to `null` or
+ * `undefined`.
+ * @property {boolean} TagInfo.optional - Indicates whether the member is optional.
+ * @property {string} TagInfo.text - Descriptive text for the member (for example, `The user's email
+ * address.`).
+ * @property {Array.<string>} TagInfo.type - The type or types that the member can contain (for
+ * example, `string` or `MyNamespace.MyClass`).
+ * @property {string} TagInfo.typeExpression - The type expression that was parsed to identify the
+ * types.
+ * @property {boolean} TagInfo.variable - Indicates whether the number of members that are provided
+ * can vary (for example, in a function that accepts any number of parameters).
+ */
 
 // TODO: move to module:jsdoc/name?
-***REMOVED***
-***REMOVED*** Extract JSDoc-style type information from the name specified in the tag info, including the
-***REMOVED*** member name; whether the member is optional; and the default value of the member.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {module:jsdoc/tag/type.TagInfo} tagInfo - Information contained in the tag.
-***REMOVED*** @return {module:jsdoc/tag/type.TagInfo} Updated information from the tag.
-***REMOVED***
+/**
+ * Extract JSDoc-style type information from the name specified in the tag info, including the
+ * member name; whether the member is optional; and the default value of the member.
+ *
+ * @private
+ * @param {module:jsdoc/tag/type.TagInfo} tagInfo - Information contained in the tag.
+ * @return {module:jsdoc/tag/type.TagInfo} Updated information from the tag.
+ */
 function parseName(tagInfo) {
     // like '[foo]' or '[ foo ]' or '[foo=bar]' or '[ foo=bar ]' or '[ foo = bar ]'
     if ( /^\[\s*(.+?)\s*\]$/.test(tagInfo.name) ) {
@@ -167,7 +167,7 @@ function parseName(tagInfo) {
     return tagInfo;
 }
 
-***REMOVED*** @private***REMOVED***
+/** @private */
 function getTypeStrings(parsedType, isOutermostType) {
     var applications;
     var typeString;
@@ -227,14 +227,14 @@ function getTypeStrings(parsedType, isOutermostType) {
     return types;
 }
 
-***REMOVED***
-***REMOVED*** Extract JSDoc-style and Closure Compiler-style type information from the type expression
-***REMOVED*** specified in the tag info.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @param {module:jsdoc/tag/type.TagInfo} tagInfo - Information contained in the tag.
-***REMOVED*** @return {module:jsdoc/tag/type.TagInfo} Updated information from the tag.
-***REMOVED***
+/**
+ * Extract JSDoc-style and Closure Compiler-style type information from the type expression
+ * specified in the tag info.
+ *
+ * @private
+ * @param {module:jsdoc/tag/type.TagInfo} tagInfo - Information contained in the tag.
+ * @return {module:jsdoc/tag/type.TagInfo} Updated information from the tag.
+ */
 function parseTypeExpression(tagInfo) {
     var errorMessage;
     var parsedType;
@@ -273,17 +273,17 @@ function parseTypeExpression(tagInfo) {
 // TODO: allow users to add/remove type parsers (perhaps via plugins)
 var typeParsers = [parseName, parseTypeExpression];
 
-***REMOVED***
-***REMOVED*** Parse the value of a JSDoc tag.
-***REMOVED***
-***REMOVED*** @param {string} tagValue - The value of the tag. For example, the tag `@param {string} name` has
-***REMOVED*** a value of `{string} name`.
-***REMOVED*** @param {boolean} canHaveName - Indicates whether the value can include a symbol name.
-***REMOVED*** @param {boolean} canHaveType - Indicates whether the value can include a type expression that
-***REMOVED*** describes the symbol.
-***REMOVED*** @return {module:jsdoc/tag/type.TagInfo} Information obtained from the tag.
-***REMOVED*** @throws {Error} Thrown if a type expression cannot be parsed.
-***REMOVED***
+/**
+ * Parse the value of a JSDoc tag.
+ *
+ * @param {string} tagValue - The value of the tag. For example, the tag `@param {string} name` has
+ * a value of `{string} name`.
+ * @param {boolean} canHaveName - Indicates whether the value can include a symbol name.
+ * @param {boolean} canHaveType - Indicates whether the value can include a type expression that
+ * describes the symbol.
+ * @return {module:jsdoc/tag/type.TagInfo} Information obtained from the tag.
+ * @throws {Error} Thrown if a type expression cannot be parsed.
+ */
 exports.parse = function(tagValue, canHaveName, canHaveType) {
     if (typeof tagValue !== 'string') { tagValue = ''; }
 
@@ -300,4 +300,4 @@ exports.parse = function(tagValue, canHaveName, canHaveType) {
     }
 
     return tagInfo;
-***REMOVED***
+};

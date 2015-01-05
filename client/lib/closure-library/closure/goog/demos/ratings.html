@@ -10,12 +10,12 @@ See the COPYING file for details.
 <title>Ratings Widget</title>
 <script type="text/javascript" src="../base.js"></script>
 <script type="text/javascript">
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.ui.Ratings');
 </script>
 <style class="text/css">
   /* NOTE(pupius): Horrible class names needed to get around IE6 not supporting
-     the ".foo.bar" selector***REMOVED***
+     the ".foo.bar" selector */
 
   #test {
     height: 20px;
@@ -96,11 +96,11 @@ See the COPYING file for details.
 <script type="text/javascript">
   var rw1 = new goog.ui.Ratings();
   var defaultText = 'Rate this...';
-***REMOVED***rw1, 'change', function(e) {
+  goog.events.listen(rw1, 'change', function(e) {
     defaultText = e.target.getValue() || 'Rate this...';
     document.getElementById('lab').innerHTML = defaultText;
   });
-***REMOVED***rw1, 'highlightchange', function(e) {
+  goog.events.listen(rw1, 'highlightchange', function(e) {
     document.getElementById('lab').innerHTML =
         e.target.getHighlightedValue() || defaultText;
   });

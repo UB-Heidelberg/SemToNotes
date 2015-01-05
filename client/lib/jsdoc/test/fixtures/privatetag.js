@@ -1,9 +1,9 @@
-***REMOVED***
+/**
 * @constructor
 * @private
 */
 function Foo() {
 
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     this.bar = 1;
 }

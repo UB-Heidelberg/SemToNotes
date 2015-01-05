@@ -40,8 +40,8 @@ See the COPYING file for details.
     .horiz3_class,
     .horiz5_class {
       padding: 8px 12px;
-      /* box_height + 2***REMOVED*** (padding + border + margin) =
-         50 + 2***REMOVED*** (5 + 2 + 4) = 72px***REMOVED***
+      /* box_height + 2 * (padding + border + margin) =
+         50 + 2 * (5 + 2 + 4) = 72px */
       height: 72px;
       border: 2px solid #000000;
     }
@@ -66,8 +66,8 @@ See the COPYING file for details.
     .vert1_class,
     .vert2_class {
       padding: 12px 8px;
-      /* box_width + 2***REMOVED*** (padding + border + margin) =
-         50 + 2***REMOVED*** (5 + 2 + 2) = 68px***REMOVED***
+      /* box_width + 2 * (padding + border + margin) =
+         50 + 2 * (5 + 2 + 2) = 68px */
       width: 68px;
       border: 2px solid #000000;
     }
@@ -111,7 +111,7 @@ See the COPYING file for details.
       margin: 15px;
     }
 
-    /* The following styles are used in the JS.***REMOVED***
+    /* The following styles are used in the JS. */
 
     .cursor_pointer {
       cursor: pointer;
@@ -253,7 +253,7 @@ See the COPYING file for details.
   dlg3.setDraggerElClass('cursor_move opacity_40');
   dlg3.addDragList(goog.dom.getElement('horiz6_div'),
       goog.fx.DragListDirection.RIGHT);
-***REMOVED***dlg3, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
+  goog.events.listen(dlg3, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
       function(e) {
         if (!e.event.shiftKey) {
           e.preventDefault();

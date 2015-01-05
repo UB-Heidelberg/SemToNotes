@@ -68,9 +68,9 @@ knowledge of the CeCILL license and that you accept its terms.
 // Begin namespace
 (function () {
 
-/* Private static helper function***REMOVED***
+/* Private static helper function */
 
-/* Private static helpers treated below as private instance methods, so don't need to add these to the public API; we might use a Relator to also get rid of non-standard public properties***REMOVED***
+/* Private static helpers treated below as private instance methods, so don't need to add these to the public API; we might use a Relator to also get rid of non-standard public properties */
 function _displayAtts (atts) {
     for (var i = 0 ; i < atts.getLength() ; i++) {
         this.div.innerHTML += "attribute [" + atts.getURI(i) + "] [" + atts.getLocalName(i) + "] [" + atts.getValue(i) + "]<br/>";
@@ -98,128 +98,128 @@ function DummyContentHandler(div) {
 //  http://www.saxproject.org/apidoc/org/xml/sax/ext/DefaultHandler2.html
 DummyContentHandler.prototype.startDocument = function() {
     this.div.innerHTML += "startDocument<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.startElement = function(namespaceURI, localName, qName, atts) {
     this.div.innerHTML += "startElement [" + namespaceURI + "] [" + localName + "] [" + qName + "]<br/>";
     _displayAtts.call(this, atts);
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endElement = function(namespaceURI, localName, qName) {
     this.div.innerHTML += "endElement [" + namespaceURI + "] [" + localName + "] [" + qName + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.startPrefixMapping = function(prefix, uri) {
     this.div.innerHTML += "startPrefixMapping [" + prefix + "] [" + uri + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endPrefixMapping = function(prefix) {
     this.div.innerHTML += "endPrefixMapping [" + prefix + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.processingInstruction = function(target, data) {
     this.div.innerHTML += "processingInstruction [" + target + "] [" + data + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.ignorableWhitespace = function(ch, start, length) {
     this.div.innerHTML += "ignorableWhitespace [" + ch + "] [" + start + "] [" + length + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.characters = function(ch, start, length) {
     this.div.innerHTML += "characters [" + ch + "] [" + start + "] [" + length + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.skippedEntity = function(name) {
     this.div.innerHTML += "skippedEntity [" + name + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endDocument = function() {
     this.div.innerHTML += "endDocument";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.setDocumentLocator = function (locator) {
     this.div.innerHTML += 'locator';
-***REMOVED***
+};
 
 
 // INTERFACE: DeclHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/DeclHandler.html
 
 DummyContentHandler.prototype.attributeDecl = function(eName, aName, type, mode, value) {
     this.div.innerHTML += "attributeDecl [" + eName + "] [" + aName + "] [" + type + "] [" + mode + "] [" + value + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.elementDecl = function(name, model) {
     this.div.innerHTML += "elementDecl [" + name + "] [" + model + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.externalEntityDecl = function(name, publicId, systemId) {
     this.div.innerHTML += "externalEntityDecl [" + name + "] [" + publicId + "] [" + systemId + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.internalEntityDecl = function(name, value) {
     this.div.innerHTML += "internalEntityDecl [" + name + "] [" + value + "]<br/>";
-***REMOVED***
+};
 
 // INTERFACE: LexicalHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/LexicalHandler.html
 
 DummyContentHandler.prototype.comment = function(ch, start, length) {
     this.div.innerHTML += "comment [" + ch + "] [" + start + "] [" + length + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endCDATA = function() {
     this.div.innerHTML += "endCDATA<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endDTD = function() {
     this.div.innerHTML += "endDTD<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.endEntity = function(name) {
     this.div.innerHTML += "endEntity [" + name + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.startCDATA = function() {
     this.div.innerHTML += "startCDATA<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.startDTD = function(name, publicId, systemId) {
     this.div.innerHTML += "startDTD [" + name + "] [" + publicId + "] [" + systemId + "]<br/>";
-***REMOVED***
+};
 
 DummyContentHandler.prototype.startEntity = function(name) {
     this.div.innerHTML += "startEntity [" + name + "]<br/>";
-***REMOVED***
+};
 
 // INTERFACE: EntityResolver: http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html
 // Could implement this by checking for last two arguments missing in EntityResolver2 resolveEntity() below
-// DummyContentHandler.prototype.resolveEntity = function (publicId, systemId) {***REMOVED***
+// DummyContentHandler.prototype.resolveEntity = function (publicId, systemId) {};
 
 // INTERFACE: EntityResolver2: http://www.saxproject.org/apidoc/org/xml/sax/ext/EntityResolver2.html
 DummyContentHandler.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {
     this.div.innerHTML += "resolveEntity [" + name + "] [" + publicId + "] [" +baseURI + "] [" + systemId + "]<br/>";
-***REMOVED***
+};
 DummyContentHandler.prototype.getExternalSubset = function(name, baseURI) {
     this.div.innerHTML += "getExternalSubset [" + name + "] [" + baseURI + "]<br/>";
-***REMOVED***
+};
 
 // INTERFACE: DTDHandler: http://www.saxproject.org/apidoc/org/xml/sax/DTDHandler.html
 DummyContentHandler.prototype.notationDecl = function (name, publicId, systemId) {
     this.div.innerHTML += "name[" + name + "] [" + publicId + "] [" + systemId + "]<br/>";
-***REMOVED***
+};
 DummyContentHandler.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {
     this.div.innerHTML += "name[" + name + "] [" + publicId + "] [" + systemId + "] [" + notationName + "]<br/>";
-***REMOVED***
+};
 
 // INTERFACE: ErrorHandler: http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
 DummyContentHandler.prototype.warning = function(saxParseException) {
     _serializeSaxParseException.call(this, saxParseException);
-***REMOVED***
+};
 DummyContentHandler.prototype.error = function(saxParseException) {
     _serializeSaxParseException.call(this, saxParseException);
-***REMOVED***
+};
 DummyContentHandler.prototype.fatalError = function(saxParseException) {
     _serializeSaxParseException.call(this, saxParseException);
-***REMOVED***
+};
 
 
 

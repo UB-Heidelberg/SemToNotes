@@ -24,28 +24,28 @@ goog.provide('goog.testing.MockClassFactoryTest');
 // test inheritance.
 fake.BaseClass = function(a) {
   fail('real object should never be called');
-***REMOVED***
+};
 
 fake.BaseClass.prototype.foo = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
-fake.BaseClass.prototype.toString = function() {return 'foo';***REMOVED***
+fake.BaseClass.prototype.toString = function() {return 'foo';};
 
-fake.BaseClass.prototype.toLocaleString = function() {return 'bar';***REMOVED***
+fake.BaseClass.prototype.toLocaleString = function() {return 'bar';};
 
 fake.ChildClass = function(a) {
   fail('real object should never be called');
-***REMOVED***
+};
 goog.inherits(fake.ChildClass, fake.BaseClass);
 
 fake.ChildClass.staticFoo = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 fake.ChildClass.prototype.bar = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 fake.ChildClass.staticProperty = 'staticPropertyOnClass';
 

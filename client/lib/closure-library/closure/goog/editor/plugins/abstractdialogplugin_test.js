@@ -81,28 +81,28 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a concrete instance of goog.ui.editor.AbstractDialog by adding
-***REMOVED*** a plain implementation of createDialogControl().
-***REMOVED*** @param {goog.dom.DomHelper} dialogDomHelper The dom helper to be used to
-***REMOVED***     create the dialog.
-***REMOVED*** @return {goog.ui.editor.AbstractDialog} The created dialog.
-***REMOVED***
+/**
+ * Creates a concrete instance of goog.ui.editor.AbstractDialog by adding
+ * a plain implementation of createDialogControl().
+ * @param {goog.dom.DomHelper} dialogDomHelper The dom helper to be used to
+ *     create the dialog.
+ * @return {goog.ui.editor.AbstractDialog} The created dialog.
+ */
 function createDialog(domHelper) {
   var dialog = new goog.ui.editor.AbstractDialog(domHelper);
   dialog.createDialogControl = function() {
     return new goog.ui.editor.AbstractDialog.Builder(dialog).build();
- ***REMOVED*****REMOVED***
+  };
   return dialog;
 }
 
 
-***REMOVED***
-***REMOVED*** Creates a concrete instance of the abstract class
-***REMOVED*** goog.editor.plugins.AbstractDialogPlugin
-***REMOVED*** and registers it with the mock editable field being used.
-***REMOVED*** @return {goog.editor.plugins.AbstractDialogPlugin} The created plugin.
-***REMOVED***
+/**
+ * Creates a concrete instance of the abstract class
+ * goog.editor.plugins.AbstractDialogPlugin
+ * and registers it with the mock editable field being used.
+ * @return {goog.editor.plugins.AbstractDialogPlugin} The created plugin.
+ */
 function createDialogPlugin() {
   var plugin = new goog.editor.plugins.AbstractDialogPlugin(COMMAND);
   plugin.createDialog = createDialog;
@@ -118,9 +118,9 @@ function createDialogPlugin() {
 }
 
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect an OPENED event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect an OPENED event.
+ */
 function expectOpened(opt_times) {
   mockOpenedHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
       function(arg) {
@@ -135,9 +135,9 @@ function expectOpened(opt_times) {
 }
 
 
-***REMOVED***
-***REMOVED*** Sets up the mock event handler to expect a CLOSED event.
-***REMOVED***
+/**
+ * Sets up the mock event handler to expect a CLOSED event.
+ */
 function expectClosed(opt_times) {
   mockClosedHandler.handleEvent(new goog.testing.mockmatchers.ArgumentMatcher(
       function(arg) {
@@ -152,11 +152,11 @@ function expectClosed(opt_times) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the simple flow of calling execCommand (which opens the
-***REMOVED*** dialog) and immediately disposing of the plugin (which closes the dialog).
-***REMOVED*** @param {boolean=} opt_reuse Whether to set the plugin to reuse its dialog.
-***REMOVED***
+/**
+ * Tests the simple flow of calling execCommand (which opens the
+ * dialog) and immediately disposing of the plugin (which closes the dialog).
+ * @param {boolean=} opt_reuse Whether to set the plugin to reuse its dialog.
+ */
 function testExecAndDispose(opt_reuse) {
   setUpMockRange();
   expectOpened();
@@ -181,20 +181,20 @@ function testExecAndDispose(opt_reuse) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests execCommand and dispose while reusing the dialog.
-***REMOVED***
+/**
+ * Tests execCommand and dispose while reusing the dialog.
+ */
 function testExecAndDisposeReuse() {
   testExecAndDispose(true);
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the flow of calling execCommand (which opens the dialog) and
-***REMOVED*** then hiding it (simulating that a user did somthing to cause the dialog to
-***REMOVED*** close).
-***REMOVED*** @param {boolean} reuse Whether to set the plugin to reuse its dialog.
-***REMOVED***
+/**
+ * Tests the flow of calling execCommand (which opens the dialog) and
+ * then hiding it (simulating that a user did somthing to cause the dialog to
+ * close).
+ * @param {boolean} reuse Whether to set the plugin to reuse its dialog.
+ */
 function testExecAndHide(opt_reuse) {
   setUpMockRange();
   expectOpened();
@@ -227,23 +227,23 @@ function testExecAndHide(opt_reuse) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests execCommand and hide while reusing the dialog.
-***REMOVED***
+/**
+ * Tests execCommand and hide while reusing the dialog.
+ */
 function testExecAndHideReuse() {
   testExecAndHide(true);
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the flow of calling execCommand (which opens a dialog) and
-***REMOVED*** then calling it again before the first dialog is closed. This is not
-***REMOVED*** something anyone should be doing since dialogs are (usually?) modal so the
-***REMOVED*** user can't do another execCommand before closing the first dialog. But
-***REMOVED*** since the API makes it possible, I thought it would be good to guard
-***REMOVED*** against and unit test.
-***REMOVED*** @param {boolean} reuse Whether to set the plugin to reuse its dialog.
-***REMOVED***
+/**
+ * Tests the flow of calling execCommand (which opens a dialog) and
+ * then calling it again before the first dialog is closed. This is not
+ * something anyone should be doing since dialogs are (usually?) modal so the
+ * user can't do another execCommand before closing the first dialog. But
+ * since the API makes it possible, I thought it would be good to guard
+ * against and unit test.
+ * @param {boolean} reuse Whether to set the plugin to reuse its dialog.
+ */
 function testExecTwice(opt_reuse) {
   setUpMockRange();
   if (opt_reuse) {
@@ -289,9 +289,9 @@ function testExecTwice(opt_reuse) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests execCommand twice while reusing the dialog.
-***REMOVED***
+/**
+ * Tests execCommand twice while reusing the dialog.
+ */
 function testExecTwiceReuse() {
   // Test is failing with an out-of-memory error in IE7.
   if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher('8')) {
@@ -302,10 +302,10 @@ function testExecTwiceReuse() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the selection is cleared when the dialog opens and is
-***REMOVED*** correctly restored after it closes.
-***REMOVED***
+/**
+ * Tests that the selection is cleared when the dialog opens and is
+ * correctly restored after it closes.
+ */
 function testRestoreSelection() {
   setUpRealEditableField();
 
@@ -331,10 +331,10 @@ function testRestoreSelection() {
 }
 
 
-***REMOVED***
-***REMOVED*** Setup a real editable field (instead of a mock) and register the plugin to
-***REMOVED*** it.
-***REMOVED***
+/**
+ * Setup a real editable field (instead of a mock) and register the plugin to
+ * it.
+ */
 function setUpRealEditableField() {
   fieldElem = document.createElement('div');
   fieldElem.id = 'myField';
@@ -347,9 +347,9 @@ function setUpRealEditableField() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tear down the real editable field.
-***REMOVED***
+/**
+ * Tear down the real editable field.
+ */
 function tearDownRealEditableField() {
   if (fieldObj) {
     fieldObj.makeUneditable();
@@ -362,13 +362,13 @@ function tearDownRealEditableField() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that after the dialog is hidden via a keystroke, the editable field
-***REMOVED*** doesn't fire an extra SELECTIONCHANGE event due to the keyup from that
-***REMOVED*** keystroke.
-***REMOVED*** There is also a robot test in dialog_robot.html to test debouncing the
-***REMOVED*** SELECTIONCHANGE event when the dialog closes.
-***REMOVED***
+/**
+ * Tests that after the dialog is hidden via a keystroke, the editable field
+ * doesn't fire an extra SELECTIONCHANGE event due to the keyup from that
+ * keystroke.
+ * There is also a robot test in dialog_robot.html to test debouncing the
+ * SELECTIONCHANGE event when the dialog closes.
+ */
 function testDebounceSelectionChange() {
   mockClock = new goog.testing.MockClock(true);
   // Initial time is 0 which evaluates to false in debouncing implementation.

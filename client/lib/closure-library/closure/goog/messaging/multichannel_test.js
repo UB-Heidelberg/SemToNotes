@@ -41,7 +41,7 @@ function expectedFn(name, callback) {
   fn(ignored).$does(function(args) {
     callback.apply(this, args);
   });
-  return function() { fn(arguments);***REMOVED*****REMOVED***
+  return function() { fn(arguments); };
 }
 
 function notExpectedFn() {

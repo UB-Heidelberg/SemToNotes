@@ -118,7 +118,7 @@ class DepsTree(object):
       raise NamespaceNotFoundError(required_namespace)
 
     if required_namespace in traversal_path:
-      traversal_path.append(required_namespace)  # do this***REMOVED***after* the test
+      traversal_path.append(required_namespace)  # do this *after* the test
 
       # This must be a cycle.
       raise CircularDependencyError(traversal_path)

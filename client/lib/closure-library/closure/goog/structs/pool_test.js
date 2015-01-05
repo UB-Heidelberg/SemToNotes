@@ -28,7 +28,7 @@ goog.inherits(NoObjectReusePool, goog.structs.Pool);
 
 NoObjectReusePool.prototype.objectCanBeReused = function(obj) {
   return false;
-***REMOVED***
+};
 
 
 function testExceedMax1() {
@@ -111,7 +111,7 @@ function testReleaseAndGet3() {
   var o1 = p.getObject();
   var o2 = p.getObject();
   var o3 = p.getObject();
-  var o4 = {***REMOVED***
+  var o4 = {};
   assertEquals(3, p.getCount());
   assertEquals(3, p.getInUseCount());
   assertEquals(0, p.getFreeCount());
@@ -129,7 +129,7 @@ function testReleaseAndGet4() {
   var o1 = p.getObject();
   var o2 = p.getObject();
   var o3 = p.getObject();
-  var o4 = {***REMOVED***
+  var o4 = {};
   assertEquals(3, p.getCount());
   assertEquals(3, p.getInUseCount());
   assertEquals(0, p.getFreeCount());
@@ -147,8 +147,8 @@ function testIsInPool1() {
   var o1 = p.getObject();
   var o2 = p.getObject();
   var o3 = p.getObject();
-  var o4 = {***REMOVED***
-  var o5 = {***REMOVED***
+  var o4 = {};
+  var o5 = {};
   var o6 = o1;
 
   assertTrue(p.contains(o1));

@@ -1,24 +1,24 @@
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for XPath JSUnit tests.
-***REMOVED***
+/**
+ * @fileoverview Utilities for XPath JSUnit tests.
+ */
 
 goog.provide('xrx.xpath.Test');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.testing.jsunit');
 goog.require('xrx');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.Components');
 goog.require('xrx.mvc.Instance');
 goog.require('xrx.node');
-***REMOVED***
+goog.require('xrx.node.Nodes');
 goog.require('xrx.xpath');
 
 
 
-xrx.xpath.Test = {***REMOVED***
+xrx.xpath.Test = {};
 
 
 
@@ -28,7 +28,7 @@ xrx.xpath.Test.query_ = function(expression) {
   var instance = new xrx.mvc.Instance(element);
   var node = new xrx.node.DocumentS(instance.getId());
   return xrx.xpath.evaluate(expression, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
-***REMOVED***
+};
 
 
 
@@ -49,7 +49,7 @@ xrx.xpath.Test.assertEquals = function(expected, expression) {
     assertEquals('Missing XPath Result Type', '');
     break;
   }
-***REMOVED***
+};
 
 
 
@@ -69,4 +69,4 @@ xrx.xpath.Test.assertTrue = function(test, expression) {
     assertTrue('Missing XPath Result Type', '');
     break;
   }
-***REMOVED***
+};

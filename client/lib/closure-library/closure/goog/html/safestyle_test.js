@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.html.SafeStyle and its builders.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.html.SafeStyle and its builders.
+ */
 
 goog.provide('goog.html.safeStyleTest');
 
@@ -39,12 +39,12 @@ function testSafeStyle() {
 }
 
 
-***REMOVED*** @suppress {checkTypes}***REMOVED***
+/** @suppress {checkTypes} */
 function testUnwrap() {
-  var evil = {***REMOVED***
+  var evil = {};
   evil.safeStyleValueWithSecurityContract__googHtmlSecurityPrivate_ =
       'width: expression(evil);';
-  evil.SAFE_STYLE_TYPE_MARKER__GOOG_HTML_SECURITY_PRIVATE_ = {***REMOVED***
+  evil.SAFE_STYLE_TYPE_MARKER__GOOG_HTML_SECURITY_PRIVATE_ = {};
 
   var exception = assertThrows(function() {
     goog.html.SafeStyle.unwrap(evil);

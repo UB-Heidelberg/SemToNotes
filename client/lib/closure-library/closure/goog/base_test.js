@@ -13,11 +13,11 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for Closure's base.js.
-***REMOVED***
-***REMOVED*** @nocompile
-***REMOVED***
+/**
+ * @fileoverview Unit tests for Closure's base.js.
+ *
+ * @nocompile
+ */
 
 goog.provide('goog.baseTest');
 
@@ -37,13 +37,13 @@ function getFramedVars(name) {
   doc.open();
   doc.write('<script>' +
             'var a = [0, 1, 2];' +
-            'var o = {a: 0, b: 1***REMOVED***' +
+            'var o = {a: 0, b: 1};' +
             'var n = 42;' +
             'var b = true;' +
             'var s = "string";' +
             'var nv = null;' +
             'var u = undefined;' +
-            'var fv = function(){***REMOVED***' +
+            'var fv = function(){};' +
             '</' + 'script>');
   doc.close();
   return {
@@ -55,7 +55,7 @@ function getFramedVars(name) {
     'functionVar': w.fv,
     'nullVar': w.nv,
     'undefinedVar': w.u
- ***REMOVED*****REMOVED***
+  };
 }
 
 var framedVars = getFramedVars('f1');
@@ -137,8 +137,8 @@ function testGlobalize() {
   goog.globalize(goog);
   assertNotUndefined('Globalize goog', provide);
 
-  var a = {a: 1, b: 2, c: 3***REMOVED***
-  var b = {***REMOVED***
+  var a = {a: 1, b: 2, c: 3};
+  var b = {};
   goog.globalize(a, b);
   assertNotUndefined('Globalize to arbitrary object', b.a);
   assertNotUndefined('Globalize to arbitrary object', b.b);
@@ -164,9 +164,9 @@ function testExportSymbol() {
   assertEquals(date, an.existing.path);
   an = undefined;
 
-  var foo = {foo: 'foo'***REMOVED***
-  var bar = {bar: 'bar'***REMOVED***
-  var baz = {baz: 'baz'***REMOVED***
+  var foo = {foo: 'foo'};
+  var bar = {bar: 'bar'};
+  var baz = {baz: 'baz'};
   goog.exportSymbol('one.two.three.Four', foo);
   goog.exportSymbol('one.two.three.five', bar);
   goog.exportSymbol('one.two.six', baz);
@@ -174,8 +174,8 @@ function testExportSymbol() {
   assertEquals(bar, one.two.three.five);
   assertEquals(baz, one.two.six);
 
-  var win = {***REMOVED***
-  var fooBar = {foo: 'foo', bar: 'bar'***REMOVED***
+  var win = {};
+  var fooBar = {foo: 'foo', bar: 'bar'};
   goog.exportSymbol('one.two.four', fooBar, win);
   assertEquals(fooBar, win.one.two.four);
   assertTrue('four' in win.one.two);
@@ -199,7 +199,7 @@ function testRequireClosure() {
   assertNotUndefined('goog.Timer should be available', goog.Timer);
   assertNotUndefined(
       'goog.events.EventTarget should be available',
-     ***REMOVED*****REMOVED*** @suppress {missingRequire}***REMOVED*** goog.events.EventTarget);
+      /** @suppress {missingRequire} */ goog.events.EventTarget);
 }
 
 function testRequireWithExternalDuplicate() {
@@ -307,8 +307,8 @@ function testIsArray() {
   var array = [1, 2, 3];
   var arrayWithLengthSet = [1, 2, 3];
   arrayWithLengthSet.length = 2;
-  var objWithArrayFunctions = {slice: function() {}, length: 0***REMOVED***
-  var object = {a: 1, b: 2, c: 3***REMOVED***
+  var objWithArrayFunctions = {slice: function() {}, length: 0};
+  var object = {a: 1, b: 2, c: 3};
   var nullVar = null;
   var notDefined;
   var elem = document.getElementById('elem');
@@ -346,12 +346,12 @@ function testTypeOfAcrossWindow() {
       try {
         var d = w.document;
         d.open();
-        d.write('<script>function fun(){***REMOVED***' +
+        d.write('<script>function fun(){};' +
                 'var arr = [];' +
                 'var x = 42;' +
                 'var s = "";' +
                 'var b = true;' +
-                'var obj = {length: 0, splice: {}, call: {}***REMOVED***' +
+                'var obj = {length: 0, splice: {}, call: {}};' +
                 '</' + 'script>');
         d.close();
       } catch (ex) {
@@ -374,9 +374,9 @@ function testTypeOfAcrossWindow() {
 
 function testIsArrayLike() {
   var array = [1, 2, 3];
-  var objectWithNumericLength = {length: 2***REMOVED***
-  var objectWithNonNumericLength = {length: 'a'***REMOVED***
-  var object = {a: 1, b: 2***REMOVED***
+  var objectWithNumericLength = {length: 2};
+  var objectWithNonNumericLength = {length: 'a'};
+  var object = {a: 1, b: 2};
   var nullVar = null;
   var notDefined;
   var elem = document.getElementById('elem');
@@ -406,7 +406,7 @@ function MockGoogDate() {}
 
 MockGoogDate.prototype.getFullYear = function() {
   return 2007;
-***REMOVED***
+};
 
 
 function testIsDateLike() {
@@ -464,8 +464,8 @@ function testIsNumber() {
 }
 
 function testIsFunction() {
-  var func = function() { return 1;***REMOVED*****REMOVED***
-  var object = {a: 1, b: 2***REMOVED***
+  var func = function() { return 1; };
+  var object = {a: 1, b: 2};
   var nullVar = null;
   var notDefined;
 
@@ -477,12 +477,12 @@ function testIsFunction() {
 }
 
 function testIsObject() {
-  var object = {a: 1, b: 2***REMOVED***
+  var object = {a: 1, b: 2};
   var string = 'b';
   var nullVar = null;
   var notDefined;
   var array = [0, 1, 2];
-  var fun = function() {***REMOVED***
+  var fun = function() {};
 
   assertTrue('object should be an object', goog.isObject(object));
   assertTrue('array should be an object', goog.isObject(array));
@@ -496,9 +496,9 @@ function testIsObject() {
 //=== tests for unique ID methods ===
 
 function testGetUid() {
-  var a = {***REMOVED***
-  var b = {***REMOVED***
-  var c = {***REMOVED***
+  var a = {};
+  var b = {};
+  var c = {};
 
   var uid1 = goog.getUid(a);
   var uid2 = goog.getUid(b);
@@ -510,7 +510,7 @@ function testGetUid() {
 }
 
 function testHasUid() {
-  var a = {***REMOVED***
+  var a = {};
 
   assertFalse(goog.hasUid(a));
   assertFalse(goog.UID_PROPERTY_ in a);
@@ -521,7 +521,7 @@ function testHasUid() {
 }
 
 function testRemoveUidFromPlainObject() {
-  var a = {***REMOVED***
+  var a = {};
   var uid = goog.getUid(a);
   goog.removeUid(a);
   assertNotEquals("An object's old and new unique IDs should be different",
@@ -529,7 +529,7 @@ function testRemoveUidFromPlainObject() {
 }
 
 function testRemoveUidFromObjectWithoutUid() {
-  var a = {***REMOVED***
+  var a = {};
   // Removing a unique ID should not fail even if it did not exist
   goog.removeUid(a);
 }
@@ -543,8 +543,8 @@ function testRemoveUidFromNode() {
 }
 
 function testConstructorUid() {
-  function BaseClass() {***REMOVED***
-  function SubClass() {***REMOVED***
+  function BaseClass() {};
+  function SubClass() {};
   goog.inherits(SubClass, BaseClass);
 
   var baseClassUid = goog.getUid(BaseClass);
@@ -566,10 +566,10 @@ function testConstructorUid() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests against Chrome bug where the re-created element will have the uid
-***REMOVED*** property set but undefined. See bug 1252508.
-***REMOVED***
+/**
+ * Tests against Chrome bug where the re-created element will have the uid
+ * property set but undefined. See bug 1252508.
+ */
 function testUidNotUndefinedOnReusedElement() {
   var div = document.createElement('DIV');
   document.body.appendChild(div);
@@ -601,8 +601,8 @@ function testClonePrimitive() {
 function testCloneObjectThatHasACloneMethod() {
   var original = {
     name: 'original',
-    clone: function() { return { name: 'clone'***REMOVED*****REMOVED*** }
- ***REMOVED*****REMOVED***
+    clone: function() { return { name: 'clone' }; }
+  };
 
   var clone = goog.cloneObject(original);
   assertEquals('original', original.name);
@@ -610,7 +610,7 @@ function testCloneObjectThatHasACloneMethod() {
 }
 
 function testCloneFlatObject() {
-  var original = {a: 1, b: 2, c: 3***REMOVED***
+  var original = {a: 1, b: 2, c: 3};
   var clone = goog.cloneObject(original);
   assertNotEquals(original, clone);
   assertEquals(1, clone.a);
@@ -623,7 +623,7 @@ function testCloneDeepObject() {
     a: 1,
     b: {c: 2, d: 3},
     e: {f: {g: 4, h: 5}}
- ***REMOVED*****REMOVED***
+  };
   var clone = goog.cloneObject(original);
 
   assertNotEquals(original, clone);
@@ -642,7 +642,7 @@ function testCloneFunctions() {
     f: function() {
       return 'hi';
     }
- ***REMOVED*****REMOVED***
+  };
   var clone = goog.cloneObject(original);
 
   assertNotEquals(original, clone);
@@ -658,10 +658,10 @@ function testCloneFunctions() {
 // presence.
 
 var foo = 'global';
-var obj = {foo: 'obj'***REMOVED***
+var obj = {foo: 'obj'};
 
 function getFoo(arg1, arg2) {
-  return {foo: this.foo, arg1: arg1, arg2: arg2***REMOVED***
+  return {foo: this.foo, arg1: arg1, arg2: arg2};
 }
 
 function testBindWithoutObj() {
@@ -720,11 +720,11 @@ function testBindDoubleBind() {
 }
 
 function testBindWithCall() {
-  var obj = {***REMOVED***
-  var obj2 = {***REMOVED***
+  var obj = {};
+  var obj2 = {};
   var f = function() {
     assertEquals('this should be bound to obj', obj, this);
- ***REMOVED*****REMOVED***
+  };
   var b = goog.bind(f, obj);
   b.call(null);
   b.call(obj2);
@@ -765,7 +765,7 @@ function add(var_args) {
 function testPartial() {
   var f = function(x, y) {
     return x + y;
- ***REMOVED*****REMOVED***
+  };
   var g = goog.partial(f, 1);
   assertEquals(3, g(2));
 
@@ -780,18 +780,18 @@ function testPartialUsesGlobal() {
   var f = function(x, y) {
     assertEquals(goog.global, this);
     return x + y;
- ***REMOVED*****REMOVED***
+  };
   var g = goog.partial(f, 1);
   var h = goog.partial(g, 2);
   assertEquals(3, h());
 }
 
 function testPartialWithCall() {
-  var obj = {***REMOVED***
+  var obj = {};
   var f = function(x, y) {
     assertEquals(obj, this);
     return x + y;
- ***REMOVED*****REMOVED***
+  };
   var g = goog.partial(f, 1);
   var h = goog.partial(g, 2);
   assertEquals(3, h.call(obj));
@@ -856,7 +856,7 @@ function testGlobalEvalWithHtml() {
   goog.global.evalTestResult = 'failed';
   goog.global.evalTest = function(arg) {
     goog.global.evalTestResult = arg;
- ***REMOVED*****REMOVED***
+  };
 
   goog.globalEval('evalTest("<test>")');
 
@@ -868,8 +868,8 @@ function testGlobalEvalWithHtml() {
 //=== tests for inherits ===
 
 function testInherits() {
-  function Foo() {***REMOVED***
-  function Bar() {***REMOVED***
+  function Foo() {};
+  function Bar() {};
   goog.inherits(Bar, Foo);
   var bar = new Bar();
 
@@ -880,8 +880,8 @@ function testInherits() {
 }
 
 function testInherits_constructor() {
-  function Foo() {***REMOVED***
-  function Bar() {***REMOVED***
+  function Foo() {};
+  function Bar() {};
   goog.inherits(Bar, Foo);
   var bar = new Bar();
 
@@ -894,7 +894,7 @@ function testInherits_constructor() {
 
 //=== tests for makeSingleton ===
 function testMakeSingleton() {
-  function Foo() {***REMOVED***
+  function Foo() {};
   goog.addSingletonGetter(Foo);
 
   assertNotNull('Should add get instance function', Foo.getInstance);
@@ -930,11 +930,11 @@ function testNow() {
 function testInHtmlDocument() {
   var savedGoogGlobal = goog.global;
   try {
-    goog.global = {***REMOVED***
+    goog.global = {};
     assertFalse(goog.inHtmlDocument_());
-    goog.global.document = {***REMOVED***
+    goog.global.document = {};
     assertFalse(goog.inHtmlDocument_());
-    goog.global.document.write = function() {***REMOVED***
+    goog.global.document.write = function() {};
     assertTrue(goog.inHtmlDocument_());
   } finally {
     // Restore context to respect other tests.
@@ -945,8 +945,8 @@ function testInHtmlDocument() {
 function testLoadInNonHtmlNotThrows() {
   var savedGoogGlobal = goog.global;
   try {
-    goog.global = {***REMOVED***
-    goog.global.document = {***REMOVED***
+    goog.global = {};
+    goog.global.document = {};
     assertFalse(goog.inHtmlDocument_());
     // The goog code which is executed at load.
     goog.findBasePath_();
@@ -960,12 +960,12 @@ function testLoadInNonHtmlNotThrows() {
 function testLoadBaseWithQueryParamOk() {
   var savedGoogGlobal = goog.global;
   try {
-    goog.global = {***REMOVED***
+    goog.global = {};
     goog.global.document = {
       write: goog.nullFunction,
       getElementsByTagName: goog.functions.constant(
           [{src: '/path/to/base.js?zx=5'}])
-   ***REMOVED*****REMOVED***
+    };
     assertTrue(goog.inHtmlDocument_());
     goog.findBasePath_();
     assertEquals('/path/to/', goog.basePath);
@@ -1022,7 +1022,7 @@ function testGetObjectByName() {
     },
     'six|seven': '6|7',
     'eight.nine': 8.9
- ***REMOVED*****REMOVED***
+  };
   goog.global.m = m;
 
   assertNull(goog.getObjectByName('m.undefined'));
@@ -1100,24 +1100,24 @@ function testBaseMethod() {
   function A() {}
   A.prototype.foo = function(x, y) {
     return x + y;
- ***REMOVED*****REMOVED***
+  };
 
   function B() {}
   goog.inherits(B, A);
   B.prototype.foo = function(x, y) {
     return 2 + goog.base(this, 'foo', x, y);
- ***REMOVED*****REMOVED***
+  };
 
   function C() {}
   goog.inherits(C, B);
   C.prototype.foo = function(x, y) {
     return 4 + goog.base(this, 'foo', x, y);
- ***REMOVED*****REMOVED***
+  };
 
   var d = new C();
   d.foo = function(x, y) {
     return 8 + goog.base(this, 'foo', x, y);
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals(15, d.foo(1, 0));
   assertEquals(16, d.foo(1, 1));
@@ -1143,7 +1143,7 @@ function testBaseMethodAndBaseCtor() {
   }
   A.prototype.foo = function(x, y) {
     this.bar = x + y;
- ***REMOVED*****REMOVED***
+  };
 
   function B(x, y) {
     goog.base(this, x, y);
@@ -1151,8 +1151,8 @@ function testBaseMethodAndBaseCtor() {
   goog.inherits(B, A);
   B.prototype.foo = function(x, y) {
     goog.base(this, 'foo', x, y);
-    this.bar = this.bar***REMOVED*** 2;
- ***REMOVED*****REMOVED***
+    this.bar = this.bar * 2;
+  };
 
   assertEquals(14, new B(3, 4).bar);
 }
@@ -1191,19 +1191,19 @@ function testClassBaseOnMethod() {
   function A() {}
   A.prototype.foo = function(x, y) {
     return x + y;
- ***REMOVED*****REMOVED***
+  };
 
   function B() {}
   goog.inherits(B, A);
   B.prototype.foo = function(x, y) {
     return 2 + B.base(this, 'foo', x, y);
- ***REMOVED*****REMOVED***
+  };
 
   function C() {}
   goog.inherits(C, B);
   C.prototype.foo = function(x, y) {
     return 4 + C.base(this, 'foo', x, y);
- ***REMOVED*****REMOVED***
+  };
 
   var d = new C();
   assertEquals(7, d.foo(1, 0));
@@ -1254,7 +1254,7 @@ function testClassBaseOnMethodAndBaseCtor() {
   }
   A.prototype.foo = function(x, y) {
     this.bar = x + y;
- ***REMOVED*****REMOVED***
+  };
 
   function B(x, y) {
     B.base(this, 'constructor', x, y);
@@ -1262,8 +1262,8 @@ function testClassBaseOnMethodAndBaseCtor() {
   goog.inherits(B, A);
   B.prototype.foo = function(x, y) {
     B.base(this, 'foo', x, y);
-    this.bar = this.bar***REMOVED*** 2;
- ***REMOVED*****REMOVED***
+    this.bar = this.bar * 2;
+  };
 
   assertEquals(14, new B(3, 4).bar);
 }

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Code for handling edit history (undo/redo).
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Code for handling edit history (undo/redo).
+ *
+ */
 
 
 goog.provide('goog.editor.plugins.UndoRedo');
@@ -31,23 +31,23 @@ goog.require('goog.editor.Plugin');
 goog.require('goog.editor.node');
 goog.require('goog.editor.plugins.UndoRedoManager');
 goog.require('goog.editor.plugins.UndoRedoState');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** Encapsulates undo/redo logic using a custom undo stack (i.e. not browser
-***REMOVED*** built-in). Browser built-in undo stacks are too flaky (e.g. IE's gets
-***REMOVED*** clobbered on DOM modifications). Also, this allows interleaving non-editing
-***REMOVED*** commands into the undo stack via the UndoRedoManager.
-***REMOVED***
-***REMOVED*** @param {goog.editor.plugins.UndoRedoManager=} opt_manager An undo redo
-***REMOVED***    manager to be used by this plugin. If none is provided one is created.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED***
+/**
+ * Encapsulates undo/redo logic using a custom undo stack (i.e. not browser
+ * built-in). Browser built-in undo stacks are too flaky (e.g. IE's gets
+ * clobbered on DOM modifications). Also, this allows interleaving non-editing
+ * commands into the undo stack via the UndoRedoManager.
+ *
+ * @param {goog.editor.plugins.UndoRedoManager=} opt_manager An undo redo
+ *    manager to be used by this plugin. If none is provided one is created.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ */
 goog.editor.plugins.UndoRedo = function(opt_manager) {
   goog.editor.Plugin.call(this);
 
@@ -55,100 +55,100 @@ goog.editor.plugins.UndoRedo = function(opt_manager) {
       new goog.editor.plugins.UndoRedoManager());
 
   // Map of goog.editor.Field hashcode to goog.events.EventHandler
-  this.eventHandlers_ = {***REMOVED***
+  this.eventHandlers_ = {};
 
-  this.currentStates_ = {***REMOVED***
+  this.currentStates_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {?string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {?string}
+   * @private
+   */
   this.initialFieldChange_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A copy of {@code goog.editor.plugins.UndoRedo.restoreState} bound to this,
-  ***REMOVED*** used by undo-redo state objects to restore the state of an editable field.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @see goog.editor.plugins.UndoRedo#restoreState
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A copy of {@code goog.editor.plugins.UndoRedo.restoreState} bound to this,
+   * used by undo-redo state objects to restore the state of an editable field.
+   * @type {Function}
+   * @see goog.editor.plugins.UndoRedo#restoreState
+   * @private
+   */
   this.boundRestoreState_ = goog.bind(this.restoreState, this);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.UndoRedo, goog.editor.Plugin);
 
 
-***REMOVED***
-***REMOVED*** The logger for this class.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * The logger for this class.
+ * @type {goog.log.Logger}
+ * @protected
+ * @override
+ */
 goog.editor.plugins.UndoRedo.prototype.logger =
     goog.log.getLogger('goog.editor.plugins.UndoRedo');
 
 
-***REMOVED***
-***REMOVED*** The {@code UndoState_} whose change is in progress, null if an undo or redo
-***REMOVED*** is not in progress.
-***REMOVED***
-***REMOVED*** @type {goog.editor.plugins.UndoRedo.UndoState_?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The {@code UndoState_} whose change is in progress, null if an undo or redo
+ * is not in progress.
+ *
+ * @type {goog.editor.plugins.UndoRedo.UndoState_?}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.inProgressUndo_ = null;
 
 
-***REMOVED***
-***REMOVED*** The undo-redo stack manager used by this plugin.
-***REMOVED*** @type {goog.editor.plugins.UndoRedoManager}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The undo-redo stack manager used by this plugin.
+ * @type {goog.editor.plugins.UndoRedoManager}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.undoManager_;
 
 
-***REMOVED***
-***REMOVED*** The key for the event listener handling state change events from the
-***REMOVED*** undo-redo manager.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key for the event listener handling state change events from the
+ * undo-redo manager.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.managerStateChangeKey_;
 
 
-***REMOVED***
-***REMOVED*** Commands implemented by this plugin.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Commands implemented by this plugin.
+ * @enum {string}
+ */
 goog.editor.plugins.UndoRedo.COMMAND = {
   UNDO: '+undo',
   REDO: '+redo'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inverse map of execCommand strings to
-***REMOVED*** {@link goog.editor.plugins.UndoRedo.COMMAND} constants. Used to determine
-***REMOVED*** whether a string corresponds to a command this plugin handles in O(1) time.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Inverse map of execCommand strings to
+ * {@link goog.editor.plugins.UndoRedo.COMMAND} constants. Used to determine
+ * whether a string corresponds to a command this plugin handles in O(1) time.
+ * @type {Object}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.SUPPORTED_COMMANDS_ =
     goog.object.transpose(goog.editor.plugins.UndoRedo.COMMAND);
 
 
-***REMOVED***
-***REMOVED*** Set the max undo stack depth (not the real memory usage).
-***REMOVED*** @param {number} depth Depth of the stack.
-***REMOVED***
+/**
+ * Set the max undo stack depth (not the real memory usage).
+ * @param {number} depth Depth of the stack.
+ */
 goog.editor.plugins.UndoRedo.prototype.setMaxUndoDepth = function(depth) {
   this.undoManager_.setMaxUndoDepth(depth);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the undo-redo manager used by this plugin. Any state on a previous
-***REMOVED*** undo-redo manager is lost.
-***REMOVED*** @param {goog.editor.plugins.UndoRedoManager} manager The undo-redo manager.
-***REMOVED***
+/**
+ * Set the undo-redo manager used by this plugin. Any state on a previous
+ * undo-redo manager is lost.
+ * @param {goog.editor.plugins.UndoRedoManager} manager The undo-redo manager.
+ */
 goog.editor.plugins.UndoRedo.prototype.setUndoRedoManager = function(manager) {
   if (this.managerStateChangeKey_) {
     goog.events.unlistenByKey(this.managerStateChangeKey_);
@@ -156,76 +156,76 @@ goog.editor.plugins.UndoRedo.prototype.setUndoRedoManager = function(manager) {
 
   this.undoManager_ = manager;
   this.managerStateChangeKey_ =
-    ***REMOVED***this.undoManager_,
+      goog.events.listen(this.undoManager_,
           goog.editor.plugins.UndoRedoManager.EventType.STATE_CHANGE,
           this.dispatchCommandValueChange_,
           false,
           this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the string corresponds to a command this plugin handles.
-***REMOVED*** @param {string} command Command string to check.
-***REMOVED*** @return {boolean} Whether the string corresponds to a command
-***REMOVED***     this plugin handles.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Whether the string corresponds to a command this plugin handles.
+ * @param {string} command Command string to check.
+ * @return {boolean} Whether the string corresponds to a command
+ *     this plugin handles.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.prototype.isSupportedCommand = function(command) {
   return command in goog.editor.plugins.UndoRedo.SUPPORTED_COMMANDS_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unregisters and disables the fieldObject with this plugin. Thie does***REMOVED***not*
-***REMOVED*** clobber the undo stack for the fieldObject though.
-***REMOVED*** TODO(user): For the multifield version, we really should add a way to
-***REMOVED*** ignore undo actions on field's that have been made uneditable.
-***REMOVED*** This is probably as simple as skipping over entries in the undo stack
-***REMOVED*** that have a hashcode of an uneditable field.
-***REMOVED*** @param {goog.editor.Field} fieldObject The field to register with the plugin.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Unregisters and disables the fieldObject with this plugin. Thie does *not*
+ * clobber the undo stack for the fieldObject though.
+ * TODO(user): For the multifield version, we really should add a way to
+ * ignore undo actions on field's that have been made uneditable.
+ * This is probably as simple as skipping over entries in the undo stack
+ * that have a hashcode of an uneditable field.
+ * @param {goog.editor.Field} fieldObject The field to register with the plugin.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.prototype.unregisterFieldObject = function(
     fieldObject) {
   this.disable(fieldObject);
   this.setFieldObject(null);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This is so subclasses can deal with multifield undo-redo.
-***REMOVED*** @return {goog.editor.Field} The active field object for this field. This is
-***REMOVED***     the one registered field object for the single-plugin case and the
-***REMOVED***     focused field for the multi-field plugin case.
-***REMOVED***
+/**
+ * This is so subclasses can deal with multifield undo-redo.
+ * @return {goog.editor.Field} The active field object for this field. This is
+ *     the one registered field object for the single-plugin case and the
+ *     focused field for the multi-field plugin case.
+ */
 goog.editor.plugins.UndoRedo.prototype.getCurrentFieldObject = function() {
   return this.getFieldObject();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This is so subclasses can deal with multifield undo-redo.
-***REMOVED*** @param {string} fieldHashCode The Field's hashcode.
-***REMOVED*** @return {goog.editor.Field} The field object with the hashcode.
-***REMOVED***
+/**
+ * This is so subclasses can deal with multifield undo-redo.
+ * @param {string} fieldHashCode The Field's hashcode.
+ * @return {goog.editor.Field} The field object with the hashcode.
+ */
 goog.editor.plugins.UndoRedo.prototype.getFieldObjectForHash = function(
     fieldHashCode) {
   // With single field undoredo, there's only one Field involved.
   return this.getFieldObject();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This is so subclasses can deal with multifield undo-redo.
-***REMOVED*** @return {goog.editor.Field} Target for COMMAND_VALUE_CHANGE events.
-***REMOVED***
+/**
+ * This is so subclasses can deal with multifield undo-redo.
+ * @return {goog.editor.Field} Target for COMMAND_VALUE_CHANGE events.
+ */
 goog.editor.plugins.UndoRedo.prototype.getCurrentEventTarget = function() {
   return this.getFieldObject();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.enable = function(fieldObject) {
   if (this.isEnabled(fieldObject)) {
     return;
@@ -240,7 +240,7 @@ goog.editor.plugins.UndoRedo.prototype.enable = function(fieldObject) {
 
   // TODO(user): From ojan during a code review:
   // The beforechange handler is meant to be there so you can grab the cursor
-  // position***REMOVED***before* the change is made as that's where you want the cursor to
+  // position *before* the change is made as that's where you want the cursor to
   // be after an undo.
   //
   // It kinda looks like updateCurrentState_ doesn't do that correctly right
@@ -269,10 +269,10 @@ goog.editor.plugins.UndoRedo.prototype.enable = function(fieldObject) {
   // editing has happened. This is necessary so that we can undo the first
   // change to a field, even if we don't handle beforeChange.
   this.updateCurrentState_(fieldObject);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.disable = function(fieldObject) {
   // Process any pending changes so we don't lose any undo-redo states that we
   // want prior to disabling undo-redo.
@@ -303,18 +303,18 @@ goog.editor.plugins.UndoRedo.prototype.disable = function(fieldObject) {
   if (this.currentStates_[fieldObject.getHashCode()]) {
     delete this.currentStates_[fieldObject.getHashCode()];
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.isEnabled = function(fieldObject) {
   // All enabled plugins have a eventHandler so reuse that map rather than
   // storing additional enabled state.
   return !!this.eventHandlers_[fieldObject.getHashCode()];
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.disposeInternal = function() {
   goog.editor.plugins.UndoRedo.superClass_.disposeInternal.call(this);
 
@@ -328,16 +328,16 @@ goog.editor.plugins.UndoRedo.prototype.disposeInternal = function() {
     this.undoManager_.dispose();
     delete this.undoManager_;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.getTrogClassId = function() {
   return 'UndoRedo';
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.execCommand = function(command,
     var_args) {
   if (command == goog.editor.plugins.UndoRedo.COMMAND.UNDO) {
@@ -345,10 +345,10 @@ goog.editor.plugins.UndoRedo.prototype.execCommand = function(command,
   } else if (command == goog.editor.plugins.UndoRedo.COMMAND.REDO) {
     this.undoManager_.redo();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.UndoRedo.prototype.queryCommandValue = function(command) {
   var state = null;
   if (command == goog.editor.plugins.UndoRedo.COMMAND.UNDO) {
@@ -357,16 +357,16 @@ goog.editor.plugins.UndoRedo.prototype.queryCommandValue = function(command) {
     state = this.undoManager_.hasRedoState();
   }
   return state;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches the COMMAND_VALUE_CHANGE event on the editable field or the field
-***REMOVED*** manager, as appropriate.
-***REMOVED*** Note: Really, people using multi field mode should be listening directly
-***REMOVED*** to the undo-redo manager for events.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches the COMMAND_VALUE_CHANGE event on the editable field or the field
+ * manager, as appropriate.
+ * Note: Really, people using multi field mode should be listening directly
+ * to the undo-redo manager for events.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.dispatchCommandValueChange_ =
     function() {
   var eventTarget = this.getCurrentEventTarget();
@@ -374,17 +374,17 @@ goog.editor.plugins.UndoRedo.prototype.dispatchCommandValueChange_ =
     type: goog.editor.Field.EventType.COMMAND_VALUE_CHANGE,
     commands: [goog.editor.plugins.UndoRedo.COMMAND.REDO,
       goog.editor.plugins.UndoRedo.COMMAND.UNDO]});
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Restores the state of the editable field.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.UndoState_} state The state initiating
-***REMOVED***    the restore.
-***REMOVED*** @param {string} content The content to restore.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
-***REMOVED***     The cursor position within the content.
-***REMOVED***
+/**
+ * Restores the state of the editable field.
+ * @param {goog.editor.plugins.UndoRedo.UndoState_} state The state initiating
+ *    the restore.
+ * @param {string} content The content to restore.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
+ *     The cursor position within the content.
+ */
 goog.editor.plugins.UndoRedo.prototype.restoreState = function(
     state, content, cursorPosition) {
   // Fire any pending changes to get the current field state up to date and
@@ -443,12 +443,12 @@ goog.editor.plugins.UndoRedo.prototype.restoreState = function(
     fieldObj.dispatchChange();
     fieldObj.dispatchSelectionChangeEvent();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.editor.plugins.UndoRedo.prototype.handleKeyboardShortcut = function(e, key,
     isModifierPressed) {
   if (isModifierPressed) {
@@ -480,26 +480,26 @@ goog.editor.plugins.UndoRedo.prototype.handleKeyboardShortcut = function(e, key,
   }
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clear the undo/redo stack.
-***REMOVED***
+/**
+ * Clear the undo/redo stack.
+ */
 goog.editor.plugins.UndoRedo.prototype.clearHistory = function() {
   // Fire all pending change events, so that they don't come back
   // asynchronously to fill the queue.
   this.getFieldObject().stopChangeEvents(true, true);
   this.undoManager_.clearHistory();
   this.getFieldObject().startChangeEvents();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Refreshes the current state of the editable field as maintained by undo-redo,
-***REMOVED*** without adding any undo-redo states to the stack.
-***REMOVED*** @param {goog.editor.Field} fieldObject The editable field.
-***REMOVED***
+/**
+ * Refreshes the current state of the editable field as maintained by undo-redo,
+ * without adding any undo-redo states to the stack.
+ * @param {goog.editor.Field} fieldObject The editable field.
+ */
 goog.editor.plugins.UndoRedo.prototype.refreshCurrentState = function(
     fieldObject) {
   if (this.isEnabled(fieldObject)) {
@@ -508,14 +508,14 @@ goog.editor.plugins.UndoRedo.prototype.refreshCurrentState = function(
     }
     this.updateCurrentState_(fieldObject);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Before the field changes, we want to save the state.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Before the field changes, we want to save the state.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e) {
   if (this.inProgressUndo_) {
     // We are in between a previous undo and its delayed change event.
@@ -525,21 +525,21 @@ goog.editor.plugins.UndoRedo.prototype.handleBeforeChange_ = function(e) {
     return;
   }
 
-  var fieldObj =***REMOVED*****REMOVED*** @type {goog.editor.Field}***REMOVED*** (e.target);
+  var fieldObj = /** @type {goog.editor.Field} */ (e.target);
   var fieldHashCode = fieldObj.getHashCode();
 
   if (this.initialFieldChange_ != fieldHashCode) {
     this.initialFieldChange_ = fieldHashCode;
     this.updateCurrentState_(fieldObj);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** After some idle time, we want to save the state.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * After some idle time, we want to save the state.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.handleDelayedChange_ = function(e) {
   // This was undo making a change, don't add it BACK into the history
   if (this.inProgressUndo_) {
@@ -552,45 +552,45 @@ goog.editor.plugins.UndoRedo.prototype.handleDelayedChange_ = function(e) {
     return;
   }
 
-  this.updateCurrentState_(***REMOVED*** @type {goog.editor.Field}***REMOVED*** (e.target));
-***REMOVED***
+  this.updateCurrentState_(/** @type {goog.editor.Field} */ (e.target));
+};
 
 
-***REMOVED***
-***REMOVED*** When the user blurs away, we need to save the state on that field.
-***REMOVED*** @param {goog.events.Event} e The event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * When the user blurs away, we need to save the state on that field.
+ * @param {goog.events.Event} e The event.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.handleBlur_ = function(e) {
-  var fieldObj =***REMOVED*****REMOVED*** @type {goog.editor.Field}***REMOVED*** (e.target);
+  var fieldObj = /** @type {goog.editor.Field} */ (e.target);
   if (fieldObj) {
     fieldObj.clearDelayedChange();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the goog.editor.plugins.UndoRedo.CursorPosition_ for the current
-***REMOVED*** selection in the given Field.
-***REMOVED*** @param {goog.editor.Field} fieldObj The field object.
-***REMOVED*** @return {goog.editor.plugins.UndoRedo.CursorPosition_} The CursorPosition_ or
-***REMOVED***    null if there is no valid selection.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns the goog.editor.plugins.UndoRedo.CursorPosition_ for the current
+ * selection in the given Field.
+ * @param {goog.editor.Field} fieldObj The field object.
+ * @return {goog.editor.plugins.UndoRedo.CursorPosition_} The CursorPosition_ or
+ *    null if there is no valid selection.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.getCursorPosition_ = function(fieldObj) {
   var cursorPos = new goog.editor.plugins.UndoRedo.CursorPosition_(fieldObj);
   if (!cursorPos.isValid()) {
     return null;
   }
   return cursorPos;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method for saving state.
-***REMOVED*** @param {goog.editor.Field} fieldObj The field object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper method for saving state.
+ * @param {goog.editor.Field} fieldObj The field object.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.prototype.updateCurrentState_ = function(
     fieldObj) {
   var fieldHashCode = fieldObj.getHashCode();
@@ -639,159 +639,159 @@ goog.editor.plugins.UndoRedo.prototype.updateCurrentState_ = function(
   this.currentStates_[fieldHashCode] =
       new goog.editor.plugins.UndoRedo.UndoState_(fieldHashCode, content,
           cursorPos, this.boundRestoreState_);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This object encapsulates the state of an editable field.
-***REMOVED***
-***REMOVED*** @param {string} fieldHashCode String the id of the field we're saving the
-***REMOVED***     content of.
-***REMOVED*** @param {string} content String the actual text we're saving.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
-***REMOVED***     CursorPosLite object for the cursor position in the field.
-***REMOVED*** @param {Function} restore The function used to restore editable field state.
-***REMOVED*** @private
-***REMOVED***
-***REMOVED*** @extends {goog.editor.plugins.UndoRedoState}
-***REMOVED***
+/**
+ * This object encapsulates the state of an editable field.
+ *
+ * @param {string} fieldHashCode String the id of the field we're saving the
+ *     content of.
+ * @param {string} content String the actual text we're saving.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
+ *     CursorPosLite object for the cursor position in the field.
+ * @param {Function} restore The function used to restore editable field state.
+ * @private
+ * @constructor
+ * @extends {goog.editor.plugins.UndoRedoState}
+ */
 goog.editor.plugins.UndoRedo.UndoState_ = function(fieldHashCode, content,
     cursorPosition, restore) {
   goog.editor.plugins.UndoRedoState.call(this, true);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The hash code for the field whose content is being saved.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The hash code for the field whose content is being saved.
+   * @type {string}
+   */
   this.fieldHashCode = fieldHashCode;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The bound copy of {@code goog.editor.plugins.UndoRedo.restoreState} used by
-  ***REMOVED*** this state.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The bound copy of {@code goog.editor.plugins.UndoRedo.restoreState} used by
+   * this state.
+   * @type {Function}
+   * @private
+   */
   this.restore_ = restore;
 
   this.setUndoState(content, cursorPosition);
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.UndoRedo.UndoState_,
     goog.editor.plugins.UndoRedoState);
 
 
-***REMOVED***
-***REMOVED*** The content to restore on undo.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The content to restore on undo.
+ * @type {string}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.undoContent_;
 
 
-***REMOVED***
-***REMOVED*** The cursor position to restore on undo.
-***REMOVED*** @type {goog.editor.plugins.UndoRedo.CursorPosition_?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The cursor position to restore on undo.
+ * @type {goog.editor.plugins.UndoRedo.CursorPosition_?}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.undoCursorPosition_;
 
 
-***REMOVED***
-***REMOVED*** The content to restore on redo, undefined until the state is pushed onto the
-***REMOVED*** undo stack.
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The content to restore on redo, undefined until the state is pushed onto the
+ * undo stack.
+ * @type {string|undefined}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.redoContent_;
 
 
-***REMOVED***
-***REMOVED*** The cursor position to restore on redo, undefined until the state is pushed
-***REMOVED*** onto the undo stack.
-***REMOVED*** @type {goog.editor.plugins.UndoRedo.CursorPosition_|null|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The cursor position to restore on redo, undefined until the state is pushed
+ * onto the undo stack.
+ * @type {goog.editor.plugins.UndoRedo.CursorPosition_|null|undefined}
+ * @private
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.redoCursorPosition_;
 
 
-***REMOVED***
-***REMOVED*** Performs the undo operation represented by this state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Performs the undo operation represented by this state.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.undo = function() {
   this.restore_(this, this.undoContent_,
       this.undoCursorPosition_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Performs the redo operation represented by this state.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Performs the redo operation represented by this state.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.redo = function() {
   this.restore_(this, this.redoContent_,
       this.redoCursorPosition_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Updates the undo portion of this state. Should only be used to update the
-***REMOVED*** current state of an editable field, which is not yet on the undo stack after
-***REMOVED*** an undo or redo operation. You should never be modifying states on the stack!
-***REMOVED*** @param {string} content The current content.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
-***REMOVED***     The current cursor position.
-***REMOVED***
+/**
+ * Updates the undo portion of this state. Should only be used to update the
+ * current state of an editable field, which is not yet on the undo stack after
+ * an undo or redo operation. You should never be modifying states on the stack!
+ * @param {string} content The current content.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
+ *     The current cursor position.
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.setUndoState = function(
     content, cursorPosition) {
   this.undoContent_ = content;
   this.undoCursorPosition_ = cursorPosition;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds redo information to this state. This method should be called before the
-***REMOVED*** state is added onto the undo stack.
-***REMOVED***
-***REMOVED*** @param {string} content The content to restore on a redo.
-***REMOVED*** @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
-***REMOVED***     The cursor position to restore on a redo.
-***REMOVED***
+/**
+ * Adds redo information to this state. This method should be called before the
+ * state is added onto the undo stack.
+ *
+ * @param {string} content The content to restore on a redo.
+ * @param {goog.editor.plugins.UndoRedo.CursorPosition_?} cursorPosition
+ *     The cursor position to restore on a redo.
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.setRedoState = function(
     content, cursorPosition) {
   this.redoContent_ = content;
   this.redoCursorPosition_ = cursorPosition;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks if the***REMOVED***contents* of two
-***REMOVED*** {@code goog.editor.plugins.UndoRedo.UndoState_}s are the same.  We don't
-***REMOVED*** bother checking the cursor position (that's not something we'd want to save
-***REMOVED*** anyway).
-***REMOVED*** @param {goog.editor.plugins.UndoRedoState} rhs The state to compare.
-***REMOVED*** @return {boolean} Whether the contents are the same.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Checks if the *contents* of two
+ * {@code goog.editor.plugins.UndoRedo.UndoState_}s are the same.  We don't
+ * bother checking the cursor position (that's not something we'd want to save
+ * anyway).
+ * @param {goog.editor.plugins.UndoRedoState} rhs The state to compare.
+ * @return {boolean} Whether the contents are the same.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.UndoState_.prototype.equals = function(rhs) {
   return this.fieldHashCode == rhs.fieldHashCode &&
       this.undoContent_ == rhs.undoContent_ &&
       this.redoContent_ == rhs.redoContent_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Stores the state of the selection in a way the survives DOM modifications
-***REMOVED*** that don't modify the user-interactable content (e.g. making something bold
-***REMOVED*** vs. typing a character).
-***REMOVED***
-***REMOVED*** TODO(user): Completely get rid of this and use goog.dom.SavedCaretRange.
-***REMOVED***
-***REMOVED*** @param {goog.editor.Field} field The field the selection is in.
-***REMOVED*** @private
-***REMOVED***
-***REMOVED***
+/**
+ * Stores the state of the selection in a way the survives DOM modifications
+ * that don't modify the user-interactable content (e.g. making something bold
+ * vs. typing a character).
+ *
+ * TODO(user): Completely get rid of this and use goog.dom.SavedCaretRange.
+ *
+ * @param {goog.editor.Field} field The field the selection is in.
+ * @private
+ * @constructor
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_ = function(field) {
   this.field_ = field;
 
@@ -806,14 +806,14 @@ goog.editor.plugins.UndoRedo.CursorPosition_ = function(field) {
   } else if (goog.editor.BrowserFeature.HAS_IE_RANGES) {
     this.initIE_(range);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The standards compliant version keeps a list of childNode offsets.
-***REMOVED*** @param {goog.dom.AbstractRange?} range The range to save.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The standards compliant version keeps a list of childNode offsets.
+ * @param {goog.dom.AbstractRange?} range The range to save.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.initW3C_ = function(
     range) {
   this.isValid_ = false;
@@ -850,14 +850,14 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.initW3C_ = function(
   }
 
   this.isValid_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** In IE, we just keep track of the text offset (number of characters).
-***REMOVED*** @param {goog.dom.AbstractRange?} range The range to save.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * In IE, we just keep track of the text offset (number of characters).
+ * @param {goog.dom.AbstractRange?} range The range to save.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.initIE_ = function(
     range) {
   this.isValid_ = false;
@@ -896,21 +896,21 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.initIE_ = function(
           endMarker);
 
   this.isValid_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether this object is valid.
-***REMOVED***
+/**
+ * @return {boolean} Whether this object is valid.
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.isValid = function() {
   return this.isValid_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} A string representation of this object.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @return {string} A string representation of this object.
+ * @override
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.toString = function() {
   if (goog.editor.BrowserFeature.HAS_W3C_RANGES) {
     return 'W3C:' + this.startOffset_.toString() + '\n' +
@@ -918,12 +918,12 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.toString = function() {
         this.endChildOffset_;
   }
   return 'IE:' + this.startOffset_ + ',' + this.endOffset_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Makes the browser's selection match the cursor position.
-***REMOVED***
+/**
+ * Makes the browser's selection match the cursor position.
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.select = function() {
   var range = this.getRange_(this.field_.getElement());
   if (range) {
@@ -932,16 +932,16 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.select = function() {
     }
     goog.dom.Range.createFromBrowserRange(range).select();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get the range that encompases the the cursor position relative to a given
-***REMOVED*** base node.
-***REMOVED*** @param {Element} baseNode The node to get the cursor position relative to.
-***REMOVED*** @return {Range|TextRange|null} The browser range for this position.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Get the range that encompases the the cursor position relative to a given
+ * base node.
+ * @param {Element} baseNode The node to get the cursor position relative to.
+ * @return {Range|TextRange|null} The browser range for this position.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.prototype.getRange_ =
     function(baseNode) {
   if (goog.editor.BrowserFeature.HAS_W3C_RANGES) {
@@ -952,7 +952,7 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.getRange_ =
     }
 
     // Create range.
-    return***REMOVED*****REMOVED*** @type {Range}***REMOVED*** (
+    return /** @type {Range} */ (
         goog.dom.Range.createFromNodes(startNode, this.startChildOffset_,
             endNode, this.endChildOffset_).getBrowserRangeObject());
   }
@@ -966,15 +966,15 @@ goog.editor.plugins.UndoRedo.CursorPosition_.prototype.getRange_ =
   sel.moveEnd('character', this.endOffset_);
   sel.moveStart('character', this.startOffset_);
   return sel;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compute the number of characters to the end of the range in IE.
-***REMOVED*** @param {TextRange} range The range to compute an offset for.
-***REMOVED*** @return {number} The number of characters to the end of the range.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compute the number of characters to the end of the range in IE.
+ * @param {TextRange} range The range to compute an offset for.
+ * @return {number} The number of characters to the end of the range.
+ * @private
+ */
 goog.editor.plugins.UndoRedo.CursorPosition_.computeEndOffsetIE_ =
     function(range) {
   var testRange = range.duplicate();
@@ -1012,4 +1012,4 @@ goog.editor.plugins.UndoRedo.CursorPosition_.computeEndOffsetIE_ =
     pos = text.indexOf('\n\r', pos + 1);
   }
   return guess + offset;
-***REMOVED***
+};

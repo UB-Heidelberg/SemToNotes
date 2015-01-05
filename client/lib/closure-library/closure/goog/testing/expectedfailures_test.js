@@ -28,7 +28,7 @@ goog.testing.ExpectedFailures.prototype.logger_.log = function(level,
   lastLevel = level;
   lastMessage = message;
   count++;
-***REMOVED***
+};
 
 function setUp() {
   expectedFailures = new goog.testing.ExpectedFailures();

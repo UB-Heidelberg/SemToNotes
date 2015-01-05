@@ -38,7 +38,7 @@ See the COPYING file for details.
     var handler = new goog.events.FileDropHandler(dropZone, true);
     var logger = goog.log.getLogger('demo');
 
-  ***REMOVED***handler, goog.events.FileDropHandler.EventType.DROP,
+    goog.events.listen(handler, goog.events.FileDropHandler.EventType.DROP,
         function(e) {
           goog.log.log(logger, goog.log.Level.SHOUT, 'DROP event detected!');
           goog.log.info(logger, 'dataTransfer:\n' +

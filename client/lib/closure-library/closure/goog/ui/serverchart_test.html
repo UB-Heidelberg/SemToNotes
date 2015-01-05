@@ -559,7 +559,7 @@ function testUriLengthLimit() {
   var chart = new goog.ui.ServerChart(
       goog.ui.ServerChart.ChartType.SPARKLINE, 300,200);
   var longUri = null;
-***REMOVED***chart, goog.ui.ServerChart.Event.URI_TOO_LONG,
+  goog.events.listen(chart, goog.ui.ServerChart.Event.URI_TOO_LONG,
                      function(e) {longUri = e.uri;});
   assertEquals(goog.ui.ServerChart.EncodingType.AUTOMATIC,
       chart.getEncodingType());

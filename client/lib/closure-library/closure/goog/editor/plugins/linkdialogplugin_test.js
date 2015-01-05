@@ -16,7 +16,7 @@ goog.provide('goog.ui.editor.LinkDialogTest');
 goog.setTestOnly('goog.ui.editor.LinkDialogTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.TagName');
 goog.require('goog.editor.BrowserFeature');
@@ -114,9 +114,9 @@ function setUpGivenAnchor(
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the plugin's dialog is properly created.
-***REMOVED***
+/**
+ * Tests that the plugin's dialog is properly created.
+ */
 function testCreateDialog() {
   // Note: this tests simply creating the dialog because that's the only
   // functionality added to this class. Opening or closing effects (editing
@@ -135,9 +135,9 @@ function testCreateDialog() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the OK event fires the link is properly updated.
-***REMOVED***
+/**
+ * Tests that when the OK event fires the link is properly updated.
+ */
 function testOk() {
   mockLink.placeCursorRightOf();
   mockField.dispatchSelectionChangeEvent();
@@ -166,9 +166,9 @@ function testOk() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the Cancel event fires the link is unchanged.
-***REMOVED***
+/**
+ * Tests that when the Cancel event fires the link is unchanged.
+ */
 function testCancel() {
   mockCtrl.$replayAll();
 
@@ -192,9 +192,9 @@ function testCancel() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the Cancel event fires for a new link it gets removed.
-***REMOVED***
+/**
+ * Tests that when the Cancel event fires for a new link it gets removed.
+ */
 function testCancelNew() {
   mockField.dispatchChange(); // Should be fired because link was removed.
   mockCtrl.$replayAll();
@@ -224,9 +224,9 @@ function testCancelNew() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the Cancel event fires for a new link it gets removed.
-***REMOVED***
+/**
+ * Tests that when the Cancel event fires for a new link it gets removed.
+ */
 function testCancelNewMultiple() {
   mockField.dispatchChange(); // Should be fired because link was removed.
   mockCtrl.$replayAll();
@@ -296,9 +296,9 @@ function testCancelNewMultiple() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that when the Cancel event fires for a new link it gets removed.
-***REMOVED***
+/**
+ * Tests that when the Cancel event fires for a new link it gets removed.
+ */
 function testOkNewMultiple() {
   mockLink.placeCursorRightOf();
   mockField.dispatchSelectionChangeEvent();
@@ -350,10 +350,10 @@ function testOkNewMultiple() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests the anchor's target is correctly modified with the "open in new
-***REMOVED*** window" feature on.
-***REMOVED***
+/**
+ * Tests the anchor's target is correctly modified with the "open in new
+ * window" feature on.
+ */
 function testOkOpenInNewWindow() {
   mockLink.placeCursorRightOf().$anyTimes();
   mockField.dispatchSelectionChangeEvent().$anyTimes();
@@ -461,10 +461,10 @@ function verifyRelNoFollow(noFollow, originalRel, expectedRel) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the selection is cleared when the dialog opens and is
-***REMOVED*** correctly restored after cancel is clicked.
-***REMOVED***
+/**
+ * Tests that the selection is cleared when the dialog opens and is
+ * correctly restored after cancel is clicked.
+ */
 function testRestoreSelectionOnOk() {
   setUpAnchor('12345', '/');
   setUpRealEditableField();
@@ -503,12 +503,12 @@ function testRestoreSelectionOnOk() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the selection is cleared when the dialog opens and is
-***REMOVED*** correctly restored after cancel is clicked.
-***REMOVED*** @param {boolean=} opt_isNew Whether to test behavior when creating a new
-***REMOVED***     link (cancelling will flatten it).
-***REMOVED***
+/**
+ * Tests that the selection is cleared when the dialog opens and is
+ * correctly restored after cancel is clicked.
+ * @param {boolean=} opt_isNew Whether to test behavior when creating a new
+ *     link (cancelling will flatten it).
+ */
 function testRestoreSelectionOnCancel(opt_isNew) {
   setUpAnchor('12345', '/', opt_isNew);
   setUpRealEditableField();
@@ -535,18 +535,18 @@ function testRestoreSelectionOnCancel(opt_isNew) {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the selection is cleared when the dialog opens and is
-***REMOVED*** correctly restored after cancel is clicked and the new link is removed.
-***REMOVED***
+/**
+ * Tests that the selection is cleared when the dialog opens and is
+ * correctly restored after cancel is clicked and the new link is removed.
+ */
 function testRestoreSelectionOnCancelNew() {
   testRestoreSelectionOnCancel(true);
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that the BeforeTestLink event is suppressed for invalid url schemes.
-***REMOVED***
+/**
+ * Tests that the BeforeTestLink event is suppressed for invalid url schemes.
+ */
 function testTestLinkDisabledForInvalidScheme() {
   mockAlert(goog.testing.mockmatchers.isString);
   mockCtrl.$replayAll();
@@ -604,13 +604,13 @@ function testShouldOpenWithWhitelist() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for http://b/issue?id=1607766 . Without the fix, this
-***REMOVED*** should give an Invalid Argument error in IE, because the editable field
-***REMOVED*** caches a selection util that has a reference to the node of the link text
-***REMOVED*** before it is edited (which gets replaced by a new node for the new text
-***REMOVED*** after editing).
-***REMOVED***
+/**
+ * Regression test for http://b/issue?id=1607766 . Without the fix, this
+ * should give an Invalid Argument error in IE, because the editable field
+ * caches a selection util that has a reference to the node of the link text
+ * before it is edited (which gets replaced by a new node for the new text
+ * after editing).
+ */
 function testBug1607766() {
   setUpAnchor('abc', 'def');
   setUpRealEditableField();
@@ -633,9 +633,9 @@ function testBug1607766() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for http://b/issue?id=2215546 .
-***REMOVED***
+/**
+ * Regression test for http://b/issue?id=2215546 .
+ */
 function testBug2215546() {
   setUpRealEditableField();
 
@@ -663,10 +663,10 @@ function testBug2215546() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that link insertion doesn't scroll the field to the top
-***REMOVED*** after clicking Cancel or OK.
-***REMOVED***
+/**
+ * Test that link insertion doesn't scroll the field to the top
+ * after clicking Cancel or OK.
+ */
 function testBug7279077ScrollOnFocus() {
   if (goog.userAgent.IE) {
     return;  // TODO(user): take this out once b/7279077 fixed for IE too.
@@ -718,10 +718,10 @@ function testBug7279077ScrollOnFocus() {
 }
 
 
-***REMOVED***
-***REMOVED*** Setup a real editable field (instead of a mock) and register the plugin to
-***REMOVED*** it.
-***REMOVED***
+/**
+ * Setup a real editable field (instead of a mock) and register the plugin to
+ * it.
+ */
 function setUpRealEditableField() {
   fieldElem = document.createElement('div');
   fieldElem.id = 'myField';
@@ -736,9 +736,9 @@ function setUpRealEditableField() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tear down the real editable field.
-***REMOVED***
+/**
+ * Tear down the real editable field.
+ */
 function tearDownRealEditableField() {
   if (fieldObj) {
     fieldObj.makeUneditable();

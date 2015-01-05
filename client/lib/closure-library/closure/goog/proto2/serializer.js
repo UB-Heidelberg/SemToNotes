@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Base class for all Protocol Buffer 2 serializers.
-***REMOVED***
+/**
+ * @fileoverview Base class for all Protocol Buffer 2 serializers.
+ */
 
 goog.provide('goog.proto2.Serializer');
 
@@ -24,96 +24,96 @@ goog.require('goog.proto2.Message');
 
 
 
-***REMOVED***
-***REMOVED*** Abstract base class for PB2 serializers. A serializer is a class which
-***REMOVED*** implements the serialization and deserialization of a Protocol Buffer Message
-***REMOVED*** to/from a specific format.
-***REMOVED***
-***REMOVED***
-***REMOVED***
-goog.proto2.Serializer = function() {***REMOVED***
+/**
+ * Abstract base class for PB2 serializers. A serializer is a class which
+ * implements the serialization and deserialization of a Protocol Buffer Message
+ * to/from a specific format.
+ *
+ * @constructor
+ */
+goog.proto2.Serializer = function() {};
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether to decode and convert symbolic enum values to
-***REMOVED*** actual enum values or leave them as strings.
-***REMOVED***
+/**
+ * @define {boolean} Whether to decode and convert symbolic enum values to
+ * actual enum values or leave them as strings.
+ */
 goog.define('goog.proto2.Serializer.DECODE_SYMBOLIC_ENUMS', false);
 
 
-***REMOVED***
-***REMOVED*** Serializes a message to the expected format.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Message} message The message to be serialized.
-***REMOVED***
-***REMOVED*** @return {*} The serialized form of the message.
-***REMOVED***
+/**
+ * Serializes a message to the expected format.
+ *
+ * @param {goog.proto2.Message} message The message to be serialized.
+ *
+ * @return {*} The serialized form of the message.
+ */
 goog.proto2.Serializer.prototype.serialize = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Returns the serialized form of the given value for the given field
-***REMOVED*** if the field is a Message or Group and returns the value unchanged
-***REMOVED*** otherwise.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field from which this
-***REMOVED***     value came.
-***REMOVED***
-***REMOVED*** @param {*} value The value of the field.
-***REMOVED***
-***REMOVED*** @return {*} The value.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the serialized form of the given value for the given field
+ * if the field is a Message or Group and returns the value unchanged
+ * otherwise.
+ *
+ * @param {goog.proto2.FieldDescriptor} field The field from which this
+ *     value came.
+ *
+ * @param {*} value The value of the field.
+ *
+ * @return {*} The value.
+ * @protected
+ */
 goog.proto2.Serializer.prototype.getSerializedValue = function(field, value) {
   if (field.isCompositeType()) {
-    return this.serialize(***REMOVED*** @type {goog.proto2.Message}***REMOVED*** (value));
+    return this.serialize(/** @type {goog.proto2.Message} */ (value));
   } else {
     return value;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deserializes a message from the expected format.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Descriptor} descriptor The descriptor of the message
-***REMOVED***     to be created.
-***REMOVED*** @param {*} data The data of the message.
-***REMOVED***
-***REMOVED*** @return {!goog.proto2.Message} The message created.
-***REMOVED***
+/**
+ * Deserializes a message from the expected format.
+ *
+ * @param {goog.proto2.Descriptor} descriptor The descriptor of the message
+ *     to be created.
+ * @param {*} data The data of the message.
+ *
+ * @return {!goog.proto2.Message} The message created.
+ */
 goog.proto2.Serializer.prototype.deserialize = function(descriptor, data) {
   var message = descriptor.createMessageInstance();
   this.deserializeTo(message, data);
   goog.asserts.assert(message instanceof goog.proto2.Message);
   return message;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Deserializes a message from the expected format and places the
-***REMOVED*** data in the message.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.Message} message The message in which to
-***REMOVED***     place the information.
-***REMOVED*** @param {*} data The data of the message.
-***REMOVED***
+/**
+ * Deserializes a message from the expected format and places the
+ * data in the message.
+ *
+ * @param {goog.proto2.Message} message The message in which to
+ *     place the information.
+ * @param {*} data The data of the message.
+ */
 goog.proto2.Serializer.prototype.deserializeTo = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Returns the deserialized form of the given value for the given field if the
-***REMOVED*** field is a Message or Group and returns the value, converted or unchanged,
-***REMOVED*** for primitive field types otherwise.
-***REMOVED***
-***REMOVED*** @param {goog.proto2.FieldDescriptor} field The field from which this
-***REMOVED***     value came.
-***REMOVED***
-***REMOVED*** @param {*} value The value of the field.
-***REMOVED***
-***REMOVED*** @return {*} The value.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the deserialized form of the given value for the given field if the
+ * field is a Message or Group and returns the value, converted or unchanged,
+ * for primitive field types otherwise.
+ *
+ * @param {goog.proto2.FieldDescriptor} field The field from which this
+ *     value came.
+ *
+ * @param {*} value The value of the field.
+ *
+ * @return {*} The value.
+ * @protected
+ */
 goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
   // Composite types are deserialized recursively.
   if (field.isCompositeType()) {
@@ -170,4 +170,4 @@ goog.proto2.Serializer.prototype.getDeserializedValue = function(field, value) {
   }
 
   return value;
-***REMOVED***
+};

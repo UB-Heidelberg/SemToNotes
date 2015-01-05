@@ -16,9 +16,9 @@ goog.provide('goog.date.relativeWithPluralsTest');
 goog.setTestOnly('goog.date.relativeWithPluralsTest');
 
 goog.require('goog.date.relative');
-***REMOVED*** @suppress {extraRequire} Include shared tests.***REMOVED***
+/** @suppress {extraRequire} Include shared tests. */
 goog.require('goog.date.relativeTest');
-***REMOVED*** @suppress {extraRequire} Included for side effects.***REMOVED***
+/** @suppress {extraRequire} Included for side effects. */
 goog.require('goog.date.relativeWithPlurals');
 goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.i18n.DateTimeSymbols');

@@ -24,7 +24,7 @@ goog.require('goog.testing.jsunit');
 function testConstructor() {
   goog.now = function() {
     return new Date(2001, 2, 3, 4).getTime();
- ***REMOVED*****REMOVED***
+  };
 
   var d = new goog.date.UtcDateTime();
   assertTrue('default constructor', d.equals(new Date(goog.now())));
@@ -58,7 +58,7 @@ function testAdd() {
   assertTrue('UTC date + days', expected.equals(date));
 
   var date = new goog.date.UtcDateTime(2007, goog.date.month.OCT, 1);
-  date.add(new goog.date.Interval(0, 0, 0, 60***REMOVED*** 24 - 12, -30, -30.5));
+  date.add(new goog.date.Interval(0, 0, 0, 60 * 24 - 12, -30, -30.5));
   var expected = new goog.date.UtcDateTime(2007, goog.date.month.NOV, 29,
                                            11, 29, 29, 500);
   assertTrue('UTC date + time, daylight saving ignored', expected.equals(date));

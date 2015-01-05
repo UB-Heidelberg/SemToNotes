@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Client positioning class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Client positioning class.
+ *
+ */
 
 goog.provide('goog.positioning.ViewportPosition');
 
@@ -26,39 +26,39 @@ goog.require('goog.positioning.AbstractPosition');
 
 
 
-***REMOVED***
-***REMOVED*** Encapsulates a popup position where the popup is positioned according to
-***REMOVED*** coordinates relative to the  element's viewport (page). This calculates the
-***REMOVED*** correct position to use even if the element is relatively positioned to some
-***REMOVED*** other element.
-***REMOVED***
-***REMOVED*** @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
-***REMOVED*** @param {number=} opt_arg2 Top position.
-***REMOVED***
-***REMOVED*** @extends {goog.positioning.AbstractPosition}
-***REMOVED***
+/**
+ * Encapsulates a popup position where the popup is positioned according to
+ * coordinates relative to the  element's viewport (page). This calculates the
+ * correct position to use even if the element is relatively positioned to some
+ * other element.
+ *
+ * @param {number|goog.math.Coordinate} arg1 Left position or coordinate.
+ * @param {number=} opt_arg2 Top position.
+ * @constructor
+ * @extends {goog.positioning.AbstractPosition}
+ */
 goog.positioning.ViewportPosition = function(arg1, opt_arg2) {
   this.coordinate = arg1 instanceof goog.math.Coordinate ? arg1 :
-      new goog.math.Coordinate(***REMOVED*** @type {number}***REMOVED*** (arg1), opt_arg2);
-***REMOVED***
+      new goog.math.Coordinate(/** @type {number} */ (arg1), opt_arg2);
+};
 goog.inherits(goog.positioning.ViewportPosition,
               goog.positioning.AbstractPosition);
 
 
-***REMOVED***
-***REMOVED*** Repositions the popup according to the current state
-***REMOVED***
-***REMOVED*** @param {Element} element The DOM element of the popup.
-***REMOVED*** @param {goog.positioning.Corner} popupCorner The corner of the popup
-***REMOVED***     element that that should be positioned adjacent to the anchorElement.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @param {goog.math.Size=} opt_preferredSize Preferred size of the element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Repositions the popup according to the current state
+ *
+ * @param {Element} element The DOM element of the popup.
+ * @param {goog.positioning.Corner} popupCorner The corner of the popup
+ *     element that that should be positioned adjacent to the anchorElement.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @param {goog.math.Size=} opt_preferredSize Preferred size of the element.
+ * @override
+ */
 goog.positioning.ViewportPosition.prototype.reposition = function(
     element, popupCorner, opt_margin, opt_preferredSize) {
   goog.positioning.positionAtAnchor(
       goog.style.getClientViewportElement(element),
       goog.positioning.Corner.TOP_LEFT, element, popupCorner,
       this.coordinate, opt_margin, null, opt_preferredSize);
-***REMOVED***
+};

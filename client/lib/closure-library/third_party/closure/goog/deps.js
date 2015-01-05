@@ -13,8 +13,8 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @deprecated This file is deprecated. The contents have been
-***REMOVED*** migrated to the main deps.js instead (which is auto-included by
-***REMOVED*** base.js).  Please do not add new dependencies here.
-***REMOVED***
+/**
+ * @deprecated This file is deprecated. The contents have been
+ * migrated to the main deps.js instead (which is auto-included by
+ * base.js).  Please do not add new dependencies here.
+ */

@@ -16,7 +16,7 @@ goog.provide('goog.testing.events.EventObserverTest');
 goog.setTestOnly('goog.testing.events.EventObserverTest');
 
 goog.require('goog.array');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
 goog.require('goog.testing.events.EventObserver');
@@ -30,7 +30,7 @@ function getEventType(e) {
 function testGetEvents() {
   var observer = new goog.testing.events.EventObserver();
   var target = new goog.events.EventTarget();
-***REMOVED***target, ['foo', 'bar', 'baz'], observer);
+  goog.events.listen(target, ['foo', 'bar', 'baz'], observer);
 
   var eventTypes = [
     'bar', 'baz', 'foo', 'qux', 'quux', 'corge', 'foo', 'baz'];

@@ -1,9 +1,9 @@
-***REMOVED***
-***REMOVED***
-***REMOVED***
-var Test = function () {***REMOVED***
+/**
+ * @constructor
+ */
+var Test = function () {};
 
-***REMOVED***
-***REMOVED*** @param {string, number} a
-***REMOVED***
-Test.prototype.test = function (a) {***REMOVED***
+/**
+ * @param {string, number} a
+ */
+Test.prototype.test = function (a) {};

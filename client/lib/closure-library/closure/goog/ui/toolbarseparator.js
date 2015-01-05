@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A toolbar separator control.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @author ssaviano@google.com (Steven Saviano)
-***REMOVED***
+/**
+ * @fileoverview A toolbar separator control.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @author ssaviano@google.com (Steven Saviano)
+ */
 
 goog.provide('goog.ui.ToolbarSeparator');
 
@@ -27,22 +27,22 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** A separator control for a toolbar.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ToolbarSeparatorRenderer=} opt_renderer Renderer to render or
-***REMOVED***    decorate the separator; defaults to
-***REMOVED***     {@link goog.ui.ToolbarSeparatorRenderer}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
-***REMOVED***    document interaction.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Separator}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A separator control for a toolbar.
+ *
+ * @param {goog.ui.ToolbarSeparatorRenderer=} opt_renderer Renderer to render or
+ *    decorate the separator; defaults to
+ *     {@link goog.ui.ToolbarSeparatorRenderer}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper, used for
+ *    document interaction.
+ * @constructor
+ * @extends {goog.ui.Separator}
+ * @final
+ */
 goog.ui.ToolbarSeparator = function(opt_renderer, opt_domHelper) {
   goog.ui.Separator.call(this, opt_renderer ||
       goog.ui.ToolbarSeparatorRenderer.getInstance(), opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.ToolbarSeparator, goog.ui.Separator);
 
 

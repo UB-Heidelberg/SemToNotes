@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An alternative custom button renderer that uses even more CSS
-***REMOVED*** voodoo than the default implementation to render custom buttons with fake
-***REMOVED*** rounded corners and dimensionality (via a subtle flat shadow on the bottom
-***REMOVED*** half of the button) without the use of images.
-***REMOVED***
-***REMOVED*** Based on the Custom Buttons 3.1 visual specification, see
-***REMOVED*** http://go/custombuttons
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/imagelessbutton.html
-***REMOVED***
+/**
+ * @fileoverview An alternative custom button renderer that uses even more CSS
+ * voodoo than the default implementation to render custom buttons with fake
+ * rounded corners and dimensionality (via a subtle flat shadow on the bottom
+ * half of the button) without the use of images.
+ *
+ * Based on the Custom Buttons 3.1 visual specification, see
+ * http://go/custombuttons
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/imagelessbutton.html
+ */
 
 goog.provide('goog.ui.ImagelessButtonRenderer');
 
@@ -36,85 +36,85 @@ goog.require('goog.ui.registry');
 
 
 
-***REMOVED***
-***REMOVED*** Custom renderer for {@link goog.ui.Button}s. Imageless buttons can contain
-***REMOVED*** almost arbitrary HTML content, will flow like inline elements, but can be
-***REMOVED*** styled like block-level elements.
-***REMOVED***
-***REMOVED*** @deprecated These contain a lot of unnecessary DOM for modern user agents.
-***REMOVED***     Please use a simpler button renderer like css3buttonrenderer.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.CustomButtonRenderer}
-***REMOVED***
+/**
+ * Custom renderer for {@link goog.ui.Button}s. Imageless buttons can contain
+ * almost arbitrary HTML content, will flow like inline elements, but can be
+ * styled like block-level elements.
+ *
+ * @deprecated These contain a lot of unnecessary DOM for modern user agents.
+ *     Please use a simpler button renderer like css3buttonrenderer.
+ * @constructor
+ * @extends {goog.ui.CustomButtonRenderer}
+ */
 goog.ui.ImagelessButtonRenderer = function() {
   goog.ui.CustomButtonRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.ImagelessButtonRenderer, goog.ui.CustomButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** The singleton instance of this renderer class.
-***REMOVED*** @type {goog.ui.ImagelessButtonRenderer?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The singleton instance of this renderer class.
+ * @type {goog.ui.ImagelessButtonRenderer?}
+ * @private
+ */
 goog.ui.ImagelessButtonRenderer.instance_ = null;
 goog.addSingletonGetter(goog.ui.ImagelessButtonRenderer);
 
 
-***REMOVED***
-***REMOVED*** Default CSS class to be applied to the root element of components rendered
-***REMOVED*** by this renderer.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default CSS class to be applied to the root element of components rendered
+ * by this renderer.
+ * @type {string}
+ */
 goog.ui.ImagelessButtonRenderer.CSS_CLASS =
     goog.getCssName('goog-imageless-button');
 
 
-***REMOVED***
-***REMOVED*** Returns the button's contents wrapped in the following DOM structure:
-***REMOVED***    <div class="goog-inline-block goog-imageless-button">
-***REMOVED***      <div class="goog-inline-block goog-imageless-button-outer-box">
-***REMOVED***        <div class="goog-imageless-button-inner-box">
-***REMOVED***          <div class="goog-imageless-button-pos-box">
-***REMOVED***            <div class="goog-imageless-button-top-shadow">&nbsp;</div>
-***REMOVED***            <div class="goog-imageless-button-content">Contents...</div>
-***REMOVED***          </div>
-***REMOVED***        </div>
-***REMOVED***      </div>
-***REMOVED***    </div>
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the button's contents wrapped in the following DOM structure:
+ *    <div class="goog-inline-block goog-imageless-button">
+ *      <div class="goog-inline-block goog-imageless-button-outer-box">
+ *        <div class="goog-imageless-button-inner-box">
+ *          <div class="goog-imageless-button-pos-box">
+ *            <div class="goog-imageless-button-top-shadow">&nbsp;</div>
+ *            <div class="goog-imageless-button-content">Contents...</div>
+ *          </div>
+ *        </div>
+ *      </div>
+ *    </div>
+ * @override
+ */
 goog.ui.ImagelessButtonRenderer.prototype.createDom;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.ImagelessButtonRenderer.prototype.getContentElement = function(
     element) {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (element && element.firstChild &&
+  return /** @type {Element} */ (element && element.firstChild &&
       element.firstChild.firstChild &&
       element.firstChild.firstChild.firstChild.lastChild);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Takes a text caption or existing DOM structure, and returns the content
-***REMOVED*** wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
-***REMOVED***  <div class="goog-inline-block goog-imageless-button-outer-box">
-***REMOVED***    <div class="goog-inline-block goog-imageless-button-inner-box">
-***REMOVED***      <div class="goog-imageless-button-pos">
-***REMOVED***        <div class="goog-imageless-button-top-shadow">&nbsp;</div>
-***REMOVED***        <div class="goog-imageless-button-content">Contents...</div>
-***REMOVED***      </div>
-***REMOVED***    </div>
-***REMOVED***  </div>
-***REMOVED*** Used by both {@link #createDom} and {@link #decorate}.  To be overridden
-***REMOVED*** by subclasses.
-***REMOVED*** @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
-***REMOVED***     in a box.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
-***REMOVED*** @return {Element} Pseudo-rounded-corner box containing the content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Takes a text caption or existing DOM structure, and returns the content
+ * wrapped in a pseudo-rounded-corner box.  Creates the following DOM structure:
+ *  <div class="goog-inline-block goog-imageless-button-outer-box">
+ *    <div class="goog-inline-block goog-imageless-button-inner-box">
+ *      <div class="goog-imageless-button-pos">
+ *        <div class="goog-imageless-button-top-shadow">&nbsp;</div>
+ *        <div class="goog-imageless-button-content">Contents...</div>
+ *      </div>
+ *    </div>
+ *  </div>
+ * Used by both {@link #createDom} and {@link #decorate}.  To be overridden
+ * by subclasses.
+ * @param {goog.ui.ControlContent} content Text caption or DOM structure to wrap
+ *     in a box.
+ * @param {goog.dom.DomHelper} dom DOM helper, used for document interaction.
+ * @return {Element} Pseudo-rounded-corner box containing the content.
+ * @override
+ */
 goog.ui.ImagelessButtonRenderer.prototype.createButton = function(content,
                                                                   dom) {
   var baseClass = this.getCssClass();
@@ -128,18 +128,18 @@ goog.ui.ImagelessButtonRenderer.prototype.createButton = function(content,
                   '\u00A0'),
               dom.createDom('div', goog.getCssName(baseClass, 'content'),
                   content))));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Check if the button's element has a box structure.
-***REMOVED*** @param {goog.ui.Button} button Button instance whose structure is being
-***REMOVED***     checked.
-***REMOVED*** @param {Element} element Element of the button.
-***REMOVED*** @return {boolean} Whether the element has a box structure.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Check if the button's element has a box structure.
+ * @param {goog.ui.Button} button Button instance whose structure is being
+ *     checked.
+ * @param {Element} element Element of the button.
+ * @return {boolean} Whether the element has a box structure.
+ * @protected
+ * @override
+ */
 goog.ui.ImagelessButtonRenderer.prototype.hasBoxStructure = function(
     button, element) {
   var outer = button.getDomHelper().getFirstElementChild(element);
@@ -172,18 +172,18 @@ goog.ui.ImagelessButtonRenderer.prototype.hasBoxStructure = function(
     }
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the CSS class to be applied to the root element of components
-***REMOVED*** rendered using this renderer.
-***REMOVED*** @return {string} Renderer-specific CSS class.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns the CSS class to be applied to the root element of components
+ * rendered using this renderer.
+ * @return {string} Renderer-specific CSS class.
+ * @override
+ */
 goog.ui.ImagelessButtonRenderer.prototype.getCssClass = function() {
   return goog.ui.ImagelessButtonRenderer.CSS_CLASS;
-***REMOVED***
+};
 
 
 // Register a decorator factory function for goog.ui.ImagelessButtonRenderer.

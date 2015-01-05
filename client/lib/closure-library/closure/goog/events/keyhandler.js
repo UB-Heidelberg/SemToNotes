@@ -12,202 +12,202 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file contains a class for working with keyboard events
-***REMOVED*** that repeat consistently across browsers and platforms. It also unifies the
-***REMOVED*** key code so that it is the same in all browsers and platforms.
-***REMOVED***
-***REMOVED*** Different web browsers have very different keyboard event handling. Most
-***REMOVED*** importantly is that only certain browsers repeat keydown events:
-***REMOVED*** IE, Opera, FF/Win32, and Safari 3 repeat keydown events.
-***REMOVED*** FF/Mac and Safari 2 do not.
-***REMOVED***
-***REMOVED*** For the purposes of this code, "Safari 3" means WebKit 525+, when WebKit
-***REMOVED*** decided that they should try to match IE's key handling behavior.
-***REMOVED*** Safari 3.0.4, which shipped with Leopard (WebKit 523), has the
-***REMOVED*** Safari 2 behavior.
-***REMOVED***
-***REMOVED*** Firefox, Safari, Opera prevent on keypress
-***REMOVED***
-***REMOVED*** IE prevents on keydown
-***REMOVED***
-***REMOVED*** Firefox does not fire keypress for shift, ctrl, alt
-***REMOVED*** Firefox does fire keydown for shift, ctrl, alt, meta
-***REMOVED*** Firefox does not repeat keydown for shift, ctrl, alt, meta
-***REMOVED***
-***REMOVED*** Firefox does not fire keypress for up and down in an input
-***REMOVED***
-***REMOVED*** Opera fires keypress for shift, ctrl, alt, meta
-***REMOVED*** Opera does not repeat keypress for shift, ctrl, alt, meta
-***REMOVED***
-***REMOVED*** Safari 2 and 3 do not fire keypress for shift, ctrl, alt
-***REMOVED*** Safari 2 does not fire keydown for shift, ctrl, alt
-***REMOVED*** Safari 3***REMOVED***does* fire keydown for shift, ctrl, alt
-***REMOVED***
-***REMOVED*** IE provides the keycode for keyup/down events and the charcode (in the
-***REMOVED*** keycode field) for keypress.
-***REMOVED***
-***REMOVED*** Mozilla provides the keycode for keyup/down and the charcode for keypress
-***REMOVED*** unless it's a non text modifying key in which case the keycode is provided.
-***REMOVED***
-***REMOVED*** Safari 3 provides the keycode and charcode for all events.
-***REMOVED***
-***REMOVED*** Opera provides the keycode for keyup/down event and either the charcode or
-***REMOVED*** the keycode (in the keycode field) for keypress events.
-***REMOVED***
-***REMOVED*** Firefox x11 doesn't fire keydown events if a another key is already held down
-***REMOVED*** until the first key is released. This can cause a key event to be fired with
-***REMOVED*** a keyCode for the first key and a charCode for the second key.
-***REMOVED***
-***REMOVED*** Safari in keypress
-***REMOVED***
-***REMOVED***        charCode keyCode which
-***REMOVED*** ENTER:       13      13    13
-***REMOVED*** F1:       63236   63236 63236
-***REMOVED*** F8:       63243   63243 63243
-***REMOVED*** ...
-***REMOVED*** p:          112     112   112
-***REMOVED*** P:           80      80    80
-***REMOVED***
-***REMOVED*** Firefox, keypress:
-***REMOVED***
-***REMOVED***        charCode keyCode which
-***REMOVED*** ENTER:        0      13    13
-***REMOVED*** F1:           0     112     0
-***REMOVED*** F8:           0     119     0
-***REMOVED*** ...
-***REMOVED*** p:          112       0   112
-***REMOVED*** P:           80       0    80
-***REMOVED***
-***REMOVED*** Opera, Mac+Win32, keypress:
-***REMOVED***
-***REMOVED***         charCode keyCode which
-***REMOVED*** ENTER: undefined      13    13
-***REMOVED*** F1:    undefined     112     0
-***REMOVED*** F8:    undefined     119     0
-***REMOVED*** ...
-***REMOVED*** p:     undefined     112   112
-***REMOVED*** P:     undefined      80    80
-***REMOVED***
-***REMOVED*** IE7, keydown
-***REMOVED***
-***REMOVED***         charCode keyCode     which
-***REMOVED*** ENTER: undefined      13 undefined
-***REMOVED*** F1:    undefined     112 undefined
-***REMOVED*** F8:    undefined     119 undefined
-***REMOVED*** ...
-***REMOVED*** p:     undefined      80 undefined
-***REMOVED*** P:     undefined      80 undefined
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/keyhandler.html
-***REMOVED***
+/**
+ * @fileoverview This file contains a class for working with keyboard events
+ * that repeat consistently across browsers and platforms. It also unifies the
+ * key code so that it is the same in all browsers and platforms.
+ *
+ * Different web browsers have very different keyboard event handling. Most
+ * importantly is that only certain browsers repeat keydown events:
+ * IE, Opera, FF/Win32, and Safari 3 repeat keydown events.
+ * FF/Mac and Safari 2 do not.
+ *
+ * For the purposes of this code, "Safari 3" means WebKit 525+, when WebKit
+ * decided that they should try to match IE's key handling behavior.
+ * Safari 3.0.4, which shipped with Leopard (WebKit 523), has the
+ * Safari 2 behavior.
+ *
+ * Firefox, Safari, Opera prevent on keypress
+ *
+ * IE prevents on keydown
+ *
+ * Firefox does not fire keypress for shift, ctrl, alt
+ * Firefox does fire keydown for shift, ctrl, alt, meta
+ * Firefox does not repeat keydown for shift, ctrl, alt, meta
+ *
+ * Firefox does not fire keypress for up and down in an input
+ *
+ * Opera fires keypress for shift, ctrl, alt, meta
+ * Opera does not repeat keypress for shift, ctrl, alt, meta
+ *
+ * Safari 2 and 3 do not fire keypress for shift, ctrl, alt
+ * Safari 2 does not fire keydown for shift, ctrl, alt
+ * Safari 3 *does* fire keydown for shift, ctrl, alt
+ *
+ * IE provides the keycode for keyup/down events and the charcode (in the
+ * keycode field) for keypress.
+ *
+ * Mozilla provides the keycode for keyup/down and the charcode for keypress
+ * unless it's a non text modifying key in which case the keycode is provided.
+ *
+ * Safari 3 provides the keycode and charcode for all events.
+ *
+ * Opera provides the keycode for keyup/down event and either the charcode or
+ * the keycode (in the keycode field) for keypress events.
+ *
+ * Firefox x11 doesn't fire keydown events if a another key is already held down
+ * until the first key is released. This can cause a key event to be fired with
+ * a keyCode for the first key and a charCode for the second key.
+ *
+ * Safari in keypress
+ *
+ *        charCode keyCode which
+ * ENTER:       13      13    13
+ * F1:       63236   63236 63236
+ * F8:       63243   63243 63243
+ * ...
+ * p:          112     112   112
+ * P:           80      80    80
+ *
+ * Firefox, keypress:
+ *
+ *        charCode keyCode which
+ * ENTER:        0      13    13
+ * F1:           0     112     0
+ * F8:           0     119     0
+ * ...
+ * p:          112       0   112
+ * P:           80       0    80
+ *
+ * Opera, Mac+Win32, keypress:
+ *
+ *         charCode keyCode which
+ * ENTER: undefined      13    13
+ * F1:    undefined     112     0
+ * F8:    undefined     119     0
+ * ...
+ * p:     undefined     112   112
+ * P:     undefined      80    80
+ *
+ * IE7, keydown
+ *
+ *         charCode keyCode     which
+ * ENTER: undefined      13 undefined
+ * F1:    undefined     112 undefined
+ * F8:    undefined     119 undefined
+ * ...
+ * p:     undefined      80 undefined
+ * P:     undefined      80 undefined
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/keyhandler.html
+ */
 
 goog.provide('goog.events.KeyEvent');
 goog.provide('goog.events.KeyHandler');
 goog.provide('goog.events.KeyHandler.EventType');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A wrapper around an element that you want to listen to keyboard events on.
-***REMOVED*** @param {Element|Document=} opt_element The element or document to listen on.
-***REMOVED*** @param {boolean=} opt_capture Whether to listen for browser events in
-***REMOVED***     capture phase (defaults to false).
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A wrapper around an element that you want to listen to keyboard events on.
+ * @param {Element|Document=} opt_element The element or document to listen on.
+ * @param {boolean=} opt_capture Whether to listen for browser events in
+ *     capture phase (defaults to false).
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.events.KeyHandler = function(opt_element, opt_capture) {
   goog.events.EventTarget.call(this);
 
   if (opt_element) {
     this.attach(opt_element, opt_capture);
   }
-***REMOVED***
+};
 goog.inherits(goog.events.KeyHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** This is the element that we will listen to the real keyboard events on.
-***REMOVED*** @type {Element|Document|null}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * This is the element that we will listen to the real keyboard events on.
+ * @type {Element|Document|null}
+ * @private
+ */
 goog.events.KeyHandler.prototype.element_ = null;
 
 
-***REMOVED***
-***REMOVED*** The key for the key press listener.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key for the key press listener.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.events.KeyHandler.prototype.keyPressKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** The key for the key down listener.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key for the key down listener.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.events.KeyHandler.prototype.keyDownKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** The key for the key up listener.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The key for the key up listener.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.events.KeyHandler.prototype.keyUpKey_ = null;
 
 
-***REMOVED***
-***REMOVED*** Used to detect keyboard repeat events.
-***REMOVED*** @private
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Used to detect keyboard repeat events.
+ * @private
+ * @type {number}
+ */
 goog.events.KeyHandler.prototype.lastKey_ = -1;
 
 
-***REMOVED***
-***REMOVED*** Keycode recorded for key down events. As most browsers don't report the
-***REMOVED*** keycode in the key press event we need to record it in the key down phase.
-***REMOVED*** @private
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Keycode recorded for key down events. As most browsers don't report the
+ * keycode in the key press event we need to record it in the key down phase.
+ * @private
+ * @type {number}
+ */
 goog.events.KeyHandler.prototype.keyCode_ = -1;
 
 
-***REMOVED***
-***REMOVED*** Alt key recorded for key down events. FF on Mac does not report the alt key
-***REMOVED*** flag in the key press event, we need to record it in the key down phase.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Alt key recorded for key down events. FF on Mac does not report the alt key
+ * flag in the key press event, we need to record it in the key down phase.
+ * @type {boolean}
+ * @private
+ */
 goog.events.KeyHandler.prototype.altKey_ = false;
 
 
-***REMOVED***
-***REMOVED*** Enum type for the events fired by the key handler
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum type for the events fired by the key handler
+ * @enum {string}
+ */
 goog.events.KeyHandler.EventType = {
   KEY: 'key'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An enumeration of key codes that Safari 2 does incorrectly
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An enumeration of key codes that Safari 2 does incorrectly
+ * @type {Object}
+ * @private
+ */
 goog.events.KeyHandler.safariKey_ = {
   '3': goog.events.KeyCodes.ENTER, // 13
   '12': goog.events.KeyCodes.NUMLOCK, // 144
@@ -235,17 +235,17 @@ goog.events.KeyHandler.safariKey_ = {
   '63277': goog.events.KeyCodes.PAGE_DOWN, // 34
   '63289': goog.events.KeyCodes.NUMLOCK, // 144
   '63302': goog.events.KeyCodes.INSERT // 45
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An enumeration of key identifiers currently part of the W3C draft for DOM3
-***REMOVED*** and their mappings to keyCodes.
-***REMOVED*** http://www.w3.org/TR/DOM-Level-3-Events/keyset.html#KeySet-Set
-***REMOVED*** This is currently supported in Safari and should be platform independent.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An enumeration of key identifiers currently part of the W3C draft for DOM3
+ * and their mappings to keyCodes.
+ * http://www.w3.org/TR/DOM-Level-3-Events/keyset.html#KeySet-Set
+ * This is currently supported in Safari and should be platform independent.
+ * @type {Object}
+ * @private
+ */
 goog.events.KeyHandler.keyIdentifier_ = {
   'Up': goog.events.KeyCodes.UP, // 38
   'Down': goog.events.KeyCodes.DOWN, // 40
@@ -270,37 +270,37 @@ goog.events.KeyHandler.keyIdentifier_ = {
   'PageUp': goog.events.KeyCodes.PAGE_UP, // 33
   'PageDown': goog.events.KeyCodes.PAGE_DOWN, // 34
   'Insert': goog.events.KeyCodes.INSERT // 45
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** If true, the KeyEvent fires on keydown. Otherwise, it fires on keypress.
-***REMOVED***
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If true, the KeyEvent fires on keydown. Otherwise, it fires on keypress.
+ *
+ * @type {boolean}
+ * @private
+ */
 goog.events.KeyHandler.USES_KEYDOWN_ = goog.userAgent.IE ||
     goog.userAgent.WEBKIT && goog.userAgent.isVersionOrHigher('525');
 
 
-***REMOVED***
-***REMOVED*** If true, the alt key flag is saved during the key down and reused when
-***REMOVED*** handling the key press. FF on Mac does not set the alt flag in the key press
-***REMOVED*** event.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If true, the alt key flag is saved during the key down and reused when
+ * handling the key press. FF on Mac does not set the alt flag in the key press
+ * event.
+ * @type {boolean}
+ * @private
+ */
 goog.events.KeyHandler.SAVE_ALT_FOR_KEYPRESS_ = goog.userAgent.MAC &&
     goog.userAgent.GECKO;
 
 
-***REMOVED***
-***REMOVED*** Records the keycode for browsers that only returns the keycode for key up/
-***REMOVED*** down events. For browser/key combinations that doesn't trigger a key pressed
-***REMOVED*** event it also fires the patched key event.
-***REMOVED*** @param {goog.events.BrowserEvent} e The key down event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Records the keycode for browsers that only returns the keycode for key up/
+ * down events. For browser/key combinations that doesn't trigger a key pressed
+ * event it also fires the patched key event.
+ * @param {goog.events.BrowserEvent} e The key down event.
+ * @private
+ */
 goog.events.KeyHandler.prototype.handleKeyDown_ = function(e) {
   // Ctrl-Tab and Alt-Tab can cause the focus to be moved to another window
   // before we've caught a key-up event.  If the last-key was one of these we
@@ -335,38 +335,38 @@ goog.events.KeyHandler.prototype.handleKeyDown_ = function(e) {
       this.altKey_ = e.altKey;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets the stored previous values. Needed to be called for webkit which will
-***REMOVED*** not generate a key up for meta key operations. This should only be called
-***REMOVED*** when having finished with repeat key possiblities.
-***REMOVED***
+/**
+ * Resets the stored previous values. Needed to be called for webkit which will
+ * not generate a key up for meta key operations. This should only be called
+ * when having finished with repeat key possiblities.
+ */
 goog.events.KeyHandler.prototype.resetState = function() {
   this.lastKey_ = -1;
   this.keyCode_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the stored previous key value, resetting the key repeat status. Uses
-***REMOVED*** -1 because the Safari 3 Windows beta reports 0 for certain keys (like Home
-***REMOVED*** and End.)
-***REMOVED*** @param {goog.events.BrowserEvent} e The keyup event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Clears the stored previous key value, resetting the key repeat status. Uses
+ * -1 because the Safari 3 Windows beta reports 0 for certain keys (like Home
+ * and End.)
+ * @param {goog.events.BrowserEvent} e The keyup event.
+ * @private
+ */
 goog.events.KeyHandler.prototype.handleKeyup_ = function(e) {
   this.resetState();
   this.altKey_ = e.altKey;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the events on the element.
-***REMOVED*** @param {goog.events.BrowserEvent} e  The keyboard event sent from the
-***REMOVED***     browser.
-***REMOVED***
+/**
+ * Handles the events on the element.
+ * @param {goog.events.BrowserEvent} e  The keyboard event sent from the
+ *     browser.
+ */
 goog.events.KeyHandler.prototype.handleEvent = function(e) {
   var be = e.getBrowserEvent();
   var keyCode, charCode;
@@ -443,25 +443,25 @@ goog.events.KeyHandler.prototype.handleEvent = function(e) {
   var event = new goog.events.KeyEvent(key, charCode, repeat, be);
   event.altKey = altKey;
   this.dispatchEvent(event);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the element listened on for the real keyboard events.
-***REMOVED*** @return {Element|Document|null} The element listened on for the real
-***REMOVED***     keyboard events.
-***REMOVED***
+/**
+ * Returns the element listened on for the real keyboard events.
+ * @return {Element|Document|null} The element listened on for the real
+ *     keyboard events.
+ */
 goog.events.KeyHandler.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds the proper key event listeners to the element.
-***REMOVED*** @param {Element|Document} element The element to listen on.
-***REMOVED*** @param {boolean=} opt_capture Whether to listen for browser events in
-***REMOVED***     capture phase (defaults to false).
-***REMOVED***
+/**
+ * Adds the proper key event listeners to the element.
+ * @param {Element|Document} element The element to listen on.
+ * @param {boolean=} opt_capture Whether to listen for browser events in
+ *     capture phase (defaults to false).
+ */
 goog.events.KeyHandler.prototype.attach = function(element, opt_capture) {
   if (this.keyUpKey_) {
     this.detach();
@@ -490,12 +490,12 @@ goog.events.KeyHandler.prototype.attach = function(element, opt_capture) {
                                       this.handleKeyup_,
                                       opt_capture,
                                       this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the listeners that may exist.
-***REMOVED***
+/**
+ * Removes the listeners that may exist.
+ */
 goog.events.KeyHandler.prototype.detach = function() {
   if (this.keyPressKey_) {
     goog.events.unlistenByKey(this.keyPressKey_);
@@ -508,49 +508,49 @@ goog.events.KeyHandler.prototype.detach = function() {
   this.element_ = null;
   this.lastKey_ = -1;
   this.keyCode_ = -1;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.KeyHandler.prototype.disposeInternal = function() {
   goog.events.KeyHandler.superClass_.disposeInternal.call(this);
   this.detach();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This class is used for the goog.events.KeyHandler.EventType.KEY event and
-***REMOVED*** it overrides the key code with the fixed key code.
-***REMOVED*** @param {number} keyCode The adjusted key code.
-***REMOVED*** @param {number} charCode The unicode character code.
-***REMOVED*** @param {boolean} repeat Whether this event was generated by keyboard repeat.
-***REMOVED*** @param {Event} browserEvent Browser event object.
-***REMOVED***
-***REMOVED*** @extends {goog.events.BrowserEvent}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class is used for the goog.events.KeyHandler.EventType.KEY event and
+ * it overrides the key code with the fixed key code.
+ * @param {number} keyCode The adjusted key code.
+ * @param {number} charCode The unicode character code.
+ * @param {boolean} repeat Whether this event was generated by keyboard repeat.
+ * @param {Event} browserEvent Browser event object.
+ * @constructor
+ * @extends {goog.events.BrowserEvent}
+ * @final
+ */
 goog.events.KeyEvent = function(keyCode, charCode, repeat, browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent);
   this.type = goog.events.KeyHandler.EventType.KEY;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Keycode of key press.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Keycode of key press.
+   * @type {number}
+   */
   this.keyCode = keyCode;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Unicode character code.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Unicode character code.
+   * @type {number}
+   */
   this.charCode = charCode;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** True if this event was generated by keyboard auto-repeat (i.e., the user is
-  ***REMOVED*** holding the key down.)
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * True if this event was generated by keyboard auto-repeat (i.e., the user is
+   * holding the key down.)
+   * @type {boolean}
+   */
   this.repeat = repeat;
-***REMOVED***
+};
 goog.inherits(goog.events.KeyEvent, goog.events.BrowserEvent);

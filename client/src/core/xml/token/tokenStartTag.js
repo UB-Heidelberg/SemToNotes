@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Class represents the start-tag token.
-***REMOVED***
+/**
+ * @fileoverview Class represents the start-tag token.
+ */
 
 goog.provide('xrx.token.StartTag');
 
@@ -11,25 +11,25 @@ goog.require('xrx.token.Token');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new start tag token.
-***REMOVED***
-***REMOVED*** @extends xrx.token
-***REMOVED***
+/**
+ * Constructs a new start tag token.
+ * @constructor
+ * @extends xrx.token
+ */
 xrx.token.StartTag = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.START_TAG, label, opt_offset, opt_length);
-***REMOVED***
+};
 goog.inherits(xrx.token.StartTag, xrx.token.Token);
 
 
 
-***REMOVED***
-***REMOVED*** Compares the generic type of two tokens.
-***REMOVED***
-***REMOVED*** @param {!number} type The type to check against.
-***REMOVED*** @return {!boolean}
-***REMOVED***
+/**
+ * Compares the generic type of two tokens.
+ *
+ * @param {!number} type The type to check against.
+ * @return {!boolean}
+ */
 xrx.token.StartTag.prototype.typeOf = function(type) {
   return this.type_ === type || xrx.token.START_EMPTY_TAG === type || 
       xrx.token.TAG === type;
-***REMOVED***
+};

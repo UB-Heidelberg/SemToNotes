@@ -17,7 +17,7 @@ See the COPYING file for details.
     goog.require('goog.a11y.aria');
     goog.require('goog.a11y.aria.State');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.object');
     goog.require('goog.testing.events');
     goog.require('goog.testing.jsunit');
@@ -224,14 +224,14 @@ See the COPYING file for details.
     var dispatchedActionCount;
     var handleAction = function() {
       dispatchedActionCount++;
-   ***REMOVED*****REMOVED***
+    };
 
     var doTest = function (zippyObj) {
       dispatchedActionCount = 0;
-    ***REMOVED***zippyObj, goog.ui.Zippy.Events.TOGGLE, handleAction);
+      goog.events.listen(zippyObj, goog.ui.Zippy.Events.TOGGLE, handleAction);
       zippy.toggle();
       assertEquals("Custom Event must be called ", 1, dispatchedActionCount);
-   ***REMOVED*****REMOVED***
+    };
 
     doTest(zippy);
     doTest(fakeZippy1);
@@ -250,8 +250,8 @@ See the COPYING file for details.
         assertTrue('toggle must have been called first',
             toggleEventCount >= actionEventCount);
       }
-   ***REMOVED*****REMOVED***
-  ***REMOVED***zippy, goog.object.getValues(goog.ui.Zippy.Events),
+    };
+    goog.events.listen(zippy, goog.object.getValues(goog.ui.Zippy.Events),
         handleEvent);
     goog.testing.events.fireClickSequence(zippy.elHeader_);
     assertEquals('Zippy ACTION event fired', 1, actionEventCount);
@@ -266,9 +266,9 @@ See the COPYING file for details.
     var dispatchedActionCount = 0;
     var handleAction = function() {
       dispatchedActionCount++;
-   ***REMOVED*****REMOVED***
+    };
 
-  ***REMOVED***zippy, goog.ui.Zippy.Events.TOGGLE, handleAction);
+    goog.events.listen(zippy, goog.ui.Zippy.Events.TOGGLE, handleAction);
     goog.testing.events.fireClickSequence(zippy.elHeader_);
     assertEquals('Zippy  must have dispatched TOGGLE on click', 1,
         dispatchedActionCount);

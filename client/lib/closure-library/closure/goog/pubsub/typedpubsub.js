@@ -19,108 +19,108 @@ goog.require('goog.pubsub.PubSub');
 
 
 
-***REMOVED***
-***REMOVED*** This object is a temporary shim that provides goog.pubsub.TopicId support
-***REMOVED*** for goog.pubsub.PubSub.  See b/12477087 for more info.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
+/**
+ * This object is a temporary shim that provides goog.pubsub.TopicId support
+ * for goog.pubsub.PubSub.  See b/12477087 for more info.
+ * @constructor
+ * @extends {goog.Disposable}
+ */
 goog.pubsub.TypedPubSub = function() {
   goog.pubsub.TypedPubSub.base(this, 'constructor');
 
   this.pubSub_ = new goog.pubsub.PubSub();
   this.registerDisposable(this.pubSub_);
-***REMOVED***
+};
 goog.inherits(goog.pubsub.TypedPubSub, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.subscribe}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to subscribe to.
-***REMOVED*** @param {function(this:CONTEXT, PAYLOAD)} fn Function to be invoked when a
-***REMOVED***     message is published to the given topic.
-***REMOVED*** @param {CONTEXT=} opt_context Object in whose context the function is to be
-***REMOVED***     called (the global scope if none).
-***REMOVED*** @return {number} Subscription key.
-***REMOVED*** @template PAYLOAD, CONTEXT
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.subscribe}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to subscribe to.
+ * @param {function(this:CONTEXT, PAYLOAD)} fn Function to be invoked when a
+ *     message is published to the given topic.
+ * @param {CONTEXT=} opt_context Object in whose context the function is to be
+ *     called (the global scope if none).
+ * @return {number} Subscription key.
+ * @template PAYLOAD, CONTEXT
+ */
 goog.pubsub.TypedPubSub.prototype.subscribe = function(topic, fn, opt_context) {
   return this.pubSub_.subscribe(topic.toString(), fn, opt_context);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.subscribeOnce}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to subscribe to.
-***REMOVED*** @param {function(this:CONTEXT, PAYLOAD)} fn Function to be invoked once and
-***REMOVED***     then unsubscribed when a message is published to the given topic.
-***REMOVED*** @param {CONTEXT=} opt_context Object in whose context the function is to be
-***REMOVED***     called (the global scope if none).
-***REMOVED*** @return {number} Subscription key.
-***REMOVED*** @template PAYLOAD, CONTEXT
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.subscribeOnce}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to subscribe to.
+ * @param {function(this:CONTEXT, PAYLOAD)} fn Function to be invoked once and
+ *     then unsubscribed when a message is published to the given topic.
+ * @param {CONTEXT=} opt_context Object in whose context the function is to be
+ *     called (the global scope if none).
+ * @return {number} Subscription key.
+ * @template PAYLOAD, CONTEXT
+ */
 goog.pubsub.TypedPubSub.prototype.subscribeOnce = function(
     topic, fn, opt_context) {
   return this.pubSub_.subscribeOnce(topic.toString(), fn, opt_context);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.unsubscribe}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to unsubscribe from.
-***REMOVED*** @param {function(this:CONTEXT, PAYLOAD)} fn Function to unsubscribe.
-***REMOVED*** @param {CONTEXT=} opt_context Object in whose context the function was to be
-***REMOVED***     called (the global scope if none).
-***REMOVED*** @return {boolean} Whether a matching subscription was removed.
-***REMOVED*** @template PAYLOAD, CONTEXT
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.unsubscribe}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to unsubscribe from.
+ * @param {function(this:CONTEXT, PAYLOAD)} fn Function to unsubscribe.
+ * @param {CONTEXT=} opt_context Object in whose context the function was to be
+ *     called (the global scope if none).
+ * @return {boolean} Whether a matching subscription was removed.
+ * @template PAYLOAD, CONTEXT
+ */
 goog.pubsub.TypedPubSub.prototype.unsubscribe = function(
     topic, fn, opt_context) {
   return this.pubSub_.unsubscribe(topic.toString(), fn, opt_context);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.unsubscribeByKey}.
-***REMOVED*** @param {number} key Subscription key.
-***REMOVED*** @return {boolean} Whether a matching subscription was removed.
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.unsubscribeByKey}.
+ * @param {number} key Subscription key.
+ * @return {boolean} Whether a matching subscription was removed.
+ */
 goog.pubsub.TypedPubSub.prototype.unsubscribeByKey = function(key) {
   return this.pubSub_.unsubscribeByKey(key);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.publish}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to publish to.
-***REMOVED*** @param {PAYLOAD} payload Payload passed to each subscription function.
-***REMOVED*** @return {boolean} Whether any subscriptions were called.
-***REMOVED*** @template PAYLOAD
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.publish}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>} topic Topic to publish to.
+ * @param {PAYLOAD} payload Payload passed to each subscription function.
+ * @return {boolean} Whether any subscriptions were called.
+ * @template PAYLOAD
+ */
 goog.pubsub.TypedPubSub.prototype.publish = function(topic, payload) {
   return this.pubSub_.publish(topic.toString(), payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.clear}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>=} opt_topic Topic to clear (all topics
-***REMOVED***     if unspecified).
-***REMOVED*** @template PAYLOAD
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.clear}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>=} opt_topic Topic to clear (all topics
+ *     if unspecified).
+ * @template PAYLOAD
+ */
 goog.pubsub.TypedPubSub.prototype.clear = function(opt_topic) {
   this.pubSub_.clear(goog.isDef(opt_topic) ? opt_topic.toString() : undefined);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** See {@code goog.pubsub.PubSub.getCount}.
-***REMOVED*** @param {!goog.pubsub.TopicId.<PAYLOAD>=} opt_topic The topic (all topics if
-***REMOVED***     unspecified).
-***REMOVED*** @return {number} Number of subscriptions to the topic.
-***REMOVED*** @template PAYLOAD
-***REMOVED***
+/**
+ * See {@code goog.pubsub.PubSub.getCount}.
+ * @param {!goog.pubsub.TopicId.<PAYLOAD>=} opt_topic The topic (all topics if
+ *     unspecified).
+ * @return {number} Number of subscriptions to the topic.
+ * @template PAYLOAD
+ */
 goog.pubsub.TypedPubSub.prototype.getCount = function(opt_topic) {
   return this.pubSub_.getCount(
       goog.isDef(opt_topic) ? opt_topic.toString() : undefined);
-***REMOVED***
+};

@@ -114,7 +114,7 @@ function testInversionMapSplice4() {
   var alphabetNames = newAsciiMap();
   alphabetNames.spliceInversion(
       [98, 1], ['CHANGED LETTER B', 'CHANGED LETTER C'],
-      true /* delta mode***REMOVED***);
+      true /* delta mode */);
   assertEquals('LATIN SMALL LETTER A', alphabetNames.at(97));
   assertEquals('CHANGED LETTER B', alphabetNames.at(98));
   assertEquals('CHANGED LETTER C', alphabetNames.at(99));

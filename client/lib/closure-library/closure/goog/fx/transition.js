@@ -12,64 +12,64 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An interface for transition animation. This is a simple
-***REMOVED*** interface that allows for playing and stopping a transition. It adds
-***REMOVED*** a simple event model with BEGIN and END event.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An interface for transition animation. This is a simple
+ * interface that allows for playing and stopping a transition. It adds
+ * a simple event model with BEGIN and END event.
+ *
+ */
 
 goog.provide('goog.fx.Transition');
 goog.provide('goog.fx.Transition.EventType');
 
 
 
-***REMOVED***
-***REMOVED*** An interface for programmatic transition. Must extend
-***REMOVED*** {@code goog.events.EventTarget}.
-***REMOVED*** @interface
-***REMOVED***
-goog.fx.Transition = function() {***REMOVED***
+/**
+ * An interface for programmatic transition. Must extend
+ * {@code goog.events.EventTarget}.
+ * @interface
+ */
+goog.fx.Transition = function() {};
 
 
-***REMOVED***
-***REMOVED*** Transition event types.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Transition event types.
+ * @enum {string}
+ */
 goog.fx.Transition.EventType = {
- ***REMOVED*****REMOVED*** Dispatched when played for the first time OR when it is resumed.***REMOVED***
+  /** Dispatched when played for the first time OR when it is resumed. */
   PLAY: 'play',
 
- ***REMOVED*****REMOVED*** Dispatched only when the animation starts from the beginning.***REMOVED***
+  /** Dispatched only when the animation starts from the beginning. */
   BEGIN: 'begin',
 
- ***REMOVED*****REMOVED*** Dispatched only when animation is restarted after a pause.***REMOVED***
+  /** Dispatched only when animation is restarted after a pause. */
   RESUME: 'resume',
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dispatched when animation comes to the end of its duration OR stop
-  ***REMOVED*** is called.
- ***REMOVED*****REMOVED***
+  /**
+   * Dispatched when animation comes to the end of its duration OR stop
+   * is called.
+   */
   END: 'end',
 
- ***REMOVED*****REMOVED*** Dispatched only when stop is called.***REMOVED***
+  /** Dispatched only when stop is called. */
   STOP: 'stop',
 
- ***REMOVED*****REMOVED*** Dispatched only when animation comes to its end naturally.***REMOVED***
+  /** Dispatched only when animation comes to its end naturally. */
   FINISH: 'finish',
 
- ***REMOVED*****REMOVED*** Dispatched when an animation is paused.***REMOVED***
+  /** Dispatched when an animation is paused. */
   PAUSE: 'pause'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Plays the transition.
-***REMOVED***
+/**
+ * Plays the transition.
+ */
 goog.fx.Transition.prototype.play;
 
 
-***REMOVED***
-***REMOVED*** Stops the transition.
-***REMOVED***
+/**
+ * Stops the transition.
+ */
 goog.fx.Transition.prototype.stop;

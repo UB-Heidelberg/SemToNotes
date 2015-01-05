@@ -14,7 +14,7 @@ See the COPYING file for details.
   <script src="../base.js"></script>
   <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.dom.DomHelper');
     goog.require('goog.dom.NodeType');
     goog.require('goog.dom.TagName');
     goog.require('goog.events.EventTarget');
@@ -46,7 +46,7 @@ See the COPYING file for details.
       assertTrue('DOM helper must be non-null and have the expected class',
           component.dom_ instanceof goog.dom.DomHelper);
 
-      var fakeDom = {***REMOVED***
+      var fakeDom = {};
       var otherComponent = new goog.ui.Component(fakeDom);
       assertEquals('DOM helper must refer to expected object', fakeDom,
           otherComponent.dom_);
@@ -490,7 +490,7 @@ See the COPYING file for details.
         ENUM_1: 'enum 1',
         ENUM_2: 'enum 2',
         ENUM_3: 'enum 3'
-     ***REMOVED*****REMOVED***
+      };
       var ids = component.makeIds(EnumDef);
       assertEquals(component.makeId(EnumDef.ENUM_1), ids.ENUM_1);
       assertEquals(component.makeId(EnumDef.ENUM_2), ids.ENUM_2);

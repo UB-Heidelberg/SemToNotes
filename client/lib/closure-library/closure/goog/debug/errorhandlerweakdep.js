@@ -12,27 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview File which defines dummy object to work around undefined
-***REMOVED*** properties compiler warning for weak dependencies on
-***REMOVED*** {@link goog.debug.ErrorHandler#protectEntryPoint}.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview File which defines dummy object to work around undefined
+ * properties compiler warning for weak dependencies on
+ * {@link goog.debug.ErrorHandler#protectEntryPoint}.
+ *
+ */
 
 goog.provide('goog.debug.errorHandlerWeakDep');
 
 
-***REMOVED***
-***REMOVED*** Dummy object to work around undefined properties compiler warning.
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * Dummy object to work around undefined properties compiler warning.
+ * @type {Object}
+ */
 goog.debug.errorHandlerWeakDep = {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @param {Function} fn An entry point function to be protected.
-  ***REMOVED*** @param {boolean=} opt_tracers Whether to install tracers around the
-  ***REMOVED***     fn.
-  ***REMOVED*** @return {Function} A protected wrapper function that calls the
-  ***REMOVED***     entry point function.
- ***REMOVED*****REMOVED***
+  /**
+   * @param {Function} fn An entry point function to be protected.
+   * @param {boolean=} opt_tracers Whether to install tracers around the
+   *     fn.
+   * @return {Function} A protected wrapper function that calls the
+   *     entry point function.
+   */
   protectEntryPoint: function(fn, opt_tracers) { return fn; }
-***REMOVED***
+};

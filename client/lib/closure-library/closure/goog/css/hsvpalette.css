@@ -1,19 +1,19 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** All Rights Reserved.
-***REMOVED***
-***REMOVED*** Styles for the HSV color palette.
-***REMOVED***
-***REMOVED*** @author smcbride@google.com (Sean McBride)
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author manucornet@google.com (Manu Cornet)
-***REMOVED***
+ * All Rights Reserved.
+ *
+ * Styles for the HSV color palette.
+ *
+ * @author smcbride@google.com (Sean McBride)
+ * @author arv@google.com (Erik Arvidsson)
+ * @author manucornet@google.com (Manu Cornet)
+ */
 
 .goog-hsv-palette,
 .goog-hsv-palette-sm {

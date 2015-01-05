@@ -7,7 +7,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('xrx.xml.Label');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.token');
   goog.require('xrx.token.Tokens');
 </script>
@@ -53,7 +53,7 @@ function test01Backward() {
   var target = pilot.backward(tag2, tag);
   assertEquals(4, target.offset());
   assertEquals(3, target.length());
-***REMOVED***
+};
 
 function test02JointParent() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -67,7 +67,7 @@ function test02JointParent() {
   var expected = new xrx.token.StartEmptyTag(label);
   var token = pilot.jointParent(token1, token2);
   assertEquals(true, expected.sameAs(token));
-***REMOVED***
+};
 
 function test03StartTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -79,7 +79,7 @@ function test03StartTag() {
   assertEquals(4, token.offset());
   assertEquals(3, token.length());
   assertEquals(true, token.label().sameAs(label));
-***REMOVED***
+};
 
 function test04StartTagWithContext() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -120,7 +120,7 @@ function test04StartTagWithContext() {
   assertEquals(25, token3.length());
   assertEquals(true, token3.label().sameAs(label));
   assertEquals('xrx.xml.Pilot.prototype.zigzag', pilot.currentPath());
-***REMOVED***
+};
 
 function test05EndTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -132,7 +132,7 @@ function test05EndTag() {
   assertEquals(8, token.offset());
   assertEquals(4, token.length());
   assertEquals(true, token.label().sameAs(label));  
-***REMOVED***
+};
 
 function test06EmptyTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -144,7 +144,7 @@ function test06EmptyTag() {
   assertEquals(13, token.offset());
   assertEquals(4, token.length());
   assertEquals(true, token.label().sameAs(label));  
-***REMOVED***
+};
 
 function test07NotTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -156,7 +156,7 @@ function test07NotTag() {
   assertEquals(3, token.offset());
   assertEquals(1, token.length());
   assertEquals(true, token.label().sameAs(label));  
-***REMOVED***
+};
 
 function test08TagName() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -181,7 +181,7 @@ function test08TagName() {
   assertEquals(1, locEmptyTag.length());
   assertEquals(14, locStartEmptyTag.offset());
   assertEquals(1, locStartEmptyTag.length());
-***REMOVED***
+};
 
 function test09Attribute() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -193,7 +193,7 @@ function test09Attribute() {
   assertEquals(21, token.offset());
   assertEquals(12, token.length());
   assertEquals(true, token.label().sameAs(label));
-***REMOVED***
+};
 
 
 function test10AttrName() {
@@ -206,7 +206,7 @@ function test10AttrName() {
   assertEquals(21, token.offset());
   assertEquals(5, token.length());
   assertEquals(true, token.label().sameAs(label));  
-***REMOVED***
+};
 
 function test11AttrValue() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -218,7 +218,7 @@ function test11AttrValue() {
   assertEquals(28, token.offset());
   assertEquals(4, token.length());
   assertEquals(true, token.label().sameAs(label));  
-***REMOVED***
+};
 
 function test12StartEmptyTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -230,10 +230,10 @@ function test12StartEmptyTag() {
   assertEquals(13, token.offset());
   assertEquals(4, token.length());
   assertEquals(true, token.label().sameAs(label));
-***REMOVED***
+};
 
 function test13Tag() {
-***REMOVED***
+};
 
 function test14Attributes() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -258,7 +258,7 @@ function test14Attributes() {
   var label1 = label0.clone();
   label1.nextSibling();
   assertEquals(true, attributes[1].label().sameAs(label1));  
-***REMOVED***
+};
 
 function stest15PathOnLocation() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -270,7 +270,7 @@ function stest15PathOnLocation() {
   var attrLoc = pilot.location(null, attr);
   assertEquals('attr1="test"', pilot.xml(attrLoc));
   assertEquals(true, xrx.xml.Pilot.prototype.onLocation == pilot.currentPath());
-***REMOVED***
+};
 
 function stest16PathForward() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -282,7 +282,7 @@ function stest16PathForward() {
   var attrLoc = pilot.attribute(null, attr);
   assertEquals('attr2=""', pilot.xml(attrLoc));
   assertEquals(true, xrx.xml.Pilot.prototype.forward == pilot.currentPath());
-***REMOVED***
+};
 
 function stest17SameTag() {
   var pilot = new xrx.xml.Pilot(xml);
@@ -317,7 +317,7 @@ function stest17SameTag() {
   
   // NOT_TAG => START_EMPTY_TAG
   pilot.startEmptyTag(null, startEmptyTag);
-***REMOVED***
+};
 
 /*
 function stest19ChildParentTag() {
@@ -332,7 +332,7 @@ function stest19ChildParentTag() {
   // START_EMPTY_TAG => self::END_TAG
   
   // END_TAG => self::START_EMPTY_TAG
-***REMOVED***
+};
 */
 </script>
 </body>

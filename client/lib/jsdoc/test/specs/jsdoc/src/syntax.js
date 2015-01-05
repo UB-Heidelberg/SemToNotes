@@ -1,4 +1,4 @@
-/*global describe, expect, it***REMOVED***
+/*global describe, expect, it */
 describe('jsdoc/src/syntax', function() {
     var Syntax = require('jsdoc/src/syntax').Syntax;
 

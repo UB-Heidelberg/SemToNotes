@@ -24,15 +24,15 @@ goog.require('goog.testing.jsunit');
 
 // The object that we will be mocking
 var RealObject = function() {
-***REMOVED***
+};
 
 RealObject.prototype.a = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 RealObject.prototype.b = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 var matchers = goog.testing.mockmatchers;
 var mock;
@@ -69,12 +69,12 @@ function testVerifyArgumentList() {
   assertTrue(mock.$verifyCall(expectation, 'a', [2]));
 
   // single object arg (using standard === comparison)
-  var obj = {prop1: 'prop1', prop2: 2***REMOVED***
+  var obj = {prop1: 'prop1', prop2: 2};
   expectation.argumentList = [obj];
   assertTrue(mock.$verifyCall(expectation, 'a', [obj]));
 
   // make sure comparison succeeds if args are similar, but not ===
-  var obj2 = {prop1: 'prop1', prop2: 2***REMOVED***
+  var obj2 = {prop1: 'prop1', prop2: 2};
   expectation.argumentList = [obj];
   assertTrue(mock.$verifyCall(expectation, 'a', [obj2]));
   assertEquals('', expectation.getErrorMessage());
@@ -117,7 +117,7 @@ function testRegisterArgumentListVerifier() {
   assertTrue(mock.$verifyCall(expectationA, 'a', [2]));
 
   // single object arg (using standard === comparison)
-  var obj = {prop1: 'prop1', prop2: 2***REMOVED***
+  var obj = {prop1: 'prop1', prop2: 2};
   expectationA.argumentList = [obj];
   expectationB.argumentList = [obj];
   assertTrue(mock.$verifyCall(expectationA, 'a', [obj]));
@@ -125,7 +125,7 @@ function testRegisterArgumentListVerifier() {
 
   // if args are similar, but not ===, then comparison should succeed
   // for method with registered object matcher, and fail for method without
-  var obj2 = {prop1: 'prop1', prop2: 2***REMOVED***
+  var obj2 = {prop1: 'prop1', prop2: 2};
   expectationA.argumentList = [obj];
   expectationB.argumentList = [obj];
   assertFalse(mock.$verifyCall(expectationA, 'a', [obj2]));
@@ -154,7 +154,7 @@ function testCreateProxy() {
 
 
 function testValidConstructorArgument() {
-  var someNamespace = {***REMOVED*****REMOVED***
+  var someNamespace = { };
   assertThrows(function() {
     new goog.testing.Mock(someNamespace.RealObjectWithTypo);
   });
@@ -172,7 +172,7 @@ function testThrowCallExceptionBadArgs() {
   var msg;
   mock.$throwException = function(m) {
     msg = m;
- ***REMOVED*****REMOVED***
+  };
 
   mock.$throwCallException(
       'fn1', ['b'],
@@ -187,7 +187,7 @@ function testThrowCallExceptionUnexpected() {
   var msg;
   mock.$throwException = function(m) {
     msg = m;
- ***REMOVED*****REMOVED***
+  };
 
   mock.$throwCallException('fn1', ['b']);
   assertEquals('Unexpected call to fn1(string).', msg);
@@ -197,7 +197,7 @@ function testThrowCallExceptionUnexpectedWithNext() {
   var msg;
   mock.$throwException = function(m) {
     msg = m;
- ***REMOVED*****REMOVED***
+  };
 
   mock.$throwCallException(
       'fn1', ['b'],
@@ -213,28 +213,28 @@ function testThrowCallExceptionUnexpectedWithNext() {
 // be mocked correctly.
 function testBindNonEnumerableFunctions() {
   // Create Foo and override non enumerable functions.
-  var Foo = function() {***REMOVED***
+  var Foo = function() {};
   Foo.prototype.constructor = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.hasOwnProperty = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.isPrototypeOf = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.propertyIsEnumerable = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.toLocaleString = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.toString = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
   Foo.prototype.valueOf = function() {
     fail('real object should never be called');
- ***REMOVED*****REMOVED***
+  };
 
   // Create Mock and set $returns for toString.
   var mockControl = new goog.testing.MockControl();

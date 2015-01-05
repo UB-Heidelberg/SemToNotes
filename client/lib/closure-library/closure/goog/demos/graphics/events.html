@@ -35,8 +35,8 @@ See the COPYING file for details.
   <script type="text/javascript" src="../../base.js"></script>
   <script type="text/javascript">
     goog.require('goog.debug.DivConsole');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.graphics');
     goog.require('goog.log');
   </script>
@@ -86,25 +86,25 @@ See the COPYING file for details.
     var stroke = new goog.graphics.Stroke(2, 'green');
 
     var elipseElem = graphics.drawEllipse(300, 140, 80, 40, stroke, fill);
-  ***REMOVED***elipseElem, events, handleEvent('Ellipse'));
+    goog.events.listen(elipseElem, events, handleEvent('Ellipse'));
 
 
     // Create a group of circles.
     stroke = new goog.graphics.Stroke(1, 'black');
     var group = graphics.createGroup();
-  ***REMOVED***group, events, handleEvent('Group'));
+    goog.events.listen(group, events, handleEvent('Group'));
 
     fill = new goog.graphics.SolidFill('blue');
     var blueCircle = graphics.drawCircle(500, 60, 40, stroke, fill, group);
-  ***REMOVED***blueCircle, events, handleEvent('Blue-Circle'));
+    goog.events.listen(blueCircle, events, handleEvent('Blue-Circle'));
 
     fill = new goog.graphics.SolidFill("red", 0.5);
     var redCircle = graphics.drawCircle(500, 90, 40, stroke, fill, group);
-  ***REMOVED***redCircle, events, handleEvent('Red-Circle'));
+    goog.events.listen(redCircle, events, handleEvent('Red-Circle'));
 
     fill = new goog.graphics.SolidFill('green', 0.2);
     var greenCircle = graphics.drawCircle(500, 120, 40, stroke, fill, group);
-  ***REMOVED***greenCircle, events, handleEvent('Green-Circle'));
+    goog.events.listen(greenCircle, events, handleEvent('Green-Circle'));
 
     graphics.render(document.getElementById('shapes'));
 

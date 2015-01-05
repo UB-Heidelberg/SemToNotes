@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe('@event and @fires/@emits tags', function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/eventfirestag.js'),
         snowballMethod = docSet.getByLongname('Hurl#snowball')[0],

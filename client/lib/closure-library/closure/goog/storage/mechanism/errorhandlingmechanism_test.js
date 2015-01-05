@@ -25,7 +25,7 @@ var submechanism = {
   get: function() { throw error; },
   set: function() { throw error; },
   remove: function() { throw error; }
-***REMOVED***
+};
 
 var handler = goog.testing.recordFunction(goog.nullFunction);
 var mechanism;

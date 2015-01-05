@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a convenient API for data persistence with data
-***REMOVED*** expiration and user-initiated expired key collection.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a convenient API for data persistence with data
+ * expiration and user-initiated expired key collection.
+ *
+ */
 
 goog.provide('goog.storage.CollectableStorage');
 
@@ -28,35 +28,35 @@ goog.require('goog.storage.RichStorage');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a storage with expirning keys and a collection method.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.IterableMechanism} mechanism The underlying
-***REMOVED***     storage mechanism.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.ExpiringStorage}
-***REMOVED***
+/**
+ * Provides a storage with expirning keys and a collection method.
+ *
+ * @param {!goog.storage.mechanism.IterableMechanism} mechanism The underlying
+ *     storage mechanism.
+ * @constructor
+ * @extends {goog.storage.ExpiringStorage}
+ */
 goog.storage.CollectableStorage = function(mechanism) {
   goog.storage.CollectableStorage.base(this, 'constructor', mechanism);
-***REMOVED***
+};
 goog.inherits(goog.storage.CollectableStorage, goog.storage.ExpiringStorage);
 
 
-***REMOVED***
-***REMOVED*** Iterate over keys and returns those that expired.
-***REMOVED***
-***REMOVED*** @param {goog.iter.Iterable} keys keys to iterate over.
-***REMOVED*** @param {boolean=} opt_strict Also return invalid keys.
-***REMOVED*** @return {!Array.<string>} Keys of values that expired.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Iterate over keys and returns those that expired.
+ *
+ * @param {goog.iter.Iterable} keys keys to iterate over.
+ * @param {boolean=} opt_strict Also return invalid keys.
+ * @return {!Array.<string>} Keys of values that expired.
+ * @private
+ */
 goog.storage.CollectableStorage.prototype.getExpiredKeys_ =
     function(keys, opt_strict) {
   var keysToRemove = [];
   goog.iter.forEach(keys, function(key) {
     // Get the wrapper.
     var wrapper;
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       wrapper = goog.storage.CollectableStorage.prototype.getWrapper.call(
           this, key, true);
@@ -85,7 +85,7 @@ goog.storage.CollectableStorage.prototype.getExpiredKeys_ =
     }
     // Objects which can't be decoded are removed in strict mode.
     if (opt_strict) {
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         goog.storage.RichStorage.Wrapper.unwrap(wrapper);
       } catch (ex) {
@@ -100,17 +100,17 @@ goog.storage.CollectableStorage.prototype.getExpiredKeys_ =
     }
   }, this);
   return keysToRemove;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cleans up the storage by removing expired keys.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} keys List of all keys.
-***REMOVED*** @param {boolean=} opt_strict Also remove invalid keys.
-***REMOVED*** @return {!Array.<string>} a list of expired keys.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Cleans up the storage by removing expired keys.
+ *
+ * @param {Array.<string>} keys List of all keys.
+ * @param {boolean=} opt_strict Also remove invalid keys.
+ * @return {!Array.<string>} a list of expired keys.
+ * @protected
+ */
 goog.storage.CollectableStorage.prototype.collectInternal = function(
     keys, opt_strict) {
   var keysToRemove = this.getExpiredKeys_(keys, opt_strict);
@@ -118,14 +118,14 @@ goog.storage.CollectableStorage.prototype.collectInternal = function(
     goog.storage.CollectableStorage.prototype.remove.call(this, key);
   }, this);
   return keysToRemove;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cleans up the storage by removing expired keys.
-***REMOVED***
-***REMOVED*** @param {boolean=} opt_strict Also remove invalid keys.
-***REMOVED***
+/**
+ * Cleans up the storage by removing expired keys.
+ *
+ * @param {boolean=} opt_strict Also remove invalid keys.
+ */
 goog.storage.CollectableStorage.prototype.collect = function(opt_strict) {
   this.collectInternal(this.mechanism.__iterator__(true), opt_strict);
-***REMOVED***
+};

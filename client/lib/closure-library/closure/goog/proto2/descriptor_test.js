@@ -19,7 +19,7 @@ goog.require('goog.proto2.Descriptor');
 goog.require('goog.testing.jsunit');
 
 function testDescriptorConstruction() {
-  var messageType = {***REMOVED***
+  var messageType = {};
   var descriptor = new goog.proto2.Descriptor(messageType, {
     name: 'test',
     fullName: 'this.is.a.test'
@@ -31,8 +31,8 @@ function testDescriptorConstruction() {
 }
 
 function testParentDescriptor() {
-  var parentType = {***REMOVED***
-  var messageType = {***REMOVED***
+  var parentType = {};
+  var messageType = {};
 
   var parentDescriptor = new goog.proto2.Descriptor(parentType, {
     name: 'parent',
@@ -41,7 +41,7 @@ function testParentDescriptor() {
 
   parentType.getDescriptor = function() {
     return parentDescriptor;
- ***REMOVED*****REMOVED***
+  };
 
   var descriptor = new goog.proto2.Descriptor(messageType, {
     name: 'test',

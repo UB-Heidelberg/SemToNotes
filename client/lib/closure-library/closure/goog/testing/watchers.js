@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Simple notifiers for the Closure testing framework.
-***REMOVED***
-***REMOVED*** @author johnlenz@google.com (John Lenz)
-***REMOVED***
+/**
+ * @fileoverview Simple notifiers for the Closure testing framework.
+ *
+ * @author johnlenz@google.com (John Lenz)
+ */
 
 goog.provide('goog.testing.watchers');
 
 
-***REMOVED*** @private {!Array.<function()>}***REMOVED***
+/** @private {!Array.<function()>} */
 goog.testing.watchers.resetWatchers_ = [];
 
 
-***REMOVED***
-***REMOVED*** Fires clock reset watching functions.
-***REMOVED***
+/**
+ * Fires clock reset watching functions.
+ */
 goog.testing.watchers.signalClockReset = function() {
   var watchers = goog.testing.watchers.resetWatchers_;
   for (var i = 0; i < watchers.length; i++) {
     goog.testing.watchers.resetWatchers_[i]();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Enqueues a function to be called when the clock used for setTimeout is reset.
-***REMOVED*** @param {function()} fn
-***REMOVED***
+/**
+ * Enqueues a function to be called when the clock used for setTimeout is reset.
+ * @param {function()} fn
+ */
 goog.testing.watchers.watchClockReset = function(fn) {
   goog.testing.watchers.resetWatchers_.push(fn);
-***REMOVED***
+};
 

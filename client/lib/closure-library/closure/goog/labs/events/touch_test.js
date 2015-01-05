@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.events.touch.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.events.touch.
+ */
 
 
 goog.provide('goog.labs.events.touchTest');
@@ -25,7 +25,7 @@ goog.require('goog.testing.jsunit');
 goog.setTestOnly('goog.labs.events.touchTest');
 
 function testMouseEvent() {
-  var fakeTarget = {***REMOVED***
+  var fakeTarget = {};
 
   var fakeMouseMove = {
     'clientX': 1,
@@ -34,7 +34,7 @@ function testMouseEvent() {
     'screenY': 4,
     'target': fakeTarget,
     'type': 'mousemove'
- ***REMOVED*****REMOVED***
+  };
 
   var data = goog.labs.events.touch.getTouchData(fakeMouseMove);
   assertEquals(1, data.clientX);
@@ -45,7 +45,7 @@ function testMouseEvent() {
 }
 
 function testTouchEvent() {
-  var fakeTarget = {***REMOVED***
+  var fakeTarget = {};
 
   var fakeTouch = {
     'clientX': 1,
@@ -53,13 +53,13 @@ function testTouchEvent() {
     'screenX': 3,
     'screenY': 4,
     'target': fakeTarget
- ***REMOVED*****REMOVED***
+  };
 
   var fakeTouchStart = {
     'targetTouches': [fakeTouch],
     'target': fakeTarget,
     'type': 'touchstart'
- ***REMOVED*****REMOVED***
+  };
 
   var data = goog.labs.events.touch.getTouchData(fakeTouchStart);
   assertEquals(1, data.clientX);
@@ -70,7 +70,7 @@ function testTouchEvent() {
 }
 
 function testTouchChangeEvent() {
-  var fakeTarget = {***REMOVED***
+  var fakeTarget = {};
 
   var fakeTouch = {
     'clientX': 1,
@@ -78,13 +78,13 @@ function testTouchChangeEvent() {
     'screenX': 3,
     'screenY': 4,
     'target': fakeTarget
- ***REMOVED*****REMOVED***
+  };
 
   var fakeTouchStart = {
     'changedTouches': [fakeTouch],
     'target': fakeTarget,
     'type': 'touchend'
- ***REMOVED*****REMOVED***
+  };
 
   var data = goog.labs.events.touch.getTouchData(fakeTouchStart);
   assertEquals(1, data.clientX);

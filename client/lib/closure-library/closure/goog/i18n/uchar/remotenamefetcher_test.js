@@ -17,7 +17,7 @@ goog.provide('goog.i18n.uChar.RemoteNameFetcherTest');
 goog.setTestOnly('goog.i18n.uChar.RemoteNameFetcherTest');
 
 goog.require('goog.i18n.uChar.RemoteNameFetcher');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.testing.jsunit');
 goog.require('goog.testing.net.XhrIo');
 goog.require('goog.testing.recordFunction');

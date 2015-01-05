@@ -12,7 +12,7 @@ See the COPYING file for details.
 
   <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.ui.Component');
     goog.require('goog.ui.Ratings');
     goog.require('goog.ui.ServerChart');
@@ -23,9 +23,9 @@ See the COPYING file for details.
   <style class="text/css">
 
     /* NOTE: A bug in Safari 3 requires these css definitions to be in here.
-       Do not move these to a seperate file without testing safari 3!***REMOVED***
+       Do not move these to a seperate file without testing safari 3! */
 
-    /* These are recommended styles for the default splitpane***REMOVED***
+    /* These are recommended styles for the default splitpane */
     .goog-splitpane {
       height: 200px;
       width: 300px;
@@ -53,15 +53,15 @@ See the COPYING file for details.
       position: absolute;
     }
 
-    /* The rest of these styles are for the splitpane demo, splitpane.html***REMOVED***
+    /* The rest of these styles are for the splitpane demo, splitpane.html */
 
-    /* Example of styling a particular handle***REMOVED***
+    /* Example of styling a particular handle */
     #another-splitpane .goog-splitpane-handle {
       background: gray;
     }
 
     /* The following styles are for the rating widget, which is used in the splipane
-       example.  These have nothing to do with the splitpane!***REMOVED***
+       example.  These have nothing to do with the splitpane! */
     .goog-ratings {
       display: block;
       float: left;
@@ -147,10 +147,10 @@ See the COPYING file for details.
 
   <script>
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Show the width of the first splitpane on event changes.
-    ***REMOVED*** @param {goog.events.Event} e The event
-   ***REMOVED*****REMOVED***
+    /**
+     * Show the width of the first splitpane on event changes.
+     * @param {goog.events.Event} e The event
+     */
     var showWidth_ = function(e) {
       var el = document.getElementById('componentOneWidth');
       if (el) {
@@ -166,7 +166,7 @@ See the COPYING file for details.
         goog.ui.SplitPane.Orientation.HORIZONTAL);
 
     // Listen for change events and call showWidth.
-  ***REMOVED***splitpane1, goog.ui.Component.EventType.CHANGE,
+    goog.events.listen(splitpane1, goog.ui.Component.EventType.CHANGE,
         showWidth_);
 
 
@@ -193,11 +193,11 @@ See the COPYING file for details.
 
     splitpane2.setContinuousResize(false);
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Change the left splitter size or size a split pane.
-    ***REMOVED*** This method reads the form fields to choose the splitter
-    ***REMOVED*** and get the new values.
-   ***REMOVED*****REMOVED***
+    /**
+     * Change the left splitter size or size a split pane.
+     * This method reads the form fields to choose the splitter
+     * and get the new values.
+     */
     var updatePane_ = function() {
       var componentSizeValue =
           document.getElementById('firstComponentSize').value;
@@ -222,9 +222,9 @@ See the COPYING file for details.
       splitpane2.setFirstComponentSize();
     }
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** Change the orientation of the splitter pane.
-   ***REMOVED*****REMOVED***
+    /**
+     * Change the orientation of the splitter pane.
+     */
     var changeOrientation_ = function() {
       var s1Checked = document.getElementById('select1').checked;
       // Which splitter to update.

@@ -14,7 +14,7 @@ See the COPYING file for details.
 
 <script>
   goog.require('goog.dom');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.ui.ScrollFloater');
   goog.require('goog.ui.ToggleButton');
 </script>
@@ -123,7 +123,7 @@ table {
     scrollfloater3.decorate(goog.dom.getElement('floater3'));
 
     function setupClickHandler(ctrl, floater) {
-    ***REMOVED***ctrl, goog.ui.Component.EventType.ACTION,
+      goog.events.listen(ctrl, goog.ui.Component.EventType.ACTION,
                          function() {
                            floater.setScrollingEnabled(ctrl.isChecked());
                          });

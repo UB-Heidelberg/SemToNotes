@@ -13,8 +13,8 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.Component.EventType');
@@ -193,26 +193,26 @@ See the COPYING file for details.
     select3.render(goog.dom.getElement('select3'));
     select3.setSelectedIndex(0);
 
-  ***REMOVED***select1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(select1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           var value = 'Yay ' + select.getValue() + '!';
           goog.dom.setTextContent(goog.dom.getElement('value1'), value);
           goog.dom.setTextContent(goog.dom.getElement('value2'), '');
         });
-  ***REMOVED***select2, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(select2, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           var value = 'Boo ' + select.getValue() + '...';
           goog.dom.setTextContent(goog.dom.getElement('value2'), value);
           goog.dom.setTextContent(goog.dom.getElement('value1'), '');
         });
-  ***REMOVED***select3, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(select3, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           select2.setEnabled(select.getValue());
         });
-  ***REMOVED***goog.dom.getElement('add'), goog.events.EventType.CLICK,
+    goog.events.listen(goog.dom.getElement('add'), goog.events.EventType.CLICK,
         function(e) {
           var good = prompt('What\'s another good movie...?');
           if (select1.getItemCount() == 3) {
@@ -220,11 +220,11 @@ See the COPYING file for details.
           }
           select1.addItem(new goog.ui.MenuItem(good));
         });
-  ***REMOVED***goog.dom.getElement('hide'), goog.events.EventType.CLICK,
+    goog.events.listen(goog.dom.getElement('hide'), goog.events.EventType.CLICK,
         function(e) {
           select1.setVisible(!select1.isVisible());
         });
-  ***REMOVED***goog.dom.getElement('worst'),
+    goog.events.listen(goog.dom.getElement('worst'),
         goog.events.EventType.CLICK,
         function(e) {
           select2.setValue('Catwoman');
@@ -233,10 +233,10 @@ See the COPYING file for details.
     // Decorate an element with a Select control.
     var select4 = goog.ui.decorate(goog.dom.getElement('spaghetti'));
 
-  ***REMOVED***select1, EVENTS, logEvent);
-  ***REMOVED***select2, EVENTS, logEvent);
-  ***REMOVED***select3, EVENTS, logEvent);
-  ***REMOVED***select4, EVENTS, logEvent);
+    goog.events.listen(select1, EVENTS, logEvent);
+    goog.events.listen(select2, EVENTS, logEvent);
+    goog.events.listen(select3, EVENTS, logEvent);
+    goog.events.listen(select4, EVENTS, logEvent);
 
     // goog.ui.Select using goog.ui.FlatMenuButtonRenderer
     var flatSelect1 = new goog.ui.Select(null, null,
@@ -268,26 +268,26 @@ See the COPYING file for details.
     flatSelect3.render(goog.dom.getElement('flat-select3'));
     flatSelect3.setSelectedIndex(0);
 
-  ***REMOVED***flatSelect1, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(flatSelect1, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           var value = 'Yay ' + select.getValue() + '!';
           goog.dom.setTextContent(goog.dom.getElement('flat-value1'), value);
           goog.dom.setTextContent(goog.dom.getElement('flat-value2'), '');
         });
-  ***REMOVED***flatSelect2, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(flatSelect2, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           var value = 'Boo ' + select.getValue() + '...';
           goog.dom.setTextContent(goog.dom.getElement('flat-value2'), value);
           goog.dom.setTextContent(goog.dom.getElement('flat-value1'), '');
         });
-  ***REMOVED***flatSelect3, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(flatSelect3, goog.ui.Component.EventType.ACTION,
         function(e) {
           var select = e.target;
           flatSelect2.setEnabled(select.getValue());
         });
-  ***REMOVED***goog.dom.getElement('flat-add'),
+    goog.events.listen(goog.dom.getElement('flat-add'),
         goog.events.EventType.CLICK,
         function(e) {
           var good = prompt('What\'s another good Arnold movie...?');
@@ -296,12 +296,12 @@ See the COPYING file for details.
           }
           flatSelect1.addItem(new goog.ui.MenuItem(good));
         });
-  ***REMOVED***goog.dom.getElement('flat-hide'),
+    goog.events.listen(goog.dom.getElement('flat-hide'),
         goog.events.EventType.CLICK,
         function(e) {
           flatSelect1.setVisible(!flatSelect1.isVisible());
         });
-  ***REMOVED***goog.dom.getElement('flat-worst'),
+    goog.events.listen(goog.dom.getElement('flat-worst'),
         goog.events.EventType.CLICK,
         function(e) {
           flatSelect2.setValue('Jingle All the Way');
@@ -312,10 +312,10 @@ See the COPYING file for details.
         goog.ui.FlatMenuButtonRenderer.getInstance());
     flatSelect4.decorate(goog.dom.getElement('flat-ferrell'));
 
-  ***REMOVED***flatSelect1, EVENTS, logEvent);
-  ***REMOVED***flatSelect2, EVENTS, logEvent);
-  ***REMOVED***flatSelect3, EVENTS, logEvent);
-  ***REMOVED***flatSelect4, EVENTS, logEvent);
+    goog.events.listen(flatSelect1, EVENTS, logEvent);
+    goog.events.listen(flatSelect2, EVENTS, logEvent);
+    goog.events.listen(flatSelect3, EVENTS, logEvent);
+    goog.events.listen(flatSelect4, EVENTS, logEvent);
 
     goog.dom.setTextContent(goog.dom.getElement('perf'),
         (goog.now() - timer) + 'ms');

@@ -125,7 +125,7 @@ function testSendExceptionsInSendReadyPingStopsTimerAndReraises() {
   mockChannel.send(
       goog.messaging.BufferedChannel.CONTROL_CHANNEL_NAME_ + ':' +
       goog.messaging.BufferedChannel.PEER_READY_SERVICE_NAME_,
-      /* payload***REMOVED*** '').$throws(Error(errorMessage));
+      /* payload */ '').$throws(Error(errorMessage));
   channel.timer_.enabled = true;
 
   mockControl.$replayAll();

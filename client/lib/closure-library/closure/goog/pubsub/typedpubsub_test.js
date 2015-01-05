@@ -54,9 +54,9 @@ function testSubscribeUnsubscribe() {
   function bar2() {
   }
 
- ***REMOVED*****REMOVED*** const***REMOVED*** var FOO = new goog.pubsub.TopicId('foo');
- ***REMOVED*****REMOVED*** const***REMOVED*** var BAR = new goog.pubsub.TopicId('bar');
- ***REMOVED*****REMOVED*** const***REMOVED*** var BAZ = new goog.pubsub.TopicId('baz');
+  /** const */ var FOO = new goog.pubsub.TopicId('foo');
+  /** const */ var BAR = new goog.pubsub.TopicId('bar');
+  /** const */ var BAZ = new goog.pubsub.TopicId('baz');
 
   assertEquals('Topic "foo" must not have any subscribers', 0,
       pubsub.getCount(FOO));
@@ -124,10 +124,10 @@ function testSubscribeUnsubscribeWithContext() {
   function bar() {
   }
 
-  var contextA = {***REMOVED***
-  var contextB = {***REMOVED***
+  var contextA = {};
+  var contextB = {};
 
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_X = new goog.pubsub.TopicId('X');
+  /** const */ var TOPIC_X = new goog.pubsub.TopicId('X');
 
   assertEquals('Topic "X" must not have any subscribers', 0,
       pubsub.getCount(TOPIC_X));
@@ -163,7 +163,7 @@ function testSubscribeUnsubscribeWithContext() {
 function testSubscribeOnce() {
   var called, context;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   called = false;
   pubsub.subscribeOnce(SOME_TOPIC, function() {
@@ -178,7 +178,7 @@ function testSubscribeOnce() {
       pubsub.getCount(SOME_TOPIC));
   assertTrue('Subscriber must have been called', called);
 
-  context = {called: false***REMOVED***
+  context = {called: false};
   pubsub.subscribeOnce(SOME_TOPIC, function() {
     this.called = true;
   }, context);
@@ -191,7 +191,7 @@ function testSubscribeOnce() {
       pubsub.getCount(SOME_TOPIC));
   assertTrue('Subscriber must have been called', context.called);
 
-  context = {called: false, value: 0***REMOVED***
+  context = {called: false, value: 0};
   pubsub.subscribeOnce(SOME_TOPIC, function(value) {
     this.called = true;
     this.value = value;
@@ -209,9 +209,9 @@ function testSubscribeOnce() {
 }
 
 function testSubscribeOnce_boundFn() {
-  var context = {called: false, value: 0***REMOVED***
+  var context = {called: false, value: 0};
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   function subscriber(value) {
     this.called = true;
@@ -235,7 +235,7 @@ function testSubscribeOnce_partialFn() {
   var called = false;
   var value = 0;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   function subscriber(hasBeenCalled, newValue) {
     called = hasBeenCalled;
@@ -258,7 +258,7 @@ function testSubscribeOnce_partialFn() {
 function testSelfResubscribe() {
   var value = null;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   function resubscribe(iteration, newValue) {
     pubsub.subscribeOnce(SOME_TOPIC,
@@ -290,8 +290,8 @@ function testSelfResubscribe() {
 function testUnsubscribeByKey() {
   var key1, key2, key3;
 
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_X = new goog.pubsub.TopicId('X');
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_Y = new goog.pubsub.TopicId('Y');
+  /** const */ var TOPIC_X = new goog.pubsub.TopicId('X');
+  /** const */ var TOPIC_Y = new goog.pubsub.TopicId('Y');
 
   key1 = pubsub.subscribe(TOPIC_X, function() {});
   key2 = pubsub.subscribe(TOPIC_Y, function() {});
@@ -341,11 +341,11 @@ function testSubscribeUnsubscribeMultiple() {
   function bar() {
   }
 
-  var context = {***REMOVED***
+  var context = {};
 
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_X = new goog.pubsub.TopicId('X');
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_Y = new goog.pubsub.TopicId('Y');
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_Z = new goog.pubsub.TopicId('Z');
+  /** const */ var TOPIC_X = new goog.pubsub.TopicId('X');
+  /** const */ var TOPIC_Y = new goog.pubsub.TopicId('Y');
+  /** const */ var TOPIC_Z = new goog.pubsub.TopicId('Z');
 
   assertEquals('Pubsub channel must not have any subscribers', 0,
       pubsub.getCount());
@@ -405,11 +405,11 @@ function testSubscribeUnsubscribeMultiple() {
 }
 
 function testPublish() {
-  var context = {***REMOVED***
+  var context = {};
   var fooCalled = false;
   var barCalled = false;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   function foo(record) {
     fooCalled = true;
@@ -454,7 +454,7 @@ function testPublishEmptyTopic() {
     fooCalled = true;
   }
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   assertFalse('Publishing to nonexistent topic must return false',
       pubsub.publish(SOME_TOPIC));
@@ -479,7 +479,7 @@ function testSubscribeWhilePublishing() {
   var firstCalled = false;
   var secondCalled = false;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   pubsub.subscribe(SOME_TOPIC, function() {
     pubsub.subscribe(SOME_TOPIC, function() {
@@ -518,7 +518,7 @@ function testUnsubscribeWhilePublishing() {
   var secondCalled = false;
   var thirdCalled = false;
 
- ***REMOVED*****REMOVED*** const***REMOVED*** var TOPIC_X = new goog.pubsub.TopicId('X');
+  /** const */ var TOPIC_X = new goog.pubsub.TopicId('X');
 
   function first() {
     assertFalse('unsubscribe() must return false during publishing',
@@ -564,7 +564,7 @@ function testUnsubscribeSelfWhilePublishing() {
 
   var selfDestructCalled = false;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
 
   function selfDestruct() {
     assertFalse('unsubscribe() must return false during publishing',
@@ -587,7 +587,7 @@ function testUnsubscribeSelfWhilePublishing() {
 }
 
 function testPublishReturnValue() {
- ***REMOVED*****REMOVED*** @const***REMOVED*** SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
+  /** @const */ SOME_TOPIC = new goog.pubsub.TopicId('someTopic');
   pubsub.subscribe(SOME_TOPIC, function() {
     pubsub.unsubscribe(SOME_TOPIC, arguments.callee);
   });
@@ -601,8 +601,8 @@ function testNestedPublish() {
   var y1 = false;
   var y2 = false;
 
- ***REMOVED*****REMOVED*** @const***REMOVED*** TOPIC_X = new goog.pubsub.TopicId('X');
- ***REMOVED*****REMOVED*** @const***REMOVED*** TOPIC_Y = new goog.pubsub.TopicId('Y');
+  /** @const */ TOPIC_X = new goog.pubsub.TopicId('X');
+  /** @const */ TOPIC_Y = new goog.pubsub.TopicId('Y');
 
   pubsub.subscribe(TOPIC_X, function() {
     pubsub.publish(TOPIC_Y);

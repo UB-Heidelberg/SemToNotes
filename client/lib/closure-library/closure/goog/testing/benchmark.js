@@ -21,10 +21,10 @@ goog.require('goog.testing.PerformanceTimer');
 goog.require('goog.testing.TestCase');
 
 
-***REMOVED***
-***REMOVED*** Run the benchmarks.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Run the benchmarks.
+ * @private
+ */
 goog.testing.benchmark.run_ = function() {
   // Parse the 'times' query parameter if it's set.
   var times = 200;
@@ -39,7 +39,7 @@ goog.testing.benchmark.run_ = function() {
   // First, get the functions.
   var testSource = goog.testing.TestCase.getGlobals(prefix);
 
-  var benchmarks = {***REMOVED***
+  var benchmarks = {};
   var names = [];
 
   for (var name in testSource) {
@@ -76,13 +76,13 @@ goog.testing.benchmark.run_ = function() {
   for (var i = 0; i < names.length; i++) {
     performanceTable.run(benchmarks[names[i]], names[i]);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Onload handler that runs the benchmarks.
-***REMOVED*** @param {Event} e The event object.
-***REMOVED***
+/**
+ * Onload handler that runs the benchmarks.
+ * @param {Event} e The event object.
+ */
 window.onload = function(e) {
   goog.testing.benchmark.run_();
-***REMOVED***
+};

@@ -1,4 +1,4 @@
-/*global afterEach, beforeEach, describe, env, expect, it, spyOn***REMOVED***
+/*global afterEach, beforeEach, describe, env, expect, it, spyOn */
 'use strict';
 
 describe('jsdoc/tag/validator', function() {
@@ -21,13 +21,13 @@ describe('jsdoc/tag/validator', function() {
         var dictionary = require('jsdoc/tag/dictionary');
 
         var allowUnknown = !!env.conf.tags.allowUnknownTags;
-        var badTag = { title: 'lkjasdlkjfb'***REMOVED*****REMOVED***
+        var badTag = { title: 'lkjasdlkjfb' };
         var badTag2 = new tag.Tag('type', '{string} I am a string!');
         var meta = {
             filename: 'asdf.js',
             lineno: 1,
             comment: 'Better luck next time.'
-       ***REMOVED*****REMOVED***
+        };
         var goodTag = new tag.Tag('name', 'MyDocletName', meta); // mustHaveValue
         var goodTag2 = new tag.Tag('ignore', '', meta); // mustNotHaveValue
 

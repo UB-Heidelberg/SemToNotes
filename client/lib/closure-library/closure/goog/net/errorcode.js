@@ -12,86 +12,86 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Error codes shared between goog.net.IframeIo and
-***REMOVED*** goog.net.XhrIo.
-***REMOVED***
+/**
+ * @fileoverview Error codes shared between goog.net.IframeIo and
+ * goog.net.XhrIo.
+ */
 
 goog.provide('goog.net.ErrorCode');
 
 
-***REMOVED***
-***REMOVED*** Error codes
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Error codes
+ * @enum {number}
+ */
 goog.net.ErrorCode = {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** There is no error condition.
- ***REMOVED*****REMOVED***
+  /**
+   * There is no error condition.
+   */
   NO_ERROR: 0,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The most common error from iframeio, unfortunately, is that the browser
-  ***REMOVED*** responded with an error page that is classed as a different domain. The
-  ***REMOVED*** situations, are when a browser error page  is shown -- 404, access denied,
-  ***REMOVED*** DNS failure, connection reset etc.)
-  ***REMOVED***
- ***REMOVED*****REMOVED***
+  /**
+   * The most common error from iframeio, unfortunately, is that the browser
+   * responded with an error page that is classed as a different domain. The
+   * situations, are when a browser error page  is shown -- 404, access denied,
+   * DNS failure, connection reset etc.)
+   *
+   */
   ACCESS_DENIED: 1,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Currently the only case where file not found will be caused is when the
-  ***REMOVED*** code is running on the local file system and a non-IE browser makes a
-  ***REMOVED*** request to a file that doesn't exist.
- ***REMOVED*****REMOVED***
+  /**
+   * Currently the only case where file not found will be caused is when the
+   * code is running on the local file system and a non-IE browser makes a
+   * request to a file that doesn't exist.
+   */
   FILE_NOT_FOUND: 2,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** If Firefox shows a browser error page, such as a connection reset by
-  ***REMOVED*** server or access denied, then it will fail silently without the error or
-  ***REMOVED*** load handlers firing.
- ***REMOVED*****REMOVED***
+  /**
+   * If Firefox shows a browser error page, such as a connection reset by
+   * server or access denied, then it will fail silently without the error or
+   * load handlers firing.
+   */
   FF_SILENT_ERROR: 3,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Custom error provided by the client through the error check hook.
- ***REMOVED*****REMOVED***
+  /**
+   * Custom error provided by the client through the error check hook.
+   */
   CUSTOM_ERROR: 4,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Exception was thrown while processing the request.
- ***REMOVED*****REMOVED***
+  /**
+   * Exception was thrown while processing the request.
+   */
   EXCEPTION: 5,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The Http response returned a non-successful http status code.
- ***REMOVED*****REMOVED***
+  /**
+   * The Http response returned a non-successful http status code.
+   */
   HTTP_ERROR: 6,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The request was aborted.
- ***REMOVED*****REMOVED***
+  /**
+   * The request was aborted.
+   */
   ABORT: 7,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The request timed out.
- ***REMOVED*****REMOVED***
+  /**
+   * The request timed out.
+   */
   TIMEOUT: 8,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The resource is not available offline.
- ***REMOVED*****REMOVED***
+  /**
+   * The resource is not available offline.
+   */
   OFFLINE: 9
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a friendly error message for an error code. These messages are for
-***REMOVED*** debugging and are not localized.
-***REMOVED*** @param {goog.net.ErrorCode} errorCode An error code.
-***REMOVED*** @return {string} A message for debugging.
-***REMOVED***
+/**
+ * Returns a friendly error message for an error code. These messages are for
+ * debugging and are not localized.
+ * @param {goog.net.ErrorCode} errorCode An error code.
+ * @return {string} A message for debugging.
+ */
 goog.net.ErrorCode.getDebugMessage = function(errorCode) {
   switch (errorCode) {
     case goog.net.ErrorCode.NO_ERROR:
@@ -127,4 +127,4 @@ goog.net.ErrorCode.getDebugMessage = function(errorCode) {
     default:
       return 'Unrecognized error code';
   }
-***REMOVED***
+};

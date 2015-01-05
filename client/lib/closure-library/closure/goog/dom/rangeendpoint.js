@@ -12,21 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Simple struct for endpoints of a range.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Simple struct for endpoints of a range.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.dom.RangeEndpoint');
 
 
-***REMOVED***
-***REMOVED*** Constants for selection endpoints.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Constants for selection endpoints.
+ * @enum {number}
+ */
 goog.dom.RangeEndpoint = {
   START: 1,
   END: 0
-***REMOVED***
+};

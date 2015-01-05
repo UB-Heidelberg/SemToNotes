@@ -12,28 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This event wrapper will dispatch an event when the user uses
-***REMOVED*** the mouse wheel to scroll an element. You can get the direction by checking
-***REMOVED*** the deltaX and deltaY properties of the event.
-***REMOVED***
-***REMOVED*** This class aims to smooth out inconsistencies between browser platforms with
-***REMOVED*** regards to mousewheel events, but we do not cover every possible
-***REMOVED*** software/hardware combination out there, some of which occasionally produce
-***REMOVED*** very large deltas in mousewheel events. If your application wants to guard
-***REMOVED*** against extremely large deltas, use the setMaxDeltaX and setMaxDeltaY APIs
-***REMOVED*** to set maximum values that make sense for your application.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @see ../demos/mousewheelhandler.html
-***REMOVED***
+/**
+ * @fileoverview This event wrapper will dispatch an event when the user uses
+ * the mouse wheel to scroll an element. You can get the direction by checking
+ * the deltaX and deltaY properties of the event.
+ *
+ * This class aims to smooth out inconsistencies between browser platforms with
+ * regards to mousewheel events, but we do not cover every possible
+ * software/hardware combination out there, some of which occasionally produce
+ * very large deltas in mousewheel events. If your application wants to guard
+ * against extremely large deltas, use the setMaxDeltaX and setMaxDeltaY APIs
+ * to set maximum values that make sense for your application.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @see ../demos/mousewheelhandler.html
+ */
 
 goog.provide('goog.events.MouseWheelEvent');
 goog.provide('goog.events.MouseWheelHandler');
 goog.provide('goog.events.MouseWheelHandler.EventType');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
 goog.require('goog.math');
@@ -42,96 +42,96 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** This event handler allows you to catch mouse wheel events in a consistent
-***REMOVED*** manner.
-***REMOVED*** @param {Element|Document} element The element to listen to the mouse wheel
-***REMOVED***     event on.
-***REMOVED*** @param {boolean=} opt_capture Whether to handle the mouse wheel event in
-***REMOVED***     capture phase.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * This event handler allows you to catch mouse wheel events in a consistent
+ * manner.
+ * @param {Element|Document} element The element to listen to the mouse wheel
+ *     event on.
+ * @param {boolean=} opt_capture Whether to handle the mouse wheel event in
+ *     capture phase.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.events.MouseWheelHandler = function(element, opt_capture) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This is the element that we will listen to the real mouse wheel events on.
-  ***REMOVED*** @type {Element|Document}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * This is the element that we will listen to the real mouse wheel events on.
+   * @type {Element|Document}
+   * @private
+   */
   this.element_ = element;
 
   var rtlElement = goog.dom.isElement(this.element_) ?
-     ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.element_) :
-      (this.element_ ?***REMOVED*****REMOVED*** @type {Document}***REMOVED*** (this.element_).body : null);
+      /** @type {Element} */ (this.element_) :
+      (this.element_ ? /** @type {Document} */ (this.element_).body : null);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** True if the element exists and is RTL, false otherwise.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * True if the element exists and is RTL, false otherwise.
+   * @type {boolean}
+   * @private
+   */
   this.isRtl_ = !!rtlElement && goog.style.isRightToLeft(rtlElement);
 
   var type = goog.userAgent.GECKO ? 'DOMMouseScroll' : 'mousewheel';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The key returned from the goog.events.listen.
-  ***REMOVED*** @type {goog.events.Key}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The key returned from the goog.events.listen.
+   * @type {goog.events.Key}
+   * @private
+   */
   this.listenKey_ = goog.events.listen(this.element_, type, this, opt_capture);
-***REMOVED***
+};
 goog.inherits(goog.events.MouseWheelHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Enum type for the events fired by the mouse wheel handler.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum type for the events fired by the mouse wheel handler.
+ * @enum {string}
+ */
 goog.events.MouseWheelHandler.EventType = {
   MOUSEWHEEL: 'mousewheel'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Optional maximum magnitude for x delta on each mousewheel event.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Optional maximum magnitude for x delta on each mousewheel event.
+ * @type {number|undefined}
+ * @private
+ */
 goog.events.MouseWheelHandler.prototype.maxDeltaX_;
 
 
-***REMOVED***
-***REMOVED*** Optional maximum magnitude for y delta on each mousewheel event.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Optional maximum magnitude for y delta on each mousewheel event.
+ * @type {number|undefined}
+ * @private
+ */
 goog.events.MouseWheelHandler.prototype.maxDeltaY_;
 
 
-***REMOVED***
-***REMOVED*** @param {number} maxDeltaX Maximum magnitude for x delta on each mousewheel
-***REMOVED***     event. Should be non-negative.
-***REMOVED***
+/**
+ * @param {number} maxDeltaX Maximum magnitude for x delta on each mousewheel
+ *     event. Should be non-negative.
+ */
 goog.events.MouseWheelHandler.prototype.setMaxDeltaX = function(maxDeltaX) {
   this.maxDeltaX_ = maxDeltaX;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {number} maxDeltaY Maximum magnitude for y delta on each mousewheel
-***REMOVED***     event. Should be non-negative.
-***REMOVED***
+/**
+ * @param {number} maxDeltaY Maximum magnitude for y delta on each mousewheel
+ *     event. Should be non-negative.
+ */
 goog.events.MouseWheelHandler.prototype.setMaxDeltaY = function(maxDeltaY) {
   this.maxDeltaY_ = maxDeltaY;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the events on the element.
-***REMOVED*** @param {goog.events.BrowserEvent} e The underlying browser event.
-***REMOVED***
+/**
+ * Handles the events on the element.
+ * @param {goog.events.BrowserEvent} e The underlying browser event.
+ */
 goog.events.MouseWheelHandler.prototype.handleEvent = function(e) {
   var deltaX = 0;
   var deltaY = 0;
@@ -200,19 +200,19 @@ goog.events.MouseWheelHandler.prototype.handleEvent = function(e) {
   }
   var newEvent = new goog.events.MouseWheelEvent(detail, be, deltaX, deltaY);
   this.dispatchEvent(newEvent);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper for scaling down a mousewheel delta by a scale factor, if appropriate.
-***REMOVED*** @param {number} mouseWheelDelta Delta from a mouse wheel event. Expected to
-***REMOVED***     be an integer.
-***REMOVED*** @param {number} scaleFactor Factor to scale the delta down by. Expected to
-***REMOVED***     be an integer.
-***REMOVED*** @return {number} Scaled-down delta value, or the original delta if the
-***REMOVED***     scaleFactor does not appear to be applicable.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Helper for scaling down a mousewheel delta by a scale factor, if appropriate.
+ * @param {number} mouseWheelDelta Delta from a mouse wheel event. Expected to
+ *     be an integer.
+ * @param {number} scaleFactor Factor to scale the delta down by. Expected to
+ *     be an integer.
+ * @return {number} Scaled-down delta value, or the original delta if the
+ *     scaleFactor does not appear to be applicable.
+ * @private
+ */
 goog.events.MouseWheelHandler.smartScale_ = function(mouseWheelDelta,
     scaleFactor) {
   // The basic problem here is that in Webkit on Mac and Linux, we can get two
@@ -234,63 +234,63 @@ goog.events.MouseWheelHandler.smartScale_ = function(mouseWheelDelta,
   } else {
     return mouseWheelDelta / scaleFactor;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.MouseWheelHandler.prototype.disposeInternal = function() {
   goog.events.MouseWheelHandler.superClass_.disposeInternal.call(this);
   goog.events.unlistenByKey(this.listenKey_);
   this.listenKey_ = null;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A base class for mouse wheel events. This is used with the
-***REMOVED*** MouseWheelHandler.
-***REMOVED***
-***REMOVED*** @param {number} detail The number of rows the user scrolled.
-***REMOVED*** @param {Event} browserEvent Browser event object.
-***REMOVED*** @param {number} deltaX The number of rows the user scrolled in the X
-***REMOVED***     direction.
-***REMOVED*** @param {number} deltaY The number of rows the user scrolled in the Y
-***REMOVED***     direction.
-***REMOVED***
-***REMOVED*** @extends {goog.events.BrowserEvent}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A base class for mouse wheel events. This is used with the
+ * MouseWheelHandler.
+ *
+ * @param {number} detail The number of rows the user scrolled.
+ * @param {Event} browserEvent Browser event object.
+ * @param {number} deltaX The number of rows the user scrolled in the X
+ *     direction.
+ * @param {number} deltaY The number of rows the user scrolled in the Y
+ *     direction.
+ * @constructor
+ * @extends {goog.events.BrowserEvent}
+ * @final
+ */
 goog.events.MouseWheelEvent = function(detail, browserEvent, deltaX, deltaY) {
   goog.events.BrowserEvent.call(this, browserEvent);
 
   this.type = goog.events.MouseWheelHandler.EventType.MOUSEWHEEL;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of lines the user scrolled
-  ***REMOVED*** @type {number}
-  ***REMOVED*** NOTE: Informally deprecated. Use deltaX and deltaY instead, they provide
-  ***REMOVED*** more information.
- ***REMOVED*****REMOVED***
+  /**
+   * The number of lines the user scrolled
+   * @type {number}
+   * NOTE: Informally deprecated. Use deltaX and deltaY instead, they provide
+   * more information.
+   */
   this.detail = detail;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of "lines" scrolled in the X direction.
-  ***REMOVED***
-  ***REMOVED*** Note that not all browsers provide enough information to distinguish
-  ***REMOVED*** horizontal and vertical scroll events, so for these unsupported browsers,
-  ***REMOVED*** we will always have a deltaX of 0, even if the user scrolled their mouse
-  ***REMOVED*** wheel or trackpad sideways.
-  ***REMOVED***
-  ***REMOVED*** Currently supported browsers are Webkit and Firefox 3.1 or later.
-  ***REMOVED***
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The number of "lines" scrolled in the X direction.
+   *
+   * Note that not all browsers provide enough information to distinguish
+   * horizontal and vertical scroll events, so for these unsupported browsers,
+   * we will always have a deltaX of 0, even if the user scrolled their mouse
+   * wheel or trackpad sideways.
+   *
+   * Currently supported browsers are Webkit and Firefox 3.1 or later.
+   *
+   * @type {number}
+   */
   this.deltaX = deltaX;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The number of lines scrolled in the Y direction.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * The number of lines scrolled in the Y direction.
+   * @type {number}
+   */
   this.deltaY = deltaY;
-***REMOVED***
+};
 goog.inherits(goog.events.MouseWheelEvent, goog.events.BrowserEvent);

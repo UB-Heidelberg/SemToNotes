@@ -63,7 +63,7 @@ See the COPYING file for details.
     assertElementsEquals(q0, q2);
 
     goog.vec.Quaternion.slerp(q0, q1, 1, q2);
-    if (q1[3]***REMOVED*** q2[3] < 0) {
+    if (q1[3] * q2[3] < 0) {
       goog.vec.Quaternion.negate(q2, q2);
     }
     assertElementsEquals(q1, q2);
@@ -152,7 +152,7 @@ See the COPYING file for details.
     var q0 = goog.vec.Quaternion.createFloat32();
     goog.vec.Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual([0, 0, 0, 1], q0, goog.vec.EPSILON);
-    angle = 4***REMOVED*** Math.PI;
+    angle = 4 * Math.PI;
     goog.vec.Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual([0, 0, 0, 1], q0, goog.vec.EPSILON);
 
@@ -163,7 +163,7 @@ See the COPYING file for details.
         [-0.288675032, 0.622008682, -0.17254543, 0.70710678],
         q0, goog.vec.EPSILON);
     // Angle multiples of TWO_PI with a scaled axis should be the same.
-    angle += 4***REMOVED*** Math.PI;
+    angle += 4 * Math.PI;
     goog.vec.Vec3.scale(axis, 7.0, axis);
     goog.vec.Quaternion.fromAngleAxis(angle, axis, q0);
     assertElementsRoughlyEqual(

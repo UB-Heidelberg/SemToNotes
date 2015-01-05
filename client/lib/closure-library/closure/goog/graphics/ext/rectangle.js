@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview A thick wrapper around rectangles.
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview A thick wrapper around rectangles.
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 
 goog.provide('goog.graphics.ext.Rectangle');
@@ -25,31 +25,31 @@ goog.require('goog.graphics.ext.StrokeAndFillElement');
 
 
 
-***REMOVED***
-***REMOVED*** Wrapper for a graphics rectangle element.
-***REMOVED*** @param {goog.graphics.ext.Group} group Parent for this element.
-***REMOVED***
-***REMOVED*** @extends {goog.graphics.ext.StrokeAndFillElement}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wrapper for a graphics rectangle element.
+ * @param {goog.graphics.ext.Group} group Parent for this element.
+ * @constructor
+ * @extends {goog.graphics.ext.StrokeAndFillElement}
+ * @final
+ */
 goog.graphics.ext.Rectangle = function(group) {
   // Initialize with some stock values.
   var wrapper = group.getGraphicsImplementation().drawRect(0, 0, 1, 1, null,
       null, group.getWrapper());
   goog.graphics.ext.StrokeAndFillElement.call(this, group, wrapper);
-***REMOVED***
+};
 goog.inherits(goog.graphics.ext.Rectangle,
               goog.graphics.ext.StrokeAndFillElement);
 
 
-***REMOVED***
-***REMOVED*** Redraw the rectangle.  Called when the coordinate system is changed.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Redraw the rectangle.  Called when the coordinate system is changed.
+ * @protected
+ * @override
+ */
 goog.graphics.ext.Rectangle.prototype.redraw = function() {
   goog.graphics.ext.Rectangle.superClass_.redraw.call(this);
 
   // Our position is already handled by transform_.
   this.getWrapper().setSize(this.getWidth(), this.getHeight());
-***REMOVED***
+};

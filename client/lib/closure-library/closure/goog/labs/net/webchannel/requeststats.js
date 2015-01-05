@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Static utilities for collecting stats associated with
-***REMOVED*** ChannelRequest.
-***REMOVED***
-***REMOVED*** @visibility {:internal}
-***REMOVED***
+/**
+ * @fileoverview Static utilities for collecting stats associated with
+ * ChannelRequest.
+ *
+ * @visibility {:internal}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.requestStats');
@@ -36,340 +36,340 @@ goog.scope(function() {
 var requestStats = goog.labs.net.webChannel.requestStats;
 
 
-***REMOVED***
-***REMOVED*** Events fired.
-***REMOVED*** @type {Object}
-***REMOVED***
-requestStats.Event = {***REMOVED***
+/**
+ * Events fired.
+ * @type {Object}
+ */
+requestStats.Event = {};
 
 
-***REMOVED***
-***REMOVED*** Singleton event target for firing stat events
-***REMOVED*** @type {goog.events.EventTarget}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Singleton event target for firing stat events
+ * @type {goog.events.EventTarget}
+ * @private
+ */
 requestStats.statEventTarget_ = new goog.events.EventTarget();
 
 
-***REMOVED***
-***REMOVED*** The type of event that occurs every time some information about how reachable
-***REMOVED*** the server is is discovered.
-***REMOVED***
+/**
+ * The type of event that occurs every time some information about how reachable
+ * the server is is discovered.
+ */
 requestStats.Event.SERVER_REACHABILITY_EVENT = 'serverreachability';
 
 
-***REMOVED***
-***REMOVED*** Types of events which reveal information about the reachability of the
-***REMOVED*** server.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Types of events which reveal information about the reachability of the
+ * server.
+ * @enum {number}
+ */
 requestStats.ServerReachability = {
   REQUEST_MADE: 1,
   REQUEST_SUCCEEDED: 2,
   REQUEST_FAILED: 3,
   BACK_CHANNEL_ACTIVITY: 4
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Event class for SERVER_REACHABILITY_EVENT.
-***REMOVED***
-***REMOVED*** @param {goog.events.EventTarget} target The stat event target for
+/**
+ * Event class for SERVER_REACHABILITY_EVENT.
+ *
+ * @param {goog.events.EventTarget} target The stat event target for
        the channel.
-***REMOVED*** @param {requestStats.ServerReachability} reachabilityType
-***REMOVED***     The reachability event type.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
+ * @param {requestStats.ServerReachability} reachabilityType
+ *     The reachability event type.
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 requestStats.ServerReachabilityEvent = function(target, reachabilityType) {
   goog.events.Event.call(this,
       requestStats.Event.SERVER_REACHABILITY_EVENT, target);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {requestStats.ServerReachability}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {requestStats.ServerReachability}
+   */
   this.reachabilityType = reachabilityType;
-***REMOVED***
+};
 goog.inherits(requestStats.ServerReachabilityEvent, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Notify the channel that a particular fine grained network event has occurred.
-***REMOVED*** Should be considered package-private.
-***REMOVED*** @param {requestStats.ServerReachability} reachabilityType
-***REMOVED***     The reachability event type.
-***REMOVED***
+/**
+ * Notify the channel that a particular fine grained network event has occurred.
+ * Should be considered package-private.
+ * @param {requestStats.ServerReachability} reachabilityType
+ *     The reachability event type.
+ */
 requestStats.notifyServerReachabilityEvent = function(reachabilityType) {
   var target = requestStats.statEventTarget_;
   target.dispatchEvent(
       new requestStats.ServerReachabilityEvent(target, reachabilityType));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Stat Event that fires when things of interest happen that may be useful for
-***REMOVED*** applications to know about for stats or debugging purposes.
-***REMOVED***
+/**
+ * Stat Event that fires when things of interest happen that may be useful for
+ * applications to know about for stats or debugging purposes.
+ */
 requestStats.Event.STAT_EVENT = 'statevent';
 
 
-***REMOVED***
-***REMOVED*** Enum that identifies events for statistics that are interesting to track.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Enum that identifies events for statistics that are interesting to track.
+ * @enum {number}
+ */
 requestStats.Stat = {
- ***REMOVED*****REMOVED*** Event indicating a new connection attempt.***REMOVED***
+  /** Event indicating a new connection attempt. */
   CONNECT_ATTEMPT: 0,
 
- ***REMOVED*****REMOVED*** Event indicating a connection error due to a general network problem.***REMOVED***
+  /** Event indicating a connection error due to a general network problem. */
   ERROR_NETWORK: 1,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating a connection error that isn't due to a general network
-  ***REMOVED*** problem.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating a connection error that isn't due to a general network
+   * problem.
+   */
   ERROR_OTHER: 2,
 
- ***REMOVED*****REMOVED*** Event indicating the start of test stage one.***REMOVED***
+  /** Event indicating the start of test stage one. */
   TEST_STAGE_ONE_START: 3,
 
- ***REMOVED*****REMOVED*** Event indicating the start of test stage two.***REMOVED***
+  /** Event indicating the start of test stage two. */
   TEST_STAGE_TWO_START: 4,
 
- ***REMOVED*****REMOVED*** Event indicating the first piece of test data was received.***REMOVED***
+  /** Event indicating the first piece of test data was received. */
   TEST_STAGE_TWO_DATA_ONE: 5,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating that the second piece of test data was received and it was
-  ***REMOVED*** recieved separately from the first.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating that the second piece of test data was received and it was
+   * recieved separately from the first.
+   */
   TEST_STAGE_TWO_DATA_TWO: 6,
 
- ***REMOVED*****REMOVED*** Event indicating both pieces of test data were received simultaneously.***REMOVED***
+  /** Event indicating both pieces of test data were received simultaneously. */
   TEST_STAGE_TWO_DATA_BOTH: 7,
 
- ***REMOVED*****REMOVED*** Event indicating stage one of the test request failed.***REMOVED***
+  /** Event indicating stage one of the test request failed. */
   TEST_STAGE_ONE_FAILED: 8,
 
- ***REMOVED*****REMOVED*** Event indicating stage two of the test request failed.***REMOVED***
+  /** Event indicating stage two of the test request failed. */
   TEST_STAGE_TWO_FAILED: 9,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating that a buffering proxy is likely between the client and
-  ***REMOVED*** the server.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating that a buffering proxy is likely between the client and
+   * the server.
+   */
   PROXY: 10,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating that no buffering proxy is likely between the client and
-  ***REMOVED*** the server.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating that no buffering proxy is likely between the client and
+   * the server.
+   */
   NOPROXY: 11,
 
- ***REMOVED*****REMOVED*** Event indicating an unknown SID error.***REMOVED***
+  /** Event indicating an unknown SID error. */
   REQUEST_UNKNOWN_SESSION_ID: 12,
 
- ***REMOVED*****REMOVED*** Event indicating a bad status code was received.***REMOVED***
+  /** Event indicating a bad status code was received. */
   REQUEST_BAD_STATUS: 13,
 
- ***REMOVED*****REMOVED*** Event indicating incomplete data was received***REMOVED***
+  /** Event indicating incomplete data was received */
   REQUEST_INCOMPLETE_DATA: 14,
 
- ***REMOVED*****REMOVED*** Event indicating bad data was received***REMOVED***
+  /** Event indicating bad data was received */
   REQUEST_BAD_DATA: 15,
 
- ***REMOVED*****REMOVED*** Event indicating no data was received when data was expected.***REMOVED***
+  /** Event indicating no data was received when data was expected. */
   REQUEST_NO_DATA: 16,
 
- ***REMOVED*****REMOVED*** Event indicating a request timeout.***REMOVED***
+  /** Event indicating a request timeout. */
   REQUEST_TIMEOUT: 17,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating that the server never received our hanging GET and so it
-  ***REMOVED*** is being retried.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating that the server never received our hanging GET and so it
+   * is being retried.
+   */
   BACKCHANNEL_MISSING: 18,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event indicating that we have determined that our hanging GET is not
-  ***REMOVED*** receiving data when it should be. Thus it is dead dead and will be retried.
- ***REMOVED*****REMOVED***
+  /**
+   * Event indicating that we have determined that our hanging GET is not
+   * receiving data when it should be. Thus it is dead dead and will be retried.
+   */
   BACKCHANNEL_DEAD: 19,
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The browser declared itself offline during the lifetime of a request, or
-  ***REMOVED*** was offline when a request was initially made.
- ***REMOVED*****REMOVED***
+  /**
+   * The browser declared itself offline during the lifetime of a request, or
+   * was offline when a request was initially made.
+   */
   BROWSER_OFFLINE: 20,
 
- ***REMOVED*****REMOVED*** ActiveX is blocked by the machine's admin settings.***REMOVED***
+  /** ActiveX is blocked by the machine's admin settings. */
   ACTIVE_X_BLOCKED: 21
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Event class for STAT_EVENT.
-***REMOVED***
-***REMOVED*** @param {goog.events.EventTarget} eventTarget The stat event target for
+/**
+ * Event class for STAT_EVENT.
+ *
+ * @param {goog.events.EventTarget} eventTarget The stat event target for
        the channel.
-***REMOVED*** @param {requestStats.Stat} stat The stat.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
+ * @param {requestStats.Stat} stat The stat.
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 requestStats.StatEvent = function(eventTarget, stat) {
   goog.events.Event.call(this, requestStats.Event.STAT_EVENT, eventTarget);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The stat
-  ***REMOVED*** @type {requestStats.Stat}
- ***REMOVED*****REMOVED***
+  /**
+   * The stat
+   * @type {requestStats.Stat}
+   */
   this.stat = stat;
 
-***REMOVED***
+};
 goog.inherits(requestStats.StatEvent, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Returns the singleton event target for stat events.
-***REMOVED*** @return {goog.events.EventTarget} The event target for stat events.
-***REMOVED***
+/**
+ * Returns the singleton event target for stat events.
+ * @return {goog.events.EventTarget} The event target for stat events.
+ */
 requestStats.getStatEventTarget = function() {
   return requestStats.statEventTarget_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to call the stat event callback.
-***REMOVED*** @param {requestStats.Stat} stat The stat.
-***REMOVED***
+/**
+ * Helper function to call the stat event callback.
+ * @param {requestStats.Stat} stat The stat.
+ */
 requestStats.notifyStatEvent = function(stat) {
   var target = requestStats.statEventTarget_;
   target.dispatchEvent(new requestStats.StatEvent(target, stat));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An event that fires when POST requests complete successfully, indicating
-***REMOVED*** the size of the POST and the round trip time.
-***REMOVED***
+/**
+ * An event that fires when POST requests complete successfully, indicating
+ * the size of the POST and the round trip time.
+ */
 requestStats.Event.TIMING_EVENT = 'timingevent';
 
 
 
-***REMOVED***
-***REMOVED*** Event class for requestStats.Event.TIMING_EVENT
-***REMOVED***
-***REMOVED*** @param {goog.events.EventTarget} target The stat event target for
+/**
+ * Event class for requestStats.Event.TIMING_EVENT
+ *
+ * @param {goog.events.EventTarget} target The stat event target for
        the channel.
-***REMOVED*** @param {number} size The number of characters in the POST data.
-***REMOVED*** @param {number} rtt The total round trip time from POST to response in MS.
-***REMOVED*** @param {number} retries The number of times the POST had to be retried.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
+ * @param {number} size The number of characters in the POST data.
+ * @param {number} rtt The total round trip time from POST to response in MS.
+ * @param {number} retries The number of times the POST had to be retried.
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 requestStats.TimingEvent = function(target, size, rtt, retries) {
   goog.events.Event.call(this,
       requestStats.Event.TIMING_EVENT, target);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   */
   this.size = size;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   */
   this.rtt = rtt;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   */
   this.retries = retries;
 
-***REMOVED***
+};
 goog.inherits(requestStats.TimingEvent, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Helper function to notify listeners about POST request performance.
-***REMOVED***
-***REMOVED*** @param {number} size Number of characters in the POST data.
-***REMOVED*** @param {number} rtt The amount of time from POST start to response.
-***REMOVED*** @param {number} retries The number of times the POST had to be retried.
-***REMOVED***
+/**
+ * Helper function to notify listeners about POST request performance.
+ *
+ * @param {number} size Number of characters in the POST data.
+ * @param {number} rtt The amount of time from POST start to response.
+ * @param {number} retries The number of times the POST had to be retried.
+ */
 requestStats.notifyTimingEvent = function(size, rtt, retries) {
   var target = requestStats.statEventTarget_;
   target.dispatchEvent(
       new requestStats.TimingEvent(
           target, size, rtt, retries));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the application to set an execution hooks for when a channel
-***REMOVED*** starts processing requests. This is useful to track timing or logging
-***REMOVED*** special information. The function takes no parameters and return void.
-***REMOVED*** @param {Function} startHook  The function for the start hook.
-***REMOVED***
+/**
+ * Allows the application to set an execution hooks for when a channel
+ * starts processing requests. This is useful to track timing or logging
+ * special information. The function takes no parameters and return void.
+ * @param {Function} startHook  The function for the start hook.
+ */
 requestStats.setStartThreadExecutionHook = function(startHook) {
   requestStats.startExecutionHook_ = startHook;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Allows the application to set an execution hooks for when a channel
-***REMOVED*** stops processing requests. This is useful to track timing or logging
-***REMOVED*** special information. The function takes no parameters and return void.
-***REMOVED*** @param {Function} endHook  The function for the end hook.
-***REMOVED***
+/**
+ * Allows the application to set an execution hooks for when a channel
+ * stops processing requests. This is useful to track timing or logging
+ * special information. The function takes no parameters and return void.
+ * @param {Function} endHook  The function for the end hook.
+ */
 requestStats.setEndThreadExecutionHook = function(endHook) {
   requestStats.endExecutionHook_ = endHook;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Application provided execution hook for the start hook.
-***REMOVED***
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
-requestStats.startExecutionHook_ = function() {***REMOVED*****REMOVED***
+/**
+ * Application provided execution hook for the start hook.
+ *
+ * @type {Function}
+ * @private
+ */
+requestStats.startExecutionHook_ = function() { };
 
 
-***REMOVED***
-***REMOVED*** Application provided execution hook for the end hook.
-***REMOVED***
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
-requestStats.endExecutionHook_ = function() {***REMOVED*****REMOVED***
+/**
+ * Application provided execution hook for the end hook.
+ *
+ * @type {Function}
+ * @private
+ */
+requestStats.endExecutionHook_ = function() { };
 
 
-***REMOVED***
-***REMOVED*** Helper function to call the start hook
-***REMOVED***
+/**
+ * Helper function to call the start hook
+ */
 requestStats.onStartExecution = function() {
   requestStats.startExecutionHook_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to call the end hook
-***REMOVED***
+/**
+ * Helper function to call the end hook
+ */
 requestStats.onEndExecution = function() {
   requestStats.endExecutionHook_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wrapper around SafeTimeout which calls the start and end execution hooks
-***REMOVED*** with a try...finally block.
-***REMOVED*** @param {Function} fn The callback function.
-***REMOVED*** @param {number} ms The time in MS for the timer.
-***REMOVED*** @return {number} The ID of the timer.
-***REMOVED***
+/**
+ * Wrapper around SafeTimeout which calls the start and end execution hooks
+ * with a try...finally block.
+ * @param {Function} fn The callback function.
+ * @param {number} ms The time in MS for the timer.
+ * @return {number} The ID of the timer.
+ */
 requestStats.setTimeout = function(fn, ms) {
   if (!goog.isFunction(fn)) {
     throw Error('Fn must not be null and must be a function');
@@ -382,5 +382,5 @@ requestStats.setTimeout = function(fn, ms) {
       requestStats.onEndExecution();
     }
   }, ms);
-***REMOVED***
+};
 });  // goog.scope

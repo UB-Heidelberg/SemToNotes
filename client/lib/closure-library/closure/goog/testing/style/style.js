@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for inspecting page layout. This is a port of
-***REMOVED***     http://go/layoutbot.java
-***REMOVED***     See {@link http://go/layouttesting}.
-***REMOVED***
+/**
+ * @fileoverview Utilities for inspecting page layout. This is a port of
+ *     http://go/layoutbot.java
+ *     See {@link http://go/layouttesting}.
+ */
 
 goog.provide('goog.testing.style');
 
@@ -25,25 +25,25 @@ goog.require('goog.math.Rect');
 goog.require('goog.style');
 
 
-***REMOVED***
-***REMOVED*** Determines whether the bounding rectangles of the given elements intersect.
-***REMOVED*** @param {Element} element The first element.
-***REMOVED*** @param {Element} otherElement The second element.
-***REMOVED*** @return {boolean} Whether the bounding rectangles of the given elements
-***REMOVED***     intersect.
-***REMOVED***
+/**
+ * Determines whether the bounding rectangles of the given elements intersect.
+ * @param {Element} element The first element.
+ * @param {Element} otherElement The second element.
+ * @return {boolean} Whether the bounding rectangles of the given elements
+ *     intersect.
+ */
 goog.testing.style.intersects = function(element, otherElement) {
   var elementRect = goog.style.getBounds(element);
   var otherElementRect = goog.style.getBounds(otherElement);
   return goog.math.Rect.intersects(elementRect, otherElementRect);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether the element has visible dimensions, i.e. x > 0 && y > 0.
-***REMOVED*** @param {Element} element The element to check.
-***REMOVED*** @return {boolean} Whether the element has visible dimensions.
-***REMOVED***
+/**
+ * Determines whether the element has visible dimensions, i.e. x > 0 && y > 0.
+ * @param {Element} element The element to check.
+ * @return {boolean} Whether the element has visible dimensions.
+ */
 goog.testing.style.hasVisibleDimensions = function(element) {
   var elSize = goog.style.getSize(element);
   var shortest = elSize.getShortest();
@@ -52,14 +52,14 @@ goog.testing.style.hasVisibleDimensions = function(element) {
   }
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines whether the CSS style of the element renders it visible.
-***REMOVED*** @param {!Element} element The element to check.
-***REMOVED*** @return {boolean} Whether the CSS style of the element renders it visible.
-***REMOVED***
+/**
+ * Determines whether the CSS style of the element renders it visible.
+ * @param {!Element} element The element to check.
+ * @return {boolean} Whether the CSS style of the element renders it visible.
+ */
 goog.testing.style.isVisible = function(element) {
   var visibilityStyle =
       goog.testing.style.getAvailableStyle_(element, 'visibility');
@@ -67,35 +67,35 @@ goog.testing.style.isVisible = function(element) {
       goog.testing.style.getAvailableStyle_(element, 'display');
 
   return (visibilityStyle != 'hidden' && displayStyle != 'none');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test whether the given element is on screen.
-***REMOVED*** @param {!Element} el The element to test.
-***REMOVED*** @return {boolean} Whether the element is on the screen.
-***REMOVED***
+/**
+ * Test whether the given element is on screen.
+ * @param {!Element} el The element to test.
+ * @return {boolean} Whether the element is on the screen.
+ */
 goog.testing.style.isOnScreen = function(el) {
   var doc = goog.dom.getDomHelper(el).getDocument();
   var viewport = goog.style.getVisibleRectForElement(doc.body);
   var viewportRect = goog.math.Rect.createFromBox(viewport);
   return goog.dom.contains(doc, el) &&
       goog.style.getBounds(el).intersects(viewportRect);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This is essentially goog.style.getStyle_. goog.style.getStyle_ is private
-***REMOVED*** and is not a recommended way for general purpose style extractor. For the
-***REMOVED*** purposes of layout testing, we only use this function for retrieving
-***REMOVED*** 'visiblity' and 'display' style.
-***REMOVED*** @param {!Element} element The element to retrieve the style from.
-***REMOVED*** @param {string} style Style property name.
-***REMOVED*** @return {string} Style value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * This is essentially goog.style.getStyle_. goog.style.getStyle_ is private
+ * and is not a recommended way for general purpose style extractor. For the
+ * purposes of layout testing, we only use this function for retrieving
+ * 'visiblity' and 'display' style.
+ * @param {!Element} element The element to retrieve the style from.
+ * @param {string} style Style property name.
+ * @return {string} Style value.
+ * @private
+ */
 goog.testing.style.getAvailableStyle_ = function(element, style) {
   return goog.style.getComputedStyle(element, style) ||
       goog.style.getCascadedStyle(element, style) ||
       goog.style.getStyle(element, style);
-***REMOVED***
+};

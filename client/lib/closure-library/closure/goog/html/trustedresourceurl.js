@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview The TrustedResourceUrl type and its builders.
-***REMOVED***
-***REMOVED*** TODO(user): Link to document stating type contract.
-***REMOVED***
+/**
+ * @fileoverview The TrustedResourceUrl type and its builders.
+ *
+ * TODO(user): Link to document stating type contract.
+ */
 
 goog.provide('goog.html.TrustedResourceUrl');
 
@@ -28,129 +28,129 @@ goog.require('goog.string.TypedString');
 
 
 
-***REMOVED***
-***REMOVED*** A URL which is under application control and from which script, CSS, and
-***REMOVED*** other resources that represent executable code, can be fetched.
-***REMOVED***
-***REMOVED*** Given that the URL can only be constructed from strings under application
-***REMOVED*** control and is used to load resources, bugs resulting in a malformed URL
-***REMOVED*** should not have a security impact and are likely to be easily detectable
-***REMOVED*** during testing. Given the wide number of non-RFC compliant URLs in use,
-***REMOVED*** stricter validation could prevent some applications from being able to use
-***REMOVED*** this type.
-***REMOVED***
-***REMOVED*** Instances of this type must be created via the factory method,
-***REMOVED*** ({@code goog.html.TrustedResourceUrl.fromConstant}), and not by invoking its
-***REMOVED*** constructor. The constructor intentionally takes no parameters and the type
-***REMOVED*** is immutable; hence only a default instance corresponding to the empty
-***REMOVED*** string can be obtained via constructor invocation.
-***REMOVED***
-***REMOVED*** @see goog.html.TrustedResourceUrl#fromConstant
-***REMOVED***
-***REMOVED*** @final
-***REMOVED*** @struct
-***REMOVED*** @implements {goog.i18n.bidi.DirectionalString}
-***REMOVED*** @implements {goog.string.TypedString}
-***REMOVED***
+/**
+ * A URL which is under application control and from which script, CSS, and
+ * other resources that represent executable code, can be fetched.
+ *
+ * Given that the URL can only be constructed from strings under application
+ * control and is used to load resources, bugs resulting in a malformed URL
+ * should not have a security impact and are likely to be easily detectable
+ * during testing. Given the wide number of non-RFC compliant URLs in use,
+ * stricter validation could prevent some applications from being able to use
+ * this type.
+ *
+ * Instances of this type must be created via the factory method,
+ * ({@code goog.html.TrustedResourceUrl.fromConstant}), and not by invoking its
+ * constructor. The constructor intentionally takes no parameters and the type
+ * is immutable; hence only a default instance corresponding to the empty
+ * string can be obtained via constructor invocation.
+ *
+ * @see goog.html.TrustedResourceUrl#fromConstant
+ * @constructor
+ * @final
+ * @struct
+ * @implements {goog.i18n.bidi.DirectionalString}
+ * @implements {goog.string.TypedString}
+ */
 goog.html.TrustedResourceUrl = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The contained value of this TrustedResourceUrl.  The field has a purposely
-  ***REMOVED*** ugly name to make (non-compiled) code that attempts to directly access this
-  ***REMOVED*** field stand out.
-  ***REMOVED*** @private {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The contained value of this TrustedResourceUrl.  The field has a purposely
+   * ugly name to make (non-compiled) code that attempts to directly access this
+   * field stand out.
+   * @private {string}
+   */
   this.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_ = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A type marker used to implement additional run-time type checking.
-  ***REMOVED*** @see goog.html.TrustedResourceUrl#unwrap
-  ***REMOVED*** @const
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A type marker used to implement additional run-time type checking.
+   * @see goog.html.TrustedResourceUrl#unwrap
+   * @const
+   * @private
+   */
   this.TRUSTED_RESOURCE_URL_TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ =
       goog.html.TrustedResourceUrl.TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @const
-***REMOVED***
+/**
+ * @override
+ * @const
+ */
 goog.html.TrustedResourceUrl.prototype.implementsGoogStringTypedString = true;
 
 
-***REMOVED***
-***REMOVED*** Returns this TrustedResourceUrl's value as a string.
-***REMOVED***
-***REMOVED*** IMPORTANT: In code where it is security relevant that an object's type is
-***REMOVED*** indeed {@code TrustedResourceUrl}, use
-***REMOVED*** {@code goog.html.TrustedResourceUrl.unwrap} instead of this method. If in
-***REMOVED*** doubt, assume that it's security relevant. In particular, note that
-***REMOVED*** goog.html functions which return a goog.html type do not guarantee that
-***REMOVED*** the returned instance is of the right type. For example:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** var fakeSafeHtml = new String('fake');
-***REMOVED*** fakeSafeHtml.__proto__ = goog.html.SafeHtml.prototype;
-***REMOVED*** var newSafeHtml = goog.html.SafeHtml.htmlEscape(fakeSafeHtml);
-***REMOVED*** // newSafeHtml is just an alias for fakeSafeHtml, it's passed through by
-***REMOVED*** // goog.html.SafeHtml.htmlEscape() as fakeSafeHtml instanceof
-***REMOVED*** // goog.html.SafeHtml.
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @see goog.html.TrustedResourceUrl#unwrap
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns this TrustedResourceUrl's value as a string.
+ *
+ * IMPORTANT: In code where it is security relevant that an object's type is
+ * indeed {@code TrustedResourceUrl}, use
+ * {@code goog.html.TrustedResourceUrl.unwrap} instead of this method. If in
+ * doubt, assume that it's security relevant. In particular, note that
+ * goog.html functions which return a goog.html type do not guarantee that
+ * the returned instance is of the right type. For example:
+ *
+ * <pre>
+ * var fakeSafeHtml = new String('fake');
+ * fakeSafeHtml.__proto__ = goog.html.SafeHtml.prototype;
+ * var newSafeHtml = goog.html.SafeHtml.htmlEscape(fakeSafeHtml);
+ * // newSafeHtml is just an alias for fakeSafeHtml, it's passed through by
+ * // goog.html.SafeHtml.htmlEscape() as fakeSafeHtml instanceof
+ * // goog.html.SafeHtml.
+ * </pre>
+ *
+ * @see goog.html.TrustedResourceUrl#unwrap
+ * @override
+ */
 goog.html.TrustedResourceUrl.prototype.getTypedStringValue = function() {
   return this.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED*** @const
-***REMOVED***
+/**
+ * @override
+ * @const
+ */
 goog.html.TrustedResourceUrl.prototype.implementsGoogI18nBidiDirectionalString =
     true;
 
 
-***REMOVED***
-***REMOVED*** Returns this URLs directionality, which is always {@code LTR}.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Returns this URLs directionality, which is always {@code LTR}.
+ * @override
+ */
 goog.html.TrustedResourceUrl.prototype.getDirection = function() {
   return goog.i18n.bidi.Dir.LTR;
-***REMOVED***
+};
 
 
 if (goog.DEBUG) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Returns a debug string-representation of this value.
-  ***REMOVED***
-  ***REMOVED*** To obtain the actual string value wrapped in a TrustedResourceUrl, use
-  ***REMOVED*** {@code goog.html.TrustedResourceUrl.unwrap}.
-  ***REMOVED***
-  ***REMOVED*** @see goog.html.TrustedResourceUrl#unwrap
-  ***REMOVED*** @override
- ***REMOVED*****REMOVED***
+  /**
+   * Returns a debug string-representation of this value.
+   *
+   * To obtain the actual string value wrapped in a TrustedResourceUrl, use
+   * {@code goog.html.TrustedResourceUrl.unwrap}.
+   *
+   * @see goog.html.TrustedResourceUrl#unwrap
+   * @override
+   */
   goog.html.TrustedResourceUrl.prototype.toString = function() {
     return 'TrustedResourceUrl{' +
         this.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_ + '}';
- ***REMOVED*****REMOVED***
+  };
 }
 
 
-***REMOVED***
-***REMOVED*** Performs a runtime check that the provided object is indeed a
-***REMOVED*** TrustedResourceUrl object, and returns its value.
-***REMOVED***
-***REMOVED*** @param {!goog.html.TrustedResourceUrl} trustedResourceUrl The object to
-***REMOVED***     extract from.
-***REMOVED*** @return {string} The trustedResourceUrl object's contained string, unless
-***REMOVED***     the run-time type check fails. In that case, {@code unwrap} returns an
-***REMOVED***     innocuous string, or, if assertions are enabled, throws
-***REMOVED***     {@code goog.asserts.AssertionError}.
-***REMOVED***
+/**
+ * Performs a runtime check that the provided object is indeed a
+ * TrustedResourceUrl object, and returns its value.
+ *
+ * @param {!goog.html.TrustedResourceUrl} trustedResourceUrl The object to
+ *     extract from.
+ * @return {string} The trustedResourceUrl object's contained string, unless
+ *     the run-time type check fails. In that case, {@code unwrap} returns an
+ *     innocuous string, or, if assertions are enabled, throws
+ *     {@code goog.asserts.AssertionError}.
+ */
 goog.html.TrustedResourceUrl.unwrap = function(trustedResourceUrl) {
   // Perform additional Run-time type-checking to ensure that
   // trustedResourceUrl is indeed an instance of the expected type.  This
@@ -176,54 +176,54 @@ goog.html.TrustedResourceUrl.unwrap = function(trustedResourceUrl) {
     return 'type_error:TrustedResourceUrl';
 
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a TrustedResourceUrl object from a compile-time constant string.
-***REMOVED***
-***REMOVED*** Compile-time constant strings are inherently program-controlled and hence
-***REMOVED*** trusted.
-***REMOVED***
-***REMOVED*** @param {!goog.string.Const} url A compile-time-constant string from which to
-***REMOVED***     create a TrustedResourceUrl.
-***REMOVED*** @return {!goog.html.TrustedResourceUrl} A TrustedResourceUrl object
-***REMOVED***     initialized to {@code url}.
-***REMOVED***
+/**
+ * Creates a TrustedResourceUrl object from a compile-time constant string.
+ *
+ * Compile-time constant strings are inherently program-controlled and hence
+ * trusted.
+ *
+ * @param {!goog.string.Const} url A compile-time-constant string from which to
+ *     create a TrustedResourceUrl.
+ * @return {!goog.html.TrustedResourceUrl} A TrustedResourceUrl object
+ *     initialized to {@code url}.
+ */
 goog.html.TrustedResourceUrl.fromConstant = function(url) {
   return goog.html.TrustedResourceUrl
       .createTrustedResourceUrlSecurityPrivateDoNotAccessOrElse_(
           goog.string.Const.unwrap(url));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Type marker for the TrustedResourceUrl type, used to implement additional
-***REMOVED*** run-time type checking.
-***REMOVED*** @const
-***REMOVED*** @private
-***REMOVED***
-goog.html.TrustedResourceUrl.TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {***REMOVED***
+/**
+ * Type marker for the TrustedResourceUrl type, used to implement additional
+ * run-time type checking.
+ * @const
+ * @private
+ */
+goog.html.TrustedResourceUrl.TYPE_MARKER_GOOG_HTML_SECURITY_PRIVATE_ = {};
 
 
-***REMOVED***
-***REMOVED*** Utility method to create TrustedResourceUrl instances.
-***REMOVED***
-***REMOVED*** This function is considered "package private", i.e. calls (using "suppress
-***REMOVED*** visibility") from other files within this package are considered acceptable.
-***REMOVED*** DO NOT call this function from outside the goog.html package; use appropriate
-***REMOVED*** wrappers instead.
-***REMOVED***
-***REMOVED*** @param {string} url The string to initialize the TrustedResourceUrl object
-***REMOVED***     with.
-***REMOVED*** @return {!goog.html.TrustedResourceUrl} The initialized TrustedResourceUrl
-***REMOVED***     object.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Utility method to create TrustedResourceUrl instances.
+ *
+ * This function is considered "package private", i.e. calls (using "suppress
+ * visibility") from other files within this package are considered acceptable.
+ * DO NOT call this function from outside the goog.html package; use appropriate
+ * wrappers instead.
+ *
+ * @param {string} url The string to initialize the TrustedResourceUrl object
+ *     with.
+ * @return {!goog.html.TrustedResourceUrl} The initialized TrustedResourceUrl
+ *     object.
+ * @private
+ */
 goog.html.TrustedResourceUrl.
     createTrustedResourceUrlSecurityPrivateDoNotAccessOrElse_ = function(url) {
   var trustedResourceUrl = new goog.html.TrustedResourceUrl();
   trustedResourceUrl.privateDoNotAccessOrElseTrustedResourceUrlWrappedValue_ =
       url;
   return trustedResourceUrl;
-***REMOVED***
+};

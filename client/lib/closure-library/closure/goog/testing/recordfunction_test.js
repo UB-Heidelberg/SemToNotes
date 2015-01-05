@@ -49,7 +49,7 @@ function testWithoutArguments() {
 
 function testWithIdentityFunction() {
   var f = goog.testing.recordFunction(goog.functions.identity);
-  var dummyThis = {***REMOVED***
+  var dummyThis = {};
   assertEquals('f(1)', 1, f(1));
   assertEquals('f.call(dummyThis, 2)', 2, f.call(dummyThis, 2));
 
@@ -87,17 +87,17 @@ function testWithErrorFunction() {
 }
 
 function testWithClass() {
-  var ns = {***REMOVED***
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
+  var ns = {};
+  /** @constructor */
   ns.TestClass = function(num) {
     this.setX(ns.TestClass.identity(1) + num);
- ***REMOVED*****REMOVED***
+  };
   ns.TestClass.prototype.setX = function(x) {
     this.x = x;
- ***REMOVED*****REMOVED***
+  };
   ns.TestClass.identity = function(x) {
     return x;
- ***REMOVED*****REMOVED***
+  };
   var originalNsTestClass = ns.TestClass;
 
   stubs.set(ns, 'TestClass', goog.testing.recordConstructor(ns.TestClass));

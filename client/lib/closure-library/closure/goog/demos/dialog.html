@@ -10,8 +10,8 @@ See the COPYING file for details.
   <title>goog.ui.Dialog</title>
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
+    goog.require('goog.events.EventType');
     goog.require('goog.ui.Dialog');
   </script>
   <link rel="stylesheet" href="css/demo.css">
@@ -83,7 +83,7 @@ See the COPYING file for details.
     </p>
   </fieldset>
   <script>
-  ***REMOVED***document, goog.events.EventType.KEYDOWN, function(e) {
+    goog.events.listen(document, goog.events.EventType.KEYDOWN, function(e) {
       var code = e.keyCode;
       if (goog.dom.getElement('openOnKeyDown').checked) {
         switch (code) {
@@ -124,7 +124,7 @@ See the COPYING file for details.
 
     dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.CONTINUE_SAVE_CANCEL);
 
-  ***REMOVED***dialog1, goog.ui.Dialog.EventType.SELECT, function(e) {
+    goog.events.listen(dialog1, goog.ui.Dialog.EventType.SELECT, function(e) {
       alert('You chose: ' + e.key);
     });
 
@@ -136,7 +136,7 @@ See the COPYING file for details.
 
     dialog2.setButtonSet(goog.ui.Dialog.ButtonSet.YES_NO_CANCEL);
 
-  ***REMOVED***dialog2, goog.ui.Dialog.EventType.SELECT, function(e) {
+    goog.events.listen(dialog2, goog.ui.Dialog.EventType.SELECT, function(e) {
       alert('You chose: ' + e.key);
     });
 

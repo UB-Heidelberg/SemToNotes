@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true, jasmine: true***REMOVED***
+/*global describe: true, expect: true, it: true, jasmine: true */
 describe("@constant tag", function() {
     var docSet = jasmine.getDocSetFromFile('test/fixtures/constanttag.js');
     var FOO = docSet.getByLongname('FOO')[0];

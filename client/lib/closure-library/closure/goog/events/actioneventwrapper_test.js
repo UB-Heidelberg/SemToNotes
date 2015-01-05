@@ -17,7 +17,7 @@ goog.setTestOnly('goog.events.actionEventWrapperTest');
 
 goog.require('goog.a11y.aria');
 goog.require('goog.a11y.aria.Role');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.events.actionEventWrapper');
@@ -42,10 +42,10 @@ function tearDown() {
   eh.dispose();
 }
 
-var Foo = function() {***REMOVED***
+var Foo = function() {};
 Foo.prototype.test = function(e) {
   events.push(e);
-***REMOVED***
+};
 
 function assertListenersExist(el, listenerCount, capt) {
   var EVENT_TYPES = goog.events.ActionEventWrapper_.EVENT_TYPES_;
@@ -56,7 +56,7 @@ function assertListenersExist(el, listenerCount, capt) {
 }
 
 function testAddActionListener() {
-  var listener = function(e) { events.push(e);***REMOVED***
+  var listener = function(e) { events.push(e);};
   goog.events.listenWithWrapper(a, goog.events.actionEventWrapper, listener);
 
   assertListenersExist(a, 1, false);
@@ -70,12 +70,12 @@ function testAddActionListener() {
   assertEquals('Should be a keypress event', 'keypress', events[1].type);
 
   goog.a11y.aria.setRole(
-     ***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (a), goog.a11y.aria.Role.BUTTON);
+      /** @type {!Element} */ (a), goog.a11y.aria.Role.BUTTON);
   goog.testing.events.fireKeySequence(a, goog.events.KeyCodes.SPACE);
   assertEquals('3 events should have been dispatched', 3, events.length);
   assertEquals('Should be a keyup event', 'keyup', events[2].type);
   assertTrue('Should be default prevented.', events[2].defaultPrevented);
-  goog.a11y.aria.removeRole(***REMOVED*** @type {!Element}***REMOVED*** (a));
+  goog.a11y.aria.removeRole(/** @type {!Element} */ (a));
 
   goog.testing.events.fireKeySequence(a, goog.events.KeyCodes.SPACE);
   assertEquals('3 events should have been dispatched', 3, events.length);
@@ -92,7 +92,7 @@ function testAddActionListener() {
 function testAddActionListenerForHandleEvent() {
   var listener = {
     handleEvent: function(e) { events.push(e); }
- ***REMOVED*****REMOVED***
+  };
   goog.events.listenWithWrapper(a, goog.events.actionEventWrapper, listener);
 
   assertListenersExist(a, 1, false);
@@ -106,12 +106,12 @@ function testAddActionListenerForHandleEvent() {
   assertEquals('Should be a keypress event', 'keypress', events[1].type);
 
   goog.a11y.aria.setRole(
-     ***REMOVED*****REMOVED*** @type {!Element}***REMOVED*** (a), goog.a11y.aria.Role.BUTTON);
+      /** @type {!Element} */ (a), goog.a11y.aria.Role.BUTTON);
   goog.testing.events.fireKeySequence(a, goog.events.KeyCodes.SPACE);
   assertEquals('3 events should have been dispatched', 3, events.length);
   assertEquals('Should be a keyup event', 'keyup', events[2].type);
   assertTrue('Should be default prevented.', events[2].defaultPrevented);
-  goog.a11y.aria.removeRole(***REMOVED*** @type {!Element}***REMOVED*** (a));
+  goog.a11y.aria.removeRole(/** @type {!Element} */ (a));
 
   goog.testing.events.fireKeySequence(a, goog.events.KeyCodes.SPACE);
   assertEquals('3 events should have been dispatched', 3, events.length);
@@ -131,13 +131,13 @@ function testAddActionListenerInCaptPhase() {
     events.push(e);
     assertEquals(0, count);
     count++;
- ***REMOVED*****REMOVED***
+  };
 
   var bubbleListener = function(e) {
     events.push(e);
     assertEquals(1, count);
     count = 0;
- ***REMOVED*****REMOVED***
+  };
 
   goog.events.listenWithWrapper(a, goog.events.actionEventWrapper,
       captListener, true);
@@ -173,8 +173,8 @@ function testAddActionListenerInCaptPhase() {
 
 
 function testRemoveActionListener() {
-  var listener1 = function(e) { events.push(e);***REMOVED*****REMOVED***
-  var listener2 = function(e) { events.push({type: 'err'});***REMOVED*****REMOVED***
+  var listener1 = function(e) { events.push(e); };
+  var listener2 = function(e) { events.push({type: 'err'}); };
 
   goog.events.listenWithWrapper(a, goog.events.actionEventWrapper, listener1);
   assertListenersExist(a, 1, false);
@@ -203,7 +203,7 @@ function testRemoveActionListener() {
 
 
 function testEventHandlerActionListener() {
-  var listener = function(e) { events.push(e);***REMOVED*****REMOVED***
+  var listener = function(e) { events.push(e); };
   eh.listenWithWrapper(a, goog.events.actionEventWrapper, listener);
 
   assertListenersExist(a, 1, false);

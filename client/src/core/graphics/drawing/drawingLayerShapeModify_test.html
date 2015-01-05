@@ -6,7 +6,7 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
@@ -68,27 +68,27 @@ function getDrawingCanvas(id, callback) {
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
     xrx.engine.CANVAS);
   canvasDrawing.setBackgroundImage(url, callback);
-  for (var i = 0; i < 8; i++) { canvasDrawing.getViewbox().zoomIn()***REMOVED*****REMOVED***
+  for (var i = 0; i < 8; i++) { canvasDrawing.getViewbox().zoomIn() };
   return canvasDrawing;
-***REMOVED***
+};
 
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
       xrx.engine.SVG);
   svgDrawing.setBackgroundImage(url, callback);
-  for (var i = 0; i < 8; i++) { svgDrawing.getViewbox().zoomIn()***REMOVED*****REMOVED***
+  for (var i = 0; i < 8; i++) { svgDrawing.getViewbox().zoomIn() };
   return svgDrawing;
-***REMOVED***
+};
 
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
   var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
       xrx.engine.VML);
   vmlDrawing.setBackgroundImage(url, callback);
-  for (var i = 0; i < 8; i++) { vmlDrawing.getViewbox().zoomIn()***REMOVED*****REMOVED***
+  for (var i = 0; i < 8; i++) { vmlDrawing.getViewbox().zoomIn() };
   return vmlDrawing;
-***REMOVED***
+};
 
 function test1DeleteRectangle() {
   if (!xrx.engine.isOldIE()) {
@@ -118,7 +118,7 @@ function test1DeleteRectangle() {
     vmlDrawing.getLayerShape().addShapes(vmlRect);
     vmlDrawing.draw();
   }
-***REMOVED***
+};
 
 function test2deletePolygon() {
   if (!xrx.engine.isOldIE()) {
@@ -148,7 +148,7 @@ function test2deletePolygon() {
     vmlDrawing.getLayerShape().addShapes(vmlPolygon);
     vmlDrawing.draw();
   }
-***REMOVED***
+};
 
 function test3ModifyRectangle() {
   if (!xrx.engine.isOldIE()) {
@@ -178,7 +178,7 @@ function test3ModifyRectangle() {
     vmlDrawing.getLayerShape().addShapes(vmlRect);
     vmlDrawing.draw();
   }
-***REMOVED***
+};
 
 function test4ModifyPolygon() {
   if (!xrx.engine.isOldIE()) {
@@ -208,7 +208,7 @@ function test4ModifyPolygon() {
     vmlDrawing.getLayerShape().addShapes(vmlPolygon);
     vmlDrawing.draw();
   }
-***REMOVED***
+};
 
 </script>
 

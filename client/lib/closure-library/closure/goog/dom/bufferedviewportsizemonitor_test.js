@@ -12,19 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tests for goog.dom.BufferedViewportSizeMonitor.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Tests for goog.dom.BufferedViewportSizeMonitor.
+ *
+ */
 
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.dom.BufferedViewportSizeMonitorTest');
 
 goog.require('goog.dom.BufferedViewportSizeMonitor');
 goog.require('goog.dom.ViewportSizeMonitor');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.math.Size');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.events');
@@ -45,17 +45,17 @@ var size;
 
 var resizeCallback = function() {
   resizeEventCount++;
-***REMOVED***
+};
 
 function setUp() {
   timer.install();
 
   size = INITIAL_SIZE;
   viewportSizeMonitor = new goog.dom.ViewportSizeMonitor();
-  viewportSizeMonitor.getSize = function() { return size;***REMOVED*****REMOVED***
+  viewportSizeMonitor.getSize = function() { return size; };
   bufferedVsm = new goog.dom.BufferedViewportSizeMonitor(viewportSizeMonitor);
 
-***REMOVED***bufferedVsm, goog.events.EventType.RESIZE, resizeCallback);
+  goog.events.listen(bufferedVsm, goog.events.EventType.RESIZE, resizeCallback);
 }
 
 function tearDown() {

@@ -54,7 +54,7 @@ var attrWhitelist = {
     // mask the generic title handler for no good reason.
     'title': function(title) { return '<' + title + '>'; }
   }
-***REMOVED***
+};
 
 
 function run(input, golden, desc) {
@@ -189,7 +189,7 @@ function testNonWhitelistFunctionsNotCalled() {
   Object.prototype.dontcallme = function() {
     called = true;
     return 'dontcallme was called despite being on the prototype';
- ***REMOVED*****REMOVED***
+  };
   try {
     run('<span dontcallme="I\'ll call you">Lorem Ipsum',
         '<span>Lorem Ipsum</span>',

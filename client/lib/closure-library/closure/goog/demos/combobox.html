@@ -10,7 +10,7 @@ See the COPYING file for details.
   <title>goog.ui.ComboBox</title>
   <script src="../base.js"></script>
   <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.ui.ComboBox');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.dispose');
@@ -44,7 +44,7 @@ See the COPYING file for details.
   }
 
   /* Size the combobox so that it is sufficiently small to demonstrate the menu
-     being positioned to left-align with the control.***REMOVED***
+     being positioned to left-align with the control. */
   .goog-combobox input {
     width: 100px;
   }
@@ -143,7 +143,7 @@ See the COPYING file for details.
   for (var i = 0; i < containerEls.length; i++) {
     var cb = createTestComboBox();
     cb.render(containerEls[i]);
-  ***REMOVED***cb, 'change', handleChangeEvent);
+    goog.events.listen(cb, 'change', handleChangeEvent);
     controls.push(cb);
   }
 
@@ -153,7 +153,7 @@ See the COPYING file for details.
 
   window.onbeforeunload = function() {
     goog.disposeAll(controls);
- ***REMOVED*****REMOVED***
+  };
 
   </script>
 </body>

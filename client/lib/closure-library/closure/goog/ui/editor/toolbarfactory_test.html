@@ -36,15 +36,15 @@ function tearDown() {
   expectedFailures.handleTearDown();
 }
 
-***REMOVED***
-***REMOVED*** Makes sure we have the correct conversion table in
-***REMOVED*** goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_. Can only be tested in
-***REMOVED*** a browser that takes legacy size values as input to execCommand but returns
-***REMOVED*** pixel size values from queryCommandValue. That's OK because that's the only
-***REMOVED*** situation where this conversion table's precision is critical. (When it's
-***REMOVED*** used to size the labels of the font size menu options it's ok if it's a few
-***REMOVED*** pixels off.)
-***REMOVED***
+/**
+ * Makes sure we have the correct conversion table in
+ * goog.ui.editor.ToolbarFactory.LEGACY_SIZE_TO_PX_MAP_. Can only be tested in
+ * a browser that takes legacy size values as input to execCommand but returns
+ * pixel size values from queryCommandValue. That's OK because that's the only
+ * situation where this conversion table's precision is critical. (When it's
+ * used to size the labels of the font size menu options it's ok if it's a few
+ * pixels off.)
+ */
 function testGetLegacySizeFromPx() {
   // We will be warned if other browsers start behaving like webkit pre-534.7.
   expectedFailures.expectFailureFor(

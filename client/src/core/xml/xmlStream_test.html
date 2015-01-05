@@ -7,7 +7,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('xrx.xml.Label');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Stream');
   goog.require('xrx.token');
   goog.require('xrx.token.Tokens');
 </script>
@@ -30,22 +30,22 @@ function test01StopAtTagWithoutText() {
   var stream = new xrx.xml.Stream(xml);
   var off, len1, len2;
   
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
 
   stream.rowStartTag = function(offset, length1, length2) {
     off = offset;
     len1 = length1;
     len2 = length2;
     stream.stop();
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward(13);
   
   assertEquals(18, off);
   assertEquals(3, len1);
   assertEquals(0, len2);
-***REMOVED***
+};
 
 
 
@@ -53,22 +53,22 @@ function test02StopAtEndTag() {
   var stream = new xrx.xml.Stream(xml);
   var off, len1, len2;
   
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
 
   stream.rowEndTag = function(offset, length1, length2) {
     off = offset;
     len1 = length1;
     len2 = length2;
     stream.stop();
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   
   assertEquals(8, off);
   assertEquals(4, len1);
   assertEquals(5, len2);
-***REMOVED***
+};
 
 
 
@@ -76,22 +76,22 @@ function test03StopAtEmptyTagWithOffset() {
   var stream = new xrx.xml.Stream(xml);
   var off, len1, len2;
   
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEndTag = function() {};
 
   stream.rowEmptyTag = function(offset, length1, length2) {
     off = offset;
     len1 = length1;
     len2 = length2;
     stream.stop();
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   
   assertEquals(13, off);
   assertEquals(4, len1);
   assertEquals(5, len2);
-***REMOVED***
+};
 
 
 
@@ -103,19 +103,19 @@ function test04Forward() {
     startTags.push(offset.toString());
     notTags.push((offset + length1).toString());
     len2.push(length2.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEndTag = function(offset, length1, length2) {
     endTags.push(offset.toString());
     notTags.push((offset + length1).toString());
     len2.push(length2.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEmptyTag = function(offset, length1, length2) {
     emptyTags.push(offset.toString());
     notTags.push((offset + length1).toString());
     len2.push(length2.toString());
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   
@@ -124,7 +124,7 @@ function test04Forward() {
   assertEquals(emptyTagsTest, emptyTags.join(''));
   assertEquals(notTagsTest, notTags.join(''));
   assertEquals(length2Test, len2.join(''));
-***REMOVED***
+};
 
 
 
@@ -138,26 +138,26 @@ function test05ForwardWithOffset() {
   
   stream.rowStartTag = function(offset) {
     startTags.push(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEndTag = function(offset) {
     endTags.push(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEmptyTag = function(offset) {
     emptyTags.push(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowNotTag = function(offset) {
     notTags.push(offset.toString());
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward(12);
   
   assertEquals(startTagsTest, startTags.join(''));
   assertEquals(endTagsTest, endTags.join(''));
   assertEquals(emptyTagsTest, emptyTags.join(''));
-***REMOVED***
+};
 
 
 
@@ -169,19 +169,19 @@ function test06Backward() {
     startTags.unshift(offset.toString());
     notTags.unshift((offset + length1).toString());
     len2.unshift(length2.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEndTag = function(offset, length1, length2) {
     endTags.unshift(offset.toString());
     notTags.unshift((offset + length1).toString());
     len2.unshift(length2.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEmptyTag = function(offset, length1, length2) {
     emptyTags.unshift(offset.toString());
     notTags.unshift((offset + length1).toString());
     len2.unshift(length2.toString());
- ***REMOVED*****REMOVED***
+  };
   
   stream.backward();
   
@@ -190,7 +190,7 @@ function test06Backward() {
   assertEquals(emptyTagsTest, emptyTags.join(''));
   assertEquals(notTagsTest, notTags.join(''));
   assertEquals(length2Test, len2.join(''));
-***REMOVED***
+};
 
 
 
@@ -202,22 +202,22 @@ function test07BackwardWithOffset() {
   
   stream.rowStartTag = function(offset) {
     startTags.unshift(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEndTag = function(offset) {
     endTags.unshift(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.rowEmptyTag = function(offset) {
     emptyTags.unshift(offset.toString());
- ***REMOVED*****REMOVED***
+  };
 
   stream.backward(34);
   
   assertEquals(startTagsTest, startTags.join(''));
   assertEquals(endTagsTest, endTags.join(''));
   assertEquals(emptyTagsTest, emptyTags.join('')); 
-***REMOVED***
+};
 
 
 
@@ -226,12 +226,12 @@ function test08rowComment() {
   var xml = '<!-- - --><test><!-- --><!---->a<!----><a/><!----><b></b><!----></test>';
   var stream = new xrx.xml.Stream(xml);
 
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowStartTag = function() {***REMOVED***
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowStartTag = function() {};
   stream.rowComment = function(offset, length) {
     test.push(xml.substring(offset, offset + length));
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   stream.backward();
@@ -248,7 +248,7 @@ function test08rowComment() {
   assertEquals('<!---->', test[9]);
   assertEquals('<!-- -->', test[10]);
   assertEquals('<!-- - -->', test[11]);
-***REMOVED***
+};
 
 
 
@@ -258,13 +258,13 @@ function test09rowPI() {
   var xml = pi + '<test>' + pi + pi + 'a' + pi + '<a/>' + pi + '<b></b>' + pi + '</test>';
   var stream = new xrx.xml.Stream(xml);
 
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowStartTag = function() {***REMOVED***
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowStartTag = function() {};
   stream.rowPI = function(offset, length) {
     console.log(xml.substring(offset, offset + length));
     test.push(xml.substring(offset, offset + length));
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   stream.backward();
@@ -279,7 +279,7 @@ function test09rowPI() {
   assertEquals(pi, test[7]);
   assertEquals(pi, test[8]);
   assertEquals(pi, test[9]);
-***REMOVED***
+};
 
 
 
@@ -295,13 +295,13 @@ function test10rowCDATA() {
   stream.rowStartTag = function(offset, length1, length2) {
     startTag.push(xml.substring(offset, offset + length1));
     test.push(xml.substring(offset + length1, offset + length2));
- ***REMOVED*****REMOVED***
+  };
   stream.rowEndTag = function(offset, length1, length2) {
     endTag.push(xml.substring(offset, offset + length1));
- ***REMOVED*****REMOVED***
+  };
   stream.rowCDATA = function() {
     count++;
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
   stream.backward();
@@ -315,7 +315,7 @@ function test10rowCDATA() {
   assertEquals('</test>', endTag[1]);
   assertEquals('a' + cdata + cdata + 'b', test[0]);
   assertEquals('a' + cdata + cdata + 'b', test[1]);
-***REMOVED***
+};
 
 
 
@@ -358,7 +358,7 @@ function test11TagName() {
   var xmlTok4 = xml.substr(tok4.offset(), tok4.length());
   var location4 = stream.tagName(xmlTok4);
   assertEquals('a', xmlTok4.substr(location4.offset, location4.length));
-***REMOVED***
+};
 
 
 
@@ -400,7 +400,7 @@ function test12Attribute() {
   var xmlTok3 = xmlB.substr(tok3.offset(), tok3.length());
   var location3 = stream10b.attribute(xmlTok3, attr3.label().last());
   assertEquals(null, location3);
-***REMOVED***
+};
 
 
 
@@ -422,7 +422,7 @@ function test13AttrName() {
   // @return attr2
   var location2 = stream.attrName(xmlTok, attr2.label().last());
   assertEquals('attr2', xmlTok.substr(location2.offset, location2.length));
-***REMOVED***
+};
 
 
 
@@ -454,7 +454,7 @@ function test14AttrValue() {
   // @return null
   var location4 = stream.attrValue(xmlTok, attr4.label().last());
   assertEquals(null, location4); 
-***REMOVED***
+};
 
 
 
@@ -474,7 +474,7 @@ function test15Attributes() {
   assertEquals('attr1="value1"', xmlTok.substr(locations[1].offset, locations[1].length));
   assertEquals('attr2="value2"', xmlTok.substr(locations[3].offset, locations[3].length));
   assertEquals('attr3=""', xmlTok.substr(locations[4].offset, locations[4].length));
-***REMOVED***
+};
 
 
 
@@ -492,7 +492,7 @@ function test16Namespaces() {
 
   assertEquals(undefined, locations[1])
   assertEquals('xmlns="http://example.org"', xmlTok.substr(locations[2].offset, locations[2].length));
-***REMOVED***
+};
 
 
 
@@ -503,20 +503,20 @@ function test17namespaceForward() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('NAMESPACE', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
   stream.eventNamespace = function(offset, length) {
     count += 1;
     namespaces.push(new xrx.token.Namespace(null, offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   
   assertEquals(2, count);
   assertEquals('xmlns="http://example.org/NS/a"', namespaces[0].xml(xml));
   assertEquals('xmlns="http://example.org/NS/b"', namespaces[1].xml(xml));
-***REMOVED***
+};
 
 
 
@@ -527,13 +527,13 @@ function test18namespaceBackward() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('NAMESPACE', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
   stream.eventNamespace = function(offset, length) {
     count += 1;
     namespaces.push(new xrx.token.Namespace(null, offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.backward();
   
@@ -541,7 +541,7 @@ function test18namespaceBackward() {
   assertEquals('xmlns="http://example.org/NS/b"', namespaces[0].xml(xml));
   assertEquals('xmlns="http://example.org/NS/a"', namespaces[1].xml(xml));
   
-***REMOVED***
+};
 
 
 
@@ -554,7 +554,7 @@ function test19nsPrefix() {
   
   assertEquals('xmlns', attrName1.xml(xml));
   assertEquals('xmlns:b', attrName2.xml(xml));
-***REMOVED***
+};
 
 
 
@@ -567,7 +567,7 @@ function test20nsUri() {
   
   assertEquals('http://example.org/NS/a', attrValue1.xml(xml));
   assertEquals('http://example.org/NS/b', attrValue2.xml(xml));
-***REMOVED***
+};
 
 
 
@@ -577,18 +577,18 @@ function test21featureTagName() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('TAG_NAME', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventTagName = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('e1e2e3e3e1e1e3e3e2e1', test.join(''));
-***REMOVED***
+};
 
 
 
@@ -598,18 +598,18 @@ function test22featureAttribute() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('ATTRIBUTE', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventAttribute = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('attr1="v1"attr2="v2"attr1="v1"attr2="v2"', test.join(''));
-***REMOVED***
+};
 
 
 
@@ -619,18 +619,18 @@ function test23featureAttrName() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('ATTR_NAME', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventAttrName = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('attr1attr2attr1attr2', test.join(''));
-***REMOVED***
+};
 
 
 
@@ -640,19 +640,19 @@ function test24featureAttrValue() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('ATTR_VALUE', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventAttrValue = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('v1v2v1v2', test.join(''));
 
-***REMOVED***
+};
 
 
 
@@ -662,18 +662,18 @@ function test25featureNsPrefix() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('NS_PREFIX', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventNsPrefix = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('xmlns:axmlns:a', test.join(''));
-***REMOVED***
+};
 
 
 
@@ -683,18 +683,18 @@ function test26featureNsUri() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('NS_URI', true);
 
-  stream.rowStartTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowEndTag = function() {***REMOVED***
+  stream.rowStartTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowEndTag = function() {};
   stream.eventNsUri = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
 
   stream.forward();
   stream.backward();
 
   assertEquals('http://example.org/NS/ahttp://example.org/NS/a', test.join(''));
-***REMOVED***
+};
 
 
 
@@ -704,17 +704,17 @@ function test27featureXmlDecl() {
   var stream = new xrx.xml.Stream(xml);
   stream.setFeature('XML_DECL', true);
 
-  stream.rowEndTag = function() {***REMOVED***
-  stream.rowEmptyTag = function() {***REMOVED***
-  stream.rowStartTag = function() {***REMOVED***
+  stream.rowEndTag = function() {};
+  stream.rowEmptyTag = function() {};
+  stream.rowStartTag = function() {};
   stream.eventXmlDecl = function(offset, length) {
     test.push(xml.substr(offset, length));
- ***REMOVED*****REMOVED***
+  };
   
   stream.forward();
 
   assertEquals('<?xml version="1.0"?>', test[0]);
-***REMOVED***
+};
 
 
 </script>

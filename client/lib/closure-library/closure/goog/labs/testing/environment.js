@@ -19,66 +19,66 @@ goog.require('goog.testing.TestCase');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** JsUnit environments allow developers to customize the existing testing
-***REMOVED*** lifecycle by hitching additional setUp and tearDown behaviors to tests.
-***REMOVED***
-***REMOVED*** Environments will run their setUp steps in the order in which they
-***REMOVED*** are instantiated and registered. During tearDown, the environments will
-***REMOVED*** unwind the setUp and execute in reverse order.
-***REMOVED***
-***REMOVED*** See http://go/jsunit-env for more information.
-***REMOVED***
+/**
+ * JsUnit environments allow developers to customize the existing testing
+ * lifecycle by hitching additional setUp and tearDown behaviors to tests.
+ *
+ * Environments will run their setUp steps in the order in which they
+ * are instantiated and registered. During tearDown, the environments will
+ * unwind the setUp and execute in reverse order.
+ *
+ * See http://go/jsunit-env for more information.
+ */
 goog.labs.testing.Environment = goog.defineClass(null, {
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
+  /** @constructor */
   constructor: function() {
     goog.labs.testing.EnvironmentTestCase_.getInstance().
         registerEnvironment_(this);
   },
 
 
- ***REMOVED*****REMOVED*** Runs immediately before the setUpPage phase of JsUnit tests.***REMOVED***
+  /** Runs immediately before the setUpPage phase of JsUnit tests. */
   setUpPage: goog.nullFunction,
 
 
- ***REMOVED*****REMOVED*** Runs immediately after the tearDownPage phase of JsUnit tests.***REMOVED***
+  /** Runs immediately after the tearDownPage phase of JsUnit tests. */
   tearDownPage: goog.nullFunction,
 
 
- ***REMOVED*****REMOVED*** Runs immediately before the setUp phase of JsUnit tests.***REMOVED***
+  /** Runs immediately before the setUp phase of JsUnit tests. */
   setUp: goog.nullFunction,
 
 
- ***REMOVED*****REMOVED*** Runs immediately after the tearDown phase of JsUnit tests.***REMOVED***
+  /** Runs immediately after the tearDown phase of JsUnit tests. */
   tearDown: goog.nullFunction
 });
 
 
 
-***REMOVED***
-***REMOVED*** An internal TestCase used to hook environments into the JsUnit test runner.
-***REMOVED*** Environments cannot be used in conjunction with custom TestCases for JsUnit.
-***REMOVED*** @private @final @constructor
-***REMOVED*** @extends {goog.testing.TestCase}
-***REMOVED***
+/**
+ * An internal TestCase used to hook environments into the JsUnit test runner.
+ * Environments cannot be used in conjunction with custom TestCases for JsUnit.
+ * @private @final @constructor
+ * @extends {goog.testing.TestCase}
+ */
 goog.labs.testing.EnvironmentTestCase_ = function() {
   goog.labs.testing.EnvironmentTestCase_.base(this, 'constructor');
 
- ***REMOVED*****REMOVED*** @private {!Array.<!goog.labs.testing.Environment>}>***REMOVED***
+  /** @private {!Array.<!goog.labs.testing.Environment>}> */
   this.environments_ = [];
 
   // Automatically install this TestCase when any environment is used in a test.
   goog.testing.TestCase.initializeTestRunner(this);
-***REMOVED***
+};
 goog.inherits(goog.labs.testing.EnvironmentTestCase_, goog.testing.TestCase);
 goog.addSingletonGetter(goog.labs.testing.EnvironmentTestCase_);
 
 
-***REMOVED***
-***REMOVED*** Override the default global scope discovery of lifecycle functions to prevent
-***REMOVED*** overriding the custom environment setUp(Page)/tearDown(Page) logic.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Override the default global scope discovery of lifecycle functions to prevent
+ * overriding the custom environment setUp(Page)/tearDown(Page) logic.
+ * @override
+ */
 goog.labs.testing.EnvironmentTestCase_.prototype.autoDiscoverLifecycle =
     function() {
   if (goog.global['runTests']) {
@@ -87,21 +87,21 @@ goog.labs.testing.EnvironmentTestCase_.prototype.autoDiscoverLifecycle =
   if (goog.global['shouldRunTests']) {
     this.shouldRunTests = goog.bind(goog.global['shouldRunTests'], goog.global);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an environment to the JsUnit test.
-***REMOVED*** @param {!goog.labs.testing.Environment} env
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds an environment to the JsUnit test.
+ * @param {!goog.labs.testing.Environment} env
+ * @private
+ */
 goog.labs.testing.EnvironmentTestCase_.prototype.registerEnvironment_ =
     function(env) {
   this.environments_.push(env);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.testing.EnvironmentTestCase_.prototype.setUpPage = function() {
   goog.array.forEach(this.environments_, function(env) {
     env.setUpPage();
@@ -111,10 +111,10 @@ goog.labs.testing.EnvironmentTestCase_.prototype.setUpPage = function() {
   if (goog.global['setUpPage']) {
     goog.global['setUpPage']();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.testing.EnvironmentTestCase_.prototype.setUp = function() {
   // User defined configure method.
   if (goog.global['configureEnvironment']) {
@@ -129,10 +129,10 @@ goog.labs.testing.EnvironmentTestCase_.prototype.setUp = function() {
   if (goog.global['setUp']) {
     goog.global['setUp']();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.testing.EnvironmentTestCase_.prototype.tearDown = function() {
   // User defined tearDown method.
   if (goog.global['tearDown']) {
@@ -144,10 +144,10 @@ goog.labs.testing.EnvironmentTestCase_.prototype.tearDown = function() {
   goog.array.forEachRight(this.environments_, function(env) {
     env.tearDown();
   });
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.testing.EnvironmentTestCase_.prototype.tearDownPage = function() {
   // User defined tearDownPage method.
   if (goog.global['tearDownPage']) {
@@ -157,4 +157,4 @@ goog.labs.testing.EnvironmentTestCase_.prototype.tearDownPage = function() {
   goog.array.forEachRight(this.environments_, function(env) {
     env.tearDownPage();
   });
-***REMOVED***
+};

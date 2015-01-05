@@ -1,5 +1,5 @@
-***REMOVED*** Some documentation.
-***REMOVED*** @tutorial tute1
-***REMOVED*** @tutorial tute2
-***REMOVED***
+/** Some documentation.
+ * @tutorial tute1
+ * @tutorial tute2
+ */
 var x;

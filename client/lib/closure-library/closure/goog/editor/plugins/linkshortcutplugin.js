@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Adds a keyboard shortcut for the link command.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Adds a keyboard shortcut for the link command.
+ *
+ */
 
 goog.provide('goog.editor.plugins.LinkShortcutPlugin');
 
@@ -26,32 +26,32 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Plugin to add a keyboard shortcut for the link command
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Plugin to add a keyboard shortcut for the link command
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 goog.editor.plugins.LinkShortcutPlugin = function() {
   goog.editor.plugins.LinkShortcutPlugin.base(this, 'constructor');
-***REMOVED***
+};
 goog.inherits(goog.editor.plugins.LinkShortcutPlugin, goog.editor.Plugin);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.editor.plugins.LinkShortcutPlugin.prototype.getTrogClassId = function() {
   return 'LinkShortcutPlugin';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.editor.plugins.LinkShortcutPlugin.prototype.handleKeyboardShortcut =
     function(e, key, isModifierPressed) {
   var command;
   if (isModifierPressed && key == 'k' && !e.shiftKey) {
-    var link =***REMOVED*****REMOVED*** @type {goog.editor.Link?}***REMOVED*** (
+    var link = /** @type {goog.editor.Link?} */ (
         this.getFieldObject().execCommand(goog.editor.Command.LINK));
     if (link) {
       link.finishLinkCreation(this.getFieldObject());
@@ -60,5 +60,5 @@ goog.editor.plugins.LinkShortcutPlugin.prototype.handleKeyboardShortcut =
   }
 
   return false;
-***REMOVED***
+};
 

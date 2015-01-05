@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Constants for HTTP status codes.
-***REMOVED***
+/**
+ * @fileoverview Constants for HTTP status codes.
+ */
 
 goog.provide('goog.net.HttpStatus');
 
 
-***REMOVED***
-***REMOVED*** HTTP Status Codes defined in RFC 2616.
-***REMOVED*** @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * HTTP Status Codes defined in RFC 2616.
+ * @see http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+ * @enum {number}
+ */
 goog.net.HttpStatus = {
   // Informational 1xx
   CONTINUE: 100,
@@ -76,24 +76,24 @@ goog.net.HttpStatus = {
   HTTP_VERSION_NOT_SUPPORTED: 505,
 
   /*
-  ***REMOVED*** IE returns this code for 204 due to its use of URLMon, which returns this
-  ***REMOVED*** code for 'Operation Aborted'. The status text is 'Unknown', the response
-  ***REMOVED*** headers are ''. Known to occur on IE 6 on XP through IE9 on Win7.
- ***REMOVED*****REMOVED***
+   * IE returns this code for 204 due to its use of URLMon, which returns this
+   * code for 'Operation Aborted'. The status text is 'Unknown', the response
+   * headers are ''. Known to occur on IE 6 on XP through IE9 on Win7.
+   */
   QUIRK_IE_NO_CONTENT: 1223
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the given status should be considered successful.
-***REMOVED***
-***REMOVED*** Successful codes are OK (200), CREATED (201), ACCEPTED (202),
-***REMOVED*** NO CONTENT (204), PARTIAL CONTENT (206), NOT MODIFIED (304),
-***REMOVED*** and IE's no content code (1223).
-***REMOVED***
-***REMOVED*** @param {number} status The status code to test.
-***REMOVED*** @return {boolean} Whether the status code should be considered successful.
-***REMOVED***
+/**
+ * Returns whether the given status should be considered successful.
+ *
+ * Successful codes are OK (200), CREATED (201), ACCEPTED (202),
+ * NO CONTENT (204), PARTIAL CONTENT (206), NOT MODIFIED (304),
+ * and IE's no content code (1223).
+ *
+ * @param {number} status The status code to test.
+ * @return {boolean} Whether the status code should be considered successful.
+ */
 goog.net.HttpStatus.isSuccess = function(status) {
   switch (status) {
     case goog.net.HttpStatus.OK:
@@ -108,4 +108,4 @@ goog.net.HttpStatus.isSuccess = function(status) {
     default:
       return false;
   }
-***REMOVED***
+};

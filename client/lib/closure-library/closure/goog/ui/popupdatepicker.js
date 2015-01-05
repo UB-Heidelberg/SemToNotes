@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Popup Date Picker implementation.  Pairs a goog.ui.DatePicker
-***REMOVED*** with a goog.ui.Popup allowing the DatePicker to be attached to elements.
-***REMOVED***
-***REMOVED*** @see ../demos/popupdatepicker.html
-***REMOVED***
+/**
+ * @fileoverview Popup Date Picker implementation.  Pairs a goog.ui.DatePicker
+ * with a goog.ui.Popup allowing the DatePicker to be attached to elements.
+ *
+ * @see ../demos/popupdatepicker.html
+ */
 
 goog.provide('goog.ui.PopupDatePicker');
 
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.positioning.AnchoredPosition');
 goog.require('goog.positioning.Corner');
 goog.require('goog.positioning.Overflow');
@@ -33,77 +33,77 @@ goog.require('goog.ui.PopupBase');
 
 
 
-***REMOVED***
-***REMOVED*** Popup date picker widget. Fires goog.ui.PopupBase.EventType.SHOW or HIDE
-***REMOVED*** events when its visibility changes.
-***REMOVED***
-***REMOVED*** @param {goog.ui.DatePicker=} opt_datePicker Optional DatePicker.  This
-***REMOVED***     enables the use of a custom date-picker instance.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
-***REMOVED***
+/**
+ * Popup date picker widget. Fires goog.ui.PopupBase.EventType.SHOW or HIDE
+ * events when its visibility changes.
+ *
+ * @param {goog.ui.DatePicker=} opt_datePicker Optional DatePicker.  This
+ *     enables the use of a custom date-picker instance.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @extends {goog.ui.Component}
+ * @constructor
+ */
 goog.ui.PopupDatePicker = function(opt_datePicker, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
   this.datePicker_ = opt_datePicker || new goog.ui.DatePicker();
-***REMOVED***
+};
 goog.inherits(goog.ui.PopupDatePicker, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** Instance of a date picker control.
-***REMOVED*** @type {goog.ui.DatePicker?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Instance of a date picker control.
+ * @type {goog.ui.DatePicker?}
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.datePicker_ = null;
 
 
-***REMOVED***
-***REMOVED*** Instance of goog.ui.Popup used to manage the behavior of the date picker.
-***REMOVED*** @type {goog.ui.Popup?}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Instance of goog.ui.Popup used to manage the behavior of the date picker.
+ * @type {goog.ui.Popup?}
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.popup_ = null;
 
 
-***REMOVED***
-***REMOVED*** Reference to the element that triggered the last popup.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Reference to the element that triggered the last popup.
+ * @type {Element}
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.lastTarget_ = null;
 
 
-***REMOVED***
-***REMOVED*** Whether the date picker can move the focus to its key event target when it
-***REMOVED*** is shown.  The default is true.  Setting to false can break keyboard
-***REMOVED*** navigation, but this is needed for certain scenarios, for example the
-***REMOVED*** toolbar menu in trogedit which can't have the selection changed.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the date picker can move the focus to its key event target when it
+ * is shown.  The default is true.  Setting to false can break keyboard
+ * navigation, but this is needed for certain scenarios, for example the
+ * toolbar menu in trogedit which can't have the selection changed.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.allowAutoFocus_ = true;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.PopupDatePicker.prototype.createDom = function() {
   goog.ui.PopupDatePicker.superClass_.createDom.call(this);
   this.getElement().className = goog.getCssName('goog-popupdatepicker');
   this.popup_ = new goog.ui.Popup(this.getElement());
   this.popup_.setParentEventTarget(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the date picker is visible.
-***REMOVED***
+/**
+ * @return {boolean} Whether the date picker is visible.
+ */
 goog.ui.PopupDatePicker.prototype.isVisible = function() {
   return this.popup_ ? this.popup_.isVisible() : false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.PopupDatePicker.prototype.enterDocument = function() {
   goog.ui.PopupDatePicker.superClass_.enterDocument.call(this);
   // Create the DatePicker, if it isn't already.
@@ -118,10 +118,10 @@ goog.ui.PopupDatePicker.prototype.enterDocument = function() {
   }
   this.getHandler().listen(this.datePicker_, goog.ui.DatePicker.Events.CHANGE,
                            this.onDateChanged_);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.PopupDatePicker.prototype.disposeInternal = function() {
   goog.ui.PopupDatePicker.superClass_.disposeInternal.call(this);
   if (this.popup_) {
@@ -131,99 +131,99 @@ goog.ui.PopupDatePicker.prototype.disposeInternal = function() {
   this.datePicker_.dispose();
   this.datePicker_ = null;
   this.lastTarget_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** DatePicker cannot be used to decorate pre-existing html, since they're
-***REMOVED*** not based on Components.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {boolean} Returns always false.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * DatePicker cannot be used to decorate pre-existing html, since they're
+ * not based on Components.
+ * @param {Element} element Element to decorate.
+ * @return {boolean} Returns always false.
+ * @override
+ */
 goog.ui.PopupDatePicker.prototype.canDecorate = function(element) {
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.DatePicker} The date picker instance.
-***REMOVED***
+/**
+ * @return {goog.ui.DatePicker} The date picker instance.
+ */
 goog.ui.PopupDatePicker.prototype.getDatePicker = function() {
   return this.datePicker_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.date.Date?} The selected date, if any.  See
-***REMOVED***     goog.ui.DatePicker.getDate().
-***REMOVED***
+/**
+ * @return {goog.date.Date?} The selected date, if any.  See
+ *     goog.ui.DatePicker.getDate().
+ */
 goog.ui.PopupDatePicker.prototype.getDate = function() {
   return this.datePicker_.getDate();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the selected date.  See goog.ui.DatePicker.setDate().
-***REMOVED*** @param {goog.date.Date?} date The date to select.
-***REMOVED***
+/**
+ * Sets the selected date.  See goog.ui.DatePicker.setDate().
+ * @param {goog.date.Date?} date The date to select.
+ */
 goog.ui.PopupDatePicker.prototype.setDate = function(date) {
   this.datePicker_.setDate(date);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The last element that triggered the popup.
-***REMOVED***
+/**
+ * @return {Element} The last element that triggered the popup.
+ */
 goog.ui.PopupDatePicker.prototype.getLastTarget = function() {
   return this.lastTarget_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches the popup date picker to an element.
-***REMOVED*** @param {Element} element The element to attach to.
-***REMOVED***
+/**
+ * Attaches the popup date picker to an element.
+ * @param {Element} element The element to attach to.
+ */
 goog.ui.PopupDatePicker.prototype.attach = function(element) {
   this.getHandler().listen(element, goog.events.EventType.MOUSEDOWN,
                            this.showPopup_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Detatches the popup date picker from an element.
-***REMOVED*** @param {Element} element The element to detach from.
-***REMOVED***
+/**
+ * Detatches the popup date picker from an element.
+ * @param {Element} element The element to detach from.
+ */
 goog.ui.PopupDatePicker.prototype.detach = function(element) {
   this.getHandler().unlisten(element, goog.events.EventType.MOUSEDOWN,
                              this.showPopup_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the date picker can automatically move focus to its key event
-***REMOVED*** target when it is set to visible.
-***REMOVED*** @param {boolean} allow Whether to allow auto focus.
-***REMOVED***
+/**
+ * Sets whether the date picker can automatically move focus to its key event
+ * target when it is set to visible.
+ * @param {boolean} allow Whether to allow auto focus.
+ */
 goog.ui.PopupDatePicker.prototype.setAllowAutoFocus = function(allow) {
   this.allowAutoFocus_ = allow;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the date picker can automatically move focus to
-***REMOVED*** its key event target when it is set to visible.
-***REMOVED***
+/**
+ * @return {boolean} Whether the date picker can automatically move focus to
+ * its key event target when it is set to visible.
+ */
 goog.ui.PopupDatePicker.prototype.getAllowAutoFocus = function() {
   return this.allowAutoFocus_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Show the popup at the bottom-left corner of the specified element.
-***REMOVED*** @param {Element} element Reference element for displaying the popup -- popup
-***REMOVED***     will appear at the bottom-left corner of this element.
-***REMOVED***
+/**
+ * Show the popup at the bottom-left corner of the specified element.
+ * @param {Element} element Reference element for displaying the popup -- popup
+ *     will appear at the bottom-left corner of this element.
+ */
 goog.ui.PopupDatePicker.prototype.showPopup = function(element) {
   this.lastTarget_ = element;
   this.popup_.setPosition(new goog.positioning.AnchoredPosition(
@@ -249,39 +249,39 @@ goog.ui.PopupDatePicker.prototype.showPopup = function(element) {
   if (this.allowAutoFocus_) {
     this.getElement().focus();  // Our element contains the date picker.
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles click events on the targets and shows the date picker.
-***REMOVED*** @param {goog.events.Event} event The click event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles click events on the targets and shows the date picker.
+ * @param {goog.events.Event} event The click event.
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.showPopup_ = function(event) {
-  this.showPopup(***REMOVED*** @type {Element}***REMOVED*** (event.currentTarget));
-***REMOVED***
+  this.showPopup(/** @type {Element} */ (event.currentTarget));
+};
 
 
-***REMOVED***
-***REMOVED*** Hides this popup.
-***REMOVED***
+/**
+ * Hides this popup.
+ */
 goog.ui.PopupDatePicker.prototype.hidePopup = function() {
   this.popup_.setVisible(false);
   if (this.allowAutoFocus_ && this.lastTarget_) {
     this.lastTarget_.focus();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called when the date is changed.
-***REMOVED***
-***REMOVED*** @param {goog.events.Event} event The date change event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Called when the date is changed.
+ *
+ * @param {goog.events.Event} event The date change event.
+ * @private
+ */
 goog.ui.PopupDatePicker.prototype.onDateChanged_ = function(event) {
   this.hidePopup();
 
   // Forward the change event onto our listeners.
   this.dispatchEvent(event);
-***REMOVED***
+};

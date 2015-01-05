@@ -12,20 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the Bubble class.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @see ../demos/bubble.html
-***REMOVED***
-***REMOVED*** TODO: support decoration and addChild
-***REMOVED***
+/**
+ * @fileoverview Definition of the Bubble class.
+ *
+ *
+ * @see ../demos/bubble.html
+ *
+ * TODO: support decoration and addChild
+ */
 
 goog.provide('goog.ui.Bubble');
 
 goog.require('goog.Timer');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.math.Box');
 goog.require('goog.positioning');
 goog.require('goog.positioning.AbsolutePosition');
@@ -38,100 +38,100 @@ goog.require('goog.ui.Popup');
 
 
 
-***REMOVED***
-***REMOVED*** The Bubble provides a general purpose bubble implementation that can be
-***REMOVED*** anchored to a particular element and displayed for a period of time.
-***REMOVED***
-***REMOVED*** @param {string|Element} message HTML string or an element to display inside
-***REMOVED***     the bubble.
-***REMOVED*** @param {Object=} opt_config The configuration
-***REMOVED***     for the bubble. If not specified, the default configuration will be
-***REMOVED***     used. {@see goog.ui.Bubble.defaultConfig}.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * The Bubble provides a general purpose bubble implementation that can be
+ * anchored to a particular element and displayed for a period of time.
+ *
+ * @param {string|Element} message HTML string or an element to display inside
+ *     the bubble.
+ * @param {Object=} opt_config The configuration
+ *     for the bubble. If not specified, the default configuration will be
+ *     used. {@see goog.ui.Bubble.defaultConfig}.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.Bubble = function(message, opt_config, opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The HTML string or element to display inside the bubble.
-  ***REMOVED***
-  ***REMOVED*** @type {string|Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The HTML string or element to display inside the bubble.
+   *
+   * @type {string|Element}
+   * @private
+   */
   this.message_ = message;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The Popup element used to position and display the bubble.
-  ***REMOVED***
-  ***REMOVED*** @type {goog.ui.Popup}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The Popup element used to position and display the bubble.
+   *
+   * @type {goog.ui.Popup}
+   * @private
+   */
   this.popup_ = new goog.ui.Popup();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Configuration map that contains bubble's UI elements.
-  ***REMOVED***
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Configuration map that contains bubble's UI elements.
+   *
+   * @type {Object}
+   * @private
+   */
   this.config_ = opt_config || goog.ui.Bubble.defaultConfig;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Id of the close button for this bubble.
-  ***REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Id of the close button for this bubble.
+   *
+   * @type {string}
+   * @private
+   */
   this.closeButtonId_ = this.makeId('cb');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Id of the div for the embedded element.
-  ***REMOVED***
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Id of the div for the embedded element.
+   *
+   * @type {string}
+   * @private
+   */
   this.messageId_ = this.makeId('mi');
 
-***REMOVED***
+};
 goog.inherits(goog.ui.Bubble, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** In milliseconds, timeout after which the button auto-hides. Null means
-***REMOVED*** infinite.
-***REMOVED*** @type {?number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * In milliseconds, timeout after which the button auto-hides. Null means
+ * infinite.
+ * @type {?number}
+ * @private
+ */
 goog.ui.Bubble.prototype.timeout_ = null;
 
 
-***REMOVED***
-***REMOVED*** Key returned by the bubble timer.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Key returned by the bubble timer.
+ * @type {number}
+ * @private
+ */
 goog.ui.Bubble.prototype.timerId_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Key returned by the listen function for the close button.
-***REMOVED*** @type {goog.events.Key}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Key returned by the listen function for the close button.
+ * @type {goog.events.Key}
+ * @private
+ */
 goog.ui.Bubble.prototype.listener_ = null;
 
 
-***REMOVED***
-***REMOVED*** Key returned by the listen function for the close button.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Key returned by the listen function for the close button.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Bubble.prototype.anchor_ = null;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Bubble.prototype.createDom = function() {
   goog.ui.Bubble.superClass_.createDom.call(this);
 
@@ -140,39 +140,39 @@ goog.ui.Bubble.prototype.createDom = function() {
   element.style.visibility = 'hidden';
 
   this.popup_.setElement(element);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attaches the bubble to an anchor element. Computes the positioning and
-***REMOVED*** orientation of the bubble.
-***REMOVED***
-***REMOVED*** @param {Element} anchorElement The element to which we are attaching.
-***REMOVED***
+/**
+ * Attaches the bubble to an anchor element. Computes the positioning and
+ * orientation of the bubble.
+ *
+ * @param {Element} anchorElement The element to which we are attaching.
+ */
 goog.ui.Bubble.prototype.attach = function(anchorElement) {
   this.setAnchoredPosition_(
       anchorElement, this.computePinnedCorner_(anchorElement));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the corner of the bubble to used in the positioning algorithm.
-***REMOVED***
-***REMOVED*** @param {goog.positioning.Corner} corner The bubble corner used for
-***REMOVED***     positioning constants.
-***REMOVED***
+/**
+ * Sets the corner of the bubble to used in the positioning algorithm.
+ *
+ * @param {goog.positioning.Corner} corner The bubble corner used for
+ *     positioning constants.
+ */
 goog.ui.Bubble.prototype.setPinnedCorner = function(corner) {
   this.popup_.setPinnedCorner(corner);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the position of the bubble. Pass null for corner in AnchoredPosition
-***REMOVED*** for corner to be computed automatically.
-***REMOVED***
-***REMOVED*** @param {goog.positioning.AbstractPosition} position The position of the
-***REMOVED***     bubble.
-***REMOVED***
+/**
+ * Sets the position of the bubble. Pass null for corner in AnchoredPosition
+ * for corner to be computed automatically.
+ *
+ * @param {goog.positioning.AbstractPosition} position The position of the
+ *     bubble.
+ */
 goog.ui.Bubble.prototype.setPosition = function(position) {
   if (position instanceof goog.positioning.AbsolutePosition) {
     this.popup_.setPosition(position);
@@ -181,35 +181,35 @@ goog.ui.Bubble.prototype.setPosition = function(position) {
   } else {
     throw Error('Bubble only supports absolute and anchored positions!');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the timeout after which bubble hides itself.
-***REMOVED***
-***REMOVED*** @param {number} timeout Timeout of the bubble.
-***REMOVED***
+/**
+ * Sets the timeout after which bubble hides itself.
+ *
+ * @param {number} timeout Timeout of the bubble.
+ */
 goog.ui.Bubble.prototype.setTimeout = function(timeout) {
   this.timeout_ = timeout;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the bubble should be automatically hidden whenever user clicks
-***REMOVED*** outside the bubble element.
-***REMOVED***
-***REMOVED*** @param {boolean} autoHide Whether to hide if user clicks outside the bubble.
-***REMOVED***
+/**
+ * Sets whether the bubble should be automatically hidden whenever user clicks
+ * outside the bubble element.
+ *
+ * @param {boolean} autoHide Whether to hide if user clicks outside the bubble.
+ */
 goog.ui.Bubble.prototype.setAutoHide = function(autoHide) {
   this.popup_.setAutoHide(autoHide);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the bubble should be visible.
-***REMOVED***
-***REMOVED*** @param {boolean} visible Desired visibility state.
-***REMOVED***
+/**
+ * Sets whether the bubble should be visible.
+ *
+ * @param {boolean} visible Desired visibility state.
+ */
 goog.ui.Bubble.prototype.setVisible = function(visible) {
   if (visible && !this.popup_.isVisible()) {
     this.configureElement_();
@@ -218,31 +218,31 @@ goog.ui.Bubble.prototype.setVisible = function(visible) {
   if (!this.popup_.isVisible()) {
     this.unconfigureElement_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the bubble is visible.
-***REMOVED***
+/**
+ * @return {boolean} Whether the bubble is visible.
+ */
 goog.ui.Bubble.prototype.isVisible = function() {
   return this.popup_.isVisible();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Bubble.prototype.disposeInternal = function() {
   this.unconfigureElement_();
   this.popup_.dispose();
   this.popup_ = null;
   goog.ui.Bubble.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates element's contents and configures all timers. This is called on
-***REMOVED*** setVisible(true).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates element's contents and configures all timers. This is called on
+ * setVisible(true).
+ * @private
+ */
 goog.ui.Bubble.prototype.configureElement_ = function() {
   if (!this.isInDocument()) {
     throw Error('You must render the bubble before showing it!');
@@ -263,14 +263,14 @@ goog.ui.Bubble.prototype.configureElement_ = function() {
   if (this.timeout_) {
     this.timerId_ = goog.Timer.callOnce(this.hideBubble_, this.timeout_, this);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets rid of the element's contents and all assoicated timers and listeners.
-***REMOVED*** This is called on dispose as well as on setVisible(false).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets rid of the element's contents and all assoicated timers and listeners.
+ * This is called on dispose as well as on setVisible(false).
+ * @private
+ */
 goog.ui.Bubble.prototype.unconfigureElement_ = function() {
   if (this.listener_) {
     goog.events.unlistenByKey(this.listener_);
@@ -286,17 +286,17 @@ goog.ui.Bubble.prototype.unconfigureElement_ = function() {
     this.getDomHelper().removeChildren(element);
     element.innerHTML = '';
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes bubble position based on anchored element.
-***REMOVED***
-***REMOVED*** @param {Element} anchorElement The element to which we are attaching.
-***REMOVED*** @param {goog.positioning.Corner} corner The bubble corner used for
-***REMOVED***     positioning.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Computes bubble position based on anchored element.
+ *
+ * @param {Element} anchorElement The element to which we are attaching.
+ * @param {goog.positioning.Corner} corner The bubble corner used for
+ *     positioning.
+ * @private
+ */
 goog.ui.Bubble.prototype.setAnchoredPosition_ = function(anchorElement,
     corner) {
   this.popup_.setPinnedCorner(corner);
@@ -305,40 +305,40 @@ goog.ui.Bubble.prototype.setAnchoredPosition_ = function(anchorElement,
   var anchorCorner = goog.positioning.flipCorner(corner);
   this.popup_.setPosition(new goog.positioning.AnchoredPosition(
       anchorElement, anchorCorner));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Hides the bubble. This is called asynchronously by timer of event processor
-***REMOVED*** for the mouse click on the close button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Hides the bubble. This is called asynchronously by timer of event processor
+ * for the mouse click on the close button.
+ * @private
+ */
 goog.ui.Bubble.prototype.hideBubble_ = function() {
   this.setVisible(false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an AnchoredPosition that will position the bubble optimally
-***REMOVED*** given the position of the anchor element and the size of the viewport.
-***REMOVED***
-***REMOVED*** @param {Element} anchorElement The element to which the bubble is attached.
-***REMOVED*** @return {!goog.ui.Popup.AnchoredPosition} The AnchoredPosition to give to
-***REMOVED***     {@link #setPosition}.
-***REMOVED***
+/**
+ * Returns an AnchoredPosition that will position the bubble optimally
+ * given the position of the anchor element and the size of the viewport.
+ *
+ * @param {Element} anchorElement The element to which the bubble is attached.
+ * @return {!goog.ui.Popup.AnchoredPosition} The AnchoredPosition to give to
+ *     {@link #setPosition}.
+ */
 goog.ui.Bubble.prototype.getComputedAnchoredPosition = function(anchorElement) {
   return new goog.ui.Popup.AnchoredPosition(
       anchorElement, this.computePinnedCorner_(anchorElement));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the pinned corner for the bubble.
-***REMOVED***
-***REMOVED*** @param {Element} anchorElement The element to which the button is attached.
-***REMOVED*** @return {goog.positioning.Corner} The pinned corner.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Computes the pinned corner for the bubble.
+ *
+ * @param {Element} anchorElement The element to which the button is attached.
+ * @return {goog.positioning.Corner} The pinned corner.
+ * @private
+ */
 goog.ui.Bubble.prototype.computePinnedCorner_ = function(anchorElement) {
   var doc = this.getDomHelper().getOwnerDocument(anchorElement);
   var viewportElement = goog.style.getClientViewportElement(doc);
@@ -358,19 +358,19 @@ goog.ui.Bubble.prototype.computePinnedCorner_ = function(anchorElement) {
     anchorType += 2;
   }
   return goog.ui.Bubble.corners_[anchorType];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the right offset for a given bubble corner
-***REMOVED*** and creates a margin element for it. This is done to have the
-***REMOVED*** button anchor element on its frame rather than on the corner.
-***REMOVED***
-***REMOVED*** @param {goog.positioning.Corner} corner The corner.
-***REMOVED*** @return {!goog.math.Box} the computed margin. Only left or right fields are
-***REMOVED***     non-zero, but they may be negative.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Computes the right offset for a given bubble corner
+ * and creates a margin element for it. This is done to have the
+ * button anchor element on its frame rather than on the corner.
+ *
+ * @param {goog.positioning.Corner} corner The corner.
+ * @return {!goog.math.Box} the computed margin. Only left or right fields are
+ *     non-zero, but they may be negative.
+ * @private
+ */
 goog.ui.Bubble.prototype.createMarginForCorner_ = function(corner) {
   var margin = new goog.math.Box(0, 0, 0, 0);
   if (corner & goog.positioning.CornerBit.RIGHT) {
@@ -379,16 +379,16 @@ goog.ui.Bubble.prototype.createMarginForCorner_ = function(corner) {
     margin.left -= this.config_.marginShift;
   }
   return margin;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Computes the HTML string for a given bubble orientation.
-***REMOVED***
-***REMOVED*** @param {goog.positioning.Corner} corner The corner.
-***REMOVED*** @return {string} The HTML string to place inside the bubble's popup.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Computes the HTML string for a given bubble orientation.
+ *
+ * @param {goog.positioning.Corner} corner The corner.
+ * @return {string} The HTML string to place inside the bubble's popup.
+ * @private
+ */
 goog.ui.Bubble.prototype.computeHtmlForCorner_ = function(corner) {
   var bubbleTopClass;
   var bubbleBottomClass;
@@ -433,14 +433,14 @@ goog.ui.Bubble.prototype.computeHtmlForCorner_ = function(corner) {
       '<td colspan=4 class="' + bubbleBottomClass + '">' +
       '</table>';
   return html;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A default configuration for the bubble.
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED***
+/**
+ * A default configuration for the bubble.
+ *
+ * @type {Object}
+ */
 goog.ui.Bubble.defaultConfig = {
   bubbleWidth: 147,
   marginShift: 60,
@@ -455,15 +455,15 @@ goog.ui.Bubble.defaultConfig = {
   cssBubbleBottomNoAnchor: goog.getCssName('goog-bubble-bottom-no-anchor'),
   cssBubbleLeft: goog.getCssName('goog-bubble-left'),
   cssBubbleRight: goog.getCssName('goog-bubble-right')
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** An auxiliary array optimizing the corner computation.
-***REMOVED***
-***REMOVED*** @type {Array.<goog.positioning.Corner>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An auxiliary array optimizing the corner computation.
+ *
+ * @type {Array.<goog.positioning.Corner>}
+ * @private
+ */
 goog.ui.Bubble.corners_ = [
   goog.positioning.Corner.BOTTOM_RIGHT,
   goog.positioning.Corner.BOTTOM_LEFT,

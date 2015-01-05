@@ -10,7 +10,7 @@ See the COPYING file for details.
 <title>goog.ui.FilteredMenu</title>
 <script src="../base.js"></script>
 <script>
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.ui.Menu');
   goog.require('goog.ui.MenuItem');
   goog.require('goog.ui.CheckBoxMenuItem');
@@ -34,7 +34,7 @@ See the COPYING file for details.
 .goog-menu-filter input {
   width: 100%;
 
-  /* width: 100% interferes with the input event handler in IE6***REMOVED***
+  /* width: 100% interferes with the input event handler in IE6 */
   width: expression('30ex');
 }
 </style>

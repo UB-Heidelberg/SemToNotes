@@ -28,7 +28,7 @@ var fieldObject;
 
 function setUp() {
   plugin = new goog.editor.Plugin();
-  fieldObject = {***REMOVED***
+  fieldObject = {};
 }
 
 
@@ -108,7 +108,7 @@ function testExecCommand() {
   plugin.execCommandInternal = function(command, arg) {
     passedCommand = command;
     passedArg = arg;
- ***REMOVED*****REMOVED***
+  };
   plugin.execCommand('+indent', true);
 
   // Verify that execCommand dispatched the expected events.
@@ -129,15 +129,15 @@ function testExecCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Regression test for http://b/issue?id=1471355 .
-***REMOVED***
+/**
+ * Regression test for http://b/issue?id=1471355 .
+ */
 function testExecCommandException() {
   var mockField = new goog.testing.StrictMock(goog.editor.Field);
   plugin.registerFieldObject(mockField);
   plugin.execCommandInternal = function() {
     throw 1;
- ***REMOVED*****REMOVED***
+  };
 
   if (goog.userAgent.GECKO) {
     mockField.stopChangeEvents(true, true);

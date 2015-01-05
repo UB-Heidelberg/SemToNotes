@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing the background layer of a drawing canvas.
-***REMOVED***
+/**
+ * @fileoverview A class representing the background layer of a drawing canvas.
+ */
 
 goog.provide('xrx.drawing.LayerBackground');
 
@@ -10,60 +10,60 @@ goog.require('xrx.drawing.Layer');
 
 
 
-***REMOVED***
-***REMOVED*** A class representing the background layer of a drawing canvas. The 
-***REMOVED*** background layer can hold an image for image annotation.
-***REMOVED*** @param {xrx.drawing.Drawing} canvas A canvas object.
-***REMOVED***
-***REMOVED*** @extends xrx.drawing.Layer
-***REMOVED***
+/**
+ * A class representing the background layer of a drawing canvas. The 
+ * background layer can hold an image for image annotation.
+ * @param {xrx.drawing.Drawing} canvas A canvas object.
+ * @constructor
+ * @extends xrx.drawing.Layer
+ */
 xrx.drawing.LayerBackground = function(drawing) {
 
   goog.base(this, drawing);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Pointer to the background image object.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Pointer to the background image object.
+   * @type {Object}
+   * @private
+   */
   this.image_;
-***REMOVED***
+};
 goog.inherits(xrx.drawing.LayerBackground, xrx.drawing.Layer);
 
 
 
-***REMOVED***
-***REMOVED*** Returns the background image object.
-***REMOVED*** @return {Object} The background image object. 
-***REMOVED***
+/**
+ * Returns the background image object.
+ * @return {Object} The background image object. 
+ */
 xrx.drawing.LayerBackground.prototype.getImage = function(image) {
   return this.image_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Sets a new background image.
-***REMOVED*** @param {Image} image The new image.
-***REMOVED***
+/**
+ * Sets a new background image.
+ * @param {Image} image The new image.
+ */
 xrx.drawing.LayerBackground.prototype.setImage = function(image) {
   this.image_.setImage(image);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Draws the layer.
-***REMOVED***
+/**
+ * Draws the layer.
+ */
 xrx.drawing.LayerBackground.prototype.draw = function() {
   this.image_.draw();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.drawing.LayerBackground.prototype.create_ = function() {
   var graphics = this.getDrawing().getGraphics();
   var canvas = this.getDrawing().getCanvas();
@@ -73,4 +73,4 @@ xrx.drawing.LayerBackground.prototype.create_ = function() {
   // install the background image
   this.image_ = graphics.Image.create(undefined, canvas);
   this.group_.addChildren(this.image_);
-***REMOVED***
+};

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED*** @nocompile***REMOVED***
+/** @nocompile */
 
 ['Big Table', 'Googlebot', 'Instant Indexing', 'Mustang', 'Page Rank',
     'Proto Buffer']

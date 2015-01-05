@@ -15,7 +15,7 @@
 goog.provide('goog.net.iframeIoDifferentBaseTest');
 goog.setTestOnly('goog.net.iframeIoDifferentBaseTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.net.EventType');
 goog.require('goog.net.IframeIo');
 goog.require('goog.testing.AsyncTestCase');
@@ -25,7 +25,7 @@ var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
 
 function testDifferentBaseUri() {
   var io = new goog.net.IframeIo();
-***REMOVED***io, goog.net.EventType.COMPLETE,
+  goog.events.listen(io, goog.net.EventType.COMPLETE,
       function() {
         assertNotEquals('File should have expected content.',
             -1, io.getResponseText().indexOf('just a file'));

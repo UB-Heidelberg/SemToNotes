@@ -12,24 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A polyfill for window.requestAnimationFrame and
-***REMOVED*** window.cancelAnimationFrame.
-***REMOVED*** Code based on https://gist.github.com/paulirish/1579671
-***REMOVED***
+/**
+ * @fileoverview A polyfill for window.requestAnimationFrame and
+ * window.cancelAnimationFrame.
+ * Code based on https://gist.github.com/paulirish/1579671
+ */
 
 goog.provide('goog.dom.animationFrame.polyfill');
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} If true, will install the requestAnimationFrame polyfill.
-***REMOVED***
+/**
+ * @define {boolean} If true, will install the requestAnimationFrame polyfill.
+ */
 goog.define('goog.dom.animationFrame.polyfill.ENABLED', true);
 
 
-***REMOVED***
-***REMOVED*** Installs the requestAnimationFrame (and cancelAnimationFrame) polyfill.
-***REMOVED***
+/**
+ * Installs the requestAnimationFrame (and cancelAnimationFrame) polyfill.
+ */
 goog.dom.animationFrame.polyfill.install =
     goog.dom.animationFrame.polyfill.ENABLED ? function() {
   var vendors = ['ms', 'moz', 'webkit', 'o'];
@@ -50,12 +50,12 @@ goog.dom.animationFrame.polyfill.install =
       return window.setTimeout(function() {
         callback(currTime + timeToCall);
       }, timeToCall);
-   ***REMOVED*****REMOVED***
+    };
 
     if (!window.cancelAnimationFrame) {
       window.cancelAnimationFrame = function(id) {
         clearTimeout(id);
-     ***REMOVED*****REMOVED***
+      };
     }
   }
 } : goog.nullFunction;

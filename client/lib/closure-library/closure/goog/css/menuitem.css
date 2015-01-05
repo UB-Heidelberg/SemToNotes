@@ -1,60 +1,60 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for menus created by goog.ui.MenuItemRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for menus created by goog.ui.MenuItemRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
-***REMOVED***
-***REMOVED*** State: resting.
-***REMOVED***
-***REMOVED*** NOTE(mleibman,chrishenry):
-***REMOVED*** The RTL support in Closure is provided via two mechanisms -- "rtl" CSS
-***REMOVED*** classes and BiDi flipping done by the CSS compiler.  Closure supports RTL
-***REMOVED*** with or without the use of the CSS compiler.  In order for them not
-***REMOVED*** to conflict with each other, the "rtl" CSS classes need to have the @noflip
-***REMOVED*** annotation.  The non-rtl counterparts should ideally have them as well, but,
-***REMOVED*** since .goog-menuitem existed without .goog-menuitem-rtl for so long before
-***REMOVED*** being added, there is a risk of people having templates where they are not
-***REMOVED*** rendering the .goog-menuitem-rtl class when in RTL and instead rely solely
-***REMOVED*** on the BiDi flipping by the CSS compiler.  That's why we're not adding the
-***REMOVED*** @noflip to .goog-menuitem.
-***REMOVED***
+/**
+ * State: resting.
+ *
+ * NOTE(mleibman,chrishenry):
+ * The RTL support in Closure is provided via two mechanisms -- "rtl" CSS
+ * classes and BiDi flipping done by the CSS compiler.  Closure supports RTL
+ * with or without the use of the CSS compiler.  In order for them not
+ * to conflict with each other, the "rtl" CSS classes need to have the @noflip
+ * annotation.  The non-rtl counterparts should ideally have them as well, but,
+ * since .goog-menuitem existed without .goog-menuitem-rtl for so long before
+ * being added, there is a risk of people having templates where they are not
+ * rendering the .goog-menuitem-rtl class when in RTL and instead rely solely
+ * on the BiDi flipping by the CSS compiler.  That's why we're not adding the
+ * @noflip to .goog-menuitem.
+ */
 .goog-menuitem {
   color: #000;
   font: normal 13px Arial, sans-serif;
   list-style: none;
   margin: 0;
-  /* 28px on the left for icon or checkbox; 7em on the right for shortcut.***REMOVED***
+  /* 28px on the left for icon or checkbox; 7em on the right for shortcut. */
   padding: 4px 7em 4px 28px;
   white-space: nowrap;
 }
 
-/* BiDi override for the resting state.***REMOVED***
-/* @noflip***REMOVED***
+/* BiDi override for the resting state. */
+/* @noflip */
 .goog-menuitem.goog-menuitem-rtl {
-  /* Flip left/right padding for BiDi.***REMOVED***
+  /* Flip left/right padding for BiDi. */
   padding-left: 7em;
   padding-right: 28px;
 }
 
-/* If a menu doesn't have checkable items or items with icons, remove padding.***REMOVED***
+/* If a menu doesn't have checkable items or items with icons, remove padding. */
 .goog-menu-nocheckbox .goog-menuitem,
 .goog-menu-noicon .goog-menuitem {
   padding-left: 12px;
 }
 
 /*
-***REMOVED*** If a menu doesn't have items with shortcuts, leave just enough room for
-***REMOVED*** submenu arrows, if they are rendered.
-***REMOVED***
+ * If a menu doesn't have items with shortcuts, leave just enough room for
+ * submenu arrows, if they are rendered.
+ */
 .goog-menu-noaccel .goog-menuitem {
   padding-right: 20px;
 }
@@ -64,7 +64,7 @@
   font: normal 13px Arial, sans-serif;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-menuitem-disabled .goog-menuitem-accel,
 .goog-menuitem-disabled .goog-menuitem-content {
   color: #ccc !important;
@@ -75,12 +75,12 @@
   filter: alpha(opacity=30);
 }
 
-/* State: hover.***REMOVED***
+/* State: hover. */
 .goog-menuitem-highlight,
 .goog-menuitem-hover {
   background-color: #d6e9f8;
   /* Use an explicit top and bottom border so that the selection is visible
-  ***REMOVED*** in high contrast mode.***REMOVED***
+   * in high contrast mode. */
   border-color: #d6e9f8;
   border-style: dotted;
   border-width: 1px 0;
@@ -88,7 +88,7 @@
   padding-top: 3px;
 }
 
-/* State: selected/checked.***REMOVED***
+/* State: selected/checked. */
 .goog-menuitem-checkbox,
 .goog-menuitem-icon {
   background-repeat: no-repeat;
@@ -100,26 +100,26 @@
   width: 16px;
 }
 
-/* BiDi override for the selected/checked state.***REMOVED***
-/* @noflip***REMOVED***
+/* BiDi override for the selected/checked state. */
+/* @noflip */
 .goog-menuitem-rtl .goog-menuitem-checkbox,
 .goog-menuitem-rtl .goog-menuitem-icon {
-  /* Flip left/right positioning.***REMOVED***
+  /* Flip left/right positioning. */
   left: auto;
   right: 6px;
 }
 
 .goog-option-selected .goog-menuitem-checkbox,
 .goog-option-selected .goog-menuitem-icon {
-  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  /* Client apps may override the URL at which they serve the sprite. */
   background: url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -512px 0;
 }
 
-/* Keyboard shortcut ("accelerator") style.***REMOVED***
+/* Keyboard shortcut ("accelerator") style. */
 .goog-menuitem-accel {
   color: #999;
-  /* Keyboard shortcuts are untranslated; always left-to-right.***REMOVED***
-  /* @noflip***REMOVED*** direction: ltr;
+  /* Keyboard shortcuts are untranslated; always left-to-right. */
+  /* @noflip */ direction: ltr;
   left: auto;
   padding: 0 6px;
   position: absolute;
@@ -127,16 +127,16 @@
   text-align: right;
 }
 
-/* BiDi override for shortcut style.***REMOVED***
-/* @noflip***REMOVED***
+/* BiDi override for shortcut style. */
+/* @noflip */
 .goog-menuitem-rtl .goog-menuitem-accel {
-  /* Flip left/right positioning and text alignment.***REMOVED***
+  /* Flip left/right positioning and text alignment. */
   left: 0;
   right: auto;
   text-align: left;
 }
 
-/* Mnemonic styles.***REMOVED***
+/* Mnemonic styles. */
 .goog-menuitem-mnemonic-hint {
   text-decoration: underline;
 }

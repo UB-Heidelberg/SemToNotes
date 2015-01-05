@@ -125,9 +125,9 @@ See the COPYING file for details.
       var hc;
       hc = new goog.ui.HoverCard({SPAN: 'email'});
       hc.setElement(goog.dom.getElement('profileCard'));
-    ***REMOVED***hc, goog.ui.HoverCard.EventType.TRIGGER,
+      goog.events.listen(hc, goog.ui.HoverCard.EventType.TRIGGER,
                          onTrigger);
-    ***REMOVED***hc, goog.ui.HoverCard.EventType.BEFORE_SHOW,
+      goog.events.listen(hc, goog.ui.HoverCard.EventType.BEFORE_SHOW,
                          onBeforeShow);
 
       hc.className = 'goog-hovercard';
@@ -165,7 +165,7 @@ See the COPYING file for details.
         return true;
       }
 
-    ***REMOVED***hc, EVENTS, logEvent);
+      goog.events.listen(hc, EVENTS, logEvent);
 
       goog.dom.setTextContent(goog.dom.getElement('perf'),
           (goog.now() - timer) + 'ms');

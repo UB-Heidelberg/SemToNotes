@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A utility to load JavaScript files via DOM script tags.
-***REMOVED*** Refactored from goog.net.Jsonp. Works cross-domain.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A utility to load JavaScript files via DOM script tags.
+ * Refactored from goog.net.Jsonp. Works cross-domain.
+ *
+ */
 
 goog.provide('goog.net.jsloader');
 goog.provide('goog.net.jsloader.Error');
@@ -30,68 +30,68 @@ goog.require('goog.dom');
 goog.require('goog.dom.TagName');
 
 
-***REMOVED***
-***REMOVED*** The name of the property of goog.global under which the JavaScript
-***REMOVED*** verification object is stored by the loaded script.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The name of the property of goog.global under which the JavaScript
+ * verification object is stored by the loaded script.
+ * @type {string}
+ * @private
+ */
 goog.net.jsloader.GLOBAL_VERIFY_OBJS_ = 'closure_verification';
 
 
-***REMOVED***
-***REMOVED*** The default length of time, in milliseconds, we are prepared to wait for a
-***REMOVED*** load request to complete.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The default length of time, in milliseconds, we are prepared to wait for a
+ * load request to complete.
+ * @type {number}
+ */
 goog.net.jsloader.DEFAULT_TIMEOUT = 5000;
 
 
-***REMOVED***
-***REMOVED*** Optional parameters for goog.net.jsloader.send.
-***REMOVED*** timeout: The length of time, in milliseconds, we are prepared to wait
-***REMOVED***     for a load request to complete. Default it 5 seconds.
-***REMOVED*** document: The HTML document under which to load the JavaScript. Default is
-***REMOVED***     the current document.
-***REMOVED*** cleanupWhenDone: If true clean up the script tag after script completes to
-***REMOVED***     load. This is important if you just want to read data from the JavaScript
-***REMOVED***     and then throw it away. Default is false.
-***REMOVED***
-***REMOVED*** @typedef {{
-***REMOVED***   timeout: (number|undefined),
-***REMOVED***   document: (HTMLDocument|undefined),
-***REMOVED***   cleanupWhenDone: (boolean|undefined)
-***REMOVED*** }}
-***REMOVED***
+/**
+ * Optional parameters for goog.net.jsloader.send.
+ * timeout: The length of time, in milliseconds, we are prepared to wait
+ *     for a load request to complete. Default it 5 seconds.
+ * document: The HTML document under which to load the JavaScript. Default is
+ *     the current document.
+ * cleanupWhenDone: If true clean up the script tag after script completes to
+ *     load. This is important if you just want to read data from the JavaScript
+ *     and then throw it away. Default is false.
+ *
+ * @typedef {{
+ *   timeout: (number|undefined),
+ *   document: (HTMLDocument|undefined),
+ *   cleanupWhenDone: (boolean|undefined)
+ * }}
+ */
 goog.net.jsloader.Options;
 
 
-***REMOVED***
-***REMOVED*** Scripts (URIs) waiting to be loaded.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Scripts (URIs) waiting to be loaded.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.net.jsloader.scriptsToLoad_ = [];
 
 
-***REMOVED***
-***REMOVED*** Loads and evaluates the JavaScript files at the specified URIs, guaranteeing
-***REMOVED*** the order of script loads.
-***REMOVED***
-***REMOVED*** Because we have to load the scripts in serial (load script 1, exec script 1,
-***REMOVED*** load script 2, exec script 2, and so on), this will be slower than doing
-***REMOVED*** the network fetches in parallel.
-***REMOVED***
-***REMOVED*** If you need to load a large number of scripts but dependency order doesn't
-***REMOVED*** matter, you should just call goog.net.jsloader.load N times.
-***REMOVED***
-***REMOVED*** If you need to load a large number of scripts on the same domain,
-***REMOVED*** you may want to use goog.module.ModuleLoader.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} uris The URIs to load.
-***REMOVED*** @param {goog.net.jsloader.Options=} opt_options Optional parameters. See
-***REMOVED***     goog.net.jsloader.options documentation for details.
-***REMOVED***
+/**
+ * Loads and evaluates the JavaScript files at the specified URIs, guaranteeing
+ * the order of script loads.
+ *
+ * Because we have to load the scripts in serial (load script 1, exec script 1,
+ * load script 2, exec script 2, and so on), this will be slower than doing
+ * the network fetches in parallel.
+ *
+ * If you need to load a large number of scripts but dependency order doesn't
+ * matter, you should just call goog.net.jsloader.load N times.
+ *
+ * If you need to load a large number of scripts on the same domain,
+ * you may want to use goog.module.ModuleLoader.
+ *
+ * @param {Array.<string>} uris The URIs to load.
+ * @param {goog.net.jsloader.Options=} opt_options Optional parameters. See
+ *     goog.net.jsloader.options documentation for details.
+ */
 goog.net.jsloader.loadMany = function(uris, opt_options) {
   // Loading the scripts in serial introduces asynchronosity into the flow.
   // Therefore, there are race conditions where client A can kick off the load
@@ -119,30 +119,30 @@ goog.net.jsloader.loadMany = function(uris, opt_options) {
     if (uris.length) {
       deferred.addBoth(popAndLoadNextScript);
     }
- ***REMOVED*****REMOVED***
+  };
   popAndLoadNextScript();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Loads and evaluates a JavaScript file.
-***REMOVED*** When the script loads, a user callback is called.
-***REMOVED*** It is the client's responsibility to verify that the script ran successfully.
-***REMOVED***
-***REMOVED*** @param {string} uri The URI of the JavaScript.
-***REMOVED*** @param {goog.net.jsloader.Options=} opt_options Optional parameters. See
-***REMOVED***     goog.net.jsloader.Options documentation for details.
-***REMOVED*** @return {!goog.async.Deferred} The deferred result, that may be used to add
-***REMOVED***     callbacks and/or cancel the transmission.
-***REMOVED***     The error callback will be called with a single goog.net.jsloader.Error
-***REMOVED***     parameter.
-***REMOVED***
+/**
+ * Loads and evaluates a JavaScript file.
+ * When the script loads, a user callback is called.
+ * It is the client's responsibility to verify that the script ran successfully.
+ *
+ * @param {string} uri The URI of the JavaScript.
+ * @param {goog.net.jsloader.Options=} opt_options Optional parameters. See
+ *     goog.net.jsloader.Options documentation for details.
+ * @return {!goog.async.Deferred} The deferred result, that may be used to add
+ *     callbacks and/or cancel the transmission.
+ *     The error callback will be called with a single goog.net.jsloader.Error
+ *     parameter.
+ */
 goog.net.jsloader.load = function(uri, opt_options) {
-  var options = opt_options || {***REMOVED***
+  var options = opt_options || {};
   var doc = options.document || document;
 
   var script = goog.dom.createElement(goog.dom.TagName.SCRIPT);
-  var request = {script_: script, timeout_: undefined***REMOVED***
+  var request = {script_: script, timeout_: undefined};
   var deferred = new goog.async.Deferred(goog.net.jsloader.cancel_, request);
 
   // Set a timeout.
@@ -170,7 +170,7 @@ goog.net.jsloader.load = function(uri, opt_options) {
       goog.net.jsloader.cleanup_(script, removeScriptNode, timeout);
       deferred.callback(null);
     }
- ***REMOVED*****REMOVED***
+  };
 
   // Add an error callback.
   // NOTE(user): Not supported in IE.
@@ -179,7 +179,7 @@ goog.net.jsloader.load = function(uri, opt_options) {
     deferred.errback(new goog.net.jsloader.Error(
         goog.net.jsloader.ErrorCode.LOAD_ERROR,
         'Error while loading script ' + uri));
- ***REMOVED*****REMOVED***
+  };
 
   // Add the script element to the document.
   goog.dom.setProperties(script, {
@@ -193,33 +193,33 @@ goog.net.jsloader.load = function(uri, opt_options) {
   scriptParent.appendChild(script);
 
   return deferred;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Loads a JavaScript file and verifies it was evaluated successfully, using a
-***REMOVED*** verification object.
-***REMOVED*** The verification object is set by the loaded JavaScript at the end of the
-***REMOVED*** script.
-***REMOVED*** We verify this object was set and return its value in the success callback.
-***REMOVED*** If the object is not defined we trigger an error callback.
-***REMOVED***
-***REMOVED*** @param {string} uri The URI of the JavaScript.
-***REMOVED*** @param {string} verificationObjName The name of the verification object that
-***REMOVED***     the loaded script should set.
-***REMOVED*** @param {goog.net.jsloader.Options} options Optional parameters. See
-***REMOVED***     goog.net.jsloader.Options documentation for details.
-***REMOVED*** @return {!goog.async.Deferred} The deferred result, that may be used to add
-***REMOVED***     callbacks and/or cancel the transmission.
-***REMOVED***     The success callback will be called with a single parameter containing
-***REMOVED***     the value of the verification object.
-***REMOVED***     The error callback will be called with a single goog.net.jsloader.Error
-***REMOVED***     parameter.
-***REMOVED***
+/**
+ * Loads a JavaScript file and verifies it was evaluated successfully, using a
+ * verification object.
+ * The verification object is set by the loaded JavaScript at the end of the
+ * script.
+ * We verify this object was set and return its value in the success callback.
+ * If the object is not defined we trigger an error callback.
+ *
+ * @param {string} uri The URI of the JavaScript.
+ * @param {string} verificationObjName The name of the verification object that
+ *     the loaded script should set.
+ * @param {goog.net.jsloader.Options} options Optional parameters. See
+ *     goog.net.jsloader.Options documentation for details.
+ * @return {!goog.async.Deferred} The deferred result, that may be used to add
+ *     callbacks and/or cancel the transmission.
+ *     The success callback will be called with a single parameter containing
+ *     the value of the verification object.
+ *     The error callback will be called with a single goog.net.jsloader.Error
+ *     parameter.
+ */
 goog.net.jsloader.loadAndVerify = function(uri, verificationObjName, options) {
   // Define the global objects variable.
   if (!goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_]) {
-    goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_] = {***REMOVED***
+    goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_] = {};
   }
   var verifyObjs = goog.global[goog.net.jsloader.GLOBAL_VERIFY_OBJS_];
 
@@ -262,18 +262,18 @@ goog.net.jsloader.loadAndVerify = function(uri, verificationObjName, options) {
   });
 
   return deferred;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the DOM element under which we should add new script elements.
-***REMOVED*** How? Take the first head element, and if not found take doc.documentElement,
-***REMOVED*** which always exists.
-***REMOVED***
-***REMOVED*** @param {!HTMLDocument} doc The relevant document.
-***REMOVED*** @return {!Element} The script parent element.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the DOM element under which we should add new script elements.
+ * How? Take the first head element, and if not found take doc.documentElement,
+ * which always exists.
+ *
+ * @param {!HTMLDocument} doc The relevant document.
+ * @return {!Element} The script parent element.
+ * @private
+ */
 goog.net.jsloader.getScriptParentElement_ = function(doc) {
   var headElements = doc.getElementsByTagName(goog.dom.TagName.HEAD);
   if (!headElements || goog.array.isEmpty(headElements)) {
@@ -281,14 +281,14 @@ goog.net.jsloader.getScriptParentElement_ = function(doc) {
   } else {
     return headElements[0];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cancels a given request.
-***REMOVED*** @this {{script_: Element, timeout_: number}} The request context.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Cancels a given request.
+ * @this {{script_: Element, timeout_: number}} The request context.
+ * @private
+ */
 goog.net.jsloader.cancel_ = function() {
   var request = this;
   if (request && request.script_) {
@@ -297,17 +297,17 @@ goog.net.jsloader.cancel_ = function() {
       goog.net.jsloader.cleanup_(scriptNode, true, request.timeout_);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the script node and the timeout.
-***REMOVED***
-***REMOVED*** @param {Node} scriptNode The node to be cleaned up.
-***REMOVED*** @param {boolean} removeScriptNode If true completely remove the script node.
-***REMOVED*** @param {?number=} opt_timeout The timeout handler to cleanup.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes the script node and the timeout.
+ *
+ * @param {Node} scriptNode The node to be cleaned up.
+ * @param {boolean} removeScriptNode If true completely remove the script node.
+ * @param {?number=} opt_timeout The timeout handler to cleanup.
+ * @private
+ */
 goog.net.jsloader.cleanup_ = function(scriptNode, removeScriptNode,
                                       opt_timeout) {
   if (goog.isDefAndNotNull(opt_timeout)) {
@@ -325,31 +325,31 @@ goog.net.jsloader.cleanup_ = function(scriptNode, removeScriptNode,
       goog.dom.removeNode(scriptNode);
     }, 0);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Possible error codes for jsloader.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Possible error codes for jsloader.
+ * @enum {number}
+ */
 goog.net.jsloader.ErrorCode = {
   LOAD_ERROR: 0,
   TIMEOUT: 1,
   VERIFY_ERROR: 2,
   VERIFY_OBJECT_ALREADY_EXISTS: 3
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A jsloader error.
-***REMOVED***
-***REMOVED*** @param {goog.net.jsloader.ErrorCode} code The error code.
-***REMOVED*** @param {string=} opt_message Additional message.
-***REMOVED***
-***REMOVED*** @extends {goog.debug.Error}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A jsloader error.
+ *
+ * @param {goog.net.jsloader.ErrorCode} code The error code.
+ * @param {string=} opt_message Additional message.
+ * @constructor
+ * @extends {goog.debug.Error}
+ * @final
+ */
 goog.net.jsloader.Error = function(code, opt_message) {
   var msg = 'Jsloader error (code #' + code + ')';
   if (opt_message) {
@@ -357,11 +357,11 @@ goog.net.jsloader.Error = function(code, opt_message) {
   }
   goog.net.jsloader.Error.base(this, 'constructor', msg);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The code for this error.
-  ***REMOVED***
-  ***REMOVED*** @type {goog.net.jsloader.ErrorCode}
- ***REMOVED*****REMOVED***
+  /**
+   * The code for this error.
+   *
+   * @type {goog.net.jsloader.ErrorCode}
+   */
   this.code = code;
-***REMOVED***
+};
 goog.inherits(goog.net.jsloader.Error, goog.debug.Error);

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for working with ranges in HTML documents.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author ojan@google.com (Ojan Vafai)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED***
+/**
+ * @fileoverview Utilities for working with ranges in HTML documents.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author ojan@google.com (Ojan Vafai)
+ * @author jparent@google.com (Julie Parent)
+ */
 
 goog.provide('goog.dom.Range');
 
@@ -31,35 +31,35 @@ goog.require('goog.dom.TextRange');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Create a new selection from the given browser window's current selection.
-***REMOVED*** Note that this object does not auto-update if the user changes their
-***REMOVED*** selection and should be used as a snapshot.
-***REMOVED*** @param {Window=} opt_win The window to get the selection of.  Defaults to the
-***REMOVED***     window this class was defined in.
-***REMOVED*** @return {goog.dom.AbstractRange?} A range wrapper object, or null if there
-***REMOVED***     was an error.
-***REMOVED***
+/**
+ * Create a new selection from the given browser window's current selection.
+ * Note that this object does not auto-update if the user changes their
+ * selection and should be used as a snapshot.
+ * @param {Window=} opt_win The window to get the selection of.  Defaults to the
+ *     window this class was defined in.
+ * @return {goog.dom.AbstractRange?} A range wrapper object, or null if there
+ *     was an error.
+ */
 goog.dom.Range.createFromWindow = function(opt_win) {
   var sel = goog.dom.AbstractRange.getBrowserSelectionForWindow(
       opt_win || window);
   return sel && goog.dom.Range.createFromBrowserSelection(sel);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range wrapper from the given browser selection object.  Note
-***REMOVED*** that this object does not auto-update if the user changes their selection and
-***REMOVED*** should be used as a snapshot.
-***REMOVED*** @param {!Object} selection The browser selection object.
-***REMOVED*** @return {goog.dom.AbstractRange?} A range wrapper object or null if there
-***REMOVED***    was an error.
-***REMOVED***
+/**
+ * Create a new range wrapper from the given browser selection object.  Note
+ * that this object does not auto-update if the user changes their selection and
+ * should be used as a snapshot.
+ * @param {!Object} selection The browser selection object.
+ * @return {goog.dom.AbstractRange?} A range wrapper object or null if there
+ *    was an error.
+ */
 goog.dom.Range.createFromBrowserSelection = function(selection) {
   var range;
   var isReversed = false;
   if (selection.createRange) {
-   ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+    /** @preserveTry */
     try {
       range = selection.createRange();
     } catch (e) {
@@ -70,7 +70,7 @@ goog.dom.Range.createFromBrowserSelection = function(selection) {
   } else if (selection.rangeCount) {
     if (selection.rangeCount > 1) {
       return goog.dom.MultiRange.createFromBrowserSelection(
-         ***REMOVED*****REMOVED*** @type {Selection}***REMOVED*** (selection));
+          /** @type {Selection} */ (selection));
     } else {
       range = selection.getRangeAt(0);
       isReversed = goog.dom.Range.isReversed(selection.anchorNode,
@@ -81,70 +81,70 @@ goog.dom.Range.createFromBrowserSelection = function(selection) {
   }
 
   return goog.dom.Range.createFromBrowserRange(range, isReversed);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range wrapper from the given browser range object.
-***REMOVED*** @param {Range|TextRange} range The browser range object.
-***REMOVED*** @param {boolean=} opt_isReversed Whether the focus node is before the anchor
-***REMOVED***     node.
-***REMOVED*** @return {!goog.dom.AbstractRange} A range wrapper object.
-***REMOVED***
+/**
+ * Create a new range wrapper from the given browser range object.
+ * @param {Range|TextRange} range The browser range object.
+ * @param {boolean=} opt_isReversed Whether the focus node is before the anchor
+ *     node.
+ * @return {!goog.dom.AbstractRange} A range wrapper object.
+ */
 goog.dom.Range.createFromBrowserRange = function(range, opt_isReversed) {
   // Create an IE control range when appropriate.
   return goog.dom.AbstractRange.isNativeControlRange(range) ?
       goog.dom.ControlRange.createFromBrowserRange(range) :
       goog.dom.TextRange.createFromBrowserRange(range, opt_isReversed);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range wrapper that selects the given node's text.
-***REMOVED*** @param {Node} node The node to select.
-***REMOVED*** @param {boolean=} opt_isReversed Whether the focus node is before the anchor
-***REMOVED***     node.
-***REMOVED*** @return {!goog.dom.AbstractRange} A range wrapper object.
-***REMOVED***
+/**
+ * Create a new range wrapper that selects the given node's text.
+ * @param {Node} node The node to select.
+ * @param {boolean=} opt_isReversed Whether the focus node is before the anchor
+ *     node.
+ * @return {!goog.dom.AbstractRange} A range wrapper object.
+ */
 goog.dom.Range.createFromNodeContents = function(node, opt_isReversed) {
   return goog.dom.TextRange.createFromNodeContents(node, opt_isReversed);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range wrapper that represents a caret at the given node,
-***REMOVED*** accounting for the given offset.  This always creates a TextRange, regardless
-***REMOVED*** of whether node is an image node or other control range type node.
-***REMOVED*** @param {Node} node The node to place a caret at.
-***REMOVED*** @param {number} offset The offset within the node to place the caret at.
-***REMOVED*** @return {!goog.dom.AbstractRange} A range wrapper object.
-***REMOVED***
+/**
+ * Create a new range wrapper that represents a caret at the given node,
+ * accounting for the given offset.  This always creates a TextRange, regardless
+ * of whether node is an image node or other control range type node.
+ * @param {Node} node The node to place a caret at.
+ * @param {number} offset The offset within the node to place the caret at.
+ * @return {!goog.dom.AbstractRange} A range wrapper object.
+ */
 goog.dom.Range.createCaret = function(node, offset) {
   return goog.dom.TextRange.createFromNodes(node, offset, node, offset);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Create a new range wrapper that selects the area between the given nodes,
-***REMOVED*** accounting for the given offsets.
-***REMOVED*** @param {Node} anchorNode The node to anchor on.
-***REMOVED*** @param {number} anchorOffset The offset within the node to anchor on.
-***REMOVED*** @param {Node} focusNode The node to focus on.
-***REMOVED*** @param {number} focusOffset The offset within the node to focus on.
-***REMOVED*** @return {!goog.dom.AbstractRange} A range wrapper object.
-***REMOVED***
+/**
+ * Create a new range wrapper that selects the area between the given nodes,
+ * accounting for the given offsets.
+ * @param {Node} anchorNode The node to anchor on.
+ * @param {number} anchorOffset The offset within the node to anchor on.
+ * @param {Node} focusNode The node to focus on.
+ * @param {number} focusOffset The offset within the node to focus on.
+ * @return {!goog.dom.AbstractRange} A range wrapper object.
+ */
 goog.dom.Range.createFromNodes = function(anchorNode, anchorOffset, focusNode,
     focusOffset) {
   return goog.dom.TextRange.createFromNodes(anchorNode, anchorOffset, focusNode,
       focusOffset);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the window's selection.
-***REMOVED*** @param {Window=} opt_win The window to get the selection of.  Defaults to the
-***REMOVED***     window this class was defined in.
-***REMOVED***
+/**
+ * Clears the window's selection.
+ * @param {Window=} opt_win The window to get the selection of.  Defaults to the
+ *     window this class was defined in.
+ */
 goog.dom.Range.clearSelection = function(opt_win) {
   var sel = goog.dom.AbstractRange.getBrowserSelectionForWindow(
       opt_win || window);
@@ -168,31 +168,31 @@ goog.dom.Range.clearSelection = function(opt_win) {
       // handler.
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests if the window has a selection.
-***REMOVED*** @param {Window=} opt_win The window to check the selection of.  Defaults to
-***REMOVED***     the window this class was defined in.
-***REMOVED*** @return {boolean} Whether the window has a selection.
-***REMOVED***
+/**
+ * Tests if the window has a selection.
+ * @param {Window=} opt_win The window to check the selection of.  Defaults to
+ *     the window this class was defined in.
+ * @return {boolean} Whether the window has a selection.
+ */
 goog.dom.Range.hasSelection = function(opt_win) {
   var sel = goog.dom.AbstractRange.getBrowserSelectionForWindow(
       opt_win || window);
   return !!sel && (goog.userAgent.IE ? sel.type != 'None' : !!sel.rangeCount);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the focus position occurs before the anchor position.
-***REMOVED*** @param {Node} anchorNode The node to anchor on.
-***REMOVED*** @param {number} anchorOffset The offset within the node to anchor on.
-***REMOVED*** @param {Node} focusNode The node to focus on.
-***REMOVED*** @param {number} focusOffset The offset within the node to focus on.
-***REMOVED*** @return {boolean} Whether the focus position occurs before the anchor
-***REMOVED***     position.
-***REMOVED***
+/**
+ * Returns whether the focus position occurs before the anchor position.
+ * @param {Node} anchorNode The node to anchor on.
+ * @param {number} anchorOffset The offset within the node to anchor on.
+ * @param {Node} focusNode The node to focus on.
+ * @param {number} focusOffset The offset within the node to focus on.
+ * @return {boolean} Whether the focus position occurs before the anchor
+ *     position.
+ */
 goog.dom.Range.isReversed = function(anchorNode, anchorOffset, focusNode,
     focusOffset) {
   if (anchorNode == focusNode) {
@@ -223,4 +223,4 @@ goog.dom.Range.isReversed = function(anchorNode, anchorOffset, focusNode,
   }
   return (goog.dom.compareNodeOrder(anchorNode, focusNode) ||
       anchorOffset - focusOffset) > 0;
-***REMOVED***
+};

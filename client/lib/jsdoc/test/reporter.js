@@ -1,7 +1,7 @@
 module.exports = function(jasmine) {
     var util = require('util');
 
-    var jasmineNode = {***REMOVED***
+    var jasmineNode = {};
 
     //
     // Helpers
@@ -19,7 +19,7 @@ module.exports = function(jasmine) {
         neutral : function() {
             return '\033[0m';
         } // Normal
-   ***REMOVED*****REMOVED***
+    };
 
     jasmineNode.NoColors = {
         pass : function() {
@@ -31,10 +31,10 @@ module.exports = function(jasmine) {
         neutral : function() {
             return '';
         }
-   ***REMOVED*****REMOVED***
+    };
 
     jasmineNode.TerminalReporter = function(config) {
-        this.print_ = config.print || function (str) { process.stdout.write(util.format(str));***REMOVED*****REMOVED***
+        this.print_ = config.print || function (str) { process.stdout.write(util.format(str)); };
         this.color_ = config.color ? jasmineNode.ANSIColors : jasmineNode.NoColors;
 
         this.started_ = false;
@@ -43,10 +43,10 @@ module.exports = function(jasmine) {
         this.callback_ = config.onComplete || false;
 
         this.suites_ = [];
-        this.specResults_ = {***REMOVED***
-        this.failures_ = {***REMOVED***
+        this.specResults_ = {};
+        this.failures_ = {};
         this.failures_.length = 0;
-   ***REMOVED*****REMOVED***
+    };
 
     jasmineNode.TerminalReporter.prototype = {
         reportRunnerStarting : function(runner) {
@@ -69,7 +69,7 @@ module.exports = function(jasmine) {
                 type : isSuite ? 'suite' : 'spec',
                 suiteNestingLevel : 0,
                 children : []
-           ***REMOVED*****REMOVED***
+            };
 
             if (isSuite) {
                 var calculateNestingLevel = function(examinedSuite) {
@@ -79,7 +79,7 @@ module.exports = function(jasmine) {
                         examinedSuite = examinedSuite.parentSuite;
                     }
                     return nestingLevel;
-               ***REMOVED*****REMOVED***
+                };
 
                 summary.suiteNestingLevel = calculateNestingLevel(suiteOrSpec);
 
@@ -179,7 +179,7 @@ module.exports = function(jasmine) {
                         spec : spec.description,
                         message : failureItem.message,
                         stackTrace : failureItem.trace.stack
-                   ***REMOVED*****REMOVED***
+                    };
                     failures = this.failures_[suite];
                     if (!failures) {
                         this.failures_[suite] = [];
@@ -209,16 +209,16 @@ module.exports = function(jasmine) {
             this.print_(stringValue);
             this.print_('\n');
         }
-   ***REMOVED*****REMOVED***
+    };
 
-    ***REMOVED****REMOVED****REMOVED*****************************************************************
+    // ***************************************************************
     // TerminalVerboseReporter uses the TerminalReporter's constructor
-    ***REMOVED****REMOVED****REMOVED*****************************************************************
+    // ***************************************************************
     jasmineNode.TerminalVerboseReporter = function(config) {
         jasmineNode.TerminalReporter.call(this, config);
         // The extra field in this object
         this.indent_ = 0;
-   ***REMOVED*****REMOVED***
+    };
 
     jasmineNode.TerminalVerboseReporter.prototype = {
         reportSpecResults : function(spec) {
@@ -229,7 +229,7 @@ module.exports = function(jasmine) {
             this.specResults_[spec.id] = {
                 messages : spec.results().getItems(),
                 result : spec.results().failedCount > 0 ? 'failed' : 'passed'
-           ***REMOVED*****REMOVED***
+            };
         },
 
         reportRunnerResults : function(runner) {
@@ -266,7 +266,7 @@ module.exports = function(jasmine) {
 
                     messages.push(msg);
                 } else {
-                    this.indent_ = element.suiteNestingLevel***REMOVED*** 2;
+                    this.indent_ = element.suiteNestingLevel * 2;
 
                     messages.push('');
                     messages.push(this.indentMessage_(element.name,this.indent_));
@@ -283,10 +283,10 @@ module.exports = function(jasmine) {
             }
             return (_indent + message);
         }
-   ***REMOVED*****REMOVED***
+    };
 
     // Inherit from TerminalReporter
     jasmineNode.TerminalVerboseReporter.prototype.__proto__ = jasmineNode.TerminalReporter.prototype;
 
     return jasmineNode;
-***REMOVED***
+};

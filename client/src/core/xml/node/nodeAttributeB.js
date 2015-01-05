@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a attribute node
-***REMOVED*** implementation working on a binary XML model.
-***REMOVED***
+/**
+ * @fileoverview A class representing a attribute node
+ * implementation working on a binary XML model.
+ */
 
 goog.provide('xrx.node.AttributeB');
 
@@ -12,13 +12,13 @@ goog.require('xrx.node.Binary');
 goog.require('xrx.xpath.NodeSet');
 
 
-***REMOVED***
-***REMOVED*** Creates a binary attribute node.
-***REMOVED***
-***REMOVED*** @param {!integer}
-***REMOVED*** @param {!xrx.node.ElementB}
-***REMOVED***
-***REMOVED***
+/**
+ * Creates a binary attribute node.
+ *
+ * @param {!integer}
+ * @param {!xrx.node.ElementB}
+ * @constructor
+ */
 xrx.node.AttributeB = function(num, parent) {
 
   goog.base(this, xrx.node.ATTRIBUTE);
@@ -26,14 +26,14 @@ xrx.node.AttributeB = function(num, parent) {
   this.num_ = num;
 
   this.parent_ = parent;
-***REMOVED***
+};
 goog.inherits(xrx.node.AttributeB, xrx.node.Binary);
 
 
 
 xrx.node.AttributeB.prototype.getParent = function() {
   return this.parent_;
-***REMOVED***
+};
 
 
 
@@ -51,7 +51,7 @@ xrx.node.AttributeB.prototype.getToken = function() {
   var loc = this.getStream().attribute(xml, this.num_);
   
   return new xrx.token.Attribute(this.getLabel(), loc.offset, loc.length);
-***REMOVED***
+};
 
 
 
@@ -60,7 +60,7 @@ xrx.node.AttributeB.prototype.getLabel = function() {
   label.push(this.num_);
 
   return label;
-***REMOVED***
+};
 
 
 
@@ -70,7 +70,7 @@ xrx.node.AttributeB.prototype.getOffset = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.offset;
-***REMOVED***
+};
 
 
 
@@ -80,7 +80,7 @@ xrx.node.AttributeB.prototype.getLength = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.length;
-***REMOVED***
+};
 
 
 
@@ -138,7 +138,7 @@ xrx.node.AttributeB.prototype.getName = function() {
   var loc = this.getStream().attrName(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 
@@ -147,7 +147,7 @@ xrx.node.AttributeB.prototype.getNamespaceUri = function(prefix) {
       this.parent_.getToken(), prefix);
 
   return ns ? ns.uri : '';
-***REMOVED***
+};
 
 
 
@@ -157,7 +157,7 @@ xrx.node.AttributeB.prototype.getStringValue = function() {
   var loc = this.getStream().attrValue(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 
@@ -167,7 +167,7 @@ xrx.node.AttributeB.prototype.getXml = function() {
   var loc = this.getStream().attribute(xml, this.num_);
 
   return loc.xml(xml);
-***REMOVED***
+};
 
 
 

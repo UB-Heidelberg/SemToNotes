@@ -1,23 +1,23 @@
-***REMOVED***
-***REMOVED*** @fileoverview An abstract class representing
-***REMOVED***   a component of the model-view-controller.
-***REMOVED***
+/**
+ * @fileoverview An abstract class representing
+ *   a component of the model-view-controller.
+ */
 
 goog.provide('xrx.mvc.Component');
 
 
 
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.ui.IdGenerator');
 goog.require('xrx.mvc.Validate');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new model-view-controller component.
-***REMOVED***
-***REMOVED***
+/**
+ * Constructs a new model-view-controller component.
+ * @constructor
+ */
 xrx.mvc.Component = function(element, uidl) {
 
   this.element_ = element;
@@ -27,49 +27,49 @@ xrx.mvc.Component = function(element, uidl) {
   goog.base(this);
 
   this.validate();
-***REMOVED***
+};
 goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
 xrx.mvc.Component.prototype.getAction = function(eventKey) {
   xrx.mvc.getComponent;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Function is called by the model-view-controller when the component
-***REMOVED*** is initialized the first time. Each component must implement this.
-***REMOVED***
+/**
+ * Function is called by the model-view-controller when the component
+ * is initialized the first time. Each component must implement this.
+ */
 xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
 
 
 
-***REMOVED***
-***REMOVED*** Unique ID of the component, lazily initialized in {@link
-***REMOVED*** xrx.mvc.Component#getId}.
-***REMOVED*** @type {?string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Unique ID of the component, lazily initialized in {@link
+ * xrx.mvc.Component#getId}.
+ * @type {?string}
+ * @private
+ */
 xrx.mvc.Component.prototype.id_ = null;
 
 
 
 
-***REMOVED***
-***REMOVED*** Returns the component's element.
-***REMOVED*** @return {Element} The element for the component.
-***REMOVED***
+/**
+ * Returns the component's element.
+ * @return {Element} The element for the component.
+ */
 xrx.mvc.Component.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ *
+ */
 xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
   var element = opt_element || this.element_;
   var shortened;
@@ -81,15 +81,15 @@ xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
   } else {
     return standard;
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the unique ID of this component. If the instance
-***REMOVED*** doesn't already have an ID generate one on the fly.
-***REMOVED*** @return {string} Unique component ID.
-***REMOVED***
+/**
+ * Returns the unique ID of this component. If the instance
+ * doesn't already have an ID generate one on the fly.
+ * @return {string} Unique component ID.
+ */
 xrx.mvc.Component.prototype.getId = function() {
   if (!this.id_) {
     if (this.element_.id && this.element_.id !== '') {
@@ -100,36 +100,36 @@ xrx.mvc.Component.prototype.getId = function() {
     }
   }
   return this.id_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Whether the component has its own context other than a
-***REMOVED*** repeat context.
-***REMOVED*** @return {boolean}
-***REMOVED***
+/**
+ * Whether the component has its own context other than a
+ * repeat context.
+ * @return {boolean}
+ */
 xrx.mvc.Component.prototype.hasContext = function() {
   return !!this.getContext;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the parent repeat component of the component.
-***REMOVED*** @return {xrx.mvc.Repeat} The repeat component.
-***REMOVED***
+/**
+ * Returns the parent repeat component of the component.
+ * @return {xrx.mvc.Repeat} The repeat component.
+ */
 xrx.mvc.Component.prototype.getRepeat = function() {
   var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
   return element ? xrx.mvc.getViewComponent(element.id) : undefined;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the index of a dynamically repeated component.
-***REMOVED*** @return {number} The index.
-***REMOVED***
+/**
+ * Returns the index of a dynamically repeated component.
+ * @return {number} The index.
+ */
 xrx.mvc.Component.prototype.getRepeatIndex = function() {
   var value;
   var repeatItem = goog.dom.getAncestorByClass(this.element_,
@@ -142,76 +142,76 @@ xrx.mvc.Component.prototype.getRepeatIndex = function() {
     throw Error('Repeat item could not be found.');
   }
   return parseInt(value);
-***REMOVED*** 
+}; 
 
 
 
-***REMOVED***
-***REMOVED*** Returns the XPath expression found in the component's data-xrx-ref attribute.
-***REMOVED*** @return {string} The expression.
-***REMOVED***
+/**
+ * Returns the XPath expression found in the component's data-xrx-ref attribute.
+ * @return {string} The expression.
+ */
 xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxRef';
   return this.getDataset(dataset);
-***REMOVED***
+};
 
 
 
 xrx.mvc.Component.prototype.getValueExpression = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxValue';
   return this.getDataset(dataset);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the bind ID found in the component's data-xrx-bind attribute.
-***REMOVED*** @return {string} The bind ID.
-***REMOVED***
+/**
+ * Returns the bind ID found in the component's data-xrx-bind attribute.
+ * @return {string} The bind ID.
+ */
 xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxBind';
   return this.getDataset(dataset);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the source URI found in the component's data-xrx-src attribute.
-***REMOVED*** @return {?string} The source URI.
-***REMOVED***
+/**
+ * Returns the source URI found in the component's data-xrx-src attribute.
+ * @return {?string} The source URI.
+ */
 xrx.mvc.Component.prototype.getSrcUri = function(opt_dataset) {
   var dataset = opt_dataset || 'xrxSrc';
   return this.getDataset(dataset);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the bind component referenced by the component.
-***REMOVED*** @return {xrx.mvc.Bind} The bind component.
-***REMOVED***
+/**
+ * Returns the bind component referenced by the component.
+ * @return {xrx.mvc.Bind} The bind component.
+ */
 xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
   return xrx.mvc.getModelComponent(this.getBindId(opt_dataset));
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the n'th node held by the component by means of a
-***REMOVED*** bind expression.
-***REMOVED*** @return {xrx.node.Node} The node.
-***REMOVED***
+/**
+ * Returns the n'th node held by the component by means of a
+ * bind expression.
+ * @return {xrx.node.Node} The node.
+ */
 xrx.mvc.Component.prototype.getNodeBind = function(num, opt_dataset) {
   return this.getBind(opt_dataset).getNode(num);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the node held by the component by means of a repeat component
-***REMOVED*** and a ref expression.
-***REMOVED*** @return {xrx.node.Node} The node.
-***REMOVED***
+/**
+ * Returns the node held by the component by means of a repeat component
+ * and a ref expression.
+ * @return {xrx.node.Node} The node.
+ */
 xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_context) {
   var repeat = this.getRepeat();
   var context = repeat.getNode(this.getRepeatIndex());
@@ -222,15 +222,15 @@ xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_con
       xrx.xpath.XPathResultType.ANY_TYPE);
   var next = result.iterateNext();
   return next;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the node held by the component by means of a context node
-***REMOVED*** and a ref expression.
-***REMOVED*** @return {xrx.node.Node} The node.
-***REMOVED***
+/**
+ * Returns the node held by the component by means of a context node
+ * and a ref expression.
+ * @return {xrx.node.Node} The node.
+ */
 xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_context) {
   var context = this.getContext();
   if (!context) return;
@@ -240,14 +240,14 @@ xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_co
       xrx.xpath.XPathResultType.ANY_TYPE);
   var next = result.iterateNext();
   return next;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the node referenced by the component.
-***REMOVED*** @return {xrx.node.Node} The node.
-***REMOVED***
+/**
+ * Returns the node referenced by the component.
+ * @return {xrx.node.Node} The node.
+ */
 xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
   var node;
   var n = num || 0;
@@ -262,19 +262,19 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
         'attribute.');*/
   }
   return node;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
   return xrx.xpath.evaluate(this.getValueExpression(opt_dataset), undefined, null,
       xrx.xpath.XPathResultType.STRING_TYPE).stringValue;  
-***REMOVED***
+};
 
 
 
 xrx.mvc.Component.prototype.getParentComponent = function() {
-***REMOVED***
+};

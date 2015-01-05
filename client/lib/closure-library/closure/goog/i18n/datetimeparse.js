@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Date/Time parsing library with locale support.
-***REMOVED***
+/**
+ * @fileoverview Date/Time parsing library with locale support.
+ */
 
 
-***REMOVED***
-***REMOVED*** Namespace for locale date/time parsing functions
-***REMOVED***
+/**
+ * Namespace for locale date/time parsing functions
+ */
 goog.provide('goog.i18n.DateTimeParse');
 
 goog.require('goog.date');
@@ -27,107 +27,107 @@ goog.require('goog.i18n.DateTimeFormat');
 goog.require('goog.i18n.DateTimeSymbols');
 
 
-***REMOVED***
-***REMOVED*** DateTimeParse is for parsing date in a locale-sensitive manner. It allows
-***REMOVED*** user to use any customized patterns to parse date-time string under certain
-***REMOVED*** locale. Things varies across locales like month name, weekname, field
-***REMOVED*** order, etc.
-***REMOVED***
-***REMOVED*** This module is the counter-part of DateTimeFormat. They use the same
-***REMOVED*** date/time pattern specification, which is borrowed from ICU/JDK.
-***REMOVED***
-***REMOVED*** This implementation could parse partial date/time.
-***REMOVED***
-***REMOVED*** Time Format Syntax: To specify the time format use a time pattern string.
-***REMOVED*** In this pattern, following letters are reserved as pattern letters, which
-***REMOVED*** are defined as the following:
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** Symbol   Meaning                 Presentation        Example
-***REMOVED*** ------   -------                 ------------        -------
-***REMOVED*** G        era designator          (Text)              AD
-***REMOVED*** y#       year                    (Number)            1996
-***REMOVED*** M        month in year           (Text & Number)     July & 07
-***REMOVED*** d        day in month            (Number)            10
-***REMOVED*** h        hour in am/pm (1~12)    (Number)            12
-***REMOVED*** H        hour in day (0~23)      (Number)            0
-***REMOVED*** m        minute in hour          (Number)            30
-***REMOVED*** s        second in minute        (Number)            55
-***REMOVED*** S        fractional second       (Number)            978
-***REMOVED*** E        day of week             (Text)              Tuesday
-***REMOVED*** D        day in year             (Number)            189
-***REMOVED*** a        am/pm marker            (Text)              PM
-***REMOVED*** k        hour in day (1~24)      (Number)            24
-***REMOVED*** K        hour in am/pm (0~11)    (Number)            0
-***REMOVED*** z        time zone               (Text)              Pacific Standard Time
-***REMOVED*** Z        time zone (RFC 822)     (Number)            -0800
-***REMOVED*** v        time zone (generic)     (Text)              Pacific Time
-***REMOVED*** '        escape for text         (Delimiter)         'Date='
-***REMOVED*** ''       single quote            (Literal)           'o''clock'
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** The count of pattern letters determine the format. <p>
-***REMOVED*** (Text): 4 or more pattern letters--use full form,
-***REMOVED***         less than 4--use short or abbreviated form if one exists.
-***REMOVED***         In parsing, we will always try long format, then short. <p>
-***REMOVED*** (Number): the minimum number of digits. <p>
-***REMOVED*** (Text & Number): 3 or over, use text, otherwise use number. <p>
-***REMOVED*** Any characters that not in the pattern will be treated as quoted text. For
-***REMOVED*** instance, characters like ':', '.', ' ', '#' and '@' will appear in the
-***REMOVED*** resulting time text even they are not embraced within single quotes. In our
-***REMOVED*** current pattern usage, we didn't use up all letters. But those unused
-***REMOVED*** letters are strongly discouraged to be used as quoted text without quote.
-***REMOVED*** That's because we may use other letter for pattern in future. <p>
-***REMOVED***
-***REMOVED*** Examples Using the US Locale:
-***REMOVED***
-***REMOVED*** Format Pattern                         Result
-***REMOVED*** --------------                         -------
-***REMOVED*** "yyyy.MM.dd G 'at' HH:mm:ss vvvv" ->>  1996.07.10 AD at 15:08:56 Pacific Time
-***REMOVED*** "EEE, MMM d, ''yy"                ->>  Wed, July 10, '96
-***REMOVED*** "h:mm a"                          ->>  12:08 PM
-***REMOVED*** "hh 'o''clock' a, zzzz"           ->>  12 o'clock PM, Pacific Daylight Time
-***REMOVED*** "K:mm a, vvv"                     ->>  0:00 PM, PT
-***REMOVED*** "yyyyy.MMMMM.dd GGG hh:mm aaa"    ->>  01996.July.10 AD 12:08 PM
-***REMOVED***
-***REMOVED*** <p> When parsing a date string using the abbreviated year pattern ("yy"),
-***REMOVED*** DateTimeParse must interpret the abbreviated year relative to some
-***REMOVED*** century. It does this by adjusting dates to be within 80 years before and 20
-***REMOVED*** years after the time the parse function is called. For example, using a
-***REMOVED*** pattern of "MM/dd/yy" and a DateTimeParse instance created on Jan 1, 1997,
-***REMOVED*** the string "01/11/12" would be interpreted as Jan 11, 2012 while the string
-***REMOVED*** "05/04/64" would be interpreted as May 4, 1964. During parsing, only
-***REMOVED*** strings consisting of exactly two digits, as defined by {@link
-***REMOVED*** java.lang.Character#isDigit(char)}, will be parsed into the default
-***REMOVED*** century. Any other numeric string, such as a one digit string, a three or
-***REMOVED*** more digit string will be interpreted as its face value.
-***REMOVED***
-***REMOVED*** <p> If the year pattern does not have exactly two 'y' characters, the year is
-***REMOVED*** interpreted literally, regardless of the number of digits. So using the
-***REMOVED*** pattern "MM/dd/yyyy", "01/11/12" parses to Jan 11, 12 A.D.
-***REMOVED***
-***REMOVED*** <p> When numeric fields abut one another directly, with no intervening
-***REMOVED*** delimiter characters, they constitute a run of abutting numeric fields. Such
-***REMOVED*** runs are parsed specially. For example, the format "HHmmss" parses the input
-***REMOVED*** text "123456" to 12:34:56, parses the input text "12345" to 1:23:45, and
-***REMOVED*** fails to parse "1234". In other words, the leftmost field of the run is
-***REMOVED*** flexible, while the others keep a fixed width. If the parse fails anywhere in
-***REMOVED*** the run, then the leftmost field is shortened by one character, and the
-***REMOVED*** entire run is parsed again. This is repeated until either the parse succeeds
-***REMOVED*** or the leftmost field is one character in length. If the parse still fails at
-***REMOVED*** that point, the parse of the run fails.
-***REMOVED***
-***REMOVED*** <p> Now timezone parsing only support GMT:hhmm, GMT:+hhmm, GMT:-hhmm
-***REMOVED***
+/**
+ * DateTimeParse is for parsing date in a locale-sensitive manner. It allows
+ * user to use any customized patterns to parse date-time string under certain
+ * locale. Things varies across locales like month name, weekname, field
+ * order, etc.
+ *
+ * This module is the counter-part of DateTimeFormat. They use the same
+ * date/time pattern specification, which is borrowed from ICU/JDK.
+ *
+ * This implementation could parse partial date/time.
+ *
+ * Time Format Syntax: To specify the time format use a time pattern string.
+ * In this pattern, following letters are reserved as pattern letters, which
+ * are defined as the following:
+ *
+ * <pre>
+ * Symbol   Meaning                 Presentation        Example
+ * ------   -------                 ------------        -------
+ * G        era designator          (Text)              AD
+ * y#       year                    (Number)            1996
+ * M        month in year           (Text & Number)     July & 07
+ * d        day in month            (Number)            10
+ * h        hour in am/pm (1~12)    (Number)            12
+ * H        hour in day (0~23)      (Number)            0
+ * m        minute in hour          (Number)            30
+ * s        second in minute        (Number)            55
+ * S        fractional second       (Number)            978
+ * E        day of week             (Text)              Tuesday
+ * D        day in year             (Number)            189
+ * a        am/pm marker            (Text)              PM
+ * k        hour in day (1~24)      (Number)            24
+ * K        hour in am/pm (0~11)    (Number)            0
+ * z        time zone               (Text)              Pacific Standard Time
+ * Z        time zone (RFC 822)     (Number)            -0800
+ * v        time zone (generic)     (Text)              Pacific Time
+ * '        escape for text         (Delimiter)         'Date='
+ * ''       single quote            (Literal)           'o''clock'
+ * </pre>
+ *
+ * The count of pattern letters determine the format. <p>
+ * (Text): 4 or more pattern letters--use full form,
+ *         less than 4--use short or abbreviated form if one exists.
+ *         In parsing, we will always try long format, then short. <p>
+ * (Number): the minimum number of digits. <p>
+ * (Text & Number): 3 or over, use text, otherwise use number. <p>
+ * Any characters that not in the pattern will be treated as quoted text. For
+ * instance, characters like ':', '.', ' ', '#' and '@' will appear in the
+ * resulting time text even they are not embraced within single quotes. In our
+ * current pattern usage, we didn't use up all letters. But those unused
+ * letters are strongly discouraged to be used as quoted text without quote.
+ * That's because we may use other letter for pattern in future. <p>
+ *
+ * Examples Using the US Locale:
+ *
+ * Format Pattern                         Result
+ * --------------                         -------
+ * "yyyy.MM.dd G 'at' HH:mm:ss vvvv" ->>  1996.07.10 AD at 15:08:56 Pacific Time
+ * "EEE, MMM d, ''yy"                ->>  Wed, July 10, '96
+ * "h:mm a"                          ->>  12:08 PM
+ * "hh 'o''clock' a, zzzz"           ->>  12 o'clock PM, Pacific Daylight Time
+ * "K:mm a, vvv"                     ->>  0:00 PM, PT
+ * "yyyyy.MMMMM.dd GGG hh:mm aaa"    ->>  01996.July.10 AD 12:08 PM
+ *
+ * <p> When parsing a date string using the abbreviated year pattern ("yy"),
+ * DateTimeParse must interpret the abbreviated year relative to some
+ * century. It does this by adjusting dates to be within 80 years before and 20
+ * years after the time the parse function is called. For example, using a
+ * pattern of "MM/dd/yy" and a DateTimeParse instance created on Jan 1, 1997,
+ * the string "01/11/12" would be interpreted as Jan 11, 2012 while the string
+ * "05/04/64" would be interpreted as May 4, 1964. During parsing, only
+ * strings consisting of exactly two digits, as defined by {@link
+ * java.lang.Character#isDigit(char)}, will be parsed into the default
+ * century. Any other numeric string, such as a one digit string, a three or
+ * more digit string will be interpreted as its face value.
+ *
+ * <p> If the year pattern does not have exactly two 'y' characters, the year is
+ * interpreted literally, regardless of the number of digits. So using the
+ * pattern "MM/dd/yyyy", "01/11/12" parses to Jan 11, 12 A.D.
+ *
+ * <p> When numeric fields abut one another directly, with no intervening
+ * delimiter characters, they constitute a run of abutting numeric fields. Such
+ * runs are parsed specially. For example, the format "HHmmss" parses the input
+ * text "123456" to 12:34:56, parses the input text "12345" to 1:23:45, and
+ * fails to parse "1234". In other words, the leftmost field of the run is
+ * flexible, while the others keep a fixed width. If the parse fails anywhere in
+ * the run, then the leftmost field is shortened by one character, and the
+ * entire run is parsed again. This is repeated until either the parse succeeds
+ * or the leftmost field is one character in length. If the parse still fails at
+ * that point, the parse of the run fails.
+ *
+ * <p> Now timezone parsing only support GMT:hhmm, GMT:+hhmm, GMT:-hhmm
+ */
 
 
 
-***REMOVED***
-***REMOVED*** Construct a DateTimeParse based on current locale.
-***REMOVED*** @param {string|number} pattern pattern specification or pattern type.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Construct a DateTimeParse based on current locale.
+ * @param {string|number} pattern pattern specification or pattern type.
+ * @constructor
+ * @final
+ */
 goog.i18n.DateTimeParse = function(pattern) {
   this.patternParts_ = [];
   if (typeof pattern == 'number') {
@@ -135,28 +135,28 @@ goog.i18n.DateTimeParse = function(pattern) {
   } else {
     this.applyPattern_(pattern);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Number of years prior to now that the century used to
-***REMOVED*** disambiguate two digit years will begin
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Number of years prior to now that the century used to
+ * disambiguate two digit years will begin
+ *
+ * @type {number}
+ */
 goog.i18n.DateTimeParse.ambiguousYearCenturyStart = 80;
 
 
-***REMOVED***
-***REMOVED*** Apply a pattern to this Parser. The pattern string will be parsed and saved
-***REMOVED*** in "compiled" form.
-***REMOVED*** Note: this method is somewhat similar to the pattern parsing method in
-***REMOVED***       datetimeformat. If you see something wrong here, you might want
-***REMOVED***       to check the other.
-***REMOVED*** @param {string} pattern It describes the format of date string that need to
-***REMOVED***     be parsed.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Apply a pattern to this Parser. The pattern string will be parsed and saved
+ * in "compiled" form.
+ * Note: this method is somewhat similar to the pattern parsing method in
+ *       datetimeformat. If you see something wrong here, you might want
+ *       to check the other.
+ * @param {string} pattern It describes the format of date string that need to
+ *     be parsed.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.applyPattern_ = function(pattern) {
   var inQuote = false;
   var buf = '';
@@ -216,15 +216,15 @@ goog.i18n.DateTimeParse.prototype.applyPattern_ = function(pattern) {
   }
 
   this.markAbutStart_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Apply a predefined pattern to this Parser.
-***REMOVED*** @param {number} formatType A constant used to identified the predefined
-***REMOVED***     pattern string stored in locale repository.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Apply a predefined pattern to this Parser.
+ * @param {number} formatType A constant used to identified the predefined
+ *     pattern string stored in locale repository.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.applyStandardPattern_ = function(formatType) {
   var pattern;
   // formatType constants are in consecutive numbers. So it can be used to
@@ -247,48 +247,48 @@ goog.i18n.DateTimeParse.prototype.applyStandardPattern_ = function(formatType) {
         goog.i18n.DateTimeSymbols.TIMEFORMATS[formatType - 8]);
   }
   this.applyPattern_(pattern);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse the given string and fill info into date object. This version does
-***REMOVED*** not validate the input.
-***REMOVED*** @param {string} text The string being parsed.
-***REMOVED*** @param {goog.date.DateLike} date The Date object to hold the parsed date.
-***REMOVED*** @param {number=} opt_start The position from where parse should begin.
-***REMOVED*** @return {number} How many characters parser advanced.
-***REMOVED***
+/**
+ * Parse the given string and fill info into date object. This version does
+ * not validate the input.
+ * @param {string} text The string being parsed.
+ * @param {goog.date.DateLike} date The Date object to hold the parsed date.
+ * @param {number=} opt_start The position from where parse should begin.
+ * @return {number} How many characters parser advanced.
+ */
 goog.i18n.DateTimeParse.prototype.parse = function(text, date, opt_start) {
   var start = opt_start || 0;
   return this.internalParse_(text, date, start, false/*validation*/);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse the given string and fill info into date object. This version will
-***REMOVED*** validate the input and make sure it is a validate date/time.
-***REMOVED*** @param {string} text The string being parsed.
-***REMOVED*** @param {goog.date.DateLike} date The Date object to hold the parsed date.
-***REMOVED*** @param {number=} opt_start The position from where parse should begin.
-***REMOVED*** @return {number} How many characters parser advanced.
-***REMOVED***
+/**
+ * Parse the given string and fill info into date object. This version will
+ * validate the input and make sure it is a validate date/time.
+ * @param {string} text The string being parsed.
+ * @param {goog.date.DateLike} date The Date object to hold the parsed date.
+ * @param {number=} opt_start The position from where parse should begin.
+ * @return {number} How many characters parser advanced.
+ */
 goog.i18n.DateTimeParse.prototype.strictParse =
     function(text, date, opt_start) {
   var start = opt_start || 0;
   return this.internalParse_(text, date, start, true/*validation*/);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse the given string and fill info into date object.
-***REMOVED*** @param {string} text The string being parsed.
-***REMOVED*** @param {goog.date.DateLike} date The Date object to hold the parsed date.
-***REMOVED*** @param {number} start The position from where parse should begin.
-***REMOVED*** @param {boolean} validation If true, input string need to be a valid
-***REMOVED***     date/time string.
-***REMOVED*** @return {number} How many characters parser advanced.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse the given string and fill info into date object.
+ * @param {string} text The string being parsed.
+ * @param {goog.date.DateLike} date The Date object to hold the parsed date.
+ * @param {number} start The position from where parse should begin.
+ * @param {boolean} validation If true, input string need to be a valid
+ *     date/time string.
+ * @return {number} How many characters parser advanced.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.internalParse_ =
     function(text, date, start, validation) {
   var cal = new goog.i18n.DateTimeParse.MyDate_();
@@ -378,19 +378,19 @@ goog.i18n.DateTimeParse.prototype.internalParse_ =
 
   // return progress
   return cal.calcDate_(date, validation) ? parsePos[0] - start : 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculate character repeat count in pattern.
-***REMOVED***
-***REMOVED*** @param {string} pattern It describes the format of date string that need to
-***REMOVED***     be parsed.
-***REMOVED*** @param {number} start The position of pattern character.
-***REMOVED***
-***REMOVED*** @return {number} Repeat count.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculate character repeat count in pattern.
+ *
+ * @param {string} pattern It describes the format of date string that need to
+ *     be parsed.
+ * @param {number} start The position of pattern character.
+ *
+ * @return {number} Repeat count.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.getNextCharCount_ =
     function(pattern, start) {
   var ch = pattern.charAt(start);
@@ -399,31 +399,31 @@ goog.i18n.DateTimeParse.prototype.getNextCharCount_ =
     next++;
   }
   return next - start;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** All acceptable pattern characters.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * All acceptable pattern characters.
+ * @private
+ */
 goog.i18n.DateTimeParse.PATTERN_CHARS_ = 'GyMdkHmsSEDahKzZvQL';
 
 
-***REMOVED***
-***REMOVED*** Pattern characters that specify numerical field.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Pattern characters that specify numerical field.
+ * @private
+ */
 goog.i18n.DateTimeParse.NUMERIC_FORMAT_CHARS_ = 'MydhHmsSDkK';
 
 
-***REMOVED***
-***REMOVED*** Check if the pattern part is a numeric field.
-***REMOVED***
-***REMOVED*** @param {Object} part pattern part to be examined.
-***REMOVED***
-***REMOVED*** @return {boolean} true if the pattern part is numeric field.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Check if the pattern part is a numeric field.
+ *
+ * @param {Object} part pattern part to be examined.
+ *
+ * @return {boolean} true if the pattern part is numeric field.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.isNumericField_ = function(part) {
   if (part.count <= 0) {
     return false;
@@ -431,21 +431,21 @@ goog.i18n.DateTimeParse.prototype.isNumericField_ = function(part) {
   var i = goog.i18n.DateTimeParse.NUMERIC_FORMAT_CHARS_.indexOf(
       part.text.charAt(0));
   return i > 0 || i == 0 && part.count < 3;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Identify the start of an abutting numeric fields' run. Taking pattern
-***REMOVED*** "HHmmss" as an example. It will try to parse 2/2/2 characters of the input
-***REMOVED*** text, then if that fails, 1/2/2. We only adjust the width of the leftmost
-***REMOVED*** field; the others remain fixed. This allows "123456" => 12:34:56, but
-***REMOVED*** "12345" => 1:23:45. Likewise, for the pattern "yyyyMMdd" we try 4/2/2,
-***REMOVED*** 3/2/2, 2/2/2, and finally 1/2/2. The first field of connected numeric
-***REMOVED*** fields will be marked as abutStart, its width can be reduced to accommodate
-***REMOVED*** others.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Identify the start of an abutting numeric fields' run. Taking pattern
+ * "HHmmss" as an example. It will try to parse 2/2/2 characters of the input
+ * text, then if that fails, 1/2/2. We only adjust the width of the leftmost
+ * field; the others remain fixed. This allows "123456" => 12:34:56, but
+ * "12345" => 1:23:45. Likewise, for the pattern "yyyyMMdd" we try 4/2/2,
+ * 3/2/2, 2/2/2, and finally 1/2/2. The first field of connected numeric
+ * fields will be marked as abutStart, its width can be reduced to accommodate
+ * others.
+ *
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.markAbutStart_ = function() {
   // abut parts are continuous numeric parts. abutStart is the switch
   // point from non-abut to abut
@@ -463,38 +463,38 @@ goog.i18n.DateTimeParse.prototype.markAbutStart_ = function() {
       abut = false;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Skip space in the string.
-***REMOVED***
-***REMOVED*** @param {string} text input string.
-***REMOVED*** @param {Array.<number>} pos where skip start, and return back where the skip
-***REMOVED***     stops.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Skip space in the string.
+ *
+ * @param {string} text input string.
+ * @param {Array.<number>} pos where skip start, and return back where the skip
+ *     stops.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.skipSpace_ = function(text, pos) {
   var m = text.substring(pos[0]).match(/^\s+/);
   if (m) {
     pos[0] += m[0].length;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Protected method that converts one field of the input string into a
-***REMOVED*** numeric field value.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {Object} part the pattern part for this field.
-***REMOVED*** @param {number} digitCount when > 0, numeric parsing must obey the count.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object that holds parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if it parses successfully.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Protected method that converts one field of the input string into a
+ * numeric field value.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {Object} part the pattern part for this field.
+ * @param {number} digitCount when > 0, numeric parsing must obey the count.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object that holds parsed value.
+ *
+ * @return {boolean} True if it parses successfully.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParse_ =
     function(text, pos, part, digitCount, cal) {
   this.skipSpace_(text, pos);
@@ -574,25 +574,25 @@ goog.i18n.DateTimeParse.prototype.subParse_ =
     default:
       return false;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse year field. Year field is special because
-***REMOVED*** 1) two digit year need to be resolved.
-***REMOVED*** 2) we allow year to take a sign.
-***REMOVED*** 3) year field participate in abut processing.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {number} start where this field start.
-***REMOVED*** @param {number} value integer value of year.
-***REMOVED*** @param {Object} part the pattern part for this field.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse year field. Year field is special because
+ * 1) two digit year need to be resolved.
+ * 2) we allow year to take a sign.
+ * 3) year field participate in abut processing.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {number} start where this field start.
+ * @param {number} value integer value of year.
+ * @param {Object} part the pattern part for this field.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ *
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParseYear_ =
     function(text, pos, start, value, part, cal) {
   var ch;
@@ -619,21 +619,21 @@ goog.i18n.DateTimeParse.prototype.subParseYear_ =
     cal.year = value;
   }
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse Month field.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED*** @param {number} value numeric value if this field is expressed using
-***REMOVED***      numeric pattern, or -1 if not.
-***REMOVED***
-***REMOVED*** @return {boolean} True if parsing successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse Month field.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ * @param {number} value numeric value if this field is expressed using
+ *      numeric pattern, or -1 if not.
+ *
+ * @return {boolean} True if parsing successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParseMonth_ =
     function(text, pos, cal, value) {
   // when month is symbols, i.e., MMM, MMMM, LLL or LLLL, value will be -1
@@ -656,21 +656,21 @@ goog.i18n.DateTimeParse.prototype.subParseMonth_ =
     cal.month = value - 1;
     return true;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse Quarter field.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED*** @param {number} value numeric value if this field is expressed using
-***REMOVED***      numeric pattern, or -1 if not.
-***REMOVED***
-***REMOVED*** @return {boolean} True if parsing successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse Quarter field.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ * @param {number} value numeric value if this field is expressed using
+ *      numeric pattern, or -1 if not.
+ *
+ * @return {boolean} True if parsing successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParseQuarter_ =
     function(text, pos, cal, value) {
   // value should be -1, since this is a non-numeric field.
@@ -685,23 +685,23 @@ goog.i18n.DateTimeParse.prototype.subParseQuarter_ =
     if (value < 0) {
       return false;
     }
-    cal.month = value***REMOVED*** 3;  // First month of quarter.
+    cal.month = value * 3;  // First month of quarter.
     cal.day = 1;
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse Day of week field.
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse Day of week field.
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ *
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParseDayOfWeek_ =
     function(text, pos, cal) {
   // Handle both short and long forms.
@@ -716,40 +716,40 @@ goog.i18n.DateTimeParse.prototype.subParseDayOfWeek_ =
   }
   cal.dayOfWeek = value;
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse fractional seconds field.
-***REMOVED***
-***REMOVED*** @param {number} value parsed numeric value.
-***REMOVED*** @param {Array.<number>} pos current parse position.
-***REMOVED*** @param {number} start where this field start.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse fractional seconds field.
+ *
+ * @param {number} value parsed numeric value.
+ * @param {Array.<number>} pos current parse position.
+ * @param {number} start where this field start.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ *
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subParseFractionalSeconds_ =
     function(value, pos, start, cal) {
   // Fractional seconds left-justify
   var len = pos[0] - start;
-  cal.milliseconds = len < 3 ? value***REMOVED*** Math.pow(10, 3 - len) :
+  cal.milliseconds = len < 3 ? value * Math.pow(10, 3 - len) :
                                Math.round(value / Math.pow(10, len - 3));
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse GMT type timezone.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse GMT type timezone.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ *
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.subparseTimeZoneInGMT_ =
     function(text, pos, cal) {
   // First try to parse generic forms such as GMT-07:00. Do this first
@@ -777,19 +777,19 @@ goog.i18n.DateTimeParse.prototype.subparseTimeZoneInGMT_ =
   // a little more permissive than RFC 822.  It will try to do
   // its best with numbers that aren't strictly 4 digits long.
   return this.parseTimeZoneOffset_(text, pos, cal);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse time zone offset.
-***REMOVED***
-***REMOVED*** @param {string} text the time text to be parsed.
-***REMOVED*** @param {Array.<number>} pos Parse position.
-***REMOVED*** @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
-***REMOVED***
-***REMOVED*** @return {boolean} True if successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse time zone offset.
+ *
+ * @param {string} text the time text to be parsed.
+ * @param {Array.<number>} pos Parse position.
+ * @param {goog.i18n.DateTimeParse.MyDate_} cal object to hold parsed value.
+ *
+ * @return {boolean} True if successful.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.parseTimeZoneOffset_ =
     function(text, pos, cal) {
   if (pos[0] >= text.length) {
@@ -813,7 +813,7 @@ goog.i18n.DateTimeParse.prototype.parseTimeZoneOffset_ =
   var offset;
   if (pos[0] < text.length && text.charAt(pos[0]) == ':') {
     // This is the hours:minutes case
-    offset = value***REMOVED*** 60;
+    offset = value * 60;
     pos[0]++;
     st = pos[0];
     value = this.parseInt_(text, pos);
@@ -826,28 +826,28 @@ goog.i18n.DateTimeParse.prototype.parseTimeZoneOffset_ =
     offset = value;
     // Assume "-23".."+23" refers to hours.
     if (offset < 24 && (pos[0] - st) <= 2) {
-      offset***REMOVED***= 60;
+      offset *= 60;
     } else {
       // todo: this looks questionable, should have more error checking
-      offset = offset % 100 + offset / 100***REMOVED*** 60;
+      offset = offset % 100 + offset / 100 * 60;
     }
   }
 
-  offset***REMOVED***= sign;
+  offset *= sign;
   cal.tzOffset = -offset;
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parse a integer string and return integer value.
-***REMOVED***
-***REMOVED*** @param {string} text string being parsed.
-***REMOVED*** @param {Array.<number>} pos parse position.
-***REMOVED***
-***REMOVED*** @return {number} Converted integer value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parse a integer string and return integer value.
+ *
+ * @param {string} text string being parsed.
+ * @param {Array.<number>} pos parse position.
+ *
+ * @return {number} Converted integer value.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.parseInt_ = function(text, pos) {
   // Delocalizes the string containing native digits specified by the locale,
   // replaces the native digits with ASCII digits. Leaves other characters.
@@ -871,23 +871,23 @@ goog.i18n.DateTimeParse.prototype.parseInt_ = function(text, pos) {
   }
   pos[0] += m[0].length;
   return parseInt(m[0], 10);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attempt to match the text at a given position against an array of strings.
-***REMOVED*** Since multiple strings in the array may match (for example, if the array
-***REMOVED*** contains "a", "ab", and "abc", all will match the input string "abcd") the
-***REMOVED*** longest match is returned.
-***REMOVED***
-***REMOVED*** @param {string} text The string to match to.
-***REMOVED*** @param {Array.<number>} pos parsing position.
-***REMOVED*** @param {Array.<string>} data The string array of matching patterns.
-***REMOVED***
-***REMOVED*** @return {number} the new start position if matching succeeded; a negative
-***REMOVED***     number indicating matching failure.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Attempt to match the text at a given position against an array of strings.
+ * Since multiple strings in the array may match (for example, if the array
+ * contains "a", "ab", and "abc", all will match the input string "abcd") the
+ * longest match is returned.
+ *
+ * @param {string} text The string to match to.
+ * @param {Array.<number>} pos parsing position.
+ * @param {Array.<string>} data The string array of matching patterns.
+ *
+ * @return {number} the new start position if matching succeeded; a negative
+ *     number indicating matching failure.
+ * @private
+ */
 goog.i18n.DateTimeParse.prototype.matchString_ = function(text, pos, data) {
   // There may be multiple strings in the data[] array which begin with
   // the same prefix (e.g., Cerven and Cervenec (June and July) in Czech).
@@ -910,133 +910,133 @@ goog.i18n.DateTimeParse.prototype.matchString_ = function(text, pos, data) {
     pos[0] += bestMatchLength;
   }
   return bestMatch;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This class hold the intermediate parsing result. After all fields are
-***REMOVED*** consumed, final result will be resolved from this class.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
-goog.i18n.DateTimeParse.MyDate_ = function() {***REMOVED***
+/**
+ * This class hold the intermediate parsing result. After all fields are
+ * consumed, final result will be resolved from this class.
+ * @constructor
+ * @private
+ */
+goog.i18n.DateTimeParse.MyDate_ = function() {};
 
 
-***REMOVED***
-***REMOVED*** The date's era.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's era.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.era;
 
 
-***REMOVED***
-***REMOVED*** The date's year.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's year.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.year;
 
 
-***REMOVED***
-***REMOVED*** The date's month.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's month.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.month;
 
 
-***REMOVED***
-***REMOVED*** The date's day of month.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's day of month.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.day;
 
 
-***REMOVED***
-***REMOVED*** The date's hour.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's hour.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.hours;
 
 
-***REMOVED***
-***REMOVED*** The date's before/afternoon denominator.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's before/afternoon denominator.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.ampm;
 
 
-***REMOVED***
-***REMOVED*** The date's minutes.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's minutes.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.minutes;
 
 
-***REMOVED***
-***REMOVED*** The date's seconds.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's seconds.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.seconds;
 
 
-***REMOVED***
-***REMOVED*** The date's milliseconds.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's milliseconds.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.milliseconds;
 
 
-***REMOVED***
-***REMOVED*** The date's timezone offset.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's timezone offset.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.tzOffset;
 
 
-***REMOVED***
-***REMOVED*** The date's day of week. Sunday is 0, Saturday is 6.
-***REMOVED*** @type {?number}
-***REMOVED***
+/**
+ * The date's day of week. Sunday is 0, Saturday is 6.
+ * @type {?number}
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.dayOfWeek;
 
 
-***REMOVED***
-***REMOVED*** 2 digit year special handling. Assuming for example that the
-***REMOVED*** defaultCenturyStart is 6/18/1903. This means that two-digit years will be
-***REMOVED*** forced into the range 6/18/1903 to 6/17/2003. As a result, years 00, 01, and
-***REMOVED*** 02 correspond to 2000, 2001, and 2002. Years 04, 05, etc. correspond
-***REMOVED*** to 1904, 1905, etc. If the year is 03, then it is 2003 if the
-***REMOVED*** other fields specify a date before 6/18, or 1903 if they specify a
-***REMOVED*** date afterwards. As a result, 03 is an ambiguous year. All other
-***REMOVED*** two-digit years are unambiguous.
-***REMOVED***
-***REMOVED*** @param {number} year 2 digit year value before adjustment.
-***REMOVED*** @return {number} disambiguated year.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * 2 digit year special handling. Assuming for example that the
+ * defaultCenturyStart is 6/18/1903. This means that two-digit years will be
+ * forced into the range 6/18/1903 to 6/17/2003. As a result, years 00, 01, and
+ * 02 correspond to 2000, 2001, and 2002. Years 04, 05, etc. correspond
+ * to 1904, 1905, etc. If the year is 03, then it is 2003 if the
+ * other fields specify a date before 6/18, or 1903 if they specify a
+ * date afterwards. As a result, 03 is an ambiguous year. All other
+ * two-digit years are unambiguous.
+ *
+ * @param {number} year 2 digit year value before adjustment.
+ * @return {number} disambiguated year.
+ * @private
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.setTwoDigitYear_ = function(year) {
   var now = new Date();
   var defaultCenturyStartYear =
       now.getFullYear() - goog.i18n.DateTimeParse.ambiguousYearCenturyStart;
   var ambiguousTwoDigitYear = defaultCenturyStartYear % 100;
   this.ambiguousYear = (year == ambiguousTwoDigitYear);
-  year += Math.floor(defaultCenturyStartYear / 100)***REMOVED*** 100 +
+  year += Math.floor(defaultCenturyStartYear / 100) * 100 +
       (year < ambiguousTwoDigitYear ? 100 : 0);
   return this.year = year;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Based on the fields set, fill a Date object. For those fields that not
-***REMOVED*** set, use the passed in date object's value.
-***REMOVED***
-***REMOVED*** @param {goog.date.DateLike} date Date object to be filled.
-***REMOVED*** @param {boolean} validation If true, input string will be checked to make
-***REMOVED***     sure it is valid.
-***REMOVED***
-***REMOVED*** @return {boolean} false if fields specify a invalid date.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Based on the fields set, fill a Date object. For those fields that not
+ * set, use the passed in date object's value.
+ *
+ * @param {goog.date.DateLike} date Date object to be filled.
+ * @param {boolean} validation If true, input string will be checked to make
+ *     sure it is valid.
+ *
+ * @return {boolean} false if fields specify a invalid date.
+ * @private
+ */
 goog.i18n.DateTimeParse.MyDate_.prototype.calcDate_ =
     function(date, validation) {
   // year 0 is 1 BC, and so on.
@@ -1113,7 +1113,7 @@ goog.i18n.DateTimeParse.MyDate_.prototype.calcDate_ =
   // adjust time zone
   if (this.tzOffset != undefined) {
     var offset = date.getTimezoneOffset();
-    date.setTime(date.getTime() + (this.tzOffset - offset)***REMOVED*** 60***REMOVED*** 1000);
+    date.setTime(date.getTime() + (this.tzOffset - offset) * 60 * 1000);
   }
 
   // resolve ambiguous year if needed
@@ -1147,4 +1147,4 @@ goog.i18n.DateTimeParse.MyDate_.prototype.calcDate_ =
     }
   }
   return true;
-***REMOVED***
+};

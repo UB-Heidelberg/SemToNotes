@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for the abstract cryptographic hash interface.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for the abstract cryptographic hash interface.
+ *
+ */
 
 goog.provide('goog.crypt.hashTester');
 
@@ -27,11 +27,11 @@ goog.require('goog.testing.asserts');
 goog.setTestOnly('hashTester');
 
 
-***REMOVED***
-***REMOVED*** Runs basic tests.
-***REMOVED***
-***REMOVED*** @param {!goog.crypt.Hash} hash A hash instance.
-***REMOVED***
+/**
+ * Runs basic tests.
+ *
+ * @param {!goog.crypt.Hash} hash A hash instance.
+ */
 goog.crypt.hashTester.runBasicTests = function(hash) {
   // Compute first hash.
   hash.update([97, 158]);
@@ -94,15 +94,15 @@ goog.crypt.hashTester.runBasicTests = function(hash) {
   hash.update([97, 158, 32], 2);
   assertArrayEquals('Updating with an explicit buffer length did not work',
       golden1, hash.digest());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Runs block tests.
-***REMOVED***
-***REMOVED*** @param {!goog.crypt.Hash} hash A hash instance.
-***REMOVED*** @param {number} blockBytes Size of the hash block.
-***REMOVED***
+/**
+ * Runs block tests.
+ *
+ * @param {!goog.crypt.Hash} hash A hash instance.
+ * @param {number} blockBytes Size of the hash block.
+ */
 goog.crypt.hashTester.runBlockTests = function(hash, blockBytes) {
   // Compute a message which is 1 byte shorter than hash block size.
   var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -160,15 +160,15 @@ goog.crypt.hashTester.runBlockTests = function(hash, blockBytes) {
   hash.update(goog.crypt.stringToByteArray(message));
   hash.update(goog.crypt.stringToByteArray(message + '123'));
   assertArrayEquals(golden2, hash.digest());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Runs performance tests.
-***REMOVED***
-***REMOVED*** @param {function():!goog.crypt.Hash} hashFactory A hash factory.
-***REMOVED*** @param {string} hashName Name of the hashing function.
-***REMOVED***
+/**
+ * Runs performance tests.
+ *
+ * @param {function():!goog.crypt.Hash} hashFactory A hash factory.
+ * @param {string} hashName Name of the hashing function.
+ */
 goog.crypt.hashTester.runPerfTests = function(hashFactory, hashName) {
   var body = goog.dom.getDocument().body;
   var perfTable = goog.dom.createElement('div');
@@ -203,41 +203,41 @@ goog.crypt.hashTester.runPerfTests = function(hashFactory, hashName) {
 
   runPerfTest(MESSAGE_LENGTH_LONG, 1);
   runPerfTest(MESSAGE_LENGTH_SHORT, MESSAGE_COUNT_SHORT);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates and returns a random byte array.
-***REMOVED***
-***REMOVED*** @param {number} length Length of the byte array.
-***REMOVED*** @return {!Array.<number>} An array of bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates and returns a random byte array.
+ *
+ * @param {number} length Length of the byte array.
+ * @return {!Array.<number>} An array of bytes.
+ * @private
+ */
 goog.crypt.hashTester.createRandomByteArray_ = function(length) {
   var random = new goog.testing.PseudoRandom(0);
   var bytes = [];
 
   for (var i = 0; i < length; ++i) {
     // Generates an integer from 0 to 255.
-    var b = Math.floor(random.random()***REMOVED*** 0x100);
+    var b = Math.floor(random.random() * 0x100);
     bytes.push(b);
   }
 
   return bytes;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a string from an array of bytes.
-***REMOVED***
-***REMOVED*** @param {!Array.<number>} bytes An array of bytes.
-***REMOVED*** @return {string} The string encoded by the bytes.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a string from an array of bytes.
+ *
+ * @param {!Array.<number>} bytes An array of bytes.
+ * @return {string} The string encoded by the bytes.
+ * @private
+ */
 goog.crypt.hashTester.createByteString_ = function(bytes) {
   var str = '';
   goog.array.forEach(bytes, function(b) {
     str += String.fromCharCode(b);
   });
   return str;
-***REMOVED***
+};

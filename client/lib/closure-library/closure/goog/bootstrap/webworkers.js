@@ -12,26 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A bootstrap for dynamically requiring Closure within an HTML5
-***REMOVED*** Web Worker context. To use this, first set CLOSURE_BASE_PATH to the directory
-***REMOVED*** containing base.js (relative to the main script), then use importScripts to
-***REMOVED*** load this file and base.js (in that order). After this you can use
-***REMOVED*** goog.require for further imports.
-***REMOVED***
-***REMOVED*** @nocompile
-***REMOVED***
+/**
+ * @fileoverview A bootstrap for dynamically requiring Closure within an HTML5
+ * Web Worker context. To use this, first set CLOSURE_BASE_PATH to the directory
+ * containing base.js (relative to the main script), then use importScripts to
+ * load this file and base.js (in that order). After this you can use
+ * goog.require for further imports.
+ *
+ * @nocompile
+ */
 
 
-***REMOVED***
-***REMOVED*** Imports a script using the Web Worker importScript API.
-***REMOVED***
-***REMOVED*** @param {string} src The script source.
-***REMOVED*** @return {boolean} True if the script was imported, false otherwise.
-***REMOVED***
+/**
+ * Imports a script using the Web Worker importScript API.
+ *
+ * @param {string} src The script source.
+ * @return {boolean} True if the script was imported, false otherwise.
+ */
 this.CLOSURE_IMPORT_SCRIPT = (function(global) {
   return function(src) {
     global['importScripts'](src);
     return true;
- ***REMOVED*****REMOVED***
+  };
 })(this);

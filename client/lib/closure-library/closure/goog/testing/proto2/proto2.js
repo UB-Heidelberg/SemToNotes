@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Test helpers to compare goog.proto2.Messages.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Test helpers to compare goog.proto2.Messages.
+ *
+ */
 
 goog.provide('goog.testing.proto2');
 
@@ -24,15 +24,15 @@ goog.require('goog.proto2.ObjectSerializer');
 goog.require('goog.testing.asserts');
 
 
-***REMOVED***
-***REMOVED*** Compares two goog.proto2.Message instances of the same type.
-***REMOVED*** @param {!goog.proto2.Message} expected First message.
-***REMOVED*** @param {!goog.proto2.Message} actual Second message.
-***REMOVED*** @param {string} path Path to the messages.
-***REMOVED*** @return {string} A string describing where they differ. Empty string if they
-***REMOVED***     are equal.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Compares two goog.proto2.Message instances of the same type.
+ * @param {!goog.proto2.Message} expected First message.
+ * @param {!goog.proto2.Message} actual Second message.
+ * @param {string} path Path to the messages.
+ * @return {string} A string describing where they differ. Empty string if they
+ *     are equal.
+ * @private
+ */
 goog.testing.proto2.findDifferences_ = function(expected, actual, path) {
   var fields = expected.getDescriptor().getFields();
   for (var i = 0; i < fields.length; i++) {
@@ -62,8 +62,8 @@ goog.testing.proto2.findDifferences_ = function(expected, actual, path) {
           var actualItem = actual.get(field, j);
           if (isComposite) {
             var itemDiff = goog.testing.proto2.findDifferences_(
-               ***REMOVED*****REMOVED*** @type {!goog.proto2.Message}***REMOVED*** (expectedItem),
-               ***REMOVED*****REMOVED*** @type {!goog.proto2.Message}***REMOVED*** (actualItem),
+                /** @type {!goog.proto2.Message} */ (expectedItem),
+                /** @type {!goog.proto2.Message} */ (actualItem),
                 newPath + '[' + j + ']');
             if (itemDiff) {
               return itemDiff;
@@ -80,8 +80,8 @@ goog.testing.proto2.findDifferences_ = function(expected, actual, path) {
         var actualValue = actual.get(field);
         if (isComposite) {
           var diff = goog.testing.proto2.findDifferences_(
-             ***REMOVED*****REMOVED*** @type {!goog.proto2.Message}***REMOVED*** (expectedValue),
-             ***REMOVED*****REMOVED*** @type {!goog.proto2.Message}***REMOVED*** (actualValue),
+              /** @type {!goog.proto2.Message} */ (expectedValue),
+              /** @type {!goog.proto2.Message} */ (actualValue),
               newPath);
           if (diff) {
             return diff;
@@ -97,17 +97,17 @@ goog.testing.proto2.findDifferences_ = function(expected, actual, path) {
   }
 
   return '';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Compares two goog.proto2.Message objects. Gives more readable output than
-***REMOVED*** assertObjectEquals on mismatch.
-***REMOVED*** @param {!goog.proto2.Message} expected Expected proto2 message.
-***REMOVED*** @param {!goog.proto2.Message} actual Actual proto2 message.
-***REMOVED*** @param {string=} opt_failureMessage Failure message when the values don't
-***REMOVED***     match.
-***REMOVED***
+/**
+ * Compares two goog.proto2.Message objects. Gives more readable output than
+ * assertObjectEquals on mismatch.
+ * @param {!goog.proto2.Message} expected Expected proto2 message.
+ * @param {!goog.proto2.Message} actual Actual proto2 message.
+ * @param {string=} opt_failureMessage Failure message when the values don't
+ *     match.
+ */
 goog.testing.proto2.assertEquals = function(expected, actual,
     opt_failureMessage) {
   var failureSummary = opt_failureMessage || '';
@@ -125,21 +125,21 @@ goog.testing.proto2.assertEquals = function(expected, actual,
   if (diff) {
     goog.testing.asserts.raiseException(failureSummary, diff);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function to quickly build protocol buffer messages from JSON objects.
-***REMOVED*** @param {function(new:MessageType)} messageCtor A constructor that
-***REMOVED***     creates a {@code goog.proto2.Message} subclass instance.
-***REMOVED*** @param {!Object} json JSON object which uses field names as keys.
-***REMOVED*** @return {!MessageType} The deserialized protocol buffer.
-***REMOVED*** @template MessageType
-***REMOVED***
+/**
+ * Helper function to quickly build protocol buffer messages from JSON objects.
+ * @param {function(new:MessageType)} messageCtor A constructor that
+ *     creates a {@code goog.proto2.Message} subclass instance.
+ * @param {!Object} json JSON object which uses field names as keys.
+ * @return {!MessageType} The deserialized protocol buffer.
+ * @template MessageType
+ */
 goog.testing.proto2.fromObject = function(messageCtor, json) {
   var serializer = new goog.proto2.ObjectSerializer(
       goog.proto2.ObjectSerializer.KeyOption.NAME);
   var message = new messageCtor;
   serializer.deserializeTo(message, json);
   return message;
-***REMOVED***
+};

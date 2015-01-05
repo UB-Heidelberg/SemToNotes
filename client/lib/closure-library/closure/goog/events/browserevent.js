@@ -12,201 +12,201 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A patched, standardized event object for browser events.
-***REMOVED***
-***REMOVED*** <pre>
-***REMOVED*** The patched event object contains the following members:
-***REMOVED*** - type           {string}    Event type, e.g. 'click'
-***REMOVED*** - timestamp      {Date}      A date object for when the event was fired
-***REMOVED*** - target         {Object}    The element that actually triggered the event
-***REMOVED*** - currentTarget  {Object}    The element the listener is attached to
-***REMOVED*** - relatedTarget  {Object}    For mouseover and mouseout, the previous object
-***REMOVED*** - offsetX        {number}    X-coordinate relative to target
-***REMOVED*** - offsetY        {number}    Y-coordinate relative to target
-***REMOVED*** - clientX        {number}    X-coordinate relative to viewport
-***REMOVED*** - clientY        {number}    Y-coordinate relative to viewport
-***REMOVED*** - screenX        {number}    X-coordinate relative to the edge of the screen
-***REMOVED*** - screenY        {number}    Y-coordinate relative to the edge of the screen
-***REMOVED*** - button         {number}    Mouse button. Use isButton() to test.
-***REMOVED*** - keyCode        {number}    Key-code
-***REMOVED*** - ctrlKey        {boolean}   Was ctrl key depressed
-***REMOVED*** - altKey         {boolean}   Was alt key depressed
-***REMOVED*** - shiftKey       {boolean}   Was shift key depressed
-***REMOVED*** - metaKey        {boolean}   Was meta key depressed
-***REMOVED*** - defaultPrevented {boolean} Whether the default action has been prevented
-***REMOVED*** - state          {Object}    History state object
-***REMOVED***
-***REMOVED*** NOTE: The keyCode member contains the raw browser keyCode. For normalized
-***REMOVED*** key and character code use {@link goog.events.KeyHandler}.
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A patched, standardized event object for browser events.
+ *
+ * <pre>
+ * The patched event object contains the following members:
+ * - type           {string}    Event type, e.g. 'click'
+ * - timestamp      {Date}      A date object for when the event was fired
+ * - target         {Object}    The element that actually triggered the event
+ * - currentTarget  {Object}    The element the listener is attached to
+ * - relatedTarget  {Object}    For mouseover and mouseout, the previous object
+ * - offsetX        {number}    X-coordinate relative to target
+ * - offsetY        {number}    Y-coordinate relative to target
+ * - clientX        {number}    X-coordinate relative to viewport
+ * - clientY        {number}    Y-coordinate relative to viewport
+ * - screenX        {number}    X-coordinate relative to the edge of the screen
+ * - screenY        {number}    Y-coordinate relative to the edge of the screen
+ * - button         {number}    Mouse button. Use isButton() to test.
+ * - keyCode        {number}    Key-code
+ * - ctrlKey        {boolean}   Was ctrl key depressed
+ * - altKey         {boolean}   Was alt key depressed
+ * - shiftKey       {boolean}   Was shift key depressed
+ * - metaKey        {boolean}   Was meta key depressed
+ * - defaultPrevented {boolean} Whether the default action has been prevented
+ * - state          {Object}    History state object
+ *
+ * NOTE: The keyCode member contains the raw browser keyCode. For normalized
+ * key and character code use {@link goog.events.KeyHandler}.
+ * </pre>
+ *
+ */
 
 goog.provide('goog.events.BrowserEvent');
 goog.provide('goog.events.BrowserEvent.MouseButton');
 
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.reflect');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Accepts a browser event object and creates a patched, cross browser event
-***REMOVED*** object.
-***REMOVED*** The content of this object will not be initialized if no event object is
-***REMOVED*** provided. If this is the case, init() needs to be invoked separately.
-***REMOVED*** @param {Event=} opt_e Browser event object.
-***REMOVED*** @param {EventTarget=} opt_currentTarget Current target for event.
-***REMOVED***
-***REMOVED*** @extends {goog.events.Event}
-***REMOVED***
+/**
+ * Accepts a browser event object and creates a patched, cross browser event
+ * object.
+ * The content of this object will not be initialized if no event object is
+ * provided. If this is the case, init() needs to be invoked separately.
+ * @param {Event=} opt_e Browser event object.
+ * @param {EventTarget=} opt_currentTarget Current target for event.
+ * @constructor
+ * @extends {goog.events.Event}
+ */
 goog.events.BrowserEvent = function(opt_e, opt_currentTarget) {
   goog.events.BrowserEvent.base(this, 'constructor', opt_e ? opt_e.type : '');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Target that fired the event.
-  ***REMOVED*** @override
-  ***REMOVED*** @type {Node}
- ***REMOVED*****REMOVED***
+  /**
+   * Target that fired the event.
+   * @override
+   * @type {Node}
+   */
   this.target = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Node that had the listener attached.
-  ***REMOVED*** @override
-  ***REMOVED*** @type {Node|undefined}
- ***REMOVED*****REMOVED***
+  /**
+   * Node that had the listener attached.
+   * @override
+   * @type {Node|undefined}
+   */
   this.currentTarget = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** For mouseover and mouseout events, the related object for the event.
-  ***REMOVED*** @type {Node}
- ***REMOVED*****REMOVED***
+  /**
+   * For mouseover and mouseout events, the related object for the event.
+   * @type {Node}
+   */
   this.relatedTarget = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X-coordinate relative to target.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X-coordinate relative to target.
+   * @type {number}
+   */
   this.offsetX = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y-coordinate relative to target.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y-coordinate relative to target.
+   * @type {number}
+   */
   this.offsetY = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X-coordinate relative to the window.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X-coordinate relative to the window.
+   * @type {number}
+   */
   this.clientX = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y-coordinate relative to the window.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y-coordinate relative to the window.
+   * @type {number}
+   */
   this.clientY = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** X-coordinate relative to the monitor.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * X-coordinate relative to the monitor.
+   * @type {number}
+   */
   this.screenX = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Y-coordinate relative to the monitor.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Y-coordinate relative to the monitor.
+   * @type {number}
+   */
   this.screenY = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Which mouse button was pressed.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Which mouse button was pressed.
+   * @type {number}
+   */
   this.button = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Keycode of key press.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Keycode of key press.
+   * @type {number}
+   */
   this.keyCode = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Keycode of key press.
-  ***REMOVED*** @type {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Keycode of key press.
+   * @type {number}
+   */
   this.charCode = 0;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether control was pressed at time of event.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether control was pressed at time of event.
+   * @type {boolean}
+   */
   this.ctrlKey = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether alt was pressed at time of event.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether alt was pressed at time of event.
+   * @type {boolean}
+   */
   this.altKey = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether shift was pressed at time of event.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether shift was pressed at time of event.
+   * @type {boolean}
+   */
   this.shiftKey = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the meta key was pressed at time of event.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the meta key was pressed at time of event.
+   * @type {boolean}
+   */
   this.metaKey = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** History state object, only set for PopState events where it's a copy of the
-  ***REMOVED*** state object provided to pushState or replaceState.
-  ***REMOVED*** @type {Object}
- ***REMOVED*****REMOVED***
+  /**
+   * History state object, only set for PopState events where it's a copy of the
+   * state object provided to pushState or replaceState.
+   * @type {Object}
+   */
   this.state = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the default platform modifier key was pressed at time of event.
-  ***REMOVED*** (This is control for all platforms except Mac, where it's Meta.)
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the default platform modifier key was pressed at time of event.
+   * (This is control for all platforms except Mac, where it's Meta.)
+   * @type {boolean}
+   */
   this.platformModifierKey = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The browser event object.
-  ***REMOVED*** @private {Event}
- ***REMOVED*****REMOVED***
+  /**
+   * The browser event object.
+   * @private {Event}
+   */
   this.event_ = null;
 
   if (opt_e) {
     this.init(opt_e, opt_currentTarget);
   }
-***REMOVED***
+};
 goog.inherits(goog.events.BrowserEvent, goog.events.Event);
 
 
-***REMOVED***
-***REMOVED*** Normalized button constants for the mouse.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Normalized button constants for the mouse.
+ * @enum {number}
+ */
 goog.events.BrowserEvent.MouseButton = {
   LEFT: 0,
   MIDDLE: 1,
   RIGHT: 2
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static data for mapping mouse buttons.
-***REMOVED*** @type {!Array.<number>}
-***REMOVED***
+/**
+ * Static data for mapping mouse buttons.
+ * @type {!Array.<number>}
+ */
 goog.events.BrowserEvent.IEButtonMap = [
   1, // LEFT
   4, // MIDDLE
@@ -214,22 +214,22 @@ goog.events.BrowserEvent.IEButtonMap = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Accepts a browser event object and creates a patched, cross browser event
-***REMOVED*** object.
-***REMOVED*** @param {Event} e Browser event object.
-***REMOVED*** @param {EventTarget=} opt_currentTarget Current target for event.
-***REMOVED***
+/**
+ * Accepts a browser event object and creates a patched, cross browser event
+ * object.
+ * @param {Event} e Browser event object.
+ * @param {EventTarget=} opt_currentTarget Current target for event.
+ */
 goog.events.BrowserEvent.prototype.init = function(e, opt_currentTarget) {
   var type = this.type = e.type;
 
   // TODO(nicksantos): Change this.target to type EventTarget.
-  this.target =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.target) || e.srcElement;
+  this.target = /** @type {Node} */ (e.target) || e.srcElement;
 
   // TODO(nicksantos): Change this.currentTarget to type EventTarget.
-  this.currentTarget =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (opt_currentTarget);
+  this.currentTarget = /** @type {Node} */ (opt_currentTarget);
 
-  var relatedTarget =***REMOVED*****REMOVED*** @type {Node}***REMOVED*** (e.relatedTarget);
+  var relatedTarget = /** @type {Node} */ (e.relatedTarget);
   if (relatedTarget) {
     // There's a bug in FireFox where sometimes, relatedTarget will be a
     // chrome element, and accessing any property of it will get a permission
@@ -276,25 +276,25 @@ goog.events.BrowserEvent.prototype.init = function(e, opt_currentTarget) {
   if (e.defaultPrevented) {
     this.preventDefault();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests to see which button was pressed during the event. This is really only
-***REMOVED*** useful in IE and Gecko browsers. And in IE, it's only useful for
-***REMOVED*** mousedown/mouseup events, because click only fires for the left mouse button.
-***REMOVED***
-***REMOVED*** Safari 2 only reports the left button being clicked, and uses the value '1'
-***REMOVED*** instead of 0. Opera only reports a mousedown event for the middle button, and
-***REMOVED*** no mouse events for the right button. Opera has default behavior for left and
-***REMOVED*** middle click that can only be overridden via a configuration setting.
-***REMOVED***
-***REMOVED*** There's a nice table of this mess at http://www.unixpapa.com/js/mouse.html.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent.MouseButton} button The button
-***REMOVED***     to test for.
-***REMOVED*** @return {boolean} True if button was pressed.
-***REMOVED***
+/**
+ * Tests to see which button was pressed during the event. This is really only
+ * useful in IE and Gecko browsers. And in IE, it's only useful for
+ * mousedown/mouseup events, because click only fires for the left mouse button.
+ *
+ * Safari 2 only reports the left button being clicked, and uses the value '1'
+ * instead of 0. Opera only reports a mousedown event for the middle button, and
+ * no mouse events for the right button. Opera has default behavior for left and
+ * middle click that can only be overridden via a configuration setting.
+ *
+ * There's a nice table of this mess at http://www.unixpapa.com/js/mouse.html.
+ *
+ * @param {goog.events.BrowserEvent.MouseButton} button The button
+ *     to test for.
+ * @return {boolean} True if button was pressed.
+ */
 goog.events.BrowserEvent.prototype.isButton = function(button) {
   if (!goog.events.BrowserFeature.HAS_W3C_BUTTON) {
     if (this.type == 'click') {
@@ -306,28 +306,28 @@ goog.events.BrowserEvent.prototype.isButton = function(button) {
   } else {
     return this.event_.button == button;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether this has an "action"-producing mouse button.
-***REMOVED***
-***REMOVED*** By definition, this includes left-click on windows/linux, and left-click
-***REMOVED*** without the ctrl key on Macs.
-***REMOVED***
-***REMOVED*** @return {boolean} The result.
-***REMOVED***
+/**
+ * Whether this has an "action"-producing mouse button.
+ *
+ * By definition, this includes left-click on windows/linux, and left-click
+ * without the ctrl key on Macs.
+ *
+ * @return {boolean} The result.
+ */
 goog.events.BrowserEvent.prototype.isMouseActionButton = function() {
   // Webkit does not ctrl+click to be a right-click, so we
   // normalize it to behave like Gecko and Opera.
   return this.isButton(goog.events.BrowserEvent.MouseButton.LEFT) &&
       !(goog.userAgent.WEBKIT && goog.userAgent.MAC && this.ctrlKey);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.events.BrowserEvent.prototype.stopPropagation = function() {
   goog.events.BrowserEvent.superClass_.stopPropagation.call(this);
   if (this.event_.stopPropagation) {
@@ -335,19 +335,19 @@ goog.events.BrowserEvent.prototype.stopPropagation = function() {
   } else {
     this.event_.cancelBubble = true;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.events.BrowserEvent.prototype.preventDefault = function() {
   goog.events.BrowserEvent.superClass_.preventDefault.call(this);
   var be = this.event_;
   if (!be.preventDefault) {
     be.returnValue = false;
     if (goog.events.BrowserFeature.SET_KEY_CODE_TO_PREVENT_DEFAULT) {
-     ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+      /** @preserveTry */
       try {
         // Most keys can be prevented using returnValue. Some special keys
         // require setting the keyCode to -1 as well:
@@ -375,17 +375,17 @@ goog.events.BrowserEvent.prototype.preventDefault = function() {
   } else {
     be.preventDefault();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Event} The underlying browser event object.
-***REMOVED***
+/**
+ * @return {Event} The underlying browser event object.
+ */
 goog.events.BrowserEvent.prototype.getBrowserEvent = function() {
   return this.event_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.BrowserEvent.prototype.disposeInternal = function() {
-***REMOVED***
+};

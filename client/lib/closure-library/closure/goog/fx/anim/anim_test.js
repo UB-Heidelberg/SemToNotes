@@ -17,7 +17,7 @@ goog.setTestOnly('goog.fx.animTest');
 
 goog.require('goog.async.AnimationDelay');
 goog.require('goog.async.Delay');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.functions');
 goog.require('goog.fx.Animation');
 goog.require('goog.fx.anim');
@@ -58,10 +58,10 @@ function testAnimationDelayWithMocks() {
 }
 
 
-***REMOVED***
-***REMOVED*** @param {!Function} delayType The constructor for Delay or AnimationDelay.
-***REMOVED***     The methods will be mocked out.
-***REMOVED***
+/**
+ * @param {!Function} delayType The constructor for Delay or AnimationDelay.
+ *     The methods will be mocked out.
+ */
 function registerAndUnregisterAnimationWithMocks(delayType) {
   var timerCount = 0;
 

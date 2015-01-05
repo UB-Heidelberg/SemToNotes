@@ -17,7 +17,7 @@ goog.setTestOnly('goog.style.webkitScrollbarsTest');
 
 goog.require('goog.asserts');
 goog.require('goog.style');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.styleScrollbarTester');
 goog.require('goog.testing.ExpectedFailures');
 goog.require('goog.testing.jsunit');

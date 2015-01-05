@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview Abstract class which represents a
-***REMOVED*** control of the model-view-controller.
-***REMOVED***
+/**
+ * @fileoverview Abstract class which represents a
+ * control of the model-view-controller.
+ */
 
 goog.provide('xrx.mvc.ComponentView');
 
@@ -11,9 +11,9 @@ goog.require('xrx.mvc.Component');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.mvc.ComponentView = function(element, uidl) {
 
   goog.base(this, element, uidl);
@@ -23,5 +23,5 @@ xrx.mvc.ComponentView = function(element, uidl) {
   this.createDom();
 
   this.mvcRefresh();
-***REMOVED***
+};
 goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);

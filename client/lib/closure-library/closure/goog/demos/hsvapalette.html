@@ -14,7 +14,7 @@ See the COPYING file for details.
     <link rel="stylesheet" href="../css/hsvapalette.css" />
     <script src="../base.js"></script>
     <script>
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.ui.Component.EventType');
     goog.require('goog.ui.HsvaPalette');
     </script>
@@ -38,7 +38,7 @@ See the COPYING file for details.
 
     function linkColors(e) {
       e.target.other.setColorRgbaHex(e.target.getColorRgbaHex());
-   ***REMOVED*****REMOVED***
+    };
 
     var pSmall = new goog.ui.HsvaPalette(null, null, null,
         'goog-hsva-palette-sm');
@@ -46,8 +46,8 @@ See the COPYING file for details.
 
     p.other = pSmall;
     pSmall.other = p;
-  ***REMOVED***p, goog.ui.Component.EventType.ACTION, linkColors);
-  ***REMOVED***pSmall, goog.ui.Component.EventType.ACTION, linkColors);
+    goog.events.listen(p, goog.ui.Component.EventType.ACTION, linkColors);
+    goog.events.listen(pSmall, goog.ui.Component.EventType.ACTION, linkColors);
 
     </script>
 

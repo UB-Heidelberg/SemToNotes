@@ -15,7 +15,7 @@ See the COPYING file for details.
 #viewport {
   width: 400px;
   height: 200px;
-  overflow: hidden; /* Suppress scroll bars to get consistent cross-browser resizing***REMOVED***
+  overflow: hidden; /* Suppress scroll bars to get consistent cross-browser resizing */
   position: relative;
 }
 </style>
@@ -26,7 +26,7 @@ See the COPYING file for details.
   goog.require('goog.a11y.aria');
   goog.require('goog.a11y.aria.Role');
   goog.require('goog.a11y.aria.State');
- ***REMOVED*****REMOVED***
+  goog.require('goog.events');
   goog.require('goog.functions');
   goog.require('goog.fx.dom.FadeInAndShow');
   goog.require('goog.fx.dom.FadeOutAndHide');
@@ -541,7 +541,7 @@ See the COPYING file for details.
           goog.dom.appendChild(resultsHolder, node);
         }
       }
-   ***REMOVED*****REMOVED***
+    };
     renderer = new goog.ui.ac.Renderer(null, customRenderer);
 
     // Make sure we can still highlight the row at position 2 even though

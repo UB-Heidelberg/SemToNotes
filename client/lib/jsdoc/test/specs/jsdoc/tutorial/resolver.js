@@ -1,4 +1,4 @@
-/*global beforeEach, describe, env, expect, it, spyOn***REMOVED***
+/*global beforeEach, describe, env, expect, it, spyOn */
 describe("jsdoc/tutorial/resolver", function() {
     var logger = require('jsdoc/util/logger');
     var resolver = require('jsdoc/tutorial/resolver');
@@ -34,7 +34,7 @@ describe("jsdoc/tutorial/resolver", function() {
         expect(typeof resolver.root.getByName).toBe("function");
     });
 
-    // note: every time we addTutorial or run the resolver, we are***REMOVED***adding*
+    // note: every time we addTutorial or run the resolver, we are *adding*
     // to the root tutorial.
 
     // addTutorial

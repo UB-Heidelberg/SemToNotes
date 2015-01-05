@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class implementing the document node
-***REMOVED*** type for streaming XPath evaluation.
-***REMOVED***
+/**
+ * @fileoverview A class implementing the document node
+ * type for streaming XPath evaluation.
+ */
 
 goog.provide('xrx.node.DocumentS');
 
@@ -15,15 +15,15 @@ goog.require('xrx.xpath.NodeSet');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.node.DocumentS = function(instanceId) {
 
   goog.base(this, xrx.node.DOCUMENT, this);
 
   this.instanceId_ = instanceId;
-***REMOVED***
+};
 goog.inherits(xrx.node.DocumentS, xrx.node.Streaming);
 
 
@@ -112,24 +112,24 @@ xrx.node.DocumentS.prototype.getStringValue = function() {
   var xml = this.getInstance().xml();
   var traverse = new xrx.xml.Traverse(xml);
   var string = '';
-***REMOVED***
+  var self = this;
 
   traverse.rowStartTag = function(label, offset, length1, length2) {
     string += xml.substr(offset + length1, length2 - length1);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
     string += xml.substr(offset + length1, length2 - length1);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label, offset, length1, length2) {
     string += xml.substr(offset + length1, length2 - length1);
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward();
 
   return string;
-***REMOVED***
+};
 
 
 
@@ -149,7 +149,7 @@ xrx.node.DocumentS.prototype.getNodeChild = function(test) {
 
   return this.find(test, xrx.node.DocumentS.prototype.isParentOf, false,
       this.getLabel([1]));
-***REMOVED***
+};
 
 
 
@@ -157,7 +157,7 @@ xrx.node.DocumentS.prototype.getNodeDescendant = function(test) {
 
   return this.find(test, xrx.node.DocumentS.prototype.isAncestorOf, false,
       this.getLabel([-1]));
-***REMOVED***
+};
 
 
 
@@ -181,11 +181,11 @@ xrx.node.DocumentS.prototype.getNodePrecedingSibling = xrx.node.Document.prototy
 
 
 
-***REMOVED***
-***REMOVED*** @param {!xrx.xml.Label}
-***REMOVED***
+/**
+ * @param {!xrx.xml.Label}
+ */
 xrx.node.DocumentS.prototype.forward = function(stop) {
-***REMOVED***
+  var self = this;
   var traverse = new xrx.xml.Traverse(this.getInstance().xml());
   var token;
 
@@ -196,7 +196,7 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
       self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
     if (label.sameAs(stop)) traverse.stop();
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEmptyTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.EmptyTag(label.clone(), offset, length1);
@@ -206,7 +206,7 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
       self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
     if (label.sameAs(stop)) traverse.stop();
- ***REMOVED*****REMOVED***
+  };
 
   traverse.rowEndTag = function(label, offset, length1, length2) {
     var tag = new xrx.token.EndTag(label.clone(), offset, length1);
@@ -214,16 +214,16 @@ xrx.node.DocumentS.prototype.forward = function(stop) {
     if (length1 !== length2) {
       self.eventNode(new xrx.node.TextS(self.getDocument(), tag, length2 - length1));
     }
- ***REMOVED*****REMOVED***
+  };
 
   traverse.forward();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.node.DocumentS.prototype.find = xrx.node.Node.prototype.find;
 
 

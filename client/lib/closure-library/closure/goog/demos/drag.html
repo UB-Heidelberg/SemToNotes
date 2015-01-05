@@ -150,13 +150,13 @@
       goog.style.setOpacity(this.target, 1);
     }
 
-  ***REMOVED***window1, 'start', setZ);
-  ***REMOVED***window2, 'start', setZ);
-  ***REMOVED***window3, 'start', setZ);
+    goog.events.listen(window1, 'start', setZ);
+    goog.events.listen(window2, 'start', setZ);
+    goog.events.listen(window3, 'start', setZ);
 
-  ***REMOVED***window1, 'end', end);
-  ***REMOVED***window2, 'end', end);
-  ***REMOVED***window3, 'end', end);
+    goog.events.listen(window1, 'end', end);
+    goog.events.listen(window2, 'end', end);
+    goog.events.listen(window3, 'end', end);
 
 
     // SLIDER EXAMPLE
@@ -165,14 +165,14 @@
     var slider1 = new goog.fx.Dragger($('slider'), null,
         new goog.math.Rect(35, 98, 0, 490));
 
-  ***REMOVED***slider1, 'drag', function(e) {
-      var percent = Math.round(100***REMOVED*** (e.top - e.dragger.limits.top) /
+    goog.events.listen(slider1, 'drag', function(e) {
+      var percent = Math.round(100 * (e.top - e.dragger.limits.top) /
           e.dragger.limits.height);
       $('slider').innerHTML = percent;
     });
 
 
-  ***REMOVED***window, 'unload', function(e) {
+    goog.events.listen(window, 'unload', function(e) {
       window1.dispose();
       window2.dispose();
       window3.dispose();

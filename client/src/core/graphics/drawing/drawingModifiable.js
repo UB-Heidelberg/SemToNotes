@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a modifiable shape. 
-***REMOVED***
+/**
+ * @fileoverview A class representing a modifiable shape. 
+ */
 
 goog.provide('xrx.drawing.Modifiable');
 
@@ -12,9 +12,9 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+/**
+ * @constructor
+ */
 xrx.drawing.Modifiable = function(drawing) {
 
   this.drawing_ = drawing;
@@ -36,14 +36,14 @@ xrx.drawing.Modifiable = function(drawing) {
   this.draggerOriginCoords_;
 
   this.mousePoint_ = new Array(2);
-***REMOVED***
+};
 
 
 
 xrx.drawing.Modifiable.Mode = {
   DRAGSHAPE: 1,
   DRAGVERTEX: 2
-***REMOVED***
+};
 
 
 
@@ -68,7 +68,7 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e) {
     modifiable = this.shape_.createModify(this.shape_);
     this.drawing_.getLayerShapeModify().activate(modifiable);
   }
-***REMOVED***
+};
 
 
 
@@ -87,7 +87,7 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     y: 0,
     x2: 0,
     y2: 0
- ***REMOVED*****REMOVED***
+  };
   var bboxS;
   this.coords_ = new Array(this.originCoords_.length);
 
@@ -95,7 +95,7 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     this.coords_[i] = new Array(2);
     this.coords_[i][0] = - this.mousePoint_[0] + point[0] + this.originCoords_[i][0];
     this.coords_[i][1] = - this.mousePoint_[1] + point[1] + this.originCoords_[i][1];
- ***REMOVED*****REMOVED***
+  };
 
   bboxS = xrx.geometry.getBBox(this.coords_);
 
@@ -120,13 +120,13 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e) {
     this.drawing_.getLayerShapeModify().update(this.shape_.getCoords());
   }
   if (this.shape_.handleValueChanged) this.shape_.handleValueChanged();
-***REMOVED***
+};
 
 
 
 xrx.drawing.Modifiable.prototype.handleUp = function(e) {
   this.state_ = xrx.drawing.State.NONE;
-***REMOVED***
+};
 
 
 
@@ -146,4 +146,4 @@ xrx.drawing.Modifiable.prototype.handleClick = function(e) {
   } else {
     drawing.getLayerShapeModify().removeShapes();
   }
-***REMOVED***
+};

@@ -18,11 +18,11 @@ goog.setTestOnly('goog.fx.DragListGroupTest');
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.classlist');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.BrowserFeature');
 goog.require('goog.events.Event');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.fx.DragEvent');
 goog.require('goog.fx.DragListDirection');
 goog.require('goog.fx.DragListGroup');
@@ -33,30 +33,30 @@ goog.require('goog.testing.events');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED*** @type {goog.fx.DragListGroup}***REMOVED***
+/** @type {goog.fx.DragListGroup} */
 var dlg;
 
 
-***REMOVED*** @type {goog.dom.Element}***REMOVED***
+/** @type {goog.dom.Element} */
 var list;
 
 
-***REMOVED*** @type {goog.events.BrowserEvent}***REMOVED***
+/** @type {goog.events.BrowserEvent} */
 var event;
 
 
-***REMOVED***
-***REMOVED*** The number of event listeners registered by the DragListGroup after the
-***REMOVED*** init() call.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * The number of event listeners registered by the DragListGroup after the
+ * init() call.
+ * @type {number}
+ */
 var initialListenerCount;
 
 
-***REMOVED***
-***REMOVED*** Type of events fired by the DragListGroup.
-***REMOVED*** @type {!Array.<string>}
-***REMOVED***
+/**
+ * Type of events fired by the DragListGroup.
+ * @type {!Array.<string>}
+ */
 var firedEventTypes;
 
 function setUp() {
@@ -84,7 +84,7 @@ function setUp() {
   event.currentTarget = list.getElementsByTagName('div')[0];
 
   firedEventTypes = [];
-***REMOVED***dlg,
+  goog.events.listen(dlg,
       goog.object.getValues(goog.fx.DragListGroup.EventType),
       function(e) {
         firedEventTypes.push(e.type);
@@ -97,14 +97,14 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test the initial assumptions.
-***REMOVED***
-***REMOVED*** Verify that the setter methods work properly, i.e., the CSS classes are
-***REMOVED*** stored in the private arrays after init() but are not added yet to target.
-***REMOVED*** (Since initially, we are not yet hovering over any list, in particular,
-***REMOVED*** over this target.)
-***REMOVED***
+/**
+ * Test the initial assumptions.
+ *
+ * Verify that the setter methods work properly, i.e., the CSS classes are
+ * stored in the private arrays after init() but are not added yet to target.
+ * (Since initially, we are not yet hovering over any list, in particular,
+ * over this target.)
+ */
 function testSettersAfterInit() {
   assertTrue(goog.array.equals(dlg.dragItemHoverClasses_,
       ['opacity_40', 'cursor_move']));
@@ -124,12 +124,12 @@ function testSettersAfterInit() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test the effect of hovering over a list.
-***REMOVED***
-***REMOVED*** Check that after the MOUSEOVER browser event these classes are added to
-***REMOVED*** the current target of the event.
-***REMOVED***
+/**
+ * Test the effect of hovering over a list.
+ *
+ * Check that after the MOUSEOVER browser event these classes are added to
+ * the current target of the event.
+ */
 function testAddDragItemHoverClasses() {
   dlg.handleDragItemMouseover_(event);
 
@@ -157,12 +157,12 @@ function testAddDragItemHandleHoverClasses() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test the effect of stopping hovering over a list.
-***REMOVED***
-***REMOVED*** Check that after the MOUSEOUT browser event all CSS classes are removed
-***REMOVED*** from the target (as we are no longer hovering over the it).
-***REMOVED***
+/**
+ * Test the effect of stopping hovering over a list.
+ *
+ * Check that after the MOUSEOUT browser event all CSS classes are removed
+ * from the target (as we are no longer hovering over the it).
+ */
 function testRemoveDragItemHoverClasses() {
   dlg.handleDragItemMouseover_(event);
   dlg.handleDragItemMouseout_(event);
@@ -192,13 +192,13 @@ function testRemoveDragItemHandleHoverClasses() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test the effect of dragging an item. (DRAGSTART event.)
-***REMOVED***
-***REMOVED*** Check that after the MOUSEDOWN browser event is handled by the
-***REMOVED*** handlePotentialDragStart_() method the currDragItem has the CSS classes
-***REMOVED*** set by the setter method.
-***REMOVED***
+/**
+ * Test the effect of dragging an item. (DRAGSTART event.)
+ *
+ * Check that after the MOUSEDOWN browser event is handled by the
+ * handlePotentialDragStart_() method the currDragItem has the CSS classes
+ * set by the setter method.
+ */
 function testAddCurrentDragItemClasses() {
   var be = new goog.events.BrowserEvent({
     type: goog.events.EventType.MOUSEDOWN,
@@ -219,12 +219,12 @@ function testAddCurrentDragItemClasses() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test the effect of dragging an item. (DRAGEND event.)
-***REMOVED***
-***REMOVED*** Check that after the MOUSEUP browser event handled by the handleDragEnd_()
-***REMOVED*** method the currDragItem has no CSS classes set in the dispatched event.
-***REMOVED***
+/**
+ * Test the effect of dragging an item. (DRAGEND event.)
+ *
+ * Check that after the MOUSEUP browser event handled by the handleDragEnd_()
+ * method the currDragItem has no CSS classes set in the dispatched event.
+ */
 function testRemoveCurrentDragItemClasses() {
   var be = new goog.events.BrowserEvent({
     type: goog.events.EventType.MOUSEDOWN,
@@ -237,7 +237,7 @@ function testRemoveCurrentDragItemClasses() {
   // including dlg.currentDragItem_ are cleared after the dragging has ended.
   var currDragItem = goog.dom.createDom(
       'div', ['cursor_move', 'blue_bg'], goog.dom.createTextNode('4'));
-***REMOVED***dlg, goog.fx.DragListGroup.EventType.DRAGEND,
+  goog.events.listen(dlg, goog.fx.DragListGroup.EventType.DRAGEND,
       function(e) {currDragItem = dlg.currDragItem_;});
 
   var dragger = new goog.fx.Dragger(event.currentTarget);
@@ -260,10 +260,10 @@ function testRemoveCurrentDragItemClasses() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that the DragListGroup is in idle state.
-***REMOVED*** @param {!goog.fx.DragListGroup} dlg The DragListGroup to examine.
-***REMOVED***
+/**
+ * Asserts that the DragListGroup is in idle state.
+ * @param {!goog.fx.DragListGroup} dlg The DragListGroup to examine.
+ */
 function assertIdle(dlg) {
   assertNull('dragger element has been cleaned up', dlg.draggerEl_);
   assertNull('dragger has been cleaned up', dlg.dragger_);
@@ -317,7 +317,7 @@ function testFiredEventsWithHysteresis() {
 }
 
 function testPreventDefaultBeforeDragStart() {
-***REMOVED***dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
+  goog.events.listen(dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
       goog.events.Event.preventDefault);
 
   goog.testing.events.fireMouseDownEvent(list.firstChild);
@@ -328,7 +328,7 @@ function testPreventDefaultBeforeDragStart() {
 
 function testPreventDefaultBeforeDragStartWithHysteresis() {
   dlg.setHysteresis(5);
-***REMOVED***dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
+  goog.events.listen(dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
       goog.events.Event.preventDefault);
 
   goog.testing.events.fireMouseDownEvent(list.firstChild, null,
@@ -351,10 +351,10 @@ function testRightClick() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that a new item can be added to a drag list after the control has
-***REMOVED*** been initialized.
-***REMOVED***
+/**
+ * Tests that a new item can be added to a drag list after the control has
+ * been initialized.
+ */
 function testAddItemToDragList() {
   var item =
       goog.dom.createDom('div', null, goog.dom.createTextNode('newItem'));
@@ -364,7 +364,7 @@ function testAddItemToDragList() {
   assertEquals(item, list.lastChild);
   assertEquals(4, goog.dom.getChildren(list).length);
 
-***REMOVED***dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
+  goog.events.listen(dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
       goog.events.Event.preventDefault);
 
   goog.testing.events.fireMouseDownEvent(item);
@@ -374,10 +374,10 @@ function testAddItemToDragList() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that a new item added to a drag list after the control has been
-***REMOVED*** initialized is inserted at the correct position.
-***REMOVED***
+/**
+ * Tests that a new item added to a drag list after the control has been
+ * initialized is inserted at the correct position.
+ */
 function testInsertItemInDragList() {
   var item =
       goog.dom.createDom('div', null, goog.dom.createTextNode('newItem'));
@@ -387,7 +387,7 @@ function testInsertItemInDragList() {
   assertEquals(item, list.firstChild);
   assertEquals(4, goog.dom.getChildren(list).length);
 
-***REMOVED***dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
+  goog.events.listen(dlg, goog.fx.DragListGroup.EventType.BEFOREDRAGSTART,
       goog.events.Event.preventDefault);
 
   goog.testing.events.fireMouseDownEvent(item);

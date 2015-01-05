@@ -33,7 +33,7 @@ function setUp() {
   mockClock = new goog.testing.MockClock();
   mockClock.getCurrentTime = function() {
     return mockClockTicks++;
- ***REMOVED*****REMOVED***
+  };
   mockClock.install();
 }
 
@@ -133,14 +133,14 @@ function testTable() {
 }
 
 
-***REMOVED***
-***REMOVED*** We have a sanity check in HtmlPrettyPrinter to make sure the regex index
-***REMOVED*** advances after every match. We should never hit this, but we include it on
-***REMOVED*** the chance there is some corner case where the pattern would match but not
-***REMOVED*** process a new token. It's not generally a good idea to break the
-***REMOVED*** implementation to test behavior, but this is the easiest way to mimic a
-***REMOVED*** bad internal state.
-***REMOVED***
+/**
+ * We have a sanity check in HtmlPrettyPrinter to make sure the regex index
+ * advances after every match. We should never hit this, but we include it on
+ * the chance there is some corner case where the pattern would match but not
+ * process a new token. It's not generally a good idea to break the
+ * implementation to test behavior, but this is the easiest way to mimic a
+ * bad internal state.
+ */
 function testRegexMakesProgress() {
   var original = goog.format.HtmlPrettyPrinter.TOKEN_REGEX_;
 
@@ -164,9 +164,9 @@ function testRegexMakesProgress() {
 }
 
 
-***REMOVED***
-***REMOVED*** FF3.0 doesn't like \n between </li> and </ul>. See bug 1520665.
-***REMOVED***
+/**
+ * FF3.0 doesn't like \n between </li> and </ul>. See bug 1520665.
+ */
 function testLists() {
   var original = '<ul><li>one</li><ul><li>two</li></UL><li>three</li></ul>';
   var expected =
@@ -175,14 +175,14 @@ function testLists() {
 }
 
 
-***REMOVED***
-***REMOVED*** We have a sanity check in HtmlPrettyPrinter to make sure the regex fully
-***REMOVED*** tokenizes the string. We should never hit this, but we include it on the
-***REMOVED*** chance there is some corner case where the pattern would miss a section of
-***REMOVED*** original string. It's not generally a good idea to break the
-***REMOVED*** implementation to test behavior, but this is the easiest way to mimic a
-***REMOVED*** bad internal state.
-***REMOVED***
+/**
+ * We have a sanity check in HtmlPrettyPrinter to make sure the regex fully
+ * tokenizes the string. We should never hit this, but we include it on the
+ * chance there is some corner case where the pattern would miss a section of
+ * original string. It's not generally a good idea to break the
+ * implementation to test behavior, but this is the easiest way to mimic a
+ * bad internal state.
+ */
 function testAvoidDataLoss() {
   var original = goog.format.HtmlPrettyPrinter.TOKEN_REGEX_;
 

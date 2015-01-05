@@ -16,7 +16,7 @@ goog.provide('goog.events.ActionHandlerTest');
 goog.setTestOnly('goog.events.ActionHandlerTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.ActionHandler');
 goog.require('goog.testing.events');
 goog.require('goog.testing.jsunit');
@@ -34,12 +34,12 @@ function tearDown() {
 function testActionHandlerWithBeforeActionHandler() {
   var actionEventFired = false;
   var beforeActionFired = false;
-***REMOVED***actionHandler,
+  goog.events.listen(actionHandler,
       goog.events.ActionHandler.EventType.ACTION,
       function(e) {
         actionEventFired = true;
       });
-***REMOVED***actionHandler,
+  goog.events.listen(actionHandler,
       goog.events.ActionHandler.EventType.BEFOREACTION,
       function(e) {
         beforeActionFired = true;
@@ -53,7 +53,7 @@ function testActionHandlerWithBeforeActionHandler() {
 // BEFOREACTION handler.
 function testActionHandlerWithoutBeforeActionHandler() {
   var actionEventFired = false;
-***REMOVED***actionHandler,
+  goog.events.listen(actionHandler,
       goog.events.ActionHandler.EventType.ACTION,
       function(e) {actionEventFired = true;});
   goog.testing.events.fireClickSequence(goog.dom.getElement('actionDiv'));
@@ -65,10 +65,10 @@ function testActionHandlerWithoutBeforeActionHandler() {
 function testBeforeActionCancel() {
   var actionEventFired = false;
   var beforeActionFired = false;
-***REMOVED***actionHandler,
+  goog.events.listen(actionHandler,
       goog.events.ActionHandler.EventType.ACTION,
       function(e) {actionEvent = e;});
-***REMOVED***actionHandler,
+  goog.events.listen(actionHandler,
       goog.events.ActionHandler.EventType.BEFOREACTION,
       function(e) {
         beforeActionFired = true;

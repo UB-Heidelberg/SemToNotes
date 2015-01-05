@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a convenient API for data persistence using a selected
-***REMOVED*** data storage mechanism.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a convenient API for data persistence using a selected
+ * data storage mechanism.
+ *
+ */
 
 goog.provide('goog.storage.Storage');
 
@@ -25,44 +25,44 @@ goog.require('goog.storage.ErrorCode');
 
 
 
-***REMOVED***
-***REMOVED*** The base implementation for all storage APIs.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.Mechanism} mechanism The underlying
-***REMOVED***     storage mechanism.
-***REMOVED***
-***REMOVED***
+/**
+ * The base implementation for all storage APIs.
+ *
+ * @param {!goog.storage.mechanism.Mechanism} mechanism The underlying
+ *     storage mechanism.
+ * @constructor
+ */
 goog.storage.Storage = function(mechanism) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The mechanism used to persist key-value pairs.
-  ***REMOVED***
-  ***REMOVED*** @protected {goog.storage.mechanism.Mechanism}
- ***REMOVED*****REMOVED***
+  /**
+   * The mechanism used to persist key-value pairs.
+   *
+   * @protected {goog.storage.mechanism.Mechanism}
+   */
   this.mechanism = mechanism;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets an item in the data storage.
-***REMOVED***
-***REMOVED*** @param {string} key The key to set.
-***REMOVED*** @param {*} value The value to serialize to a string and save.
-***REMOVED***
+/**
+ * Sets an item in the data storage.
+ *
+ * @param {string} key The key to set.
+ * @param {*} value The value to serialize to a string and save.
+ */
 goog.storage.Storage.prototype.set = function(key, value) {
   if (!goog.isDef(value)) {
     this.mechanism.remove(key);
     return;
   }
   this.mechanism.set(key, goog.json.serialize(value));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets an item from the data storage.
-***REMOVED***
-***REMOVED*** @param {string} key The key to get.
-***REMOVED*** @return {*} Deserialized value or undefined if not found.
-***REMOVED***
+/**
+ * Gets an item from the data storage.
+ *
+ * @param {string} key The key to get.
+ * @return {*} Deserialized value or undefined if not found.
+ */
 goog.storage.Storage.prototype.get = function(key) {
   var json;
   try {
@@ -77,20 +77,20 @@ goog.storage.Storage.prototype.get = function(key) {
   if (goog.isNull(json)) {
     return undefined;
   }
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     return goog.json.parse(json);
   } catch (e) {
     throw goog.storage.ErrorCode.INVALID_VALUE;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an item from the data storage.
-***REMOVED***
-***REMOVED*** @param {string} key The key to remove.
-***REMOVED***
+/**
+ * Removes an item from the data storage.
+ *
+ * @param {string} key The key to remove.
+ */
 goog.storage.Storage.prototype.remove = function(key) {
   this.mechanism.remove(key);
-***REMOVED***
+};

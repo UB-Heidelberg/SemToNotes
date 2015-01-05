@@ -12,7 +12,7 @@
 <script src='../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.array');
- ***REMOVED*****REMOVED***
+  goog.require('goog.dom.DomHelper');
   goog.require('goog.dom.dataset');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
@@ -67,7 +67,7 @@ function prepareTest(testId) {
   goog.dom.append(testDiv, template);
   goog.dom.append(testsDiv, testDiv);
   xrx.mvc.Mvc.install(testDiv);
-***REMOVED***
+};
 
 
 
@@ -81,11 +81,11 @@ function test01InsertNode() {
     var node = cons.getNode();
     xrx.mvc.Controller.insertNode(cons, node, newNode);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
- ***REMOVED*****REMOVED***
+  };
 
   // insert node (empty tag and attributes) after first console widget
   insertNode(1, '<data><a/><x a="1" b="2"/><b/><c/></data>');
-***REMOVED***
+};
 
 
 
@@ -99,7 +99,7 @@ function test02RemoveEmptyTag() {
     var token = node.getToken();
     xrx.mvc.Controller.removeEmptyTag(cons, node, token);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
- ***REMOVED*****REMOVED***
+  };
 
   // remove last console widget
   removeEmptyTag(3, '<data><a/><b/></data>');
@@ -109,7 +109,7 @@ function test02RemoveEmptyTag() {
 
   // remove first console widget
   removeEmptyTag(1, '<data></data>');
-***REMOVED***
+};
 
 
 
@@ -127,7 +127,7 @@ function test03InsertEmptyTag() {
     notTag = pilot.notTag(node.getToken(), notTag);
     xrx.mvc.Controller.insertEmptyTag(cons, node, notTag, 0, newTag);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
- ***REMOVED*****REMOVED***
+  };
 
   // insert empty tag after first console widget
   insertEmptyTag(1, '<data><a/><x a="1" b="2"/><b/><c/></data>');
@@ -137,7 +137,7 @@ function test03InsertEmptyTag() {
 
   // insert empty tag after third console widget
   insertEmptyTag(3, '<data><a/><x a="1" b="2"/><b/><x a="1" b="2"/><c/><x a="1" b="2"/></data>');
-***REMOVED***
+};
 
 
 

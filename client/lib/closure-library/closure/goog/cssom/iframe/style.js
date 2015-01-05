@@ -13,38 +13,38 @@
 // limitations under the License.
 // All Rights Reserved.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides utility routines for copying modified
-***REMOVED*** {@code CSSRule} objects from the parent document into iframes so that any
-***REMOVED*** content in the iframe will be styled as if it was inline in the parent
-***REMOVED*** document.
-***REMOVED***
-***REMOVED*** <p>
-***REMOVED*** For example, you might have this CSS rule:
-***REMOVED***
-***REMOVED*** #content .highlighted { background-color: yellow; }
-***REMOVED***
-***REMOVED*** And this DOM structure:
-***REMOVED***
-***REMOVED*** <div id="content">
-***REMOVED***   <iframe />
-***REMOVED*** </div>
-***REMOVED***
-***REMOVED*** Then inside the iframe you have:
-***REMOVED***
-***REMOVED*** <body>
-***REMOVED*** <div class="highlighted">
-***REMOVED*** </body>
-***REMOVED***
-***REMOVED*** If you copied the CSS rule directly into the iframe, it wouldn't match the
-***REMOVED*** .highlighted div. So we rewrite the original stylesheets based on the
-***REMOVED*** context where the iframe is going to be inserted. In this case the CSS
-***REMOVED*** selector would be rewritten to:
-***REMOVED***
-***REMOVED*** body .highlighted { background-color: yellow; }
-***REMOVED*** </p>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides utility routines for copying modified
+ * {@code CSSRule} objects from the parent document into iframes so that any
+ * content in the iframe will be styled as if it was inline in the parent
+ * document.
+ *
+ * <p>
+ * For example, you might have this CSS rule:
+ *
+ * #content .highlighted { background-color: yellow; }
+ *
+ * And this DOM structure:
+ *
+ * <div id="content">
+ *   <iframe />
+ * </div>
+ *
+ * Then inside the iframe you have:
+ *
+ * <body>
+ * <div class="highlighted">
+ * </body>
+ *
+ * If you copied the CSS rule directly into the iframe, it wouldn't match the
+ * .highlighted div. So we rewrite the original stylesheets based on the
+ * context where the iframe is going to be inserted. In this case the CSS
+ * selector would be rewritten to:
+ *
+ * body .highlighted { background-color: yellow; }
+ * </p>
+ *
+ */
 
 
 goog.provide('goog.cssom.iframe.style');
@@ -60,78 +60,78 @@ goog.require('goog.style');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Regexp that matches "a", "a:link", "a:visited", etc.
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regexp that matches "a", "a:link", "a:visited", etc.
+ * @type {RegExp}
+ * @private
+ */
 goog.cssom.iframe.style.selectorPartAnchorRegex_ =
     /a(:(link|visited|active|hover))?/;
 
 
-***REMOVED***
-***REMOVED*** Delimiter between selectors (h1, h2)
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter between selectors (h1, h2)
+ * @type {string}
+ * @private
+ */
 goog.cssom.iframe.style.SELECTOR_DELIMITER_ = ',';
 
 
-***REMOVED***
-***REMOVED*** Delimiter between selector parts (.main h1)
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter between selector parts (.main h1)
+ * @type {string}
+ * @private
+ */
 goog.cssom.iframe.style.SELECTOR_PART_DELIMITER_ = ' ';
 
 
-***REMOVED***
-***REMOVED*** Delimiter marking the start of a css rules section ( h1 { )
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter marking the start of a css rules section ( h1 { )
+ * @type {string}
+ * @private
+ */
 goog.cssom.iframe.style.DECLARATION_START_DELIMITER_ = '{';
 
 
-***REMOVED***
-***REMOVED*** Delimiter marking the end of a css rules section ( } )
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delimiter marking the end of a css rules section ( } )
+ * @type {string}
+ * @private
+ */
 goog.cssom.iframe.style.DECLARATION_END_DELIMITER_ = '}\n';
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a CSS rule set. A rule set is something like this:
-***REMOVED*** h1, h2 { font-family: Arial; color: red; }
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Class representing a CSS rule set. A rule set is something like this:
+ * h1, h2 { font-family: Arial; color: red; }
+ * @constructor
+ * @private
+ */
 goog.cssom.iframe.style.CssRuleSet_ = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Text of the declarations inside the rule set.
-  ***REMOVED*** For example: 'font-family: Arial; color: red;'
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * Text of the declarations inside the rule set.
+   * For example: 'font-family: Arial; color: red;'
+   * @type {string}
+   */
   this.declarationText = '';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of CssSelector objects, one for each selector.
-  ***REMOVED*** Example: [h1, h2]
-  ***REMOVED*** @type {Array.<goog.cssom.iframe.style.CssSelector_>}
- ***REMOVED*****REMOVED***
+  /**
+   * Array of CssSelector objects, one for each selector.
+   * Example: [h1, h2]
+   * @type {Array.<goog.cssom.iframe.style.CssSelector_>}
+   */
   this.selectors = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the rule set from a {@code CSSRule}.
-***REMOVED***
-***REMOVED*** @param {CSSRule} cssRule The {@code CSSRule} to initialize from.
-***REMOVED*** @return {boolean} True if initialization succeeded. We only support
-***REMOVED***     {@code CSSStyleRule} and {@code CSSFontFaceRule} objects.
-***REMOVED***
+/**
+ * Initializes the rule set from a {@code CSSRule}.
+ *
+ * @param {CSSRule} cssRule The {@code CSSRule} to initialize from.
+ * @return {boolean} True if initialization succeeded. We only support
+ *     {@code CSSStyleRule} and {@code CSSFontFaceRule} objects.
+ */
 goog.cssom.iframe.style.CssRuleSet_.prototype.initializeFromCssRule =
     function(cssRule) {
   var ruleStyle = cssRule.style; // Cache object for performance.
@@ -151,7 +151,7 @@ goog.cssom.iframe.style.CssRuleSet_.prototype.initializeFromCssRule =
     // We used to check for a troublesome open comment using a regular
     // expression, but it's faster not to check and always do this.
     if (goog.userAgent.IE) {
-      declarations += '***REMOVED*****REMOVED***';
+      declarations += '/* */';
     }
   } else if (cssRule.cssText) {
     var cssSelectorMatch = /([^\{]+)\{/;
@@ -169,14 +169,14 @@ goog.cssom.iframe.style.CssRuleSet_.prototype.initializeFromCssRule =
     return true;
   }
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a selectors string (which may contain multiple comma-delimited
-***REMOVED*** selectors) and loads the results into this.selectors.
-***REMOVED*** @param {string} selectorsString String containing selectors.
-***REMOVED***
+/**
+ * Parses a selectors string (which may contain multiple comma-delimited
+ * selectors) and loads the results into this.selectors.
+ * @param {string} selectorsString String containing selectors.
+ */
 goog.cssom.iframe.style.CssRuleSet_.prototype.setSelectorsFromString =
     function(selectorsString) {
   this.selectors = [];
@@ -187,29 +187,29 @@ goog.cssom.iframe.style.CssRuleSet_.prototype.setSelectorsFromString =
       this.selectors.push(new goog.cssom.iframe.style.CssSelector_(selector));
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Make a copy of this ruleset.
-***REMOVED*** @return {!goog.cssom.iframe.style.CssRuleSet_} A new CssRuleSet containing
-***REMOVED***     the same data as this one.
-***REMOVED***
+/**
+ * Make a copy of this ruleset.
+ * @return {!goog.cssom.iframe.style.CssRuleSet_} A new CssRuleSet containing
+ *     the same data as this one.
+ */
 goog.cssom.iframe.style.CssRuleSet_.prototype.clone = function() {
   var newRuleSet = new goog.cssom.iframe.style.CssRuleSet_();
   newRuleSet.selectors = this.selectors.concat();
   newRuleSet.declarationText = this.declarationText;
   return newRuleSet;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set the declaration text with properties from a given object.
-***REMOVED*** @param {Object} sourceObject Object whose properties and values should
-***REMOVED***     be used to generate the declaration text.
-***REMOVED*** @param {boolean=} opt_important Whether !important should be added to each
-***REMOVED***     declaration.
-***REMOVED***
+/**
+ * Set the declaration text with properties from a given object.
+ * @param {Object} sourceObject Object whose properties and values should
+ *     be used to generate the declaration text.
+ * @param {boolean=} opt_important Whether !important should be added to each
+ *     declaration.
+ */
 goog.cssom.iframe.style.CssRuleSet_.prototype.setDeclarationTextFromObject =
     function(sourceObject, opt_important) {
   var stringParts = [];
@@ -224,15 +224,15 @@ goog.cssom.iframe.style.CssRuleSet_.prototype.setDeclarationTextFromObject =
     }
   }
   this.declarationText = stringParts.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes this CssRuleSet_ into an array as a series of strings.
-***REMOVED*** The array can then be join()-ed to get a string representation
-***REMOVED*** of this ruleset.
-***REMOVED*** @param {Array.<string>} array The array to which to append strings.
-***REMOVED***
+/**
+ * Serializes this CssRuleSet_ into an array as a series of strings.
+ * The array can then be join()-ed to get a string representation
+ * of this ruleset.
+ * @param {Array.<string>} array The array to which to append strings.
+ */
 goog.cssom.iframe.style.CssRuleSet_.prototype.writeToArray = function(array) {
   var selectorCount = this.selectors.length;
   var matchesAnchorTag = false;
@@ -264,73 +264,73 @@ goog.cssom.iframe.style.CssRuleSet_.prototype.writeToArray = function(array) {
   array.push(goog.cssom.iframe.style.DECLARATION_START_DELIMITER_,
              declarationText,
              goog.cssom.iframe.style.DECLARATION_END_DELIMITER_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regexp that matches "color: value;".
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regexp that matches "color: value;".
+ * @type {RegExp}
+ * @private
+ */
 goog.cssom.iframe.style.colorImportantReplaceRegex_ =
     /(^|;|{)\s*color:([^;]+);/g;
 
 
-***REMOVED***
-***REMOVED*** Adds !important to a css color: rule
-***REMOVED*** @param {string} cssText Text of the CSS rule(s) to modify.
-***REMOVED*** @return {string} Text with !important added to the color: rule if found.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds !important to a css color: rule
+ * @param {string} cssText Text of the CSS rule(s) to modify.
+ * @return {string} Text with !important added to the color: rule if found.
+ * @private
+ */
 goog.cssom.iframe.style.makeColorRuleImportant_ = function(cssText) {
   // Replace to insert a "! important" string.
   return cssText.replace(goog.cssom.iframe.style.colorImportantReplaceRegex_,
                          '$1 color: $2 ! important; ');
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Represents a single CSS selector, as described in
-***REMOVED*** http://www.w3.org/TR/REC-CSS2/selector.html
-***REMOVED*** Currently UNSUPPORTED are the following selector features:
-***REMOVED*** <ul>
-***REMOVED***   <li>pseudo-classes (:hover)
-***REMOVED***   <li>child selectors (div > h1)
-***REMOVED***   <li>adjacent sibling selectors (div + h1)
-***REMOVED***   <li>attribute selectors (input[type=submit])
-***REMOVED*** </ul>
-***REMOVED*** @param {string=} opt_selectorString String containing selectors to parse.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Represents a single CSS selector, as described in
+ * http://www.w3.org/TR/REC-CSS2/selector.html
+ * Currently UNSUPPORTED are the following selector features:
+ * <ul>
+ *   <li>pseudo-classes (:hover)
+ *   <li>child selectors (div > h1)
+ *   <li>adjacent sibling selectors (div + h1)
+ *   <li>attribute selectors (input[type=submit])
+ * </ul>
+ * @param {string=} opt_selectorString String containing selectors to parse.
+ * @constructor
+ * @private
+ */
 goog.cssom.iframe.style.CssSelector_ = function(opt_selectorString) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of CssSelectorPart objects representing the parts of this selector
-  ***REMOVED*** Example: for the selector 'body h1' the parts would be [body, h1].
-  ***REMOVED*** @type {Array.<goog.cssom.iframe.style.CssSelectorPart_>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array of CssSelectorPart objects representing the parts of this selector
+   * Example: for the selector 'body h1' the parts would be [body, h1].
+   * @type {Array.<goog.cssom.iframe.style.CssSelectorPart_>}
+   * @private
+   */
   this.parts_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object to track ancestry matches to speed up repeatedly testing this
-  ***REMOVED*** CssSelector against the same NodeAncestry object.
-  ***REMOVED*** @type {Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.ancestryMatchCache_ = {***REMOVED***
+  /**
+   * Object to track ancestry matches to speed up repeatedly testing this
+   * CssSelector against the same NodeAncestry object.
+   * @type {Object}
+   * @private
+   */
+  this.ancestryMatchCache_ = {};
   if (opt_selectorString) {
     this.setPartsFromString_(opt_selectorString);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Parses a selector string into individual parts.
-***REMOVED*** @param {string} selectorString A string containing a CSS selector.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Parses a selector string into individual parts.
+ * @param {string} selectorString A string containing a CSS selector.
+ * @private
+ */
 goog.cssom.iframe.style.CssSelector_.prototype.setPartsFromString_ =
     function(selectorString) {
   var parts = [];
@@ -344,27 +344,27 @@ goog.cssom.iframe.style.CssSelector_.prototype.setPartsFromString_ =
     parts.push(part);
   }
   this.parts = parts;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests to see what part of a DOM element hierarchy would be matched by
-***REMOVED*** this selector, and returns the indexes of the matching element and matching
-***REMOVED*** selector part.
-***REMOVED*** <p>
-***REMOVED*** For example, given this hierarchy:
-***REMOVED***   document > html > body > div.content > div.sidebar > p
-***REMOVED*** and this CSS selector:
-***REMOVED***   body div.sidebar h1
-***REMOVED*** This would return {elementIndex: 4, selectorPartIndex: 1},
-***REMOVED*** indicating that the element at index 4 matched
-***REMOVED*** the css selector at index 1.
-***REMOVED*** </p>
-***REMOVED*** @param {goog.cssom.iframe.style.NodeAncestry_} elementAncestry Object
-***REMOVED***     representing an element and its ancestors.
-***REMOVED*** @return {Object} Object with the properties elementIndex and
-***REMOVED***     selectorPartIndex, or null if there was no match.
-***REMOVED***
+/**
+ * Tests to see what part of a DOM element hierarchy would be matched by
+ * this selector, and returns the indexes of the matching element and matching
+ * selector part.
+ * <p>
+ * For example, given this hierarchy:
+ *   document > html > body > div.content > div.sidebar > p
+ * and this CSS selector:
+ *   body div.sidebar h1
+ * This would return {elementIndex: 4, selectorPartIndex: 1},
+ * indicating that the element at index 4 matched
+ * the css selector at index 1.
+ * </p>
+ * @param {goog.cssom.iframe.style.NodeAncestry_} elementAncestry Object
+ *     representing an element and its ancestors.
+ * @return {Object} Object with the properties elementIndex and
+ *     selectorPartIndex, or null if there was no match.
+ */
 goog.cssom.iframe.style.CssSelector_.prototype.matchElementAncestry =
     function(elementAncestry) {
 
@@ -391,7 +391,7 @@ goog.cssom.iframe.style.CssSelector_.prototype.matchElementAncestry =
         match = {
           elementIndex: elementIndex,
           selectorPartIndex: i
-       ***REMOVED*****REMOVED***
+        };
         elementIndex++;
         break;
       } else if (lastSelectorPart &&
@@ -399,7 +399,7 @@ goog.cssom.iframe.style.CssSelector_.prototype.matchElementAncestry =
         match = {
           elementIndex: elementIndex,
           selectorPartIndex: i - 1
-       ***REMOVED*****REMOVED***
+        };
       }
       elementIndex++;
     }
@@ -407,19 +407,19 @@ goog.cssom.iframe.style.CssSelector_.prototype.matchElementAncestry =
   }
   this.ancestryMatchCache_[ancestryUid] = match;
   return match;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Represents one part of a CSS Selector. For example in the selector
-***REMOVED*** 'body #foo .bar', body, #foo, and .bar would be considered selector parts.
-***REMOVED*** In the official CSS spec these are called "simple selectors".
-***REMOVED*** @param {string} selectorPartString A string containing the selector part
-***REMOVED***     in css format.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Represents one part of a CSS Selector. For example in the selector
+ * 'body #foo .bar', body, #foo, and .bar would be considered selector parts.
+ * In the official CSS spec these are called "simple selectors".
+ * @param {string} selectorPartString A string containing the selector part
+ *     in css format.
+ * @constructor
+ * @private
+ */
 goog.cssom.iframe.style.CssSelectorPart_ = function(selectorPartString) {
   // Only one CssSelectorPart instance should exist for a given string.
   var cacheEntry = goog.cssom.iframe.style.CssSelectorPart_.instances_[
@@ -436,7 +436,7 @@ goog.cssom.iframe.style.CssSelectorPart_ = function(selectorPartString) {
   } else {
     identifiers = [selectorPartString];
   }
-  var properties = {***REMOVED***
+  var properties = {};
   for (var i = 0; i < identifiers.length; i++) {
     var identifier = identifiers[i];
     if (identifier.charAt(0) == '.') {
@@ -449,25 +449,25 @@ goog.cssom.iframe.style.CssSelectorPart_ = function(selectorPartString) {
   }
   this.inputString_ = selectorPartString;
   this.matchProperties_ = properties;
-  this.testedElements_ = {***REMOVED***
+  this.testedElements_ = {};
   goog.cssom.iframe.style.CssSelectorPart_.instances_[selectorPartString] =
       this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Cache of existing CssSelectorPart_ instances.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.cssom.iframe.style.CssSelectorPart_.instances_ = {***REMOVED***
+/**
+ * Cache of existing CssSelectorPart_ instances.
+ * @type {Object}
+ * @private
+ */
+goog.cssom.iframe.style.CssSelectorPart_.instances_ = {};
 
 
-***REMOVED***
-***REMOVED*** Test whether an element matches this selector part, considered in isolation.
-***REMOVED*** @param {Object} elementInfo Element properties to test.
-***REMOVED*** @return {boolean} Whether the element matched.
-***REMOVED***
+/**
+ * Test whether an element matches this selector part, considered in isolation.
+ * @param {Object} elementInfo Element properties to test.
+ * @return {boolean} Whether the element matched.
+ */
 goog.cssom.iframe.style.CssSelectorPart_.prototype.testElement =
     function(elementInfo) {
 
@@ -494,18 +494,18 @@ goog.cssom.iframe.style.CssSelectorPart_.prototype.testElement =
 
   this.testedElements_[elementUid] = matched;
   return matched;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Represents an element and all its parent/ancestor nodes.
-***REMOVED*** This class exists as an optimization so we run tests on an element
-***REMOVED*** hierarchy multiple times without walking the dom each time.
-***REMOVED*** @param {Element} el The DOM element whose ancestry should be stored.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Represents an element and all its parent/ancestor nodes.
+ * This class exists as an optimization so we run tests on an element
+ * hierarchy multiple times without walking the dom each time.
+ * @param {Element} el The DOM element whose ancestry should be stored.
+ * @constructor
+ * @private
+ */
 goog.cssom.iframe.style.NodeAncestry_ = function(el) {
   var node = el;
   var nodeUid = goog.getUid(node);
@@ -521,10 +521,10 @@ goog.cssom.iframe.style.NodeAncestry_ = function(el) {
     var nodeInfo = {
       id: node.id,
       nodeName: node.nodeName
-   ***REMOVED*****REMOVED***
+    };
     nodeInfo.uid = goog.getUid(nodeInfo);
     var className = node.className;
-    var classNamesLookup = {***REMOVED***
+    var classNamesLookup = {};
     if (className) {
       var classNames = goog.dom.classlist.get(goog.asserts.assertElement(node));
       for (var i = 0; i < classNames.length; i++) {
@@ -535,42 +535,42 @@ goog.cssom.iframe.style.NodeAncestry_ = function(el) {
     nodes.unshift(nodeInfo);
   } while (node = node.parentNode);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array of nodes in order of hierarchy from the top of the document
-  ***REMOVED*** to the node passed to the constructor
-  ***REMOVED*** @type {Array.<Node>}
- ***REMOVED*****REMOVED***
+  /**
+   * Array of nodes in order of hierarchy from the top of the document
+   * to the node passed to the constructor
+   * @type {Array.<Node>}
+   */
   this.nodes = nodes;
 
   this.uid = goog.getUid(this);
   goog.cssom.iframe.style.NodeAncestry_.instances_[nodeUid] = this;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Object for caching existing NodeAncestry instances.
-***REMOVED*** @private
-***REMOVED***
-goog.cssom.iframe.style.NodeAncestry_.instances_ = {***REMOVED***
+/**
+ * Object for caching existing NodeAncestry instances.
+ * @private
+ */
+goog.cssom.iframe.style.NodeAncestry_.instances_ = {};
 
 
-***REMOVED***
-***REMOVED*** Throw away all cached dom information. Call this if you've modified
-***REMOVED*** the structure or class/id attributes of your document and you want
-***REMOVED*** to recalculate the currently applied CSS rules.
-***REMOVED***
+/**
+ * Throw away all cached dom information. Call this if you've modified
+ * the structure or class/id attributes of your document and you want
+ * to recalculate the currently applied CSS rules.
+ */
 goog.cssom.iframe.style.resetDomCache = function() {
-  goog.cssom.iframe.style.NodeAncestry_.instances_ = {***REMOVED***
-***REMOVED***
+  goog.cssom.iframe.style.NodeAncestry_.instances_ = {};
+};
 
 
-***REMOVED***
-***REMOVED*** Inspects a document and returns all active rule sets
-***REMOVED*** @param {Document} doc The document from which to read CSS rules.
-***REMOVED*** @return {!Array.<goog.cssom.iframe.style.CssRuleSet_>} An array of CssRuleSet
-***REMOVED***     objects representing all the active rule sets in the document.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Inspects a document and returns all active rule sets
+ * @param {Document} doc The document from which to read CSS rules.
+ * @return {!Array.<goog.cssom.iframe.style.CssRuleSet_>} An array of CssRuleSet
+ *     objects representing all the active rule sets in the document.
+ * @private
+ */
 goog.cssom.iframe.style.getRuleSetsFromDocument_ = function(doc) {
   var ruleSets = [];
   var styleSheets = goog.cssom.getAllCssStyleSheets(doc.styleSheets);
@@ -586,46 +586,46 @@ goog.cssom.iframe.style.getRuleSetsFromDocument_ = function(doc) {
     }
   }
   return ruleSets;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Static object to cache rulesets read from documents. Inspecting all
-***REMOVED*** active css rules is an expensive operation, so its best to only do
-***REMOVED*** it once and then cache the results.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.cssom.iframe.style.ruleSetCache_ = {***REMOVED***
+/**
+ * Static object to cache rulesets read from documents. Inspecting all
+ * active css rules is an expensive operation, so its best to only do
+ * it once and then cache the results.
+ * @type {Object}
+ * @private
+ */
+goog.cssom.iframe.style.ruleSetCache_ = {};
 
 
-***REMOVED***
-***REMOVED*** Cache of ruleset objects keyed by document unique ID.
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
-goog.cssom.iframe.style.ruleSetCache_.ruleSetCache_ = {***REMOVED***
+/**
+ * Cache of ruleset objects keyed by document unique ID.
+ * @type {Object}
+ * @private
+ */
+goog.cssom.iframe.style.ruleSetCache_.ruleSetCache_ = {};
 
 
-***REMOVED***
-***REMOVED*** Loads ruleset definitions from a document. If the cache already
-***REMOVED*** has rulesets for this document the cached version will be replaced.
-***REMOVED*** @param {Document} doc The document from which to load rulesets.
-***REMOVED***
+/**
+ * Loads ruleset definitions from a document. If the cache already
+ * has rulesets for this document the cached version will be replaced.
+ * @param {Document} doc The document from which to load rulesets.
+ */
 goog.cssom.iframe.style.ruleSetCache_.loadRuleSetsForDocument = function(doc) {
   var docUid = goog.getUid(doc);
   goog.cssom.iframe.style.ruleSetCache_.ruleSetCache_[docUid] =
       goog.cssom.iframe.style.getRuleSetsFromDocument_(doc);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Retrieves the array of css rulesets for this document. A cached
-***REMOVED*** version will be used when possible.
-***REMOVED*** @param {Document} doc The document for which to get rulesets.
-***REMOVED*** @return {!Array.<goog.cssom.iframe.style.CssRuleSet_>} An array of CssRuleSet
-***REMOVED***     objects representing the css rule sets in the supplied document.
-***REMOVED***
+/**
+ * Retrieves the array of css rulesets for this document. A cached
+ * version will be used when possible.
+ * @param {Document} doc The document for which to get rulesets.
+ * @return {!Array.<goog.cssom.iframe.style.CssRuleSet_>} An array of CssRuleSet
+ *     objects representing the css rule sets in the supplied document.
+ */
 goog.cssom.iframe.style.ruleSetCache_.getRuleSetsForDocument = function(doc) {
   var docUid = goog.getUid(doc);
   var cache = goog.cssom.iframe.style.ruleSetCache_.ruleSetCache_;
@@ -641,16 +641,16 @@ goog.cssom.iframe.style.ruleSetCache_.getRuleSetsForDocument = function(doc) {
     ruleSetsCopy.push(ruleSets[i].clone());
   }
   return ruleSetsCopy;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Array of CSS properties that are inherited by child nodes, according to
-***REMOVED*** the CSS 2.1 spec. Properties that may be set to relative values, such
-***REMOVED*** as font-size, and line-height, are omitted.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array of CSS properties that are inherited by child nodes, according to
+ * the CSS 2.1 spec. Properties that may be set to relative values, such
+ * as font-size, and line-height, are omitted.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.cssom.iframe.style.inheritedProperties_ = [
   'color',
   'visibility',
@@ -678,11 +678,11 @@ goog.cssom.iframe.style.inheritedProperties_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Array of CSS 2.1 properties that directly effect text nodes.
-***REMOVED*** @type {Array.<string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array of CSS 2.1 properties that directly effect text nodes.
+ * @type {Array.<string>}
+ * @private
+ */
 goog.cssom.iframe.style.textProperties_ = [
   'font-family',
   'font-size',
@@ -700,23 +700,23 @@ goog.cssom.iframe.style.textProperties_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Reads the current css rules from element's document, and returns them
-***REMOVED*** rewriting selectors so that any rules that formerly applied to element will
-***REMOVED*** be applied to doc.body. This makes it possible to replace a block in a page
-***REMOVED*** with an iframe and preserve the css styling of the contents.
-***REMOVED***
-***REMOVED*** @param {Element} element The element for which context should be calculated.
-***REMOVED*** @param {boolean=} opt_forceRuleSetCacheUpdate Flag to force the internal
-***REMOVED***     cache of rulesets to refresh itself before we read the same.
-***REMOVED*** @param {boolean=} opt_copyBackgroundContext Flag indicating that if the
-***REMOVED***     {@code element} has a transparent background, background rules
-***REMOVED***     from the nearest ancestor element(s) that have background-color
-***REMOVED***     and/or background-image set should be copied.
-***REMOVED*** @return {string} String containing all CSS rules present in the original
-***REMOVED***     document, with modified selectors.
-***REMOVED*** @see goog.cssom.iframe.style.getBackgroundContext.
-***REMOVED***
+/**
+ * Reads the current css rules from element's document, and returns them
+ * rewriting selectors so that any rules that formerly applied to element will
+ * be applied to doc.body. This makes it possible to replace a block in a page
+ * with an iframe and preserve the css styling of the contents.
+ *
+ * @param {Element} element The element for which context should be calculated.
+ * @param {boolean=} opt_forceRuleSetCacheUpdate Flag to force the internal
+ *     cache of rulesets to refresh itself before we read the same.
+ * @param {boolean=} opt_copyBackgroundContext Flag indicating that if the
+ *     {@code element} has a transparent background, background rules
+ *     from the nearest ancestor element(s) that have background-color
+ *     and/or background-image set should be copied.
+ * @return {string} String containing all CSS rules present in the original
+ *     document, with modified selectors.
+ * @see goog.cssom.iframe.style.getBackgroundContext.
+ */
 goog.cssom.iframe.style.getElementContext = function(
     element,
     opt_forceRuleSetCacheUpdate,
@@ -791,7 +791,7 @@ goog.cssom.iframe.style.getElementContext = function(
   var htmlSelector = new goog.cssom.iframe.style.CssSelector_();
   htmlSelector.parts = [new goog.cssom.iframe.style.CssSelectorPart_('html')];
   defaultPropertiesRuleSet.selectors = [htmlSelector];
-  var defaultProperties = {***REMOVED***
+  var defaultProperties = {};
   for (var i = 0, prop;
        prop = goog.cssom.iframe.style.inheritedProperties_[i];
        i++) {
@@ -812,7 +812,7 @@ goog.cssom.iframe.style.getElementContext = function(
     right: 'auto', // Override any existing right value so 'left' works.
     display: 'block',
     visibility: 'visible'
- ***REMOVED*****REMOVED***
+  };
   // Text formatting property values, to keep text nodes directly under BODY
   // looking right.
   for (i = 0; prop = goog.cssom.iframe.style.textProperties_[i]; i++) {
@@ -849,55 +849,55 @@ goog.cssom.iframe.style.getElementContext = function(
     ruleSets[i].writeToArray(ruleSetStrings);
   }
   return ruleSetStrings.join('');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tests whether a value is equivalent to 'transparent'.
-***REMOVED*** @param {string} colorValue The value to test.
-***REMOVED*** @return {boolean} Whether the value is transparent.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Tests whether a value is equivalent to 'transparent'.
+ * @param {string} colorValue The value to test.
+ * @return {boolean} Whether the value is transparent.
+ * @private
+ */
 goog.cssom.iframe.style.isTransparentValue_ = function(colorValue) {
   return colorValue == 'transparent' || colorValue == 'rgba(0, 0, 0, 0)';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an object containing the set of computedStyle/currentStyle
-***REMOVED*** values for the given element. Note that this should be used with
-***REMOVED*** caution as it ignores the fact that currentStyle and computedStyle
-***REMOVED*** are not the same for certain properties.
-***REMOVED***
-***REMOVED*** @param {Element} element The element whose computed style to return.
-***REMOVED*** @return {Object} Object containing style properties and values.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns an object containing the set of computedStyle/currentStyle
+ * values for the given element. Note that this should be used with
+ * caution as it ignores the fact that currentStyle and computedStyle
+ * are not the same for certain properties.
+ *
+ * @param {Element} element The element whose computed style to return.
+ * @return {Object} Object containing style properties and values.
+ * @private
+ */
 goog.cssom.iframe.style.getComputedStyleObject_ = function(element) {
   // Return an object containing the element's computedStyle/currentStyle.
   // The resulting object can be re-used to read multiple properties, which
   // is faster than calling goog.style.getComputedStyle every time.
   return element.currentStyle ||
       goog.dom.getOwnerDocument(element).defaultView.getComputedStyle(
-          element, '') || {***REMOVED***
-***REMOVED***
+          element, '') || {};
+};
 
 
-***REMOVED***
-***REMOVED*** RegExp that splits a value like "10px" or "-1em" into parts.
-***REMOVED*** @private
-***REMOVED*** @type {RegExp}
-***REMOVED***
+/**
+ * RegExp that splits a value like "10px" or "-1em" into parts.
+ * @private
+ * @type {RegExp}
+ */
 goog.cssom.iframe.style.valueWithUnitsRegEx_ = /^(-?)([0-9]+)([a-z]*|%)/;
 
 
-***REMOVED***
-***REMOVED*** Given an object containing a set of styles, returns a two-element array
-***REMOVED*** containing the values of background-position-x and background-position-y.
-***REMOVED*** @param {Object} styleObject Object from which to read style properties.
-***REMOVED*** @return {Array.<string>} The background-position values in the order [x, y].
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Given an object containing a set of styles, returns a two-element array
+ * containing the values of background-position-x and background-position-y.
+ * @param {Object} styleObject Object from which to read style properties.
+ * @return {Array.<string>} The background-position values in the order [x, y].
+ * @private
+ */
 goog.cssom.iframe.style.getBackgroundXYValues_ = function(styleObject) {
   // Gecko only has backgroundPosition, containing both values.
   // IE has only backgroundPositionX/backgroundPositionY.
@@ -908,27 +908,27 @@ goog.cssom.iframe.style.getBackgroundXYValues_ = function(styleObject) {
   } else {
     return (styleObject['backgroundPosition'] || '0 0').split(' ');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Generates a set of CSS properties that can be used to make another
-***REMOVED*** element's background look like the background of a given element.
-***REMOVED*** This is useful when you want to copy the CSS context of an element,
-***REMOVED*** but the element's background is transparent. In the original context
-***REMOVED*** you would see the ancestor's backround color/image showing through,
-***REMOVED*** but in the new context there might be a something different underneath.
-***REMOVED*** Note that this assumes the element you're copying context from has a
-***REMOVED*** fairly standard positioning/layout - it assumes that when the element
-***REMOVED*** has a transparent background what you're going to see through it is its
-***REMOVED*** ancestors.
-***REMOVED*** @param {Element} element The element from which to copy background styles.
-***REMOVED*** @return {!Object} Object containing background* properties.
-***REMOVED***
+/**
+ * Generates a set of CSS properties that can be used to make another
+ * element's background look like the background of a given element.
+ * This is useful when you want to copy the CSS context of an element,
+ * but the element's background is transparent. In the original context
+ * you would see the ancestor's backround color/image showing through,
+ * but in the new context there might be a something different underneath.
+ * Note that this assumes the element you're copying context from has a
+ * fairly standard positioning/layout - it assumes that when the element
+ * has a transparent background what you're going to see through it is its
+ * ancestors.
+ * @param {Element} element The element from which to copy background styles.
+ * @return {!Object} Object containing background* properties.
+ */
 goog.cssom.iframe.style.getBackgroundContext = function(element) {
   var propertyValues = {
     'backgroundImage': 'none'
- ***REMOVED*****REMOVED***
+  };
   var ancestor = element;
   var currentIframeWindow;
   // Walk up the DOM tree to find the ancestor nodes whose backgrounds
@@ -941,7 +941,7 @@ goog.cssom.iframe.style.getBackgroundContext = function(element) {
   while ((ancestor = ancestor.parentNode) &&
          ancestor.nodeType == goog.dom.NodeType.ELEMENT) {
     var computedStyle = goog.cssom.iframe.style.getComputedStyleObject_(
-       ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (ancestor));
+        /** @type {Element} */ (ancestor));
     // Copy background color if a non-transparent value is found.
     var backgroundColorValue = computedStyle['backgroundColor'];
     if (!goog.cssom.iframe.style.isTransparentValue_(backgroundColorValue)) {
@@ -962,14 +962,14 @@ goog.cssom.iframe.style.getBackgroundContext = function(element) {
             element, currentIframeWindow);
         var frameElement = currentIframeWindow.frameElement;
         var iframeRelativePosition = goog.style.getRelativePosition(
-           ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (frameElement),
-           ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (ancestor));
+            /** @type {Element} */ (frameElement),
+            /** @type {Element} */ (ancestor));
         var iframeBorders = goog.style.getBorderBox(frameElement);
         relativePosition.x += iframeRelativePosition.x + iframeBorders.left;
         relativePosition.y += iframeRelativePosition.y + iframeBorders.top;
       } else {
         relativePosition = goog.style.getRelativePosition(
-            element,***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (ancestor));
+            element, /** @type {Element} */ (ancestor));
       }
       var backgroundXYValues = goog.cssom.iframe.style.getBackgroundXYValues_(
           computedStyle);
@@ -1006,7 +1006,7 @@ goog.cssom.iframe.style.getBackgroundContext = function(element) {
     if (ancestor.tagName == goog.dom.TagName.HTML) {
       try {
         currentIframeWindow = goog.dom.getWindow(
-           ***REMOVED*****REMOVED*** @type {Document}***REMOVED*** (ancestor.parentNode));
+            /** @type {Document} */ (ancestor.parentNode));
         // This could theoretically throw a security exception if the parent
         // iframe is in a different domain.
         ancestor = currentIframeWindow.frameElement;
@@ -1021,4 +1021,4 @@ goog.cssom.iframe.style.getBackgroundContext = function(element) {
     }
   }
   return propertyValues;
-***REMOVED***
+};

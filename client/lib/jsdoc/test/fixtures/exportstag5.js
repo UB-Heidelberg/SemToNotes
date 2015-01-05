@@ -1,13 +1,13 @@
 define(function() {
     'use strict';
-    var bar = function() {***REMOVED***
-   ***REMOVED*****REMOVED*** @exports Foo***REMOVED***
+    var bar = function() {};
+    /** @exports Foo */
     var Foo = Object.create(
-       ***REMOVED*****REMOVED*** @lends module:Foo.prototype***REMOVED***
+        /** @lends module:Foo.prototype */
         {
-           ***REMOVED*****REMOVED*** This should be in the Foo module doc.***REMOVED***
+            /** This should be in the Foo module doc. */
             bar : function() {}
         }
-  ***REMOVED***
+    );
     return Foo;
 });

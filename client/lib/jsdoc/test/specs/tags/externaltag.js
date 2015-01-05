@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine, xit***REMOVED***
+/*global describe, expect, it, jasmine, xit */
 'use strict';
 
 describe('@external tag', function() {

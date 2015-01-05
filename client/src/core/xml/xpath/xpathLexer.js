@@ -1,38 +1,38 @@
-***REMOVED***
-***REMOVED*** @fileoverview The lexer class for tokenizing xpath expressions.
-***REMOVED***
+/**
+ * @fileoverview The lexer class for tokenizing xpath expressions.
+ */
 
 goog.provide('xrx.xpath.Lexer');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a lexer.
-***REMOVED***
-***REMOVED*** @param {!Array.<string>} tokens Tokens to iterate over.
-***REMOVED***
-***REMOVED***
+/**
+ * Constructs a lexer.
+ *
+ * @param {!Array.<string>} tokens Tokens to iterate over.
+ * @constructor
+ */
 xrx.xpath.Lexer = function(tokens) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {!Array.<string>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {!Array.<string>}
+   * @private
+   */
   this.tokens_ = tokens;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {number}
+   * @private
+   */
   this.index_ = 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Tokenizes a source string into an array of tokens.
-***REMOVED***
-***REMOVED*** @param {string} source Source string to tokenize.
-***REMOVED*** @return {!xrx.xpath.Lexer} Essentially an iterator over the tokens.
-***REMOVED***
+/**
+ * Tokenizes a source string into an array of tokens.
+ *
+ * @param {string} source Source string to tokenize.
+ * @return {!xrx.xpath.Lexer} Essentially an iterator over the tokens.
+ */
 xrx.xpath.Lexer.tokenize = function(source) {
   var tokens = source.match(xrx.xpath.Lexer.TOKEN_);
 
@@ -43,16 +43,16 @@ xrx.xpath.Lexer.tokenize = function(source) {
     }
   }
   return new xrx.xpath.Lexer(tokens);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expressions to match XPath productions.
-***REMOVED***
-***REMOVED*** @const
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expressions to match XPath productions.
+ *
+ * @const
+ * @type {!RegExp}
+ * @private
+ */
 xrx.xpath.Lexer.TOKEN_ = new RegExp(
     '\\$?(?:(?![0-9-])[\\w-]+:)?(?![0-9-])[\\w-]+' +
         // Nodename (possibly with namespace) or variable.
@@ -69,51 +69,51 @@ xrx.xpath.Lexer.TOKEN_ = new RegExp(
     'g');
 
 
-***REMOVED***
-***REMOVED*** Regex to check if a string starts with a whitespace character.
-***REMOVED***
-***REMOVED*** @const
-***REMOVED*** @type {!RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regex to check if a string starts with a whitespace character.
+ *
+ * @const
+ * @type {!RegExp}
+ * @private
+ */
 xrx.xpath.Lexer.LEADING_WHITESPACE_ = /^\s/;
 
 
-***REMOVED***
-***REMOVED*** Peeks at the lexer. An optional index can be
-***REMOVED*** used to specify the token peek at.
-***REMOVED***
-***REMOVED*** @param {number=} opt_i Index to peek at. Defaults to zero.
-***REMOVED*** @return {string} Token peeked.
-***REMOVED***
+/**
+ * Peeks at the lexer. An optional index can be
+ * used to specify the token peek at.
+ *
+ * @param {number=} opt_i Index to peek at. Defaults to zero.
+ * @return {string} Token peeked.
+ */
 xrx.xpath.Lexer.prototype.peek = function(opt_i) {
   return this.tokens_[this.index_ + (opt_i || 0)];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the next token from the lexer and increments the index.
-***REMOVED***
-***REMOVED*** @return {string} The next token.
-***REMOVED***
+/**
+ * Returns the next token from the lexer and increments the index.
+ *
+ * @return {string} The next token.
+ */
 xrx.xpath.Lexer.prototype.next = function() {
   return this.tokens_[this.index_++];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Decrements the index by one.
-***REMOVED***
+/**
+ * Decrements the index by one.
+ */
 xrx.xpath.Lexer.prototype.back = function() {
   this.index_--;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Checks whether the lexer is empty.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the lexer is empty.
-***REMOVED***
+/**
+ * Checks whether the lexer is empty.
+ *
+ * @return {boolean} Whether the lexer is empty.
+ */
 xrx.xpath.Lexer.prototype.empty = function() {
   return this.tokens_.length <= this.index_;
-***REMOVED***
+};

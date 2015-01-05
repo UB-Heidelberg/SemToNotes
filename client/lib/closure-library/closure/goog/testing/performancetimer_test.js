@@ -91,7 +91,7 @@ function runAndAssert(useSetUp, useTearDown, runAsync) {
       deferred.callback();
       return deferred;
     }
- ***REMOVED*****REMOVED***
+  };
 
   var setUpCount = 0;
   var setUpFunction = function() {
@@ -103,7 +103,7 @@ function runAndAssert(useSetUp, useTearDown, runAsync) {
       deferred.callback();
       return deferred;
     }
- ***REMOVED*****REMOVED***
+  };
 
   var tearDownCount = 0;
   var tearDownFunction = function() {
@@ -115,7 +115,7 @@ function runAndAssert(useSetUp, useTearDown, runAsync) {
       deferred.callback();
       return deferred;
     }
- ***REMOVED*****REMOVED***
+  };
 
   // Fast test function should complete successfully in under 5 seconds...
   var task = new goog.testing.PerformanceTimer.Task(testFunction);
@@ -170,7 +170,7 @@ function testTimeout() {
   var testFunction = function() {
     mockClock.tick(100);
     ++count;
- ***REMOVED*****REMOVED***
+  };
 
   timer.setNumSamples(200);
   timer.setTimeoutInterval(2500);
@@ -191,7 +191,7 @@ function testCreateResults() {
     'minimum': 0,
     'standardDeviation': goog.math.standardDeviation.apply(null, samples),
     'total': 156
- ***REMOVED*****REMOVED***
+  };
   assertObjectEquals(
       expectedResults,
       goog.testing.PerformanceTimer.createResults(samples));

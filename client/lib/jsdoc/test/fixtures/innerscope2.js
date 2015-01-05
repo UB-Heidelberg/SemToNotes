@@ -1,18 +1,18 @@
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 function Message(to) {
 
-    var headers = {***REMOVED***
+    var headers = {};
 
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     headers.to = to;
 
     (function() {
         var headers = {
-           ***REMOVED*****REMOVED*** document me***REMOVED***
+            /** document me */
             cache: {}
-       ***REMOVED*****REMOVED***
+        };
 
-       ***REMOVED*****REMOVED*** document me***REMOVED***
+        /** document me */
         headers.from = '';
     })()
 }

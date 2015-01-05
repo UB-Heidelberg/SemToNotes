@@ -29,14 +29,14 @@ function setUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** @see https://bugzilla.mozilla.org/show_bug.cgi?id=497780
-***REMOVED***
+/**
+ * @see https://bugzilla.mozilla.org/show_bug.cgi?id=497780
+ */
 function testInvalidNodeBug() {
   if (!goog.userAgent.GECKO) return;
 
-  var event = {***REMOVED***
-  event.relatedTarget = {***REMOVED***
+  var event = {};
+  event.relatedTarget = {};
   event.relatedTarget.__defineGetter__(
       'nodeName',
       function() {
@@ -50,7 +50,7 @@ function testInvalidNodeBug() {
 }
 
 function testPreventDefault() {
-  var event = {***REMOVED***
+  var event = {};
   event.defaultPrevented = false;
   var bEvent = new goog.events.BrowserEvent(event);
   assertFalse(bEvent.defaultPrevented);
@@ -59,7 +59,7 @@ function testPreventDefault() {
 }
 
 function testDefaultPrevented() {
-  var event = {***REMOVED***
+  var event = {};
   event.defaultPrevented = true;
   var bEvent = new goog.events.BrowserEvent(event);
   assertTrue(bEvent.defaultPrevented);

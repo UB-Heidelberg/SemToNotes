@@ -25,10 +25,10 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview Classes representing a modifiable and creatable
-***REMOVED***     polygon shape.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview Classes representing a modifiable and creatable
+ *     polygon shape.
+ */
 
 goog.provide('xrx.shape.Polygon');
 goog.provide('xrx.shape.PolygonModify');
@@ -45,60 +45,60 @@ goog.require('xrx.shape.VertexDragger');
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a polygon shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing a polygon shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.shape.Polygon = function(drawing) {
 
   goog.base(this, drawing);
-***REMOVED***
+};
 goog.inherits(xrx.shape.Polygon, xrx.shape.Shape);
 
 
 
-***REMOVED***
-***REMOVED*** The engine class used to render this shape.
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The engine class used to render this shape.
+ * @type {string}
+ * @const
+ */
 xrx.shape.Polygon.prototype.engineClass_ = 'Polygon';
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new polygon shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
+/**
+ * Creates a new polygon shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ */
 xrx.shape.Polygon.create = function(drawing) {
   return new xrx.shape.Polygon(drawing);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new instance of a modifiable polygon shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
+/**
+ * Creates a new instance of a modifiable polygon shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ */
 xrx.shape.Polygon.prototype.createModify = function(drawing) {
   return xrx.shape.PolygonModify.create(this);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a modifiable polygon shape.
-***REMOVED***
-***REMOVED***
-xrx.shape.PolygonModify = function() {***REMOVED***
+/**
+ * A class representing a modifiable polygon shape.
+ * @constructor
+ */
+xrx.shape.PolygonModify = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new modifiable polygon shape.
-***REMOVED*** @param {xrx.shape.Polygon} polygon The related polygon shape.
-***REMOVED***
+/**
+ * Creates a new modifiable polygon shape.
+ * @param {xrx.shape.Polygon} polygon The related polygon shape.
+ */
 xrx.shape.PolygonModify.create = function(polygon) {
   var drawing = polygon.getDrawing();
   var graphics = drawing.getGraphics();
@@ -114,72 +114,72 @@ xrx.shape.PolygonModify.create = function(polygon) {
   }
 
   return draggers;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A class representing a creatable polygon shape.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing a creatable polygon shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.shape.PolygonCreate = function(drawing) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent drawing object.
-  ***REMOVED*** @type {xrx.drawing.Drawing}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The parent drawing object.
+   * @type {xrx.drawing.Drawing}
+   * @private
+   */
   this.drawing_ = drawing;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The first vertex created by the user, which at the same time
-  ***REMOVED*** closes the polygon when touched.
-  ***REMOVED*** @type {xrx.shape.VertexDragger}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The first vertex created by the user, which at the same time
+   * closes the polygon when touched.
+   * @type {xrx.shape.VertexDragger}
+   * @private
+   */
   this.close_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** A poly-line shape to give the user a preview of the created
-  ***REMOVED***     polygon.
-  ***REMOVED*** @type {xrx.shape.Polyline}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * A poly-line shape to give the user a preview of the created
+   *     polygon.
+   * @type {xrx.shape.Polyline}
+   * @private
+   */
   this.polyline_;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** An array of vertexes the user has created so far.
-  ***REMOVED*** @type {xrx.shape.VertexDragger}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * An array of vertexes the user has created so far.
+   * @type {xrx.shape.VertexDragger}
+   * @private
+   */
   this.vertexes_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Number of vertexes the user has created so far.
-  ***REMOVED*** @type {number}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Number of vertexes the user has created so far.
+   * @type {number}
+   * @private
+   */
   this.count_ = 0;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the coordinates of the poly-line currently creating a
-***REMOVED*** polygon.
-***REMOVED*** @return Array.&lt;Array.&lt;number>> The coordinates.
-***REMOVED***
+/**
+ * Returns the coordinates of the poly-line currently creating a
+ * polygon.
+ * @return Array.&lt;Array.&lt;number>> The coordinates.
+ */
 xrx.shape.PolygonCreate.prototype.getCoords = function() {
   return this.polyline_.getCoords();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles click events for a creatable polygon shape.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles click events for a creatable polygon shape.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
   var vertex;
   var polygon;
@@ -247,7 +247,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
 
     if (this.handleValueChanged) this.handleValueChanged();
   } 
-***REMOVED***
+};
 
 
 

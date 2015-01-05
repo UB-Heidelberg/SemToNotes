@@ -21,19 +21,19 @@ goog.require('goog.math.RangeSet');
 goog.require('goog.testing.jsunit');
 
 
-***REMOVED***
-***REMOVED*** Produce legible assertion results for comparing ranges. The expected range
-***REMOVED*** may be defined as a goog.math.Range or as a two-element array of numbers. If
-***REMOVED*** two ranges are not equal, the error message will be in the format:
-***REMOVED*** "Expected <[1, 2]> (Object) but was <[3, 4]> (Object)"
-***REMOVED***
-***REMOVED*** @param {!goog.math.Range|!Array.<number>|string} a A descriptive string or
-***REMOVED***     the expected range.
-***REMOVED*** @param {!goog.math.Range|!Array.<number>} b The expected range when a
-***REMOVED***     descriptive string is present, or the range to compare.
-***REMOVED*** @param {goog.math.Range=} opt_c The range to compare when a descriptive
-***REMOVED***     string is present.
-***REMOVED***
+/**
+ * Produce legible assertion results for comparing ranges. The expected range
+ * may be defined as a goog.math.Range or as a two-element array of numbers. If
+ * two ranges are not equal, the error message will be in the format:
+ * "Expected <[1, 2]> (Object) but was <[3, 4]> (Object)"
+ *
+ * @param {!goog.math.Range|!Array.<number>|string} a A descriptive string or
+ *     the expected range.
+ * @param {!goog.math.Range|!Array.<number>} b The expected range when a
+ *     descriptive string is present, or the range to compare.
+ * @param {goog.math.Range=} opt_c The range to compare when a descriptive
+ *     string is present.
+ */
 function assertRangesEqual(a, b, opt_c) {
   var message = opt_c ? a : '';
   var expected = opt_c ? b : a;
@@ -48,8 +48,8 @@ function assertRangesEqual(a, b, opt_c) {
     expected = new goog.math.Range(expected[0], expected[1]);
   }
 
-  if (!goog.math.Range.equals(***REMOVED*** @type {!goog.math.Range}***REMOVED*** (expected),
-                             ***REMOVED*****REMOVED*** @type {!goog.math.Range}***REMOVED*** (actual))) {
+  if (!goog.math.Range.equals(/** @type {!goog.math.Range} */ (expected),
+                              /** @type {!goog.math.Range} */ (actual))) {
     if (message) {
       assertEquals(message, expected, actual);
     } else {
@@ -59,19 +59,19 @@ function assertRangesEqual(a, b, opt_c) {
 }
 
 
-***REMOVED***
-***REMOVED*** Produce legible assertion results for comparing two lists of ranges. Expected
-***REMOVED*** lists may be specified as a list of goog.math.Ranges, or as a list of
-***REMOVED*** two-element arrays of numbers.
-***REMOVED***
-***REMOVED*** @param {Array.<goog.math.Range|Array.<number>>|string} a A help
-***REMOVED***     string or the list of expected ranges.
-***REMOVED*** @param {Array.<goog.math.Range|Array.<number>>} b The list of
-***REMOVED***     expected ranges when a descriptive string is present, or the list of
-***REMOVED***     ranges to compare.
-***REMOVED*** @param {Array.<goog.math.Range>=} opt_c The list of ranges to compare when a
-***REMOVED***     descriptive string is present.
-***REMOVED***
+/**
+ * Produce legible assertion results for comparing two lists of ranges. Expected
+ * lists may be specified as a list of goog.math.Ranges, or as a list of
+ * two-element arrays of numbers.
+ *
+ * @param {Array.<goog.math.Range|Array.<number>>|string} a A help
+ *     string or the list of expected ranges.
+ * @param {Array.<goog.math.Range|Array.<number>>} b The list of
+ *     expected ranges when a descriptive string is present, or the list of
+ *     ranges to compare.
+ * @param {Array.<goog.math.Range>=} opt_c The list of ranges to compare when a
+ *     descriptive string is present.
+ */
 function assertRangeListsEqual(a, b, opt_c) {
   var message = opt_c ? a + '\n' : '';
   var expected = opt_c ? b : a;

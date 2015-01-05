@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Tooltip widget implementation.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/tooltip.html
-***REMOVED***
+/**
+ * @fileoverview Tooltip widget implementation.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/tooltip.html
+ */
 
 goog.provide('goog.ui.Tooltip');
 goog.provide('goog.ui.Tooltip.CursorTooltipPosition');
@@ -28,8 +28,8 @@ goog.require('goog.Timer');
 goog.require('goog.array');
 goog.require('goog.dom');
 goog.require('goog.dom.safe');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.html.legacyconversions');
 goog.require('goog.math.Box');
 goog.require('goog.math.Coordinate');
@@ -46,24 +46,24 @@ goog.require('goog.ui.PopupBase');
 
 
 
-***REMOVED***
-***REMOVED*** Tooltip widget. Can be attached to one or more elements and is shown, with a
-***REMOVED*** slight delay, when the the cursor is over the element or the element gains
-***REMOVED*** focus.
-***REMOVED***
-***REMOVED*** @param {Element|string=} opt_el Element to display tooltip for, either
-***REMOVED***     element reference or string id.
-***REMOVED*** @param {?string=} opt_str Text message to display in tooltip.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Popup}
-***REMOVED***
+/**
+ * Tooltip widget. Can be attached to one or more elements and is shown, with a
+ * slight delay, when the the cursor is over the element or the element gains
+ * focus.
+ *
+ * @param {Element|string=} opt_el Element to display tooltip for, either
+ *     element reference or string id.
+ * @param {?string=} opt_str Text message to display in tooltip.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Popup}
+ */
 goog.ui.Tooltip = function(opt_el, opt_str, opt_domHelper) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dom Helper
-  ***REMOVED*** @type {goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Dom Helper
+   * @type {goog.dom.DomHelper}
+   * @private
+   */
   this.dom_ = opt_domHelper || (opt_el ?
       goog.dom.getDomHelper(goog.dom.getElement(opt_el)) :
       goog.dom.getDomHelper());
@@ -71,18 +71,18 @@ goog.ui.Tooltip = function(opt_el, opt_str, opt_domHelper) {
   goog.ui.Popup.call(this, this.dom_.createDom(
       'div', {'style': 'position:absolute;display:none;'}));
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Cursor position relative to the page.
-  ***REMOVED*** @type {!goog.math.Coordinate}
-  ***REMOVED*** @protected
- ***REMOVED*****REMOVED***
+  /**
+   * Cursor position relative to the page.
+   * @type {!goog.math.Coordinate}
+   * @protected
+   */
   this.cursorPosition = new goog.math.Coordinate(1, 1);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Elements this widget is attached to.
-  ***REMOVED*** @type {goog.structs.Set}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Elements this widget is attached to.
+   * @type {goog.structs.Set}
+   * @private
+   */
   this.elements_ = new goog.structs.Set();
 
   // Attach to element, if specified
@@ -94,195 +94,195 @@ goog.ui.Tooltip = function(opt_el, opt_str, opt_domHelper) {
   if (opt_str != null) {
     this.setText(opt_str);
   }
-***REMOVED***
+};
 goog.inherits(goog.ui.Tooltip, goog.ui.Popup);
 
 
-***REMOVED***
-***REMOVED*** List of active (open) tooltip widgets. Used to prevent multiple tooltips
-***REMOVED*** from appearing at once.
-***REMOVED***
-***REMOVED*** @type {!Array.<goog.ui.Tooltip>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * List of active (open) tooltip widgets. Used to prevent multiple tooltips
+ * from appearing at once.
+ *
+ * @type {!Array.<goog.ui.Tooltip>}
+ * @private
+ */
 goog.ui.Tooltip.activeInstances_ = [];
 
 
-***REMOVED***
-***REMOVED*** Active element reference. Used by the delayed show functionality to keep
-***REMOVED*** track of the element the mouse is over or the element with focus.
-***REMOVED*** @type {Element}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Active element reference. Used by the delayed show functionality to keep
+ * track of the element the mouse is over or the element with focus.
+ * @type {Element}
+ * @private
+ */
 goog.ui.Tooltip.prototype.activeEl_ = null;
 
 
-***REMOVED***
-***REMOVED*** CSS class name for tooltip.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS class name for tooltip.
+ *
+ * @type {string}
+ */
 goog.ui.Tooltip.prototype.className = goog.getCssName('goog-tooltip');
 
 
-***REMOVED***
-***REMOVED*** Delay in milliseconds since the last mouseover or mousemove before the
-***REMOVED*** tooltip is displayed for an element.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delay in milliseconds since the last mouseover or mousemove before the
+ * tooltip is displayed for an element.
+ *
+ * @type {number}
+ * @private
+ */
 goog.ui.Tooltip.prototype.showDelayMs_ = 500;
 
 
-***REMOVED***
-***REMOVED*** Timer for when to show.
-***REMOVED***
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Timer for when to show.
+ *
+ * @type {number|undefined}
+ * @protected
+ */
 goog.ui.Tooltip.prototype.showTimer;
 
 
-***REMOVED***
-***REMOVED*** Delay in milliseconds before tooltips are hidden.
-***REMOVED***
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delay in milliseconds before tooltips are hidden.
+ *
+ * @type {number}
+ * @private
+ */
 goog.ui.Tooltip.prototype.hideDelayMs_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Timer for when to hide.
-***REMOVED***
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Timer for when to hide.
+ *
+ * @type {number|undefined}
+ * @protected
+ */
 goog.ui.Tooltip.prototype.hideTimer;
 
 
-***REMOVED***
-***REMOVED*** Element that triggered the tooltip.  Note that if a second element triggers
-***REMOVED*** this tooltip, anchor becomes that second element, even if its show is
-***REMOVED*** cancelled and the original tooltip survives.
-***REMOVED***
-***REMOVED*** @type {Element|undefined}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Element that triggered the tooltip.  Note that if a second element triggers
+ * this tooltip, anchor becomes that second element, even if its show is
+ * cancelled and the original tooltip survives.
+ *
+ * @type {Element|undefined}
+ * @protected
+ */
 goog.ui.Tooltip.prototype.anchor;
 
 
-***REMOVED***
-***REMOVED*** Possible states for the tooltip to be in.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Possible states for the tooltip to be in.
+ * @enum {number}
+ */
 goog.ui.Tooltip.State = {
   INACTIVE: 0,
   WAITING_TO_SHOW: 1,
   SHOWING: 2,
   WAITING_TO_HIDE: 3,
   UPDATING: 4 // waiting to show new hovercard while old one still showing.
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Popup activation types. Used to select a positioning strategy.
-***REMOVED*** @enum {number}
-***REMOVED***
+/**
+ * Popup activation types. Used to select a positioning strategy.
+ * @enum {number}
+ */
 goog.ui.Tooltip.Activation = {
   CURSOR: 0,
   FOCUS: 1
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Whether the anchor has seen the cursor move or has received focus since the
-***REMOVED*** tooltip was last shown. Used to ignore mouse over events triggered by view
-***REMOVED*** changes and UI updates.
-***REMOVED*** @type {boolean|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the anchor has seen the cursor move or has received focus since the
+ * tooltip was last shown. Used to ignore mouse over events triggered by view
+ * changes and UI updates.
+ * @type {boolean|undefined}
+ * @private
+ */
 goog.ui.Tooltip.prototype.seenInteraction_;
 
 
-***REMOVED***
-***REMOVED*** Whether the cursor must have moved before the tooltip will be shown.
-***REMOVED*** @type {boolean|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the cursor must have moved before the tooltip will be shown.
+ * @type {boolean|undefined}
+ * @private
+ */
 goog.ui.Tooltip.prototype.requireInteraction_;
 
 
-***REMOVED***
-***REMOVED*** If this tooltip's element contains another tooltip that becomes active, this
-***REMOVED*** property identifies that tooltip so that we can check if this tooltip should
-***REMOVED*** not be hidden because the nested tooltip is active.
-***REMOVED*** @type {goog.ui.Tooltip}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If this tooltip's element contains another tooltip that becomes active, this
+ * property identifies that tooltip so that we can check if this tooltip should
+ * not be hidden because the nested tooltip is active.
+ * @type {goog.ui.Tooltip}
+ * @private
+ */
 goog.ui.Tooltip.prototype.childTooltip_;
 
 
-***REMOVED***
-***REMOVED*** If this tooltip is inside another tooltip's element, then it may have
-***REMOVED*** prevented that tooltip from hiding.  When this tooltip hides, we'll need
-***REMOVED*** to check if the parent should be hidden as well.
-***REMOVED*** @type {goog.ui.Tooltip}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * If this tooltip is inside another tooltip's element, then it may have
+ * prevented that tooltip from hiding.  When this tooltip hides, we'll need
+ * to check if the parent should be hidden as well.
+ * @type {goog.ui.Tooltip}
+ * @private
+ */
 goog.ui.Tooltip.prototype.parentTooltip_;
 
 
-***REMOVED***
-***REMOVED*** Returns the dom helper that is being used on this component.
-***REMOVED*** @return {goog.dom.DomHelper} The dom helper used on this component.
-***REMOVED***
+/**
+ * Returns the dom helper that is being used on this component.
+ * @return {goog.dom.DomHelper} The dom helper used on this component.
+ */
 goog.ui.Tooltip.prototype.getDomHelper = function() {
   return this.dom_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.Tooltip} Active tooltip in a child element, or null if none.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {goog.ui.Tooltip} Active tooltip in a child element, or null if none.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.getChildTooltip = function() {
   return this.childTooltip_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attach to element. Tooltip will be displayed when the cursor is over the
-***REMOVED*** element or when the element has been active for a few milliseconds.
-***REMOVED***
-***REMOVED*** @param {Element|string} el Element to display tooltip for, either element
-***REMOVED***                            reference or string id.
-***REMOVED***
+/**
+ * Attach to element. Tooltip will be displayed when the cursor is over the
+ * element or when the element has been active for a few milliseconds.
+ *
+ * @param {Element|string} el Element to display tooltip for, either element
+ *                            reference or string id.
+ */
 goog.ui.Tooltip.prototype.attach = function(el) {
   el = goog.dom.getElement(el);
 
   this.elements_.add(el);
-***REMOVED***el, goog.events.EventType.MOUSEOVER,
+  goog.events.listen(el, goog.events.EventType.MOUSEOVER,
                      this.handleMouseOver, false, this);
-***REMOVED***el, goog.events.EventType.MOUSEOUT,
+  goog.events.listen(el, goog.events.EventType.MOUSEOUT,
                      this.handleMouseOutAndBlur, false, this);
-***REMOVED***el, goog.events.EventType.MOUSEMOVE,
+  goog.events.listen(el, goog.events.EventType.MOUSEMOVE,
                      this.handleMouseMove, false, this);
-***REMOVED***el, goog.events.EventType.FOCUS,
+  goog.events.listen(el, goog.events.EventType.FOCUS,
                      this.handleFocus, false, this);
-***REMOVED***el, goog.events.EventType.BLUR,
+  goog.events.listen(el, goog.events.EventType.BLUR,
                      this.handleMouseOutAndBlur, false, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Detach from element(s).
-***REMOVED***
-***REMOVED*** @param {Element|string=} opt_el Element to detach from, either element
-***REMOVED***                                reference or string id. If no element is
-***REMOVED***                                specified all are detached.
-***REMOVED***
+/**
+ * Detach from element(s).
+ *
+ * @param {Element|string=} opt_el Element to detach from, either element
+ *                                reference or string id. If no element is
+ *                                specified all are detached.
+ */
 goog.ui.Tooltip.prototype.detach = function(opt_el) {
   if (opt_el) {
     var el = goog.dom.getElement(opt_el);
@@ -295,15 +295,15 @@ goog.ui.Tooltip.prototype.detach = function(opt_el) {
     }
     this.elements_.clear();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Detach from element.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to detach from.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Detach from element.
+ *
+ * @param {Element} el Element to detach from.
+ * @private
+ */
 goog.ui.Tooltip.prototype.detachElement_ = function(el) {
   goog.events.unlisten(el, goog.events.EventType.MOUSEOVER,
                        this.handleMouseOver, false, this);
@@ -315,88 +315,88 @@ goog.ui.Tooltip.prototype.detachElement_ = function(el) {
                        this.handleFocus, false, this);
   goog.events.unlisten(el, goog.events.EventType.BLUR,
                        this.handleMouseOutAndBlur, false, this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets delay in milliseconds before tooltip is displayed for an element.
-***REMOVED***
-***REMOVED*** @param {number} delay The delay in milliseconds.
-***REMOVED***
+/**
+ * Sets delay in milliseconds before tooltip is displayed for an element.
+ *
+ * @param {number} delay The delay in milliseconds.
+ */
 goog.ui.Tooltip.prototype.setShowDelayMs = function(delay) {
   this.showDelayMs_ = delay;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The delay in milliseconds before tooltip is displayed for an
-***REMOVED***     element.
-***REMOVED***
+/**
+ * @return {number} The delay in milliseconds before tooltip is displayed for an
+ *     element.
+ */
 goog.ui.Tooltip.prototype.getShowDelayMs = function() {
   return this.showDelayMs_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets delay in milliseconds before tooltip is hidden once the cursor leavs
-***REMOVED*** the element.
-***REMOVED***
-***REMOVED*** @param {number} delay The delay in milliseconds.
-***REMOVED***
+/**
+ * Sets delay in milliseconds before tooltip is hidden once the cursor leavs
+ * the element.
+ *
+ * @param {number} delay The delay in milliseconds.
+ */
 goog.ui.Tooltip.prototype.setHideDelayMs = function(delay) {
   this.hideDelayMs_ = delay;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {number} The delay in milliseconds before tooltip is hidden once the
-***REMOVED***     cursor leaves the element.
-***REMOVED***
+/**
+ * @return {number} The delay in milliseconds before tooltip is hidden once the
+ *     cursor leaves the element.
+ */
 goog.ui.Tooltip.prototype.getHideDelayMs = function() {
   return this.hideDelayMs_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets tooltip message as plain text.
-***REMOVED***
-***REMOVED*** @param {string} str Text message to display in tooltip.
-***REMOVED***
+/**
+ * Sets tooltip message as plain text.
+ *
+ * @param {string} str Text message to display in tooltip.
+ */
 goog.ui.Tooltip.prototype.setText = function(str) {
   goog.dom.setTextContent(this.getElement(), str);
-***REMOVED***
+};
 
 
 // TODO(user): Deprecate in favor of setSafeHtml, once developer docs on.
-***REMOVED***
-***REMOVED*** Sets tooltip message as HTML markup.
-***REMOVED*** using goog.html.SafeHtml are in place.
-***REMOVED***
-***REMOVED*** @param {string} str HTML message to display in tooltip.
-***REMOVED***
+/**
+ * Sets tooltip message as HTML markup.
+ * using goog.html.SafeHtml are in place.
+ *
+ * @param {string} str HTML message to display in tooltip.
+ */
 goog.ui.Tooltip.prototype.setHtml = function(str) {
   this.setSafeHtml(goog.html.legacyconversions.safeHtmlFromString(str));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets tooltip message as HTML markup.
-***REMOVED*** @param {!goog.html.SafeHtml} html HTML message to display in tooltip.
-***REMOVED***
+/**
+ * Sets tooltip message as HTML markup.
+ * @param {!goog.html.SafeHtml} html HTML message to display in tooltip.
+ */
 goog.ui.Tooltip.prototype.setSafeHtml = function(html) {
   var element = this.getElement();
   if (element) {
     goog.dom.safe.setInnerHtml(element, html);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets tooltip element.
-***REMOVED***
-***REMOVED*** @param {Element} el HTML element to use as the tooltip.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets tooltip element.
+ *
+ * @param {Element} el HTML element to use as the tooltip.
+ * @override
+ */
 goog.ui.Tooltip.prototype.setElement = function(el) {
   var oldElement = this.getElement();
   if (oldElement) {
@@ -407,28 +407,28 @@ goog.ui.Tooltip.prototype.setElement = function(el) {
     var body = this.dom_.getDocument().body;
     body.insertBefore(el, body.lastChild);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The tooltip message as plain text.
-***REMOVED***
+/**
+ * @return {string} The tooltip message as plain text.
+ */
 goog.ui.Tooltip.prototype.getText = function() {
   return goog.dom.getTextContent(this.getElement());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The tooltip message as HTML as plain string.
-***REMOVED***
+/**
+ * @return {string} The tooltip message as HTML as plain string.
+ */
 goog.ui.Tooltip.prototype.getHtml = function() {
   return this.getElement().innerHTML;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.ui.Tooltip.State} Current state of tooltip.
-***REMOVED***
+/**
+ * @return {goog.ui.Tooltip.State} Current state of tooltip.
+ */
 goog.ui.Tooltip.prototype.getState = function() {
   return this.showTimer ?
              (this.isVisible() ? goog.ui.Tooltip.State.UPDATING :
@@ -436,25 +436,25 @@ goog.ui.Tooltip.prototype.getState = function() {
          this.hideTimer ? goog.ui.Tooltip.State.WAITING_TO_HIDE :
          this.isVisible() ? goog.ui.Tooltip.State.SHOWING :
          goog.ui.Tooltip.State.INACTIVE;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether tooltip requires the mouse to have moved or the anchor receive
-***REMOVED*** focus before the tooltip will be shown.
-***REMOVED*** @param {boolean} requireInteraction Whether tooltip should require some user
-***REMOVED***     interaction before showing tooltip.
-***REMOVED***
+/**
+ * Sets whether tooltip requires the mouse to have moved or the anchor receive
+ * focus before the tooltip will be shown.
+ * @param {boolean} requireInteraction Whether tooltip should require some user
+ *     interaction before showing tooltip.
+ */
 goog.ui.Tooltip.prototype.setRequireInteraction = function(requireInteraction) {
   this.requireInteraction_ = requireInteraction;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns true if the coord is in the tooltip.
-***REMOVED*** @param {goog.math.Coordinate} coord Coordinate being tested.
-***REMOVED*** @return {boolean} Whether the coord is in the tooltip.
-***REMOVED***
+/**
+ * Returns true if the coord is in the tooltip.
+ * @param {goog.math.Coordinate} coord Coordinate being tested.
+ * @return {boolean} Whether the coord is in the tooltip.
+ */
 goog.ui.Tooltip.prototype.isCoordinateInTooltip = function(coord) {
   // Check if coord is inside the the tooltip
   if (!this.isVisible()) {
@@ -465,16 +465,16 @@ goog.ui.Tooltip.prototype.isCoordinateInTooltip = function(coord) {
   var size = goog.style.getSize(this.getElement());
   return offset.x <= coord.x && coord.x <= offset.x + size.width &&
          offset.y <= coord.y && coord.y <= offset.y + size.height;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called before the popup is shown.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether tooltip should be shown.
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Called before the popup is shown.
+ *
+ * @return {boolean} Whether tooltip should be shown.
+ * @protected
+ * @override
+ */
 goog.ui.Tooltip.prototype.onBeforeShow = function() {
   if (!goog.ui.PopupBase.prototype.onBeforeShow.call(this)) {
     return false;
@@ -498,23 +498,23 @@ goog.ui.Tooltip.prototype.onBeforeShow = function() {
   // Register event handlers for tooltip. Used to prevent the tooltip from
   // closing if the cursor is over the tooltip rather then the element that
   // triggered it.
-***REMOVED***element, goog.events.EventType.MOUSEOVER,
+  goog.events.listen(element, goog.events.EventType.MOUSEOVER,
                      this.handleTooltipMouseOver, false, this);
-***REMOVED***element, goog.events.EventType.MOUSEOUT,
+  goog.events.listen(element, goog.events.EventType.MOUSEOUT,
                      this.handleTooltipMouseOut, false, this);
 
   this.clearShowTimer();
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called after the popup is hidden.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED*** @suppress {underscore|visibility}
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Called after the popup is hidden.
+ *
+ * @protected
+ * @suppress {underscore|visibility}
+ * @override
+ */
 goog.ui.Tooltip.prototype.onHide_ = function() {
   goog.array.remove(goog.ui.Tooltip.activeInstances_, this);
 
@@ -545,17 +545,17 @@ goog.ui.Tooltip.prototype.onHide_ = function() {
   }
 
   goog.ui.PopupBase.prototype.onHide_.call(this);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called by timer from mouse over handler. Shows tooltip if cursor is still
-***REMOVED*** over the same element.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to show tooltip for.
-***REMOVED*** @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
-***REMOVED***     at.
-***REMOVED***
+/**
+ * Called by timer from mouse over handler. Shows tooltip if cursor is still
+ * over the same element.
+ *
+ * @param {Element} el Element to show tooltip for.
+ * @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
+ *     at.
+ */
 goog.ui.Tooltip.prototype.maybeShow = function(el, opt_pos) {
   // Assert that the mouse is still over the same element, and that we have not
   // detached from the anchor in the meantime.
@@ -571,71 +571,71 @@ goog.ui.Tooltip.prototype.maybeShow = function(el, opt_pos) {
     }
   }
   this.showTimer = undefined;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.structs.Set} Elements this widget is attached to.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {goog.structs.Set} Elements this widget is attached to.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.getElements = function() {
   return this.elements_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} Active element reference.
-***REMOVED***
+/**
+ * @return {Element} Active element reference.
+ */
 goog.ui.Tooltip.prototype.getActiveElement = function() {
   return this.activeEl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @param {Element} activeEl Active element reference.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @param {Element} activeEl Active element reference.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.setActiveElement = function(activeEl) {
   this.activeEl_ = activeEl;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Shows tooltip for a specific element.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to show tooltip for.
-***REMOVED*** @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
-***REMOVED***     at.
-***REMOVED***
+/**
+ * Shows tooltip for a specific element.
+ *
+ * @param {Element} el Element to show tooltip for.
+ * @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
+ *     at.
+ */
 goog.ui.Tooltip.prototype.showForElement = function(el, opt_pos) {
   this.attach(el);
   this.activeEl_ = el;
 
   this.positionAndShow_(el, opt_pos);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets tooltip position and shows it.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to show tooltip for.
-***REMOVED*** @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
-***REMOVED***     at.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Sets tooltip position and shows it.
+ *
+ * @param {Element} el Element to show tooltip for.
+ * @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
+ *     at.
+ * @private
+ */
 goog.ui.Tooltip.prototype.positionAndShow_ = function(el, opt_pos) {
   this.anchor = el;
   this.setPosition(opt_pos ||
       this.getPositioningStrategy(goog.ui.Tooltip.Activation.CURSOR));
   this.setVisible(true);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Called by timer from mouse out handler. Hides tooltip if cursor is still
-***REMOVED*** outside element and tooltip, or if a child of tooltip has the focus.
-***REMOVED*** @param {Element} el Tooltip's anchor when hide timer was started.
-***REMOVED***
+/**
+ * Called by timer from mouse out handler. Hides tooltip if cursor is still
+ * outside element and tooltip, or if a child of tooltip has the focus.
+ * @param {Element} el Tooltip's anchor when hide timer was started.
+ */
 goog.ui.Tooltip.prototype.maybeHide = function(el) {
   this.hideTimer = undefined;
   if (el == this.anchor) {
@@ -645,59 +645,59 @@ goog.ui.Tooltip.prototype.maybeHide = function(el) {
       this.setVisible(false);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether tooltip element contains an active child tooltip,
-***REMOVED***     and should thus not be hidden.  When the child tooltip is hidden, it
-***REMOVED***     will check if the parent should be hidden, too.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {boolean} Whether tooltip element contains an active child tooltip,
+ *     and should thus not be hidden.  When the child tooltip is hidden, it
+ *     will check if the parent should be hidden, too.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.hasActiveChild = function() {
   return !!(this.childTooltip_ && this.childTooltip_.activeEl_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Saves the current mouse cursor position to {@code this.cursorPosition}.
-***REMOVED*** @param {goog.events.BrowserEvent} event MOUSEOVER or MOUSEMOVE event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Saves the current mouse cursor position to {@code this.cursorPosition}.
+ * @param {goog.events.BrowserEvent} event MOUSEOVER or MOUSEMOVE event.
+ * @private
+ */
 goog.ui.Tooltip.prototype.saveCursorPosition_ = function(event) {
   var scroll = this.dom_.getDocumentScroll();
   this.cursorPosition.x = event.clientX + scroll.x;
   this.cursorPosition.y = event.clientY + scroll.y;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for mouse over events.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for mouse over events.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleMouseOver = function(event) {
-  var el = this.getAnchorFromElement(***REMOVED*** @type {Element}***REMOVED*** (event.target));
-  this.activeEl_ =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (el);
+  var el = this.getAnchorFromElement(/** @type {Element} */ (event.target));
+  this.activeEl_ = /** @type {Element} */ (el);
   this.clearHideTimer();
   if (el != this.anchor) {
     this.anchor = el;
-    this.startShowTimer(***REMOVED*** @type {Element}***REMOVED*** (el));
+    this.startShowTimer(/** @type {Element} */ (el));
     this.checkForParentTooltip_();
     this.saveCursorPosition_(event);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Find anchor containing the given element, if any.
-***REMOVED***
-***REMOVED*** @param {Element} el Element that triggered event.
-***REMOVED*** @return {Element} Element in elements_ array that contains given element,
-***REMOVED***     or null if not found.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Find anchor containing the given element, if any.
+ *
+ * @param {Element} el Element that triggered event.
+ * @return {Element} Element in elements_ array that contains given element,
+ *     or null if not found.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.getAnchorFromElement = function(el) {
   // FireFox has a bug where mouse events relating to <input> elements are
   // sometimes duplicated (often in FF2, rarely in FF3): once for the
@@ -708,35 +708,35 @@ goog.ui.Tooltip.prototype.getAnchorFromElement = function(el) {
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=330961
   try {
     while (el && !this.elements_.contains(el)) {
-      el =***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (el.parentNode);
+      el = /** @type {Element} */ (el.parentNode);
     }
     return el;
   } catch (e) {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for mouse move events.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event MOUSEMOVE event.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for mouse move events.
+ *
+ * @param {goog.events.BrowserEvent} event MOUSEMOVE event.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleMouseMove = function(event) {
   this.saveCursorPosition_(event);
   this.seenInteraction_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for focus events.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for focus events.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleFocus = function(event) {
-  var el = this.getAnchorFromElement(***REMOVED*** @type {Element}***REMOVED*** (event.target));
+  var el = this.getAnchorFromElement(/** @type {Element} */ (event.target));
   this.activeEl_ = el;
   this.seenInteraction_ = true;
 
@@ -744,38 +744,38 @@ goog.ui.Tooltip.prototype.handleFocus = function(event) {
     this.anchor = el;
     var pos = this.getPositioningStrategy(goog.ui.Tooltip.Activation.FOCUS);
     this.clearHideTimer();
-    this.startShowTimer(***REMOVED*** @type {Element}***REMOVED*** (el), pos);
+    this.startShowTimer(/** @type {Element} */ (el), pos);
 
     this.checkForParentTooltip_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Return a Position instance for repositioning the tooltip. Override in
-***REMOVED*** subclasses to customize the way repositioning is done.
-***REMOVED***
-***REMOVED*** @param {goog.ui.Tooltip.Activation} activationType Information about what
-***REMOVED***    kind of event caused the popup to be shown.
-***REMOVED*** @return {!goog.positioning.AbstractPosition} The position object used
-***REMOVED***    to position the tooltip.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Return a Position instance for repositioning the tooltip. Override in
+ * subclasses to customize the way repositioning is done.
+ *
+ * @param {goog.ui.Tooltip.Activation} activationType Information about what
+ *    kind of event caused the popup to be shown.
+ * @return {!goog.positioning.AbstractPosition} The position object used
+ *    to position the tooltip.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.getPositioningStrategy = function(activationType) {
   if (activationType == goog.ui.Tooltip.Activation.CURSOR) {
     var coord = this.cursorPosition.clone();
     return new goog.ui.Tooltip.CursorTooltipPosition(coord);
   }
   return new goog.ui.Tooltip.ElementTooltipPosition(this.activeEl_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Looks for an active tooltip whose element contains this tooltip's anchor.
-***REMOVED*** This allows us to prevent hides until they are really necessary.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Looks for an active tooltip whose element contains this tooltip's anchor.
+ * This allows us to prevent hides until they are really necessary.
+ *
+ * @private
+ */
 goog.ui.Tooltip.prototype.checkForParentTooltip_ = function() {
   if (this.anchor) {
     for (var tt, i = 0; tt = goog.ui.Tooltip.activeInstances_[i]; i++) {
@@ -785,19 +785,19 @@ goog.ui.Tooltip.prototype.checkForParentTooltip_ = function() {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for mouse out and blur events.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for mouse out and blur events.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleMouseOutAndBlur = function(event) {
-  var el = this.getAnchorFromElement(***REMOVED*** @type {Element}***REMOVED*** (event.target));
+  var el = this.getAnchorFromElement(/** @type {Element} */ (event.target));
   var elTo = this.getAnchorFromElement(
-     ***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (event.relatedTarget));
+      /** @type {Element} */ (event.relatedTarget));
   if (el == elTo) {
     // We haven't really left the anchor, just moved from one child to
     // another.
@@ -816,30 +816,30 @@ goog.ui.Tooltip.prototype.handleMouseOutAndBlur = function(event) {
   } else {
     this.anchor = undefined;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for mouse over events for the tooltip element.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for mouse over events for the tooltip element.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleTooltipMouseOver = function(event) {
   var element = this.getElement();
   if (this.activeEl_ != element) {
     this.clearHideTimer();
     this.activeEl_ = element;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handler for mouse out events for the tooltip element.
-***REMOVED***
-***REMOVED*** @param {goog.events.BrowserEvent} event Event object.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handler for mouse out events for the tooltip element.
+ *
+ * @param {goog.events.BrowserEvent} event Event object.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.handleTooltipMouseOut = function(event) {
   var element = this.getElement();
   if (this.activeEl_ == element && (!event.relatedTarget ||
@@ -847,64 +847,64 @@ goog.ui.Tooltip.prototype.handleTooltipMouseOut = function(event) {
     this.activeEl_ = null;
     this.startHideTimer();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method, starts timer that calls maybeShow. Parameters are passed to
-***REMOVED*** the maybeShow method.
-***REMOVED***
-***REMOVED*** @param {Element} el Element to show tooltip for.
-***REMOVED*** @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
-***REMOVED***     at.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helper method, starts timer that calls maybeShow. Parameters are passed to
+ * the maybeShow method.
+ *
+ * @param {Element} el Element to show tooltip for.
+ * @param {goog.positioning.AbstractPosition=} opt_pos Position to display popup
+ *     at.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.startShowTimer = function(el, opt_pos) {
   if (!this.showTimer) {
     this.showTimer = goog.Timer.callOnce(
         goog.bind(this.maybeShow, this, el, opt_pos), this.showDelayMs_);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method called to clear the show timer.
-***REMOVED***
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helper method called to clear the show timer.
+ *
+ * @protected
+ */
 goog.ui.Tooltip.prototype.clearShowTimer = function() {
   if (this.showTimer) {
     goog.Timer.clear(this.showTimer);
     this.showTimer = undefined;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method called to start the close timer.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helper method called to start the close timer.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.startHideTimer = function() {
   if (this.getState() == goog.ui.Tooltip.State.SHOWING) {
     this.hideTimer = goog.Timer.callOnce(
         goog.bind(this.maybeHide, this, this.anchor), this.getHideDelayMs());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper method called to clear the close timer.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Helper method called to clear the close timer.
+ * @protected
+ */
 goog.ui.Tooltip.prototype.clearHideTimer = function() {
   if (this.hideTimer) {
     goog.Timer.clear(this.hideTimer);
     this.hideTimer = undefined;
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.Tooltip.prototype.disposeInternal = function() {
   this.setVisible(false);
   this.clearShowTimer();
@@ -915,40 +915,40 @@ goog.ui.Tooltip.prototype.disposeInternal = function() {
   this.activeEl_ = null;
   delete this.dom_;
   goog.ui.Tooltip.superClass_.disposeInternal.call(this);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Popup position implementation that positions the popup (the tooltip in this
-***REMOVED*** case) based on the cursor position. It's positioned below the cursor to the
-***REMOVED*** right if there's enough room to fit all of it inside the Viewport. Otherwise
-***REMOVED*** it's displayed as far right as possible either above or below the element.
-***REMOVED***
-***REMOVED*** Used to position tooltips triggered by the cursor.
-***REMOVED***
-***REMOVED*** @param {number|!goog.math.Coordinate} arg1 Left position or coordinate.
-***REMOVED*** @param {number=} opt_arg2 Top position.
-***REMOVED***
-***REMOVED*** @extends {goog.positioning.ViewportPosition}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Popup position implementation that positions the popup (the tooltip in this
+ * case) based on the cursor position. It's positioned below the cursor to the
+ * right if there's enough room to fit all of it inside the Viewport. Otherwise
+ * it's displayed as far right as possible either above or below the element.
+ *
+ * Used to position tooltips triggered by the cursor.
+ *
+ * @param {number|!goog.math.Coordinate} arg1 Left position or coordinate.
+ * @param {number=} opt_arg2 Top position.
+ * @constructor
+ * @extends {goog.positioning.ViewportPosition}
+ * @final
+ */
 goog.ui.Tooltip.CursorTooltipPosition = function(arg1, opt_arg2) {
   goog.positioning.ViewportPosition.call(this, arg1, opt_arg2);
-***REMOVED***
+};
 goog.inherits(goog.ui.Tooltip.CursorTooltipPosition,
               goog.positioning.ViewportPosition);
 
 
-***REMOVED***
-***REMOVED*** Repositions the popup based on cursor position.
-***REMOVED***
-***REMOVED*** @param {Element} element The DOM element of the popup.
-***REMOVED*** @param {goog.positioning.Corner} popupCorner The corner of the popup element
-***REMOVED***     that that should be positioned adjacent to the anchorElement.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Repositions the popup based on cursor position.
+ *
+ * @param {Element} element The DOM element of the popup.
+ * @param {goog.positioning.Corner} popupCorner The corner of the popup element
+ *     that that should be positioned adjacent to the anchorElement.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @override
+ */
 goog.ui.Tooltip.CursorTooltipPosition.prototype.reposition = function(
     element, popupCorner, opt_margin) {
   var viewportElt = goog.style.getClientViewportElement(element);
@@ -966,39 +966,39 @@ goog.ui.Tooltip.CursorTooltipPosition.prototype.reposition = function(
         goog.positioning.Overflow.ADJUST_X |
             goog.positioning.Overflow.ADJUST_Y);
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Popup position implementation that positions the popup (the tooltip in this
-***REMOVED*** case) based on the element position. It's positioned below the element to the
-***REMOVED*** right if there's enough room to fit all of it inside the Viewport. Otherwise
-***REMOVED*** it's displayed as far right as possible either above or below the element.
-***REMOVED***
-***REMOVED*** Used to position tooltips triggered by focus changes.
-***REMOVED***
-***REMOVED*** @param {Element} element The element to anchor the popup at.
-***REMOVED***
-***REMOVED*** @extends {goog.positioning.AnchoredPosition}
-***REMOVED***
+/**
+ * Popup position implementation that positions the popup (the tooltip in this
+ * case) based on the element position. It's positioned below the element to the
+ * right if there's enough room to fit all of it inside the Viewport. Otherwise
+ * it's displayed as far right as possible either above or below the element.
+ *
+ * Used to position tooltips triggered by focus changes.
+ *
+ * @param {Element} element The element to anchor the popup at.
+ * @constructor
+ * @extends {goog.positioning.AnchoredPosition}
+ */
 goog.ui.Tooltip.ElementTooltipPosition = function(element) {
   goog.positioning.AnchoredPosition.call(this, element,
       goog.positioning.Corner.BOTTOM_RIGHT);
-***REMOVED***
+};
 goog.inherits(goog.ui.Tooltip.ElementTooltipPosition,
               goog.positioning.AnchoredPosition);
 
 
-***REMOVED***
-***REMOVED*** Repositions the popup based on element position.
-***REMOVED***
-***REMOVED*** @param {Element} element The DOM element of the popup.
-***REMOVED*** @param {goog.positioning.Corner} popupCorner The corner of the popup element
-***REMOVED***     that should be positioned adjacent to the anchorElement.
-***REMOVED*** @param {goog.math.Box=} opt_margin A margin specified in pixels.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Repositions the popup based on element position.
+ *
+ * @param {Element} element The DOM element of the popup.
+ * @param {goog.positioning.Corner} popupCorner The corner of the popup element
+ *     that should be positioned adjacent to the anchorElement.
+ * @param {goog.math.Box=} opt_margin A margin specified in pixels.
+ * @override
+ */
 goog.ui.Tooltip.ElementTooltipPosition.prototype.reposition = function(
     element, popupCorner, opt_margin) {
   var offset = new goog.math.Coordinate(10, 0);
@@ -1013,4 +1013,4 @@ goog.ui.Tooltip.ElementTooltipPosition.prototype.reposition = function(
         goog.positioning.Overflow.ADJUST_X |
             goog.positioning.Overflow.ADJUST_Y);
   }
-***REMOVED***
+};

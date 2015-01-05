@@ -320,9 +320,9 @@ function testRemovePartialContents() {
   removeHelper(8, range, outer, 1, '<div></div>');
 
   // TODO(robbyw): Fix the following edge cases:
-  //   ***REMOVED*** Selecting contents of a node containing multiply empty divs
-  //   ***REMOVED*** Selecting via createFromNodes(x, 0, x, x.childNodes.length)
-  //   ***REMOVED*** Consistent handling of nodeContents(<div><div></div></div>).remove
+  //    * Selecting contents of a node containing multiply empty divs
+  //    * Selecting via createFromNodes(x, 0, x, x.childNodes.length)
+  //    * Consistent handling of nodeContents(<div><div></div></div>).remove
 }
 
 function removeHelper(testNumber, range, outer, expectedChildCount,
@@ -362,11 +362,11 @@ function testSurroundContents() {
 }
 
 
-***REMOVED***
-***REMOVED*** Given two offsets into the 'foobar' node, make sure that inserting
-***REMOVED*** nodes at those offsets doesn't change a selection of 'oba'.
-***REMOVED*** @bug 1480638
-***REMOVED***
+/**
+ * Given two offsets into the 'foobar' node, make sure that inserting
+ * nodes at those offsets doesn't change a selection of 'oba'.
+ * @bug 1480638
+ */
 function assertSurroundDoesntChangeSelectionWithOffsets(
     offset1, offset2, expectedHtml) {
   var div = goog.dom.getElement('bug1480638');

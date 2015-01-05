@@ -47,12 +47,12 @@ function tearDown() {
 //=========================================================================
 // Utility methods
 
-***REMOVED***
-***REMOVED*** Fire listeners of a given type that are listening to the event's
-***REMOVED*** currentTarget.
-***REMOVED***
-***REMOVED*** @param {goog.eventsBrowserEvent} event
-***REMOVED***
+/**
+ * Fire listeners of a given type that are listening to the event's
+ * currentTarget.
+ *
+ * @param {goog.eventsBrowserEvent} event
+ */
 function simulateEvent(event) {
   goog.events.fireListeners(
       event.currentTarget, event.type, true, event);
@@ -60,11 +60,11 @@ function simulateEvent(event) {
       event.currentTarget, event.type, false, event);
 }
 
-***REMOVED***
-***REMOVED*** Fire all key event listeners that are listening to the input element.
-***REMOVED***
-***REMOVED*** @param {number} keyCode The key code.
-***REMOVED***
+/**
+ * Fire all key event listeners that are listening to the input element.
+ *
+ * @param {number} keyCode The key code.
+ */
 function simulateAllKeyEventsOnInput(keyCode) {
   var eventTypes = [
       goog.events.EventType.KEYDOWN,
@@ -80,10 +80,10 @@ function simulateAllKeyEventsOnInput(keyCode) {
       });
 }
 
-***REMOVED***
-***REMOVED*** @param {string} text
-***REMOVED*** @return {Node} Node whose inner text maches the given text.
-***REMOVED***
+/**
+ * @param {string} text
+ * @return {Node} Node whose inner text maches the given text.
+ */
 function findNodeByInnerText(text) {
   return goog.dom.findNode(document.body,
       function(node) {
@@ -98,14 +98,14 @@ function findNodeByInnerText(text) {
 	  return false;
 	}
       });
-***REMOVED***
+};
 
 //=========================================================================
 // Tests
 
-***REMOVED***
-***REMOVED*** Ensure that the display of the autocompleter works.
-***REMOVED***
+/**
+ * Ensure that the display of the autocompleter works.
+ */
 function testBasicDisplay() {
   simulateAllKeyEventsOnInput(goog.events.KeyCodes.DOWN);
 
@@ -134,9 +134,9 @@ function testBasicDisplay() {
   assert(!!findNodeByInnerText(data[2]));
 }
 
-***REMOVED***
-***REMOVED*** Ensure that key navigation with multiple inputs work
-***REMOVED***
+/**
+ * Ensure that key navigation with multiple inputs work
+ */
 function testKeyNavigation() {
   simulateAllKeyEventsOnInput(goog.events.KeyCodes.DOWN);
 
@@ -162,11 +162,11 @@ function testKeyNavigation() {
 
   simulateAllKeyEventsOnInput(goog.events.KeyCodes.ENTER);
   assertEquals('c, aab, ', input.value);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Ensure that mouse navigation with multiple inputs works.
-***REMOVED***
+/**
+ * Ensure that mouse navigation with multiple inputs works.
+ */
 function testMouseNavigation() {
   simulateAllKeyEventsOnInput(goog.events.KeyCodes.DOWN);
 

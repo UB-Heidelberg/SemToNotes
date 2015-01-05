@@ -12,7 +12,7 @@ See the COPYING file for details.
   <script src="../base.js"></script>
   <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.math.Box');
     goog.require('goog.math.Coordinate');
     goog.require('goog.style');
@@ -95,12 +95,12 @@ See the COPYING file for details.
     }
   }
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Helper function to fire events related to moving a mouse from one element
-  ***REMOVED*** to another. Fires mouseout, mouseover, and mousemove event.
-  ***REMOVED*** @param {Element} from Element the mouse is moving from.
-  ***REMOVED*** @param {Element} to Element the mouse is moving to.
- ***REMOVED*****REMOVED***
+  /**
+   * Helper function to fire events related to moving a mouse from one element
+   * to another. Fires mouseout, mouseover, and mousemove event.
+   * @param {Element} from Element the mouse is moving from.
+   * @param {Element} to Element the mouse is moving to.
+   */
   function fireMouseEvents(from, to) {
     goog.testing.events.fireMouseOutEvent(from, to);
     goog.testing.events.fireMouseOverEvent(to, from);

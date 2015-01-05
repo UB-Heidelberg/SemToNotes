@@ -33,7 +33,7 @@ var TEST_DATA = {
   'vaild': [goog.spell.SpellCheck.WordStatus.INVALID, []],
   'invalid': [goog.spell.SpellCheck.WordStatus.VALID, []],
   'ignoerd': [goog.spell.SpellCheck.WordStatus.INVALID, []]
-***REMOVED***
+};
 
 function mockSpellCheckingFunction(words, spellChecker, callback) {
   var len = words.length;

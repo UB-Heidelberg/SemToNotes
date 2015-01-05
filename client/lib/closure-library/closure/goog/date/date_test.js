@@ -53,9 +53,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Unit test for Closure's 'goog.date'.
-***REMOVED***
+/**
+ * Unit test for Closure's 'goog.date'.
+ */
 function testIsLeapYear() {
   var f = goog.date.isLeapYear;
 
@@ -315,7 +315,7 @@ function testDateConstructor() {
 
   goog.now = function() {
     return new Date(2001, 2, 3, 4).getTime();
- ***REMOVED*****REMOVED***
+  };
   var date = new goog.date.Date();
   assertEquals(2001, date.getFullYear());
   assertEquals(2, date.getMonth());
@@ -875,7 +875,7 @@ function testDateTimeConstructor() {
 
   goog.now = function() {
     return new Date(2001, 2, 3, 4).getTime();
- ***REMOVED*****REMOVED***
+  };
   var date = new goog.date.DateTime();
   assertEquals(2001, date.getFullYear());
   assertEquals(2, date.getMonth());
@@ -1112,7 +1112,7 @@ function testIsoDuration() {
 
 function testGetTotalSeconds() {
   var duration = new goog.date.Interval(0, 0, 2, 3, 4, 5);
-  assertEquals('seconds in 2d3h4m5s', 2***REMOVED*** 86400 + 3***REMOVED*** 3600 + 4***REMOVED*** 60 + 5,
+  assertEquals('seconds in 2d3h4m5s', 2 * 86400 + 3 * 3600 + 4 * 60 + 5,
       duration.getTotalSeconds());
 }
 
@@ -1380,7 +1380,7 @@ function testDateCompare() {
   var towelDay = new goog.date.Date(-300, goog.date.month.MAY, 12);
 
   assertEquals('Dates should be 113 days apart.',
-      113***REMOVED*** 24***REMOVED*** 60***REMOVED*** 60***REMOVED*** 1000,
+      113 * 24 * 60 * 60 * 1000,
       goog.date.Date.compare(pirateDay, towelDay));
 }
 

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utilities for window manipulation.
-***REMOVED***
+/**
+ * @fileoverview Utilities for window manipulation.
+ */
 
 
 goog.provide('goog.window');
@@ -23,61 +23,61 @@ goog.require('goog.string');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Default height for popup windows
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Default height for popup windows
+ * @type {number}
+ */
 goog.window.DEFAULT_POPUP_HEIGHT = 500;
 
 
-***REMOVED***
-***REMOVED*** Default width for popup windows
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Default width for popup windows
+ * @type {number}
+ */
 goog.window.DEFAULT_POPUP_WIDTH = 690;
 
 
-***REMOVED***
-***REMOVED*** Default target for popup windows
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default target for popup windows
+ * @type {string}
+ */
 goog.window.DEFAULT_POPUP_TARGET = 'google_popup';
 
 
-***REMOVED***
-***REMOVED*** Opens a new window.
-***REMOVED***
-***REMOVED*** @param {string|Object} linkRef A string or an object that supports toString,
-***REMOVED***     for example goog.Uri.  If this is an object with a 'href' attribute, such
-***REMOVED***     as HTMLAnchorElement, it will be used instead.
-***REMOVED***
-***REMOVED*** @param {Object=} opt_options supports the following options:
-***REMOVED***  'target': (string) target (window name). If null, linkRef.target will
-***REMOVED***          be used.
-***REMOVED***  'width': (number) window width.
-***REMOVED***  'height': (number) window height.
-***REMOVED***  'top': (number) distance from top of screen
-***REMOVED***  'left': (number) distance from left of screen
-***REMOVED***  'toolbar': (boolean) show toolbar
-***REMOVED***  'scrollbars': (boolean) show scrollbars
-***REMOVED***  'location': (boolean) show location
-***REMOVED***  'statusbar': (boolean) show statusbar
-***REMOVED***  'menubar': (boolean) show menubar
-***REMOVED***  'resizable': (boolean) resizable
-***REMOVED***  'noreferrer': (boolean) whether to attempt to remove the referrer header
-***REMOVED***      from the request headers. Does this by opening a blank window that
-***REMOVED***      then redirects to the target url, so users may see some flickering.
-***REMOVED***
-***REMOVED*** @param {Window=} opt_parentWin Parent window that should be used to open the
-***REMOVED***                 new window.
-***REMOVED***
-***REMOVED*** @return {Window} Returns the window object that was opened. This returns
-***REMOVED***                  null if a popup blocker prevented the window from being
-***REMOVED***                  opened.
-***REMOVED***
+/**
+ * Opens a new window.
+ *
+ * @param {string|Object} linkRef A string or an object that supports toString,
+ *     for example goog.Uri.  If this is an object with a 'href' attribute, such
+ *     as HTMLAnchorElement, it will be used instead.
+ *
+ * @param {Object=} opt_options supports the following options:
+ *  'target': (string) target (window name). If null, linkRef.target will
+ *          be used.
+ *  'width': (number) window width.
+ *  'height': (number) window height.
+ *  'top': (number) distance from top of screen
+ *  'left': (number) distance from left of screen
+ *  'toolbar': (boolean) show toolbar
+ *  'scrollbars': (boolean) show scrollbars
+ *  'location': (boolean) show location
+ *  'statusbar': (boolean) show statusbar
+ *  'menubar': (boolean) show menubar
+ *  'resizable': (boolean) resizable
+ *  'noreferrer': (boolean) whether to attempt to remove the referrer header
+ *      from the request headers. Does this by opening a blank window that
+ *      then redirects to the target url, so users may see some flickering.
+ *
+ * @param {Window=} opt_parentWin Parent window that should be used to open the
+ *                 new window.
+ *
+ * @return {Window} Returns the window object that was opened. This returns
+ *                  null if a popup blocker prevented the window from being
+ *                  opened.
+ */
 goog.window.open = function(linkRef, opt_options, opt_parentWin) {
   if (!opt_options) {
-    opt_options = {***REMOVED***
+    opt_options = {};
   }
   var parentWin = opt_parentWin || window;
 
@@ -143,68 +143,68 @@ goog.window.open = function(linkRef, opt_options, opt_parentWin) {
   }
   // newWin is null if a popup blocker prevented the window open.
   return newWin;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opens a new window without any real content in it.
-***REMOVED***
-***REMOVED*** This can be used to get around popup blockers if you need to open a window
-***REMOVED*** in response to a user event, but need to do asynchronous work to determine
-***REMOVED*** the URL to open, and then set the URL later.
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED***
-***REMOVED*** var newWin = goog.window.openBlank('Loading...');
-***REMOVED*** setTimeout(
-***REMOVED***     function() {
-***REMOVED***       newWin.location.href = 'http://www.google.com';
-***REMOVED***     }, 100);
-***REMOVED***
-***REMOVED*** @param {string=} opt_message String to show in the new window. This string
-***REMOVED***     will be HTML-escaped to avoid XSS issues.
-***REMOVED*** @param {Object=} opt_options Options to open window with.
-***REMOVED***     {@see goog.window.open for exact option semantics}.
-***REMOVED*** @param {Window=} opt_parentWin Parent window that should be used to open the
-***REMOVED***                 new window.
-***REMOVED*** @return {Window} Returns the window object that was opened. This returns
-***REMOVED***                  null if a popup blocker prevented the window from being
-***REMOVED***                  opened.
-***REMOVED***
+/**
+ * Opens a new window without any real content in it.
+ *
+ * This can be used to get around popup blockers if you need to open a window
+ * in response to a user event, but need to do asynchronous work to determine
+ * the URL to open, and then set the URL later.
+ *
+ * Example usage:
+ *
+ * var newWin = goog.window.openBlank('Loading...');
+ * setTimeout(
+ *     function() {
+ *       newWin.location.href = 'http://www.google.com';
+ *     }, 100);
+ *
+ * @param {string=} opt_message String to show in the new window. This string
+ *     will be HTML-escaped to avoid XSS issues.
+ * @param {Object=} opt_options Options to open window with.
+ *     {@see goog.window.open for exact option semantics}.
+ * @param {Window=} opt_parentWin Parent window that should be used to open the
+ *                 new window.
+ * @return {Window} Returns the window object that was opened. This returns
+ *                  null if a popup blocker prevented the window from being
+ *                  opened.
+ */
 goog.window.openBlank = function(opt_message, opt_options, opt_parentWin) {
 
   // Open up a window with the loading message and nothing else.
   // This will be interpreted as HTML content type with a missing doctype
   // and html/body tags, but is otherwise acceptable.
   var loadingMessage = opt_message ? goog.string.htmlEscape(opt_message) : '';
-  return***REMOVED*****REMOVED*** @type {Window}***REMOVED*** (goog.window.open(
+  return /** @type {Window} */ (goog.window.open(
       'javascript:"' + encodeURI(loadingMessage) + '"',
       opt_options, opt_parentWin));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Raise a help popup window, defaulting to "Google standard" size and name.
-***REMOVED***
-***REMOVED*** (If your project is using GXPs, consider using {@link PopUpLink.gxp}.)
-***REMOVED***
-***REMOVED*** @param {string|Object} linkRef if this is a string, it will be used as the
-***REMOVED*** URL of the popped window; otherwise it's assumed to be an HTMLAnchorElement
-***REMOVED*** (or some other object with "target" and "href" properties).
-***REMOVED***
-***REMOVED*** @param {Object=} opt_options Options to open window with.
-***REMOVED***     {@see goog.window.open for exact option semantics}
-***REMOVED***     Additional wrinkles to the options:
-***REMOVED***     - if 'target' field is null, linkRef.target will be used. If***REMOVED***that's*
-***REMOVED***     null, the default is "google_popup".
-***REMOVED***     - if 'width' field is not specified, the default is 690.
-***REMOVED***     - if 'height' field is not specified, the default is 500.
-***REMOVED***
-***REMOVED*** @return {boolean} true if the window was not popped up, false if it was.
-***REMOVED***
+/**
+ * Raise a help popup window, defaulting to "Google standard" size and name.
+ *
+ * (If your project is using GXPs, consider using {@link PopUpLink.gxp}.)
+ *
+ * @param {string|Object} linkRef if this is a string, it will be used as the
+ * URL of the popped window; otherwise it's assumed to be an HTMLAnchorElement
+ * (or some other object with "target" and "href" properties).
+ *
+ * @param {Object=} opt_options Options to open window with.
+ *     {@see goog.window.open for exact option semantics}
+ *     Additional wrinkles to the options:
+ *     - if 'target' field is null, linkRef.target will be used. If *that's*
+ *     null, the default is "google_popup".
+ *     - if 'width' field is not specified, the default is 690.
+ *     - if 'height' field is not specified, the default is 500.
+ *
+ * @return {boolean} true if the window was not popped up, false if it was.
+ */
 goog.window.popup = function(linkRef, opt_options) {
   if (!opt_options) {
-    opt_options = {***REMOVED***
+    opt_options = {};
   }
 
   // set default properties
@@ -222,4 +222,4 @@ goog.window.popup = function(linkRef, opt_options) {
   newWin.focus();
 
   return false;
-***REMOVED***
+};

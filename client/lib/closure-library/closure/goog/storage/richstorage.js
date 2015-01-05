@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a convenient API for data with attached metadata
-***REMOVED*** persistence. You probably don't want to use this class directly as it
-***REMOVED*** does not save any metadata by itself. It only provides the necessary
-***REMOVED*** infrastructure for subclasses that need to save metadata along with
-***REMOVED*** values stored.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Provides a convenient API for data with attached metadata
+ * persistence. You probably don't want to use this class directly as it
+ * does not save any metadata by itself. It only provides the necessary
+ * infrastructure for subclasses that need to save metadata along with
+ * values stored.
+ *
+ */
 
 goog.provide('goog.storage.RichStorage');
 goog.provide('goog.storage.RichStorage.Wrapper');
@@ -30,121 +30,121 @@ goog.require('goog.storage.mechanism.Mechanism');
 
 
 
-***REMOVED***
-***REMOVED*** Provides a storage for data with attached metadata.
-***REMOVED***
-***REMOVED*** @param {!goog.storage.mechanism.Mechanism} mechanism The underlying
-***REMOVED***     storage mechanism.
-***REMOVED***
-***REMOVED*** @extends {goog.storage.Storage}
-***REMOVED***
+/**
+ * Provides a storage for data with attached metadata.
+ *
+ * @param {!goog.storage.mechanism.Mechanism} mechanism The underlying
+ *     storage mechanism.
+ * @constructor
+ * @extends {goog.storage.Storage}
+ */
 goog.storage.RichStorage = function(mechanism) {
   goog.storage.RichStorage.base(this, 'constructor', mechanism);
-***REMOVED***
+};
 goog.inherits(goog.storage.RichStorage, goog.storage.Storage);
 
 
-***REMOVED***
-***REMOVED*** Metadata key under which the actual data is stored.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Metadata key under which the actual data is stored.
+ *
+ * @type {string}
+ * @protected
+ */
 goog.storage.RichStorage.DATA_KEY = 'data';
 
 
 
-***REMOVED***
-***REMOVED*** Wraps a value so metadata can be associated with it. You probably want
-***REMOVED*** to use goog.storage.RichStorage.Wrapper.wrapIfNecessary to avoid multiple
-***REMOVED*** embeddings.
-***REMOVED***
-***REMOVED*** @param {*} value The value to wrap.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Wraps a value so metadata can be associated with it. You probably want
+ * to use goog.storage.RichStorage.Wrapper.wrapIfNecessary to avoid multiple
+ * embeddings.
+ *
+ * @param {*} value The value to wrap.
+ * @constructor
+ * @final
+ */
 goog.storage.RichStorage.Wrapper = function(value) {
   this[goog.storage.RichStorage.DATA_KEY] = value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Convenience method for wrapping a value so metadata can be associated with
-***REMOVED*** it. No-op if the value is already wrapped or is undefined.
-***REMOVED***
-***REMOVED*** @param {*} value The value to wrap.
-***REMOVED*** @return {(!goog.storage.RichStorage.Wrapper|undefined)} The wrapper.
-***REMOVED***
+/**
+ * Convenience method for wrapping a value so metadata can be associated with
+ * it. No-op if the value is already wrapped or is undefined.
+ *
+ * @param {*} value The value to wrap.
+ * @return {(!goog.storage.RichStorage.Wrapper|undefined)} The wrapper.
+ */
 goog.storage.RichStorage.Wrapper.wrapIfNecessary = function(value) {
   if (!goog.isDef(value) || value instanceof goog.storage.RichStorage.Wrapper) {
-    return***REMOVED*****REMOVED*** @type {(!goog.storage.RichStorage.Wrapper|undefined)}***REMOVED*** (value);
+    return /** @type {(!goog.storage.RichStorage.Wrapper|undefined)} */ (value);
   }
   return new goog.storage.RichStorage.Wrapper(value);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Unwraps a value, any metadata is discarded (not returned). You might want to
-***REMOVED*** use goog.storage.RichStorage.Wrapper.unwrapIfPossible to handle cases where
-***REMOVED*** the wrapper is missing.
-***REMOVED***
-***REMOVED*** @param {!Object} wrapper The wrapper.
-***REMOVED*** @return {*} The wrapped value.
-***REMOVED***
+/**
+ * Unwraps a value, any metadata is discarded (not returned). You might want to
+ * use goog.storage.RichStorage.Wrapper.unwrapIfPossible to handle cases where
+ * the wrapper is missing.
+ *
+ * @param {!Object} wrapper The wrapper.
+ * @return {*} The wrapped value.
+ */
 goog.storage.RichStorage.Wrapper.unwrap = function(wrapper) {
   var value = wrapper[goog.storage.RichStorage.DATA_KEY];
   if (!goog.isDef(value)) {
     throw goog.storage.ErrorCode.INVALID_VALUE;
   }
   return value;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Convenience method for unwrapping a value. Returns undefined if the
-***REMOVED*** wrapper is missing.
-***REMOVED***
-***REMOVED*** @param {(!Object|undefined)} wrapper The wrapper.
-***REMOVED*** @return {*} The wrapped value or undefined.
-***REMOVED***
+/**
+ * Convenience method for unwrapping a value. Returns undefined if the
+ * wrapper is missing.
+ *
+ * @param {(!Object|undefined)} wrapper The wrapper.
+ * @return {*} The wrapped value or undefined.
+ */
 goog.storage.RichStorage.Wrapper.unwrapIfPossible = function(wrapper) {
   if (!wrapper) {
     return undefined;
   }
   return goog.storage.RichStorage.Wrapper.unwrap(wrapper);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.RichStorage.prototype.set = function(key, value) {
   goog.storage.RichStorage.base(this, 'set', key,
       goog.storage.RichStorage.Wrapper.wrapIfNecessary(value));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get an item wrapper (the item and its metadata) from the storage.
-***REMOVED***
-***REMOVED*** WARNING: This returns an Object, which once used to be
-***REMOVED*** goog.storage.RichStorage.Wrapper. This is due to the fact
-***REMOVED*** that deserialized objects lose type information and it
-***REMOVED*** is hard to do proper typecasting in JavaScript. Be sure
-***REMOVED*** you know what you are doing when using the returned value.
-***REMOVED***
-***REMOVED*** @param {string} key The key to get.
-***REMOVED*** @return {(!Object|undefined)} The wrapper, or undefined if not found.
-***REMOVED***
+/**
+ * Get an item wrapper (the item and its metadata) from the storage.
+ *
+ * WARNING: This returns an Object, which once used to be
+ * goog.storage.RichStorage.Wrapper. This is due to the fact
+ * that deserialized objects lose type information and it
+ * is hard to do proper typecasting in JavaScript. Be sure
+ * you know what you are doing when using the returned value.
+ *
+ * @param {string} key The key to get.
+ * @return {(!Object|undefined)} The wrapper, or undefined if not found.
+ */
 goog.storage.RichStorage.prototype.getWrapper = function(key) {
   var wrapper = goog.storage.RichStorage.superClass_.get.call(this, key);
   if (!goog.isDef(wrapper) || wrapper instanceof Object) {
-    return***REMOVED*****REMOVED*** @type {(!Object|undefined)}***REMOVED*** (wrapper);
+    return /** @type {(!Object|undefined)} */ (wrapper);
   }
   throw goog.storage.ErrorCode.INVALID_VALUE;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.storage.RichStorage.prototype.get = function(key) {
   return goog.storage.RichStorage.Wrapper.unwrapIfPossible(
       this.getWrapper(key));
-***REMOVED***
+};

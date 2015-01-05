@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Default factory for <code>WebChannelTransport</code> to
-***REMOVED*** avoid exposing concrete classes to clients.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Default factory for <code>WebChannelTransport</code> to
+ * avoid exposing concrete classes to clients.
+ *
+ */
 
 goog.provide('goog.net.createWebChannelTransport');
 
@@ -24,12 +24,12 @@ goog.require('goog.functions');
 goog.require('goog.labs.net.webChannel.WebChannelBaseTransport');
 
 
-***REMOVED***
-***REMOVED*** Create a new WebChannelTransport instance using the default implementation.
-***REMOVED***
-***REMOVED*** @return {!goog.net.WebChannelTransport} the newly created transport instance.
-***REMOVED***
+/**
+ * Create a new WebChannelTransport instance using the default implementation.
+ *
+ * @return {!goog.net.WebChannelTransport} the newly created transport instance.
+ */
 goog.net.createWebChannelTransport =
-   ***REMOVED*****REMOVED*** @type {function(): !goog.net.WebChannelTransport}***REMOVED*** (
+    /** @type {function(): !goog.net.WebChannelTransport} */ (
     goog.partial(goog.functions.create,
                  goog.labs.net.webChannel.WebChannelBaseTransport));

@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Protocol buffer serializer.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED***
+/**
+ * @fileoverview Protocol buffer serializer.
+ * @author arv@google.com (Erik Arvidsson)
+ */
 
 
 // TODO(arv): Serialize booleans as 0 and 1
@@ -29,25 +29,25 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Object that can serialize objects or values to a protocol buffer string.
-***REMOVED***
-***REMOVED*** @extends {goog.json.Serializer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Object that can serialize objects or values to a protocol buffer string.
+ * @constructor
+ * @extends {goog.json.Serializer}
+ * @final
+ */
 goog.proto.Serializer = function() {
   goog.json.Serializer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.proto.Serializer, goog.json.Serializer);
 
 
-***REMOVED***
-***REMOVED*** Serializes an array to a protocol buffer string. This overrides the JSON
-***REMOVED*** method to output empty slots when the value is null or undefined.
-***REMOVED*** @param {Array} arr The array to serialize.
-***REMOVED*** @param {Array} sb Array used as a string builder.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Serializes an array to a protocol buffer string. This overrides the JSON
+ * method to output empty slots when the value is null or undefined.
+ * @param {Array} arr The array to serialize.
+ * @param {Array} sb Array used as a string builder.
+ * @override
+ */
 goog.proto.Serializer.prototype.serializeArray = function(arr, sb) {
   var l = arr.length;
   sb.push('[');
@@ -67,4 +67,4 @@ goog.proto.Serializer.prototype.serializeArray = function(arr, sb) {
     }
   }
   sb.push(']');
-***REMOVED***
+};

@@ -20,7 +20,7 @@ goog.require('goog.proto2.Message');
 goog.require('goog.testing.jsunit');
 
 function testFieldDescriptorConstruction() {
-  var messageType = {***REMOVED***
+  var messageType = {};
   var fieldDescriptor = new goog.proto2.FieldDescriptor(messageType, 10, {
     name: 'test',
     repeated: true,
@@ -70,7 +70,7 @@ function testGetDefaultValueOfInt64() {
 }
 
 function testRepeatedField() {
-  var messageType = {***REMOVED***
+  var messageType = {};
   var fieldDescriptor = new goog.proto2.FieldDescriptor(messageType, 10, {
     name: 'test',
     repeated: true,
@@ -84,7 +84,7 @@ function testRepeatedField() {
 }
 
 function testRequiredField() {
-  var messageType = {***REMOVED***
+  var messageType = {};
   var fieldDescriptor = new goog.proto2.FieldDescriptor(messageType, 10, {
     name: 'test',
     required: true,
@@ -98,7 +98,7 @@ function testRequiredField() {
 }
 
 function testOptionalField() {
-  var messageType = {***REMOVED***
+  var messageType = {};
   var fieldDescriptor = new goog.proto2.FieldDescriptor(messageType, 10, {
     name: 'test',
     fieldType: 7,
@@ -113,7 +113,7 @@ function testOptionalField() {
 function testContaingType() {
   var MessageType = function() {
     MessageType.base(this, 'constructor');
- ***REMOVED*****REMOVED***
+  };
   goog.inherits(MessageType, goog.proto2.Message);
 
   var descriptorObj = {
@@ -126,7 +126,7 @@ function testContaingType() {
       fieldType: 7,
       type: Number
     }
- ***REMOVED*****REMOVED***
+  };
   goog.proto2.Message.set$Metadata(MessageType, descriptorObj);
 
   var descriptor = MessageType.getDescriptor();

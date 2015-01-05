@@ -25,18 +25,18 @@ goog.require('goog.testing.jsunit');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Each object in the test vector array is a source text and one or more
-***REMOVED*** hashes of that source text.  The source text is either a string or a
-***REMOVED*** byte array.
-***REMOVED*** <p>
-***REMOVED*** All hash values, except for the empty string, are from public sources:
-***REMOVED***   csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
-***REMOVED***   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA384.pdf
-***REMOVED***   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA512_256.pdf
-***REMOVED***   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA2_Additional.pdf
-***REMOVED***   en.wikipedia.org/wiki/SHA-2#Examples_of_SHA-2_variants
-***REMOVED***
+/**
+ * Each object in the test vector array is a source text and one or more
+ * hashes of that source text.  The source text is either a string or a
+ * byte array.
+ * <p>
+ * All hash values, except for the empty string, are from public sources:
+ *   csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+ *   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA384.pdf
+ *   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA512_256.pdf
+ *   csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA2_Additional.pdf
+ *   en.wikipedia.org/wiki/SHA-2#Examples_of_SHA-2_variants
+ */
 var TEST_VECTOR = [
   {
     // Make sure the algorithm correctly handles the empty string
@@ -86,10 +86,10 @@ var TEST_VECTOR = [
 ];
 
 
-***REMOVED***
-***REMOVED*** For each integer key N, the value is the SHA-512 value of a string
-***REMOVED*** consisting of N repetitions of the character 'a'.
-***REMOVED***
+/**
+ * For each integer key N, the value is the SHA-512 value of a string
+ * consisting of N repetitions of the character 'a'.
+ */
 var TEST_FENCEPOST_VECTOR = {
   110:
       'c825949632e509824543f7eaf159fb6041722fce3c1cdcbb613b3d37ff107c51' +
@@ -103,12 +103,12 @@ var TEST_FENCEPOST_VECTOR = {
   113:
       '55ddd8ac210a6e18ba1ee055af84c966e0dbff091c43580ae1be703bdb85da31' +
       'acf6948cf5bd90c55a20e5450f22fb89bd8d0085e39f85a86cc46abbca75e24d'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Simple sanity tests for hash functions.
-***REMOVED***
+/**
+ * Simple sanity tests for hash functions.
+ */
 function testBasicOperations() {
   var sha512 = new goog.crypt.Sha512();
   goog.crypt.hashTester.runBasicTests(sha512);
@@ -121,23 +121,23 @@ function testBasicOperations() {
 }
 
 
-***REMOVED***
-***REMOVED*** Function called by the actual testers to ensure that specific strings
-***REMOVED*** hash to specific published values.
-***REMOVED***
-***REMOVED*** Each item in the vector has a "source" and one or more additional keys.
-***REMOVED*** If the item has a key matching the key argument passed to this
-***REMOVED*** function, it is the expected value of the hash function.
-***REMOVED***
-***REMOVED*** @param {!goog.crypt.Sha2_64bit} hasher The hasher to test
-***REMOVED*** @param {number} length The length of the resulting hash, in bits.
-***REMOVED***     Also the key to use in TEST_VECTOR for the expected hash value
-***REMOVED***
+/**
+ * Function called by the actual testers to ensure that specific strings
+ * hash to specific published values.
+ *
+ * Each item in the vector has a "source" and one or more additional keys.
+ * If the item has a key matching the key argument passed to this
+ * function, it is the expected value of the hash function.
+ *
+ * @param {!goog.crypt.Sha2_64bit} hasher The hasher to test
+ * @param {number} length The length of the resulting hash, in bits.
+ *     Also the key to use in TEST_VECTOR for the expected hash value
+ */
 function hashGoldenTester(hasher, length) {
   goog.array.forEach(TEST_VECTOR, function(data) {
     hasher.update(data.source);
     var digest = hasher.digest();
-    assertEquals('Hash digest has the wrong length', length, digest.length***REMOVED*** 8);
+    assertEquals('Hash digest has the wrong length', length, digest.length * 8);
     if (data[length]) {
       // We're given an expected value
       var expected = goog.crypt.hexToByteArray(data[length]);
@@ -150,25 +150,25 @@ function hashGoldenTester(hasher, length) {
 }
 
 
-***REMOVED*** Test that Sha512() returns the published values***REMOVED***
+/** Test that Sha512() returns the published values */
 function testHashing512() {
   hashGoldenTester(new goog.crypt.Sha512(), 512);
 }
 
 
-***REMOVED*** Test that Sha384 returns the published values***REMOVED***
+/** Test that Sha384 returns the published values */
 function testHashing384() {
   hashGoldenTester(new goog.crypt.Sha384(), 384);
 }
 
 
-***REMOVED*** Test that Sha512_256 returns the published values***REMOVED***
+/** Test that Sha512_256 returns the published values */
 function testHashing256() {
   hashGoldenTester(new goog.crypt.Sha512_256(), 256);
 }
 
 
-***REMOVED*** Test that the opt_length works***REMOVED***
+/** Test that the opt_length works */
 function testHashing_optLength() {
   var hasher = new goog.crypt.Sha512();
   hasher.update('1234567890');
@@ -180,11 +180,11 @@ function testHashing_optLength() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that we correctly handle strings whose length is 110-113.
-***REMOVED*** This is the area where we are likely to hit fencepost errors in the padding
-***REMOVED*** code.
-***REMOVED***
+/**
+ * Make sure that we correctly handle strings whose length is 110-113.
+ * This is the area where we are likely to hit fencepost errors in the padding
+ * code.
+ */
 function testFencepostErrors() {
   var hasher = new goog.crypt.Sha512();
   A64 = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
@@ -199,7 +199,7 @@ function testFencepostErrors() {
 }
 
 
-***REMOVED*** Test one really large string using SHA512***REMOVED***
+/** Test one really large string using SHA512 */
 function testHashing512Large() {
   // This test tends to time out on IE7.
   if (!goog.userAgent.IE || goog.userAgent.isVersionOrHigher('8')) {
@@ -214,7 +214,7 @@ function testHashing512Large() {
 }
 
 
-***REMOVED*** Check that the code throws an error for bad input***REMOVED***
+/** Check that the code throws an error for bad input */
 function testBadInput_nullNotAllowed() {
   var hasher = new goog.crypt.Sha512();
   assertThrows('Null input not allowed', function() {

@@ -1339,7 +1339,7 @@ function testToFromInt() {
 
 function testToFromNumber() {
   for (var i = 0; i < TEST_BITS.length; i += 2) {
-    var num = TEST_BITS[i]***REMOVED*** Math.pow(2, 32) + TEST_BITS[i + 1] >= 0 ?
+    var num = TEST_BITS[i] * Math.pow(2, 32) + TEST_BITS[i + 1] >= 0 ?
         TEST_BITS[i + 1] : Math.pow(2, 32) + TEST_BITS[i + 1];
     var val = goog.math.Integer.fromNumber(num);
     assertEquals(num, val.toNumber());
@@ -1426,7 +1426,7 @@ function createTestComparisons(i) {
       assertEquals(i > j, vi.greaterThan(vj));
       assertEquals(i >= j, vi.greaterThanOrEqual(vj));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 // Here and below, we translate one conceptual test (e.g., "testComparisons")
@@ -1483,7 +1483,7 @@ function createTestBitOperations(i) {
                  vi.shiftRight(64).getBits(1));
     assertEquals(TEST_BITS[i] & (1 << 31) ? -1 : 0,
                  vi.shiftRight(64).getBits(0));
- ***REMOVED*****REMOVED***
+  };
 }
 
 for (var i = 0; i < TEST_BITS.length; i += 2) {
@@ -1512,7 +1512,7 @@ function createTestAdd(i, count) {
       assertEquals(TEST_ADD_BITS[count++], result.getBits(1));
       assertEquals(TEST_ADD_BITS[count++], result.getBits(0));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 var countAdd = 0;
@@ -1530,7 +1530,7 @@ function createTestSubtract(i, count) {
       assertEquals(TEST_SUB_BITS[count++], result.getBits(1));
       assertEquals(TEST_SUB_BITS[count++], result.getBits(0));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 var countSubtract = 0;
@@ -1548,7 +1548,7 @@ function createTestMultiply(i, count) {
       assertEquals(TEST_MUL_BITS[count++], result.getBits(1));
       assertEquals(TEST_MUL_BITS[count++], result.getBits(0));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 var countMultiply = 0;
@@ -1572,7 +1572,7 @@ function createTestDivMod(i, count) {
         assertTrue(vi.equals(combinedResult));
       }
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 var countPerDivModCall = 0;
@@ -1606,7 +1606,7 @@ function createTestToFromString(i) {
       assertEquals(TEST_BITS[i + 1],
                    goog.math.Integer.fromString(result, radix).getBits(0));
     }
- ***REMOVED*****REMOVED***
+  };
 }
 
 for (var i = 0; i < TEST_BITS.length; i += 2) {

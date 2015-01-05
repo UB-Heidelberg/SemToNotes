@@ -12,55 +12,55 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of the goog.events.EventWrapper interface.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Definition of the goog.events.EventWrapper interface.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.events.EventWrapper');
 
 
 
-***REMOVED***
-***REMOVED*** Interface for event wrappers.
-***REMOVED*** @interface
-***REMOVED***
+/**
+ * Interface for event wrappers.
+ * @interface
+ */
 goog.events.EventWrapper = function() {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds an event listener using the wrapper on a DOM Node or an object that has
-***REMOVED*** implemented {@link goog.events.EventTarget}. A listener can only be added
-***REMOVED*** once to an object.
-***REMOVED***
-***REMOVED*** @param {goog.events.ListenableType} src The node to listen to events on.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
-***REMOVED***     method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @param {goog.events.EventHandler=} opt_eventHandler Event handler to add
-***REMOVED***     listener to.
-***REMOVED***
+/**
+ * Adds an event listener using the wrapper on a DOM Node or an object that has
+ * implemented {@link goog.events.EventTarget}. A listener can only be added
+ * once to an object.
+ *
+ * @param {goog.events.ListenableType} src The node to listen to events on.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
+ *     method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @param {goog.events.EventHandler=} opt_eventHandler Event handler to add
+ *     listener to.
+ */
 goog.events.EventWrapper.prototype.listen = function(src, listener, opt_capt,
     opt_scope, opt_eventHandler) {
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes an event listener added using goog.events.EventWrapper.listen.
-***REMOVED***
-***REMOVED*** @param {goog.events.ListenableType} src The node to remove listener from.
-***REMOVED*** @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
-***REMOVED***     method, or an object with a handleEvent function.
-***REMOVED*** @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
-***REMOVED***     false).
-***REMOVED*** @param {Object=} opt_scope Element in whose scope to call the listener.
-***REMOVED*** @param {goog.events.EventHandler=} opt_eventHandler Event handler to remove
-***REMOVED***     listener from.
-***REMOVED***
+/**
+ * Removes an event listener added using goog.events.EventWrapper.listen.
+ *
+ * @param {goog.events.ListenableType} src The node to remove listener from.
+ * @param {function(?):?|{handleEvent:function(?):?}|null} listener Callback
+ *     method, or an object with a handleEvent function.
+ * @param {boolean=} opt_capt Whether to fire in capture phase (defaults to
+ *     false).
+ * @param {Object=} opt_scope Element in whose scope to call the listener.
+ * @param {goog.events.EventHandler=} opt_eventHandler Event handler to remove
+ *     listener from.
+ */
 goog.events.EventWrapper.prototype.unlisten = function(src, listener, opt_capt,
     opt_scope, opt_eventHandler) {
-***REMOVED***
+};

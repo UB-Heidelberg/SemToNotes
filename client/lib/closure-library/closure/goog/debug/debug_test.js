@@ -41,7 +41,7 @@ function testGetFunctionName() {
     } else {
       return null;
     }
- ***REMOVED*****REMOVED***
+  };
   goog.debug.setFunctionResolver(resolver);
 
   assertEquals(
@@ -64,12 +64,12 @@ function testGetFunctionName() {
 }
 
 
-***REMOVED***
-***REMOVED*** Asserts that a substring can be found in a specified text string.
-***REMOVED***
-***REMOVED*** @param {string} substring The substring to search for.
-***REMOVED*** @param {string} text The text string to search within.
-***REMOVED***
+/**
+ * Asserts that a substring can be found in a specified text string.
+ *
+ * @param {string} substring The substring to search for.
+ * @param {string} text The text string to search within.
+ */
 function assertContainsSubstring(substring, text) {
   assertNotEquals('Could not find "' + substring + '" in "' + text + '"',
       -1, text.search(substring));
@@ -77,8 +77,8 @@ function assertContainsSubstring(substring, text) {
 
 
 function testDeepExpose() {
-  var a = {***REMOVED***
-  var b = {***REMOVED***
+  var a = {};
+  var b = {};
   a.ancestor = a;
   a.otherObject = b;
   a.otherObjectAgain = b;

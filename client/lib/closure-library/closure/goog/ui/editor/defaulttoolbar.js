@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Factory functions for creating a default editing toolbar.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED*** @see ../../demos/editor/editor.html
-***REMOVED***
+/**
+ * @fileoverview Factory functions for creating a default editing toolbar.
+ *
+ * @author attila@google.com (Attila Bodis)
+ * @author jparent@google.com (Julie Parent)
+ * @see ../../demos/editor/editor.html
+ */
 
 goog.provide('goog.ui.editor.ButtonDescriptor');
 goog.provide('goog.ui.editor.DefaultToolbar');
@@ -36,26 +36,26 @@ goog.require('goog.userAgent');
 // Font menu creation.
 
 
-***REMOVED*** @desc Font menu item caption for the default sans-serif font.***REMOVED***
+/** @desc Font menu item caption for the default sans-serif font. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_NORMAL = goog.getMsg('Normal');
 
 
-***REMOVED*** @desc Font menu item caption for the default serif font.***REMOVED***
+/** @desc Font menu item caption for the default serif font. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_NORMAL_SERIF =
     goog.getMsg('Normal / serif');
 
 
-***REMOVED***
-***REMOVED*** Common font descriptors for all locales.  Each descriptor has the following
-***REMOVED*** attributes:
-***REMOVED*** <ul>
-***REMOVED***   <li>{@code caption} - Caption to show in the font menu (e.g. 'Tahoma')
-***REMOVED***   <li>{@code value} - Value for the corresponding 'font-family' CSS style
-***REMOVED***       (e.g. 'Tahoma, Arial, sans-serif')
-***REMOVED*** </ul>
-***REMOVED*** @type {!Array.<{caption:string, value:string}>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Common font descriptors for all locales.  Each descriptor has the following
+ * attributes:
+ * <ul>
+ *   <li>{@code caption} - Caption to show in the font menu (e.g. 'Tahoma')
+ *   <li>{@code value} - Value for the corresponding 'font-family' CSS style
+ *       (e.g. 'Tahoma, Arial, sans-serif')
+ * </ul>
+ * @type {!Array.<{caption:string, value:string}>}
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.FONTS_ = [
   {
     caption: goog.ui.editor.DefaultToolbar.MSG_FONT_NORMAL,
@@ -72,12 +72,12 @@ goog.ui.editor.DefaultToolbar.FONTS_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Locale-specific font descriptors.  The object is a map of locale strings to
-***REMOVED*** arrays of font descriptors.
-***REMOVED*** @type {!Object.<!Array.<{caption:string, value:string}>>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Locale-specific font descriptors.  The object is a map of locale strings to
+ * arrays of font descriptors.
+ * @type {!Object.<!Array.<{caption:string, value:string}>>}
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.I18N_FONTS_ = {
   'ja': [{
     caption: '\uff2d\uff33 \uff30\u30b4\u30b7\u30c3\u30af',
@@ -116,35 +116,35 @@ goog.ui.editor.DefaultToolbar.I18N_FONTS_ = {
     caption: 'MS Song',
     value: 'ms song,monospace'
   }]
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Default locale for font names.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Default locale for font names.
+ * @type {string}
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.locale_ = 'en-us';
 
 
-***REMOVED***
-***REMOVED*** Sets the locale for the font names.  If not set, defaults to 'en-us'.
-***REMOVED*** Used only for default creation of font names name.  Must be set
-***REMOVED*** before font name menu is created.
-***REMOVED*** @param {string} locale Locale to use for the toolbar font names.
-***REMOVED***
+/**
+ * Sets the locale for the font names.  If not set, defaults to 'en-us'.
+ * Used only for default creation of font names name.  Must be set
+ * before font name menu is created.
+ * @param {string} locale Locale to use for the toolbar font names.
+ */
 goog.ui.editor.DefaultToolbar.setLocale = function(locale) {
   goog.ui.editor.DefaultToolbar.locale_ = locale;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Initializes the given font menu button by adding default fonts to the menu.
-***REMOVED*** If goog.ui.editor.DefaultToolbar.setLocale was called to specify a locale
-***REMOVED*** for which locale-specific default fonts exist, those are added before
-***REMOVED*** common fonts.
-***REMOVED*** @param {!goog.ui.Select} button Font menu button.
-***REMOVED***
+/**
+ * Initializes the given font menu button by adding default fonts to the menu.
+ * If goog.ui.editor.DefaultToolbar.setLocale was called to specify a locale
+ * for which locale-specific default fonts exist, those are added before
+ * common fonts.
+ * @param {!goog.ui.Select} button Font menu button.
+ */
 goog.ui.editor.DefaultToolbar.addDefaultFonts = function(button) {
   // Normalize locale to lowercase, with a hyphen (see bug 1036165).
   var locale =
@@ -161,37 +161,37 @@ goog.ui.editor.DefaultToolbar.addDefaultFonts = function(button) {
   // Add locale-independent default fonts.
   goog.ui.editor.ToolbarFactory.addFonts(button,
       goog.ui.editor.DefaultToolbar.FONTS_);
-***REMOVED***
+};
 
 
 // Font size menu creation.
 
 
-***REMOVED*** @desc Font size menu item caption for the 'Small' size.***REMOVED***
+/** @desc Font size menu item caption for the 'Small' size. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_SMALL = goog.getMsg('Small');
 
 
-***REMOVED*** @desc Font size menu item caption for the 'Normal' size.***REMOVED***
+/** @desc Font size menu item caption for the 'Normal' size. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_NORMAL = goog.getMsg('Normal');
 
 
-***REMOVED*** @desc Font size menu item caption for the 'Large' size.***REMOVED***
+/** @desc Font size menu item caption for the 'Large' size. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_LARGE = goog.getMsg('Large');
 
 
-***REMOVED*** @desc Font size menu item caption for the 'Huge' size.***REMOVED***
+/** @desc Font size menu item caption for the 'Huge' size. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_HUGE = goog.getMsg('Huge');
 
 
-***REMOVED***
-***REMOVED*** Font size descriptors, each with the following attributes:
-***REMOVED*** <ul>
-***REMOVED***   <li>{@code caption} - Caption to show in the font size menu (e.g. 'Huge')
-***REMOVED***   <li>{@code value} - Value for the corresponding HTML font size (e.g. 6)
-***REMOVED*** </ul>
-***REMOVED*** @type {!Array.<{caption:string, value:number}>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Font size descriptors, each with the following attributes:
+ * <ul>
+ *   <li>{@code caption} - Caption to show in the font size menu (e.g. 'Huge')
+ *   <li>{@code value} - Value for the corresponding HTML font size (e.g. 6)
+ * </ul>
+ * @type {!Array.<{caption:string, value:number}>}
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.FONT_SIZES_ = [
   {caption: goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_SMALL, value: 1},
   {caption: goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_NORMAL, value: 2},
@@ -200,47 +200,47 @@ goog.ui.editor.DefaultToolbar.FONT_SIZES_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Initializes the given font size menu button by adding default font sizes to
-***REMOVED*** it.
-***REMOVED*** @param {!goog.ui.Select} button Font size menu button.
-***REMOVED***
+/**
+ * Initializes the given font size menu button by adding default font sizes to
+ * it.
+ * @param {!goog.ui.Select} button Font size menu button.
+ */
 goog.ui.editor.DefaultToolbar.addDefaultFontSizes = function(button) {
   goog.ui.editor.ToolbarFactory.addFontSizes(button,
       goog.ui.editor.DefaultToolbar.FONT_SIZES_);
-***REMOVED***
+};
 
 
 // Header format menu creation.
 
 
-***REMOVED*** @desc Caption for "Heading" block format option.***REMOVED***
+/** @desc Caption for "Heading" block format option. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_HEADING = goog.getMsg('Heading');
 
 
-***REMOVED*** @desc Caption for "Subheading" block format option.***REMOVED***
+/** @desc Caption for "Subheading" block format option. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_SUBHEADING = goog.getMsg('Subheading');
 
 
-***REMOVED*** @desc Caption for "Minor heading" block format option.***REMOVED***
+/** @desc Caption for "Minor heading" block format option. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_MINOR_HEADING =
     goog.getMsg('Minor heading');
 
 
-***REMOVED*** @desc Caption for "Normal" block format option.***REMOVED***
+/** @desc Caption for "Normal" block format option. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_NORMAL = goog.getMsg('Normal');
 
 
-***REMOVED***
-***REMOVED*** Format option descriptors, each with the following attributes:
-***REMOVED*** <ul>
-***REMOVED***   <li>{@code caption} - Caption to show in the menu (e.g. 'Minor heading')
-***REMOVED***   <li>{@code command} - Corresponding {@link goog.dom.TagName} (e.g.
-***REMOVED***       'H4')
-***REMOVED*** </ul>
-***REMOVED*** @type {!Array.<{caption: string, command: !goog.dom.TagName}>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Format option descriptors, each with the following attributes:
+ * <ul>
+ *   <li>{@code caption} - Caption to show in the menu (e.g. 'Minor heading')
+ *   <li>{@code command} - Corresponding {@link goog.dom.TagName} (e.g.
+ *       'H4')
+ * </ul>
+ * @type {!Array.<{caption: string, command: !goog.dom.TagName}>}
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.FORMAT_OPTIONS_ = [
   {
     caption: goog.ui.editor.DefaultToolbar.MSG_FORMAT_HEADING,
@@ -261,28 +261,28 @@ goog.ui.editor.DefaultToolbar.FORMAT_OPTIONS_ = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Initializes the given "Format block" menu button by adding default format
-***REMOVED*** options to the menu.
-***REMOVED*** @param {!goog.ui.Select} button "Format block" menu button.
-***REMOVED***
+/**
+ * Initializes the given "Format block" menu button by adding default format
+ * options to the menu.
+ * @param {!goog.ui.Select} button "Format block" menu button.
+ */
 goog.ui.editor.DefaultToolbar.addDefaultFormatOptions = function(button) {
   goog.ui.editor.ToolbarFactory.addFormatOptions(button,
       goog.ui.editor.DefaultToolbar.FORMAT_OPTIONS_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a {@link goog.ui.Toolbar} containing a default set of editor
-***REMOVED*** toolbar buttons, and renders it into the given parent element.
-***REMOVED*** @param {!Element} elem Toolbar parent element.
-***REMOVED*** @param {boolean=} opt_isRightToLeft Whether the editor chrome is
-***REMOVED***     right-to-left; defaults to the directionality of the toolbar parent
-***REMOVED***     element.
-***REMOVED*** @return {!goog.ui.Toolbar} Default editor toolbar, rendered into the given
-***REMOVED***     parent element.
-***REMOVED*** @see goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS
-***REMOVED***
+/**
+ * Creates a {@link goog.ui.Toolbar} containing a default set of editor
+ * toolbar buttons, and renders it into the given parent element.
+ * @param {!Element} elem Toolbar parent element.
+ * @param {boolean=} opt_isRightToLeft Whether the editor chrome is
+ *     right-to-left; defaults to the directionality of the toolbar parent
+ *     element.
+ * @return {!goog.ui.Toolbar} Default editor toolbar, rendered into the given
+ *     parent element.
+ * @see goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS
+ */
 goog.ui.editor.DefaultToolbar.makeDefaultToolbar = function(elem,
     opt_isRightToLeft) {
   var isRightToLeft = opt_isRightToLeft || goog.style.isRightToLeft(elem);
@@ -291,24 +291,24 @@ goog.ui.editor.DefaultToolbar.makeDefaultToolbar = function(elem,
       goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS;
   return goog.ui.editor.DefaultToolbar.makeToolbar(buttons, elem,
       opt_isRightToLeft);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a {@link goog.ui.Toolbar} containing the specified set of
-***REMOVED*** toolbar buttons, and renders it into the given parent element.  Each
-***REMOVED*** item in the {@code items} array must either be a
-***REMOVED*** {@link goog.editor.Command} (to create a built-in button) or a subclass
-***REMOVED*** of {@link goog.ui.Control} (to create a custom control).
-***REMOVED*** @param {!Array.<string|goog.ui.Control>} items Toolbar items; each must
-***REMOVED***     be a {@link goog.editor.Command} or a {@link goog.ui.Control}.
-***REMOVED*** @param {!Element} elem Toolbar parent element.
-***REMOVED*** @param {boolean=} opt_isRightToLeft Whether the editor chrome is
-***REMOVED***     right-to-left; defaults to the directionality of the toolbar parent
-***REMOVED***     element.
-***REMOVED*** @return {!goog.ui.Toolbar} Editor toolbar, rendered into the given parent
-***REMOVED***     element.
-***REMOVED***
+/**
+ * Creates a {@link goog.ui.Toolbar} containing the specified set of
+ * toolbar buttons, and renders it into the given parent element.  Each
+ * item in the {@code items} array must either be a
+ * {@link goog.editor.Command} (to create a built-in button) or a subclass
+ * of {@link goog.ui.Control} (to create a custom control).
+ * @param {!Array.<string|goog.ui.Control>} items Toolbar items; each must
+ *     be a {@link goog.editor.Command} or a {@link goog.ui.Control}.
+ * @param {!Element} elem Toolbar parent element.
+ * @param {boolean=} opt_isRightToLeft Whether the editor chrome is
+ *     right-to-left; defaults to the directionality of the toolbar parent
+ *     element.
+ * @return {!goog.ui.Toolbar} Editor toolbar, rendered into the given parent
+ *     element.
+ */
 goog.ui.editor.DefaultToolbar.makeToolbar = function(items, elem,
     opt_isRightToLeft) {
   var domHelper = goog.dom.getDomHelper(elem);
@@ -326,20 +326,20 @@ goog.ui.editor.DefaultToolbar.makeToolbar = function(items, elem,
 
   return goog.ui.editor.ToolbarFactory.makeToolbar(controls, elem,
       opt_isRightToLeft);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an instance of a subclass of {@link goog.ui.Button} for the given
-***REMOVED*** {@link goog.editor.Command}, or null if no built-in button exists for the
-***REMOVED*** command.  Note that this function is only intended to create built-in
-***REMOVED*** buttons; please don't try to hack it!
-***REMOVED*** @param {string} command Editor command ID.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {goog.ui.Button} Toolbar button (null if no built-in button exists
-***REMOVED***     for the command).
-***REMOVED***
+/**
+ * Creates an instance of a subclass of {@link goog.ui.Button} for the given
+ * {@link goog.editor.Command}, or null if no built-in button exists for the
+ * command.  Note that this function is only intended to create built-in
+ * buttons; please don't try to hack it!
+ * @param {string} command Editor command ID.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {goog.ui.Button} Toolbar button (null if no built-in button exists
+ *     for the command).
+ */
 goog.ui.editor.DefaultToolbar.makeBuiltInToolbarButton = function(command,
     opt_domHelper) {
   var button;
@@ -365,13 +365,13 @@ goog.ui.editor.DefaultToolbar.makeBuiltInToolbarButton = function(command,
     }
   }
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A set of built-in buttons to display in the default editor toolbar.
-***REMOVED*** @type {!Array.<string>}
-***REMOVED***
+/**
+ * A set of built-in buttons to display in the default editor toolbar.
+ * @type {!Array.<string>}
+ */
 goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS = [
   goog.editor.Command.IMAGE,
   goog.editor.Command.LINK,
@@ -388,11 +388,11 @@ goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS = [
 ];
 
 
-***REMOVED***
-***REMOVED*** A set of built-in buttons to display in the default editor toolbar when
-***REMOVED*** the editor chrome is right-to-left (BiDi mode only).
-***REMOVED*** @type {!Array.<string>}
-***REMOVED***
+/**
+ * A set of built-in buttons to display in the default editor toolbar when
+ * the editor chrome is right-to-left (BiDi mode only).
+ * @type {!Array.<string>}
+ */
 goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS_RTL = [
   goog.editor.Command.IMAGE,
   goog.editor.Command.LINK,
@@ -411,23 +411,23 @@ goog.ui.editor.DefaultToolbar.DEFAULT_BUTTONS_RTL = [
 ];
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element.  This button
-***REMOVED*** is designed to be used as the RTL button.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.ButtonRenderer=} opt_renderer Button renderer; defaults to
-***REMOVED***     {@link goog.ui.ToolbarButtonRenderer} if unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element.  This button
+ * is designed to be used as the RTL button.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.ButtonRenderer=} opt_renderer Button renderer; defaults to
+ *     {@link goog.ui.ToolbarButtonRenderer} if unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.rtlButtonFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeToggleButton(id, tooltip,
@@ -442,56 +442,56 @@ goog.ui.editor.DefaultToolbar.rtlButtonFactory_ = function(id, tooltip,
         goog.asserts.assert(button.getParent().getElement()),
         goog.getCssName('tr-rtl-mode'), isRtl);
     button.setChecked(isRtl);
- ***REMOVED*****REMOVED***
+  };
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element.  Designed to
-***REMOVED*** be used to create undo and redo buttons.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.ButtonRenderer=} opt_renderer Button renderer; defaults to
-***REMOVED***     {@link goog.ui.ToolbarButtonRenderer} if unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element.  Designed to
+ * be used to create undo and redo buttons.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.ButtonRenderer=} opt_renderer Button renderer; defaults to
+ *     {@link goog.ui.ToolbarButtonRenderer} if unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.undoRedoButtonFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeButton(id, tooltip,
       caption, opt_classNames, opt_renderer, opt_domHelper);
   button.updateFromValue = function(value) {
     button.setEnabled(value);
- ***REMOVED*****REMOVED***
+  };
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element.  Used to create
-***REMOVED*** a font face button, filled with default fonts.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer; defaults
-***REMOVED***     to {@link goog.ui.ToolbarMenuButtonRenderer} if unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element.  Used to create
+ * a font face button, filled with default fonts.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer; defaults
+ *     to {@link goog.ui.ToolbarMenuButtonRenderer} if unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.fontFaceFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeSelectButton(id, tooltip,
@@ -513,35 +513,35 @@ goog.ui.editor.DefaultToolbar.fontFaceFactory_ = function(id, tooltip,
     // TODO (attila): Try to make this more robust.
     var item = null;
     if (value && value.length > 0) {
-      item =***REMOVED*****REMOVED*** @type {goog.ui.MenuItem}***REMOVED*** (button.getMenu().getChild(
+      item = /** @type {goog.ui.MenuItem} */ (button.getMenu().getChild(
           goog.ui.editor.ToolbarFactory.getPrimaryFont(value)));
     }
     var selectedItem = button.getSelectedItem();
     if (item != selectedItem) {
       button.setSelectedItem(item);
     }
- ***REMOVED*****REMOVED***
+  };
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element. Use to create a
-***REMOVED*** font size button, filled with default font sizes.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer; defaults
-***REMOVED***     to {@link goog.ui.ToolbarMebuButtonRenderer} if unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element. Use to create a
+ * font size button, filled with default font sizes.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer; defaults
+ *     to {@link goog.ui.ToolbarMebuButtonRenderer} if unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.fontSizeFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeSelectButton(id, tooltip,
@@ -570,21 +570,21 @@ goog.ui.editor.DefaultToolbar.fontSizeFactory_ = function(id, tooltip,
     if (value != button.getValue()) {
       button.setValue(value);
     }
- ***REMOVED*****REMOVED***
+  };
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Function to update the state of a color menu button.
-***REMOVED*** @param {goog.ui.ToolbarColorMenuButton} button The button to which the
-***REMOVED***     color menu is attached.
-***REMOVED*** @param {number} color Color value to update to.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Function to update the state of a color menu button.
+ * @param {goog.ui.ToolbarColorMenuButton} button The button to which the
+ *     color menu is attached.
+ * @param {number} color Color value to update to.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.colorUpdateFromValue_ = function(button, color) {
   var value = color;
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     if (goog.userAgent.IE) {
       // IE returns a number that, converted to hex, is a BGR color.
@@ -595,32 +595,32 @@ goog.ui.editor.DefaultToolbar.colorUpdateFromValue_ = function(button, color) {
           bgr.substring(0, 2);
     }
     if (value != button.getValue()) {
-      button.setValue(***REMOVED*** @type {string}***REMOVED*** (value));
+      button.setValue(/** @type {string} */ (value));
     }
   } catch (ex) {
     // TODO(attila): Find out when/why this happens.
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element. Use to create
-***REMOVED*** a font color button.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Button renderer;
-***REMOVED***     defaults to {@link goog.ui.ToolbarColorMenuButtonRenderer} if
-***REMOVED***     unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element. Use to create
+ * a font color button.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Button renderer;
+ *     defaults to {@link goog.ui.ToolbarColorMenuButtonRenderer} if
+ *     unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.fontColorFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeColorMenuButton(id, tooltip,
@@ -630,27 +630,27 @@ goog.ui.editor.DefaultToolbar.fontColorFactory_ = function(id, tooltip,
   button.updateFromValue = goog.partial(
       goog.ui.editor.DefaultToolbar.colorUpdateFromValue_, button);
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element. Use to create
-***REMOVED*** a font background color button.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Button renderer;
-***REMOVED***     defaults to {@link goog.ui.ToolbarColorMenuButtonRenderer} if
-***REMOVED***     unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element. Use to create
+ * a font background color button.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.ColorMenuButtonRenderer=} opt_renderer Button renderer;
+ *     defaults to {@link goog.ui.ToolbarColorMenuButtonRenderer} if
+ *     unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.backgroundColorFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeColorMenuButton(id,
@@ -660,27 +660,27 @@ goog.ui.editor.DefaultToolbar.backgroundColorFactory_ = function(id, tooltip,
   button.updateFromValue = goog.partial(
       goog.ui.editor.DefaultToolbar.colorUpdateFromValue_, button);
   return button;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates a toolbar button with the given ID, tooltip, and caption.  Applies
-***REMOVED*** any custom CSS class names to the button's caption element. Use to create
-***REMOVED*** the format menu, prefilled with default formats.
-***REMOVED*** @param {string} id Button ID; must equal a {@link goog.editor.Command} for
-***REMOVED***     built-in buttons, anything else for custom buttons.
-***REMOVED*** @param {string} tooltip Tooltip to be shown on hover.
-***REMOVED*** @param {goog.ui.ControlContent} caption Button caption.
-***REMOVED*** @param {string=} opt_classNames CSS class name(s) to apply to the caption
-***REMOVED***     element.
-***REMOVED*** @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer;
-***REMOVED***     defaults to
-***REMOVED***     {@link goog.ui.ToolbarMenuButtonRenderer} if unspecified.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
-***REMOVED***     creation; defaults to the current document if unspecified.
-***REMOVED*** @return {!goog.ui.Button} A toolbar button.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates a toolbar button with the given ID, tooltip, and caption.  Applies
+ * any custom CSS class names to the button's caption element. Use to create
+ * the format menu, prefilled with default formats.
+ * @param {string} id Button ID; must equal a {@link goog.editor.Command} for
+ *     built-in buttons, anything else for custom buttons.
+ * @param {string} tooltip Tooltip to be shown on hover.
+ * @param {goog.ui.ControlContent} caption Button caption.
+ * @param {string=} opt_classNames CSS class name(s) to apply to the caption
+ *     element.
+ * @param {goog.ui.MenuButtonRenderer=} opt_renderer Button renderer;
+ *     defaults to
+ *     {@link goog.ui.ToolbarMenuButtonRenderer} if unspecified.
+ * @param {goog.dom.DomHelper=} opt_domHelper DOM helper, used for DOM
+ *     creation; defaults to the current document if unspecified.
+ * @return {!goog.ui.Button} A toolbar button.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.formatBlockFactory_ = function(id, tooltip,
     caption, opt_classNames, opt_renderer, opt_domHelper) {
   var button = goog.ui.editor.ToolbarFactory.makeSelectButton(id, tooltip,
@@ -699,198 +699,198 @@ goog.ui.editor.DefaultToolbar.formatBlockFactory_ = function(id, tooltip,
     if (value != button.getValue()) {
       button.setValue(value);
     }
- ***REMOVED*****REMOVED***
+  };
   return button;
-***REMOVED***
+};
 
 
 // Messages used for tooltips and captions.
 
 
-***REMOVED*** @desc Format menu tooltip.***REMOVED***
+/** @desc Format menu tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_BLOCK_TITLE = goog.getMsg('Format');
 
 
-***REMOVED*** @desc Format menu caption.***REMOVED***
+/** @desc Format menu caption. */
 goog.ui.editor.DefaultToolbar.MSG_FORMAT_BLOCK_CAPTION = goog.getMsg('Format');
 
 
-***REMOVED*** @desc Undo button tooltip.***REMOVED***
+/** @desc Undo button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_UNDO_TITLE = goog.getMsg('Undo');
 
 
-***REMOVED*** @desc Redo button tooltip.***REMOVED***
+/** @desc Redo button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_REDO_TITLE = goog.getMsg('Redo');
 
 
-***REMOVED*** @desc Font menu tooltip.***REMOVED***
+/** @desc Font menu tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_FACE_TITLE = goog.getMsg('Font');
 
 
-***REMOVED*** @desc Font size menu tooltip.***REMOVED***
+/** @desc Font size menu tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_SIZE_TITLE = goog.getMsg('Font size');
 
 
-***REMOVED*** @desc Text foreground color menu tooltip.***REMOVED***
+/** @desc Text foreground color menu tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_FONT_COLOR_TITLE = goog.getMsg('Text color');
 
 
-***REMOVED*** @desc Bold button tooltip.***REMOVED***
+/** @desc Bold button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_BOLD_TITLE = goog.getMsg('Bold');
 
 
-***REMOVED*** @desc Italic button tooltip.***REMOVED***
+/** @desc Italic button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_ITALIC_TITLE = goog.getMsg('Italic');
 
 
-***REMOVED*** @desc Underline button tooltip.***REMOVED***
+/** @desc Underline button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_UNDERLINE_TITLE = goog.getMsg('Underline');
 
 
-***REMOVED*** @desc Text background color menu tooltip.***REMOVED***
+/** @desc Text background color menu tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_BACKGROUND_COLOR_TITLE =
     goog.getMsg('Text background color');
 
 
-***REMOVED*** @desc Link button tooltip.***REMOVED***
+/** @desc Link button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_LINK_TITLE =
     goog.getMsg('Add or remove link');
 
 
-***REMOVED*** @desc Numbered list button tooltip.***REMOVED***
+/** @desc Numbered list button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_ORDERED_LIST_TITLE =
     goog.getMsg('Numbered list');
 
 
-***REMOVED*** @desc Bullet list button tooltip.***REMOVED***
+/** @desc Bullet list button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_UNORDERED_LIST_TITLE =
     goog.getMsg('Bullet list');
 
 
-***REMOVED*** @desc Outdent button tooltip.***REMOVED***
+/** @desc Outdent button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_OUTDENT_TITLE =
     goog.getMsg('Decrease indent');
 
 
-***REMOVED*** @desc Indent button tooltip.***REMOVED***
+/** @desc Indent button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_INDENT_TITLE = goog.getMsg('Increase indent');
 
 
-***REMOVED*** @desc Align left button tooltip.***REMOVED***
+/** @desc Align left button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_ALIGN_LEFT_TITLE = goog.getMsg('Align left');
 
 
-***REMOVED*** @desc Align center button tooltip.***REMOVED***
+/** @desc Align center button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_ALIGN_CENTER_TITLE =
     goog.getMsg('Align center');
 
 
-***REMOVED*** @desc Align right button tooltip.***REMOVED***
+/** @desc Align right button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_ALIGN_RIGHT_TITLE =
     goog.getMsg('Align right');
 
 
-***REMOVED*** @desc Justify button tooltip.***REMOVED***
+/** @desc Justify button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_JUSTIFY_TITLE = goog.getMsg('Justify');
 
 
-***REMOVED*** @desc Remove formatting button tooltip.***REMOVED***
+/** @desc Remove formatting button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_REMOVE_FORMAT_TITLE =
     goog.getMsg('Remove formatting');
 
 
-***REMOVED*** @desc Insert image button tooltip.***REMOVED***
+/** @desc Insert image button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_IMAGE_TITLE = goog.getMsg('Insert image');
 
 
-***REMOVED*** @desc Strike through button tooltip.***REMOVED***
+/** @desc Strike through button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_STRIKE_THROUGH_TITLE =
     goog.getMsg('Strikethrough');
 
 
-***REMOVED*** @desc Left-to-right button tooltip.***REMOVED***
+/** @desc Left-to-right button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_DIR_LTR_TITLE = goog.getMsg('Left-to-right');
 
 
-***REMOVED*** @desc Right-to-left button tooltip.***REMOVED***
+/** @desc Right-to-left button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_DIR_RTL_TITLE = goog.getMsg('Right-to-left');
 
 
-***REMOVED*** @desc Blockquote button tooltip.***REMOVED***
+/** @desc Blockquote button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_BLOCKQUOTE_TITLE = goog.getMsg('Quote');
 
 
-***REMOVED*** @desc Edit HTML button tooltip.***REMOVED***
+/** @desc Edit HTML button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_EDIT_HTML_TITLE =
     goog.getMsg('Edit HTML source');
 
 
-***REMOVED*** @desc Subscript button tooltip.***REMOVED***
+/** @desc Subscript button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_SUBSCRIPT = goog.getMsg('Subscript');
 
 
-***REMOVED*** @desc Superscript button tooltip.***REMOVED***
+/** @desc Superscript button tooltip. */
 goog.ui.editor.DefaultToolbar.MSG_SUPERSCRIPT = goog.getMsg('Superscript');
 
 
-***REMOVED*** @desc Edit HTML button caption.***REMOVED***
+/** @desc Edit HTML button caption. */
 goog.ui.editor.DefaultToolbar.MSG_EDIT_HTML_CAPTION = goog.getMsg('Edit HTML');
 
 
-***REMOVED***
-***REMOVED*** Map of {@code goog.editor.Command}s to toolbar button descriptor objects,
-***REMOVED*** each of which has the following attributes:
-***REMOVED*** <ul>
-***REMOVED***   <li>{@code command} - The command corresponding to the
-***REMOVED***       button (mandatory)
-***REMOVED***   <li>{@code tooltip} - Tooltip text (optional); if unspecified, the button
-***REMOVED***       has no hover text
-***REMOVED***   <li>{@code caption} - Caption to display on the button (optional); if
-***REMOVED***       unspecified, the button has no text caption
-***REMOVED***   <li>{@code classes} - CSS class name(s) to be applied to the button's
-***REMOVED***       element when rendered (optional); if unspecified, defaults to
-***REMOVED***       'tr-icon'
-***REMOVED***       plus 'tr-' followed by the command ID, but without any leading '+'
-***REMOVED***       character (e.g. if the command ID is '+undo', then {@code classes}
-***REMOVED***       defaults to 'tr-icon tr-undo')
-***REMOVED***   <li>{@code factory} - factory function used to create the button, which
-***REMOVED***       must accept {@code id}, {@code tooltip}, {@code caption}, and
-***REMOVED***       {@code classes} as arguments, and must return an instance of
-***REMOVED***       {@link goog.ui.Button} or an appropriate subclass (optional); if
-***REMOVED***       unspecified, defaults to
-***REMOVED***       {@link goog.ui.editor.DefaultToolbar.makeToggleButton},
-***REMOVED***       since most built-in toolbar buttons are toggle buttons
-***REMOVED***   <li>(@code queryable} - Whether the button's state should be queried
-***REMOVED***       when updating the toolbar (optional).
-***REMOVED*** </ul>
-***REMOVED*** Note that this object is only used for creating toolbar buttons for
-***REMOVED*** built-in editor commands; custom buttons aren't listed here.  Please don't
-***REMOVED*** try to hack this!
-***REMOVED*** @type {Object.<!goog.ui.editor.ButtonDescriptor>}.
-***REMOVED*** @private
-***REMOVED***
-goog.ui.editor.DefaultToolbar.buttons_ = {***REMOVED***
+/**
+ * Map of {@code goog.editor.Command}s to toolbar button descriptor objects,
+ * each of which has the following attributes:
+ * <ul>
+ *   <li>{@code command} - The command corresponding to the
+ *       button (mandatory)
+ *   <li>{@code tooltip} - Tooltip text (optional); if unspecified, the button
+ *       has no hover text
+ *   <li>{@code caption} - Caption to display on the button (optional); if
+ *       unspecified, the button has no text caption
+ *   <li>{@code classes} - CSS class name(s) to be applied to the button's
+ *       element when rendered (optional); if unspecified, defaults to
+ *       'tr-icon'
+ *       plus 'tr-' followed by the command ID, but without any leading '+'
+ *       character (e.g. if the command ID is '+undo', then {@code classes}
+ *       defaults to 'tr-icon tr-undo')
+ *   <li>{@code factory} - factory function used to create the button, which
+ *       must accept {@code id}, {@code tooltip}, {@code caption}, and
+ *       {@code classes} as arguments, and must return an instance of
+ *       {@link goog.ui.Button} or an appropriate subclass (optional); if
+ *       unspecified, defaults to
+ *       {@link goog.ui.editor.DefaultToolbar.makeToggleButton},
+ *       since most built-in toolbar buttons are toggle buttons
+ *   <li>(@code queryable} - Whether the button's state should be queried
+ *       when updating the toolbar (optional).
+ * </ul>
+ * Note that this object is only used for creating toolbar buttons for
+ * built-in editor commands; custom buttons aren't listed here.  Please don't
+ * try to hack this!
+ * @type {Object.<!goog.ui.editor.ButtonDescriptor>}.
+ * @private
+ */
+goog.ui.editor.DefaultToolbar.buttons_ = {};
 
 
-***REMOVED***
-***REMOVED*** @typedef {{command: string, tooltip: ?string,
-***REMOVED***   caption: ?goog.ui.ControlContent, classes: ?string,
-***REMOVED***   factory: ?function(string, string, goog.ui.ControlContent, ?string,
-***REMOVED***       goog.ui.ButtonRenderer, goog.dom.DomHelper):goog.ui.Button,
-***REMOVED***   queryable:?boolean}}
-***REMOVED***
+/**
+ * @typedef {{command: string, tooltip: ?string,
+ *   caption: ?goog.ui.ControlContent, classes: ?string,
+ *   factory: ?function(string, string, goog.ui.ControlContent, ?string,
+ *       goog.ui.ButtonRenderer, goog.dom.DomHelper):goog.ui.Button,
+ *   queryable:?boolean}}
+ */
 goog.ui.editor.ButtonDescriptor;
 
 
-***REMOVED***
-***REMOVED*** Built-in toolbar button descriptors.  See
-***REMOVED*** {@link goog.ui.editor.DefaultToolbar.buttons_} for details on button
-***REMOVED*** descriptor objects.  This array is processed at JS parse time; each item is
-***REMOVED*** inserted into {@link goog.ui.editor.DefaultToolbar.buttons_}, and the array
-***REMOVED*** itself is deleted and (hopefully) garbage-collected.
-***REMOVED*** @type {Array.<!goog.ui.editor.ButtonDescriptor>}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Built-in toolbar button descriptors.  See
+ * {@link goog.ui.editor.DefaultToolbar.buttons_} for details on button
+ * descriptor objects.  This array is processed at JS parse time; each item is
+ * inserted into {@link goog.ui.editor.DefaultToolbar.buttons_}, and the array
+ * itself is deleted and (hopefully) garbage-collected.
+ * @type {Array.<!goog.ui.editor.ButtonDescriptor>}.
+ * @private
+ */
 goog.ui.editor.DefaultToolbar.BUTTONS_ = [{
   command: goog.editor.Command.UNDO,
   tooltip: goog.ui.editor.DefaultToolbar.MSG_UNDO_TITLE,

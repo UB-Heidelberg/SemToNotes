@@ -16,13 +16,13 @@ goog.provide('goog.labs.testing.objectMatcherTest');
 goog.setTestOnly('goog.labs.testing.objectMatcherTest');
 
 goog.require('goog.labs.testing.MatcherError');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.ObjectEqualsMatcher');
 goog.require('goog.labs.testing.assertThat');
 goog.require('goog.testing.jsunit');
 
 function testObjectEquals() {
-  var obj1 = {x: 1***REMOVED***
+  var obj1 = {x: 1};
   var obj2 = obj1;
   goog.labs.testing.assertThat(obj1, equalsObject(obj2), 'obj1 equals obj2');
 

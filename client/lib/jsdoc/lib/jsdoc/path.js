@@ -1,8 +1,8 @@
-/*global env: true***REMOVED***
-***REMOVED***
-***REMOVED*** Extended version of the standard `path` module.
-***REMOVED*** @module jsdoc/path
-***REMOVED***
+/*global env: true */
+/**
+ * Extended version of the standard `path` module.
+ * @module jsdoc/path
+ */
 'use strict';
 
 var fs = require('fs');
@@ -35,23 +35,23 @@ function prefixReducer(previousPath, current) {
     return currentPath;
 }
 
-***REMOVED***
-***REMOVED*** Find the common prefix for an array of paths. If there is a common prefix, a trailing separator
-***REMOVED*** is appended to the prefix. Relative paths are resolved relative to the current working directory.
-***REMOVED***
-***REMOVED*** For example, assuming that the current working directory is `/Users/jsdoc`:
-***REMOVED***
-***REMOVED*** + For the single path `foo/bar/baz/qux.js`, the common prefix is `foo/bar/baz/`.
-***REMOVED*** + For paths `foo/bar/baz/qux.js`, `foo/bar/baz/quux.js`, and `foo/bar/baz.js`, the common prefix
-***REMOVED*** is `/Users/jsdoc/foo/bar/`.
-***REMOVED*** + For paths `../jsdoc/foo/bar/baz/qux/quux/test.js`, `/Users/jsdoc/foo/bar/bazzy.js`, and
-***REMOVED*** `../../Users/jsdoc/foo/bar/foobar.js`, the common prefix is `/Users/jsdoc/foo/bar/`.
-***REMOVED*** + For paths `foo/bar/baz/qux.js` and `../../Library/foo/bar/baz.js`, there is no common prefix,
-***REMOVED*** and an empty string is returned.
-***REMOVED***
-***REMOVED*** @param {Array.<string>} paths - The paths to search for a common prefix.
-***REMOVED*** @return {string} The common prefix, or an empty string if there is no common prefix.
-***REMOVED***
+/**
+ * Find the common prefix for an array of paths. If there is a common prefix, a trailing separator
+ * is appended to the prefix. Relative paths are resolved relative to the current working directory.
+ *
+ * For example, assuming that the current working directory is `/Users/jsdoc`:
+ *
+ * + For the single path `foo/bar/baz/qux.js`, the common prefix is `foo/bar/baz/`.
+ * + For paths `foo/bar/baz/qux.js`, `foo/bar/baz/quux.js`, and `foo/bar/baz.js`, the common prefix
+ * is `/Users/jsdoc/foo/bar/`.
+ * + For paths `../jsdoc/foo/bar/baz/qux/quux/test.js`, `/Users/jsdoc/foo/bar/bazzy.js`, and
+ * `../../Users/jsdoc/foo/bar/foobar.js`, the common prefix is `/Users/jsdoc/foo/bar/`.
+ * + For paths `foo/bar/baz/qux.js` and `../../Library/foo/bar/baz.js`, there is no common prefix,
+ * and an empty string is returned.
+ *
+ * @param {Array.<string>} paths - The paths to search for a common prefix.
+ * @return {string} The common prefix, or an empty string if there is no common prefix.
+ */
 exports.commonPrefix = function(paths) {
     var segments;
 
@@ -81,23 +81,23 @@ exports.commonPrefix = function(paths) {
     }
 
     return prefix;
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Retrieve the fully qualified path to the requested resource.
-***REMOVED***
-***REMOVED*** If the resource path is specified as a relative path, JSDoc searches for the path in the
-***REMOVED*** directory where the JSDoc configuration file is located, then in the current working directory,
-***REMOVED*** and finally in the JSDoc directory.
-***REMOVED***
-***REMOVED*** If the resource path is specified as a fully qualified path, JSDoc uses the path as-is.
-***REMOVED***
-***REMOVED*** @param {string} filepath - The path to the requested resource. May be an absolute path; a path
-***REMOVED*** relative to the JSDoc directory; or a path relative to the current working directory.
-***REMOVED*** @param {string} [filename] - The filename of the requested resource.
-***REMOVED*** @return {string} The fully qualified path (or, on Rhino, a URI) to the requested resource.
-***REMOVED*** Includes the filename if one was provided.
-***REMOVED***
+/**
+ * Retrieve the fully qualified path to the requested resource.
+ *
+ * If the resource path is specified as a relative path, JSDoc searches for the path in the
+ * directory where the JSDoc configuration file is located, then in the current working directory,
+ * and finally in the JSDoc directory.
+ *
+ * If the resource path is specified as a fully qualified path, JSDoc uses the path as-is.
+ *
+ * @param {string} filepath - The path to the requested resource. May be an absolute path; a path
+ * relative to the JSDoc directory; or a path relative to the current working directory.
+ * @param {string} [filename] - The filename of the requested resource.
+ * @return {string} The fully qualified path (or, on Rhino, a URI) to the requested resource.
+ * Includes the filename if one was provided.
+ */
 exports.getResourcePath = function(filepath, filename) {
     var result = null;
 
@@ -127,7 +127,7 @@ exports.getResourcePath = function(filepath, filename) {
     }
 
     return result;
-***REMOVED***
+};
 
 Object.keys(path).forEach(function(member) {
     exports[member] = path[member];

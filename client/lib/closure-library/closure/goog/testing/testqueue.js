@@ -12,55 +12,55 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Generic queue for writing unit tests.
-***REMOVED***
+/**
+ * @fileoverview Generic queue for writing unit tests.
+ */
 
 goog.provide('goog.testing.TestQueue');
 
 
 
-***REMOVED***
-***REMOVED*** Generic queue for writing unit tests
-***REMOVED***
-***REMOVED***
+/**
+ * Generic queue for writing unit tests
+ * @constructor
+ */
 goog.testing.TestQueue = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Events that have accumulated
-  ***REMOVED*** @type {Array.<Object>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Events that have accumulated
+   * @type {Array.<Object>}
+   * @private
+   */
   this.events_ = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a new event onto the queue.
-***REMOVED*** @param {Object} event The event to queue.
-***REMOVED***
+/**
+ * Adds a new event onto the queue.
+ * @param {Object} event The event to queue.
+ */
 goog.testing.TestQueue.prototype.enqueue = function(event) {
   this.events_.push(event);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the queue is empty.
-***REMOVED*** @return {boolean} Whether the queue is empty.
-***REMOVED***
+/**
+ * Returns whether the queue is empty.
+ * @return {boolean} Whether the queue is empty.
+ */
 goog.testing.TestQueue.prototype.isEmpty = function() {
   return this.events_.length == 0;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the next event from the queue. Throws an exception if the queue is
-***REMOVED*** empty.
-***REMOVED*** @param {string=} opt_comment Comment if the queue is empty.
-***REMOVED*** @return {Object} The next event from the queue.
-***REMOVED***
+/**
+ * Gets the next event from the queue. Throws an exception if the queue is
+ * empty.
+ * @param {string=} opt_comment Comment if the queue is empty.
+ * @return {Object} The next event from the queue.
+ */
 goog.testing.TestQueue.prototype.dequeue = function(opt_comment) {
   if (this.isEmpty()) {
     throw Error('Handler is empty: ' + opt_comment);
   }
   return this.events_.shift();
-***REMOVED***
+};

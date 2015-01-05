@@ -13,9 +13,9 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Extended graphics namespace.
-***REMOVED***
+/**
+ * @fileoverview Extended graphics namespace.
+ */
 
 
 goog.provide('goog.graphics.ext');

@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared code for dom_test.html and dom_quirks_test.html.
-***REMOVED***
+/**
+ * @fileoverview Shared code for dom_test.html and dom_quirks_test.html.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.dom.dom_test');
 
 goog.require('goog.dom');
 goog.require('goog.dom.BrowserFeature');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.TagName');
 goog.require('goog.functions');
@@ -53,7 +53,7 @@ function setUpPage() {
   // Setup for the iframe
   myIframe = $('myIframe');
   myIframeDoc = goog.dom.getFrameContentDocument(
-     ***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED*** (myIframe));
+      /** @type {HTMLIFrameElement} */ (myIframe));
 
   // Set up document for iframe: total height of elements in document is 65
   // If the elements are not create like below, IE will get a wrong height for
@@ -187,7 +187,7 @@ function testGetElementByClass() {
 }
 
 function testSetProperties() {
-  var attrs = {'name': 'test3', 'title': 'A title', 'random': 'woop'***REMOVED***
+  var attrs = {'name': 'test3', 'title': 'A title', 'random': 'woop'};
   var el = $('testEl');
 
   var res = goog.dom.setProperties(el, attrs);
@@ -197,7 +197,7 @@ function testSetProperties() {
 }
 
 function testSetPropertiesDirectAttributeMap() {
-  var attrs = {'usemap': '#myMap'***REMOVED***
+  var attrs = {'usemap': '#myMap'};
   var el = goog.dom.createDom('img');
 
   var res = goog.dom.setProperties(el, attrs);
@@ -209,7 +209,7 @@ function testSetPropertiesAria() {
     'aria-hidden': 'true',
     'aria-label': 'This is a label',
     'role': 'presentation'
- ***REMOVED*****REMOVED***
+  };
   var el = goog.dom.createDom('div');
 
   goog.dom.setProperties(el, attrs);
@@ -223,7 +223,7 @@ function testSetPropertiesData() {
   var attrs = {
     'data-tooltip': 'This is a tooltip',
     'data-tooltip-delay': '100'
- ***REMOVED*****REMOVED***
+  };
   var el = goog.dom.createDom('div');
 
   goog.dom.setProperties(el, attrs);
@@ -239,7 +239,7 @@ function testSetTableProperties() {
     'class': 'mytestclass',
     'height': '101',
     'cellpadding': '15'
- ***REMOVED*****REMOVED***
+  };
   var el = $('testTable1');
 
   var res = goog.dom.setProperties(el, attrs);
@@ -257,7 +257,7 @@ function testGetViewportSize() {
 }
 
 function testGetViewportSizeInIframe() {
-  var iframe =***REMOVED*****REMOVED*** @type {HTMLIFrameElement}***REMOVED*** (goog.dom.getElement('iframe'));
+  var iframe = /** @type {HTMLIFrameElement} */ (goog.dom.getElement('iframe'));
   var contentDoc = goog.dom.getFrameContentDocument(iframe);
   contentDoc.write('<body></body>');
 
@@ -648,7 +648,7 @@ function testIsWindow() {
   var global = goog.global;
   var frame = window.frames['frame'];
   var otherWindow = window.open('', 'blank');
-  var object = {window: goog.global***REMOVED***
+  var object = {window: goog.global};
   var nullVar = null;
   var notDefined;
 
@@ -709,7 +709,7 @@ function testGetFirstElementChild() {
     childNodes: [b1, b2],
     firstChild: b1,
     firstElementChild: undefined
- ***REMOVED*****REMOVED***
+  };
 
   b1 = goog.dom.getFirstElementChild(mockP2);
   assertNotNull('First element child of mockP2 should not be null', b1);
@@ -731,7 +731,7 @@ function testGetLastElementChild() {
     childNodes: [b1, b2],
     lastChild: b2,
     lastElementChild: undefined
- ***REMOVED*****REMOVED***
+  };
 
   b2 = goog.dom.getLastElementChild(mockP2);
   assertNotNull('Last element child of mockP2 should not be null', b2);
@@ -751,7 +751,7 @@ function testGetNextElementSibling() {
   var mockB1 = {
     nextSibling: b2,
     nextElementSibling: undefined
- ***REMOVED*****REMOVED***
+  };
 
   b2 = goog.dom.getNextElementSibling(mockB1);
   assertNotNull('Next element sibling of mockB1 should not be null', b1);
@@ -771,7 +771,7 @@ function testGetPreviousElementSibling() {
   var mockB2 = {
     previousSibling: b1,
     previousElementSibling: undefined
- ***REMOVED*****REMOVED***
+  };
 
   b1 = goog.dom.getPreviousElementSibling(mockB2);
   assertNotNull('Previous element sibling of mockB2 should not be null', b1);
@@ -799,7 +799,7 @@ function testGetChildren() {
   var mockP2 = {
     childNodes: [b1, b2],
     children: undefined
- ***REMOVED*****REMOVED***
+  };
 
   children = goog.dom.getChildren(mockP2);
   assertNotNull('Elements array should not be null', children);
@@ -823,7 +823,7 @@ function testGetNextNode() {
   var node = tree;
   var next = function() {
     return node = goog.dom.getNextNode(node);
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals('P', next().tagName);
   assertEquals('Some text', next().nodeValue);
@@ -854,7 +854,7 @@ function testGetPreviousNode() {
   var node = tree.lastChild.lastChild;
   var previous = function() {
     return node = goog.dom.getPreviousNode(node);
- ***REMOVED*****REMOVED***
+  };
 
   assertEquals(goog.dom.NodeType.COMMENT, previous().nodeType);
   assertEquals('ADDRESS', previous().tagName);
@@ -1150,7 +1150,7 @@ function testGetNodeAtOffset() {
              '</span></div><div id=i>7890<i id=j>123</i></div>';
   var node = document.createElement('div');
   node.innerHTML = html;
-  var rv = {***REMOVED***
+  var rv = {};
 
   goog.dom.getNodeAtOffset(node, 2, rv);
   assertEquals('123', rv.node.nodeValue);
@@ -1467,12 +1467,12 @@ function testGetDocumentScrollOfFixedViewport() {
   // We need getDocumentScroll to handle this case though.
   // In case of IE10 though, we do want to use scrollLeft/scrollTop
   // because the rest of the positioning is done off the scrolled away origin.
-  var fakeDocumentScrollElement = {scrollLeft: 0, scrollTop: 0***REMOVED***
+  var fakeDocumentScrollElement = {scrollLeft: 0, scrollTop: 0};
   var fakeDocument = {
     defaultView: {pageXOffset: 100, pageYOffset: 100},
     documentElement: fakeDocumentScrollElement,
     body: fakeDocumentScrollElement
- ***REMOVED*****REMOVED***
+  };
   var dh = goog.dom.getDomHelper(document);
   dh.setDocument(fakeDocument);
   if (goog.userAgent.IE && goog.userAgent.isVersionOrHigher(10)) {
@@ -1492,7 +1492,7 @@ function testGetDocumentScrollFromDocumentWithoutABody() {
   var fakeDocument = {
     defaultView: {pageXOffset: 0, pageYOffset: 0},
     documentElement: {scrollLeft: 0, scrollTop: 0}
- ***REMOVED*****REMOVED***
+  };
 
   var dh = new goog.dom.DomHelper(fakeDocument);
   assertEquals(fakeDocument.documentElement, dh.getDocumentScrollElement());
@@ -1564,9 +1564,9 @@ function testParentElement() {
 }
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Returns true if the userAgent is IE8 or higher.
-***REMOVED***
+/**
+ * @return {boolean} Returns true if the userAgent is IE8 or higher.
+ */
 function isIE8OrHigher() {
   return goog.userAgent.IE && goog.userAgent.product.isVersion('8');
 }
@@ -1578,7 +1578,7 @@ function testDevicePixelRatio() {
         matchMedia: function(query) {
           return {
             matches: query.indexOf('1.5') >= 0
-         ***REMOVED*****REMOVED***
+          };
         }
       }));
 

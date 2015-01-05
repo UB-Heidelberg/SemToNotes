@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Definition of goog.messaging.MultiChannel, which uses a
-***REMOVED*** single underlying MessageChannel to carry several independent virtual message
-***REMOVED*** channels.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Definition of goog.messaging.MultiChannel, which uses a
+ * single underlying MessageChannel to carry several independent virtual message
+ * channels.
+ *
+ */
 
 
 goog.provide('goog.messaging.MultiChannel');
@@ -31,61 +31,61 @@ goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a new MultiChannel wrapping a single MessageChannel. The
-***REMOVED*** underlying channel shouldn't have any other listeners registered, but it
-***REMOVED*** should be connected.
-***REMOVED***
-***REMOVED*** Note that the other side of the channel should also be connected to a
-***REMOVED*** MultiChannel with the same number of virtual channels.
-***REMOVED***
-***REMOVED*** @param {goog.messaging.MessageChannel} underlyingChannel The underlying
-***REMOVED***     channel to use as transport for the virtual channels.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a new MultiChannel wrapping a single MessageChannel. The
+ * underlying channel shouldn't have any other listeners registered, but it
+ * should be connected.
+ *
+ * Note that the other side of the channel should also be connected to a
+ * MultiChannel with the same number of virtual channels.
+ *
+ * @param {goog.messaging.MessageChannel} underlyingChannel The underlying
+ *     channel to use as transport for the virtual channels.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.messaging.MultiChannel = function(underlyingChannel) {
   goog.messaging.MultiChannel.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying channel across which all requests are sent.
-  ***REMOVED*** @type {goog.messaging.MessageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying channel across which all requests are sent.
+   * @type {goog.messaging.MessageChannel}
+   * @private
+   */
   this.underlyingChannel_ = underlyingChannel;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** All the virtual channels that are registered for this MultiChannel.
-  ***REMOVED*** These are null if they've been disposed.
-  ***REMOVED*** @type {Object.<?goog.messaging.MultiChannel.VirtualChannel>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.virtualChannels_ = {***REMOVED***
+  /**
+   * All the virtual channels that are registered for this MultiChannel.
+   * These are null if they've been disposed.
+   * @type {Object.<?goog.messaging.MultiChannel.VirtualChannel>}
+   * @private
+   */
+  this.virtualChannels_ = {};
 
   this.underlyingChannel_.registerDefaultService(
       goog.bind(this.handleDefault_, this));
-***REMOVED***
+};
 goog.inherits(goog.messaging.MultiChannel, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Logger object for goog.messaging.MultiChannel.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger object for goog.messaging.MultiChannel.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.messaging.MultiChannel.prototype.logger_ =
     goog.log.getLogger('goog.messaging.MultiChannel');
 
 
-***REMOVED***
-***REMOVED*** Creates a new virtual channel that will communicate across the underlying
-***REMOVED*** channel.
-***REMOVED*** @param {string} name The name of the virtual channel. Must be unique for this
-***REMOVED***     MultiChannel. Cannot contain colons.
-***REMOVED*** @return {!goog.messaging.MultiChannel.VirtualChannel} The new virtual
-***REMOVED***     channel.
-***REMOVED***
+/**
+ * Creates a new virtual channel that will communicate across the underlying
+ * channel.
+ * @param {string} name The name of the virtual channel. Must be unique for this
+ *     MultiChannel. Cannot contain colons.
+ * @return {!goog.messaging.MultiChannel.VirtualChannel} The new virtual
+ *     channel.
+ */
 goog.messaging.MultiChannel.prototype.createVirtualChannel = function(name) {
   if (name.indexOf(':') != -1) {
     throw Error(
@@ -101,17 +101,17 @@ goog.messaging.MultiChannel.prototype.createVirtualChannel = function(name) {
       new goog.messaging.MultiChannel.VirtualChannel(this, name);
   this.virtualChannels_[name] = channel;
   return channel;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the default service for the underlying channel. This dispatches any
-***REMOVED*** unrecognized services to the appropriate virtual channel.
-***REMOVED***
-***REMOVED*** @param {string} serviceName The name of the service being called.
-***REMOVED*** @param {string|!Object} payload The message payload.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles the default service for the underlying channel. This dispatches any
+ * unrecognized services to the appropriate virtual channel.
+ *
+ * @param {string} serviceName The name of the service being called.
+ * @param {string|!Object} payload The message payload.
+ * @private
+ */
 goog.messaging.MultiChannel.prototype.handleDefault_ = function(
     serviceName, payload) {
   var match = serviceName.match(/^([^:]*):(.*)/);
@@ -147,10 +147,10 @@ goog.messaging.MultiChannel.prototype.handleDefault_ = function(
   }
 
   virtualChannel.defaultService_(serviceName, payload);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.MultiChannel.prototype.disposeInternal = function() {
   goog.object.forEach(this.virtualChannels_, function(channel) {
     goog.dispose(channel);
@@ -158,112 +158,112 @@ goog.messaging.MultiChannel.prototype.disposeInternal = function() {
   goog.dispose(this.underlyingChannel_);
   delete this.virtualChannels_;
   delete this.underlyingChannel_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A message channel that proxies its messages over another underlying channel.
-***REMOVED***
-***REMOVED*** @param {goog.messaging.MultiChannel} parent The MultiChannel
-***REMOVED***     which created this channel, and which contains the underlying
-***REMOVED***     MessageChannel that's used as the transport.
-***REMOVED*** @param {string} name The name of this virtual channel. Unique among the
-***REMOVED***     virtual channels in parent.
-***REMOVED***
-***REMOVED*** @implements {goog.messaging.MessageChannel}
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A message channel that proxies its messages over another underlying channel.
+ *
+ * @param {goog.messaging.MultiChannel} parent The MultiChannel
+ *     which created this channel, and which contains the underlying
+ *     MessageChannel that's used as the transport.
+ * @param {string} name The name of this virtual channel. Unique among the
+ *     virtual channels in parent.
+ * @constructor
+ * @implements {goog.messaging.MessageChannel}
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.messaging.MultiChannel.VirtualChannel = function(parent, name) {
   goog.messaging.MultiChannel.VirtualChannel.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The MultiChannel containing the underlying transport channel.
-  ***REMOVED*** @type {goog.messaging.MultiChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The MultiChannel containing the underlying transport channel.
+   * @type {goog.messaging.MultiChannel}
+   * @private
+   */
   this.parent_ = parent;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The name of this virtual channel.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The name of this virtual channel.
+   * @type {string}
+   * @private
+   */
   this.name_ = name;
-***REMOVED***
+};
 goog.inherits(goog.messaging.MultiChannel.VirtualChannel,
               goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** The default service to run if no other services match.
-***REMOVED*** @type {?function(string, (string|!Object))}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The default service to run if no other services match.
+ * @type {?function(string, (string|!Object))}
+ * @private
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.defaultService_;
 
 
-***REMOVED***
-***REMOVED*** Logger object for goog.messaging.MultiChannel.VirtualChannel.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger object for goog.messaging.MultiChannel.VirtualChannel.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.logger_ =
     goog.log.getLogger(
         'goog.messaging.MultiChannel.VirtualChannel');
 
 
-***REMOVED***
-***REMOVED*** This is a no-op, since the underlying channel is expected to already be
-***REMOVED*** initialized when it's passed in.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * This is a no-op, since the underlying channel is expected to already be
+ * initialized when it's passed in.
+ *
+ * @override
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.connect =
     function(opt_connectCb) {
   if (opt_connectCb) {
     opt_connectCb();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This always returns true, since the underlying channel is expected to already
-***REMOVED*** be initialized when it's passed in.
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * This always returns true, since the underlying channel is expected to already
+ * be initialized when it's passed in.
+ *
+ * @override
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.isConnected =
     function() {
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.registerService =
     function(serviceName, callback, opt_objectPayload) {
   this.parent_.underlyingChannel_.registerService(
       this.name_ + ':' + serviceName,
       goog.bind(this.doCallback_, this, callback),
       opt_objectPayload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.
     registerDefaultService = function(callback) {
   this.defaultService_ = goog.bind(this.doCallback_, this, callback);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @override
-***REMOVED***
+/**
+ * @override
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.send =
     function(serviceName, payload) {
   if (this.isDisposed()) {
@@ -272,17 +272,17 @@ goog.messaging.MultiChannel.VirtualChannel.prototype.send =
 
   this.parent_.underlyingChannel_.send(this.name_ + ':' + serviceName,
                                        payload);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Wraps a callback with a function that will log a warning and abort if it's
-***REMOVED*** called when this channel is disposed.
-***REMOVED***
-***REMOVED*** @param {function()} callback The callback to wrap.
-***REMOVED*** @param {...*} var_args Other arguments, passed to the callback.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Wraps a callback with a function that will log a warning and abort if it's
+ * called when this channel is disposed.
+ *
+ * @param {function()} callback The callback to wrap.
+ * @param {...*} var_args Other arguments, passed to the callback.
+ * @private
+ */
 goog.messaging.MultiChannel.VirtualChannel.prototype.doCallback_ =
     function(callback, var_args) {
   if (this.isDisposed()) {
@@ -293,12 +293,12 @@ goog.messaging.MultiChannel.VirtualChannel.prototype.doCallback_ =
   }
 
   callback.apply({}, Array.prototype.slice.call(arguments, 1));
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.messaging.MultiChannel.VirtualChannel.prototype.disposeInternal =
     function() {
   this.parent_.virtualChannels_[this.name_] = null;
   this.parent_ = null;
-***REMOVED***
+};

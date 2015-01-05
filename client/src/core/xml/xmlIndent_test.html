@@ -7,7 +7,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Indent');
 </script>
 </head>
 <body>
@@ -25,7 +25,7 @@ function test01standard() {
       '</a>';
   assertEquals(expected1, xrx.xml.Indent.forward(xml1, 2));
   assertEquals(expected1, xrx.xml.Indent.backward(xml1, 2));
-***REMOVED***
+};
 
 
 
@@ -44,7 +44,7 @@ function test02xmlMixedContent() {
       '</a>';
   assertEquals(expected1, xrx.xml.Indent.forward(xml1, 2));
   assertEquals(expected1, xrx.xml.Indent.backward(xml1, 2));
-***REMOVED***
+};
 
 
 

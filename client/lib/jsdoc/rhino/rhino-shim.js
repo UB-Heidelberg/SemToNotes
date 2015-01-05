@@ -1,24 +1,24 @@
-/*global env: true, Packages: true***REMOVED***
-***REMOVED***
-***REMOVED*** @overview A minimal emulation of the standard features of Node.js necessary
-***REMOVED*** to get JSDoc to run.
-***REMOVED***
+/*global env: true, Packages: true */
+/**
+ * @overview A minimal emulation of the standard features of Node.js necessary
+ * to get JSDoc to run.
+ */
 
 // Set the JS version that the Rhino interpreter will use.
 version(180);
 
-***REMOVED***
-***REMOVED*** Emulate DOM timeout/interval functions.
-***REMOVED*** @see https://developer.mozilla.org/en-US/docs/DOM/window#Methods
-***REMOVED***
+/**
+ * Emulate DOM timeout/interval functions.
+ * @see https://developer.mozilla.org/en-US/docs/DOM/window#Methods
+ */
 (function() {
     'use strict';
 
     var timerPool = new java.util.concurrent.ScheduledThreadPoolExecutor(1);
-    var timers = {***REMOVED***
+    var timers = {};
     var timerCount = 1;
     var timerUnits = java.util.concurrent.TimeUnit.MILLISECONDS;
-    var queue = {***REMOVED***
+    var queue = {};
     var queueActive = false;
 
     function getCallback(fn) {
@@ -32,21 +32,21 @@ version(180);
         var callback = getCallback(fn);
         timers[timerId] = timerPool.schedule(callback, delay, timerUnits);
         return timerId;
-   ***REMOVED*****REMOVED***
+    };
 
     global.clearTimeout = function clearTimeout(timerId) {
         if (timers[timerId]) {
             timerPool.remove(timers[timerId]);
             delete timers[timerId];
         }
-   ***REMOVED*****REMOVED***
+    };
 
     global.setInterval = function setInterval(fn, delay) {
         var timerId = timerCount++;
         var callback = getCallback(fn);
         timers[timerId] = timerPool.scheduleAtFixedRate(callback, delay, delay, timerUnits);
         return timerId;
-   ***REMOVED*****REMOVED***
+    };
 
     global.clearInterval = global.clearTimeout;
 
@@ -78,18 +78,18 @@ version(180);
             }
 
             return timerId;
-       ***REMOVED*****REMOVED***
+        };
     })();
 
     global.clearImmediate = function clearImmediate(id) {
         delete queue[id];
-   ***REMOVED*****REMOVED***
+    };
 })();
 
-***REMOVED***
-***REMOVED*** Emulate Node.js console functions.
-***REMOVED*** @see http://nodejs.org/api/stdio.html
-***REMOVED***
+/**
+ * Emulate Node.js console functions.
+ * @see http://nodejs.org/api/stdio.html
+ */
 global.console = (function() {
     function println(stream, args) {
         java.lang.System[stream].println( require('util').format.apply(this, args) );
@@ -113,13 +113,13 @@ global.console = (function() {
         warn: function warn() {
             println('err', arguments);
         }
-   ***REMOVED*****REMOVED***
+    };
 })();
 
-***REMOVED***
-***REMOVED*** Emulate Node.js process functions.
-***REMOVED*** @see http://nodejs.org/api/process.html
-***REMOVED***
+/**
+ * Emulate Node.js process functions.
+ * @see http://nodejs.org/api/process.html
+ */
 global.process = {
     // not quite right, but close enough
     argv: ['java', env.dirname + '/jsdoc.js']
@@ -130,7 +130,7 @@ global.process = {
         return String( f.getAbsolutePath() );
     },
     env: (function() {
-        var result = {***REMOVED***
+        var result = {};
 
         var env = java.lang.System.getenv();
         var keys = env.keySet().toArray();
@@ -165,12 +165,12 @@ global.process = {
             java.lang.System.out.print(str);
         }
     }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Emulate other Node.js globals.
-***REMOVED*** @see http://nodejs.org/docs/latest/api/globals.html
-***REMOVED***
+/**
+ * Emulate other Node.js globals.
+ * @see http://nodejs.org/docs/latest/api/globals.html
+ */
 Object.defineProperties(global, {
     '__dirname': {
         get: function() {

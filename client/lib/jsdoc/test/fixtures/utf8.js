@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED***
-***REMOVED*** @desc Τεκμηρίωση είναι η επικοινωνία!
-***REMOVED***
+/**
+ * @constructor
+ * @desc Τεκμηρίωση είναι η επικοινωνία!
+ */
 Test = function() {
-***REMOVED***
+};

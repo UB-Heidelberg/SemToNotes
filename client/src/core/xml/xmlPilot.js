@@ -1,89 +1,89 @@
-***REMOVED***
-***REMOVED*** @fileoverview A class representing a pilot to reach all 
-***REMOVED***     tokens of a XML document.
-***REMOVED***
+/**
+ * @fileoverview A class representing a pilot to reach all 
+ *     tokens of a XML document.
+ */
 
 goog.provide('xrx.xml.Pilot');
 
 
 
 goog.require('xrx.xml.Label');
-***REMOVED***
+goog.require('xrx.xml.Stream');
 goog.require('xrx.token');
 goog.require('xrx.xml.Traverse');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new XML pilot.
-***REMOVED*** 
-***REMOVED*** @param {!string} xml A XML string. 
-***REMOVED***
-***REMOVED***
+/**
+ * Constructs a new XML pilot.
+ * 
+ * @param {!string} xml A XML string. 
+ * @constructor
+ */
 xrx.xml.Pilot = function(xml) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Traverse object.
-  ***REMOVED*** @type {xrx.xml.Traverse}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Traverse object.
+   * @type {xrx.xml.Traverse}
+   * @private
+   */
   this.traverse_ = new xrx.xml.Traverse(xml);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Stream object.
-  ***REMOVED*** @type {xrx.xml.Stream}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Stream object.
+   * @type {xrx.xml.Stream}
+   * @private
+   */
   this.stream_ = this.traverse_.stream();
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Path lastly used to traverse the XML instance 
-  ***REMOVED*** (for debugging only).
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Path lastly used to traverse the XML instance 
+   * (for debugging only).
+   * @type {string}
+   * @private
+   */
   this.currentPath_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the path lastly used to traverse the XML instance 
-***REMOVED*** (for debugging only).
-***REMOVED*** @return {?}
-***REMOVED***
+/**
+ * Returns the path lastly used to traverse the XML instance 
+ * (for debugging only).
+ * @return {?}
+ */
 xrx.xml.Pilot.prototype.currentPath = function() {
   return this.currentPath_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns a token string or the content of the XML stream.
-***REMOVED*** @return {!string}
-***REMOVED***
+/**
+ * Returns a token string or the content of the XML stream.
+ * @return {!string}
+ */
 xrx.xml.Pilot.prototype.xml = function(token) {
   return token ? this.traverse_.xml() : 
     this.traverse_.xml().substr(token.offset(), token.length());
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Stops the XML stream.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Stops the XML stream.
+ * @private
+ */
 xrx.xml.Pilot.prototype.stop = function() {
   this.traverse_.stop();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Forward piloting.
-***REMOVED*** 
-***REMOVED*** @param context The context token.
-***REMOVED*** @param target The target token.
-***REMOVED***
+/**
+ * Forward piloting.
+ * 
+ * @param context The context token.
+ * @param target The target token.
+ */
 xrx.xml.Pilot.prototype.forward = function(context, target) {
   var tok;
   var pilot = this;
@@ -107,7 +107,7 @@ xrx.xml.Pilot.prototype.forward = function(context, target) {
       tok.length(length2 - length1);
       pilot.stop();
     } else {}
- ***REMOVED*****REMOVED***
+  };
   
   pilot.traverse_.rowEndTag = function(label, offset, length1, length2) {
 
@@ -122,7 +122,7 @@ xrx.xml.Pilot.prototype.forward = function(context, target) {
       tok.length(length2 - length1);
       pilot.stop();
     } else {}
- ***REMOVED*****REMOVED***
+  };
   
   pilot.traverse_.rowEmptyTag = function(label, offset, length1, length2) {
  
@@ -137,21 +137,21 @@ xrx.xml.Pilot.prototype.forward = function(context, target) {
       tok.length(length2 - length1);
       pilot.stop();
     } else {}
- ***REMOVED*****REMOVED***
+  };
   
   pilot.traverse_.forward(context);
 
   return tok;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Backward piloting.
-***REMOVED*** 
-***REMOVED*** @param context The context token.
-***REMOVED*** @param target The target token.
-***REMOVED***
+/**
+ * Backward piloting.
+ * 
+ * @param context The context token.
+ * @param target The target token.
+ */
 xrx.xml.Pilot.prototype.backward = function(context, target) {
   var tok;
   var pilot = this;
@@ -164,7 +164,7 @@ xrx.xml.Pilot.prototype.backward = function(context, target) {
       tok.length(length1);
       pilot.stop();
     }
- ***REMOVED*****REMOVED***
+  };
   
   pilot.traverse_.rowEndTag = function(label, offset, length1, length2) {
 
@@ -174,7 +174,7 @@ xrx.xml.Pilot.prototype.backward = function(context, target) {
       tok.length(length1);
       pilot.stop();
     }
- ***REMOVED*****REMOVED***
+  };
   
   pilot.traverse_.rowEmptyTag = function(label, offset, length1, length2) {
 
@@ -184,49 +184,49 @@ xrx.xml.Pilot.prototype.backward = function(context, target) {
       tok.length(length1);
       pilot.stop();
     }
- ***REMOVED*****REMOVED***
+  };
 
   pilot.traverse_.backward(context);
 
   return tok;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the joint parent of two tags.
-***REMOVED*** 
-***REMOVED*** @private
-***REMOVED*** @param {!xrx.token.StartEmptyTag} tag The overloaded tag.
-***REMOVED*** @return {!xrx.token.StartEmptyTag}
-***REMOVED***
+/**
+ * Returns the joint parent of two tags.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The overloaded tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
 xrx.xml.Pilot.prototype.jointParent = function(context, tag) {
   var label = context.label().jointParent(tag.label());
 
   return new xrx.token.StartEmptyTag(label);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Helper function for xrx.xml.Pilot.prototype.path.
-***REMOVED*** 
-***REMOVED*** @private
-***REMOVED*** @param {!xrx.token.StartEmptyTag} tag The target tag.
-***REMOVED*** @return {!xrx.token.StartEmptyTag}
-***REMOVED***
+/**
+ * Helper function for xrx.xml.Pilot.prototype.path.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The target tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
 xrx.xml.Pilot.prototype.onLocation = function(tag) {
   return tag;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Helper function for xrx.xml.Pilot.prototype.path.
-***REMOVED*** 
-***REMOVED*** @private
-***REMOVED*** @param {!xrx.token.StartEmptyTag} tag The target tag.
-***REMOVED*** @return {!xrx.token.StartEmptyTag}
-***REMOVED***
+/**
+ * Helper function for xrx.xml.Pilot.prototype.path.
+ * 
+ * @private
+ * @param {!xrx.token.StartEmptyTag} tag The target tag.
+ * @return {!xrx.token.StartEmptyTag}
+ */
 xrx.xml.Pilot.prototype.zigzag = function(context, tag) {
 
   // we first traverse to the joint parent tag
@@ -236,12 +236,12 @@ xrx.xml.Pilot.prototype.zigzag = function(context, tag) {
   // stream forward. We can use xrx.xml.Pilot.path short hand for 
   // (a) and (b).
   return this.path(jointParent, tag);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.xml.Pilot.prototype.path = function(context, tag) {
 
   if (context === null) {
@@ -263,14 +263,14 @@ xrx.xml.Pilot.prototype.path = function(context, tag) {
     this.currentPath_ = 'xrx.xml.Pilot.prototype.zigzag';
     return zigzag;
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the location of a token.
-***REMOVED*** @return {xrx.token.Token}
-***REMOVED***
+/**
+ * Returns the location of a token.
+ * @return {xrx.token.Token}
+ */
 xrx.xml.Pilot.prototype.location = function(opt_context, target) {
   var token;
   
@@ -317,66 +317,66 @@ xrx.xml.Pilot.prototype.location = function(opt_context, target) {
     break;
   }
   return token;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.xml.Pilot.prototype.startTag = function(context, target) {
   var startTag = this.path(context, target);
   return startTag;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.xml.Pilot.prototype.endTag = function(context, target) {
   var endTag = this.path(context, target);
   return endTag;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** 
-***REMOVED***
+/**
+ * 
+ */
 xrx.xml.Pilot.prototype.emptyTag = function(context, target) {
   var emptyTag = this.path(context, target);
   return emptyTag;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location of a fragment token.
-***REMOVED***
-***REMOVED***  
-***REMOVED***
+/**
+ * Get the location of a fragment token.
+ *
+ *  
+ */
 xrx.xml.Pilot.prototype.fragment = function(context, target) {
   var firstTag = target.firstTag();
   var secondTag;
   if (!(firstTag instanceof xrx.token.StartTag)) throw Error('Start-tag expected.');
   console.log(firstTag);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location of a tag-name token.
-***REMOVED*** 
-***REMOVED*** @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
-***REMOVED*** |!xrx.token.StartEmptyTag)} context The context token at which to 
-***REMOVED*** start piloting.
-***REMOVED*** @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
-***REMOVED*** |!xrx.token.StartEmptyTag|!xrx.token.Tag)} target The tag to which 
-***REMOVED*** the tag-name belongs. 
-***REMOVED*** @return {xrx.token.TagName} The tag-name token with offset and length
-***REMOVED*** information.
-***REMOVED***
+/**
+ * Get the location of a tag-name token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag|!xrx.token.Tag)} target The tag to which 
+ * the tag-name belongs. 
+ * @return {xrx.token.TagName} The tag-name token with offset and length
+ * information.
+ */
 xrx.xml.Pilot.prototype.tagName = function(context, target) {
   var pos = this.stream_.pos();
   var tag = this.path(context, target);
@@ -389,21 +389,21 @@ xrx.xml.Pilot.prototype.tagName = function(context, target) {
   this.stream_.pos(pos);
 
   return tagName;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location of a attribute token.
-***REMOVED*** 
-***REMOVED*** @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
-***REMOVED*** |!xrx.token.StartEmptyTag)} context The context token at which to 
-***REMOVED*** start piloting.
-***REMOVED*** @param {!xrx.token.Attribute} target The attribute token without
-***REMOVED*** offset and length information.
-***REMOVED*** @return {xrx.token.Attribute} The attribute token with offset and
-***REMOVED*** length information.
-***REMOVED***
+/**
+ * Get the location of a attribute token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {!xrx.token.Attribute} target The attribute token without
+ * offset and length information.
+ * @return {xrx.token.Attribute} The attribute token with offset and
+ * length information.
+ */
 xrx.xml.Pilot.prototype.attribute = function(context, target) {
   var pos = this.stream_.pos();
   var tag = this.path(context, target.tag());
@@ -416,21 +416,21 @@ xrx.xml.Pilot.prototype.attribute = function(context, target) {
   this.stream_.pos(pos);
   
   return attribute;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location of a attribute name token.
-***REMOVED*** 
-***REMOVED*** @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
-***REMOVED*** |!xrx.token.StartEmptyTag)} context The context token at which to 
-***REMOVED*** start piloting.
-***REMOVED*** @param {!xrx.token.AttrName} target The attribute-name token without
-***REMOVED*** offset and length information.
-***REMOVED*** @return {xrx.token.AttrName} the attribute-name token with offset and
-***REMOVED*** length information.
-***REMOVED***
+/**
+ * Get the location of a attribute name token.
+ * 
+ * @param {(!xrx.token.StartTag|!xrx.token.EndTag|!xrx.token.EmptyTag
+ * |!xrx.token.StartEmptyTag)} context The context token at which to 
+ * start piloting.
+ * @param {!xrx.token.AttrName} target The attribute-name token without
+ * offset and length information.
+ * @return {xrx.token.AttrName} the attribute-name token with offset and
+ * length information.
+ */
 xrx.xml.Pilot.prototype.attrName = function(context, target) {
   var pos = this.stream_.pos();
   var tag = this.path(context, target.tag());
@@ -443,18 +443,18 @@ xrx.xml.Pilot.prototype.attrName = function(context, target) {
   this.stream_.pos(pos);
 
   return attrName;  
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location of a attribute value token.
-***REMOVED*** 
-***REMOVED*** @param {?} context
-***REMOVED*** @param {!xrx.token.AttrValue} target The attribute-value token.
-***REMOVED*** @param {?string} opt_update The new attribute-value.
-***REMOVED*** @return {!xrx.token.AttrValue}
-***REMOVED***
+/**
+ * Get the location of a attribute value token.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.AttrValue} target The attribute-value token.
+ * @param {?string} opt_update The new attribute-value.
+ * @return {!xrx.token.AttrValue}
+ */
 xrx.xml.Pilot.prototype.attrValue = function(context, target, opt_update) {
   var pos = this.stream_.pos();
 
@@ -469,24 +469,24 @@ xrx.xml.Pilot.prototype.attrValue = function(context, target, opt_update) {
 
   return opt_update === undefined ? attrValue :
       xrx.xml.Update.attrValue(this.stream_, attrValue, opt_update);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Get the location and optionally update a xrx.token.NotTag.
-***REMOVED*** 
-***REMOVED*** @param {?} context
-***REMOVED*** @param {!xrx.token.NotTag} target The not-tag token.
-***REMOVED*** @param {?string} opt_update The new not-tag.
-***REMOVED*** @return {!xrx.token.NotTag}
-***REMOVED***
+/**
+ * Get the location and optionally update a xrx.token.NotTag.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.NotTag} target The not-tag token.
+ * @param {?string} opt_update The new not-tag.
+ * @return {!xrx.token.NotTag}
+ */
 xrx.xml.Pilot.prototype.notTag = function(context, target, opt_update) {
   var notTag = this.path(context, target);
 
   return opt_update === undefined ? notTag :
       xrx.xml.Update.notTag(this.stream_, notTag, opt_update);
-***REMOVED***
+};
 
 
 
@@ -495,23 +495,23 @@ xrx.xml.Pilot.prototype.startEmptyTag = function(context, target, opt_update) {
 
   return opt_update === undefined ? startEmptyTag :
       xrx.xml.Update.startEmptyTag(this.stream_, startEmptyTag, opt_update);
-***REMOVED***
+};
 
 
 
 xrx.xml.Pilot.prototype.tag = function(context, target, opt_update) {
   
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Get or update an array of xrx.token.Attribute.
-***REMOVED*** 
-***REMOVED*** @param {?} context
-***REMOVED*** @param {!xrx.token.StartEmptyTag} target The start-empty tag.
-***REMOVED*** @param {?Array.<xrx.token.Attribute>} opt_update Array of new attribute tokens.
-***REMOVED*** @return {!Array.<xrx.token.Attribute>}
-***REMOVED***
+/**
+ * Get or update an array of xrx.token.Attribute.
+ * 
+ * @param {?} context
+ * @param {!xrx.token.StartEmptyTag} target The start-empty tag.
+ * @param {?Array.<xrx.token.Attribute>} opt_update Array of new attribute tokens.
+ * @return {!Array.<xrx.token.Attribute>}
+ */
 xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
   var pos = this.stream_.pos();
   var tag = this.path(context, target);
@@ -532,4 +532,4 @@ xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
 
   return opt_update === undefined ? attributes : 
       xrx.xml.Update.attributes(this.stream_, attributes, opt_update);
-***REMOVED***
+};

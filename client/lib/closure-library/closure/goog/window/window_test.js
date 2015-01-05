@@ -16,7 +16,7 @@ goog.provide('goog.windowTest');
 goog.setTestOnly('goog.windowTest');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.string');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.jsunit');
@@ -36,7 +36,7 @@ function setUpPage() {
   var anchors = goog.dom.getElementsByTagNameAndClass(
       'div', 'goog-like-link');
   for (var i = 0; i < anchors.length; i++) {
-  ***REMOVED***
+    goog.events.listen(
         anchors[i], 'click',
         function(e) {
           goog.window.open(
@@ -46,10 +46,10 @@ function setUpPage() {
 }
 
 
-***REMOVED***
-***REMOVED*** Some tests should only run locally, because they will trigger
-***REMOVED*** popup blockers on http urls.
-***REMOVED***
+/**
+ * Some tests should only run locally, because they will trigger
+ * popup blockers on http urls.
+ */
 function canOpenPopups() {
   // TODO(nicksantos): Fix the test runner farm.
   return window.location.toString().indexOf('file://') == 0;
@@ -77,16 +77,16 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Uses setTimeout to keep checking if a new window has been loaded, and once
-***REMOVED*** it has, calls the given continuation function and then calls
-***REMOVED*** asyncTestCase.continueTesting() to resume the flow of the test.
-***REMOVED*** @param {Function} continueFn Continuation function to be called when the
-***REMOVED***     new window has loaded.
-***REMOVED*** @param {number=} opt_numTries Number of times this method has checked if
-***REMOVED***     the window has loaded, to prevent getting in an endless setTimeout
-***REMOVED***     loop. (Used internally, callers should omit.)
-***REMOVED***
+/**
+ * Uses setTimeout to keep checking if a new window has been loaded, and once
+ * it has, calls the given continuation function and then calls
+ * asyncTestCase.continueTesting() to resume the flow of the test.
+ * @param {Function} continueFn Continuation function to be called when the
+ *     new window has loaded.
+ * @param {number=} opt_numTries Number of times this method has checked if
+ *     the window has loaded, to prevent getting in an endless setTimeout
+ *     loop. (Used internally, callers should omit.)
+ */
 function continueAfterWindowLoaded(continueFn, opt_numTries) {
   opt_numTries = opt_numTries || 0;
   if (newWinLoaded) {
@@ -103,12 +103,12 @@ function continueAfterWindowLoaded(continueFn, opt_numTries) {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper to kick off a test that opens a window and checks that the referrer
-***REMOVED*** is hidden if requested and the url is properly encoded/decoded.
-***REMOVED*** @param {boolean} noreferrer Whether to test the noreferrer option.
-***REMOVED*** @param {string} urlParam Url param to append to the url being opened.
-***REMOVED***
+/**
+ * Helper to kick off a test that opens a window and checks that the referrer
+ * is hidden if requested and the url is properly encoded/decoded.
+ * @param {boolean} noreferrer Whether to test the noreferrer option.
+ * @param {string} urlParam Url param to append to the url being opened.
+ */
 function doTestOpenWindow(noreferrer, urlParam) {
   if (!canOpenPopups()) {
     return;
@@ -121,11 +121,11 @@ function doTestOpenWindow(noreferrer, urlParam) {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper callback to do asserts after the window opens.
-***REMOVED*** @param {boolean} noreferrer Whether the noreferrer option is being tested.
-***REMOVED*** @param {string} urlParam Url param appended to the url being opened.
-***REMOVED***
+/**
+ * Helper callback to do asserts after the window opens.
+ * @param {boolean} noreferrer Whether the noreferrer option is being tested.
+ * @param {string} urlParam Url param appended to the url being opened.
+ */
 function continueTestOpenWindow(noreferrer, urlParam) {
   if (noreferrer) {
     assertEquals('Referrer should have been stripped',
@@ -206,12 +206,12 @@ function testOpenBlank() {
     newWin.location.href = REDIRECT_URL_PREFIX + urlParam;
     continueAfterWindowLoaded(
         goog.partial(continueTestOpenWindow, false, urlParam));
- ***REMOVED*****REMOVED***
+  };
   setTimeout(continueFn, 100);
 }
 
 
-***REMOVED*** @this {Element}***REMOVED***
+/** @this {Element} */
 function stripReferrer() {
   goog.window.open(this.href, {'noreferrer': true});
 }

@@ -12,7 +12,7 @@ See the COPYING file for details.
 <script>
 goog.require('goog.debug.DivConsole');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.InputHandler');
 goog.require('goog.log');
 </script>
@@ -73,10 +73,10 @@ goog.object.forEach(['text', 'password', 'textarea'], function(id) {
   var el = $(id);
   var ih = new goog.events.InputHandler(el);
 
-***REMOVED***ih, goog.events.InputHandler.EventType.INPUT, updateText);
-***REMOVED***ih, INPUTHANDLER_EVENTS,
+  goog.events.listen(ih, goog.events.InputHandler.EventType.INPUT, updateText);
+  goog.events.listen(ih, INPUTHANDLER_EVENTS,
       goog.partial(logEvent, 'InputHandler'));
-***REMOVED***el, DOM_EVENTS,
+  goog.events.listen(el, DOM_EVENTS,
       goog.partial(logEvent, 'DOM'));
 });
 </script>

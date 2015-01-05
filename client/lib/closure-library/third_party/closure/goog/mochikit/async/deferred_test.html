@@ -49,7 +49,7 @@ function assertEqualsCallback(msg, expected) {
     // Deferred object, we must advance the clock to see if it has failed.
     mockClock.tick();
     return res;
- ***REMOVED*****REMOVED***
+  };
 }
 
 function increment(res) {
@@ -227,7 +227,7 @@ function testIncorrectUsage3() {
 }
 
 function testCallbackScope1() {
-  var c1 = {}, c2 = {***REMOVED***
+  var c1 = {}, c2 = {};
   var callbackScope = null;
   var errbackScope = null;
 
@@ -262,7 +262,7 @@ function testCallbackScope2() {
 }
 
 function testCallbackScope3() {
-  var c = {***REMOVED***
+  var c = {};
   var callbackScope = null;
   var errbackScope = null;
 
@@ -507,7 +507,7 @@ function testAwaitDeferred() {
   function fn(x) {
     return function() {
       results.push(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d2 = new Deferred();
@@ -560,7 +560,7 @@ function testAwaitDeferred_withPromise() {
   function fn(x) {
     return function() {
       results.push(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var resolver = new goog.Promise.withResolver();
@@ -613,7 +613,7 @@ function testAwaitDeferredWithErrors() {
   function fn(x) {
     return function(e) {
       results.push(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d2 = new Deferred();
@@ -643,7 +643,7 @@ function testNonErrorErrback() {
   function fn(x) {
     return function(e) {
       results.push(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d = new Deferred();
@@ -664,7 +664,7 @@ function testUnequalReturnValueForErrback() {
   function fn(x) {
     return function(e) {
       results.push(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d = new Deferred();
@@ -686,7 +686,7 @@ function testBranch() {
   function fn(x) {
     return function(arr) {
       return arr.concat(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d = new Deferred();
@@ -708,7 +708,7 @@ function testDiamondBranch() {
   function fn(x) {
     return function(arr) {
       return arr.concat(x);
-   ***REMOVED*****REMOVED***
+    };
   }
 
   var d = new Deferred();
@@ -797,7 +797,7 @@ function testDeepCancelOnBranch() {
   branch1.addErrback(function() { branch1HadErrback = true; });
   branch2.addErrback(function() { branch2HadErrback = true; });
 
-  branch2.cancel(true /* opt_deepCancel***REMOVED***);
+  branch2.cancel(true /* opt_deepCancel */);
   assertTrue(wasCanceled);
   assertTrue(branch1HadErrback);
   assertTrue(branch2HadErrback);
@@ -912,7 +912,7 @@ function testWhenDoesntAlterOriginalChain() {
   var d1 = new Deferred();
   var d2 = Deferred.when(d1, function(obj) {
     calls++;
-    return obj***REMOVED*** 2;
+    return obj * 2;
   });
   d1.addCallback(function(obj) {
     assertEquals('Original chain should get original value', 5, obj);

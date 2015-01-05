@@ -16,7 +16,7 @@ Author: attila@google.com (Attila Bodis)
   <script>
     goog.require('goog.dom');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.testing.ExpectedFailures');
     goog.require('goog.testing.events');
     goog.require('goog.testing.jsunit');
@@ -155,8 +155,8 @@ Author: attila@google.com (Attila Bodis)
       var dispatchedActionCount = 0;
       var handleAction = function() {
         dispatchedActionCount++;
-     ***REMOVED*****REMOVED***
-    ***REMOVED***button, goog.ui.Component.EventType.ACTION,
+      };
+      goog.events.listen(button, goog.ui.Component.EventType.ACTION,
           handleAction);
 
       button.render(sandbox);

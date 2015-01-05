@@ -136,7 +136,7 @@ See the COPYING file for details.
     var m0 = goog.vec.mat3d.create();
     for (var r = 0; r < 3; r++) {
       for (var c = 0; c < 3; c++) {
-        var value = c***REMOVED*** 3 + r + 1;
+        var value = c * 3 + r + 1;
         goog.vec.mat3d.setElement(m0, r, c, value);
         assertEquals(value, goog.vec.mat3d.getElement(m0, r, c));
       }
@@ -378,9 +378,9 @@ See the COPYING file for details.
 
   function testMakeEulerZXZ() {
     var m0 = goog.vec.mat3d.create();
-    var roll = 0.200982***REMOVED*** 2***REMOVED*** Math.PI;
-    var tilt = 0.915833***REMOVED*** Math.PI;
-    var yaw = 0.839392***REMOVED*** 2***REMOVED*** Math.PI;
+    var roll = 0.200982 * 2 * Math.PI;
+    var tilt = 0.915833 * Math.PI;
+    var yaw = 0.839392 * 2 * Math.PI;
 
     goog.vec.mat3d.makeRotate(m0, roll, 0, 0, 1);
     goog.vec.mat3d.rotate(m0, tilt, 1, 0, 0);

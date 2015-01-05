@@ -1,20 +1,20 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Standard styling for buttons created by goog.ui.MenuButtonRenderer.
-***REMOVED***
-***REMOVED*** @author attila@google.com (Attila Bodis)
-***REMOVED***
+ * Standard styling for buttons created by goog.ui.MenuButtonRenderer.
+ *
+ * @author attila@google.com (Attila Bodis)
+ */
 
 
-/* State: resting.***REMOVED***
+/* State: resting. */
 .goog-menu-button {
-  /* Client apps may override the URL at which they serve the image.***REMOVED***
+  /* Client apps may override the URL at which they serve the image. */
   background: #ddd url(//ssl.gstatic.com/editor/button-bg.png) repeat-x top left;
   border: 0;
   color: #000;
@@ -27,7 +27,7 @@
   vertical-align: middle;
 }
 
-/* Pseudo-rounded corners.***REMOVED***
+/* Pseudo-rounded corners. */
 .goog-menu-button-outer-box,
 .goog-menu-button-inner-box {
   border-style: solid;
@@ -45,46 +45,46 @@
   padding: 3px 4px;
 }
 
-/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers.***REMOVED***
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
 * html .goog-menu-button-inner-box {
-  /* IE6 needs to have the box shifted to make the borders line up.***REMOVED***
+  /* IE6 needs to have the box shifted to make the borders line up. */
   left: -1px;
 }
 
-/* Pre-IE7 BiDi fixes.***REMOVED***
+/* Pre-IE7 BiDi fixes. */
 * html .goog-menu-button-rtl .goog-menu-button-outer-box {
-  /* @noflip***REMOVED*** left: -1px;
-  /* @noflip***REMOVED*** right: auto;
+  /* @noflip */ left: -1px;
+  /* @noflip */ right: auto;
 }
 * html .goog-menu-button-rtl .goog-menu-button-inner-box {
-  /* @noflip***REMOVED*** right: auto;
+  /* @noflip */ right: auto;
 }
 
-/* IE7-only hack; ignored by all other browsers.***REMOVED***
+/* IE7-only hack; ignored by all other browsers. */
 *:first-child+html .goog-menu-button-inner-box {
-  /* IE7 needs to have the box shifted to make the borders line up.***REMOVED***
+  /* IE7 needs to have the box shifted to make the borders line up. */
   left: -1px;
 }
-/* IE7 BiDi fix.***REMOVED***
+/* IE7 BiDi fix. */
 *:first-child+html .goog-menu-button-rtl .goog-menu-button-inner-box {
-  /* @noflip***REMOVED*** left: 1px;
-  /* @noflip***REMOVED*** right: auto;
+  /* @noflip */ left: 1px;
+  /* @noflip */ right: auto;
 }
 
-/* Safari-only hacks.***REMOVED***
+/* Safari-only hacks. */
 ::root .goog-menu-button,
 ::root .goog-menu-button-outer-box,
 ::root .goog-menu-button-inner-box {
-  /* Required to make pseudo-rounded corners work on Safari.***REMOVED***
+  /* Required to make pseudo-rounded corners work on Safari. */
   line-height: 0;
 }
 ::root .goog-menu-button-caption,
 ::root .goog-menu-button-dropdown {
-  /* Required to make pseudo-rounded corners work on Safari.***REMOVED***
+  /* Required to make pseudo-rounded corners work on Safari. */
   line-height: normal;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-menu-button-disabled {
   background-image: none !important;
   opacity: 0.3;
@@ -99,54 +99,54 @@
   border-color: #999 !important;
 }
 
-/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers.***REMOVED***
+/* Pre-IE7 IE hack; ignored by IE7 and all non-IE browsers. */
 * html .goog-menu-button-disabled {
   margin: 2px 1px !important;
   padding: 0 1px !important;
 }
 
-/* IE7-only hack; ignored by all other browsers.***REMOVED***
+/* IE7-only hack; ignored by all other browsers. */
 *:first-child+html .goog-menu-button-disabled {
   margin: 2px 1px !important;
   padding: 0 1px !important;
 }
 
-/* State: hover.***REMOVED***
+/* State: hover. */
 .goog-menu-button-hover .goog-menu-button-outer-box,
 .goog-menu-button-hover .goog-menu-button-inner-box {
-  border-color: #9cf #69e #69e #7af !important; /* Hover border wins.***REMOVED***
+  border-color: #9cf #69e #69e #7af !important; /* Hover border wins. */
 }
 
-/* State: active, open.***REMOVED***
+/* State: active, open. */
 .goog-menu-button-active,
 .goog-menu-button-open {
   background-color: #bbb;
   background-position: bottom left;
 }
 
-/* State: focused.***REMOVED***
+/* State: focused. */
 .goog-menu-button-focused .goog-menu-button-outer-box,
 .goog-menu-button-focused .goog-menu-button-inner-box {
   border-color: orange;
 }
 
-/* Caption style.***REMOVED***
+/* Caption style. */
 .goog-menu-button-caption {
   padding: 0 4px 0 0;
   vertical-align: top;
 }
 
-/* Dropdown arrow style.***REMOVED***
+/* Dropdown arrow style. */
 .goog-menu-button-dropdown {
   height: 15px;
   width: 7px;
-  /* Client apps may override the URL at which they serve the sprite.***REMOVED***
+  /* Client apps may override the URL at which they serve the sprite. */
   background: url(//ssl.gstatic.com/editor/editortoolbar.png) no-repeat -388px 0;
   vertical-align: top;
 }
 
-/* Pill (collapsed border) styles.***REMOVED***
-/* TODO(gboyer): Remove specific menu button styles and have any button support being a menu button.***REMOVED***
+/* Pill (collapsed border) styles. */
+/* TODO(gboyer): Remove specific menu button styles and have any button support being a menu button. */
 .goog-menu-button-collapse-right,
 .goog-menu-button-collapse-right .goog-menu-button-outer-box,
 .goog-menu-button-collapse-right .goog-menu-button-inner-box {

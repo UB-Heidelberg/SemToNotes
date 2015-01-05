@@ -13,7 +13,7 @@ See the COPYING file for details.
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.ui.Checkbox');
     goog.require('goog.ui.Checkbox.State');
@@ -65,17 +65,17 @@ See the COPYING file for details.
     var all = new goog.ui.Checkbox();
     all.decorate(goog.dom.getElement('all'));
     all.setLabel(all.getElement().parentNode);
-  ***REMOVED***all, EVENTS, goog.partial(logEvent, 'root'));
+    goog.events.listen(all, EVENTS, goog.partial(logEvent, 'root'));
 
     var leaf1 = new goog.ui.Checkbox();
     leaf1.decorate(goog.dom.getElement('leaf1'));
     leaf1.setLabel(leaf1.getElement().parentNode);
-  ***REMOVED***leaf1, EVENTS, goog.partial(logEvent, 'leaf1'));
+    goog.events.listen(leaf1, EVENTS, goog.partial(logEvent, 'leaf1'));
 
     var leaf2 = new goog.ui.Checkbox();
     leaf2.decorate(goog.dom.getElement('leaf2'));
     leaf2.setLabel(leaf2.getElement().parentNode);
-  ***REMOVED***leaf2, EVENTS, goog.partial(logEvent, 'leaf2'));
+    goog.events.listen(leaf2, EVENTS, goog.partial(logEvent, 'leaf2'));
 
     var enable = new goog.ui.Checkbox();
     enable.setLabel(goog.dom.getElement('enable').parentNode);
@@ -112,10 +112,10 @@ See the COPYING file for details.
       leaf2.setEnabled(enable);
     }
 
-  ***REMOVED***all, goog.ui.Component.EventType.CHANGE, rootChanged);
-  ***REMOVED***leaf1, goog.ui.Component.EventType.CHANGE, leafChanged);
-  ***REMOVED***leaf2, goog.ui.Component.EventType.CHANGE, leafChanged);
-  ***REMOVED***enable, goog.ui.Component.EventType.CHANGE,
+    goog.events.listen(all, goog.ui.Component.EventType.CHANGE, rootChanged);
+    goog.events.listen(leaf1, goog.ui.Component.EventType.CHANGE, leafChanged);
+    goog.events.listen(leaf2, goog.ui.Component.EventType.CHANGE, leafChanged);
+    goog.events.listen(enable, goog.ui.Component.EventType.CHANGE,
         function() { enableTree(enable.getChecked()); });
   </script>
 </body>

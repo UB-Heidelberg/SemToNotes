@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock MessageChannel implementation that can receive fake
-***REMOVED*** messages and test that the right messages are sent.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Mock MessageChannel implementation that can receive fake
+ * messages and test that the right messages are sent.
+ *
+ */
 
 
 goog.provide('goog.testing.messaging.MockMessageChannel');
@@ -26,55 +26,55 @@ goog.require('goog.testing.asserts');
 
 
 
-***REMOVED***
-***REMOVED*** Class for unit-testing code that communicates over a MessageChannel.
-***REMOVED*** @param {goog.testing.MockControl} mockControl The mock control used to create
-***REMOVED***   the method mock for #send.
-***REMOVED*** @extends {goog.messaging.AbstractChannel}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class for unit-testing code that communicates over a MessageChannel.
+ * @param {goog.testing.MockControl} mockControl The mock control used to create
+ *   the method mock for #send.
+ * @extends {goog.messaging.AbstractChannel}
+ * @constructor
+ * @final
+ */
 goog.testing.messaging.MockMessageChannel = function(mockControl) {
   goog.testing.messaging.MockMessageChannel.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the channel has been disposed.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the channel has been disposed.
+   * @type {boolean}
+   */
   this.disposed = false;
 
   mockControl.createMethodMock(this, 'send');
-***REMOVED***
+};
 goog.inherits(goog.testing.messaging.MockMessageChannel,
               goog.messaging.AbstractChannel);
 
 
-***REMOVED***
-***REMOVED*** A mock send function. Actually an instance of
-***REMOVED*** {@link goog.testing.FunctionMock}.
-***REMOVED*** @param {string} serviceName The name of the remote service to run.
-***REMOVED*** @param {string|!Object} payload The payload to send to the remote page.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * A mock send function. Actually an instance of
+ * {@link goog.testing.FunctionMock}.
+ * @param {string} serviceName The name of the remote service to run.
+ * @param {string|!Object} payload The payload to send to the remote page.
+ * @override
+ */
 goog.testing.messaging.MockMessageChannel.prototype.send = function(
-    serviceName, payload) {***REMOVED***
+    serviceName, payload) {};
 
 
-***REMOVED***
-***REMOVED*** Sets a flag indicating that this is disposed.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Sets a flag indicating that this is disposed.
+ * @override
+ */
 goog.testing.messaging.MockMessageChannel.prototype.dispose = function() {
   this.disposed = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Mocks the receipt of a message. Passes the payload the appropriate service.
-***REMOVED*** @param {string} serviceName The service to run.
-***REMOVED*** @param {string|!Object} payload The argument to pass to the service.
-***REMOVED***
+/**
+ * Mocks the receipt of a message. Passes the payload the appropriate service.
+ * @param {string} serviceName The service to run.
+ * @param {string|!Object} payload The argument to pass to the service.
+ */
 goog.testing.messaging.MockMessageChannel.prototype.receive = function(
     serviceName, payload) {
   this.deliver(serviceName, payload);
-***REMOVED***
+};

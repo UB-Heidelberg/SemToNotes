@@ -1,68 +1,68 @@
-/* Tomorrow Theme***REMOVED***
-/* Original theme - https://github.com/chriskempson/tomorrow-theme***REMOVED***
-/* Pretty printing styles. Used with prettify.js.***REMOVED***
-/* SPAN elements with the classes below are added by prettyprint.***REMOVED***
-/* plain text***REMOVED***
+/* Tomorrow Theme */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* Pretty printing styles. Used with prettify.js. */
+/* SPAN elements with the classes below are added by prettyprint. */
+/* plain text */
 .pln {
   color: #4d4d4c; }
 
 @media screen {
-  /* string content***REMOVED***
+  /* string content */
   .str {
     color: #718c00; }
 
-  /* a keyword***REMOVED***
+  /* a keyword */
   .kwd {
     color: #8959a8; }
 
-  /* a comment***REMOVED***
+  /* a comment */
   .com {
     color: #8e908c; }
 
-  /* a type name***REMOVED***
+  /* a type name */
   .typ {
     color: #4271ae; }
 
-  /* a literal value***REMOVED***
+  /* a literal value */
   .lit {
     color: #f5871f; }
 
-  /* punctuation***REMOVED***
+  /* punctuation */
   .pun {
     color: #4d4d4c; }
 
-  /* lisp open bracket***REMOVED***
+  /* lisp open bracket */
   .opn {
     color: #4d4d4c; }
 
-  /* lisp close bracket***REMOVED***
+  /* lisp close bracket */
   .clo {
     color: #4d4d4c; }
 
-  /* a markup tag name***REMOVED***
+  /* a markup tag name */
   .tag {
     color: #c82829; }
 
-  /* a markup attribute name***REMOVED***
+  /* a markup attribute name */
   .atn {
     color: #f5871f; }
 
-  /* a markup attribute value***REMOVED***
+  /* a markup attribute value */
   .atv {
     color: #3e999f; }
 
-  /* a declaration***REMOVED***
+  /* a declaration */
   .dec {
     color: #f5871f; }
 
-  /* a variable name***REMOVED***
+  /* a variable name */
   .var {
     color: #c82829; }
 
-  /* a function name***REMOVED***
+  /* a function name */
   .fun {
     color: #4271ae; } }
-/* Use higher contrast and text-weight for printable form.***REMOVED***
+/* Use higher contrast and text-weight for printable form. */
 @media print, projection {
   .str {
     color: #060; }
@@ -94,7 +94,7 @@
 
   .atv {
     color: #060; } }
-/* Style***REMOVED***
+/* Style */
 /*
 pre.prettyprint {
   background: white;
@@ -105,12 +105,12 @@ pre.prettyprint {
   padding: 10px; }
 */
 
-/* Specify class=linenums on a pre to get line numbering***REMOVED***
+/* Specify class=linenums on a pre to get line numbering */
 ol.linenums {
   margin-top: 0;
   margin-bottom: 0; }
 
-/* IE indents via margin-left***REMOVED***
+/* IE indents via margin-left */
 li.L0,
 li.L1,
 li.L2,
@@ -121,12 +121,12 @@ li.L6,
 li.L7,
 li.L8,
 li.L9 {
- ***REMOVED*****REMOVED*****REMOVED*** }
+  /* */ }
 
-/* Alternate shading for lines***REMOVED***
+/* Alternate shading for lines */
 li.L1,
 li.L3,
 li.L5,
 li.L7,
 li.L9 {
- ***REMOVED*****REMOVED*****REMOVED*** }
+  /* */ }

@@ -13,26 +13,26 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines an interface for serializing objects into strings.
-***REMOVED***
+/**
+ * @fileoverview Defines an interface for serializing objects into strings.
+ */
 
 goog.provide('goog.string.Stringifier');
 
 
 
-***REMOVED***
-***REMOVED*** An interface for serializing objects into strings.
-***REMOVED*** @interface
-***REMOVED***
-goog.string.Stringifier = function() {***REMOVED***
+/**
+ * An interface for serializing objects into strings.
+ * @interface
+ */
+goog.string.Stringifier = function() {};
 
 
-***REMOVED***
-***REMOVED*** Serializes an object or a value to a string.
-***REMOVED*** Agnostic to the particular format of object and string.
-***REMOVED***
-***REMOVED*** @param {*} object The object to stringify.
-***REMOVED*** @return {string} A string representation of the input.
-***REMOVED***
+/**
+ * Serializes an object or a value to a string.
+ * Agnostic to the particular format of object and string.
+ *
+ * @param {*} object The object to stringify.
+ * @return {string} A string representation of the input.
+ */
 goog.string.Stringifier.prototype.stringify;

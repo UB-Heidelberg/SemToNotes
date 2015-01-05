@@ -1,7 +1,7 @@
-***REMOVED***
-***REMOVED*** @fileoverview Engine entry-point class useful to include all rendering engine
-***REMOVED***     classes at once.
-***REMOVED***
+/**
+ * @fileoverview Engine entry-point class useful to include all rendering engine
+ *     classes at once.
+ */
 
 goog.provide('xrx.engine.Engines');
 
@@ -38,9 +38,9 @@ goog.require('xrx.vml.Rect');
 
 
 
-***REMOVED***
-***REMOVED*** Engine entry-point class useful to include all rendering engine
-***REMOVED*** classes at once.
-***REMOVED***
-***REMOVED***
-xrx.engine.Engines = function() {***REMOVED***
+/**
+ * Engine entry-point class useful to include all rendering engine
+ * classes at once.
+ * @constructor
+ */
+xrx.engine.Engines = function() {};

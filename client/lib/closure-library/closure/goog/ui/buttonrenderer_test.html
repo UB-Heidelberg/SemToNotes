@@ -33,22 +33,22 @@ See the COPYING file for details.
     var sandbox = goog.dom.getElement('sandbox');
     var expectedFailures = new goog.testing.ExpectedFailures();
 
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** A subclass of ButtonRenderer that overrides
-    ***REMOVED*** {@code getStructuralCssClass} for testing purposes.
-   ***REMOVED*****REMOVED***
-    ***REMOVED*** @extends {goog.ui.ControlRenderer}
-   ***REMOVED*****REMOVED***
+    /**
+     * A subclass of ButtonRenderer that overrides
+     * {@code getStructuralCssClass} for testing purposes.
+     * @constructor
+     * @extends {goog.ui.ControlRenderer}
+     */
     function TestRenderer() {
       goog.ui.ButtonRenderer.call(this);
     }
     goog.inherits(TestRenderer, goog.ui.ButtonRenderer);
     goog.addSingletonGetter(TestRenderer);
 
-   ***REMOVED*****REMOVED*** @override***REMOVED***
+    /** @override */
     TestRenderer.prototype.getStructuralCssClass = function() {
       return 'goog-base';
-   ***REMOVED*****REMOVED***
+    };
 
     function setUp() {
       buttonRenderer = goog.ui.ButtonRenderer.getInstance();

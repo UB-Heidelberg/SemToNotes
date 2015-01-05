@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Multiple Element Drag and Drop.
-***REMOVED***
-***REMOVED*** Drag and drop implementation for sources/targets consisting of multiple
-***REMOVED*** elements.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED*** @see ../demos/dragdrop.html
-***REMOVED***
+/**
+ * @fileoverview Multiple Element Drag and Drop.
+ *
+ * Drag and drop implementation for sources/targets consisting of multiple
+ * elements.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ * @see ../demos/dragdrop.html
+ */
 
 goog.provide('goog.fx.DragDropGroup');
 
@@ -30,59 +30,59 @@ goog.require('goog.fx.DragDropItem');
 
 
 
-***REMOVED***
-***REMOVED*** Drag/drop implementation for creating drag sources/drop targets consisting of
-***REMOVED*** multiple HTML Elements (items). All items share the same drop target(s) but
-***REMOVED*** can be dragged individually.
-***REMOVED***
-***REMOVED*** @extends {goog.fx.AbstractDragDrop}
-***REMOVED***
-***REMOVED***
+/**
+ * Drag/drop implementation for creating drag sources/drop targets consisting of
+ * multiple HTML Elements (items). All items share the same drop target(s) but
+ * can be dragged individually.
+ *
+ * @extends {goog.fx.AbstractDragDrop}
+ * @constructor
+ */
 goog.fx.DragDropGroup = function() {
   goog.fx.AbstractDragDrop.call(this);
-***REMOVED***
+};
 goog.inherits(goog.fx.DragDropGroup, goog.fx.AbstractDragDrop);
 
 
-***REMOVED***
-***REMOVED*** Add item to drag object.
-***REMOVED***
-***REMOVED*** @param {Element|string} element Dom Node, or string representation of node
-***REMOVED***     id, to be used as drag source/drop target.
-***REMOVED*** @param {Object=} opt_data Data associated with the source/target.
-***REMOVED*** @throws Error If no element argument is provided or if the type is
-***REMOVED***     invalid
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Add item to drag object.
+ *
+ * @param {Element|string} element Dom Node, or string representation of node
+ *     id, to be used as drag source/drop target.
+ * @param {Object=} opt_data Data associated with the source/target.
+ * @throws Error If no element argument is provided or if the type is
+ *     invalid
+ * @override
+ */
 goog.fx.DragDropGroup.prototype.addItem = function(element, opt_data) {
   var item = new goog.fx.DragDropItem(element, opt_data);
   this.addDragDropItem(item);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Add DragDropItem to drag object.
-***REMOVED***
-***REMOVED*** @param {goog.fx.DragDropItem} item DragDropItem being added to the
-***REMOVED***     drag object.
-***REMOVED*** @throws Error If no element argument is provided or if the type is
-***REMOVED***     invalid
-***REMOVED***
+/**
+ * Add DragDropItem to drag object.
+ *
+ * @param {goog.fx.DragDropItem} item DragDropItem being added to the
+ *     drag object.
+ * @throws Error If no element argument is provided or if the type is
+ *     invalid
+ */
 goog.fx.DragDropGroup.prototype.addDragDropItem = function(item) {
   item.setParent(this);
   this.items_.push(item);
   if (this.isInitialized()) {
     this.initItem(item);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Remove item from drag object.
-***REMOVED***
-***REMOVED*** @param {Element|string} element Dom Node, or string representation of node
-***REMOVED***     id, that was previously added with addItem().
-***REMOVED***
+/**
+ * Remove item from drag object.
+ *
+ * @param {Element|string} element Dom Node, or string representation of node
+ *     id, that was previously added with addItem().
+ */
 goog.fx.DragDropGroup.prototype.removeItem = function(element) {
   element = goog.dom.getElement(element);
   for (var item, i = 0; item = this.items_[i]; i++) {
@@ -92,18 +92,18 @@ goog.fx.DragDropGroup.prototype.removeItem = function(element) {
       break;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Marks the supplied list of items as selected. A drag operation for any of the
-***REMOVED*** selected items will affect all of them.
-***REMOVED***
-***REMOVED*** @param {Array.<goog.fx.DragDropItem>} list List of items to select or null to
-***REMOVED***     clear selection.
-***REMOVED***
-***REMOVED*** TODO(eae): Not yet implemented.
-***REMOVED***
+/**
+ * Marks the supplied list of items as selected. A drag operation for any of the
+ * selected items will affect all of them.
+ *
+ * @param {Array.<goog.fx.DragDropItem>} list List of items to select or null to
+ *     clear selection.
+ *
+ * TODO(eae): Not yet implemented.
+ */
 goog.fx.DragDropGroup.prototype.setSelection = function(list) {
 
-***REMOVED***
+};

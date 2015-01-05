@@ -18,7 +18,7 @@ goog.setTestOnly('goog.net.FileDownloaderTest');
 goog.require('goog.fs.Error');
 goog.require('goog.net.ErrorCode');
 goog.require('goog.net.FileDownloader');
-***REMOVED***
+goog.require('goog.net.XhrIo');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.PropertyReplacer');
 goog.require('goog.testing.fs');

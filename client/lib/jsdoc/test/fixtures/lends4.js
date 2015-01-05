@@ -1,16 +1,16 @@
 define([], function () {
     var Person = makeClass(
-       ***REMOVED*****REMOVED*** @lends Person.prototype***REMOVED***
+        /** @lends Person.prototype */
         {
-           ***REMOVED*****REMOVED*** @constructs***REMOVED***
+            /** @constructs */
             initialize: function(name) {
                 this.name = name;
             },
-           ***REMOVED*****REMOVED*** Speak a message.***REMOVED***
+            /** Speak a message. */
             say: function(message) {
                 return this.name + " says: " + message;
             }
         }
-  ***REMOVED***
+    );
     return Person;
 });

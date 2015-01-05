@@ -20,19 +20,19 @@ goog.require('goog.testing.jsunit');
 
 // The object that we will be mocking
 var RealObject = function() {
-***REMOVED***
+};
 
 RealObject.prototype.a = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 RealObject.prototype.b = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 RealObject.prototype.c = function() {
   fail('real object should never be called');
-***REMOVED***
+};
 
 var mock;
 

@@ -141,13 +141,13 @@ See the COPYING file for details.
     'VERSION'
   ];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Adds a list of user-agent properties and their values to the output table.
-  ***REMOVED*** @param {Element} parent The table body to append new rows to
-  ***REMOVED*** @param {string} title The header for this table section
-  ***REMOVED*** @param {Object} ns The Closure namespace to read properties from
-  ***REMOVED*** @param {Array.<string>} A list of properties to read from that namespace
- ***REMOVED*****REMOVED***
+  /**
+   * Adds a list of user-agent properties and their values to the output table.
+   * @param {Element} parent The table body to append new rows to
+   * @param {string} title The header for this table section
+   * @param {Object} ns The Closure namespace to read properties from
+   * @param {Array.<string>} A list of properties to read from that namespace
+   */
   function addSection(parent, title, ns, properties) {
     goog.dom.appendChild(
         parent,
@@ -165,12 +165,12 @@ See the COPYING file for details.
   }
 
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Adds a name/value row to the table.
-  ***REMOVED*** @param {Element} parent The table body to append the row to
-  ***REMOVED*** @param {string} name The name of the property
-  ***REMOVED*** @param {string|boolean} value The value to display
- ***REMOVED*****REMOVED***
+  /**
+   * Adds a name/value row to the table.
+   * @param {Element} parent The table body to append the row to
+   * @param {string} name The name of the property
+   * @param {string|boolean} value The value to display
+   */
   function addValue(parent, name, value) {
     var row = goog.dom.createElement('tr');
     goog.dom.appendChild(parent, row);

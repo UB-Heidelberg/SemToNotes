@@ -1,28 +1,28 @@
-***REMOVED***
+/**
 * @module my/module
 */
 (function() {
 
-***REMOVED*** document fooIn***REMOVED***
+/** document fooIn */
 fooIn = function() {
-***REMOVED***
+};
 
-***REMOVED*** @namespace***REMOVED***
+/** @namespace */
 bar = {
-   ***REMOVED*****REMOVED*** document bar.Zop***REMOVED***
+    /** document bar.Zop */
     zop: function() {
     }
 }
 
-***REMOVED*** @constructor***REMOVED***
+/** @constructor */
 exports.Frotz = function() {
-   ***REMOVED*****REMOVED*** document exports.Frotz#quaz***REMOVED***
+    /** document exports.Frotz#quaz */
     this.quaz = 1;
 }
 
 }) ();
 
-***REMOVED*** document fooOut
+/** document fooOut
 */
 fooOut = function() {
-***REMOVED***
+};

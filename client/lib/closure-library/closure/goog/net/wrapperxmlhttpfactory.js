@@ -12,60 +12,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Implementation of XmlHttpFactory which allows construction from
-***REMOVED*** simple factory methods.
-***REMOVED*** @author dbk@google.com (David Barrett-Kahn)
-***REMOVED***
+/**
+ * @fileoverview Implementation of XmlHttpFactory which allows construction from
+ * simple factory methods.
+ * @author dbk@google.com (David Barrett-Kahn)
+ */
 
 goog.provide('goog.net.WrapperXmlHttpFactory');
 
-***REMOVED*** @suppress {extraRequire} Typedef.***REMOVED***
+/** @suppress {extraRequire} Typedef. */
 goog.require('goog.net.XhrLike');
 goog.require('goog.net.XmlHttpFactory');
 
 
 
-***REMOVED***
-***REMOVED*** An xhr factory subclass which can be constructed using two factory methods.
-***REMOVED*** This exists partly to allow the preservation of goog.net.XmlHttp.setFactory()
-***REMOVED*** with an unchanged signature.
-***REMOVED*** @param {function():!goog.net.XhrLike.OrNative} xhrFactory
-***REMOVED***     A function which returns a new XHR object.
-***REMOVED*** @param {function():!Object} optionsFactory A function which returns the
-***REMOVED***     options associated with xhr objects from this factory.
-***REMOVED*** @extends {goog.net.XmlHttpFactory}
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * An xhr factory subclass which can be constructed using two factory methods.
+ * This exists partly to allow the preservation of goog.net.XmlHttp.setFactory()
+ * with an unchanged signature.
+ * @param {function():!goog.net.XhrLike.OrNative} xhrFactory
+ *     A function which returns a new XHR object.
+ * @param {function():!Object} optionsFactory A function which returns the
+ *     options associated with xhr objects from this factory.
+ * @extends {goog.net.XmlHttpFactory}
+ * @constructor
+ * @final
+ */
 goog.net.WrapperXmlHttpFactory = function(xhrFactory, optionsFactory) {
   goog.net.XmlHttpFactory.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** XHR factory method.
-  ***REMOVED*** @type {function() : !goog.net.XhrLike.OrNative}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * XHR factory method.
+   * @type {function() : !goog.net.XhrLike.OrNative}
+   * @private
+   */
   this.xhrFactory_ = xhrFactory;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Options factory method.
-  ***REMOVED*** @type {function() : !Object}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Options factory method.
+   * @type {function() : !Object}
+   * @private
+   */
   this.optionsFactory_ = optionsFactory;
-***REMOVED***
+};
 goog.inherits(goog.net.WrapperXmlHttpFactory, goog.net.XmlHttpFactory);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.WrapperXmlHttpFactory.prototype.createInstance = function() {
   return this.xhrFactory_();
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.WrapperXmlHttpFactory.prototype.getOptions = function() {
   return this.optionsFactory_();
-***REMOVED***
+};
 

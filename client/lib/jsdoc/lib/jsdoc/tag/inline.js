@@ -1,52 +1,52 @@
-***REMOVED***
-***REMOVED*** @module jsdoc/tag/inline
-***REMOVED***
-***REMOVED*** @author Jeff Williams <jeffrey.l.williams@gmail.com>
-***REMOVED*** @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+/**
+ * @module jsdoc/tag/inline
+ *
+ * @author Jeff Williams <jeffrey.l.williams@gmail.com>
+ * @license Apache License 2.0 - See file 'LICENSE.md' in this project.
+ */
 'use strict';
 
-***REMOVED***
-***REMOVED*** Information about an inline tag that was found within a string.
-***REMOVED***
-***REMOVED*** @typedef {Object} InlineTagInfo
-***REMOVED*** @memberof module:jsdoc/tag/inline
-***REMOVED*** @property {?string} completeTag - The entire inline tag, including its enclosing braces.
-***REMOVED*** @property {?string} tag - The tag whose text was found.
-***REMOVED*** @property {?string} text - The tag text that was found.
-***REMOVED***
+/**
+ * Information about an inline tag that was found within a string.
+ *
+ * @typedef {Object} InlineTagInfo
+ * @memberof module:jsdoc/tag/inline
+ * @property {?string} completeTag - The entire inline tag, including its enclosing braces.
+ * @property {?string} tag - The tag whose text was found.
+ * @property {?string} text - The tag text that was found.
+ */
 
-***REMOVED***
-***REMOVED*** Information about the results of replacing inline tags within a string.
-***REMOVED***
-***REMOVED*** @typedef {Object} InlineTagResult
-***REMOVED*** @memberof module:jsdoc/tag/inline
-***REMOVED*** @property {Array.<module:jsdoc/tag/inline.InlineTagInfo>} tags - The inline tags that were found.
-***REMOVED*** @property {string} newString - The updated text string after extracting or replacing the inline
-***REMOVED*** tags.
-***REMOVED***
+/**
+ * Information about the results of replacing inline tags within a string.
+ *
+ * @typedef {Object} InlineTagResult
+ * @memberof module:jsdoc/tag/inline
+ * @property {Array.<module:jsdoc/tag/inline.InlineTagInfo>} tags - The inline tags that were found.
+ * @property {string} newString - The updated text string after extracting or replacing the inline
+ * tags.
+ */
 
-***REMOVED***
-***REMOVED*** Text-replacing function for strings that contain an inline tag.
-***REMOVED***
-***REMOVED*** @callback InlineTagReplacer
-***REMOVED*** @memberof module:jsdoc/tag/inline
-***REMOVED*** @param {string} string - The complete string containing the inline tag.
-***REMOVED*** @param {module:jsdoc/tag/inline.InlineTagInfo} tagInfo - Information about the inline tag.
-***REMOVED*** @return {string} An updated version of the complete string.
-***REMOVED***
+/**
+ * Text-replacing function for strings that contain an inline tag.
+ *
+ * @callback InlineTagReplacer
+ * @memberof module:jsdoc/tag/inline
+ * @param {string} string - The complete string containing the inline tag.
+ * @param {module:jsdoc/tag/inline.InlineTagInfo} tagInfo - Information about the inline tag.
+ * @return {string} An updated version of the complete string.
+ */
 
-***REMOVED***
-***REMOVED*** Create a regexp that matches a specific inline tag, or all inline tags.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED*** @memberof module:jsdoc/tag/inline
-***REMOVED*** @param {?string} tagName - The inline tag that the regexp will match. May contain regexp
-***REMOVED*** characters. If omitted, matches any string.
-***REMOVED*** @param {?string} prefix - A prefix for the regexp. Defaults to an empty string.
-***REMOVED*** @param {?string} suffix - A suffix for the regexp. Defaults to an empty string.
-***REMOVED*** @returns {RegExp} A regular expression that matches the requested inline tag.
-***REMOVED***
+/**
+ * Create a regexp that matches a specific inline tag, or all inline tags.
+ *
+ * @private
+ * @memberof module:jsdoc/tag/inline
+ * @param {?string} tagName - The inline tag that the regexp will match. May contain regexp
+ * characters. If omitted, matches any string.
+ * @param {?string} prefix - A prefix for the regexp. Defaults to an empty string.
+ * @param {?string} suffix - A suffix for the regexp. Defaults to an empty string.
+ * @returns {RegExp} A regular expression that matches the requested inline tag.
+ */
 function regExpFactory(tagName, prefix, suffix) {
     tagName = tagName || '\\S+';
     prefix = prefix || '';
@@ -55,30 +55,30 @@ function regExpFactory(tagName, prefix, suffix) {
     return new RegExp(prefix + '\\{@' + tagName + '\\s+((?:.|\n)+?)\\}' + suffix, 'gi');
 }
 
-***REMOVED***
-***REMOVED*** Check whether a string is an inline tag. You can check for a specific inline tag or for any valid
-***REMOVED*** inline tag.
-***REMOVED***
-***REMOVED*** @param {string} string - The string to check.
-***REMOVED*** @param {?string} tagName - The inline tag to match. May contain regexp characters. If this
-***REMOVED*** parameter is omitted, this method returns `true` for any valid inline tag.
-***REMOVED*** @returns {boolean} Set to `true` if the string is a valid inline tag or `false` in all other
-***REMOVED*** cases.
-***REMOVED***
+/**
+ * Check whether a string is an inline tag. You can check for a specific inline tag or for any valid
+ * inline tag.
+ *
+ * @param {string} string - The string to check.
+ * @param {?string} tagName - The inline tag to match. May contain regexp characters. If this
+ * parameter is omitted, this method returns `true` for any valid inline tag.
+ * @returns {boolean} Set to `true` if the string is a valid inline tag or `false` in all other
+ * cases.
+ */
 exports.isInlineTag = function(string, tagName) {
     return regExpFactory(tagName, '^', '$').test(string);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Replace all instances of multiple inline tags with other text.
-***REMOVED***
-***REMOVED*** @param {string} string - The string in which to replace the inline tags.
-***REMOVED*** @param {Object} replacers - The functions that are used to replace text in the string. The keys
-***REMOVED*** must contain tag names (for example, `link`), and the values must contain functions with the
-***REMOVED*** type {@link module:jsdoc/tag/inline.InlineTagReplacer}.
-***REMOVED*** @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
-***REMOVED*** about the inline tags that were found.
-***REMOVED***
+/**
+ * Replace all instances of multiple inline tags with other text.
+ *
+ * @param {string} string - The string in which to replace the inline tags.
+ * @param {Object} replacers - The functions that are used to replace text in the string. The keys
+ * must contain tag names (for example, `link`), and the values must contain functions with the
+ * type {@link module:jsdoc/tag/inline.InlineTagReplacer}.
+ * @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
+ * about the inline tags that were found.
+ */
 exports.replaceInlineTags = function(string, replacers) {
     var tagInfo = [];
 
@@ -87,7 +87,7 @@ exports.replaceInlineTags = function(string, replacers) {
             completeTag: match,
             tag: tag,
             text: text
-       ***REMOVED*****REMOVED***
+        };
         tagInfo.push(matchedTag);
 
         return replacer(string, matchedTag);
@@ -106,36 +106,36 @@ exports.replaceInlineTags = function(string, replacers) {
     return {
         tags: tagInfo,
         newString: string.trim()
-   ***REMOVED*****REMOVED***
-***REMOVED***
+    };
+};
 
-***REMOVED***
-***REMOVED*** Replace all instances of an inline tag with other text.
-***REMOVED***
-***REMOVED*** @param {string} string - The string in which to replace the inline tag.
-***REMOVED*** @param {string} tag - The name of the inline tag to replace.
-***REMOVED*** @param {module:jsdoc/tag/inline.InlineTagReplacer} replacer - The function that is used to
-***REMOVED*** replace text in the string.
-***REMOVED*** @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
-***REMOVED*** about the inline tags that were found.
-***REMOVED***
+/**
+ * Replace all instances of an inline tag with other text.
+ *
+ * @param {string} string - The string in which to replace the inline tag.
+ * @param {string} tag - The name of the inline tag to replace.
+ * @param {module:jsdoc/tag/inline.InlineTagReplacer} replacer - The function that is used to
+ * replace text in the string.
+ * @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
+ * about the inline tags that were found.
+ */
 exports.replaceInlineTag = function(string, tag, replacer) {
-    var replacers = {***REMOVED***
+    var replacers = {};
     replacers[tag] = replacer;
 
     return exports.replaceInlineTags(string, replacers);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Extract inline tags from a string, replacing them with an empty string.
-***REMOVED***
-***REMOVED*** @param {string} string - The string from which to extract text.
-***REMOVED*** @param {?string} tag - The inline tag to extract.
-***REMOVED*** @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
-***REMOVED*** about the inline tags that were found.
-***REMOVED***
+/**
+ * Extract inline tags from a string, replacing them with an empty string.
+ *
+ * @param {string} string - The string from which to extract text.
+ * @param {?string} tag - The inline tag to extract.
+ * @return {module:jsdoc/tag/inline.InlineTagResult} The updated string, as well as information
+ * about the inline tags that were found.
+ */
 exports.extractInlineTag = function(string, tag) {
     return exports.replaceInlineTag(string, tag, function(str, tagInfo) {
         return str.replace(tagInfo.completeTag, '');
     });
-***REMOVED***
+};

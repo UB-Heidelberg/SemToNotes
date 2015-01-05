@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for storage mechanism sharing.
-***REMOVED***
-***REMOVED*** These tests should be included in tests of any storage mechanism in which
-***REMOVED*** separate mechanism instances share the same underlying storage. Most (if
-***REMOVED*** not all) storage mechanisms should have this property. If the mechanism
-***REMOVED*** employs namespaces, make sure the same namespace is used for both objects.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Unit tests for storage mechanism sharing.
+ *
+ * These tests should be included in tests of any storage mechanism in which
+ * separate mechanism instances share the same underlying storage. Most (if
+ * not all) storage mechanisms should have this property. If the mechanism
+ * employs namespaces, make sure the same namespace is used for both objects.
+ *
+ */
 
 goog.provide('goog.storage.mechanism.mechanismSharingTester');
 

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Methods for annotating occurrences of query terms in text or
-***REMOVED***   in a DOM tree. Adapted from Gmail code.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Methods for annotating occurrences of query terms in text or
+ *   in a DOM tree. Adapted from Gmail code.
+ *
+ */
 
 goog.provide('goog.dom.annotate');
 goog.provide('goog.dom.annotate.AnnotateFn');
@@ -29,35 +29,35 @@ goog.require('goog.dom.safe');
 goog.require('goog.html.SafeHtml');
 
 
-***REMOVED***
-***REMOVED*** A function that takes:
-***REMOVED***   (1) the number of the term that is "hit",
-***REMOVED***   (2) the HTML (search term) to be annotated,
-***REMOVED*** and returns the annotated term as an HTML.
-***REMOVED*** @typedef {function(number, !goog.html.SafeHtml): !goog.html.SafeHtml}
-***REMOVED***
+/**
+ * A function that takes:
+ *   (1) the number of the term that is "hit",
+ *   (2) the HTML (search term) to be annotated,
+ * and returns the annotated term as an HTML.
+ * @typedef {function(number, !goog.html.SafeHtml): !goog.html.SafeHtml}
+ */
 goog.dom.annotate.AnnotateFn;
 
 
-***REMOVED***
-***REMOVED*** Calls {@code annotateFn} for each occurrence of a search term in text nodes
-***REMOVED*** under {@code node}. Returns the number of hits.
-***REMOVED***
-***REMOVED*** @param {Node} node  A DOM node.
-***REMOVED*** @param {Array} terms  An array of [searchTerm, matchWholeWordOnly] tuples.
-***REMOVED***   The matchWholeWordOnly value is a per-term attribute because some terms
-***REMOVED***   may be CJK, while others are not. (For correctness, matchWholeWordOnly
-***REMOVED***   should always be false for CJK terms.).
-***REMOVED*** @param {goog.dom.annotate.AnnotateFn} annotateFn
-***REMOVED*** @param {*=} opt_ignoreCase  Whether to ignore the case of the query
-***REMOVED***   terms when looking for matches.
-***REMOVED*** @param {Array.<string>=} opt_classesToSkip  Nodes with one of these CSS class
-***REMOVED***   names (and its descendants) will be skipped.
-***REMOVED*** @param {number=} opt_maxMs  Number of milliseconds after which this function,
-***REMOVED***   if still annotating, should stop and return.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether any terms were annotated.
-***REMOVED***
+/**
+ * Calls {@code annotateFn} for each occurrence of a search term in text nodes
+ * under {@code node}. Returns the number of hits.
+ *
+ * @param {Node} node  A DOM node.
+ * @param {Array} terms  An array of [searchTerm, matchWholeWordOnly] tuples.
+ *   The matchWholeWordOnly value is a per-term attribute because some terms
+ *   may be CJK, while others are not. (For correctness, matchWholeWordOnly
+ *   should always be false for CJK terms.).
+ * @param {goog.dom.annotate.AnnotateFn} annotateFn
+ * @param {*=} opt_ignoreCase  Whether to ignore the case of the query
+ *   terms when looking for matches.
+ * @param {Array.<string>=} opt_classesToSkip  Nodes with one of these CSS class
+ *   names (and its descendants) will be skipped.
+ * @param {number=} opt_maxMs  Number of milliseconds after which this function,
+ *   if still annotating, should stop and return.
+ *
+ * @return {boolean} Whether any terms were annotated.
+ */
 goog.dom.annotate.annotateTerms = function(node, terms, annotateFn,
                                            opt_ignoreCase,
                                            opt_classesToSkip,
@@ -70,45 +70,45 @@ goog.dom.annotate.annotateTerms = function(node, terms, annotateFn,
   return goog.dom.annotate.annotateTermsInNode_(
       node, terms, annotateFn, opt_ignoreCase, opt_classesToSkip || [],
       stopTime, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The maximum recursion depth allowed. Any DOM nodes deeper than this are
-***REMOVED*** ignored.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The maximum recursion depth allowed. Any DOM nodes deeper than this are
+ * ignored.
+ * @type {number}
+ * @private
+ */
 goog.dom.annotate.MAX_RECURSION_ = 200;
 
 
-***REMOVED***
-***REMOVED*** The node types whose descendants should not be affected by annotation.
-***REMOVED*** @type {Array}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The node types whose descendants should not be affected by annotation.
+ * @type {Array}
+ * @private
+ */
 goog.dom.annotate.NODES_TO_SKIP_ = ['SCRIPT', 'STYLE', 'TEXTAREA'];
 
 
-***REMOVED***
-***REMOVED*** Recursive helper function.
-***REMOVED***
-***REMOVED*** @param {Node} node  A DOM node.
-***REMOVED*** @param {Array} terms  An array of [searchTerm, matchWholeWordOnly] tuples.
-***REMOVED***     The matchWholeWordOnly value is a per-term attribute because some terms
-***REMOVED***     may be CJK, while others are not. (For correctness, matchWholeWordOnly
-***REMOVED***     should always be false for CJK terms.).
-***REMOVED*** @param {goog.dom.annotate.AnnotateFn} annotateFn
-***REMOVED*** @param {*} ignoreCase  Whether to ignore the case of the query terms
-***REMOVED***     when looking for matches.
-***REMOVED*** @param {Array.<string>} classesToSkip  Nodes with one of these CSS class
-***REMOVED***     names will be skipped (as will their descendants).
-***REMOVED*** @param {number} stopTime  Deadline for annotation operation (ignored if 0).
-***REMOVED*** @param {number} recursionLevel  How deep this recursive call is; pass the
-***REMOVED***     value 0 in the initial call.
-***REMOVED*** @return {boolean} Whether any terms were annotated.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Recursive helper function.
+ *
+ * @param {Node} node  A DOM node.
+ * @param {Array} terms  An array of [searchTerm, matchWholeWordOnly] tuples.
+ *     The matchWholeWordOnly value is a per-term attribute because some terms
+ *     may be CJK, while others are not. (For correctness, matchWholeWordOnly
+ *     should always be false for CJK terms.).
+ * @param {goog.dom.annotate.AnnotateFn} annotateFn
+ * @param {*} ignoreCase  Whether to ignore the case of the query terms
+ *     when looking for matches.
+ * @param {Array.<string>} classesToSkip  Nodes with one of these CSS class
+ *     names will be skipped (as will their descendants).
+ * @param {number} stopTime  Deadline for annotation operation (ignored if 0).
+ * @param {number} recursionLevel  How deep this recursive call is; pass the
+ *     value 0 in the initial call.
+ * @return {boolean} Whether any terms were annotated.
+ * @private
+ */
 goog.dom.annotate.annotateTermsInNode_ =
     function(node, terms, annotateFn, ignoreCase, classesToSkip,
              stopTime, recursionLevel) {
@@ -165,43 +165,43 @@ goog.dom.annotate.annotateTermsInNode_ =
   }
 
   return annotated;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Regular expression that matches non-word characters.
-***REMOVED***
-***REMOVED*** Performance note: Testing a one-character string using this regex is as fast
-***REMOVED*** as the equivalent string test ("a-zA-Z0-9_".indexOf(c) < 0), give or take a
-***REMOVED*** few percent. (The regex is about 5% faster in IE 6 and about 4% slower in
-***REMOVED*** Firefox 1.5.) If performance becomes critical, it may be better to convert
-***REMOVED*** the character to a numerical char code and check whether it falls in the
-***REMOVED*** word character ranges. A quick test suggests that could be 33% faster.
-***REMOVED***
-***REMOVED*** @type {RegExp}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Regular expression that matches non-word characters.
+ *
+ * Performance note: Testing a one-character string using this regex is as fast
+ * as the equivalent string test ("a-zA-Z0-9_".indexOf(c) < 0), give or take a
+ * few percent. (The regex is about 5% faster in IE 6 and about 4% slower in
+ * Firefox 1.5.) If performance becomes critical, it may be better to convert
+ * the character to a numerical char code and check whether it falls in the
+ * word character ranges. A quick test suggests that could be 33% faster.
+ *
+ * @type {RegExp}
+ * @private
+ */
 goog.dom.annotate.NONWORD_RE_ = /\W/;
 
 
-***REMOVED***
-***REMOVED*** Annotates occurrences of query terms in plain text. This process consists of
-***REMOVED*** identifying all occurrences of all query terms, calling a provided function
-***REMOVED*** to get the appropriate replacement HTML for each occurrence, and
-***REMOVED*** HTML-escaping all the text.
-***REMOVED***
-***REMOVED*** @param {string} text  The plain text to be searched.
-***REMOVED*** @param {Array} terms  An array of
-***REMOVED***   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
-***REMOVED***   The matchWholeWordOnly value is a per-term attribute because some terms
-***REMOVED***   may be CJK, while others are not. (For correctness, matchWholeWordOnly
-***REMOVED***   should always be false for CJK terms.).
-***REMOVED*** @param {goog.dom.annotate.AnnotateFn} annotateFn
-***REMOVED*** @param {*=} opt_ignoreCase  Whether to ignore the case of the query
-***REMOVED***   terms when looking for matches.
-***REMOVED*** @return {goog.html.SafeHtml} The HTML equivalent of {@code text} with terms
-***REMOVED***   annotated, or null if the text did not contain any of the terms.
-***REMOVED***
+/**
+ * Annotates occurrences of query terms in plain text. This process consists of
+ * identifying all occurrences of all query terms, calling a provided function
+ * to get the appropriate replacement HTML for each occurrence, and
+ * HTML-escaping all the text.
+ *
+ * @param {string} text  The plain text to be searched.
+ * @param {Array} terms  An array of
+ *   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
+ *   The matchWholeWordOnly value is a per-term attribute because some terms
+ *   may be CJK, while others are not. (For correctness, matchWholeWordOnly
+ *   should always be false for CJK terms.).
+ * @param {goog.dom.annotate.AnnotateFn} annotateFn
+ * @param {*=} opt_ignoreCase  Whether to ignore the case of the query
+ *   terms when looking for matches.
+ * @return {goog.html.SafeHtml} The HTML equivalent of {@code text} with terms
+ *   annotated, or null if the text did not contain any of the terms.
+ */
 goog.dom.annotate.annotateText = function(text, terms, annotateFn,
                                           opt_ignoreCase) {
   if (opt_ignoreCase) {
@@ -209,29 +209,29 @@ goog.dom.annotate.annotateText = function(text, terms, annotateFn,
   }
   return goog.dom.annotate.helpAnnotateText_(text, terms, annotateFn,
                                              opt_ignoreCase);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Annotates occurrences of query terms in plain text. This process consists of
-***REMOVED*** identifying all occurrences of all query terms, calling a provided function
-***REMOVED*** to get the appropriate replacement HTML for each occurrence, and
-***REMOVED*** HTML-escaping all the text.
-***REMOVED***
-***REMOVED*** @param {string} text  The plain text to be searched.
-***REMOVED*** @param {Array} terms  An array of
-***REMOVED***   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
-***REMOVED***   If {@code ignoreCase} is true, each search term must already be lowercase.
-***REMOVED***   The matchWholeWordOnly value is a per-term attribute because some terms
-***REMOVED***   may be CJK, while others are not. (For correctness, matchWholeWordOnly
-***REMOVED***   should always be false for CJK terms.).
-***REMOVED*** @param {goog.dom.annotate.AnnotateFn} annotateFn
-***REMOVED*** @param {*} ignoreCase  Whether to ignore the case of the query terms
-***REMOVED***   when looking for matches.
-***REMOVED*** @return {goog.html.SafeHtml} The HTML equivalent of {@code text} with terms
-***REMOVED***   annotated, or null if the text did not contain any of the terms.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Annotates occurrences of query terms in plain text. This process consists of
+ * identifying all occurrences of all query terms, calling a provided function
+ * to get the appropriate replacement HTML for each occurrence, and
+ * HTML-escaping all the text.
+ *
+ * @param {string} text  The plain text to be searched.
+ * @param {Array} terms  An array of
+ *   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
+ *   If {@code ignoreCase} is true, each search term must already be lowercase.
+ *   The matchWholeWordOnly value is a per-term attribute because some terms
+ *   may be CJK, while others are not. (For correctness, matchWholeWordOnly
+ *   should always be false for CJK terms.).
+ * @param {goog.dom.annotate.AnnotateFn} annotateFn
+ * @param {*} ignoreCase  Whether to ignore the case of the query terms
+ *   when looking for matches.
+ * @return {goog.html.SafeHtml} The HTML equivalent of {@code text} with terms
+ *   annotated, or null if the text did not contain any of the terms.
+ * @private
+ */
 goog.dom.annotate.helpAnnotateText_ = function(text, terms, annotateFn,
                                                ignoreCase) {
   var hit = false;
@@ -333,18 +333,18 @@ goog.dom.annotate.helpAnnotateText_ = function(text, terms, annotateFn,
   } else {
     return null;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts terms to lowercase.
-***REMOVED***
-***REMOVED*** @param {Array} terms  An array of
-***REMOVED***   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
-***REMOVED*** @return {!Array}  An array of
-***REMOVED***   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts terms to lowercase.
+ *
+ * @param {Array} terms  An array of
+ *   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
+ * @return {!Array}  An array of
+ *   [{string} searchTerm, {boolean} matchWholeWordOnly] tuples.
+ * @private
+ */
 goog.dom.annotate.lowercaseTerms_ = function(terms) {
   var lowercaseTerms = [];
   for (var i = 0; i < terms.length; ++i) {
@@ -352,4 +352,4 @@ goog.dom.annotate.lowercaseTerms_ = function(terms) {
     lowercaseTerms[i] = [term[0].toLowerCase(), term[1]];
   }
   return lowercaseTerms;
-***REMOVED***
+};

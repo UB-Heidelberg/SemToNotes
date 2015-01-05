@@ -13,8 +13,8 @@ See the COPYING file for details.
     if (typeof goog == 'undefined') {
       alert('Closure failed to load');
     } else {
-     ***REMOVED*****REMOVED***
-     ***REMOVED*****REMOVED***
+      goog.require('goog.events');
+      goog.require('goog.events.EventType');
       goog.require('goog.positioning.ClientPosition');
       goog.require('goog.positioning.Corner');
       goog.require('goog.positioning.AnchoredViewportPosition');
@@ -122,8 +122,8 @@ See the COPYING file for details.
     popup.setAutoHide(true);
     var showingBecauseOfBox = false;
 
-  ***REMOVED***window, goog.events.EventType.RESIZE, onResize);
-  ***REMOVED***document, goog.events.EventType.MOUSEMOVE, onMouseMove);
+    goog.events.listen(window, goog.events.EventType.RESIZE, onResize);
+    goog.events.listen(document, goog.events.EventType.MOUSEMOVE, onMouseMove);
     // goog.events.listen(absBox, goog.events.EventType.MOUSEOUT,
     // onAbsBoxMouseOut);
 

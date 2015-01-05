@@ -1,4 +1,4 @@
-/*global beforeEach, describe, expect, it, jasmine***REMOVED***
+/*global beforeEach, describe, expect, it, jasmine */
 describe('jsdoc/src/filter', function() {
     var filter = require('jsdoc/src/filter');
     var path = require('jsdoc/path');
@@ -70,7 +70,7 @@ describe('jsdoc/src/filter', function() {
 
             it('should contain the regexp passed to the constructor', function() {
                 var regExp = new RegExp('^foo$');
-                var options = {***REMOVED***
+                var options = {};
                 options[name] = regExp;
                 myFilter = new filter.Filter(options);
 
@@ -79,7 +79,7 @@ describe('jsdoc/src/filter', function() {
 
             it('should contain a regexp if a string was passed to the constructor', function() {
                 var regExpString = '^foo$';
-                var options = {***REMOVED***
+                var options = {};
                 options[name] = regExpString;
                 myFilter = new filter.Filter(options);
 

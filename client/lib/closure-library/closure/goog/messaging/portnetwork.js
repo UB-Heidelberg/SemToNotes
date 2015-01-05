@@ -12,67 +12,67 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An interface for classes that connect a collection of HTML5
-***REMOVED*** message-passing entities ({@link MessagePort}s, {@link Worker}s, and
-***REMOVED*** {@link Window}s) and allow them to seamlessly communicate with one another.
-***REMOVED***
-***REMOVED*** Conceptually, a PortNetwork is a collection of JS contexts, such as pages (in
-***REMOVED*** or outside of iframes) or web workers. Each context has a unique name, and
-***REMOVED*** each one can communicate with any of the others in the same network. This
-***REMOVED*** communication takes place through a {@link goog.messaging.PortChannel} that
-***REMOVED*** is retrieved via {#link goog.messaging.PortNetwork#dial}.
-***REMOVED***
-***REMOVED*** One context (usually the main page) has a
-***REMOVED*** {@link goog.messaging.PortOperator}, which is in charge of connecting each
-***REMOVED*** context to each other context. All other contexts have
-***REMOVED*** {@link goog.messaging.PortCaller}s which connect to the operator.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview An interface for classes that connect a collection of HTML5
+ * message-passing entities ({@link MessagePort}s, {@link Worker}s, and
+ * {@link Window}s) and allow them to seamlessly communicate with one another.
+ *
+ * Conceptually, a PortNetwork is a collection of JS contexts, such as pages (in
+ * or outside of iframes) or web workers. Each context has a unique name, and
+ * each one can communicate with any of the others in the same network. This
+ * communication takes place through a {@link goog.messaging.PortChannel} that
+ * is retrieved via {#link goog.messaging.PortNetwork#dial}.
+ *
+ * One context (usually the main page) has a
+ * {@link goog.messaging.PortOperator}, which is in charge of connecting each
+ * context to each other context. All other contexts have
+ * {@link goog.messaging.PortCaller}s which connect to the operator.
+ *
+ */
 
 goog.provide('goog.messaging.PortNetwork');
 
 
 
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED***
-goog.messaging.PortNetwork = function() {***REMOVED***
+/**
+ * @interface
+ */
+goog.messaging.PortNetwork = function() {};
 
 
-***REMOVED***
-***REMOVED*** Returns a message channel that communicates with the named context. If no
-***REMOVED*** such port exists, an error will either be thrown immediately or after a round
-***REMOVED*** trip with the operator, depending on whether this pool is the operator or a
-***REMOVED*** caller.
-***REMOVED***
-***REMOVED*** If context A calls dial('B') and context B calls dial('A'), the two
-***REMOVED*** ports returned will be connected to one another.
-***REMOVED***
-***REMOVED*** @param {string} name The name of the context to get.
-***REMOVED*** @return {goog.messaging.MessageChannel} The channel communicating with the
-***REMOVED***     given context. This is either a {@link goog.messaging.PortChannel} or a
-***REMOVED***     decorator around a PortChannel, so it's safe to send {@link MessagePorts}
-***REMOVED***     across it. This will be disposed along with the PortNetwork.
-***REMOVED***
-goog.messaging.PortNetwork.prototype.dial = function(name) {***REMOVED***
+/**
+ * Returns a message channel that communicates with the named context. If no
+ * such port exists, an error will either be thrown immediately or after a round
+ * trip with the operator, depending on whether this pool is the operator or a
+ * caller.
+ *
+ * If context A calls dial('B') and context B calls dial('A'), the two
+ * ports returned will be connected to one another.
+ *
+ * @param {string} name The name of the context to get.
+ * @return {goog.messaging.MessageChannel} The channel communicating with the
+ *     given context. This is either a {@link goog.messaging.PortChannel} or a
+ *     decorator around a PortChannel, so it's safe to send {@link MessagePorts}
+ *     across it. This will be disposed along with the PortNetwork.
+ */
+goog.messaging.PortNetwork.prototype.dial = function(name) {};
 
 
-***REMOVED***
-***REMOVED*** The name of the service exported by the operator for creating a connection
-***REMOVED*** between two callers.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The name of the service exported by the operator for creating a connection
+ * between two callers.
+ *
+ * @type {string}
+ * @const
+ */
 goog.messaging.PortNetwork.REQUEST_CONNECTION_SERVICE = 'requestConnection';
 
 
-***REMOVED***
-***REMOVED*** The name of the service exported by the callers for adding a connection to
-***REMOVED*** another context.
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @const
-***REMOVED***
+/**
+ * The name of the service exported by the callers for adding a connection to
+ * another context.
+ *
+ * @type {string}
+ * @const
+ */
 goog.messaging.PortNetwork.GRANT_CONNECTION_SERVICE = 'grantConnection';

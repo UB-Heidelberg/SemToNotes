@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.testing.i18n.asserts.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.testing.i18n.asserts.
+ */
 
 goog.provide('goog.testing.i18n.assertsTest');
 goog.setTestOnly('goog.testing.i18n.assertsTest');

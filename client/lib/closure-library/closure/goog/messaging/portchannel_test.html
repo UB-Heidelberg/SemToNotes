@@ -41,7 +41,7 @@ var asyncTestCase = goog.testing.AsyncTestCase.createAndInstall();
 var timer;
 
 // Use a relatively long timeout because workers can take a while to start up.
-asyncTestCase.stepTimeout = 3***REMOVED*** 1000;
+asyncTestCase.stepTimeout = 3 * 1000;
 
 function setUpPage() {
   if (!('Worker' in goog.global)) {
@@ -71,7 +71,7 @@ function tearDown() {
 }
 
 function makeMessage(serviceName, payload) {
-  var msg = {'serviceName': serviceName, 'payload': payload***REMOVED***
+  var msg = {'serviceName': serviceName, 'payload': payload};
   msg[goog.messaging.PortChannel.FLAG] = true;
   if (goog.messaging.PortChannel.REQUIRES_SERIALIZATION_) {
     msg = goog.json.serialize(msg);
@@ -176,7 +176,7 @@ function testReceiveNonChannelMessageWithFalseFlag() {
   var body = {
     serviceName: 'foobar',
     payload: 'this is a payload'
- ***REMOVED*****REMOVED***
+  };
   body[goog.messaging.PortChannel.FLAG] = false;
   receiveNonChannelMessage(body);
 }
@@ -342,27 +342,27 @@ function testWindowWontReceiveFromWrongOrigin() {
   }, 'testdata/portchannel_wrong_origin_inner.html');
 }
 
-***REMOVED***
-***REMOVED*** Assert that two HTML5 MessagePorts are entangled by posting messages from
-***REMOVED*** each to the other.
-***REMOVED***
-***REMOVED*** @param {!MessagePort} port1
-***REMOVED*** @param {!MessagePort} port2
-***REMOVED*** @param {function()} callback Called when the assertion is finished.
-***REMOVED***
+/**
+ * Assert that two HTML5 MessagePorts are entangled by posting messages from
+ * each to the other.
+ *
+ * @param {!MessagePort} port1
+ * @param {!MessagePort} port2
+ * @param {function()} callback Called when the assertion is finished.
+ */
 function assertPortsEntangled(port1, port2, callback) {
   port1.onmessage = function(e) {
     assertEquals('port 2 should send messages to port 1',
                  'port2 to port1', e.data);
     callback();
- ***REMOVED*****REMOVED***
+  };
 
   port2.onmessage = function(e) {
     assertEquals('port 1 should send messages to port 2',
                  'port1 to port2', e.data);
     port2.postMessage('port2 to port1');
     asyncTestCase.waitForAsync('port 1 receiving message');
- ***REMOVED*****REMOVED***
+  };
 
   port1.postMessage('port1 to port2');
   asyncTestCase.waitForAsync('port 2 receiving message');

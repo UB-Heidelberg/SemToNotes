@@ -83,17 +83,17 @@ _INDENTED_SOURCE = """\
   boo.foo.woo = function() {
     var bar = 3;
     return true;
- ***REMOVED*****REMOVED***
+  };
 """
 
 _EXPECTED_INDENTED_SOURCE = """\
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @return
- ***REMOVED*****REMOVED***
+  /**
+   * @return
+   */
   boo.foo.woo = function() {
     var bar = 3;
     return true;
- ***REMOVED*****REMOVED***
+  };
 """
 
 
@@ -104,22 +104,22 @@ _TEST_SOURCE = """\
 goog.foo.bar = function (aaa, bbb, ccc) {
   // Function comments.
   return;
-***REMOVED***
+};
 """
 
 _EXPECTED_TEST_SOURCE = """\
 
 //  Random comment.
 
-***REMOVED***
-***REMOVED*** @param {} aaa
-***REMOVED*** @param {} bbb
-***REMOVED*** @param {} ccc
-***REMOVED***
+/**
+ * @param {} aaa
+ * @param {} bbb
+ * @param {} ccc
+ */
 goog.foo.bar = function (aaa, bbb, ccc) {
   // Function comments.
   return;
-***REMOVED***
+};
 """
 
 _ODD_NEWLINES_SOURCE = """\
@@ -137,15 +137,15 @@ qux
 bbb, ccc) {
   // Function comments.
   return;
-***REMOVED***
+};
 """
 
 _EXPECTED_ODD_NEWLINES_SOURCE = """\
-***REMOVED***
-***REMOVED*** @param {} aaa
-***REMOVED*** @param {} bbb
-***REMOVED*** @param {} ccc
-***REMOVED***
+/**
+ * @param {} aaa
+ * @param {} bbb
+ * @param {} ccc
+ */
 goog.
 foo.
 bar
@@ -160,7 +160,7 @@ qux
 bbb, ccc) {
   // Function comments.
   return;
-***REMOVED***
+};
 """
 
 if __name__ == '__main__':

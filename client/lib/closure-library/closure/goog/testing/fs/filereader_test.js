@@ -17,7 +17,7 @@ goog.setTestOnly('goog.testing.fs.FileReaderTest');
 
 goog.require('goog.Timer');
 goog.require('goog.async.Deferred');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fs.Error');
 goog.require('goog.fs.FileReader');
 goog.require('goog.fs.FileSaver');

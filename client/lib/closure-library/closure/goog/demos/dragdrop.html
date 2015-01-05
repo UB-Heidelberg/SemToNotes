@@ -117,11 +117,11 @@ List 2 (source only, can be dropped on list 1 or button 2)
 
   FooDrag.prototype.createDragElement = function(sourceEl) {
     return goog.dom.createDom('div', 'foo', 'Custom drag element');
- ***REMOVED*****REMOVED***
+  };
 
   FooDrag.prototype.getDragElementPosition = function(sourceEl, el, event) {
     return new goog.math.Coordinate(event.clientX, event.clientY);
- ***REMOVED*****REMOVED***
+  };
 
 
   var button1, button2, list1, list2, i, len, nodes, el;
@@ -129,7 +129,7 @@ List 2 (source only, can be dropped on list 1 or button 2)
   // Create drop targets (either by id or element reference)
   button1 = new FooDrag(
     document.getElementById('button1'), 'button 1'
-***REMOVED***
+  );
   button2 = new goog.fx.DragDrop('button2', 'button 2');
 
   // Create drag clusters (multiple elements shares the same
@@ -184,30 +184,30 @@ List 2 (source only, can be dropped on list 1 or button 2)
   list2.init();
 
   // Set up event handlers
-***REMOVED***list1, 'dragover', dragOver);
-***REMOVED***list1, 'dragout', dragOut);
-***REMOVED***list1, 'drop', dropList1);
-***REMOVED***list1, 'drag', dragList1);
-***REMOVED***list1, 'dragstart', dragStart);
-***REMOVED***list1, 'dragend', dragEnd);
+  goog.events.listen(list1, 'dragover', dragOver);
+  goog.events.listen(list1, 'dragout', dragOut);
+  goog.events.listen(list1, 'drop', dropList1);
+  goog.events.listen(list1, 'drag', dragList1);
+  goog.events.listen(list1, 'dragstart', dragStart);
+  goog.events.listen(list1, 'dragend', dragEnd);
 
-***REMOVED***list2, 'dragover', dragOver);
-***REMOVED***list2, 'dragout', dragOut);
-***REMOVED***list2, 'drop', drop);
-***REMOVED***list2, 'dragstart', dragStart);
-***REMOVED***list2, 'dragend', dragEnd);
+  goog.events.listen(list2, 'dragover', dragOver);
+  goog.events.listen(list2, 'dragout', dragOut);
+  goog.events.listen(list2, 'drop', drop);
+  goog.events.listen(list2, 'dragstart', dragStart);
+  goog.events.listen(list2, 'dragend', dragEnd);
 
-***REMOVED***button1, 'dragover', dragOver);
-***REMOVED***button1, 'dragout', dragOut);
-***REMOVED***button1, 'drop', drop);
-***REMOVED***button1, 'dragstart', dragStart);
-***REMOVED***button1, 'dragend', dragEnd);
+  goog.events.listen(button1, 'dragover', dragOver);
+  goog.events.listen(button1, 'dragout', dragOut);
+  goog.events.listen(button1, 'drop', drop);
+  goog.events.listen(button1, 'dragstart', dragStart);
+  goog.events.listen(button1, 'dragend', dragEnd);
 
-***REMOVED***button2, 'dragover', dragOver);
-***REMOVED***button2, 'dragout', dragOut);
-***REMOVED***button2, 'drop', drop);
+  goog.events.listen(button2, 'dragover', dragOver);
+  goog.events.listen(button2, 'dragout', dragOut);
+  goog.events.listen(button2, 'drop', drop);
 
-***REMOVED***document.getElementById('button1'), 'click',
+  goog.events.listen(document.getElementById('button1'), 'click',
                      function(e) { alert('click'); });
 
   function dragOver(event) {

@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An adaptor from a Result to a Deferred.
-***REMOVED***
-***REMOVED*** TODO (vbhasin): cancel() support.
-***REMOVED*** TODO (vbhasin): See if we can make this a static.
-***REMOVED*** TODO (gboyer, vbhasin): Rename to "Adapter" once this graduates; this is the
-***REMOVED*** proper programmer spelling.
-***REMOVED***
+/**
+ * @fileoverview An adaptor from a Result to a Deferred.
+ *
+ * TODO (vbhasin): cancel() support.
+ * TODO (vbhasin): See if we can make this a static.
+ * TODO (gboyer, vbhasin): Rename to "Adapter" once this graduates; this is the
+ * proper programmer spelling.
+ */
 
 
 goog.provide('goog.result.DeferredAdaptor');
@@ -30,15 +30,15 @@ goog.require('goog.result.Result');
 
 
 
-***REMOVED***
-***REMOVED*** An adaptor from Result to a Deferred, for use with existing Deferred chains.
-***REMOVED***
-***REMOVED*** @param {!goog.result.Result} result A result.
-***REMOVED***
-***REMOVED*** @extends {goog.async.Deferred}
-***REMOVED*** @final
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
+/**
+ * An adaptor from Result to a Deferred, for use with existing Deferred chains.
+ *
+ * @param {!goog.result.Result} result A result.
+ * @constructor
+ * @extends {goog.async.Deferred}
+ * @final
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
 goog.result.DeferredAdaptor = function(result) {
   goog.result.DeferredAdaptor.base(this, 'constructor');
   goog.result.wait(result, function(result) {
@@ -55,5 +55,5 @@ goog.result.DeferredAdaptor = function(result) {
       }
     }
   }, this);
-***REMOVED***
+};
 goog.inherits(goog.result.DeferredAdaptor, goog.async.Deferred);

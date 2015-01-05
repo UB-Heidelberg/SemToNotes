@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a fake storage mechanism for testing.
-***REMOVED***
+/**
+ * @fileoverview Provides a fake storage mechanism for testing.
+ */
 
 goog.provide('goog.testing.storage.FakeMechanism');
 goog.setTestOnly('goog.testing.storage.FakeMechanism');
@@ -24,44 +24,44 @@ goog.require('goog.structs.Map');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a fake iterable mechanism.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.storage.mechanism.IterableMechanism}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a fake iterable mechanism.
+ *
+ * @constructor
+ * @extends {goog.storage.mechanism.IterableMechanism}
+ * @final
+ */
 goog.testing.storage.FakeMechanism = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @type {goog.structs.Map}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * @type {goog.structs.Map}
+   * @private
+   */
   this.storage_ = new goog.structs.Map();
-***REMOVED***
+};
 goog.inherits(goog.testing.storage.FakeMechanism,
     goog.storage.mechanism.IterableMechanism);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.storage.FakeMechanism.prototype.set = function(key, value) {
   this.storage_.set(key, value);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.storage.FakeMechanism.prototype.get = function(key) {
-  return***REMOVED*****REMOVED*** @type {?string}***REMOVED*** (
-      this.storage_.get(key, null /* default value***REMOVED***));
-***REMOVED***
+  return /** @type {?string} */ (
+      this.storage_.get(key, null /* default value */));
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.storage.FakeMechanism.prototype.remove = function(key) {
   this.storage_.remove(key);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.testing.storage.FakeMechanism.prototype.__iterator__ = function(opt_keys) {
   return this.storage_.__iterator__(opt_keys);
-***REMOVED***
+};

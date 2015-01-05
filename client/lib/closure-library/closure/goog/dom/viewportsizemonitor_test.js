@@ -16,10 +16,10 @@ goog.provide('goog.dom.ViewportSizeMonitorTest');
 goog.setTestOnly('goog.dom.ViewportSizeMonitorTest');
 
 goog.require('goog.dom.ViewportSizeMonitor');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.Event');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.math.Size');
 goog.require('goog.testing.MockClock');
 goog.require('goog.testing.PropertyReplacer');
@@ -36,7 +36,7 @@ goog.inherits(FakeWindow, goog.events.EventTarget);
 
 FakeWindow.prototype.fireResize = function() {
   return this.dispatchEvent(new FakeResizeEvent());
-***REMOVED***
+};
 
 
 function FakeResizeEvent(obj) {
@@ -58,11 +58,11 @@ function setViewportSize(w, h, fireEvent) {
 }
 
 
-var eventWasFired = {***REMOVED***
+var eventWasFired = {};
 function getListenerFn(id) {
   return function() {
     propertyReplacer.set(eventWasFired, id, true);
- ***REMOVED*****REMOVED***
+  };
 }
 
 
@@ -89,7 +89,7 @@ function tearDown() {
 
 
 function testResizeEvent() {
-***REMOVED***viewportSizeMonitor, goog.events.EventType.RESIZE,
+  goog.events.listen(viewportSizeMonitor, goog.events.EventType.RESIZE,
       getListenerFn(1));
   assertFalse('Listener should not be called if window was not resized',
       listenerWasCalled(1));

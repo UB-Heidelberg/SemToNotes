@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Typedefs for working with dates.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview Typedefs for working with dates.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ */
 
 goog.provide('goog.date.DateLike');
 
 
-***REMOVED***
-***REMOVED*** @typedef {(Date|goog.date.Date)}
-***REMOVED***
+/**
+ * @typedef {(Date|goog.date.Date)}
+ */
 goog.date.DateLike;

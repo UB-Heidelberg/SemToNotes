@@ -12,45 +12,45 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines the collection interface.
-***REMOVED***
-***REMOVED*** @author nnaze@google.com (Nathan Naze)
-***REMOVED***
+/**
+ * @fileoverview Defines the collection interface.
+ *
+ * @author nnaze@google.com (Nathan Naze)
+ */
 
 goog.provide('goog.structs.Collection');
 
 
 
-***REMOVED***
-***REMOVED*** An interface for a collection of values.
-***REMOVED*** @interface
-***REMOVED*** @template T
-***REMOVED***
-goog.structs.Collection = function() {***REMOVED***
+/**
+ * An interface for a collection of values.
+ * @interface
+ * @template T
+ */
+goog.structs.Collection = function() {};
 
 
-***REMOVED***
-***REMOVED*** @param {T} value Value to add to the collection.
-***REMOVED***
+/**
+ * @param {T} value Value to add to the collection.
+ */
 goog.structs.Collection.prototype.add;
 
 
-***REMOVED***
-***REMOVED*** @param {T} value Value to remove from the collection.
-***REMOVED***
+/**
+ * @param {T} value Value to remove from the collection.
+ */
 goog.structs.Collection.prototype.remove;
 
 
-***REMOVED***
-***REMOVED*** @param {T} value Value to find in the collection.
-***REMOVED*** @return {boolean} Whether the collection contains the specified value.
-***REMOVED***
+/**
+ * @param {T} value Value to find in the collection.
+ * @return {boolean} Whether the collection contains the specified value.
+ */
 goog.structs.Collection.prototype.contains;
 
 
-***REMOVED***
-***REMOVED*** @return {number} The number of values stored in the collection.
-***REMOVED***
+/**
+ * @return {number} The number of values stored in the collection.
+ */
 goog.structs.Collection.prototype.getCount;
 

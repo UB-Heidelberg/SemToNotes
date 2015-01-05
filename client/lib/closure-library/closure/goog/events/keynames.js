@@ -12,31 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Constant declarations for common key codes.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Constant declarations for common key codes.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.events.KeyNames');
 
 
-***REMOVED***
-***REMOVED*** Key names for common characters. These should be used with keyup/keydown
-***REMOVED*** events, since the .keyCode property on those is meant to indicate the
-***REMOVED******REMOVED***physical key* the user held down on the keyboard. Hence the mapping uses
-***REMOVED*** only the unshifted version of each key (e.g. no '#', since that's shift+3).
-***REMOVED*** Keypress events on the other hand generate (mostly) ASCII codes since they
-***REMOVED*** correspond to***REMOVED***characters* the user typed.
-***REMOVED***
-***REMOVED*** For further reference: http://unixpapa.com/js/key.html
-***REMOVED***
-***REMOVED*** This list is not localized and therefore some of the key codes are not
-***REMOVED*** correct for non-US keyboard layouts.
-***REMOVED***
-***REMOVED*** @see goog.events.KeyCodes
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Key names for common characters. These should be used with keyup/keydown
+ * events, since the .keyCode property on those is meant to indicate the
+ * *physical key* the user held down on the keyboard. Hence the mapping uses
+ * only the unshifted version of each key (e.g. no '#', since that's shift+3).
+ * Keypress events on the other hand generate (mostly) ASCII codes since they
+ * correspond to *characters* the user typed.
+ *
+ * For further reference: http://unixpapa.com/js/key.html
+ *
+ * This list is not localized and therefore some of the key codes are not
+ * correct for non-US keyboard layouts.
+ *
+ * @see goog.events.KeyCodes
+ * @enum {string}
+ */
 goog.events.KeyNames = {
   8: 'backspace',
   9: 'tab',
@@ -136,4 +136,4 @@ goog.events.KeyNames = {
   221: 'close-square-bracket',
   222: 'single-quote',
   224: 'win'
-***REMOVED***
+};

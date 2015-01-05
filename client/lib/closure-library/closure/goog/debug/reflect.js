@@ -12,69 +12,69 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview JavaScript reflection tools. They should only be used for
-***REMOVED*** debugging non-compiled code or tests, because there is no guarantee that
-***REMOVED*** they work consistently in all browsers.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview JavaScript reflection tools. They should only be used for
+ * debugging non-compiled code or tests, because there is no guarantee that
+ * they work consistently in all browsers.
+ *
+ */
 
 goog.provide('goog.debug.reflect');
 
 
-***REMOVED***
-***REMOVED*** Maps the unique id of the known constructors to their full names.
-***REMOVED*** Initialized lazily.
-***REMOVED*** @type {Object.<number, string>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Maps the unique id of the known constructors to their full names.
+ * Initialized lazily.
+ * @type {Object.<number, string>}
+ * @private
+ */
 goog.debug.reflect.typeMap_ = null;
 
 
-***REMOVED***
-***REMOVED*** List of all known constructors. Initialized lazily.
-***REMOVED*** @type {Array.<!Function>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * List of all known constructors. Initialized lazily.
+ * @type {Array.<!Function>}
+ * @private
+ */
 goog.debug.reflect.constructors_ = null;
 
 
-***REMOVED***
-***REMOVED*** Copy of {@code Object.prototype.toString} to use if it is overridden later.
-***REMOVED*** Although saving the original {@code toString} somewhat protects against
-***REMOVED*** third-party libraries which touch {@code Object.prototype}, the actual goal
-***REMOVED*** of this assignment is to allow overriding that method, thus more debug
-***REMOVED*** information can be exposed about objects.
-***REMOVED*** See {@link goog.debug.reflect.typeOf}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Copy of {@code Object.prototype.toString} to use if it is overridden later.
+ * Although saving the original {@code toString} somewhat protects against
+ * third-party libraries which touch {@code Object.prototype}, the actual goal
+ * of this assignment is to allow overriding that method, thus more debug
+ * information can be exposed about objects.
+ * See {@link goog.debug.reflect.typeOf}.
+ * @private
+ */
 goog.debug.reflect.toString_ = Object.prototype.toString;
 
 
-***REMOVED***
-***REMOVED*** Registers a type which will be recognized by goog.debug.reflect.typeOf.
-***REMOVED*** @param {string} name Full name of the type.
-***REMOVED*** @param {!Function} ctor The constructor.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Registers a type which will be recognized by goog.debug.reflect.typeOf.
+ * @param {string} name Full name of the type.
+ * @param {!Function} ctor The constructor.
+ * @private
+ */
 goog.debug.reflect.registerType_ = function(name, ctor) {
   goog.debug.reflect.constructors_.push(ctor);
   goog.debug.reflect.typeMap_[goog.getUid(ctor)] = name;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds all known constructors to the type registry.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Adds all known constructors to the type registry.
+ * @private
+ */
 goog.debug.reflect.init_ = function() {
   if (goog.debug.reflect.typeMap_) {
     return;
   }
 
-  goog.debug.reflect.typeMap_ = {***REMOVED***
+  goog.debug.reflect.typeMap_ = {};
   goog.debug.reflect.constructors_ = [];
-  var implicitNs = goog.getObjectByName('goog.implicitNamespaces_') || {***REMOVED***
+  var implicitNs = goog.getObjectByName('goog.implicitNamespaces_') || {};
 
   for (var ns in implicitNs) {
     if (implicitNs.hasOwnProperty(ns)) {
@@ -100,14 +100,14 @@ goog.debug.reflect.init_ = function() {
   // then it can't optimize regexps as well. Just be sneaky about it,
   // because this is only for debugging.
   goog.debug.reflect.registerType_('RegExp', goog.global['RegExp']);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the name of a type of object.
-***REMOVED*** @param {!Function} classConstructor A object constructor to get the name of.
-***REMOVED*** @return {string|undefined} The string name of the class.
-***REMOVED***
+/**
+ * Returns the name of a type of object.
+ * @param {!Function} classConstructor A object constructor to get the name of.
+ * @return {string|undefined} The string name of the class.
+ */
 goog.debug.reflect.className = function(classConstructor) {
   goog.debug.reflect.init_();
   if (goog.isDefAndNotNull(classConstructor)) {
@@ -115,29 +115,29 @@ goog.debug.reflect.className = function(classConstructor) {
   } else {
     return undefined;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Guesses the real type of the object, even if its {@code toString} method is
-***REMOVED*** overridden. Gives exact result for all goog.provided classes in non-compiled
-***REMOVED*** code, and some often used native classes in compiled code too. Not tested in
-***REMOVED*** multi-frame environment.
-***REMOVED***
-***REMOVED*** Example use case to get better type information in the Watch tab of FireBug:
-***REMOVED*** <pre>
-***REMOVED*** Object.prototype.toString = function() {
-***REMOVED***   return goog.debug.reflect.typeOf(this);
-***REMOVED******REMOVED*****REMOVED***
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** @param {*} obj An arbitrary variable to get the type of.
-***REMOVED*** @return {string} The namespaced type of the argument or 'Object' if didn't
-***REMOVED***     manage to determine it. Warning: in IE7 ActiveX (including DOM) objects
-***REMOVED***     don't expose their type to JavaScript. Their {@code constructor}
-***REMOVED***     property is undefined and they are not even the instances of the
-***REMOVED***     {@code Object} type. This method will recognize them as 'ActiveXObject'.
-***REMOVED***
+/**
+ * Guesses the real type of the object, even if its {@code toString} method is
+ * overridden. Gives exact result for all goog.provided classes in non-compiled
+ * code, and some often used native classes in compiled code too. Not tested in
+ * multi-frame environment.
+ *
+ * Example use case to get better type information in the Watch tab of FireBug:
+ * <pre>
+ * Object.prototype.toString = function() {
+ *   return goog.debug.reflect.typeOf(this);
+ * };
+ * </pre>
+ *
+ * @param {*} obj An arbitrary variable to get the type of.
+ * @return {string} The namespaced type of the argument or 'Object' if didn't
+ *     manage to determine it. Warning: in IE7 ActiveX (including DOM) objects
+ *     don't expose their type to JavaScript. Their {@code constructor}
+ *     property is undefined and they are not even the instances of the
+ *     {@code Object} type. This method will recognize them as 'ActiveXObject'.
+ */
 goog.debug.reflect.typeOf = function(obj) {
   // Check primitive types.
   if (!obj || goog.isNumber(obj) || goog.isString(obj) || goog.isBoolean(obj)) {
@@ -159,7 +159,7 @@ goog.debug.reflect.typeOf = function(obj) {
   var isActiveXObject = goog.global.ActiveXObject &&
       obj instanceof ActiveXObject;
   var typeString = isActiveXObject ? String(obj) :
-      goog.debug.reflect.toString_.call(***REMOVED*** @type {Object}***REMOVED*** (obj));
+      goog.debug.reflect.toString_.call(/** @type {Object} */ (obj));
   var match = typeString.match(/^\[object (\w+)\]$/);
   if (match) {
     var name = match[1];
@@ -175,4 +175,4 @@ goog.debug.reflect.typeOf = function(obj) {
 
   // Fall back to Object or ActiveXObject.
   return isActiveXObject ? 'ActiveXObject' : 'Object';
-***REMOVED***
+};

@@ -12,42 +12,42 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This event handler allows you to catch focusin and focusout
-***REMOVED*** events on  descendants. Unlike the "focus" and "blur" events which do not
-***REMOVED*** propagate consistently, and therefore must be added to the element that is
-***REMOVED*** focused, this allows you to attach one listener to an ancester and you will
-***REMOVED*** be notified when the focus state changes of ony of its descendants.
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @see ../demos/focushandler.html
-***REMOVED***
+/**
+ * @fileoverview This event handler allows you to catch focusin and focusout
+ * events on  descendants. Unlike the "focus" and "blur" events which do not
+ * propagate consistently, and therefore must be added to the element that is
+ * focused, this allows you to attach one listener to an ancester and you will
+ * be notified when the focus state changes of ony of its descendants.
+ * @author arv@google.com (Erik Arvidsson)
+ * @see ../demos/focushandler.html
+ */
 
 goog.provide('goog.events.FocusHandler');
 goog.provide('goog.events.FocusHandler.EventType');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** This event handler allows you to catch focus events when descendants gain or
-***REMOVED*** loses focus.
-***REMOVED*** @param {Element|Document} element  The node to listen on.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This event handler allows you to catch focus events when descendants gain or
+ * loses focus.
+ * @param {Element|Document} element  The node to listen on.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.events.FocusHandler = function(element) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This is the element that we will listen to the real focus events on.
-  ***REMOVED*** @type {Element|Document}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * This is the element that we will listen to the real focus events on.
+   * @type {Element|Document}
+   * @private
+   */
   this.element_ = element;
 
   // In IE we use focusin/focusout and in other browsers we use a capturing
@@ -55,39 +55,39 @@ goog.events.FocusHandler = function(element) {
   var typeIn = goog.userAgent.IE ? 'focusin' : 'focus';
   var typeOut = goog.userAgent.IE ? 'focusout' : 'blur';
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Store the listen key so it easier to unlisten in dispose.
-  ***REMOVED*** @private
-  ***REMOVED*** @type {goog.events.Key}
- ***REMOVED*****REMOVED***
+  /**
+   * Store the listen key so it easier to unlisten in dispose.
+   * @private
+   * @type {goog.events.Key}
+   */
   this.listenKeyIn_ =
-    ***REMOVED***this.element_, typeIn, this, !goog.userAgent.IE);
+      goog.events.listen(this.element_, typeIn, this, !goog.userAgent.IE);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Store the listen key so it easier to unlisten in dispose.
-  ***REMOVED*** @private
-  ***REMOVED*** @type {goog.events.Key}
- ***REMOVED*****REMOVED***
+  /**
+   * Store the listen key so it easier to unlisten in dispose.
+   * @private
+   * @type {goog.events.Key}
+   */
   this.listenKeyOut_ =
-    ***REMOVED***this.element_, typeOut, this, !goog.userAgent.IE);
-***REMOVED***
+      goog.events.listen(this.element_, typeOut, this, !goog.userAgent.IE);
+};
 goog.inherits(goog.events.FocusHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Enum type for the events fired by the focus handler
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum type for the events fired by the focus handler
+ * @enum {string}
+ */
 goog.events.FocusHandler.EventType = {
   FOCUSIN: 'focusin',
   FOCUSOUT: 'focusout'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** This handles the underlying events and dispatches a new event.
-***REMOVED*** @param {goog.events.BrowserEvent} e  The underlying browser event.
-***REMOVED***
+/**
+ * This handles the underlying events and dispatches a new event.
+ * @param {goog.events.BrowserEvent} e  The underlying browser event.
+ */
 goog.events.FocusHandler.prototype.handleEvent = function(e) {
   var be = e.getBrowserEvent();
   var event = new goog.events.BrowserEvent(be);
@@ -95,13 +95,13 @@ goog.events.FocusHandler.prototype.handleEvent = function(e) {
       goog.events.FocusHandler.EventType.FOCUSIN :
       goog.events.FocusHandler.EventType.FOCUSOUT;
   this.dispatchEvent(event);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.FocusHandler.prototype.disposeInternal = function() {
   goog.events.FocusHandler.superClass_.disposeInternal.call(this);
   goog.events.unlistenByKey(this.listenKeyIn_);
   goog.events.unlistenByKey(this.listenKeyOut_);
   delete this.element_;
-***REMOVED***
+};

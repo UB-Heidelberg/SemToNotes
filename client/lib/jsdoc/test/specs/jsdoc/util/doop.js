@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 describe('jsdoc/util/doop', function() {
     var doop = require('jsdoc/util/doop');
 
@@ -24,7 +24,7 @@ describe('jsdoc/util/doop', function() {
             // test a boolean...
             expect(doop.doop(true)).toBe(true);
             // test a function...
-            var f = function () {***REMOVED***
+            var f = function () {};
             expect(doop.doop(f)).toBe(f);
         });
 
@@ -37,7 +37,7 @@ describe('jsdoc/util/doop', function() {
         });
 
         it("should return a clone of an object", function() {
-            var inp = {a:1, b:2, 'asdf-fdsa': 3***REMOVED***
+            var inp = {a:1, b:2, 'asdf-fdsa': 3};
             var out = doop.doop(inp);
             // toEqual is a comparison on properties; toBe is === comparison.
             expect(inp).toEqual(out);
@@ -70,7 +70,7 @@ describe('jsdoc/util/doop', function() {
         }
 
         it("should clone recursively", function() {
-            var inp = {a:1, b:2, 'asdf-fdsa': {a: 'fdsa', b: [1,2,3]}***REMOVED***
+            var inp = {a:1, b:2, 'asdf-fdsa': {a: 'fdsa', b: [1,2,3]}};
             var out = doop.doop(inp);
             // toEqual is a comparison on properties; toBe is === comparison.
             expect(inp).toEqual(out);

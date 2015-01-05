@@ -1,13 +1,13 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: dalewis@google.com (Darren Lewis)***REMOVED***
+/* Author: dalewis@google.com (Darren Lewis) */
 
-/* Styles used in the emojipicker demo***REMOVED***
+/* Styles used in the emojipicker demo */
 .goog-ui-popupemojipicker {
   position: absolute;
   -moz-outline: 0;

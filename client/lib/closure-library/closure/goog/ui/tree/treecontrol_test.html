@@ -39,7 +39,7 @@ function makeATree() {
   createTreeFromTestData(tree, testData, 3);
   tree.render(goog.dom.getElement('treeContainer'));
   return tree;
-***REMOVED***
+};
 
 function createTreeFromTestData(node, data, maxLevels) {
   node.setHtml(data[0]);
@@ -54,11 +54,11 @@ function createTreeFromTestData(node, data, maxLevels) {
     node.add(childNode);
     createTreeFromTestData(childNode, child, maxLevels - 1);
   }
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Test moving a node to a greater depth.
-***REMOVED***
+/**
+ * Test moving a node to a greater depth.
+ */
 function testIndent() {
   var tree = makeATree();
   tree.expandAll();
@@ -80,11 +80,11 @@ function testIndent() {
   assertEquals(node, newParent.getChildren()[0]);
   assertEquals(3, node.getDepth());
   assertEquals('38px', node.getRowElement().style.paddingLeft);
-***REMOVED***
+};
 
-***REMOVED***
-***REMOVED*** Test moving a node to a lesser depth.
-***REMOVED***
+/**
+ * Test moving a node to a lesser depth.
+ */
 function testOutdent() {
   var tree = makeATree();
   tree.expandAll();
@@ -106,7 +106,7 @@ function testOutdent() {
   assertEquals(node, newParent.getChildren()[2]);
   assertEquals(1, node.getDepth());
   assertEquals('0px', node.getRowElement().style.paddingLeft);
-***REMOVED***
+};
 
 </script>
 </body>

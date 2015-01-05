@@ -1,27 +1,27 @@
-/*global env: true***REMOVED***
-***REMOVED***
-***REMOVED*** Helper functions for handling errors.
-***REMOVED***
-***REMOVED*** @deprecated As of JSDoc 3.3.0. This module may be removed in a future release. Use the module
-***REMOVED*** {@link module:jsdoc/util/logger} to log warnings and errors.
-***REMOVED*** @module jsdoc/util/error
-***REMOVED***
+/*global env: true */
+/**
+ * Helper functions for handling errors.
+ *
+ * @deprecated As of JSDoc 3.3.0. This module may be removed in a future release. Use the module
+ * {@link module:jsdoc/util/logger} to log warnings and errors.
+ * @module jsdoc/util/error
+ */
 'use strict';
 
-***REMOVED***
-***REMOVED*** Log an exception as an error.
-***REMOVED***
-***REMOVED*** Prior to JSDoc 3.3.0, this method would either log the exception (if lenient mode was enabled) or
-***REMOVED*** re-throw the exception (default).
-***REMOVED***
-***REMOVED*** In JSDoc 3.3.0 and later, lenient mode has been replaced with strict mode, which is disabled by
-***REMOVED*** default. If strict mode is enabled, calling the `handle` method causes JSDoc to exit immediately,
-***REMOVED*** just as if the exception had been re-thrown.
-***REMOVED***
-***REMOVED*** @deprecated As of JSDoc 3.3.0. This module may be removed in a future release.
-***REMOVED*** @param {Error} e - The exception to log.
-***REMOVED*** @memberof module:jsdoc/util/error
-***REMOVED***
+/**
+ * Log an exception as an error.
+ *
+ * Prior to JSDoc 3.3.0, this method would either log the exception (if lenient mode was enabled) or
+ * re-throw the exception (default).
+ *
+ * In JSDoc 3.3.0 and later, lenient mode has been replaced with strict mode, which is disabled by
+ * default. If strict mode is enabled, calling the `handle` method causes JSDoc to exit immediately,
+ * just as if the exception had been re-thrown.
+ *
+ * @deprecated As of JSDoc 3.3.0. This module may be removed in a future release.
+ * @param {Error} e - The exception to log.
+ * @memberof module:jsdoc/util/error
+ */
 exports.handle = function(e) {
     var logger = require('jsdoc/util/logger');
     var msg = e ? ( e.message || JSON.stringify(e) ) : '';
@@ -32,4 +32,4 @@ exports.handle = function(e) {
     }
 
     logger.error(msg);
-***REMOVED***
+};

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.log.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.log.
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.logTest');
 
 goog.require('goog.debug.LogManager');
@@ -30,23 +30,23 @@ goog.setTestOnly('goog.logTest');
 
 
 
-***REMOVED***
-***REMOVED*** A simple log handler that remembers the last record published.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A simple log handler that remembers the last record published.
+ * @constructor
+ * @private
+ */
 function TestHandler_() {
   this.logRecord = null;
 }
 
 TestHandler_.prototype.onPublish = function(logRecord) {
   this.logRecord = logRecord;
-***REMOVED***
+};
 
 
 TestHandler_.prototype.reset = function() {
   this.logRecord = null;
-***REMOVED***
+};
 
 
 function testParents() {

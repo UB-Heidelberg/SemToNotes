@@ -25,7 +25,7 @@ goog.require('goog.db.Error');
 goog.require('goog.db.IndexedDb');
 goog.require('goog.db.KeyRange');
 goog.require('goog.db.Transaction');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.object');
 goog.require('goog.testing.AsyncTestCase');
 goog.require('goog.testing.PropertyReplacer');
@@ -54,7 +54,7 @@ function unblockDatabase(db) {
   // This listens for a version change event (e.g. from deleting it in
   // preparation for the next test) and closes the existing connection when one
   // is received.
-***REMOVED***
+  goog.events.listen(
       db, goog.db.IndexedDb.EventType.VERSION_CHANGE,
       function(ev) { db.close(); });
 }
@@ -70,7 +70,7 @@ function incrementVersion(db, onUpgradeNeeded) {
 
   var onBlocked = function(ev) {
     fail('Upgrade to version ' + dbVersion + ' is blocked.');
- ***REMOVED*****REMOVED***
+  };
 
   return goog.db.openDatabase(dbName, ++dbVersion, onUpgradeNeeded, onBlocked).
       addCallback(unblockDatabase).addCallback(function(db) {
@@ -352,8 +352,8 @@ function testPutRecord() {
             assertEquals('value2', result.value);
           });
 
-    ***REMOVED***checkOverwriteTx, ERROR, failOnErrorEvent);
-    ***REMOVED***checkOverwriteTx, COMPLETE, function() {
+      goog.events.listen(checkOverwriteTx, ERROR, failOnErrorEvent);
+      goog.events.listen(checkOverwriteTx, COMPLETE, function() {
         closeAndContinue(db);
       });
     }
@@ -364,8 +364,8 @@ function testPutRecord() {
           {key: 'overwritten', value: 'value2'},
           'putKey');
 
-    ***REMOVED***overwriteTx, ERROR, failOnErrorEvent);
-    ***REMOVED***overwriteTx, COMPLETE, checkForOverwrittenValue);
+      goog.events.listen(overwriteTx, ERROR, failOnErrorEvent);
+      goog.events.listen(overwriteTx, COMPLETE, checkForOverwrittenValue);
     }
 
     function checkForInitialValue() {
@@ -375,8 +375,8 @@ function testPutRecord() {
             assertEquals('initial', result.key);
             assertEquals('value1', result.value);
           });
-    ***REMOVED***checkResultsTx, ERROR, failOnErrorEvent);
-    ***REMOVED***checkResultsTx, COMPLETE, overwriteValue);
+      goog.events.listen(checkResultsTx, ERROR, failOnErrorEvent);
+      goog.events.listen(checkResultsTx, COMPLETE, overwriteValue);
     }
 
     var initialPutTx = db.createTransaction(['store'], rw);
@@ -384,8 +384,8 @@ function testPutRecord() {
         {key: 'initial', value: 'value1'},
         'putKey');
 
-  ***REMOVED***initialPutTx, ERROR, failOnErrorEvent);
-  ***REMOVED***initialPutTx, COMPLETE, checkForInitialValue);
+    goog.events.listen(initialPutTx, ERROR, failOnErrorEvent);
+    goog.events.listen(initialPutTx, COMPLETE, checkForInitialValue);
 
   }).addErrback(failOnError);
 }
@@ -406,8 +406,8 @@ function testAddRecord() {
         {key: 'hi', value: 'something'},
         'stuff');
 
-  ***REMOVED***initialAddTx, ERROR, failOnErrorEvent);
-  ***REMOVED***initialAddTx, COMPLETE, function() {
+    goog.events.listen(initialAddTx, ERROR, failOnErrorEvent);
+    goog.events.listen(initialAddTx, COMPLETE, function() {
       var successfulAddTx = db.createTransaction(['store']);
       successfulAddTx.objectStore('store').get('stuff').addCallback(
           function(result) {
@@ -415,8 +415,8 @@ function testAddRecord() {
             assertEquals('something', result.value);
           });
 
-    ***REMOVED***successfulAddTx, ERROR, failOnErrorEvent);
-    ***REMOVED***successfulAddTx, COMPLETE, function() {
+      goog.events.listen(successfulAddTx, ERROR, failOnErrorEvent);
+      goog.events.listen(successfulAddTx, COMPLETE, function() {
         var addOverwriteTx = db.createTransaction(['store'], rw);
         addOverwriteTx.objectStore('store').add(
             {key: 'bye', value: 'nothing'}, 'stuff').addErrback(function(err) {
@@ -426,10 +426,10 @@ function testAddRecord() {
               err.getName());
         });
 
-      ***REMOVED***addOverwriteTx, COMPLETE, function() {
+        goog.events.listen(addOverwriteTx, COMPLETE, function() {
           fail('adding existing record should not have succeeded');
         });
-      ***REMOVED***addOverwriteTx, ERROR, function(ev) {
+        goog.events.listen(addOverwriteTx, ERROR, function(ev) {
           // expected
           assertEquals(
               goog.db.Error.ErrorName.CONSTRAINT_ERR,
@@ -460,8 +460,8 @@ function testPutRecordKeyPathStore() {
         goog.db.Transaction.TransactionMode.READ_WRITE);
     putTx.objectStore('keyStore').put({key: 'hi', value: 'something'});
 
-  ***REMOVED***putTx, ERROR, failOnErrorEvent);
-  ***REMOVED***putTx, COMPLETE, function() {
+    goog.events.listen(putTx, ERROR, failOnErrorEvent);
+    goog.events.listen(putTx, COMPLETE, function() {
       var checkResultsTx = db.createTransaction(['keyStore']);
       checkResultsTx.objectStore('keyStore').get('hi').addCallback(
           function(result) {
@@ -470,8 +470,8 @@ function testPutRecordKeyPathStore() {
             assertEquals('something', result.value);
           });
 
-    ***REMOVED***checkResultsTx, ERROR, failOnErrorEvent);
-    ***REMOVED***checkResultsTx, COMPLETE, function() {
+      goog.events.listen(checkResultsTx, ERROR, failOnErrorEvent);
+      goog.events.listen(checkResultsTx, COMPLETE, function() {
         closeAndContinue(db);
       });
     });
@@ -521,12 +521,12 @@ function testPutRecordAutoIncrementStore() {
     tx.objectStore('aiStore').put('1');
     tx.objectStore('aiStore').put('2');
     tx.objectStore('aiStore').put('3');
-  ***REMOVED***
+    goog.events.listen(
         tx,
         goog.db.Transaction.EventTypes.ERROR,
         failOnErrorEvent);
 
-  ***REMOVED***tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
+    goog.events.listen(tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
       var tx = db.createTransaction(['aiStore']);
       tx.objectStore('aiStore').getAll().addCallback(function(results) {
         assertEquals(3, results.length);
@@ -559,12 +559,12 @@ function testPutRecordKeyPathAndAutoIncrementStore() {
         ['hybridStore'],
         goog.db.Transaction.TransactionMode.READ_WRITE);
     tx.objectStore('hybridStore').put({value: 'whatever'});
-  ***REMOVED***
+    goog.events.listen(
         tx,
         goog.db.Transaction.EventTypes.ERROR,
         failOnErrorEvent);
 
-  ***REMOVED***tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
+    goog.events.listen(tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
       var tx = db.createTransaction(['hybridStore']);
       tx.objectStore('hybridStore').getAll().addCallback(function(results) {
         assertEquals(1, results.length);
@@ -652,21 +652,21 @@ function testDeleteRecord() {
     var putTx = db.createTransaction(['store'], rw);
     putTx.objectStore('store').put({key: 'hi', value: 'something'}, 'stuff');
 
-  ***REMOVED***putTx, ERROR, failOnErrorEvent);
-  ***REMOVED***putTx, COMPLETE, function() {
+    goog.events.listen(putTx, ERROR, failOnErrorEvent);
+    goog.events.listen(putTx, COMPLETE, function() {
       var deleteTx = db.createTransaction(['store'], rw);
       deleteTx.objectStore('store').remove('stuff');
 
-    ***REMOVED***deleteTx, ERROR, failOnErrorEvent);
-    ***REMOVED***deleteTx, COMPLETE, function() {
+      goog.events.listen(deleteTx, ERROR, failOnErrorEvent);
+      goog.events.listen(deleteTx, COMPLETE, function() {
         var checkResultsTx = db.createTransaction(['store']);
         checkResultsTx.objectStore('store').get('stuff').addCallback(
             function(result) {
               assertUndefined(result);
             });
 
-      ***REMOVED***checkResultsTx, ERROR, failOnErrorEvent);
-      ***REMOVED***checkResultsTx, COMPLETE, function() {
+        goog.events.listen(checkResultsTx, ERROR, failOnErrorEvent);
+        goog.events.listen(checkResultsTx, COMPLETE, function() {
           closeAndContinue(db);
         });
       });
@@ -701,11 +701,11 @@ function testGetAllFreesCursor() {
   var addData = goog.partial(populateStore, values, keys);
   var origCursor = goog.db.Cursor;
   var cursors = [];
- ***REMOVED*****REMOVED*** @constructor***REMOVED***
+  /** @constructor */
   var testCursor = function() {
     origCursor.call(this);
     cursors.push(this);
- ***REMOVED*****REMOVED***
+  };
   goog.object.extend(testCursor, origCursor);
   // We don't use goog.inherits here because we are going to be overwriting
   // goog.db.Cursor and we don't want a new "base" method as
@@ -741,9 +741,9 @@ function testObjectStoreCursorGet() {
     var keys = [];
 
     var whenTxComplete = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE, function() {
           whenTxComplete.callback();
         });
@@ -782,7 +782,7 @@ function testObjectStoreCursorGet() {
       assertArrayEquals(['c', 'b'], keys);
       closeAndContinue(db);
     });
- ***REMOVED*****REMOVED***
+  };
 
   asyncTestCase.waitForAsync('getting range');
   globalDb.branch().addCallbacks(addStore, failOnError).
@@ -811,9 +811,9 @@ function testObjectStoreCursorReplace() {
         goog.db.Transaction.TransactionMode.READ_WRITE);
 
     var whenTxComplete = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE, function() {
           whenTxComplete.callback();
         });
@@ -850,7 +850,7 @@ function testObjectStoreCursorReplace() {
     }, failOnError);
 
     return d;
- ***REMOVED*****REMOVED***
+  };
 
   // Setup and execute test case.
   asyncTestCase.waitForAsync('replacing value by cursor');
@@ -881,9 +881,9 @@ function testObjectStoreCursorRemove() {
         goog.db.Transaction.TransactionMode.READ_WRITE);
 
     var whenTxComplete = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE, function() {
           whenTxComplete.callback();
         });
@@ -920,7 +920,7 @@ function testObjectStoreCursorRemove() {
     }, failOnError);
 
     return d;
- ***REMOVED*****REMOVED***
+  };
 
   // Setup and execute test case.
   asyncTestCase.waitForAsync('removing value by cursor');
@@ -946,21 +946,21 @@ function testClear() {
     putTx.objectStore('store').put('2', 'b');
     putTx.objectStore('store').put('3', 'c');
 
-  ***REMOVED***putTx, ERROR, failOnErrorEvent);
-  ***REMOVED***putTx, COMPLETE, function() {
+    goog.events.listen(putTx, ERROR, failOnErrorEvent);
+    goog.events.listen(putTx, COMPLETE, function() {
       var clearTx = db.createTransaction(['store'], rw);
       clearTx.objectStore('store').clear();
 
-    ***REMOVED***clearTx, ERROR, failOnErrorEvent);
-    ***REMOVED***clearTx, COMPLETE, function() {
+      goog.events.listen(clearTx, ERROR, failOnErrorEvent);
+      goog.events.listen(clearTx, COMPLETE, function() {
         var checkResultsTx = db.createTransaction(['store']);
         checkResultsTx.objectStore('store').getAll().addCallback(
             function(results) {
               assertEquals(0, results.length);
             }).addErrback(failOnError);
 
-      ***REMOVED***checkResultsTx, ERROR, failOnErrorEvent);
-      ***REMOVED***checkResultsTx, COMPLETE, function() {
+        goog.events.listen(checkResultsTx, ERROR, failOnErrorEvent);
+        goog.events.listen(checkResultsTx, COMPLETE, function() {
           closeAndContinue(db);
         });
       });
@@ -981,19 +981,19 @@ function testAbortTransaction() {
     abortTx.objectStore('store').put('data', 'stuff').addCallback(function() {
       abortTx.abort();
     });
-  ***REMOVED***
+    goog.events.listen(
         abortTx,
         goog.db.Transaction.EventTypes.ERROR,
         failOnErrorEvent);
 
-  ***REMOVED***
+    goog.events.listen(
         abortTx,
         goog.db.Transaction.EventTypes.COMPLETE,
         function() {
           fail('transaction shouldn\'t have completed after being aborted');
         });
 
-  ***REMOVED***
+    goog.events.listen(
         abortTx,
         goog.db.Transaction.EventTypes.ABORT,
         function() {
@@ -1002,7 +1002,7 @@ function testAbortTransaction() {
               function(result) {
                 assertUndefined(result);
               });
-        ***REMOVED***
+          goog.events.listen(
               checkResultsTx,
               goog.db.Transaction.EventTypes.COMPLETE,
               function() {
@@ -1025,7 +1025,7 @@ function testInactiveTransaction() {
     var store = tx.objectStore('store');
     var index = store.getIndex('index');
     store.put({key: 'something', value: 'anything'});
-  ***REMOVED***tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
+    goog.events.listen(tx, goog.db.Transaction.EventTypes.COMPLETE, function() {
       var expectedCode = goog.db.Error.ErrorName.TRANSACTION_INACTIVE_ERR;
       store.put({
         key: 'another',
@@ -1193,7 +1193,7 @@ function testAddRecordWithIndex() {
     assertEquals('value', store.getIndex('index').getKeyPath());
     store.add({key: 'someKey', value: 'lookUpThis'});
 
-  ***REMOVED***addTx, COMPLETE, function() {
+    goog.events.listen(addTx, COMPLETE, function() {
       var checkResultsTx = db.createTransaction(['store']);
       var index = checkResultsTx.objectStore('store').getIndex('index');
       index.get('lookUpThis').addCallback(function(result) {
@@ -1205,11 +1205,11 @@ function testAddRecordWithIndex() {
         assertNotUndefined(result);
         assertEquals('someKey', result);
       });
-    ***REMOVED***
+      goog.events.listen(
           checkResultsTx,
           goog.db.Transaction.EventTypes.ERROR,
           failOnErrorEvent);
-    ***REMOVED***checkResultsTx, COMPLETE, function() {
+      goog.events.listen(checkResultsTx, COMPLETE, function() {
         closeAndContinue(db);
       });
     });
@@ -1232,12 +1232,12 @@ function testGetMultipleRecordsFromIndex() {
     addTx.objectStore('store').add({key: '3', value: 'b'});
     // The following line breaks Chrome 14, but not Chrome 15:
     // addTx.objectStore('store').add({key: '4'});
-  ***REMOVED***
+    goog.events.listen(
         addTx,
         goog.db.Transaction.EventTypes.ERROR,
         failOnErrorEvent);
 
-  ***REMOVED***addTx, COMPLETE, function() {
+    goog.events.listen(addTx, COMPLETE, function() {
       var checkResultsTx = db.createTransaction(['store']);
       var index = checkResultsTx.objectStore('store').getIndex('index');
       index.getAll().addCallback(function(results) {
@@ -1257,11 +1257,11 @@ function testGetMultipleRecordsFromIndex() {
         assertEquals(1, results.length);
       });
 
-    ***REMOVED***
+      goog.events.listen(
           checkResultsTx,
           goog.db.Transaction.EventTypes.ERROR,
           failOnErrorEvent);
-    ***REMOVED***checkResultsTx, COMPLETE, function() {
+      goog.events.listen(checkResultsTx, COMPLETE, function() {
         closeAndContinue(db);
       });
     });
@@ -1286,7 +1286,7 @@ function testUniqueIndex() {
     assertTrue(tx.objectStore('store').getIndex('index').isUnique());
     tx.objectStore('store').add({key: '1', value: 'a'});
     tx.objectStore('store').add({key: '2', value: 'a'});
-  ***REMOVED***tx, goog.db.Transaction.EventTypes.ERROR, function(ev) {
+    goog.events.listen(tx, goog.db.Transaction.EventTypes.ERROR, function(ev) {
       // expected
       assertTrue(
           'Expected DATA_ERR, CONSTRAINT_ERR, was ',
@@ -1349,7 +1349,7 @@ function testBlockedDeleteDatabaseWithVersionChangeEvent() {
     // Get a fresh connection, without any events registered on globalDb.
     return goog.db.openDatabase(dbName);
   }).addCallback(function(db) {
-  ***REMOVED***db, goog.db.IndexedDb.EventType.VERSION_CHANGE,
+    goog.events.listen(db, goog.db.IndexedDb.EventType.VERSION_CHANGE,
                        function(ev) {
           gotVersionChange = true;
           db.close();
@@ -1397,7 +1397,7 @@ function testObjectStoreCountAll() {
       db.close();
       failOnError(e);
     });
- ***REMOVED*****REMOVED***
+  };
 
   asyncTestCase.waitForAsync('testObjectStoreCountAll');
   globalDb.branch().addCallbacks(addStore, failOnError).
@@ -1427,7 +1427,7 @@ function testObjectStoreCountSome() {
           db.close();
           failOnError(e);
         });
- ***REMOVED*****REMOVED***
+  };
 
   asyncTestCase.waitForAsync('testObjectStoreCountSome');
   globalDb.branch().addCallbacks(addStore, failOnError).
@@ -1454,9 +1454,9 @@ function testIndexCursorGet() {
     var keys = [];
 
     var txDeferred = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE,
         function() {
           txDeferred.callback();
@@ -1496,7 +1496,7 @@ function testIndexCursorGet() {
           assertArrayEquals(['c', 'b'], keys);
           closeAndContinue(db);
         });
- ***REMOVED*****REMOVED***
+  };
 
   asyncTestCase.waitForAsync('testIndexCursorGet');
   globalDb.branch().addCallbacks(addStoreWithIndex, failOnError).
@@ -1525,9 +1525,9 @@ function testIndexCursorReplace() {
         goog.db.Transaction.TransactionMode.READ_WRITE);
 
     var txDeferred = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE,
         function() {
           txDeferred.callback();
@@ -1572,7 +1572,7 @@ function testIndexCursorReplace() {
         }, failOnError);
 
     return d;
- ***REMOVED*****REMOVED***
+  };
 
   // Setup and execute test case.
   asyncTestCase.waitForAsync('replacing value by cursor');
@@ -1603,9 +1603,9 @@ function testIndexCursorRemove() {
         goog.db.Transaction.TransactionMode.READ_WRITE);
 
     var txDeferred = new goog.async.Deferred();
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.ERROR, failOnError);
-  ***REMOVED***
+    goog.events.listen(
         cursorTx, goog.db.Transaction.EventTypes.COMPLETE,
         function() {
           txDeferred.callback();
@@ -1645,7 +1645,7 @@ function testIndexCursorRemove() {
         }, failOnError);
 
     return d;
- ***REMOVED*****REMOVED***
+  };
 
   // Setup and execute test case.
   asyncTestCase.waitForAsync('removing value by cursor');

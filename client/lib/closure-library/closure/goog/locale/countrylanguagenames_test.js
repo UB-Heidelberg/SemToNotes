@@ -36,7 +36,7 @@ function setUpPage() {
       'ES': 'Spanien',
       'FR': 'Frankreich'
     }
- ***REMOVED*****REMOVED***
+  };
   registerLocalNameConstants(LocaleNameConstants_de, 'de');
 
   // Test data from //googledata/i18n/js_locale_data/LocaleNameConstants__en.js
@@ -55,7 +55,7 @@ function setUpPage() {
       'ES': 'Spain',
       'FR': 'France'
     }
- ***REMOVED*****REMOVED***
+  };
   registerLocalNameConstants(LocaleNameConstants_en, 'en');
 
   goog.locale.setLocale('de');
@@ -158,13 +158,13 @@ function testGetLocalizedLanguageNameForGivenSymbolset() {
   assertEquals('Frankreich', result);
 }
 
-***REMOVED***
-***REMOVED*** Valid combination of sub tags:
-***REMOVED***  1)  LanguageSubtag'-'RegionSubtag
-***REMOVED***  2)  LanguageSubtag'-'ScriptSubtag'-'RegionSubtag
-***REMOVED***  3)  LanguageSubtag'-'RegionSubtag'-'VariantSubtag
-***REMOVED***  4)  LanguageSubtag'-'ScriptSubTag'-'RegionSubtag'-'VariantSubtag
-***REMOVED***
+/**
+ * Valid combination of sub tags:
+ *  1)  LanguageSubtag'-'RegionSubtag
+ *  2)  LanguageSubtag'-'ScriptSubtag'-'RegionSubtag
+ *  3)  LanguageSubtag'-'RegionSubtag'-'VariantSubtag
+ *  4)  LanguageSubtag'-'ScriptSubTag'-'RegionSubtag'-'VariantSubtag
+ */
 
 function testGetRegionSubTag() {
 

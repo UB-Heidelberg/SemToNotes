@@ -15,14 +15,14 @@
 goog.provide('goog.labs.testing.dictionaryMatcherTest');
 goog.setTestOnly('goog.labs.testing.dictionaryMatcherTest');
 
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.HasEntryMatcher');
 goog.require('goog.labs.testing.MatcherError');
 goog.require('goog.labs.testing.assertThat');
 goog.require('goog.testing.jsunit');
 
 function testHasEntries() {
-  var obj1 = {x: 1, y: 2, z: 3***REMOVED***
+  var obj1 = {x: 1, y: 2, z: 3};
   goog.labs.testing.assertThat(obj1, hasEntries({x: 1, y: 2}),
       'obj1 has entries: {x:1, y:2}');
 
@@ -32,7 +32,7 @@ function testHasEntries() {
 }
 
 function testHasEntry() {
-  var obj1 = {x: 1, y: 2, z: 3***REMOVED***
+  var obj1 = {x: 1, y: 2, z: 3};
   goog.labs.testing.assertThat(obj1, hasEntry('x', 1),
       'obj1 has entry: {x:1}');
 
@@ -42,7 +42,7 @@ function testHasEntry() {
 }
 
 function testHasKey() {
-  var obj1 = {x: 1***REMOVED***
+  var obj1 = {x: 1};
   goog.labs.testing.assertThat(obj1, hasKey('x'), 'obj1 has key x');
 
   assertMatcherError(function() {
@@ -51,7 +51,7 @@ function testHasKey() {
 }
 
 function testHasValue() {
-  var obj1 = {x: 1***REMOVED***
+  var obj1 = {x: 1};
   goog.labs.testing.assertThat(obj1, hasValue(1), 'obj1 has value 1');
 
   assertMatcherError(function() {

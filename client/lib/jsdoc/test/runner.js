@@ -1,11 +1,11 @@
-/*global env: true, jasmine: true***REMOVED***
+/*global env: true, jasmine: true */
 /*
-***REMOVED*** Test Steps:
-***REMOVED*** 1. Get Jasmine
-***REMOVED*** 2. Get the test options
-***REMOVED*** 3. Get the list of directories to run tests from
-***REMOVED*** 4. Run Jasmine on each directory
-***REMOVED***
+ * Test Steps:
+ * 1. Get Jasmine
+ * 2. Get the test options
+ * 3. Get the list of directories to run tests from
+ * 4. Run Jasmine on each directory
+ */
 var fs = require('jsdoc/fs');
 var logger = require('jsdoc/util/logger');
 var path = require('path');
@@ -19,7 +19,7 @@ var hasOwnProp = Object.prototype.hasOwnProperty;
 var opts = {
     verbose: env.opts.verbose || false,
     showColors: env.opts.nocolor === true ? false : true
-***REMOVED***
+};
 
 var extensions = 'js';
 var match = env.opts.match || '.';
@@ -53,7 +53,7 @@ var runNextFolder = module.exports = function(callback) {
             testsCompleteCallback(failedCount);
         });
     }
-***REMOVED***
+};
 
 onComplete = function(runner, log) {
     if (runner.results().failedCount !== 0) {
@@ -62,4 +62,4 @@ onComplete = function(runner, log) {
 
     index++;
     runNextFolder();
-***REMOVED***
+};

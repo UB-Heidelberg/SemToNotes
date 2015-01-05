@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Datastructure: Pool.
-***REMOVED***
-***REMOVED***
-***REMOVED*** A generic class for handling pools of objects that is more efficient than
-***REMOVED*** goog.structs.Pool because it doesn't maintain a list of objects that are in
-***REMOVED*** use. See constructor comment.
-***REMOVED***
+/**
+ * @fileoverview Datastructure: Pool.
+ *
+ *
+ * A generic class for handling pools of objects that is more efficient than
+ * goog.structs.Pool because it doesn't maintain a list of objects that are in
+ * use. See constructor comment.
+ */
 
 
 goog.provide('goog.structs.SimplePool');
@@ -28,117 +28,117 @@ goog.require('goog.Disposable');
 
 
 
-***REMOVED***
-***REMOVED*** A generic pool class. Simpler and more efficient than goog.structs.Pool
-***REMOVED*** because it doesn't maintain a list of objects that are in use. This class
-***REMOVED*** has constant overhead and doesn't create any additional objects as part of
-***REMOVED*** the pool management after construction time.
-***REMOVED***
-***REMOVED*** IMPORTANT: If the objects being pooled are arrays or maps that can have
-***REMOVED*** unlimited number of properties, they need to be cleaned before being
-***REMOVED*** returned to the pool.
-***REMOVED***
-***REMOVED*** Also note that {@see goog.object.clean} actually allocates an array to clean
-***REMOVED*** the object passed to it, so simply using this function would defy the
-***REMOVED*** purpose of using the pool.
-***REMOVED***
-***REMOVED*** @param {number} initialCount Initial number of objects to populate the free
-***REMOVED***     pool at construction time.
-***REMOVED*** @param {number} maxCount Maximum number of objects to keep in the free pool.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * A generic pool class. Simpler and more efficient than goog.structs.Pool
+ * because it doesn't maintain a list of objects that are in use. This class
+ * has constant overhead and doesn't create any additional objects as part of
+ * the pool management after construction time.
+ *
+ * IMPORTANT: If the objects being pooled are arrays or maps that can have
+ * unlimited number of properties, they need to be cleaned before being
+ * returned to the pool.
+ *
+ * Also note that {@see goog.object.clean} actually allocates an array to clean
+ * the object passed to it, so simply using this function would defy the
+ * purpose of using the pool.
+ *
+ * @param {number} initialCount Initial number of objects to populate the free
+ *     pool at construction time.
+ * @param {number} maxCount Maximum number of objects to keep in the free pool.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @template T
+ */
 goog.structs.SimplePool = function(initialCount, maxCount) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Function for overriding createObject. The avoids a common case requiring
-  ***REMOVED*** subclassing this class.
-  ***REMOVED*** @private {Function}
- ***REMOVED*****REMOVED***
+  /**
+   * Function for overriding createObject. The avoids a common case requiring
+   * subclassing this class.
+   * @private {Function}
+   */
   this.createObjectFn_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Function for overriding disposeObject. The avoids a common case requiring
-  ***REMOVED*** subclassing this class.
-  ***REMOVED*** @private {Function}
- ***REMOVED*****REMOVED***
+  /**
+   * Function for overriding disposeObject. The avoids a common case requiring
+   * subclassing this class.
+   * @private {Function}
+   */
   this.disposeObjectFn_ = null;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Maximum number of objects allowed
-  ***REMOVED*** @private {number}
- ***REMOVED*****REMOVED***
+  /**
+   * Maximum number of objects allowed
+   * @private {number}
+   */
   this.maxCount_ = maxCount;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Queue used to store objects that are currently in the pool and available
-  ***REMOVED*** to be used.
-  ***REMOVED*** @private {Array.<T>}
- ***REMOVED*****REMOVED***
+  /**
+   * Queue used to store objects that are currently in the pool and available
+   * to be used.
+   * @private {Array.<T>}
+   */
   this.freeQueue_ = [];
 
   this.createInitial_(initialCount);
-***REMOVED***
+};
 goog.inherits(goog.structs.SimplePool, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Sets the {@code createObject} function which is used for creating a new
-***REMOVED*** object in the pool.
-***REMOVED*** @param {Function} createObjectFn Create object function which returns the
-***REMOVED***     newly created object.
-***REMOVED***
+/**
+ * Sets the {@code createObject} function which is used for creating a new
+ * object in the pool.
+ * @param {Function} createObjectFn Create object function which returns the
+ *     newly created object.
+ */
 goog.structs.SimplePool.prototype.setCreateObjectFn = function(createObjectFn) {
   this.createObjectFn_ = createObjectFn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the {@code disposeObject} function which is used for disposing of an
-***REMOVED*** object in the pool.
-***REMOVED*** @param {Function} disposeObjectFn Dispose object function which takes the
-***REMOVED***     object to dispose as a parameter.
-***REMOVED***
+/**
+ * Sets the {@code disposeObject} function which is used for disposing of an
+ * object in the pool.
+ * @param {Function} disposeObjectFn Dispose object function which takes the
+ *     object to dispose as a parameter.
+ */
 goog.structs.SimplePool.prototype.setDisposeObjectFn = function(
     disposeObjectFn) {
   this.disposeObjectFn_ = disposeObjectFn;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets an unused object from the the pool, if there is one available,
-***REMOVED*** otherwise creates a new one.
-***REMOVED*** @return {T} An object from the pool or a new one if necessary.
-***REMOVED***
+/**
+ * Gets an unused object from the the pool, if there is one available,
+ * otherwise creates a new one.
+ * @return {T} An object from the pool or a new one if necessary.
+ */
 goog.structs.SimplePool.prototype.getObject = function() {
   if (this.freeQueue_.length) {
     return this.freeQueue_.pop();
   }
   return this.createObject();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns an object to the pool so that it can be reused. If the pool is
-***REMOVED*** already full, the object is disposed instead.
-***REMOVED*** @param {T} obj The object to release.
-***REMOVED***
+/**
+ * Returns an object to the pool so that it can be reused. If the pool is
+ * already full, the object is disposed instead.
+ * @param {T} obj The object to release.
+ */
 goog.structs.SimplePool.prototype.releaseObject = function(obj) {
   if (this.freeQueue_.length < this.maxCount_) {
     this.freeQueue_.push(obj);
   } else {
     this.disposeObject(obj);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Populates the pool with initialCount objects.
-***REMOVED*** @param {number} initialCount The number of objects to add to the pool.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Populates the pool with initialCount objects.
+ * @param {number} initialCount The number of objects to add to the pool.
+ * @private
+ */
 goog.structs.SimplePool.prototype.createInitial_ = function(initialCount) {
   if (initialCount > this.maxCount_) {
     throw Error('[goog.structs.SimplePool] Initial cannot be greater than max');
@@ -146,29 +146,29 @@ goog.structs.SimplePool.prototype.createInitial_ = function(initialCount) {
   for (var i = 0; i < initialCount; i++) {
     this.freeQueue_.push(this.createObject());
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Should be overridden by sub-classes to return an instance of the object type
-***REMOVED*** that is expected in the pool.
-***REMOVED*** @return {T} The created object.
-***REMOVED***
+/**
+ * Should be overridden by sub-classes to return an instance of the object type
+ * that is expected in the pool.
+ * @return {T} The created object.
+ */
 goog.structs.SimplePool.prototype.createObject = function() {
   if (this.createObjectFn_) {
     return this.createObjectFn_();
   } else {
-    return {***REMOVED***
+    return {};
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Should be overrideen to dispose of an object. Default implementation is to
-***REMOVED*** remove all of the object's members, which should render it useless. Calls the
-***REMOVED***  object's dispose method, if available.
-***REMOVED*** @param {T} obj The object to dispose.
-***REMOVED***
+/**
+ * Should be overrideen to dispose of an object. Default implementation is to
+ * remove all of the object's members, which should render it useless. Calls the
+ *  object's dispose method, if available.
+ * @param {T} obj The object to dispose.
+ */
 goog.structs.SimplePool.prototype.disposeObject = function(obj) {
   if (this.disposeObjectFn_) {
     this.disposeObjectFn_(obj);
@@ -181,14 +181,14 @@ goog.structs.SimplePool.prototype.disposeObject = function(obj) {
       }
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Disposes of the pool and all objects currently held in the pool.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Disposes of the pool and all objects currently held in the pool.
+ * @override
+ * @protected
+ */
 goog.structs.SimplePool.prototype.disposeInternal = function() {
   goog.structs.SimplePool.superClass_.disposeInternal.call(this);
   // Call disposeObject on each object held by the pool.
@@ -197,4 +197,4 @@ goog.structs.SimplePool.prototype.disposeInternal = function() {
     this.disposeObject(freeQueue.pop());
   }
   delete this.freeQueue_;
-***REMOVED***
+};

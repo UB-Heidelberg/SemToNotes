@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock matchers for event related arguments.
-***REMOVED***
+/**
+ * @fileoverview Mock matchers for event related arguments.
+ */
 
 goog.provide('goog.testing.events.EventMatcher');
 
@@ -23,20 +23,20 @@ goog.require('goog.testing.mockmatchers.ArgumentMatcher');
 
 
 
-***REMOVED***
-***REMOVED*** A matcher that verifies that an argument is a {@code goog.events.Event} of a
-***REMOVED*** particular type.
-***REMOVED*** @param {string} type The single type the event argument must be of.
-***REMOVED***
-***REMOVED*** @extends {goog.testing.mockmatchers.ArgumentMatcher}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A matcher that verifies that an argument is a {@code goog.events.Event} of a
+ * particular type.
+ * @param {string} type The single type the event argument must be of.
+ * @constructor
+ * @extends {goog.testing.mockmatchers.ArgumentMatcher}
+ * @final
+ */
 goog.testing.events.EventMatcher = function(type) {
   goog.testing.mockmatchers.ArgumentMatcher.call(this,
       function(obj) {
         return obj instanceof goog.events.Event &&
             obj.type == type;
       }, 'isEventOfType(' + type + ')');
-***REMOVED***
+};
 goog.inherits(goog.testing.events.EventMatcher,
     goog.testing.mockmatchers.ArgumentMatcher);

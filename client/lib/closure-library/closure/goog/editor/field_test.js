@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Shared tests for goog.editor.Field and ContentEditableField.
-***REMOVED*** Since ContentEditableField switches many of the internal code paths in Field
-***REMOVED*** (such as via usesIframe()) it's important to re-run a lot of the same tests.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED*** @author jparent@google.com (Julie Parent)
-***REMOVED*** @author gboyer@google.com (Garrett Boyer)
-***REMOVED***
+/**
+ * @fileoverview Shared tests for goog.editor.Field and ContentEditableField.
+ * Since ContentEditableField switches many of the internal code paths in Field
+ * (such as via usesIframe()) it's important to re-run a lot of the same tests.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ * @author jparent@google.com (Julie Parent)
+ * @author gboyer@google.com (Garrett Boyer)
+ */
 
-***REMOVED*** @suppress {extraProvide}***REMOVED***
+/** @suppress {extraProvide} */
 goog.provide('goog.editor.field_test');
 
 goog.require('goog.dom');
@@ -31,7 +31,7 @@ goog.require('goog.editor.BrowserFeature');
 goog.require('goog.editor.Field');
 goog.require('goog.editor.Plugin');
 goog.require('goog.editor.range');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.functions');
@@ -45,11 +45,11 @@ goog.require('goog.userAgent');
 goog.setTestOnly('Tests for goog.editor.*Field');
 
 
-***REMOVED*** Constructor to use for creating the field. Set by the test HTML file.***REMOVED***
+/** Constructor to use for creating the field. Set by the test HTML file. */
 var FieldConstructor;
 
 
-***REMOVED*** Hard-coded HTML for the tests.***REMOVED***
+/** Hard-coded HTML for the tests. */
 var HTML = '<div id="testField">I am text.</div>';
 
 
@@ -72,16 +72,16 @@ function tearDown() {
 
 
 
-***REMOVED***
-***REMOVED*** Dummy plugin for test usage.
-***REMOVED***
-***REMOVED*** @extends {goog.editor.Plugin}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Dummy plugin for test usage.
+ * @constructor
+ * @extends {goog.editor.Plugin}
+ * @final
+ */
 function TestPlugin() {
   this.getTrogClassId = function() {
     return 'TestPlugin';
- ***REMOVED*****REMOVED***
+  };
 
   this.handleKeyDown = goog.nullFunction;
   this.handleKeyPress = goog.nullFunction;
@@ -96,10 +96,10 @@ function TestPlugin() {
 goog.inherits(TestPlugin, goog.editor.Plugin);
 
 
-***REMOVED***
-***REMOVED*** Tests that calling registerPlugin will add the plugin to the
-***REMOVED*** plugin map.
-***REMOVED***
+/**
+ * Tests that calling registerPlugin will add the plugin to the
+ * plugin map.
+ */
 function testRegisterPlugin() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -150,10 +150,10 @@ function testRegisterPlugin() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that calling unregisterPlugin will remove the plugin from
-***REMOVED*** the map.
-***REMOVED***
+/**
+ * Tests that calling unregisterPlugin will remove the plugin from
+ * the map.
+ */
 function testUnregisterPlugin() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -168,9 +168,9 @@ function testUnregisterPlugin() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that registered plugins can be fetched by their id.
-***REMOVED***
+/**
+ * Tests that registered plugins can be fetched by their id.
+ */
 function testGetPluginByClassId() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -185,11 +185,11 @@ function testGetPluginByClassId() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that plugins get auto disposed by default when the field is disposed.
-***REMOVED*** Tests that plugins with setAutoDispose(false) do not get disposed when the
-***REMOVED*** field is disposed.
-***REMOVED***
+/**
+ * Tests that plugins get auto disposed by default when the field is disposed.
+ * Tests that plugins with setAutoDispose(false) do not get disposed when the
+ * field is disposed.
+ */
 function testDisposed_PluginAutoDispose() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -197,7 +197,7 @@ function testDisposed_PluginAutoDispose() {
   var noDisposePlugin = new goog.editor.Plugin();
   noDisposePlugin.getTrogClassId = function() {
     return 'noDisposeId';
- ***REMOVED*****REMOVED***
+  };
   noDisposePlugin.setAutoDispose(false);
 
   editableField.registerPlugin(plugin);
@@ -211,10 +211,10 @@ function testDisposed_PluginAutoDispose() {
 var STRING_KEY = String.fromCharCode(goog.events.KeyCodes.A).toLowerCase();
 
 
-***REMOVED***
-***REMOVED*** @return {goog.events.Event} Returns an event for a keyboard shortcut
-***REMOVED*** for the letter 'a'.
-***REMOVED***
+/**
+ * @return {goog.events.Event} Returns an event for a keyboard shortcut
+ * for the letter 'a'.
+ */
 function getBrowserEvent() {
   var e = new goog.events.BrowserEvent();
   e.ctrlKey = true;
@@ -224,9 +224,9 @@ function getBrowserEvent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that plugins are disabled when the field is made uneditable.
-***REMOVED***
+/**
+ * Tests that plugins are disabled when the field is made uneditable.
+ */
 
 function testMakeUneditableDisablesPlugins() {
   var editableField = new FieldConstructor('testField');
@@ -237,7 +237,7 @@ function testMakeUneditableDisablesPlugins() {
     assertEquals(editableField, field);
     assertTrue(field.isUneditable());
     calls++;
- ***REMOVED*****REMOVED***
+  };
 
   editableField.registerPlugin(plugin);
   editableField.makeEditable();
@@ -251,9 +251,9 @@ function testMakeUneditableDisablesPlugins() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if a plugin registers keyup, it gets called.
-***REMOVED***
+/**
+ * Test that if a plugin registers keyup, it gets called.
+ */
 function testPluginKeyUp() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -274,9 +274,9 @@ function testPluginKeyUp() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if a plugin registers keydown, it gets called.
-***REMOVED***
+/**
+ * Test that if a plugin registers keydown, it gets called.
+ */
 function testPluginKeyDown() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -297,9 +297,9 @@ function testPluginKeyDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if a plugin registers keypress, it gets called.
-***REMOVED***
+/**
+ * Test that if a plugin registers keypress, it gets called.
+ */
 function testPluginKeyPress() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -320,10 +320,10 @@ function testPluginKeyPress() {
 }
 
 
-***REMOVED***
-***REMOVED*** If one plugin handles a key event, the rest of the plugins do not get their
-***REMOVED*** key handlers invoked.
-***REMOVED***
+/**
+ * If one plugin handles a key event, the rest of the plugins do not get their
+ * key handlers invoked.
+ */
 function testHandledKeyEvent() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -362,9 +362,9 @@ function testHandledKeyEvent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests to make sure the cut and paste events are not dispatched immediately.
-***REMOVED***
+/**
+ * Tests to make sure the cut and paste events are not dispatched immediately.
+ */
 function testHandleCutAndPasteEvents() {
   if (goog.editor.BrowserFeature.USE_MUTATION_EVENTS) {
     // Cut and paste events do not raise events at all in Mozilla.
@@ -373,7 +373,7 @@ function testHandleCutAndPasteEvents() {
   var editableField = new FieldConstructor('testField');
   var clock = new goog.testing.MockClock(true);
   var delayedChanges = goog.testing.recordFunction();
-***REMOVED***editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
       delayedChanges);
 
   editableField.makeEditable();
@@ -399,10 +399,10 @@ function testHandleCutAndPasteEvents() {
 }
 
 
-***REMOVED***
-***REMOVED*** If the first plugin does not handle the key event, the next plugin gets
-***REMOVED*** a chance to handle it.
-***REMOVED***
+/**
+ * If the first plugin does not handle the key event, the next plugin gets
+ * a chance to handle it.
+ */
 function testNotHandledKeyEvent() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -447,10 +447,10 @@ function testNotHandledKeyEvent() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that handleKeyboardShortcut is called if other key handlers
-***REMOVED*** return false.
-***REMOVED***
+/**
+ * Make sure that handleKeyboardShortcut is called if other key handlers
+ * return false.
+ */
 function testKeyboardShortcutCalled() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -480,10 +480,10 @@ function testKeyboardShortcutCalled() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that handleKeyboardShortcut is not called if other key handlers
-***REMOVED*** return true.
-***REMOVED***
+/**
+ * Make sure that handleKeyboardShortcut is not called if other key handlers
+ * return true.
+ */
 function testKeyboardShortcutNotCalled() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -512,10 +512,10 @@ function testKeyboardShortcutNotCalled() {
 }
 
 
-***REMOVED***
-***REMOVED*** Make sure that handleKeyboardShortcut is not called if alt is pressed.
-***REMOVED*** @bug 1363959
-***REMOVED***
+/**
+ * Make sure that handleKeyboardShortcut is not called if alt is pressed.
+ * @bug 1363959
+ */
 function testKeyHandlingAlt() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -545,17 +545,17 @@ function testKeyHandlingAlt() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if a plugin has an execCommand function, it gets called
-***REMOVED*** but only for supported commands.
-***REMOVED***
+/**
+ * Test that if a plugin has an execCommand function, it gets called
+ * but only for supported commands.
+ */
 function testPluginExecCommand() {
   var plugin = new TestPlugin();
   var passedCommand, passedArg;
   plugin.execCommand = function(command, arg) {
     passedCommand = command;
     passedArg = arg;
- ***REMOVED*****REMOVED***
+  };
 
   var editableField = new FieldConstructor('testField');
   editableField.registerPlugin(plugin);
@@ -583,10 +583,10 @@ function testPluginExecCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if one plugin supports execCommand, no other plugins
-***REMOVED*** get a chance to handle the execComand.
-***REMOVED***
+/**
+ * Test that if one plugin supports execCommand, no other plugins
+ * get a chance to handle the execComand.
+ */
 function testSupportedExecCommand() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -617,10 +617,10 @@ function testSupportedExecCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Test that if the first plugin does not support execCommand, the other
-***REMOVED*** plugins get a chance to handle the execCommand.
-***REMOVED***
+/**
+ * Test that if the first plugin does not support execCommand, the other
+ * plugins get a chance to handle the execCommand.
+ */
 function testNotSupportedExecCommand() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -652,10 +652,10 @@ function testNotSupportedExecCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if a plugin supports a command that its queryCommandValue
-***REMOVED*** gets called and no further plugins can handle the queryCommandValue.
-***REMOVED***
+/**
+ * Tests that if a plugin supports a command that its queryCommandValue
+ * gets called and no further plugins can handle the queryCommandValue.
+ */
 function testSupportedQueryCommand() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -685,11 +685,11 @@ function testSupportedQueryCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if the first plugin does not support a command that its
-***REMOVED*** queryCommandValue do not get called and the next plugin can handle the
-***REMOVED*** queryCommandValue.
-***REMOVED***
+/**
+ * Tests that if the first plugin does not support a command that its
+ * queryCommandValue do not get called and the next plugin can handle the
+ * queryCommandValue.
+ */
 function testNotSupportedQueryCommand() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -720,10 +720,10 @@ function testNotSupportedQueryCommand() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if a plugin handles selectionChange that it gets called and
-***REMOVED*** no further plugins can handle the selectionChange.
-***REMOVED***
+/**
+ * Tests that if a plugin handles selectionChange that it gets called and
+ * no further plugins can handle the selectionChange.
+ */
 function testHandledSelectionChange() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -752,10 +752,10 @@ function testHandledSelectionChange() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests that if the first plugin does not handle selectionChange that
-***REMOVED*** the next plugin gets a chance to handle it.
-***REMOVED***
+/**
+ * Tests that if the first plugin does not handle selectionChange that
+ * the next plugin gets a chance to handle it.
+ */
 function testNotHandledSelectionChange() {
   var editableField = new FieldConstructor('testField');
   var plugin = new TestPlugin();
@@ -791,7 +791,7 @@ function testSelectionChange() {
   var editableField = new FieldConstructor('testField', document);
   var clock = new goog.testing.MockClock(true);
   var selectionChanges = goog.testing.recordFunction();
-***REMOVED***editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
       selectionChanges);
 
   editableField.makeEditable();
@@ -821,7 +821,7 @@ function testSelectionChangeOnMouseUp() {
   var editableField = new FieldConstructor('testField', document);
   var clock = new goog.testing.MockClock(true);
   var selectionChanges = goog.testing.recordFunction();
-***REMOVED***editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
       selectionChanges);
 
   var plugin = new TestPlugin();
@@ -877,7 +877,7 @@ function testSelectionChangeBeforeUneditable() {
   var editableField = new FieldConstructor('testField', document);
   var clock = new goog.testing.MockClock(true);
   var selectionChanges = goog.testing.recordFunction();
-***REMOVED***editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.SELECTIONCHANGE,
       selectionChanges);
 
   editableField.makeEditable();
@@ -934,7 +934,7 @@ function testSetHtml() {
 
   try {
     var delayedChangeCalled = false;
-  ***REMOVED***editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
+    goog.events.listen(editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
         function() {
           delayedChangeCalled = true;
         });
@@ -944,13 +944,13 @@ function testSetHtml() {
     assertFalse('Make editable must not fire delayed change.',
         delayedChangeCalled);
 
-    editableField.setHtml(false, 'bar', true /* Don't fire delayed change***REMOVED***);
+    editableField.setHtml(false, 'bar', true /* Don't fire delayed change */);
     goog.testing.dom.assertHtmlContentsMatch('bar', editableField.getElement());
     clock.tick(1000);
     assertFalse('setHtml must not fire delayed change if so configured.',
         delayedChangeCalled);
 
-    editableField.setHtml(false, 'foo', false /* Fire delayed change***REMOVED***);
+    editableField.setHtml(false, 'foo', false /* Fire delayed change */);
     goog.testing.dom.assertHtmlContentsMatch('foo', editableField.getElement());
     clock.tick(1000);
     assertTrue('setHtml must fire delayed change by default',
@@ -962,16 +962,16 @@ function testSetHtml() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper to test that the cursor is placed at the beginning of the editable
-***REMOVED*** field's contents.
-***REMOVED*** @param {string=} opt_html Html to replace the test file default field
-***REMOVED***     contents with.
-***REMOVED*** @param {string=} opt_parentId Id of the parent of the node where the cursor
-***REMOVED***     is expected to be placed. If omitted, will expect cursor to be placed in
-***REMOVED***     the first child of the field element (or, if the field has no content, in
-***REMOVED***     the field element itself).
-***REMOVED***
+/**
+ * Helper to test that the cursor is placed at the beginning of the editable
+ * field's contents.
+ * @param {string=} opt_html Html to replace the test file default field
+ *     contents with.
+ * @param {string=} opt_parentId Id of the parent of the node where the cursor
+ *     is expected to be placed. If omitted, will expect cursor to be placed in
+ *     the first child of the field element (or, if the field has no content, in
+ *     the field element itself).
+ */
 function doTestPlaceCursorAtStart(opt_html, opt_parentId) {
   var editableField = new FieldConstructor('testField', document);
   editableField.makeEditable();
@@ -1020,9 +1020,9 @@ function doTestPlaceCursorAtStart(opt_html, opt_parentId) {
 }
 
 
-***REMOVED***
-***REMOVED*** Verify that restoreSavedRange() restores the range and sets the focus.
-***REMOVED***
+/**
+ * Verify that restoreSavedRange() restores the range and sets the focus.
+ */
 function testRestoreSavedRange() {
   var editableField = new FieldConstructor('testField', document);
   editableField.makeEditable();
@@ -1075,17 +1075,17 @@ function testPlaceCursorAtStartNonImportantTextNode() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper to test that the cursor is placed at the beginning of the editable
-***REMOVED*** field's contents.
-***REMOVED*** @param {string=} opt_html Html to replace the test file default field
-***REMOVED***     contents with.
-***REMOVED*** @param {string=} opt_parentId Id of the parent of the node where the cursor
-***REMOVED***     is expected to be placed. If omitted, will expect cursor to be placed in
-***REMOVED***     the first child of the field element (or, if the field has no content, in
-***REMOVED***     the field element itself).
-***REMOVED*** @param {number=} opt_offset The offset to expect for the end position.
-***REMOVED***
+/**
+ * Helper to test that the cursor is placed at the beginning of the editable
+ * field's contents.
+ * @param {string=} opt_html Html to replace the test file default field
+ *     contents with.
+ * @param {string=} opt_parentId Id of the parent of the node where the cursor
+ *     is expected to be placed. If omitted, will expect cursor to be placed in
+ *     the first child of the field element (or, if the field has no content, in
+ *     the field element itself).
+ * @param {number=} opt_offset The offset to expect for the end position.
+ */
 function doTestPlaceCursorAtEnd(opt_html, opt_parentId, opt_offset) {
   var editableField = new FieldConstructor('testField', document);
   editableField.makeEditable();
@@ -1161,7 +1161,7 @@ function testClearDelayedChange() {
   editableField.makeEditable();
 
   var delayedChangeCalled = false;
-***REMOVED***editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(editableField, goog.editor.Field.EventType.DELAYEDCHANGE,
       function() {
         delayedChangeCalled = true;
       });

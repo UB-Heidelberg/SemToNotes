@@ -35,7 +35,7 @@ function testCreateWithContent() {
   var iframe = goog.dom.iframe.createWithContent(sandbox,
       '<title>Foo Title</title>', '<div id="blah">Test</div>',
       'position: absolute',
-      false /* opt_quirks***REMOVED***);
+      false /* opt_quirks */);
 
   var doc = goog.dom.getFrameContentDocument(iframe);
   assertNotNull(doc.getElementById('blah'));

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Provides a utility for tracing and debugging WebChannel
-***REMOVED***     requests.
-***REMOVED***
-***REMOVED*** @visibility {:internal}
-***REMOVED***
+/**
+ * @fileoverview Provides a utility for tracing and debugging WebChannel
+ *     requests.
+ *
+ * @visibility {:internal}
+ */
 
 
 goog.provide('goog.labs.net.webChannel.WebChannelDebug');
@@ -27,201 +27,201 @@ goog.require('goog.log');
 
 
 
-***REMOVED***
-***REMOVED*** Logs and keeps a buffer of debugging info for the Channel.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @struct
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Logs and keeps a buffer of debugging info for the Channel.
+ *
+ * @constructor
+ * @struct
+ * @final
+ */
 goog.labs.net.webChannel.WebChannelDebug = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The logger instance.
-  ***REMOVED*** @const
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The logger instance.
+   * @const
+   * @private
+   */
   this.logger_ = goog.log.getLogger('goog.labs.net.webChannel.WebChannelDebug');
-***REMOVED***
+};
 
 
 goog.scope(function() {
 var WebChannelDebug = goog.labs.net.webChannel.WebChannelDebug;
 
 
-***REMOVED***
-***REMOVED*** Gets the logger used by this ChannelDebug.
-***REMOVED*** @return {goog.debug.Logger} The logger used by this WebChannelDebug.
-***REMOVED***
+/**
+ * Gets the logger used by this ChannelDebug.
+ * @return {goog.debug.Logger} The logger used by this WebChannelDebug.
+ */
 WebChannelDebug.prototype.getLogger = function() {
   return this.logger_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs that the browser went offline during the lifetime of a request.
-***REMOVED*** @param {goog.Uri} url The URL being requested.
-***REMOVED***
+/**
+ * Logs that the browser went offline during the lifetime of a request.
+ * @param {goog.Uri} url The URL being requested.
+ */
 WebChannelDebug.prototype.browserOfflineResponse = function(url) {
   this.info('BROWSER_OFFLINE: ' + url);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs an XmlHttp request..
-***REMOVED*** @param {string} verb The request type (GET/POST).
-***REMOVED*** @param {goog.Uri} uri The request destination.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {number} attempt Which attempt # the request was.
-***REMOVED*** @param {?string} postData The data posted in the request.
-***REMOVED***
+/**
+ * Logs an XmlHttp request..
+ * @param {string} verb The request type (GET/POST).
+ * @param {goog.Uri} uri The request destination.
+ * @param {string|number|undefined} id The request id.
+ * @param {number} attempt Which attempt # the request was.
+ * @param {?string} postData The data posted in the request.
+ */
 WebChannelDebug.prototype.xmlHttpChannelRequest =
     function(verb, uri, id, attempt, postData) {
   this.info(
       'XMLHTTP REQ (' + id + ') [attempt ' + attempt + ']: ' +
       verb + '\n' + uri + '\n' +
       this.maybeRedactPostData_(postData));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the meta data received from an XmlHttp request.
-***REMOVED*** @param {string} verb The request type (GET/POST).
-***REMOVED*** @param {goog.Uri} uri The request destination.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {number} attempt Which attempt # the request was.
-***REMOVED*** @param {goog.net.XmlHttp.ReadyState} readyState The ready state.
-***REMOVED*** @param {number} statusCode The HTTP status code.
-***REMOVED***
+/**
+ * Logs the meta data received from an XmlHttp request.
+ * @param {string} verb The request type (GET/POST).
+ * @param {goog.Uri} uri The request destination.
+ * @param {string|number|undefined} id The request id.
+ * @param {number} attempt Which attempt # the request was.
+ * @param {goog.net.XmlHttp.ReadyState} readyState The ready state.
+ * @param {number} statusCode The HTTP status code.
+ */
 WebChannelDebug.prototype.xmlHttpChannelResponseMetaData =
     function(verb, uri, id, attempt, readyState, statusCode)  {
   this.info(
       'XMLHTTP RESP (' + id + ') [ attempt ' + attempt + ']: ' +
       verb + '\n' + uri + '\n' + readyState + ' ' + statusCode);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the response data received from an XmlHttp request.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {?string} responseText The response text.
-***REMOVED*** @param {?string=} opt_desc Optional request description.
-***REMOVED***
+/**
+ * Logs the response data received from an XmlHttp request.
+ * @param {string|number|undefined} id The request id.
+ * @param {?string} responseText The response text.
+ * @param {?string=} opt_desc Optional request description.
+ */
 WebChannelDebug.prototype.xmlHttpChannelResponseText =
     function(id, responseText, opt_desc) {
   this.info(
       'XMLHTTP TEXT (' + id + '): ' +
       this.redactResponse_(responseText) +
       (opt_desc ? ' ' + opt_desc : ''));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a Trident ActiveX request.
-***REMOVED*** @param {string} verb The request type (GET/POST).
-***REMOVED*** @param {goog.Uri} uri The request destination.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {number} attempt Which attempt # the request was.
-***REMOVED***
+/**
+ * Logs a Trident ActiveX request.
+ * @param {string} verb The request type (GET/POST).
+ * @param {goog.Uri} uri The request destination.
+ * @param {string|number|undefined} id The request id.
+ * @param {number} attempt Which attempt # the request was.
+ */
 WebChannelDebug.prototype.tridentChannelRequest =
     function(verb, uri, id, attempt) {
   this.info(
       'TRIDENT REQ (' + id + ') [ attempt ' + attempt + ']: ' +
       verb + '\n' + uri);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the response text received from a Trident ActiveX request.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {string} responseText The response text.
-***REMOVED***
+/**
+ * Logs the response text received from a Trident ActiveX request.
+ * @param {string|number|undefined} id The request id.
+ * @param {string} responseText The response text.
+ */
 WebChannelDebug.prototype.tridentChannelResponseText =
     function(id, responseText) {
   this.info(
       'TRIDENT TEXT (' + id + '): ' +
       this.redactResponse_(responseText));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs the done response received from a Trident ActiveX request.
-***REMOVED*** @param {string|number|undefined} id The request id.
-***REMOVED*** @param {boolean} successful Whether the request was successful.
-***REMOVED***
+/**
+ * Logs the done response received from a Trident ActiveX request.
+ * @param {string|number|undefined} id The request id.
+ * @param {boolean} successful Whether the request was successful.
+ */
 WebChannelDebug.prototype.tridentChannelResponseDone =
     function(id, successful) {
   this.info(
       'TRIDENT TEXT (' + id + '): ' + successful ? 'success' : 'failure');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a request timeout.
-***REMOVED*** @param {goog.Uri} uri The uri that timed out.
-***REMOVED***
+/**
+ * Logs a request timeout.
+ * @param {goog.Uri} uri The uri that timed out.
+ */
 WebChannelDebug.prototype.timeoutResponse = function(uri) {
   this.info('TIMEOUT: ' + uri);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a debug message.
-***REMOVED*** @param {string} text The message.
-***REMOVED***
+/**
+ * Logs a debug message.
+ * @param {string} text The message.
+ */
 WebChannelDebug.prototype.debug = function(text) {
   this.info(text);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs an exception
-***REMOVED*** @param {Error} e The error or error event.
-***REMOVED*** @param {string=} opt_msg The optional message, defaults to 'Exception'.
-***REMOVED***
+/**
+ * Logs an exception
+ * @param {Error} e The error or error event.
+ * @param {string=} opt_msg The optional message, defaults to 'Exception'.
+ */
 WebChannelDebug.prototype.dumpException = function(e, opt_msg) {
   this.severe((opt_msg || 'Exception') + e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs an info message.
-***REMOVED*** @param {string} text The message.
-***REMOVED***
+/**
+ * Logs an info message.
+ * @param {string} text The message.
+ */
 WebChannelDebug.prototype.info = function(text) {
   goog.log.info(this.logger_, text);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a warning message.
-***REMOVED*** @param {string} text The message.
-***REMOVED***
+/**
+ * Logs a warning message.
+ * @param {string} text The message.
+ */
 WebChannelDebug.prototype.warning = function(text) {
   goog.log.warning(this.logger_, text);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logs a severe message.
-***REMOVED*** @param {string} text The message.
-***REMOVED***
+/**
+ * Logs a severe message.
+ * @param {string} text The message.
+ */
 WebChannelDebug.prototype.severe = function(text) {
   goog.log.error(this.logger_, text);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes potentially private data from a response so that we don't
-***REMOVED*** accidentally save private and personal data to the server logs.
-***REMOVED*** @param {?string} responseText A JSON response to clean.
-***REMOVED*** @return {?string} The cleaned response.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes potentially private data from a response so that we don't
+ * accidentally save private and personal data to the server logs.
+ * @param {?string} responseText A JSON response to clean.
+ * @return {?string} The cleaned response.
+ * @private
+ */
 WebChannelDebug.prototype.redactResponse_ = function(responseText) {
   if (!responseText) {
     return null;
   }
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     var responseArray = goog.json.unsafeParse(responseText);
     if (responseArray) {
@@ -237,14 +237,14 @@ WebChannelDebug.prototype.redactResponse_ = function(responseText) {
     this.debug('Exception parsing expected JS array - probably was not JS');
     return responseText;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes data from a response array that may be sensitive.
-***REMOVED*** @param {!Array} array The array to clean.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes data from a response array that may be sensitive.
+ * @param {!Array} array The array to clean.
+ * @private
+ */
 WebChannelDebug.prototype.maybeRedactArray_ = function(array) {
   if (array.length < 2) {
     return;
@@ -264,16 +264,16 @@ WebChannelDebug.prototype.maybeRedactArray_ = function(array) {
       dataPart[i] = '';
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes potentially private data from a request POST body so that we don't
-***REMOVED*** accidentally save private and personal data to the server logs.
-***REMOVED*** @param {?string} data The data string to clean.
-***REMOVED*** @return {?string} The data string with sensitive data replaced by 'redacted'.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Removes potentially private data from a request POST body so that we don't
+ * accidentally save private and personal data to the server logs.
+ * @param {?string} data The data string to clean.
+ * @return {?string} The data string with sensitive data replaced by 'redacted'.
+ * @private
+ */
 WebChannelDebug.prototype.maybeRedactPostData_ = function(data) {
   if (!data) {
     return null;
@@ -296,5 +296,5 @@ WebChannelDebug.prototype.maybeRedactPostData_ = function(data) {
     }
   }
   return out;
-***REMOVED***
+};
 });  // goog.scope

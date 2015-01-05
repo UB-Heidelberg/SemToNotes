@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Utility methods to deal with CSS3 transforms programmatically.
-***REMOVED***
+/**
+ * @fileoverview Utility methods to deal with CSS3 transforms programmatically.
+ */
 
 goog.provide('goog.style.transform');
 
@@ -25,21 +25,21 @@ goog.require('goog.userAgent');
 goog.require('goog.userAgent.product.isVersion');
 
 
-***REMOVED***
-***REMOVED*** Whether CSS3 transform translate() is supported. IE 9 supports 2D transforms
-***REMOVED*** and IE 10 supports 3D transforms. IE 8 supports neither.
-***REMOVED*** @return {boolean} Whether the current environment supports CSS3 transforms.
-***REMOVED***
+/**
+ * Whether CSS3 transform translate() is supported. IE 9 supports 2D transforms
+ * and IE 10 supports 3D transforms. IE 8 supports neither.
+ * @return {boolean} Whether the current environment supports CSS3 transforms.
+ */
 goog.style.transform.isSupported = goog.functions.cacheReturnValue(function() {
   return !goog.userAgent.IE || goog.userAgent.product.isVersion(9);
 });
 
 
-***REMOVED***
-***REMOVED*** Whether CSS3 transform translate3d() is supported. If the current browser
-***REMOVED*** supports this transform strategy.
-***REMOVED*** @return {boolean} Whether the current environment supports CSS3 transforms.
-***REMOVED***
+/**
+ * Whether CSS3 transform translate3d() is supported. If the current browser
+ * supports this transform strategy.
+ * @return {boolean} Whether the current environment supports CSS3 transforms.
+ */
 goog.style.transform.is3dSupported =
     goog.functions.cacheReturnValue(function() {
   return goog.userAgent.WEBKIT ||
@@ -48,13 +48,13 @@ goog.style.transform.is3dSupported =
 });
 
 
-***REMOVED***
-***REMOVED*** Returns the x,y translation component of any CSS transforms applied to the
-***REMOVED*** element, in pixels.
-***REMOVED***
-***REMOVED*** @param {!Element} element The element to get the translation of.
-***REMOVED*** @return {!goog.math.Coordinate} The CSS translation of the element in px.
-***REMOVED***
+/**
+ * Returns the x,y translation component of any CSS transforms applied to the
+ * element, in pixels.
+ *
+ * @param {!Element} element The element to get the translation of.
+ * @return {!goog.math.Coordinate} The CSS translation of the element in px.
+ */
 goog.style.transform.getTranslation = function(element) {
   var transform = goog.style.getComputedTransform(element);
   var matrixConstructor = goog.style.transform.matrixConstructor_();
@@ -65,16 +65,16 @@ goog.style.transform.getTranslation = function(element) {
     }
   }
   return new goog.math.Coordinate(0, 0);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Translates an element's position using the CSS3 transform property.
-***REMOVED*** @param {Element} element The element to translate.
-***REMOVED*** @param {number} x The horizontal translation.
-***REMOVED*** @param {number} y The vertical translation.
-***REMOVED*** @return {boolean} Whether the CSS translation was set.
-***REMOVED***
+/**
+ * Translates an element's position using the CSS3 transform property.
+ * @param {Element} element The element to translate.
+ * @param {number} x The horizontal translation.
+ * @param {number} y The vertical translation.
+ * @return {boolean} Whether the CSS translation was set.
+ */
 goog.style.transform.setTranslation = function(element, x, y) {
   if (!goog.style.transform.isSupported()) {
     return false;
@@ -86,15 +86,15 @@ goog.style.transform.setTranslation = function(element, x, y) {
       'translate(' + x + 'px,' + y + 'px)';
   goog.style.setStyle(element, 'transform', translation);
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the constructor for a CSSMatrix object.
-***REMOVED*** @return {function(new:CSSMatrix, string)?} A constructor for a CSSMatrix
-***REMOVED***     object (or null).
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the constructor for a CSSMatrix object.
+ * @return {function(new:CSSMatrix, string)?} A constructor for a CSSMatrix
+ *     object (or null).
+ * @private
+ */
 goog.style.transform.matrixConstructor_ =
     goog.functions.cacheReturnValue(function() {
   // TODO(user): Unless these are accessed from the default namespace the

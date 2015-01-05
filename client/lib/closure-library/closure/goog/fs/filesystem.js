@@ -12,30 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview A wrapper for the HTML5 FileSystem object.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview A wrapper for the HTML5 FileSystem object.
+ *
+ */
 
 goog.provide('goog.fs.FileSystem');
 
 
 
-***REMOVED***
-***REMOVED*** A local filesystem.
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED***
-goog.fs.FileSystem = function() {***REMOVED***
+/**
+ * A local filesystem.
+ *
+ * @interface
+ */
+goog.fs.FileSystem = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The name of the filesystem.
-***REMOVED***
-goog.fs.FileSystem.prototype.getName = function() {***REMOVED***
+/**
+ * @return {string} The name of the filesystem.
+ */
+goog.fs.FileSystem.prototype.getName = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.fs.DirectoryEntry} The root directory of the filesystem.
-***REMOVED***
-goog.fs.FileSystem.prototype.getRoot = function() {***REMOVED***
+/**
+ * @return {!goog.fs.DirectoryEntry} The root directory of the filesystem.
+ */
+goog.fs.FileSystem.prototype.getRoot = function() {};

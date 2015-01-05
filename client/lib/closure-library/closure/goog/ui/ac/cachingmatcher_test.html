@@ -27,11 +27,11 @@ goog.async.Throttle = function(fn, time, self) {
   this.time = time;
   this.self = self;
   this.numFires = 0;
-***REMOVED***
+};
 
 goog.async.Throttle.prototype.fire = function() {
   this.numFires++;
-***REMOVED***
+};
 
 goog.async.Throttle.prototype.permitOne = function() {
   if (this.numFires == 0) {
@@ -39,7 +39,7 @@ goog.async.Throttle.prototype.permitOne = function() {
   }
   this.fn.call(this.self);
   this.numFires = 0;
-***REMOVED***
+};
 
 // Actual tests.
 var mockControl;
@@ -51,7 +51,7 @@ function setUp() {
   mockControl = new goog.testing.MockControl();
   mockMatcher = {
     requestMatchingRows: mockControl.createFunctionMock('requestMatchingRows')
- ***REMOVED*****REMOVED***
+  };
   mockHandler = mockControl.createFunctionMock('matchHandler');
   matcher = new goog.ui.ac.CachingMatcher(mockMatcher);
 }

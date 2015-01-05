@@ -12,66 +12,66 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Detects the specific browser and not just the rendering engine.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Detects the specific browser and not just the rendering engine.
+ *
+ */
 
 goog.provide('goog.userAgent.product');
 
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether the code is running on the Firefox web browser.
-***REMOVED***
+/**
+ * @define {boolean} Whether the code is running on the Firefox web browser.
+ */
 goog.define('goog.userAgent.product.ASSUME_FIREFOX', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether the code is running on the Camino web browser.
-***REMOVED***
+/**
+ * @define {boolean} Whether the code is running on the Camino web browser.
+ */
 goog.define('goog.userAgent.product.ASSUME_CAMINO', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether we know at compile-time that the product is an
-***REMOVED***     iPhone.
-***REMOVED***
+/**
+ * @define {boolean} Whether we know at compile-time that the product is an
+ *     iPhone.
+ */
 goog.define('goog.userAgent.product.ASSUME_IPHONE', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether we know at compile-time that the product is an
-***REMOVED***     iPad.
-***REMOVED***
+/**
+ * @define {boolean} Whether we know at compile-time that the product is an
+ *     iPad.
+ */
 goog.define('goog.userAgent.product.ASSUME_IPAD', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether we know at compile-time that the product is an
-***REMOVED***     Android phone.
-***REMOVED***
+/**
+ * @define {boolean} Whether we know at compile-time that the product is an
+ *     Android phone.
+ */
 goog.define('goog.userAgent.product.ASSUME_ANDROID', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether the code is running on the Chrome web browser.
-***REMOVED***
+/**
+ * @define {boolean} Whether the code is running on the Chrome web browser.
+ */
 goog.define('goog.userAgent.product.ASSUME_CHROME', false);
 
 
-***REMOVED***
-***REMOVED*** @define {boolean} Whether the code is running on the Safari web browser.
-***REMOVED***
+/**
+ * @define {boolean} Whether the code is running on the Safari web browser.
+ */
 goog.define('goog.userAgent.product.ASSUME_SAFARI', false);
 
 
-***REMOVED***
-***REMOVED*** Whether we know the product type at compile-time.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether we know the product type at compile-time.
+ * @type {boolean}
+ * @private
+ */
 goog.userAgent.product.PRODUCT_KNOWN_ =
     goog.userAgent.ASSUME_IE ||
     goog.userAgent.ASSUME_OPERA ||
@@ -84,63 +84,63 @@ goog.userAgent.product.PRODUCT_KNOWN_ =
     goog.userAgent.product.ASSUME_SAFARI;
 
 
-***REMOVED***
-***REMOVED*** Right now we just focus on Tier 1-3 browsers at:
-***REMOVED*** http://wiki/Nonconf/ProductPlatformGuidelines
-***REMOVED*** As well as the YUI grade A browsers at:
-***REMOVED*** http://developer.yahoo.com/yui/articles/gbs/
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Right now we just focus on Tier 1-3 browsers at:
+ * http://wiki/Nonconf/ProductPlatformGuidelines
+ * As well as the YUI grade A browsers at:
+ * http://developer.yahoo.com/yui/articles/gbs/
+ *
+ * @private
+ */
 goog.userAgent.product.init_ = function() {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on the Firefox web browser.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on the Firefox web browser.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedFirefox_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on the Camino web browser.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on the Camino web browser.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedCamino_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on an iPhone or iPod touch.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on an iPhone or iPod touch.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedIphone_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on an iPad
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on an iPad
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedIpad_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on the default browser on an Android phone.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on the default browser on an Android phone.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedAndroid_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on the Chrome web browser.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on the Chrome web browser.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedChrome_ = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the code is running on the Safari web browser.
-  ***REMOVED*** @type {boolean}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the code is running on the Safari web browser.
+   * @type {boolean}
+   * @private
+   */
   goog.userAgent.product.detectedSafari_ = false;
 
   var ua = goog.userAgent.getUserAgentString();
@@ -169,85 +169,85 @@ goog.userAgent.product.init_ = function() {
   } else if (ua.indexOf('Safari') != -1) {
     goog.userAgent.product.detectedSafari_ = true;
   }
-***REMOVED***
+};
 
 if (!goog.userAgent.product.PRODUCT_KNOWN_) {
   goog.userAgent.product.init_();
 }
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the Opera web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the Opera web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.OPERA = goog.userAgent.OPERA;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on an IE web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on an IE web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.IE = goog.userAgent.IE;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the Firefox web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the Firefox web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.FIREFOX = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_FIREFOX :
     goog.userAgent.product.detectedFirefox_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the Camino web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the Camino web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.CAMINO = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_CAMINO :
     goog.userAgent.product.detectedCamino_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on an iPhone or iPod touch.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on an iPhone or iPod touch.
+ * @type {boolean}
+ */
 goog.userAgent.product.IPHONE = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_IPHONE :
     goog.userAgent.product.detectedIphone_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on an iPad.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on an iPad.
+ * @type {boolean}
+ */
 goog.userAgent.product.IPAD = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_IPAD :
     goog.userAgent.product.detectedIpad_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the default browser on an Android phone.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the default browser on an Android phone.
+ * @type {boolean}
+ */
 goog.userAgent.product.ANDROID = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_ANDROID :
     goog.userAgent.product.detectedAndroid_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the Chrome web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the Chrome web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.CHROME = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_CHROME :
     goog.userAgent.product.detectedChrome_;
 
 
-***REMOVED***
-***REMOVED*** Whether the code is running on the Safari web browser.
-***REMOVED*** @type {boolean}
-***REMOVED***
+/**
+ * Whether the code is running on the Safari web browser.
+ * @type {boolean}
+ */
 goog.userAgent.product.SAFARI = goog.userAgent.product.PRODUCT_KNOWN_ ?
     goog.userAgent.product.ASSUME_SAFARI :
     goog.userAgent.product.detectedSafari_;

@@ -20,7 +20,7 @@ goog.require('goog.string');
 goog.require('goog.testing.jsunit');
 goog.require('goog.tweak');
 goog.require('goog.tweak.TweakUi');
-***REMOVED*** @suppress {extraRequire} needed for createRegistryEntries.***REMOVED***
+/** @suppress {extraRequire} needed for createRegistryEntries. */
 goog.require('goog.tweak.testhelpers');
 
 var root;
@@ -232,7 +232,7 @@ function testAddEntry() {
   createUi(false);
   goog.tweak.registerBoolean('Lazy1', 'Lazy-loaded tweak.');
   goog.tweak.registerBoolean('Lazy2', 'Lazy-loaded tweak.',
-      /* defaultValue***REMOVED*** false, { restartRequired: false });
+      /* defaultValue */ false, { restartRequired: false });
   goog.tweak.beginBooleanGroup('LazyGroup', 'Lazy-loaded tweak.');
   goog.tweak.registerBoolean('Lazy3', 'Lazy-loaded tweak.');
   goog.tweak.endBooleanGroup();

@@ -13,10 +13,10 @@
 // limitations under the License.
 
 
-***REMOVED***
-***REMOVED*** @fileoverview Factories for common path types.
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview Factories for common path types.
+ * @author nicksantos@google.com (Nick Santos)
+ */
 
 
 goog.provide('goog.math.paths');
@@ -25,15 +25,15 @@ goog.require('goog.math.Coordinate');
 goog.require('goog.math.Path');
 
 
-***REMOVED***
-***REMOVED*** Defines a regular n-gon by specifing the center, a vertex, and the total
-***REMOVED*** number of vertices.
-***REMOVED*** @param {goog.math.Coordinate} center The center point.
-***REMOVED*** @param {goog.math.Coordinate} vertex The vertex, which implicitly defines
-***REMOVED***     a radius as well.
-***REMOVED*** @param {number} n The number of vertices.
-***REMOVED*** @return {!goog.math.Path} The path.
-***REMOVED***
+/**
+ * Defines a regular n-gon by specifing the center, a vertex, and the total
+ * number of vertices.
+ * @param {goog.math.Coordinate} center The center point.
+ * @param {goog.math.Coordinate} vertex The vertex, which implicitly defines
+ *     a radius as well.
+ * @param {number} n The number of vertices.
+ * @return {!goog.math.Path} The path.
+ */
 goog.math.paths.createRegularNGon = function(center, vertex, n) {
   var path = new goog.math.Path();
   path.moveTo(vertex.x, vertex.y);
@@ -41,25 +41,25 @@ goog.math.paths.createRegularNGon = function(center, vertex, n) {
   var startAngle = Math.atan2(vertex.y - center.y, vertex.x - center.x);
   var radius = goog.math.Coordinate.distance(center, vertex);
   for (var i = 1; i < n; i++) {
-    var angle = startAngle + 2***REMOVED*** Math.PI***REMOVED*** (i / n);
-    path.lineTo(center.x + radius***REMOVED*** Math.cos(angle),
-                center.y + radius***REMOVED*** Math.sin(angle));
+    var angle = startAngle + 2 * Math.PI * (i / n);
+    path.lineTo(center.x + radius * Math.cos(angle),
+                center.y + radius * Math.sin(angle));
   }
   path.close();
   return path;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Defines an arrow.
-***REMOVED*** @param {goog.math.Coordinate} a Point A.
-***REMOVED*** @param {goog.math.Coordinate} b Point B.
-***REMOVED*** @param {?number} aHead The size of the arrow head at point A.
-***REMOVED***     0 omits the head.
-***REMOVED*** @param {?number} bHead The size of the arrow head at point B.
-***REMOVED***     0 omits the head.
-***REMOVED*** @return {!goog.math.Path} The path.
-***REMOVED***
+/**
+ * Defines an arrow.
+ * @param {goog.math.Coordinate} a Point A.
+ * @param {goog.math.Coordinate} b Point B.
+ * @param {?number} aHead The size of the arrow head at point A.
+ *     0 omits the head.
+ * @param {?number} bHead The size of the arrow head at point B.
+ *     0 omits the head.
+ * @return {!goog.math.Path} The path.
+ */
 goog.math.paths.createArrow = function(a, b, aHead, bHead) {
   var path = new goog.math.Path();
   path.moveTo(a.x, a.y);
@@ -70,17 +70,17 @@ goog.math.paths.createArrow = function(a, b, aHead, bHead) {
     path.appendPath(
         goog.math.paths.createRegularNGon(
             new goog.math.Coordinate(
-                a.x + aHead***REMOVED*** Math.cos(angle),
-                a.y + aHead***REMOVED*** Math.sin(angle)),
+                a.x + aHead * Math.cos(angle),
+                a.y + aHead * Math.sin(angle)),
             a, 3));
   }
   if (bHead) {
     path.appendPath(
         goog.math.paths.createRegularNGon(
             new goog.math.Coordinate(
-                b.x + bHead***REMOVED*** Math.cos(angle + Math.PI),
-                b.y + bHead***REMOVED*** Math.sin(angle + Math.PI)),
+                b.x + bHead * Math.cos(angle + Math.PI),
+                b.y + bHead * Math.sin(angle + Math.PI)),
             b, 3));
   }
   return path;
-***REMOVED***
+};

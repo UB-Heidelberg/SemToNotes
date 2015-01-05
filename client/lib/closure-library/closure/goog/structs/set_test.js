@@ -88,13 +88,13 @@ function testContains() {
 function testContainsFunctionValue() {
   var s = new Set;
 
-  var fn1 = function() {***REMOVED***
+  var fn1 = function() {};
 
   assertFalse(s.contains(fn1));
   s.add(fn1);
   assertTrue(s.contains(fn1));
 
-  var fn2 = function() {***REMOVED***
+  var fn2 = function() {};
 
   assertFalse(s.contains(fn2));
   s.add(fn2);
@@ -179,9 +179,9 @@ function testDifference() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to assert intersection is commutative.
-***REMOVED***
+/**
+ * Helper function to assert intersection is commutative.
+ */
 function assertIntersection(msg, set1, set2, expectedIntersection) {
   assertTrue(msg + ': set1->set2',
       set1.intersection(set2).equals(expectedIntersection));
@@ -208,9 +208,9 @@ function testRemoveAll() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper function to test removeAll.
-***REMOVED***
+/**
+ * Helper function to test removeAll.
+ */
 function assertRemoveAll(msg, elements1, elements2, expectedResult) {
   var set1 = new Set(elements1);
   var set2 = new Set(elements2);
@@ -338,13 +338,13 @@ function testClone() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper method for testEquals().
-***REMOVED*** @param {Object} a First element to use in the tests.
-***REMOVED*** @param {Object} b Second element to use in the tests.
-***REMOVED*** @param {Object} c Third element to use in the tests.
-***REMOVED*** @param {Object} d Fourth element to use in the tests.
-***REMOVED***
+/**
+ * Helper method for testEquals().
+ * @param {Object} a First element to use in the tests.
+ * @param {Object} b Second element to use in the tests.
+ * @param {Object} c Third element to use in the tests.
+ * @param {Object} d Fourth element to use in the tests.
+ */
 function helperForTestEquals(a, b, c, d) {
   var s = new Set([a, b, c]);
 
@@ -378,13 +378,13 @@ function testEquals() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper method for testIsSubsetOf().
-***REMOVED*** @param {Object} a First element to use in the tests.
-***REMOVED*** @param {Object} b Second element to use in the tests.
-***REMOVED*** @param {Object} c Third element to use in the tests.
-***REMOVED*** @param {Object} d Fourth element to use in the tests.
-***REMOVED***
+/**
+ * Helper method for testIsSubsetOf().
+ * @param {Object} a First element to use in the tests.
+ * @param {Object} b Second element to use in the tests.
+ * @param {Object} c Third element to use in the tests.
+ * @param {Object} d Fourth element to use in the tests.
+ */
 function helperForTestIsSubsetOf(a, b, c, d) {
   var s = new Set([a, b, c]);
 

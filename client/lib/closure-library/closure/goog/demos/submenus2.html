@@ -139,7 +139,7 @@ See the COPYING file for details.
 
     menu.render();
     menu.getElement().id = 'foo';
-  ***REMOVED***menu, 'action', function(e) {
+    goog.events.listen(menu, 'action', function(e) {
       var action = e.target.getCaption();
       alert(action);
     });

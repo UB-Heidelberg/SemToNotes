@@ -15,7 +15,7 @@
 goog.provide('goog.labs.testing.numberMatcherTest');
 goog.setTestOnly('goog.labs.testing.numberMatcherTest');
 
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.labs.testing.LessThanMatcher');
 goog.require('goog.labs.testing.MatcherError');
 goog.require('goog.labs.testing.assertThat');

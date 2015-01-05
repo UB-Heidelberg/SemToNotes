@@ -1,6 +1,6 @@
-***REMOVED***
-***REMOVED*** @fileoverview Class represents the namespace URI token.
-***REMOVED***
+/**
+ * @fileoverview Class represents the namespace URI token.
+ */
 
 goog.provide('xrx.token.NsUri');
 
@@ -10,12 +10,12 @@ goog.require('xrx.token.Token');
 
 
 
-***REMOVED***
-***REMOVED*** Constructs a new namespace URI token.
-***REMOVED***
-***REMOVED*** @extends xrx.token
-***REMOVED***
+/**
+ * Constructs a new namespace URI token.
+ * @constructor
+ * @extends xrx.token
+ */
 xrx.token.NsUri = function(label, opt_offset, opt_length) {
   goog.base(this, xrx.token.NS_URI, label, opt_offset, opt_length);
-***REMOVED***
+};
 goog.inherits(xrx.token.NsUri, xrx.token.Token);

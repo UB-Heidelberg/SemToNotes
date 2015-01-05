@@ -12,112 +12,112 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview This file contains a class to provide a unified mechanism for
-***REMOVED*** CLICK and enter KEYDOWN events. This provides better accessibility by
-***REMOVED*** providing the given functionality to a keyboard user which is otherwise
-***REMOVED*** would be available only via a mouse click.
-***REMOVED***
-***REMOVED*** If there is an existing CLICK listener or planning to be added as below -
-***REMOVED***
-***REMOVED*** <code>this.eventHandler_.listen(el, CLICK, this.onClick_);<code>
-***REMOVED***
-***REMOVED*** it can be replaced with an ACTION listener as follows:
-***REMOVED***
-***REMOVED*** <code>this.eventHandler_.listen(
-***REMOVED***    new goog.events.ActionHandler(el),
-***REMOVED***    ACTION,
-***REMOVED***    this.onAction_);<code>
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview This file contains a class to provide a unified mechanism for
+ * CLICK and enter KEYDOWN events. This provides better accessibility by
+ * providing the given functionality to a keyboard user which is otherwise
+ * would be available only via a mouse click.
+ *
+ * If there is an existing CLICK listener or planning to be added as below -
+ *
+ * <code>this.eventHandler_.listen(el, CLICK, this.onClick_);<code>
+ *
+ * it can be replaced with an ACTION listener as follows:
+ *
+ * <code>this.eventHandler_.listen(
+ *    new goog.events.ActionHandler(el),
+ *    ACTION,
+ *    this.onAction_);<code>
+ *
+ */
 
 goog.provide('goog.events.ActionEvent');
 goog.provide('goog.events.ActionHandler');
 goog.provide('goog.events.ActionHandler.EventType');
 goog.provide('goog.events.BeforeActionEvent');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.events.BrowserEvent');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.events.KeyCodes');
 goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** A wrapper around an element that you want to listen to ACTION events on.
-***REMOVED*** @param {Element|Document} element The element or document to listen on.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A wrapper around an element that you want to listen to ACTION events on.
+ * @param {Element|Document} element The element or document to listen on.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ * @final
+ */
 goog.events.ActionHandler = function(element) {
   goog.events.EventTarget.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** This is the element that we will listen to events on.
-  ***REMOVED*** @type {Element|Document}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * This is the element that we will listen to events on.
+   * @type {Element|Document}
+   * @private
+   */
   this.element_ = element;
 
-***REMOVED***element, goog.events.ActionHandler.KEY_EVENT_TYPE_,
+  goog.events.listen(element, goog.events.ActionHandler.KEY_EVENT_TYPE_,
       this.handleKeyDown_, false, this);
-***REMOVED***element, goog.events.EventType.CLICK,
+  goog.events.listen(element, goog.events.EventType.CLICK,
       this.handleClick_, false, this);
-***REMOVED***
+};
 goog.inherits(goog.events.ActionHandler, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** Enum type for the events fired by the action handler
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Enum type for the events fired by the action handler
+ * @enum {string}
+ */
 goog.events.ActionHandler.EventType = {
   ACTION: 'action',
   BEFOREACTION: 'beforeaction'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Key event type to listen for.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Key event type to listen for.
+ * @type {string}
+ * @private
+ */
 goog.events.ActionHandler.KEY_EVENT_TYPE_ = goog.userAgent.GECKO ?
     goog.events.EventType.KEYPRESS :
     goog.events.EventType.KEYDOWN;
 
 
-***REMOVED***
-***REMOVED*** Handles key press events.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The key press event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles key press events.
+ * @param {!goog.events.BrowserEvent} e The key press event.
+ * @private
+ */
 goog.events.ActionHandler.prototype.handleKeyDown_ = function(e) {
   if (e.keyCode == goog.events.KeyCodes.ENTER ||
       goog.userAgent.WEBKIT && e.keyCode == goog.events.KeyCodes.MAC_ENTER) {
     this.dispatchEvents_(e);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles mouse events.
-***REMOVED*** @param {!goog.events.BrowserEvent} e The click event.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles mouse events.
+ * @param {!goog.events.BrowserEvent} e The click event.
+ * @private
+ */
 goog.events.ActionHandler.prototype.handleClick_ = function(e) {
   this.dispatchEvents_(e);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches BeforeAction and Action events to the element
-***REMOVED*** @param {!goog.events.BrowserEvent} e The event causing dispatches.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches BeforeAction and Action events to the element
+ * @param {!goog.events.BrowserEvent} e The event causing dispatches.
+ * @private
+ */
 goog.events.ActionHandler.prototype.dispatchEvents_ = function(e) {
   var beforeActionEvent = new goog.events.BeforeActionEvent(e);
 
@@ -138,10 +138,10 @@ goog.events.ActionHandler.prototype.dispatchEvents_ = function(e) {
     // Stop propagating the event
     e.stopPropagation();
   }
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.events.ActionHandler.prototype.disposeInternal = function() {
   goog.events.ActionHandler.superClass_.disposeInternal.call(this);
   goog.events.unlisten(this.element_, goog.events.ActionHandler.KEY_EVENT_TYPE_,
@@ -149,36 +149,36 @@ goog.events.ActionHandler.prototype.disposeInternal = function() {
   goog.events.unlisten(this.element_, goog.events.EventType.CLICK,
       this.handleClick_, false, this);
   delete this.element_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** This class is used for the goog.events.ActionHandler.EventType.ACTION event.
-***REMOVED*** @param {!goog.events.BrowserEvent} browserEvent Browser event object.
-***REMOVED***
-***REMOVED*** @extends {goog.events.BrowserEvent}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class is used for the goog.events.ActionHandler.EventType.ACTION event.
+ * @param {!goog.events.BrowserEvent} browserEvent Browser event object.
+ * @constructor
+ * @extends {goog.events.BrowserEvent}
+ * @final
+ */
 goog.events.ActionEvent = function(browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent.getBrowserEvent());
   this.type = goog.events.ActionHandler.EventType.ACTION;
-***REMOVED***
+};
 goog.inherits(goog.events.ActionEvent, goog.events.BrowserEvent);
 
 
 
-***REMOVED***
-***REMOVED*** This class is used for the goog.events.ActionHandler.EventType.BEFOREACTION
-***REMOVED*** event. BEFOREACTION gives a chance to the application so the keyboard focus
-***REMOVED*** can be restored back, if required.
-***REMOVED*** @param {!goog.events.BrowserEvent} browserEvent Browser event object.
-***REMOVED***
-***REMOVED*** @extends {goog.events.BrowserEvent}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * This class is used for the goog.events.ActionHandler.EventType.BEFOREACTION
+ * event. BEFOREACTION gives a chance to the application so the keyboard focus
+ * can be restored back, if required.
+ * @param {!goog.events.BrowserEvent} browserEvent Browser event object.
+ * @constructor
+ * @extends {goog.events.BrowserEvent}
+ * @final
+ */
 goog.events.BeforeActionEvent = function(browserEvent) {
   goog.events.BrowserEvent.call(this, browserEvent.getBrowserEvent());
   this.type = goog.events.ActionHandler.EventType.BEFOREACTION;
-***REMOVED***
+};
 goog.inherits(goog.events.BeforeActionEvent, goog.events.BrowserEvent);

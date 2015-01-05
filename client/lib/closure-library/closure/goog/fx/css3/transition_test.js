@@ -17,7 +17,7 @@ goog.setTestOnly('goog.fx.css3.TransitionTest');
 
 goog.require('goog.dispose');
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fx.Transition');
 goog.require('goog.fx.css3.Transition');
 goog.require('goog.style.transition');
@@ -56,7 +56,7 @@ function testPlayEventFiredOnPlay() {
 
   transition = createTransition(element, 10);
   var handlerCalled = false;
-***REMOVED***transition, goog.fx.Transition.EventType.PLAY,
+  goog.events.listen(transition, goog.fx.Transition.EventType.PLAY,
       function() {
         handlerCalled = true;
       });
@@ -71,7 +71,7 @@ function testBeginEventFiredOnPlay() {
 
   transition = createTransition(element, 10);
   var handlerCalled = false;
-***REMOVED***transition, goog.fx.Transition.EventType.BEGIN,
+  goog.events.listen(transition, goog.fx.Transition.EventType.BEGIN,
       function() {
         handlerCalled = true;
       });
@@ -87,11 +87,11 @@ function testFinishEventsFiredAfterFinish() {
   transition = createTransition(element, 10);
   var finishHandlerCalled = false;
   var endHandlerCalled = false;
-***REMOVED***transition, goog.fx.Transition.EventType.FINISH,
+  goog.events.listen(transition, goog.fx.Transition.EventType.FINISH,
       function() {
         finishHandlerCalled = true;
       });
-***REMOVED***transition, goog.fx.Transition.EventType.END,
+  goog.events.listen(transition, goog.fx.Transition.EventType.END,
       function() {
         endHandlerCalled = true;
       });
@@ -113,23 +113,23 @@ function testEventsWhenTransitionIsUnsupported() {
   var stopHandlerCalled = false;
   var finishHandlerCalled = false, endHandlerCalled = false;
   var beginHandlerCalled = false, playHandlerCalled = false;
-***REMOVED***transition, goog.fx.Transition.EventType.BEGIN,
+  goog.events.listen(transition, goog.fx.Transition.EventType.BEGIN,
       function() {
         beginHandlerCalled = true;
       });
-***REMOVED***transition, goog.fx.Transition.EventType.PLAY,
+  goog.events.listen(transition, goog.fx.Transition.EventType.PLAY,
       function() {
         playHandlerCalled = true;
       });
-***REMOVED***transition, goog.fx.Transition.EventType.FINISH,
+  goog.events.listen(transition, goog.fx.Transition.EventType.FINISH,
       function() {
         finishHandlerCalled = true;
       });
-***REMOVED***transition, goog.fx.Transition.EventType.END,
+  goog.events.listen(transition, goog.fx.Transition.EventType.END,
       function() {
         endHandlerCalled = true;
       });
-***REMOVED***transition, goog.fx.Transition.EventType.STOP,
+  goog.events.listen(transition, goog.fx.Transition.EventType.STOP,
       function() {
         stopHandlerCalled = true;
       });
@@ -155,11 +155,11 @@ function testCallingStopDuringAnimationWorks() {
   var stopHandler = goog.testing.recordFunction();
   var endHandler = goog.testing.recordFunction();
   var finishHandler = goog.testing.recordFunction();
-***REMOVED***transition, goog.fx.Transition.EventType.STOP,
+  goog.events.listen(transition, goog.fx.Transition.EventType.STOP,
       stopHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.END,
+  goog.events.listen(transition, goog.fx.Transition.EventType.END,
       endHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.FINISH,
+  goog.events.listen(transition, goog.fx.Transition.EventType.FINISH,
       finishHandler);
 
   transition.play();
@@ -180,11 +180,11 @@ function testCallingStopImmediatelyWorks() {
   var stopHandler = goog.testing.recordFunction();
   var endHandler = goog.testing.recordFunction();
   var finishHandler = goog.testing.recordFunction();
-***REMOVED***transition, goog.fx.Transition.EventType.STOP,
+  goog.events.listen(transition, goog.fx.Transition.EventType.STOP,
       stopHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.END,
+  goog.events.listen(transition, goog.fx.Transition.EventType.END,
       endHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.FINISH,
+  goog.events.listen(transition, goog.fx.Transition.EventType.FINISH,
       finishHandler);
 
   transition.play();
@@ -203,11 +203,11 @@ function testCallingStopAfterAnimationDoesNothing() {
   var stopHandler = goog.testing.recordFunction();
   var endHandler = goog.testing.recordFunction();
   var finishHandler = goog.testing.recordFunction();
-***REMOVED***transition, goog.fx.Transition.EventType.STOP,
+  goog.events.listen(transition, goog.fx.Transition.EventType.STOP,
       stopHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.END,
+  goog.events.listen(transition, goog.fx.Transition.EventType.END,
       endHandler);
-***REMOVED***transition, goog.fx.Transition.EventType.FINISH,
+  goog.events.listen(transition, goog.fx.Transition.EventType.FINISH,
       finishHandler);
 
   transition.play();

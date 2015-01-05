@@ -1,17 +1,17 @@
-/*global env: true***REMOVED***
-***REMOVED***
+/*global env: true */
+/**
     @overview
     @author Michael Mathews <micmath@gmail.com>
     @license Apache License 2.0 - See file 'LICENSE.md' in this project.
-***REMOVED***
+ */
 
-***REMOVED***
+/**
     Functionality related to JSDoc tags.
     @module jsdoc/tag
     @requires jsdoc/tag/dictionary
     @requires jsdoc/tag/validator
     @requires jsdoc/tag/type
-***REMOVED***
+ */
 'use strict';
 
 var jsdoc = {
@@ -23,14 +23,14 @@ var jsdoc = {
     util: {
         logger: require('jsdoc/util/logger')
     }
-***REMOVED***
+};
 var path = require('jsdoc/path');
 
 function trim(text, opts) {
     var indentMatcher;
     var match;
 
-    opts = opts || {***REMOVED***
+    opts = opts || {};
     text = text || '';
 
     if (opts.keepsWhitespace) {
@@ -58,19 +58,19 @@ function processTagText(tag, tagDef) {
     }
 
     if (tagDef.canHaveType || tagDef.canHaveName) {
-       ***REMOVED*****REMOVED*** The value property represents the result of parsing the tag text.***REMOVED***
-        tag.value = {***REMOVED***
+        /** The value property represents the result of parsing the tag text. */
+        tag.value = {};
 
         tagType = jsdoc.tag.type.parse(tag.text, tagDef.canHaveName, tagDef.canHaveType);
 
-        // It is possible for a tag to***REMOVED***not* have a type but still have
+        // It is possible for a tag to *not* have a type but still have
         // optional or defaultvalue, e.g. '@param [foo]'.
         // Although tagType.type.length == 0 we should still copy the other properties.
         if (tagType.type) {
             if (tagType.type.length) {
                 tag.value.type = {
                     names: tagType.type
-               ***REMOVED*****REMOVED***
+                };
             }
             tag.value.optional = tagType.optional;
             tag.value.nullable = tagType.nullable;
@@ -92,32 +92,32 @@ function processTagText(tag, tagDef) {
     }
 }
 
-***REMOVED***
+/**
     Constructs a new tag object. Calls the tag validator.
     @class
     @classdesc Represents a single doclet tag.
     @param {string} tagTitle
     @param {string=} tagBody
     @param {object=} meta
-***REMOVED***
+ */
 var Tag = exports.Tag = function(tagTitle, tagBody, meta) {
     var tagDef;
     var trimOpts;
 
-    meta = meta || {***REMOVED***
+    meta = meta || {};
 
     this.originalTitle = trim(tagTitle);
 
-   ***REMOVED*****REMOVED*** The title part of the tag: @title text***REMOVED***
+    /** The title part of the tag: @title text */
     this.title = jsdoc.tag.dictionary.normalise(this.originalTitle);
 
     tagDef = jsdoc.tag.dictionary.lookUp(this.title);
     trimOpts = {
         keepsWhitespace: tagDef.keepsWhitespace,
         removesIndent: tagDef.removesIndent
-   ***REMOVED*****REMOVED***
+    };
 
-   ***REMOVED*****REMOVED*** The text part of the tag: @title text***REMOVED***
+    /** The text part of the tag: @title text */
     this.text = trim(tagBody, trimOpts);
 
     if (this.text) {
@@ -133,7 +133,7 @@ var Tag = exports.Tag = function(tagTitle, tagBody, meta) {
                 tagTitle,
                 tagBody,
                 e.message
-          ***REMOVED***
+            );
         }
     }
-***REMOVED***
+};

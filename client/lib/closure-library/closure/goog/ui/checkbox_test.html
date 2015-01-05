@@ -18,7 +18,7 @@ See the COPYING file for details.
     goog.require('goog.a11y.aria.Role');
     goog.require('goog.a11y.aria.State');
     goog.require('goog.dom.classlist');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.events.KeyCodes');
     goog.require('goog.testing.events');
     goog.require('goog.testing.jsunit');
@@ -111,7 +111,7 @@ See the COPYING file for details.
     checkbox.render();
 
     var events = [];
-  ***REMOVED***checkbox,
+    goog.events.listen(checkbox,
         [goog.ui.Component.EventType.CHECK,
          goog.ui.Component.EventType.UNCHECK,
          goog.ui.Component.EventType.CHANGE],
@@ -136,7 +136,7 @@ See the COPYING file for details.
     assertFalse('checkbox became unchecked', checkbox.getChecked());
     events = [];
 
-  ***REMOVED***checkbox, goog.ui.Component.EventType.CHECK,
+    goog.events.listen(checkbox, goog.ui.Component.EventType.CHECK,
         function(e) {
           e.preventDefault();
         });

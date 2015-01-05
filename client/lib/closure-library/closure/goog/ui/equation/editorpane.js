@@ -19,73 +19,73 @@ goog.require('goog.ui.Component');
 
 
 
-***REMOVED***
-***REMOVED*** An abstract equation editor tab pane.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
-***REMOVED***
-***REMOVED*** @extends {goog.ui.Component}
-***REMOVED***
+/**
+ * An abstract equation editor tab pane.
+ * @param {goog.dom.DomHelper=} opt_domHelper Optional DOM helper.
+ * @constructor
+ * @extends {goog.ui.Component}
+ */
 goog.ui.equation.EditorPane = function(opt_domHelper) {
   goog.ui.Component.call(this, opt_domHelper);
-***REMOVED***
+};
 goog.inherits(goog.ui.equation.EditorPane, goog.ui.Component);
 
 
-***REMOVED***
-***REMOVED*** A link to any available help documentation to be displayed in a "Learn more"
-***REMOVED*** link.  If not set through the equationeditor plugin constructor, the link
-***REMOVED*** will be omitted.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A link to any available help documentation to be displayed in a "Learn more"
+ * link.  If not set through the equationeditor plugin constructor, the link
+ * will be omitted.
+ * @type {string}
+ * @private
+ */
 goog.ui.equation.EditorPane.prototype.helpUrl_ = '';
 
 
-***REMOVED***
-***REMOVED*** Sets the visibility of this tab pane.
-***REMOVED*** @param {boolean} visible Whether this tab should become visible.
-***REMOVED***
+/**
+ * Sets the visibility of this tab pane.
+ * @param {boolean} visible Whether this tab should become visible.
+ */
 goog.ui.equation.EditorPane.prototype.setVisible =
     function(visible) {
   goog.style.setElementShown(this.getElement(), visible);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the equation to show in this tab pane.
-***REMOVED*** @param {string} equation The equation.
-***REMOVED***
+/**
+ * Sets the equation to show in this tab pane.
+ * @param {string} equation The equation.
+ */
 goog.ui.equation.EditorPane.prototype.setEquation = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** @return {string} The equation shown in this tab pane.
-***REMOVED***
+/**
+ * @return {string} The equation shown in this tab pane.
+ */
 goog.ui.equation.EditorPane.prototype.getEquation = goog.abstractMethod;
 
 
-***REMOVED***
-***REMOVED*** Sets the help link URL to show in this tab pane.
-***REMOVED*** @param {string} url The help link URL.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Sets the help link URL to show in this tab pane.
+ * @param {string} url The help link URL.
+ * @protected
+ */
 goog.ui.equation.EditorPane.prototype.setHelpUrl = function(url) {
   this.helpUrl_ = url;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The help link URL.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {string} The help link URL.
+ * @protected
+ */
 goog.ui.equation.EditorPane.prototype.getHelpUrl = function() {
   return this.helpUrl_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the equation was modified.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {boolean} Whether the equation was modified.
+ * @protected
+ */
 goog.ui.equation.EditorPane.prototype.isModified = goog.abstractMethod;
 

@@ -19,8 +19,8 @@ goog.require('goog.debug');
 goog.require('goog.debug.DivConsole');
 goog.require('goog.debug.LogManager');
 goog.require('goog.dom');
-***REMOVED***
-***REMOVED***
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.log');
 goog.require('goog.log.Level');
 goog.require('goog.net.IframeIo');
@@ -43,7 +43,7 @@ function setUpPage() {
 }
 
 
-***REMOVED*** Creates an iframeIo instance and sets up the test environment***REMOVED***
+/** Creates an iframeIo instance and sets up the test environment */
 function getTestIframeIo() {
   logconsole.addSeparator();
   logconsole.getFormatter().resetRelativeTimeStart();
@@ -51,18 +51,18 @@ function getTestIframeIo() {
   var io = new goog.net.IframeIo();
   io.setErrorChecker(checkForError);
 
-***REMOVED***io, 'success', onSuccess);
-***REMOVED***io, 'error', onError);
-***REMOVED***io, 'ready', onReady);
+  goog.events.listen(io, 'success', onSuccess);
+  goog.events.listen(io, 'error', onError);
+  goog.events.listen(io, 'ready', onReady);
 
   return io;
 }
 
 
-***REMOVED***
-***REMOVED*** Checks for error strings returned by the GSE and error variables that
-***REMOVED*** the Gmail server and GFE set on certain errors.
-***REMOVED***
+/**
+ * Checks for error strings returned by the GSE and error variables that
+ * the Gmail server and GFE set on certain errors.
+ */
 function checkForError(doc) {
   var win = goog.dom.getWindow(doc);
   var text = doc.body.textContent || doc.body.innerText || '';
@@ -79,7 +79,7 @@ function checkForError(doc) {
 }
 
 
-***REMOVED*** Logs the status of an iframeIo object***REMOVED***
+/** Logs the status of an iframeIo object */
 function logStatus(i) {
   goog.log.fine(testLogger, 'Is complete/success/active: ' +
       [i.isComplete(), i.isSuccess(), i.isActive()].join('/'));
@@ -105,14 +105,14 @@ function onReady(e) {
 
 function simpleGet() {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onSimpleTestComplete);
+  goog.events.listen(io, 'complete', onSimpleTestComplete);
   io.send('/iframeio/ping', 'GET');
 }
 
 
 function simplePost() {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onSimpleTestComplete);
+  goog.events.listen(io, 'complete', onSimpleTestComplete);
   io.send('/iframeio/ping', 'POST');
 }
 
@@ -122,8 +122,8 @@ function onSimpleTestComplete(e) {
 
 function abort() {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onAbortComplete);
-***REMOVED***io, 'abort', onAbort);
+  goog.events.listen(io, 'complete', onAbortComplete);
+  goog.events.listen(io, 'abort', onAbort);
   io.send('/iframeio/ping', 'GET');
   io.abort();
 }
@@ -144,8 +144,8 @@ function errorGse404() {
 
 function jsonEcho(method) {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onJsonComplete);
-  var data = {'p1': 'x', 'p2': 'y', 'p3': 'z', 'r': 10***REMOVED***
+  goog.events.listen(io, 'complete', onJsonComplete);
+  var data = {'p1': 'x', 'p2': 'y', 'p3': 'z', 'r': 10};
   io.send('/iframeio/jsonecho?q1=a&q2=b&q3=c&r=5', method, false, data);
 }
 
@@ -160,8 +160,8 @@ function onJsonComplete(e) {
 
 function sendFromForm() {
   var io = getTestIframeIo();
-***REMOVED***io, 'success', onUploadSuccess);
-***REMOVED***io, 'error', onUploadError);
+  goog.events.listen(io, 'success', onUploadSuccess);
+  goog.events.listen(io, 'error', onUploadError);
   io.sendFromForm(document.getElementById('uploadform'));
 }
 
@@ -193,13 +193,13 @@ function badUrl() {
 
 function localUrl1() {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onLocalSuccess);
+  goog.events.listen(io, 'complete', onLocalSuccess);
   io.send('c:\test.txt', 'GET');
 }
 
 function localUrl2() {
   var io = getTestIframeIo();
-***REMOVED***io, 'success', onLocalSuccess);
+  goog.events.listen(io, 'success', onLocalSuccess);
   io.send('//test.txt', 'GET');
 }
 
@@ -210,7 +210,7 @@ function onLocalSuccess(e) {
 
 function getServerTime(noCache) {
   var io = getTestIframeIo();
-***REMOVED***io, 'success', onTestCacheSuccess);
+  goog.events.listen(io, 'success', onTestCacheSuccess);
   io.send('/iframeio/datetime', 'GET', noCache);
 }
 
@@ -221,7 +221,7 @@ function onTestCacheSuccess(e) {
 
 function errorGmail() {
   var io = getTestIframeIo();
-***REMOVED***io, 'error', onGmailError);
+  goog.events.listen(io, 'error', onGmailError);
   io.send('/iframeio/gmailerror', 'GET');
 }
 
@@ -232,7 +232,7 @@ function onGmailError(e) {
 
 function errorGfe() {
   var io = getTestIframeIo();
-***REMOVED***io, 'error', onGfeError);
+  goog.events.listen(io, 'error', onGfeError);
   io.send('/iframeio/gfeerror', 'GET');
 }
 
@@ -250,12 +250,12 @@ function incremental() {
 window['P'] = function(iframe, data) {
   var iframeIo = goog.net.IframeIo.getInstanceByName(iframe.name);
   goog.log.info(testLogger, 'Data recieved - ' + data);
-***REMOVED***
+};
 
 
 function postForm() {
   var io = getTestIframeIo();
-***REMOVED***io, 'complete', onJsonComplete);
+  goog.events.listen(io, 'complete', onJsonComplete);
   io.sendFromForm(document.getElementById('testfrm'));
 }
 // UNIT TESTS - to be run via the JsUnit testRunner

@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine, spyOn***REMOVED***
+/*global describe, expect, it, jasmine, spyOn */
 describe("multiple doclets per symbol", function() {
     function undocumented($) {
         return ! $.undocumented;

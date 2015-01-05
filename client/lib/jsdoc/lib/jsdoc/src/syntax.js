@@ -64,4 +64,4 @@ exports.Syntax = {
     WhileStatement: 'WhileStatement',
     WithStatement: 'WithStatement',
     YieldExpression: 'YieldExpression'
-***REMOVED***
+};

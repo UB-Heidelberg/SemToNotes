@@ -272,25 +272,25 @@ function testMergeCells() {
 }
 
 
-***REMOVED***
-***REMOVED*** Helper routine which returns the number of cells in the table.
-***REMOVED***
-***REMOVED*** @param {Element} table The table in question.
-***REMOVED*** @return {number} Number of cells.
-***REMOVED***
+/**
+ * Helper routine which returns the number of cells in the table.
+ *
+ * @param {Element} table The table in question.
+ * @return {number} Number of cells.
+ */
 function getCellCount(table) {
   return table.cells ? table.cells.length :
-      table.rows[0].cells.length***REMOVED*** table.rows.length;
+      table.rows[0].cells.length * table.rows.length;
 }
 
 
-***REMOVED***
-***REMOVED*** Helper method which creates a table and puts the cursor on the first TD.
-***REMOVED*** In IE, the cursor isn't positioned in the first cell (TD) and we simulate
-***REMOVED*** that behavior explicitly to be consistent across all browsers.
-***REMOVED***
-***REMOVED*** @param {Object} op_tableProps Optional table properties.
-***REMOVED***
+/**
+ * Helper method which creates a table and puts the cursor on the first TD.
+ * In IE, the cursor isn't positioned in the first cell (TD) and we simulate
+ * that behavior explicitly to be consistent across all browsers.
+ *
+ * @param {Object} op_tableProps Optional table properties.
+ */
 function createTableAndSelectCell(opt_tableProps) {
   goog.dom.Range.createCaret(field, 1).select();
   plugin.execCommandInternal(goog.editor.plugins.TableEditor.COMMAND.TABLE,

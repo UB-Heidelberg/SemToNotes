@@ -129,7 +129,7 @@ hooked up to a toolbar.</p>
       new goog.ui.editor.ToolbarController(myField, myToolbar);
 
   // Watch for field changes, to display below.
-***REMOVED***myField, goog.editor.Field.EventType.DELAYEDCHANGE,
+  goog.events.listen(myField, goog.editor.Field.EventType.DELAYEDCHANGE,
       updateFieldContents);
 
   myField.makeEditable();

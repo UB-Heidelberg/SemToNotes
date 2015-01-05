@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview
-***REMOVED*** XML utilities.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview
+ * XML utilities.
+ *
+ */
 
 goog.provide('goog.dom.xml');
 
@@ -24,26 +24,26 @@ goog.require('goog.dom');
 goog.require('goog.dom.NodeType');
 
 
-***REMOVED***
-***REMOVED*** Max XML size for MSXML2.  Used to prevent potential DoS attacks.
-***REMOVED*** @type {number}
-***REMOVED***
-goog.dom.xml.MAX_XML_SIZE_KB = 2***REMOVED*** 1024;  // In kB
+/**
+ * Max XML size for MSXML2.  Used to prevent potential DoS attacks.
+ * @type {number}
+ */
+goog.dom.xml.MAX_XML_SIZE_KB = 2 * 1024;  // In kB
 
 
-***REMOVED***
-***REMOVED*** Max XML size for MSXML2.  Used to prevent potential DoS attacks.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Max XML size for MSXML2.  Used to prevent potential DoS attacks.
+ * @type {number}
+ */
 goog.dom.xml.MAX_ELEMENT_DEPTH = 256; // Same default as MSXML6.
 
 
-***REMOVED***
-***REMOVED*** Creates an XML document appropriate for the current JS runtime
-***REMOVED*** @param {string=} opt_rootTagName The root tag name.
-***REMOVED*** @param {string=} opt_namespaceUri Namespace URI of the document element.
-***REMOVED*** @return {Document} The new document.
-***REMOVED***
+/**
+ * Creates an XML document appropriate for the current JS runtime
+ * @param {string=} opt_rootTagName The root tag name.
+ * @param {string=} opt_namespaceUri Namespace URI of the document element.
+ * @return {Document} The new document.
+ */
 goog.dom.xml.createDocument = function(opt_rootTagName, opt_namespaceUri) {
   if (opt_namespaceUri && !opt_rootTagName) {
     throw Error("Can't create document with namespace and no root tag");
@@ -64,14 +64,14 @@ goog.dom.xml.createDocument = function(opt_rootTagName, opt_namespaceUri) {
     }
   }
   throw Error('Your browser does not support creating new documents');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an XML document from a string
-***REMOVED*** @param {string} xml The text.
-***REMOVED*** @return {Document} XML document from the text.
-***REMOVED***
+/**
+ * Creates an XML document from a string
+ * @param {string} xml The text.
+ * @return {Document} XML document from the text.
+ */
 goog.dom.xml.loadXml = function(xml) {
   if (typeof DOMParser != 'undefined') {
     return new DOMParser().parseFromString(xml, 'application/xml');
@@ -81,14 +81,14 @@ goog.dom.xml.loadXml = function(xml) {
     return doc;
   }
   throw Error('Your browser does not support loading xml documents');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Serializes an XML document or subtree to string.
-***REMOVED*** @param {Document|Element} xml The document or the root node of the subtree.
-***REMOVED*** @return {string} The serialized XML.
-***REMOVED***
+/**
+ * Serializes an XML document or subtree to string.
+ * @param {Document|Element} xml The document or the root node of the subtree.
+ * @return {string} The serialized XML.
+ */
 goog.dom.xml.serialize = function(xml) {
   // Compatible with Firefox, Opera and WebKit.
   if (typeof XMLSerializer != 'undefined') {
@@ -100,15 +100,15 @@ goog.dom.xml.serialize = function(xml) {
     return text;
   }
   throw Error('Your browser does not support serializing XML documents');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects a single node using an Xpath expression and a root node
-***REMOVED*** @param {Node} node The root node.
-***REMOVED*** @param {string} path Xpath selector.
-***REMOVED*** @return {Node} The selected node, or null if no matching node.
-***REMOVED***
+/**
+ * Selects a single node using an Xpath expression and a root node
+ * @param {Node} node The root node.
+ * @param {string} path Xpath selector.
+ * @return {Node} The selected node, or null if no matching node.
+ */
 goog.dom.xml.selectSingleNode = function(node, path) {
   if (typeof node.selectSingleNode != 'undefined') {
     var doc = goog.dom.getOwnerDocument(node);
@@ -124,16 +124,16 @@ goog.dom.xml.selectSingleNode = function(node, path) {
     return result.singleNodeValue;
   }
   return null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Selects multiple nodes using an Xpath expression and a root node
-***REMOVED*** @param {Node} node The root node.
-***REMOVED*** @param {string} path Xpath selector.
-***REMOVED*** @return {(NodeList,Array.<Node>)} The selected nodes, or empty array if no
-***REMOVED***     matching nodes.
-***REMOVED***
+/**
+ * Selects multiple nodes using an Xpath expression and a root node
+ * @param {Node} node The root node.
+ * @param {string} path Xpath selector.
+ * @return {(NodeList,Array.<Node>)} The selected nodes, or empty array if no
+ *     matching nodes.
+ */
 goog.dom.xml.selectNodes = function(node, path) {
   if (typeof node.selectNodes != 'undefined') {
     var doc = goog.dom.getOwnerDocument(node);
@@ -155,31 +155,31 @@ goog.dom.xml.selectNodes = function(node, path) {
   } else {
     return [];
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets multiple attributes on an element. Differs from goog.dom.setProperties
-***REMOVED*** in that it exclusively uses the element's setAttributes method. Use this
-***REMOVED*** when you need to ensure that the exact property is available as an attribute
-***REMOVED*** and can be read later by the native getAttribute method.
-***REMOVED*** @param {!Element} element XML or DOM element to set attributes on.
-***REMOVED*** @param {!Object.<string, string>} attributes Map of property:value pairs.
-***REMOVED***
+/**
+ * Sets multiple attributes on an element. Differs from goog.dom.setProperties
+ * in that it exclusively uses the element's setAttributes method. Use this
+ * when you need to ensure that the exact property is available as an attribute
+ * and can be read later by the native getAttribute method.
+ * @param {!Element} element XML or DOM element to set attributes on.
+ * @param {!Object.<string, string>} attributes Map of property:value pairs.
+ */
 goog.dom.xml.setAttributes = function(element, attributes) {
   for (var key in attributes) {
     if (attributes.hasOwnProperty(key)) {
       element.setAttribute(key, attributes[key]);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an instance of the MSXML2.DOMDocument.
-***REMOVED*** @return {Document} The new document.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Creates an instance of the MSXML2.DOMDocument.
+ * @return {Document} The new document.
+ * @private
+ */
 goog.dom.xml.createMsXmlDocument_ = function() {
   var doc = new ActiveXObject('MSXML2.DOMDocument');
   if (doc) {
@@ -201,4 +201,4 @@ goog.dom.xml.createMsXmlDocument_ = function() {
     }
   }
   return doc;
-***REMOVED***
+};

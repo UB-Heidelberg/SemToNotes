@@ -1,16 +1,16 @@
 /*
-***REMOVED*** Copyright 2008 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2008 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-/* Author: attila@google.com (Attila Bodis)***REMOVED***
+/* Author: attila@google.com (Attila Bodis) */
 
 
 /*
-***REMOVED*** Styles used by goog.ui.RoundedTabRenderer.
-***REMOVED***
+ * Styles used by goog.ui.RoundedTabRenderer.
+ */
 .goog-rounded-tab {
   border: 0;
   cursor: default;
@@ -49,7 +49,7 @@
   overflow: hidden;
 }
 
-/* State: Hover***REMOVED***
+/* State: Hover */
 .goog-rounded-tab-hover .goog-rounded-tab-caption,
 .goog-rounded-tab-hover .goog-rounded-tab-inner-edge,
 .goog-rounded-tab-hover .goog-rounded-tab-outer-edge {
@@ -57,7 +57,7 @@
   border-right: 1px solid #369;
 }
 
-/* State: Disabled***REMOVED***
+/* State: Disabled */
 .goog-rounded-tab-disabled .goog-rounded-tab-caption,
 .goog-rounded-tab-disabled .goog-rounded-tab-inner-edge,
 .goog-rounded-tab-disabled .goog-rounded-tab-outer-edge {
@@ -65,18 +65,18 @@
   border-right: 1px solid #ccc;
 }
 
-/* State: Selected***REMOVED***
+/* State: Selected */
 .goog-rounded-tab-selected .goog-rounded-tab-caption,
 .goog-rounded-tab-selected .goog-rounded-tab-inner-edge,
 .goog-rounded-tab-selected .goog-rounded-tab-outer-edge {
-  background: #369 !important; /* Selected trumps hover.***REMOVED***
+  background: #369 !important; /* Selected trumps hover. */
   border-right: 1px solid #036 !important;
 }
 
 
 /*
-***REMOVED*** Styles for horizontal (top or bottom) tabs.
-***REMOVED***
+ * Styles for horizontal (top or bottom) tabs.
+ */
 .goog-tab-bar-top .goog-rounded-tab {
   vertical-align: bottom;
 }
@@ -97,8 +97,8 @@
 
 
 /*
-***REMOVED*** Styles for vertical (start or end) tabs.
-***REMOVED***
+ * Styles for vertical (start or end) tabs.
+ */
 .goog-tab-bar-start .goog-rounded-tab-table,
 .goog-tab-bar-end .goog-rounded-tab-table {
   width: 100%;
@@ -122,11 +122,11 @@
 
 
 /*
-***REMOVED*** Overrides for start tabs.
-***REMOVED***
+ * Overrides for start tabs.
+ */
 .goog-tab-bar-start .goog-rounded-tab-table,
 .goog-tab-bar-end .goog-rounded-tab-table {
-  width: 12ex; /* TODO(attila): Make this work for variable width.***REMOVED***
+  width: 12ex; /* TODO(attila): Make this work for variable width. */
 }
 
 .goog-tab-bar-start .goog-rounded-tab-caption,

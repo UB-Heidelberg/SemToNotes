@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview DOM pattern matcher.  Allows for simple searching of DOM
-***REMOVED*** using patterns descended from {@link goog.dom.pattern.AbstractPattern}.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview DOM pattern matcher.  Allows for simple searching of DOM
+ * using patterns descended from {@link goog.dom.pattern.AbstractPattern}.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.dom.pattern.Matcher');
 
@@ -30,83 +30,83 @@ goog.require('goog.iter');
 
 
 
-***REMOVED***
-***REMOVED*** Given a set of patterns and a root node, this class tests the patterns in
-***REMOVED*** parallel.
-***REMOVED***
-***REMOVED*** It is not (yet) a smart matcher - it doesn't do any advanced backtracking.
-***REMOVED*** Given the pattern <code>DIV, SPAN</code> the matcher will not match
-***REMOVED*** <code>DIV, DIV, SPAN</code> because it starts matching at the first
-***REMOVED*** <code>DIV</code>, fails to match <code>SPAN</code> at the second, and never
-***REMOVED*** backtracks to try again.
-***REMOVED***
-***REMOVED*** It is also possible to have a set of complex patterns that when matched in
-***REMOVED*** parallel will miss some possible matches.  Running multiple times will catch
-***REMOVED*** all matches eventually.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Given a set of patterns and a root node, this class tests the patterns in
+ * parallel.
+ *
+ * It is not (yet) a smart matcher - it doesn't do any advanced backtracking.
+ * Given the pattern <code>DIV, SPAN</code> the matcher will not match
+ * <code>DIV, DIV, SPAN</code> because it starts matching at the first
+ * <code>DIV</code>, fails to match <code>SPAN</code> at the second, and never
+ * backtracks to try again.
+ *
+ * It is also possible to have a set of complex patterns that when matched in
+ * parallel will miss some possible matches.  Running multiple times will catch
+ * all matches eventually.
+ *
+ * @constructor
+ * @final
+ */
 goog.dom.pattern.Matcher = function() {
   this.patterns_ = [];
   this.callbacks_ = [];
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Array of patterns to attempt to match in parallel.
-***REMOVED***
-***REMOVED*** @type {Array.<goog.dom.pattern.AbstractPattern>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array of patterns to attempt to match in parallel.
+ *
+ * @type {Array.<goog.dom.pattern.AbstractPattern>}
+ * @private
+ */
 goog.dom.pattern.Matcher.prototype.patterns_;
 
 
-***REMOVED***
-***REMOVED*** Array of callbacks to call when a pattern is matched.  The indexing is the
-***REMOVED*** same as the {@link #patterns_} array.
-***REMOVED***
-***REMOVED*** @type {Array.<Function>}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Array of callbacks to call when a pattern is matched.  The indexing is the
+ * same as the {@link #patterns_} array.
+ *
+ * @type {Array.<Function>}
+ * @private
+ */
 goog.dom.pattern.Matcher.prototype.callbacks_;
 
 
-***REMOVED***
-***REMOVED*** Adds a pattern to be matched.  The callback can return an object whose keys
-***REMOVED*** are processing instructions.
-***REMOVED***
-***REMOVED*** @param {goog.dom.pattern.AbstractPattern} pattern The pattern to add.
-***REMOVED*** @param {Function} callback Function to call when a match is found.  Uses
-***REMOVED***     the above semantics.
-***REMOVED***
+/**
+ * Adds a pattern to be matched.  The callback can return an object whose keys
+ * are processing instructions.
+ *
+ * @param {goog.dom.pattern.AbstractPattern} pattern The pattern to add.
+ * @param {Function} callback Function to call when a match is found.  Uses
+ *     the above semantics.
+ */
 goog.dom.pattern.Matcher.prototype.addPattern = function(pattern, callback) {
   this.patterns_.push(pattern);
   this.callbacks_.push(callback);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Resets all the patterns.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Resets all the patterns.
+ *
+ * @private
+ */
 goog.dom.pattern.Matcher.prototype.reset_ = function() {
   for (var i = 0, len = this.patterns_.length; i < len; i++) {
     this.patterns_[i].reset();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Test the given node against all patterns.
-***REMOVED***
-***REMOVED*** @param {goog.dom.TagIterator} position A position in a node walk that is
-***REMOVED***     located at the token to process.
-***REMOVED*** @return {boolean} Whether a pattern modified the position or tree
-***REMOVED***     and its callback resulted in DOM structure or position modification.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Test the given node against all patterns.
+ *
+ * @param {goog.dom.TagIterator} position A position in a node walk that is
+ *     located at the token to process.
+ * @return {boolean} Whether a pattern modified the position or tree
+ *     and its callback resulted in DOM structure or position modification.
+ * @private
+ */
 goog.dom.pattern.Matcher.prototype.matchToken_ = function(position) {
   for (var i = 0, len = this.patterns_.length; i < len; i++) {
     var pattern = this.patterns_[i];
@@ -128,14 +128,14 @@ goog.dom.pattern.Matcher.prototype.matchToken_ = function(position) {
   }
 
   return false;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Match the set of patterns against a match tree.
-***REMOVED***
-***REMOVED*** @param {Node} node The root node of the tree to match.
-***REMOVED***
+/**
+ * Match the set of patterns against a match tree.
+ *
+ * @param {Node} node The root node of the tree to match.
+ */
 goog.dom.pattern.Matcher.prototype.match = function(node) {
   var position = new goog.dom.TagIterator(node);
 
@@ -148,4 +148,4 @@ goog.dom.pattern.Matcher.prototype.match = function(node) {
       this.reset_();
     }
   }, this);
-***REMOVED***
+};

@@ -1,4 +1,4 @@
-/*global beforeEach, afterEach, describe, env, expect, it, jasmine***REMOVED***
+/*global beforeEach, afterEach, describe, env, expect, it, jasmine */
 
 describe("@overview tag", function() {
     var path = require('jsdoc/path');
@@ -31,7 +31,7 @@ describe("@overview tag", function() {
         env.sourceFiles.push(filename);
         doclets = srcParser.parse(
             path.normalize( path.join(env.pwd, filename) )
-      ***REMOVED***
+        );
         expect(doclets[0].name).toMatch(/^file\.js$/);
     });
 
@@ -41,7 +41,7 @@ describe("@overview tag", function() {
         env.sourceFiles.push(filename);
         doclets = srcParser.parse(
             path.normalize( path.join(env.pwd, filename) )
-      ***REMOVED***
+        );
         expect(doclets[0].name).toBe(doclets[0].longname);
     });
 
@@ -61,11 +61,11 @@ describe("@overview tag", function() {
         env.opts._ = [fakePath];
 
         // create a doclet with a fake filepath, then add a `@file` tag
-        docletSrc = '***REMOVED*** @class***REMOVED***';
+        docletSrc = '/** @class */';
         docletMeta = {
             lineno: 1,
             filename: fakePath
-       ***REMOVED*****REMOVED***
+        };
         doclet = new Doclet(docletSrc, docletMeta);
         doclet.addTag('file', 'This file is pretty okay.');
 

@@ -12,23 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Table editing support.
-***REMOVED*** This file provides the class goog.editor.Table and two
-***REMOVED*** supporting classes, goog.editor.TableRow and
-***REMOVED*** goog.editor.TableCell. Together these provide support for
-***REMOVED*** high level table modifications: Adding and deleting rows and columns,
-***REMOVED*** and merging and splitting cells.
-***REMOVED***
-***REMOVED*** @supported IE6+, WebKit 525+, Firefox 2+.
-***REMOVED***
+/**
+ * @fileoverview Table editing support.
+ * This file provides the class goog.editor.Table and two
+ * supporting classes, goog.editor.TableRow and
+ * goog.editor.TableCell. Together these provide support for
+ * high level table modifications: Adding and deleting rows and columns,
+ * and merging and splitting cells.
+ *
+ * @supported IE6+, WebKit 525+, Firefox 2+.
+ */
 
 goog.provide('goog.editor.Table');
 goog.provide('goog.editor.TableCell');
 goog.provide('goog.editor.TableRow');
 
 goog.require('goog.dom');
-***REMOVED***
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.NodeType');
 goog.require('goog.dom.TagName');
 goog.require('goog.log');
@@ -37,12 +37,12 @@ goog.require('goog.style');
 
 
 
-***REMOVED***
-***REMOVED*** Class providing high level table editing functions.
-***REMOVED*** @param {Element} node Element that is a table or descendant of a table.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class providing high level table editing functions.
+ * @param {Element} node Element that is a table or descendant of a table.
+ * @constructor
+ * @final
+ */
 goog.editor.Table = function(node) {
   this.element = goog.dom.getAncestorByTagNameAndClass(node,
       goog.dom.TagName.TABLE);
@@ -53,25 +53,25 @@ goog.editor.Table = function(node) {
   }
   this.dom_ = goog.dom.getDomHelper(this.element);
   this.refresh();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Logger object for debugging and error messages.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Logger object for debugging and error messages.
+ * @type {goog.log.Logger}
+ * @private
+ */
 goog.editor.Table.prototype.logger_ =
     goog.log.getLogger('goog.editor.Table');
 
 
-***REMOVED***
-***REMOVED*** Walks the dom structure of this object's table element and populates
-***REMOVED*** this.rows with goog.editor.TableRow objects. This is done initially
-***REMOVED*** to populate the internal data structures, and also after each time the
-***REMOVED*** DOM structure is modified. Currently this means that the all existing
-***REMOVED*** information is discarded and re-read from the DOM.
-***REMOVED***
+/**
+ * Walks the dom structure of this object's table element and populates
+ * this.rows with goog.editor.TableRow objects. This is done initially
+ * to populate the internal data structures, and also after each time the
+ * DOM structure is modified. Currently this means that the all existing
+ * information is discarded and re-read from the DOM.
+ */
 // TODO(user): support partial refresh to save cost of full update
 // every time there is a change to the DOM.
 goog.editor.Table.prototype.refresh = function() {
@@ -124,14 +124,14 @@ goog.editor.Table.prototype.refresh = function() {
       columnNum += cell.colSpan;
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns all child elements of a TR element that are of type TD or TH.
-***REMOVED*** @param {Element} tr TR element in which to find children.
-***REMOVED*** @return {!Array.<Element>} array of child cell elements.
-***REMOVED***
+/**
+ * Returns all child elements of a TR element that are of type TD or TH.
+ * @param {Element} tr TR element in which to find children.
+ * @return {!Array.<Element>} array of child cell elements.
+ */
 goog.editor.Table.getChildCellElements = function(tr) {
   var cells = [];
   for (var i = 0, cell; cell = tr.childNodes[i]; i++) {
@@ -141,17 +141,17 @@ goog.editor.Table.getChildCellElements = function(tr) {
     }
   }
   return cells;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts a new row in the table. The row will be populated with new
-***REMOVED*** cells, and existing rowspanned cells that overlap the new row will
-***REMOVED*** be extended.
-***REMOVED*** @param {number=} opt_rowIndex Index at which to insert the row. If
-***REMOVED***     this is omitted the row will be appended to the end of the table.
-***REMOVED*** @return {!Element} The new row.
-***REMOVED***
+/**
+ * Inserts a new row in the table. The row will be populated with new
+ * cells, and existing rowspanned cells that overlap the new row will
+ * be extended.
+ * @param {number=} opt_rowIndex Index at which to insert the row. If
+ *     this is omitted the row will be appended to the end of the table.
+ * @return {!Element} The new row.
+ */
 goog.editor.Table.prototype.insertRow = function(opt_rowIndex) {
   var rowIndex = goog.isDefAndNotNull(opt_rowIndex) ?
       opt_rowIndex : this.rows.length;
@@ -186,19 +186,19 @@ goog.editor.Table.prototype.insertRow = function(opt_rowIndex) {
   }
   this.refresh();
   return newTr;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts a new column in the table. The column will be created by
-***REMOVED*** inserting new TD elements in each row, or extending the colspan
-***REMOVED*** of existing TD elements.
-***REMOVED*** @param {number=} opt_colIndex Index at which to insert the column. If
-***REMOVED***     this is omitted the column will be appended to the right side of
-***REMOVED***     the table.
-***REMOVED*** @return {!Array.<Element>} Array of new cell elements that were created
-***REMOVED***     to populate the new column.
-***REMOVED***
+/**
+ * Inserts a new column in the table. The column will be created by
+ * inserting new TD elements in each row, or extending the colspan
+ * of existing TD elements.
+ * @param {number=} opt_colIndex Index at which to insert the column. If
+ *     this is omitted the column will be appended to the right side of
+ *     the table.
+ * @return {!Array.<Element>} Array of new cell elements that were created
+ *     to populate the new column.
+ */
 goog.editor.Table.prototype.insertColumn = function(opt_colIndex) {
   // TODO(user): set column widths in a way that makes sense.
   var colIndex = goog.isDefAndNotNull(opt_colIndex) ?
@@ -221,14 +221,14 @@ goog.editor.Table.prototype.insertColumn = function(opt_colIndex) {
   }
   this.refresh();
   return newTds;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a row from the table, removing the TR element and
-***REMOVED*** decrementing the rowspan of any cells in other rows that overlap the row.
-***REMOVED*** @param {number} rowIndex Index of the row to delete.
-***REMOVED***
+/**
+ * Removes a row from the table, removing the TR element and
+ * decrementing the rowspan of any cells in other rows that overlap the row.
+ * @param {number} rowIndex Index of the row to delete.
+ */
 goog.editor.Table.prototype.removeRow = function(rowIndex) {
   var row = this.rows[rowIndex];
   if (!row) {
@@ -246,14 +246,14 @@ goog.editor.Table.prototype.removeRow = function(rowIndex) {
   }
   row.element.parentNode.removeChild(row.element);
   this.refresh();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes a column from the table. This is done by removing cell elements,
-***REMOVED*** or shrinking the colspan of elements that span multiple columns.
-***REMOVED*** @param {number} colIndex Index of the column to delete.
-***REMOVED***
+/**
+ * Removes a column from the table. This is done by removing cell elements,
+ * or shrinking the colspan of elements that span multiple columns.
+ * @param {number} colIndex Index of the column to delete.
+ */
 goog.editor.Table.prototype.removeColumn = function(colIndex) {
   for (var i = 0, row; row = this.rows[i]; i++) {
     var cell = row.columns[colIndex];
@@ -271,19 +271,19 @@ goog.editor.Table.prototype.removeColumn = function(colIndex) {
     i += cell.rowSpan - 1;
   }
   this.refresh();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Merges multiple cells into a single cell, and sets the rowSpan and colSpan
-***REMOVED*** attributes of the cell to take up the same space as the original cells.
-***REMOVED*** @param {number} startRowIndex Top coordinate of the cells to merge.
-***REMOVED*** @param {number} startColIndex Left coordinate of the cells to merge.
-***REMOVED*** @param {number} endRowIndex Bottom coordinate of the cells to merge.
-***REMOVED*** @param {number} endColIndex Right coordinate of the cells to merge.
-***REMOVED*** @return {boolean} Whether or not the merge was possible. If the cells
-***REMOVED***     in the supplied coordinates can't be merged this will return false.
-***REMOVED***
+/**
+ * Merges multiple cells into a single cell, and sets the rowSpan and colSpan
+ * attributes of the cell to take up the same space as the original cells.
+ * @param {number} startRowIndex Top coordinate of the cells to merge.
+ * @param {number} startColIndex Left coordinate of the cells to merge.
+ * @param {number} endRowIndex Bottom coordinate of the cells to merge.
+ * @param {number} endColIndex Right coordinate of the cells to merge.
+ * @return {boolean} Whether or not the merge was possible. If the cells
+ *     in the supplied coordinates can't be merged this will return false.
+ */
 goog.editor.Table.prototype.mergeCells = function(
     startRowIndex, startColIndex, endRowIndex, endColIndex) {
   // TODO(user): take a single goog.math.Rect parameter instead?
@@ -347,16 +347,16 @@ goog.editor.Table.prototype.mergeCells = function(
   this.refresh();
 
   return true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Splits a cell with colspans or rowspans into multiple descrete cells.
-***REMOVED*** @param {number} rowIndex y coordinate of the cell to split.
-***REMOVED*** @param {number} colIndex x coordinate of the cell to split.
-***REMOVED*** @return {!Array.<Element>} Array of new cell elements created by splitting
-***REMOVED***     the cell.
-***REMOVED***
+/**
+ * Splits a cell with colspans or rowspans into multiple descrete cells.
+ * @param {number} rowIndex y coordinate of the cell to split.
+ * @param {number} colIndex x coordinate of the cell to split.
+ * @return {!Array.<Element>} Array of new cell elements created by splitting
+ *     the cell.
+ */
 // TODO(user): support splitting only horizontally or vertically,
 // support splitting cells that aren't already row/colspanned.
 goog.editor.Table.prototype.splitCell = function(rowIndex, colIndex) {
@@ -376,18 +376,18 @@ goog.editor.Table.prototype.splitCell = function(rowIndex, colIndex) {
   cell.setRowSpan(1);
   this.refresh();
   return newTds;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Inserts a cell element at the given position. The colIndex is the logical
-***REMOVED*** column index, not the position in the dom. This takes into consideration
-***REMOVED*** that cells in a given logical  row may actually be children of a previous
-***REMOVED*** DOM row that have used rowSpan to extend into the row.
-***REMOVED*** @param {Element} td The new cell element to insert.
-***REMOVED*** @param {number} rowIndex Row in which to insert the element.
-***REMOVED*** @param {number} colIndex Column in which to insert the element.
-***REMOVED***
+/**
+ * Inserts a cell element at the given position. The colIndex is the logical
+ * column index, not the position in the dom. This takes into consideration
+ * that cells in a given logical  row may actually be children of a previous
+ * DOM row that have used rowSpan to extend into the row.
+ * @param {Element} td The new cell element to insert.
+ * @param {number} rowIndex Row in which to insert the element.
+ * @param {number} colIndex Column in which to insert the element.
+ */
 goog.editor.Table.prototype.insertCellElement = function(
     td, rowIndex, colIndex) {
   var row = this.rows[rowIndex];
@@ -399,47 +399,47 @@ goog.editor.Table.prototype.insertCellElement = function(
     }
   }
   row.element.insertBefore(td, nextSiblingElement);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Creates an empty TD element and fill it with some empty content so it will
-***REMOVED*** show up with borders even in IE pre-7 or if empty-cells is set to 'hide'
-***REMOVED*** @return {!Element} a new TD element.
-***REMOVED***
+/**
+ * Creates an empty TD element and fill it with some empty content so it will
+ * show up with borders even in IE pre-7 or if empty-cells is set to 'hide'
+ * @return {!Element} a new TD element.
+ */
 goog.editor.Table.prototype.createEmptyTd = function() {
   // TODO(user): more cross-browser testing to determine best
   // and least annoying filler content.
   return this.dom_.createDom(goog.dom.TagName.TD, {}, goog.string.Unicode.NBSP);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a logical table row: a tr element and any cells
-***REMOVED*** that appear in that row.
-***REMOVED*** @param {Element} trElement This rows's underlying TR element.
-***REMOVED*** @param {number} rowIndex This row's index in its parent table.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class representing a logical table row: a tr element and any cells
+ * that appear in that row.
+ * @param {Element} trElement This rows's underlying TR element.
+ * @param {number} rowIndex This row's index in its parent table.
+ * @constructor
+ * @final
+ */
 goog.editor.TableRow = function(trElement, rowIndex) {
   this.index = rowIndex;
   this.element = trElement;
   this.columns = [];
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Class representing a table cell, which may span across multiple
-***REMOVED*** rows and columns
-***REMOVED*** @param {Element} td This cell's underlying TD or TH element.
-***REMOVED*** @param {number} startRow Index of the row where this cell begins.
-***REMOVED*** @param {number} startCol Index of the column where this cell begins.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Class representing a table cell, which may span across multiple
+ * rows and columns
+ * @param {Element} td This cell's underlying TD or TH element.
+ * @param {number} startRow Index of the row where this cell begins.
+ * @param {number} startCol Index of the column where this cell begins.
+ * @constructor
+ * @final
+ */
 goog.editor.TableCell = function(td, startRow, startCol) {
   this.element = td;
   this.colSpan = parseInt(td.colSpan, 10) || 1;
@@ -447,24 +447,24 @@ goog.editor.TableCell = function(td, startRow, startCol) {
   this.startRow = startRow;
   this.startCol = startCol;
   this.updateCoordinates_();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Calculates this cell's endRow/endCol coordinates based on rowSpan/colSpan
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Calculates this cell's endRow/endCol coordinates based on rowSpan/colSpan
+ * @private
+ */
 goog.editor.TableCell.prototype.updateCoordinates_ = function() {
   this.endCol = this.startCol + this.colSpan - 1;
   this.endRow = this.startRow + this.rowSpan - 1;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set this cell's colSpan, updating both its colSpan property and the
-***REMOVED*** underlying element's colSpan attribute.
-***REMOVED*** @param {number} colSpan The new colSpan.
-***REMOVED***
+/**
+ * Set this cell's colSpan, updating both its colSpan property and the
+ * underlying element's colSpan attribute.
+ * @param {number} colSpan The new colSpan.
+ */
 goog.editor.TableCell.prototype.setColSpan = function(colSpan) {
   if (colSpan != this.colSpan) {
     if (colSpan > 1) {
@@ -476,14 +476,14 @@ goog.editor.TableCell.prototype.setColSpan = function(colSpan) {
     this.colSpan = colSpan;
     this.updateCoordinates_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Set this cell's rowSpan, updating both its rowSpan property and the
-***REMOVED*** underlying element's rowSpan attribute.
-***REMOVED*** @param {number} rowSpan The new rowSpan.
-***REMOVED***
+/**
+ * Set this cell's rowSpan, updating both its rowSpan property and the
+ * underlying element's rowSpan attribute.
+ * @param {number} rowSpan The new rowSpan.
+ */
 goog.editor.TableCell.prototype.setRowSpan = function(rowSpan) {
   if (rowSpan != this.rowSpan) {
     if (rowSpan > 1) {
@@ -495,39 +495,39 @@ goog.editor.TableCell.prototype.setRowSpan = function(rowSpan) {
     this.rowSpan = rowSpan;
     this.updateCoordinates_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Optimum size of empty cells (in pixels), if possible.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Optimum size of empty cells (in pixels), if possible.
+ * @type {number}
+ */
 goog.editor.Table.OPTIMUM_EMPTY_CELL_WIDTH = 60;
 
 
-***REMOVED***
-***REMOVED*** Maximum width for new tables.
-***REMOVED*** @type {number}
-***REMOVED***
+/**
+ * Maximum width for new tables.
+ * @type {number}
+ */
 goog.editor.Table.OPTIMUM_MAX_NEW_TABLE_WIDTH = 600;
 
 
-***REMOVED***
-***REMOVED*** Default color for table borders.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * Default color for table borders.
+ * @type {string}
+ */
 goog.editor.Table.DEFAULT_BORDER_COLOR = '#888';
 
 
-***REMOVED***
-***REMOVED*** Creates a new table element, populated with cells and formatted.
-***REMOVED*** @param {Document} doc Document in which to create the table element.
-***REMOVED*** @param {number} columns Number of columns in the table.
-***REMOVED*** @param {number} rows Number of rows in the table.
-***REMOVED*** @param {Object=} opt_tableStyle Object containing borderWidth and borderColor
-***REMOVED***    properties, used to set the inital style of the table.
-***REMOVED*** @return {!Element} a table element.
-***REMOVED***
+/**
+ * Creates a new table element, populated with cells and formatted.
+ * @param {Document} doc Document in which to create the table element.
+ * @param {number} columns Number of columns in the table.
+ * @param {number} rows Number of rows in the table.
+ * @param {Object=} opt_tableStyle Object containing borderWidth and borderColor
+ *    properties, used to set the inital style of the table.
+ * @return {!Element} a table element.
+ */
 goog.editor.Table.createDomTable = function(
     doc, columns, rows, opt_tableStyle) {
   // TODO(user): define formatting properties as constants,
@@ -535,7 +535,7 @@ goog.editor.Table.createDomTable = function(
   var style = {
     borderWidth: '1',
     borderColor: goog.editor.Table.DEFAULT_BORDER_COLOR
- ***REMOVED*****REMOVED***
+  };
   for (var prop in opt_tableStyle) {
     style[prop] = opt_tableStyle[prop];
   }
@@ -567,4 +567,4 @@ goog.editor.Table.createDomTable = function(
   tableElement.setAttribute('cellspacing', '0');
 
   return tableElement;
-***REMOVED***
+};

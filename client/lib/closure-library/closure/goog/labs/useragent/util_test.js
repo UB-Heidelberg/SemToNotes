@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Unit tests for goog.labs.userAgent.engine.
-***REMOVED***
+/**
+ * @fileoverview Unit tests for goog.labs.userAgent.engine.
+ */
 
 goog.provide('goog.labs.userAgent.utilTest');
 
@@ -34,9 +34,9 @@ function tearDown() {
 }
 
 
-***REMOVED***
-***REMOVED*** Tests parsing a few example UA strings.
-***REMOVED***
+/**
+ * Tests parsing a few example UA strings.
+ */
 function testExtractVersionTuples() {
   // Old Android
   var tuples = goog.labs.userAgent.util.extractVersionTuples(

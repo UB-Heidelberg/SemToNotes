@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Concrete implementations of the
-***REMOVED***     goog.fs.DirectoryEntry, and goog.fs.FileEntry interfaces.
-***REMOVED***
+/**
+ * @fileoverview Concrete implementations of the
+ *     goog.fs.DirectoryEntry, and goog.fs.FileEntry interfaces.
+ */
 goog.provide('goog.fs.DirectoryEntryImpl');
 goog.provide('goog.fs.EntryImpl');
 goog.provide('goog.fs.FileEntryImpl');
@@ -32,71 +32,71 @@ goog.require('goog.string');
 
 
 
-***REMOVED***
-***REMOVED*** Base class for concrete implementations of goog.fs.Entry.
-***REMOVED*** @param {!goog.fs.FileSystem} fs The wrapped filesystem.
-***REMOVED*** @param {!Entry} entry The underlying Entry object.
-***REMOVED***
-***REMOVED*** @implements {goog.fs.Entry}
-***REMOVED***
+/**
+ * Base class for concrete implementations of goog.fs.Entry.
+ * @param {!goog.fs.FileSystem} fs The wrapped filesystem.
+ * @param {!Entry} entry The underlying Entry object.
+ * @constructor
+ * @implements {goog.fs.Entry}
+ */
 goog.fs.EntryImpl = function(fs, entry) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The wrapped filesystem.
-  ***REMOVED***
-  ***REMOVED*** @type {!goog.fs.FileSystem}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The wrapped filesystem.
+   *
+   * @type {!goog.fs.FileSystem}
+   * @private
+   */
   this.fs_ = fs;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying Entry object.
-  ***REMOVED***
-  ***REMOVED*** @type {!Entry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying Entry object.
+   *
+   * @type {!Entry}
+   * @private
+   */
   this.entry_ = entry;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.isFile = function() {
   return this.entry_.isFile;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.isDirectory = function() {
   return this.entry_.isDirectory;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getName = function() {
   return this.entry_.name;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getFullPath = function() {
   return this.entry_.fullPath;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getFileSystem = function() {
   return this.fs_;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getLastModified = function() {
   return this.getMetadata().addCallback(function(metadata) {
     return metadata.modificationTime;
   });
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getMetadata = function() {
   var d = new goog.async.Deferred();
 
@@ -107,10 +107,10 @@ goog.fs.EntryImpl.prototype.getMetadata = function() {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.moveTo = function(parent, opt_newName) {
   var d = new goog.async.Deferred();
   this.entry_.moveTo(
@@ -123,10 +123,10 @@ goog.fs.EntryImpl.prototype.moveTo = function(parent, opt_newName) {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.copyTo = function(parent, opt_newName) {
   var d = new goog.async.Deferred();
   this.entry_.copyTo(
@@ -139,42 +139,42 @@ goog.fs.EntryImpl.prototype.copyTo = function(parent, opt_newName) {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.wrapEntry = function(entry) {
   return entry.isFile ?
-      new goog.fs.FileEntryImpl(this.fs_,***REMOVED*****REMOVED*** @type {!FileEntry}***REMOVED*** (entry)) :
+      new goog.fs.FileEntryImpl(this.fs_, /** @type {!FileEntry} */ (entry)) :
       new goog.fs.DirectoryEntryImpl(
-          this.fs_,***REMOVED*****REMOVED*** @type {!DirectoryEntry}***REMOVED*** (entry));
-***REMOVED***
+          this.fs_, /** @type {!DirectoryEntry} */ (entry));
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.toUrl = function(opt_mimeType) {
   return this.entry_.toURL(opt_mimeType);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.toUri = goog.fs.EntryImpl.prototype.toUrl;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.remove = function() {
   var d = new goog.async.Deferred();
   this.entry_.remove(
-      goog.bind(d.callback, d, true /* result***REMOVED***),
+      goog.bind(d.callback, d, true /* result */),
       goog.bind(function(err) {
         var msg = 'removing ' + this.getFullPath();
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.EntryImpl.prototype.getParent = function() {
   var d = new goog.async.Deferred();
   this.entry_.getParent(
@@ -186,39 +186,39 @@ goog.fs.EntryImpl.prototype.getParent = function() {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A directory in a local FileSystem.
-***REMOVED***
-***REMOVED*** This should not be instantiated directly. Instead, it should be accessed via
-***REMOVED*** {@link goog.fs.FileSystem#getRoot} or
-***REMOVED*** {@link goog.fs.DirectoryEntry#getDirectoryEntry}.
-***REMOVED***
-***REMOVED*** @param {!goog.fs.FileSystem} fs The wrapped filesystem.
-***REMOVED*** @param {!DirectoryEntry} dir The underlying DirectoryEntry object.
-***REMOVED***
-***REMOVED*** @extends {goog.fs.EntryImpl}
-***REMOVED*** @implements {goog.fs.DirectoryEntry}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A directory in a local FileSystem.
+ *
+ * This should not be instantiated directly. Instead, it should be accessed via
+ * {@link goog.fs.FileSystem#getRoot} or
+ * {@link goog.fs.DirectoryEntry#getDirectoryEntry}.
+ *
+ * @param {!goog.fs.FileSystem} fs The wrapped filesystem.
+ * @param {!DirectoryEntry} dir The underlying DirectoryEntry object.
+ * @constructor
+ * @extends {goog.fs.EntryImpl}
+ * @implements {goog.fs.DirectoryEntry}
+ * @final
+ */
 goog.fs.DirectoryEntryImpl = function(fs, dir) {
   goog.fs.DirectoryEntryImpl.base(this, 'constructor', fs, dir);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying DirectoryEntry object.
-  ***REMOVED***
-  ***REMOVED*** @type {!DirectoryEntry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying DirectoryEntry object.
+   *
+   * @type {!DirectoryEntry}
+   * @private
+   */
   this.dir_ = dir;
-***REMOVED***
+};
 goog.inherits(goog.fs.DirectoryEntryImpl, goog.fs.EntryImpl);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.DirectoryEntryImpl.prototype.getFile = function(path, opt_behavior) {
   var d = new goog.async.Deferred();
   this.dir_.getFile(
@@ -231,10 +231,10 @@ goog.fs.DirectoryEntryImpl.prototype.getFile = function(path, opt_behavior) {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.DirectoryEntryImpl.prototype.getDirectory =
     function(path, opt_behavior) {
   var d = new goog.async.Deferred();
@@ -248,10 +248,10 @@ goog.fs.DirectoryEntryImpl.prototype.getDirectory =
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.DirectoryEntryImpl.prototype.createPath = function(path) {
   // If the path begins at the root, reinvoke createPath on the root directory.
   if (goog.string.startsWith(path, '/')) {
@@ -284,10 +284,10 @@ goog.fs.DirectoryEntryImpl.prototype.createPath = function(path) {
   }
 
   return getNextDirectory(this);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.DirectoryEntryImpl.prototype.listDirectory = function() {
   var d = new goog.async.Deferred();
   var reader = this.dir_.createReader();
@@ -311,71 +311,71 @@ goog.fs.DirectoryEntryImpl.prototype.listDirectory = function() {
 
   reader.readEntries(successCallback, errorCallback);
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.DirectoryEntryImpl.prototype.removeRecursively = function() {
   var d = new goog.async.Deferred();
   this.dir_.removeRecursively(
-      goog.bind(d.callback, d, true /* result***REMOVED***),
+      goog.bind(d.callback, d, true /* result */),
       goog.bind(function(err) {
         var msg = 'removing ' + this.getFullPath() + ' recursively';
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Converts a value in the Behavior enum into an options object expected by the
-***REMOVED*** File API.
-***REMOVED***
-***REMOVED*** @param {goog.fs.DirectoryEntry.Behavior=} opt_behavior The behavior for
-***REMOVED***     existing files.
-***REMOVED*** @return {!Object.<boolean>} The options object expected by the File API.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Converts a value in the Behavior enum into an options object expected by the
+ * File API.
+ *
+ * @param {goog.fs.DirectoryEntry.Behavior=} opt_behavior The behavior for
+ *     existing files.
+ * @return {!Object.<boolean>} The options object expected by the File API.
+ * @private
+ */
 goog.fs.DirectoryEntryImpl.prototype.getOptions_ = function(opt_behavior) {
   if (opt_behavior == goog.fs.DirectoryEntry.Behavior.CREATE) {
-    return {'create': true***REMOVED***
+    return {'create': true};
   } else if (opt_behavior == goog.fs.DirectoryEntry.Behavior.CREATE_EXCLUSIVE) {
-    return {'create': true, 'exclusive': true***REMOVED***
+    return {'create': true, 'exclusive': true};
   } else {
-    return {***REMOVED***
+    return {};
   }
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** A file in a local filesystem.
-***REMOVED***
-***REMOVED*** This should not be instantiated directly. Instead, it should be accessed via
-***REMOVED*** {@link goog.fs.DirectoryEntry#getFile}.
-***REMOVED***
-***REMOVED*** @param {!goog.fs.FileSystem} fs The wrapped filesystem.
-***REMOVED*** @param {!FileEntry} file The underlying FileEntry object.
-***REMOVED***
-***REMOVED*** @extends {goog.fs.EntryImpl}
-***REMOVED*** @implements {goog.fs.FileEntry}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A file in a local filesystem.
+ *
+ * This should not be instantiated directly. Instead, it should be accessed via
+ * {@link goog.fs.DirectoryEntry#getFile}.
+ *
+ * @param {!goog.fs.FileSystem} fs The wrapped filesystem.
+ * @param {!FileEntry} file The underlying FileEntry object.
+ * @constructor
+ * @extends {goog.fs.EntryImpl}
+ * @implements {goog.fs.FileEntry}
+ * @final
+ */
 goog.fs.FileEntryImpl = function(fs, file) {
   goog.fs.FileEntryImpl.base(this, 'constructor', fs, file);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The underlying FileEntry object.
-  ***REMOVED***
-  ***REMOVED*** @type {!FileEntry}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The underlying FileEntry object.
+   *
+   * @type {!FileEntry}
+   * @private
+   */
   this.file_ = file;
-***REMOVED***
+};
 goog.inherits(goog.fs.FileEntryImpl, goog.fs.EntryImpl);
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.FileEntryImpl.prototype.createWriter = function() {
   var d = new goog.async.Deferred();
   this.file_.createWriter(
@@ -385,10 +385,10 @@ goog.fs.FileEntryImpl.prototype.createWriter = function() {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.fs.FileEntryImpl.prototype.file = function() {
   var d = new goog.async.Deferred();
   this.file_.file(
@@ -398,4 +398,4 @@ goog.fs.FileEntryImpl.prototype.file = function() {
         d.errback(new goog.fs.Error(err, msg));
       }, this));
   return d;
-***REMOVED***
+};

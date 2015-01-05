@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines an interface that represents a Result.
-***REMOVED***
-***REMOVED*** NOTE: goog.result is soft deprecated - we expect to replace this and
-***REMOVED*** {@link goog.async.Deferred} with {@link goog.Promise}.
-***REMOVED***
+/**
+ * @fileoverview Defines an interface that represents a Result.
+ *
+ * NOTE: goog.result is soft deprecated - we expect to replace this and
+ * {@link goog.async.Deferred} with {@link goog.Promise}.
+ */
 
 goog.provide('goog.result.Result');
 
@@ -25,95 +25,95 @@ goog.require('goog.Thenable');
 
 
 
-***REMOVED***
-***REMOVED*** A Result object represents a value returned by an asynchronous
-***REMOVED*** operation at some point in the future (e.g. a network fetch). This is akin
-***REMOVED*** to a 'Promise' or a 'Future' in other languages and frameworks.
-***REMOVED***
-***REMOVED*** @interface
-***REMOVED*** @extends {goog.Thenable}
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
-goog.result.Result = function() {***REMOVED***
+/**
+ * A Result object represents a value returned by an asynchronous
+ * operation at some point in the future (e.g. a network fetch). This is akin
+ * to a 'Promise' or a 'Future' in other languages and frameworks.
+ *
+ * @interface
+ * @extends {goog.Thenable}
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
+goog.result.Result = function() {};
 
 
-***REMOVED***
-***REMOVED*** Attaches handlers to be called when the value of this Result is available.
-***REMOVED*** Handlers are called in the order they were added by wait.
-***REMOVED***
-***REMOVED*** @param {!function(this:T, !goog.result.Result)} handler The function called
-***REMOVED***     when the value is available. The function is passed the Result object as
-***REMOVED***     the only argument.
-***REMOVED*** @param {T=} opt_scope Optional scope for the handler.
-***REMOVED*** @template T
-***REMOVED***
-goog.result.Result.prototype.wait = function(handler, opt_scope) {***REMOVED***
+/**
+ * Attaches handlers to be called when the value of this Result is available.
+ * Handlers are called in the order they were added by wait.
+ *
+ * @param {!function(this:T, !goog.result.Result)} handler The function called
+ *     when the value is available. The function is passed the Result object as
+ *     the only argument.
+ * @param {T=} opt_scope Optional scope for the handler.
+ * @template T
+ */
+goog.result.Result.prototype.wait = function(handler, opt_scope) {};
 
 
-***REMOVED***
-***REMOVED*** The States this object can be in.
-***REMOVED***
-***REMOVED*** @enum {string}
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
+/**
+ * The States this object can be in.
+ *
+ * @enum {string}
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
 goog.result.Result.State = {
- ***REMOVED*****REMOVED*** The operation was a success and the value is available.***REMOVED***
+  /** The operation was a success and the value is available. */
   SUCCESS: 'success',
 
- ***REMOVED*****REMOVED*** The operation resulted in an error.***REMOVED***
+  /** The operation resulted in an error. */
   ERROR: 'error',
 
- ***REMOVED*****REMOVED*** The operation is incomplete and the value is not yet available.***REMOVED***
+  /** The operation is incomplete and the value is not yet available. */
   PENDING: 'pending'
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {!goog.result.Result.State} The state of this Result.
-***REMOVED***
-goog.result.Result.prototype.getState = function() {***REMOVED***
+/**
+ * @return {!goog.result.Result.State} The state of this Result.
+ */
+goog.result.Result.prototype.getState = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {*} The value of this Result. Will return undefined if the Result is
-***REMOVED***     pending or was an error.
-***REMOVED***
-goog.result.Result.prototype.getValue = function() {***REMOVED***
+/**
+ * @return {*} The value of this Result. Will return undefined if the Result is
+ *     pending or was an error.
+ */
+goog.result.Result.prototype.getValue = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {*} The error slug for this Result. Will return undefined if the
-***REMOVED***     Result was a success, the error slug was not set, or if the Result is
-***REMOVED***     pending.
-***REMOVED***
-goog.result.Result.prototype.getError = function() {***REMOVED***
+/**
+ * @return {*} The error slug for this Result. Will return undefined if the
+ *     Result was a success, the error slug was not set, or if the Result is
+ *     pending.
+ */
+goog.result.Result.prototype.getError = function() {};
 
 
-***REMOVED***
-***REMOVED*** Cancels the current Result, invoking the canceler function, if set.
-***REMOVED***
-***REMOVED*** @return {boolean} Whether the Result was canceled.
-***REMOVED***
-goog.result.Result.prototype.cancel = function() {***REMOVED***
+/**
+ * Cancels the current Result, invoking the canceler function, if set.
+ *
+ * @return {boolean} Whether the Result was canceled.
+ */
+goog.result.Result.prototype.cancel = function() {};
 
 
-***REMOVED***
-***REMOVED*** @return {boolean} Whether this Result was canceled.
-***REMOVED***
-goog.result.Result.prototype.isCanceled = function() {***REMOVED***
+/**
+ * @return {boolean} Whether this Result was canceled.
+ */
+goog.result.Result.prototype.isCanceled = function() {};
 
 
 
-***REMOVED***
-***REMOVED*** The value to be passed to the error handlers invoked upon cancellation.
-***REMOVED***
-***REMOVED*** @extends {Error}
-***REMOVED*** @final
-***REMOVED*** @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
-***REMOVED***
+/**
+ * The value to be passed to the error handlers invoked upon cancellation.
+ * @constructor
+ * @extends {Error}
+ * @final
+ * @deprecated Use {@link goog.Promise} instead - http://go/promisemigration
+ */
 goog.result.Result.CancelError = function() {
   // Note that this does not derive from goog.debug.Error in order to prevent
   // stack trace capture and reduce the amount of garbage generated during a
   // cancel() operation.
-***REMOVED***
+};
 goog.inherits(goog.result.Result.CancelError, Error);

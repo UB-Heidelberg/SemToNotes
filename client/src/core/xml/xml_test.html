@@ -41,19 +41,19 @@ function methodsTest(base, impl, methods) {
     assertTrue('Method ' + e + '() is not available for class ' + impl,
           typeof base[impl][e] === 'function');
   });
-***REMOVED***
+};
 
 
 
 function test01Update() {
   methodsTest(xrx.index, 'Rebuild', updateOperations);
-***REMOVED***
+};
 
 
 
 function test02Rebuild() {
   methodsTest(xrx.xml, 'Update', updateOperations);
-***REMOVED***
+};
 
 
 

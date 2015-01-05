@@ -1,4 +1,4 @@
-/*global describe: true, expect: true, it: true***REMOVED***
+/*global describe: true, expect: true, it: true */
 describe("path", function() {
     // TODO: more tests
     var path = require('path');

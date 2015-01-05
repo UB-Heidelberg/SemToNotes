@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Common events for the network classes.
-***REMOVED***
+/**
+ * @fileoverview Common events for the network classes.
+ */
 
 
 goog.provide('goog.net.EventType');
 
 
-***REMOVED***
-***REMOVED*** Event names for network events
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event names for network events
+ * @enum {string}
+ */
 goog.net.EventType = {
   COMPLETE: 'complete',
   SUCCESS: 'success',
@@ -34,4 +34,4 @@ goog.net.EventType = {
   TIMEOUT: 'timeout',
   INCREMENTAL_DATA: 'incrementaldata',
   PROGRESS: 'progress'
-***REMOVED***
+};

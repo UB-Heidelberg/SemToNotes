@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Simple logger that logs a Div Element.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Simple logger that logs a Div Element.
+ *
+ */
 
 goog.provide('goog.debug.DivConsole');
 
@@ -25,11 +25,11 @@ goog.require('goog.style');
 
 
 
-***REMOVED***
-***REMOVED*** A class for visualising logger calls in a div element.
-***REMOVED*** @param {Element} element The element to append to.
-***REMOVED***
-***REMOVED***
+/**
+ * A class for visualising logger calls in a div element.
+ * @param {Element} element The element to append to.
+ * @constructor
+ */
 goog.debug.DivConsole = function(element) {
   this.publishHandler_ = goog.bind(this.addLogRecord, this);
   this.formatter_ = new goog.debug.HtmlFormatter();
@@ -40,12 +40,12 @@ goog.debug.DivConsole = function(element) {
       this.element_.ownerDocument || this.element_.document;
 
   this.installStyles();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Installs styles for the log messages and its div
-***REMOVED***
+/**
+ * Installs styles for the log messages and its div
+ */
 goog.debug.DivConsole.prototype.installStyles = function() {
   goog.style.installStyles(
       '.dbg-sev{color:#F00}' +
@@ -61,13 +61,13 @@ goog.debug.DivConsole.prototype.installStyles = function() {
       'font:medium monospace}',
       this.element_);
   this.element_.className += ' logdiv';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether we are currently capturing logger output.
-***REMOVED*** @param {boolean} capturing Whether to capture logger output.
-***REMOVED***
+/**
+ * Sets whether we are currently capturing logger output.
+ * @param {boolean} capturing Whether to capture logger output.
+ */
 goog.debug.DivConsole.prototype.setCapturing = function(capturing) {
   if (capturing == this.isCapturing_) {
     return;
@@ -82,13 +82,13 @@ goog.debug.DivConsole.prototype.setCapturing = function(capturing) {
     this.logBuffer = '';
   }
   this.isCapturing_ = capturing;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a log record.
-***REMOVED*** @param {goog.debug.LogRecord} logRecord The log entry.
-***REMOVED***
+/**
+ * Adds a log record.
+ * @param {goog.debug.LogRecord} logRecord The log entry.
+ */
 goog.debug.DivConsole.prototype.addLogRecord = function(logRecord) {
   var scroll = this.element_.scrollHeight - this.element_.scrollTop -
       this.element_.clientHeight <= 100;
@@ -101,41 +101,41 @@ goog.debug.DivConsole.prototype.addLogRecord = function(logRecord) {
   if (scroll) {
     this.element_.scrollTop = this.element_.scrollHeight;
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the formatter for outputting to the console. The default formatter
-***REMOVED*** is an instance of goog.debug.HtmlFormatter
-***REMOVED*** @return {!goog.debug.Formatter} The formatter in use.
-***REMOVED***
+/**
+ * Gets the formatter for outputting to the console. The default formatter
+ * is an instance of goog.debug.HtmlFormatter
+ * @return {!goog.debug.Formatter} The formatter in use.
+ */
 goog.debug.DivConsole.prototype.getFormatter = function() {
   return this.formatter_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the formatter for outputting to the console.
-***REMOVED*** @param {goog.debug.Formatter} formatter The formatter to use.
-***REMOVED***
+/**
+ * Sets the formatter for outputting to the console.
+ * @param {goog.debug.Formatter} formatter The formatter to use.
+ */
 goog.debug.DivConsole.prototype.setFormatter = function(formatter) {
   this.formatter_ = formatter;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a separator to the debug window.
-***REMOVED***
+/**
+ * Adds a separator to the debug window.
+ */
 goog.debug.DivConsole.prototype.addSeparator = function() {
   var div = this.elementOwnerDocument_.createElement('div');
   div.className = 'logmsg logsep';
   this.element_.appendChild(div);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Clears the console.
-***REMOVED***
+/**
+ * Clears the console.
+ */
 goog.debug.DivConsole.prototype.clear = function() {
   this.element_.innerHTML = '';
-***REMOVED***
+};

@@ -1,15 +1,15 @@
 /*
-***REMOVED*** Copyright 2009 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2009 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
 /*
-***REMOVED*** Styling for flat buttons created by goog.ui.FlatButtonRenderer.
-***REMOVED***
-***REMOVED*** @author brianp@google.com (Brian Peterson)
-***REMOVED***
+ * Styling for flat buttons created by goog.ui.FlatButtonRenderer.
+ *
+ * @author brianp@google.com (Brian Peterson)
+ */
 
 .goog-flat-button {
   position: relative;
@@ -24,7 +24,7 @@
   outline: none;
 }
 
-/* State: disabled.***REMOVED***
+/* State: disabled. */
 .goog-flat-button-disabled {
   border-color: #888;
   color: #888;
@@ -32,14 +32,14 @@
   cursor: default;
 }
 
-/* State: hover.***REMOVED***
+/* State: hover. */
 .goog-flat-button-hover {
   border-color: #8c2425;
   color: #8c2425;
   background-color: #eaa4a5;
 }
 
-/* State: active, selected, checked.***REMOVED***
+/* State: active, selected, checked. */
 .goog-flat-button-active,
 .goog-flat-button-selected,
 .goog-flat-button-checked {
@@ -48,12 +48,12 @@
   background-color: #d1a8ea;
 }
 
-/* State: focused.***REMOVED***
+/* State: focused. */
 .goog-flat-button-focused {
   border-color: #5b4169;
 }
 
-/* Pill (collapsed border) styles.***REMOVED***
+/* Pill (collapsed border) styles. */
 .goog-flat-button-collapse-right {
   margin-right: 0;
 }

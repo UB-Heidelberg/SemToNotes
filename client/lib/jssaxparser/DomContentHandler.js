@@ -1,4 +1,4 @@
-/*global ActiveXObject, window, document***REMOVED***
+/*global ActiveXObject, window, document */
 /*
 Copyright or © or Copr. Nicolas Debeissat, Brett Zamir
 
@@ -69,7 +69,7 @@ knowledge of the CeCILL license and that you accept its terms.
 // Begin namespace
 (function () {
 
-/* Private static helper function***REMOVED***
+/* Private static helper function */
 function _createDocument() {
     // code for IE
     var doc;
@@ -84,7 +84,7 @@ function _createDocument() {
     return doc;
 }
 
-/* Private static helpers treated below as private instance methods, so don't need to add these to the public API; we might use a Relator to also get rid of non-standard public properties***REMOVED***
+/* Private static helpers treated below as private instance methods, so don't need to add these to the public API; we might use a Relator to also get rid of non-standard public properties */
 function _appendToCurrentElement (node) {
     if (!this.currentElement) {
         this.document.appendChild(node);
@@ -110,7 +110,7 @@ function _addNsDecls () { // Will add namespaces (for true XHTML) where they are
         for (var prefix in this.currentAttNodes) {
             this.currentElement.setAttributeNodeNS(this.currentAttNodes[prefix]);
         }
-        this.currentAttNodes = {***REMOVED***
+        this.currentAttNodes = {};
     }
 }
 function _setBaseUri(atts) {
@@ -132,7 +132,7 @@ function _setBaseUri(atts) {
 // CLASS (could be renamed or aliased to DefaultHandler2): http://www.saxproject.org/apidoc/org/xml/sax/ext/DefaultHandler2.html
 function DomContentHandler() {
     this.saxParseExceptions = [];
-    this.currentAttNodes = {***REMOVED***
+    this.currentAttNodes = {};
     //if text coming is inside a cdata section then this boolean will be set to true
     this.cdata = false;
 }
@@ -151,7 +151,7 @@ DomContentHandler.prototype.startDocument = function() {
         //baseURI is read only (and not supported on IE)
         this.document.custBaseURI = this.locator.getSystemId();
     }
-***REMOVED***
+};
 DomContentHandler.prototype.startElement = function(namespaceURI, localName, qName, atts) {
     var element;
     if (namespaceURI === '' || namespaceURI === null) { // namespaceURI should be null, not empty string, no?
@@ -164,10 +164,10 @@ DomContentHandler.prototype.startElement = function(namespaceURI, localName, qNa
     _addAtts.call(this, atts);
     _addNsDecls.call(this);
     _setBaseUri.call(this, atts);
-***REMOVED***
+};
 DomContentHandler.prototype.endElement = function(namespaceURI, localName, qName) {
     this.currentElement = this.currentElement.parentNode;
-***REMOVED***
+};
 DomContentHandler.prototype.startPrefixMapping = function(prefix, uri) {
     /* not supported by all browsers*/
     if (this.document.createAttributeNS) {
@@ -181,15 +181,15 @@ DomContentHandler.prototype.startPrefixMapping = function(prefix, uri) {
         }
         this.currentAttNodes[prefix] = att;
     }
-***REMOVED***
+};
 DomContentHandler.prototype.endPrefixMapping = function(prefix) {
-***REMOVED***
+};
 DomContentHandler.prototype.processingInstruction = function(target, data) {
     var procInst = this.document.createProcessingInstruction(target, data);
     _appendToCurrentElement.call(this, procInst);
-***REMOVED***
+};
 DomContentHandler.prototype.ignorableWhitespace = function(ch, start, length) {
-***REMOVED***
+};
 DomContentHandler.prototype.characters = function(ch, start, length) {
     if (this.cdata) {
         var cdataNode = this.document.createCDATASection(ch);
@@ -198,25 +198,25 @@ DomContentHandler.prototype.characters = function(ch, start, length) {
         var textNode = this.document.createTextNode(ch);
         this.currentElement.appendChild(textNode);
     }
-***REMOVED***
+};
 DomContentHandler.prototype.skippedEntity = function(name) {
-***REMOVED***
+};
 DomContentHandler.prototype.endDocument = function() {
-***REMOVED***
+};
 DomContentHandler.prototype.setDocumentLocator = function (locator) {
     this.locator = locator;
-***REMOVED***
+};
 
 
 // INTERFACE: DeclHandler: http://www.saxproject.org/apidoc/org/xml/sax/ext/DeclHandler.html
 
-DomContentHandler.prototype.attributeDecl = function(eName, aName, type, mode, value) {***REMOVED***
+DomContentHandler.prototype.attributeDecl = function(eName, aName, type, mode, value) {};
 
-DomContentHandler.prototype.elementDecl = function(name, model) {***REMOVED***
+DomContentHandler.prototype.elementDecl = function(name, model) {};
 
-DomContentHandler.prototype.externalEntityDecl = function(name, publicId, systemId) {***REMOVED***
+DomContentHandler.prototype.externalEntityDecl = function(name, publicId, systemId) {};
 
-DomContentHandler.prototype.internalEntityDecl = function(name, value) {***REMOVED***
+DomContentHandler.prototype.internalEntityDecl = function(name, value) {};
 
 
 
@@ -224,52 +224,52 @@ DomContentHandler.prototype.internalEntityDecl = function(name, value) {***REMOV
 DomContentHandler.prototype.comment = function(ch, start, length) {
     var commentNode = this.document.createComment(ch);
     _appendToCurrentElement.call(this, commentNode);
-***REMOVED***
+};
 
 DomContentHandler.prototype.endCDATA = function() {
     //used in characters() methods
     this.cdata = false;
-***REMOVED***
+};
 
-DomContentHandler.prototype.endDTD = function() {***REMOVED***
-DomContentHandler.prototype.endEntity = function(name) {***REMOVED***
+DomContentHandler.prototype.endDTD = function() {};
+DomContentHandler.prototype.endEntity = function(name) {};
 
 DomContentHandler.prototype.startCDATA = function() {
     //used in characters() methods
     this.cdata = true;
-***REMOVED***
+};
 
 DomContentHandler.prototype.startDTD = function(name, publicId, systemId) {
     if (document.implementation && document.implementation.createDocumentType) {
         var dt = document.implementation.createDocumentType(name, publicId, systemId);
         _appendToCurrentElement.call(this, dt);
     }
-***REMOVED***
-DomContentHandler.prototype.startEntity = function(name) {***REMOVED***
+};
+DomContentHandler.prototype.startEntity = function(name) {};
 
 
 // INTERFACE: EntityResolver: http://www.saxproject.org/apidoc/org/xml/sax/EntityResolver.html
 // Could implement this by checking for last two arguments missing in EntityResolver2 resolveEntity() below
-// DomContentHandler.prototype.resolveEntity(publicId, systemId) {***REMOVED***
+// DomContentHandler.prototype.resolveEntity(publicId, systemId) {};
 
 // INTERFACE: EntityResolver2: http://www.saxproject.org/apidoc/org/xml/sax/ext/EntityResolver2.html
-DomContentHandler.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {***REMOVED***
-DomContentHandler.prototype.getExternalSubset = function(name, baseURI) {***REMOVED***
+DomContentHandler.prototype.resolveEntity = function(name, publicId, baseURI, systemId) {};
+DomContentHandler.prototype.getExternalSubset = function(name, baseURI) {};
 
 // INTERFACE: DTDHandler: http://www.saxproject.org/apidoc/org/xml/sax/DTDHandler.html
-DomContentHandler.prototype.notationDecl = function (name, publicId, systemId) {***REMOVED***
-DomContentHandler.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {***REMOVED***
+DomContentHandler.prototype.notationDecl = function (name, publicId, systemId) {};
+DomContentHandler.prototype.unparsedEntityDecl = function (name, publicId, systemId, notationName) {};
 
 // INTERFACE: ErrorHandler: http://www.saxproject.org/apidoc/org/xml/sax/ErrorHandler.html
 DomContentHandler.prototype.warning = function(saxParseException) {
     this.saxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 DomContentHandler.prototype.error = function(saxParseException) {
     this.saxParseExceptions.push(saxParseException);
-***REMOVED***
+};
 DomContentHandler.prototype.fatalError = function(saxParseException) {
     throw saxParseException;
-***REMOVED***
+};
 
 // EXPORT
 this.DomContentHandler = DomContentHandler;

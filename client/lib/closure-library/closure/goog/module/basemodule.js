@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Defines the base class for a module. This is used to allow the
-***REMOVED*** code to be modularized, giving the benefits of lazy loading and loading on
-***REMOVED*** demand.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Defines the base class for a module. This is used to allow the
+ * code to be modularized, giving the benefits of lazy loading and loading on
+ * demand.
+ *
+ */
 
 goog.provide('goog.module.BaseModule');
 
@@ -25,21 +25,21 @@ goog.require('goog.Disposable');
 
 
 
-***REMOVED***
-***REMOVED*** A basic module object that represents a module of Javascript code that can
-***REMOVED*** be dynamically loaded.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED***
+/**
+ * A basic module object that represents a module of Javascript code that can
+ * be dynamically loaded.
+ *
+ * @constructor
+ * @extends {goog.Disposable}
+ */
 goog.module.BaseModule = function() {
   goog.Disposable.call(this);
-***REMOVED***
+};
 goog.inherits(goog.module.BaseModule, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** Performs any load-time initialization that the module requires.
-***REMOVED*** @param {Object} context The module context.
-***REMOVED***
-goog.module.BaseModule.prototype.initialize = function(context) {***REMOVED***
+/**
+ * Performs any load-time initialization that the module requires.
+ * @param {Object} context The module context.
+ */
+goog.module.BaseModule.prototype.initialize = function(context) {};

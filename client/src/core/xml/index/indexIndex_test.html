@@ -8,9 +8,9 @@
   goog.require('goog.array');
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.index.Index');
   goog.require('xrx.xml.Label');
- ***REMOVED*****REMOVED***
+  goog.require('xrx.xml.Pilot');
   goog.require('xrx.token');
   goog.require('xrx.token.EmptyTag');
 </script>
@@ -39,7 +39,7 @@ function test01basic() {
   assertTrue(index.getLabel(11).sameAs(new xrx.xml.Label([1,5])));
   assertTrue(index.getLabel(12).sameAs(new xrx.xml.Label([1,6])));
   assertTrue(index.getLabel(13).sameAs(new xrx.xml.Label([1])));
-***REMOVED***
+};
 
 function test02iter() {
   var xml           =         '<a>1<b>2</b>3<c/>4<d><e>5</e>6</d></a>';
@@ -96,7 +96,7 @@ function test02iter() {
       '</a>', '</d>', '</e>', '</b>'])); // backward
   assertTrue(goog.array.equals(notTags, ['1', '2', '3', '4', '', '5', '6', '', '', // forward
       '', '', '6', '5', '', '4', '3', '2', '1'])); // backward
-***REMOVED***
+};
 
 function test03namespaceFunctions() {
   var xml = '<x><y/><a xmlns="http://www.example.org/a"><b:b xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
@@ -128,7 +128,7 @@ function test03namespaceFunctions() {
   // undefined prefix
   var prefixUndefined = index.getNamespacePrefix(t1, 'http://www.example.org/c');
   assertEquals(undefined, prefixUndefined);
-***REMOVED***
+};
 
 
 </script>

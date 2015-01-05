@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Mock of goog.editor.field.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED***
+/**
+ * @fileoverview Mock of goog.editor.field.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ */
 
 goog.provide('goog.testing.editor.FieldMock');
 
@@ -28,21 +28,21 @@ goog.require('goog.testing.mockmatchers');
 
 
 
-***REMOVED***
-***REMOVED*** Mock of goog.editor.Field.
-***REMOVED*** @param {Window=} opt_window Window the field would edit.  Defaults to
-***REMOVED***     {@code window}.
-***REMOVED*** @param {Window=} opt_appWindow "AppWindow" of the field, which can be
-***REMOVED***     different from {@code opt_window} when mocking a field that uses an
-***REMOVED***     iframe. Defaults to {@code opt_window}.
-***REMOVED*** @param {goog.dom.AbstractRange=} opt_range An object (mock or real) to be
-***REMOVED***     returned by getRange(). If ommitted, a new goog.dom.Range is created
-***REMOVED***     from the window every time getRange() is called.
-***REMOVED***
-***REMOVED*** @extends {goog.testing.LooseMock}
-***REMOVED*** @suppress {missingProperties} Mocks do not fit in the type system well.
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Mock of goog.editor.Field.
+ * @param {Window=} opt_window Window the field would edit.  Defaults to
+ *     {@code window}.
+ * @param {Window=} opt_appWindow "AppWindow" of the field, which can be
+ *     different from {@code opt_window} when mocking a field that uses an
+ *     iframe. Defaults to {@code opt_window}.
+ * @param {goog.dom.AbstractRange=} opt_range An object (mock or real) to be
+ *     returned by getRange(). If ommitted, a new goog.dom.Range is created
+ *     from the window every time getRange() is called.
+ * @constructor
+ * @extends {goog.testing.LooseMock}
+ * @suppress {missingProperties} Mocks do not fit in the type system well.
+ * @final
+ */
 goog.testing.editor.FieldMock =
     function(opt_window, opt_appWindow, opt_range) {
   goog.testing.LooseMock.call(this, goog.editor.Field);
@@ -83,18 +83,18 @@ goog.testing.editor.FieldMock =
   // gets stepped on by the mock framework.
   var inModalMode = false;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @return {boolean} Whether we're in modal interaction mode.
- ***REMOVED*****REMOVED***
+  /**
+   * @return {boolean} Whether we're in modal interaction mode.
+   */
   this.inModalMode = function() {
     return inModalMode;
- ***REMOVED*****REMOVED***
+  };
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** @param {boolean} mode Sets whether we're in modal interaction mode.
- ***REMOVED*****REMOVED***
+  /**
+   * @param {boolean} mode Sets whether we're in modal interaction mode.
+   */
   this.setModalMode = function(mode) {
     inModalMode = mode;
- ***REMOVED*****REMOVED***
-***REMOVED***
+  };
+};
 goog.inherits(goog.testing.editor.FieldMock, goog.testing.LooseMock);

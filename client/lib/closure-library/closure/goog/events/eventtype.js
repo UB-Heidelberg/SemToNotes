@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Event Types.
-***REMOVED***
-***REMOVED*** @author arv@google.com (Erik Arvidsson)
-***REMOVED*** @author mirkov@google.com (Mirko Visontai)
-***REMOVED***
+/**
+ * @fileoverview Event Types.
+ *
+ * @author arv@google.com (Erik Arvidsson)
+ * @author mirkov@google.com (Mirko Visontai)
+ */
 
 
 goog.provide('goog.events.EventType');
@@ -25,24 +25,24 @@ goog.provide('goog.events.EventType');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Returns a prefixed event name for the current browser.
-***REMOVED*** @param {string} eventName The name of the event.
-***REMOVED*** @return {string} The prefixed event name.
-***REMOVED*** @suppress {missingRequire|missingProvide}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a prefixed event name for the current browser.
+ * @param {string} eventName The name of the event.
+ * @return {string} The prefixed event name.
+ * @suppress {missingRequire|missingProvide}
+ * @private
+ */
 goog.events.getVendorPrefixedName_ = function(eventName) {
   return goog.userAgent.WEBKIT ? 'webkit' + eventName :
       (goog.userAgent.OPERA ? 'o' + eventName.toLowerCase() :
           eventName.toLowerCase());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Constants for event names.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Constants for event names.
+ * @enum {string}
+ */
 goog.events.EventType = {
   // Mouse events
   CLICK: 'click',
@@ -144,16 +144,16 @@ goog.events.EventType = {
   CONNECT: 'connect',
 
   // CSS animation events.
- ***REMOVED*****REMOVED*** @suppress {missingRequire}***REMOVED***
+  /** @suppress {missingRequire} */
   ANIMATIONSTART: goog.events.getVendorPrefixedName_('AnimationStart'),
- ***REMOVED*****REMOVED*** @suppress {missingRequire}***REMOVED***
+  /** @suppress {missingRequire} */
   ANIMATIONEND: goog.events.getVendorPrefixedName_('AnimationEnd'),
- ***REMOVED*****REMOVED*** @suppress {missingRequire}***REMOVED***
+  /** @suppress {missingRequire} */
   ANIMATIONITERATION: goog.events.getVendorPrefixedName_('AnimationIteration'),
 
   // CSS transition events. Based on the browser support described at:
   // https://developer.mozilla.org/en/css/css_transitions#Browser_compatibility
- ***REMOVED*****REMOVED*** @suppress {missingRequire}***REMOVED***
+  /** @suppress {missingRequire} */
   TRANSITIONEND: goog.events.getVendorPrefixedName_('TransitionEnd'),
 
   // W3C Pointer Events
@@ -223,4 +223,4 @@ goog.events.EventType = {
   DOMNODEINSERTEDINTODOCUMENT: 'DOMNodeInsertedIntoDocument',
   DOMATTRMODIFIED: 'DOMAttrModified',
   DOMCHARACTERDATAMODIFIED: 'DOMCharacterDataModified'
-***REMOVED***
+};

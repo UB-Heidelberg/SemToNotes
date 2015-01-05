@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Contains the frame element method transport for cross-domain
-***REMOVED*** communication. It exploits the fact that FF lets a page in an
-***REMOVED*** iframe call a method on the iframe-element it is contained in, even if the
-***REMOVED*** containing page is from a different domain.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Contains the frame element method transport for cross-domain
+ * communication. It exploits the fact that FF lets a page in an
+ * iframe call a method on the iframe-element it is contained in, even if the
+ * containing page is from a different domain.
+ *
+ */
 
 
 goog.provide('goog.net.xpc.FrameElementMethodTransport');
@@ -31,92 +31,92 @@ goog.require('goog.net.xpc.TransportTypes');
 
 
 
-***REMOVED***
-***REMOVED*** Frame-element method transport.
-***REMOVED***
-***REMOVED*** Firefox allows a document within an iframe to call methods on the
-***REMOVED*** iframe-element added by the containing document.
-***REMOVED*** NOTE(user): Tested in all FF versions starting from 1.0
-***REMOVED***
-***REMOVED*** @param {goog.net.xpc.CrossPageChannel} channel The channel this transport
-***REMOVED***     belongs to.
-***REMOVED*** @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for finding
-***REMOVED***     the correct window.
-***REMOVED***
-***REMOVED*** @extends {goog.net.xpc.Transport}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Frame-element method transport.
+ *
+ * Firefox allows a document within an iframe to call methods on the
+ * iframe-element added by the containing document.
+ * NOTE(user): Tested in all FF versions starting from 1.0
+ *
+ * @param {goog.net.xpc.CrossPageChannel} channel The channel this transport
+ *     belongs to.
+ * @param {goog.dom.DomHelper=} opt_domHelper The dom helper to use for finding
+ *     the correct window.
+ * @constructor
+ * @extends {goog.net.xpc.Transport}
+ * @final
+ */
 goog.net.xpc.FrameElementMethodTransport = function(channel, opt_domHelper) {
   goog.net.xpc.FrameElementMethodTransport.base(
       this, 'constructor', opt_domHelper);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The channel this transport belongs to.
-  ***REMOVED*** @type {goog.net.xpc.CrossPageChannel}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The channel this transport belongs to.
+   * @type {goog.net.xpc.CrossPageChannel}
+   * @private
+   */
   this.channel_ = channel;
 
   // To transfer messages, this transport basically uses normal function calls,
   // which are synchronous. To avoid endless recursion, the delivery has to
   // be artificially made asynchronous.
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Array for queued messages.
-  ***REMOVED*** @type {Array}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Array for queued messages.
+   * @type {Array}
+   * @private
+   */
   this.queue_ = [];
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Callback function which wraps deliverQueued_.
-  ***REMOVED*** @type {Function}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Callback function which wraps deliverQueued_.
+   * @type {Function}
+   * @private
+   */
   this.deliverQueuedCb_ = goog.bind(this.deliverQueued_, this);
-***REMOVED***
+};
 goog.inherits(goog.net.xpc.FrameElementMethodTransport, goog.net.xpc.Transport);
 
 
-***REMOVED***
-***REMOVED*** The transport type.
-***REMOVED*** @type {number}
-***REMOVED*** @protected
-***REMOVED*** @override
-***REMOVED***
+/**
+ * The transport type.
+ * @type {number}
+ * @protected
+ * @override
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.transportType =
     goog.net.xpc.TransportTypes.FRAME_ELEMENT_METHOD;
 
 
-***REMOVED***
-***REMOVED*** Flag used to enforce asynchronous messaging semantics.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Flag used to enforce asynchronous messaging semantics.
+ * @type {boolean}
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.recursive_ = false;
 
 
-***REMOVED***
-***REMOVED*** Timer used to enforce asynchronous message delivery.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Timer used to enforce asynchronous message delivery.
+ * @type {number}
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.timer_ = 0;
 
 
-***REMOVED***
-***REMOVED*** Holds the function to send messages to the peer
-***REMOVED*** (once it becomes available).
-***REMOVED*** @type {Function}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Holds the function to send messages to the peer
+ * (once it becomes available).
+ * @type {Function}
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.outgoing_ = null;
 
 
-***REMOVED***
-***REMOVED*** Connect this transport.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Connect this transport.
+ * @override
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.connect = function() {
   if (this.channel_.getRole() == goog.net.xpc.CrossPageChannelRole.OUTER) {
     // get shortcut to iframe-element
@@ -131,19 +131,19 @@ goog.net.xpc.FrameElementMethodTransport.prototype.connect = function() {
   } else {
     this.attemptSetup_();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Only used from within an iframe. Attempts to attach the method
-***REMOVED*** to be used for sending messages by the containing document. Has to
-***REMOVED*** wait until the containing document has finished. Therefore calls
-***REMOVED*** itself in a timeout if not successful.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Only used from within an iframe. Attempts to attach the method
+ * to be used for sending messages by the containing document. Has to
+ * wait until the containing document has finished. Therefore calls
+ * itself in a timeout if not successful.
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.attemptSetup_ = function() {
   var retry = true;
- ***REMOVED*****REMOVED*** @preserveTry***REMOVED***
+  /** @preserveTry */
   try {
     if (!this.iframeElm_) {
       // throws security exception when called too early
@@ -177,14 +177,14 @@ goog.net.xpc.FrameElementMethodTransport.prototype.attemptSetup_ = function() {
     }
     this.getWindow().setTimeout(this.attemptSetupCb_, 100);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles transport service messages.
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Handles transport service messages.
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.transportServiceHandler =
     function(payload) {
   if (this.channel_.getRole() == goog.net.xpc.CrossPageChannelRole.OUTER &&
@@ -196,16 +196,16 @@ goog.net.xpc.FrameElementMethodTransport.prototype.transportServiceHandler =
   } else {
     throw Error('Got unexpected transport message.');
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Process incoming message.
-***REMOVED*** @param {string} serviceName The name of the service the message is to be
-***REMOVED*** delivered to.
-***REMOVED*** @param {string} payload The message to process.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Process incoming message.
+ * @param {string} serviceName The name of the service the message is to be
+ * delivered to.
+ * @param {string} payload The message to process.
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.incoming_ =
     function(serviceName, payload) {
   if (!this.recursive_ && this.queue_.length == 0) {
@@ -217,42 +217,42 @@ goog.net.xpc.FrameElementMethodTransport.prototype.incoming_ =
       this.timer_ = this.getWindow().setTimeout(this.deliverQueuedCb_, 1);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Delivers queued messages.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Delivers queued messages.
+ * @private
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.deliverQueued_ =
     function() {
   while (this.queue_.length) {
     var msg = this.queue_.shift();
     this.channel_.xpcDeliver(msg.serviceName, msg.payload);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Send a message
-***REMOVED*** @param {string} service The name off the service the message is to be
-***REMOVED*** delivered to.
-***REMOVED*** @param {string} payload The message content.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Send a message
+ * @param {string} service The name off the service the message is to be
+ * delivered to.
+ * @param {string} payload The message content.
+ * @override
+ */
 goog.net.xpc.FrameElementMethodTransport.prototype.send =
     function(service, payload) {
   this.recursive_ = true;
   this.outgoing_(service, payload);
   this.recursive_ = false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.net.xpc.FrameElementMethodTransport.prototype.disposeInternal =
     function() {
   goog.net.xpc.FrameElementMethodTransport.superClass_.disposeInternal.call(
       this);
   this.outgoing_ = null;
   this.iframeElm_ = null;
-***REMOVED***
+};

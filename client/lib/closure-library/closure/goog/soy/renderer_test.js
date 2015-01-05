@@ -22,7 +22,7 @@ goog.require('goog.html.SafeHtml');
 goog.require('goog.i18n.bidi.Dir');
 goog.require('goog.soy.Renderer');
 goog.require('goog.soy.data.SanitizedContentKind');
-***REMOVED*** @suppress {extraRequire}***REMOVED***
+/** @suppress {extraRequire} */
 goog.require('goog.soy.testHelper');
 goog.require('goog.testing.jsunit');
 goog.require('goog.testing.recordFunction');
@@ -39,9 +39,9 @@ function setUp() {
 
 var dataSupplier = {
   getData: function() {
-    return {name: 'IjValue'***REMOVED***
+    return {name: 'IjValue'};
   }
-***REMOVED***
+};
 
 
 function testRenderElement() {

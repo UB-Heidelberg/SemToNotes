@@ -12,57 +12,57 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Helper for passing property names as string literals in
-***REMOVED*** compiled test code.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Helper for passing property names as string literals in
+ * compiled test code.
+ *
+ */
 
 goog.provide('goog.testing.ObjectPropertyString');
 
 
 
-***REMOVED***
-***REMOVED*** Object to pass a property name as a string literal and its containing object
-***REMOVED*** when the JSCompiler is rewriting these names. This should only be used in
-***REMOVED*** test code.
-***REMOVED***
-***REMOVED*** @param {Object} object The containing object.
-***REMOVED*** @param {Object|string} propertyString Property name as a string literal.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Object to pass a property name as a string literal and its containing object
+ * when the JSCompiler is rewriting these names. This should only be used in
+ * test code.
+ *
+ * @param {Object} object The containing object.
+ * @param {Object|string} propertyString Property name as a string literal.
+ * @constructor
+ * @final
+ */
 goog.testing.ObjectPropertyString = function(object, propertyString) {
   this.object_ = object;
-  this.propertyString_ =***REMOVED*****REMOVED*** @type {string}***REMOVED*** (propertyString);
-***REMOVED***
+  this.propertyString_ = /** @type {string} */ (propertyString);
+};
 
 
-***REMOVED***
-***REMOVED*** @type {Object}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @type {Object}
+ * @private
+ */
 goog.testing.ObjectPropertyString.prototype.object_;
 
 
-***REMOVED***
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @type {string}
+ * @private
+ */
 goog.testing.ObjectPropertyString.prototype.propertyString_;
 
 
-***REMOVED***
-***REMOVED*** @return {Object} The object.
-***REMOVED***
+/**
+ * @return {Object} The object.
+ */
 goog.testing.ObjectPropertyString.prototype.getObject = function() {
   return this.object_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {string} The property string.
-***REMOVED***
+/**
+ * @return {string} The property string.
+ */
 goog.testing.ObjectPropertyString.prototype.getPropertyString = function() {
   return this.propertyString_;
-***REMOVED***
+};

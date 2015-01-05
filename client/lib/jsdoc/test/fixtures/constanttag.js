@@ -1,15 +1,15 @@
-***REMOVED*** @constant***REMOVED***
+/** @constant */
 var FOO = 1;
 
-***REMOVED*** @const BAR***REMOVED***
+/** @const BAR */
 
-***REMOVED*** @const {string} BAZ***REMOVED***
+/** @const {string} BAZ */
 
-***REMOVED*** @const {number}***REMOVED***
+/** @const {number} */
 var QUX = 0;
 
-***REMOVED*** @const {Object} SOCKET***REMOVED***
+/** @const {Object} SOCKET */
 var mySocket;
 
-***REMOVED*** @const ROCKET***REMOVED***
+/** @const ROCKET */
 var myRocket;

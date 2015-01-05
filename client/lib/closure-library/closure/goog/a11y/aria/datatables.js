@@ -14,12 +14,12 @@
 
 
 
-***REMOVED***
-***REMOVED*** @fileoverview The file contains data tables generated from the ARIA
-***REMOVED*** standard schema http://www.w3.org/TR/wai-aria/.
-***REMOVED***
-***REMOVED*** This is auto-generated code. Do not manually edit!
-***REMOVED***
+/**
+ * @fileoverview The file contains data tables generated from the ARIA
+ * standard schema http://www.w3.org/TR/wai-aria/.
+ *
+ * This is auto-generated code. Do not manually edit!
+ */
 
 goog.provide('goog.a11y.aria.datatables');
 
@@ -27,22 +27,22 @@ goog.require('goog.a11y.aria.State');
 goog.require('goog.object');
 
 
-***REMOVED***
-***REMOVED*** A map that contains mapping between an ARIA state and the default value
-***REMOVED*** for it. Note that not all ARIA states have default values.
-***REMOVED***
-***REMOVED*** @type {Object.<!(goog.a11y.aria.State|string), (string|boolean|number)>}
-***REMOVED***
+/**
+ * A map that contains mapping between an ARIA state and the default value
+ * for it. Note that not all ARIA states have default values.
+ *
+ * @type {Object.<!(goog.a11y.aria.State|string), (string|boolean|number)>}
+ */
 goog.a11y.aria.DefaultStateValueMap_;
 
 
-***REMOVED***
-***REMOVED*** A method that creates a map that contains mapping between an ARIA state and
-***REMOVED*** the default value for it. Note that not all ARIA states have default values.
-***REMOVED***
-***REMOVED*** @return {!Object.<!(goog.a11y.aria.State|string), (string|boolean|number)>}
-***REMOVED***      The names for each of the notification methods.
-***REMOVED***
+/**
+ * A method that creates a map that contains mapping between an ARIA state and
+ * the default value for it. Note that not all ARIA states have default values.
+ *
+ * @return {!Object.<!(goog.a11y.aria.State|string), (string|boolean|number)>}
+ *      The names for each of the notification methods.
+ */
 goog.a11y.aria.datatables.getDefaultValuesMap = function() {
   if (!goog.a11y.aria.DefaultStateValueMap_) {
     goog.a11y.aria.DefaultStateValueMap_ = goog.object.create(
@@ -65,4 +65,4 @@ goog.a11y.aria.datatables.getDefaultValuesMap = function() {
   }
 
   return goog.a11y.aria.DefaultStateValueMap_;
-***REMOVED***
+};

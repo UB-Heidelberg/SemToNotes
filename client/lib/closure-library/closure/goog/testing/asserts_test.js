@@ -362,8 +362,8 @@ function testAssertObjectEquals3() {
               true];
   assertObjectEquals('Objects should be equal', obj1, obj2);
 
-  var obj3 = {'a': [1, 2]***REMOVED***
-  var obj4 = {'a': [1, 2, 3]***REMOVED***
+  var obj3 = {'a': [1, 2]};
+  var obj4 = {'a': [1, 2, 3]};
   assertThrows('inner arrays should not be equal', function() {
     assertObjectEquals(obj3, obj4);
   });
@@ -402,7 +402,7 @@ function testAssertObjectEqualsIterNoEquals() {
   }
   Thing.prototype.add = function(n, v) {
     this.what.push(n + '@' + v);
- ***REMOVED*****REMOVED***
+  };
   Thing.prototype.get = function(n) {
     var m = new RegExp('^' + n + '@(.*)$', '');
     for (var i = 0; i < this.what.length; ++i) {
@@ -412,7 +412,7 @@ function testAssertObjectEqualsIterNoEquals() {
       }
     }
     return null;
- ***REMOVED*****REMOVED***
+  };
   Thing.prototype.__iterator__ = function() {
     var iter = new goog.iter.Iterator;
     iter.index = 0;
@@ -423,9 +423,9 @@ function testAssertObjectEqualsIterNoEquals() {
       } else {
         throw goog.iter.StopIteration;
       }
-   ***REMOVED*****REMOVED***
+    };
     return iter;
- ***REMOVED*****REMOVED***
+  };
 
   var thing1 = new Thing(); thing1.name = 'thing1';
   var thing2 = new Thing(); thing2.name = 'thing2';
@@ -913,7 +913,7 @@ function testAssertObjectsEqualsDifferentTypeSameToString() {
 
   assertThrows('Should have thrown because args are different', function() {
     var a1 = ['className1'];
-    var a2 = {'0': 'className1'***REMOVED***
+    var a2 = {'0': 'className1'};
     assertObjectEquals(a1, a2);
   });
 
@@ -966,8 +966,8 @@ function testFindDifferences_objectsAndNull() {
 }
 
 function testFindDifferences_basicCycle() {
-  var a = {***REMOVED***
-  var b = {***REMOVED***
+  var a = {};
+  var b = {};
   a.self = a;
   b.self = b;
   assertNull(goog.testing.asserts.findDifferences(a, b));
@@ -977,8 +977,8 @@ function testFindDifferences_basicCycle() {
 }
 
 function testFindDifferences_crossedCycle() {
-  var a = {***REMOVED***
-  var b = {***REMOVED***
+  var a = {};
+  var b = {};
   a.self = b;
   b.self = a;
   assertNull(goog.testing.asserts.findDifferences(a, b));
@@ -988,11 +988,11 @@ function testFindDifferences_crossedCycle() {
 }
 
 function testFindDifferences_asymmetricCycle() {
-  var a = {***REMOVED***
-  var b = {***REMOVED***
-  var c = {***REMOVED***
-  var d = {***REMOVED***
-  var e = {***REMOVED***
+  var a = {};
+  var b = {};
+  var c = {};
+  var d = {};
+  var e = {};
   a.self = b;
   b.self = a;
   c.self = d;
@@ -1038,26 +1038,26 @@ function testFindDifferences_asymmetricCycleArray() {
 }
 
 function testFindDifferences_multiCycles() {
-  var a = {***REMOVED***
+  var a = {};
   a.cycle1 = a;
   a.test = {
     cycle2: a
- ***REMOVED*****REMOVED***
+  };
 
-  var b = {***REMOVED***
+  var b = {};
   b.cycle1 = b;
   b.test = {
     cycle2: b
- ***REMOVED*****REMOVED***
+  };
   assertNull(goog.testing.asserts.findDifferences(a, b));
 }
 
 function testFindDifferences_binaryTree() {
   function createBinTree(depth, root) {
     if (depth == 0) {
-      return {root: root***REMOVED***
+      return {root: root};
     } else {
-      var node = {***REMOVED***
+      var node = {};
       node.left = createBinTree(depth - 1, root || node);
       node.right = createBinTree(depth - 1, root || node);
       return node;
@@ -1144,7 +1144,7 @@ function testDisplayStringForValue() {
   assertEquals('<null>', _displayStringForValue(null));
   assertEquals('<undefined>', _displayStringForValue(undefined));
   assertEquals('<hello,,,,1> (Array)', _displayStringForValue(
-      ['hello', /* array hole***REMOVED***, undefined, null, 1]));
+      ['hello', /* array hole */, undefined, null, 1]));
 }
 
 function testDisplayStringForValue_exception() {

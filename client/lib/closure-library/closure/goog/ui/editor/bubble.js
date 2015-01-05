@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Bubble component - handles display, hiding, etc. of the
-***REMOVED*** actual bubble UI.
-***REMOVED***
-***REMOVED*** This is used exclusively by code within the editor package, and should not
-***REMOVED*** be used directly.
-***REMOVED***
-***REMOVED*** @author robbyw@google.com (Robby Walker)
-***REMOVED*** @author tildahl@google.com (Michael Tildahl)
-***REMOVED***
+/**
+ * @fileoverview Bubble component - handles display, hiding, etc. of the
+ * actual bubble UI.
+ *
+ * This is used exclusively by code within the editor package, and should not
+ * be used directly.
+ *
+ * @author robbyw@google.com (Robby Walker)
+ * @author tildahl@google.com (Michael Tildahl)
+ */
 
 goog.provide('goog.ui.editor.Bubble');
 
@@ -33,7 +33,7 @@ goog.require('goog.dom.classlist');
 goog.require('goog.editor.style');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventTarget');
-***REMOVED***
+goog.require('goog.events.EventType');
 goog.require('goog.functions');
 goog.require('goog.log');
 goog.require('goog.math.Box');
@@ -50,51 +50,51 @@ goog.require('goog.userAgent');
 
 
 
-***REMOVED***
-***REMOVED*** Property bubble UI element.
-***REMOVED*** @param {Element} parent The parent element for this bubble.
-***REMOVED*** @param {number} zIndex The z index to draw the bubble at.
-***REMOVED***
-***REMOVED*** @extends {goog.events.EventTarget}
-***REMOVED***
+/**
+ * Property bubble UI element.
+ * @param {Element} parent The parent element for this bubble.
+ * @param {number} zIndex The z index to draw the bubble at.
+ * @constructor
+ * @extends {goog.events.EventTarget}
+ */
 goog.ui.editor.Bubble = function(parent, zIndex) {
   goog.ui.editor.Bubble.base(this, 'constructor');
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Dom helper for the document the bubble should be shown in.
-  ***REMOVED*** @type {!goog.dom.DomHelper}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Dom helper for the document the bubble should be shown in.
+   * @type {!goog.dom.DomHelper}
+   * @private
+   */
   this.dom_ = goog.dom.getDomHelper(parent);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Event handler for this bubble.
-  ***REMOVED*** @type {goog.events.EventHandler.<!goog.ui.editor.Bubble>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Event handler for this bubble.
+   * @type {goog.events.EventHandler.<!goog.ui.editor.Bubble>}
+   * @private
+   */
   this.eventHandler_ = new goog.events.EventHandler(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Object that monitors the application window for size changes.
-  ***REMOVED*** @type {goog.dom.ViewportSizeMonitor}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Object that monitors the application window for size changes.
+   * @type {goog.dom.ViewportSizeMonitor}
+   * @private
+   */
   this.viewPortSizeMonitor_ = new goog.dom.ViewportSizeMonitor(
       this.dom_.getWindow());
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Maps panel ids to panels.
-  ***REMOVED*** @type {Object.<goog.ui.editor.Bubble.Panel_>}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
-  this.panels_ = {***REMOVED***
+  /**
+   * Maps panel ids to panels.
+   * @type {Object.<goog.ui.editor.Bubble.Panel_>}
+   * @private
+   */
+  this.panels_ = {};
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Container element for the entire bubble.  This may contain elements related
-  ***REMOVED*** to look and feel or styling of the bubble.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Container element for the entire bubble.  This may contain elements related
+   * to look and feel or styling of the bubble.
+   * @type {Element}
+   * @private
+   */
   this.bubbleContainer_ =
       this.dom_.createDom(goog.dom.TagName.DIV,
           {'className': goog.ui.editor.Bubble.BUBBLE_CLASSNAME});
@@ -103,19 +103,19 @@ goog.ui.editor.Bubble = function(parent, zIndex) {
   goog.dom.appendChild(parent, this.bubbleContainer_);
   goog.style.setStyle(this.bubbleContainer_, 'zIndex', zIndex);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Container element for the bubble panels - this should be some inner element
-  ***REMOVED*** within (or equal to) bubbleContainer.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Container element for the bubble panels - this should be some inner element
+   * within (or equal to) bubbleContainer.
+   * @type {Element}
+   * @private
+   */
   this.bubbleContents_ = this.createBubbleDom(this.dom_, this.bubbleContainer_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Element showing the close box.
-  ***REMOVED*** @type {!Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Element showing the close box.
+   * @type {!Element}
+   * @private
+   */
   this.closeBox_ = this.dom_.createDom(goog.dom.TagName.DIV, {
     'className': goog.getCssName('tr_bubble_closebox'),
     'innerHTML': '&nbsp;'
@@ -126,47 +126,47 @@ goog.ui.editor.Bubble = function(parent, zIndex) {
   // or move the cursor away from the element the bubble is attached to.
   goog.editor.style.makeUnselectable(this.bubbleContainer_, this.eventHandler_);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Popup that controls showing and hiding the bubble at the appropriate
-  ***REMOVED*** position.
-  ***REMOVED*** @type {goog.ui.PopupBase}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Popup that controls showing and hiding the bubble at the appropriate
+   * position.
+   * @type {goog.ui.PopupBase}
+   * @private
+   */
   this.popup_ = new goog.ui.PopupBase(this.bubbleContainer_);
-***REMOVED***
+};
 goog.inherits(goog.ui.editor.Bubble, goog.events.EventTarget);
 
 
-***REMOVED***
-***REMOVED*** The css class name of the bubble container element.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * The css class name of the bubble container element.
+ * @type {string}
+ */
 goog.ui.editor.Bubble.BUBBLE_CLASSNAME = goog.getCssName('tr_bubble');
 
 
-***REMOVED***
-***REMOVED*** Creates and adds DOM for the bubble UI to the given container.  This default
-***REMOVED*** implementation just returns the container itself.
-***REMOVED*** @param {!goog.dom.DomHelper} dom DOM helper to use.
-***REMOVED*** @param {!Element} container Element to add the new elements to.
-***REMOVED*** @return {!Element} The element where bubble content should be added.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Creates and adds DOM for the bubble UI to the given container.  This default
+ * implementation just returns the container itself.
+ * @param {!goog.dom.DomHelper} dom DOM helper to use.
+ * @param {!Element} container Element to add the new elements to.
+ * @return {!Element} The element where bubble content should be added.
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.createBubbleDom = function(dom, container) {
   return container;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A logger for goog.ui.editor.Bubble.
-***REMOVED*** @type {goog.log.Logger}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * A logger for goog.ui.editor.Bubble.
+ * @type {goog.log.Logger}
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.logger =
     goog.log.getLogger('goog.ui.editor.Bubble');
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.editor.Bubble.prototype.disposeInternal = function() {
   goog.ui.editor.Bubble.base(this, 'disposeInternal');
 
@@ -178,83 +178,83 @@ goog.ui.editor.Bubble.prototype.disposeInternal = function() {
 
   this.viewPortSizeMonitor_.dispose();
   this.viewPortSizeMonitor_ = null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The element that where the bubble's contents go.
-***REMOVED***
+/**
+ * @return {Element} The element that where the bubble's contents go.
+ */
 goog.ui.editor.Bubble.prototype.getContentElement = function() {
   return this.bubbleContents_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The element that contains the bubble.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * @return {Element} The element that contains the bubble.
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.getContainerElement = function() {
   return this.bubbleContainer_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {goog.events.EventHandler.<T>} The event handler.
-***REMOVED*** @protected
-***REMOVED*** @this T
-***REMOVED*** @template T
-***REMOVED***
+/**
+ * @return {goog.events.EventHandler.<T>} The event handler.
+ * @protected
+ * @this T
+ * @template T
+ */
 goog.ui.editor.Bubble.prototype.getEventHandler = function() {
   return this.eventHandler_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles user resizing of window.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Handles user resizing of window.
+ * @private
+ */
 goog.ui.editor.Bubble.prototype.handleWindowResize_ = function() {
   if (this.isVisible()) {
     this.reposition();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets whether the bubble dismisses itself when the user clicks outside of it.
-***REMOVED*** @param {boolean} autoHide Whether to autohide on an external click.
-***REMOVED***
+/**
+ * Sets whether the bubble dismisses itself when the user clicks outside of it.
+ * @param {boolean} autoHide Whether to autohide on an external click.
+ */
 goog.ui.editor.Bubble.prototype.setAutoHide = function(autoHide) {
   this.popup_.setAutoHide(autoHide);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether there is already a panel of the given type.
-***REMOVED*** @param {string} type Type of panel to check.
-***REMOVED*** @return {boolean} Whether there is already a panel of the given type.
-***REMOVED***
+/**
+ * Returns whether there is already a panel of the given type.
+ * @param {string} type Type of panel to check.
+ * @return {boolean} Whether there is already a panel of the given type.
+ */
 goog.ui.editor.Bubble.prototype.hasPanelOfType = function(type) {
   return goog.object.some(this.panels_, function(panel) {
     return panel.type == type;
   });
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Adds a panel to the bubble.
-***REMOVED*** @param {string} type The type of bubble panel this is.  Should usually be
-***REMOVED***     the same as the tagName of the targetElement.  This ensures multiple
-***REMOVED***     bubble panels don't appear for the same element.
-***REMOVED*** @param {string} title The title of the panel.
-***REMOVED*** @param {Element} targetElement The target element of the bubble.
-***REMOVED*** @param {function(Element): void} contentFn Function that when called with
-***REMOVED***     a container element, will add relevant panel content to it.
-***REMOVED*** @param {boolean=} opt_preferTopPosition Whether to prefer placing the bubble
-***REMOVED***     above the element instead of below it.  Defaults to preferring below.
-***REMOVED***     If any panel prefers the top position, the top position is used.
-***REMOVED*** @return {string} The id of the panel.
-***REMOVED***
+/**
+ * Adds a panel to the bubble.
+ * @param {string} type The type of bubble panel this is.  Should usually be
+ *     the same as the tagName of the targetElement.  This ensures multiple
+ *     bubble panels don't appear for the same element.
+ * @param {string} title The title of the panel.
+ * @param {Element} targetElement The target element of the bubble.
+ * @param {function(Element): void} contentFn Function that when called with
+ *     a container element, will add relevant panel content to it.
+ * @param {boolean=} opt_preferTopPosition Whether to prefer placing the bubble
+ *     above the element instead of below it.  Defaults to preferring below.
+ *     If any panel prefers the top position, the top position is used.
+ * @return {string} The id of the panel.
+ */
 goog.ui.editor.Bubble.prototype.addPanel = function(type, title, targetElement,
     contentFn, opt_preferTopPosition) {
   var id = goog.string.createUniqueString();
@@ -295,13 +295,13 @@ goog.ui.editor.Bubble.prototype.addPanel = function(type, title, targetElement,
   this.reposition();
 
   return id;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Removes the panel with the given id.
-***REMOVED*** @param {string} id The id of the panel.
-***REMOVED***
+/**
+ * Removes the panel with the given id.
+ * @param {string} id The id of the panel.
+ */
 goog.ui.editor.Bubble.prototype.removePanel = function(id) {
   var panel = this.panels_[id];
   goog.dom.removeNode(panel.element);
@@ -319,13 +319,13 @@ goog.ui.editor.Bubble.prototype.removePanel = function(id) {
   } else {
     this.reposition();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Opens the bubble.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Opens the bubble.
+ * @private
+ */
 goog.ui.editor.Bubble.prototype.openBubble_ = function() {
   this.eventHandler_.
       listen(this.closeBox_, goog.events.EventType.CLICK,
@@ -337,23 +337,23 @@ goog.ui.editor.Bubble.prototype.openBubble_ = function() {
 
   this.popup_.setVisible(true);
   this.reposition();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Closes the bubble.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Closes the bubble.
+ * @private
+ */
 goog.ui.editor.Bubble.prototype.closeBubble_ = function() {
   this.popup_.setVisible(false);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Handles the popup's hide event by removing all panels and dispatching a
-***REMOVED*** HIDE event.
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Handles the popup's hide event by removing all panels and dispatching a
+ * HIDE event.
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.handlePopupHide = function() {
   // Remove the panel elements.
   for (var panelId in this.panels_) {
@@ -361,59 +361,59 @@ goog.ui.editor.Bubble.prototype.handlePopupHide = function() {
   }
 
   // Update the state to reflect no panels.
-  this.panels_ = {***REMOVED***
+  this.panels_ = {};
   goog.dom.classlist.remove(
       goog.asserts.assert(this.bubbleContainer_),
       goog.getCssName('tr_multi_bubble'));
 
   this.eventHandler_.removeAll();
   this.dispatchEvent(goog.ui.Component.EventType.HIDE);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the visibility of the bubble.
-***REMOVED*** @return {boolean} True if visible false if not.
-***REMOVED***
+/**
+ * Returns the visibility of the bubble.
+ * @return {boolean} True if visible false if not.
+ */
 goog.ui.editor.Bubble.prototype.isVisible = function() {
   return this.popup_.isVisible();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** The vertical clearance in pixels between the bottom of the targetElement
-***REMOVED*** and the edge of the bubble.
-***REMOVED*** @type {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * The vertical clearance in pixels between the bottom of the targetElement
+ * and the edge of the bubble.
+ * @type {number}
+ * @private
+ */
 goog.ui.editor.Bubble.VERTICAL_CLEARANCE_ = goog.userAgent.IE ? 4 : 2;
 
 
-***REMOVED***
-***REMOVED*** Bubble's margin box to be passed to goog.positioning.
-***REMOVED*** @type {goog.math.Box}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Bubble's margin box to be passed to goog.positioning.
+ * @type {goog.math.Box}
+ * @private
+ */
 goog.ui.editor.Bubble.MARGIN_BOX_ = new goog.math.Box(
     goog.ui.editor.Bubble.VERTICAL_CLEARANCE_, 0,
     goog.ui.editor.Bubble.VERTICAL_CLEARANCE_, 0);
 
 
-***REMOVED***
-***REMOVED*** Returns the margin box.
-***REMOVED*** @return {goog.math.Box}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the margin box.
+ * @return {goog.math.Box}
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.getMarginBox = function() {
   return goog.ui.editor.Bubble.MARGIN_BOX_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Positions and displays this bubble below its targetElement. Assumes that
-***REMOVED*** the bubbleContainer is already contained in the document object it applies
-***REMOVED*** to.
-***REMOVED***
+/**
+ * Positions and displays this bubble below its targetElement. Assumes that
+ * the bubbleContainer is already contained in the document object it applies
+ * to.
+ */
 goog.ui.editor.Bubble.prototype.reposition = function() {
   var targetElement = null;
   var preferBottomPosition = true;
@@ -464,20 +464,20 @@ goog.ui.editor.Bubble.prototype.reposition = function() {
           'reposition(): positionAtAnchor() failed with ' + status);
     }
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** A helper for reposition() - positions the bubble in regards to the position
-***REMOVED*** of the elements the bubble is attached to.
-***REMOVED*** @param {goog.positioning.Corner} targetCorner The corner of
-***REMOVED***     the target element.
-***REMOVED*** @param {goog.positioning.Corner} bubbleCorner The corner of the bubble.
-***REMOVED*** @param {number} overflow Overflow handling mode bitmap,
-***REMOVED***     {@see goog.positioning.Overflow}.
-***REMOVED*** @return {number} Status bitmap, {@see goog.positioning.OverflowStatus}.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A helper for reposition() - positions the bubble in regards to the position
+ * of the elements the bubble is attached to.
+ * @param {goog.positioning.Corner} targetCorner The corner of
+ *     the target element.
+ * @param {goog.positioning.Corner} bubbleCorner The corner of the bubble.
+ * @param {number} overflow Overflow handling mode bitmap,
+ *     {@see goog.positioning.Overflow}.
+ * @return {number} Status bitmap, {@see goog.positioning.OverflowStatus}.
+ * @private
+ */
 goog.ui.editor.Bubble.prototype.positionAtAnchor_ = function(
     targetCorner, bubbleCorner, overflow) {
   var targetElement = null;
@@ -495,53 +495,53 @@ goog.ui.editor.Bubble.prototype.positionAtAnchor_ = function(
       targetElement, targetCorner, this.bubbleContainer_,
       bubbleCorner, null, this.getMarginBox(), overflow,
       null, this.getViewportBox());
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the viewport box to use when positioning the bubble.
-***REMOVED*** @return {goog.math.Box}
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Returns the viewport box to use when positioning the bubble.
+ * @return {goog.math.Box}
+ * @protected
+ */
 goog.ui.editor.Bubble.prototype.getViewportBox = goog.functions.NULL;
 
 
 
-***REMOVED***
-***REMOVED*** Private class used to describe a bubble panel.
-***REMOVED*** @param {goog.dom.DomHelper} dom DOM helper used to create the panel.
-***REMOVED*** @param {string} id ID of the panel.
-***REMOVED*** @param {string} type Type of the panel.
-***REMOVED*** @param {string} title Title of the panel.
-***REMOVED*** @param {Element} targetElement Element the panel is showing for.
-***REMOVED*** @param {boolean} preferBottomPosition Whether this panel prefers to show
-***REMOVED***     below the target element.
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Private class used to describe a bubble panel.
+ * @param {goog.dom.DomHelper} dom DOM helper used to create the panel.
+ * @param {string} id ID of the panel.
+ * @param {string} type Type of the panel.
+ * @param {string} title Title of the panel.
+ * @param {Element} targetElement Element the panel is showing for.
+ * @param {boolean} preferBottomPosition Whether this panel prefers to show
+ *     below the target element.
+ * @constructor
+ * @private
+ */
 goog.ui.editor.Bubble.Panel_ = function(dom, id, type, title, targetElement,
     preferBottomPosition) {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The type of bubble panel.
-  ***REMOVED*** @type {string}
- ***REMOVED*****REMOVED***
+  /**
+   * The type of bubble panel.
+   * @type {string}
+   */
   this.type = type;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The target element of this bubble panel.
-  ***REMOVED*** @type {Element}
- ***REMOVED*****REMOVED***
+  /**
+   * The target element of this bubble panel.
+   * @type {Element}
+   */
   this.targetElement = targetElement;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Whether the panel prefers to be placed below the target element.
-  ***REMOVED*** @type {boolean}
- ***REMOVED*****REMOVED***
+  /**
+   * Whether the panel prefers to be placed below the target element.
+   * @type {boolean}
+   */
   this.preferBottomPosition = preferBottomPosition;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The element containing this panel.
- ***REMOVED*****REMOVED***
+  /**
+   * The element containing this panel.
+   */
   this.element = dom.createDom(goog.dom.TagName.DIV,
       {className: goog.getCssName('tr_bubble_panel'), id: id},
       dom.createDom(goog.dom.TagName.DIV,
@@ -549,12 +549,12 @@ goog.ui.editor.Bubble.Panel_ = function(dom, id, type, title, targetElement,
           title ? title + ':' : ''), // TODO(robbyw): Does this work in bidi?
       dom.createDom(goog.dom.TagName.DIV,
           {className: goog.getCssName('tr_bubble_panel_content')}));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** @return {Element} The element in the panel where content should go.
-***REMOVED***
+/**
+ * @return {Element} The element in the panel where content should go.
+ */
 goog.ui.editor.Bubble.Panel_.prototype.getContentElement = function() {
-  return***REMOVED*****REMOVED*** @type {Element}***REMOVED*** (this.element.lastChild);
-***REMOVED***
+  return /** @type {Element} */ (this.element.lastChild);
+};

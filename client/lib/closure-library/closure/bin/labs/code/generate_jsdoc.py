@@ -106,21 +106,21 @@ def _GenerateJsDoc(args, return_val=False):
   """
 
   lines = []
-  lines.append('***REMOVED***')
+  lines.append('/**')
 
-  lines += ['***REMOVED*** @param {} %s' % arg for arg in args]
+  lines += [' * @param {} %s' % arg for arg in args]
 
   if return_val:
-    lines.append('***REMOVED*** @return')
+    lines.append(' * @return')
 
-  lines.append('***REMOVED***')
+  lines.append(' */')
 
   return '\n'.join(lines) + '\n'
 
 
 def _IndentString(source_string, indentation):
   """Indent string some number of characters."""
-  lines = [(indentation***REMOVED*** ' ') + line
+  lines = [(indentation * ' ') + line
            for line in source_string.splitlines(True)]
   return ''.join(lines)
 

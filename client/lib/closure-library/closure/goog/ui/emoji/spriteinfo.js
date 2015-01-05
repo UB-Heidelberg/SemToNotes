@@ -12,35 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview SpriteInfo implementation. This is a simple wrapper class to
-***REMOVED*** hold CSS metadata needed for sprited emoji.
-***REMOVED***
-***REMOVED*** @see ../demos/popupemojipicker.html or emojipicker_test.html for examples
-***REMOVED*** of how to use this class.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview SpriteInfo implementation. This is a simple wrapper class to
+ * hold CSS metadata needed for sprited emoji.
+ *
+ * @see ../demos/popupemojipicker.html or emojipicker_test.html for examples
+ * of how to use this class.
+ *
+ */
 goog.provide('goog.ui.emoji.SpriteInfo');
 
 
 
-***REMOVED***
-***REMOVED*** Creates a SpriteInfo object with the specified properties. If the image is
-***REMOVED*** sprited via CSS, then only the first parameter needs a value. If the image
-***REMOVED*** is sprited via metadata, then the first parameter should be left null.
-***REMOVED***
-***REMOVED*** @param {?string} cssClass CSS class to properly display the sprited image.
-***REMOVED*** @param {string=} opt_url Url of the sprite image.
-***REMOVED*** @param {number=} opt_width Width of the image being sprited.
-***REMOVED*** @param {number=} opt_height Height of the image being sprited.
-***REMOVED*** @param {number=} opt_xOffset Positive x offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {number=} opt_yOffset Positive y offset of the image being sprited
-***REMOVED***     within the sprite.
-***REMOVED*** @param {boolean=} opt_animated Whether the sprite is animated.
-***REMOVED***
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Creates a SpriteInfo object with the specified properties. If the image is
+ * sprited via CSS, then only the first parameter needs a value. If the image
+ * is sprited via metadata, then the first parameter should be left null.
+ *
+ * @param {?string} cssClass CSS class to properly display the sprited image.
+ * @param {string=} opt_url Url of the sprite image.
+ * @param {number=} opt_width Width of the image being sprited.
+ * @param {number=} opt_height Height of the image being sprited.
+ * @param {number=} opt_xOffset Positive x offset of the image being sprited
+ *     within the sprite.
+ * @param {number=} opt_yOffset Positive y offset of the image being sprited
+ *     within the sprite.
+ * @param {boolean=} opt_animated Whether the sprite is animated.
+ * @constructor
+ * @final
+ */
 goog.ui.emoji.SpriteInfo = function(cssClass, opt_url, opt_width, opt_height,
                                     opt_xOffset, opt_yOffset, opt_animated) {
   if (cssClass != null) {
@@ -60,154 +60,154 @@ goog.ui.emoji.SpriteInfo = function(cssClass, opt_url, opt_width, opt_height,
   }
 
   this.animated_ = !!opt_animated;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Name of the CSS class to properly display the sprited image.
-***REMOVED*** @type {string}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Name of the CSS class to properly display the sprited image.
+ * @type {string}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.cssClass_;
 
 
-***REMOVED***
-***REMOVED*** Url of the sprite image.
-***REMOVED*** @type {string|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Url of the sprite image.
+ * @type {string|undefined}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.url_;
 
 
-***REMOVED***
-***REMOVED*** Width of the image being sprited.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Width of the image being sprited.
+ * @type {number|undefined}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.width_;
 
 
-***REMOVED***
-***REMOVED*** Height of the image being sprited.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Height of the image being sprited.
+ * @type {number|undefined}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.height_;
 
 
-***REMOVED***
-***REMOVED*** Positive x offset of the image being sprited within the sprite.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Positive x offset of the image being sprited within the sprite.
+ * @type {number|undefined}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.xOffset_;
 
 
-***REMOVED***
-***REMOVED*** Positive y offset of the image being sprited within the sprite.
-***REMOVED*** @type {number|undefined}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Positive y offset of the image being sprited within the sprite.
+ * @type {number|undefined}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.yOffset_;
 
 
-***REMOVED***
-***REMOVED*** Whether the emoji specified by the sprite is animated.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether the emoji specified by the sprite is animated.
+ * @type {boolean}
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.prototype.animated_;
 
 
-***REMOVED***
-***REMOVED*** Returns the css class of the sprited image.
-***REMOVED*** @return {?string} Name of the CSS class to properly display the sprited
-***REMOVED***     image.
-***REMOVED***
+/**
+ * Returns the css class of the sprited image.
+ * @return {?string} Name of the CSS class to properly display the sprited
+ *     image.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getCssClass = function() {
   return this.cssClass_ || null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the url of the sprite image.
-***REMOVED*** @return {?string} Url of the sprite image.
-***REMOVED***
+/**
+ * Returns the url of the sprite image.
+ * @return {?string} Url of the sprite image.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getUrl = function() {
   return this.url_ || null;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns whether the emoji specified by this sprite is animated.
-***REMOVED*** @return {boolean} Whether the emoji is animated.
-***REMOVED***
+/**
+ * Returns whether the emoji specified by this sprite is animated.
+ * @return {boolean} Whether the emoji is animated.
+ */
 goog.ui.emoji.SpriteInfo.prototype.isAnimated = function() {
   return this.animated_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the width of the image being sprited, appropriate for a CSS value.
-***REMOVED*** @return {string} The width of the image being sprited.
-***REMOVED***
+/**
+ * Returns the width of the image being sprited, appropriate for a CSS value.
+ * @return {string} The width of the image being sprited.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getWidthCssValue = function() {
   return goog.ui.emoji.SpriteInfo.getCssPixelValue_(this.width_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the height of the image being sprited, appropriate for a CSS value.
-***REMOVED*** @return {string} The height of the image being sprited.
-***REMOVED***
+/**
+ * Returns the height of the image being sprited, appropriate for a CSS value.
+ * @return {string} The height of the image being sprited.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getHeightCssValue = function() {
   return goog.ui.emoji.SpriteInfo.getCssPixelValue_(this.height_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the x offset of the image being sprited within the sprite,
-***REMOVED*** appropriate for a CSS value.
-***REMOVED*** @return {string} The x offset of the image being sprited within the sprite.
-***REMOVED***
+/**
+ * Returns the x offset of the image being sprited within the sprite,
+ * appropriate for a CSS value.
+ * @return {string} The x offset of the image being sprited within the sprite.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getXOffsetCssValue = function() {
   return goog.ui.emoji.SpriteInfo.getOffsetCssValue_(this.xOffset_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns the positive y offset of the image being sprited within the sprite,
-***REMOVED*** appropriate for a CSS value.
-***REMOVED*** @return {string} The y offset of the image being sprited within the sprite.
-***REMOVED***
+/**
+ * Returns the positive y offset of the image being sprited within the sprite,
+ * appropriate for a CSS value.
+ * @return {string} The y offset of the image being sprited within the sprite.
+ */
 goog.ui.emoji.SpriteInfo.prototype.getYOffsetCssValue = function() {
   return goog.ui.emoji.SpriteInfo.getOffsetCssValue_(this.yOffset_);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a string appropriate for use as a CSS value. If the value is zero,
-***REMOVED*** then there is no unit appended.
-***REMOVED***
-***REMOVED*** @param {number|undefined} value A number to be turned into a
-***REMOVED***     CSS size/location value.
-***REMOVED*** @return {string} A string appropriate for use as a CSS value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a string appropriate for use as a CSS value. If the value is zero,
+ * then there is no unit appended.
+ *
+ * @param {number|undefined} value A number to be turned into a
+ *     CSS size/location value.
+ * @return {string} A string appropriate for use as a CSS value.
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.getCssPixelValue_ = function(value) {
   return !value ? '0' : value + 'px';
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Returns a string appropriate for use as a CSS value for a position offset,
-***REMOVED*** such as the position argument for sprites.
-***REMOVED***
-***REMOVED*** @param {number|undefined} posOffset A positive offset for a position.
-***REMOVED*** @return {string} A string appropriate for use as a CSS value.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Returns a string appropriate for use as a CSS value for a position offset,
+ * such as the position argument for sprites.
+ *
+ * @param {number|undefined} posOffset A positive offset for a position.
+ * @return {string} A string appropriate for use as a CSS value.
+ * @private
+ */
 goog.ui.emoji.SpriteInfo.getOffsetCssValue_ = function(posOffset) {
   var offset = goog.ui.emoji.SpriteInfo.getCssPixelValue_(posOffset);
   return offset == '0' ? offset : '-' + offset;
-***REMOVED***
+};

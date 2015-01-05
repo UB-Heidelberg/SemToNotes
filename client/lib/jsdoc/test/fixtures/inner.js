@@ -1,7 +1,7 @@
 function sendMessage(text) {
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     var encoding = 'utf8';
 
-   ***REMOVED*****REMOVED*** document me***REMOVED***
+    /** document me */
     function encrypt(){}
 }

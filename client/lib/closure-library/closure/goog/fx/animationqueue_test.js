@@ -15,7 +15,7 @@
 goog.provide('goog.fx.AnimationQueueTest');
 goog.setTestOnly('goog.fx.AnimationQueueTest');
 
-***REMOVED***
+goog.require('goog.events');
 goog.require('goog.fx.Animation');
 goog.require('goog.fx.AnimationParallelQueue');
 goog.require('goog.fx.AnimationSerialQueue');
@@ -49,19 +49,19 @@ function testParallelEvents() {
   var playEvents = 0, beginEvents = 0, resumeEvents = 0, pauseEvents = 0;
   var endEvents = 0, stopEvents = 0, finishEvents = 0;
 
-***REMOVED***anim, goog.fx.Transition.EventType.PLAY, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.PLAY, function() {
     ++playEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.BEGIN, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN, function() {
     ++beginEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.RESUME, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.RESUME, function() {
     ++resumeEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.PAUSE, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.PAUSE, function() {
     ++pauseEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.END, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.END, function() {
     ++endEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.STOP, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.STOP, function() {
     ++stopEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.FINISH, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.FINISH, function() {
     ++finishEvents; });
 
   // PLAY, BEGIN
@@ -109,19 +109,19 @@ function testSerialEvents() {
   var playEvents = 0, beginEvents = 0, resumeEvents = 0, pauseEvents = 0;
   var endEvents = 0, stopEvents = 0, finishEvents = 0;
 
-***REMOVED***anim, goog.fx.Transition.EventType.PLAY, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.PLAY, function() {
     ++playEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.BEGIN, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.BEGIN, function() {
     ++beginEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.RESUME, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.RESUME, function() {
     ++resumeEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.PAUSE, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.PAUSE, function() {
     ++pauseEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.END, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.END, function() {
     ++endEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.STOP, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.STOP, function() {
     ++stopEvents; });
-***REMOVED***anim, goog.fx.Transition.EventType.FINISH, function() {
+  goog.events.listen(anim, goog.fx.Transition.EventType.FINISH, function() {
     ++finishEvents; });
 
   // PLAY, BEGIN

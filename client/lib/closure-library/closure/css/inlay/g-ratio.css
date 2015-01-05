@@ -1,26 +1,26 @@
 /*
-***REMOVED*** Copyright 2007 The Closure Library Authors. All Rights Reserved.
-***REMOVED***
-***REMOVED*** Use of this source code is governed by the Apache License, Version 2.0.
-***REMOVED*** See the COPYING file for details.
-***REMOVED***
+ * Copyright 2007 The Closure Library Authors. All Rights Reserved.
+ *
+ * Use of this source code is governed by the Apache License, Version 2.0.
+ * See the COPYING file for details.
+ */
 
-***REMOVED***
-***REMOVED*** CSS Inlay
-***REMOVED*** Percentage based templates
-***REMOVED*** @author ddiaz@google.com (Dustin Diaz)
-***REMOVED*** @author elsigh@google.com (Lindsey Simon)
-***REMOVED*** @fileoverview
-***REMOVED*** The first ten templates are described using the following convention:
-***REMOVED*** tpl-LEFT%-RIGHT% and tpl-LEFT%-RIGHT%-alt, where alt switches render order.
-***REMOVED***
-***REMOVED*** The rationale for the percentage values are pretty fascinating.
-***REMOVED*** Three nine's are needed for a miminal affordance in the gap between units
-***REMOVED*** for Opera, while two for IE 5.5 and down.
-***REMOVED*** Straight percentages seem to work fine otherwise, but the values here test
-***REMOVED*** well cross-browser.
-***REMOVED***
-***REMOVED*** Sample Usage:
+/**
+ * CSS Inlay
+ * Percentage based templates
+ * @author ddiaz@google.com (Dustin Diaz)
+ * @author elsigh@google.com (Lindsey Simon)
+ * @fileoverview
+ * The first ten templates are described using the following convention:
+ * tpl-LEFT%-RIGHT% and tpl-LEFT%-RIGHT%-alt, where alt switches render order.
+ *
+ * The rationale for the percentage values are pretty fascinating.
+ * Three nine's are needed for a miminal affordance in the gap between units
+ * for Opera, while two for IE 5.5 and down.
+ * Straight percentages seem to work fine otherwise, but the values here test
+ * well cross-browser.
+ *
+ * Sample Usage:
   <div class="g-section g-tpl-50-50">
     <div class="g-unit g-first">
       <p>
@@ -33,9 +33,9 @@
       </p>
     </div>
   </div>
-***REMOVED***
+ */
 
-/* 25/75***REMOVED***
+/* 25/75 */
 .g-tpl-25-75 .g-unit,
 .g-unit .g-tpl-25-75 .g-unit,
 .g-unit .g-unit .g-tpl-25-75 .g-unit,
@@ -53,7 +53,7 @@
   margin: 0;
 }
 
-/* 25/75-alt***REMOVED***
+/* 25/75-alt */
 .g-tpl-25-75-alt .g-unit,
 .g-unit .g-tpl-25-75-alt .g-unit,
 .g-unit .g-unit .g-tpl-25-75-alt .g-unit,
@@ -71,7 +71,7 @@
   margin: 0;
 }
 
-/* 75/25***REMOVED***
+/* 75/25 */
 .g-tpl-75-25 .g-unit,
 .g-unit .g-tpl-75-25 .g-unit,
 .g-unit .g-unit .g-tpl-75-25 .g-unit,
@@ -89,7 +89,7 @@
   margin: 0;
 }
 
-/* 75/25-alt***REMOVED***
+/* 75/25-alt */
 .g-tpl-75-25-alt .g-unit,
 .g-unit .g-tpl-75-25-alt .g-unit,
 .g-unit .g-unit .g-tpl-75-25-alt .g-unit,
@@ -107,7 +107,7 @@
   margin: 0;
 }
 
-/* 33/67***REMOVED***
+/* 33/67 */
 .g-tpl-33-67  .g-unit,
 .g-unit .g-tpl-33-67  .g-unit,
 .g-unit .g-unit .g-tpl-33-67  .g-unit,
@@ -125,7 +125,7 @@
   margin: 0;
 }
 
-/* 33/67-alt***REMOVED***
+/* 33/67-alt */
 .g-tpl-33-67-alt .g-unit,
 .g-unit .g-tpl-33-67-alt .g-unit,
 .g-unit .g-unit .g-tpl-33-67-alt .g-unit,
@@ -142,7 +142,7 @@
   float: right;
   margin: 0;
 }
-/* 67/33***REMOVED***
+/* 67/33 */
 .g-tpl-67-33 .g-unit,
 .g-unit .g-tpl-67-33 .g-unit,
 .g-unit .g-unit .g-tpl-67-33 .g-unit,
@@ -160,7 +160,7 @@
   margin: 0;
 }
 
-/* 67/33-alt***REMOVED***
+/* 67/33-alt */
 .g-tpl-67-33-alt .g-unit,
 .g-unit .g-tpl-67-33-alt .g-unit,
 .g-unit .g-unit .g-tpl-67-33-alt .g-unit,
@@ -178,7 +178,7 @@
   margin: 0;
 }
 
-/* 50/50***REMOVED***
+/* 50/50 */
 .g-tpl-50-50 .g-unit,
 .g-unit .g-tpl-50-50 .g-unit,
 .g-unit .g-unit .g-tpl-50-50 .g-unit,
@@ -196,7 +196,7 @@
   margin: 0;
 }
 
-/* 50/50-alt***REMOVED***
+/* 50/50-alt */
 .g-tpl-50-50-alt .g-unit,
 .g-unit .g-tpl-50-50-alt .g-unit,
 .g-unit .g-unit .g-tpl-50-50-alt .g-unit,
@@ -214,25 +214,25 @@
   margin: 0;
 }
 
-***REMOVED***
-***REMOVED*** Nest templates contain floating g-units.
-***REMOVED*** For these, width needs to be reset from the 100% for inline-block
-***REMOVED*** to auto. This fixes an issue with horizontal scrollbars.
-***REMOVED***
+/**
+ * Nest templates contain floating g-units.
+ * For these, width needs to be reset from the 100% for inline-block
+ * to auto. This fixes an issue with horizontal scrollbars.
+ */
 .g-tpl-nest {
   width: auto;
 }
-***REMOVED***
-***REMOVED*** Making any g-sections inside of g-tpl-nests display inline instead
-***REMOVED*** of display block solves an issue where inner sections add up incrementally
-***REMOVED*** their widths to set the width of the outer g-unit. This causes all kinds of
-***REMOVED*** problems with float-drops and display:inline fixes this.
-***REMOVED***
+/**
+ * Making any g-sections inside of g-tpl-nests display inline instead
+ * of display block solves an issue where inner sections add up incrementally
+ * their widths to set the width of the outer g-unit. This causes all kinds of
+ * problems with float-drops and display:inline fixes this.
+ */
 .g-tpl-nest .g-section {
   display: inline;
 }
 
-/* g-tpl-nest for multi unit nesting (float left), say for a menu.***REMOVED***
+/* g-tpl-nest for multi unit nesting (float left), say for a menu. */
 .g-tpl-nest .g-unit,
 .g-unit .g-tpl-nest .g-unit,
 .g-unit .g-unit .g-tpl-nest .g-unit,
@@ -242,7 +242,7 @@
   margin: 0;
 }
 
-/* g-tpl-nest-alt for multi unit nesting (float right), say for a menu.***REMOVED***
+/* g-tpl-nest-alt for multi unit nesting (float right), say for a menu. */
 .g-tpl-nest-alt .g-unit,
 .g-unit .g-tpl-nest-alt .g-unit,
 .g-unit .g-unit .g-tpl-nest-alt .g-unit,

@@ -15,8 +15,8 @@ See the COPYING file for details.
     <script src="../base.js"></script>
     <script>
     goog.require('goog.dom');
-   ***REMOVED*****REMOVED***
-   ***REMOVED*****REMOVED***
+    goog.require('goog.dom.DomHelper');
+    goog.require('goog.events');
     goog.require('goog.ui.Component');
     goog.require('goog.ui.HsvPalette');
     goog.require('goog.style');
@@ -46,9 +46,9 @@ See the COPYING file for details.
     pSmall.other = p;
     var linkColors = function(e) {
       e.target.other.setColor(e.target.getColor());
-   ***REMOVED*****REMOVED***
-  ***REMOVED***p, goog.ui.Component.EventType.ACTION, linkColors);
-  ***REMOVED***pSmall, goog.ui.Component.EventType.ACTION, linkColors);
+    };
+    goog.events.listen(p, goog.ui.Component.EventType.ACTION, linkColors);
+    goog.events.listen(pSmall, goog.ui.Component.EventType.ACTION, linkColors);
 
     </script>
 

@@ -15,7 +15,7 @@ See the COPYING file for details.
     goog.require('goog.array');
     goog.require('goog.debug.DivConsole');
     goog.require('goog.debug.LogManager');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events');
     goog.require('goog.log');
     goog.require('goog.object');
     goog.require('goog.ui.CustomButton');
@@ -26,7 +26,7 @@ See the COPYING file for details.
   <link rel="stylesheet" href="css/demo.css">
   <link rel="stylesheet" href="../css/imagelessbutton.css">
   <style>
-    /* Base class for all icon elements.***REMOVED***
+    /* Base class for all icon elements. */
     .icon {
       height: 16px;
       width: 16px;
@@ -36,17 +36,17 @@ See the COPYING file for details.
       vertical-align: middle;
     }
 
-    /* "Highlight" icon.***REMOVED***
+    /* "Highlight" icon. */
     .highlight-icon{
       background-position: -64px;
     }
 
-    /* "Insert Image" icon.***REMOVED***
+    /* "Insert Image" icon. */
     .insert-image-icon {
       background-position: -80px;
     }
 
-    /* Custom style for the "default" button.***REMOVED***
+    /* Custom style for the "default" button. */
     .default-button {
       font-weight: bold;
     }
@@ -150,12 +150,12 @@ See the COPYING file for details.
     disabledButton.setEnabled(false);
     goog.array.forEach(customButtons, function(b) {
       b.render(goog.dom.getElement('cb1'));
-    ***REMOVED***b, goog.ui.Component.EventType.ACTION,
+      goog.events.listen(b, goog.ui.Component.EventType.ACTION,
           function(e) {
             var newCaption = window.prompt('Enter new caption for button:');
             b.setCaption(newCaption || 'Empty');
           });
-    ***REMOVED***b, EVENTS, logEvent);
+      goog.events.listen(b, EVENTS, logEvent);
     });
 
     // Decorate some buttons.
@@ -171,7 +171,7 @@ See the COPYING file for details.
 
       button.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
       cb2.push(button);
-    ***REMOVED***button, EVENTS, logEvent);
+      goog.events.listen(button, EVENTS, logEvent);
     });
 
     // Decorate toggle buttons.
@@ -179,9 +179,9 @@ See the COPYING file for details.
     var toggleEnable = goog.ui.decorate(toggleEnableElem);
     toggleEnable.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
 
-  ***REMOVED***toggleEnable, EVENTS, logEvent);
+    goog.events.listen(toggleEnable, EVENTS, logEvent);
 
-  ***REMOVED***toggleEnable, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(toggleEnable, goog.ui.Component.EventType.ACTION,
         function(e) {
           cb2[1].setEnabled(e.target.isChecked());
         });
@@ -189,9 +189,9 @@ See the COPYING file for details.
     var hideShowElem = goog.dom.getElement('hideShow');
     var hideShow = new goog.ui.decorate(hideShowElem);
     hideShow.setDispatchTransitionEvents(goog.ui.Component.State.ALL, true);
-  ***REMOVED***hideShow, EVENTS, logEvent);
+    goog.events.listen(hideShow, EVENTS, logEvent);
 
-  ***REMOVED***hideShow, goog.ui.Component.EventType.ACTION,
+    goog.events.listen(hideShow, goog.ui.Component.EventType.ACTION,
         function(e) {
           cb2[1].setVisible(e.target.isChecked());
         });
@@ -203,7 +203,7 @@ See the COPYING file for details.
       'Insert Image'
     ], goog.ui.ImagelessButtonRenderer.getInstance());
     iconbutton1.render(goog.dom.getElement('iconbuttons'));
-  ***REMOVED***iconbutton1, EVENTS, logEvent);
+    goog.events.listen(iconbutton1, EVENTS, logEvent);
 
     // Add a custom style, too.
     var iconbutton2 = new goog.ui.ToggleButton([
@@ -212,7 +212,7 @@ See the COPYING file for details.
     ], goog.ui.ImagelessButtonRenderer.getInstance());
     iconbutton2.addClassName('default-button');
     iconbutton2.render(goog.dom.getElement('iconbuttons'));
-  ***REMOVED***iconbutton2, EVENTS, logEvent);
+    goog.events.listen(iconbutton2, EVENTS, logEvent);
 
     goog.dom.setTextContent(goog.dom.getElement('perf'),
         (goog.now() - timer) + 'ms');

@@ -101,7 +101,7 @@ function testGetAll() {
     'UnusualKey1': 'unusual1',
     'unusual-Key2': 'unusual2',
     '-Bizarre--Key': 'bizarre'
- ***REMOVED*****REMOVED***
+  };
   assertHashEquals('Dataset should have basicKey, UnusualKey1, ' +
                    'unusual-Key2, and -Bizarre--Key',
                    expectedDataset, dataset.getAll(el));

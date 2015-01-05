@@ -1,4 +1,4 @@
-/*global describe, expect, it, jasmine***REMOVED***
+/*global describe, expect, it, jasmine */
 describe('virtual symbols', function() {
 
     describe('simple cases', function() {

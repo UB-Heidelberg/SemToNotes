@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview An implementation of {@link goog.events.Listenable} that does
-***REMOVED*** not need to be disposed.
-***REMOVED***
+/**
+ * @fileoverview An implementation of {@link goog.events.Listenable} that does
+ * not need to be disposed.
+ */
 
 goog.provide('goog.labs.events.NonDisposableEventTarget');
 
@@ -29,89 +29,89 @@ goog.require('goog.object');
 
 
 
-***REMOVED***
-***REMOVED*** An implementation of {@code goog.events.Listenable} with full W3C
-***REMOVED*** EventTarget-like support (capture/bubble mechanism, stopping event
-***REMOVED*** propagation, preventing default actions).
-***REMOVED***
-***REMOVED*** You may subclass this class to turn your class into a Listenable.
-***REMOVED***
-***REMOVED*** Unlike {@link goog.events.EventTarget}, this class does not implement
-***REMOVED*** {@link goog.disposable.IDisposable}. Instances of this class that have had
-***REMOVED*** It is not necessary to call {@link goog.dispose}
-***REMOVED*** or {@link #removeAllListeners} in order for an instance of this class
-***REMOVED*** to be garbage collected.
-***REMOVED***
-***REMOVED*** Unless propagation is stopped, an event dispatched by an
-***REMOVED*** EventTarget will bubble to the parent returned by
-***REMOVED*** {@code getParentEventTarget}. To set the parent, call
-***REMOVED*** {@code setParentEventTarget}. Subclasses that don't support
-***REMOVED*** changing the parent can override the setter to throw an error.
-***REMOVED***
-***REMOVED*** Example usage:
-***REMOVED*** <pre>
-***REMOVED***   var source = new goog.labs.events.NonDisposableEventTarget();
-***REMOVED***   function handleEvent(e) {
-***REMOVED***     alert('Type: ' + e.type + '; Target: ' + e.target);
-***REMOVED***   }
-***REMOVED***   source.listen('foo', handleEvent);
-***REMOVED***   source.dispatchEvent('foo'); // will call handleEvent
-***REMOVED*** </pre>
-***REMOVED***
-***REMOVED*** TODO(user|johnlenz): Consider a more modern, less viral
-***REMOVED*** (not based on inheritance) replacement of goog.Disposable, which will allow
-***REMOVED*** goog.events.EventTarget to not be disposable.
-***REMOVED***
-***REMOVED***
-***REMOVED*** @implements {goog.events.Listenable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * An implementation of {@code goog.events.Listenable} with full W3C
+ * EventTarget-like support (capture/bubble mechanism, stopping event
+ * propagation, preventing default actions).
+ *
+ * You may subclass this class to turn your class into a Listenable.
+ *
+ * Unlike {@link goog.events.EventTarget}, this class does not implement
+ * {@link goog.disposable.IDisposable}. Instances of this class that have had
+ * It is not necessary to call {@link goog.dispose}
+ * or {@link #removeAllListeners} in order for an instance of this class
+ * to be garbage collected.
+ *
+ * Unless propagation is stopped, an event dispatched by an
+ * EventTarget will bubble to the parent returned by
+ * {@code getParentEventTarget}. To set the parent, call
+ * {@code setParentEventTarget}. Subclasses that don't support
+ * changing the parent can override the setter to throw an error.
+ *
+ * Example usage:
+ * <pre>
+ *   var source = new goog.labs.events.NonDisposableEventTarget();
+ *   function handleEvent(e) {
+ *     alert('Type: ' + e.type + '; Target: ' + e.target);
+ *   }
+ *   source.listen('foo', handleEvent);
+ *   source.dispatchEvent('foo'); // will call handleEvent
+ * </pre>
+ *
+ * TODO(user|johnlenz): Consider a more modern, less viral
+ * (not based on inheritance) replacement of goog.Disposable, which will allow
+ * goog.events.EventTarget to not be disposable.
+ *
+ * @constructor
+ * @implements {goog.events.Listenable}
+ * @final
+ */
 goog.labs.events.NonDisposableEventTarget = function() {
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Maps of event type to an array of listeners.
-  ***REMOVED*** @private {!goog.events.ListenerMap}
- ***REMOVED*****REMOVED***
+  /**
+   * Maps of event type to an array of listeners.
+   * @private {!goog.events.ListenerMap}
+   */
   this.eventTargetListeners_ = new goog.events.ListenerMap(this);
-***REMOVED***
+};
 goog.events.Listenable.addImplementation(
     goog.labs.events.NonDisposableEventTarget);
 
 
-***REMOVED***
-***REMOVED*** An artificial cap on the number of ancestors you can have. This is mainly
-***REMOVED*** for loop detection.
-***REMOVED*** @const {number}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * An artificial cap on the number of ancestors you can have. This is mainly
+ * for loop detection.
+ * @const {number}
+ * @private
+ */
 goog.labs.events.NonDisposableEventTarget.MAX_ANCESTORS_ = 1000;
 
 
-***REMOVED***
-***REMOVED*** Parent event target, used during event bubbling.
-***REMOVED*** @private {goog.events.Listenable}
-***REMOVED***
+/**
+ * Parent event target, used during event bubbling.
+ * @private {goog.events.Listenable}
+ */
 goog.labs.events.NonDisposableEventTarget.prototype.parentEventTarget_ = null;
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.getParentEventTarget =
     function() {
   return this.parentEventTarget_;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Sets the parent of this event target to use for capture/bubble
-***REMOVED*** mechanism.
-***REMOVED*** @param {goog.events.Listenable} parent Parent listenable (null if none).
-***REMOVED***
+/**
+ * Sets the parent of this event target to use for capture/bubble
+ * mechanism.
+ * @param {goog.events.Listenable} parent Parent listenable (null if none).
+ */
 goog.labs.events.NonDisposableEventTarget.prototype.setParentEventTarget =
     function(parent) {
   this.parentEventTarget_ = parent;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.dispatchEvent = function(
     e) {
   this.assertInitialized_();
@@ -130,51 +130,51 @@ goog.labs.events.NonDisposableEventTarget.prototype.dispatchEvent = function(
 
   return goog.labs.events.NonDisposableEventTarget.dispatchEventInternal_(
       this, e, ancestorsTree);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.listen = function(
     type, listener, opt_useCapture, opt_listenerScope) {
   this.assertInitialized_();
   return this.eventTargetListeners_.add(
-      String(type), listener, false /* callOnce***REMOVED***, opt_useCapture,
+      String(type), listener, false /* callOnce */, opt_useCapture,
       opt_listenerScope);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.listenOnce = function(
     type, listener, opt_useCapture, opt_listenerScope) {
   return this.eventTargetListeners_.add(
-      String(type), listener, true /* callOnce***REMOVED***, opt_useCapture,
+      String(type), listener, true /* callOnce */, opt_useCapture,
       opt_listenerScope);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.unlisten = function(
     type, listener, opt_useCapture, opt_listenerScope) {
   return this.eventTargetListeners_.remove(
       String(type), listener, opt_useCapture, opt_listenerScope);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.unlistenByKey = function(
     key) {
   return this.eventTargetListeners_.removeByKey(key);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.removeAllListeners =
     function(opt_type) {
   return this.eventTargetListeners_.removeAll(opt_type);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.fireListeners = function(
     type, capture, eventObject) {
   // TODO(user): Original code avoids array creation when there
@@ -203,63 +203,63 @@ goog.labs.events.NonDisposableEventTarget.prototype.fireListeners = function(
   }
 
   return rv && eventObject.returnValue_ != false;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.getListeners = function(
     type, capture) {
   return this.eventTargetListeners_.getListeners(String(type), capture);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.getListener = function(
     type, listener, capture, opt_listenerScope) {
   return this.eventTargetListeners_.getListener(
       String(type), listener, capture, opt_listenerScope);
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.labs.events.NonDisposableEventTarget.prototype.hasListener = function(
     opt_type, opt_capture) {
   var id = goog.isDef(opt_type) ? String(opt_type) : undefined;
   return this.eventTargetListeners_.hasListener(id, opt_capture);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Asserts that the event target instance is initialized properly.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Asserts that the event target instance is initialized properly.
+ * @private
+ */
 goog.labs.events.NonDisposableEventTarget.prototype.assertInitialized_ =
     function() {
   goog.asserts.assert(
       this.eventTargetListeners_,
       'Event target is not initialized. Did you call the superclass ' +
       '(goog.labs.events.NonDisposableEventTarget) constructor?');
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Dispatches the given event on the ancestorsTree.
-***REMOVED***
-***REMOVED*** TODO(user): Look for a way to reuse this logic in
-***REMOVED*** goog.events, if possible.
-***REMOVED***
-***REMOVED*** @param {!Object} target The target to dispatch on.
-***REMOVED*** @param {goog.events.Event|Object|string} e The event object.
-***REMOVED*** @param {Array.<goog.events.Listenable>=} opt_ancestorsTree The ancestors
-***REMOVED***     tree of the target, in reverse order from the closest ancestor
-***REMOVED***     to the root event target. May be null if the target has no ancestor.
-***REMOVED*** @return {boolean} If anyone called preventDefault on the event object (or
-***REMOVED***     if any of the listeners returns false) this will also return false.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Dispatches the given event on the ancestorsTree.
+ *
+ * TODO(user): Look for a way to reuse this logic in
+ * goog.events, if possible.
+ *
+ * @param {!Object} target The target to dispatch on.
+ * @param {goog.events.Event|Object|string} e The event object.
+ * @param {Array.<goog.events.Listenable>=} opt_ancestorsTree The ancestors
+ *     tree of the target, in reverse order from the closest ancestor
+ *     to the root event target. May be null if the target has no ancestor.
+ * @return {boolean} If anyone called preventDefault on the event object (or
+ *     if any of the listeners returns false) this will also return false.
+ * @private
+ */
 goog.labs.events.NonDisposableEventTarget.dispatchEventInternal_ = function(
     target, e, opt_ancestorsTree) {
-  var type = e.type ||***REMOVED*****REMOVED*** @type {string}***REMOVED*** (e);
+  var type = e.type || /** @type {string} */ (e);
 
   // If accepting a string or object, create a custom event object so that
   // preventDefault and stopPropagation work with the event.
@@ -302,4 +302,4 @@ goog.labs.events.NonDisposableEventTarget.dispatchEventInternal_ = function(
   }
 
   return rv;
-***REMOVED***
+};

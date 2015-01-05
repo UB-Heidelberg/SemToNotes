@@ -169,7 +169,7 @@ See the COPYING file for details.
     var m0 = goog.vec.Matrix4.create();
     for (var r = 0; r < 4; r++) {
       for (var c = 0; c < 4; c++) {
-        var value = c***REMOVED*** 4 + r + 1;
+        var value = c * 4 + r + 1;
         goog.vec.Matrix4.setElement(m0, r, c, value);
         assertEquals(value, goog.vec.Matrix4.getElement(m0, r, c));
       }
@@ -361,11 +361,11 @@ See the COPYING file for details.
     goog.vec.Matrix4.multVec3Projective(m0, v0, v1);
     assertElementsEquals([1, 2, 3], v0);
     assertElementsEquals(
-        [51***REMOVED*** invw, 58***REMOVED*** invw, 65***REMOVED*** invw], v1);
+        [51 * invw, 58 * invw, 65 * invw], v1);
 
     goog.vec.Matrix4.multVec3Projective(m0, v0, v0);
     assertElementsEquals(
-        [51***REMOVED*** invw, 58***REMOVED*** invw, 65***REMOVED*** invw], v0);
+        [51 * invw, 58 * invw, 65 * invw], v0);
   }
 
   function testMultVec4() {
@@ -496,7 +496,7 @@ See the COPYING file for details.
 
   function testMakePerspective() {
     var m0 = goog.vec.Matrix4.create();
-    goog.vec.Matrix4.makePerspective(m0, 90***REMOVED*** Math.PI / 180, 2, 0.1, 1.1);
+    goog.vec.Matrix4.makePerspective(m0, 90 * Math.PI / 180, 2, 0.1, 1.1);
     assertElementsRoughlyEqual(
         [0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1.2, -1, 0, 0, -0.22, 0],
         m0, goog.vec.EPSILON);
@@ -515,9 +515,9 @@ See the COPYING file for details.
 
   function testEulerZXZ() {
     var m0 = goog.vec.Matrix4.create();
-    var roll = Math.random()***REMOVED*** 2***REMOVED*** Math.PI;
-    var tilt = -Math.random()***REMOVED*** Math.PI / 2;
-    var pan = Math.random()***REMOVED*** 2***REMOVED*** Math.PI;
+    var roll = Math.random() * 2 * Math.PI;
+    var tilt = -Math.random() * Math.PI / 2;
+    var pan = Math.random() * 2 * Math.PI;
 
     goog.vec.Matrix4.makeAxisAngleRotate(m0, roll, 0, 0, 1);
     goog.vec.Matrix4.applyRotate(m0, tilt, 1, 0, 0);
@@ -531,9 +531,9 @@ See the COPYING file for details.
     var euler = [0, 0, 0];
     goog.vec.Matrix4.toEulerZXZ(m0, euler);
     // Bring them to their range.
-    euler[0] = (euler[0] + Math.PI***REMOVED*** 2) % (Math.PI***REMOVED*** 2);
-    euler[1] = (euler[1] - Math.PI***REMOVED*** 2) % (Math.PI***REMOVED*** 2);
-    euler[2] = (euler[2] + Math.PI***REMOVED*** 2) % (Math.PI***REMOVED*** 2);
+    euler[0] = (euler[0] + Math.PI * 2) % (Math.PI * 2);
+    euler[1] = (euler[1] - Math.PI * 2) % (Math.PI * 2);
+    euler[2] = (euler[2] + Math.PI * 2) % (Math.PI * 2);
     assertElementsRoughlyEqual([roll, tilt, pan], euler, goog.vec.EPSILON);
   }
 

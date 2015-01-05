@@ -49,7 +49,7 @@ function testNextTick() {
     if (c === max) {
       asyncTestCase.continueTesting();
     }
- ***REMOVED*****REMOVED***
+  };
   for (var i = 0; i < max; i++) {
     goog.async.nextTick(goog.partial(counterStep, i));
   }
@@ -59,7 +59,7 @@ function testNextTick() {
 
 
 function testNextTickContext() {
-  var context = {***REMOVED***
+  var context = {};
   var c = 0;
   var max = 10;
   var async = true;
@@ -71,7 +71,7 @@ function testNextTickContext() {
     if (c === max) {
       asyncTestCase.continueTesting();
     }
- ***REMOVED*****REMOVED***
+  };
   for (var i = 0; i < max; i++) {
     goog.async.nextTick(goog.partial(counterStep, i), context);
   }
@@ -111,7 +111,7 @@ function testNextTickDoesntSwallowError() {
     window.onerror = before;
     asyncTestCase.continueTesting();
     return false;
- ***REMOVED*****REMOVED***
+  };
   goog.async.nextTick(function() {
     throw sentinel;
   });
@@ -136,7 +136,7 @@ function testNextTickProtectEntryPoint() {
           e instanceof goog.debug.ErrorHandler.ProtectedFunctionError);
     }
     asyncTestCase.continueTesting();
- ***REMOVED*****REMOVED***
+  };
   var origSetImmediate;
   if (window.setImmediate) {
     origSetImmediate = window.setImmediate;

@@ -16,7 +16,7 @@ Author: attila@google.com (Attila Bodis)
   <script>
     goog.require('goog.dom');
     goog.require('goog.events.Event');
-   ***REMOVED*****REMOVED***
+    goog.require('goog.events.EventType');
     goog.require('goog.events.KeyCodes');
     goog.require('goog.testing.jsunit');
     goog.require('goog.ui.Component');
@@ -42,10 +42,10 @@ Author: attila@google.com (Attila Bodis)
     }
     FakeKeyEvent.prototype.preventDefault = function() {
       this.defaultPrevented = true;
-   ***REMOVED*****REMOVED***
+    };
     FakeKeyEvent.prototype.stopPropagation = function() {
       this.propagationStopped = true;
-   ***REMOVED*****REMOVED***
+    };
 
     function setUp() {
       tabBar = new goog.ui.TabBar();
@@ -65,8 +65,8 @@ Author: attila@google.com (Attila Bodis)
       assertEquals('Tab bar orientation must default to expected value',
           goog.ui.Container.Orientation.HORIZONTAL, tabBar.getOrientation());
 
-      var fakeRenderer = {***REMOVED***
-      var fakeDomHelper = {***REMOVED***
+      var fakeRenderer = {};
+      var fakeDomHelper = {};
       var bar = new goog.ui.TabBar(goog.ui.TabBar.Location.START, fakeRenderer,
           fakeDomHelper);
       assertNotNull('Tab bar must not be null', bar);
@@ -83,7 +83,7 @@ Author: attila@google.com (Attila Bodis)
 
     function testDispose() {
       // Set tabBar.selectedTab_ to something non-null, just to test dispose().
-      tabBar.selectedTab_ = {***REMOVED***
+      tabBar.selectedTab_ = {};
       assertNotNull('Selected tab must be non-null', tabBar.getSelectedTab());
       assertFalse('Tab bar must not have been disposed of',
           tabBar.isDisposed());
@@ -496,7 +496,7 @@ Author: attila@google.com (Attila Bodis)
         'foo': {'select': 0, 'unselect': 0},
         'bar': {'select': 0, 'unselect': 0},
         'baz': {'select': 0, 'unselect': 0}
-     ***REMOVED*****REMOVED***
+      };
 
       function countEvent(e) {
         var tabId = e.target.getContent();
@@ -509,7 +509,7 @@ Author: attila@google.com (Attila Bodis)
       }
 
       // Listen for SELECT and UNSELECT events on the tab bar.
-    ***REMOVED***tabBar, [
+      goog.events.listen(tabBar, [
         goog.ui.Component.EventType.SELECT,
         goog.ui.Component.EventType.UNSELECT
       ], countEvent);

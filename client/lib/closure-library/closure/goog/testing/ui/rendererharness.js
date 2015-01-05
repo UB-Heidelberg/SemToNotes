@@ -13,11 +13,11 @@
 // limitations under the License.
 // All Rights Reserved
 
-***REMOVED***
-***REMOVED*** @fileoverview A driver for testing renderers.
-***REMOVED***
-***REMOVED*** @author nicksantos@google.com (Nick Santos)
-***REMOVED***
+/**
+ * @fileoverview A driver for testing renderers.
+ *
+ * @author nicksantos@google.com (Nick Santos)
+ */
 
 goog.provide('goog.testing.ui.RendererHarness');
 
@@ -28,89 +28,89 @@ goog.require('goog.testing.dom');
 
 
 
-***REMOVED***
-***REMOVED*** A driver for testing renderers.
-***REMOVED***
-***REMOVED*** @param {goog.ui.ControlRenderer} renderer A renderer to test.
-***REMOVED*** @param {Element} renderParent The parent of the element where controls will
-***REMOVED***     be rendered.
-***REMOVED*** @param {Element} decorateParent The parent of the element where controls will
-***REMOVED***     be decorated.
-***REMOVED***
-***REMOVED*** @extends {goog.Disposable}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * A driver for testing renderers.
+ *
+ * @param {goog.ui.ControlRenderer} renderer A renderer to test.
+ * @param {Element} renderParent The parent of the element where controls will
+ *     be rendered.
+ * @param {Element} decorateParent The parent of the element where controls will
+ *     be decorated.
+ * @constructor
+ * @extends {goog.Disposable}
+ * @final
+ */
 goog.testing.ui.RendererHarness = function(renderer, renderParent,
     decorateParent) {
   goog.Disposable.call(this);
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The renderer under test.
-  ***REMOVED*** @type {goog.ui.ControlRenderer}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The renderer under test.
+   * @type {goog.ui.ControlRenderer}
+   * @private
+   */
   this.renderer_ = renderer;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The parent of the element where controls will be rendered.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The parent of the element where controls will be rendered.
+   * @type {Element}
+   * @private
+   */
   this.renderParent_ = renderParent;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The original HTML of the render element.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The original HTML of the render element.
+   * @type {string}
+   * @private
+   */
   this.renderHtml_ = renderParent.innerHTML;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** Teh parent of the element where controls will be decorated.
-  ***REMOVED*** @type {Element}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * Teh parent of the element where controls will be decorated.
+   * @type {Element}
+   * @private
+   */
   this.decorateParent_ = decorateParent;
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The original HTML of the decorated element.
-  ***REMOVED*** @type {string}
-  ***REMOVED*** @private
- ***REMOVED*****REMOVED***
+  /**
+   * The original HTML of the decorated element.
+   * @type {string}
+   * @private
+   */
   this.decorateHtml_ = decorateParent.innerHTML;
-***REMOVED***
+};
 goog.inherits(goog.testing.ui.RendererHarness, goog.Disposable);
 
 
-***REMOVED***
-***REMOVED*** A control to create by decoration.
-***REMOVED*** @type {goog.ui.Control}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A control to create by decoration.
+ * @type {goog.ui.Control}
+ * @private
+ */
 goog.testing.ui.RendererHarness.prototype.decorateControl_;
 
 
-***REMOVED***
-***REMOVED*** A control to create by rendering.
-***REMOVED*** @type {goog.ui.Control}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * A control to create by rendering.
+ * @type {goog.ui.Control}
+ * @private
+ */
 goog.testing.ui.RendererHarness.prototype.renderControl_;
 
 
-***REMOVED***
-***REMOVED*** Whether all the necessary assert methods have been called.
-***REMOVED*** @type {boolean}
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Whether all the necessary assert methods have been called.
+ * @type {boolean}
+ * @private
+ */
 goog.testing.ui.RendererHarness.prototype.verified_ = false;
 
 
-***REMOVED***
-***REMOVED*** Attach a control and render its DOM.
-***REMOVED*** @param {goog.ui.Control} control A control.
-***REMOVED*** @return {Element} The element created.
-***REMOVED***
+/**
+ * Attach a control and render its DOM.
+ * @param {goog.ui.Control} control A control.
+ * @return {Element} The element created.
+ */
 goog.testing.ui.RendererHarness.prototype.attachControlAndRender =
     function(control) {
   this.renderControl_ = control;
@@ -118,14 +118,14 @@ goog.testing.ui.RendererHarness.prototype.attachControlAndRender =
   control.setRenderer(this.renderer_);
   control.render(this.renderParent_);
   return control.getElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Attach a control and decorate the element given in the constructor.
-***REMOVED*** @param {goog.ui.Control} control A control.
-***REMOVED*** @return {Element} The element created.
-***REMOVED***
+/**
+ * Attach a control and decorate the element given in the constructor.
+ * @param {goog.ui.Control} control A control.
+ * @return {Element} The element created.
+ */
 goog.testing.ui.RendererHarness.prototype.attachControlAndDecorate =
     function(control) {
   this.decorateControl_ = control;
@@ -135,14 +135,14 @@ goog.testing.ui.RendererHarness.prototype.attachControlAndDecorate =
   var child = this.decorateParent_.firstChild;
   assertEquals('The decorated node must be an element',
                goog.dom.NodeType.ELEMENT, child.nodeType);
-  control.decorate(***REMOVED*** @type {Element}***REMOVED*** (child));
+  control.decorate(/** @type {Element} */ (child));
   return control.getElement();
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Assert that the rendered element and the decorated element match.
-***REMOVED***
+/**
+ * Assert that the rendered element and the decorated element match.
+ */
 goog.testing.ui.RendererHarness.prototype.assertDomMatches = function() {
   assert('Both elements were not generated',
          !!(this.renderControl_ && this.decorateControl_));
@@ -150,14 +150,14 @@ goog.testing.ui.RendererHarness.prototype.assertDomMatches = function() {
       this.renderControl_.getElement().innerHTML,
       this.decorateControl_.getElement().innerHTML);
   this.verified_ = true;
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Destroy the harness, verifying that all assertions had been checked.
-***REMOVED*** @override
-***REMOVED*** @protected
-***REMOVED***
+/**
+ * Destroy the harness, verifying that all assertions had been checked.
+ * @override
+ * @protected
+ */
 goog.testing.ui.RendererHarness.prototype.disposeInternal = function() {
   // If the harness was not verified appropriately, throw an exception.
   assert('Expected assertDomMatches to be called',
@@ -174,4 +174,4 @@ goog.testing.ui.RendererHarness.prototype.disposeInternal = function() {
   this.decorateParent_.innerHTML = this.decorateHtml_;
 
   goog.testing.ui.RendererHarness.superClass_.disposeInternal.call(this);
-***REMOVED***
+};

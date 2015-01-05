@@ -1,31 +1,31 @@
-***REMOVED***
-***REMOVED*** @fileoverview SVG super class.
-***REMOVED***
+/**
+ * @fileoverview SVG super class.
+ */
 
 goog.provide('xrx.svg.Element');
 
 
 
-***REMOVED***
-***REMOVED*** SVG super class.
-***REMOVED*** @param {Element} element A SVG element.
-***REMOVED***
-***REMOVED***
+/**
+ * SVG super class.
+ * @param {Element} element A SVG element.
+ * @constructor
+ */
 xrx.svg.Element = function(element) {
 
- ***REMOVED*****REMOVED***
-  ***REMOVED*** The SVG element.
-  ***REMOVED*** @type {Element}
- ***REMOVED*****REMOVED***
+  /**
+   * The SVG element.
+   * @type {Element}
+   */
   this.element_ = element;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the SVG element.
-***REMOVED*** @return {Element} The SVG element.
-***REMOVED***
+/**
+ * Returns the SVG element.
+ * @return {Element} The SVG element.
+ */
 xrx.svg.Element.prototype.getElement = function() {
   return this.element_;
-***REMOVED***
+};

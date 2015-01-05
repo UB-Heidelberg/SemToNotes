@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Functions for managing full screen status of the DOM.
-***REMOVED***
-***REMOVED***
+/**
+ * @fileoverview Functions for managing full screen status of the DOM.
+ *
+ */
 
 goog.provide('goog.dom.fullscreen');
 goog.provide('goog.dom.fullscreen.EventType');
@@ -24,12 +24,12 @@ goog.require('goog.dom');
 goog.require('goog.userAgent');
 
 
-***REMOVED***
-***REMOVED*** Event types for full screen.
-***REMOVED*** @enum {string}
-***REMOVED***
+/**
+ * Event types for full screen.
+ * @enum {string}
+ */
 goog.dom.fullscreen.EventType = {
- ***REMOVED*****REMOVED*** Dispatched by the Document when the fullscreen status changes.***REMOVED***
+  /** Dispatched by the Document when the fullscreen status changes. */
   CHANGE: (function() {
     if (goog.userAgent.WEBKIT) {
       return 'webkitfullscreenchange';
@@ -44,15 +44,15 @@ goog.dom.fullscreen.EventType = {
     // https://dvcs.w3.org/hg/fullscreen/raw-file/tip/Overview.html
     return 'fullscreenchange';
   })()
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if full screen is supported.
-***REMOVED*** @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
-***REMOVED***     queried. If not provided, use the current DOM.
-***REMOVED*** @return {boolean} True iff full screen is supported.
-***REMOVED***
+/**
+ * Determines if full screen is supported.
+ * @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
+ *     queried. If not provided, use the current DOM.
+ * @return {boolean} True iff full screen is supported.
+ */
 goog.dom.fullscreen.isSupported = function(opt_domHelper) {
   var doc = goog.dom.fullscreen.getDocument_(opt_domHelper);
   var body = doc.body;
@@ -60,13 +60,13 @@ goog.dom.fullscreen.isSupported = function(opt_domHelper) {
       (body.mozRequestFullScreen && doc.mozFullScreenEnabled) ||
       (body.msRequestFullscreen && doc.msFullscreenEnabled) ||
       (body.requestFullscreen && doc.fullscreenEnabled));
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Requests putting the element in full screen.
-***REMOVED*** @param {!Element} element The element to put full screen.
-***REMOVED***
+/**
+ * Requests putting the element in full screen.
+ * @param {!Element} element The element to put full screen.
+ */
 goog.dom.fullscreen.requestFullScreen = function(element) {
   if (element.webkitRequestFullscreen) {
     element.webkitRequestFullscreen();
@@ -77,13 +77,13 @@ goog.dom.fullscreen.requestFullScreen = function(element) {
   } else if (element.requestFullscreen) {
     element.requestFullscreen();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Requests putting the element in full screen with full keyboard access.
-***REMOVED*** @param {!Element} element The element to put full screen.
-***REMOVED***
+/**
+ * Requests putting the element in full screen with full keyboard access.
+ * @param {!Element} element The element to put full screen.
+ */
 goog.dom.fullscreen.requestFullScreenWithKeys = function(
     element) {
   if (element.mozRequestFullScreenWithKeys) {
@@ -93,14 +93,14 @@ goog.dom.fullscreen.requestFullScreenWithKeys = function(
   } else {
     goog.dom.fullscreen.requestFullScreen(element);
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Exits full screen.
-***REMOVED*** @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
-***REMOVED***     queried. If not provided, use the current DOM.
-***REMOVED***
+/**
+ * Exits full screen.
+ * @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
+ *     queried. If not provided, use the current DOM.
+ */
 goog.dom.fullscreen.exitFullScreen = function(opt_domHelper) {
   var doc = goog.dom.fullscreen.getDocument_(opt_domHelper);
   if (doc.webkitCancelFullScreen) {
@@ -112,33 +112,33 @@ goog.dom.fullscreen.exitFullScreen = function(opt_domHelper) {
   } else if (doc.exitFullscreen) {
     doc.exitFullscreen();
   }
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Determines if the document is full screen.
-***REMOVED*** @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
-***REMOVED***     queried. If not provided, use the current DOM.
-***REMOVED*** @return {boolean} Whether the document is full screen.
-***REMOVED***
+/**
+ * Determines if the document is full screen.
+ * @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
+ *     queried. If not provided, use the current DOM.
+ * @return {boolean} Whether the document is full screen.
+ */
 goog.dom.fullscreen.isFullScreen = function(opt_domHelper) {
   var doc = goog.dom.fullscreen.getDocument_(opt_domHelper);
   // IE 11 doesn't have similar boolean property, so check whether
   // document.msFullscreenElement is null instead.
   return !!(doc.webkitIsFullScreen || doc.mozFullScreen ||
       doc.msFullscreenElement || doc.fullscreenElement);
-***REMOVED***
+};
 
 
-***REMOVED***
-***REMOVED*** Gets the document object of the dom.
-***REMOVED*** @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
-***REMOVED***     queried. If not provided, use the current DOM.
-***REMOVED*** @return {!Document} The dom document.
-***REMOVED*** @private
-***REMOVED***
+/**
+ * Gets the document object of the dom.
+ * @param {!goog.dom.DomHelper=} opt_domHelper The DomHelper for the DOM being
+ *     queried. If not provided, use the current DOM.
+ * @return {!Document} The dom document.
+ * @private
+ */
 goog.dom.fullscreen.getDocument_ = function(opt_domHelper) {
   return opt_domHelper ?
       opt_domHelper.getDocument() :
       goog.dom.getDomHelper().getDocument();
-***REMOVED***
+};

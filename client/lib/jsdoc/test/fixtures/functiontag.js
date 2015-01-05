@@ -1,7 +1,7 @@
-***REMOVED*** @func Foo***REMOVED***
+/** @func Foo */
 function Foo() {
 }
 
-***REMOVED*** @method***REMOVED***
+/** @method */
 function Bar() {
 }

@@ -25,9 +25,9 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>***REMOVED***
-***REMOVED*** @fileoverview A class representing the view-box of a drawing canvas.
-***REMOVED***
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class representing the view-box of a drawing canvas.
+ */
 
 goog.provide('xrx.drawing.Viewbox');
 
@@ -39,11 +39,11 @@ goog.require('xrx.drawing');
 
 
 
-***REMOVED***
-***REMOVED*** A class representing the view-box of a drawing canvas.
-***REMOVED*** @param {xrx.drawing.Drawing} drawing The parent drawing object.
-***REMOVED***
-***REMOVED***
+/**
+ * A class representing the view-box of a drawing canvas.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @constructor
+ */
 xrx.drawing.Viewbox = function(drawing) {
 
   this.drawing_ = drawing;
@@ -57,89 +57,89 @@ xrx.drawing.Viewbox = function(drawing) {
   this.origin_;
 
   this.create_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Makes the whole view-box width visible.
-***REMOVED***
+/**
+ * Makes the whole view-box width visible.
+ */
 xrx.drawing.Viewbox.prototype.setOptimalWidth = function() {
   var canvasWidth = this.drawing_.getCanvas().getWidth();
   var imageWidth = this.drawing_.getLayerBackground().getImage().getWidth();
   var scale = canvasWidth / imageWidth;
   this.ctm_.scale(scale, scale);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Makes the whole view-box height visible.
-***REMOVED***
+/**
+ * Makes the whole view-box height visible.
+ */
 xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
   var canvasHeight = this.drawing_.getCanvas().getHeight();
   var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
   var scale = canvasHeight / imageHeight;
   this.ctm_.scale(scale, scale);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the parent drawing object of the view-box.
-***REMOVED*** @return {xrx.drawing.Drawing} The drawing object.
-***REMOVED***
+/**
+ * Returns the parent drawing object of the view-box.
+ * @return {xrx.drawing.Drawing} The drawing object.
+ */
 xrx.drawing.Viewbox.prototype.getDrawing = function() {
   return this.drawing_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the group of the view-box.
-***REMOVED*** @return {Object} The group.
-***REMOVED***
+/**
+ * Returns the group of the view-box.
+ * @return {Object} The group.
+ */
 xrx.drawing.Viewbox.prototype.getGroup = function() {
   return this.group_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the current transformation matrix of the view-box.
-***REMOVED*** @return {goog.math.affineTransform} The transformation matrix.
-***REMOVED***
+/**
+ * Returns the current transformation matrix of the view-box.
+ * @return {goog.math.affineTransform} The transformation matrix.
+ */
 xrx.drawing.Viewbox.prototype.getCTM = function() {
   return this.ctm_;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Returns the bounding-box for the view-box.
-***REMOVED*** @return {goog.math.Box} The bounding box.
-***REMOVED***
+/**
+ * Returns the bounding-box for the view-box.
+ * @return {goog.math.Box} The bounding box.
+ */
 xrx.drawing.Viewbox.prototype.getBox = function() {
   var image = this.drawing_.getLayerBackground().getImage();
   return image.getGeometry().getBox();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles double-click events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles double-click events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
   this.rotateRight();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-down events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles mouse-down events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleDown = function(e) {
   var eventPoint = [e.clientX, e.clientY];
   var transform = new goog.math.AffineTransform();
@@ -149,14 +149,14 @@ xrx.drawing.Viewbox.prototype.handleDown = function(e) {
   transform.createInverse().transform(eventPoint, 0, this.origin_, 0, 1);
 
   this.state_ = xrx.drawing.State.DRAG;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-move events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles mouse-move events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleMove = function(e) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
 
@@ -172,108 +172,108 @@ xrx.drawing.Viewbox.prototype.handleMove = function(e) {
   this.ctm_ = transform.translate(x, y).concatenate(this.ctm_);
 
   this.origin_ = point;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-out events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles mouse-out events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleOut = function(e) {
   this.resetState_();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-up events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles mouse-up events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleUp = function(e) {
   this.state_ = xrx.drawing.State.NONE;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Handles mouse-wheel events for the view-box.
-***REMOVED*** @param {goog.events.BrowserEvent} e The browser event.
-***REMOVED***
+/**
+ * Handles mouse-wheel events for the view-box.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
 xrx.drawing.Viewbox.prototype.handleZoom = function(e) {
   e.deltaY &lt; 0 ? this.zoomIn() : this.zoomOut();
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.drawing.Viewbox.prototype.resetState_ = function() {
   this.state_ = xrx.drawing.State.NONE;
   this.origin_ = null;
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.drawing.Viewbox.prototype.getCenterPoint_ = function() {
   var image = this.getDrawing().getLayerBackground().getImage();
   return [image.getWidth() / 2, image.getHeight() / 2];
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Rotates the view-box by 90° in left direction.
-***REMOVED***
+/**
+ * Rotates the view-box by 90° in left direction.
+ */
 xrx.drawing.Viewbox.prototype.rotateLeft = function() {
   var centerPoint = this.getCenterPoint_();
   this.ctm_.rotate(goog.math.toRadians(-90), centerPoint[0],
       centerPoint[1]);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Rotates the view-box by 90° in right direction.
-***REMOVED***
+/**
+ * Rotates the view-box by 90° in right direction.
+ */
 xrx.drawing.Viewbox.prototype.rotateRight = function() {
   var centerPoint = this.getCenterPoint_();
   this.ctm_.rotate(goog.math.toRadians(90), centerPoint[0],
       centerPoint[1]);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Zoom in on the view-box.
-***REMOVED***
+/**
+ * Zoom in on the view-box.
+ */
 xrx.drawing.Viewbox.prototype.zoomIn = function() {
   this.ctm_.scale(1.05, 1.05);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** Zoom out the view-box.
-***REMOVED***
+/**
+ * Zoom out the view-box.
+ */
 xrx.drawing.Viewbox.prototype.zoomOut = function() {
   this.ctm_.scale(.95, .95);
-***REMOVED***
+};
 
 
 
-***REMOVED***
-***REMOVED*** @private
-***REMOVED***
+/**
+ * @private
+ */
 xrx.drawing.Viewbox.prototype.create_ = function() {
   var graphics = this.drawing_.getGraphics();
   var canvas = this.drawing_.getCanvas();
   this.group_ = graphics.Group.create(canvas);
-***REMOVED***
+};
 </code></pre>
         </article>
     </section>

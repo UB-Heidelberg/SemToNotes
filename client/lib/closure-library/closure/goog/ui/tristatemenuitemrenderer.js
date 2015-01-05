@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-***REMOVED***
-***REMOVED*** @fileoverview Renderer for {@link goog.ui.TriStateMenuItem}s.
-***REMOVED***
-***REMOVED*** @author eae@google.com (Emil A Eklund)
-***REMOVED***
+/**
+ * @fileoverview Renderer for {@link goog.ui.TriStateMenuItem}s.
+ *
+ * @author eae@google.com (Emil A Eklund)
+ */
 
 goog.provide('goog.ui.TriStateMenuItemRenderer');
 
@@ -26,41 +26,41 @@ goog.require('goog.ui.MenuItemRenderer');
 
 
 
-***REMOVED***
-***REMOVED*** Default renderer for {@link goog.ui.TriStateMenuItemRenderer}s. Each item has
-***REMOVED*** the following structure:
-***REMOVED***    <div class="goog-tristatemenuitem">
-***REMOVED***        <div class="goog-tristatemenuitem-checkbox"></div>
-***REMOVED***        <div>...(content)...</div>
-***REMOVED***    </div>
-***REMOVED***
-***REMOVED*** @extends {goog.ui.MenuItemRenderer}
-***REMOVED*** @final
-***REMOVED***
+/**
+ * Default renderer for {@link goog.ui.TriStateMenuItemRenderer}s. Each item has
+ * the following structure:
+ *    <div class="goog-tristatemenuitem">
+ *        <div class="goog-tristatemenuitem-checkbox"></div>
+ *        <div>...(content)...</div>
+ *    </div>
+ * @constructor
+ * @extends {goog.ui.MenuItemRenderer}
+ * @final
+ */
 goog.ui.TriStateMenuItemRenderer = function() {
   goog.ui.MenuItemRenderer.call(this);
-***REMOVED***
+};
 goog.inherits(goog.ui.TriStateMenuItemRenderer, goog.ui.MenuItemRenderer);
 goog.addSingletonGetter(goog.ui.TriStateMenuItemRenderer);
 
 
-***REMOVED***
-***REMOVED*** CSS class name the renderer applies to menu item elements.
-***REMOVED*** @type {string}
-***REMOVED***
+/**
+ * CSS class name the renderer applies to menu item elements.
+ * @type {string}
+ */
 goog.ui.TriStateMenuItemRenderer.CSS_CLASS =
     goog.getCssName('goog-tristatemenuitem');
 
 
-***REMOVED***
-***REMOVED*** Overrides {@link goog.ui.ControlRenderer#decorate} by initializing the
-***REMOVED*** menu item to checkable based on whether the element to be decorated has
-***REMOVED*** extra styling indicating that it should be.
-***REMOVED*** @param {goog.ui.Control} item goog.ui.MenuItem to decorate the element.
-***REMOVED*** @param {Element} element Element to decorate.
-***REMOVED*** @return {!Element} Decorated element.
-***REMOVED*** @override
-***REMOVED***
+/**
+ * Overrides {@link goog.ui.ControlRenderer#decorate} by initializing the
+ * menu item to checkable based on whether the element to be decorated has
+ * extra styling indicating that it should be.
+ * @param {goog.ui.Control} item goog.ui.MenuItem to decorate the element.
+ * @param {Element} element Element to decorate.
+ * @return {!Element} Decorated element.
+ * @override
+ */
 goog.ui.TriStateMenuItemRenderer.prototype.decorate = function(item, element) {
   element = goog.ui.TriStateMenuItemRenderer.superClass_.decorate.call(this,
       item, element);
@@ -70,22 +70,22 @@ goog.ui.TriStateMenuItemRenderer.prototype.decorate = function(item, element) {
 
   if (goog.dom.classlist.contains(element,
       goog.getCssName(this.getCssClass(), 'fully-checked'))) {
-    item.setCheckedState(***REMOVED*** @suppress {missingRequire}***REMOVED***
+    item.setCheckedState(/** @suppress {missingRequire} */
         goog.ui.TriStateMenuItem.State.FULLY_CHECKED);
   } else if (goog.dom.classlist.contains(element,
       goog.getCssName(this.getCssClass(), 'partially-checked'))) {
-    item.setCheckedState(***REMOVED*** @suppress {missingRequire}***REMOVED***
+    item.setCheckedState(/** @suppress {missingRequire} */
         goog.ui.TriStateMenuItem.State.PARTIALLY_CHECKED);
   } else {
-    item.setCheckedState(***REMOVED*** @suppress {missingRequire}***REMOVED***
+    item.setCheckedState(/** @suppress {missingRequire} */
         goog.ui.TriStateMenuItem.State.NOT_CHECKED);
   }
 
   return element;
-***REMOVED***
+};
 
 
-***REMOVED*** @override***REMOVED***
+/** @override */
 goog.ui.TriStateMenuItemRenderer.prototype.getCssClass = function() {
   return goog.ui.TriStateMenuItemRenderer.CSS_CLASS;
-***REMOVED***
+};
