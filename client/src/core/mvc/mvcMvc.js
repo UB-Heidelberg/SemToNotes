@@ -7,8 +7,10 @@ goog.provide('xrx.mvc.Mvc');
 
 
 goog.require('goog.array');
+goog.require('goog.crypt.base64');
 goog.require('goog.object');
 goog.require('goog.dom');
+goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
 goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
@@ -61,13 +63,19 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
   var self = this;
   var elements1 = goog.dom.getElementsByClass('xrx-instance', opt_context);
   var elements2 = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
+  var elements3 = goog.dom.getElementsByClass('xrx-github', opt_context);
   var elements = goog.array.concat(goog.array.toArray(elements1),
-      goog.array.toArray(elements2));
+      goog.array.toArray(elements2), goog.array.toArray(elements3));
   var requests = [];
   var instances = [];
 
   goog.array.forEach(elements, function(e, num) {
-    var instance = new xrx.mvc.Instance(e);
+    var instance;
+    if (goog.dom.classes.has(e, 'xrx-github')) {
+      instance = new xrx.mvc.InstanceGithub(e);
+    } else {
+      instance = new xrx.mvc.InstanceRest(e);
+    }
     var srcUri = instance.getSrcUri();
     if (srcUri) {
       requests.push(goog.labs.net.xhr.get(srcUri));
@@ -81,7 +89,14 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
 
   instancesReady.then(function() {
     goog.array.forEach(requests, function(result, num) {
-      instances[num].setData(new String(result.result_));
+      if (goog.dom.classes.has(instances[num].getElement(), 'xrx-github')) {
+        var json = goog.json.parse(result.result_);
+        var str = goog.crypt.base64.decodeString(json.content);
+        instances[num].setData(new String(str));
+        instances[num].setSha(json.sha);
+      } else {
+        instances[num].setData(new String(result.result_));
+      }
     });
     if (requests.length !== 0) {
       xrx.mvc.Mvc.installComponents(opt_context);

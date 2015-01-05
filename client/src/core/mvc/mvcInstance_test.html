@@ -19,10 +19,14 @@
 </head>
 <body>
 
+<!-- REST -->
 <span id="i1" class="xrx-instance" data-xrx-src="../xml/data/hamlet.xml.txt"></span>
 <span id="i2" class="xrx-instance" data-xrx-src="../xml/data/hamlet.xml.txt"></span>
 <span id="i3" class="xrx-instance">&lt;dummy/&gt;</span>
 <span id="b1" class="xrx-mvc-bind" data-xrx-ref="xrx:instance('i1')"></span>
+
+<!-- GitHub -->
+<span id="igithub" class="xrx-github" data-xrx-src="https://api.github.com/repos/JochenGraf/eCodicology/contents/SKOS.test.rdf"></span>
 
 <script type="text/javascript">
 
@@ -71,6 +75,35 @@ function testCallback() {
   assertTrue(xrx.mvc.getModelComponent('i3').xml() !== undefined);
   assertEquals('<dummy/>', xrx.mvc.getModelComponent('i3').xml());
   assertTrue(xrx.mvc.getModelComponent('b1').getNode(0) !== undefined);
+};
+
+
+
+function testGithubGET() {
+  assertTrue(xrx.mvc.getModelComponent('igithub').xml()[0] === '<');
+};
+
+
+
+function testGithubPUT() {
+  var xml = xrx.mvc.getModelComponent('igithub').xml();
+  xml = xml.split('');
+  xml[22] = parseInt(Math.floor(Math.random() * 10));
+  xml = xml.join('');
+  xrx.mvc.getModelComponent('igithub').xml(xml);
+  xrx.mvc.getModelComponent('igithub').save();
+  var xml = xrx.mvc.getModelComponent('igithub').xml();
+  xml = xml.split('');
+  xml[22] = parseInt(Math.floor(Math.random() * 10));
+  xml = xml.join('');
+  xrx.mvc.getModelComponent('igithub').xml(xml);
+  xrx.mvc.getModelComponent('igithub').save();
+  var xml = xrx.mvc.getModelComponent('igithub').xml();
+  xml = xml.split('');
+  xml[22] = parseInt(Math.floor(Math.random() * 10));
+  xml = xml.join('');
+  xrx.mvc.getModelComponent('igithub').xml(xml);
+  xrx.mvc.getModelComponent('igithub').save();
 };
 
 
