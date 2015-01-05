@@ -70,13 +70,14 @@ xrx.mvc.Component.prototype.getElement = function() {
 /**
  *
  */
-xrx.mvc.Component.prototype.getDataset = function(key) {
+xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
+  var element = opt_element || this.element_;
   var shortened;
-  var standard = goog.dom.dataset.get(this.element_, key);
+  var standard = goog.dom.dataset.get(element, key);
   if (!standard) {
     shortened = key.replace(/^xrx/, '');
     shortened = shortened.charAt(0).toLowerCase() + shortened.slice(1);
-    return goog.dom.dataset.get(this.element_, shortened);
+    return goog.dom.dataset.get(element, shortened);
   } else {
     return standard;
   }
@@ -136,7 +137,7 @@ xrx.mvc.Component.prototype.getRepeatIndex = function() {
   if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
     value = this.getDataset('xrxRepeatIndex');
   } else if (repeatItem) {
-    value = this.getDataset('xrxRepeatIndex');
+    value = this.getDataset('xrxRepeatIndex', repeatItem);
   } else {
     throw Error('Repeat item could not be found.');
   }
@@ -257,8 +258,8 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
   } else if (this.getRefExpression(opt_dataset)) {
     node = this.getNodeRefWithRepeat(opt_dataset);
   } else {
-    throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
-        'attribute.');
+    /*throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
+        'attribute.');*/
   }
   return node;
 };

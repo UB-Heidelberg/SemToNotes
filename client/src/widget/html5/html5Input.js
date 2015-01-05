@@ -9,8 +9,7 @@ goog.provide('xrx.html5.Input');
 goog.require('goog.dom.forms');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
-goog.require('xrx.mvc');
-goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.html5.Component');
 
 
 
@@ -18,7 +17,7 @@ xrx.html5.Input = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.html5.Input, xrx.mvc.ComponentView);
+goog.inherits(xrx.html5.Input, xrx.html5.Component);
 xrx.mvc.registerComponent('xrx-input', xrx.html5.Input);
 
 
@@ -26,7 +25,7 @@ xrx.mvc.registerComponent('xrx-input', xrx.html5.Input);
 xrx.html5.Input.prototype.createDom = function() {
   goog.events.listen(this.element_, goog.events.EventType.INPUT, function(e) {
     e.preventDefault();
-    this.mvcModelUpdateData();
+    if (this.mvcModelUpdateData) this.mvcModelUpdateData();
   }, false, this);
 };
 

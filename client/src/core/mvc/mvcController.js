@@ -204,7 +204,7 @@ xrx.mvc.Controller.mvcRecalculate = function() {
  * @private
  */
 xrx.mvc.Controller.mvcRefreshDynamicView_ = function(control) {
-  if (xrx.mvc.Controller.currentOperation_ !== xrx.mvc.Controller.REMOVE) return;
+  if (xrx.mvc.Controller.currentOperation_ === xrx.mvc.Controller.UPDATE) return;
   var repeat = control.getRepeat();
   if (repeat) {
     repeat.mvcRefresh();

@@ -6,6 +6,7 @@ goog.provide('xrx.widget.Widgets');
 
 
 
+goog.require('xrx.html5.Button');
 goog.require('xrx.html5.Input');
 goog.require('xrx.html5.Textarea');
 goog.require('xrx.widget.Canvas');
