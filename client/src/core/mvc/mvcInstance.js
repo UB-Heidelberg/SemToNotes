@@ -1,15 +1,18 @@
 /**
- * @fileoverview Class implements data instance component for 
+ * @fileoverview Class implements different data instance components for 
  *     the model-view-controller.
  */
 
 goog.provide('xrx.mvc.Instance');
+goog.provide('xrx.mvc.InstanceGithub');
+goog.provide('xrx.mvc.InstanceRest');
 
 
-
-goog.require('goog.dom');
+goog.require('goog.dom.DomHelper');
 goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.net.XhrIo');
+goog.require('goog.Uri');
 goog.require('xrx.index.Index');
 goog.require('xrx.mvc.ComponentModel');
 goog.require('xrx.mvc.Uidl');
@@ -17,6 +20,7 @@ goog.require('xrx.node.Nodes');
 goog.require('xrx.xml.Parser');
 goog.require('xrx.xml.Stream');
 goog.require('xrx.xml.Pilot');
+goog.require('xrx.xml.Indent');
 
 
 
@@ -155,4 +159,67 @@ xrx.mvc.Instance.prototype.getIndex = function() {
   if (!this.xml_) this.setData();
   if (this.index_ === undefined) this.index_ = new xrx.index.Index(this.xml_);
   return this.index_;
+};
+
+
+
+/**
+ * Creates a new instance using a REST client.
+ * @constructor
+ */
+xrx.mvc.InstanceRest = function(element) {
+
+  goog.base(this, element);
+};
+goog.inherits(xrx.mvc.InstanceRest, xrx.mvc.Instance);
+
+
+
+/**
+ * Creates a new instance using a GitHub client.
+ * @constructor
+ */
+xrx.mvc.InstanceGithub = function(element) {
+
+  this.sha_;
+
+  goog.base(this, element);
+};
+goog.inherits(xrx.mvc.InstanceGithub, xrx.mvc.Instance);
+
+
+
+xrx.mvc.InstanceGithub.prototype.setSha = function(sha) {
+  this.sha_ = sha;
+};
+
+
+
+xrx.mvc.InstanceGithub.prototype.save = function() {
+  var self = this;
+  var srcUri = this.getSrcUri()
+  var xhr = new goog.net.XhrIo();
+  var creds = goog.crypt.base64.encodeString('JochenGraf:0JGraf00');
+  xhr.headers.set('Authorization', 'Basic ' + creds);
+
+  var successHandler = function(e) {
+    self.sha_ = e.target.getResponseJson().content.sha;
+    console.log(self.sha_);
+  };
+
+  goog.events.listen(
+    xhr,
+    goog.net.EventType.SUCCESS,
+    successHandler
+  );
+
+  var responseBody = {
+    'path': srcUri,
+    'message': 'SKOS test data updated.',
+    'content': goog.crypt.base64.encodeString(xrx.xml.Indent.forward(self.xml_, 2)),
+    'sha': self.sha_,
+    'branch': 'master'
+  };
+
+  xhr.send(srcUri, 'PUT', goog.json.serialize(responseBody));
 };

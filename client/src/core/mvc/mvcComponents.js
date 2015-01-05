@@ -10,6 +10,8 @@ goog.require('xrx.mvc.Action');
 goog.require('xrx.mvc.Bind');
 goog.require('xrx.mvc.Insert');
 goog.require('xrx.mvc.Instance');
+goog.require('xrx.mvc.InstanceGithub');
+goog.require('xrx.mvc.InstanceRest');
 goog.require('xrx.mvc.Namespace');
 goog.require('xrx.mvc.Repeat');
 goog.require('xrx.mvc.Update');
