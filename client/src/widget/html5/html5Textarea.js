@@ -16,7 +16,3 @@ xrx.html5.Textarea = function(element) {
 ***REMOVED***
 goog.inherits(xrx.html5.Textarea, xrx.html5.Input);
 xrx.mvc.registerComponent('xrx-textarea', xrx.html5.Textarea);
-
-
-
-
