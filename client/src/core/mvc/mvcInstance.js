@@ -199,7 +199,11 @@ xrx.mvc.InstanceGithub.prototype.save = function() {
   var self = this;
   var srcUri = this.getSrcUri()
   var xhr = new goog.net.XhrIo();
+<<<<<<< HEAD
   var creds = goog.crypt.base64.encodeString('');
+=======
+  var creds = goog.crypt.base64.encodeString('JochenGraf:0JGraf00');
+>>>>>>> 2455e948c7fe406cef844e8e893f770d94bd612a
   xhr.headers.set('Authorization', 'Basic ' + creds);
 
   var successHandler = function(e) {
