@@ -7,6 +7,7 @@ goog.provide('xrx.mvc.Component');
 
 
 
+goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.ui.IdGenerator');
@@ -27,13 +28,15 @@ xrx.mvc.Component = function(element, uidl) {
   goog.base(this);
 
   this.validate();
+
+  this.addComponent();
 };
 goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
-xrx.mvc.Component.prototype.getAction = function(eventKey) {
-  xrx.mvc.getComponent;
+xrx.mvc.Component.prototype.addComponent = function() {
+  xrx.mvc.addComponent(this.getId(), this);
 };
 
 
@@ -276,5 +279,33 @@ xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
 
 
 
-xrx.mvc.Component.prototype.getParentComponent = function() {
+xrx.mvc.Component.prototype.getParentComponent = function(className) {
+  var element = goog.dom.getAncestorByClass(this.element_, className);
+  return xrx.mvc.getComponent(element.id);
+};
+
+
+
+xrx.mvc.Component.prototype.getActionElements = function(eventName) {
+  var self = this;
+  return goog.dom.findNodes(this.element_, function(node) {
+    return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
+        self.getDataset('xrxEvent', node) === eventName;
+  });
+};
+
+
+
+xrx.mvc.Component.prototype.dispatch = function(eventName) {
+  goog.array.forEach(this.getActionElements(eventName), function(e) {
+    e.execute();
+  });
+};
+
+
+
+xrx.mvc.Component.prototype.show = function(isShown) {
+  var display = isShown ? 'block' : 'none';
+  goog.style.setElementShown(this.element_, isShown);
+  goog.style.setStyle(this.element_, 'display', display);
 };

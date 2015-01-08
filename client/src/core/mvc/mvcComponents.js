@@ -59,6 +59,10 @@ xrx.mvc.Components['xrx-update'] = xrx.mvc.Update;
 
 
 
+xrx.mvc.Components['xrx-auth'] = xrx.mvc.Auth;
+
+
+
 xrx.mvc.Components['xrx-user'] = xrx.mvc.User;
 
 

@@ -18,10 +18,14 @@ xrx.mvc.ComponentView = function(element, uidl) {
 
   goog.base(this, element, uidl);
 
-  xrx.mvc.addViewComponent(this.getId(), this);
-
   this.createDom();
 
   this.mvcRefresh();
 };
 goog.inherits(xrx.mvc.ComponentView, xrx.mvc.Component);
+
+
+
+xrx.mvc.ComponentView.prototype.addComponent = function() {
+  xrx.mvc.addViewComponent(this.getId(), this);
+};

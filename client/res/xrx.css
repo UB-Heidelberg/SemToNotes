@@ -1,5 +1,11 @@
 
+/* instance */
 .xrx-instance {
+display: none;
+}
+
+/* auth */
+.xrx-user, .xrx-password, .xrx-signin, .xrx-signout {
 display: none;
 }
 

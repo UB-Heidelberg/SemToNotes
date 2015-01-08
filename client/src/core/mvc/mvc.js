@@ -26,6 +26,10 @@ xrx.mvc =  {};
 
 
 
+/** @const */ xrx.mvc.OTHER = 'other';
+
+
+
 /**
  * Stack of model components.
  */
@@ -37,6 +41,13 @@ xrx.mvc[xrx.mvc.MODEL] = {};
  * Stack of view components.
  */
 xrx.mvc[xrx.mvc.VIEW] = {};
+
+
+
+/**
+ * Stack of other components.
+ */
+xrx.mvc[xrx.mvc.OTHER] = {};
 
 
 
@@ -75,9 +86,19 @@ xrx.mvc.addViewComponent = function(id, component) {
 
 
 
+/**
+ * Add other component to the MVC stack.
+ */
+xrx.mvc.addComponent = function(id, component) {
+  xrx.mvc.addComponent_(id, component, xrx.mvc.OTHER);
+};
+
+
+
 xrx.mvc.getComponent = function(id) {
   return xrx.mvc[xrx.mvc.MODEL][id] ||
-      xrx.mvc[xrx.mvc.VIEW][id];
+      xrx.mvc[xrx.mvc.VIEW][id] ||
+      xrx.mvc[xrx.mvc.OTHER][id];
 };
 
 
