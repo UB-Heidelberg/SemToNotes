@@ -297,8 +297,8 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
 
 
 xrx.mvc.Component.prototype.dispatch = function(eventName) {
-  goog.array.forEach(this.getActionElements(eventName), function(e) {
-    e.execute();
+  goog.array.forEach(this.getActionElements(eventName), function(element) {
+    xrx.mvc.getComponent(element.id).execute();
   });
 };
 

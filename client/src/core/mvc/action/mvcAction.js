@@ -30,6 +30,6 @@ xrx.mvc.Action.prototype.mvcRecalculate = function() {};
 xrx.mvc.Action.prototype.execute = function() {
   var children = goog.dom.getChildren(this.element_);
   goog.array.forEach(children, function(e, i, a) {
-    xrx.mvc.getModelComponent(e.id).execute();
+    xrx.mvc.getComponent(e.id).execute();
   });
 };
