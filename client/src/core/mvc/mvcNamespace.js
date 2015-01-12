@@ -22,6 +22,10 @@ goog.inherits(xrx.mvc.Namespace, xrx.mvc.ComponentModel);
 
 
 
+xrx.mvc.Namespace.prototype.createDom = function() {};
+
+
+
 xrx.mvc.Namespace.prototype.mvcRecalculate = function() {
   var prefix = this.getDataset('xrxPrefix');
   var uri = this.getDataset('xrxUri');

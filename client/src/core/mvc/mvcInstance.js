@@ -46,6 +46,10 @@ goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
 
 
 
+xrx.mvc.Instance.prototype.createDom = function() {};
+
+
+
 /**
  *
  */
@@ -175,6 +179,10 @@ goog.inherits(xrx.mvc.InstanceRest, xrx.mvc.Instance);
 
 
 
+xrx.mvc.InstanceRest.prototype.createDom = function() {};
+
+
+
 /**
  * Creates a new instance using a GitHub client.
  * @constructor
@@ -186,6 +194,10 @@ xrx.mvc.InstanceGithub = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.mvc.InstanceGithub, xrx.mvc.Instance);
+
+
+
+xrx.mvc.InstanceGithub.prototype.createDom = function() {};
 
 
 
@@ -204,7 +216,6 @@ xrx.mvc.InstanceGithub.prototype.save = function() {
 
   var successHandler = function(e) {
     self.sha_ = e.target.getResponseJson().content.sha;
-    console.log(self.sha_);
   };
 
   goog.events.listen(

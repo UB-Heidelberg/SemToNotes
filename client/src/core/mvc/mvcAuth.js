@@ -34,6 +34,10 @@ goog.inherits(xrx.mvc.Auth, xrx.mvc.Component);
 
 
 
+xrx.mvc.Auth.prototype.createDom = function() {};
+
+
+
 xrx.mvc.Auth.KEY_ = 'xrxAuth';
 
 
@@ -72,12 +76,18 @@ xrx.mvc.Auth.prototype.isAuth = function() {
 
 
 
+xrx.mvc.Auth.getCredentials = function() {
+  return 'Basic ' + goog.crypt.base64.encodeString(
+      xrx.mvc.Auth.USER_ + ':' + xrx.mvc.Auth.PSWD_);
+};
+
+
+
 xrx.mvc.Auth.prototype.signin = function() {
   var self = this;
   var method = this.getDataset('xrxMethod') || 'GET';
   var xhr = new goog.net.XhrIo();
-  var authorization = 'Basic ' + goog.crypt.base64.encodeString(
-      xrx.mvc.Auth.USER_ + ':' + xrx.mvc.Auth.PSWD_);
+  var authorization = xrx.mvc.Auth.getCredentials();
   xhr.headers.set('Authorization', authorization);
   xrx.mvc.Auth.Cookies_.remove(xrx.mvc.Auth.KEY_);
 
@@ -114,14 +124,12 @@ xrx.mvc.User = function(element) {
   goog.base(this, element);
 
   this.auth_;
-
-  this.init_();
 };
 goog.inherits(xrx.mvc.User, xrx.mvc.Component);
 
 
 
-xrx.mvc.User.prototype.init_ = function() {
+xrx.mvc.User.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
   this.show(!this.auth_.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.INPUT, function(e) {
@@ -164,14 +172,12 @@ xrx.mvc.Signin = function(element) {
   goog.base(this, element);
 
   this.auth_;
-
-  this.init_();
 };
 goog.inherits(xrx.mvc.Signin, xrx.mvc.Component);
 
 
 
-xrx.mvc.Signin.prototype.init_ = function() {
+xrx.mvc.Signin.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
   this.show(!this.auth_.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.CLICK, function(e) {
@@ -190,14 +196,12 @@ xrx.mvc.Signout = function(element) {
   goog.base(this, element);
 
   this.auth_;
-
-  this.init_();
 };
 goog.inherits(xrx.mvc.Signout, xrx.mvc.Component);
 
 
 
-xrx.mvc.Signout.prototype.init_ = function() {
+xrx.mvc.Signout.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
   this.show(this.auth_.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.CLICK, function(e) {

@@ -25,6 +25,10 @@ goog.inherits(xrx.mvc.Bind, xrx.mvc.ComponentModel);
 
 
 
+xrx.mvc.Bind.prototype.createDom = function() {};
+
+
+
 xrx.mvc.Bind.prototype.getNodes = function() {
   return this.node_;
 };

@@ -26,6 +26,10 @@ goog.inherits(xrx.mvc.Dom, xrx.mvc.Component);
 
 
 
+xrx.mvc.Dom.prototype.createDom = function() {};
+
+
+
 xrx.mvc.Dom.prototype.getElementsSelected = function() {
   var elements;
   var selector = this.getDataset('xrxSelect');

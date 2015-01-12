@@ -17,9 +17,11 @@ goog.require('xrx.mvc.InstanceGithub');
 goog.require('xrx.mvc.InstanceRest');
 goog.require('xrx.mvc.Namespace');
 goog.require('xrx.mvc.Password');
+goog.require('xrx.mvc.Repeat');
+goog.require('xrx.mvc.Send');
 goog.require('xrx.mvc.Signin');
 goog.require('xrx.mvc.Signout');
-goog.require('xrx.mvc.Repeat');
+goog.require('xrx.mvc.Submission');
 goog.require('xrx.mvc.Update');
 goog.require('xrx.mvc.User');
 goog.require('xrx.mvc.Repeat');
@@ -42,11 +44,12 @@ xrx.mvc.Components['xrx-mvc-repeat'] = xrx.mvc.Repeat;
 xrx.mvc.Components['xrx-repeat'] = xrx.mvc.Repeat;
 xrx.mvc.Components['xrx-mvc-action'] = xrx.mvc.Action;
 xrx.mvc.Components['xrx-action'] = xrx.mvc.Action;
+xrx.mvc.Components['xrx-submission'] = xrx.mvc.Submission;
 
 
 
 /**
- * data manipulation
+ * data manipulation actions
  */
 xrx.mvc.Components['xrx-mvc-insert'] = xrx.mvc.Insert;
 xrx.mvc.Components['xrx-insert'] = xrx.mvc.Insert;
@@ -56,10 +59,17 @@ xrx.mvc.Components['xrx-update'] = xrx.mvc.Update;
 
 
 /**
- * dom manipulation
+ * dom manipulation actions
  */
 xrx.mvc.Components['xrx-classes-add'] = xrx.mvc.ClassesAdd;
 xrx.mvc.Components['xrx-classes-remove'] = xrx.mvc.ClassesRemove;
+
+
+
+/**
+ * other actions
+ */
+xrx.mvc.Components['xrx-send'] = xrx.mvc.Send;
 
 
 

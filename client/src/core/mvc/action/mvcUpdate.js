@@ -21,6 +21,10 @@ goog.inherits(xrx.mvc.Update, xrx.mvc.ComponentModel);
 
 
 
+xrx.mvc.Update.prototype.createDom = function() {};
+
+
+
 xrx.mvc.Update.prototype.mvcRecalculate = function() {};
 
 

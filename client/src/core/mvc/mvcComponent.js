@@ -10,6 +10,8 @@ goog.provide('xrx.mvc.Component');
 goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
+goog.require('goog.events');
+goog.require('goog.events.EventType');
 goog.require('goog.ui.IdGenerator');
 goog.require('xrx.mvc.Validate');
 
@@ -30,6 +32,8 @@ xrx.mvc.Component = function(element, uidl) {
   this.validate();
 
   this.addComponent();
+
+  this.createDom();
 };
 goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
@@ -292,6 +296,30 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
     return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
         self.getDataset('xrxEvent', node) === eventName;
   });
+};
+
+
+
+xrx.mvc.Component.prototype.registerEvent = function(event) {
+  var self = this;
+  var listen = function(mvcEvent, opt_mvcInternal) {
+    goog.events.listen(self.element_, event, function(e) {
+      e.preventDefault();
+      if (self[opt_mvcInternal]) self[opt_mvcInternal]();
+      self.dispatch(mvcEvent);
+    });
+  };
+  switch(event) {
+  case goog.events.EventType.CLICK:
+    listen('xrx-event-click');
+    break;
+  case goog.events.EventType.INPUT:
+    listen('xrx-event-input', 'mvcModelUpdateData');
+    break;
+  default:
+    throw Error('Unknown event.');
+    break;
+  };
 };
 
 

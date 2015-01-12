@@ -8,7 +8,7 @@ goog.provide('xrx.mvc.Action');
 
 goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.mvc.ComponentModel');
+goog.require('xrx.mvc.Component');
 
 
 
@@ -19,11 +19,11 @@ xrx.mvc.Action = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Action, xrx.mvc.ComponentModel);
+goog.inherits(xrx.mvc.Action, xrx.mvc.Component);
 
 
 
-xrx.mvc.Action.prototype.mvcRecalculate = function() {};
+xrx.mvc.Action.prototype.createDom = function() {};
 
 
 
