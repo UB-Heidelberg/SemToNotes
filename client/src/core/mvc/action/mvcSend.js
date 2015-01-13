@@ -28,7 +28,7 @@ xrx.mvc.Send.prototype.execute = function() {
   var id = this.getDataset('xrxSubmission');
   var submission = xrx.mvc.getComponent(id);
   if (submission) {
-    submission.send();
+    submission.submit();
   } else {
     throw Error('Submission "' + id + '" not found.');
   }

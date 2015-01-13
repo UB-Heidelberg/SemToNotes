@@ -36,7 +36,7 @@ xrx.mvc.Dom.prototype.getElementsSelected = function() {
   if (selector[0] === '.') {
     elements = goog.dom.getElementsByClass(selector.substr(1));
   } else if (selector[0] === '#') {
-    elements = goog.dom.getElement(selector.substr(1));
+    elements = [goog.dom.getElement(selector.substr(1))];
   } else {
     throw Error('Invalid selector: "' + selector + '".');
   };
@@ -46,7 +46,7 @@ xrx.mvc.Dom.prototype.getElementsSelected = function() {
 
 
 xrx.mvc.Dom.prototype.getClasses = function() {
-  return this.getDataset('xrxClasses');
+  return this.getDataset('xrxClasses').split(' ');
 };
 
 
@@ -64,7 +64,9 @@ goog.inherits(xrx.mvc.ClassesAdd, xrx.mvc.Dom);
 
 xrx.mvc.ClassesAdd.prototype.execute = function() {
   goog.array.forEach(this.getElementsSelected(), function(element) {
-    goog.dom.classes.add(element, this.getClasses());
+    goog.array.forEach(this.getClasses(), function(clss) {
+      goog.dom.classes.add(element, clss);
+    });
   }, this);
 };
 
@@ -82,5 +84,9 @@ goog.inherits(xrx.mvc.ClassesRemove, xrx.mvc.Dom);
 
 
 xrx.mvc.ClassesRemove.prototype.execute = function() {
-  console.log('TEST');
+  goog.array.forEach(this.getElementsSelected(), function(element) {
+    goog.array.forEach(this.getClasses(), function(clss) {
+      goog.dom.classes.remove(element, clss);
+    });
+  }, this);
 };

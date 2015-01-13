@@ -11,6 +11,7 @@ goog.provide('xrx.mvc.InstanceRest');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.json');
 goog.require('goog.net.XhrIo');
 goog.require('goog.Uri');
 goog.require('xrx.index.Index');
@@ -35,10 +36,10 @@ xrx.mvc.Instance = function(element) {
 
   this.pilot_;
 
-  goog.base(this, element, new xrx.mvc.Uidl('span',
+  goog.base(this, element/*, new xrx.mvc.Uidl('span',
     'xrx-instance',
     [['dataset', 'src'], ['dataset', 'xrxSrc'], ['text', true]]
-  ));
+  )*/);
 
   this.document_ = new xrx.node.DocumentB(this.getId());
 };
@@ -76,6 +77,7 @@ xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
   this.stream_ = new xrx.xml.Stream(this.xml_);
   this.pilot_ = undefined;
   this.pilot_ = new xrx.xml.Pilot(this.xml_);
+  this.dispatch('xrx-event-instance-update');
 };
 
 

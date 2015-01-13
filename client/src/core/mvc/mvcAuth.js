@@ -58,27 +58,28 @@ xrx.mvc.Auth.Cookies_ = new goog.net.Cookies(goog.dom.getDocument());
 
 
 
-xrx.mvc.Auth.prototype.setUser = function(user) {
+xrx.mvc.Auth.setUser = function(user) {
   xrx.mvc.Auth.USER_ = user;
 };
 
 
 
-xrx.mvc.Auth.prototype.setPassword = function(password) {
+xrx.mvc.Auth.setPassword = function(password) {
   xrx.mvc.Auth.PSWD_ = password;
 };
 
 
 
-xrx.mvc.Auth.prototype.isAuth = function() {
+xrx.mvc.Auth.isAuth = function() {
   return !!xrx.mvc.Auth.Cookies_.get(xrx.mvc.Auth.KEY_);
 };
 
 
 
 xrx.mvc.Auth.getCredentials = function() {
-  return 'Basic ' + goog.crypt.base64.encodeString(
-      xrx.mvc.Auth.USER_ + ':' + xrx.mvc.Auth.PSWD_);
+  return xrx.mvc.Auth.isAuth() ?
+      xrx.mvc.Auth.Cookies_.get(xrx.mvc.Auth.KEY_) :
+      'Basic ' + goog.crypt.base64.encodeString(xrx.mvc.Auth.USER_ + ':' + xrx.mvc.Auth.PSWD_);
 };
 
 
@@ -131,7 +132,7 @@ goog.inherits(xrx.mvc.User, xrx.mvc.Component);
 
 xrx.mvc.User.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
-  this.show(!this.auth_.isAuth());
+  this.show(!xrx.mvc.Auth.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.INPUT, function(e) {
     this.handleInput_();
   }, false, this);
@@ -141,7 +142,7 @@ xrx.mvc.User.prototype.createDom = function() {
 
 xrx.mvc.User.prototype.handleInput_ = function() {
   var input = goog.dom.forms.getValue(this.element_);
-  this.auth_.setUser(input);
+  xrx.mvc.Auth.setUser(input);
 };
 
 
@@ -159,7 +160,7 @@ goog.inherits(xrx.mvc.Password, xrx.mvc.User);
 
 xrx.mvc.Password.prototype.handleInput_ = function() {
   var input = goog.dom.forms.getValue(this.element_);
-  this.auth_.setPassword(input);
+  xrx.mvc.Auth.setPassword(input);
 };
 
 
@@ -179,7 +180,7 @@ goog.inherits(xrx.mvc.Signin, xrx.mvc.Component);
 
 xrx.mvc.Signin.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
-  this.show(!this.auth_.isAuth());
+  this.show(!xrx.mvc.Auth.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.CLICK, function(e) {
     e.preventDefault();
     this.auth_.signin();
@@ -203,7 +204,7 @@ goog.inherits(xrx.mvc.Signout, xrx.mvc.Component);
 
 xrx.mvc.Signout.prototype.createDom = function() {
   this.auth_ = this.getParentComponent('xrx-auth');
-  this.show(this.auth_.isAuth());
+  this.show(xrx.mvc.Auth.isAuth());
   goog.events.listen(this.element_, goog.events.EventType.CLICK, function(e) {
     e.preventDefault();
     this.auth_.signout();
