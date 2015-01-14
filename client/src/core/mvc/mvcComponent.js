@@ -283,8 +283,26 @@ xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
 
 
 
+/**
+ * @private
+ */
+xrx.mvc.Component.prototype.isVoidElement_ = function() {
+  var voidElements = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr',
+      'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
+  var tagName = this.element_.tagName.toLowerCase();
+  return goog.array.contains(voidElements, tagName);
+};
+
+
+
 xrx.mvc.Component.prototype.getParentComponent = function(className) {
-  var element = goog.dom.getAncestorByClass(this.element_, className);
+  var datasetFor = this.getDataset('xrxFor');
+  var element;
+  if (datasetFor) {
+    element = goog.dom.getElement(datasetFor);
+  } else {
+    element = goog.dom.getAncestorByClass(this.element_, className);
+  }
   return xrx.mvc.getComponent(element.id);
 };
 
@@ -292,10 +310,26 @@ xrx.mvc.Component.prototype.getParentComponent = function(className) {
 
 xrx.mvc.Component.prototype.getActionElements = function(eventName) {
   var self = this;
-  return goog.dom.findNodes(this.element_, function(node) {
-    return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
-        self.getDataset('xrxEvent', node) === eventName;
-  });
+  if (this.isVoidElement_()) {
+    var elmnt = this.element_;
+    var elmnts = [];
+    while (elmnt = goog.dom.getNextElementSibling(elmnt)) {
+      if (goog.dom.classes.has(elmnt, 'xrx-action') &&
+          self.getDataset('xrxEvent', elmnt) === eventName) {
+          elmnts.push(elmnt);
+      };
+      if (!goog.dom.classes.has(elmnt, 'xrx-action')) {
+        break;
+      };
+    };
+    return elmnts;
+  } else {
+    return goog.dom.findNodes(this.element_, function(node) {
+      return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
+          self.getDataset('xrxEvent', node) === eventName;
+    });
+  }
+  return [];
 };
 
 
