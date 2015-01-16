@@ -265,8 +265,8 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
   } else if (this.getRefExpression(opt_dataset)) {
     node = this.getNodeRefWithRepeat(opt_dataset);
   } else {
-    /*throw Error('A control must define a data-xrx-mvc-bind or a data-xrx-mvc-ref ' +
-        'attribute.');*/
+    throw Error('A component must define a data-xrx-bind or a data-xrx-ref ' +
+        'attribute.');
   }
   return node;
 };
@@ -326,6 +326,7 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
   } else {
     return goog.dom.findNodes(this.element_, function(node) {
       return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
+          goog.dom.getParentElement(node) === self.element_ &&
           self.getDataset('xrxEvent', node) === eventName;
     });
   }

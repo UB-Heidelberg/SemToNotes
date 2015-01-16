@@ -7,8 +7,10 @@ goog.provide('xrx.mvc.Components');
 
 
 goog.require('xrx.mvc.Action');
+goog.require('xrx.mvc.Calculate');
 goog.require('xrx.mvc.ClassesAdd');
 goog.require('xrx.mvc.ClassesRemove');
+goog.require('xrx.mvc.Dispatch');
 goog.require('xrx.mvc.Auth');
 goog.require('xrx.mvc.Bind');
 goog.require('xrx.mvc.Insert');
@@ -49,27 +51,23 @@ xrx.mvc.Components['xrx-submission'] = xrx.mvc.Submission;
 
 
 /**
- * data manipulation actions
+ * actions
  */
-xrx.mvc.Components['xrx-mvc-insert'] = xrx.mvc.Insert;
+xrx.mvc.Components['xrx-calculate'] = xrx.mvc.Calculate;
+xrx.mvc.Components['xrx-classes-add'] = xrx.mvc.ClassesAdd;
+xrx.mvc.Components['xrx-classes-remove'] = xrx.mvc.ClassesRemove;
+xrx.mvc.Components['xrx-dispatch'] = xrx.mvc.Dispatch;
 xrx.mvc.Components['xrx-insert'] = xrx.mvc.Insert;
-xrx.mvc.Components['xrx-mvc-update'] = xrx.mvc.Update;
+xrx.mvc.Components['xrx-send'] = xrx.mvc.Send;
 xrx.mvc.Components['xrx-update'] = xrx.mvc.Update;
 
 
 
 /**
- * dom manipulation actions
+ * @deprecated
  */
-xrx.mvc.Components['xrx-classes-add'] = xrx.mvc.ClassesAdd;
-xrx.mvc.Components['xrx-classes-remove'] = xrx.mvc.ClassesRemove;
-
-
-
-/**
- * other actions
- */
-xrx.mvc.Components['xrx-send'] = xrx.mvc.Send;
+xrx.mvc.Components['xrx-mvc-insert'] = xrx.mvc.Insert;
+xrx.mvc.Components['xrx-mvc-update'] = xrx.mvc.Update;
 
 
 

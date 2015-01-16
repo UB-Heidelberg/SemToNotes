@@ -8,7 +8,7 @@ goog.provide('xrx.mvc.Send');
 
 goog.require('goog.events.EventType');
 goog.require('xrx.mvc');
-goog.require('xrx.mvc.Component');
+goog.require('xrx.mvc.AbstractAction');
 
 
 
@@ -16,15 +16,11 @@ xrx.mvc.Send = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Send, xrx.mvc.Component);
+goog.inherits(xrx.mvc.Send, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Send.prototype.createDom = function() {};
-
-
-
-xrx.mvc.Send.prototype.execute = function() {
+xrx.mvc.Send.prototype.execute_ = function() {
   var id = this.getDataset('xrxSubmission');
   var submission = xrx.mvc.getComponent(id);
   if (submission) {

@@ -6,7 +6,7 @@ goog.provide('xrx.mvc.Insert');
 
 
 
-goog.require('xrx.mvc.Component');
+goog.require('xrx.mvc.AbstractAction');
 goog.require('xrx.mvc.Controller');
 
 
@@ -18,11 +18,7 @@ xrx.mvc.Insert = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Insert, xrx.mvc.Component);
-
-
-
-xrx.mvc.Insert.prototype.createDom = function() {};
+goog.inherits(xrx.mvc.Insert, xrx.mvc.AbstractAction);
 
 
 
@@ -33,7 +29,7 @@ xrx.mvc.Insert.prototype.getNode = function(opt_num, opt_dataset) {
 
 
 
-xrx.mvc.Insert.prototype.execute = function() {
+xrx.mvc.Insert.prototype.execute_ = function() {
   var origin = this.getNode(0, 'xrxOrigin');
   var target = this.getNode();
   xrx.mvc.Controller.insertNode(this, target, origin);

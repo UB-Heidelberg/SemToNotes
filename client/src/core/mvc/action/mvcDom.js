@@ -11,7 +11,7 @@ goog.provide('xrx.mvc.ClassesRemove');
 goog.require('goog.array');
 goog.require('goog.dom.classes');
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.mvc.Component');
+goog.require('xrx.mvc.AbstractAction');
 
 
 
@@ -22,11 +22,7 @@ xrx.mvc.Dom = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Dom, xrx.mvc.Component);
-
-
-
-xrx.mvc.Dom.prototype.createDom = function() {};
+goog.inherits(xrx.mvc.Dom, xrx.mvc.AbstractAction);
 
 
 
@@ -62,7 +58,7 @@ goog.inherits(xrx.mvc.ClassesAdd, xrx.mvc.Dom);
 
 
 
-xrx.mvc.ClassesAdd.prototype.execute = function() {
+xrx.mvc.ClassesAdd.prototype.execute_ = function() {
   goog.array.forEach(this.getElementsSelected(), function(element) {
     goog.array.forEach(this.getClasses(), function(clss) {
       goog.dom.classes.add(element, clss);
@@ -83,7 +79,7 @@ goog.inherits(xrx.mvc.ClassesRemove, xrx.mvc.Dom);
 
 
 
-xrx.mvc.ClassesRemove.prototype.execute = function() {
+xrx.mvc.ClassesRemove.prototype.execute_ = function() {
   goog.array.forEach(this.getElementsSelected(), function(element) {
     goog.array.forEach(this.getClasses(), function(clss) {
       goog.dom.classes.remove(element, clss);

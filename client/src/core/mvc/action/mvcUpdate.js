@@ -6,7 +6,7 @@ goog.provide('xrx.mvc.Update');
 
 
 
-goog.require('xrx.mvc.ComponentModel');
+goog.require('xrx.mvc.AbstractAction');
 
 
 
@@ -17,18 +17,10 @@ xrx.mvc.Update = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Update, xrx.mvc.ComponentModel);
+goog.inherits(xrx.mvc.Update, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Update.prototype.createDom = function() {};
-
-
-
-xrx.mvc.Update.prototype.mvcRecalculate = function() {};
-
-
-
-xrx.mvc.Update.prototype.execute = function() {
+xrx.mvc.Update.prototype.execute_ = function() {
   xrx.mvc.Controller.updateNode(this, this.getNode(0), this.getValue());
 };
