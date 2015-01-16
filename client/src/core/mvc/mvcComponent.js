@@ -137,11 +137,12 @@ xrx.mvc.Component.prototype.getRepeat = function() {
  * Returns the index of a dynamically repeated component.
  * @return {number} The index.
  */
-xrx.mvc.Component.prototype.getRepeatIndex = function() {
+xrx.mvc.Component.prototype.getRepeatIndex = function(opt_element) {
   var value;
-  var repeatItem = goog.dom.getAncestorByClass(this.element_,
+  var element = opt_element || this.element_;
+  var repeatItem = goog.dom.getAncestorByClass(element,
       'xrx-mvc-repeat-item');
-  if (goog.dom.classes.has(this.element_, 'xrx-mvc-repeat-item')) {
+  if (goog.dom.classes.has(element, 'xrx-mvc-repeat-item')) {
     value = this.getDataset('xrxRepeatIndex');
   } else if (repeatItem) {
     value = this.getDataset('xrxRepeatIndex', repeatItem);
@@ -288,7 +289,8 @@ xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
  */
 xrx.mvc.Component.prototype.isVoidElement_ = function() {
   var voidElements = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr',
-      'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
+      'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
+      /* not void but special */ 'select', 'textarea'];
   var tagName = this.element_.tagName.toLowerCase();
   return goog.array.contains(voidElements, tagName);
 };
@@ -303,7 +305,7 @@ xrx.mvc.Component.prototype.getParentComponent = function(className) {
   } else {
     element = goog.dom.getAncestorByClass(this.element_, className);
   }
-  return xrx.mvc.getComponent(element.id);
+  return element ? xrx.mvc.getComponent(element.id) : undefined;
 };
 
 
@@ -339,6 +341,8 @@ xrx.mvc.Component.prototype.registerEvent = function(event) {
   var self = this;
   var listen = function(mvcEvent, opt_mvcInternal) {
     goog.events.listen(self.element_, event, function(e) {
+      var repeat = self.getRepeat();
+      if (repeat) repeat.setIndexElement(self.element_);
       e.preventDefault();
       if (self[opt_mvcInternal]) self[opt_mvcInternal]();
       self.dispatch(mvcEvent);

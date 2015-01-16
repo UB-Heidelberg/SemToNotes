@@ -27,9 +27,23 @@ xrx.mvc.Repeat = function(element) {
 
   this.nextItems_ = [];
 
+  this.activeElement_;
+
   goog.base(this, element);
 };
 goog.inherits(xrx.mvc.Repeat, xrx.mvc.ComponentView);
+
+
+
+xrx.mvc.Repeat.prototype.getIndex = function() {
+  return !this.activeElement_ ? -1 : this.getRepeatIndex(this.activeElement_) + 1;
+};
+
+
+
+xrx.mvc.Repeat.prototype.setIndexElement = function(activeElement) {
+  this.activeElement_ = activeElement;
+};
 
 
 

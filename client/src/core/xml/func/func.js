@@ -30,6 +30,13 @@ xrx.func = {
         }
         return nodeset;
       }, 1, 1),
+  INDEX: xrx.xpath.FunctionCall.createFunc('xrx:index',
+      xrx.xpath.DataType.NUMBER, true, true, true,
+      function(ctx, expr) {
+        var repeatId = expr.evaluate(ctx);
+        var repeat = xrx.mvc.getViewComponent(repeatId);
+        return repeat.getIndex();
+      }, 1, 1),
   INSTANCE: xrx.xpath.FunctionCall.createFunc('xrx:instance',
       xrx.xpath.DataType.NODESET, true, true, true,
       function(ctx, expr) {
