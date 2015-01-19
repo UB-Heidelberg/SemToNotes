@@ -1,5 +1,5 @@
 /**
- * @fileoverview A class representing an action.
+ * @fileoverview A class representing an XML insert action.
  */
 
 goog.provide('xrx.mvc.Insert');
@@ -22,13 +22,9 @@ goog.inherits(xrx.mvc.Insert, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Insert.prototype.getNode = function(opt_num, opt_dataset) {
-  var dataset = opt_dataset || 'xrxTarget';
-  return goog.base(this, 'getNode', opt_num, dataset);
-};
-
-
-
+/**
+ * @private
+ */
 xrx.mvc.Insert.prototype.execute_ = function() {
   var origin = this.getNode(0, 'xrxOrigin');
   var target = this.getNode();

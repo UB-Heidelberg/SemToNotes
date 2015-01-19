@@ -59,7 +59,7 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
 /**
  * @private
  */
-xrx.mvc.Mvc.installInstances_ = function(opt_context) {
+xrx.mvc.Mvc.installInstances_ = function(opt_context, opt_callback) {
   var self = this;
   var elements1 = goog.dom.getElementsByClass('xrx-instance', opt_context);
   var elements2 = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
@@ -100,11 +100,13 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
     });
     if (requests.length !== 0) {
       xrx.mvc.Mvc.installComponents(opt_context);
+      if (opt_callback) opt_callback();
     }
   });
 
   if (requests.length === 0) {
     xrx.mvc.Mvc.installComponents(opt_context);
+    if (opt_callback) opt_callback();
   };
 };
 
@@ -113,6 +115,6 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context) {
 /**
  * 
  */
-xrx.mvc.Mvc.install = function(opt_context) {
-  xrx.mvc.Mvc.installInstances_(opt_context);
+xrx.mvc.Mvc.install = function(opt_context, opt_callback) {
+  xrx.mvc.Mvc.installInstances_(opt_context, opt_callback);
 };

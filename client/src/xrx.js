@@ -12,6 +12,6 @@ goog.require('xrx.mvc.Mvc');
 
 
 
-xrx.install = function() {
-  xrx.mvc.Mvc.install();
+xrx.install = function(opt_callback) {
+  xrx.mvc.Mvc.install(undefined, opt_callback);
 };

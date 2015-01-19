@@ -6,6 +6,7 @@ goog.provide('xrx.mvc.Dispatch');
 
 
 
+goog.require('goog.dom.dataset');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.AbstractAction');
 

@@ -30,8 +30,10 @@ xrx.html5.Select.prototype.createDom = function() {
 
 
 xrx.html5.Select.prototype.mvcRefresh = function() {
+  var value;
+  var node = this.getNode();
   var optgroup = xrx.mvc.getModelComponent(this.getDataset('xrxOptgroup'));
-  var value = this.getNode().getValueAsString();
+  node ? value = node.getValueAsString() : node = null;
   var i = 0;
   var option;
   goog.dom.removeChildren(this.element_);
