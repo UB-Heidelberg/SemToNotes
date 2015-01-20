@@ -265,7 +265,8 @@ xrx.index.Rebuild.removeEmptyTag = function(index, token, diff) {
 /**
  *
  */
-xrx.index.Rebuild.removeFragment = function() {
+xrx.index.Rebuild.removeFragment = function(index, xml) {
+  index.rebuild(xml);
 };
 
 
@@ -328,7 +329,6 @@ xrx.index.Rebuild.removeStartEndTag = function(index, token1, token2, diff1, dif
 
     //TODO: implement this
   }
-
 };
 
 

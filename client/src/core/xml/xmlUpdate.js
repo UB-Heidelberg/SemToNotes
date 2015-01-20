@@ -211,11 +211,8 @@ xrx.xml.Update.removeAttribute = function(instance, token) {
  * @return {integer} Number of characters removed or inserted.
  */
 xrx.xml.Update.removeEmptyTag = function(instance, token) {
-  var diff = xrx.xml.Update.remove_(instance, token.offset(), token.length());
-
   //TODO: remove namespace declaration from index
-
-  return diff;
+  return xrx.xml.Update.remove_(instance, token.offset(), token.length());
 };
 
 
@@ -225,11 +222,15 @@ xrx.xml.Update.removeEmptyTag = function(instance, token) {
  * the two tag tokens. 
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
- * @param {!xrx.token.Fragment} token The tag to be removed.
+ * @param {!xrx.token.Fragment} token The fragment token to be removed.
  * @return {integer} Number of characters removed or inserted.
  */
 xrx.xml.Update.removeFragment = function(instance, token) {
-  //TODO: implement this
+  //TODO: remove namespace declarations from index
+  var offset = token.firstTag().offset();
+  var st = token.secondTag();
+  var length = st.offset() + st.length() - offset
+  return xrx.xml.Update.remove_(instance, offset, length);
 };
 
 

@@ -85,11 +85,17 @@ xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
 
 xrx.mvc.Controller.removeNode = function(control, opt_node) {
   var node = opt_node || control.getNode();
+  var pilot = node.getInstance().getPilot();
   var token = node.getToken();
   xrx.mvc.Controller.currentOperation_ = xrx.mvc.Controller.REMOVE;
   switch(token.type()) {
   case xrx.token.EMPTY_TAG:
     xrx.mvc.Controller.removeEmptyTag(control, node, token);
+    break;
+  case xrx.token.START_TAG:
+    var token2 = pilot.location(token, new xrx.token.EndTag(token.label()));
+    var fragment = new xrx.token.Fragment(token, token2);
+    xrx.mvc.Controller.removeFragment(control, node, fragment);
     break;
   default:
     throw Error('Remove operation not supported for this token-type.');
@@ -168,6 +174,15 @@ xrx.mvc.Controller.insertFragment = function(control, node, notTag, offset, xml)
 xrx.mvc.Controller.removeEmptyTag = function(control, node, token) {
   var diff = xrx.xml.Update.removeEmptyTag(node.getInstance(), token);
   xrx.index.Rebuild.removeEmptyTag(node.getInstance().getIndex(), token, diff);
+  xrx.mvc.Controller.mvcRecalculate();
+  xrx.mvc.Controller.mvcRefresh(control, node);
+};
+
+
+
+xrx.mvc.Controller.removeFragment = function(control, node, token) {
+  var diff = xrx.xml.Update.removeFragment(node.getInstance(), token);
+  xrx.index.Rebuild.removeFragment(node.getInstance().getIndex(), node.getInstance().xml());
   xrx.mvc.Controller.mvcRecalculate();
   xrx.mvc.Controller.mvcRefresh(control, node);
 };

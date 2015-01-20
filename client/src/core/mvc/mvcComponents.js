@@ -22,6 +22,7 @@ goog.require('xrx.mvc.Optgroup');
 goog.require('xrx.mvc.Password');
 goog.require('xrx.mvc.Remove');
 goog.require('xrx.mvc.Repeat');
+goog.require('xrx.mvc.Script');
 goog.require('xrx.mvc.Send');
 goog.require('xrx.mvc.Signin');
 goog.require('xrx.mvc.Signout');
@@ -64,6 +65,7 @@ xrx.mvc.Components['xrx-dispatch'] = xrx.mvc.Dispatch;
 xrx.mvc.Components['xrx-insert'] = xrx.mvc.Insert;
 xrx.mvc.Components['xrx-remove'] = xrx.mvc.Remove;
 xrx.mvc.Components['xrx-send'] = xrx.mvc.Send;
+xrx.mvc.Components['xrx-script'] = xrx.mvc.Script;
 xrx.mvc.Components['xrx-update'] = xrx.mvc.Update;
 
 

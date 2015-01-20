@@ -2,54 +2,32 @@
  * @fileoverview Class implements an output control.
  */
 
-goog.provide('xrx.output');
+goog.provide('xrx.widget.Output');
 
 
 
-goog.require('goog.dom');
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.mvc');
 
 
 
-xrx.output = function(element) {
-
-
+/**
+ * @constructor
+ */
+xrx.widget.Output = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.output, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.Output, xrx.mvc.ComponentView);
+xrx.mvc.registerComponent('xrx-output', xrx.widget.Output);
 
 
 
-xrx.output.prototype.createDom = function() {};
+xrx.widget.Output.prototype.createDom = function() {};
 
 
 
-xrx.output.prototype.eventBeforeChange = function() {};
-
-
-
-xrx.output.prototype.eventFocus = function() {};
-
-
-
-xrx.output.prototype.getValue = function() {};
-
-
-
-xrx.output.prototype.setFocus = function() {};
-
-
-
-xrx.output.prototype.setValue = function(value) {
-
-  goog.dom.setTextContent(this.getElement(), value);
-};
-
-
-
-xrx.output.prototype.mvcRefresh = function() {
+xrx.widget.Output.prototype.mvcRefresh = function() {
   var value = this.getNode().getStringValue();
-
-  this.setValue(value);
+  goog.dom.setTextContent(this.getElement(), value);
 };

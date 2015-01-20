@@ -363,6 +363,16 @@ function test08removeEmptyTag() {
 
 
 function test09removeFragment() {
+  resetForNextTest();
+  var expected = '<a>test<b>2</b>3<f/></a>';
+  var t1 = instance.getPilot().location(null, new xrx.token.StartTag(new xrx.xml.Label([1,2])));
+  var t2 = instance.getPilot().location(t1, new xrx.token.EndTag(new xrx.xml.Label([1,2])));;
+  var fragment = new xrx.token.Fragment(t1, t2);
+  var diff = xrx.xml.Update.removeFragment(instance, fragment);
+  assertEquals(expected, instance.xml());
+
+  xrx.index.Rebuild.removeFragment(instance.getIndex(), instance.xml());
+  assertEquals(_testStringStream(instance), _testStringBinary(instance));
 };
 
 

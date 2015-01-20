@@ -21,6 +21,7 @@ goog.require('xrx.widget.CanvasToolbarItemCreate');
 goog.require('xrx.widget.CanvasToolbarItemModify');
 goog.require('xrx.widget.CanvasToolbarItemDelete');
 goog.require('xrx.widget.Console');
+goog.require('xrx.widget.Output');
 goog.require('xrx.widget.ShapePolygon');
 goog.require('xrx.widget.ShapePolygonCreate');
 goog.require('xrx.widget.ShapePolygonInsert');
