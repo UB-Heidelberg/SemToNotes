@@ -19,8 +19,7 @@ goog.inherits(xrx.mvc.Calculate, xrx.mvc.AbstractAction);
 
 
 xrx.mvc.Calculate.prototype.getResult = function() {
-  return xrx.xpath.evaluate(this.getRefExpression(), undefined, null, 
-      xrx.xpath.XPathResultType.ANY_TYPE);
+  return this.xpath_.evaluate(undefined, xrx.xpath.XPathResultType.ANY_TYPE);
 };
 
 

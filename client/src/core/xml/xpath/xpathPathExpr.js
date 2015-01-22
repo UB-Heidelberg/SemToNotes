@@ -57,6 +57,26 @@ goog.inherits(xrx.xpath.PathExpr, xrx.xpath.Expr);
 
 
 /**
+ * Returns the attached filter expression of the path expression.
+ * @return xrx.xpath.Expr
+ */
+xrx.xpath.PathExpr.prototype.getFilter = function() {
+  return this.filter_;
+};
+
+
+
+/**
+ * Returns the single steps of the path expression.
+ * @return Array.<xrx.xpath.PathExpr>
+ */
+xrx.xpath.PathExpr.prototype.getSteps = function() {
+  return this.steps_;
+};
+
+
+
+/**
  * Constructor for RootHelperExpr.
  *
  * @extends {xrx.xpath.Expr}

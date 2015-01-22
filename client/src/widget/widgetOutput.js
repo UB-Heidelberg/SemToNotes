@@ -27,6 +27,12 @@ xrx.widget.Output.prototype.createDom = function() {};
 
 
 
+xrx.widget.Output.prototype.mvcRemove = function() {
+  goog.dom.setTextContent(this.element_, '');
+};
+
+
+
 xrx.widget.Output.prototype.mvcRefresh = function() {
   var value = this.getNode().getStringValue();
   goog.dom.setTextContent(this.getElement(), value);

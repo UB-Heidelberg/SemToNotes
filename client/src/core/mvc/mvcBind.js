@@ -58,8 +58,7 @@ xrx.mvc.Bind.prototype.mvcRemove = function() {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRecalculate = function() {
-  var result = xrx.xpath.evaluate(this.getRefExpression(), undefined, null, 
-      xrx.xpath.XPathResultType.ANY_TYPE);
+  var result = this.xpath_.evaluate(undefined, xrx.xpath.XPathResultType.ANY_TYPE);
   this.node_ = [];
   var node;
   while(node = result.iterateNext()) {

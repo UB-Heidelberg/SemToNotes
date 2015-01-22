@@ -14,6 +14,8 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.ui.IdGenerator');
 goog.require('xrx.mvc.Validate');
+goog.require('xrx.mvc.Xpath');
+goog.require('xrx.xpath');
 
 
 
@@ -25,6 +27,11 @@ xrx.mvc.Component = function(element, uidl) {
 
   this.element_ = element;
 
+  /**
+   * @type xrx.mvc.Xpath
+   */
+  this.xpath_;
+
   this.uidl = uidl;
 
   goog.base(this);
@@ -33,9 +40,18 @@ xrx.mvc.Component = function(element, uidl) {
 
   this.addComponent();
 
+  this.compileXpath();
+
   this.createDom();
 };
 goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
+
+
+
+xrx.mvc.Component.prototype.compileXpath = function() {
+  var ref = this.getDataset('xrxRef');
+  if (ref) this.xpath_ = new xrx.mvc.Xpath(ref);
+};
 
 
 
@@ -47,7 +63,8 @@ xrx.mvc.Component.prototype.addComponent = function() {
 
 /**
  * Function is called by the model-view-controller when the component
- * is initialized the first time. Each component must implement this.
+ * is initialized the first time. Each component must implement this
+ * abstract function.
  */
 xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
 
@@ -127,7 +144,7 @@ xrx.mvc.Component.prototype.hasContext = function() {
  * @return {xrx.mvc.Repeat} The repeat component.
  */
 xrx.mvc.Component.prototype.getRepeat = function() {
-  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-mvc-repeat');
+  var element = goog.dom.getAncestorByClass(this.element_, 'xrx-repeat');
   return element ? xrx.mvc.getViewComponent(element.id) : undefined;
 };
 
@@ -141,8 +158,8 @@ xrx.mvc.Component.prototype.getRepeatIndex = function(opt_element) {
   var value;
   var element = opt_element || this.element_;
   var repeatItem = goog.dom.getAncestorByClass(element,
-      'xrx-mvc-repeat-item');
-  if (goog.dom.classes.has(element, 'xrx-mvc-repeat-item')) {
+      'xrx-repeat-item');
+  if (goog.dom.classes.has(element, 'xrx-repeat-item')) {
     value = this.getDataset('xrxRepeatIndex');
   } else if (repeatItem) {
     value = this.getDataset('xrxRepeatIndex', repeatItem);
@@ -226,10 +243,8 @@ xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_con
   if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  var result = xrx.xpath.evaluate(this.getRefExpression(opt_dataset), nodeS, null,
-      xrx.xpath.XPathResultType.ANY_TYPE);
-  var next = result.iterateNext();
-  return next;
+  var result = this.xpath_.evaluate(nodeS, xrx.xpath.XPathResultType.ANY_TYPE);
+  return result.iterateNext();
 };
 
 
@@ -244,10 +259,8 @@ xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_co
   if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  var result = xrx.xpath.evaluate(this.getRefExpression(opt_dataset), nodeS, null,
-      xrx.xpath.XPathResultType.ANY_TYPE);
-  var next = result.iterateNext();
-  return next;
+  var result = this.xpath_.evaluate(nodeS, xrx.xpath.XPathResultType.ANY_TYPE);
+  return result.iterateNext();
 };
 
 

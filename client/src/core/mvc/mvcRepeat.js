@@ -160,7 +160,7 @@ xrx.mvc.RepeatItem.prototype.getClonedElements = function() {
 xrx.mvc.RepeatItem.prototype.createDom = function() {
   this.repeat_.appendItem(this);
   for (var i = 0, len = this.elements_.length; i < len; i++) {
-    goog.dom.classes.add(this.elements_[i], 'xrx-mvc-repeat-item');
+    goog.dom.classes.add(this.elements_[i], 'xrx-repeat-item');
     goog.dom.dataset.set(this.elements_[i], 'xrxRepeatIndex', this.index_);
   }
 };

@@ -57,6 +57,27 @@ xrx.xpath.BinaryExpr = function(op, left, right) {
 goog.inherits(xrx.xpath.BinaryExpr, xrx.xpath.Expr);
 
 
+
+/**
+ * Returns the left-hand expression of the binary expression.
+ * @return xrx.xpath.Expr
+ */
+xrx.xpath.BinaryExpr.prototype.getLeft = function() {
+  return this.left_;
+};
+
+
+
+/**
+ * Returns the right-hand expression of the binary expression.
+ * @return xrx.xpath.Expr
+ */
+xrx.xpath.BinaryExpr.prototype.getRight = function() {
+  return this.right_;
+};
+
+
+
 /**
  * Performs comparison between the left hand side and the right hand side.
  *

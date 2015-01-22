@@ -28,6 +28,7 @@
 */
 
 goog.provide('xrx.xpath');
+goog.provide('xrx.xpath.XPathExpression');
 
 
 
@@ -135,12 +136,12 @@ xrx.xpath.XPathExpression = function(expr) {
     throw Error('Invalid XPath expression.');
   }
 
-  var gexpr = new xrx.xpath.Parser(lexer).parseExpr();
+  this.gexpr = new xrx.xpath.Parser(lexer).parseExpr();
   if (!lexer.empty()) {
     throw Error('Bad token: ' + lexer.next());
   }
   this['evaluate'] = function(node, type) {
-    var value = gexpr.evaluate(new xrx.xpath.Context(node));
+    var value = this.gexpr.evaluate(new xrx.xpath.Context(node));
     return new xrx.xpath.XPathResult(value, type);
   };
 };
@@ -234,3 +235,14 @@ xrx.xpath.evaluate = function(expr, context, nsResolver, type, result) {
   return new xrx.xpath.XPathExpression(expr, nsResolver).
       evaluate(context, type);
 };
+
+
+xrx.xpath.compile = function(expression) {
+  return new xrx.xpath.XPathExpression(expression);
+};
+
+
+xrx.xpath.evaluateCompiled = function(compiledExpr, context, type) {
+  return compiledExpr.evaluate(context, type);
+};
+
