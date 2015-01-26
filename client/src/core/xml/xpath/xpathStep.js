@@ -167,6 +167,16 @@ xrx.xpath.Step.prototype.getTest = function() {
 };
 
 
+
+/**
+ * Returns the predicates of this step.
+ * @return {!xrx.xpath.Predicates} The predicates of this step.
+ */
+xrx.xpath.Step.prototype.getPredicates = function() {
+  return this.predicates_;
+};
+
+
 /**
  * @override
  */

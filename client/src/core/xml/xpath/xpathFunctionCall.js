@@ -82,6 +82,38 @@ xrx.xpath.FunctionCall.prototype.evaluate = function(ctx) {
 };
 
 
+
+/**
+ * Returns the function of the function call.
+ * @return {!xrx.xpath.Function} The function.
+ */
+xrx.xpath.FunctionCall.prototype.getFunction = function() {
+  return this.func_;
+};
+
+
+
+/**
+ * Returns the n'th argument of the function call.
+ * @param {number} The argument index.
+ * @returns {xrx.xpath.Expr} The argument.
+ */
+xrx.xpath.FunctionCall.prototype.getArg = function(n) {
+  return this.args_[n];
+};
+
+
+
+/**
+ * Returns the arguments of the function call.
+ * @return {!Array.<xrx.xpath.Expr>} 
+ */
+xrx.xpath.FunctionCall.prototype.getArgs = function() {
+  return this.args_;
+};
+
+
+
 /**
  * @override
  */

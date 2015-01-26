@@ -22,7 +22,7 @@ xrx.xpath.Literal = function(text) {
    * @type {string}
    * @private
    */
-  this.text_ = text.substring(1, text.length - 1);
+  this.string_ = text.substring(1, text.length - 1);
 };
 goog.inherits(xrx.xpath.Literal, xrx.xpath.Expr);
 
@@ -32,7 +32,17 @@ goog.inherits(xrx.xpath.Literal, xrx.xpath.Expr);
  * @return {string} The string result.
  */
 xrx.xpath.Literal.prototype.evaluate = function(context) {
-  return this.text_;
+  return this.string_;
+};
+
+
+
+/**
+ * Returns the literal's string value.
+ * @return {String} The literal as string.
+ */
+xrx.xpath.Literal.prototype.getString = function() {
+  return this.string_;
 };
 
 
@@ -40,5 +50,5 @@ xrx.xpath.Literal.prototype.evaluate = function(context) {
  * @override
  */
 xrx.xpath.Literal.prototype.toString = function() {
-  return 'Literal: ' + this.text_;
+  return 'Literal: ' + this.string_;
 };

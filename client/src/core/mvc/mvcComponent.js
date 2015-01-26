@@ -48,6 +48,12 @@ goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
+xrx.mvc.Component.prototype.getXpath_ = function() {
+  return this.xpath_;
+};
+
+
+
 xrx.mvc.Component.prototype.compileXpath = function() {
   var ref = this.getDataset('xrxRef');
   if (ref) this.xpath_ = new xrx.mvc.Xpath(ref);

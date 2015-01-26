@@ -57,8 +57,8 @@ goog.inherits(xrx.xpath.PathExpr, xrx.xpath.Expr);
 
 
 /**
- * Returns the attached filter expression of the path expression.
- * @return xrx.xpath.Expr
+ * Returns the attached filter of this path expression.
+ * @return {xrx.xpath.Expr} The filter expression.
  */
 xrx.xpath.PathExpr.prototype.getFilter = function() {
   return this.filter_;
@@ -68,7 +68,7 @@ xrx.xpath.PathExpr.prototype.getFilter = function() {
 
 /**
  * Returns the single steps of the path expression.
- * @return Array.<xrx.xpath.PathExpr>
+ * @return {Array.<xrx.xpath.Step>} The step expressions.
  */
 xrx.xpath.PathExpr.prototype.getSteps = function() {
   return this.steps_;
