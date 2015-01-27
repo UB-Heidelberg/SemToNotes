@@ -48,7 +48,7 @@ goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
-xrx.mvc.Component.prototype.getXpath_ = function() {
+xrx.mvc.Component.prototype.getXpath = function() {
   return this.xpath_;
 };
 
@@ -188,13 +188,6 @@ xrx.mvc.Component.prototype.getRefExpression = function(opt_dataset) {
 
 
 
-xrx.mvc.Component.prototype.getValueExpression = function(opt_dataset) {
-  var dataset = opt_dataset || 'xrxValue';
-  return this.getDataset(dataset);
-};
-
-
-
 /**
  * Returns the bind ID found in the component's data-xrx-bind attribute.
  * @return {string} The bind ID.
@@ -232,7 +225,7 @@ xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
  * bind expression.
  * @return {xrx.node.Node} The node.
  */
-xrx.mvc.Component.prototype.getNodeBind = function(num, opt_dataset) {
+xrx.mvc.Component.prototype.getNodeWithBind = function(num, opt_dataset) {
   return this.getBind(opt_dataset).getNode(num);
 };
 
@@ -243,14 +236,13 @@ xrx.mvc.Component.prototype.getNodeBind = function(num, opt_dataset) {
  * and a ref expression.
  * @return {xrx.node.Node} The node.
  */
-xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_context) {
+xrx.mvc.Component.prototype.getResultWithRefAndRepeat = function(type, opt_dataset, opt_context) {
   var repeat = this.getRepeat();
   var context = repeat.getNode(this.getRepeatIndex());
   if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  var result = this.xpath_.evaluate(nodeS, xrx.xpath.XPathResultType.ANY_TYPE);
-  return result.iterateNext();
+  return this.xpath_.evaluate(nodeS, type);
 };
 
 
@@ -260,13 +252,31 @@ xrx.mvc.Component.prototype.getNodeRefWithRepeat = function(opt_dataset, opt_con
  * and a ref expression.
  * @return {xrx.node.Node} The node.
  */
-xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_context) {
+xrx.mvc.Component.prototype.getResultWithRefAndContext = function(type, opt_dataset, opt_context) {
   var context = this.getContext();
   if (!context) return;
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  var result = this.xpath_.evaluate(nodeS, xrx.xpath.XPathResultType.ANY_TYPE);
-  return result.iterateNext();
+  return this.xpath_.evaluate(nodeS, type);
+};
+
+
+
+/**
+ * @private
+ */
+xrx.mvc.Component.prototype.getResult_ = function(num, type, opt_dataset) {
+  var result;
+  var n = num || 0;
+  if (this.hasContext()) {
+    result = this.getResultWithRefAndContext(type, opt_dataset, this.getContext());
+  } else if (this.getRefExpression(opt_dataset)) {
+    result = this.getResultWithRefAndRepeat(type, opt_dataset);
+  } else {
+    throw Error('A component must define a data-xrx-bind or a data-xrx-ref ' +
+        'attribute.');
+  }
+  return result;
 };
 
 
@@ -276,29 +286,26 @@ xrx.mvc.Component.prototype.getNodeRefWithContext = function(opt_dataset, opt_co
  * @return {xrx.node.Node} The node.
  */
 xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
-  var node;
   var n = num || 0;
-  if (this.hasContext()) {
-    node = this.getNodeRefWithContext(opt_dataset, this.getContext());
-  } else if (this.getBind(opt_dataset)) {
-    node = this.getNodeBind(n, opt_dataset);
-  } else if (this.getRefExpression(opt_dataset)) {
-    node = this.getNodeRefWithRepeat(opt_dataset);
+  var result;
+  if (this.getBind(opt_dataset)) {
+    return this.getNodeWithBind(n, opt_dataset)
   } else {
-    throw Error('A component must define a data-xrx-bind or a data-xrx-ref ' +
-        'attribute.');
+    result = this.getResult_(n, xrx.xpath.XPathResultType.ANY_TYPE,
+        opt_dataset);
+    return result ? result.iterateNext() : undefined;
   }
-  return node;
 };
 
 
 
 /**
- * 
+ * Returns the string-value referenced by the component.
+ * @return {string} The string-value.
  */
 xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
-  return xrx.xpath.evaluate(this.getValueExpression(opt_dataset), undefined, null,
-      xrx.xpath.XPathResultType.STRING_TYPE).stringValue;  
+  return this.getResult_(0, xrx.xpath.XPathResultType.STRING_TYPE,
+      opt_dataset).stringValue;
 };
 
 
@@ -373,6 +380,9 @@ xrx.mvc.Component.prototype.registerEvent = function(event) {
     break;
   case goog.events.EventType.INPUT:
     listen('xrx-event-input', 'mvcModelUpdateData');
+    break;
+  case goog.events.EventType.CHANGE:
+    listen('xrx-event-change', 'mvcModelUpdateData');
     break;
   default:
     throw Error('Unknown event.');

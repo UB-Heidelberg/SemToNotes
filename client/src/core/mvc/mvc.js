@@ -126,6 +126,7 @@ xrx.mvc.getViewComponents = function() {
 };
 
 
+
 xrx.mvc.hasComponent = function(id) {
   return !!xrx.mvc.getComponent(id);
 };

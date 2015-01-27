@@ -16,7 +16,7 @@ xrx.mvc.Optgroup = function(element) {
 
   goog.base(this, element);
 
-  this.options_ ;
+  this.options_;
 
   this.valueExpr_;
 
@@ -53,7 +53,8 @@ xrx.mvc.Optgroup.prototype.mvcRecalculate = function() {
         xrx.xpath.XPathResultType.STRING_TYPE).stringValue;
     label = xrx.xpath.evaluate(this.labelExpr_, node, null,
         xrx.xpath.XPathResultType.STRING_TYPE).stringValue;
-    option = goog.dom.createDom('option', {value: value, label: label});
+    option = goog.dom.createDom('option', {value: value})
+    goog.dom.setTextContent(option, label);
     this.options_.push(option);
     i++;
   };

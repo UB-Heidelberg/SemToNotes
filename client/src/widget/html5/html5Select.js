@@ -24,7 +24,7 @@ xrx.mvc.registerComponent('xrx-select', xrx.html5.Select);
 
 
 xrx.html5.Select.prototype.createDom = function() {
-  this.registerEvent(goog.events.EventType.INPUT);
+  this.registerEvent(goog.events.EventType.CHANGE);
 };
 
 

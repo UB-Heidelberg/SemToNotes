@@ -172,4 +172,3 @@ xrx.mvc.RepeatItem.prototype.removeDom = function() {
     goog.dom.removeNode(this.elements_[i]);
   }
 };
-

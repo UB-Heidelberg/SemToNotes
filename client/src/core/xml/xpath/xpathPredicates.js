@@ -42,6 +42,27 @@ xrx.xpath.Predicates = function(predicates, opt_reverse) {
 };
 
 
+
+/**
+ * Returns the n'th predicate expression.
+ * @return {xrx.xpath.Expr} The expression.
+ */
+xrx.xpath.Predicates.prototype.getPredicate = function(i) {
+  return this.predicates_[i];
+};
+
+
+
+/**
+ * Returns the predicate expressions.
+ * @return {Array.<xrx.xpath.Expr>} Array of expressions.
+ */
+xrx.xpath.Predicates.prototype.getPredicates = function() {
+  return this.predicates_;
+};
+
+
+
 /**
  * Evaluates the predicates against the given nodeset.
  *

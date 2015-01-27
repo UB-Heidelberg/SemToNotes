@@ -35,7 +35,7 @@ xrx.xpath.KindTest = function(typeName, opt_literal) {
   this.literal_ = goog.isDef(opt_literal) ? opt_literal : null;
 
   /**
-   * @type {?xrx.node}
+   * @type {?xrx.node.Node}
    * @private
    */
   this.type_ = null;
@@ -59,6 +59,13 @@ xrx.xpath.KindTest = function(typeName, opt_literal) {
       throw Error('Unexpected argument');
   }
 };
+
+
+
+xrx.xpath.KindTest.prototype.getTypeName = function() {
+  return this.typeName_;
+};
+
 
 
 /**

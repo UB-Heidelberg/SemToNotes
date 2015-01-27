@@ -6,7 +6,7 @@ goog.provide('xrx.mvc.Update');
 
 
 
-goog.require('xrx.mvc.AbstractAction');
+goog.require('xrx.mvc.AbstractUpdate');
 goog.require('xrx.mvc.Controller');
 
 
@@ -18,7 +18,7 @@ xrx.mvc.Update = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.mvc.Update, xrx.mvc.AbstractAction);
+goog.inherits(xrx.mvc.Update, xrx.mvc.AbstractUpdate);
 
 
 
@@ -26,5 +26,7 @@ goog.inherits(xrx.mvc.Update, xrx.mvc.AbstractAction);
  * @private
  */
 xrx.mvc.Update.prototype.execute_ = function() {
-  xrx.mvc.Controller.updateNode(this, this.getNode(0), this.getValue());
+  console.log(this.getOriginAsString());
+  xrx.mvc.Controller.updateNode(this, this.getTargetAsNode(),
+      this.getOriginAsString());
 };

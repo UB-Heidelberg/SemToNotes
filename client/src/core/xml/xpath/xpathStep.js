@@ -72,6 +72,17 @@ xrx.xpath.Step = function(axis, test, opt_predicates, opt_descendants) {
 goog.inherits(xrx.xpath.Step, xrx.xpath.Expr);
 
 
+
+/**
+ * Returns the axis of this step expression.
+ * @return {!xrx.xpath.Step.Axis_} The axis.
+ */
+xrx.xpath.Step.prototype.getAxis = function(ctx) {
+  return this.axis_;
+};
+
+
+
 /**
  * @override
  * @return {!xrx.xpath.NodeSet} The nodeset result.
@@ -238,6 +249,13 @@ xrx.xpath.Step.Axis_ = function(name, func, reverse, supportsQuickAttr) {
    */
   this.supportsQuickAttr_ = supportsQuickAttr;
 };
+
+
+
+xrx.xpath.Step.Axis_.prototype.getName = function() {
+  return this.name_;
+};
+
 
 
 /**

@@ -174,21 +174,6 @@ xrx.xml.Update.insertStartEndTag = function(instance, target1, target2, offset1,
 
 
 /**
- * Removes characters from a not-tag token.
- * 
- * @param {!xrx.mvc.Instance} instance The instance to be updated.
- * @param {!xrx.token.NotTag} target The token to be replaced.
- * @param {!integer} target The offset relative to the not-tag token.
- * @param {!integer} string The number of characters to be removed.
- * @return {integer} Number of characters removed or inserted.
- */
-xrx.xml.Update.reduceNotTag = function(instance, target, offset, length) {
-  return xrx.xml.Update.remove_(instance, target.offset() + offset, length);
-};
-
-
-
-/**
  * Removes an attribute token.
  * 
  * @param {!xrx.mvc.Instance} instance The instance to be updated.
