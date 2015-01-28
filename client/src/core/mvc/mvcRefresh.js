@@ -23,8 +23,7 @@ xrx.mvc.Refresh.refresh_ = function(control, binds, opt_test) {
   var test = opt_test || function() { return false; };
   for (var c in xrx.mvc.getViewComponents()) {
     component = xrx.mvc.getViewComponent(c);
-    if (component === control) {
-    } else if (test(component)) {
+    if (test(component)) {
     } else if (goog.array.contains(binds, component.getBindId())) {
       component.mvcRefresh();
     } else {}
@@ -101,7 +100,7 @@ xrx.mvc.Refresh.replaceAttrValue = function(control, node, binds) {
 
 xrx.mvc.Refresh.replaceNotTag = function(control, node, binds) {
   xrx.mvc.Refresh.refresh_(control, binds, function(component) {
-    var n = component.getNode(0);
+    var n = component.getNode();
     return false;
   });
 };

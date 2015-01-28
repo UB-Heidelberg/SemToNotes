@@ -10,6 +10,9 @@ goog.require('goog.dom.forms');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.node');
+goog.require('xrx.token');
+goog.require('xrx.token.NotTag');
 
 
 
@@ -30,8 +33,13 @@ xrx.html5.Input.prototype.createDom = function() {
 
 xrx.html5.Input.prototype.mvcRefresh = function() {
   var node = this.getNode();
-  var xml = node ? node.getStringValue() : undefined;
-  if (xml) goog.dom.forms.setValue(this.element_, xml);
+  if (node) {
+    goog.dom.forms.setValue(this.element_, node.getStringValue());
+    goog.dom.forms.setDisabled(this.element_, false);
+  } else {
+    goog.dom.forms.setValue(this.element_, '');
+    goog.dom.forms.setDisabled(this.element_, true);
+  }
 };
 
 

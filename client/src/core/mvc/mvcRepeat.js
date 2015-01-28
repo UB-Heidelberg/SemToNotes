@@ -60,11 +60,6 @@ xrx.mvc.Repeat.prototype.createItems_ = function() {
       new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
   var n = 1;
   var item;
-  while(this.getNode(n)) {
-    item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
-    this.nextItems_.push(item);
-    n++;
-  }
   if (!this.getNode(0)) {
     goog.array.forEach(this.firstElements_, function(elmnt) {
       goog.style.setStyle(elmnt, 'display', 'none');
@@ -73,6 +68,11 @@ xrx.mvc.Repeat.prototype.createItems_ = function() {
     goog.array.forEach(this.firstElements_, function(elmnt) {
       goog.style.setStyle(elmnt, 'display', '');
     }, this);
+  }
+  while(this.getNode(n)) {
+    item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
+    this.nextItems_.push(item);
+    n++;
   }
 };
 
@@ -103,6 +103,7 @@ xrx.mvc.Repeat.prototype.mvcRefresh = function() {
   this.removeItems_();
   this.createItems_();
   xrx.mvc.Mvc.install(this.element_);
+  goog.style.setStyle(this.element_, 'display', 'block');
 };
 
 

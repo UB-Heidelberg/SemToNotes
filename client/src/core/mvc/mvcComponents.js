@@ -31,7 +31,7 @@ goog.require('xrx.mvc.Submission');
 goog.require('xrx.mvc.Target');
 goog.require('xrx.mvc.Update');
 goog.require('xrx.mvc.User');
-goog.require('xrx.mvc.Update');
+goog.require('xrx.mvc.While');
 
 
 
@@ -63,6 +63,7 @@ xrx.mvc.Components['xrx-remove'] = xrx.mvc.Remove;
 xrx.mvc.Components['xrx-send'] = xrx.mvc.Send;
 xrx.mvc.Components['xrx-script'] = xrx.mvc.Script;
 xrx.mvc.Components['xrx-update'] = xrx.mvc.Update;
+xrx.mvc.Components['xrx-while'] = xrx.mvc.While;
 
 
 

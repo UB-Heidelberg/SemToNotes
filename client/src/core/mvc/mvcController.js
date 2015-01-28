@@ -35,6 +35,14 @@ xrx.mvc.Controller.updateNode = function(control, opt_node, update) {
   case xrx.node.TEXT:
     xrx.mvc.Controller.replaceNotTag(control, node, token, update);
     break;
+  case xrx.node.ELEMENT:
+    if (token.type() === xrx.token.EMPTY_TAG) return;
+    var label = token.label().clone();
+    if (token.type() === xrx.token.START_TAG) label.push(0);
+    var notTag = new xrx.token.NotTag(label);
+    notTag = pilot.notTag(token, notTag);
+    xrx.mvc.Controller.replaceNotTag(control, node, notTag, update);
+    break;
   default:
     throw Error('Value update not supported for this node-type.');
     break;

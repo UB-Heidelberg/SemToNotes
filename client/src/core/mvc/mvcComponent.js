@@ -118,7 +118,7 @@ xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
 /**
  * Returns the unique ID of this component. If the instance
  * doesn't already have an ID generate one on the fly.
- * @return {string} Unique component ID.
+ * @return {string} Unique ID.
  */
 xrx.mvc.Component.prototype.getId = function() {
   if (!this.id_) {
