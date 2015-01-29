@@ -17,7 +17,7 @@ goog.require('xrx.xpath');
  */
 xrx.mvc.Bind = function(element) {
 
-  this.node_ = [];
+  this.result_;
 
   goog.base(this, element);
 };
@@ -30,7 +30,7 @@ xrx.mvc.Bind.prototype.createDom = function() {};
 
 
 xrx.mvc.Bind.prototype.getNodes = function() {
-  return this.node_;
+  return this.result_.getNodes();
 };
 
 
@@ -39,7 +39,16 @@ xrx.mvc.Bind.prototype.getNodes = function() {
  *
  */
 xrx.mvc.Bind.prototype.getNode = function(num) {
-  return this.node_[num];
+  return this.result_.getNode(num);
+};
+
+
+
+/**
+ *
+ */
+xrx.mvc.Bind.prototype.getStringValue = function() {
+  return this.result_.stringValue;
 };
 
 
@@ -58,10 +67,5 @@ xrx.mvc.Bind.prototype.mvcRemove = function() {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRecalculate = function() {
-  var result = this.xpath_.evaluate(undefined, xrx.xpath.XPathResultType.ANY_TYPE);
-  this.node_ = [];
-  var node;
-  while(node = result.iterateNext()) {
-    this.node_.push(node);
-  };
+  this.result_ = this.xpath_.evaluate(undefined, xrx.xpath.XPathResultType.ANY_TYPE);
 };

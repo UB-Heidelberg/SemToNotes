@@ -35,21 +35,7 @@ xrx.mvc.Calculate.prototype.getResultAsBoolean = function() {
   } else {
     return result.snapshotLength > 0;
   }
-};
-
-
-
-xrx.mvc.Calculate.prototype.getValue = function() {
-  var result = this.getResult();
-  if (result.stringValue) {
-    return result.stringValue;
-  } else if (result.numberValue) {
-    return result.numberValue.toString();
-  } else if (result.booleanValue) {
-    return result.booleanValue.toString();
-  } else {
-    return result.snapshotLength > 0;
-  }
+  return false;
 };
 
 

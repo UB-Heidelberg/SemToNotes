@@ -220,6 +220,20 @@ xrx.xpath.XPathResult = function(value, type) {
     }
     return (index >= nodes.length) ? null : nodes[index++];
   };
+  this['getNode'] = function(i) {
+    if (type != xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE &&
+        type != xrx.xpath.XPathResultType.ORDERED_NODE_ITERATOR_TYPE) {
+      throw Error('getNode called with wrong result type');
+    }
+    return (i >= nodes.length || i < 0) ? null : nodes[i];
+  };
+  this['getNodes'] = function(i) {
+    if (type != xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE &&
+        type != xrx.xpath.XPathResultType.ORDERED_NODE_ITERATOR_TYPE) {
+      throw Error('getNodes called with wrong result type');
+    }
+    return nodes;
+  };
   this['snapshotItem'] = function(i) {
     if (type != xrx.xpath.XPathResultType.UNORDERED_NODE_SNAPSHOT_TYPE &&
         type != xrx.xpath.XPathResultType.ORDERED_NODE_SNAPSHOT_TYPE) {

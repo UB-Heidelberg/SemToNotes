@@ -55,8 +55,9 @@ xrx.mvc.Component.prototype.getXpath = function() {
 
 
 xrx.mvc.Component.prototype.compileXpath = function() {
+  var debug = false;
   var ref = this.getDataset('xrxRef');
-  if (ref) this.xpath_ = new xrx.mvc.Xpath(ref);
+  if (ref) this.xpath_ = new xrx.mvc.Xpath(ref, debug);
 };
 
 
@@ -68,9 +69,7 @@ xrx.mvc.Component.prototype.addComponent = function() {
 
 
 /**
- * Function is called by the model-view-controller when the component
- * is initialized the first time. Each component must implement this
- * abstract function.
+ * 
  */
 xrx.mvc.Component.prototype.createDom = goog.abstractMethod;
 
@@ -232,6 +231,16 @@ xrx.mvc.Component.prototype.getNodeWithBind = function(num, opt_dataset) {
 
 
 /**
+ * Returns the value held by the component by means of a bind expression.
+ * @return {String} The string value.
+ */
+xrx.mvc.Component.prototype.getStringValueWithBind = function(num, opt_dataset) {
+  return this.getBind(opt_dataset).getStringValue();
+};
+
+
+
+/**
  * Returns the node held by the component by means of a repeat component
  * and a ref expression.
  * @return {xrx.node.Node} The node.
@@ -304,8 +313,12 @@ xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
  * @return {string} The string-value.
  */
 xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
-  return this.getResult_(0, xrx.xpath.XPathResultType.STRING_TYPE,
-      opt_dataset).stringValue;
+  if (this.getBind(opt_dataset)) {
+    return this.getStringValueWithBind(opt_dataset);
+  } else {
+    return this.getResult_(0, xrx.xpath.XPathResultType.STRING_TYPE,
+        opt_dataset).stringValue;
+  }
 };
 
 

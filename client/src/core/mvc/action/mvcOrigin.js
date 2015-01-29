@@ -10,6 +10,9 @@ goog.require('xrx.mvc.Component');
 
 
 
+/**
+ * @constructor
+ */
 xrx.mvc.Origin = function(element) {
 
   goog.base(this, element);

@@ -29,7 +29,9 @@ goog.require('xrx.xpath.Step');
  * @param {!string} An XPath expression in string-form.
  * @constructor
  */
-xrx.mvc.Xpath = function(expression) {
+xrx.mvc.Xpath = function(expression, opt_debug) {
+
+  this.debug_ = opt_debug;
 
   this.expression_ = xrx.xpath.compile(expression);
 
@@ -147,6 +149,10 @@ xrx.mvc.Xpath.prototype.functionCall_ = function(expr) {
     }
     break;
   default:
+    var a = expr.getArgs();
+    for (var i = 0, len = a.length; i < len; i++) {
+      this.analyse_(a[i]);
+    };
     break;
   }
 };

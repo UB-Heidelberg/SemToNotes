@@ -97,9 +97,7 @@ xrx.mvc.Recalculate.replaceAttrValue = function(instance) {
 
 xrx.mvc.Recalculate.replaceNotTag = function(instance) {
   return xrx.mvc.Recalculate.recalculate_(instance, function(control) {
-    //TODO: is not true! Since e.g. HTML5 input controls can reference an element but update a text node.
-    //return !control.getXpath().hasNotTag();
-    return false;
+    return !control.getXpath().hasNotTag();
   });
 };
 
