@@ -48,7 +48,13 @@ xrx.mvc.Bind.prototype.getNode = function(num) {
  *
  */
 xrx.mvc.Bind.prototype.getStringValue = function() {
-  return this.result_.stringValue;
+  if (this.result_.stringValue) {
+    return this.result_.stringValue;
+  } else if (this.result_.booleanValue) {
+    this.result_.booleanValue.toString();
+  } else {
+    return this.result_.iterateNext().getStringValue();
+  }
 };
 
 
@@ -67,5 +73,6 @@ xrx.mvc.Bind.prototype.mvcRemove = function() {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRecalculate = function() {
-  this.result_ = this.xpath_.evaluate(undefined, xrx.xpath.XPathResultType.ANY_TYPE);
+  this.result_ = this.xpath_.evaluate(undefined,
+      xrx.xpath.XPathResultType.ANY_TYPE);
 };
