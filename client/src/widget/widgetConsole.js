@@ -25,7 +25,7 @@ xrx.widget.Console = function(element) {
 
   this.tabSize_ = 2;
 
-  this.maxLines_ = 50;
+  this.maxLines_ = 500;
 
   goog.base(this, element);
 };
@@ -63,7 +63,7 @@ xrx.widget.Console.prototype.mvcRemove = function() {
  *
  */
 xrx.widget.Console.prototype.mvcRefresh = function() {
-  var node = this.getNode();
+  var node = this.getResult().getNode(0);
   var type = node ? node.getType() : undefined;
   if (!node) {
     goog.dom.setTextContent(this.element_, '');

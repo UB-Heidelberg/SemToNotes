@@ -29,32 +29,8 @@ xrx.mvc.Bind.prototype.createDom = function() {};
 
 
 
-xrx.mvc.Bind.prototype.getNodes = function() {
-  return this.result_.getNodes();
-};
-
-
-
-/**
- *
- */
-xrx.mvc.Bind.prototype.getNode = function(num) {
-  return this.result_.getNode(num);
-};
-
-
-
-/**
- *
- */
-xrx.mvc.Bind.prototype.getStringValue = function() {
-  if (this.result_.stringValue) {
-    return this.result_.stringValue;
-  } else if (this.result_.booleanValue) {
-    this.result_.booleanValue.toString();
-  } else {
-    return this.result_.iterateNext().getStringValue();
-  }
+xrx.mvc.Bind.prototype.getResult = function() {
+  return this.result_;
 };
 
 
@@ -63,7 +39,7 @@ xrx.mvc.Bind.prototype.getStringValue = function() {
  * @override
  */
 xrx.mvc.Bind.prototype.mvcRemove = function() {
-  this.node_ = [];
+  this.result_ = null;
 };
 
 

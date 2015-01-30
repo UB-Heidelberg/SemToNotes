@@ -44,7 +44,7 @@ xrx.mvc.Submission.prototype.createDom = function() {
 
 xrx.mvc.Submission.prototype.getResponseBody = function() {
   var self = this;
-  var xml = this.getNode().getXml();
+  var xml = this.getResult().getNode(0).getXml();
   var path = goog.array.peek(this.getDataset('xrxResource').split('/'));
   var response = goog.json.serialize({
     'path': path,

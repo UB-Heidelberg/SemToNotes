@@ -43,6 +43,27 @@ xrx.xpath.FilterExpr = function(primary, predicates) {
 goog.inherits(xrx.xpath.FilterExpr, xrx.xpath.Expr);
 
 
+
+/**
+ * Returns the primary expression of this filter expression.
+ * @return {?xrx.xpath.Expr} The primary expression.
+ */
+xrx.xpath.FilterExpr.prototype.getPrimary = function() {
+  return this.primary_;
+};
+
+
+
+/**
+ * Returns the predicate expressions of this filter expression.
+ * @return {Array.<xrx.xpath.Expr>} The primary expressions.
+ */
+xrx.xpath.FilterExpr.prototype.getPredicates = function() {
+  return this.predicates_;
+};
+
+
+
 /**
  * @override
  * @return {!xrx.xpath.NodeSet} The nodeset result.

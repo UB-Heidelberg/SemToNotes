@@ -55,7 +55,7 @@ xrx.mvc.Component.prototype.getXpath = function() {
 
 
 xrx.mvc.Component.prototype.compileXpath = function() {
-  var debug = false;
+  var debug = this.element_.id == 'btargetNarrower';
   var ref = this.getDataset('xrxRef');
   if (ref) this.xpath_ = new xrx.mvc.Xpath(ref, debug);
 };
@@ -98,6 +98,7 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 /**
  *
+ * @return {String} The dataset value.
  */
 xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
   var element = opt_element || this.element_;
@@ -107,6 +108,25 @@ xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
     shortened = key.replace(/^xrx/, '');
     shortened = shortened.charAt(0).toLowerCase() + shortened.slice(1);
     return goog.dom.dataset.get(element, shortened);
+  } else {
+    return standard;
+  }
+};
+
+
+
+/**
+ * Whether the component has a specific dataset.
+ * @return {boolean} Whether the dataset exists.
+ */
+xrx.mvc.Component.prototype.hasDataset = function(key, opt_element) {
+  var element = opt_element || this.element_;
+  var shortened;
+  var standard = goog.dom.dataset.has(element, key);
+  if (!standard) {
+    shortened = key.replace(/^xrx/, '');
+    shortened = shortened.charAt(0).toLowerCase() + shortened.slice(1);
+    return goog.dom.dataset.has(element, shortened);
   } else {
     return standard;
   }
@@ -210,32 +230,14 @@ xrx.mvc.Component.prototype.getSrcUri = function(opt_dataset) {
 
 
 /**
- * Returns the bind component referenced by the component.
+ * Returns the bind referenced by the component.
  * @return {xrx.mvc.Bind} The bind component.
  */
 xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
-  return xrx.mvc.getModelComponent(this.getBindId(opt_dataset));
-};
-
-
-
-/**
- * Returns the n'th node held by the component by means of a
- * bind expression.
- * @return {xrx.node.Node} The node.
- */
-xrx.mvc.Component.prototype.getNodeWithBind = function(num, opt_dataset) {
-  return this.getBind(opt_dataset).getNode(num);
-};
-
-
-
-/**
- * Returns the value held by the component by means of a bind expression.
- * @return {String} The string value.
- */
-xrx.mvc.Component.prototype.getStringValueWithBind = function(num, opt_dataset) {
-  return this.getBind(opt_dataset).getStringValue();
+  var id = this.getBindId(opt_dataset);
+  var bind = xrx.mvc.getModelComponent(id);
+  if (!bind) throw Error('Bind ' + id + ' does not exist.');
+  return bind;
 };
 
 
@@ -245,79 +247,26 @@ xrx.mvc.Component.prototype.getStringValueWithBind = function(num, opt_dataset) 
  * and a ref expression.
  * @return {xrx.node.Node} The node.
  */
-xrx.mvc.Component.prototype.getResultWithRefAndRepeat = function(type, opt_dataset, opt_context) {
+xrx.mvc.Component.prototype.getResultByRef_ = function() {
   var repeat = this.getRepeat();
-  var context = repeat.getNode(this.getRepeatIndex());
-  if (!context) return;
+  var context = repeat.getResult().getNode(this.getRepeatIndex());
+  if (!context) return new xrx.xpath.XPathResult();
   // TODO: Node conversion function
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  return this.xpath_.evaluate(nodeS, type);
+  return this.xpath_.evaluate(nodeS);
 };
 
 
 
 /**
- * Returns the node held by the component by means of a context node
- * and a ref expression.
- * @return {xrx.node.Node} The node.
+ * Returns the result of the components ref or bind expression.
+ * @return {!xrx.xpath.XPathResult} The result.
  */
-xrx.mvc.Component.prototype.getResultWithRefAndContext = function(type, opt_dataset, opt_context) {
-  var context = this.getContext();
-  if (!context) return;
-  // TODO: Node conversion function
-  var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  return this.xpath_.evaluate(nodeS, type);
-};
-
-
-
-/**
- * @private
- */
-xrx.mvc.Component.prototype.getResult_ = function(num, type, opt_dataset) {
-  var result;
-  var n = num || 0;
-  if (this.hasContext()) {
-    result = this.getResultWithRefAndContext(type, opt_dataset, this.getContext());
-  } else if (this.getRefExpression(opt_dataset)) {
-    result = this.getResultWithRefAndRepeat(type, opt_dataset);
+xrx.mvc.Component.prototype.getResult = function() {
+  if (this.hasDataset('xrxBind')) {
+    return this.getBind().getResult();
   } else {
-    throw Error('A component must define a data-xrx-bind or a data-xrx-ref ' +
-        'attribute.');
-  }
-  return result;
-};
-
-
-
-/**
- * Returns the node referenced by the component.
- * @return {xrx.node.Node} The node.
- */
-xrx.mvc.Component.prototype.getNode = function(num, opt_dataset) {
-  var n = num || 0;
-  var result;
-  if (this.getBind(opt_dataset)) {
-    return this.getNodeWithBind(n, opt_dataset)
-  } else {
-    result = this.getResult_(n, xrx.xpath.XPathResultType.ANY_TYPE,
-        opt_dataset);
-    return result ? result.iterateNext() : undefined;
-  }
-};
-
-
-
-/**
- * Returns the string-value referenced by the component.
- * @return {string} The string-value.
- */
-xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
-  if (this.getBind(opt_dataset)) {
-    return this.getStringValueWithBind(opt_dataset);
-  } else {
-    return this.getResult_(0, xrx.xpath.XPathResultType.STRING_TYPE,
-        opt_dataset).stringValue;
+    return this.getResultByRef_();
   }
 };
 
@@ -329,7 +278,7 @@ xrx.mvc.Component.prototype.getValue = function(opt_dataset) {
 xrx.mvc.Component.prototype.isVoidElement_ = function() {
   var voidElements = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr',
       'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
-      /* not void but special */ 'select', 'textarea'];
+      /* not void, but editable content */ 'select', 'textarea'];
   var tagName = this.element_.tagName.toLowerCase();
   return goog.array.contains(voidElements, tagName);
 };

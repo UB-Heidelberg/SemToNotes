@@ -78,7 +78,7 @@ function test01InsertNode() {
 
   var insertNode = function(comp, expected) {
     var cons = xrx.mvc.getComponent('c' + testId + comp);
-    var node = cons.getNode();
+    var node = cons.getResult().getNode(0);
     xrx.mvc.Controller.insertNode(cons, node, newNode);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
   };
@@ -95,7 +95,7 @@ function test02RemoveEmptyTag() {
 
   var removeEmptyTag = function(comp, expected) {
     var cons = xrx.mvc.getComponent('c' + testId + comp);
-    var node = cons.getNode();
+    var node = cons.getResult().getNode(0);
     var token = node.getToken();
     xrx.mvc.Controller.removeEmptyTag(cons, node, token);
     assertEquals(expected, xrx.mvc.getComponent('i' + testId + '1').xml());
@@ -121,7 +121,7 @@ function test03InsertEmptyTag() {
 
   var insertEmptyTag = function(comp, expected) {
     var cons = xrx.mvc.getComponent('c' + testId + comp);
-    var node = cons.getNode();
+    var node = cons.getResult().getNode(0);
     var pilot = node.getInstance().getPilot();
     var notTag = new xrx.token.NotTag(node.getToken().label().clone());
     notTag = pilot.notTag(node.getToken(), notTag);

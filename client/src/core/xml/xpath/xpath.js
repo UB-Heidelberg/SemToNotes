@@ -153,11 +153,13 @@ xrx.xpath.XPathExpression = function(expr) {
  *
  * @constructor
  * @extends {XPathResult}
- * @param {(!xrx.xpath.NodeSet|number|string|boolean)} value The result value.
- * @param {number} type The result type.
+ * @param {(!xrx.xpath.NodeSet|number|string|boolean)} opt_value The result value.
+ * @param {number} opt_type The result type.
  * @private
  */
-xrx.xpath.XPathResult = function(value, type) {
+xrx.xpath.XPathResult = function(opt_value, opt_type) {
+  var value = opt_value || new xrx.xpath.NodeSet();
+  var type = opt_type || xrx.xpath.XPathResultType.ANY_TYPE;
   if (type == xrx.xpath.XPathResultType.ANY_TYPE) {
     if (value instanceof xrx.xpath.NodeSet) {
       type = xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE;
@@ -245,6 +247,113 @@ xrx.xpath.XPathResult = function(value, type) {
 
 
 
+/**
+ * Casts the XPath result as a boolean value.
+ * @return {boolean} The boolean result.
+ */
+xrx.xpath.XPathResult.prototype.castAsBoolean = function() {
+  switch(this.resultType) {
+  case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+    return this.booleanValue;
+    break;
+  case xrx.xpath.XPathResultType.STRING_TYPE:
+    return !!this.stringValue;
+    break;
+  case xrx.xpath.XPathResultType.NUMBER_TYPE:
+    return !!this.numberValue;
+    break;
+  case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
+    return this.getNodes().length > 0;
+    break;
+  default:
+    break;
+  };
+};
+
+
+
+/**
+ * Casts the XPath result as an array of nodes.
+ * @return {Array.<xrx.node.Node>|boolean} The node array.
+ */
+xrx.xpath.XPathResult.prototype.castAsNode = function() {
+  switch(this.resultType) {
+  case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
+    return this.getNodes();
+    break;
+  case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+    return this.getNodes().length > 0;
+    break;
+  case xrx.xpath.XPathResultType.STRING_TYPE:
+    throw Error('Cannot cast string into a nodeset.');
+    break;
+  case xrx.xpath.XPathResultType.NUMBER_TYPE:
+    throw Error('Cannot cast number into a nodeset.');
+    break;
+  default:
+    break;
+  };
+};
+
+
+
+/**
+ * Casts the XPath result as an array of nodes.
+ * @return {Array.<xrx.node.Node>|boolean} The node array.
+ */
+xrx.xpath.XPathResult.prototype.castAsNumber = function() {
+  switch(this.resultType) {
+  case xrx.xpath.XPathResultType.NUMBER_TYPE:
+    return this.numberValue;
+    break;
+  case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+    return Number(this.booleanValue);
+    break;
+  case xrx.xpath.XPathResultType.STRING_TYPE:
+    var num = parseFloat(this.stringValue);
+    if (num === NaN) throw Error('Cannot cast string ' + num + ' into a number.');
+    return num;
+    break;
+  case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
+    throw Error('Cannot cast nodeset into a number.');
+    break;
+  default:
+    break;
+  };
+};
+
+
+
+/**
+ * Casts the XPath result as a string.
+ * @return {String} The string.
+ */
+xrx.xpath.XPathResult.prototype.castAsString = function() {
+  switch(this.resultType) {
+  case xrx.xpath.XPathResultType.STRING_TYPE:
+    return this.stringValue;
+    break;
+  case xrx.xpath.XPathResultType.NUMBER_TYPE:
+    return this.numberValue.toString();
+    break;
+  case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+    return this.booleanValue.toString();
+    break;
+  case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
+    var nodes = this.getNodes();
+    var str = '';
+    for(var i = 0, len = nodes.length; i < len; i++) {
+      str += nodes[i].getValueAsString();
+    };
+    return str;
+    break;
+  default:
+    break;
+  };
+};
+
+
+
 xrx.xpath.evaluate = function(expr, context, nsResolver, type, result) {
   return new xrx.xpath.XPathExpression(expr, nsResolver).
       evaluate(context, type);
@@ -254,6 +363,7 @@ xrx.xpath.evaluate = function(expr, context, nsResolver, type, result) {
 xrx.xpath.compile = function(expression) {
   return new xrx.xpath.XPathExpression(expression);
 };
+
 
 
 xrx.xpath.evaluateCompiled = function(compiledExpr, context, type) {

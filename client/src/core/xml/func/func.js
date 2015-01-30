@@ -24,7 +24,7 @@ xrx.func = {
       function(ctx, expr) {
         var nodeset = new xrx.xpath.NodeSet();
         var bindId = expr.evaluate(ctx);
-        var nodes = xrx.mvc.getModelComponent(bindId).getNodes();
+        var nodes = xrx.mvc.getModelComponent(bindId).getResult().getNodes();
         for (var i = 0; i < nodes.length; i++) {
           nodeset.add(nodes[i]);
         }

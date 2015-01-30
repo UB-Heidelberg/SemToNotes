@@ -60,7 +60,7 @@ xrx.mvc.Repeat.prototype.createItems_ = function() {
       new xrx.mvc.RepeatItem(this, this.firstElements_, 0);
   var n = 1;
   var item;
-  if (!this.getNode(0)) {
+  if (!this.getResult().getNode(0)) {
     goog.array.forEach(this.firstElements_, function(elmnt) {
       goog.style.setStyle(elmnt, 'display', 'none');
     }, this);
@@ -69,7 +69,7 @@ xrx.mvc.Repeat.prototype.createItems_ = function() {
       goog.style.setStyle(elmnt, 'display', '');
     }, this);
   }
-  while(this.getNode(n)) {
+  while(this.getResult().getNode(n)) {
     item = new xrx.mvc.RepeatItem(this, this.firstItem_.getClonedElements(), n);
     this.nextItems_.push(item);
     n++;

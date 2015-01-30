@@ -4,6 +4,8 @@
 
 goog.provide('xrx.xpath.UnionExpr');
 
+
+
 goog.require('goog.array');
 goog.require('xrx.xpath.DataType');
 goog.require('xrx.xpath.Expr');
@@ -35,6 +37,17 @@ xrx.xpath.UnionExpr = function(paths) {
 goog.inherits(xrx.xpath.UnionExpr, xrx.xpath.Expr);
 
 
+
+/**
+ * Returns the path expressions of this union expression.
+ * @return {Array.<xrx.xpath.PathExpr>} The path expressions.
+ */
+xrx.xpath.UnionExpr.prototype.getPaths = function() {
+  return this.paths_;
+};
+
+
+
 /**
  * @override
  * @return {!xrx.xpath.NodeSet} The nodeset result.
@@ -50,6 +63,7 @@ xrx.xpath.UnionExpr.prototype.evaluate = function(ctx) {
   });
   return nodeset;
 };
+
 
 
 /**

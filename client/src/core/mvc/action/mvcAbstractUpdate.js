@@ -26,21 +26,21 @@ goog.inherits(xrx.mvc.AbstractUpdate, xrx.mvc.AbstractAction);
 
 xrx.mvc.AbstractUpdate.prototype.getTargetAsNode = function() {
   var element = goog.dom.getElementByClass('xrx-target', this.element_);
-  return xrx.mvc.getComponent(element.id).getNode(0);
+  return xrx.mvc.getComponent(element.id).getResult().getNode(0);
 };
 
 
 
 xrx.mvc.AbstractUpdate.prototype.getOriginAsNode = function() {
   var element = goog.dom.getElementByClass('xrx-origin', this.element_);
-  return xrx.mvc.getComponent(element.id).getNode(0);
+  return xrx.mvc.getComponent(element.id).getResult().getNode(0);
 };
 
 
 
 xrx.mvc.AbstractUpdate.prototype.getOriginAsString = function() {
   var element = goog.dom.getElementByClass('xrx-origin', this.element_);
-  return xrx.mvc.getComponent(element.id).getValue();
+  return xrx.mvc.getComponent(element.id).getResult().castAsString();
 };
 
 

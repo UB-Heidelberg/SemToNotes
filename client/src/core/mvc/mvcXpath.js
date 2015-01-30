@@ -50,7 +50,7 @@ xrx.mvc.Xpath = function(expression, opt_debug) {
 
 /**
  * Returns the compiled XPath expression.
- * @return {xrx.xpath.XPathExpression}
+ * @return {xrx.xpath.XPathExpression} The expression.
  */
 xrx.mvc.Xpath.prototype.getExpression = function() {
   return this.expression_;
@@ -65,7 +65,8 @@ xrx.mvc.Xpath.prototype.getExpression = function() {
  * @return {xrx.xpath.XPathResult} The XPath result.
  */
 xrx.mvc.Xpath.prototype.evaluate = function(opt_context, opt_type) {
-  return xrx.xpath.evaluateCompiled(this.expression_, opt_context, opt_type);
+  var type = opt_type || xrx.xpath.XPathResultType.ANY_TYPE;
+  return xrx.xpath.evaluateCompiled(this.expression_, opt_context, type);
 };
 
 
@@ -125,6 +126,12 @@ xrx.mvc.Xpath.prototype.binaryExpr_ = function(expr) {
  * @private
  */
 xrx.mvc.Xpath.prototype.filterExpr_ = function(expr) {
+  var primary = expr.getPrimary();
+  var predicates = expr.getPredicates();
+  if (primary) this.analyse_(primary);
+  for(var i = 0, len = predicates.length; i < len; i++) {
+    this.analyse_(predicates[i]);
+  }
 };
 
 
@@ -242,6 +249,20 @@ xrx.mvc.Xpath.prototype.literal_ = function(expr) {
 
 
 /**
+ * Analyses an XPath union expression.
+ * @param {!xrx.xpath.Union} The expression.
+ * @private
+ */
+xrx.mvc.Xpath.prototype.unionExpr_ = function(expr) {
+  var paths = expr.getPaths();
+  for (var i = 0, len = paths.length; i < len; i++) {
+    this.analyse_(paths[i]);
+  }
+};
+
+
+
+/**
  * Analyses an XPath expression.
  * @param {!xrx.xpath.Expr} The expression.
  * @private
@@ -267,6 +288,8 @@ xrx.mvc.Xpath.prototype.analyse_ = function(expr) {
     this.number_(expr);
   } else if (expr instanceof xrx.xpath.Literal) {
     this.literal_(expr);
+  } else if (expr instanceof xrx.xpath.UnionExpr) {
+    this.unionExpr_(expr);
   } else if (expr instanceof xrx.xpath.PathExpr.ContextHelperExpr) {
     // do nothing
   } else {

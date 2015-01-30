@@ -34,7 +34,6 @@ xrx.widget.Output.prototype.mvcRemove = function() {
 
 
 xrx.widget.Output.prototype.mvcRefresh = function() {
-  var node = this.getNode(0);
-  var value = node ? node.getStringValue() : '';
+  var value = this.getResult().castAsString();
   goog.dom.setTextContent(this.getElement(), value);
 };

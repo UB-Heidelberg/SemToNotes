@@ -31,7 +31,7 @@ xrx.html5.Select.prototype.createDom = function() {
 
 xrx.html5.Select.prototype.mvcRefresh = function() {
   var value;
-  var node = this.getNode();
+  var node = this.getResult().getNode(0);
   var optgroup = xrx.mvc.getModelComponent(this.getDataset('xrxOptgroup'));
   node ? value = node.getValueAsString() : node = null;
   var i = 0;
@@ -53,6 +53,6 @@ xrx.html5.Select.prototype.mvcRemove = function() {
 
 
 xrx.html5.Select.prototype.mvcModelUpdateData = function() {
-  xrx.mvc.Controller.updateNode(this, this.getNode(),
+  xrx.mvc.Controller.updateNode(this, this.getResult().getNode(0),
       goog.dom.forms.getValue(this.element_));
 };

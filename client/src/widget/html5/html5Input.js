@@ -32,7 +32,7 @@ xrx.html5.Input.prototype.createDom = function() {
 
 
 xrx.html5.Input.prototype.mvcRefresh = function() {
-  var node = this.getNode();
+  var node = this.getResult().getNode(0);
   if (node) {
     goog.dom.forms.setValue(this.element_, node.getStringValue());
     goog.dom.forms.setDisabled(this.element_, false);
@@ -51,6 +51,6 @@ xrx.html5.Input.prototype.mvcRemove = function() {
 
 
 xrx.html5.Input.prototype.mvcModelUpdateData = function() {
-  xrx.mvc.Controller.updateNode(this, this.getNode(),
+  xrx.mvc.Controller.updateNode(this, this.getResult().getNode(0),
       goog.dom.forms.getValue(this.element_));
 };

@@ -48,7 +48,7 @@ xrx.mvc.Optgroup.prototype.mvcRecalculate = function() {
   var option;
   var i = 0;
   this.options_ = [];
-  while(node = this.getNode(i)) {
+  while(node = this.getResult().getNode(i)) {
     value = xrx.xpath.evaluate(this.valueExpr_, node, null,
         xrx.xpath.XPathResultType.STRING_TYPE).stringValue;
     label = xrx.xpath.evaluate(this.labelExpr_, node, null,

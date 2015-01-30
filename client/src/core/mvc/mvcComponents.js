@@ -13,6 +13,7 @@ goog.require('xrx.mvc.Calculate');
 goog.require('xrx.mvc.ClassesAdd');
 goog.require('xrx.mvc.ClassesRemove');
 goog.require('xrx.mvc.Dispatch');
+goog.require('xrx.mvc.Hide');
 goog.require('xrx.mvc.Insert');
 goog.require('xrx.mvc.Instance');
 goog.require('xrx.mvc.InstanceGithub');
@@ -24,6 +25,7 @@ goog.require('xrx.mvc.Password');
 goog.require('xrx.mvc.Remove');
 goog.require('xrx.mvc.Repeat');
 goog.require('xrx.mvc.Script');
+goog.require('xrx.mvc.Show');
 goog.require('xrx.mvc.Send');
 goog.require('xrx.mvc.Signin');
 goog.require('xrx.mvc.Signout');
@@ -44,9 +46,11 @@ xrx.mvc.Components = {};
  */
 xrx.mvc.Components['xrx-namespace'] = xrx.mvc.Namespace;
 xrx.mvc.Components['xrx-bind'] = xrx.mvc.Bind;
+xrx.mvc.Components['xrx-hide'] = xrx.mvc.Hide;
 xrx.mvc.Components['xrx-optgroup'] = xrx.mvc.Optgroup;
-xrx.mvc.Components['xrx-submission'] = xrx.mvc.Submission;
 xrx.mvc.Components['xrx-repeat'] = xrx.mvc.Repeat;
+xrx.mvc.Components['xrx-show'] = xrx.mvc.Show;
+xrx.mvc.Components['xrx-submission'] = xrx.mvc.Submission;
 
 
 

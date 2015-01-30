@@ -23,7 +23,7 @@ xrx.mvc.Controller = function() {};
 
 
 xrx.mvc.Controller.updateNode = function(control, opt_node, update) {
-  var node = opt_node || control.getNode();
+  var node = opt_node || control.getResult().getNode(0);
   var token = node.getToken();
   var pilot = node.getInstance().getPilot();
   switch(node.getType()) {
@@ -52,7 +52,7 @@ xrx.mvc.Controller.updateNode = function(control, opt_node, update) {
 
 
 xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
-  var node = opt_node || control.getNode();
+  var node = opt_node || control.getResult().getNode(0);
   var pilot = node.getInstance().getPilot();
   var token = node.getToken();
   switch(token.type()) {
@@ -75,7 +75,7 @@ xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
 
 
 xrx.mvc.Controller.removeNode = function(control, opt_node) {
-  var node = opt_node || control.getNode();
+  var node = opt_node || control.getResult().getNode(0);
   var pilot = node.getInstance().getPilot();
   var token = node.getToken();
   switch(token.type()) {
@@ -125,7 +125,7 @@ xrx.mvc.Controller.insertMixed = function() {
 
 
 xrx.mvc.Controller.insertNotTag = function(control, token, offset, update) {
-  var node = control.getNode();
+  var node = control.getResult().getNode(0);
   var tok = token || node.getToken();
   var diff = xrx.xml.Update.insertNotTag(node.getInstance(), tok, offset, update);
   xrx.index.Rebuild.insertNotTag(node.getInstance().getIndex(), tok, diff);
@@ -172,7 +172,7 @@ xrx.mvc.Controller.removeMixed = function() {
 
 
 xrx.mvc.Controller.removeStartEndTag = function(control, token1, token2) {
-  var node = control.getNode();
+  var node = control.getResult().getNode(0);
   var diff = xrx.xml.Update.removeStartEndTag(node.getInstance(), token1, token2);
   xrx.index.Rebuild.removeStartEndTag(node.getInstance().getIndex(), token1, diff);
   var binds = xrx.mvc.Recalculate.removeStartEndTag(node.getInstance().getId());
@@ -197,6 +197,7 @@ xrx.mvc.Controller.replaceNotTag = function(control, node, token, update) {
   var diff = xrx.xml.Update.replaceNotTag(instance, token, update);
   xrx.index.Rebuild.replaceNotTag(instance.getIndex(), token, diff);
   var binds = xrx.mvc.Recalculate.replaceNotTag(node.getInstance().getId());
+  console.log(binds);
   xrx.mvc.Refresh.replaceNotTag(control, node, binds);
 };
 
