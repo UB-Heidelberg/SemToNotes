@@ -34,17 +34,12 @@ xrx.mvc.Component = function(element, uidl) {
 
   this.uidl = uidl;
 
-  goog.base(this);
-
-  this.validate();
-
   this.addComponent();
 
   this.compileXpath();
 
   this.createDom();
 };
-goog.inherits(xrx.mvc.Component, xrx.mvc.Validate);
 
 
 
@@ -56,7 +51,7 @@ xrx.mvc.Component.prototype.getXpath = function() {
 
 xrx.mvc.Component.prototype.compileXpath = function() {
   var debug = this.element_.id == 'btargetNarrower';
-  var ref = this.getDataset('xrxRef');
+  var ref = this.getRefExpression();
   if (ref) this.xpath_ = new xrx.mvc.Xpath(ref, debug);
 };
 

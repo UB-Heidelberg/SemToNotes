@@ -16,7 +16,7 @@
 </script>
 <link rel="stylesheet" type="text/css" href="../../../res/xrx.css">
 <style>
-.xrx-widget-canvas-toolbar {
+.xrx-canvas-toolbar {
 position: absolute;
 left: 2px;
 top: 2px;
@@ -57,25 +57,25 @@ word-wrap: break-word;
 <div id="b9" class="xrx-bind" data-xrx-ref="xrx:instance('i2')"></div>
 
 <!-- HTML UIDL -->
-<div id="d1" class="xrx-widget-canvas">
-  <div class="xrx-widget-canvas-background-image" data-xrx-bind="b1"></div>
-  <div class="xrx-widget-canvas-toolbar">
-    <span class="xrx-widget-canvas-toolbar-item-view xrx-icon-openhand32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-zoom-in xrx-icon-zoomIn32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-zoom-out xrx-icon-zoomOut32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapePolygon32"
+<div id="d1" class="xrx-canvas">
+  <div class="xrx-canvas-background-image" data-xrx-bind="b1"></div>
+  <div class="xrx-canvas-toolbar">
+    <span class="xrx-canvas-toolbar-item-view xrx-icon-openhand32"></span>
+    <span class="xrx-canvas-toolbar-item-zoom-in xrx-icon-zoomIn32"></span>
+    <span class="xrx-canvas-toolbar-item-zoom-out xrx-icon-zoomOut32"></span>
+    <span class="xrx-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
+    <span class="xrx-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
+    <span class="xrx-canvas-toolbar-item-create xrx-icon-shapePolygon32"
         title="Draw a black polygon." data-xrx-graphics-name="my-black-polygons"></span>
-    <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapeRect32"
+    <span class="xrx-canvas-toolbar-item-create xrx-icon-shapeRect32"
         title="Draw a black rectangle." data-xrx-graphics-name="my-black-rectangles"></span>
-    <span class="xrx-widget-canvas-toolbar-item-create xrx-icon-shapeRect32"
+    <span class="xrx-canvas-toolbar-item-create xrx-icon-shapeRect32"
         title="Draw a red rectangle." data-xrx-graphics-name="my-red-rectangles"></span>
-    <span class="xrx-widget-canvas-toolbar-item-modify xrx-icon-move32"></span>
-    <span class="xrx-widget-canvas-toolbar-item-delete xrx-icon-delete32"></span>
+    <span class="xrx-canvas-toolbar-item-modify xrx-icon-move32"></span>
+    <span class="xrx-canvas-toolbar-item-delete xrx-icon-delete32"></span>
   </div>
-  <div class="xrx-widget-canvas-graphics">
-    <div class="xrx-widget-canvas-group" data-xrx-graphics-name="my-black-polygons">
+  <div class="xrx-canvas-graphics">
+    <div class="xrx-canvas-group" data-xrx-graphics-name="my-black-polygons">
       <div id="r1" class="xrx-repeat" data-xrx-bind="b2">
         <div class="xrx-widget-shape-polygon" data-xrx-ref="./self::*"
             data-xrx-ref-coords="./@points"></div>
@@ -85,13 +85,13 @@ word-wrap: break-word;
         <div class="xrx-insert" data-xrx-origin="b6" data-xrx-target="b0"></div>
       </div>
     </div>
-    <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-black-rectangles">
+    <div class="xrx-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-black-rectangles">
       <div class="xrx-repeat" data-xrx-bind="b3"> 
-        <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*"
+        <div class="xrx-shape-rect" data-xrx-ref="./self::*"
             data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
             data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
       </div>
-      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b7"
+      <div class="xrx-shape-rect-create" data-xrx-bind="b7"
             data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
             data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
       </div>
@@ -99,13 +99,13 @@ word-wrap: break-word;
         <div class="xrx-insert" data-xrx-origin="b7" data-xrx-target="b0"></div>
       </div>
     </div>
-    <div class="xrx-widget-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-red-rectangles">
+    <div class="xrx-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-red-rectangles">
       <div class="xrx-repeat" data-xrx-bind="b4">
-        <div class="xrx-widget-shape-rect" data-xrx-ref="./self::*"
+        <div class="xrx-shape-rect" data-xrx-ref="./self::*"
             data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
             data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
       </div>
-      <div class="xrx-widget-shape-rect-create" data-xrx-bind="b8"
+      <div class="xrx-shape-rect-create" data-xrx-bind="b8"
             data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
             data-xrx-ref-width="./@width" data-xrx-ref-height="./@height">
       </div>

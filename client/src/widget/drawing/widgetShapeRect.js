@@ -50,7 +50,7 @@ xrx.widget.ShapeRect = function(element, drawing) {
   this.rectBottom_;
 };
 goog.inherits(xrx.widget.ShapeRect, xrx.widget.Shape);
-xrx.mvc.registerComponent('xrx-widget-shape-rect', xrx.widget.ShapeRect);
+xrx.mvc.registerComponent('xrx-shape-rect', xrx.widget.ShapeRect);
 
 
 
@@ -171,7 +171,7 @@ xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
 
 
 xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
-  if (!this.getNode()) return;
+  if (!this.getResult().getNode(0)) return;
   if (this.rectX_)      this.rectX_.refresh();
   if (this.rectY_)      this.rectY_.refresh();
   if (this.rectWidth_)  this.rectWidth_.refresh();
@@ -212,14 +212,14 @@ xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
 
 xrx.widget.ShapeRect.prototype.initCoordComponents = function() {
   // get datasets
-  var x      = goog.dom.dataset.get(this.element_, 'xrxRefX');
-  var y      = goog.dom.dataset.get(this.element_, 'xrxRefY');
-  var width  = goog.dom.dataset.get(this.element_, 'xrxRefWidth');
-  var height = goog.dom.dataset.get(this.element_, 'xrxRefHeight');
-  var left   = goog.dom.dataset.get(this.element_, 'xrxRefLeft');
-  var top    = goog.dom.dataset.get(this.element_, 'xrxRefTop');
-  var right  = goog.dom.dataset.get(this.element_, 'xrxRefRight');
-  var bottom = goog.dom.dataset.get(this.element_, 'xrxRefBottom');
+  var x      = this.getDataset('xrxRefX');
+  var y      = this.getDataset('xrxRefY');
+  var width  = this.getDataset('xrxRefWidth');
+  var height = this.getDataset('xrxRefHeight');
+  var left   = this.getDataset('xrxRefLeft');
+  var top    = this.getDataset('xrxRefTop');
+  var right  = this.getDataset('xrxRefRight');
+  var bottom = this.getDataset('xrxRefBottom');
   // initialize coordinate components
   if (x)      this.rectX_      = new xrx.widget.ShapeRectX(this, x);
   if (y)      this.rectY_      = new xrx.widget.ShapeRectY(this, y);
@@ -238,7 +238,8 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   var drawing = this.getDrawing();
   if (!drawing.getEngine().isAvailable()) return;
   this.shape_ = xrx.shape.Rect.create(drawing);
-  if (this.getNode()) drawing.getLayerShape().addShapes(this.shape_);
+  console.log('TEST');
+  if (this.getResult().getNode(0)) drawing.getLayerShape().addShapes(this.shape_);
   // handle value changed
   this.shape_.handleValueChanged = function() {
     self.mvcModelUpdateData();
@@ -264,6 +265,10 @@ xrx.widget.ShapeRectGeometry = function(rect, dataset) {
   goog.base(this, rect.getElement());
 };
 goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.createDom = function() {};
 
 
 
@@ -294,7 +299,7 @@ goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectX.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setX(point);
 };
@@ -303,7 +308,7 @@ xrx.widget.ShapeRectX.prototype.refresh = function() {
 
 xrx.widget.ShapeRectX.prototype.modelUpdateData = function() {
   var x = this.rect_.getX().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), x.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), x.toString());
 };
 
 
@@ -320,7 +325,7 @@ goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectY.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setY(point);
 };
@@ -329,7 +334,7 @@ xrx.widget.ShapeRectY.prototype.refresh = function() {
 
 xrx.widget.ShapeRectY.prototype.modelUpdateData = function() {
   var y = this.rect_.getY().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), y.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), y.toString());
 };
 
 
@@ -346,7 +351,7 @@ goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectWidth.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setWidth(point);
 };
@@ -355,7 +360,7 @@ xrx.widget.ShapeRectWidth.prototype.refresh = function() {
 
 xrx.widget.ShapeRectWidth.prototype.modelUpdateData = function() {
   var width = this.rect_.getWidth().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), width.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), width.toString());
 };
 
 
@@ -372,7 +377,7 @@ goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectHeight.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setHeight(point);
 };
@@ -381,7 +386,7 @@ xrx.widget.ShapeRectHeight.prototype.refresh = function() {
 
 xrx.widget.ShapeRectHeight.prototype.modelUpdateData = function() {
   var height = this.rect_.getHeight().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), height.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), height.toString());
 };
 
 
@@ -398,7 +403,7 @@ goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectLeft.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setLeft(point);
 };
@@ -407,7 +412,7 @@ xrx.widget.ShapeRectLeft.prototype.refresh = function() {
 
 xrx.widget.ShapeRectLeft.prototype.modelUpdateData = function() {
   var left = this.rect_.getLeft().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), left.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), left.toString());
 };
 
 
@@ -424,7 +429,7 @@ goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectTop.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setTop(point);
 };
@@ -433,7 +438,7 @@ xrx.widget.ShapeRectTop.prototype.refresh = function() {
 
 xrx.widget.ShapeRectTop.prototype.modelUpdateData = function() {
   var top = this.rect_.getTop().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), top.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), top.toString());
 };
 
 
@@ -450,7 +455,7 @@ goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectRight.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setRight(point);
 };
@@ -459,7 +464,7 @@ xrx.widget.ShapeRectRight.prototype.refresh = function() {
 
 xrx.widget.ShapeRectRight.prototype.modelUpdateData = function() {
   var right = this.rect_.getRight().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), right.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), right.toString());
 };
 
 
@@ -476,7 +481,7 @@ goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectBottom.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().castAsString();
   var point = parseFloat(str);
   this.rect_.setBottom(point);
 };
@@ -485,7 +490,7 @@ xrx.widget.ShapeRectBottom.prototype.refresh = function() {
 
 xrx.widget.ShapeRectBottom.prototype.modelUpdateData = function() {
   var bottom = this.rect_.getBottom().toFixed(1);
-  xrx.mvc.Controller.updateNode(this.rect_, this.getNode(), bottom.toString());
+  xrx.mvc.Controller.updateNode(this.rect_, this.getResult().getNode(0), bottom.toString());
 };
 
 
@@ -516,7 +521,7 @@ xrx.widget.ShapeRectCreate = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.ShapeRectCreate, xrx.widget.ShapeRect);
-xrx.mvc.registerComponent('xrx-widget-shape-rect-create', xrx.widget.ShapeRectCreate);
+xrx.mvc.registerComponent('xrx-shape-rect-create', xrx.widget.ShapeRectCreate);
 
 
 
@@ -546,7 +551,7 @@ xrx.widget.ShapeRectInsert = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.ShapeRectInsert, xrx.mvc.ComponentView);
-xrx.mvc.registerComponent('xrx-widget-shape-rect-insert', xrx.widget.ShapeRectInsert);
+xrx.mvc.registerComponent('xrx-shape-rect-insert', xrx.widget.ShapeRectInsert);
 
 
 

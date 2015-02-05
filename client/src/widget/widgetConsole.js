@@ -7,11 +7,9 @@ goog.provide('xrx.widget.Console');
 
 
 goog.require('goog.dom.DomHelper');
-goog.require('goog.string');
-goog.require('goog.style');
+goog.require('xrx.node');
 goog.require('xrx.xml.Indent');
 goog.require('xrx.xml.Serialize');
-goog.require('xrx.token.Tokens');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Cursor');

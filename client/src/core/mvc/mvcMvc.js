@@ -14,6 +14,7 @@ goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
 goog.require('goog.json');
 goog.require('goog.labs.net.xhr');
+goog.require('goog.string');
 goog.require('goog.style');
 goog.require('goog.ui.IdGenerator');
 goog.require('goog.Promise');
@@ -47,8 +48,9 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
     elements = goog.dom.getElementsByClass(key, opt_context);
     for (var i = 0; i < elements.length; i++) {
       goog.dom.isNodeList(elements) ? element = elements.item(i) : element = elements[i];
-      if (!element.id || element.id === '') element.id =
-          xrx.mvc.Mvc.idGenerator.getNextUniqueId();
+      if (!element.id || element.id === '') {
+        element.id = xrx.mvc.Mvc.idGenerator.getNextUniqueId();
+      };
       if (!xrx.mvc.hasComponent(element.id)) new xrx.mvc.Components[key](element);
     }
   });
@@ -62,10 +64,9 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
 xrx.mvc.Mvc.installInstances_ = function(opt_context, opt_callback) {
   var self = this;
   var elements1 = goog.dom.getElementsByClass('xrx-instance', opt_context);
-  var elements2 = goog.dom.getElementsByClass('xrx-mvc-instance', opt_context);
-  var elements3 = goog.dom.getElementsByClass('xrx-github', opt_context);
+  var elements2 = goog.dom.getElementsByClass('xrx-github', opt_context);
   var elements = goog.array.concat(goog.array.toArray(elements1),
-      goog.array.toArray(elements2), goog.array.toArray(elements3));
+      goog.array.toArray(elements2));
   var requests = [];
   var instances = [];
 
@@ -91,7 +92,7 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context, opt_callback) {
     goog.array.forEach(requests, function(result, num) {
       if (goog.dom.classes.has(instances[num].getElement(), 'xrx-github')) {
         var json = goog.json.parse(result.result_);
-        var str = goog.crypt.base64.decodeString(json.content);
+        var str = decodeURIComponent(escape(goog.crypt.base64.decodeString(json.content)));
         instances[num].setData(new String(str));
         instances[num].setSha(json.sha);
       } else {

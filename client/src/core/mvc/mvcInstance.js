@@ -13,6 +13,7 @@ goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.json');
 goog.require('goog.net.XhrIo');
+goog.require('goog.string');
 goog.require('goog.Uri');
 goog.require('xrx.index.Index');
 goog.require('xrx.mvc.ComponentModel');
@@ -28,7 +29,7 @@ goog.require('xrx.xml.Indent');
 /**
  * @constructor
  */
-xrx.mvc.Instance = function(element) { 
+xrx.mvc.Instance = function(element) {
 
   this.xml_;
 
@@ -36,17 +37,17 @@ xrx.mvc.Instance = function(element) {
 
   this.pilot_;
 
-  goog.base(this, element/*, new xrx.mvc.Uidl('span',
-    'xrx-instance',
-    [['dataset', 'src'], ['dataset', 'xrxSrc'], ['text', true]]
-  )*/);
+  goog.base(this, element);
 
-  this.document_ = new xrx.node.DocumentB(this.getId());
+  this.document_ = new xrx.node.DocumentB(this.getId());;
 };
 goog.inherits(xrx.mvc.Instance, xrx.mvc.ComponentModel);
 
 
 
+/**
+ * @override
+ */
 xrx.mvc.Instance.prototype.createDom = function() {};
 
 
@@ -87,8 +88,10 @@ xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
  */
 xrx.mvc.Instance.prototype.getDataInline = function() {
   var parse = new xrx.xml.Parser();
-
-  this.xml_ = parse.normalize(goog.dom.getRawTextContent(this.getElement()));
+  var wrapper = goog.dom.getElementByClass('xrx-document', this.element_);
+  var child = goog.dom.getChildren(wrapper)[0];
+  var stringifiedHtml = goog.dom.getOuterHtml(child);
+  this.xml_ = parse.normalize(stringifiedHtml);
   this.stream_ = new xrx.xml.Stream(this.xml_);
   this.pilot_ = new xrx.xml.Pilot(this.xml_);
 };
@@ -115,7 +118,14 @@ xrx.mvc.Instance.prototype.mvcRecalculate = function() {};
  * @override
  */
 xrx.mvc.Instance.prototype.setData = function(xml) {
-  this.getSrcUri() ? this.getDataRemote(xml) : this.getDataInline();
+  if (this.getSrcUri()) {
+    this.getDataRemote(xml)
+  } else if (goog.dom.getElementByClass('xrx-document', this.element_)) {
+    this.getDataInline();
+  } else {
+    console.error(this.element_);
+    throw Error('Ressource attribute or child element .xrx-document expected.');
+  }
 };
 
 
@@ -229,7 +239,7 @@ xrx.mvc.InstanceGithub.prototype.save = function() {
   var responseBody = {
     'path': srcUri,
     'message': 'SKOS test data updated.',
-    'content': goog.crypt.base64.encodeString(xrx.xml.Indent.forward(self.xml_, 2)),
+    'content': goog.crypt.base64.encodeString(goog.string.decodeUrl(xrx.xml.Indent.forward(self.xml_, 2))),
     'sha': self.sha_,
     'branch': 'master'
   };

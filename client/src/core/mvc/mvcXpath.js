@@ -21,6 +21,7 @@ goog.require('xrx.xpath.Number');
 goog.require('xrx.xpath.PathExpr');
 goog.require('xrx.xpath.Predicates');
 goog.require('xrx.xpath.Step');
+goog.require('xrx.xpath.UnionExpr');
 
 
 

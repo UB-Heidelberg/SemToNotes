@@ -49,7 +49,7 @@ xrx.mvc.Submission.prototype.getResponseBody = function() {
   var response = goog.json.serialize({
     'path': path,
     'message': 'Data updated by <' + location.href + '>.',
-    'content': goog.crypt.base64.encodeString(xrx.xml.Indent.forward(xml, 2)),
+    'content': goog.crypt.base64.encodeString(unescape(encodeURIComponent(xrx.xml.Indent.forward(xml, 2)))),
     'sha': self.sha_,
   });
   return response;

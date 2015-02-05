@@ -34,7 +34,7 @@ xrx.mvc.registerComponent('xrx-widget-shape-polygon', xrx.widget.ShapePolygon);
 
 
 xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
-  if (!this.getNode()) return;
+  if (!this.getResult().getNode(0)) return;
   this.shapePolygonCoords_.refresh();
   this.getDrawing().draw();
 };
@@ -55,7 +55,7 @@ xrx.widget.ShapePolygon.prototype.mvcModelUpdateData = function() {
 
 
 xrx.widget.ShapePolygon.prototype.mvcModelDeleteData = function() {
-  xrx.mvc.Controller.removeNode(this, this.getNode());
+  xrx.mvc.Controller.removeNode(this, this.getResult().getNode(0));
 };
 
 
@@ -65,7 +65,7 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   var drawing = this.getDrawing();
   if (!drawing.getEngine().isAvailable()) return;
   this.shape_ = xrx.shape.Polygon.create(drawing);
-  if (this.getNode()) drawing.getLayerShape().addShapes(this.shape_);
+  if (this.getResult().getNode(0)) drawing.getLayerShape().addShapes(this.shape_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {
@@ -102,13 +102,13 @@ xrx.widget.ShapePolygonCoords.prototype.getContext = function() {
  * @override
  */
 xrx.widget.ShapePolygonCoords.prototype.getRefExpression = function() {
-  return goog.dom.dataset.get(this.element_, 'xrxRefCoords');
+  return this.getDataset('xrxRefCoords');
 };
 
 
 
 xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
-  var str = this.getNode().getStringValue();
+  var str = this.getResult().getNode(0).getStringValue();
   var coords = this.polygon_.parseCoords(str);
   this.polygon_.getShape().setCoords(coords);
 };
@@ -116,7 +116,7 @@ xrx.widget.ShapePolygonCoords.prototype.refresh = function() {
 
 
 xrx.widget.ShapePolygonCoords.prototype.modelUpdateData = function(coords) {
-  xrx.mvc.Controller.updateNode(this.polygon_, this.getNode(),
+  xrx.mvc.Controller.updateNode(this.polygon_, this.getResult().getNode(0),
       this.polygon_.serializeCoords(this.polygon_.getShape().getCoords()));
 };
 

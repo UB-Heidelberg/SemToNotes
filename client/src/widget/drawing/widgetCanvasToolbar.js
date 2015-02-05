@@ -24,12 +24,12 @@ xrx.widget.CanvasToolbar = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbar, xrx.mvc.ComponentView);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar', xrx.widget.CanvasToolbar);
+xrx.mvc.registerComponent('xrx-canvas-toolbar', xrx.widget.CanvasToolbar);
 
 
 
 xrx.widget.CanvasToolbar.prototype.getCanvas = function() {
-  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
+  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
   var canvasComponent = xrx.mvc.getComponent(canvasDiv.id);
   return canvasComponent ? canvasComponent : new xrx.widget.Canvas(canvasDiv);
 };

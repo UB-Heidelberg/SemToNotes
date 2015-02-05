@@ -197,7 +197,6 @@ xrx.mvc.Controller.replaceNotTag = function(control, node, token, update) {
   var diff = xrx.xml.Update.replaceNotTag(instance, token, update);
   xrx.index.Rebuild.replaceNotTag(instance.getIndex(), token, diff);
   var binds = xrx.mvc.Recalculate.replaceNotTag(node.getInstance().getId());
-  console.log(binds);
   xrx.mvc.Refresh.replaceNotTag(control, node, binds);
 };
 

@@ -158,8 +158,10 @@ xrx.xpath.XPathExpression = function(expr) {
  * @private
  */
 xrx.xpath.XPathResult = function(opt_value, opt_type) {
-  var value = opt_value || new xrx.xpath.NodeSet();
-  var type = opt_type || xrx.xpath.XPathResultType.ANY_TYPE;
+  var value;
+  var type;
+  opt_value === undefined ? value = new xrx.xpath.NodeSet() : value = opt_value;
+  opt_type === undefined ? type = xrx.xpath.XPathResultType.ANY_TYPE : type = opt_type;
   if (type == xrx.xpath.XPathResultType.ANY_TYPE) {
     if (value instanceof xrx.xpath.NodeSet) {
       type = xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE;
@@ -248,7 +250,35 @@ xrx.xpath.XPathResult = function(opt_value, opt_type) {
 
 
 /**
- * Casts the XPath result as a boolean value.
+ *
+ */
+xrx.xpath.XPathResult.prototype.castAsSelf = function() {
+  switch(this.resultType) {
+  case xrx.xpath.XPathResultType.BOOLEAN_TYPE:
+    return this.booleanValue;
+    break;
+  case xrx.xpath.XPathResultType.STRING_TYPE:
+    return this.stringValue;
+    break;
+  case xrx.xpath.XPathResultType.NUMBER_TYPE:
+    return this.numberValue;
+    break;
+  case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
+    var nodeset = new xrx.xpath.NodeSet();
+    for(var i = 0, len = this.getNodes().length; i < len; i++) {
+      nodeset.add(this.getNode(i));
+    }
+    return nodeset;
+    break;
+  default:
+    break;
+  };
+};
+
+
+
+/**
+ * Cast the XPath result as a boolean value.
  * @return {boolean} The boolean result.
  */
 xrx.xpath.XPathResult.prototype.castAsBoolean = function() {
@@ -273,7 +303,7 @@ xrx.xpath.XPathResult.prototype.castAsBoolean = function() {
 
 
 /**
- * Casts the XPath result as an array of nodes.
+ * Cast the XPath result as an array of nodes.
  * @return {Array.<xrx.node.Node>|boolean} The node array.
  */
 xrx.xpath.XPathResult.prototype.castAsNode = function() {
@@ -298,7 +328,7 @@ xrx.xpath.XPathResult.prototype.castAsNode = function() {
 
 
 /**
- * Casts the XPath result as an array of nodes.
+ * Cast the XPath result as an array of nodes.
  * @return {Array.<xrx.node.Node>|boolean} The node array.
  */
 xrx.xpath.XPathResult.prototype.castAsNumber = function() {
@@ -325,7 +355,7 @@ xrx.xpath.XPathResult.prototype.castAsNumber = function() {
 
 
 /**
- * Casts the XPath result as a string.
+ * Cast the XPath result as a string.
  * @return {String} The string.
  */
 xrx.xpath.XPathResult.prototype.castAsString = function() {

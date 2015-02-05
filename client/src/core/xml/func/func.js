@@ -22,13 +22,8 @@ xrx.func = {
   BIND: xrx.xpath.FunctionCall.createFunc('xrx:bind',
       xrx.xpath.DataType.NODESET, true, true, true,
       function(ctx, expr) {
-        var nodeset = new xrx.xpath.NodeSet();
         var bindId = expr.evaluate(ctx);
-        var nodes = xrx.mvc.getModelComponent(bindId).getResult().getNodes();
-        for (var i = 0; i < nodes.length; i++) {
-          nodeset.add(nodes[i]);
-        }
-        return nodeset;
+        return xrx.mvc.getModelComponent(bindId).getResult().castAsSelf();
       }, 1, 1),
   INDEX: xrx.xpath.FunctionCall.createFunc('xrx:index',
       xrx.xpath.DataType.NUMBER, true, true, true,

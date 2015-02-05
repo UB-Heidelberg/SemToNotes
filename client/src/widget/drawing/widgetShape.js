@@ -6,6 +6,8 @@ goog.provide('xrx.widget.Shape');
 
 
 
+goog.require('goog.dom.DomHelper');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.widget.Canvas');
 
@@ -27,7 +29,7 @@ goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 
 
 xrx.widget.Shape.prototype.findDrawing_ = function() {
-  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas');
+  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
   var canvasComponent = xrx.mvc.getViewComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
   this.drawing_ = canvasComponent.getDrawing();
   return this.drawing_;
@@ -36,7 +38,7 @@ xrx.widget.Shape.prototype.findDrawing_ = function() {
 
 
 xrx.widget.Shape.prototype.getDrawing = function() {
-  return this.drawing_ ||  this.findDrawing_();
+  return this.drawing_ || this.findDrawing_();
 };
 
 

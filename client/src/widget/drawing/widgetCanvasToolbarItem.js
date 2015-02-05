@@ -36,7 +36,7 @@ goog.inherits(xrx.widget.CanvasToolbarItem, xrx.mvc.ComponentView);
 
 
 xrx.widget.CanvasToolbarItem.prototype.getToolbar = function() {
-  var toolbarDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-widget-canvas-toolbar');
+  var toolbarDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas-toolbar');
   var toolbarComponent = xrx.mvc.getComponent(toolbarDiv.id);
   return toolbarComponent ? toolbarComponent : new xrx.widget.CanvasToolbar(toolbarDiv);
 };
@@ -142,7 +142,7 @@ xrx.widget.CanvasToolbarItemView = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemView, xrx.widget.CanvasToolbarToggleItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-view', xrx.widget.CanvasToolbarItemView);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-view', xrx.widget.CanvasToolbarItemView);
 
 
 
@@ -170,7 +170,7 @@ xrx.widget.CanvasToolbarItemZoomIn = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemZoomIn, xrx.widget.CanvasToolbarClickItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-zoom-in', xrx.widget.CanvasToolbarItemZoomIn);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-zoom-in', xrx.widget.CanvasToolbarItemZoomIn);
 
 
 
@@ -197,7 +197,7 @@ xrx.widget.CanvasToolbarItemZoomOut = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemZoomOut, xrx.widget.CanvasToolbarClickItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-zoom-out', xrx.widget.CanvasToolbarItemZoomOut);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-zoom-out', xrx.widget.CanvasToolbarItemZoomOut);
 
 
 
@@ -224,7 +224,7 @@ xrx.widget.CanvasToolbarItemRotateLeft = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemRotateLeft, xrx.widget.CanvasToolbarClickItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-rotate-left', xrx.widget.CanvasToolbarItemRotateLeft);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-rotate-left', xrx.widget.CanvasToolbarItemRotateLeft);
 
 
 
@@ -251,7 +251,7 @@ xrx.widget.CanvasToolbarItemRotateRight = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemRotateRight, xrx.widget.CanvasToolbarClickItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-rotate-right', xrx.widget.CanvasToolbarItemRotateRight);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-rotate-right', xrx.widget.CanvasToolbarItemRotateRight);
 
 
 
@@ -280,7 +280,7 @@ xrx.widget.CanvasToolbarItemCreate = function(element) {
   this.graphicsName_;
 };
 goog.inherits(xrx.widget.CanvasToolbarItemCreate, xrx.widget.CanvasToolbarToggleItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-create', xrx.widget.CanvasToolbarItemCreate);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-create', xrx.widget.CanvasToolbarItemCreate);
 
 
 
@@ -296,7 +296,7 @@ xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
 xrx.widget.CanvasToolbarItemCreate.prototype.createDom = function() {
   if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Draw.');
-  this.graphicsName_ = goog.dom.dataset.get(this.element_, 'xrxGraphicsName');
+  this.graphicsName_ = this.getDataset('xrxGraphicsName');
 };
 
 
@@ -309,7 +309,7 @@ xrx.widget.CanvasToolbarItemModify = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemModify, xrx.widget.CanvasToolbarToggleItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-modify', xrx.widget.CanvasToolbarItemModify);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-modify', xrx.widget.CanvasToolbarItemModify);
 
 
 
@@ -335,7 +335,7 @@ xrx.widget.CanvasToolbarItemDelete = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasToolbarItemDelete, xrx.widget.CanvasToolbarToggleItem);
-xrx.mvc.registerComponent('xrx-widget-canvas-toolbar-item-delete', xrx.widget.CanvasToolbarItemDelete);
+xrx.mvc.registerComponent('xrx-canvas-toolbar-item-delete', xrx.widget.CanvasToolbarItemDelete);
 
 
 
