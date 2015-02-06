@@ -265,12 +265,13 @@ xrx.drawing.Drawing.prototype.isValidBBox = function(bbox) {
 
 
 xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
+  var img = this.layer_[0].getImage().getImage();
+  if (img && img.src === url) return;
   var self = this;
   var imageLoader = new goog.net.ImageLoader();
   var tmpImage = goog.dom.createElement('img');
   tmpImage.id = '_tmp';
   tmpImage.src = url;
-
   goog.events.listen(imageLoader, goog.events.EventType.LOAD, function(e) {
     self.layer_[0].setImage(e.target);
     self.draw();

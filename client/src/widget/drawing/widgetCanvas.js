@@ -15,6 +15,7 @@ goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
 goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.mvc');
+goog.require('xrx.mvc.Component');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Controller');
 
@@ -31,11 +32,13 @@ xrx.widget.Canvas = function(element) {
 
   this.groups_ = [];
 
+  this.backgroundImage_;
+
   this.nameInsertShapeCreate_;
 
   goog.base(this, element);
 };
-goog.inherits(xrx.widget.Canvas, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.Canvas, xrx.mvc.Component);
 xrx.mvc.registerComponent('xrx-canvas', xrx.widget.Canvas);
 
 
@@ -46,13 +49,8 @@ xrx.widget.Canvas.prototype.getDrawing = function() {
 
 
 
-xrx.widget.Canvas.prototype.getNode = function() {
-  return undefined;
-};
-
-
-
-xrx.widget.Canvas.prototype.mvcRefresh = function() {
+xrx.widget.Canvas.prototype.getBackgroundImage = function() {
+  return this.backgroundImage_;
 };
 
 
@@ -111,6 +109,10 @@ xrx.widget.Canvas.prototype.createDom = function() {
   this.drawing_ = new xrx.drawing.Drawing(this.element_, datasetEngine);
   if (!this.drawing_.getEngine().isAvailable()) return;
   this.drawing_.setModeView();
+  // search for background image DIV
+  var backgroundImage = goog.dom.getElementByClass('xrx-canvas-background-image',
+      this.element_);
+  this.backgroundImage_ = new xrx.widget.CanvasBackgroundImage(backgroundImage, this);
   // search for graphics DIV
   this.graphics_ = goog.dom.getElementsByClass('xrx-canvas-graphics',
       this.element_)[0];
@@ -187,26 +189,74 @@ xrx.widget.CanvasGroup.prototype.getShapeInsert = function() {
 /**
  * @constructor
  */
-xrx.widget.CanvasBackgroundImage = function(element) {
+xrx.widget.CanvasBackgroundImage = function(element, canvas) {
 
-  this.canvas_;
+  this.canvas_ = canvas;
+
+  this.zoneLeft_ = 0;
+
+  this.zoneTop_ = 0;
+
+  this.zoneRight_ = 0;
+
+  this.zoneBottom_ = 0;
 
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.CanvasBackgroundImage, xrx.mvc.ComponentView);
-xrx.mvc.registerComponent('xrx-canvas-background-image', xrx.widget.CanvasBackgroundImage);
 
 
 
-xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
-  var url = this.getResult().castAsString();
-  var drawing = this.canvas_.getDrawing()
-  if (drawing.getEngine().isAvailable()) drawing.setBackgroundImage(url);
+xrx.widget.CanvasBackgroundImage.prototype.getZoneLeft = function() {
+  return this.zoneLeft_;
+};
+
+
+
+xrx.widget.CanvasBackgroundImage.prototype.getZoneTop = function() {
+  return this.zoneTop_;
+};
+
+
+
+xrx.widget.CanvasBackgroundImage.prototype.getZoneRight = function() {
+  return this.zoneRight_;
+};
+
+
+
+xrx.widget.CanvasBackgroundImage.prototype.getZoneBottom = function() {
+  return this.zoneBottom_;
 };
 
 
 
 xrx.widget.CanvasBackgroundImage.prototype.createDom = function() {
-  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
-  this.canvas_ = xrx.mvc.getViewComponent(canvasDiv.id);
+  var left = this.getDataset('xrxZoneLeft');
+  var top = this.getDataset('xrxZoneTop');
+  var right = this.getDataset('xrxZoneRight');
+  var bottom = this.getDataset('xrxZoneBottom');
+  if (left) this.zoneLeft_ = parseFloat(left);
+  if (top) this.zoneTop_ = parseFloat(top);
+  if (right) this.zoneRight_ = parseFloat(right);
+  if (bottom) this.zoneBottom_ = parseFloat(bottom);
+};
+
+
+
+xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
+  var url = this.getResult().castAsString();
+  var canvas = this.canvas_;
+  var drawing = this.canvas_.getDrawing();
+  if (drawing.getEngine().isAvailable()) {
+    drawing.setBackgroundImage(url, function() {
+      /*
+      var rects = goog.dom.getElementsByClass('xrx-shape', canvas.getElement());
+      goog.array.forEach(rects, function(r) {
+        xrx.mvc.getViewComponent(r.id).mvcRefresh();
+      });
+      */
+      canvas.getDrawing().draw();
+    });
+  };
 };

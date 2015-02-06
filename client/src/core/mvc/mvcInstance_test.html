@@ -20,13 +20,13 @@
 <body>
 
 <!-- REST -->
-<span id="i1" class="xrx-instance" data-xrx-src="../xml/data/hamlet.xml.txt"></span>
-<span id="i2" class="xrx-instance" data-xrx-src="../xml/data/hamlet.xml.txt"></span>
+<span id="i1" class="xrx-instance" data-resource="../xml/data/hamlet.xml.txt"></span>
+<span id="i2" class="xrx-instance" data-resource="../xml/data/hamlet.xml.txt"></span>
 <span id="i3" class="xrx-instance">&lt;dummy/&gt;</span>
 <span id="b1" class="xrx-bind" data-xrx-ref="xrx:instance('i1')"></span>
 
 <!-- GitHub -->
-<span id="igithub" class="xrx-github" data-xrx-src="https://api.github.com/repos/JochenGraf/eCodicology/contents/SKOS.test.rdf"></span>
+<span id="igithub" class="xrx-github" data-resource="https://api.github.com/repos/JochenGraf/eCodicology/contents/SKOS.test.rdf"></span>
 
 <script type="text/javascript">
 
@@ -51,7 +51,7 @@ function testUidl() {
   var uri = '../xml/data/hamlet.xml.txt';
 
   // VALID
-  /* dataset regular */ e = createComponent('span', undefined, 'xrx-instance', { 'xrxSrc': uri }, undefined);
+  /* dataset regular */ e = createComponent('span', undefined, 'xrx-instance', { 'xrxResource': uri }, undefined);
   assertNotThrows(function() { new xrx.mvc.Instance(e) });
   /* dataset short   */ e = createComponent('span', undefined, 'xrx-instance', { 'src': uri }, undefined);
   assertNotThrows(function() { new xrx.mvc.Instance(e) });

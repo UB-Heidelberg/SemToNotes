@@ -6,6 +6,7 @@ goog.provide('xrx.widget.Shape');
 
 
 
+goog.require('goog.dom.classes');
 goog.require('goog.dom.DomHelper');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
@@ -22,9 +23,20 @@ xrx.widget.Shape = function(element) {
 
   this.shape_;
 
+  this.unit_;
+
   goog.base(this, element);
+
+  goog.dom.classes.add(element, 'xrx-shape');
 };
 goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
+
+
+
+xrx.widget.Shape.prototype.getUnit = function() {
+  if (!this.unit_) this.unit_ = this.getDataset('xrxUnit');
+  return this.unit_;
+};
 
 
 

@@ -214,11 +214,11 @@ xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
 
 
 /**
- * Returns the source URI found in the component's data-xrx-src attribute.
+ * Returns the source URI found in the component's data-resource attribute.
  * @return {?string} The source URI.
  */
-xrx.mvc.Component.prototype.getSrcUri = function(opt_dataset) {
-  var dataset = opt_dataset || 'xrxSrc';
+xrx.mvc.Component.prototype.getResourceUri = function(opt_dataset) {
+  var dataset = opt_dataset || 'xrxResource';
   return this.getDataset(dataset);
 };
 
@@ -280,13 +280,14 @@ xrx.mvc.Component.prototype.isVoidElement_ = function() {
 
 
 
-xrx.mvc.Component.prototype.getParentComponent = function(className) {
-  var datasetFor = this.getDataset('xrxFor');
+xrx.mvc.Component.prototype.getParentComponent = function(className, opt_context) {
+  var context = opt_context || this.element_;
+  var datasetFor = this.getDataset('xrxFor', opt_context);
   var element;
   if (datasetFor) {
     element = goog.dom.getElement(datasetFor);
   } else {
-    element = goog.dom.getAncestorByClass(this.element_, className);
+    element = goog.dom.getAncestorByClass(context, className);
   }
   return element ? xrx.mvc.getComponent(element.id) : undefined;
 };

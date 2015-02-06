@@ -77,7 +77,7 @@ xrx.mvc.Mvc.installInstances_ = function(opt_context, opt_callback) {
     } else {
       instance = new xrx.mvc.InstanceRest(e);
     }
-    var srcUri = instance.getSrcUri();
+    var srcUri = instance.getResourceUri();
     if (srcUri) {
       requests.push(goog.labs.net.xhr.get(srcUri));
       instances.push(instance);

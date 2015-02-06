@@ -58,9 +58,9 @@ xrx.mvc.Instance.prototype.createDom = function() {};
 xrx.mvc.Instance.prototype.suidl = {
   'tagName': 'span',
   'className': 'xrx-instance',
-  'dataset': {'src': undefined, 'xrxSrc': undefined},
+  'dataset': {'src': undefined, 'xrxResource': undefined},
   'text': true,
-  'choice': [[['dataset']['src']], [['dataset']['xrxSrc']],
+  'choice': [[['dataset']['src']], [['dataset']['xrxResource']],
       [['text']]]
 };
 
@@ -118,7 +118,7 @@ xrx.mvc.Instance.prototype.mvcRecalculate = function() {};
  * @override
  */
 xrx.mvc.Instance.prototype.setData = function(xml) {
-  if (this.getSrcUri()) {
+  if (this.getResourceUri()) {
     this.getDataRemote(xml)
   } else if (goog.dom.getElementByClass('xrx-document', this.element_)) {
     this.getDataInline();
@@ -221,7 +221,7 @@ xrx.mvc.InstanceGithub.prototype.setSha = function(sha) {
 
 xrx.mvc.InstanceGithub.prototype.save = function() {
   var self = this;
-  var srcUri = this.getSrcUri()
+  var srcUri = this.getResourceUri()
   var xhr = new goog.net.XhrIo();
   var creds = goog.crypt.base64.encodeString('');
   xhr.headers.set('Authorization', 'Basic ' + creds);

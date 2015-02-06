@@ -345,7 +345,12 @@ xrx.xpath.XPathResult.prototype.castAsNumber = function() {
     return num;
     break;
   case xrx.xpath.XPathResultType.UNORDERED_NODE_ITERATOR_TYPE:
-    throw Error('Cannot cast nodeset into a number.');
+    var nodes = this.getNodes();
+    var str = '';
+    for(var i = 0, len = nodes.length; i < len; i++) {
+      str += nodes[i].getValueAsString();
+    };
+    return parseFloat(str);
     break;
   default:
     break;

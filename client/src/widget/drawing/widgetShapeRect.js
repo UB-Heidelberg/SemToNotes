@@ -238,7 +238,6 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
   var drawing = this.getDrawing();
   if (!drawing.getEngine().isAvailable()) return;
   this.shape_ = xrx.shape.Rect.create(drawing);
-  console.log('TEST');
   if (this.getResult().getNode(0)) drawing.getLayerShape().addShapes(this.shape_);
   // handle value changed
   this.shape_.handleValueChanged = function() {
@@ -262,6 +261,8 @@ xrx.widget.ShapeRectGeometry = function(rect, dataset) {
 
   this.dataset_ = dataset;
 
+  this.canvas_ = this.getParentComponent('xrx-canvas', this.rect_.getElement());
+
   goog.base(this, rect.getElement());
 };
 goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
@@ -273,7 +274,7 @@ xrx.widget.ShapeRectGeometry.prototype.createDom = function() {};
 
 
 xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
-  return this.rect_.getNode();
+  return this.rect_.getResult().getNode(0);
 };
 
 
@@ -283,6 +284,32 @@ xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
  */
 xrx.widget.ShapeRectGeometry.prototype.getRefExpression = function() {
   return this.dataset_;
+};
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.percentageToPixelHorizontal = function(zone) {
+  var unit = this.rect_.getUnit();
+  var point = this.getResult().castAsNumber();
+  if (unit !== 'percentage') {
+    return point + zone;
+  } else {
+    zone = zone * point / 100;
+    return this.rect_.getDrawing().getLayerBackground().getImage().getWidth() * point / 100 + zone;
+  }
+};
+
+
+
+xrx.widget.ShapeRectGeometry.prototype.percentageToPixelVertical = function(zone) {
+  var unit = this.rect_.getUnit();
+  var point = this.getResult().castAsNumber();
+  if (unit !== 'percentage') {
+    return point + zone;
+  } else {
+    zone = zone * point / 100;
+    return this.rect_.getDrawing().getLayerBackground().getImage().getHeight() * point / 100 + zone;
+  }
 };
 
 
@@ -299,9 +326,8 @@ goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectX.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setX(point);
+  this.rect_.setX(this.percentageToPixelHorizontal(
+      this.canvas_.getBackgroundImage().getZoneLeft()));
 };
 
 
@@ -325,9 +351,8 @@ goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectY.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setY(point);
+  this.rect_.setY(this.percentageToPixelVertical(
+      this.canvas_.getBackgroundImage().getZoneBottom()));
 };
 
 
@@ -351,9 +376,8 @@ goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectWidth.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setWidth(point);
+  this.rect_.setWidth(this.percentageToPixelHorizontal(
+      this.canvas_.getBackgroundImage().getZoneRight()));
 };
 
 
@@ -377,9 +401,8 @@ goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectHeight.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setHeight(point);
+  this.rect_.setHeight(this.percentageToPixelVertical(
+      this.canvas_.getBackgroundImage().getZoneBottom()));
 };
 
 
@@ -403,9 +426,8 @@ goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectLeft.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setLeft(point);
+  this.rect_.setLeft(this.percentageToPixelHorizontal(
+      this.canvas_.getBackgroundImage().getZoneLeft()));
 };
 
 
@@ -429,9 +451,8 @@ goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectTop.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setTop(point);
+  this.rect_.setTop(this.percentageToPixelVertical(
+      this.canvas_.getBackgroundImage().getZoneTop()));
 };
 
 
@@ -455,9 +476,8 @@ goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectRight.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setRight(point);
+  this.rect_.setRight(this.percentageToPixelHorizontal(
+      this.canvas_.getBackgroundImage().getZoneRight()));
 };
 
 
@@ -481,9 +501,8 @@ goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
 
 
 xrx.widget.ShapeRectBottom.prototype.refresh = function() {
-  var str = this.getResult().castAsString();
-  var point = parseFloat(str);
-  this.rect_.setBottom(point);
+  this.rect_.setBottom(this.percentageToPixelVertical(
+      this.canvas_.getBackgroundImage().getZoneBottom()));
 };
 
 
