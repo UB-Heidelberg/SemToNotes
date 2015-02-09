@@ -82,7 +82,7 @@ xrx.mvc.Repeat.prototype.removeItems_ = function() {
   var item;
   while (item = this.nextItems_.pop()) {
     item.removeDom();
-  }
+  };
 };
 
 

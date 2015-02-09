@@ -42,7 +42,7 @@ xrx.widget.Shape.prototype.getUnit = function() {
 
 xrx.widget.Shape.prototype.findDrawing_ = function() {
   var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
-  var canvasComponent = xrx.mvc.getViewComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
+  var canvasComponent = xrx.mvc.getComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
   this.drawing_ = canvasComponent.getDrawing();
   return this.drawing_;
 };

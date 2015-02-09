@@ -18,6 +18,9 @@ xrx.mvc.Recalculate.recalculate_ = function(instance, opt_test) {
     component = xrx.mvc.getModelComponent(c);
     if (!(component instanceof xrx.mvc.Bind) || !component.mvcRecalculate) {
     } else if (!component.getXpath().hasInstance(instance)) {
+    } else if (!component.getResult().snapshotItem) {
+      component.mvcRecalculate();
+      recalculated.push(component.getId());
     } else if (test(component)) {
     } else {
       component.mvcRecalculate();

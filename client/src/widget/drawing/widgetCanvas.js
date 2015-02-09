@@ -91,11 +91,18 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
 
 
 xrx.widget.Canvas.prototype.refresh = function() {
+  var self = this;
   var repeat;
   this.drawing_.getLayerShape().removeShapes();
   goog.array.forEach(this.groups_, function(e, i, a) {
     repeat = goog.dom.getChildren(e.getElement())[0];
-    xrx.mvc.getComponent(repeat.id).mvcRefresh();
+    //xrx.mvc.getComponent(repeat.id).mvcRefresh();
+    var shapes = goog.dom.getElementsByClass('xrx-shape', this.getElement());
+    goog.array.forEach(shapes, function(s) {
+      var c = xrx.mvc.getComponent(s.id);
+      if (!c) console.log(s);
+      if (c) c.mvcRefresh();
+    });
   });
   this.drawing_.draw();
 };
@@ -250,12 +257,12 @@ xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
   var drawing = this.canvas_.getDrawing();
   if (drawing.getEngine().isAvailable()) {
     drawing.setBackgroundImage(url, function() {
-      /*
-      var rects = goog.dom.getElementsByClass('xrx-shape', canvas.getElement());
-      goog.array.forEach(rects, function(r) {
-        xrx.mvc.getViewComponent(r.id).mvcRefresh();
+      var shapes = goog.dom.getElementsByClass('xrx-shape', canvas.getElement());
+      goog.array.forEach(shapes, function(s) {
+        var c = xrx.mvc.getViewComponent(s.id);
+        if (!c) console.log(s);
+        if (c) c.mvcRefresh();
       });
-      */
       canvas.getDrawing().draw();
     });
   };
