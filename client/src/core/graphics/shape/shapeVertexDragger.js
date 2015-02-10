@@ -127,7 +127,7 @@ xrx.shape.VertexDragger.prototype.setRadius = function(radius) {
  */
 xrx.shape.VertexDragger.create = function(drawing) {
   var dragger = new xrx.shape.VertexDragger(drawing);
-  dragger.setRadius(3);
+  dragger.setRadius(8);
   dragger.setStrokeColor('black');
   dragger.setStrokeWidth(1);
   dragger.setFillColor('white');

@@ -8,6 +8,7 @@ goog.provide('xrx.widget.Shape');
 
 goog.require('goog.dom.classes');
 goog.require('goog.dom.DomHelper');
+goog.require('goog.style');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.widget.Canvas');
@@ -19,6 +20,8 @@ goog.require('xrx.widget.Canvas');
  */
 xrx.widget.Shape = function(element) {
 
+  this.canvas_;
+
   this.drawing_;
 
   this.shape_;
@@ -28,35 +31,65 @@ xrx.widget.Shape = function(element) {
   goog.base(this, element);
 
   goog.dom.classes.add(element, 'xrx-shape');
+
+  this.init_();
 };
 goog.inherits(xrx.widget.Shape, xrx.mvc.ComponentView);
 
 
 
-xrx.widget.Shape.prototype.getUnit = function() {
-  if (!this.unit_) this.unit_ = this.getDataset('xrxUnit');
-  return this.unit_;
+xrx.widget.Shape.prototype.initModifiable_ = function() {
+  var modifiable;
+  var dataset = this.getDataset('xrxModifiable');
+  dataset === 'false' ? modifiable = false : modifiable = true;
+  if (this.shape_.setModifiable) this.shape_.setModifiable(modifiable);
 };
 
 
 
-xrx.widget.Shape.prototype.findDrawing_ = function() {
-  var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
-  var canvasComponent = xrx.mvc.getComponent(canvasDiv.id) || new xrx.widget.Canvas(canvasDiv);
-  this.drawing_ = canvasComponent.getDrawing();
-  return this.drawing_;
+xrx.widget.Shape.prototype.initStyle_ = function() {
+  var borderWidth = parseInt(goog.style.getStyle_(this.element_, 'borderWidth'));
+  var borderColor = goog.style.getStyle_(this.element_, 'borderColor');
+  if (borderWidth !== NaN && this.shape_.setStrokeWidth) this.shape_.setStrokeWidth(borderWidth);
+  if (this.shape_.setStrokeColor) this.shape_.setStrokeColor(borderColor);
+};
+
+
+
+xrx.widget.Shape.prototype.init_ = function() {
+  this.initModifiable_();
+  this.initStyle_();
+};
+
+
+
+xrx.widget.Shape.prototype.getCanvas = function() {
+  if (this.canvas_ === undefined) {
+    var canvasDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas');
+    var canvasComponent = xrx.mvc.getComponent(canvasDiv.id);
+    !canvasComponent ? this.canvas_ = new xrx.widget.Canvas(canvasDiv) :
+        this.canvas_ = canvasComponent;
+  }
+  return this.canvas_;
 };
 
 
 
 xrx.widget.Shape.prototype.getDrawing = function() {
-  return this.drawing_ || this.findDrawing_();
+  return this.getCanvas().getDrawing();
 };
 
 
 
 xrx.widget.Shape.prototype.getShape = function() {
   return this.shape_;
+};
+
+
+
+xrx.widget.Shape.prototype.getUnit = function() {
+  if (!this.unit_) this.unit_ = this.getDataset('xrxUnit');
+  return this.unit_;
 };
 
 

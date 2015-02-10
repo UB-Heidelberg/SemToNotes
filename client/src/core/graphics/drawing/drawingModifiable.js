@@ -48,11 +48,16 @@ xrx.drawing.Modifiable.Mode = {
 
 
 xrx.drawing.Modifiable.prototype.handleDown = function(e) {
-  this.state_ = xrx.drawing.State.DRAG;
   var modifier;
   var modifiable;
   this.mousePoint_ = this.drawing_.getEventPoint(e);
   modifier = this.drawing_.getShapeSelected(this.mousePoint_);
+
+  if (modifier && modifier.isModifiable()) {
+    this.state_ = xrx.drawing.State.DRAG;
+  } else {
+    return;
+  }
 
   if (!modifier) {
     this.drawing_.getLayerShapeModify().removeShapes();
@@ -134,7 +139,6 @@ xrx.drawing.Modifiable.prototype.handleClick = function(e) {
   var drawing = this.drawing_;
   this.mousePoint_ = drawing.getEventPoint(e);
   var shape = drawing.getShapeSelected(this.mousePoint_);
-
   if (shape) {
     drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
     var confirm = window.confirm('Delete forever?');

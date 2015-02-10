@@ -18,6 +18,7 @@ goog.provide('xrx.widget.ShapeRectY');
 
 
 goog.require('goog.dom.dataset');
+goog.require('xrx.mvc.ChildComponent');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.shape.Rect');
 goog.require('xrx.widget.Shape');
@@ -187,6 +188,15 @@ xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
 xrx.widget.ShapeRect.prototype.mvcRemove = function() {
   this.getDrawing().getLayerShape().removeShape(this.shape_);
   this.getDrawing().draw();
+  this.shape_ = null;
+  this.rectX_ = null;
+  this.rectY_ = null;
+  this.rectWidth_ = null;
+  this.rectHeight_ = null;
+  this.rectLeft_ = null;
+  this.rectTop_ = null;
+  this.rectRight_ = null;
+  this.rectBottom_ = null;
 };
 
 
@@ -212,23 +222,31 @@ xrx.widget.ShapeRect.prototype.mvcModelUpdateData = function() {
 
 xrx.widget.ShapeRect.prototype.initCoordComponents = function() {
   // get datasets
-  var x      = this.getDataset('xrxRefX');
-  var y      = this.getDataset('xrxRefY');
-  var width  = this.getDataset('xrxRefWidth');
-  var height = this.getDataset('xrxRefHeight');
-  var left   = this.getDataset('xrxRefLeft');
-  var top    = this.getDataset('xrxRefTop');
-  var right  = this.getDataset('xrxRefRight');
-  var bottom = this.getDataset('xrxRefBottom');
+  var rx      = this.getDataset('xrxRefX');
+  var ry      = this.getDataset('xrxRefY');
+  var rwidth  = this.getDataset('xrxRefWidth');
+  var rheight = this.getDataset('xrxRefHeight');
+  var rleft   = this.getDataset('xrxRefLeft');
+  var rtop    = this.getDataset('xrxRefTop');
+  var rright  = this.getDataset('xrxRefRight');
+  var rbottom = this.getDataset('xrxRefBottom');
+  var bx = this.getDataset('xrxBindX');
+  var by = this.getDataset('xrxBindY');
+  var bwidth = this.getDataset('xrxBindWidth');
+  var bheight = this.getDataset('xrxBindHeight');
+  var bleft = this.getDataset('xrxBindLeft');
+  var btop = this.getDataset('xrxBindTop');
+  var bright = this.getDataset('xrxBindRight');
+  var bbottom = this.getDataset('xrxBindBottom');
   // initialize coordinate components
-  if (x)      this.rectX_      = new xrx.widget.ShapeRectX(this, x);
-  if (y)      this.rectY_      = new xrx.widget.ShapeRectY(this, y);
-  if (width)  this.rectWidth_  = new xrx.widget.ShapeRectWidth(this, width);
-  if (height) this.rectHeight_ = new xrx.widget.ShapeRectHeight(this, height);
-  if (left)   this.rectLeft_   = new xrx.widget.ShapeRectLeft(this, left);
-  if (top)    this.rectTop_    = new xrx.widget.ShapeRectTop(this, top);
-  if (right)  this.rectRight_  = new xrx.widget.ShapeRectRight(this, right);
-  if (bottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(this, bottom);
+  if (rx || bx)           this.rectX_      = new xrx.widget.ShapeRectX(this, rx, bx);
+  if (ry || by)           this.rectY_      = new xrx.widget.ShapeRectY(this, ry, by);
+  if (rwidth || bwidth)   this.rectWidth_  = new xrx.widget.ShapeRectWidth(this, rwidth, bwidth);
+  if (rheight || bheight) this.rectHeight_ = new xrx.widget.ShapeRectHeight(this, rheight, bheight);
+  if (rleft || bleft)     this.rectLeft_   = new xrx.widget.ShapeRectLeft(this, rleft, bleft);
+  if (rtop || btop)       this.rectTop_    = new xrx.widget.ShapeRectTop(this, rtop, btop);
+  if (rright || bright)   this.rectRight_  = new xrx.widget.ShapeRectRight(this, rright, bright);
+  if (rbottom || bbottom) this.rectBottom_ = new xrx.widget.ShapeRectBottom(this, rbottom, bbottom);
 };
 
 
@@ -255,26 +273,25 @@ xrx.widget.ShapeRect.prototype.createDom = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectGeometry = function(rect, dataset) {
+xrx.widget.ShapeRectGeometry = function(rect, ref, bind) {
 
   this.rect_ = rect;
 
-  this.dataset_ = dataset;
+  this.ref_ = ref;
 
-  this.canvas_ = this.getParentComponent('xrx-canvas', this.rect_.getElement());
+  this.bind_ = bind;
 
-  goog.base(this, rect.getElement());
+  goog.base(this, rect);
 };
-goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.Component);
+goog.inherits(xrx.widget.ShapeRectGeometry, xrx.mvc.ChildComponent);
 
 
 
-xrx.widget.ShapeRectGeometry.prototype.createDom = function() {};
-
-
-
-xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
-  return this.rect_.getResult().getNode(0);
+/**
+ * @override
+ */
+xrx.widget.ShapeRectGeometry.prototype.getBindId = function() {
+  return this.bind_;
 };
 
 
@@ -283,7 +300,7 @@ xrx.widget.ShapeRectGeometry.prototype.getContext = function() {
  * @override
  */
 xrx.widget.ShapeRectGeometry.prototype.getRefExpression = function() {
-  return this.dataset_;
+  return this.ref_;
 };
 
 
@@ -292,7 +309,7 @@ xrx.widget.ShapeRectGeometry.prototype.percentageToPixelHorizontal = function(zo
   var unit = this.rect_.getUnit();
   var point = this.getResult().castAsNumber();
   if (unit !== 'percentage') {
-    return point + zone;
+    return point;
   } else {
     zone = zone * point / 100;
     return this.rect_.getDrawing().getLayerBackground().getImage().getWidth() * point / 100 + zone;
@@ -305,7 +322,7 @@ xrx.widget.ShapeRectGeometry.prototype.percentageToPixelVertical = function(zone
   var unit = this.rect_.getUnit();
   var point = this.getResult().castAsNumber();
   if (unit !== 'percentage') {
-    return point + zone;
+    return point;
   } else {
     zone = zone * point / 100;
     return this.rect_.getDrawing().getLayerBackground().getImage().getHeight() * point / 100 + zone;
@@ -317,9 +334,9 @@ xrx.widget.ShapeRectGeometry.prototype.percentageToPixelVertical = function(zone
 /**
  * @constructor
  */
-xrx.widget.ShapeRectX = function(element, rect, dataset) {
+xrx.widget.ShapeRectX = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
 
@@ -327,7 +344,7 @@ goog.inherits(xrx.widget.ShapeRectX, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectX.prototype.refresh = function() {
   this.rect_.setX(this.percentageToPixelHorizontal(
-      this.canvas_.getBackgroundImage().getZoneLeft()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneLeft()));
 };
 
 
@@ -342,9 +359,9 @@ xrx.widget.ShapeRectX.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectY = function(element, rect, dataset) {
+xrx.widget.ShapeRectY = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
 
@@ -352,7 +369,7 @@ goog.inherits(xrx.widget.ShapeRectY, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectY.prototype.refresh = function() {
   this.rect_.setY(this.percentageToPixelVertical(
-      this.canvas_.getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
 };
 
 
@@ -367,9 +384,9 @@ xrx.widget.ShapeRectY.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectWidth = function(element, rect, dataset) {
+xrx.widget.ShapeRectWidth = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
 
@@ -377,7 +394,7 @@ goog.inherits(xrx.widget.ShapeRectWidth, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectWidth.prototype.refresh = function() {
   this.rect_.setWidth(this.percentageToPixelHorizontal(
-      this.canvas_.getBackgroundImage().getZoneRight()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneRight()));
 };
 
 
@@ -392,9 +409,9 @@ xrx.widget.ShapeRectWidth.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectHeight = function(element, rect, dataset) {
+xrx.widget.ShapeRectHeight = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 
@@ -402,7 +419,7 @@ goog.inherits(xrx.widget.ShapeRectHeight, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectHeight.prototype.refresh = function() {
   this.rect_.setHeight(this.percentageToPixelVertical(
-      this.canvas_.getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
 };
 
 
@@ -417,9 +434,9 @@ xrx.widget.ShapeRectHeight.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectLeft = function(element, rect, dataset) {
+xrx.widget.ShapeRectLeft = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
 
@@ -427,7 +444,7 @@ goog.inherits(xrx.widget.ShapeRectLeft, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectLeft.prototype.refresh = function() {
   this.rect_.setLeft(this.percentageToPixelHorizontal(
-      this.canvas_.getBackgroundImage().getZoneLeft()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneLeft()));
 };
 
 
@@ -442,9 +459,9 @@ xrx.widget.ShapeRectLeft.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectTop = function(element, rect, dataset) {
+xrx.widget.ShapeRectTop = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
 
@@ -452,7 +469,7 @@ goog.inherits(xrx.widget.ShapeRectTop, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectTop.prototype.refresh = function() {
   this.rect_.setTop(this.percentageToPixelVertical(
-      this.canvas_.getBackgroundImage().getZoneTop()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneTop()));
 };
 
 
@@ -467,9 +484,9 @@ xrx.widget.ShapeRectTop.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectRight = function(element, rect, dataset) {
+xrx.widget.ShapeRectRight = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
 
@@ -477,7 +494,7 @@ goog.inherits(xrx.widget.ShapeRectRight, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectRight.prototype.refresh = function() {
   this.rect_.setRight(this.percentageToPixelHorizontal(
-      this.canvas_.getBackgroundImage().getZoneRight()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneRight()));
 };
 
 
@@ -492,9 +509,9 @@ xrx.widget.ShapeRectRight.prototype.modelUpdateData = function() {
 /**
  * @constructor
  */
-xrx.widget.ShapeRectBottom = function(element, rect, dataset) {
+xrx.widget.ShapeRectBottom = function(rect, ref, bind) {
 
-  goog.base(this, element, rect, dataset);
+  goog.base(this, rect, ref, bind);
 };
 goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
 
@@ -502,7 +519,7 @@ goog.inherits(xrx.widget.ShapeRectBottom, xrx.widget.ShapeRectGeometry);
 
 xrx.widget.ShapeRectBottom.prototype.refresh = function() {
   this.rect_.setBottom(this.percentageToPixelVertical(
-      this.canvas_.getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
 };
 
 

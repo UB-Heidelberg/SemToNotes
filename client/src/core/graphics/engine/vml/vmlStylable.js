@@ -62,8 +62,9 @@ xrx.vml.Stylable.prototype.getGeometry = function() {
  * @param {number} width The stroke width.
  */
 xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
-  this.stroke_.width = width;
-  this.raphael_.attr({'stroke-width': width});
+  var self = this;
+  this.stroke_.width = width || this.stroke_.width;
+  this.raphael_.attr({'stroke-width': self.stroke_.width});
 };
 
 
@@ -73,8 +74,9 @@ xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
-  this.stroke_.color = color;
-  this.raphael_.attr({'stroke': color});
+  var self = this;
+  this.stroke_.color = color || this.stroke_.color;
+  this.raphael_.attr({'stroke': self.stroke_.color});
 };
 
 
@@ -84,8 +86,9 @@ xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.vml.Stylable.prototype.setFillColor = function(color) {
-  this.fill_.color = color;
-  this.raphael_.attr({'fill': color});
+  var self = this;
+  this.fill_.color = color || this.fill_.color;
+  this.raphael_.attr({'fill': self.fill_.color});
 };
 
 
@@ -95,6 +98,7 @@ xrx.vml.Stylable.prototype.setFillColor = function(color) {
  * @param {string} factor The fill opacity.
  */
 xrx.vml.Stylable.prototype.setFillOpacity = function(factor) {
-  this.fill_.opacity = factor;
-  this.raphael_.attr({'fill-opacity': factor});
+  var self = this;
+  this.fill_.opacity = factor || this.fill_.opacity;
+  this.raphael_.attr({'fill-opacity': self.fill_.opacity});
 };

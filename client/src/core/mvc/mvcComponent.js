@@ -36,7 +36,7 @@ xrx.mvc.Component = function(element, uidl) {
 
   this.addComponent();
 
-  this.compileXpath();
+  this.compileXpath_();
 
   this.createDom();
 };
@@ -49,8 +49,11 @@ xrx.mvc.Component.prototype.getXpath = function() {
 
 
 
-xrx.mvc.Component.prototype.compileXpath = function() {
-  var debug = this.element_.id == 'btargetNarrower';
+/**
+ * @private
+ */
+xrx.mvc.Component.prototype.compileXpath_ = function() {
+  var debug = '';
   var ref = this.getRefExpression();
   if (ref) this.xpath_ = new xrx.mvc.Xpath(ref, debug);
 };
@@ -187,7 +190,18 @@ xrx.mvc.Component.prototype.getRepeatIndex = function(opt_element) {
     throw Error('Repeat item could not be found.');
   }
   return parseInt(value);
-}; 
+};
+
+
+
+/**
+ * Returns the source URI found in the component's data-resource attribute.
+ * @return {?string} The source URI.
+ */
+xrx.mvc.Component.prototype.getResourceUri = function(opt_dataset) {
+  var dataset = opt_dataset || 'xrxResource';
+  return this.getDataset(dataset);
+};
 
 
 
@@ -213,12 +227,8 @@ xrx.mvc.Component.prototype.getBindId = function(opt_dataset) {
 
 
 
-/**
- * Returns the source URI found in the component's data-resource attribute.
- * @return {?string} The source URI.
- */
-xrx.mvc.Component.prototype.getResourceUri = function(opt_dataset) {
-  var dataset = opt_dataset || 'xrxResource';
+xrx.mvc.Component.prototype.getCalculateId = function(opt_dataset) {
+  var dataset = opt_dataset || 'xrxCalculate';
   return this.getDataset(dataset);
 };
 
@@ -228,11 +238,20 @@ xrx.mvc.Component.prototype.getResourceUri = function(opt_dataset) {
  * Returns the bind referenced by the component.
  * @return {xrx.mvc.Bind} The bind component.
  */
-xrx.mvc.Component.prototype.getBind = function(opt_dataset) {
-  var id = this.getBindId(opt_dataset);
+xrx.mvc.Component.prototype.getBind = function() {
+  var id = this.getBindId();
   var bind = xrx.mvc.getModelComponent(id);
-  if (!bind) throw Error('Bind ' + id + ' does not exist.');
+  if (!bind) throw Error('Bind #' + id + ' does not exist.');
   return bind;
+};
+
+
+
+xrx.mvc.Component.prototype.getCalculate = function() {
+  var id = this.getCalculateId();
+  var calc = xrx.mvc.getComponent(id);
+  if (!calc) throw Error('Calculate #' + id + ' does not exist.');
+  return calc;
 };
 
 
@@ -258,8 +277,10 @@ xrx.mvc.Component.prototype.getResultByRef_ = function() {
  * @return {!xrx.xpath.XPathResult} The result.
  */
 xrx.mvc.Component.prototype.getResult = function() {
-  if (this.hasDataset('xrxBind')) {
+  if (this.getBindId() !== null) {
     return this.getBind().getResult();
+  } else if (this.getCalculateId() !== null) {
+    return this.getCalculate().getResult();
   } else {
     return this.getResultByRef_();
   }

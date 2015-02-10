@@ -20,7 +20,7 @@ goog.require('goog.dom.dataset');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('xrx.mvc');
-goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Component');
 goog.require('xrx.widget.CanvasToolbar');
 
 
@@ -31,7 +31,7 @@ xrx.widget.CanvasToolbarItem = function(element) {
 
   this.registerEvents_();
 };
-goog.inherits(xrx.widget.CanvasToolbarItem, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.CanvasToolbarItem, xrx.mvc.Component);
 
 
 
@@ -39,17 +39,6 @@ xrx.widget.CanvasToolbarItem.prototype.getToolbar = function() {
   var toolbarDiv = goog.dom.getAncestorByClass(this.element_, 'xrx-canvas-toolbar');
   var toolbarComponent = xrx.mvc.getComponent(toolbarDiv.id);
   return toolbarComponent ? toolbarComponent : new xrx.widget.CanvasToolbar(toolbarDiv);
-};
-
-
-
-xrx.widget.CanvasToolbarItem.prototype.getNode = function() {
-  return undefined;
-};
-
-
-
-xrx.widget.CanvasToolbarItem.prototype.mvcRefresh = function() {
 };
 
 
@@ -296,7 +285,7 @@ xrx.widget.CanvasToolbarItemCreate.prototype.handleToggle = function() {
 xrx.widget.CanvasToolbarItemCreate.prototype.createDom = function() {
   if (!this.element_.getAttribute('title'))
       this.element_.setAttribute('title', 'Draw.');
-  this.graphicsName_ = this.getDataset('xrxGraphicsName');
+  this.graphicsName_ = this.getDataset('xrxName');
 };
 
 

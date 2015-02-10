@@ -11,6 +11,7 @@ goog.provide('xrx.widget.ShapePolygonInsert');
 
 goog.require('goog.dom.dataset');
 goog.require('xrx.mvc');
+goog.require('xrx.mvc.ChildComponent');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Controller');
 goog.require('xrx.shape.Polygon');
@@ -29,7 +30,7 @@ xrx.widget.ShapePolygon = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.ShapePolygon, xrx.widget.Shape);
-xrx.mvc.registerComponent('xrx-widget-shape-polygon', xrx.widget.ShapePolygon);
+xrx.mvc.registerComponent('xrx-shape-polygon', xrx.widget.ShapePolygon);
 
 
 
@@ -65,7 +66,7 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   var drawing = this.getDrawing();
   if (!drawing.getEngine().isAvailable()) return;
   this.shape_ = xrx.shape.Polygon.create(drawing);
-  if (this.getResult().getNode(0)) drawing.getLayerShape().addShapes(this.shape_);
+  drawing.getLayerShape().addShapes(this.shape_);
   this.shapePolygonCoords_ = new xrx.widget.ShapePolygonCoords(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {
@@ -75,6 +76,7 @@ xrx.widget.ShapePolygon.prototype.createDom = function() {
   this.shape_.handleDeleted = function() {
     self.mvcModelDeleteData();
   };
+  this.mvcRefresh();
 };
 
 
@@ -86,14 +88,17 @@ xrx.widget.ShapePolygonCoords = function(polygon) {
 
   this.polygon_ = polygon;
 
-  goog.base(this, polygon.getElement());
+  goog.base(this, polygon);
 };
-goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.Component);
+goog.inherits(xrx.widget.ShapePolygonCoords, xrx.mvc.ChildComponent);
 
 
 
-xrx.widget.ShapePolygonCoords.prototype.getContext = function() {
-  return this.polygon_.getNode();
+/**
+ * @override
+ */
+xrx.widget.ShapePolygonCoords.prototype.getBindId = function() {
+  return this.getDataset('xrxBindCoords');
 };
 
 
@@ -132,7 +137,7 @@ xrx.widget.ShapePolygonCreate = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.ShapePolygonCreate, xrx.widget.Shape);
-xrx.mvc.registerComponent('xrx-widget-shape-polygon-create', xrx.widget.ShapePolygonCreate);
+xrx.mvc.registerComponent('xrx-shape-polygon-create', xrx.widget.ShapePolygonCreate);
 
 
 
@@ -166,7 +171,7 @@ xrx.widget.ShapePolygonInsert = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.widget.ShapePolygonInsert, xrx.mvc.ComponentView);
-xrx.mvc.registerComponent('xrx-widget-shape-polygon-insert', xrx.widget.ShapePolygonInsert);
+xrx.mvc.registerComponent('xrx-shape-polygon-insert', xrx.widget.ShapePolygonInsert);
 
 
 

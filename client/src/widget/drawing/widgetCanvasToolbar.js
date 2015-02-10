@@ -9,7 +9,7 @@ goog.provide('xrx.widget.CanvasToolbar');
 goog.require('goog.dom.classes');
 goog.require('goog.style');
 goog.require('xrx.mvc');
-goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Component');
 goog.require('xrx.widget.Canvas');
 
 
@@ -23,7 +23,7 @@ xrx.widget.CanvasToolbar = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.widget.CanvasToolbar, xrx.mvc.ComponentView);
+goog.inherits(xrx.widget.CanvasToolbar, xrx.mvc.Component);
 xrx.mvc.registerComponent('xrx-canvas-toolbar', xrx.widget.CanvasToolbar);
 
 
@@ -41,17 +41,6 @@ xrx.widget.CanvasToolbar.prototype.setSelected = function(toolbarItem) {
       'xrx-ui-state-selected');
   this.selected_ = toolbarItem;
   goog.dom.classes.add(toolbarItem.getElement(), 'xrx-ui-state-selected');
-};
-
-
-
-xrx.widget.CanvasToolbar.prototype.getNode = function() {
-  return undefined;
-};
-
-
-
-xrx.widget.CanvasToolbar.prototype.mvcRefresh = function() {
 };
 
 

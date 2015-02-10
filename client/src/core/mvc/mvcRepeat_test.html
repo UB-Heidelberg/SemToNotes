@@ -74,7 +74,7 @@ function checkComponentValues(repeatComponent, values) {
 
 function checkIdsAreUnique(repeatComponent) {
   var ids = [];
-  var consoles = goog.dom.getElementsByClass('xrx-widget-console', repeatComponent.getElement());
+  var consoles = goog.dom.getElementsByClass('xrx-console', repeatComponent.getElement());
   goog.array.forEach(consoles, function(cons) {
     ids.push(cons.id);
   });
@@ -151,10 +151,10 @@ function mvcRefreshTest(repeatId) {
   <div id="b015" class="xrx-bind" data-xrx-ref="xrx:instance('i01')/data/c"></div>
   <div id="r01" class="xrx-repeat" data-xrx-bind="b012">
     <div>
-      <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+      <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
     </div>
     <div>
-      <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+      <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
     </div>
   </div>
 </div>
@@ -172,8 +172,8 @@ function test01MvcRefreshWrapped() {
   <div id="b024" class="xrx-bind" data-xrx-ref="xrx:instance('i02')/data/b"></div>
   <div id="b025" class="xrx-bind" data-xrx-ref="xrx:instance('i02')/data/c"></div>
   <div id="r02" class="xrx-repeat" data-xrx-bind="b022">
-    <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
-    <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+    <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
+    <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
   </div>
 </div>
 <script type="text/javascript">
@@ -190,8 +190,8 @@ function test02MvcRefreshUnwrapped() {
   <div id="b034" class="xrx-bind" data-xrx-ref="xrx:instance('i03')/data/b"></div>
   <div id="b035" class="xrx-bind" data-xrx-ref="xrx:instance('i03')/data/c"></div>
   <div id="r03" class="xrx-repeat" data-xrx-bind="b032">
-    <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
-    <pre class="xrx-widget-console" data-xrx-ref="./self::*"></pre>
+    <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
+    <pre class="xrx-console" data-xrx-ref="./self::*"></pre>
   </div>
 </div>
 
@@ -204,7 +204,7 @@ function test03RemoveNodesForward() {
   var repeatComponent = xrx.mvc.getComponent('r03');
 
   var removeFirstNode = function() {
-    consoles = goog.dom.getElementsByClass('xrx-widget-console', repeatDiv);
+    consoles = goog.dom.getElementsByClass('xrx-console', repeatDiv);
     component = xrx.mvc.getComponent(consoles[0].id);
     xrx.mvc.Controller.removeNode(component);
   };

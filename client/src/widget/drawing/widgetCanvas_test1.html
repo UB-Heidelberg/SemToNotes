@@ -35,30 +35,73 @@ word-wrap: break-word;
 <!-- HTML UIDL -->
 
 <!-- namespaces -->
-<div class="xrx-namespace" data-xrx-prefix="xmlns:tei" data-xrx-uri="http://www.tei-c.org/ns/1.0"></div>
+<div class="xrx-namespace" data-prefix="xmlns:tei" data-uri="http://www.tei-c.org/ns/1.0"></div>
 
 <!-- instances -->
 <div id="i1" class="xrx-instance" data-resource="./widgetCanvas_test.1.xml.txt"></div>
 <div id="i2" class="xrx-instance" data-resource="./widgetCanvas_test.2.xml.txt"></div>
 
 <!-- bind background image -->
-<div id="b1" class="xrx-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic/@url"></div>
+<div id="b1" class="xrx-bind" data-ref="xrx:instance('i1')//tei:graphic/@url"></div>
 <!-- bind shapes -->
-<div id="b0" class="xrx-bind" data-xrx-ref="xrx:instance('i1')//tei:graphic"></div>
-<div id="b2" class="xrx-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@points]"></div>
-<div id="b3" class="xrx-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
-<div id="b4" class="xrx-bind" data-xrx-ref="xrx:instance('i1')//tei:zone[@x]"></div>
+<div id="b0" class="xrx-bind" data-ref="xrx:instance('i1')//tei:graphic"></div>
+<div id="b2" class="xrx-bind" data-ref="xrx:instance('i1')//tei:zone[@points]"></div>
+<div id="b3" class="xrx-bind" data-ref="xrx:instance('i1')//tei:zone[@ulx]"></div>
+<div id="b4" class="xrx-bind" data-ref="xrx:instance('i1')//tei:zone[@x]"></div>
 <!-- bind console -->
-<div id="b5" class="xrx-bind" data-xrx-ref="xrx:instance('i1')"></div>
+<div id="b5" class="xrx-bind" data-ref="xrx:instance('i1')"></div>
 <!-- bind create shapes -->
-<div id="b6" class="xrx-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[1]"></div>
-<div id="b7" class="xrx-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[2]"></div>
-<div id="b8" class="xrx-bind" data-xrx-ref="xrx:instance('i2')//tei:zone[3]"></div>
-<div id="b9" class="xrx-bind" data-xrx-ref="xrx:instance('i2')"></div>
+
+
+
+<!--**
+ * My black polygons model
+ *-->
+<div class="xrx-bind"                  id="b6"
+     data-ref="xrx:instance('i2')//tei:zone[1]"></div>
+<div class="xrx-bind"                  id="b61"
+     data-ref="xrx:bind('b6')/@points"></div>
+
+
+
+<!--**
+ * My black rectangles model
+ *-->
+<div class="xrx-bind"                  id="b7"
+     data-ref="xrx:instance('i2')//tei:zone[2]"></div>
+<div class="xrx-bind"                  id="b71"
+     data-ref="xrx:bind('b7')/@ulx"></div>
+<div class="xrx-bind"                  id="b72"
+     data-ref="xrx:bind('b7')/@uly"></div>
+<div class="xrx-bind"                  id="b73"
+     data-ref="xrx:bind('b7')/@lrx"></div>
+<div class="xrx-bind"                  id="b74"
+     data-ref="xrx:bind('b7')/@lry"></div>
+
+
+
+<!--**
+ * My black rectangles model
+ *-->
+<div class="xrx-bind"                  id="b8"
+     data-ref="xrx:instance('i2')//tei:zone[3]"></div>
+<div class="xrx-bind"                  id="b81"
+     data-ref="xrx:bind('b8')/@x"></div>
+<div class="xrx-bind"                  id="b82"
+     data-ref="xrx:bind('b8')/@y"></div>
+<div class="xrx-bind"                  id="b83"
+     data-ref="xrx:bind('b8')/@width"></div>
+<div class="xrx-bind"                  id="b84"
+     data-ref="xrx:bind('b8')/@height"></div>
+
+
+
+<div class="xrx-bind"                  id="b9"
+     data-ref="xrx:instance('i2')"></div>
 
 <!-- HTML UIDL -->
-<div id="d1" class="xrx-canvas">
-  <div class="xrx-canvas-background-image" data-xrx-bind="b1"></div>
+<div id="d1" class="xrx-canvas" data-engine="svg">
+  <div class="xrx-canvas-background-image" data-bind="b1"></div>
   <div class="xrx-canvas-toolbar">
     <span class="xrx-canvas-toolbar-item-view xrx-icon-openhand32"></span>
     <span class="xrx-canvas-toolbar-item-zoom-in xrx-icon-zoomIn32"></span>
@@ -66,113 +109,88 @@ word-wrap: break-word;
     <span class="xrx-canvas-toolbar-item-rotate-left xrx-icon-rotateLeft32"></span>
     <span class="xrx-canvas-toolbar-item-rotate-right xrx-icon-rotateRight32"></span>
     <span class="xrx-canvas-toolbar-item-create xrx-icon-shapePolygon32"
-        title="Draw a black polygon." data-xrx-graphics-name="my-black-polygons"></span>
+          title="Draw a black polygon." data-name="my-black-polygons"></span>
     <span class="xrx-canvas-toolbar-item-create xrx-icon-shapeRect32"
-        title="Draw a black rectangle." data-xrx-graphics-name="my-black-rectangles"></span>
+          title="Draw a black rectangle." data-name="my-black-rectangles"></span>
     <span class="xrx-canvas-toolbar-item-create xrx-icon-shapeRect32"
-        title="Draw a red rectangle." data-xrx-graphics-name="my-red-rectangles"></span>
+          title="Draw a red rectangle." data-name="my-red-rectangles"></span>
     <span class="xrx-canvas-toolbar-item-modify xrx-icon-move32"></span>
     <span class="xrx-canvas-toolbar-item-delete xrx-icon-delete32"></span>
   </div>
   <div class="xrx-canvas-graphics">
-    <div class="xrx-canvas-group" data-xrx-graphics-name="my-black-polygons">
-      <div id="r1" class="xrx-repeat" data-xrx-bind="b2">
-        <div class="xrx-widget-shape-polygon" data-xrx-ref="./self::*"
-            data-xrx-ref-coords="./@points"></div>
+    <div class="xrx-canvas-group" data-name="my-black-polygons">
+      <div id="r1" class="xrx-repeat" data-bind="b2">
+        <div class="xrx-shape-polygon"
+             data-ref="./self::*"
+             data-ref-coords="./@points"></div>
       </div>
-      <div class="xrx-widget-shape-polygon-create" data-xrx-bind="b6" data-xrx-ref-coords="./@points"></div>
-      <div class="xrx-action" data-xrx-event="xrx-event-graphic-created">
-        <div class="xrx-insert" data-xrx-origin="b6" data-xrx-target="b0"></div>
+      <div class="xrx-shape-polygon-create"
+           data-bind="b6"
+           data-bind-coords="b61">
       </div>
-    </div>
-    <div class="xrx-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-black-rectangles">
-      <div class="xrx-repeat" data-xrx-bind="b3"> 
-        <div class="xrx-shape-rect" data-xrx-ref="./self::*"
-            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry"></div>
-      </div>
-      <div class="xrx-shape-rect-create" data-xrx-bind="b7"
-            data-xrx-ref-left="./@ulx" data-xrx-ref-top="./@uly"
-            data-xrx-ref-right="./@lrx" data-xrx-ref-bottom="./@lry">
-      </div>
-      <div class="xrx-action" data-xrx-event="xrx-event-graphic-created">
-        <div class="xrx-insert" data-xrx-origin="b7" data-xrx-target="b0"></div>
+      <div class="xrx-action" data-event="xrx-event-graphic-created">
+        <div class="xrx-insert">
+          <div class="xrx-origin" data-bind="b6"></div>
+          <div class="xrx-target" data-bind="b0"></div>
+        </div>
       </div>
     </div>
-    <div class="xrx-canvas-group" data-xrx-bind="b0" data-xrx-graphics-name="my-red-rectangles">
-      <div class="xrx-repeat" data-xrx-bind="b4">
-        <div class="xrx-shape-rect" data-xrx-ref="./self::*"
-            data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
-            data-xrx-ref-width="./@width" data-xrx-ref-height="./@height"></div>
+    <div class="xrx-canvas-group" data-bind="b0" data-name="my-black-rectangles">
+      <div class="xrx-repeat" data-bind="b3"> 
+        <div class="xrx-shape-rect"
+             data-ref="./self::*"
+             data-ref-left="./@ulx"
+             data-ref-top="./@uly"
+             data-ref-right="./@lrx"
+             data-ref-bottom="./@lry">
+        </div>
       </div>
-      <div class="xrx-shape-rect-create" data-xrx-bind="b8"
-            data-xrx-ref-x="./@x" data-xrx-ref-y="./@y"
-            data-xrx-ref-width="./@width" data-xrx-ref-height="./@height">
+      <div class="xrx-shape-rect-create"
+           data-bind="b7"
+           data-bind-left="b71"
+           data-bind-top="b72"
+           data-bind-right="b73"
+           data-bind-bottom="b74">
       </div>
-      <div class="xrx-action" data-xrx-event="xrx-event-graphic-created">
-        <div class="xrx-insert" data-xrx-origin="b8" data-xrx-target="b0"></div>
+      <div class="xrx-action" data-event="xrx-event-graphic-created">
+        <div class="xrx-insert">
+          <div class="xrx-origin" data-bind="b7"></div>
+          <div class="xrx-target" data-bind="b0"></div>
+        </div>
+      </div>
+    </div>
+    <div class="xrx-canvas-group" data-bind="b0" data-name="my-red-rectangles">
+      <div class="xrx-repeat" data-bind="b4">
+        <div class="xrx-shape-rect"
+             data-ref="./self::*"
+             data-ref-x="./@x"
+             data-ref-y="./@y"
+             data-ref-width="./@width"
+             data-ref-height="./@height">
+        </div>
+      </div>
+      <div class="xrx-shape-rect-create"
+           data-bind="b8"
+           data-bind-x="b81"
+           data-bind-y="b82"
+           data-bind-width="b83"
+           data-bind-height="b84">
+      </div> 
+      <div class="xrx-action" data-event="xrx-event-graphic-created">
+        <div class="xrx-insert">
+          <div class="xrx-origin" data-bind="b8"></div>
+          <div class="xrx-target" data-bind="b0"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<pre id="c1" class="xrx-widget-console" data-xrx-bind="b9"></pre>
-<pre id="c2" class="xrx-widget-console" data-xrx-bind="b5"></pre>
-
-<!-- XML UIDL -->
-<!--xrx:canvas id="d1" xmlns:xrx="http://monasterium.net/NS/xrx" style="display:none">
-  <xrx:background>
-    <xrx:image bind="b1"/>
-  </xrx:background>
-  <xrx:toolbar>
-    <xrx:buttonViewer class="xrx-icon-openhand32"/>
-    <xrx:buttonZoomIn class="xrx-icon-zoomIn32"/>
-    <xrx:buttonZoomOut class="xrx-icon-zoomOut32"/>
-    <xrx:buttonRotateLeft class="xrx-icon-rotateLeft32"/>
-    <xrx:buttonRotateRight class="xrx-icon-RotateRight32"/>
-    <xrx:buttonCreate class="xrx-icon-shapePolygon32" name="my-black-polygons"/>
-    <xrx:buttonCreate class="xrx-icon-shapeRect32" name="my-black-rectangles"/>
-    <xrx:buttonCreate class="xrx-icon-shapeRect32" name="my-red-rectangles"/>
-    <xrx:buttonModify class="xrx-icon-move32"/>
-    <xrx:buttonDelete class="xrx-icon-delete32"/>
-  </xrx:toolbar>
-  <xrx:graphics>
-    <xrx:group name="my-black-polygons" origin="b6" bind="b0" at="2" insert="into">
-      <xrx:repeat id="r1" bind="b2">
-        <xrx:polygon ref="./self::*">
-          <xrx:coords ref="./@points"/>
-        </xrx:polygon>
-      </xrx:repeat>
-      <xrx:action ev:event="xrx-event-graphic-created">
-        <xf:insert origin="b6" target="b0"/>
-      </xrx:action>
-    </xrx:group>
-    <xrx:group name="my-black-rectangles" origin="b7" bind="b0" at="2" insert="into">
-      <xrx:repeat id="r2" bind="b3">
-        <xrx:rect ref="./self::*">
-          <xrx:left ref="./@ulx"/>
-          <xrx:top ref="./@uly"/>
-          <xrx:right ref="./@lrx"/>
-          <xrx:bottom ref="./@lry"/>
-        </xrx:rect>
-      </xrx:repeat>
-    </xrx:group>
-    <xrx:group name="my-red-rectangles" origin="b8" bind="b0" at="2" insert="into">
-      <xrx:repeat id="r3" bind="b4">
-        <xrx:rect ref="./self::*">
-          <xrx:x ref="./@x"/>
-          <xrx:y ref="./@y"/>
-          <xrx:width ref="./@width"/>
-          <xrx:height ref="./@height"/>
-        </xrx:rect>
-      </xrx:repeat>
-    </xrx:group>
-  </xrx:graphics>
-</xrx:canvas-->
+<pre id="c1" class="xrx-console" data-bind="b9"></pre>
+<pre id="c2" class="xrx-console" data-bind="b5"></pre>
 
 <script type="text/javascript">
  
-function test() {
-};
+function test() {};
 
 </script>
 

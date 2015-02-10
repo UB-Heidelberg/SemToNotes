@@ -1,4 +1,9 @@
 
+/* canvas */
+.xrx-canvas-graphics {
+display: none;
+}
+
 /* instance */
 .xrx-instance, .xrx-repeat {
 display: none;

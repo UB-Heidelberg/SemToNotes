@@ -1,5 +1,5 @@
 /**
- * @fileoverview The MVC main class.
+ * @fileoverview The MVC main class, installs all MVC components.
  */
 
 goog.provide('xrx.mvc.Mvc');
@@ -48,8 +48,7 @@ xrx.mvc.Mvc.installComponents = function(opt_context) {
     elements = goog.dom.getElementsByClass(key, opt_context);
     for (var i = 0; i < elements.length; i++) {
       goog.dom.isNodeList(elements) ? element = elements.item(i) : element = elements[i];
-      if (!element.id || element.id === '') {
-        console.log(element);
+      if (!element.hasAttribute('id') || element.id === '') {
         element.id = xrx.mvc.Mvc.idGenerator.getNextUniqueId();
       };
       if (!xrx.mvc.hasComponent(element.id)) new xrx.mvc.Components[key](element);

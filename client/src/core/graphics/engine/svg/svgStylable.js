@@ -62,8 +62,8 @@ xrx.svg.Stylable.prototype.getGeometry = function() {
  * @param {number} width The stroke width.
  */
 xrx.svg.Stylable.prototype.setStrokeWidth = function(width) {
-  this.stroke_.width = width;
-  this.element_.setAttribute('stroke-width', width);
+  this.stroke_.width = width || this.stroke_.width;
+  this.element_.setAttribute('stroke-width', this.stroke_.width);
 };
 
 
@@ -73,9 +73,9 @@ xrx.svg.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.svg.Stylable.prototype.setStrokeColor = function(color) {
-  this.stroke_.color = color;
-  this.element_.setAttribute('stroke', color);
-  this.element_.setAttribute('stroke-color', color);
+  this.stroke_.color = color || this.stroke_.color;
+  this.element_.setAttribute('stroke', this.stroke_.color);
+  this.element_.setAttribute('stroke-color', this.stroke_.color);
 };
 
 
@@ -85,8 +85,8 @@ xrx.svg.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.svg.Stylable.prototype.setFillColor = function(color) {
-  this.fill_.color = color;
-  this.element_.setAttribute('fill', color);
+  this.fill_.color = color || this.fill_.color;
+  this.element_.setAttribute('fill', this.fill_.color);
 };
 
 
@@ -96,6 +96,6 @@ xrx.svg.Stylable.prototype.setFillColor = function(color) {
  * @param {string} factor The fill opacity.
  */
 xrx.svg.Stylable.prototype.setFillOpacity = function(factor) {
-  this.fill_.opacity = factor;
-  this.element_.setAttribute('fill-opacity', factor);
+  this.fill_.opacity = factor || this.fill_.opacity;
+  this.element_.setAttribute('fill-opacity', this.fill_.opacity);
 };

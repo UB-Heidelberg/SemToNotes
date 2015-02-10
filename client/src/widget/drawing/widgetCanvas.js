@@ -43,6 +43,27 @@ xrx.mvc.registerComponent('xrx-canvas', xrx.widget.Canvas);
 
 
 
+xrx.widget.Canvas.prototype.setModeView = function() {
+  this.setNameShapeCreate(null);
+  if (this.drawing_.getEngine().isAvailable()) this.drawing_.setModeView();
+};
+
+
+
+xrx.widget.Canvas.prototype.setModeModify = function() {
+  this.setNameShapeCreate(null);
+  if (this.drawing_.getEngine().isAvailable()) this.drawing_.setModeModify();
+};
+
+
+
+xrx.widget.Canvas.prototype.setModeCreate = function(name) {
+  this.setNameShapeCreate(name);
+  this.getDrawing().setModeCreate(this.getActiveGroup().getShapeCreate().getShape());
+};
+
+
+
 xrx.widget.Canvas.prototype.getDrawing = function() {
   return this.drawing_;
 };
@@ -79,7 +100,7 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
   var shapeDiv = goog.dom.findNode(layerGraphics, function(node) {
     if (!goog.dom.isElement(node)) {
       return false;
-    } else if (goog.dom.dataset.get(node, 'xrxGraphicsName') === self.nameInsertShapeCreate_) {
+    } else if (goog.dom.dataset.get(node, 'xrxName') === self.nameInsertShapeCreate_) {
       return true;
     } else {
       return false;
@@ -91,19 +112,18 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
 
 
 xrx.widget.Canvas.prototype.refresh = function() {
+  var shapes;
   var self = this;
-  var repeat;
   this.drawing_.getLayerShape().removeShapes();
   goog.array.forEach(this.groups_, function(e, i, a) {
-    repeat = goog.dom.getChildren(e.getElement())[0];
-    //xrx.mvc.getComponent(repeat.id).mvcRefresh();
-    var shapes = goog.dom.getElementsByClass('xrx-shape', this.getElement());
+    shapes = goog.dom.getElementsByClass('xrx-shape',
+        goog.dom.getChildren(e.getElement())[0]);
     goog.array.forEach(shapes, function(s) {
       var c = xrx.mvc.getComponent(s.id);
-      if (!c) console.log(s);
-      if (c) c.mvcRefresh();
-    });
-  });
+      this.drawing_.getLayerShape().addShapes(c.getShape());
+      c.mvcRefresh();
+    }, this);
+  }, this);
   this.drawing_.draw();
 };
 
@@ -130,7 +150,7 @@ xrx.widget.Canvas.prototype.createDom = function() {
   });
   // handle shape create
   this.drawing_.handleCreated = function() {
-    self.getActiveGroup().dispatchShapeCreated();
+    self.getActiveGroup().dispatch('xrx-event-graphic-created');
     self.refresh();
   };
 };
@@ -146,24 +166,13 @@ xrx.widget.CanvasGroup = function(element, canvas) {
 
   this.canvas_ = canvas;
 
-  this.name_ = this.getDataset('xrxGraphicsName');
+  this.name_ = this.getDataset('xrxName');
 };
 goog.inherits(xrx.widget.CanvasGroup, xrx.mvc.Component);
 
 
 
 xrx.widget.CanvasGroup.prototype.createDom = function() {};
-
-
-
-xrx.widget.CanvasGroup.prototype.dispatchShapeCreated = function() {
-  var actionElement = goog.dom.findNode(this.element_, function(node) {
-    return goog.dom.isElement(node) &&
-    goog.dom.dataset.get(node, 'xrxEvent') === 'xrx-event-graphic-created' ?
-        true : false; 
-  });
-  if (actionElement) xrx.mvc.getModelComponent(actionElement.id).execute();
-};
 
 
 
@@ -257,13 +266,7 @@ xrx.widget.CanvasBackgroundImage.prototype.mvcRefresh = function() {
   var drawing = this.canvas_.getDrawing();
   if (drawing.getEngine().isAvailable()) {
     drawing.setBackgroundImage(url, function() {
-      var shapes = goog.dom.getElementsByClass('xrx-shape', canvas.getElement());
-      goog.array.forEach(shapes, function(s) {
-        var c = xrx.mvc.getViewComponent(s.id);
-        if (!c) console.log(s);
-        if (c) c.mvcRefresh();
-      });
-      canvas.getDrawing().draw();
+      canvas.refresh();
     });
   };
 };
