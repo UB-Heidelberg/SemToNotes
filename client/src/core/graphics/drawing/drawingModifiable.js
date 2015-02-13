@@ -137,9 +137,10 @@ xrx.drawing.Modifiable.prototype.handleUp = function(e) {
 
 xrx.drawing.Modifiable.prototype.handleClick = function(e) {
   var drawing = this.drawing_;
+  if (drawing.getMode() !== xrx.drawing.Mode.DELETE) return;
   this.mousePoint_ = drawing.getEventPoint(e);
   var shape = drawing.getShapeSelected(this.mousePoint_);
-  if (shape) {
+  if (shape && shape.isModifiable()) {
     drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
     var confirm = window.confirm('Delete forever?');
     if (confirm) {

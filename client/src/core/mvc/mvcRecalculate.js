@@ -93,6 +93,7 @@ xrx.mvc.Recalculate.removeStartEndTag = function(instance) {
 
 
 xrx.mvc.Recalculate.replaceAttrValue = function(instance) {
+  return [];
   return xrx.mvc.Recalculate.recalculate_(instance, function(control) {
     return !control.getXpath().hasNotTag();
   });

@@ -335,6 +335,18 @@ xrx.xpath.FunctionCall.BuiltInFunc = {
         return opt_expr ? opt_expr.asString(ctx) :
             ctx.getNode().getValueAsString();
       }, 0, 1),
+  STRING_JOIN: xrx.xpath.FunctionCall.createFunc('string-join',
+      xrx.xpath.DataType.STRING, false, true, false,
+      function(ctx, expr1, expr2) {
+        var arr = [];
+        var ns = expr1.evaluate(ctx);
+        var iter = ns.iterator();
+        var prev = 0;
+        for (var node = iter.next(); node; node = iter.next()) {
+          arr.push(node.getValueAsString());
+        }
+        return arr.join(expr2.asString(ctx));
+      }, 2, 2),
   STRING_LENGTH: xrx.xpath.FunctionCall.createFunc('string-length',
       xrx.xpath.DataType.NUMBER, false, true, false,
       function(ctx, opt_expr) {

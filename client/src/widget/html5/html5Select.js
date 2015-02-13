@@ -30,18 +30,16 @@ xrx.html5.Select.prototype.createDom = function() {
 
 
 xrx.html5.Select.prototype.mvcRefresh = function() {
-  var value;
-  var node = this.getResult().getNode(0);
-  var optgroup = xrx.mvc.getModelComponent(this.getDataset('xrxOptgroup'));
-  node ? value = node.getValueAsString() : node = null;
-  var i = 0;
   var option;
+  var map = xrx.mvc.getModelComponent(this.getDataset('xrxMap')).getMap();
+  var value = this.getResult().castAsString();
   goog.dom.removeChildren(this.element_);
-  while(option = optgroup.getOption(i)) {
-    if (option.value === value) option.setAttribute('selected', 'selected');
+  map.forEach(function(label, key) {
+    option = goog.dom.createDom('option', {value: key});
+    goog.dom.setTextContent(option, label);
+    if (value === key) option.setAttribute('selected', 'selected');
     goog.dom.appendChild(this.element_, option);
-    i++;
-  };
+  }, this);
 };
 
 

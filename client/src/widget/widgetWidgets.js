@@ -8,6 +8,7 @@ goog.provide('xrx.widget.Widgets');
 
 goog.require('xrx.mvc.Components');
 goog.require('xrx.html5.Button');
+goog.require('xrx.html5.Checkbox');
 goog.require('xrx.html5.Input');
 goog.require('xrx.html5.Select');
 goog.require('xrx.html5.Textarea');

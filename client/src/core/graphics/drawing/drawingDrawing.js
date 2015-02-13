@@ -317,6 +317,16 @@ xrx.drawing.Drawing.prototype.draw = function() {
 
 
 /**
+ * Returns the mode.
+ * @return {number} The mode.
+ */
+xrx.drawing.Drawing.prototype.getMode = function() {
+  return this.mode_;
+};
+
+
+
+/**
  * @private
  */
 xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
@@ -444,7 +454,6 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
       function(e) {
         e.preventDefault();
         e.stopPropagation();
-        console.log(self.create_.handleClick);
         if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e);
       },
       true

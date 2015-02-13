@@ -61,6 +61,7 @@ xrx.canvas.Polygon.prototype.setCoordAt = function(pos, coord) {
  */
 xrx.canvas.Polygon.prototype.drawPath_ = function() {
   var coords = this.geometry_.coords;
+  if (!coords[0]) return;
   this.context_.beginPath();
   this.context_.moveTo(coords[0][0], coords[0][1]);
   for(var i = 1, len = coords.length; i < len; i++) {

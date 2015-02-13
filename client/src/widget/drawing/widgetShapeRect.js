@@ -20,6 +20,7 @@ goog.provide('xrx.widget.ShapeRectY');
 goog.require('goog.dom.dataset');
 goog.require('xrx.mvc.ChildComponent');
 goog.require('xrx.mvc.ComponentView');
+goog.require('xrx.mvc.Controller');
 goog.require('xrx.shape.Rect');
 goog.require('xrx.widget.Shape');
 
@@ -173,6 +174,7 @@ xrx.widget.ShapeRect.prototype.setBottom = function(coord) {
 
 xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
   if (!this.getResult().getNode(0)) return;
+  xrx.mvc.Controller.rebuild = false;
   if (this.rectX_)      this.rectX_.refresh();
   if (this.rectY_)      this.rectY_.refresh();
   if (this.rectWidth_)  this.rectWidth_.refresh();
@@ -181,6 +183,7 @@ xrx.widget.ShapeRect.prototype.mvcRefresh = function() {
   if (this.rectTop_)    this.rectTop_.refresh();
   if (this.rectRight_)  this.rectRight_.refresh();
   if (this.rectBottom_) this.rectBottom_.refresh();
+  xrx.mvc.Controller.rebuild = true;
 };
 
 
@@ -202,7 +205,7 @@ xrx.widget.ShapeRect.prototype.mvcRemove = function() {
 
 
 xrx.widget.ShapeRect.prototype.mvcModelDeleteData = function() {
-  xrx.mvc.Controller.removeNode(this);
+  xrx.mvc.Controller.removeNode(this, this.getResult().getNode(0));
 };
 
 

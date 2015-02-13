@@ -154,8 +154,8 @@ xrx.widget.Canvas.prototype.refresh = function(silent) {
       shapes = goog.dom.getElementsByClass('xrx-shape', repeatE);
       goog.array.forEach(shapes, function(s) {
         var c = xrx.mvc.getComponent(s.id);
-        this.drawing_.getLayerShape().addShapes(c.getShape());
         c.mvcRefresh();
+        this.drawing_.getLayerShape().addShapes(c.getShape());
       }, this);
     }
   }, this);

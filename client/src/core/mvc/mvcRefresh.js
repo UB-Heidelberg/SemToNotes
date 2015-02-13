@@ -7,11 +7,14 @@ goog.provide('xrx.mvc.Refresh');
 
 
 goog.require('goog.array');
+goog.require('goog.dom.DomHelper');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.Repeat');
 
 
 
-xrx.mvc.Refresh = function() {};
+xrx.mvc.Refresh = function() {
+};
 
 
 
@@ -28,8 +31,12 @@ xrx.mvc.Refresh.refresh_ = function(control, binds, opt_test) {
       component.mvcRefresh();
     } else if (goog.array.contains(binds, component.getBindId())) {
       component.mvcRefresh();
+      var canvasElements = goog.dom.getElementsByClass('xrx-canvas');
+      goog.array.forEach(canvasElements, function(e) {
+        xrx.mvc.getComponent(e.id).refresh();
+      });
     } else {}
-  }
+  };
 };
 
 
@@ -95,6 +102,7 @@ xrx.mvc.Refresh.removeStartEndTag = function(control, node, binds) {
 
 
 xrx.mvc.Refresh.replaceAttrValue = function(control, node, binds) {
+  binds = [];
   xrx.mvc.Refresh.refresh_(control, binds, function(component) {
     var n = component.getResult().getNode(0);
     return node && n && !(component instanceof xrx.mvc.Repeat) ? node.getLabel().isDescendantOf(n.getLabel()) : false;
