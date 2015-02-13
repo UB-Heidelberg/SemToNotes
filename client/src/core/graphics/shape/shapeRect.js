@@ -144,6 +144,7 @@ xrx.shape.RectCreate.prototype.handleClick = function(e) {
   var shape;
   var coords;
   var point = this.drawing_.getEventPoint(e);
+  console.log('TEST');
 
   if (this.count_ === 1) { // The user creates the second vertex and
                            // in that the rectangle

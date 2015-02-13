@@ -47,6 +47,16 @@ xrx.widget.Shape.prototype.initModifiable_ = function() {
 
 
 
+xrx.widget.Shape.prototype.initSelectable_ = function() {
+  var self = this;
+  this.shape_.handleSelected = function() {
+    self.dispatch('xrx-event-graphic-selected');
+    self.getCanvas().refresh();
+  };
+};
+
+
+
 xrx.widget.Shape.prototype.initStyle_ = function() {
   var borderWidth = parseInt(goog.style.getStyle_(this.element_, 'borderWidth'));
   var borderColor = goog.style.getStyle_(this.element_, 'borderColor');
@@ -58,6 +68,7 @@ xrx.widget.Shape.prototype.initStyle_ = function() {
 
 xrx.widget.Shape.prototype.init_ = function() {
   this.initModifiable_();
+  this.initSelectable_();
   this.initStyle_();
 };
 

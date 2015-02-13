@@ -266,6 +266,7 @@ xrx.mvc.Component.prototype.getResultByRef_ = function() {
   var context = repeat.getResult().getNode(this.getRepeatIndex());
   if (!context) return new xrx.xpath.XPathResult();
   // TODO: Node conversion function
+  xrx.mvc.actualComponent = this;
   var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
   return this.xpath_.evaluate(nodeS);
 };

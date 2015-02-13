@@ -240,6 +240,10 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
     this.registerOut(this.viewbox_);
     this.registerWheel(this.viewbox_);
     break;
+  case xrx.drawing.Mode.SELECT:
+    this.registerClick(this.selectable_);
+    this.registerWheel(this.viewbox_);
+    break;
   case xrx.drawing.Mode.MODIFY:
     this.registerDrag(this.modifiable_);
     this.registerWheel(this.viewbox_);

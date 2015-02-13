@@ -36,5 +36,7 @@ xrx.drawing.Mode = {
   MODIFY: 2,
   DELETE: 3,
   CREATE: 4,
-  DISABLED: 5
+  DISABLED: 5,
+  SELECT: 6,
+  HOVER: 7
 };

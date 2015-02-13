@@ -18,6 +18,10 @@ xrx.mvc =  {};
 
 
 
+xrx.mvc.actualComponent = {};
+
+
+
 /** @const */ xrx.mvc.MODEL = 'model';
 
 

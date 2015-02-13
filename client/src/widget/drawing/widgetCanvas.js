@@ -30,6 +30,8 @@ xrx.widget.Canvas = function(element) {
 
   this.graphics_;
 
+  this.origGroups_;
+
   this.groups_ = [];
 
   this.backgroundImage_;
@@ -50,6 +52,13 @@ xrx.widget.Canvas.prototype.setModeView = function() {
 
 
 
+xrx.widget.Canvas.prototype.setModeSelect = function() {
+  this.setNameShapeCreate(null);
+  if (this.drawing_.getEngine().isAvailable()) this.drawing_.setModeSelect();
+};
+
+
+
 xrx.widget.Canvas.prototype.setModeModify = function() {
   this.setNameShapeCreate(null);
   if (this.drawing_.getEngine().isAvailable()) this.drawing_.setModeModify();
@@ -60,6 +69,13 @@ xrx.widget.Canvas.prototype.setModeModify = function() {
 xrx.widget.Canvas.prototype.setModeCreate = function(name) {
   this.setNameShapeCreate(name);
   this.getDrawing().setModeCreate(this.getActiveGroup().getShapeCreate().getShape());
+};
+
+
+
+xrx.widget.Canvas.prototype.setModeDelete = function() {
+  this.setNameShapeCreate(null);
+  this.getDrawing().setModeDelete();
 };
 
 
@@ -78,6 +94,20 @@ xrx.widget.Canvas.prototype.getBackgroundImage = function() {
 
 xrx.widget.Canvas.prototype.setNameShapeCreate = function(name) {
   this.nameInsertShapeCreate_ = name;
+};
+
+
+
+xrx.widget.Canvas.prototype.getGroups = function() {
+  return this.groups_;
+};
+
+
+
+xrx.widget.Canvas.prototype.resetGroups = function() {
+  this.groups_ = null;
+  this.groups_ = goog.array.clone(this.origGroups_);
+  this.refresh();
 };
 
 
@@ -111,18 +141,23 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
 
 
 
-xrx.widget.Canvas.prototype.refresh = function() {
+xrx.widget.Canvas.prototype.refresh = function(silent) {
   var shapes;
+  var repeatE;
+  var repeatC;
   var self = this;
   this.drawing_.getLayerShape().removeShapes();
   goog.array.forEach(this.groups_, function(e, i, a) {
-    shapes = goog.dom.getElementsByClass('xrx-shape',
-        goog.dom.getChildren(e.getElement())[0]);
-    goog.array.forEach(shapes, function(s) {
-      var c = xrx.mvc.getComponent(s.id);
-      this.drawing_.getLayerShape().addShapes(c.getShape());
-      c.mvcRefresh();
-    }, this);
+    repeatE = goog.dom.getChildren(e.getElement())[0];
+    repeatC = xrx.mvc.getComponent(repeatE.id);
+    if (repeatC.getResult().castAsNode().length > 0) {
+      shapes = goog.dom.getElementsByClass('xrx-shape', repeatE);
+      goog.array.forEach(shapes, function(s) {
+        var c = xrx.mvc.getComponent(s.id);
+        this.drawing_.getLayerShape().addShapes(c.getShape());
+        c.mvcRefresh();
+      }, this);
+    }
   }, this);
   this.drawing_.draw();
 };
@@ -148,6 +183,7 @@ xrx.widget.Canvas.prototype.createDom = function() {
   goog.array.forEach(groups, function(e, i, a) {
     self.groups_.push(new xrx.widget.CanvasGroup(e, self));
   });
+  this.origGroups_ = goog.array.clone(this.groups_);
   // handle shape create
   this.drawing_.handleCreated = function() {
     self.getActiveGroup().dispatch('xrx-event-graphic-created');
@@ -162,7 +198,7 @@ xrx.widget.Canvas.prototype.createDom = function() {
  */
 xrx.widget.CanvasGroup = function(element, canvas) {
 
-  this.element_ = element;
+  goog.base(this, element);
 
   this.canvas_ = canvas;
 
@@ -176,8 +212,12 @@ xrx.widget.CanvasGroup.prototype.createDom = function() {};
 
 
 
-xrx.widget.CanvasGroup.prototype.getElement = function() {
-  return this.element_;
+xrx.widget.CanvasGroup.prototype.toFront = function() {
+  // move canvas group to front
+  var groups = this.canvas_.getGroups();
+  var index = goog.array.indexOf(groups, this);
+  goog.array.moveItem(groups, index, groups.length - 1);
+  this.canvas_.refresh();
 };
 
 

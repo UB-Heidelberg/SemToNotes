@@ -23,6 +23,7 @@ goog.require('xrx.drawing.LayerShapeModify');
 goog.require('xrx.drawing.LayerTool');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
+goog.require('xrx.drawing.Selectable');
 goog.require('xrx.drawing.State');
 goog.require('xrx.drawing.Viewbox');
 goog.require('xrx.engine');
@@ -95,6 +96,13 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @private
    */
   this.modifiable_ = new xrx.drawing.Modifiable(this);
+
+  /**
+   * The shape currently selected by the user.
+   * @type {?}
+   * @private
+   */
+  this.selectable_ = new xrx.drawing.Selectable(this);
 
   /**
    * The shape currently created by the user.
@@ -352,8 +360,8 @@ xrx.drawing.Drawing.prototype.setModeView = function() {
 
 
 /**
- * Switch the drawing canvas over into mode <i>hover</i> to allow view-box panning
- * zooming and rotating.
+ * Switch the drawing canvas over into mode <i>hover</i> to allow hovering
+ * shapes.
  */
 xrx.drawing.Drawing.prototype.setModeHover = function() {
   this.getLayerBackground().setLocked(false);
@@ -362,7 +370,23 @@ xrx.drawing.Drawing.prototype.setModeHover = function() {
   this.getLayerShapeCreate().setLocked(true);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  this.setMode_(xrx.drawing.Mode.VIEW);
+  this.setMode_(xrx.drawing.Mode.HOVER);
+};
+
+
+
+/**
+ * Switch the drawing canvas over into mode <i>select</i> to allow selecting
+ * shapes.
+ */
+xrx.drawing.Drawing.prototype.setModeSelect = function() {
+  this.getLayerBackground().setLocked(true);
+  this.getLayerShape().setLocked(false);
+  this.getLayerShapeModify().setLocked(true);
+  this.getLayerShapeCreate().setLocked(true);
+  this.getLayerShapeModify().removeShapes();
+  this.getLayerShapeCreate().removeShapes();
+  this.setMode_(xrx.drawing.Mode.SELECT);
 };
 
 
@@ -413,7 +437,6 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.getLayerShapeCreate().setLocked(false);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-
   this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
   if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
   this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
@@ -421,6 +444,7 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
       function(e) {
         e.preventDefault();
         e.stopPropagation();
+        console.log(self.create_.handleClick);
         if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e);
       },
       true

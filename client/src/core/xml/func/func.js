@@ -31,10 +31,15 @@ xrx.func = {
   XRX_INDEX: xrx.xpath.FunctionCall.createFunc('xrx:index',
       xrx.xpath.DataType.NUMBER, true, true, true,
       function(ctx, expr) {
-        var repeatId = expr.evaluate(ctx);
-        var repeat = xrx.mvc.getViewComponent(repeatId);
-        return repeat.getIndex();
-      }, 1, 1),
+        if (expr) {
+          var repeatId = expr.evaluate(ctx);
+          var repeat = xrx.mvc.getViewComponent(repeatId);
+          return repeat.getIndex();
+        } else {
+          var comp = xrx.mvc.actualComponent;
+          return comp.getRepeatIndex(comp.getElement()) + 1;
+        }
+      }, 0, 1),
   XRX_INSTANCE: xrx.xpath.FunctionCall.createFunc('xrx:instance',
       xrx.xpath.DataType.NODESET, true, true, true,
       function(ctx, expr) {
