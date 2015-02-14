@@ -59,7 +59,7 @@ xrx.mvc.Controller.insertNode = function(control, opt_node, newNode) {
   case xrx.token.EMPTY_TAG:
     var notTag = new xrx.token.NotTag(token.label().clone());
     notTag = pilot.notTag(token, notTag);
-    xrx.mvc.Controller.insertEmptyTag(control, node, notTag, 0, newNode.getXml());
+    xrx.mvc.Controller.insertFragment(control, node, notTag, 0, newNode.getXml());
     break;
   case xrx.token.START_TAG:
     var notTag = new xrx.token.NotTag(token.label().clone());

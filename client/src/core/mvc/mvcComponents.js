@@ -24,6 +24,7 @@ goog.require('xrx.mvc.Origin');
 goog.require('xrx.mvc.Password');
 goog.require('xrx.mvc.Remove');
 goog.require('xrx.mvc.Repeat');
+goog.require('xrx.mvc.Resource');
 goog.require('xrx.mvc.Script');
 goog.require('xrx.mvc.Show');
 goog.require('xrx.mvc.Send');
@@ -49,6 +50,7 @@ xrx.mvc.Components['xrx-bind'] = xrx.mvc.Bind;
 xrx.mvc.Components['xrx-hide'] = xrx.mvc.Hide;
 xrx.mvc.Components['xrx-map'] = xrx.mvc.Map;
 xrx.mvc.Components['xrx-repeat'] = xrx.mvc.Repeat;
+xrx.mvc.Components['xrx-resource'] = xrx.mvc.Resource;
 xrx.mvc.Components['xrx-show'] = xrx.mvc.Show;
 xrx.mvc.Components['xrx-submission'] = xrx.mvc.Submission;
 

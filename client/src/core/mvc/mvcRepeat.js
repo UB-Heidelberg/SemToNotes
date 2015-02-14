@@ -29,6 +29,8 @@ xrx.mvc.Repeat = function(element) {
 
   this.activeElement_;
 
+  this.length_ = 0;
+
   goog.base(this, element);
 };
 goog.inherits(xrx.mvc.Repeat, xrx.mvc.ComponentView);
@@ -99,11 +101,13 @@ xrx.mvc.Repeat.prototype.createDom = function() {
 
 
 xrx.mvc.Repeat.prototype.mvcRefresh = function() {
+  if (this.length_ === this.getResult().getNodes().length) return; 
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();
   xrx.mvc.Mvc.install(this.element_);
   goog.style.setStyle(this.element_, 'display', 'block');
+  this.length_ = this.getResult().getNodes().length;
 };
 
 

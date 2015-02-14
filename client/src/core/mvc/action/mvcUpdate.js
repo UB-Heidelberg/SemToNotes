@@ -26,6 +26,7 @@ goog.inherits(xrx.mvc.Update, xrx.mvc.AbstractUpdate);
  * @private
  */
 xrx.mvc.Update.prototype.execute_ = function() {
-  xrx.mvc.Controller.updateNode(this, this.getTargetAsNode(),
+  var target = this.getTargetAsNode();
+  xrx.mvc.Controller.updateNode(this, target,
       this.getOriginAsString());
 };
