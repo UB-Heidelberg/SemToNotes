@@ -29,7 +29,9 @@ xrx.mvc.Repeat = function(element) {
 
   this.activeElement_;
 
-  this.length_ = 0;
+  this.length_ = -1;
+
+  this.firstLabel_;
 
   goog.base(this, element);
 };
@@ -101,13 +103,16 @@ xrx.mvc.Repeat.prototype.createDom = function() {
 
 
 xrx.mvc.Repeat.prototype.mvcRefresh = function() {
-  if (this.length_ === this.getResult().getNodes().length) return; 
+  var node = this.getResult().getNode(0);
+  if (this.length_ === this.getResult().getNodes().length && node && this.firstLabel_ &&
+      this.firstLabel_.sameAs(node.getLabel())) return; 
   xrx.mvc.removeViewComponents(this.element_);
   this.removeItems_();
   this.createItems_();
   xrx.mvc.Mvc.install(this.element_);
   goog.style.setStyle(this.element_, 'display', 'block');
   this.length_ = this.getResult().getNodes().length;
+  if (node) this.firstLabel_ = node.getLabel();
 };
 
 
