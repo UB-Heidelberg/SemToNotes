@@ -59,7 +59,8 @@ xrx.widget.Shape.prototype.initSelectable_ = function() {
 
 xrx.widget.Shape.prototype.initStyle_ = function() {
   var borderWidth = parseInt(goog.style.getStyle_(this.element_, 'borderWidth'));
-  var borderColor = goog.style.getStyle_(this.element_, 'borderColor');
+  var borderColor = goog.style.getStyle_(this.element_, 'borderTopColor');
+  console.log(borderColor);
   if (borderWidth !== NaN && this.shape_.setStrokeWidth) this.shape_.setStrokeWidth(borderWidth);
   if (this.shape_.setStrokeColor) this.shape_.setStrokeColor(borderColor);
 };

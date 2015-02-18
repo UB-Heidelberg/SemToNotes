@@ -8,6 +8,7 @@ goog.provide('xrx');
 
 goog.require('xrx.func');
 goog.require('xrx.mvc');
+goog.require('xrx.mvc.Components');
 goog.require('xrx.mvc.Mvc');
 
 
