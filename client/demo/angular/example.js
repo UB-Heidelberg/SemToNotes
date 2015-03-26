@@ -58,7 +58,7 @@ myApp.controller("ControllerA", function ($scope, myService) {
         $scope.currentTab = currentTab;
     });
 
-
+/**
     var paper = new Raphael(document.getElementById('canvas_container'), 500, 500);
     c = paper.image("app/static/a.jpg", 0, 0, 500, 500);
     paper.rect(0, 0, 500, 500).attr({
@@ -94,7 +94,7 @@ myApp.controller("ControllerA", function ($scope, myService) {
     }
     var world = paper.setFinish();
     world.hover($scope.over, $scope.out);
-
+**/
 
 });
 
