@@ -576,6 +576,7 @@ xrx.drawing.Drawing.prototype.installFallback_ = function(opt_engine) {
   var span = goog.dom.createElement('span');
   goog.dom.setTextContent(span, 'Your browser does not support ' + opt_engine +
       ' rendering.');
+  goog.dom.classes.add(span, 'xrx-canvas-error');
   goog.dom.appendChild(this.element_, span);
 };
 

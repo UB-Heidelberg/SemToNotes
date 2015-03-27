@@ -5,5 +5,5 @@
   --namespace="xrx" \
   --output_mode=compiled \
   --compiler_jar=./lib/closure-compiler/compiler.jar \
-  --compiler_flags="--compilation_level=ADVANCED_OPTIMIZATIONS" \
+  --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" \
   > ./xrx-minified.js

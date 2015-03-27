@@ -80,6 +80,42 @@ xrx.widget.Canvas.prototype.setModeDelete = function() {
 
 
 
+xrx.widget.Canvas.prototype.zoomIn = function() {
+  if (this.drawing_.getEngine().isAvailable()) {
+    this.getDrawing().getViewbox().zoomIn();
+    this.getDrawing().draw();
+  }
+};
+
+
+
+xrx.widget.Canvas.prototype.zoomOut = function() {
+  if (this.drawing_.getEngine().isAvailable()) {
+    this.getDrawing().getViewbox().zoomOut();
+    this.getDrawing().draw();
+  }
+};
+
+
+
+xrx.widget.Canvas.prototype.rotateLeft = function() {
+  if (this.drawing_.getEngine().isAvailable()) {
+    this.getDrawing().getViewbox().rotateLeft();
+    this.getDrawing().draw();
+  }
+};
+
+
+
+xrx.widget.Canvas.prototype.rotateRight = function() {
+  if (this.drawing_.getEngine().isAvailable()) {
+    this.getDrawing().getViewbox().rotateRight();
+    this.getDrawing().draw();
+  }
+};
+
+
+
 xrx.widget.Canvas.prototype.getDrawing = function() {
   return this.drawing_;
 };
@@ -142,6 +178,7 @@ xrx.widget.Canvas.prototype.getWidgetShape = function() {
 
 
 xrx.widget.Canvas.prototype.refresh = function(silent) {
+  if (!this.getDrawing().getEngine().isAvailable()) return;
   var shapes;
   var repeatE;
   var repeatC;

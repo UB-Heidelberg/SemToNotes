@@ -114,7 +114,7 @@ xrx.mvc.Refresh.replaceAttrValue = function(control, node, binds) {
 xrx.mvc.Refresh.replaceNotTag = function(control, node, binds) {
   xrx.mvc.Refresh.refresh_(control, binds, function(component) {
     var n = component.getResult().getNode(0);
-    return node && n ? node.getLabel().isDescendantOf(n.getLabel()) : false;
+    return node && n ? (node.getLabel().isDescendantOf(n.getLabel()) || node.getLabel().sameAs(n.getLabel())) : false;
   });
 };
 

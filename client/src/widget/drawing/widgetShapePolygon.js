@@ -36,6 +36,7 @@ xrx.mvc.registerComponent('xrx-shape-polygon', xrx.widget.ShapePolygon);
 
 xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
   if (!this.getResult().getNode(0)) return;
+  if (!this.getDrawing().getEngine().isAvailable()) return;
   this.shapePolygonCoords_.refresh();
   this.getDrawing().draw();
 };
@@ -43,6 +44,7 @@ xrx.widget.ShapePolygon.prototype.mvcRefresh = function() {
 
 
 xrx.widget.ShapePolygon.prototype.mvcRemove = function() {
+  if (!this.getDrawing().getEngine().isAvailable()) return;
   this.getDrawing().getLayerShape().removeShape(this.shape_);
   this.getDrawing().draw();
 };
