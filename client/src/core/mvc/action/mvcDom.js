@@ -28,13 +28,22 @@ goog.inherits(xrx.mvc.Dom, xrx.mvc.AbstractAction);
 
 xrx.mvc.Dom.prototype.getElementsSelected = function() {
   var elements;
-  var selector = this.getDataset('xrxSelect');
-  if (selector[0] === '.') {
-    elements = goog.dom.getElementsByClass(selector.substr(1));
-  } else if (selector[0] === '#') {
-    elements = [goog.dom.getElement(selector.substr(1))];
+  var scope;
+  var datasetScope = this.getDataset('xrxScope');
+  console.log(datasetScope);
+  var datasetSelector = this.getDataset('xrxSelect');
+  if (!datasetScope) {
+  } else if (datasetScope && datasetScope.substr(0, 1) === '#') {
+    scope = goog.dom.getElement(datasetScope.substr(1));
   } else {
-    throw Error('Invalid selector: "' + selector + '".');
+    throw Error('Invalid scope: "' + datasetScope + '". "#" expected.');
+  };
+  if (datasetSelector.substr(0, 1) === '.') {
+    elements = goog.dom.getElementsByClass(datasetSelector.substr(1), scope);
+  } else if (datasetSelector.substr(0, 1) === '#') {
+    elements = [goog.dom.getElement(datasetSelector.substr(1))];
+  } else {
+    throw Error('Invalid selector: "' + datasetSelector + '". "#" or "." expected.');
   };
   return goog.array.toArray(elements);
 };

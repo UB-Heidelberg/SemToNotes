@@ -617,7 +617,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
     // install the tool layer
     this.installLayerTool_();
-
+    /*
     if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9)) {
       // IE 7 and IE 8 z-index fix
       var divs = goog.dom.getElementsByTagNameAndClass('div', undefined, this.element_);
@@ -627,6 +627,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
         zIndex -= 10;
       })
     };
+    */
 
   } else {
     // install an unavailable message

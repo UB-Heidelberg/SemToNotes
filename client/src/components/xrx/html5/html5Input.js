@@ -9,6 +9,7 @@ goog.provide('xrx.html5.Input');
 goog.require('goog.dom.forms');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.userAgent');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.node');
 goog.require('xrx.token');
@@ -27,6 +28,11 @@ xrx.mvc.registerComponent('xrx-input', xrx.html5.Input);
 
 xrx.html5.Input.prototype.createDom = function() {
   this.registerEvent(goog.events.EventType.INPUT);
+  if (goog.userAgent.IE && !goog.userAgent.isVersionOrHigher(9))
+      this.registerEvent(goog.events.EventType.PROPERTYCHANGE);
+  if (goog.userAgent.IE && goog.userAgent.isVersionOrHigher(9) &&
+      !goog.userAgent.isVersionOrHigher(10))
+      this.registerEvent(goog.events.EventType.KEYUP);
 };
 
 
