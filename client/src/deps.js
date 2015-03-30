@@ -8,7 +8,7 @@ goog.addDependency('../../../../src/components/xrx/drawing/widgetShapePolygon.js
 goog.addDependency('../../../../src/components/xrx/drawing/widgetShapeRect.js', ['xrx.widget.ShapeRect', 'xrx.widget.ShapeRectBottom', 'xrx.widget.ShapeRectCreate', 'xrx.widget.ShapeRectGeometry', 'xrx.widget.ShapeRectHeight', 'xrx.widget.ShapeRectInsert', 'xrx.widget.ShapeRectLeft', 'xrx.widget.ShapeRectRight', 'xrx.widget.ShapeRectTop', 'xrx.widget.ShapeRectWidth', 'xrx.widget.ShapeRectX', 'xrx.widget.ShapeRectY'], ['goog.dom.dataset', 'xrx.mvc.ChildComponent', 'xrx.mvc.ComponentView', 'xrx.mvc.Controller', 'xrx.shape.Rect', 'xrx.widget.Shape']);
 goog.addDependency('../../../../src/components/xrx/html5/html5Button.js', ['xrx.html5.Button'], ['goog.events.EventType', 'xrx.mvc.Component']);
 goog.addDependency('../../../../src/components/xrx/html5/html5Checkbox.js', ['xrx.html5.Checkbox'], ['goog.dom.forms', 'goog.events', 'goog.events.EventType', 'xrx.mvc.ComponentView']);
-goog.addDependency('../../../../src/components/xrx/html5/html5Input.js', ['xrx.html5.Input'], ['goog.dom.forms', 'goog.events', 'goog.events.EventType', 'xrx.mvc.ComponentView', 'xrx.node', 'xrx.token', 'xrx.token.NotTag']);
+goog.addDependency('../../../../src/components/xrx/html5/html5Input.js', ['xrx.html5.Input'], ['goog.dom.forms', 'goog.events', 'goog.events.EventType', 'goog.userAgent', 'xrx.mvc.ComponentView', 'xrx.node', 'xrx.token', 'xrx.token.NotTag']);
 goog.addDependency('../../../../src/components/xrx/html5/html5Select.js', ['xrx.html5.Select'], ['goog.dom.DomHelper', 'goog.dom.forms', 'goog.events', 'goog.events.EventType', 'xrx.mvc.ComponentView']);
 goog.addDependency('../../../../src/components/xrx/html5/html5Textarea.js', ['xrx.html5.Textarea'], ['xrx.html5.Input']);
 goog.addDependency('../../../../src/components/xrx/widgetConsole.js', ['xrx.widget.Console'], ['goog.dom.DomHelper', 'xrx.mvc', 'xrx.mvc.ComponentView', 'xrx.mvc.Cursor', 'xrx.node', 'xrx.xml.Indent', 'xrx.xml.Serialize']);
@@ -16,9 +16,10 @@ goog.addDependency('../../../../src/components/xrx/widgetOutput.js', ['xrx.widge
 goog.addDependency('../../../../src/components/xrx/widgetWidget.js', ['xrx.widget.Widget'], []);
 goog.addDependency('../../../../src/components/xrx/widgetWidgets.js', ['xrx.widget.Widgets'], ['xrx.html5.Button', 'xrx.html5.Checkbox', 'xrx.html5.Input', 'xrx.html5.Select', 'xrx.html5.Textarea', 'xrx.mvc.Components', 'xrx.widget.Canvas', 'xrx.widget.CanvasBackgroundImage', 'xrx.widget.CanvasToolbar', 'xrx.widget.CanvasToolbarItemCreate', 'xrx.widget.CanvasToolbarItemDelete', 'xrx.widget.CanvasToolbarItemModify', 'xrx.widget.CanvasToolbarItemRotateLeft', 'xrx.widget.CanvasToolbarItemRotateRight', 'xrx.widget.CanvasToolbarItemView', 'xrx.widget.CanvasToolbarItemZoomIn', 'xrx.widget.CanvasToolbarItemZoomOut', 'xrx.widget.Console', 'xrx.widget.Output', 'xrx.widget.ShapePolygon', 'xrx.widget.ShapePolygonCreate', 'xrx.widget.ShapePolygonInsert', 'xrx.widget.ShapeRect', 'xrx.widget.ShapeRectCreate', 'xrx.widget.ShapeRectInsert']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawing.js', ['xrx.drawing', 'xrx.drawing.Mode', 'xrx.drawing.State'], []);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingDrawing.js', ['xrx.drawing.Drawing'], ['goog.dom.DomHelper', 'goog.dom.ViewportSizeMonitor', 'goog.events', 'goog.events.EventType', 'goog.net.ImageLoader', 'goog.style', 'goog.userAgent', 'xrx.canvas', 'xrx.drawing', 'xrx.drawing.EventHandler', 'xrx.drawing.LayerBackground', 'xrx.drawing.LayerShape', 'xrx.drawing.LayerShapeCreate', 'xrx.drawing.LayerShapeModify', 'xrx.drawing.LayerTool', 'xrx.drawing.Mode', 'xrx.drawing.Modifiable', 'xrx.drawing.Selectable', 'xrx.drawing.State', 'xrx.drawing.Viewbox', 'xrx.engine', 'xrx.engine.Engine', 'xrx.engine.Engines', 'xrx.shape.Shape', 'xrx.shape.Shapes', 'xrx.svg', 'xrx.vml']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingDrawing.js', ['xrx.drawing.Drawing'], ['goog.dom.DomHelper', 'goog.dom.ViewportSizeMonitor', 'goog.events', 'goog.events.EventType', 'goog.net.ImageLoader', 'goog.style', 'goog.userAgent', 'xrx.canvas', 'xrx.drawing', 'xrx.drawing.EventHandler', 'xrx.drawing.Hoverable', 'xrx.drawing.LayerBackground', 'xrx.drawing.LayerShape', 'xrx.drawing.LayerShapeCreate', 'xrx.drawing.LayerShapeModify', 'xrx.drawing.LayerTool', 'xrx.drawing.Mode', 'xrx.drawing.Modifiable', 'xrx.drawing.Selectable', 'xrx.drawing.State', 'xrx.drawing.Viewbox', 'xrx.engine', 'xrx.engine.Engine', 'xrx.engine.Engines', 'xrx.shape.Shape', 'xrx.shape.Shapes', 'xrx.svg', 'xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingEventHandler.js', ['xrx.drawing.EventHandler'], ['goog.style', 'xrx.drawing', 'xrx.drawing.EventTarget']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingEventTarget.js', ['xrx.drawing.Event', 'xrx.drawing.EventTarget', 'xrx.drawing.EventType'], ['goog.Disposable', 'goog.events', 'goog.events.EventHandler', 'goog.events.EventType', 'goog.events.MouseWheelHandler', 'goog.events.MouseWheelHandler.EventType', 'goog.math', 'goog.style', 'goog.userAgent', 'xrx.drawing', 'xrx.drawing.Mode', 'xrx.shape.Shapes']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingHoverable.js', ['xrx.drawing.Hoverable'], []);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingLayer.js', ['xrx.drawing.Layer'], []);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingLayerBackground.js', ['xrx.drawing.LayerBackground'], ['xrx.drawing.Layer']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingLayerShape.js', ['xrx.drawing.LayerShape'], ['xrx.drawing.Layer']);
@@ -40,10 +41,11 @@ goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasImage.js',
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasPolygon.js', ['xrx.canvas.Polygon'], ['xrx.canvas.Stylable', 'xrx.geometry.Path']);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasPolyline.js', ['xrx.canvas.Polyline'], ['xrx.canvas.Stylable', 'xrx.geometry.Path']);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasRect.js', ['xrx.canvas.Rect'], ['xrx.canvas.Stylable', 'xrx.geometry.Rect']);
-goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasStylable.js', ['xrx.canvas.Stylable'], ['xrx.canvas.Element']);
+goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasStylable.js', ['xrx.canvas.Stylable'], ['xrx.canvas.Element', 'xrx.engine', 'xrx.engine.Stylable']);
 goog.addDependency('../../../../src/core/graphics/engine/engine.js', ['xrx.engine'], ['goog.userAgent']);
 goog.addDependency('../../../../src/core/graphics/engine/engineEngine.js', ['xrx.engine.Engine'], ['xrx.canvas', 'xrx.engine', 'xrx.svg', 'xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/engine/engineEngines.js', ['xrx.engine.Engines'], ['xrx.canvas', 'xrx.canvas.Canvas', 'xrx.canvas.Circle', 'xrx.canvas.Element', 'xrx.canvas.Group', 'xrx.canvas.Image', 'xrx.canvas.Polygon', 'xrx.canvas.Polyline', 'xrx.canvas.Rect', 'xrx.engine', 'xrx.svg', 'xrx.svg.Canvas', 'xrx.svg.Circle', 'xrx.svg.Element', 'xrx.svg.Group', 'xrx.svg.Image', 'xrx.svg.Polygon', 'xrx.svg.Polyline', 'xrx.svg.Rect', 'xrx.vml', 'xrx.vml.Canvas', 'xrx.vml.Circle', 'xrx.vml.Element', 'xrx.vml.Group', 'xrx.vml.Image', 'xrx.vml.Polygon', 'xrx.vml.Polyline', 'xrx.vml.Rect']);
+goog.addDependency('../../../../src/core/graphics/engine/engineStylable.js', ['xrx.engine.Stylable'], []);
 goog.addDependency('../../../../src/core/graphics/engine/svg/svg.js', ['xrx.svg'], []);
 goog.addDependency('../../../../src/core/graphics/engine/svg/svgCanvas.js', ['xrx.svg.Canvas'], ['goog.dom.DomHelper', 'xrx.svg', 'xrx.svg.Element']);
 goog.addDependency('../../../../src/core/graphics/engine/svg/svgCircle.js', ['xrx.svg.Circle'], ['xrx.geometry.Circle', 'xrx.svg', 'xrx.svg.Stylable']);
@@ -53,7 +55,7 @@ goog.addDependency('../../../../src/core/graphics/engine/svg/svgImage.js', ['xrx
 goog.addDependency('../../../../src/core/graphics/engine/svg/svgPolygon.js', ['xrx.svg.Polygon'], ['xrx.geometry.Path', 'xrx.svg', 'xrx.svg.Stylable']);
 goog.addDependency('../../../../src/core/graphics/engine/svg/svgPolyline.js', ['xrx.svg.Polyline'], ['xrx.geometry.Path', 'xrx.svg', 'xrx.svg.Stylable']);
 goog.addDependency('../../../../src/core/graphics/engine/svg/svgRect.js', ['xrx.svg.Rect'], ['xrx.geometry.Rect', 'xrx.svg', 'xrx.svg.Stylable']);
-goog.addDependency('../../../../src/core/graphics/engine/svg/svgStylable.js', ['xrx.svg.Stylable'], ['xrx.svg.Element']);
+goog.addDependency('../../../../src/core/graphics/engine/svg/svgStylable.js', ['xrx.svg.Stylable'], ['xrx.engine', 'xrx.engine.Stylable', 'xrx.svg.Element']);
 goog.addDependency('../../../../src/core/graphics/engine/vml/Raphael.js', ['xrx.vml.Raphael'], ['xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/engine/vml/vml.js', ['xrx.vml'], []);
 goog.addDependency('../../../../src/core/graphics/engine/vml/vmlCanvas.js', ['xrx.vml.Canvas'], ['goog.dom.DomHelper', 'goog.style', 'xrx.vml.Element', 'xrx.vml.Raphael']);
@@ -64,7 +66,7 @@ goog.addDependency('../../../../src/core/graphics/engine/vml/vmlImage.js', ['xrx
 goog.addDependency('../../../../src/core/graphics/engine/vml/vmlPolygon.js', ['xrx.vml.Polygon'], ['xrx.geometry.Path', 'xrx.vml', 'xrx.vml.Stylable']);
 goog.addDependency('../../../../src/core/graphics/engine/vml/vmlPolyline.js', ['xrx.vml.Polyline'], ['xrx.geometry.Path', 'xrx.vml', 'xrx.vml.Stylable']);
 goog.addDependency('../../../../src/core/graphics/engine/vml/vmlRect.js', ['xrx.vml.Rect'], ['xrx.geometry.Rect', 'xrx.vml.Element', 'xrx.vml.Stylable']);
-goog.addDependency('../../../../src/core/graphics/engine/vml/vmlStylable.js', ['xrx.vml.Stylable'], ['xrx.vml.Element']);
+goog.addDependency('../../../../src/core/graphics/engine/vml/vmlStylable.js', ['xrx.vml.Stylable'], ['xrx.engine', 'xrx.engine.Stylable', 'xrx.vml.Element']);
 goog.addDependency('../../../../src/core/graphics/geometry/geometry.js', ['xrx.geometry'], []);
 goog.addDependency('../../../../src/core/graphics/geometry/geometryCircle.js', ['xrx.geometry.Circle'], ['xrx.geometry']);
 goog.addDependency('../../../../src/core/graphics/geometry/geometryPath.js', ['xrx.geometry.Path'], ['xrx.geometry']);

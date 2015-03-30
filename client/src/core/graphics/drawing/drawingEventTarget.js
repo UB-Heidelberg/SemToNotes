@@ -255,6 +255,9 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
   case xrx.drawing.Mode.CREATE:
     this.registerWheel(this.viewbox_);
     break;
+  case xrx.drawing.Mode.HOVER:
+    this.registerMove_(this.hoverable_);
+    break;
   default:
     break;
   }

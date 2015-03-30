@@ -7,6 +7,8 @@ goog.provide('xrx.vml.Stylable');
 
 
 goog.require('xrx.vml.Element');
+goog.require('xrx.engine');
+goog.require('xrx.engine.Stylable');
 
 
 
@@ -28,20 +30,11 @@ xrx.vml.Stylable = function(raphael, geometry) {
   this.geometry_ = geometry;
 
   /**
-   * Object describing the stroke style.
+   * Object describing the style of the stylable element.
+   * @type {xrx.engine.Stylable}
+   * @private
    */
-  this.stroke_ = {
-    color: 'black',
-    width: 1
-  };
-
-  /**
-   * Object describing the fill style.
-   */
-  this.fill_ = {
-    color: '',
-    opacity: 0
-  };
+  this.stylable_ = new xrx.engine.Stylable();
 };
 goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
 
@@ -58,13 +51,37 @@ xrx.vml.Stylable.prototype.getGeometry = function() {
 
 
 /**
+ * Returns the style object of the stylable element.
+ * @return {xrx.engine.Stylable} The style object.
+ */
+xrx.vml.Stylable.prototype.getStylable = function() {
+  return this.stylable_;
+};
+
+
+
+/**
+ * Sets all styles at once by overloading a stylable object.
+ * @param {xrx.engine.Stylable} stylable The stylable object.
+ */
+xrx.vml.Stylable.prototype.setStylable = function(stylable) {
+  this.stylable_.setAll(stylable);
+  this.setStrokeWidth(stylable.getStrokeWidth());
+  this.setStrokeColor(stylable.getStrokeColor());
+  this.setFillColor(stylable.getFillColor());
+  this.setFillOpacity(stylable.getFillOpacity());
+};
+
+
+
+/**
  * Sets the stroke width of the stylable element.
  * @param {number} width The stroke width.
  */
 xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
   var self = this;
-  this.stroke_.width = width || this.stroke_.width;
-  this.raphael_.attr({'stroke-width': self.stroke_.width});
+  this.stylable_.setStrokeWidth(width);
+  this.raphael_.attr({'stroke-width': self.stylable_.getStrokeWidth()});
 };
 
 
@@ -75,8 +92,8 @@ xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
  */
 xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
   var self = this;
-  this.stroke_.color = color || this.stroke_.color;
-  this.raphael_.attr({'stroke': self.stroke_.color});
+  this.stylable_.setStrokeColor(color);
+  this.raphael_.attr({'stroke': self.stylable_.getStrokeColor()});
 };
 
 
@@ -87,18 +104,18 @@ xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
  */
 xrx.vml.Stylable.prototype.setFillColor = function(color) {
   var self = this;
-  this.fill_.color = color || this.fill_.color;
-  this.raphael_.attr({'fill': self.fill_.color});
+  this.stylable_.setFillColor(color);
+  this.raphael_.attr({'fill': self.stylable_.getFillColor()});
 };
 
 
 
 /**
  * Sets the fill opacity of the stylable element.
- * @param {string} factor The fill opacity.
+ * @param {number} factor The fill opacity.
  */
 xrx.vml.Stylable.prototype.setFillOpacity = function(factor) {
   var self = this;
-  this.fill_.opacity = factor || this.fill_.opacity;
-  this.raphael_.attr({'fill-opacity': self.fill_.opacity});
+  this.stylable_.setFillOpacity(factor);
+  this.raphael_.attr({'fill-opacity': self.stylable_.getFillOpacity()});
 };

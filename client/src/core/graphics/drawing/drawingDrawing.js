@@ -16,6 +16,7 @@ goog.require('goog.userAgent');
 goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
+goog.require('xrx.drawing.Hoverable');
 goog.require('xrx.drawing.LayerBackground');
 goog.require('xrx.drawing.LayerShape');
 goog.require('xrx.drawing.LayerShapeCreate');
@@ -45,7 +46,7 @@ goog.require('xrx.vml');
  * @see xrx.engine
  * @constructor
  */
-xrx.drawing.Drawing = function(element, opt_engine) {
+xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
 
   goog.base(this);
 
@@ -92,17 +93,24 @@ xrx.drawing.Drawing = function(element, opt_engine) {
 
   /**
    * The shape currently modified by the user.
-   * @type {?}
+   * @type {xrx.drawing.Modifiable}
    * @private
    */
   this.modifiable_ = new xrx.drawing.Modifiable(this);
 
   /**
    * The shape currently selected by the user.
-   * @type {?}
+   * @type {xrx.drawing.Selectable}
    * @private
    */
   this.selectable_ = new xrx.drawing.Selectable(this);
+
+  /**
+   * The shape currently hovered by the user.
+   * @type {xrx.drawing.Hoverable}
+   * @private
+   */
+  this.hoverable_ = new xrx.drawing.Hoverable(this);
 
   /**
    * The shape currently created by the user.
@@ -119,7 +127,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
   this.viewbox_;
 
   // install the canvas
-  this.install_(opt_engine);
+  this.install_(opt_engine, opt_force);
 };
 goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
 
@@ -374,8 +382,8 @@ xrx.drawing.Drawing.prototype.setModeView = function() {
  * shapes.
  */
 xrx.drawing.Drawing.prototype.setModeHover = function() {
-  this.getLayerBackground().setLocked(false);
-  this.getLayerShape().setLocked(true);
+  this.getLayerBackground().setLocked(true);
+  this.getLayerShape().setLocked(false);
   this.getLayerShapeModify().setLocked(true);
   this.getLayerShapeCreate().setLocked(true);
   this.getLayerShapeModify().removeShapes();
@@ -594,12 +602,12 @@ xrx.drawing.Drawing.prototype.initEngine_ = function(opt_engine) {
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
+xrx.drawing.Drawing.prototype.install_ = function(opt_engine, opt_force) {
 
   // initialize the graphics rendering engine
   this.initEngine_(opt_engine);
 
-  if (this.engine_.isAvailable()) {
+  if (this.engine_.isAvailable() || opt_force) {
     // install the drawing canvas
     this.installCanvas_();
 

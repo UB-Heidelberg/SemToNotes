@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.drawing.Hoverable</title>
+<script src='../../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.');
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx');
+</script>
+</head>
+<body>
+
+<div id="drawingCanvas"></div>
+<div id="drawingSVG"></div>
+<div id="drawingVML"></div>
+
+<script type="text/javascript">
+
+var drawingCanvas;
+var drawingSVG;
+var drawingVML;
+
+// create drawing canvases and switch them into mode hover
+function initDrawings_() {
+  drawingCanvas = new xrx.drawing.Drawing(goog.dom.getElement('drawingCanvas'),
+      xrx.engine.CANVAS);
+  drawingCanvas.setModeHover();
+  drawingSVG = new xrx.drawing.Drawing(goog.dom.getElement('drawingSVG'),
+      xrx.engine.SVG);
+  drawingSVG.setModeHover();
+  drawingVML = new xrx.drawing.Drawing(goog.dom.getElement('drawingVML'),
+      xrx.engine.VML, true);
+  drawingVML.setModeHover();
+};
+
+// create shapes, add them to and render them on the shapes layers
+function initShapes_() {
+  var init = function(drawing) {
+    var rectangle = new xrx.shape.Rect.create(drawing);
+    rectangle.setCoords([[10,10],[100,10],[100,110],[10,110]]);
+    var polygon = new xrx.shape.Polygon.create(drawing);
+    polygon.setCoords([[200,10],[300,15],[250,110],[240,31],[230,100]]);
+    drawing.getLayerShape().addShapes([rectangle,polygon]);
+    drawing.draw();
+  };
+  init(drawingCanvas);
+  init(drawingSVG);
+  init(drawingVML);
+};
+
+// define what shall happen when shape is hovered
+function initHover_() {
+  drawingCanvas.handleHover = function(shape) {
+    shape.setStrokeColor('red');
+  };
+  drawingSVG.handleHover = function(shape) {
+    shape.setStrokeColor('green');
+  };
+  drawingVML.handleHover = function(shape) {
+    shape.setStrokeColor('blue');
+  };
+};
+
+// create test
+function test() {
+  initDrawings_();
+  initShapes_();
+  initHover_();
+};
+
+</script>
+
+</body>
+</html>

@@ -7,6 +7,8 @@ goog.provide('xrx.svg.Stylable');
 
 
 goog.require('xrx.svg.Element');
+goog.require('xrx.engine');
+goog.require('xrx.engine.Stylable');
 
 
 
@@ -28,20 +30,11 @@ xrx.svg.Stylable = function(element, geometry) {
   this.geometry_ = geometry;
 
   /**
-   * Object describing the stroke style.
+   * Object describing the style of the stylable element.
+   * @type {xrx.engine.Stylable}
+   * @private
    */
-  this.stroke_ = {
-    color: 'black',
-    width: 1
-  };
-
-  /**
-   * Object describing the fill style.
-   */
-  this.fill_ = {
-    color: '',
-    opacity: 0
-  };
+  this.stylable_ = new xrx.engine.Stylable();
 };
 goog.inherits(xrx.svg.Stylable, xrx.svg.Element);
 
@@ -58,12 +51,36 @@ xrx.svg.Stylable.prototype.getGeometry = function() {
 
 
 /**
+ * Returns the style object of the stylable element.
+ * @return {xrx.engine.Stylable} The style object.
+ */
+xrx.svg.Stylable.prototype.getStylable = function() {
+  return this.stylable_;
+};
+
+
+
+/**
+ * Sets all styles at once by overloading a stylable object.
+ * @param {xrx.engine.Stylable} stylable The stylable object.
+ */
+xrx.svg.Stylable.prototype.setStylable = function(stylable) {
+  this.stylable_.setAll(stylable);
+  this.setStrokeWidth(stylable.getStrokeWidth());
+  this.setStrokeColor(stylable.getStrokeColor());
+  this.setFillColor(stylable.getFillColor());
+  this.setFillOpacity(stylable.getFillOpacity());
+};
+
+
+
+/**
  * Sets the stroke width of the stylable element.
  * @param {number} width The stroke width.
  */
 xrx.svg.Stylable.prototype.setStrokeWidth = function(width) {
-  this.stroke_.width = width || this.stroke_.width;
-  this.element_.setAttribute('stroke-width', this.stroke_.width);
+  this.stylable_.setStrokeWidth(width);
+  this.element_.setAttribute('stroke-width', this.stylable_.getStrokeWidth());
 };
 
 
@@ -73,9 +90,9 @@ xrx.svg.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.svg.Stylable.prototype.setStrokeColor = function(color) {
-  this.stroke_.color = color || this.stroke_.color;
-  this.element_.setAttribute('stroke', this.stroke_.color);
-  this.element_.setAttribute('stroke-color', this.stroke_.color);
+  this.stylable_.setStrokeColor(color);
+  this.element_.setAttribute('stroke', this.stylable_.getStrokeColor());
+  this.element_.setAttribute('stroke-color', this.stylable_.getStrokeColor());
 };
 
 
@@ -85,17 +102,17 @@ xrx.svg.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.svg.Stylable.prototype.setFillColor = function(color) {
-  this.fill_.color = color || this.fill_.color;
-  this.element_.setAttribute('fill', this.fill_.color);
+  this.stylable_.setFillColor(color);
+  this.element_.setAttribute('fill', this.stylable_.getFillColor());
 };
 
 
 
 /**
  * Sets the fill opacity of the stylable element.
- * @param {string} factor The fill opacity.
+ * @param {number} factor The fill opacity.
  */
 xrx.svg.Stylable.prototype.setFillOpacity = function(factor) {
-  this.fill_.opacity = factor || this.fill_.opacity;
-  this.element_.setAttribute('fill-opacity', this.fill_.opacity);
+  this.stylable_.setFillOpacity(factor);
+  this.element_.setAttribute('fill-opacity', this.stylable_.getFillOpacity());
 };
