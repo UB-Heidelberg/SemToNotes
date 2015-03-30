@@ -70,5 +70,5 @@ xrx.widget.Console.prototype.mvcRefresh = function() {
     goog.dom.setTextContent(this.element_, text);
   } else {
     goog.dom.setTextContent(this.element_, node.getXml());
-  }
+  };
 };

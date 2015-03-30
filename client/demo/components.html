@@ -23,7 +23,125 @@
     </header>
   </div>
   <div id="main_content_wrap" class="outer">
-
+    <section id="main_content" class="inner">
+      <h1>Getting Started</h1>
+      <p>SemToNotes follows the design of a <a href="http://www.balisage.net/XML-Interfaces/"><i>Native XML User Interface</i></a>. A native XML user interface
+        can be shortly called XRX, since XML is used on the client (<strong>X</strong>RX) and on the server (XR<strong>X</strong>).
+        Client and server can communicate with a REST interface (X<strong>R</strong>X). Thus, XRX is used as the global namespace
+        for all HTML5 components. SemToNotes for the moment only offers the client of XRX, future versions may also include server-side components.
+      <p>SemToNotes is entirely written in JavaScript and uses three external libraries: the <a href="https://developers.google.com/closure/library/">Closure Library</a> for
+        cross-browser support, the <a href="https://developers.google.com/closure/compiler/">Closure Compiler</a> for JavaScript compression and <a href="https://github.com/ndebeiss/jsXmlSaxParser">jsssaxparser</a>
+        for client-side XML parsing.</p>
+      <h2>Source Code Structure</h2>
+      <p>SemToNotes can be found on <a href="https://github.com/HKIKoeln/SemToNotes">GitHub</a>. User interfaces are normally developed with HTML5 components only, and
+        the source code structure is not relevant. Anyway, see below what the JavaScript project consists of:</p>
+      <pre>
+SemToNotes/
+  ├── client/
+  │   ├── apidoc/
+  │   ├── build/
+  │   ├── demo/
+  │   ├── lib/
+  │   ├── res/
+  │   │   ├── ...
+  │   │   ├── xrx.css
+  │   ├── src/
+  │   │   ├── core/
+  │   │   │   ├── graphics/
+  │   │   │   ├── mvc/
+  │   │   │   ├── xml/
+  │   │   ├── components/
+  │   │   ├── ...
+  │   ├── xrx-minified.js
+  ├── data/
+      </pre>
+      <p>
+        <li>The folder <code>client/</code> contains the JavaScript project whereas <code>data/</code> contains a small image collection used to demonstrate the graphical editing components
+          of SemToNotes. The image collection is kindly provided by the <a href="http://www.ub.uni-heidelberg.de/">Universitätsbibliothek Heidleberg</a>.
+        <li>Folders <code>apidoc/</code>, <code>build/</code> and <code>demo/</code> are self-explanatory.
+        <li>The <code>res/</code> folder includes an important stylesheet, <code>xrx.css</code>, that should be included by any XRX user interface. See the HTML5 template below for more information.
+        <li>The folder <code>components/</code> contains the JavaScript classes that implement the HTML5 components described below.
+        <li>Finally, <code>core/</code> includes the implementation of a cross-browser graphics rendering and drawing engine, a purely client-side XML model-view-controller system and several
+          low-level XML processing tools such as a streaming XML API or an XPath and XML update implementation.
+      </p>
+      <h2>Basic Template</h2>
+      <p>Copy the HTML below to begin working with a minimal XRX document.</p>
+      <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Basic Template&lt;/title&gt;
+  &lt;link rel="stylesheet" type="text/css" href="./client/res/xrx.css"&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/XMLFilterImpls.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/SAXException.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/NamespaceSupport.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/AttributesImpl.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/SAXScanner.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/ReaderWrapper.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/Reader.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/sax.js"&gt;&lt;/script&gt;
+  &lt;script type="text/javascript" src="./lib/jssaxparser/DefaultHandlers.js"&gt;&lt;/script&gt;
+  &lt;!--script src='./lib/closure-library/closure/goog/base.js'&gt;&lt;/script&gt;
+  &lt;script src='./src/deps.js'&gt;&lt;/script--&gt;&lt;!-- use this JavaScript for development --&gt;
+  &lt;script src="./xrx-minified.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    goog.require('xrx');
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Basic Template&lt;/h1&gt;
+  &lt;script&gt;
+    xrx.install();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+      </pre>
+      <h1>MVC Components</h1>
+      <p>MVC components are generic UI components that are relevant for interactive, dynamic XML user interfaces in general.</p>
+      <h2>Instance</h2>
+      <p>With an <code>xrx-instance</code> component, arbitrary XML documents can be loaded into a browser.</p>
+      <h3>Markup Example</h3>
+      <pre>&lt;div class="xrx-instance" id="i-mvcInstance" data-resource="./data/components/mvcInstance.xml.txt"&gt;&lt;/div&gt;</pre>
+      <h4>Rules</h4>
+      <ul>
+        <li>Use a HTML <code>DIV</code> tag or any other HTML element and give it the <code>.xrx-instance</code> class.
+        <li>Give the instance an unique <code>id</code> to make it accessible for other components. It is recommended to start an instance id with <code>"i-"</code>.
+        <li>The HTML5 dataset <code>data-resource</code> is required. It defines the relative or absolute URL of the XML document to be loaded.
+      </ul>
+      <h3>Remarks</h3>
+      <blockquote>Note that the XRX system does not use the browser's <a href="http://www.w3schools.com/dom/">XML DOM</a> for XML processing, since this is a fairly unstable
+        non-cross-browser technology. Instead, XRX treats XML documents as plain-text documents at first and internally builds up its own JavaScript based "DOM structure" for
+        XPath and XML update processing. You can help to circumvent browser-based XML DOM parsing and can save memory in serving XML documents as <code>*.txt</code> files,
+        i.e., with media-type <code>text/plain</code> attached.</blockquote>
+      <h2>Data Binding</h2>
+      <p>With the data binding component, arbitrary nodes of an XML document can be referenced.</p>
+      <h3>Example Data</h3>
+      <pre>&lt;data&gt;
+  &lt;a&gt;&lt;/a&gt;
+  &lt;b&gt;some text&lt;/b&gt;
+  &lt;c attr="value"&gt;&lt;/c&gt;
+&lt;/data&gt;</pre>
+      <p>It is assumed that these data are loaded by an instance with id <code>i-mvcInstance</code></p>
+      <h3>Markup Examples</h3>
+      <pre>&lt;div class="xrx-bind" id="b-mvcBind1" data-ref="xrx:instance('i-mvcInstance')/data/a"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-mvcBind2" data-ref="xrx:instance('i-mvcInstance')/data/b/text()"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-mvcBind3" data-ref="xrx:instance('i-mvcInstance')/data/c/@attr"&gt;&lt;/div&gt;</pre>
+      <h4>Rules</h4>
+      <ul>
+        <li>Use a HTML <code>DIV</code> tag or any other HTML element and give it the <code>.xrx-bind</code> class.
+        <li>Give the instance an unique <code>id</code> to make it accessible for other components. It is recommended to start a binding id with <code>"b-"</code>.
+        <li>The HTML5 dataset <code>data-ref</code> is required. It defines an XPath expression to reference a single node or a node-set of an XML document. The XRX
+          specific XPath function <code>xrx:instance()</code> is used to access the XML document loaded by instance <code>i-mvcInstance</code>.
+      </ul>
+      <h1>Form Components</h1>
+      <h2>Input</h2>
+      <h2>Textarea</h2>
+      <h1>Graphical Components</h1>
+      <h2>Image Viewer</h2>
+      <h2>Rendering Shapes</h2>
+      <h2>Manipulating Shapes</h2>
+    </section>
   </div>
   <div id="footer_wrap" class="outer">
     <footer class="inner">

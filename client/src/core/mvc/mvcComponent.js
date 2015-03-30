@@ -296,8 +296,8 @@ xrx.mvc.Component.prototype.isVoidElement_ = function() {
   var voidElements = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr',
       'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr',
       /* not void, but editable content */ 'select', 'textarea'];
-  var tagName = this.element_.tagName.toLowerCase();
-  return goog.array.contains(voidElements, tagName);
+  var tn = this.element_.tagName.toLowerCase();
+  return goog.array.contains(voidElements, tn);
 };
 
 
@@ -359,6 +359,8 @@ xrx.mvc.Component.prototype.registerEvent = function(event) {
     listen('xrx-event-click');
     break;
   case goog.events.EventType.INPUT:
+  case goog.events.EventType.PROPERTYCHANGE: // IE < 9
+  case goog.events.EventType.KEYUP: // IE9
     listen('xrx-event-input', 'mvcModelUpdateData');
     break;
   case goog.events.EventType.CHANGE:

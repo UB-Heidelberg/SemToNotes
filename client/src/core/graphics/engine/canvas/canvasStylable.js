@@ -7,6 +7,8 @@ goog.provide('xrx.canvas.Stylable');
 
 
 goog.require('xrx.canvas.Element');
+goog.require('xrx.engine');
+goog.require('xrx.engine.Stylable');
 
 
 
@@ -28,20 +30,11 @@ xrx.canvas.Stylable = function(canvas, geometry) {
   this.geometry_ = geometry;
 
   /**
-   * Object describing the stroke style.
+   * Object describing the style of the stylable element.
+   * @type {xrx.engine.Stylable}
+   * @private
    */
-  this.stroke_ = {
-    color: 'black',
-    width: 1
-  };
-
-  /**
-   * Object describing the fill style.
-   */
-  this.fill_ = {
-    color: '',
-    opacity: 0
-  };
+  this.stylable_ = new xrx.engine.Stylable();
 };
 goog.inherits(xrx.canvas.Stylable, xrx.canvas.Element);
 
@@ -58,11 +51,32 @@ xrx.canvas.Stylable.prototype.getGeometry = function() {
 
 
 /**
+ * Returns the style object of the stylable element.
+ * @return {xrx.engine.Stylable} The style object.
+ */
+xrx.canvas.Stylable.prototype.getStylable = function() {
+  return this.stylable_;
+};
+
+
+
+/**
+ * Sets all styles at once by overloading a stylable object.
+ * @param {xrx.engine.Stylable} stylable The stylable object.
+ */
+xrx.canvas.Stylable.prototype.setStylable = function(stylable) {
+  this.stylable_.setAll(stylable);
+  this.strokeAndFill_();
+};
+
+
+
+/**
  * Sets the stroke width of the stylable element.
  * @param {number} width The stroke width.
  */
 xrx.canvas.Stylable.prototype.setStrokeWidth = function(width) {
-  this.stroke_.width = width || this.stroke_.width;
+  this.stylable_.setStrokeWidth(width);
 };
 
 
@@ -72,7 +86,7 @@ xrx.canvas.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.canvas.Stylable.prototype.setStrokeColor = function(color) {
-  this.stroke_.color = color || this.stroke_.color;
+  this.stylable_.setStrokeColor(color);
 };
 
 
@@ -82,17 +96,17 @@ xrx.canvas.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.canvas.Stylable.prototype.setFillColor = function(color) {
-  this.fill_.color = color || this.fill_.color;
+  this.stylable_.setFillColor(color);
 };
 
 
 
 /**
  * Sets the fill opacity of the stylable element.
- * @param {string} factor The fill opacity.
+ * @param {number} factor The fill opacity.
  */
 xrx.canvas.Stylable.prototype.setFillOpacity = function(factor) {
-  this.fill_.opacity = factor || this.fill_.opacity;
+  this.stylable_.setFillOpacity(factor);
 };
 
 
@@ -100,11 +114,11 @@ xrx.canvas.Stylable.prototype.setFillOpacity = function(factor) {
  * @private
  */
 xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
-  this.context_.fillStyle = this.fill_.color;
-  this.context_.globalAlpha = this.fill_.opacity;
+  this.context_.fillStyle = this.stylable_.getFillColor();
+  this.context_.globalAlpha = this.stylable_.getFillOpacity();
   this.context_.fill();
   this.context_.globalAlpha = 1;
-  this.context_.strokeStyle = this.stroke_.color;
-  this.context_.lineWidth = this.stroke_.width;
-  if (this.stroke_.width > 0) this.context_.stroke();
+  this.context_.strokeStyle = this.stylable_.getStrokeColor();
+  this.context_.lineWidth = this.stylable_.getStrokeWidth();
+  if (this.stylable_.getStrokeWidth() > 0) this.context_.stroke();
 };

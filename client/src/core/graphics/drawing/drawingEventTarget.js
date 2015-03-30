@@ -69,6 +69,8 @@ xrx.drawing.EventTarget = function() {
 
   this.keyDown_;
 
+  this.keyHover_;
+
   this.keyMove_;
 
   this.keyOut_;
@@ -161,6 +163,21 @@ xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
 
 
 
+/**
+ * @private
+ */
+xrx.drawing.EventTarget.prototype.registerHover_ = function(handler) {
+  var self = this;
+  if (!this.keyHover_) this.keyHover_ = this.handler_.listen(self.canvas_.getEventTarget(),
+    xrx.drawing.EventType.MOVE,
+    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.MOVE); },
+    true,
+    handler
+  );
+};
+
+
+
 xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
   var self = this;
   if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getEventTarget(),
@@ -219,6 +236,7 @@ xrx.drawing.EventTarget.prototype.unregisterAll = function() {
   this.keyClick_ = null;
   this.keyDblClick_ = null;
   this.keyDown_ = null;
+  this.keyHover_ = null;
   this.keyMove_ = null;
   this.keyOut_ = null;
   this.keyUp_ = null;
@@ -254,6 +272,12 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
     break;
   case xrx.drawing.Mode.CREATE:
     this.registerWheel(this.viewbox_);
+    break;
+  case xrx.drawing.Mode.HOVER:
+    this.registerHover_(this.hoverable_);
+    this.registerOut(this.hoverable_);
+    this.registerWheel(this.viewbox_);
+    this.registerDrag(this.viewbox_);
     break;
   default:
     break;
