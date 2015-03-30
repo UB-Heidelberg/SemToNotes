@@ -80,11 +80,17 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
 
 
 /**
- * 
+ * Function handles mouse move event.
  */
 xrx.drawing.Hoverable.prototype.handleMove = function(e) {
   var mousePoint = this.drawing_.getEventPoint(e);
   var shape = this.drawing_.getShapeSelected(mousePoint);
   this.hover_(shape);
   if (shape && this.drawing_.handleHover) this.drawing_.handleHover(shape);
+};
+
+
+
+xrx.drawing.Hoverable.prototype.handleOut = function(e) {
+  this.pop_();
 };

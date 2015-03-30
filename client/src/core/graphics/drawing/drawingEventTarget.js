@@ -69,6 +69,8 @@ xrx.drawing.EventTarget = function() {
 
   this.keyDown_;
 
+  this.keyHover_;
+
   this.keyMove_;
 
   this.keyOut_;
@@ -273,6 +275,7 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
     break;
   case xrx.drawing.Mode.HOVER:
     this.registerHover_(this.hoverable_);
+    this.registerOut(this.hoverable_);
     this.registerWheel(this.viewbox_);
     this.registerDrag(this.viewbox_);
     break;
