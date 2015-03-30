@@ -1,0 +1,5 @@
+&lt;div class="xrx-instance" id="i-viewer" data-resource="./data/components/viewer.xml.txt"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-viewerUrl" data-ref="xrx:instance('i-viewer')/data/url/text()"&gt;&lt;/div&gt;
+&lt;div class="xrx-canvas"&gt;
+  &lt;div class="xrx-canvas-background-image" data-bind="b-viewerUrl"&gt;&lt;/div&gt;
+&lt;/div&gt;

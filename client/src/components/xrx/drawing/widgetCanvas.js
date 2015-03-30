@@ -216,10 +216,12 @@ xrx.widget.Canvas.prototype.createDom = function() {
   this.graphics_ = goog.dom.getElementsByClass('xrx-canvas-graphics',
       this.element_)[0];
   // initialize named graphic groups
-  var groups = goog.dom.getChildren(this.graphics_);
-  goog.array.forEach(groups, function(e, i, a) {
-    self.groups_.push(new xrx.widget.CanvasGroup(e, self));
-  });
+  if (this.graphics_) {
+    var groups = goog.dom.getChildren(this.graphics_);
+    goog.array.forEach(groups, function(e, i, a) {
+      self.groups_.push(new xrx.widget.CanvasGroup(e, self));
+    });
+  }
   this.origGroups_ = goog.array.clone(this.groups_);
   // handle shape create
   this.drawing_.handleCreated = function() {
