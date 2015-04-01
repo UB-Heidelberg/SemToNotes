@@ -111,9 +111,9 @@ SemToNotes/
       </ul>
       <h3>Remarks</h3>
       <blockquote>Note that the XRX system does not use the browser's <a href="http://www.w3schools.com/dom/">XML DOM</a> for XML processing, since this is a fairly unstable
-        non-cross-browser technology. Instead, XRX treats XML documents as plain-text documents at first and internally builds up its own JavaScript based "DOM structure" for
+        non-cross-browser technology. Instead, XRX treats XML documents as plain-text documents at first and internally builds up its own JavaScript-based DOM-like structure for
         XPath and XML update processing. You can help to circumvent browser-based XML DOM parsing and can save memory in serving XML documents as <code>*.txt</code> files,
-        i.e., with media-type <code>text/plain</code> attached.</blockquote>
+        i.e., with media-type <code>text/plain</code>.</blockquote>
       <h2>Data Binding</h2>
       <p>With the data binding component, arbitrary nodes of an XML document can be referenced.</p>
       <h3>Example Data</h3>
@@ -122,7 +122,7 @@ SemToNotes/
   &lt;b&gt;some text&lt;/b&gt;
   &lt;c attr="value"&gt;&lt;/c&gt;
 &lt;/data&gt;</pre>
-      <p>It is assumed that these data are loaded by an instance with id <code>i-mvcInstance</code></p>
+      <p>It is assumed that these data are loaded by an instance with id <code>i-mvcInstance</code>.</p>
       <h3>Markup Examples</h3>
       <pre>&lt;div class="xrx-bind" id="b-mvcBind1" data-ref="xrx:instance('i-mvcInstance')/data/a"&gt;&lt;/div&gt;
 &lt;div class="xrx-bind" id="b-mvcBind2" data-ref="xrx:instance('i-mvcInstance')/data/b/text()"&gt;&lt;/div&gt;
