@@ -89,6 +89,29 @@ xrx.drawing.Viewbox.prototype.getCTM = function() {
 
 
 /**
+ * Returns a dump of the current CTM as an array.
+ * @return Array.<number> The number array.
+ */
+xrx.drawing.Viewbox.prototype.ctmDump = function() {
+  return [this.ctm_.m00_, this.ctm_.m10_, this.ctm_.m01_,
+      this.ctm_.m11_, this.ctm_.m02_, this.ctm_.m12_];
+};
+
+
+
+/**
+ * Restores a CTM from an array.
+ * @param Array.<number> dump The number array.
+ */
+xrx.drawing.Viewbox.prototype.ctmRestore = function(dump) {
+  if (dump.length !== 6) throw Error('Invalid CTM dump.');
+  this.ctm_.setTransform(dump[0], dump[1], dump[2], dump[3],
+      dump[4], dump[5], dump[6]);
+};
+
+
+
+/**
  * Returns the bounding-box for the view-box.
  * @return {goog.math.Box} The bounding box.
  */

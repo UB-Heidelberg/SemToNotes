@@ -61,6 +61,8 @@
   </tr>
 </table>
 
+<div id="dumpRestore"></div>
+
 <script type="text/javascript">
 var url = './drawing_test.png';
 
@@ -152,6 +154,22 @@ function test5ZoomOut() {
   canvasDrawing.setBackgroundImage(url, function() {
     for (var i = 0; i < 10; i++) { canvasDrawing.getViewbox().zoomOut(); }
     canvasDrawing.draw();
+  });
+};
+
+function test6ctmDumpRestore() {
+  var dump;
+  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('dumpRestore'));
+  canvas.setBackgroundImage(url, function() {
+    dump = canvas.getViewbox().ctmDump();
+    dump[0]++;
+    dump[1]++;
+    dump[2]++;
+    dump[3]++;
+    dump[4]++;
+    dump[5]++;
+    canvas.getViewbox().ctmRestore(dump);
+    canvas.draw();
   });
 };
 
