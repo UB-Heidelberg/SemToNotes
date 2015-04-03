@@ -31,4 +31,7 @@ goog.require('xrx.widget.ShapePolygonInsert');
 goog.require('xrx.widget.ShapeRect');
 goog.require('xrx.widget.ShapeRectCreate');
 goog.require('xrx.widget.ShapeRectInsert');
-goog.require('xrx.widget.HighlightInner');
+goog.require('xrx.widget.Hover');
+goog.require('xrx.widget.HoverEnd');
+goog.require('xrx.widget.HoverInner');
+goog.require('xrx.widget.HoverStart');
