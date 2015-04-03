@@ -106,7 +106,7 @@ xrx.drawing.Viewbox.prototype.ctmDump = function() {
 xrx.drawing.Viewbox.prototype.ctmRestore = function(dump) {
   if (dump.length !== 6) throw Error('Invalid CTM dump.');
   this.ctm_.setTransform(dump[0], dump[1], dump[2], dump[3],
-      dump[4], dump[5], dump[6]);
+      dump[4], dump[5]);
 };
 
 

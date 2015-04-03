@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.widget.Highlight</title>
+  <script type="text/javascript" src="../../../lib/jssaxparser/XMLFilterImpls.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/SAXException.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/NamespaceSupport.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/AttributesImpl.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/SAXScanner.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/ReaderWrapper.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/Reader.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/sax.js"></script>
+  <script type="text/javascript" src="../../../lib/jssaxparser/DefaultHandlers.js"></script>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('xrx');
+</script>
+<link rel="stylesheet" type="text/css" href="../../../res/xrx.css">
+<style>
+.xrx-highlight, .xrx-highlight-inner {
+font-weight: bold;
+font-style: italic;
+}
+.xrx-class-highlighted {
+color: red;
+text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<div>
+  <!-- one -->
+  <p>text text <span class="xrx-highlight">highlight me</span> text text.</p>
+  <!-- multiple -->
+  <p>text text 
+    <span class="xrx-highlight-start"></span>
+    <span class="xrx-highlight-inner">highlight me all</span>
+    <span class="xrx-highlight-inner">highlight me all</span>
+    <span>not highlighted</span>
+    <span class="xrx-highlight-inner">highlight me all</span>
+    <span class="xrx-highlight-end"></span> text text
+  </p>
+  <!-- overlap -->
+  <p>
+    <ul>
+      <li>text text <span class="xrx-highlight-start"></span><span class="xrx-highlight-inner">highlight me</span></li>
+      <li><span class="xrx-highlight-inner">overlapped</span><span class="xrx-highlight-end"> text text.</li>
+    </ul>
+  </p>
+</div>
+
+<script type="text/javascript">
+ 
+function test() {};
+
+</script>
+
+<script type="text/javascript">
+  xrx.install();
+</script>
+
+</body>
+</html>

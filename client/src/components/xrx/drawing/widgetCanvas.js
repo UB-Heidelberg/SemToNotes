@@ -159,24 +159,6 @@ xrx.widget.Canvas.prototype.getActiveGroup = function() {
 
 
 
-xrx.widget.Canvas.prototype.getWidgetShape = function() {
-  var self = this;
-  var layerGraphics = goog.dom.getElementsByClass(
-      'xrx-canvas-layer-graphics', this.element_)[0];
-  var shapeDiv = goog.dom.findNode(layerGraphics, function(node) {
-    if (!goog.dom.isElement(node)) {
-      return false;
-    } else if (goog.dom.dataset.get(node, 'xrxName') === self.nameInsertShapeCreate_) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-  return xrx.mvc.getViewComponent(shapeDiv.id);
-};
-
-
-
 xrx.widget.Canvas.prototype.refresh = function(silent) {
   if (!this.getDrawing().getEngine().isAvailable()) return;
   var shapes;

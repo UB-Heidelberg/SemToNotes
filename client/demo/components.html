@@ -156,11 +156,16 @@ SemToNotes/
         <li>The HTML5 dataset <code>data-ref</code> is required. It defines an XPath expression to reference a single node or a node-set of an XML document. The XRX
           specific XPath function <code>xrx:instance()</code> is used to access the XML document loaded by instance <code>i-mvcInstance</code>.
       </ul>
+      <h2>Repeat</h2>
+      <p></p>
+      <h3>Example Data</h3>
+      <p></p>
+      <h3>Markup Example</h3>
       <h1>Form Components</h1>
       <h2>Input</h2>
       <h2>Textarea</h2>
       <h1>Graphical Components</h1>
-      <p>The various graphical components together provide an interactive drawing canvas to render, manipulate and create graphical annotations on top of a pan-zoom-rotate image viewer.
+      <p>The various graphical components together provide an interactive drawing canvas to render, manipulate and create graphical annotations on the basis of a pan-zoom-rotate image viewer.
         The components implement a browser chain. Depending on which rendering engine is available in your browser, either Canvas, or SVG, or VML rendering is chosen (in this order).</p>
       <h2>Pan-Zoom-Rotate Image Viewer</h2>
       <p>The image viewer component makes web images by default zoomable, draggable and rotatable with mouse interactions.</p>
@@ -180,7 +185,7 @@ SemToNotes/
         <li>Use an HTML <code>DIV</code> tag or any other HTML tag and give it the <code>.xrx-canvas</code> class.</li>
         <li>Inside the <code>.xrx-canvas</code> element, define an HTML <code>DIV</code> tag or any other HTML tag and give it the <code>.xrx-canvas-background-image</code>
           class.</li>
-        <li>The HTML5 dataset <code>data-bind</code> for <code>.xrx-canvas-background-image</code> is required. The binding expression must reference the absolute or the
+        <li>The HTML5 dataset <code>data-bind</code> for <code>.xrx-canvas-background-image</code> is required. The binding expression references the absolute or the
           relative URL of the background image.</li>
       </ul>
       <h3>Demo</h3>
@@ -191,15 +196,140 @@ SemToNotes/
         <div class="xrx-canvas-background-image" data-bind="b-viewerUrl"></div>
       </div>
       <h2>Rendering and Styling Graphical Annotations</h2>
+      <p>Graphical annotations can be rendered and styled with HTML5 components similar to the SVG or VML specification. An extra markup different from SVG is chosen, however, since--in contrast to
+        SVG and VML--XRX is not a markup language to describe <em>graphics</em> only, but to describe whole <em>interactive drawing applications</em>.</p>
       <h3>Example Data</h3>
       <pre>&lt;data&gt;
   &lt;url&gt;../../data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg&lt;/url&gt;
-  &lt;rectangle x="" y="" width="" height=""/&gt;
-  &lt;rectangle left="" top="" right="" bottom=""/&gt;
+  &lt;rectangle1 x="10" y="10" width="50" height="50"/&gt;
+  &lt;rectangle1 x="70" y="10" width="50" height="50"/&gt;
+  &lt;rectangle2 ulx="20" uly="100" lrx="250" lry="300"/&gt;
+  &lt;rectangle2 ulx="260" uly="100" lrx="400" lry="300"/&gt;
+  &lt;polygon points="200,10 300,15 250,310 240,31 230,100"/&gt;
 &lt;/data&gt;</pre>
       <h3>Markup Example</h3>
+      <pre>&lt;div class="xrx-instance" id="i-stylable" data-resource="./data/components/stylable.xml.txt"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-stylableUrl" data-ref="xrx:instance('i-stylable')/data/url/text()"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-stylableRectangle1" data-ref="xrx:instance('i-stylable')/data/rectangle1"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-stylableRectangle2" data-ref="xrx:instance('i-stylable')/data/rectangle2"&gt;&lt;/div&gt;
+&lt;div class="xrx-bind" id="b-stylablePolygon" data-ref="xrx:instance('i-stylable')/data/polygon"&gt;&lt;/div&gt;
+&lt;div class="xrx-canvas"&gt;
+  &lt;div class="xrx-canvas-background-image" data-bind="b-stylableUrl"&gt;&lt;/div&gt;
+  &lt;div class="xrx-canvas-graphics"&gt;
+    &lt;div class="xrx-canvas-group"&gt;
+      &lt;div class="xrx-repeat" data-bind="b-stylableRectangle1"&gt;
+        &lt;div class="xrx-shape-rect"
+            data-ref="./self::*"
+            data-ref-x="./@x"
+            data-ref-y="./@y"
+            data-ref-width="./@width"
+            data-ref-height="./@height"
+            data-stroke-width="3"
+            data-stroke-color="red"
+            data-fill-color="red"
+            data-fill-opacity=".3"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="xrx-canvas-group"&gt;
+      &lt;div class="xrx-repeat" data-bind="b-stylableRectangle2"&gt;
+        &lt;div class="xrx-shape-rect"
+            data-ref="./self::*"
+            data-ref-left="./@ulx"
+            data-ref-top="./@uly"
+            data-ref-right="./@lrx"
+            data-ref-bottom="./@lry"
+            data-stroke-width="5"
+            data-stroke-color="blue"
+            data-fill-color="yellow"
+            data-fill-opacity=".4"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="xrx-canvas-group"&gt;
+      &lt;div class="xrx-repeat" data-bind="b-stylablePolygon"&gt;
+        &lt;div class="xrx-shape-polygon"
+            data-ref="./self::*"
+            data-ref-coords="./@points"
+            data-stroke-width="7"
+            data-stroke-color="DarkOrange"
+            data-fill-color="DarkOrange"
+            data-fill-opacity=".4"&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
       <h4>Rules</h4>
-      <h3>Styling Graphical Annotations</h3>
+      <ul>
+        <li>Follow the markup rules of the <strong>Pan-Zoom-Rotate Image Viewer</strong> described above. Additionally:</li>
+        <li>Insert another HTML <code>DIV</code> tag or any other HTML tag as child of the <code>.xrx-canvas</code> element and give it the <code>.xrx-canvas-graphics</code> class.</li>
+        <li>For each group of shapes, insert two more nested HTML <code>DIV</code> tags and give them the <code>.xrx-canvas-group</code> and the <code>.xrx-repeat</code> class. Insert them
+          into the the <code>.xrx-canvas-graphics</code> element. For the <code>.xrx-repeat</code> element, a binding attribute <code>data-bind</code>is required. The repeat iterates the
+          node-set referenced by the binding and renders a shape for each node of the node-set.</li>
+        <li>Inside the <code>.xrx-repeat</code> elements, shapes can be defined. Currently there are two shapes available, rectangles and polygons. Use a <code>.xrx-shape-rect</code> element
+          to render rectangles and a <code>.xrx-shape-plolygon</code> element to render polygons.</li>
+        <li><code>.xrx-shape-polygon</code> elements have two required attributes, <code>data-ref</code> and <code>data-ref-coords</code> that reference the XML node defining the polygon
+          as a whole and the node containing the coordinates of the polygon, often an attribute.</code> The syntax to define coordinate points follows the SVG specification: coordinate points are separated with a
+          space, whereas the x and y value of each point is separated with a comma.</li>
+        <li>The four coordinate points of a rectangle element, <code>.xrx-shape-rectangle</code>, can be referenced in two different ways: either (a) with <code>data-x</code>, <code>data-y</code>, <code>data-width</code> 
+          and <code>data-height</code> attribute definitions, or (b) with a bounding box definition using <code>data-left</code>, <code>data-top</code>, <code>data-right</code> and <code>data-bottom</code>.</li>
+        <li>All shapes can be styled in the same way, using the attribute <code>stroke-width</code> for the border width, <code>stroke-color</code> for the border color, <code>fill-color</code> for the background color
+          and <code>fill-opacity</code> for the transparency of the background.</li>
+      </ul>
+      <h3>Demo</h3>
+      <div class="xrx-instance" id="i-stylable" data-resource="./data/components/stylable.xml.txt"></div>
+      <div class="xrx-bind" id="b-stylableUrl" data-ref="xrx:instance('i-stylable')/data/url/text()"></div>
+      <div class="xrx-bind" id="b-stylableRectangle1" data-ref="xrx:instance('i-stylable')/data/rectangle1"></div>
+      <div class="xrx-bind" id="b-stylableRectangle2" data-ref="xrx:instance('i-stylable')/data/rectangle2"></div>
+      <div class="xrx-bind" id="b-stylablePolygon" data-ref="xrx:instance('i-stylable')/data/polygon"></div>
+      <div class="xrx-canvas">
+        <div class="xrx-canvas-background-image" data-bind="b-stylableUrl"></div>
+        <div class="xrx-canvas-graphics">
+          <div class="xrx-canvas-group">
+            <div class="xrx-repeat" data-bind="b-stylableRectangle1">
+              <div class="xrx-shape-rect"
+                  data-ref="./self::*"
+                  data-ref-x="./@x"
+                  data-ref-y="./@y"
+                  data-ref-width="./@width"
+                  data-ref-height="./@height"
+                  data-stroke-width="3"
+                  data-stroke-color="red"
+                  data-fill-color="red"
+                  data-fill-opacity=".3">
+              </div>
+            </div>
+          </div>
+          <div class="xrx-canvas-group">
+            <div class="xrx-repeat" data-bind="b-stylableRectangle2">
+              <div class="xrx-shape-rect"
+                  data-ref="./self::*"
+                  data-ref-left="./@ulx"
+                  data-ref-top="./@uly"
+                  data-ref-right="./@lrx"
+                  data-ref-bottom="./@lry"
+                  data-stroke-width="5"
+                  data-stroke-color="blue"
+                  data-fill-color="yellow"
+                  data-fill-opacity=".4">
+              </div>
+            </div>
+          </div>
+          <div class="xrx-canvas-group">
+            <div class="xrx-repeat" data-bind="b-stylablePolygon">
+              <div class="xrx-shape-polygon"
+                  data-ref="./self::*"
+                  data-ref-coords="./@points"
+                  data-stroke-width="7"
+                  data-stroke-color="DarkOrange"
+                  data-fill-color="DarkOrange"
+                  data-fill-opacity=".4">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <h2>Manipulating Graphical Annotations</h2>
     </section>
   </div>

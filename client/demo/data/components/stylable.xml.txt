@@ -1,5 +1,8 @@
-&lt;div class="xrx-instance" id="i-viewer" data-resource="./data/components/viewer.xml.txt"&gt;&lt;/div&gt;
-&lt;div class="xrx-bind" id="b-viewerUrl" data-ref="xrx:instance('i-viewer')/data/url/text()"&gt;&lt;/div&gt;
-&lt;div class="xrx-canvas"&gt;
-  &lt;div class="xrx-canvas-background-image" data-bind="b-viewerUrl"&gt;&lt;/div&gt;
-&lt;/div&gt;
+<data>
+  <url>../../data/SachsenspiegelHeidelberg/Bilder-34572-28186-1600.jpg</url>
+  <rectangle1 x="10" y="10" width="50" height="50"/>
+  <rectangle1 x="70" y="10" width="50" height="50"/>
+  <rectangle2 ulx="20" uly="100" lrx="250" lry="300"/>
+  <rectangle2 ulx="260" uly="100" lrx="400" lry="300"/>
+  <polygon points="200,10 300,15 250,310 240,31 230,100"/>
+</data>
