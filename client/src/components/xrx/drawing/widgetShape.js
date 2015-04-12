@@ -58,6 +58,7 @@ xrx.widget.Shape.prototype.initSelectable_ = function() {
 
 
 xrx.widget.Shape.prototype.initStyle_ = function() {
+  if (!this.shape_.getEngineShape) return;
   var shp = this.shape_.getEngineShape();
   var strokeWidth = this.getDataset('xrxStrokeWidth');
   var strokeColor = this.getDataset('xrxStrokeColor');

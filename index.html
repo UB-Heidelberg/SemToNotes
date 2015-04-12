@@ -16,9 +16,9 @@
   <script type="text/javascript" src="./client/lib/jssaxparser/Reader.js"></script>
   <script type="text/javascript" src="./client/lib/jssaxparser/sax.js"></script>
   <script type="text/javascript" src="./client/lib/jssaxparser/DefaultHandlers.js"></script>
-  <script src='./client/lib/closure-library/closure/goog/base.js'></script>
-  <script src='./client/src/deps.js'></script>
-  <!--script src="./client/xrx-minified.js"></script-->
+  <!--script src='./client/lib/closure-library/closure/goog/base.js'></script>
+  <script src='./client/src/deps.js'></script-->
+  <script src="./client/xrx-minified.js"></script>
   <script>
     goog.require('xrx');
   </script>
@@ -306,7 +306,6 @@
         Below a TEI facsimile example is shown.
       </p>
       <h3>TEI Example</h3>
-      <!-- model -->
       <div>
         <div class="xrx-namespace" data-prefix="tei" data-uri="http://www.tei-c.org/ns/1.0"></div>
         <div class="xrx-instance"                            id="i-tei1"
@@ -326,7 +325,6 @@
         <div class="xrx-bind"                                id="b-tei6coords"
             data-ref="xrx:instance('i-tei2')//tei:zone[1]/@points"></div>
       </div>
-      <!-- view -->
       <div class="toolbar" id="ttei" data-for="ctei">
         <span class="xrx-button toolbar-item toolbar-item-selected xrx-icon-openhand32" id="tiview_4">
           <span class="xrx-action" data-event="xrx-event-click">

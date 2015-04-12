@@ -12,6 +12,7 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
 goog.require('goog.style');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.ComponentView');
 
 

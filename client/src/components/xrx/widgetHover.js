@@ -15,6 +15,7 @@ goog.require('goog.dom.NodeIterator');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.iter');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.Component');
 
 

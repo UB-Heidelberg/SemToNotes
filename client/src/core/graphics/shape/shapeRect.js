@@ -10,6 +10,7 @@ goog.provide('xrx.shape.RectModify');
 
 
 goog.require('xrx.engine.Engines');
+goog.require('xrx.mvc');
 goog.require('xrx.shape.Polygon');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.VertexDragger');
