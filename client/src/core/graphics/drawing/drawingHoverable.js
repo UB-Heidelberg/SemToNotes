@@ -46,6 +46,7 @@ xrx.drawing.Hoverable = function(drawing) {
 xrx.drawing.Hoverable.prototype.pop_ = function() {
   if (this.last_) {
     this.last_.getEngineShape().setStylable(this.stylable_);
+    if (this.drawing_.handleHoverOut) this.drawing_.handleHoverOut(this.last_);
   };
 };
 
@@ -58,6 +59,7 @@ xrx.drawing.Hoverable.prototype.push_ = function(shape) {
   if (shape) {
     this.stylable_.setAll(shape.getEngineShape().getStylable());
     this.last_ = shape;
+    if (shape && this.drawing_.handleHoverIn) this.drawing_.handleHoverIn(shape);
   } else {
     this.last_ = null;
   }
@@ -75,6 +77,7 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
     // cache the style of the shape currently hovered
     this.push_(shape);
   }
+  if (shape && this.drawing_.handleHoverMove) this.drawing_.handleHoverMove(shape);
 };
 
 
@@ -86,11 +89,13 @@ xrx.drawing.Hoverable.prototype.handleMove = function(e) {
   var mousePoint = this.drawing_.getEventPoint(e);
   var shape = this.drawing_.getShapeSelected(mousePoint);
   this.hover_(shape);
-  if (shape && this.drawing_.handleHover) this.drawing_.handleHover(shape);
 };
 
 
 
+/**
+ * Function handles mouse out event.
+ */
 xrx.drawing.Hoverable.prototype.handleOut = function(e) {
   this.pop_();
 };
