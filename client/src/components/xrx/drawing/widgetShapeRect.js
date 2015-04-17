@@ -18,6 +18,7 @@ goog.provide('xrx.widget.ShapeRectY');
 
 
 goog.require('goog.dom.dataset');
+goog.require('xrx.mvc');
 goog.require('xrx.mvc.ChildComponent');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Controller');

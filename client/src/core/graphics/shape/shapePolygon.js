@@ -9,9 +9,10 @@ goog.provide('xrx.shape.PolygonCreate');
 
 
 
-goog.require('goog.dom');
+goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
 goog.require('xrx.engine.Engines');
+goog.require('xrx.mvc');
 goog.require('xrx.shape.Polyline');
 goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.VertexDragger');

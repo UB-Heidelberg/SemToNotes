@@ -30,7 +30,6 @@ xrx.mvc.Dom.prototype.getElementsSelected = function() {
   var elements;
   var scope;
   var datasetScope = this.getDataset('xrxScope');
-  console.log(datasetScope);
   var datasetSelector = this.getDataset('xrxSelect');
   if (!datasetScope) {
   } else if (datasetScope && datasetScope.substr(0, 1) === '#') {
