@@ -21,7 +21,7 @@ goog.inherits(xrx.mvc.While, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.While.prototype.execute_ = function() {
+xrx.mvc.While.prototype.execute_ = function(opt_params) {
   var datasetTest = this.getDataset('xrxTest');
   if (!datasetTest) throw Error('Missing "data-ref" attribute.');
   var component = xrx.mvc.getComponent(datasetTest);
@@ -30,7 +30,7 @@ xrx.mvc.While.prototype.execute_ = function() {
   var children = goog.dom.getChildren(this.element_);
   while(component.getResultAsBoolean()) {
     goog.array.forEach(children, function(e) {
-      xrx.mvc.getComponent(e.id).execute();
+      xrx.mvc.getComponent(e.id).execute(opt_params);
     });
   }
 };

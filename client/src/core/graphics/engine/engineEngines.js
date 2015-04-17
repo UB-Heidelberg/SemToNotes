@@ -7,15 +7,15 @@ goog.provide('xrx.engine.Engines');
 
 
 
-goog.require('xrx.canvas');
-goog.require('xrx.canvas.Canvas');
-goog.require('xrx.canvas.Circle');
-goog.require('xrx.canvas.Element');
-goog.require('xrx.canvas.Group');
-goog.require('xrx.canvas.Image');
-goog.require('xrx.canvas.Polyline');
-goog.require('xrx.canvas.Polygon');
-goog.require('xrx.canvas.Rect');
+goog.require('xrx.cnvs');
+goog.require('xrx.cnvs.Canvas');
+goog.require('xrx.cnvs.Circle');
+goog.require('xrx.cnvs.Element');
+goog.require('xrx.cnvs.Group');
+goog.require('xrx.cnvs.Image');
+goog.require('xrx.cnvs.Polyline');
+goog.require('xrx.cnvs.Polygon');
+goog.require('xrx.cnvs.Rect');
 goog.require('xrx.engine');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Canvas');

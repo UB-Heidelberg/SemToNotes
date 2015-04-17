@@ -20,7 +20,7 @@ goog.require('goog.ui.IdGenerator');
 goog.require('goog.Promise');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.Components');
-goog.require('xrx.widget.Widgets');
+goog.require('xrx.component._All_');
 
 
 

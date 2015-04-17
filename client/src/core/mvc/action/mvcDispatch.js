@@ -23,7 +23,7 @@ goog.inherits(xrx.mvc.Dispatch, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Dispatch.prototype.execute_ = function() {
+xrx.mvc.Dispatch.prototype.execute_ = function(opt_params) {
   var action = this.getDataset('xrxAction');
-  xrx.mvc.getComponent(action).execute();
+  xrx.mvc.getComponent(action).execute(opt_params);
 };

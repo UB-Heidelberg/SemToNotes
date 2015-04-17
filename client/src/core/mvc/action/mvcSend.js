@@ -20,7 +20,7 @@ goog.inherits(xrx.mvc.Send, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Send.prototype.execute_ = function() {
+xrx.mvc.Send.prototype.execute_ = function(opt_params) {
   var id = this.getDataset('xrxSubmission');
   var submission = xrx.mvc.getComponent(id);
   if (submission) {

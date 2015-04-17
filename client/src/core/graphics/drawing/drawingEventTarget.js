@@ -3,9 +3,7 @@
  *     drawing canvas.
  */
 
-goog.provide('xrx.drawing.EventTarget');
-goog.provide('xrx.drawing.Event');
-goog.provide('xrx.drawing.EventType');
+goog.provide('xrx.event.HandlerTarget');
 
 
 
@@ -18,37 +16,11 @@ goog.require('goog.events.MouseWheelHandler.EventType');
 goog.require('goog.math');
 goog.require('goog.style');
 goog.require('goog.userAgent');
+goog.require('xrx.event.Handler');
+goog.require('xrx.event.Type');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.shape.Shapes');
-
-
-
-xrx.drawing.EventType = {
-  CLICK: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHSTART :
-        goog.events.EventType.CLICK,
-  DBLCLICK: goog.events.EventType.DBLCLICK, //TODO: mobile event?
-  DOWN: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHSTART :
-            goog.events.EventType.MOUSEDOWN,
-  MOVE: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHMOVE :
-            goog.events.EventType.MOUSEMOVE,
-  OUT: goog.events.EventType.MOUSEOUT, //TODO: mobile event?
-  UP: goog.userAgent.MOBILE ? goog.events.EventType.TOUCHEND :
-          goog.events.EventType.MOUSEUP,
-  ZOOM: goog.events.MouseWheelHandler.EventType.MOUSEWHEEL
-};
-
-
-
-xrx.drawing.Event = {
-  CLICK: 'handleClick',
-  DBLCLICK: 'handleDblClick',
-  DOWN: 'handleDown',
-  MOVE: 'handleMove',
-  OUT: 'handleOut',
-  UP: 'handleUp',
-  ZOOM: 'handleZoom'
-};
 
 
 
@@ -57,7 +29,7 @@ xrx.drawing.Event = {
  * It receives events and invokes handler functions in xrx.drawing.EventHandler.
  * @constructor
  */
-xrx.drawing.EventTarget = function() {
+xrx.event.HandlerTarget = function() {
 
   goog.base(this);
 
@@ -79,17 +51,17 @@ xrx.drawing.EventTarget = function() {
 
   this.keyWheel_;
 };
-goog.inherits(xrx.drawing.EventTarget, goog.Disposable);
+goog.inherits(xrx.event.HandlerTarget, goog.Disposable);
 
 
 
-xrx.drawing.EventTarget.prototype.getHandler = function() {
+xrx.event.HandlerTarget.prototype.getHandler = function() {
   return this.handler_;
 };
 
 
 
-xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
+xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
   // re-initialize the browser event in the case of mobile touch events
   if (e.getBrowserEvent().changedTouches) 
       e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
@@ -101,11 +73,11 @@ xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
 
 
 
-xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
+xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
   var self = this;
   if (!this.keyClick_) this.keyClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.CLICK,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.CLICK); },
+    xrx.event.Type.CLICK,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.CLICK); },
     true,
     handler
   );
@@ -113,11 +85,11 @@ xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
 
 
 
-xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
+xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
   var self = this;
   if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.DBLCLICK,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DBLCLICK); },
+    xrx.event.Type.DBLCLICK,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DBLCLICK); },
     true,
     handler
   );
@@ -128,11 +100,11 @@ xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
 /**
  * @private
  */
-xrx.drawing.EventTarget.prototype.registerDown_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
   var self = this;
   if (!this.keyDown_) this.keyDown_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.DOWN,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.DOWN); },
+    xrx.event.Type.DOWN,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DOWN); },
     true,
     handler
   );
@@ -140,7 +112,7 @@ xrx.drawing.EventTarget.prototype.registerDown_ = function(handler) {
 
 
 
-xrx.drawing.EventTarget.prototype.registerDrag = function(handler) {
+xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
   this.registerDown_(handler);
   this.registerMove_(handler);
   this.registerUp_(handler);
@@ -151,11 +123,11 @@ xrx.drawing.EventTarget.prototype.registerDrag = function(handler) {
 /**
  * @private
  */
-xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
   var self = this;
   if (!this.keyMove_) this.keyMove_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.MOVE,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.MOVE); },
+    xrx.event.Type.MOVE,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
     true,
     handler
   );
@@ -166,11 +138,11 @@ xrx.drawing.EventTarget.prototype.registerMove_ = function(handler) {
 /**
  * @private
  */
-xrx.drawing.EventTarget.prototype.registerHover_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
   var self = this;
   if (!this.keyHover_) this.keyHover_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.MOVE,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.MOVE); },
+    xrx.event.Type.MOVE,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
     true,
     handler
   );
@@ -178,11 +150,11 @@ xrx.drawing.EventTarget.prototype.registerHover_ = function(handler) {
 
 
 
-xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
+xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
   var self = this;
   if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.OUT,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.OUT); },
+    xrx.event.Type.OUT,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.OUT); },
     true,
     handler
   );
@@ -193,11 +165,11 @@ xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
 /**
  * @private
  */
-xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
   var self = this;
   if (!this.keyUp_) this.keyUp_ = this.handler_.listen(self.canvas_.getEventTarget(),
-    xrx.drawing.EventType.UP,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.UP) },
+    xrx.event.Type.UP,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.UP) },
     true,
     handler
   );
@@ -205,12 +177,12 @@ xrx.drawing.EventTarget.prototype.registerUp_ = function(handler) {
 
 
 
-xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
+xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   if (goog.userAgent.MOBILE) return;
   var self = this;
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
-  if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.drawing.EventType.ZOOM,
-    function(e) { self.registerEvent_(e, handler, xrx.drawing.Event.ZOOM) },
+  if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.event.Type.ZOOM,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.ZOOM) },
     true,
     handler
   );
@@ -221,7 +193,7 @@ xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
 /**
  * @override
  */
-xrx.drawing.EventTarget.prototype.disposeInternal = function() {
+xrx.event.HandlerTarget.prototype.disposeInternal = function() {
   if (this.handler_) {
     this.handler_.dispose();
     this.handler_ = null;
@@ -231,7 +203,7 @@ xrx.drawing.EventTarget.prototype.disposeInternal = function() {
 
 
 
-xrx.drawing.EventTarget.prototype.unregisterAll = function() {
+xrx.event.HandlerTarget.prototype.unregisterAll = function() {
   this.handler_.removeAll();
   this.keyClick_ = null;
   this.keyDblClick_ = null;
@@ -245,7 +217,7 @@ xrx.drawing.EventTarget.prototype.unregisterAll = function() {
 
 
 
-xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
+xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
   this.unregisterAll();
 
   switch(mode) {

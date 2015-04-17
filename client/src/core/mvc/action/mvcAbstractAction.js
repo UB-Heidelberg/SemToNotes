@@ -30,15 +30,15 @@ xrx.mvc.AbstractAction.prototype.createDom = function() {};
 
 
 
-xrx.mvc.AbstractAction.prototype.execute = function() {
+xrx.mvc.AbstractAction.prototype.execute = function(opt_params) {
   var datasetIf = this.getDataset('xrxIf');
   var datasetIfNot = this.getDataset('xrxIfNot');
   var calculate;
   if (!datasetIf && !datasetIfNot) {
-    this.execute_();
+    this.execute_(opt_params);
   } else if (datasetIf && xrx.mvc.getComponent(datasetIf).getResultAsBoolean()) {
-    this.execute_();
+    this.execute_(opt_params);
   } else if (datasetIfNot && !xrx.mvc.getComponent(datasetIfNot).getResultAsBoolean()) {
-    this.execute_();
+    this.execute_(opt_params);
   } else {}
 };

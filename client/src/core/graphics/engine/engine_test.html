@@ -92,7 +92,7 @@ function getCanvasSvg(id) {
 
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
-  var canvasCanvas = xrx.canvas.Canvas.create(divCanvas);
+  var canvasCanvas = xrx.cnvs.Canvas.create(divCanvas);
   canvasCanvas.setWidth(100);
   canvasCanvas.setHeight(100);
   return canvasCanvas;
@@ -172,7 +172,7 @@ function test1Shapes() {
       svgCanvas.addChild(svgShape);
 
       var canvasCanvas = getCanvasCanvas('canvas' + shape);
-      var canvasShape = this['get' + shape](xrx.canvas, canvasCanvas);
+      var canvasShape = this['get' + shape](xrx.cnvs, canvasCanvas);
       canvasCanvas.addChild(canvasShape);
     }
     var vmlCanvas = getCanvasVml('vml' + shape);
@@ -189,7 +189,7 @@ function test2Image() {
     svgCanvas.addChild(svgImage);
 
     var canvasCanvas = getCanvasCanvas('canvasImage');
-    var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
+    var canvasImage = getImage(xrx.cnvs, image, canvasCanvas);
     canvasCanvas.addChild(canvasImage);
   }
   var vmlCanvas = getCanvasVml('vmlImage');
@@ -212,10 +212,10 @@ function test3Group() {
     svgCanvas.addChild(svgGroup);
 
     var canvasCanvas = getCanvasCanvas('canvasGroup');
-    var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
-    var canvasRect = getRect(xrx.canvas, canvasCanvas);
-    var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
-    var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
+    var canvasGroup = xrx.cnvs.Group.create(canvasCanvas);
+    var canvasRect = getRect(xrx.cnvs, canvasCanvas);
+    var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
+    var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);
     // one graphic
     canvasGroup.addChildren(canvasRect);
     // array of graphics
@@ -249,11 +249,11 @@ function test4Vml() {
     var svgImage = getImage(xrx.svg, image);
 
     var canvasCanvas = getCanvasCanvas('canvasRaphael');
-    var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
-    var canvasRect = getRect(xrx.canvas, canvasCanvas);
-    var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
-    var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
-    var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
+    var canvasGroup = xrx.cnvs.Group.create(canvasCanvas);
+    var canvasRect = getRect(xrx.cnvs, canvasCanvas);
+    var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
+    var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);
+    var canvasImage = getImage(xrx.cnvs, image, canvasCanvas);
   }
   var vmlCanvas = getCanvasVml('vmlRaphael');
   var vmlGroup = xrx.vml.Group.create(vmlCanvas);

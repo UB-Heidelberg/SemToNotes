@@ -13,7 +13,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.userAgent');
-goog.require('xrx.canvas');
+goog.require('xrx.cnvs');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.Hoverable');
@@ -303,7 +303,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
   if (this.engine_.hasRenderer(xrx.engine.CANVAS)) {
-    xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
+    xrx.cnvs.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
         function() {
           self.layer_[0].draw();
           self.layer_[1].draw();
@@ -458,7 +458,7 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
   if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
   this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
-      xrx.drawing.EventType.DOWN,
+      xrx.event.Type.DOWN,
       function(e) {
         e.preventDefault();
         e.stopPropagation();

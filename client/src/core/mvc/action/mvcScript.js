@@ -21,7 +21,7 @@ goog.inherits(xrx.mvc.Script, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Script.prototype.execute_ = function() {
+xrx.mvc.Script.prototype.execute_ = function(opt_params) {
   var js = this.getDataset('xrxScript');
   if (js) eval(js);
 };

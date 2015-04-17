@@ -13,7 +13,7 @@ goog.require('goog.fx.Dragger');
 goog.require('goog.math.AffineTransform');
 goog.require('goog.math.Rect');
 goog.require('goog.style');
-goog.require('xrx.canvas');
+goog.require('xrx.cnvs');
 goog.require('xrx.drawing.tool.Tool');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.svg');
@@ -89,7 +89,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, c.width, c.height);
     ctx.beginPath();
-    xrx.canvas.setTransform_(ctx, ctm);
+    xrx.cnvs.setTransform_(ctx, ctm);
     this.group_.draw();
     ctx.closePath();
     ctx.restore();

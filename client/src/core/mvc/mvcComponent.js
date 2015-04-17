@@ -13,6 +13,10 @@ goog.require('goog.dom.dataset');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.ui.IdGenerator');
+goog.require('goog.Uri');
+goog.require('xrx.event.Handler');
+goog.require('xrx.event.Name');
+goog.require('xrx.event.Type');
 goog.require('xrx.mvc.Validate');
 goog.require('xrx.mvc.Xpath');
 goog.require('xrx.xpath');
@@ -331,6 +335,13 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
       };
     };
     return elmnts;
+  } else if (this.hasDataset('xrxAction')) {
+    var actionElement = goog.dom.getElement(this.getDataset('xrxAction'));
+    return goog.dom.findNodes(actionElement, function(node) {
+      return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
+          goog.dom.getParentElement(node) === actionElement &&
+          self.getDataset('xrxEvent', node) === eventName;
+    });
   } else {
     return goog.dom.findNodes(this.element_, function(node) {
       return goog.dom.isElement(node) && goog.dom.classes.has(node, 'xrx-action') &&
@@ -343,40 +354,35 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
 
 
 
+xrx.mvc.Component.prototype.getParameters = function() {
+  if (!this.hasDataset('xrxParam')) return undefined;
+  var datasetParam = this.getDataset('xrxParam');
+  return goog.Uri.parse('/dummy?' + datasetParam);
+};
+
+
+
 xrx.mvc.Component.prototype.registerEvent = function(event) {
   var self = this;
-  var listen = function(mvcEvent, opt_mvcInternal) {
-    goog.events.listen(self.element_, event, function(e) {
-      var repeat = self.getRepeat();
-      if (repeat) repeat.setIndexElement(self.element_);
-      e.preventDefault();
-      if (self[opt_mvcInternal]) self[opt_mvcInternal]();
-      self.dispatch(mvcEvent);
-    });
+  var isValueUpdate = function() {
+    return event === xrx.event.Type.INPUT || event === xrx.event.Type.CHANGE;
   };
-  switch(event) {
-  case goog.events.EventType.CLICK:
-    listen('xrx-event-click');
-    break;
-  case goog.events.EventType.INPUT:
-  case goog.events.EventType.PROPERTYCHANGE: // IE < 9
-  case goog.events.EventType.KEYUP: // IE9
-    listen('xrx-event-input', 'mvcModelUpdateData');
-    break;
-  case goog.events.EventType.CHANGE:
-    listen('xrx-event-change', 'mvcModelUpdateData');
-    break;
-  default:
-    throw Error('Unknown event.');
-    break;
-  };
+  goog.events.listen(self.element_, event, function(e) {
+    if (!xrx.event.Name[event]) throw Error('Unknown event.');
+    var repeat = self.getRepeat();
+    if (repeat) repeat.setIndexElement(self.element_);
+    e.preventDefault();
+    if (isValueUpdate()) self.mvcModelUpdateData();
+    self.dispatch(xrx.event.Name[event]);
+  });
 };
 
 
 
 xrx.mvc.Component.prototype.dispatch = function(eventName) {
+  var params = this.getParameters();
   goog.array.forEach(this.getActionElements(eventName), function(element) {
-    xrx.mvc.getComponent(element.id).execute();
+    xrx.mvc.getComponent(element.id).execute(params);
   });
 };
 

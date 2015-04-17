@@ -38,7 +38,7 @@ xrx.drawing.Layer.prototype.getDrawing = function() {
 
 /**
  * Locks or unlocks the layer so that the shapes are ignored by
- * xrx.drawing.EventTarget.
+ * xrx.event.HandlerTarget.
  * @param {boolean} flag Whether to lock or unlock the layer.
  */
 xrx.drawing.Layer.prototype.setLocked = function(flag) {

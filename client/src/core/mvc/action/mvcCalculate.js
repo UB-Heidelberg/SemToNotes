@@ -40,4 +40,4 @@ xrx.mvc.Calculate.prototype.getResultAsBoolean = function() {
 
 
 
-xrx.mvc.Calculate.prototype.execute_ = function() {};
+xrx.mvc.Calculate.prototype.execute_ = function(opt_params) {};

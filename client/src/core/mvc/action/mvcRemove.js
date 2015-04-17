@@ -25,7 +25,7 @@ goog.inherits(xrx.mvc.Remove, xrx.mvc.AbstractUpdate);
 /**
  * @private
  */
-xrx.mvc.Remove.prototype.execute_ = function() {
+xrx.mvc.Remove.prototype.execute_ = function(opt_params) {
   var node = this.getTargetAsNode();
   if (node) xrx.mvc.Controller.removeNode(this, node);
 };

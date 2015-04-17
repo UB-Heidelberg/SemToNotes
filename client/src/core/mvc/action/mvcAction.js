@@ -23,9 +23,9 @@ goog.inherits(xrx.mvc.Action, xrx.mvc.AbstractAction);
 
 
 
-xrx.mvc.Action.prototype.execute_ = function() {
+xrx.mvc.Action.prototype.execute_ = function(opt_params) {
   var children = goog.dom.getChildren(this.element_);
   goog.array.forEach(children, function(e) {
-    xrx.mvc.getComponent(e.id).execute();
+    xrx.mvc.getComponent(e.id).execute(opt_params);
   });
 };

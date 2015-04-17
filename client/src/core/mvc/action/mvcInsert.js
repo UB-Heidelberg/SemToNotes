@@ -25,7 +25,7 @@ goog.inherits(xrx.mvc.Insert, xrx.mvc.AbstractUpdate);
 /**
  * @private
  */
-xrx.mvc.Insert.prototype.execute_ = function() {
+xrx.mvc.Insert.prototype.execute_ = function(opt_params) {
   xrx.mvc.Controller.insertNode(this, this.getTargetAsNode(),
       this.getOriginAsNode());
 };

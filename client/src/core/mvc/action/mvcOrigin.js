@@ -21,4 +21,4 @@ goog.inherits(xrx.mvc.Origin, xrx.mvc.Component);
 
 
 
-xrx.mvc.Origin.prototype.createDom = function() {};
+xrx.mvc.Origin.prototype.createDom = function(opt_params) {};
