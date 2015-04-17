@@ -3,8 +3,6 @@ var app = angular.module('app',  [
     ]
 );
 
-
-
 app.controller("Ctrl", function ($scope, angularShape) {
 
     var drawingCanvas = new xrx.drawing.Drawing(goog.dom.getElement('drawingCanvas'),
@@ -19,10 +17,11 @@ app.controller("Ctrl", function ($scope, angularShape) {
         '3':[[93.5,972.0],[110.5,986.0],[114.5,1000.0],[76.5,1023.0], [43.5,1009.0], [52.5,992.0], [74.5,976.0]]
 
     };
-    angular.forEach(codePoints, function(value, key) {
-        angularShape.draw(key, value,drawingCanvas);
-    });
 
+    angular.forEach(codePoints, function(value, key) {
+        var polygon = new xrx.shape.Polygon.create(drawingCanvas);
+        angularShape.draw(polygon, key, value,drawingCanvas);
+    });
 
     $scope.rotateLeftCanvas = function () {
         drawingCanvas.getViewbox().rotateLeft();
@@ -52,17 +51,30 @@ app.controller("Ctrl", function ($scope, angularShape) {
 
         $scope.setTab(shape.id);
         $scope.$apply();
-        console.log(shape.id);
+
 
     };
+    /**
+    $scope.setTabAndDraw = function (idx) {
+        $scope.setTab(idx);
+        var polygon = new xrx.shape.Polygon.create(drawingCanvas);
+        angularShape.draw(polygon, idx,codePoints[idx] ,drawingCanvas,'red');
+        //angularShape.draw(idx,codePoints[idx] ,drawingCanvas,'yellow');
 
 
+    };
+    var polygon = new xrx.shape.Polygon.create(drawingCanvas);
+     **/
     $scope.setTab = function (idx) {
         angular.forEach($scope.currentTab, function(value, key) {
             $scope.currentTab[key] = false;
 
         });
         $scope.currentTab[idx] = true;
+
+
+        angularShape.draw(polygon, idx,codePoints[idx] ,drawingCanvas,'red');
+
 
 
     }
