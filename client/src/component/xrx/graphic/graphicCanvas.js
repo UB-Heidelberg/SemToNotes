@@ -128,6 +128,30 @@ xrx.graphic.Canvas.prototype.getBackgroundImage = function() {
 
 
 
+xrx.graphic.Canvas.prototype.getZoneLeft = function() {
+  return this.backgroundImage_ ? this.backgroundImage_.getZoneLeft() : 0;
+};
+
+
+
+xrx.graphic.Canvas.prototype.getZoneTop = function() {
+  return this.backgroundImage_ ? this.backgroundImage_.getZoneTop() : 0;
+};
+
+
+
+xrx.graphic.Canvas.prototype.getZoneRight = function() {
+  return this.backgroundImage_ ? this.backgroundImage_.getZoneRight() : 0;
+};
+
+
+
+xrx.graphic.Canvas.prototype.getZoneBottom = function() {
+  return this.backgroundImage_ ? this.backgroundImage_.getZoneBottom() : 0;
+};
+
+
+
 xrx.graphic.Canvas.prototype.setNameShapeCreate = function(name) {
   this.nameInsertShapeCreate_ = name;
 };
@@ -193,7 +217,8 @@ xrx.graphic.Canvas.prototype.createDom = function() {
   // search for background image DIV
   var backgroundImage = goog.dom.getElementByClass('xrx-canvas-background-image',
       this.element_);
-  this.backgroundImage_ = new xrx.graphic.CanvasBackgroundImage(backgroundImage, this);
+  if (backgroundImage) this.backgroundImage_ =
+      new xrx.graphic.CanvasBackgroundImage(backgroundImage, this);
   // search for graphics DIV
   this.graphics_ = goog.dom.getElementsByClass('xrx-canvas-graphics',
       this.element_)[0];

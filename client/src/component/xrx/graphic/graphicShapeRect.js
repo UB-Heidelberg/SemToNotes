@@ -348,7 +348,7 @@ goog.inherits(xrx.graphic.ShapeRectX, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectX.prototype.refresh = function() {
   this.rect_.setX(this.percentageToPixelHorizontal(
-      this.rect_.getCanvas().getBackgroundImage().getZoneLeft()));
+      this.rect_.getCanvas().getZoneLeft()));
 };
 
 
@@ -373,7 +373,7 @@ goog.inherits(xrx.graphic.ShapeRectY, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectY.prototype.refresh = function() {
   this.rect_.setY(this.percentageToPixelVertical(
-      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getZoneBottom()));
 };
 
 
@@ -398,7 +398,7 @@ goog.inherits(xrx.graphic.ShapeRectWidth, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectWidth.prototype.refresh = function() {
   this.rect_.setWidth(this.percentageToPixelHorizontal(
-      this.rect_.getCanvas().getBackgroundImage().getZoneRight()));
+      this.rect_.getCanvas().getZoneRight()));
 };
 
 
@@ -423,7 +423,7 @@ goog.inherits(xrx.graphic.ShapeRectHeight, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectHeight.prototype.refresh = function() {
   this.rect_.setHeight(this.percentageToPixelVertical(
-      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getZoneBottom()));
 };
 
 
@@ -448,7 +448,7 @@ goog.inherits(xrx.graphic.ShapeRectLeft, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectLeft.prototype.refresh = function() {
   this.rect_.setLeft(this.percentageToPixelHorizontal(
-      this.rect_.getCanvas().getBackgroundImage().getZoneLeft()));
+      this.rect_.getCanvas().getZoneLeft()));
 };
 
 
@@ -473,7 +473,7 @@ goog.inherits(xrx.graphic.ShapeRectTop, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectTop.prototype.refresh = function() {
   this.rect_.setTop(this.percentageToPixelVertical(
-      this.rect_.getCanvas().getBackgroundImage().getZoneTop()));
+      this.rect_.getCanvas().getZoneTop()));
 };
 
 
@@ -498,7 +498,7 @@ goog.inherits(xrx.graphic.ShapeRectRight, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectRight.prototype.refresh = function() {
   this.rect_.setRight(this.percentageToPixelHorizontal(
-      this.rect_.getCanvas().getBackgroundImage().getZoneRight()));
+      this.rect_.getCanvas().getZoneRight()));
 };
 
 
@@ -523,7 +523,7 @@ goog.inherits(xrx.graphic.ShapeRectBottom, xrx.graphic.ShapeRectGeometry);
 
 xrx.graphic.ShapeRectBottom.prototype.refresh = function() {
   this.rect_.setBottom(this.percentageToPixelVertical(
-      this.rect_.getCanvas().getBackgroundImage().getZoneBottom()));
+      this.rect_.getCanvas().getZoneBottom()));
 };
 
 

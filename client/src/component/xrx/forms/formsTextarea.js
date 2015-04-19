@@ -15,4 +15,4 @@ xrx.forms.Textarea = function(element) {
   goog.base(this, element);
 };
 goog.inherits(xrx.forms.Textarea, xrx.forms.Input);
-xrx.mvc.registerComponent('xrx-textarea', xrx.forms.Textarea);
+xrx.mvc.registerComponent('xrx-componentarea', xrx.forms.Textarea);

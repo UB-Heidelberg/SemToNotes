@@ -13,7 +13,7 @@ goog.require('goog.dom.dataset');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.ui.IdGenerator');
-goog.require('goog.Uri');
+goog.require('goog.Uri.QueryData');
 goog.require('xrx.event.Handler');
 goog.require('xrx.event.Name');
 goog.require('xrx.event.Type');
@@ -112,6 +112,18 @@ xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
     return goog.dom.dataset.get(element, shortened);
   } else {
     return standard;
+  }
+};
+
+
+
+xrx.mvc.Component.prototype.getDatasetParam = function(key, params, opt_element) {
+  var dataset = this.getDataset(key, opt_element);
+  if (!dataset) return null;
+  if (dataset.charAt(0) !== '$') {
+    return dataset; 
+  } else {
+    return params.get(dataset.slice(1));
   }
 };
 
@@ -357,7 +369,7 @@ xrx.mvc.Component.prototype.getActionElements = function(eventName) {
 xrx.mvc.Component.prototype.getParameters = function() {
   if (!this.hasDataset('xrxParam')) return undefined;
   var datasetParam = this.getDataset('xrxParam');
-  return goog.Uri.parse('/dummy?' + datasetParam);
+  return new goog.Uri.QueryData(datasetParam);
 };
 
 

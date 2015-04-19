@@ -29,8 +29,8 @@ goog.inherits(xrx.mvc.Dom, xrx.mvc.AbstractAction);
 xrx.mvc.Dom.prototype.getElementsSelected = function(opt_params) {
   var elements;
   var scope;
-  var datasetScope = this.getDataset('xrxScope');
-  var datasetSelector = this.getDataset('xrxSelect');
+  var datasetScope = this.getDatasetParam('xrxScope');
+  var datasetSelector = this.getDatasetParam('xrxSelect', opt_params);
   if (!datasetScope) {
   } else if (datasetScope && datasetScope.substr(0, 1) === '#') {
     scope = goog.dom.getElement(datasetScope.substr(1));
@@ -50,7 +50,7 @@ xrx.mvc.Dom.prototype.getElementsSelected = function(opt_params) {
 
 
 xrx.mvc.Dom.prototype.getClasses = function(opt_params) {
-  return this.getDataset('xrxClasses').split(' ');
+  return this.getDatasetParam('xrxClasses').split(' ');
 };
 
   
@@ -87,7 +87,7 @@ goog.inherits(xrx.mvc.ClassesRemove, xrx.mvc.Dom);
 
 
 
-xrx.mvc.ClassesRemove.prototype.execute_ = function() {
+xrx.mvc.ClassesRemove.prototype.execute_ = function(opt_params) {
   goog.array.forEach(this.getElementsSelected(opt_params), function(element) {
     goog.array.forEach(this.getClasses(opt_params), function(clss) {
       goog.dom.classes.remove(element, clss);
