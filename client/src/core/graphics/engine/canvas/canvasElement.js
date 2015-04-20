@@ -6,7 +6,7 @@ goog.provide('xrx.canvas.Element');
 
 
 
-goog.require('xrx.cnvs');
+goog.require('xrx.canvas');
 
 
 

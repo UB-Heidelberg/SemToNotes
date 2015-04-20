@@ -6,7 +6,7 @@ goog.provide('xrx.engine.Engine');
 
 
 
-goog.require('xrx.cnvs');
+goog.require('xrx.canvas');
 goog.require('xrx.engine');
 goog.require('xrx.svg');
 goog.require('xrx.vml');
@@ -32,7 +32,7 @@ xrx.engine.Engine = function(opt_engine) {
 
   /**
    * Pointer to the rendering engine base class.
-   * @type {(xrx.cnvs|xrx.svg|xrx.vml)}
+   * @type {(xrx.canvas|xrx.svg|xrx.vml)}
    * @private
    */
   this.renderer_;
@@ -52,7 +52,7 @@ xrx.engine.Engine = function(opt_engine) {
 
 /**
  * Returns the installed graphics renderer.
- * @return {(xrx.cnvs|xrx.svg|xrx.vml)} The renderer.
+ * @return {(xrx.canvas|xrx.svg|xrx.vml)} The renderer.
  */
 xrx.engine.Engine.prototype.getRenderer = function() {
   return this.renderer_;
@@ -88,7 +88,7 @@ xrx.engine.Engine.prototype.isAvailable = function() {
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
   if (xrx.canvas.isSupported()) {
     this.engine_ = xrx.engine.CANVAS;
-    this.renderer_ = xrx.cnvs;
+    this.renderer_ = xrx.canvas;
     this.available_ = true;
   } else if (xrx.svg.isSupported()) {
     this.engine_ = xrx.engine.SVG;
@@ -110,7 +110,7 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
  */
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
   if (this.engine_ === xrx.engine.CANVAS) {
-    this.renderer_ = xrx.cnvs;
+    this.renderer_ = xrx.canvas;
     this.available_ = xrx.canvas.isSupported();
   } else if (this.engine_ === xrx.engine.SVG) {
     this.renderer_ = xrx.svg;

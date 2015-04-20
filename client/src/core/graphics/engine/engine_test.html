@@ -172,7 +172,7 @@ function test1Shapes() {
       svgCanvas.addChild(svgShape);
 
       var canvasCanvas = getCanvasCanvas('canvas' + shape);
-      var canvasShape = this['get' + shape](xrx.cnvs, canvasCanvas);
+      var canvasShape = this['get' + shape](xrx.canvas, canvasCanvas);
       canvasCanvas.addChild(canvasShape);
     }
     var vmlCanvas = getCanvasVml('vml' + shape);
@@ -189,7 +189,7 @@ function test2Image() {
     svgCanvas.addChild(svgImage);
 
     var canvasCanvas = getCanvasCanvas('canvasImage');
-    var canvasImage = getImage(xrx.cnvs, image, canvasCanvas);
+    var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
     canvasCanvas.addChild(canvasImage);
   }
   var vmlCanvas = getCanvasVml('vmlImage');
@@ -213,9 +213,9 @@ function test3Group() {
 
     var canvasCanvas = getCanvasCanvas('canvasGroup');
     var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
-    var canvasRect = getRect(xrx.cnvs, canvasCanvas);
-    var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
-    var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);
+    var canvasRect = getRect(xrx.canvas, canvasCanvas);
+    var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
+    var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
     // one graphic
     canvasGroup.addChildren(canvasRect);
     // array of graphics
@@ -250,10 +250,10 @@ function test4Vml() {
 
     var canvasCanvas = getCanvasCanvas('canvasRaphael');
     var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
-    var canvasRect = getRect(xrx.cnvs, canvasCanvas);
-    var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
-    var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);
-    var canvasImage = getImage(xrx.cnvs, image, canvasCanvas);
+    var canvasRect = getRect(xrx.canvas, canvasCanvas);
+    var canvasPolygon = getPolygon(xrx.canvas, canvasCanvas);
+    var canvasCircle = getCircle(xrx.canvas, canvasCanvas);
+    var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
   }
   var vmlCanvas = getCanvasVml('vmlRaphael');
   var vmlGroup = xrx.vml.Group.create(vmlCanvas);

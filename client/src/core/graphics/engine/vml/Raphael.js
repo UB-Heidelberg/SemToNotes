@@ -5355,35 +5355,35 @@ xrx.vml.Raphael = function(element, width, height) {
         if (!container) {
             throw new Error("SVG container not found.");
         }
-        var cnvs = $("svg"),
+        var canvas = $("svg"),
             css = "overflow:hidden;",
             isFloating;
         x = x || 0;
         y = y || 0;
         width = width || 512;
         height = height || 342;
-        $(cnvs, {
+        $(canvas, {
             height: height,
             version: 1.1,
             width: width,
             xmlns: "http://www.w3.org/2000/svg"
         });
         if (container == 1) {
-            cnvs.style.cssText = css + "position:absolute;left:" + x + "px;top:" + y + "px";
-            R._g.doc.body.appendChild(cnvs);
+            canvas.style.cssText = css + "position:absolute;left:" + x + "px;top:" + y + "px";
+            R._g.doc.body.appendChild(canvas);
             isFloating = 1;
         } else {
-            cnvs.style.cssText = css + "position:relative";
+            canvas.style.cssText = css + "position:relative";
             if (container.firstChild) {
-                container.insertBefore(cnvs, container.firstChild);
+                container.insertBefore(canvas, container.firstChild);
             } else {
-                container.appendChild(cnvs);
+                container.appendChild(canvas);
             }
         }
         container = new R._Paper;
         container.width = width;
         container.height = height;
-        container.canvas = cnvs;
+        container.canvas = canvas;
         container.clear();
         container._left = container._top = 0;
         isFloating && (container.renderfix = function () {});
@@ -5431,13 +5431,13 @@ xrx.vml.Raphael = function(element, width, height) {
        Special thanks to Mariusz Nowak (http://www.medikoo.com/) for this method.
     \*/
     R.prototype.renderfix = function () {
-        var cnvs = this.canvas,
-            s = cnvs.style,
+        var canvas = this.canvas,
+            s = canvas.style,
             pos;
         try {
-            pos = cnvs.getScreenCTM() || cnvs.createSVGMatrix();
+            pos = canvas.getScreenCTM() || canvas.createSVGMatrix();
         } catch (e) {
-            pos = cnvs.createSVGMatrix();
+            pos = canvas.createSVGMatrix();
         }
         var left = -pos.e % 1,
             top = -pos.f % 1;

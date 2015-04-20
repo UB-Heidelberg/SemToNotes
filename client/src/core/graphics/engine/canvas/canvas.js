@@ -3,7 +3,7 @@
  *     canvas sub-classes.
  */
 
-goog.provide('xrx.cnvs');
+goog.provide('xrx.canvas');
 
 
 
@@ -11,7 +11,7 @@ goog.provide('xrx.cnvs');
  * Canvas base class providing static functions for the canvas sub-classes.
  * @constructor
  */
-xrx.cnvs = function() {};
+xrx.canvas = function() {};
 
 
 
@@ -57,4 +57,4 @@ xrx.canvas.render = function(canvas, affineTransform, callback) {
 
 
 
-goog.exportSymbol('xrx.cnvs', xrx.cnvs);
+goog.exportSymbol('xrx.canvas', xrx.canvas);

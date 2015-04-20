@@ -13,7 +13,7 @@ goog.require('goog.fx.Dragger');
 goog.require('goog.math.AffineTransform');
 goog.require('goog.math.Rect');
 goog.require('goog.style');
-goog.require('xrx.cnvs');
+goog.require('xrx.canvas');
 goog.require('xrx.drawing.tool.Tool');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.svg');

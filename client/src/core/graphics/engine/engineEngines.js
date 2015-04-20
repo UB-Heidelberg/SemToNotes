@@ -7,7 +7,7 @@ goog.provide('xrx.engine.Engines');
 
 
 
-goog.require('xrx.cnvs');
+goog.require('xrx.canvas');
 goog.require('xrx.canvas.Canvas');
 goog.require('xrx.canvas.Circle');
 goog.require('xrx.canvas.Element');

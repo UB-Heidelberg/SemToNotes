@@ -13,7 +13,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.userAgent');
-goog.require('xrx.cnvs');
+goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.Hoverable');
