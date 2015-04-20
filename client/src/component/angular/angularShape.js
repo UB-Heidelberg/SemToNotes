@@ -6,8 +6,8 @@
 var AngularShape = angular.module('AngularShape', []);
 AngularShape.factory('angularShape', function() {
     var angularShape = {
-        draw: function(key, codePoints, drawingCanvas, color) {
-            var polygon = new xrx.shape.Polygon.create(drawingCanvas);
+        draw: function(polygon, key, codePoints, drawingCanvas, color) {
+
             polygon.setCoords(codePoints);
             polygon.setStrokeWidth(1);
             color = color || 'blue';
@@ -20,6 +20,10 @@ AngularShape.factory('angularShape', function() {
 
 
     return angularShape;
+
+
+
+
 });
 
 
