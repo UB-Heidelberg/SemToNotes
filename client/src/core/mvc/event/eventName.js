@@ -15,5 +15,5 @@ xrx.event.Name = {
   'mousemove': 'xrx-event-move',
   'mouseout': 'xrx-event-out',
   'up': 'xrx-event-up',
-  'zoom': 'xrx-event-zoom',
+  'zoom': 'xrx-event-zoom'
 };
