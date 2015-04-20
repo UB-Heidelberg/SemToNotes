@@ -2,11 +2,11 @@
  * @fileoverview Canvas class representing a stylable element.
  */
 
-goog.provide('xrx.cnvs.Stylable');
+goog.provide('xrx.canvas.Stylable');
 
 
 
-goog.require('xrx.cnvs.Element');
+goog.require('xrx.canvas.Element');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Stylable');
 
@@ -17,9 +17,9 @@ goog.require('xrx.engine.Stylable');
  * @param {HTMLCanvasElement} canvas The parent canvas element.
  * @param {xrx.geometry.Geometry} geometry A geometry object.
  * @constructor
- * @extends {xrx.cnvs.Element}
+ * @extends {xrx.canvas.Element}
  */
-xrx.cnvs.Stylable = function(canvas, geometry) {
+xrx.canvas.Stylable = function(canvas, geometry) {
 
   goog.base(this, canvas);
 
@@ -36,7 +36,7 @@ xrx.cnvs.Stylable = function(canvas, geometry) {
    */
   this.stylable_ = new xrx.engine.Stylable();
 };
-goog.inherits(xrx.cnvs.Stylable, xrx.cnvs.Element);
+goog.inherits(xrx.canvas.Stylable, xrx.canvas.Element);
 
 
 
@@ -44,7 +44,7 @@ goog.inherits(xrx.cnvs.Stylable, xrx.cnvs.Element);
  * Returns the geometry object of the stylable element.
  * @return {xrx.geometry.Geometry} The geometry object.
  */
-xrx.cnvs.Stylable.prototype.getGeometry = function() {
+xrx.canvas.Stylable.prototype.getGeometry = function() {
   return this.geometry_;
 };
 
@@ -54,7 +54,7 @@ xrx.cnvs.Stylable.prototype.getGeometry = function() {
  * Returns the style object of the stylable element.
  * @return {xrx.engine.Stylable} The style object.
  */
-xrx.cnvs.Stylable.prototype.getStylable = function() {
+xrx.canvas.Stylable.prototype.getStylable = function() {
   return this.stylable_;
 };
 
@@ -64,7 +64,7 @@ xrx.cnvs.Stylable.prototype.getStylable = function() {
  * Sets all styles at once by overloading a stylable object.
  * @param {xrx.engine.Stylable} stylable The stylable object.
  */
-xrx.cnvs.Stylable.prototype.setStylable = function(stylable) {
+xrx.canvas.Stylable.prototype.setStylable = function(stylable) {
   this.stylable_.setAll(stylable);
   this.strokeAndFill_();
 };
@@ -75,7 +75,7 @@ xrx.cnvs.Stylable.prototype.setStylable = function(stylable) {
  * Sets the stroke width of the stylable element.
  * @param {number} width The stroke width.
  */
-xrx.cnvs.Stylable.prototype.setStrokeWidth = function(width) {
+xrx.canvas.Stylable.prototype.setStrokeWidth = function(width) {
   this.stylable_.setStrokeWidth(width);
 };
 
@@ -85,7 +85,7 @@ xrx.cnvs.Stylable.prototype.setStrokeWidth = function(width) {
  * Sets the stroke color of the stylable element.
  * @param {string} color The stroke color.
  */
-xrx.cnvs.Stylable.prototype.setStrokeColor = function(color) {
+xrx.canvas.Stylable.prototype.setStrokeColor = function(color) {
   this.stylable_.setStrokeColor(color);
 };
 
@@ -95,7 +95,7 @@ xrx.cnvs.Stylable.prototype.setStrokeColor = function(color) {
  * Sets the fill color of the stylable element.
  * @param {string} color The fill color.
  */
-xrx.cnvs.Stylable.prototype.setFillColor = function(color) {
+xrx.canvas.Stylable.prototype.setFillColor = function(color) {
   this.stylable_.setFillColor(color);
 };
 
@@ -105,7 +105,7 @@ xrx.cnvs.Stylable.prototype.setFillColor = function(color) {
  * Sets the fill opacity of the stylable element.
  * @param {number} factor The fill opacity.
  */
-xrx.cnvs.Stylable.prototype.setFillOpacity = function(factor) {
+xrx.canvas.Stylable.prototype.setFillOpacity = function(factor) {
   this.stylable_.setFillOpacity(factor);
 };
 
@@ -113,7 +113,7 @@ xrx.cnvs.Stylable.prototype.setFillOpacity = function(factor) {
 /**
  * @private
  */
-xrx.cnvs.Stylable.prototype.strokeAndFill_ = function() {
+xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
   this.context_.fillStyle = this.stylable_.getFillColor();
   this.context_.globalAlpha = this.stylable_.getFillOpacity();
   this.context_.fill();

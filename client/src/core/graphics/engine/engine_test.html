@@ -92,7 +92,7 @@ function getCanvasSvg(id) {
 
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
-  var canvasCanvas = xrx.cnvs.Canvas.create(divCanvas);
+  var canvasCanvas = xrx.canvas.Canvas.create(divCanvas);
   canvasCanvas.setWidth(100);
   canvasCanvas.setHeight(100);
   return canvasCanvas;
@@ -212,7 +212,7 @@ function test3Group() {
     svgCanvas.addChild(svgGroup);
 
     var canvasCanvas = getCanvasCanvas('canvasGroup');
-    var canvasGroup = xrx.cnvs.Group.create(canvasCanvas);
+    var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
     var canvasRect = getRect(xrx.cnvs, canvasCanvas);
     var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
     var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);
@@ -249,7 +249,7 @@ function test4Vml() {
     var svgImage = getImage(xrx.svg, image);
 
     var canvasCanvas = getCanvasCanvas('canvasRaphael');
-    var canvasGroup = xrx.cnvs.Group.create(canvasCanvas);
+    var canvasGroup = xrx.canvas.Group.create(canvasCanvas);
     var canvasRect = getRect(xrx.cnvs, canvasCanvas);
     var canvasPolygon = getPolygon(xrx.cnvs, canvasCanvas);
     var canvasCircle = getCircle(xrx.cnvs, canvasCanvas);

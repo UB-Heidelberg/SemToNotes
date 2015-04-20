@@ -2,7 +2,7 @@
  * @fileoverview Canvas rendering class representing a canvas.
  */
 
-goog.provide('xrx.cnvs.Canvas');
+goog.provide('xrx.canvas.Canvas');
 
 
 
@@ -15,7 +15,7 @@ goog.require('goog.dom.DomHelper');
  * @param {HTMLCanvasElement} element The HTML canvas element.
  * @constructor
  */
-xrx.cnvs.Canvas = function(element) {
+xrx.canvas.Canvas = function(element) {
 
   /**
    * The rendering context.
@@ -31,7 +31,7 @@ xrx.cnvs.Canvas = function(element) {
 
   /**
    * The child elements of the canvas.
-   * @type {xrx.cnvs.Element}
+   * @type {xrx.canvas.Element}
    */
   this.childs_ = [];
 
@@ -54,13 +54,13 @@ xrx.cnvs.Canvas = function(element) {
  * Returns the HTML canvas element.
  * @return {HTMLCanvasElement} The HTML canvas element.
  */
-xrx.cnvs.Canvas.prototype.getElement = function() {
+xrx.canvas.Canvas.prototype.getElement = function() {
   return this.element_;
 };
 
 
 
-xrx.cnvs.Canvas.prototype.getEventTarget = function() {
+xrx.canvas.Canvas.prototype.getEventTarget = function() {
   return this.element_;
 };
 
@@ -70,7 +70,7 @@ xrx.cnvs.Canvas.prototype.getEventTarget = function() {
  * Returns the width of the canvas.
  * @return {number} The width.
  */
-xrx.cnvs.Canvas.prototype.getWidth = function() {
+xrx.canvas.Canvas.prototype.getWidth = function() {
   return this.width_;
 };
 
@@ -80,7 +80,7 @@ xrx.cnvs.Canvas.prototype.getWidth = function() {
  * Sets the width of the canvas.
  * @param {number} width the width.
  */
-xrx.cnvs.Canvas.prototype.setWidth = function(width) {
+xrx.canvas.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
   this.element_.setAttribute('width', width);
 };
@@ -91,7 +91,7 @@ xrx.cnvs.Canvas.prototype.setWidth = function(width) {
  * Returns the height of the canvas.
  * @return {number} The height.
  */
-xrx.cnvs.Canvas.prototype.getHeight = function() {
+xrx.canvas.Canvas.prototype.getHeight = function() {
   return this.height_;
 };
 
@@ -101,7 +101,7 @@ xrx.cnvs.Canvas.prototype.getHeight = function() {
  * Sets the height of the canvas.
  * @param {number} width the height.
  */
-xrx.cnvs.Canvas.prototype.setHeight = function(height) {
+xrx.canvas.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
   this.element_.setAttribute('height', height);
 };
@@ -112,7 +112,7 @@ xrx.cnvs.Canvas.prototype.setHeight = function(height) {
  * Adds a child element to the canvas.
  * @param {Object} element The child element.
  */
-xrx.cnvs.Canvas.prototype.addChild = function(element) {
+xrx.canvas.Canvas.prototype.addChild = function(element) {
   this.childs_.push(element);
   element.draw();
 };
@@ -124,9 +124,9 @@ xrx.cnvs.Canvas.prototype.addChild = function(element) {
  * @param {Element} parent The parent HTML element to which the canvas
  *     shall be appended.
  */
-xrx.cnvs.Canvas.create = function(parent) {
+xrx.canvas.Canvas.create = function(parent) {
   var element = goog.dom.createElement('canvas');
-  var canvas = new xrx.cnvs.Canvas(element);
+  var canvas = new xrx.canvas.Canvas(element);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 };

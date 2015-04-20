@@ -2,26 +2,26 @@
  * @fileoverview Canvas class representing a rectangle.
  */
 
-goog.provide('xrx.cnvs.Rect');
+goog.provide('xrx.canvas.Rect');
 
 
 
-goog.require('xrx.cnvs.Stylable');
+goog.require('xrx.canvas.Stylable');
 goog.require('xrx.geometry.Rect');
 
 
 
 /**
  * Canvas class representing a rectangle.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
- * @extends {xrx.cnvs.Stylable}
+ * @extends {xrx.canvas.Stylable}
  */
-xrx.cnvs.Rect = function(canvas) {
+xrx.canvas.Rect = function(canvas) {
 
   goog.base(this, canvas, new xrx.geometry.Rect());
 };
-goog.inherits(xrx.cnvs.Rect, xrx.cnvs.Stylable);
+goog.inherits(xrx.canvas.Rect, xrx.canvas.Stylable);
 
 
 
@@ -29,7 +29,7 @@ goog.inherits(xrx.cnvs.Rect, xrx.cnvs.Stylable);
  * Sets the X coordinate of the rectangle.
  * @param {number} x The coordinate.
  */
-xrx.cnvs.Rect.prototype.setX = function(x) {
+xrx.canvas.Rect.prototype.setX = function(x) {
   this.geometry_.x = x;
 };
 
@@ -39,7 +39,7 @@ xrx.cnvs.Rect.prototype.setX = function(x) {
  * Sets the Y coordinate of the rectangle.
  * @param {number} y The coordinate.
  */
-xrx.cnvs.Rect.prototype.setY = function(y) {
+xrx.canvas.Rect.prototype.setY = function(y) {
   this.geometry_.y = y;
 };
 
@@ -49,7 +49,7 @@ xrx.cnvs.Rect.prototype.setY = function(y) {
  * Sets the width of the rectangle.
  * @param {number} width The width.
  */
-xrx.cnvs.Rect.prototype.setWidth = function(width) {
+xrx.canvas.Rect.prototype.setWidth = function(width) {
   this.geometry_.width = width;
 };
 
@@ -59,7 +59,7 @@ xrx.cnvs.Rect.prototype.setWidth = function(width) {
  * Sets the height of the rectangle.
  * @param {height} height The height.
  */
-xrx.cnvs.Rect.prototype.setHeight = function(height) {
+xrx.canvas.Rect.prototype.setHeight = function(height) {
   this.geometry_.height = height;
 };
 
@@ -68,7 +68,7 @@ xrx.cnvs.Rect.prototype.setHeight = function(height) {
 /**
  * Draws the rectangle.
  */
-xrx.cnvs.Rect.prototype.draw = function() {
+xrx.canvas.Rect.prototype.draw = function() {
   var x = this.geometry_.x;
   var y = this.geometry_.y;
   var width = this.geometry_.width;
@@ -86,8 +86,8 @@ xrx.cnvs.Rect.prototype.draw = function() {
 
 /**
  * Creates a new rectangle.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  */
-xrx.cnvs.Rect.create = function(canvas) {
-  return new xrx.cnvs.Rect(canvas);
+xrx.canvas.Rect.create = function(canvas) {
+  return new xrx.canvas.Rect(canvas);
 };

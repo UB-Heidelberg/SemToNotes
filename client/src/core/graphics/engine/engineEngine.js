@@ -86,7 +86,7 @@ xrx.engine.Engine.prototype.isAvailable = function() {
  * @private
  */
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
-  if (xrx.cnvs.isSupported()) {
+  if (xrx.canvas.isSupported()) {
     this.engine_ = xrx.engine.CANVAS;
     this.renderer_ = xrx.cnvs;
     this.available_ = true;
@@ -111,7 +111,7 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
   if (this.engine_ === xrx.engine.CANVAS) {
     this.renderer_ = xrx.cnvs;
-    this.available_ = xrx.cnvs.isSupported();
+    this.available_ = xrx.canvas.isSupported();
   } else if (this.engine_ === xrx.engine.SVG) {
     this.renderer_ = xrx.svg;
     this.available_ = xrx.svg.isSupported();

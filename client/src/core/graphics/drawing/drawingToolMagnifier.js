@@ -89,7 +89,7 @@ xrx.drawing.tool.Magnifier.prototype.handleDrag_ = function(e, dragger) {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, c.width, c.height);
     ctx.beginPath();
-    xrx.cnvs.setTransform_(ctx, ctm);
+    xrx.canvas.setTransform_(ctx, ctm);
     this.group_.draw();
     ctx.closePath();
     ctx.restore();

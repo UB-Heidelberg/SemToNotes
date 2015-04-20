@@ -2,26 +2,26 @@
  * @fileoverview Canvas class representing a polygon.
  */
 
-goog.provide('xrx.cnvs.Polygon');
+goog.provide('xrx.canvas.Polygon');
 
 
 
-goog.require('xrx.cnvs.Stylable');
+goog.require('xrx.canvas.Stylable');
 goog.require('xrx.geometry.Path');
 
 
 
 /**
  * Canvas class representing a polygon.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
- * @extends xrx.cnvs.Stylable
+ * @extends xrx.canvas.Stylable
  */
-xrx.cnvs.Polygon = function(canvas) {
+xrx.canvas.Polygon = function(canvas) {
 
   goog.base(this, canvas, new xrx.geometry.Path());
 };
-goog.inherits(xrx.cnvs.Polygon, xrx.cnvs.Stylable);
+goog.inherits(xrx.canvas.Polygon, xrx.canvas.Stylable);
 
 
 
@@ -29,7 +29,7 @@ goog.inherits(xrx.cnvs.Polygon, xrx.cnvs.Stylable);
  * Sets the coordinates for the polygon.
  * @param {Array.<Array.<number>>} coords The coordinates.
  */
-xrx.cnvs.Polygon.prototype.setCoords = function(coords) {
+xrx.canvas.Polygon.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
 };
 
@@ -39,7 +39,7 @@ xrx.cnvs.Polygon.prototype.setCoords = function(coords) {
  * Returns the coordinates of the polygon.
  * @return {Array.<Array.<number>>} The coordinates.
  */
-xrx.cnvs.Polygon.prototype.getCoords = function(coords) {
+xrx.canvas.Polygon.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
 };
 
@@ -50,7 +50,7 @@ xrx.cnvs.Polygon.prototype.getCoords = function(coords) {
  * @param {number} pos Index of the coordinate to be updated.
  * @param {Array.<number>} coord The new coordinate.
  */
-xrx.cnvs.Polygon.prototype.setCoordAt = function(pos, coord) {
+xrx.canvas.Polygon.prototype.setCoordAt = function(pos, coord) {
   this.geometry_.coords[pos] = coord;
 };
 
@@ -59,7 +59,7 @@ xrx.cnvs.Polygon.prototype.setCoordAt = function(pos, coord) {
 /**
  * @private
  */
-xrx.cnvs.Polygon.prototype.drawPath_ = function() {
+xrx.canvas.Polygon.prototype.drawPath_ = function() {
   var coords = this.geometry_.coords;
   if (!coords[0]) return;
   this.context_.beginPath();
@@ -76,7 +76,7 @@ xrx.cnvs.Polygon.prototype.drawPath_ = function() {
 /**
  * Draws the polygon.
  */
-xrx.cnvs.Polygon.prototype.draw = function() {
+xrx.canvas.Polygon.prototype.draw = function() {
   this.drawPath_();
   this.strokeAndFill_();
 };
@@ -85,8 +85,8 @@ xrx.cnvs.Polygon.prototype.draw = function() {
 
 /**
  * Creates a new polygon.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  */
-xrx.cnvs.Polygon.create = function(canvas) {
-  return new xrx.cnvs.Polygon(canvas);
+xrx.canvas.Polygon.create = function(canvas) {
+  return new xrx.canvas.Polygon(canvas);
 };

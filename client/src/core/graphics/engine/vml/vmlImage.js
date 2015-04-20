@@ -15,7 +15,7 @@ goog.require('xrx.vml.Stylable');
  * VML class representing an image.
  * @param {Raphael.circle} raphael The Raphael circle object.
  * @constructor
- * @extends xrx.cnvs.Stylable
+ * @extends xrx.canvas.Stylable
  */
 xrx.vml.Image = function(raphael) {
 

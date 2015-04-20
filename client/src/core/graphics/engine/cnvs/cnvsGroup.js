@@ -2,39 +2,39 @@
  * @fileoverview Canvas class representing a group.
  */
 
-goog.provide('xrx.cnvs.Group');
+goog.provide('xrx.canvas.Group');
 
 
 
-goog.require('xrx.cnvs.Element');
+goog.require('xrx.canvas.Element');
 
 
 
 /**
  * Canvas class representing a group.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
- * @extends xrx.cnvs.Element
+ * @extends xrx.canvas.Element
  */
-xrx.cnvs.Group = function(canvas) {
+xrx.canvas.Group = function(canvas) {
 
   goog.base(this, canvas);
 
   /**
    * The child elements of the group.
-   * @type {Array.<xrx.cnvs.Element>}
+   * @type {Array.<xrx.canvas.Element>}
    */
   this.childs_ = [];
 };
-goog.inherits(xrx.cnvs.Group, xrx.cnvs.Element);
+goog.inherits(xrx.canvas.Group, xrx.canvas.Element);
 
 
 
 /**
  * Returns the child elements of the group.
- * @return {xrx.cnvs.Element} The child elements.
+ * @return {xrx.canvas.Element} The child elements.
  */
-xrx.cnvs.Group.prototype.getChildren = function() {
+xrx.canvas.Group.prototype.getChildren = function() {
   return this.childs_;
 };
 
@@ -42,9 +42,9 @@ xrx.cnvs.Group.prototype.getChildren = function() {
 
 /**
  * Adds child elements to a group.
- * @param {xrx.cnvs.Element} children The child elements.
+ * @param {xrx.canvas.Element} children The child elements.
  */
-xrx.cnvs.Group.prototype.addChildren = function(children) {
+xrx.canvas.Group.prototype.addChildren = function(children) {
   if (!goog.isArray(children)) children = [children];
   var child;
   for(var i = 0, len = children.length; i < len; i++) {
@@ -58,7 +58,7 @@ xrx.cnvs.Group.prototype.addChildren = function(children) {
 /**
  * Removes all child elements from the group.
  */
-xrx.cnvs.Group.prototype.removeChildren = function() {
+xrx.canvas.Group.prototype.removeChildren = function() {
   this.childs_ = [];
 };
 
@@ -68,7 +68,7 @@ xrx.cnvs.Group.prototype.removeChildren = function() {
  * Removes a child element at an index.
  * @param {number} index The index.
  */
-xrx.cnvs.Group.prototype.removeChildAt = function(index) {
+xrx.canvas.Group.prototype.removeChildAt = function(index) {
   this.childs_.splice(index, 1);
 };
 
@@ -77,7 +77,7 @@ xrx.cnvs.Group.prototype.removeChildAt = function(index) {
 /**
  * Draws each child element of the group.
  */
-xrx.cnvs.Group.prototype.draw = function() {
+xrx.canvas.Group.prototype.draw = function() {
   for(var i = 0, len = this.childs_.length; i < len; i++) {
     this.childs_[i].draw();
   }
@@ -87,8 +87,8 @@ xrx.cnvs.Group.prototype.draw = function() {
 
 /**
  * Creates a new group.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object of the group.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object of the group.
  */
-xrx.cnvs.Group.create = function(canvas) {
-  return new xrx.cnvs.Group(canvas);
+xrx.canvas.Group.create = function(canvas) {
+  return new xrx.canvas.Group(canvas);
 };

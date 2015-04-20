@@ -2,7 +2,7 @@
  * @fileoverview Canvas super class.
  */
 
-goog.provide('xrx.cnvs.Element');
+goog.provide('xrx.canvas.Element');
 
 
 
@@ -12,14 +12,14 @@ goog.require('xrx.cnvs');
 
 /**
  * Canvas super class.
- * @param {xrx.cnvs.Canvas} canvas The parent canvas object.
+ * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
  */
-xrx.cnvs.Element = function(canvas) {
+xrx.canvas.Element = function(canvas) {
 
   /**
    * The parent canvas object.
-   * @type {xrx.cnvs.Canvas}
+   * @type {xrx.canvas.Canvas}
    */
   this.canvas_ = canvas;
 
@@ -34,9 +34,9 @@ xrx.cnvs.Element = function(canvas) {
 
 /**
  * Returns the parent canvas object.
- * @return {xrx.cnvs.Canvas} The parent canvas object.
+ * @return {xrx.canvas.Canvas} The parent canvas object.
  */
-xrx.cnvs.Element.prototype.getCanvas = function() {
+xrx.canvas.Element.prototype.getCanvas = function() {
   return this.canvas_;
 };
 
@@ -46,6 +46,6 @@ xrx.cnvs.Element.prototype.getCanvas = function() {
  * Returns the HTML canvas rendering context.
  * @return {CanvasRenderingContext2D} The rendering context.
  */
-xrx.cnvs.Element.prototype.getContext = function() {
+xrx.canvas.Element.prototype.getContext = function() {
   return this.context_;
 };

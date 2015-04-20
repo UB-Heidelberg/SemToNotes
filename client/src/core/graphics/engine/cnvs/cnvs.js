@@ -19,7 +19,7 @@ xrx.cnvs = function() {};
  * Returns whether HTML Canvas rendering is supported by the current user agent.
  * @return {boolean} Whether HTML Canvas rendering is supported.
  */
-xrx.cnvs.isSupported = function() {
+xrx.canvas.isSupported = function() {
   return !!document.createElement('canvas').getContext;
 };
 
@@ -28,7 +28,7 @@ xrx.cnvs.isSupported = function() {
 /**
  * @private
  */
-xrx.cnvs.setTransform_ = function(context, matrix) {
+xrx.canvas.setTransform_ = function(context, matrix) {
   context.setTransform(matrix.m00_, matrix.m10_, matrix.m01_,
       matrix.m11_, matrix.m02_, matrix.m12_);
 };
@@ -43,13 +43,13 @@ xrx.cnvs.setTransform_ = function(context, matrix) {
  * @param {function} callback Callback function, called after the canvas is cleaned
  *     and the matrix is transformed.
  */
-xrx.cnvs.render = function(canvas, affineTransform, callback) {
+xrx.canvas.render = function(canvas, affineTransform, callback) {
   var ctx = canvas.getContext('2d');
   ctx.save();
   ctx.fillStyle = '#DDDDDD';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
-  xrx.cnvs.setTransform_(ctx, affineTransform);
+  xrx.canvas.setTransform_(ctx, affineTransform);
   callback();
   ctx.closePath();
   ctx.restore();

@@ -303,7 +303,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
   if (this.engine_.hasRenderer(xrx.engine.CANVAS)) {
-    xrx.cnvs.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
+    xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
         function() {
           self.layer_[0].draw();
           self.layer_[1].draw();
