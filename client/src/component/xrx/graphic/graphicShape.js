@@ -38,6 +38,34 @@ goog.inherits(xrx.graphic.Shape, xrx.mvc.ComponentView);
 
 
 
+xrx.graphic.Shape.prototype.setStrokeWidth = function(width) {
+  if (width === undefined || width === null) return;
+  this.shape_.getEngineShape().setStrokeWidth(parseFloat(width));
+};
+
+
+
+xrx.graphic.Shape.prototype.setStrokeColor = function(color) {
+  if (color === undefined || color === null) return;
+  this.shape_.getEngineShape().setStrokeColor('' + color);
+};
+
+
+
+xrx.graphic.Shape.prototype.setFillColor = function(color) {
+  if (color === undefined || color === null) return;
+  this.shape_.getEngineShape().setFillColor('' + color);
+};
+
+
+
+xrx.graphic.Shape.prototype.setFillOpacity = function(factor) {
+  if (factor === undefined || factor === null) return;
+  this.shape_.getEngineShape().setFillOpacity(parseFloat(factor));
+};
+
+
+
 xrx.graphic.Shape.prototype.initModifiable_ = function() {
   var modifiable;
   var dataset = this.getDataset('xrxModifiable');
@@ -59,15 +87,10 @@ xrx.graphic.Shape.prototype.initSelectable_ = function() {
 
 xrx.graphic.Shape.prototype.initStyle_ = function() {
   if (!this.shape_.getEngineShape) return;
-  var shp = this.shape_.getEngineShape();
-  var strokeWidth = this.getDataset('xrxStrokeWidth');
-  var strokeColor = this.getDataset('xrxStrokeColor');
-  var fillColor = this.getDataset('xrxFillColor');
-  var fillOpacity = this.getDataset('xrxFillOpacity');
-  if (strokeWidth) shp.setStrokeWidth(parseFloat(strokeWidth));
-  if (strokeColor) shp.setStrokeColor(strokeColor);
-  if (fillColor) shp.setFillColor(fillColor);
-  if (fillOpacity) shp.setFillOpacity(parseFloat(fillOpacity));
+  this.setStrokeWidth(this.getDataset('xrxStrokeWidth'));
+  this.setStrokeColor(this.getDataset('xrxStrokeColor'));
+  this.setFillColor(this.getDataset('xrxFillColor'));
+  this.setFillOpacity(this.getDataset('xrxFillOpacity'));
 };
 
 

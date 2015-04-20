@@ -132,15 +132,29 @@ width: 50%;
       data-ref="xrx:instance('i-1')/zones/zone"></div>
   <span class="xrx-action" id="a-tgl">
     <span class="xrx-action" data-event="xrx-event-in">
-      <span class="xrx-classes-add" data-select="$select" data-classes="highlight"></span>
-      <span class="xrx-canvas-stylable-set" data-select="$select" data-stroke-color="red"></span>
+      <span class="xrx-classes-add" data-scope="#d-tgl" data-select="$select" data-classes="highlight"></span>
+      <span class="xrx-canvas-stylable-set"
+          data-scope="#c-tgl"
+          data-select="$select"
+          data-stroke-color="red"
+          data-stroke-width="1"
+          data-fill-color="yellow"
+          data-fill-opacity=".1">
+      </span>
     </span>
     <span class="xrx-action" data-event="xrx-event-out">
-      <span class="xrx-classes-remove" data-select="$select" data-classes="highlight"></span>
-      <span class="xrx-canvas-stylable-reset" data-select="$select"></span>
+      <span class="xrx-classes-remove" data-scope="#d-tgl" data-select="$select" data-classes="highlight"></span>
+      <span class="xrx-canvas-stylable-set"
+          data-scope="#c-tgl"
+          data-select="$select"
+          data-stroke-color="black"
+          data-stroke-width="2"
+          data-fill-color="grey"
+          data-fill-opacity="0">
+      </span>
     </span>
   </span>
-  <div class="left">
+  <div class="left" id="d-tgl">
     <p class="xrx-component tgl1" data-action="a-tgl" data-param="select=.tgl1">text1 text1 text1 text1 text1 text1 text1 text1</p>
     <p class="xrx-component tgl2" data-action="a-tgl" data-param="select=.tgl2">text1 text1 text1 text1 text1 text1 text1 text1</p>
     <p class="xrx-component tgl3" data-action="a-tgl" data-param="select=.tgl3">text1 text1 text1 text1 text1 text1 text1 text1</p>
@@ -148,11 +162,12 @@ width: 50%;
     <p class="xrx-component tgl5" data-action="a-tgl" data-param="select=.tgl5">text1 text1 text1 text1 text1 text1 text1 text1</p>
   </div>
   <div class="right">
-    <div class="xrx-canvas">
+    <div class="xrx-canvas" id="c-tgl">
       <div class="xrx-canvas-graphics">
         <div class="xrx-canvas-group">
           <div class="xrx-repeat" data-bind="b-1">
-            <div class="xrx-shape-rect tgl1"
+            <div class="xrx-shape-rect"
+                 data-ref-classes="concat('tgl', position())"
                  data-ref="./self::*"
                  data-ref-x="./@x"
                  data-ref-y="./@y"
@@ -166,6 +181,8 @@ width: 50%;
       </div>
     </div>
   </div>
+
+
   <h1>Graphic-Text-Linking</h1>
 </div>
 

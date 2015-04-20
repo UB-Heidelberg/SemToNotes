@@ -2,7 +2,7 @@
  * @fileoverview
  */
 
-goog.provide('xrx.canvas._All_');
+goog.provide('xrx.graphic._All_');
 
 
 
@@ -23,3 +23,8 @@ goog.require('xrx.graphic.ShapePolygonInsert');
 goog.require('xrx.graphic.ShapeRect');
 goog.require('xrx.graphic.ShapeRectCreate');
 goog.require('xrx.graphic.ShapeRectInsert');
+goog.require('xrx.graphic.StylableSet');
+
+
+
+xrx.graphic._All_ = function() {};

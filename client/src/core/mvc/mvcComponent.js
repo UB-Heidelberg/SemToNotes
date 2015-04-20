@@ -12,11 +12,13 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
+goog.require('goog.string');
 goog.require('goog.ui.IdGenerator');
 goog.require('goog.Uri.QueryData');
 goog.require('xrx.event.Handler');
 goog.require('xrx.event.Name');
 goog.require('xrx.event.Type');
+goog.require('xrx.mvc.ComponentClasses');
 goog.require('xrx.mvc.Validate');
 goog.require('xrx.mvc.Xpath');
 goog.require('xrx.xpath');
@@ -43,6 +45,20 @@ xrx.mvc.Component = function(element, uidl) {
   this.compileXpath_();
 
   this.createDom();
+
+  this.classes_;
+
+  this.initClasses_();
+};
+
+
+
+xrx.mvc.Component.prototype.initClasses_ = function() {
+  var classes;
+  var classesRef = this.getDataset('xrxRefClasses');
+  var classesBind = this.getDataset('xrxBindClasses');
+  classesRef ? classes = classesRef : classes = classesBind;
+  if (classes) this.classes_ = new xrx.mvc.ComponentClasses(this);
 };
 
 
@@ -99,6 +115,25 @@ xrx.mvc.Component.prototype.getElement = function() {
 
 
 /**
+ * Returns the unique ID of this component. If the instance
+ * doesn't already have an ID, generate one on the fly.
+ * @return {string} Unique ID.
+ */
+xrx.mvc.Component.prototype.getId = function() {
+  if (!this.id_) {
+    if (this.element_.id && this.element_.id !== '') {
+      this.id_ = this.element_.id;
+    } else {
+      this.id_ = goog.ui.IdGenerator.getInstance().getNextUniqueId();
+      this.element_.id = this.id_;
+    }
+  }
+  return this.id_;
+};
+
+
+
+/**
  *
  * @return {String} The dataset value.
  */
@@ -112,18 +147,6 @@ xrx.mvc.Component.prototype.getDataset = function(key, opt_element) {
     return goog.dom.dataset.get(element, shortened);
   } else {
     return standard;
-  }
-};
-
-
-
-xrx.mvc.Component.prototype.getDatasetParam = function(key, params, opt_element) {
-  var dataset = this.getDataset(key, opt_element);
-  if (!dataset) return null;
-  if (dataset.charAt(0) !== '$') {
-    return dataset; 
-  } else {
-    return params.get(dataset.slice(1));
   }
 };
 
@@ -148,21 +171,66 @@ xrx.mvc.Component.prototype.hasDataset = function(key, opt_element) {
 
 
 
-/**
- * Returns the unique ID of this component. If the instance
- * doesn't already have an ID generate one on the fly.
- * @return {string} Unique ID.
- */
-xrx.mvc.Component.prototype.getId = function() {
-  if (!this.id_) {
-    if (this.element_.id && this.element_.id !== '') {
-      this.id_ = this.element_.id;
-    } else {
-      this.id_ = goog.ui.IdGenerator.getInstance().getNextUniqueId();
-      this.element_.id = this.id_;
-    }
+xrx.mvc.Component.prototype.getDatasetParam = function(key, params, opt_element) {
+  var dataset = this.getDataset(key, opt_element);
+  if (!dataset) return null;
+  if (dataset.charAt(0) !== '$') {
+    return dataset; 
+  } else {
+    return params.get(dataset.slice(1));
   }
-  return this.id_;
+};
+
+
+
+xrx.mvc.Component.prototype.getElementBySelectorId_ = function(opt_element,
+      opt_selector, scope) {
+  var dataset = opt_selector || this.getDataset('xrxSelect', opt_element);
+  if (dataset.charAt(0) !== '#') return undefined;
+  var element = goog.dom.getElement(dataset.slice(1), scope);
+  return dataset && element ? [element] : undefined;
+};
+
+
+
+xrx.mvc.Component.prototype.getElementBySelectorClass_ = function(opt_element,
+      opt_selector, scope) {
+  var dataset = opt_selector || this.getDataset('xrxSelect', opt_element);
+  if (dataset.charAt(0) !== '.') return undefined;
+  var elements = goog.dom.getElementsByClass(dataset.slice(1), scope);
+  return dataset && elements.length > 0 ? goog.array.toArray(elements) : undefined;
+};
+
+
+
+xrx.mvc.Component.prototype.getElementsBySelectorParam_ = function(params,
+      opt_element, scope) {
+  var selector;
+  var elements;
+  var dataset = this.getDataset('xrxSelect', opt_element);
+  if (dataset.charAt(0) !== '$') return undefined;
+  selector = params.get(dataset.slice(1));
+  elements = this.getElementBySelectorId_(opt_element, selector, scope) ||
+      this.getElementBySelectorClass_(opt_element, selector, scope);
+  return dataset && elements && elements.length > 0 ? goog.array.toArray(elements) : undefined;
+};
+
+
+
+xrx.mvc.Component.prototype.getElementScope_ = function(opt_element, scope) {
+  var dataset = this.getDataset('xrxScope', opt_element);
+  if (!dataset) return undefined;
+  if (dataset.charAt(0) !== '#') throw Error('Invalid scope selector. "#" expected.');
+  return goog.dom.getElement(dataset.slice(1));
+};
+
+
+
+xrx.mvc.Component.prototype.getElementsBySelectAndScope = function(opt_params, opt_element) {
+  var scope = this.getElementScope_(opt_element);
+  return this.getElementBySelectorId_(opt_element, undefined, scope) ||
+      this.getElementBySelectorClass_(opt_element, undefined, scope) ||
+      this.getElementsBySelectorParam_(opt_params, opt_element, scope);
 };
 
 
