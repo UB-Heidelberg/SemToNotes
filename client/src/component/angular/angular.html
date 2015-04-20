@@ -34,7 +34,7 @@
     <div>
         <accordion close-others="oneAtATime">
 
-            <accordion-group is-open="currentTab[1]"  heading="Dynamic Body Content" ng-click="setTab(1);">
+            <accordion-group is-open="currentTab[1]"  heading="Dynamic Body Content" ng-click="setTabAndDraw(1);">
                 <p>The body of the accordion group grows to fit the contents</p>
 
                 <div ng-repeat="item in items">{{item}}</div>
