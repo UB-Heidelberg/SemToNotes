@@ -223,6 +223,26 @@ xrx.drawing.Viewbox.prototype.getCenterPoint_ = function() {
 
 
 /**
+ * Rotates the view-box by an angle around an anchor point.
+ * @param {number?} opt_angle The angle of rotation, e.g. -40. Defaults
+ *     to 90.
+ * @param {number?} opt_x The x coordinate of the anchor point. Defaults
+ *     to the center point.
+ * @param {number?} opt_y The y coordinate of the anchor point. Defaults
+ *     to the center point.
+ */
+xrx.drawing.Viewbox.prototype.rotate = function(opt_angle, opt_x, opt_y) {
+  var sx = this.ctm_.getScaleX();
+  var centerPoint = this.getCenterPoint_();
+  var angle = opt_angle || 90;
+  var x = opt_x || centerPoint[0];
+  var y = opt_y || centerPoint[1];
+  this.ctm_.scale(1/sx, 1/sx).rotate(goog.math.toRadians(angle), x, y).scale(sx, sx);
+};
+
+
+
+/**
  * Rotates the view-box by 90° in left direction.
  */
 xrx.drawing.Viewbox.prototype.rotateLeft = function() {

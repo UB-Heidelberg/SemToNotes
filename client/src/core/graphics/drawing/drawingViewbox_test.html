@@ -7,6 +7,8 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
+  goog.require('goog.events');
+  goog.require('goog.events.EventType');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.engine');
   goog.require('xrx.shape.Shapes');
@@ -21,7 +23,7 @@
 </style>
 </head>
 <body>
-
+<h1>Standard transformations</h1>
 <table>
   <tr>
     <td></td>
@@ -61,7 +63,11 @@
   </tr>
 </table>
 
+<h1>Dump and restore transformation matrix</h1>
 <div id="dumpRestore"></div>
+
+<h1>Rotate around an anchor point</h1>
+<div id="rotate"></div>
 
 <script type="text/javascript">
 var url = './drawing_test.png';
@@ -169,6 +175,18 @@ function test6ctmDumpRestore() {
     dump[4]++;
     dump[5]++;
     canvas.getViewbox().ctmRestore(dump);
+    canvas.draw();
+  });
+};
+
+function test7rotate() {
+  var dump;
+  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('rotate'));
+  canvas.setModeView();
+  canvas.setBackgroundImage(url, function() {
+    canvas.getViewbox().getCTM().translate(1000, 50);
+    canvas.getViewbox().getCTM().scale(5, 5);
+    canvas.getViewbox().rotate(40, 0, 0);
     canvas.draw();
   });
 };
