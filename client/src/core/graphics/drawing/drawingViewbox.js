@@ -235,9 +235,11 @@ xrx.drawing.Viewbox.prototype.rotate = function(opt_angle, opt_x, opt_y) {
   var sx = this.ctm_.getScaleX();
   var centerPoint = this.getCenterPoint_();
   var angle = opt_angle || 90;
-  var x = opt_x || centerPoint[0];
-  var y = opt_y || centerPoint[1];
-  this.ctm_.scale(1/sx, 1/sx).rotate(goog.math.toRadians(angle), x, y).scale(sx, sx);
+  var x;
+  var y;
+  opt_x === undefined ? x = centerPoint[0] : x = opt_x;
+  opt_y === undefined ? y = centerPoint[1] : y = opt_y;
+  this.ctm_.rotate(goog.math.toRadians(angle), x, y);
 };
 
 

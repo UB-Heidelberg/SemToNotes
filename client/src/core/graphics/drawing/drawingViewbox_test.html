@@ -67,6 +67,10 @@
 <div id="dumpRestore"></div>
 
 <h1>Rotate around an anchor point</h1>
+<div>
+  <button id="brotateLeft">Rotate left</button>
+  <button id="brotateRight">Rotate right</button>
+</div>
 <div id="rotate"></div>
 
 <script type="text/javascript">
@@ -182,13 +186,21 @@ function test6ctmDumpRestore() {
 function test7rotate() {
   var dump;
   var canvas = new xrx.drawing.Drawing(goog.dom.getElement('rotate'));
-  canvas.setModeView();
-  canvas.setBackgroundImage(url, function() {
-    canvas.getViewbox().getCTM().translate(1000, 50);
-    canvas.getViewbox().getCTM().scale(5, 5);
-    canvas.getViewbox().rotate(40, 0, 0);
+
+  // buttons
+  var rotateLeft = goog.dom.getElement('brotateLeft');
+  var rotateRight = goog.dom.getElement('brotateRight');
+  goog.events.listen(rotateLeft, goog.events.EventType.CLICK, function() {
+    canvas.getViewbox().rotate(-90, 0, 0);
     canvas.draw();
   });
+  goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
+    canvas.getViewbox().rotate(90, 0, 0);
+    canvas.draw();
+  });
+  // canvas
+  canvas.setModeView();
+  canvas.setBackgroundImage(url);
 };
 
 </script>
