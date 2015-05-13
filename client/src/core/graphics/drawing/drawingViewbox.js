@@ -29,6 +29,10 @@ xrx.drawing.Viewbox = function(drawing) {
 
   this.origin_;
 
+  this.zoomMax_;
+
+  this.zoomMin_;
+
   this.create_();
 };
 
@@ -54,6 +58,26 @@ xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
   var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
   var scale = canvasHeight / imageHeight;
   this.ctm_.scale(scale, scale);
+};
+
+
+
+/**
+ * Sets the maximal zoom factor.
+ * @param {number} factor The maximal zoom factor, e.g., 2.5.
+ */
+xrx.drawing.Viewbox.prototype.setZoomMax = function(factor) {
+  this.zoomMax_ = factor;
+};
+
+
+
+/**
+ * Sets the minimum zoom factor.
+ * @param {number} factor The minimal zoom factor, e.g., 0.1.
+ */
+xrx.drawing.Viewbox.prototype.setZoomMin = function(factor) {
+  this.zoomMin_ = factor;
 };
 
 
@@ -270,7 +294,13 @@ xrx.drawing.Viewbox.prototype.rotateRight = function() {
  * Zoom in on the view-box.
  */
 xrx.drawing.Viewbox.prototype.zoomIn = function() {
-  this.ctm_.scale(1.05, 1.05);
+  var sx;
+  if (this.zoomMax_ === undefined) {
+    this.ctm_.scale(1.05, 1.05);
+  } else {
+    sx = this.ctm_.getScaleX();
+    if (sx < this.zoomMax_) this.ctm_.scale(1.05, 1.05);
+  }
 };
 
 
@@ -279,7 +309,13 @@ xrx.drawing.Viewbox.prototype.zoomIn = function() {
  * Zoom out the view-box.
  */
 xrx.drawing.Viewbox.prototype.zoomOut = function() {
-  this.ctm_.scale(.95, .95);
+  var sx;
+  if (this.zoomMin_ === undefined) {
+    this.ctm_.scale(.95, .95);
+  } else {
+    sx = this.ctm_.getScaleX();
+    if (sx > this.zoomMin_) this.ctm_.scale(.95, .95);
+  }
 };
 
 

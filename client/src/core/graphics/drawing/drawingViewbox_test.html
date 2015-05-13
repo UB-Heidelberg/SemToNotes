@@ -186,6 +186,8 @@ function test6ctmDumpRestore() {
 function test7rotate() {
   var dump;
   var canvas = new xrx.drawing.Drawing(goog.dom.getElement('rotate'));
+  canvas.getViewbox().setZoomMax(2);
+  canvas.getViewbox().setZoomMin(.4);
 
   // buttons
   var rotateLeft = goog.dom.getElement('brotateLeft');
