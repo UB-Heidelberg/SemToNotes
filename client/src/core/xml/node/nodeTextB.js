@@ -25,6 +25,7 @@ goog.require('xrx.xpath.NodeSet');
  * @constructor
  */
 xrx.node.TextB = function(document, key) {
+
   goog.base(this, xrx.node.TEXT, document, key);
 };
 goog.inherits(xrx.node.TextB, xrx.node.Binary);
@@ -32,24 +33,12 @@ goog.inherits(xrx.node.TextB, xrx.node.Binary);
 
 
 
-xrx.node.TextB.prototype.getToken = function() {
-
-  return new xrx.token.NotTag(this.getLabel(), this.getOffset(),
-      this.getLength());
-};
-
-
-
-
 xrx.node.TextB.prototype.getLabel = function() {
-  var label = this.getIndex().getLabel(this.key_);
-  if (this.getRow().getType() === xrx.token.START_TAG) {
+  var struct = this.getIndex().getStructuralIndex();
+  var label = struct.getLabel(this.key_);
+  if (struct.getType(this.key_) === xrx.token.START_TAG) {
     label.push0();
-  } else if (this.getRow().getType() === xrx.token.END_TAG) {
-    var tmp = label.pop();
-    label.push(tmp + .5);
-  } else {};
-
+  };
   return label;
 };
 
@@ -65,7 +54,6 @@ xrx.node.TextB.prototype.getOffset = function() {
 
 xrx.node.TextB.prototype.getLength = function() {
   var row = this.getRow();
-
   return row.getLength2() - row.getLength1();
 };
 

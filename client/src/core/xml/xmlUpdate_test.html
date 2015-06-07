@@ -11,6 +11,7 @@
 <script src='../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.dom');
+  goog.require('goog.dom.classes');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
   goog.require('xrx.mvc');
@@ -29,10 +30,12 @@
 
 var xml;
 var element;
+var element2;
 var instance;
 
 var xmlNs;
 var elementNs;
+var element2Ns;
 var instanceNs;
 
 
@@ -41,8 +44,12 @@ function resetForNextTest() {
   xml = undefined;
   xml = '<a>test<b>2</b>3<c attr1="test" attr2="">4<d/>55<e/>6</c><f/></a>';
   element = undefined;
+  element2 = undefined;
   element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
+  element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.append(element, element2);
+  goog.dom.setTextContent(element2, xml);
   instance = undefined;
   instance = new xrx.mvc.Instance(element);
   instance.getIndex();
@@ -50,8 +57,12 @@ function resetForNextTest() {
   xmlNs = undefined;
   xmlNs = '<x><y/><a xmlns="http://www.example.org/a"><b:b xmlns:b="http://www.example.org/b"><c/></b:b></a></x>';
   elementNs = undefined;
+  element2Ns = undefined;
   elementNs = goog.dom.createElement('div');
-  goog.dom.setTextContent(elementNs, xmlNs);
+  element2Ns = goog.dom.createElement('div');
+  goog.dom.classes.set(element2Ns, 'xrx-document');
+  goog.dom.append(elementNs, element2Ns);
+  goog.dom.setTextContent(element2Ns, xmlNs);
   instanceNs = undefined;
   instanceNs = new xrx.mvc.Instance(elementNs);
   instanceNs.getIndex();

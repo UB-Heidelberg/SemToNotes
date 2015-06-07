@@ -38,7 +38,6 @@ xrx.node.Text.prototype.isSameAs = function(node) {
 xrx.node.Text.prototype.isBefore = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isBefore(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() < node.getType() );
@@ -52,7 +51,6 @@ xrx.node.Text.prototype.isBefore = function(node) {
 xrx.node.Text.prototype.isAfter = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isAfter(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() > node.getType() );

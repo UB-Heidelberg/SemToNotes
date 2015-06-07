@@ -25,11 +25,18 @@
 
 var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
 
+function createInstance(xml) {
+  var element = goog.dom.createElement('div');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, xml);
+  goog.dom.append(element, element2);
+  return new xrx.mvc.Instance(element);
+};
+
 function test01Text() {
   var expr = '//text()';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
   var node = new xrx.node.DocumentS(instance.getId());
 
   var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -46,9 +53,7 @@ function test01Text() {
 
 function test02Node() {
   var expr = '//node()';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
   var node = new xrx.node.DocumentS(instance.getId());
 
   var result = xrx.xpath.evaluate(expr, node, null, xrx.xpath.XPathResultType.ANY_TYPE);

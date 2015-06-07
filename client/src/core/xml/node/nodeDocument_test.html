@@ -26,15 +26,23 @@
 
 <script type="text/javascript">
 
+function createInstance(xml) {
+  var element = goog.dom.createElement('div');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, xml);
+  goog.dom.append(element, element2);
+  return new xrx.mvc.Instance(element);
+};
+
 function test01nameFunctions() {
   // always ''
 };
 
 function test02identityFunctions() {
   var xml = '<a>1<b/>2<c id="test"/>3<d/>4</a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+
+  var instance = createInstance(xml);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
@@ -66,9 +74,8 @@ function test02identityFunctions() {
 
 function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+
+  var instance = createInstance(xml);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
@@ -83,11 +90,10 @@ function test03contentFunctions() {
   assertEquals('1234', dS.getStringValue());
 };
 
-function axisTest(key, func, expected) {
+function axisTest(func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+
+  var instance = createInstance(xml);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
@@ -125,28 +131,28 @@ function axisTest(key, func, expected) {
 function test04nodeFunctions() {
 
   // ancestor
-  axisTest(5, 'getNodeAncestor', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodeAncestor', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // child
-  axisTest(0, 'getNodeChild', { node: 1, element: 1, text: 0, attribute: 0 });
+  axisTest('getNodeChild', { node: 1, element: 1, text: 0, attribute: 0 });
 
   // descendant
-  axisTest(0, 'getNodeDescendant', { node: 13, element: 6, text: 7, attribute: 0 });
+  axisTest('getNodeDescendant', { node: 13, element: 6, text: 7, attribute: 0 });
 
   // following
-  axisTest(1, 'getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // following sibling
-  axisTest(1, 'getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // parent
-  axisTest(6, 'getNodeParent', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodeParent', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // preceding
-  axisTest(8, 'getNodePreceding', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodePreceding', { node: 0, element: 0, text: 0, attribute: 0 });
 
   // preceding sibling
-  axisTest(8, 'getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
+  axisTest('getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 
 };
 

@@ -26,29 +26,42 @@
 
 <script type="text/javascript">
 
+function createInstance(xml) {
+  var element = goog.dom.createElement('div');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, xml);
+  goog.dom.append(element, element2);
+  return new xrx.mvc.Instance(element);
+};
+
 function test01nameFunctions() {
   // always ''
 };
 
 function test02identityFunctions() {
   var xml = '<a>1<b/>2<c id="test">3</c>4</a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+
+  var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB = new xrx.node.ElementB(dB, 1);
-  var tB1 = new xrx.node.TextB(dB, 1);
+  var eB = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1,1])));
+  var tB1 = new xrx.node.TextB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1,1])));
   // important!
-  var tB2 = new xrx.node.TextB(dB, 2); // [1,2,0]
-  var tB3 = new xrx.node.TextB(dB, 3); // [1,2]
+  var tB2 = new xrx.node.TextB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1,2,0]))); // [1,2,0]
+  var tB3 = new xrx.node.TextB(dB,
+      struct.createKey(xrx.token.END_TAG, new xrx.xml.Label([1,2]))); // [1,2]
 
   assertTrue(tB1.isSameAs(tB1));
   assertTrue(tB1.isAfter(eB));
   assertTrue(eB.isBefore(tB1));
   // important!
-  assertTrue(tB2.isBefore(tB3));
+  TODO: assertTrue(tB2.isBefore(tB3));
   assertTrue(tB3.isAfter(tB2));
 
   // streaming node
@@ -68,9 +81,8 @@ function test02identityFunctions() {
 
 function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
+  
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
@@ -103,9 +115,7 @@ function test03contentFunctions() {
 
 function axisTest(key, func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());

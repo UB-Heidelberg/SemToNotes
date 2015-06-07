@@ -22,6 +22,15 @@
 <body>
 <script type="text/javascript">
 
+function createInstance(xml) {
+  var element = goog.dom.createElement('div');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, xml);
+  goog.dom.append(element, element2);
+  return new xrx.mvc.Instance(element);
+};
+
 function test01FnBoolean() {
   xrx.xpath.Test.assertEquals(true, 'boolean(1)'); // number
   xrx.xpath.Test.assertEquals(true, 'boolean(-1)'); // number
@@ -79,9 +88,7 @@ function test09FnLang() {
 
 function test10FnFirstLast() {
   var xml = '<a><b/><c/><d/></a>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
 
   var first = xrx.xpath.evaluate('/a/*[1]', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -99,9 +106,7 @@ function test10FnFirstLast() {
 
 function getDocumentForNametest() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
   return new xrx.node.DocumentB(instance.getId());
 };
 
@@ -167,9 +172,7 @@ function test16FnNumber() {
 
 function test17FnPosition() {
   var xml = '<x><a>1</a><b>2</b><c>3</c><d>4</d></x>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
 
   var r = xrx.xpath.evaluate('sum(/x/*[position() <= 3]/text())', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -217,9 +220,7 @@ function test24FnSubstringBefore() {
 
 function test25FnSum() {
   var xml = '<x><a>1</a><b>2</b><c>3</c></x>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
 
   var r = xrx.xpath.evaluate('sum(/x/*)', new xrx.node.DocumentB(instance.getId()),
       null, xrx.xpath.XPathResultType.ANY_TYPE);

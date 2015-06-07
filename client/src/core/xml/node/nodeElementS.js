@@ -173,7 +173,7 @@ xrx.node.ElementS.prototype.getName = function() {
  */
 xrx.node.ElementS.prototype.getNamespaceUri = function(prefix) {
   var inst = this.getDocument().getInstance();
-  var ns = inst.getIndex().getNamespace(this.getToken(), prefix);
+  var ns = inst.getIndex().getNamespace(this.getToken().label(), prefix);
 
   return ns ? ns.uri : '';
 };

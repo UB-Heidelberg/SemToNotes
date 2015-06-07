@@ -34,17 +34,8 @@ goog.inherits(xrx.node.ElementB, xrx.node.Binary);
 /**
  * 
  */
-xrx.node.ElementB.prototype.getToken = function() {
-  return this.getIndex().getTag(this.key_);
-};
-
-
-
-/**
- * 
- */
 xrx.node.ElementB.prototype.getLabel = function() {
-  return this.getIndex().getLabel(this.key_);
+  return this.getIndex().getStructuralIndex().getLabel(this.key_);
 };
 
 
@@ -53,7 +44,7 @@ xrx.node.ElementB.prototype.getLabel = function() {
  * 
  */
 xrx.node.ElementB.prototype.getOffset = function() {
-  return this.getRow().getOffset();
+  return this.getIndex().getStructuralIndex().getOffset(this.key_);
 };
 
 
@@ -62,7 +53,7 @@ xrx.node.ElementB.prototype.getOffset = function() {
  * 
  */
 xrx.node.ElementB.prototype.getLength = function() {
-  return this.getRow().getLength1();
+  return this.getIndex().getStructuralIndex().getLength1(this.key_);
 };
 
 
@@ -161,12 +152,12 @@ xrx.node.ElementB.prototype.isPrecedingSiblingOf = xrx.node.Element.prototype.is
  *
  */
 xrx.node.ElementB.prototype.getName = function() {
+  var self = this;
   var inst = this.getDocument().getInstance();
-  var tag = inst.getIndex().getTag(this.key_);
-  var loc = inst.getStream().tagName(tag.xml(inst.xml()));
-  loc.offset += tag.offset();
-
-  return loc.xml(inst.xml());
+  var struct = inst.getIndex().getStructuralIndex();
+  var xml = inst.xml().substr(struct.getOffset(self.key_), struct.getLength1(self.key_));
+  var loc = inst.getStream().tagName(xml);
+  return xml.substr(loc.offset, loc.length);
 };
 
 
@@ -176,8 +167,7 @@ xrx.node.ElementB.prototype.getName = function() {
  */
 xrx.node.ElementB.prototype.getNamespaceUri = function(prefix) {
   var inst = this.getDocument().getInstance();
-  var ns = inst.getIndex().getNamespace(this.getToken(), prefix);
-
+  var ns = inst.getIndex().getNamespace(this.getLabel(), prefix);
   return ns ? ns.uri : '';
 };
 
@@ -187,20 +177,21 @@ xrx.node.ElementB.prototype.getNamespaceUri = function(prefix) {
  * 
  */
 xrx.node.ElementB.prototype.getStringValue = function() {
-  if (this.getRow().getType() === xrx.token.EMPTY_TAG) return '';
+  var struct = this.getIndex().getStructuralIndex();
+  struct.at(this.getKey());
+
+  if (struct.getType() === xrx.token.EMPTY_TAG) return '';
 
   var string = '';
   var xml = this.getDocument().getInstance().xml();
-  var row;
   var selfLabel = this.getLabel();
 
-  for(var key = this.getKey(); key <= this.getIndex().getLastKey(); key++) {
-    row = this.getIndex().getRowByKey(key);
-    if (row.getType() === xrx.token.END_TAG && 
-        this.getIndex().getLabel(key).sameAs(selfLabel)) break;
-    string += xml.substr(row.getOffset() + row.getLength1(),
-        row.getLength2() - row.getLength1());
-  };
+  do {
+    if (struct.getType() === xrx.token.END_TAG && 
+        struct.getLabel().sameAs(selfLabel)) break;
+    string += xml.substr(struct.getOffset() + struct.getLength1(),
+        struct.getLength2() - struct.getLength1());
+  } while (struct.next());
 
   return string;
 };
@@ -211,16 +202,15 @@ xrx.node.ElementB.prototype.getStringValue = function() {
  * 
  */
 xrx.node.ElementB.prototype.getXml = function() {
-
-  if (this.getRow().getType() === xrx.token.EMPTY_TAG) {
-
-    return this.getDocument().getInstance().xml().substr(this.getOffset(), this.getLength());
+  var xml = this.getDocument().getInstance().xml();
+  var struct = this.getIndex().getStructuralIndex();
+  if (struct.getType(this.key_) === xrx.token.EMPTY_TAG) {
+    return xml.substr(this.getOffset(), this.getLength());
   } else {
-    var row = this.getIndex().getRowByTag(new xrx.token.EndTag(
-        this.getLabel()), this.getKey());
+    var key = struct.createKey(xrx.token.END_TAG, this.getLabel());
 
-    return this.getDocument().getInstance().xml().substring(this.getOffset(), row.getOffset() +
-        row.getLength1());
+    return xml.substring(this.getOffset(), struct.getOffset(key) +
+        struct.getLength1(key));
   }
 };
 
@@ -243,11 +233,11 @@ xrx.node.ElementB.prototype.getAttributes = xrx.node.Element.prototype.getAttrib
 /**
  * 
  */
-xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
+xrx.node.ElementB.prototype.getNodeAttribute = function(test) { 
+  var instance = this.getDocument().getInstance();
   var nodeset = new xrx.xpath.NodeSet();
-  var row = this.getRow();
-  var xml = this.getDocument().getInstance().xml().substr(row.getOffset(), row.getLength2());
-  var locs = this.getDocument().getInstance().getStream().attributes(xml);
+  var xml = instance.xml().substr(this.getOffset(), this.getLength());
+  var locs = instance.getStream().attributes(xml);
   var i = 0;
   var a;
   var attr;
@@ -315,33 +305,32 @@ xrx.node.ElementB.prototype.getNodePrecedingSibling = xrx.node.Element.prototype
  */
 xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
   var self = this;
-  var index = this.getDocument().getInstance().getIndex();
-  index.iterSetKey(this.key_);
-  var row = index.iterGetRow();
+  var struct = this.getIndex().getStructuralIndex();
   var type;
 
+  struct.at(this.getKey());
   do {
-    type = row.getType();
+    type = struct.getType();
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     default:
       break;
     };
 
-    if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
+    if (needTextNode && struct.getLength1() !== struct.getLength2()) {
+      self.eventNode(new xrx.node.TextB(self.getDocument(), struct.getKey()));
     }
 
     if (type === xrx.token.END_TAG &&
-        self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
+        self.getLabel(struct.getKey()).sameAs(stop)) break;
 
-  } while (row = index.iterNext());
+  } while (struct.next());
 };
 
 
@@ -351,33 +340,32 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
  */
 xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
   var self = this;
-  var index = this.getIndex();
-  index.iterSetKey(this.key_);
-  var row = index.iterGetRow();
+  var struct = this.getIndex().getStructuralIndex();
   var type;
 
+  struct.at(this.getKey());
   do {
-    type = row.getType();
+    type = struct.getType();
 
-    if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
+    if (needTextNode && struct.getLength1() !== struct.getLength2()) {
+      self.eventNode(new xrx.node.TextB(self.getDocument(), struct.getKey()));
     }
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     default:
       break;
     };
 
     if (type === xrx.token.END_TAG &&
-        self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
+        self.getLabel(struct.getKey()).sameAs(stop)) break;
 
-  } while (row = index.iterPrevious());
+  } while (struct.next());
 };
 
 

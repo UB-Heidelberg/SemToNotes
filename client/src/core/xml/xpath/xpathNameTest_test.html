@@ -23,11 +23,18 @@
 <body>
 <script type="text/javascript">
 
+function createInstance(xml) {
+  var element = goog.dom.createElement('div');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, xml);
+  goog.dom.append(element, element2);
+  return new xrx.mvc.Instance(element);
+};
+
 function test01namespace() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
-  var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, xml);
-  var instance = new xrx.mvc.Instance(element);
+  var instance = createInstance(xml);
 
   xrx.xpath.declareNamespace('xmlns:x', 'http://example.org/x');
   xrx.xpath.declareNamespace('xmlns:y', 'http://example.org/y');

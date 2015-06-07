@@ -22,80 +22,55 @@ function test01basic() {
   var xml = '<start><empty/><empty/><start><start></end></end><start><empty/></end><start></end><empty/></end>';
   //         [1]    [1,1]   [1,2]   [1,3]  [1,3,1][1,3,1][1,3][1,4]  [1,4,1] [1,4] [1,5]  [1,5] [1,6]   [1]
   var index = new xrx.index.Index(xml);
-  
-  assertEquals(14, index.getLength());
-  assertEquals(13, index.getLastKey());
-  assertTrue(index.getLabel(0).sameAs(new xrx.xml.Label([1])));
-  assertTrue(index.getLabel(1).sameAs(new xrx.xml.Label([1,1])));
-  assertTrue(index.getLabel(2).sameAs(new xrx.xml.Label([1,2])));
-  assertTrue(index.getLabel(3).sameAs(new xrx.xml.Label([1,3])));
-  assertTrue(index.getLabel(4).sameAs(new xrx.xml.Label([1,3,1])));
-  assertTrue(index.getLabel(5).sameAs(new xrx.xml.Label([1,3,1])));
-  assertTrue(index.getLabel(6).sameAs(new xrx.xml.Label([1,3])));
-  assertTrue(index.getLabel(7).sameAs(new xrx.xml.Label([1,4])));
-  assertTrue(index.getLabel(8).sameAs(new xrx.xml.Label([1,4,1])));
-  assertTrue(index.getLabel(9).sameAs(new xrx.xml.Label([1,4])));
-  assertTrue(index.getLabel(10).sameAs(new xrx.xml.Label([1,5])));
-  assertTrue(index.getLabel(11).sameAs(new xrx.xml.Label([1,5])));
-  assertTrue(index.getLabel(12).sameAs(new xrx.xml.Label([1,6])));
-  assertTrue(index.getLabel(13).sameAs(new xrx.xml.Label([1])));
+  var struct = index.getStructuralIndex();
+
+  var containsKey = function(type, arr) {
+    var key = struct.createKey(type, new xrx.xml.Label(arr));
+    return struct.containsKey(key);
+  };
+
+  assertTrue(containsKey(xrx.token.START_TAG, [1]));
+  assertTrue(containsKey(xrx.token.EMPTY_TAG, [1,1]));
+  assertTrue(containsKey(xrx.token.EMPTY_TAG, [1,2]));
+  assertTrue(containsKey(xrx.token.START_TAG, [1,3]));
+  assertTrue(containsKey(xrx.token.START_TAG, [1,3,1]));
+  assertTrue(containsKey(xrx.token.END_TAG, [1,3,1]));
+  assertTrue(containsKey(xrx.token.END_TAG, [1,3]));
+  assertTrue(containsKey(xrx.token.START_TAG, [1,4]));
+  assertTrue(containsKey(xrx.token.EMPTY_TAG, [1,4,1]));
+  assertTrue(containsKey(xrx.token.END_TAG, [1,4]));
+  assertTrue(containsKey(xrx.token.START_TAG, [1,5]));
+  assertTrue(containsKey(xrx.token.END_TAG, [1,5]));
+  assertTrue(containsKey(xrx.token.EMPTY_TAG, [1,6]));
+  assertTrue(containsKey(xrx.token.END_TAG, [1]));
+  assertFalse(containsKey(xrx.token.END_TAG, [1,8]));
 };
 
 function test02iter() {
-  var xml           =         '<a>1<b>2</b>3<c/>4<d><e>5</e>6</d></a>';
+  var xml = '<a>1<b>2</b>3<c/>4<d><e>5</e>6</d></a>';
   var startTags = [], endTags = [], emptyTags = [], notTags = [];
   var index = new xrx.index.Index(xml);
-  var row = index.iterGetRow();
-  var key;
-  var offset;
-  var length1;
-  var length2;
+  var struct = index.getStructuralIndex();
 
   do {
-    key = index.iterGetKey();
-    offset = row.getOffset();
-    length1 = row.getLength1();
-    length2 = row.getLength2();
-    
-    if (row.getType() === xrx.token.START_TAG) {
+    offset = struct.getOffset();
+    length1 = struct.getLength1();
+    length2 = struct.getLength2();
+    if (struct.getType() === xrx.token.START_TAG) {
       startTags.push(xml.substr(offset, length1));
-    } else if (row.getType() === xrx.token.EMPTY_TAG) {
+    } else if (struct.getType() === xrx.token.EMPTY_TAG) {
       emptyTags.push(xml.substr(offset, length1));
     } else {
       endTags.push(xml.substr(offset, length1));
     }
     
     notTags.push(xml.substr(offset + length1, length2 - length1));
-  } while (row = index.iterNext());
+  } while (struct.next());
 
-
-  index.iterSetKey(index.getLastKey());
-  row = index.iterGetRow();
-  
-  do {
-    key = index.iterGetKey();
-    offset = row.getOffset();
-    length1 = row.getLength1();
-    length2 = row.getLength2();
-    
-    if (row.getType() === xrx.token.START_TAG) {
-      startTags.push(xml.substr(offset, length1));
-    } else if (row.getType() === xrx.token.EMPTY_TAG) {
-      emptyTags.push(xml.substr(offset, length1));
-    } else {
-      endTags.push(xml.substr(offset, length1));
-    }
-    
-    notTags.push(xml.substr(offset + length1, length2 - length1));
-  } while (row = index.iterPrevious());
-
-  assertTrue(goog.array.equals(startTags, ['<a>', '<b>', '<d>', '<e>', // forward
-      '<e>', '<d>', '<b>', '<a>'])); // backward
-  assertTrue(goog.array.equals(emptyTags, ['<c/>', '<c/>'])); // forward and backward
-  assertTrue(goog.array.equals(endTags, ['</b>', '</e>', '</d>', '</a>', // forward
-      '</a>', '</d>', '</e>', '</b>'])); // backward
-  assertTrue(goog.array.equals(notTags, ['1', '2', '3', '4', '', '5', '6', '', '', // forward
-      '', '', '6', '5', '', '4', '3', '2', '1'])); // backward
+  assertTrue(goog.array.equals(startTags, ['<a>', '<b>', '<d>', '<e>']));
+  assertTrue(goog.array.equals(emptyTags, ['<c/>']));
+  assertTrue(goog.array.equals(endTags, ['</b>', '</e>', '</d>', '</a>']));
+  assertTrue(goog.array.equals(notTags, ['1', '2', '3', '4', '', '5', '6', '', '']));
 };
 
 function test03namespaceFunctions() {

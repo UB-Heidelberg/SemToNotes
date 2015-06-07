@@ -14,6 +14,7 @@
   goog.require('goog.dom.DomHelper');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
+  goog.require('xrx.xpath');
 </script>
 </head>
 <body>
@@ -21,13 +22,17 @@
 
 var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
 var element = goog.dom.createElement('div');
-goog.dom.setTextContent(element, xml);
+var element2 = goog.dom.createElement('div');
+goog.dom.classes.set(element2, 'xrx-document');
+goog.dom.setTextContent(element2, xml);
+goog.dom.append(element, element2);
 var instance = new xrx.mvc.Instance(element);
 var node = new xrx.node.DocumentB(instance.getId());
 xrx.xpath.declareNamespace('xrx', 'http://www.monasterium.net/NS/xrx');
 
-function test01declareNamespace() {
 
+
+function test01declareNamespace() {
 };
 
 function test02declareFunction() {

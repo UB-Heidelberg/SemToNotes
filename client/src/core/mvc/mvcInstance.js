@@ -89,9 +89,12 @@ xrx.mvc.Instance.prototype.update = function(offset, length, xml) {
 xrx.mvc.Instance.prototype.getDataInline = function() {
   var parse = new xrx.xml.Parser();
   var wrapper = goog.dom.getElementByClass('xrx-document', this.element_);
+  /*
   var child = goog.dom.getChildren(wrapper)[0];
   var stringifiedHtml = goog.dom.getOuterHtml(child);
   this.xml_ = parse.normalize(stringifiedHtml);
+  */
+  this.xml_ = parse.normalize(goog.dom.getTextContent(wrapper));
   this.stream_ = new xrx.xml.Stream(this.xml_);
   this.pilot_ = new xrx.xml.Pilot(this.xml_);
 };

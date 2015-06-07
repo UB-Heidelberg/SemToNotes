@@ -19,6 +19,12 @@ xrx.xml.Label = function(array) {
 
 
 
+xrx.xml.Label.prototype.getArray = function() {
+  return this.label_;
+};
+
+
+
 /**
  * Returns the length of the label. The length corresponds 
  * to the nesting depth of a node or token in the XML tree.

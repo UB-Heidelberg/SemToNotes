@@ -73,7 +73,7 @@ xrx.xml.Parser.prototype.normalize = function(xml) {
 
   this.contentHandler_.comment = function(ch, start, length) {
     completeStartTag();
-    //normalized += xrx.xml.Serialize.comment(ch);
+    normalized += xrx.xml.Serialize.comment(ch);
     idx = -2;
     lastToken = xrx.token.NOT_TAG;
   };

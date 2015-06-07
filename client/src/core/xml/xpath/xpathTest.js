@@ -24,7 +24,10 @@ xrx.xpath.Test = {};
 
 xrx.xpath.Test.query_ = function(expression) {
   var element = goog.dom.createElement('div');
-  goog.dom.setTextContent(element, '<dummy/>');
+  var element2 = goog.dom.createElement('div');
+  goog.dom.classes.set(element2, 'xrx-document');
+  goog.dom.setTextContent(element2, '<dummy/>');
+  goog.dom.append(element, element2);
   var instance = new xrx.mvc.Instance(element);
   var node = new xrx.node.DocumentS(instance.getId());
   return xrx.xpath.evaluate(expression, node, null, xrx.xpath.XPathResultType.ANY_TYPE);
@@ -39,7 +42,6 @@ xrx.xpath.Test.assertEquals = function(expected, expression) {
     assertEquals(expected, result.numberValue);
     break;
   case xrx.xpath.XPathResultType.STRING_TYPE:
-    console.log(result.stringValue);
     assertEquals(expected, result.stringValue);
     break;
   case xrx.xpath.XPathResultType.BOOLEAN_TYPE:

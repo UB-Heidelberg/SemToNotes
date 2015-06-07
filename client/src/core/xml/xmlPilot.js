@@ -505,14 +505,13 @@ xrx.xml.Pilot.prototype.tag = function(context, target, opt_update) {
 
 
 /**
- * Get or update an array of xrx.token.Attribute.
+ * Get an array of xrx.token.Attribute.
  * 
  * @param {?} context
  * @param {!xrx.token.StartEmptyTag} target The start-empty tag.
- * @param {?Array.<xrx.token.Attribute>} opt_update Array of new attribute tokens.
  * @return {!Array.<xrx.token.Attribute>}
  */
-xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
+xrx.xml.Pilot.prototype.attributes = function(context, target) {
   var pos = this.stream_.pos();
   var tag = this.path(context, target);
   var xml = this.stream_.xml().substr(tag.offset(), tag.length());
@@ -520,8 +519,8 @@ xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
   var attributes = [];
   var label = target.label().clone();
   label.child();
-  for (var pos = 0; pos < locations.length; pos++) {
-    var location = locations[pos];
+  for (var loc in locations) {
+    var location = locations[loc];
     attributes.push(new xrx.token.Attribute(label.clone(),
         location.offset + tag.offset(), location.length));
     label.nextSibling();
@@ -530,6 +529,5 @@ xrx.xml.Pilot.prototype.attributes = function(context, target, opt_update) {
   // reset the stream reader position, important!
   this.stream_.pos(pos); 
 
-  return opt_update === undefined ? attributes : 
-      xrx.xml.Update.attributes(this.stream_, attributes, opt_update);
+  return attributes;
 };

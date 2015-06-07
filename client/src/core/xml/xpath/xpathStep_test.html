@@ -26,7 +26,10 @@
 
 var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test" id2="test2"/></a>';
 var element = goog.dom.createElement('div');
-goog.dom.setTextContent(element, xml)
+var element2 = goog.dom.createElement('div');
+goog.dom.classes.set(element2, 'xrx-document');
+goog.dom.setTextContent(element2, xml);
+goog.dom.append(element, element2);
 var instance = new xrx.mvc.Instance(element);
 var node = new xrx.node.DocumentB(instance.getId());
 

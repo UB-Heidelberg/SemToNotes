@@ -17,7 +17,10 @@ goog.require('xrx.xpath.NodeSet');
 /** 
  * @constructor 
  */
-xrx.node.Document = function() {};
+xrx.node.Document = function() {
+
+  this.label_ = new xrx.xml.Label();
+};
 
 
 
@@ -35,7 +38,7 @@ xrx.node.Document.prototype.getToken = function() {
 
 
 xrx.node.Document.prototype.getLabel = function() {
-  return new xrx.xml.Label();
+  return this.label_;
 };
 
 

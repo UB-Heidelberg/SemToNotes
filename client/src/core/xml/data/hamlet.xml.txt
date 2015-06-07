@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="shakes.xsl" type="text/xsl"?><!--!DOCTYPE PLAY PUBLIC "-//PLAY//EN" "play.dtd"-->
 <PLAY>
     <TITLE>The Tragedy of Hamlet, Prince of Denmark</TITLE>
     <FM>
@@ -23,7 +21,7 @@ modified or altered in any way.</P>
             <PERSONA>CORNELIUS</PERSONA>
             <PERSONA>ROSENCRANTZ</PERSONA>
             <PERSONA>GUILDENSTERN</PERSONA>
-            <PERSONA>OSRIC</PERSONA>
+            <PERSONA test="test">OSRIC</PERSONA>
             <GRPDESCR>courtiers.</GRPDESCR>
         </PGROUP>
         <PERSONA>A Gentleman</PERSONA>

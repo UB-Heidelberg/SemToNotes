@@ -45,13 +45,6 @@ goog.inherits(xrx.node.Binary, xrx.node.Node);
 /**
  * 
  */
-xrx.node.Binary.prototype.getToken = goog.abstractMethod;
-
-
-
-/**
- * 
- */
 xrx.node.Binary.prototype.getLabel = goog.abstractMethod;
 
 
@@ -85,12 +78,3 @@ xrx.node.Binary.prototype.getKey = function() {
 xrx.node.Binary.prototype.getIndex = function() {
   return this.document_.getInstance().getIndex();
 };
-
-
-/**
- * @return {!xrx.index.Row}
- */
-xrx.node.Binary.prototype.getRow = function() {
-  return this.getIndex().getRowByKey(this.key_);
-};
-

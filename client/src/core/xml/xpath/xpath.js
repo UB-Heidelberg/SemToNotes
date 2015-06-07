@@ -67,11 +67,7 @@ xrx.xpath.XPathNSResolver = {
  */
 xrx.xpath.declareNamespace = function(prefix, uri) {
   if (prefix === 'xmlns') return;
-  if (goog.string.startsWith(prefix, 'xmlns:')) {
-    xrx.xpath.XPathNSResolver[prefix] = uri;
-  } else {
-    xrx.xpath.XPathNSResolver['xmlns:' + prefix] = uri;
-  }
+  xrx.xpath.XPathNSResolver[prefix] = uri;
 };
 
 
