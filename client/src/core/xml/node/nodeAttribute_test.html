@@ -15,18 +15,13 @@
   goog.require('goog.dom.classes');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.mvc.Instance');
-  goog.require('xrx.node.Nodes');
-  goog.require('xrx.xml.Pilot');
-  goog.require('xrx.token.Tokens');
-  goog.require('xrx.xpath');
-  goog.require('xrx.xpath.NameTest');
-  goog.require('xrx.xpath.KindTest');
 </script>
 </head>
 <body>
 
 <script type="text/javascript">
+
+
 
 function createInstance(xml) {
   var element = goog.dom.createElement('div');
@@ -37,14 +32,18 @@ function createInstance(xml) {
   return new xrx.mvc.Instance(element);
 };
 
+
+
 function test01basic() {
   var xml = '<a xmlns="http://example.org/y" attr1="v" attr2="v"/>';
   //         0         10        20          32
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB = new xrx.node.ElementB(dB, 0);
+  var eB = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1])));
   var aB = new xrx.node.AttributeB(2, eB);
 
   assertEquals(32, aB.getOffset());
@@ -65,18 +64,21 @@ function test01basic() {
 function test01nameFunctions() {
   var xml = '<x:x xmlns:x="http://example.org/x"><y:y xmlns:y="http://example.org/y" y:a=""/><z x:b=""/></x:x>';
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB1 = new xrx.node.ElementB(dB, 1);
-  var eB2 = new xrx.node.ElementB(dB, 2);
+  var eB1 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1,1])));
+  var eB2 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1,2])));
   var aB1 = new xrx.node.AttributeB(2, eB1);
   var aB2 = new xrx.node.AttributeB(1, eB2);
 
   assertEquals('y:a', aB1.getName());
   assertEquals('x:b', aB2.getName());
-  assertEquals('http://example.org/y', aB1.getNamespaceUri('xmlns:y'));
-  assertEquals('http://example.org/x', aB2.getNamespaceUri('xmlns:x'));
+  assertEquals('http://example.org/y', aB1.getNamespaceUri('y'));
+  assertEquals('http://example.org/x', aB2.getNamespaceUri('x'));
 
   // streaming node
   var pilot = new xrx.xml.Pilot(instance.xml());
@@ -90,19 +92,24 @@ function test01nameFunctions() {
 
   assertEquals('y:a', aS1.getName());
   assertEquals('x:b', aS2.getName());
-  assertEquals('http://example.org/y', aS1.getNamespaceUri('xmlns:y'));
-  assertEquals('http://example.org/x', aS2.getNamespaceUri('xmlns:x'));
+  assertEquals('http://example.org/y', aS1.getNamespaceUri('y'));
+  assertEquals('http://example.org/x', aS2.getNamespaceUri('x'));
 };
+
+
 
 function test02identityFunctions() {
   var xml = '<a a="v">1<b/></a>';
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB1 = new xrx.node.ElementB(dB, 0);
+  var eB1 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1])));
   var aB = new xrx.node.AttributeB(1, eB1);
-  var eB2 = new xrx.node.ElementB(dB, 1);
+  var eB2 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1,1])));
 
   assertEquals(false, eB2.isSameAs(aB));
   assertEquals(true, eB2.isAfter(aB));
@@ -122,6 +129,8 @@ function test02identityFunctions() {
   assertEquals(true, eS1.isBefore(aS));
   assertEquals(true, aS.isAttributeOf(eS1));
 };
+
+
 
 function test03contentFunctions() {
   var xml = '<a attr1="v1" attr2="v2"/>';
@@ -151,13 +160,17 @@ function test03contentFunctions() {
   assertEquals('v2', aS2.getStringValue());
 };
 
-function axisTest(key, func, expected) {
+
+
+function axisTest(func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB = new xrx.node.ElementB(dB, key);
+  var eB = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1,3,1])));
   var aB = new xrx.node.AttributeB(1, eB);
   var test = {
     node: aB[func](new xrx.xpath.KindTest('node')),
@@ -190,42 +203,39 @@ function axisTest(key, func, expected) {
 };
 
 
+
 function test04nodeFunctions() {
-
   // ancestor
-  axisTest(5, 'getNodeAncestor', { node: 3, element: 2, text: 0, attribute: 0 });
-
+  axisTest('getNodeAncestor', { node: 3, element: 2, text: 0, attribute: 0 });
   // child
-  axisTest(5, 'getNodeChild', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodeChild', { node: 0, element: 0, text: 0, attribute: 0 });
   // descendant
-  axisTest(5, 'getNodeDescendant', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodeDescendant', { node: 0, element: 0, text: 0, attribute: 0 });
   // following
-  axisTest(5, 'getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodeFollowing', { node: 0, element: 0, text: 0, attribute: 0 });
   // following sibling
-  axisTest(5, 'getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodeFollowingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
   // parent
-  axisTest(5, 'getNodeParent', { node: 1, element: 1, text: 0, attribute: 0 });
-
+  axisTest('getNodeParent', { node: 1, element: 1, text: 0, attribute: 0 });
   // preceding
-  axisTest(5, 'getNodePreceding', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodePreceding', { node: 0, element: 0, text: 0, attribute: 0 });
   // preceding sibling
-  axisTest(5, 'getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
-
+  axisTest('getNodePrecedingSibling', { node: 0, element: 0, text: 0, attribute: 0 });
 };
+
+
 
 function test05attributeFunction() {
   var xml = '<a><b xmlns="http://example.org" attr1="v1" attr2="v2"/></a>';
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB0 = new xrx.node.ElementB(dB, 0);
-  var eB1 = new xrx.node.ElementB(dB, 1);
+  var eB0 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1])));
+  var eB1 = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.EMPTY_TAG, new xrx.xml.Label([1,1])));
 
   assertEquals(0, eB0.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());
   assertEquals(2, eB1.getNodeAttribute(new xrx.xpath.NameTest('*')).getLength());

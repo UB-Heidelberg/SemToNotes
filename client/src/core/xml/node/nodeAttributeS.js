@@ -44,7 +44,6 @@ xrx.node.AttributeS.prototype.getToken = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-  
   return new xrx.token.Attribute(this.getLabel(), loc.offset, loc.length);
 };
 
@@ -53,7 +52,6 @@ xrx.node.AttributeS.prototype.getToken = function() {
 xrx.node.AttributeS.prototype.getLabel = function() {
   var label = this.parent_.getLabel().clone();
   label.push(this.num_);
-
   return label;
 };
 
@@ -63,7 +61,6 @@ xrx.node.AttributeS.prototype.getOffset = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.offset;
 };
 
@@ -73,7 +70,6 @@ xrx.node.AttributeS.prototype.getLength = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.length;
 };
 
@@ -132,7 +128,6 @@ xrx.node.AttributeS.prototype.getName = function() {
       this.parent_.getLength());
   var stream = new xrx.xml.Stream(xml);
   var loc = stream.attrName(xml, this.num_);
-
   return loc.xml(xml);
 };
 
@@ -140,8 +135,7 @@ xrx.node.AttributeS.prototype.getName = function() {
 
 xrx.node.AttributeS.prototype.getNamespaceUri = function(prefix) {
   var ns = this.getInstance().getIndex().getNamespace(
-      this.parent_.getToken(), prefix);
-
+      this.parent_.getLabel(), prefix);
   return ns ? ns.uri : '';
 };
 
@@ -151,7 +145,6 @@ xrx.node.AttributeS.prototype.getStringValue = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
   var loc = this.getStream().attrValue(xml, this.num_);
-
   return loc.xml(xml);
 };
 
@@ -161,7 +154,6 @@ xrx.node.AttributeS.prototype.getXml = function() {
   var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
       this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.xml(xml);
 };
 
@@ -200,5 +192,3 @@ xrx.node.AttributeS.prototype.getNodePreceding = xrx.node.Attribute.prototype.ge
 
 
 xrx.node.AttributeS.prototype.getNodePrecedingSibling = xrx.node.Attribute.prototype.getNodePrecedingSibling;
-
-

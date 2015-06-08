@@ -11,20 +11,16 @@
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.dom');
+  goog.require('goog.dom.classes');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.mvc.Instance');
-  goog.require('xrx.node.Nodes');
-  goog.require('xrx.token');
-  goog.require('xrx.token.StartTag');
-  goog.require('xrx.xpath');
-  goog.require('xrx.xpath.NameTest');
-  goog.require('xrx.xpath.KindTest');
 </script>
 </head>
 <body>
 
 <script type="text/javascript">
+
+
 
 function createInstance(xml) {
   var element = goog.dom.createElement('div');
@@ -35,18 +31,23 @@ function createInstance(xml) {
   return new xrx.mvc.Instance(element);
 };
 
+
+
 function test01nameFunctions() {
   // always ''
 };
 
+
+
 function test02identityFunctions() {
   var xml = '<a>1<b/>2<c id="test"/>3<d/>4</a>';
-
   var instance = createInstance(xml);
+  var struct = instance.getIndex().getStructuralIndex();
 
   // binary node
   var dB = new xrx.node.DocumentB(instance.getId());
-  var eB = new xrx.node.ElementB(dB, 0);
+  var eB = new xrx.node.ElementB(dB,
+      struct.createKey(xrx.token.START_TAG, new xrx.xml.Label([1])));
 
   assertEquals(false, dB.isSameAs(eB));
   assertEquals(true, dB.isSameAs(dB));
@@ -72,9 +73,10 @@ function test02identityFunctions() {
   assertEquals(true, eS.isDescendantOf(dS));
 };
 
+
+
 function test03contentFunctions() {
   var xml = '<a>1<b>2</b>3<c/>4<d/></a>';
-
   var instance = createInstance(xml);
 
   // binary node
@@ -89,6 +91,8 @@ function test03contentFunctions() {
   assertEquals('<a>1<b>2</b>3<c/>4<d/></a>', dS.getXml());
   assertEquals('1234', dS.getStringValue());
 };
+
+
 
 function axisTest(func, expected) {
   var xml = '<a>1<b>2</b>3<c/>4<d>t<e type="attrValue">5</e>6</d><d id="test"/></a>';
@@ -126,6 +130,7 @@ function axisTest(func, expected) {
   assertEquals(expected.attribute, test.attribute.getLength());
 
 };
+
 
 
 function test04nodeFunctions() {

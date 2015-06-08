@@ -64,4 +64,3 @@ xrx.node.Streaming.prototype.getOffset = goog.abstractMethod;
  * 
  */
 xrx.node.Streaming.prototype.getLength = goog.abstractMethod;
-

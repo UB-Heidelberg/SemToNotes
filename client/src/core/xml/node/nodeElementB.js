@@ -124,13 +124,7 @@ xrx.node.ElementB.prototype.isFollowingSiblingOf = xrx.node.Element.prototype.is
 /**
  *
  */
-xrx.node.ElementB.prototype.isParentOf = function(node) {
-  if (node.getType() === xrx.node.ELEMENT) {
-    return this.getKey() === node.getRow().getParent() && node.getKey() !== 0;
-  } else {
-    return this.getLabel().isParentOf(node.getLabel());
-  }
-};
+xrx.node.ElementB.prototype.isParentOf = xrx.node.Element.prototype.isParentOf;
 
 
 
@@ -233,19 +227,19 @@ xrx.node.ElementB.prototype.getAttributes = xrx.node.Element.prototype.getAttrib
 /**
  * 
  */
-xrx.node.ElementB.prototype.getNodeAttribute = function(test) { 
+xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
+  var self = this;
   var instance = this.getDocument().getInstance();
   var nodeset = new xrx.xpath.NodeSet();
   var xml = instance.xml().substr(this.getOffset(), this.getLength());
   var locs = instance.getStream().attributes(xml);
   var i = 0;
-  var a;
   var attr;
-  for(var l in locs) {
-    a = locs[l];
-    attr = new xrx.node.AttributeB(parseInt(l), this);
+  var add = function(l) {
+    attr = new xrx.node.AttributeB(parseInt(l), self);
     if (test.matches(attr)) nodeset.add(attr);
   };
+  for(var l in locs) { add(l); };
   return nodeset;
 };
 
@@ -254,7 +248,64 @@ xrx.node.ElementB.prototype.getNodeAttribute = function(test) {
 /**
  * 
  */
-xrx.node.ElementB.prototype.getNodeChild = xrx.node.Element.prototype.getNodeChild;
+xrx.node.ElementB.prototype.getNodeChild = function(test) {
+  var element;
+  var text;
+  var tmp;
+  var type;
+  var nodeset = new xrx.xpath.NodeSet();
+  var struct = this.getIndex().getStructuralIndex();
+  struct.at(this.key_);
+  var needTextNode = test.needsTextNode();
+
+  // first text node
+  if (needTextNode && struct.getLength1() !== struct.getLength2()) {
+    text = new xrx.node.TextB(this.getDocument(), struct.getKey());
+    if (test.matches(text)) {
+      nodeset.add(text);
+    }
+  }
+
+  // rest of nodes
+  var label = this.getLabel();
+  label.push(1);
+  var nextKey = function(label) {
+    var key1 = struct.createKey(xrx.token.START_TAG, label);
+    var key2 = struct.createKey(xrx.token.EMPTY_TAG, label);
+    var exists = struct.at(key1);
+    if (!exists) exists = struct.at(key2);
+    return exists;
+  };
+  var isKey = nextKey(label);
+  while(isKey) {
+    var type = struct.getType();
+    element = new xrx.node.ElementB(this.getDocument(), struct.getKey());
+    if (test.matches(element)) {
+      nodeset.add(element);
+    }
+    if (type !== xrx.token.START_TAG && needTextNode &&
+        struct.getLength1() !== struct.getLength2()) {
+      text = new xrx.node.TextB(this.getDocument(), struct.getKey());
+      if (test.matches(text)) {
+        nodeset.add(text);
+      }
+    }
+    if (type === xrx.token.START_TAG && needTextNode) {
+      var key = struct.createKey(xrx.token.END_TAG, label);
+      struct.at(key);
+      if (struct.getLength1() !== struct.getLength2()) {
+        text = new xrx.node.TextB(this.getDocument(), struct.getKey());
+        if (test.matches(text)) {
+          nodeset.add(text);
+          console.log(text.getXml());
+        }
+      }
+    }
+    label.nextSibling();
+    isKey = nextKey(label);
+  };
+  return nodeset;
+};
 
 
 
@@ -328,7 +379,7 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
     }
 
     if (type === xrx.token.END_TAG &&
-        self.getLabel(struct.getKey()).sameAs(stop)) break;
+        struct.getLabel().sameAs(stop)) break;
 
   } while (struct.next());
 };
@@ -363,9 +414,9 @@ xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
     };
 
     if (type === xrx.token.END_TAG &&
-        self.getLabel(struct.getKey()).sameAs(stop)) break;
+        struct.getLabel().sameAs(stop)) break;
 
-  } while (struct.next());
+  } while (struct.previous());
 };
 
 

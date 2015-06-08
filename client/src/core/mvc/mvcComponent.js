@@ -351,8 +351,8 @@ xrx.mvc.Component.prototype.getResultByRef_ = function() {
   if (!context) return new xrx.xpath.XPathResult();
   // TODO: Node conversion function
   xrx.mvc.actualComponent = this;
-  var nodeS = new xrx.node.ElementS(context.getDocument(), context.getToken());
-  return this.xpath_.evaluate(nodeS);
+  var nodeB = new xrx.node.ElementB(context.getDocument(), context.getKey());
+  return this.xpath_.evaluate(nodeB);
 };
 
 

@@ -11,8 +11,8 @@ goog.require('xrx.node');
 
 
 /** 
- * A class providing functions that can be
- * shared by attribute node implementations.
+ * A class providing functions that can be shared by attribute node
+ * implementations.
  */
 xrx.node.Attribute = function() {};
 
@@ -40,7 +40,6 @@ xrx.node.Attribute.prototype.isSameAs = function(node) {
 xrx.node.Attribute.prototype.isBefore = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isBefore(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() < node.getType() );
@@ -51,7 +50,6 @@ xrx.node.Attribute.prototype.isBefore = function(node) {
 xrx.node.Attribute.prototype.isAfter = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isAfter(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() > node.getType() );
@@ -160,7 +158,6 @@ xrx.node.Attribute.prototype.getNodeFollowingSibling = function(test) {
 xrx.node.Attribute.prototype.getNodeParent = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
   if (test.matches(this.parent_)) nodeset.add(this.parent_);
-
   return nodeset;
 };
 
@@ -175,4 +172,3 @@ xrx.node.Attribute.prototype.getNodePreceding = function(test) {
 xrx.node.Attribute.prototype.getNodePrecedingSibling = function(test) {
   return new xrx.xpath.NodeSet();
 };
-

@@ -1,6 +1,6 @@
 /**
- * @fileoverview Constants and static functions for the node
- *     classes.
+ * @fileoverview Constants and static functions for the
+ *     node classes.
  */
 
 goog.provide('xrx.node');
@@ -19,6 +19,8 @@ goog.provide('xrx.node');
 
 
 /**
+ * Returns the node name without the namespace prefix (if any),
+ * the so called local name.
  * return {!string}
  */
 xrx.node.getNameLocal = function(name) {
@@ -29,16 +31,20 @@ xrx.node.getNameLocal = function(name) {
 
 
 /**
+ * Returns the node's namespace prefix (if any).
  * return {!string}
  */
 xrx.node.getNamePrefix = function(name) {
-  return goog.string.contains(name, ':') ? 
-      'xmlns:' + name.substr(0, name.indexOf(':')) : 'xmlns';
+  var prefix = goog.string.contains(name, ':') ? 
+      name.substr(0, name.indexOf(':')) : '';
+  return prefix;
 };
 
 
 
 /**
+ * Returns the expanded node name consisting of the namespace
+ * URI, the # delimiter and the local node name.
  * return {!string}
  */
 xrx.node.getNameExpanded = function(namespace, localName) {

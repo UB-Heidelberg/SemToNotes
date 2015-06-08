@@ -112,7 +112,6 @@ xrx.node.Text.prototype.isFollowingOf = function(node) {
 xrx.node.Text.prototype.isFollowingSiblingOf = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isFollowingSiblingOf(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) && 
           this.getType() > node.getType() );
@@ -144,7 +143,6 @@ xrx.node.Text.prototype.isPrecedingOf = function(node) {
 xrx.node.Text.prototype.isPrecedingSiblingOf = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isPrecedingSiblingOf(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) && 
           this.getType() < node.getType() );
@@ -194,7 +192,6 @@ xrx.node.Text.prototype.getXml = function() {
 xrx.node.Text.prototype.getNodeAncestor = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Text].prototype.isDescendantOf,
       true, new xrx.xml.Label());
-
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
       nodeset.unshift(new xrx.node[this.impl_.Document](this.getInstance().getId()));
@@ -234,7 +231,6 @@ xrx.node.Text.prototype.getNodeDescendant = function(test) {
  * 
  */
 xrx.node.Text.prototype.getNodeFollowing = function(test) {
-
   return this.find(test, xrx.node[this.impl_.Text].prototype.isPrecedingOf, false,
       new xrx.xml.Label());
 };
@@ -247,11 +243,9 @@ xrx.node.Text.prototype.getNodeFollowing = function(test) {
 xrx.node.Text.prototype.getNodePreceding = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Text].prototype.isFollowingOf, true,
       new xrx.xml.Label());
-
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
       nodeset.unshift(new xrx.node[this.impl_.Document](this.getInstance().getId()));
-
   return nodeset;
 };
 
@@ -263,8 +257,6 @@ xrx.node.Text.prototype.getNodePreceding = function(test) {
 xrx.node.Text.prototype.getNodePrecedingSibling = function(test) {
   var stop = this.getLabel().clone();
   stop.parent();
-
   return this.find(test, xrx.node[this.impl_.Text].prototype.isFollowingSiblingOf, true,
       stop);
 };
-

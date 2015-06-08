@@ -240,7 +240,7 @@ xrx.xpath.Parser.prototype.parseNameTest_ = function() {
     return new xrx.xpath.NameTest(name);
   } else {
     var namespacePrefix = name.substring(0, colonIndex);
-    var namespaceUri = xrx.xpath.XPathNSResolver['xmlns:' + namespacePrefix];
+    var namespaceUri = xrx.xpath.XPathNSResolver[namespacePrefix];
     if (!namespaceUri) {
       throw Error('Namespace prefix not declared: ' + namespacePrefix);
     }

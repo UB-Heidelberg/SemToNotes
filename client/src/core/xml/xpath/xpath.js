@@ -50,7 +50,7 @@ xrx.xpath.XPathFunctions = {};
  * @enum {string}
  */
 xrx.xpath.XPathNSResolver = {
-  'xmlns:xml': 'http://www.w3.org/XML/1998/namespace',
+  'xml': 'http://www.w3.org/XML/1998/namespace',
   'xmlns': 'http://www.w3.org/2000/xmlns/',
   'xs': 'http://www.w3.org/2001/XMLSchema',
   'fn': 'http://www.w3.org/2005/xpath-functions',

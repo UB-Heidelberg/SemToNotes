@@ -23,6 +23,10 @@ xrx.node.DocumentS = function(instanceId) {
   goog.base(this, xrx.node.DOCUMENT, this);
 
   this.instanceId_ = instanceId;
+
+  this.instance_ = xrx.mvc.getModelComponent(instanceId);
+
+  this.label_ = new xrx.xml.Label();
 };
 goog.inherits(xrx.node.DocumentS, xrx.node.Streaming);
 
@@ -40,7 +44,9 @@ xrx.node.DocumentS.prototype.getToken = xrx.node.Document.prototype.getToken;
 
 
 
-xrx.node.DocumentS.prototype.getLabel = xrx.node.Document.prototype.getLabel;
+xrx.node.DocumentS.prototype.getLabel = function() {
+  return this.label_;
+};
 
 
 

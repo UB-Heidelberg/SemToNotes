@@ -46,10 +46,9 @@ xrx.node.AttributeB.prototype.getInstance = xrx.node.Attribute.prototype.getInst
 
 
 xrx.node.AttributeB.prototype.getToken = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength1());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-  
   return new xrx.token.Attribute(this.getLabel(), loc.offset, loc.length);
 };
 
@@ -58,27 +57,24 @@ xrx.node.AttributeB.prototype.getToken = function() {
 xrx.node.AttributeB.prototype.getLabel = function() {
   var label = this.parent_.getLabel();
   label.push(this.num_);
-
   return label;
 };
 
 
 
 xrx.node.AttributeB.prototype.getOffset = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength2());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.offset;
 };
 
 
 
 xrx.node.AttributeB.prototype.getLength = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength2());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.length;
 };
 
@@ -133,10 +129,9 @@ xrx.node.AttributeB.prototype.isPrecedingSiblingOf = xrx.node.Attribute.prototyp
 
 
 xrx.node.AttributeB.prototype.getName = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength2());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attrName(xml, this.num_);
-
   return loc.xml(xml);
 };
 
@@ -144,28 +139,25 @@ xrx.node.AttributeB.prototype.getName = function() {
 
 xrx.node.AttributeB.prototype.getNamespaceUri = function(prefix) {
   var ns = this.getInstance().getIndex().getNamespace(
-      this.parent_.getToken(), prefix);
-
+      this.parent_.getLabel(), prefix);
   return ns ? ns.uri : '';
 };
 
 
 
 xrx.node.AttributeB.prototype.getStringValue = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength2());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attrValue(xml, this.num_);
-
   return loc.xml(xml);
 };
 
 
 
 xrx.node.AttributeB.prototype.getXml = function() {
-  var xml = this.getInstance().xml().substr(this.parent_.getRow().getOffset(),
-      this.parent_.getRow().getLength2());
+  var xml = this.getInstance().xml().substr(this.parent_.getOffset(),
+      this.parent_.getLength());
   var loc = this.getStream().attribute(xml, this.num_);
-
   return loc.xml(xml);
 };
 
@@ -204,4 +196,3 @@ xrx.node.AttributeB.prototype.getNodePreceding = xrx.node.Attribute.prototype.ge
 
 
 xrx.node.AttributeB.prototype.getNodePrecedingSibling = xrx.node.Attribute.prototype.getNodePrecedingSibling;
-

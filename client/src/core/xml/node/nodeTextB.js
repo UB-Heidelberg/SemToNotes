@@ -45,16 +45,19 @@ xrx.node.TextB.prototype.getLabel = function() {
 
 
 xrx.node.TextB.prototype.getOffset = function() {
-  var row = this.getRow();
-
-  return row.getOffset() + row.getLength1();
+  var struct = this.getIndex().getStructuralIndex();
+  var offset = struct.getOffset(this.key_);
+  var length1 = struct.getLength1(this.key_);
+  return offset + length1;
 };
 
 
 
 xrx.node.TextB.prototype.getLength = function() {
-  var row = this.getRow();
-  return row.getLength2() - row.getLength1();
+  var struct = this.getIndex().getStructuralIndex();
+  var length1 = struct.getLength1(this.key_);
+  var legnth2 = struct.getLength2(this.key_);
+  return legnth2 - length1;
 };
 
 
@@ -147,9 +150,8 @@ xrx.node.TextB.prototype.getNodeFollowing = xrx.node.Text.prototype.getNodeFollo
  * 
  */
 xrx.node.TextB.prototype.getNodeFollowingSibling = function(test) {
-  var stop = this.getIndex().getLabel(this.key_).clone();
+  var stop = this.getLabel(this.key_).clone();
   stop.parent();
-
   return this.find(test, xrx.node[this.impl_.Text].prototype.isPrecedingSiblingOf,
       false, stop);
 };
@@ -160,7 +162,6 @@ xrx.node.TextB.prototype.getNodeParent = function(test) {
   var nodeset = new xrx.xpath.NodeSet();
   var element = new xrx.node.ElementB(this.getDocument(), this.key_);
   if (test.matches(element)) nodeset.add(element);
-
   return nodeset;
 };
 
@@ -179,33 +180,31 @@ xrx.node.TextB.prototype.getNodePrecedingSibling = xrx.node.Text.prototype.getNo
  */
 xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
   var self = this;
-  var index = this.getDocument().getInstance().getIndex();
-  index.iterSetKey(this.key_);
-  var row = index.iterGetRow();
+  var struct = this.getIndex().getStructuralIndex();
   var type;
 
+  struct.at(this.key_);
   do {
-    type = row.getType();
+    type = struct.getType();
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     default:
       break;
     };
 
-    if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
+    if (needTextNode && struct.getLength1() !== struct.getLength2()) {
+      self.eventNode(new xrx.node.TextB(self.getDocument(), struct.getKey()));
     }
 
-    if (type === xrx.token.END_TAG &&
-        self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
+    if (type === xrx.token.END_TAG && struct.getLabel().sameAs(stop)) break;
 
-  } while (row = index.iterNext());
+  } while (struct.next());
 };
 
 
@@ -215,33 +214,31 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
  */
 xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
   var self = this;
-  var index = this.getIndex();
-  index.iterSetKey(this.key_);
-  var row = index.iterGetRow();
+  var struct = this.getIndex().getStructuralIndex();
   var type;
 
+  struct.at(this.key_);
   do {
-    type = row.getType();
+    type = struct.getType();
 
-    if (needTextNode && row.getLength1() !== row.getLength2()) {
-      self.eventNode(new xrx.node.TextB(self.getDocument(), index.iterGetKey()));
+    if (needTextNode && struct.getLength1() !== struct.getLength2()) {
+      self.eventNode(new xrx.node.TextB(self.getDocument(), struct.getKey()));
     }
 
     switch(type) {
     case xrx.token.START_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     case xrx.token.EMPTY_TAG:
-      self.eventNode(new xrx.node.ElementB(self.getDocument(), index.iterGetKey()));
+      self.eventNode(new xrx.node.ElementB(self.getDocument(), struct.getKey()));
       break;
     default:
       break;
     };
 
-    if (type === xrx.token.END_TAG &&
-        self.getIndex().getLabel(index.iterGetKey()).sameAs(stop)) break;
+    if (type === xrx.token.END_TAG && struct.getLabel().sameAs(stop)) break;
 
-  } while (row = index.iterPrevious());
+  } while (struct.previous());
 };
 
 

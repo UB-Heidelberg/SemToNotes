@@ -14,10 +14,6 @@
   goog.require('goog.dom');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.node');
-  goog.require('xrx.node.Nodes');
-  goog.require('xrx.mvc.Instance');
-  goog.require('xrx.xpath');
 </script>
 </head>
 <body>
@@ -36,8 +32,8 @@ function test01namespace() {
   var xml = '<x xmlns="http://example.org/x"><y:y xmlns:y="http://example.org/y"/><z/></x>';
   var instance = createInstance(xml);
 
-  xrx.xpath.declareNamespace('xmlns:x', 'http://example.org/x');
-  xrx.xpath.declareNamespace('xmlns:y', 'http://example.org/y');
+  xrx.xpath.declareNamespace('x', 'http://example.org/x');
+  xrx.xpath.declareNamespace('y', 'http://example.org/y');
 
   // '//y:y'
   var r1 = xrx.xpath.evaluate('//y:y', new xrx.node.DocumentB(instance.getId()),

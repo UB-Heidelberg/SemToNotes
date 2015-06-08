@@ -28,7 +28,7 @@ xrx.index.Structural.prototype.createKey = function(type, label) {
 
 
 xrx.index.Structural.createKey = function(type, label) {
-  var arr = label.getArray();
+  var arr = goog.array.clone(label.getArray());
   arr.unshift(type);
   return arr.join('.');
 };
@@ -44,7 +44,9 @@ xrx.index.Structural.prototype.add = function(type, label, offset, length1,
 
 
 xrx.index.Structural.prototype.at = function(key) {
-  this.pos_ = goog.array.indexOf(this.keys_, key);
+  var index = goog.array.indexOf(this.keys_, key);
+  this.pos_ = index;
+  return index === -1 ? false : true;
 };
 
 
@@ -58,6 +60,16 @@ xrx.index.Structural.prototype.first = function() {
 xrx.index.Structural.prototype.next = function() {
   if (this.pos_ <= this.count_ - 2) {
     this.pos_++;
+    return true;
+  }
+  return false;
+};
+
+
+
+xrx.index.Structural.prototype.previous = function() {
+  if (this.pos_ > 0) {
+    this.pos_--;
     return true;
   }
   return false;
@@ -81,6 +93,7 @@ xrx.index.Structural.prototype.getType = function(opt_key) {
 xrx.index.Structural.prototype.getKey = function() {
   return this.keys_[this.pos_];
 };
+
 
 
 xrx.index.Structural.prototype.getLabel = function(opt_key) {

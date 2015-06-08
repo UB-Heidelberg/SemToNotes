@@ -159,7 +159,14 @@ xrx.index.Index.prototype.build = function(xml) {
   };
 
   traverse.eventNsPrefix = function(label, offset, length) {
-    var ns = new xrx.index.Namespace(label.clone(), xml.substr(offset, length));
+    var pref = xml.substr(offset, length);
+    var prefix;
+    if (pref === 'xmlns') {
+      prefix = pref;
+    } else {
+      prefix = pref.substr('xmlns:'.length);
+    };
+    var ns = new xrx.index.Namespace(label.clone(), prefix);
     var parent = label.clone();
     parent.parent();
     ns.parentLabel = parent;

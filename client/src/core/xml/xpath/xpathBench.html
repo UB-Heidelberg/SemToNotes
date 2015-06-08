@@ -80,6 +80,10 @@ function resultEquals(expression, hits, expected) {
   }
 };
 
+function test0() {
+  resultEquals('count(xrx:instance("i6MB")/PLAY)', 1, 1);
+};
+
 function test1() {
   resultEquals('count(xrx:instance("i6MB")/PLAY/ACT)', 5, 5);
 };
@@ -93,7 +97,7 @@ function test3() {
 }
 
 function test4() {
-  resultEquals('xrx:instance("i6MB")//*[@test="test"]', 1, ['<PERSONA test="test">OSRIC</PERSONA>']);
+  resultEquals('xrx:instance("i6MB")/PLAY/PERSONAE/PGROUP/PERSONA[@test="test"]', 1, ['<PERSONA test="test">OSRIC</PERSONA>']);
 }
 
 function xtest5() {

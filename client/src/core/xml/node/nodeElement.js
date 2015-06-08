@@ -60,7 +60,6 @@ xrx.node.Element.prototype.isBefore = function(node) {
 xrx.node.Element.prototype.isAfter = function(node) {
   var selfLabel = this.getLabel();
   var nodeLabel = node.getLabel();
-
   return selfLabel.isAfter(nodeLabel) ||
       ( selfLabel.sameAs(nodeLabel) &&
           this.getType() > node.getType() );
@@ -142,7 +141,6 @@ xrx.node.Element.prototype.getAttributes = function() {
 xrx.node.Element.prototype.getNodeAncestor = function(test) {
   var nodeset = this.find(test, xrx.node[this.impl_.Element].prototype.isDescendantOf,
       true, new xrx.xml.Label());
-
   // TODO: not sure if this is correct?
   if (test.getName() === 'node') 
       nodeset.unshift(new xrx.node[this.impl_.Document](this.instance_));
@@ -209,7 +207,6 @@ xrx.node.Element.prototype.getNodePreceding = function(test) {
 xrx.node.Element.prototype.getNodePrecedingSibling = function(test) {
   var stop = this.getLabel().clone();
   stop.parent();
-
   return this.find(test, xrx.node[this.impl_.Element].prototype.isFollowingSiblingOf, true,
       stop);
 };
