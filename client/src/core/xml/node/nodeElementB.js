@@ -297,7 +297,6 @@ xrx.node.ElementB.prototype.getNodeChild = function(test) {
         text = new xrx.node.TextB(this.getDocument(), struct.getKey());
         if (test.matches(text)) {
           nodeset.add(text);
-          console.log(text.getXml());
         }
       }
     }
