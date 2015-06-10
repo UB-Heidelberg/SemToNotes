@@ -123,8 +123,8 @@ xrx.index.Index.prototype.getNamespacePrefix = function(label, uri) {
  * Rebuilds the index
  */
 xrx.index.Index.prototype.rebuild = function(xml) {
-  this.rows_ = [];
-  this.iterKey_ = 0;
+  this.structural_ = null;
+  this.structural_ = new xrx.index.Structural();
   this.tNamespace = [];
   this.build(xml);
 };

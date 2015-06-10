@@ -172,7 +172,7 @@ xrx.node.ElementB.prototype.getNamespaceUri = function(prefix) {
  */
 xrx.node.ElementB.prototype.getStringValue = function() {
   var struct = this.getIndex().getStructuralIndex();
-  struct.at(this.getKey());
+  struct.atKey(this.getKey());
 
   if (struct.getType() === xrx.token.EMPTY_TAG) return '';
 
@@ -255,7 +255,7 @@ xrx.node.ElementB.prototype.getNodeChild = function(test) {
   var type;
   var nodeset = new xrx.xpath.NodeSet();
   var struct = this.getIndex().getStructuralIndex();
-  struct.at(this.key_);
+  struct.atKey(this.key_);
   var needTextNode = test.needsTextNode();
 
   // first text node
@@ -272,8 +272,8 @@ xrx.node.ElementB.prototype.getNodeChild = function(test) {
   var nextKey = function(label) {
     var key1 = struct.createKey(xrx.token.START_TAG, label);
     var key2 = struct.createKey(xrx.token.EMPTY_TAG, label);
-    var exists = struct.at(key1);
-    if (!exists) exists = struct.at(key2);
+    var exists = struct.atKey(key1);
+    if (!exists) exists = struct.atKey(key2);
     return exists;
   };
   var isKey = nextKey(label);
@@ -292,7 +292,7 @@ xrx.node.ElementB.prototype.getNodeChild = function(test) {
     }
     if (type === xrx.token.START_TAG && needTextNode) {
       var key = struct.createKey(xrx.token.END_TAG, label);
-      struct.at(key);
+      struct.atKey(key);
       if (struct.getLength1() !== struct.getLength2()) {
         text = new xrx.node.TextB(this.getDocument(), struct.getKey());
         if (test.matches(text)) {
@@ -358,7 +358,7 @@ xrx.node.ElementB.prototype.forward = function(stop, needTextNode) {
   var struct = this.getIndex().getStructuralIndex();
   var type;
 
-  struct.at(this.getKey());
+  struct.atKey(this.getKey());
   do {
     type = struct.getType();
 
@@ -393,7 +393,7 @@ xrx.node.ElementB.prototype.backward = function(stop, needTextNode) {
   var struct = this.getIndex().getStructuralIndex();
   var type;
 
-  struct.at(this.getKey());
+  struct.atKey(this.getKey());
   do {
     type = struct.getType();
 

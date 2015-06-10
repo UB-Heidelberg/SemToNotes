@@ -43,10 +43,44 @@ xrx.index.Structural.prototype.add = function(type, label, offset, length1,
 
 
 
-xrx.index.Structural.prototype.at = function(key) {
+xrx.index.Structural.prototype.insert = function(key, value) {
+  this.count_++;
+  goog.array.insertAt(this.keys_, key, ++this.pos_);
+  this.version_++;
+  this.map_[key] = value;
+};
+
+
+
+xrx.index.Structural.prototype.remove = function(key) {
+  goog.array.remove(this.keys_, key);
+  delete this.map_[key];
+  this.count_--;
+  this.version_++;
+};
+
+
+
+xrx.index.Structural.prototype.rename = function(oldKey, newKey) {
+  var tmp = goog.array.clone(this.map_[oldKey]);
+  var index = goog.array.indexOf(this.keys_, oldKey);
+  this.keys_[index] = newKey;
+  this.map_[newKey] = tmp;
+  delete this.map_[oldKey];
+};
+
+
+
+xrx.index.Structural.prototype.atKey = function(key) {
   var index = goog.array.indexOf(this.keys_, key);
   this.pos_ = index;
   return index === -1 ? false : true;
+};
+
+
+
+xrx.index.Structural.prototype.atPos = function(pos) {
+  this.pos_ = pos;
 };
 
 
@@ -83,15 +117,21 @@ xrx.index.Structural.prototype.last = function() {
 
 
 
-xrx.index.Structural.prototype.getType = function(opt_key) {
-  var key = opt_key || this.keys_[this.pos_];
-  return parseInt(key.split('.')[0]);
+xrx.index.Structural.prototype.getPos = function() {
+  return this.pos_;
 };
 
 
 
 xrx.index.Structural.prototype.getKey = function() {
   return this.keys_[this.pos_];
+};
+
+
+
+xrx.index.Structural.prototype.getType = function(opt_key) {
+  var key = opt_key || this.keys_[this.pos_];
+  return parseInt(key.split('.')[0]);
 };
 
 
@@ -128,6 +168,15 @@ xrx.index.Structural.prototype.setOffset = function(offset) {
 /**
  * 
  */
+xrx.index.Structural.prototype.updateOffset = function(diff) {
+  this.map_[this.keys_[this.pos_]][0] += diff;
+};
+
+
+
+/**
+ * 
+ */
 xrx.index.Structural.prototype.getLength1 = function(opt_key) {
   var key = opt_key || this.keys_[this.pos_];
   return this.map_[key][1];
@@ -139,6 +188,15 @@ xrx.index.Structural.prototype.getLength1 = function(opt_key) {
  * 
  */
 xrx.index.Structural.prototype.setLength1 = function(length) {
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Structural.prototype.updateLength1 = function(diff) {
+  this.map_[this.keys_[this.pos_]][1] += diff;
 };
 
 
@@ -157,4 +215,13 @@ xrx.index.Structural.prototype.getLength2 = function(opt_key) {
  * 
  */
 xrx.index.Structural.prototype.setLength2 = function(length) {
+};
+
+
+
+/**
+ * 
+ */
+xrx.index.Structural.prototype.updateLength2 = function(diff) {
+  this.map_[this.keys_[this.pos_]][2] += diff;
 };

@@ -183,7 +183,7 @@ xrx.node.TextB.prototype.forward = function(stop, needTextNode) {
   var struct = this.getIndex().getStructuralIndex();
   var type;
 
-  struct.at(this.key_);
+  struct.atKey(this.key_);
   do {
     type = struct.getType();
 
@@ -217,7 +217,7 @@ xrx.node.TextB.prototype.backward = function(stop, needTextNode) {
   var struct = this.getIndex().getStructuralIndex();
   var type;
 
-  struct.at(this.key_);
+  struct.atKey(this.key_);
   do {
     type = struct.getType();
 
