@@ -5,11 +5,6 @@
   "useMarkdown": false,
   "closureLibraryDir": "lib/closure-library/closure/goog",
   "sources": [
-    "src/component",
-    "src/core"
-  ],
-  "typeFilters": [
-    "^goog.i18n.\\w+_.*",
-    "^goog.labs.i18n.\\w+_.*"
+    "src"
   ]
 }
