@@ -104,7 +104,7 @@ goog.addDependency('../../../../src/core/mvc/mvcBind.js', ['xrx.mvc.Bind'], ['xr
 goog.addDependency('../../../../src/core/mvc/mvcChildComponent.js', ['xrx.mvc.ChildComponent'], ['xrx.mvc', 'xrx.mvc.Component']);
 goog.addDependency('../../../../src/core/mvc/mvcComponent.js', ['xrx.mvc.Component'], ['goog.Uri.QueryData', 'goog.array', 'goog.dom.DomHelper', 'goog.dom.dataset', 'goog.events', 'goog.events.EventType', 'goog.string', 'goog.ui.IdGenerator', 'xrx.event.Handler', 'xrx.event.Name', 'xrx.event.Type', 'xrx.mvc.ComponentClasses', 'xrx.mvc.Validate', 'xrx.mvc.Xpath', 'xrx.xpath']);
 goog.addDependency('../../../../src/core/mvc/mvcComponentClasses.js', ['xrx.mvc.ComponentClasses'], []);
-goog.addDependency('../../../../src/core/mvc/mvcComponentContext.js', ['xrx.mvc.ComponentContext'], []);
+goog.addDependency('../../../../src/core/mvc/mvcComponentContext.js', ['xrx.mvc.Context'], []);
 goog.addDependency('../../../../src/core/mvc/mvcComponentModel.js', ['xrx.mvc.ComponentModel'], ['xrx.mvc.Component']);
 goog.addDependency('../../../../src/core/mvc/mvcComponentView.js', ['xrx.mvc.ComponentView'], ['xrx.mvc.Component']);
 goog.addDependency('../../../../src/core/mvc/mvcComponents.js', ['xrx.mvc.Components'], ['xrx.mvc.Action', 'xrx.mvc.Auth', 'xrx.mvc.Bind', 'xrx.mvc.Calculate', 'xrx.mvc.ClassesAdd', 'xrx.mvc.ClassesRemove', 'xrx.mvc.Dispatch', 'xrx.mvc.Hide', 'xrx.mvc.Insert', 'xrx.mvc.Instance', 'xrx.mvc.InstanceGithub', 'xrx.mvc.InstanceRest', 'xrx.mvc.Map', 'xrx.mvc.Namespace', 'xrx.mvc.Origin', 'xrx.mvc.Password', 'xrx.mvc.Remove', 'xrx.mvc.Repeat', 'xrx.mvc.Resource', 'xrx.mvc.Script', 'xrx.mvc.Send', 'xrx.mvc.Show', 'xrx.mvc.Signin', 'xrx.mvc.Signout', 'xrx.mvc.Submission', 'xrx.mvc.Target', 'xrx.mvc.Update', 'xrx.mvc.User', 'xrx.mvc.While']);
@@ -200,5 +200,5 @@ goog.addDependency('../../../../src/core/xml/xpath/xpathStep.js', ['xrx.xpath.St
 goog.addDependency('../../../../src/core/xml/xpath/xpathTest.js', ['xrx.xpath.Test'], ['goog.dom.DomHelper', 'goog.testing.jsunit', 'xrx', 'xrx.mvc', 'xrx.mvc.Components', 'xrx.mvc.Instance', 'xrx.node', 'xrx.node.Nodes', 'xrx.xpath']);
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnaryExpr.js', ['xrx.xpath.UnaryExpr'], ['xrx.xpath.DataType', 'xrx.xpath.Expr']);
 goog.addDependency('../../../../src/core/xml/xpath/xpathUnionExpr.js', ['xrx.xpath.UnionExpr'], ['goog.array', 'xrx.xpath.DataType', 'xrx.xpath.Expr']);
-goog.addDependency('../../../../src/xrx.js', ['xrx'], ['xrx.func', 'xrx.mvc', 'xrx.mvc.Components', 'xrx.mvc.Mvc']);
-goog.addDependency('../../../../src/xrxUtil.js', ['xrx.Util'], ['goog.math']);
+goog.addDependency('../../../../src/core/xrx.js', ['xrx'], ['xrx.func', 'xrx.mvc', 'xrx.mvc.Components', 'xrx.mvc.Mvc']);
+goog.addDependency('../../../../src/core/xrxUtil.js', ['xrx.Util'], ['goog.math']);

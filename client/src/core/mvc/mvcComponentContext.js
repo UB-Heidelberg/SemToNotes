@@ -2,11 +2,7 @@
  * @fileoverview Class representing a context control.
  */
 
-goog.provide('xrx.mvc.ComponentContext');
-
-
-
-goog.require();
+goog.provide('xrx.mvc.Context');
 
 
 

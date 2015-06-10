@@ -1,6 +1,6 @@
 /**
  * @fileoverview A class representing a document node
- * implementation working on a binary XML model.
+ *     implementation working on a binary XML model.
  */
 
 goog.provide('xrx.node.DocumentB');
