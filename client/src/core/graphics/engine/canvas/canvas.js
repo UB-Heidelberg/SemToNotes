@@ -46,8 +46,7 @@ xrx.canvas.setTransform_ = function(context, matrix) {
 xrx.canvas.render = function(canvas, affineTransform, callback) {
   var ctx = canvas.getContext('2d');
   ctx.save();
-  ctx.fillStyle = '#DDDDDD';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
   xrx.canvas.setTransform_(ctx, affineTransform);
   callback();

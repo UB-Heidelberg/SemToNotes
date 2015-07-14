@@ -20,6 +20,19 @@
   height: 150px;
   border: solid grey 1px;
 }
+#backgroundTest {
+  display: block;
+  
+}
+#canvasBackground,
+#svgBackground,
+#vmlBackground {
+  width: 200px;
+  height: 200px;
+  border: 4px solid grey;
+  background-color: #E8FAE8;
+  margin: 10px;
+}
 </style>
 </head>
 <body>
@@ -28,12 +41,12 @@
   <tr>
     <td></td>
     <td>Drawing</td>
-	<td>Set Background Image</td>
-	<td>Add Shapes</td>
+	  <td>Set Background Image</td>
+	  <td>Add Shapes</td>
   </tr>
   <tr>
-	<td>Canvas</td>
-	<td><div id="canvasDrawing" class="drawing"></div></td>
+	  <td>Canvas</td>
+	  <td><div id="canvasDrawing" class="drawing"></div></td>
     <td><div id="canvasBackgroundImage" class="drawing"></div></td>
     <td><div id="canvasAddShapes" class="drawing"></div></td>
   </tr>
@@ -44,12 +57,19 @@
     <td><div id="svgAddShapes" class="drawing"></div></td>
   </tr>
   <tr>
-	<td>VML</td>
-	<td><div id="vmlDrawing" class="drawing"></div></td>
+	  <td>VML</td>
+	  <td><div id="vmlDrawing" class="drawing"></div></td>
     <td><div id="vmlBackgroundImage" class="drawing"></div></td>
     <td><div id="vmlAddShapes" class="drawing"></div></td>
   </tr>
 </table>
+
+<div id="backgroundTest">
+  <h2>Background Test</h2>
+  <div id="canvasBackground"></div>
+  <div id="svgBackground"></div>
+  <div id="vmlBackground"></div>
+</div>
 
 <script type="text/javascript">
 
@@ -145,6 +165,25 @@ function test4addShapes() {
     vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
 
     vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
+    vmlDrawing.draw();
+  }
+};
+
+function test5background() {
+  var url = './drawing_test.png';
+  if (!xrx.engine.isOldIE()) {
+    var canvasDrawing = getDrawingCanvas('canvasBackground');
+    var svgDrawing = getDrawingSvg('svgBackground');
+    canvasDrawing.setModeView();
+    svgDrawing.setModeView();
+    canvasDrawing.setBackgroundImage(url);
+    svgDrawing.setBackgroundImage(url);
+    canvasDrawing.draw();
+    svgDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlBackground');
+    vmlDrawing.setModeView();
+    vmlDrawing.setBackgroundImage(url);
     vmlDrawing.draw();
   }
 };
