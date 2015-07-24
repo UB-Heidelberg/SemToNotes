@@ -34,7 +34,8 @@ goog.addDependency('../../../../src/core/graphics/drawing/drawingSelectable.js',
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolMagnifier.js', ['xrx.drawing.tool.Magnifier'], ['goog.dom.DomHelper', 'goog.events', 'goog.events.EventType', 'goog.fx.Dragger', 'goog.math.AffineTransform', 'goog.math.Rect', 'goog.style', 'xrx.canvas', 'xrx.drawing.tool.Tool', 'xrx.engine.Engines', 'xrx.svg', 'xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolTool.js', ['xrx.drawing.tool.Tool'], []);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolbar.js', ['xrx.drawing.Toolbar', 'xrx.drawing.ToolbarButton', 'xrx.drawing.ToolbarOption'], ['goog.dom.DomHelper', 'goog.dom.classes', 'goog.events', 'goog.events.EventType', 'goog.style', 'xrx.drawing', 'xrx.event.HandlerTarget', 'xrx.mvc']);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingViewbox.js', ['xrx.drawing.Viewbox'], ['goog.math', 'goog.math.AffineTransform', 'xrx.drawing']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingViewbox.js', ['xrx.drawing.Viewbox'], ['goog.math', 'goog.math.AffineTransform', 'goog.ui.RangeModel', 'xrx.drawing', 'xrx.drawing.ZoomModel']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingZoomModel.js', ['xrx.drawing.ZoomModel'], []);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvas.js', ['xrx.canvas'], []);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasCanvas.js', ['xrx.canvas.Canvas'], ['goog.dom.DomHelper']);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasCircle.js', ['xrx.canvas.Circle'], ['xrx.canvas.Stylable', 'xrx.geometry.Circle']);
