@@ -12,6 +12,7 @@
   goog.require('goog.events.EventType');
   goog.require('goog.math');
   goog.require('goog.math.AffineTransform');
+  goog.require('goog.ui.Component.EventType');
   goog.require('goog.ui.Slider');
   goog.require('xrx.drawing.Drawing');
   goog.require('xrx.engine');
@@ -28,43 +29,36 @@
   width: 152px;
   height: 20px
 }
-.goog-slider-vertical,
-.goog-slider-horizontal {
-  background-color: ThreeDFace;
+.goog-slider {
+  background-color: rgb(180, 180, 180);
   position: relative;
   overflow: hidden;
 }
 .goog-slider-thumb {
-  position: absolute;
-  background-color: ThreeDShadow;
-  overflow: hidden;
-}
-.goog-slider-vertical .goog-slider-thumb {
-  left: 0;
-  height: 20px;
-  width: 100%;
-}
-.goog-slider-horizontal .goog-slider-thumb {
   top: 0;
   width: 20px;
   height: 100%;
-}
-.goog-slider-disabled {
-  background-color: lightgray
+  position: absolute;
+  background-color: rgb(80, 80, 80);
+  overflow: hidden;
 }
 .zoom {
   float: left;
 }
-.wrapper {
+.wrapper1 {
   width: 100%;
   height: 152px;
+}
+.wrapper2 {
+  width: 100%;
+  height: 172px;
 }
 </style>
 </head>
 <body>
 
 <h1>Zoom, respecting the mouse pointer as fix-point</h1>
-<div class="wrapper">
+<div class="wrapper1">
   <div class="drawing zoom" id="zoom1"></div>
   <div class="drawing zoom" id="zoom2"></div>
   <div class="drawing zoom" id="zoom3"></div>
@@ -72,13 +66,14 @@
 </div>
 
 <h1>Zoom with Slider</h1>
-<div>
+<div class="wrapper2">
   <div class="goog-slider" role="slider" id="slider">
     <div class="goog-slider-thumb" role="button"></div>
   </div>
+  <div class="drawing zoom" id="zoom5"></div>
 </div>
 
-<h1>Scale, respecting a fix-point</h1>
+<h1>Zoom, respecting a fix-point</h1>
 <div>
   <form id="fscale">
     <input type="radio" name="dir" value="C" checked>Center<br>
@@ -90,6 +85,12 @@
   <div class="drawing" id="scale"></div>
   <button id="bscale">Scale</button>
   <button id="bscaleRotate">Rotate</button>
+</div>
+
+<h1>Viewbox Events</h1>
+<div class="wrapper1">
+  <div class="drawing zoom" id="event1"></div>
+  <div class="drawing zoom" id="event2"></div>
 </div>
 
 <h1>Rotate, respecting a fix-point</h1>
@@ -386,12 +387,6 @@ function test9scale() {
 
 
 function test10zoom() {
-  // sliders
-  var element = goog.dom.getElement('slider');
-  var slider = new goog.ui.Slider;
-  slider.decorate(element);
-
-  // canvases
   var canvas1 = new xrx.drawing.Drawing(goog.dom.getElement('zoom1'));
   var canvas2 = new xrx.drawing.Drawing(goog.dom.getElement('zoom2'));
   var canvas3 = new xrx.drawing.Drawing(goog.dom.getElement('zoom3'));
@@ -419,6 +414,51 @@ function test10zoom() {
     canvas4.getViewbox().rotateRight();
     canvas4.draw();
   });
+};
+
+
+
+function test11zoomWithSlider() {
+  var zoomStep; 
+  // canvas
+  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('zoom5'));
+  canvas.setBackgroundImage(url2, function() {
+    canvas.setModeView();
+  });
+
+  // slider
+  var element = goog.dom.getElement('slider');
+  var slider = new goog.ui.Slider();
+  slider.setValue(50);
+  slider.decorate(element);
+  slider.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
+    zoomStep = canvas.getViewbox().zoomStep_;
+    canvas.getViewbox().zoomTo((slider.getValue() - 50) * 2);
+    canvas.draw();
+  });
+};
+
+
+
+function test12events() {
+  var canvas1 = new xrx.drawing.Drawing(goog.dom.getElement('event1'));
+  var canvas2 = new xrx.drawing.Drawing(goog.dom.getElement('event2'));
+  canvas1.setBackgroundImage(url2, function() {
+    canvas1.setModeView();
+  });
+  canvas2.setBackgroundImage(url2, function() {
+    canvas2.setModeView();
+  });
+  canvas1.eventViewboxChange = function() {
+    var ctm = canvas1.getViewbox().getCTM();
+    canvas2.getViewbox().setCTM(ctm);
+    canvas2.draw();
+  };
+  canvas2.eventViewboxChange = function() {
+    var ctm = canvas2.getViewbox().getCTM();
+    canvas1.getViewbox().setCTM(ctm);
+    canvas1.draw();
+  };
 };
 
 </script>

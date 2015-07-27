@@ -8,7 +8,6 @@ goog.provide('xrx.drawing.Viewbox');
 
 goog.require('goog.math');
 goog.require('goog.math.AffineTransform');
-goog.require('goog.ui.RangeModel');
 goog.require('xrx.drawing');
 
 
@@ -31,10 +30,6 @@ xrx.drawing.Viewbox = function(drawing) {
   this.origin_;
 
   this.rotation_ = 0;
-
-  this.zoomStep_ = 1.2;
-
-  this.zoomModel_ = new goog.ui.RangeModel();
 
   this.create_();
 };
@@ -119,7 +114,7 @@ xrx.drawing.Viewbox.prototype.fitToWidth = function() {
 
   this.resetTransform_();
   this.rotate(tmp, xrx.drawing.Viewbox.FixPoint_.NW);
-  this.scale(scale, xrx.drawing.Viewbox.FixPoint_.NW);
+  this.zoom(scale, xrx.drawing.Viewbox.FixPoint_.NW);
 };
 
 
@@ -132,7 +127,7 @@ xrx.drawing.Viewbox.prototype.fitToHeight = function() {
 
   this.resetTransform_();
   this.rotate(tmp, xrx.drawing.Viewbox.FixPoint_.NW);
-  this.scale(scale, xrx.drawing.Viewbox.FixPoint_.NW);
+  this.zoom(scale, xrx.drawing.Viewbox.FixPoint_.NW);
 };
 
 
@@ -188,6 +183,16 @@ xrx.drawing.Viewbox.prototype.getGroup = function() {
  */
 xrx.drawing.Viewbox.prototype.getCTM = function() {
   return this.ctm_;
+};
+
+
+
+/**
+ * Sets the current transformation matrix of the view-box.
+ * @param {goog.math.affineTransform} ctm The matrix object.
+ */
+xrx.drawing.Viewbox.prototype.setCTM = function(ctm) {
+  this.ctm_ = ctm;
 };
 
 
@@ -272,6 +277,8 @@ xrx.drawing.Viewbox.prototype.handleMove = function(e) {
   this.ctm_ = transform.translate(x, y).concatenate(this.ctm_);
 
   this.origin_ = point;
+
+  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
 };
 
 
@@ -319,9 +326,17 @@ xrx.drawing.Viewbox.prototype.resetState_ = function() {
 /**
  * @private
  */
-xrx.drawing.Viewbox.prototype.getCenterPoint_ = function() {
+xrx.drawing.Viewbox.prototype.getCenterPoint_ = function(opt_transformed) {
   var image = this.getDrawing().getLayerBackground().getImage();
-  return [image.getWidth() / 2, image.getHeight() / 2];
+  var natural = [image.getWidth() / 2, image.getHeight() / 2];
+  var transformed;
+  if (opt_transformed !== true) {
+    return natural;
+  } else {
+    transformed = new Array(2);
+    this.ctm_.transform(natural, 0, transformed, 0, 1);
+    return transformed;
+  }
 };
 
 
@@ -409,11 +424,8 @@ xrx.drawing.Viewbox.prototype.rotate = function(opt_angle, opt_fixPoint) {
   this.rotation_ += angle;
   // rotation shall always be positive and between 0° and 360°
   this.rotation_ = (this.rotation_ + 360) % 360;
+  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
 };
-
-
-
-
 
 
 
@@ -441,28 +453,31 @@ xrx.drawing.Viewbox.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
 
 
 /**
- * Scales the view-box by a factor, respecting a fix-point.
- */
-xrx.drawing.Viewbox.prototype.scale = function(scale, opt_fixPoint) {
-  var fixPoint;
-  var translate;
-
-  opt_fixPoint === undefined ? fixPoint = xrx.drawing.Viewbox.FixPoint_.NW :
-      fixPoint = opt_fixPoint;
-
-  this.zoom(scale);
-  translate = this.getOffsetTranslate_(scale, fixPoint);
-  this.ctm_.translate(translate.x, translate.y);
-};
-
-
-
-/**
  * Rotates the view-box by 90° in left direction.
  */
 xrx.drawing.Viewbox.prototype.rotateLeft = function() {
   this.rotate(-90, xrx.drawing.Viewbox.FixPoint_.C);
 };
+
+
+
+xrx.drawing.Viewbox.prototype.zoomFactor_ = 1.05;
+
+
+
+xrx.drawing.Viewbox.prototype.zoomValue_ = 0;
+
+
+
+xrx.drawing.Viewbox.prototype.zoomStep_ = 1;
+
+
+
+xrx.drawing.Viewbox.prototype.zoomMin_ = .1;
+
+
+
+xrx.drawing.Viewbox.prototype.zoomMax_ = 2;
 
 
 
@@ -475,7 +490,7 @@ xrx.drawing.Viewbox.prototype.rotateRight = function() {
 
 
 
-xrx.drawing.Viewbox.prototype.getZoom = function() {
+xrx.drawing.Viewbox.prototype.getScale = function() {
   return Math.sqrt(Math.pow(this.ctm_.getScaleX(), 2) +
       Math.pow(this.ctm_.getShearX(), 2))
 };
@@ -485,73 +500,59 @@ xrx.drawing.Viewbox.prototype.getZoom = function() {
 /**
  * @private
  */
-xrx.drawing.Viewbox.prototype.setOffsetZoom_ = function(opt_e, scale) {
-  var offsetX = opt_e === undefined ? this.drawing_.getCanvas().getWidth() / 2 : opt_e.offsetX;
-  var offsetY = opt_e === undefined ? this.drawing_.getCanvas().getHeight() / 2 : opt_e.offsetY;
+xrx.drawing.Viewbox.prototype.zoomOffset_ = function(point, scale) {
   this.ctm_.setTransform(
     this.ctm_.getScaleX(), this.ctm_.getShearY(), 
     this.ctm_.getShearX(), this.ctm_.getScaleY(),
-    (this.ctm_.getTranslateX() - offsetX) * scale + offsetX,
-    (this.ctm_.getTranslateY() - offsetY) * scale + offsetY
+    (this.ctm_.getTranslateX() - point[0]) * scale + point[0],
+    (this.ctm_.getTranslateY() - point[1]) * scale + point[1]
   );
 };
 
 
 
 /**
- * Zoom in on the view-box.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * 
  */
-xrx.drawing.Viewbox.prototype.zoomIn = function(e) {
-	var scale = this.zoomStep_;
-  if (this.getZoom() < this.zoomModel_.getMaximum()) {
-    this.ctm_.scale(scale, scale);
-    this.setOffsetZoom_(e, scale);
-  }
-  if (this.drawing_.handleViewboxUpdate) this.drawing_.handleViewboxUpdate('zoomIn'); 
+xrx.drawing.Viewbox.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
+	if(zoomValue === this.zoomValue_) return;
+
+  var scale = Math.pow(this.zoomFactor_, zoomValue);
+  var fixPoint = opt_fixPoint ? opt_fixPoint : this.getCenterPoint_(true);
+	if(scale < this.zoomMin_) scale = this.zoomMin_;
+	if(scale > this.zoomMax_) scale = this.zoomMax_;
+
+	scale /= this.getScale();
+
+	this.zoomOffset_(fixPoint, scale);
+	this.ctm_.scale(scale, scale);
+
+  this.zoomValue_ = zoomValue;
+  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
+};
+
+
+
+/**
+ * Zoom in on the view-box.
+ * @param {?goog.events.BrowserEvent} opt_e The browser event.
+ */
+xrx.drawing.Viewbox.prototype.zoomIn = function(opt_e) {
+  var fixPoint = opt_e ? [opt_e.offsetX, opt_e.offsetY] :
+      this.getCenterPoint_(true);
+  this.zoomTo(this.zoomValue_ + this.zoomStep_, fixPoint);
 };
 
 
 
 /**
  * Zoom out the view-box.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {?goog.events.BrowserEvent} opt_e The browser event.
  */
-xrx.drawing.Viewbox.prototype.zoomOut = function(e) {
-  var scale = 1 / this.zoomStep_;
-  if (this.getZoom() > this.zoomModel_.getMinimum()) {
-    this.ctm_.scale(scale, scale);
-    this.setOffsetZoom_(e, scale);
-  }
-  if (this.drawing_.handleViewboxUpdate) this.drawing_.handleViewboxUpdate('zoomOut'); 
-};
-
-
-
-/**
- * Zoom (to) the view-box; 0 == no zoom, n == zoomStep_ ^ n
- */
-xrx.drawing.Viewbox.prototype.zoomTo = function(n) {
-  var s = Math.pow(this.zoomStep_, n);
-
-	if(this.zoomMin_ !== undefined && s < this.zoomMin_) s = this.zoomMin_;
-	if(this.zoomMax_ !== undefined && s > this.zoomMax_) s = this.zoomMax_;
-  var current_scale = Math.sqrt(Math.pow(this.ctm_.getScaleX(), 2) + Math.pow(this.ctm_.getShearX(), 2));
-	if(s === current_scale) return;
-
-	s /= current_scale;
-
-	this.ctm_.scale(s, s);
-
-	var offX = this.drawing_.getCanvas().getWidth() / 2;
-	var offY = this.drawing_.getCanvas().getHeight()/ 2;
-	this.ctm_.setTransform(
-		this.ctm_.getScaleX(), this.ctm_.getShearY(), 
-		this.ctm_.getShearX(), this.ctm_.getScaleY(),
-		(this.ctm_.getTranslateX() - offX) * s + offX,
-		(this.ctm_.getTranslateY() - offY) * s + offY
-	);
-  if (this.drawing_.handleViewboxUpdate) this.drawing_.handleViewboxUpdate('zoomTo'); 
+xrx.drawing.Viewbox.prototype.zoomOut = function(opt_e) {
+  var fixPoint = opt_e ? [opt_e.offsetX, opt_e.offsetY] :
+      this.getCenterPoint_(true);
+  this.zoomTo(this.zoomValue_ - this.zoomStep_, fixPoint);
 };
 
 

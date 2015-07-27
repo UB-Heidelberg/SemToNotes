@@ -40,3 +40,14 @@ xrx.drawing.Mode = {
   SELECT: 6,
   HOVER: 7
 };
+
+
+
+/**
+ * Enumeration of event types that can be dispatched
+ * by drawing objects.
+ * @enum {string}
+ */
+xrx.drawing.EventType = {
+  VIEWBOX_CHANGE: 'eventViewboxChange'
+};
