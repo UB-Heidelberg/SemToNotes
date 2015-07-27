@@ -4,88 +4,18 @@
 <title>XRX++ Unit Tests - xrx.drawing.Viewbox</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
+<script src='./drawingViewbox_test.js'></script>
+<link rel="stylesheet" type="text/css" href="./drawingViewbox_test.css">
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('goog.dom.forms');
   goog.require('goog.events');
   goog.require('goog.events.EventType');
-  goog.require('goog.math');
-  goog.require('goog.math.AffineTransform');
-  goog.require('goog.ui.Component.EventType');
-  goog.require('goog.ui.Slider');
-  goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine');
-  goog.require('xrx.shape.Shapes');
+  goog.require('xrx');
 </script>
-<style>
-.drawing {
-  display: block;
-  width: 150px;
-  height: 150px;
-  border: solid grey 1px;
-}
-#slider {
-  width: 152px;
-  height: 20px
-}
-.goog-slider {
-  background-color: rgb(180, 180, 180);
-  position: relative;
-  overflow: hidden;
-}
-.goog-slider-thumb {
-  top: 0;
-  width: 20px;
-  height: 100%;
-  position: absolute;
-  background-color: rgb(80, 80, 80);
-  overflow: hidden;
-}
-.zoom {
-  float: left;
-}
-.wrapper1 {
-  width: 100%;
-  height: 152px;
-}
-.wrapper2 {
-  width: 100%;
-  height: 172px;
-}
-</style>
 </head>
 <body>
-
-<h1>Zoom, respecting the mouse pointer as fix-point</h1>
-<div class="wrapper1">
-  <div class="drawing zoom" id="zoom1"></div>
-  <div class="drawing zoom" id="zoom2"></div>
-  <div class="drawing zoom" id="zoom3"></div>
-  <div class="drawing zoom" id="zoom4"></div>
-</div>
-
-<h1>Zoom with Slider</h1>
-<div class="wrapper2">
-  <div class="goog-slider" role="slider" id="slider">
-    <div class="goog-slider-thumb" role="button"></div>
-  </div>
-  <div class="drawing zoom" id="zoom5"></div>
-</div>
-
-<h1>Zoom, respecting a fix-point</h1>
-<div>
-  <form id="fscale">
-    <input type="radio" name="dir" value="C" checked>Center<br>
-    <input type="radio" name="dir" value="NE">Northeast<br>
-    <input type="radio" name="dir" value="SE">Southeast<br>
-    <input type="radio" name="dir" value="SW">Southwest<br>
-    <input type="radio" name="dir" value="NW">Northwest<br>
-  </form>
-  <div class="drawing" id="scale"></div>
-  <button id="bscale">Scale</button>
-  <button id="bscaleRotate">Rotate</button>
-</div>
 
 <h1>Viewbox Events</h1>
 <div class="wrapper1">
@@ -115,8 +45,6 @@
 	  <td>Transform</td>
     <td>Rotate Left</td>
     <td>Rotate Right</td>
-	  <td>Zoom In</td>
-	  <td>Zoom Out</td>
   </tr>
   <tr>
     <td>SVG</td>
@@ -124,8 +52,6 @@
     <td><div id="svgSetMatrix" class="drawing"></div></td>
     <td><div id="svgRotateLeft" class="drawing"></div></td>
     <td><div id="svgRotateRight" class="drawing"></div></td>
-    <td><div id="svgZoomIn" class="drawing"></div></td>
-    <td><div id="svgZoomOut" class="drawing"></div></td>
   </tr>
   <tr>
 	<td>Canvas</td>
@@ -133,8 +59,6 @@
 	  <td><div id="canvasSetMatrix" class="drawing"></div></td>
     <td><div id="canvasRotateLeft" class="drawing"></div></td>
     <td><div id="canvasRotateRight" class="drawing"></div></td>
-    <td><div id="canvasZoomIn" class="drawing"></div></td>
-    <td><div id="canvasZoomOut" class="drawing"></div></td>
   </tr>
   <tr>
     <td></td>
@@ -142,8 +66,6 @@
     <td><span></span></td>
     <td><span>'N' points to west?</span></td>
     <td><span>'N' points to east?</span></td>
-    <td><span>Zoom in 50%?</span></td>
-    <td><span>Zoom out 50%?</span></td>
   </tr>
 </table>
 
@@ -160,26 +82,6 @@
 <div id="dumpRestore"></div>
 
 <script type="text/javascript">
-var url = './drawing_test.png';
-var url2 = './drawing_test_vertical.png';
-
-
-
-function getDrawingSvg(id) {
-  var svgDiv = goog.dom.getElement(id);
-  var svgDrawing = new xrx.drawing.Drawing(svgDiv,
-      xrx.engine.SVG);
-  return svgDrawing;
-};
-
-
-
-function getDrawingCanvas(id, callback) {
-  var canvasDiv = goog.dom.getElement(id);
-  var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
-    xrx.engine.CANVAS);
-  return canvasDrawing;
-};
 
 
 
@@ -236,36 +138,6 @@ function test3RotateRight() {
   var canvasDrawing = getDrawingCanvas('canvasRotateRight');
   canvasDrawing.setBackgroundImage(url, function() {
     canvasDrawing.getViewbox().rotateRight();
-    canvasDrawing.draw();
-  });
-};
-
-
-
-function test4ZoomIn() {
-  var svgDrawing = getDrawingSvg('svgZoomIn');
-  svgDrawing.setBackgroundImage(url, function() {
-    for (var i = 0; i < 10; i++) { svgDrawing.getViewbox().zoomIn(); }
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasZoomIn');
-  canvasDrawing.setBackgroundImage(url, function() {
-    for (var i = 0; i < 10; i++) { canvasDrawing.getViewbox().zoomIn(); }
-    canvasDrawing.draw();
-  });
-};
-
-
-
-function test5ZoomOut() {
-  var svgDrawing = getDrawingSvg('svgZoomOut');
-  svgDrawing.setBackgroundImage(url, function() {
-    for (var i = 0; i < 10; i++) { svgDrawing.getViewbox().zoomOut(); }
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasZoomOut');
-  canvasDrawing.setBackgroundImage(url, function() {
-    for (var i = 0; i < 10; i++) { canvasDrawing.getViewbox().zoomOut(); }
     canvasDrawing.draw();
   });
 };
@@ -354,91 +226,6 @@ function test8rotate() {
 };
 
 
-function test9scale() {
-  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('scale'));
-
-  // form
-  var form = goog.dom.getElement('fscale');
-  var fixPoint = function() {
-    var element = goog.dom.findNode(form, function(n) {
-      return goog.dom.isElement(n) && n.checked;
-    });
-    return element.value;
-  };
-
-  // buttons
-  var buttonScale = goog.dom.getElement('bscale');
-  goog.events.listen(buttonScale, goog.events.EventType.CLICK, function() {
-    canvas.getViewbox().scale(1.2, fixPoint());
-    canvas.draw();
-  });
-  var rotateRight = goog.dom.getElement('bscaleRotate');
-  goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
-    canvas.getViewbox().rotateRight();
-    canvas.draw();
-  });
-
-  // canvas
-  canvas.setModeView();
-  canvas.getViewbox().getCTM().translate(20, 20);
-  canvas.setBackgroundImage(url);
-};
-
-
-
-function test10zoom() {
-  var canvas1 = new xrx.drawing.Drawing(goog.dom.getElement('zoom1'));
-  var canvas2 = new xrx.drawing.Drawing(goog.dom.getElement('zoom2'));
-  var canvas3 = new xrx.drawing.Drawing(goog.dom.getElement('zoom3'));
-  var canvas4 = new xrx.drawing.Drawing(goog.dom.getElement('zoom4'));
-
-  canvas1.setBackgroundImage(url, function() {
-    canvas1.setModeView();
-    canvas1.draw();
-  });
-  canvas2.setBackgroundImage(url, function() {
-    canvas2.setModeView();
-    canvas2.getViewbox().rotateRight();
-    canvas2.draw();
-  });
-  canvas3.setBackgroundImage(url, function() {
-    canvas3.setModeView();
-    canvas3.getViewbox().rotateRight();
-    canvas3.getViewbox().rotateRight();
-    canvas3.draw();
-  });
-  canvas4.setBackgroundImage(url, function() {
-    canvas4.setModeView();
-    canvas4.getViewbox().rotateRight();
-    canvas4.getViewbox().rotateRight();
-    canvas4.getViewbox().rotateRight();
-    canvas4.draw();
-  });
-};
-
-
-
-function test11zoomWithSlider() {
-  var zoomStep; 
-  // canvas
-  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('zoom5'));
-  canvas.setBackgroundImage(url2, function() {
-    canvas.setModeView();
-  });
-
-  // slider
-  var element = goog.dom.getElement('slider');
-  var slider = new goog.ui.Slider();
-  slider.setValue(50);
-  slider.decorate(element);
-  slider.addEventListener(goog.ui.Component.EventType.CHANGE, function() {
-    zoomStep = canvas.getViewbox().zoomStep_;
-    canvas.getViewbox().zoomTo((slider.getValue() - 50) * 2);
-    canvas.draw();
-  });
-};
-
-
 
 function test12events() {
   var canvas1 = new xrx.drawing.Drawing(goog.dom.getElement('event1'));
@@ -449,11 +236,13 @@ function test12events() {
   canvas2.setBackgroundImage(url2, function() {
     canvas2.setModeView();
   });
+  // synchronize canvas2 with canvas1
   canvas1.eventViewboxChange = function() {
     var ctm = canvas1.getViewbox().getCTM();
     canvas2.getViewbox().setCTM(ctm);
     canvas2.draw();
   };
+  // synchronize canvas1 with canvas2
   canvas2.eventViewboxChange = function() {
     var ctm = canvas2.getViewbox().getCTM();
     canvas1.getViewbox().setCTM(ctm);

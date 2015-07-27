@@ -9,6 +9,7 @@ goog.provide('xrx.drawing.Viewbox');
 goog.require('goog.math');
 goog.require('goog.math.AffineTransform');
 goog.require('xrx.drawing');
+goog.require('xrx.drawing.ViewboxZoom');
 
 
 
@@ -29,131 +30,11 @@ xrx.drawing.Viewbox = function(drawing) {
 
   this.origin_;
 
-  this.rotation_ = 0;
-
   this.create_();
+
+  goog.base(this);
 };
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.FixPoint_ = {
-  C:  'C',  // center
-  NE: 'NE', // northeast
-  SE: 'SE', // southeast
-  SW: 'SW', // southwest
-  NW: 'NW'  // northwest
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.Direction_ = {
-  NORTH: 0,
-  EAST:  1,
-  SOUTH: 2,
-  WEST:  3
-};
-
-
-
-/**
- * Makes the whole view-box width visible.
- * @deprecated
- */
-xrx.drawing.Viewbox.prototype.setOptimalWidth = function() {
-  var canvasWidth = this.drawing_.getCanvas().getWidth();
-  var imageWidth = this.drawing_.getLayerBackground().getImage().getWidth();
-  var scale = canvasWidth / imageWidth;
-  this.ctm_.scale(scale, scale);
-};
-
-
-
-/**
- * Makes the whole view-box height visible.
- * @deprecated
- */
-xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
-  var canvasHeight = this.drawing_.getCanvas().getHeight();
-  var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
-  var scale = canvasHeight / imageHeight;
-  this.ctm_.scale(scale, scale);
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.prototype.resetTransform_ = function() {
-  this.ctm_.setTransform(1, 0, 0, 1, 0, 0);
-  this.rotation_ = 0;
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.prototype.isVertical_ = function() {
-  return this.rotation_ === 0 || goog.math.isInt(this.rotation_ / 180);
-};
-
-
-
-xrx.drawing.Viewbox.prototype.fitToWidth = function() {
-  var image = this.getDrawing().getLayerBackground().getImage();
-	var canvasWidth = this.drawing_.getCanvas().getWidth();
-  var scale = canvasWidth / image.getWidth();
-  var tmp = this.rotation_; // we want to keep the rotation
-
-  this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.Viewbox.FixPoint_.NW);
-  this.zoom(scale, xrx.drawing.Viewbox.FixPoint_.NW);
-};
-
-
-
-xrx.drawing.Viewbox.prototype.fitToHeight = function() {
-  var image = this.getDrawing().getLayerBackground().getImage();
-	var canvasHeight = this.drawing_.getCanvas().getHeight();
-  var scale = canvasHeight / image.getHeight();
-  var tmp = this.rotation_; // we want to keep the rotation
-
-  this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.Viewbox.FixPoint_.NW);
-  this.zoom(scale, xrx.drawing.Viewbox.FixPoint_.NW);
-};
-
-
-
-xrx.drawing.Viewbox.prototype.fit = function() {
-};
-
-
-
-/**
- * Sets the maximal zoom factor.
- * @param {number} factor The maximal zoom factor, e.g., 2.5.
- */
-xrx.drawing.Viewbox.prototype.setZoomMax = function(factor) {
-  this.zoomMax_ = factor;
-};
-
-
-
-/**
- * Sets the minimum zoom factor.
- * @param {number} factor The minimal zoom factor, e.g., 0.1.
- */
-xrx.drawing.Viewbox.prototype.setZoomMin = function(factor) {
-  this.zoomMin_ = factor;
-};
+goog.inherits(xrx.drawing.Viewbox, xrx.drawing.ViewboxZoom);
 
 
 
@@ -221,12 +102,78 @@ xrx.drawing.Viewbox.prototype.ctmRestore = function(dump) {
 
 
 /**
- * Returns the bounding-box for the view-box.
- * @return {goog.math.Box} The bounding box.
+ * @private
  */
-xrx.drawing.Viewbox.prototype.getBox = function() {
-  var image = this.drawing_.getLayerBackground().getImage();
-  return image.getGeometry().getBox();
+xrx.drawing.Viewbox.prototype.resetState_ = function() {
+  this.state_ = xrx.drawing.State.NONE;
+  this.origin_ = null;
+};
+
+
+
+/**
+ * Makes the whole view-box width visible.
+ * @deprecated
+ */
+xrx.drawing.Viewbox.prototype.setOptimalWidth = function() {
+  var canvasWidth = this.drawing_.getCanvas().getWidth();
+  var imageWidth = this.drawing_.getLayerBackground().getImage().getWidth();
+  var scale = canvasWidth / imageWidth;
+  this.ctm_.scale(scale, scale);
+};
+
+
+
+/**
+ * Makes the whole view-box height visible.
+ * @deprecated
+ */
+xrx.drawing.Viewbox.prototype.setOptimalHeight = function() {
+  var canvasHeight = this.drawing_.getCanvas().getHeight();
+  var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
+  var scale = canvasHeight / imageHeight;
+  this.ctm_.scale(scale, scale);
+};
+
+
+
+/**
+ * @private
+ */
+xrx.drawing.Viewbox.prototype.resetTransform_ = function() {
+  this.ctm_.setTransform(1, 0, 0, 1, 0, 0);
+  this.rotation_ = 0;
+};
+
+
+
+xrx.drawing.Viewbox.prototype.fitToWidth = function() {
+  var image = this.getDrawing().getLayerBackground().getImage();
+	var canvasWidth = this.drawing_.getCanvas().getWidth();
+  var scale = canvasWidth / image.getWidth();
+  var tmp = this.rotation_; // we want to keep the rotation
+
+  this.resetTransform_();
+  this.rotate(tmp, xrx.drawing.ViewboxGeometry.FixPoint.NW);
+  this.zoom(scale, xrx.drawing.ViewboxGeometry.FixPoint.NW);
+};
+
+
+
+xrx.drawing.Viewbox.prototype.fitToHeight = function() {
+  var image = this.getDrawing().getLayerBackground().getImage();
+	var canvasHeight = this.drawing_.getCanvas().getHeight();
+  var scale = canvasHeight / image.getHeight();
+  var tmp = this.rotation_; // we want to keep the rotation
+
+  this.resetTransform_();
+  this.rotate(tmp, xrx.drawing.ViewboxGeometry.FixPoint.NW);
+  this.zoom(scale, xrx.drawing.ViewboxGeometry.FixPoint.NW);
+};
+
+
+
+xrx.drawing.Viewbox.prototype.fit = function() {
 };
 
 
@@ -308,17 +255,8 @@ xrx.drawing.Viewbox.prototype.handleUp = function(e) {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.drawing.Viewbox.prototype.handleZoom = function(e) {
-  e.deltaY < 0 ? this.zoomIn(e) : this.zoomOut(e);
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.prototype.resetState_ = function() {
-  this.state_ = xrx.drawing.State.NONE;
-  this.origin_ = null;
+  e.deltaY < 0 ? this.zoomIn([e.offsetX, e.offsetY]) :
+      this.zoomOut([e.offsetX, e.offsetY]);
 };
 
 
@@ -402,34 +340,6 @@ xrx.drawing.Viewbox.prototype.getAnchorPoint_ = function(fixPoint) {
 
 
 /**
- * Rotates the view-box by an angle, respecting a fix-point.
- * @param {number?} opt_angle The angle of rotation, e.g. -40. Defaults
- *     to 90.
- * @param {enum?} opt_fixPoint The fix-point. Defaults to
- *     xrx.drawing.Viewbox.FixPoint_.C.
- */
-xrx.drawing.Viewbox.prototype.rotate = function(opt_angle, opt_fixPoint) {
-  var fixPoint;
-  var point;
-  var angle;
-  var x;
-  var y;
-
-  opt_angle === undefined ? angle = 90 : angle = opt_angle;
-  opt_fixPoint === undefined ? fixPoint = xrx.drawing.Viewbox.FixPoint_.C :
-      fixPoint = opt_fixPoint;
-  point = this.getAnchorPoint_(fixPoint);
-
-  this.ctm_.rotate(goog.math.toRadians(angle), point[0], point[1]);
-  this.rotation_ += angle;
-  // rotation shall always be positive and between 0° and 360°
-  this.rotation_ = (this.rotation_ + 360) % 360;
-  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
-};
-
-
-
-/**
  * @private
  */
 xrx.drawing.Viewbox.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
@@ -439,7 +349,6 @@ xrx.drawing.Viewbox.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
   var image = this.getDrawing().getLayerBackground().getImage();
   var width = image.getWidth() * scl;
   var height = image.getHeight() * scl;
-  console.log(height);
   var offset = {
     0: [0, 0],
     1: [0, -(height * scale - height)],
@@ -448,111 +357,6 @@ xrx.drawing.Viewbox.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
   };
   var off = offset[this.getDirection_()];
   return {x: off[0], y: off[1]};
-};
-
-
-
-/**
- * Rotates the view-box by 90° in left direction.
- */
-xrx.drawing.Viewbox.prototype.rotateLeft = function() {
-  this.rotate(-90, xrx.drawing.Viewbox.FixPoint_.C);
-};
-
-
-
-xrx.drawing.Viewbox.prototype.zoomFactor_ = 1.05;
-
-
-
-xrx.drawing.Viewbox.prototype.zoomValue_ = 0;
-
-
-
-xrx.drawing.Viewbox.prototype.zoomStep_ = 1;
-
-
-
-xrx.drawing.Viewbox.prototype.zoomMin_ = .1;
-
-
-
-xrx.drawing.Viewbox.prototype.zoomMax_ = 2;
-
-
-
-/**
- * Rotates the view-box by 90° in right direction.
- */
-xrx.drawing.Viewbox.prototype.rotateRight = function() {
-  this.rotate(90, xrx.drawing.Viewbox.FixPoint_.C);
-};
-
-
-
-xrx.drawing.Viewbox.prototype.getScale = function() {
-  return Math.sqrt(Math.pow(this.ctm_.getScaleX(), 2) +
-      Math.pow(this.ctm_.getShearX(), 2))
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Viewbox.prototype.zoomOffset_ = function(point, scale) {
-  this.ctm_.setTransform(
-    this.ctm_.getScaleX(), this.ctm_.getShearY(), 
-    this.ctm_.getShearX(), this.ctm_.getScaleY(),
-    (this.ctm_.getTranslateX() - point[0]) * scale + point[0],
-    (this.ctm_.getTranslateY() - point[1]) * scale + point[1]
-  );
-};
-
-
-
-/**
- * 
- */
-xrx.drawing.Viewbox.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
-	if(zoomValue === this.zoomValue_) return;
-
-  var scale = Math.pow(this.zoomFactor_, zoomValue);
-  var fixPoint = opt_fixPoint ? opt_fixPoint : this.getCenterPoint_(true);
-	if(scale < this.zoomMin_) scale = this.zoomMin_;
-	if(scale > this.zoomMax_) scale = this.zoomMax_;
-
-	scale /= this.getScale();
-
-	this.zoomOffset_(fixPoint, scale);
-	this.ctm_.scale(scale, scale);
-
-  this.zoomValue_ = zoomValue;
-  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
-};
-
-
-
-/**
- * Zoom in on the view-box.
- * @param {?goog.events.BrowserEvent} opt_e The browser event.
- */
-xrx.drawing.Viewbox.prototype.zoomIn = function(opt_e) {
-  var fixPoint = opt_e ? [opt_e.offsetX, opt_e.offsetY] :
-      this.getCenterPoint_(true);
-  this.zoomTo(this.zoomValue_ + this.zoomStep_, fixPoint);
-};
-
-
-
-/**
- * Zoom out the view-box.
- * @param {?goog.events.BrowserEvent} opt_e The browser event.
- */
-xrx.drawing.Viewbox.prototype.zoomOut = function(opt_e) {
-  var fixPoint = opt_e ? [opt_e.offsetX, opt_e.offsetY] :
-      this.getCenterPoint_(true);
-  this.zoomTo(this.zoomValue_ - this.zoomStep_, fixPoint);
 };
 
 
