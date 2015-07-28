@@ -50,7 +50,7 @@ xrx.drawing.Mode = {
  * @enum {string}
  */
 xrx.drawing.FixPoint = {
-  C:  'C',  // center
+  C: 'C', // center
   NE: 'NE', // northeast
   SE: 'SE', // southeast
   SW: 'SW', // southwest
@@ -60,7 +60,7 @@ xrx.drawing.FixPoint = {
 
 
 /**
- * Enumeration of event types dispatched by a drawing canvas.
+ * Enumeration of event types dispatched by the drawing canvas.
  * @enum {string}
  */
 xrx.drawing.EventType = {

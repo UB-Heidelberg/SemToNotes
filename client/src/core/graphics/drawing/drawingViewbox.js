@@ -7,8 +7,8 @@ goog.provide('xrx.drawing.Viewbox');
 
 
 goog.require('goog.math');
-goog.require('goog.math.AffineTransform');
 goog.require('xrx.drawing');
+goog.require('xrx.drawing.FastAffineTransform');
 goog.require('xrx.drawing.ViewboxTransform');
 
 
@@ -20,17 +20,34 @@ goog.require('xrx.drawing.ViewboxTransform');
  */
 xrx.drawing.Viewbox = function(drawing) {
 
+  goog.base(this);
+
+  /**
+   * The parent drawing object.
+   * @type {xrx.drawing.Drawing}
+   */
   this.drawing_ = drawing;
 
+  /**
+   * The group where matrix transformations are applied to.
+   * {?}
+   */
   this.group_;
 
+  /**
+   * The state of the drawing canvas, either DRAG or NONE.
+   * @type {number}
+   */
   this.state_ = xrx.drawing.State.NONE;
 
+  /**
+   * The last mouse point. This member is used when dragging
+   * or panning the view-box.
+   * @type {Array.<number>}
+   */
   this.origin_;
 
   this.create_();
-
-  goog.base(this);
 };
 goog.inherits(xrx.drawing.Viewbox, xrx.drawing.ViewboxTransform);
 
@@ -57,21 +74,11 @@ xrx.drawing.Viewbox.prototype.getGroup = function() {
 
 
 /**
- * @private
- */
-xrx.drawing.Viewbox.prototype.resetState_ = function() {
-  this.state_ = xrx.drawing.State.NONE;
-  this.origin_ = null;
-};
-
-
-
-/**
  * Handles double-click events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
-  this.rotateRight();
+  this.rotateRight([e.offsetX, e.offsetY]);
 };
 
 
@@ -82,12 +89,9 @@ xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
  */
 xrx.drawing.Viewbox.prototype.handleDown = function(e) {
   var eventPoint = [e.clientX, e.clientY];
-  var transform = new goog.math.AffineTransform();
-
+  var identity = this.ctm_.getIdentity();
   if (!this.origin_) this.origin_ = new Array(2);
-
-  transform.createInverse().transform(eventPoint, 0, this.origin_, 0, 1);
-
+  identity.transformPoint(eventPoint, this.origin_);
   this.state_ = xrx.drawing.State.DRAG;
 };
 
@@ -99,21 +103,10 @@ xrx.drawing.Viewbox.prototype.handleDown = function(e) {
  */
 xrx.drawing.Viewbox.prototype.handleMove = function(e) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
-
-  var point = new Array(2);
-  var eventPoint = [e.clientX, e.clientY];
-  var transform = new goog.math.AffineTransform();
-
-  transform.createInverse().transform(eventPoint, 0, point, 0, 1);
-
-  var x = point[0] - this.origin_[0];
-  var y = point[1] - this.origin_[1];
-
-  this.ctm_ = transform.translate(x, y).concatenate(this.ctm_);
-
-  this.origin_ = point;
-
-  if (this.drawing_.eventViewboxChange) this.drawing_.eventViewboxChange(); 
+  var x = e.clientX - this.origin_[0];
+  var y = e.clientY - this.origin_[1];
+  this.translate(x, y);
+  this.origin_ = [e.clientX, e.clientY];
 };
 
 
@@ -145,6 +138,16 @@ xrx.drawing.Viewbox.prototype.handleUp = function(e) {
 xrx.drawing.Viewbox.prototype.handleWheel = function(e) {
   e.deltaY < 0 ? this.zoomIn([e.offsetX, e.offsetY]) :
       this.zoomOut([e.offsetX, e.offsetY]);
+};
+
+
+
+/**
+ * @private
+ */
+xrx.drawing.Viewbox.prototype.resetState_ = function() {
+  this.state_ = xrx.drawing.State.NONE;
+  this.origin_ = null;
 };
 
 

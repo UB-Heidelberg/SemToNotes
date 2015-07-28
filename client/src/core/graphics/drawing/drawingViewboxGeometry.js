@@ -7,8 +7,13 @@ goog.provide('xrx.drawing.ViewboxGeometry');
 
 
 
+goog.require('xrx.EventTarget');
+
+
+
 xrx.drawing.ViewboxGeometry = function() {
 };
+goog.inherits(xrx.drawing.ViewboxGeometry, xrx.EventTarget);
 
 
 

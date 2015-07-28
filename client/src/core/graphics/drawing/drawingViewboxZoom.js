@@ -173,8 +173,7 @@ xrx.drawing.ViewboxZoom.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
  * center of the view-box.
  */
 xrx.drawing.ViewboxZoom.prototype.zoomIn = function(opt_fixPoint) {
-  var fixPoint = opt_fixPoint ? opt_fixPoint : this.getCenterPoint_(true);
-  this.zoomTo(this.zoomValue_ + this.zoomFactor_, fixPoint);
+  this.zoomTo(this.zoomValue_ + this.zoomFactor_, opt_fixPoint);
 };
 
 
@@ -185,6 +184,5 @@ xrx.drawing.ViewboxZoom.prototype.zoomIn = function(opt_fixPoint) {
  * center of the view-box.
  */
 xrx.drawing.ViewboxZoom.prototype.zoomOut = function(opt_fixPoint) {
-  var fixPoint = opt_fixPoint ? opt_fixPoint : this.getCenterPoint_(true);
-  this.zoomTo(this.zoomValue_ - this.zoomFactor_, fixPoint);
+  this.zoomTo(this.zoomValue_ - this.zoomFactor_, opt_fixPoint);
 };

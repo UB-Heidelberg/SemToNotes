@@ -27,25 +27,27 @@
 
 
 
-function test12events() {
+function test1events() {
+  // initialize canvases
   var canvas1 = new xrx.drawing.Drawing(goog.dom.getElement('event1'));
   var canvas2 = new xrx.drawing.Drawing(goog.dom.getElement('event2'));
+  var viewbox1 = canvas1.getViewbox();
+  var viewbox2 = canvas2.getViewbox();
   canvas1.setBackgroundImage(url2, function() {
     canvas1.setModeView();
   });
   canvas2.setBackgroundImage(url2, function() {
     canvas2.setModeView();
   });
+
   // synchronize canvas2 with canvas1
   canvas1.eventViewboxChange = function() {
-    var ctm = canvas1.getViewbox().getCTM();
-    canvas2.getViewbox().setCTM(ctm);
+    viewbox2.setCTM(viewbox1.getCTM());
     canvas2.draw();
   };
   // synchronize canvas1 with canvas2
   canvas2.eventViewboxChange = function() {
-    var ctm = canvas2.getViewbox().getCTM();
-    canvas1.getViewbox().setCTM(ctm);
+    viewbox1.setCTM(viewbox2.getCTM());
     canvas1.draw();
   };
 };

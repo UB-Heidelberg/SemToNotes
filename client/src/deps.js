@@ -35,11 +35,11 @@ goog.addDependency('../../../../src/core/graphics/drawing/drawingSelectable.js',
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolMagnifier.js', ['xrx.drawing.tool.Magnifier'], ['goog.dom.DomHelper', 'goog.events', 'goog.events.EventType', 'goog.fx.Dragger', 'goog.math.AffineTransform', 'goog.math.Rect', 'goog.style', 'xrx.canvas', 'xrx.drawing.tool.Tool', 'xrx.engine.Engines', 'xrx.svg', 'xrx.vml']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolTool.js', ['xrx.drawing.tool.Tool'], []);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingToolbar.js', ['xrx.drawing.Toolbar', 'xrx.drawing.ToolbarButton', 'xrx.drawing.ToolbarOption'], ['goog.dom.DomHelper', 'goog.dom.classes', 'goog.events', 'goog.events.EventType', 'goog.style', 'xrx.drawing', 'xrx.event.HandlerTarget', 'xrx.mvc']);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingViewbox.js', ['xrx.drawing.Viewbox'], ['goog.math', 'goog.math.AffineTransform', 'xrx.drawing', 'xrx.drawing.ViewboxTransform']);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxGeometry.js', ['xrx.drawing.ViewboxGeometry'], []);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingViewbox.js', ['xrx.drawing.Viewbox'], ['goog.math', 'xrx.drawing', 'xrx.drawing.FastAffineTransform', 'xrx.drawing.ViewboxTransform']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxGeometry.js', ['xrx.drawing.ViewboxGeometry'], ['xrx.EventTarget']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxRotate.js', ['xrx.drawing.ViewboxRotate'], ['xrx.drawing.FixPoint', 'xrx.drawing.ViewboxGeometry']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxTransform.js', ['xrx.drawing.ViewboxTransform'], ['xrx.drawing.FastAffineTransform', 'xrx.drawing.FixPoint', 'xrx.drawing.ViewboxTranslate']);
-goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxTranslate.js', ['xrx.drawing.ViewboxTranslate'], ['xrx.drawing.ViewboxZoom']);
+goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxTranslate.js', ['xrx.drawing.ViewboxTranslate'], ['xrx.drawing.EventType', 'xrx.drawing.ViewboxZoom']);
 goog.addDependency('../../../../src/core/graphics/drawing/drawingViewboxZoom.js', ['xrx.drawing.ViewboxZoom'], ['xrx.drawing.ViewboxRotate']);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvas.js', ['xrx.canvas'], []);
 goog.addDependency('../../../../src/core/graphics/engine/canvas/canvasCanvas.js', ['xrx.canvas.Canvas'], ['goog.dom.DomHelper']);

@@ -26,7 +26,7 @@ goog.inherits(xrx.drawing.ViewboxRotate, xrx.drawing.ViewboxGeometry);
 
 /**
  * The current rotation in degrees. The view-box expects
- * the rotation to be 0, 90, 180 or 270. Other values are
+ * the rotation value to be 0, 90, 180 or 270. Other values are
  * not supported and may lead to unexpected behavior.
  * @type {number}
  */
@@ -103,21 +103,20 @@ xrx.drawing.ViewboxRotate.prototype.orientation_ = function() {
 
 /**
  * Rotates the view-box by an angle, respecting a fix-point.
- * @param {number?} angle The angle of rotation, e.g. 90 or 180.
- * @param {enum?} opt_fixPoint A fix-point. Defaults to the center
- * of the view-box ().
+ * @param {number?} angle The angle of rotation in degrees, e.g. 90 or 180.
+ * @param {?Array.<number>} opt_fixPoint A fix-point. Defaults to the center
+ * of the view-box.
  */
 xrx.drawing.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
+  if (angle === 0) return;
   if (!this.isValidRotation(angle))
       throw Error('Invalid rotation. 0, 90, 180 or 270 expected.');
-  var fixPoint;
-  var point;
 
-  opt_fixPoint === undefined ? fixPoint = xrx.drawing.FixPoint.C :
-      fixPoint = opt_fixPoint;
-  point = this.getAnchorPoint_(fixPoint);
+  var reverse = angle > 0 ? false : true;
+  var fixPoint = opt_fixPoint ? this.ctm_.transformPoint(opt_fixPoint) :
+      this.getPivotPoint(xrx.drawing.FixPoint.C, reverse);
 
-  this.ctm_.rotate(goog.math.toRadians(angle), point[0], point[1]);
+  this.ctm_.rotate(goog.math.toRadians(angle), fixPoint[0], fixPoint[1]);
   this.rotation_ += angle;
   // keep rotation a positive number between 0° and 360°
   this.rotation_ = (this.rotation_ + 360) % 360;
@@ -127,48 +126,36 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
 
 
 /**
- * Rotates the view-box by 90° in left direction.
+ * Rotates the view-box by 90° in left direction, optionally respecting
+ * a fix-point.
+ * @param {?Array.<number>} opt_fixPoint The fix-point.
  */
 xrx.drawing.ViewboxRotate.prototype.rotateLeft = function(opt_fixPoint) {
-  this.rotateBy(-90, xrx.drawing.FixPoint.C);
+  this.rotateBy(-90, opt_fixPoint);
 };
 
 
 
 /**
- * Rotates the view-box by 90° in right direction.
+ * Rotates the view-box by 90° in right direction, optionally respecting
+ * a fix-point.
+ * @param {?Array.<number>} opt_fixPoint The fix-point.
  */
 xrx.drawing.ViewboxRotate.prototype.rotateRight = function(opt_fixPoint) {
-  this.rotateBy(90, xrx.drawing.FixPoint.C);
+  this.rotateBy(90, opt_fixPoint);
 };
 
 
 
 /**
- * @private
+ * 
  */
-xrx.drawing.ViewboxRotate.prototype.getAnchorPoints_ = function() {
-  var width = this.getWidth();
-  var height = this.getHeight();
-  return {
-    0: [width / 2, width / 2], // north
-    1: [height / 2, height / 2], // east 
-    2: [width / 2, width / 2 + height / 2], // south
-    3: [-height / 2 + width, height / 2] // west
-  };
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.ViewboxRotate.prototype.getAnchorPoint_ = function(fixPoint,
-    reverse, opt_transformed) {
-  var anchorPoints = this.getAnchorPoints_();
+xrx.drawing.ViewboxRotate.prototype.getPivotPoint = function(fixPoint,
+    opt_reverse, opt_transformed) {
+  var pivotPoints = this.getPivotPoints_();
   var point = {
     'C': function(ap, vb) {
-      return vb.getCenterPoint_();
+      return vb.getCenterPoint_(true);
     },
     'NE': function(ap, vb) {
       var order = [0, 1, 2, 3];
@@ -187,5 +174,34 @@ xrx.drawing.ViewboxRotate.prototype.getAnchorPoint_ = function(fixPoint,
       return ap[order[vb.orientation_()]];
     }
   };
-  return point[fixPoint](anchorPoints, this);
+  return point[fixPoint](pivotPoints, this);
+};
+
+
+
+/**
+ * Returns the fix-point (C, NE, SE, SW, NW), which is most near to the
+ * center of the drawing canvas.
+ * @return {string} The fix-point. 
+ * @private
+ */
+xrx.drawing.ViewboxRotate.prototype.getNearestFixPoint_ = function() {
+};
+
+
+
+/**
+ * Returns the four pivot points of this view-box.
+ * @return {Array.<Array.<number>>}
+ * @private
+ */
+xrx.drawing.ViewboxRotate.prototype.getPivotPoints_ = function() {
+  var width = this.getWidth();
+  var height = this.getHeight();
+  return [
+    [width / 2, width / 2], // north
+    [height / 2, height / 2], // east 
+    [width / 2, width / 2 + height / 2], // south
+    [-height / 2 + width, height / 2] // west
+  ];
 };
