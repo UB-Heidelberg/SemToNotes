@@ -12,27 +12,34 @@ xrx.drawing.ViewboxGeometry = function() {
 
 
 
-/**
- *
- */
-xrx.drawing.ViewboxGeometry.FixPoint = {
-  C:  'C',  // center
-  NE: 'NE', // northeast
-  SE: 'SE', // southeast
-  SW: 'SW', // southwest
-  NW: 'NW'  // northwest
+xrx.drawing.ViewboxGeometry.prototype.getWidth = function() {
+  var image = this.getDrawing().getLayerBackground().getImage();
+  return image.getWidth();
+};
+
+
+
+xrx.drawing.ViewboxGeometry.prototype.getHeight = function() {
+  var image = this.getDrawing().getLayerBackground().getImage();
+  return image.getHeight();
 };
 
 
 
 /**
- *
+ * @private
  */
-xrx.drawing.ViewboxGeometry.Orientation = {
-  NORTH: 0,
-  EAST:  1,
-  SOUTH: 2,
-  WEST:  3
+xrx.drawing.ViewboxGeometry.prototype.getCenterPoint_ = function(opt_transformed) {
+  var image = this.getDrawing().getLayerBackground().getImage();
+  var natural = [image.getWidth() / 2, image.getHeight() / 2];
+  var transformed;
+  if (opt_transformed !== true) {
+    return natural;
+  } else {
+    transformed = new Array(2);
+    this.ctm_.transform(natural, 0, transformed, 0, 1);
+    return transformed;
+  }
 };
 
 
@@ -58,15 +65,6 @@ xrx.drawing.ViewboxGeometry.prototype.getFixPoint = function(fixPoint, opt_trans
     return point;
   }
   return fixPoint;
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.ViewboxGeometry.prototype.isVertical_ = function() {
-  return this.rotation_ === 0 || goog.math.isInt(this.rotation_ / 180);
 };
 
 

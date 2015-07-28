@@ -4,13 +4,15 @@
  */
 
 goog.provide('xrx.drawing');
+goog.provide('xrx.drawing.EventType');
+goog.provide('xrx.drawing.FixPoint');
 goog.provide('xrx.drawing.Mode');
 goog.provide('xrx.drawing.State');
 
 
 
 /**
- * A static class providing enumerations for the drawing classes.
+ * A static class providing enumerations shared by all drawing classes.
  */
 xrx.drawing = function() {};
 
@@ -44,10 +46,26 @@ xrx.drawing.Mode = {
 
 
 /**
- * Enumeration of event types that can be dispatched
- * by drawing objects.
+ * Enumeration of fix points as used in the drawing view-box.
+ * @enum {string}
+ */
+xrx.drawing.FixPoint = {
+  C:  'C',  // center
+  NE: 'NE', // northeast
+  SE: 'SE', // southeast
+  SW: 'SW', // southwest
+  NW: 'NW'  // northwest
+};
+
+
+
+/**
+ * Enumeration of event types dispatched by a drawing canvas.
  * @enum {string}
  */
 xrx.drawing.EventType = {
-  VIEWBOX_CHANGE: 'eventViewboxChange'
+  VIEWBOX_CHANGE: 'eventViewboxChange',
+  SHAPE_HOVER_IN: 'eventShapeHoverIn',
+  SHAPE_HOVER_MOVE: 'eventShapeHoverMove',
+  SHAPE_HOVER_OUT: 'eventShapeHoverOut'
 };

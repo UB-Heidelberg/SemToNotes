@@ -18,5 +18,111 @@
 </script>
 </head>
 <body>
+
+<h1>Whether rotation works with all rendering engines</h1>
+<table>
+  <tr>
+    <td></td>
+    <td>Rotate Left</td>
+    <td>Rotate Right</td>
+  </tr>
+  <tr>
+    <td>SVG</td>
+    <td><div id="svgRotateLeft" class="drawing"></div></td>
+    <td><div id="svgRotateRight" class="drawing"></div></td>
+  </tr>
+  <tr>
+	<td>Canvas</td>
+    <td><div id="canvasRotateLeft" class="drawing"></div></td>
+    <td><div id="canvasRotateRight" class="drawing"></div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><span>'N' points to west?</span></td>
+    <td><span>'N' points to east?</span></td>
+  </tr>
+</table>
+
+<h1>Rotate, respecting a fix-point</h1>
+<div>
+  <form id="frotate">
+    <input type="radio" name="dir" value="C" checked>Center<br>
+    <input type="radio" name="dir" value="NE">Northeast<br>
+    <input type="radio" name="dir" value="SE">Southeast<br>
+    <input type="radio" name="dir" value="SW">Southwest<br>
+    <input type="radio" name="dir" value="NW">Northwest<br>
+  </form>
+  <div class="drawing" id="rotate"></div>
+  <button id="brotateLeft">Rotate left</button>
+  <button id="brotateRight">Rotate right</button>
+</div>
+
+<script type="text/javascript">
+
+
+
+function test1RotateLeft() {
+  var svgDrawing = getDrawingSvg('svgRotateLeft');
+  svgDrawing.setBackgroundImage(url, function() {
+    svgDrawing.getViewbox().rotateLeft();
+    svgDrawing.draw();
+  });
+  var canvasDrawing = getDrawingCanvas('canvasRotateLeft');
+  canvasDrawing.setBackgroundImage(url, function() {
+    canvasDrawing.getViewbox().rotateLeft();
+    canvasDrawing.draw();
+  });
+};
+
+
+
+function test2RotateRight() {
+  var svgDrawing = getDrawingSvg('svgRotateRight');
+  svgDrawing.setBackgroundImage(url, function() {
+    svgDrawing.getViewbox().rotateRight();
+    svgDrawing.draw();
+  });
+  var canvasDrawing = getDrawingCanvas('canvasRotateRight');
+  canvasDrawing.setBackgroundImage(url, function() {
+    canvasDrawing.getViewbox().rotateRight();
+    canvasDrawing.draw();
+  });
+};
+
+
+
+function test3rotateBy() {
+  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('rotate'));
+
+  // form
+  var form = goog.dom.getElement('frotate');
+  var fixPoint = function() {
+    var element = goog.dom.findNode(form, function(n) {
+      return goog.dom.isElement(n) && n.checked;
+    });
+    return element.value;
+  };
+
+  // buttons
+  var rotateLeft = goog.dom.getElement('brotateLeft');
+  var rotateRight = goog.dom.getElement('brotateRight');
+  goog.events.listen(rotateLeft, goog.events.EventType.CLICK, function() {
+    canvas.getViewbox().rotateBy(-90, fixPoint());
+    canvas.draw();
+  });
+  goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
+    canvas.getViewbox().rotateBy(90, fixPoint());
+    canvas.draw();
+  });
+
+  // canvas
+  canvas.setModeView();
+  canvas.getViewbox().setZoomMax(2);
+  canvas.getViewbox().setZoomMin(.4);
+  canvas.getViewbox().getCTM().translate(20, 20);
+  canvas.setBackgroundImage(url2);
+};
+
+</script>
 </body>
 </html>

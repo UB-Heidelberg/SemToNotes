@@ -6,8 +6,10 @@ goog.provide('xrx.drawing.Hoverable');
 
 
 
+goog.require('xrx.drawing.EventType');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Stylable');
+goog.require('xrx.EventTarget');
 
 
 
@@ -17,6 +19,8 @@ goog.require('xrx.engine.Stylable');
  * @constructor
  */
 xrx.drawing.Hoverable = function(drawing) {
+
+  goog.base(this);
 
   /**
    * The drawing canvas.
@@ -37,6 +41,7 @@ xrx.drawing.Hoverable = function(drawing) {
    */
   this.stylable_ = new xrx.engine.Stylable();
 };
+goog.inherits(xrx.drawing.Hoverable, xrx.EventTarget);
 
 
 
@@ -46,7 +51,8 @@ xrx.drawing.Hoverable = function(drawing) {
 xrx.drawing.Hoverable.prototype.pop_ = function() {
   if (this.last_) {
     this.last_.getEngineShape().setStylable(this.stylable_);
-    if (this.drawing_.handleHoverOut) this.drawing_.handleHoverOut(this.last_);
+    this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_OUT,
+        this.drawing_, this.last_);
   };
 };
 
@@ -59,7 +65,8 @@ xrx.drawing.Hoverable.prototype.push_ = function(shape) {
   if (shape) {
     this.stylable_.setAll(shape.getEngineShape().getStylable());
     this.last_ = shape;
-    if (shape && this.drawing_.handleHoverIn) this.drawing_.handleHoverIn(shape);
+    this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_IN,
+        this.drawing_, shape);
   } else {
     this.last_ = null;
   }
@@ -77,7 +84,8 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
     // cache the style of the shape currently hovered
     this.push_(shape);
   }
-  if (shape && this.drawing_.handleHoverMove) this.drawing_.handleHoverMove(shape);
+  if (shape) this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_MOVE,
+      this.drawing_, shape);
 };
 
 

@@ -181,8 +181,8 @@ xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   if (goog.userAgent.MOBILE) return;
   var self = this;
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
-  if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.event.Type.ZOOM,
-    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.ZOOM) },
+  if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.event.Type.WHEEL,
+    function(e) { self.registerEvent_(e, handler, xrx.event.Handler.WHEEL) },
     true,
     handler
   );
