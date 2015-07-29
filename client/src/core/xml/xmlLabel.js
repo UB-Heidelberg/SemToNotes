@@ -11,7 +11,7 @@ goog.provide('xrx.xml.Label');
  * Constructs a new label.
  *
  * @constructor
- * @param {?Array.<!number>} array The array of numbers.
+ * @param {?Array<!number>} array The array of numbers.
  */
 xrx.xml.Label = function(array) {
   this.label_ = array || [];

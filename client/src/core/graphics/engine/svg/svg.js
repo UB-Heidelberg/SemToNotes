@@ -49,7 +49,7 @@ xrx.svg.isSupported = function() {
 /**
  * Sets the coordinates for various SVG elements such as polygons.
  * @param {Element} element The SVG element.
- * @param {Array.<Array.<number>>} points Array of coordinates.
+ * @param {Array<Array<number>>} points Array of coordinates.
  */
 xrx.svg.setCoords = function(element, coordinates) {
   var s = '';

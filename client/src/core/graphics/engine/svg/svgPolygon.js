@@ -28,7 +28,7 @@ goog.inherits(xrx.svg.Polygon, xrx.svg.Stylable);
 
 /**
  * Sets the coordinates for the polygon.
- * @param {Array.<Array.<number>>} coords The coordinates.
+ * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.svg.Polygon.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
@@ -39,7 +39,7 @@ xrx.svg.Polygon.prototype.setCoords = function(coords) {
 
 /**
  * Returns the coordinates of the polygon.
- * @return {Array.<Array.<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  */
 xrx.svg.Polygon.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
@@ -50,7 +50,7 @@ xrx.svg.Polygon.prototype.getCoords = function(coords) {
 /**
  * Updates one coordinate in the list of coordinates.
  * @param {number} pos Index of the coordinate to be updated.
- * @param {Array.<number>} coord The new coordinate.
+ * @param {Array<number>} coord The new coordinate.
  */
 xrx.svg.Polygon.prototype.setCoordAt = function(pos, coord) {
   this.geometry_.coords[pos] = coord;

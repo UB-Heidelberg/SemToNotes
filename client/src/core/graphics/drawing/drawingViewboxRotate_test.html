@@ -27,18 +27,24 @@
     <td>Rotate Right</td>
   </tr>
   <tr>
+    <td>Canvas</td>
+    <td><div class="drawing" id="canvasRotateLeft"></div></td>
+    <td><div class="drawing" id="canvasRotateRight"></div></td>
+  </tr>
+  <tr>
     <td>SVG</td>
     <td><div class="drawing" id="svgRotateLeft"></div></td>
     <td><div class="drawing" id="svgRotateRight"></div></td>
   </tr>
   <tr>
-	<td>Canvas</td>
-    <td><div class="drawing" id="canvasRotateLeft"></div></td>
-    <td><div class="drawing" id="canvasRotateRight"></div></td>
+    <td>VML</td>
+    <td><div class="drawing" id="vmlRotateLeft"></div></td>
+    <td><div class="drawing" id="vmlRotateRight"></div></td>
   </tr>
   <tr>
     <td></td>
     <td><span>'N' points to west?</span></td>
+    <td><span>'N' points to east?</span></td>
     <td><span>'N' points to east?</span></td>
   </tr>
 </table>
@@ -68,31 +74,47 @@
 
 
 function test1RotateLeft() {
-  var svgDrawing = getDrawingSvg('svgRotateLeft');
-  svgDrawing.setBackgroundImage(url, function() {
-    svgDrawing.getViewbox().rotateLeft();
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasRotateLeft');
-  canvasDrawing.setBackgroundImage(url, function() {
-    canvasDrawing.getViewbox().rotateLeft();
-    canvasDrawing.draw();
-  });
+  if (!xrx.engine.isOldIE()) {
+    var svgDrawing = getDrawingSvg('svgRotateLeft');
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.getViewbox().rotateLeft();
+      svgDrawing.draw();
+    });
+    var canvasDrawing = getDrawingCanvas('canvasRotateLeft');
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.getViewbox().rotateLeft();
+      canvasDrawing.draw();
+    });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlRotateLeft');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().rotateLeft();
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
 
 function test2RotateRight() {
-  var svgDrawing = getDrawingSvg('svgRotateRight');
-  svgDrawing.setBackgroundImage(url, function() {
-    svgDrawing.getViewbox().rotateRight();
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasRotateRight');
-  canvasDrawing.setBackgroundImage(url, function() {
-    canvasDrawing.getViewbox().rotateRight();
-    canvasDrawing.draw();
-  });
+  if (!xrx.engine.isOldIE()) {
+    var svgDrawing = getDrawingSvg('svgRotateRight');
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.getViewbox().rotateRight();
+      svgDrawing.draw();
+    });
+    var canvasDrawing = getDrawingCanvas('canvasRotateRight');
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.getViewbox().rotateRight();
+      canvasDrawing.draw();
+    });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlRotateLeft');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().rotateRight();
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
@@ -111,22 +133,22 @@ function test4rotateFixPoint() {
 
   // form
   var form = goog.dom.getElement('frotate');
-  var fixPoint = function(reverse) {
+  var orientation = function() {
     var element = goog.dom.findNode(form, function(n) {
       return goog.dom.isElement(n) && n.checked;
     });
-    return viewbox.getPivotPoint(element.value, reverse);
+    return element.value;
   };
 
   // buttons
   var rotateLeft = goog.dom.getElement('brotateLeft');
   var rotateRight = goog.dom.getElement('brotateRight');
   goog.events.listen(rotateLeft, goog.events.EventType.CLICK, function() {
-    viewbox.rotateBy(-90, fixPoint(true));
+    viewbox.rotateBy(-90, orientation());
     canvas.draw();
   });
   goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
-    viewbox.rotateBy(90, fixPoint(false));
+    viewbox.rotateBy(90, orientation());
     canvas.draw();
   });
 

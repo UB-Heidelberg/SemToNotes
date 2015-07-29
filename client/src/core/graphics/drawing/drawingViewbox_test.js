@@ -19,3 +19,12 @@ function getDrawingCanvas(id, callback) {
     xrx.engine.CANVAS);
   return canvasDrawing;
 };
+
+
+
+function getDrawingVml(id, callback) {
+  var vmlDiv = goog.dom.getElement(id);
+  var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
+    xrx.engine.VML);
+  return vmlDrawing;
+};

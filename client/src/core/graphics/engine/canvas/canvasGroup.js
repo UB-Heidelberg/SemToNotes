@@ -22,7 +22,7 @@ xrx.canvas.Group = function(canvas) {
 
   /**
    * The child elements of the group.
-   * @type {Array.<xrx.canvas.Element>}
+   * @type {Array<xrx.canvas.Element>}
    */
   this.childs_ = [];
 };

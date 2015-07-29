@@ -28,16 +28,22 @@
 	  <td>Zoom Out</td>
   </tr>
   <tr>
+	  <td>Canvas</td>
+    <td><div id="canvasOriginal" class="drawing"></div></td>
+    <td><div id="canvasZoomIn" class="drawing"></div></td>
+    <td><div id="canvasZoomOut" class="drawing"></div></td>
+  </tr>
+  <tr>
     <td>SVG</td>
     <td><div id="svgOriginal" class="drawing"></div></td>
     <td><div id="svgZoomIn" class="drawing"></div></td>
     <td><div id="svgZoomOut" class="drawing"></div></td>
   </tr>
   <tr>
-	<td>Canvas</td>
-    <td><div id="canvasOriginal" class="drawing"></div></td>
-    <td><div id="canvasZoomIn" class="drawing"></div></td>
-    <td><div id="canvasZoomOut" class="drawing"></div></td>
+    <td>VML</td>
+    <td><div id="vmlOriginal" class="drawing"></div></td>
+    <td><div id="vmlZoomIn" class="drawing"></div></td>
+    <td><div id="vmlZoomOut" class="drawing"></div></td>
   </tr>
   <tr>
     <td></td>
@@ -83,42 +89,64 @@
 
 
 function test0Original() {
-  var svgDrawing = getDrawingSvg('svgOriginal');
-  svgDrawing.setBackgroundImage(url);
-  svgDrawing.draw();
-  var canvasDrawing = getDrawingCanvas('canvasOriginal');
-  canvasDrawing.setBackgroundImage(url);
-  canvasDrawing.draw();
+  if (!xrx.engine.isOldIE()) {
+    var svgDrawing = getDrawingSvg('svgOriginal');
+    svgDrawing.setBackgroundImage(url);
+    svgDrawing.draw();
+    var canvasDrawing = getDrawingCanvas('canvasOriginal');
+    canvasDrawing.setBackgroundImage(url);
+    canvasDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlOriginal');
+    vmlDrawing.setBackgroundImage(url);
+    vmlDrawing.draw();
+  }
 };
 
 
 
 function test1ZoomIn() {
-  var svgDrawing = getDrawingSvg('svgZoomIn');
-  svgDrawing.setBackgroundImage(url, function() {
-    svgDrawing.getViewbox().zoomTo(2, [0, 0]);
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasZoomIn');
-  canvasDrawing.setBackgroundImage(url, function() {
-    canvasDrawing.getViewbox().zoomTo(2, [0, 0]);
-    canvasDrawing.draw();
-  });
+  if (!xrx.engine.isOldIE()) {
+    var svgDrawing = getDrawingSvg('svgZoomIn');
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.getViewbox().zoomTo(2, [0, 0]);
+      svgDrawing.draw();
+    });
+    var canvasDrawing = getDrawingCanvas('canvasZoomIn');
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.getViewbox().zoomTo(2, [0, 0]);
+      canvasDrawing.draw();
+    });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlZoomIn');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().zoomTo(2, [0, 0]);
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
 
 function test2ZoomOut() {
-  var svgDrawing = getDrawingSvg('svgZoomOut');
-  svgDrawing.setBackgroundImage(url, function() {
-    svgDrawing.getViewbox().zoomTo(.5, [0, 0]);
-    svgDrawing.draw();
-  });
-  var canvasDrawing = getDrawingCanvas('canvasZoomOut');
-  canvasDrawing.setBackgroundImage(url, function() {
-    canvasDrawing.getViewbox().zoomTo(.5, [0, 0]);
-    canvasDrawing.draw();
-  });
+  if (!xrx.engine.isOldIE()) {
+    var svgDrawing = getDrawingSvg('svgZoomOut');
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.getViewbox().zoomTo(.5, [0, 0]);
+      svgDrawing.draw();
+    });
+    var canvasDrawing = getDrawingCanvas('canvasZoomOut');
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.getViewbox().zoomTo(.5, [0, 0]);
+      canvasDrawing.draw();
+    });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlZoomIn');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().zoomTo(.5, [0, 0]);
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
@@ -172,7 +200,6 @@ function test4zoomWithSlider() {
   viewbox.setZoomMin(.5);
   viewbox.setZoomMax(4);
   viewbox.setZoomFactor(.1);
-  viewbox.setZoomValue(1);
 
   // configure the slider accordingly
   slider.setMaximum(viewbox.getZoomStep(viewbox.getZoomMax()));

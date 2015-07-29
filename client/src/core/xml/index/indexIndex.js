@@ -32,7 +32,7 @@ xrx.index.Index = function(xml) {
 
   /**
    * Indexed namespace table.
-   * @type {Array.<xrx.index.Namespace>}
+   * @type {Array<xrx.index.Namespace>}
    */
   this.tNamespace_ = [];
 

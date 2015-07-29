@@ -260,7 +260,7 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 /**
  * Whether a point is inside the current view-box.
- * @param {Array.<number>} point The point.
+ * @param {Array<number>} point The point.
  */
 xrx.drawing.Drawing.prototype.isValidPoint = function(point) {
   return point[0] >= this.viewbox_.box.x && point[0] <= this.viewbox_.box.x2 &&

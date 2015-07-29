@@ -385,7 +385,7 @@ xrx.xpath.Parser.prototype.parseStep_ = function(op) {
  * Parses and returns the predicates from the this.lexer_.
  *
  * @private
- * @return {!Array.<!xrx.xpath.Expr>} An array of the predicates.
+ * @return {!Array<!xrx.xpath.Expr>} An array of the predicates.
  */
 xrx.xpath.Parser.prototype.parsePredicates_ = function() {
   var predicates = [];

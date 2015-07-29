@@ -540,7 +540,7 @@ xrx.xml.Stream.prototype.attribute = function(xml, pos, opt_offset) {
  * Streams a start-tag or an empty tag and returns an array of 
  * locations of all attributes found in the tag.
  * @param {!string} xml The start-tag or empty tag string.
- * @return {Array.<xrx.xml.Location>} The location array.
+ * @return {Array<xrx.xml.Location>} The location array.
  */
 xrx.xml.Stream.prototype.attributes = function(xml) {
   var locs = {};
@@ -560,7 +560,7 @@ xrx.xml.Stream.prototype.attributes = function(xml) {
  * Streams a start-tag or an empty tag and returns an array of 
  * locations of all namespaces found in the tag.
  * @param {!string} xml The start-tag or empty tag string.
- * @return {Array.<xrx.xml.Location>} The location array.
+ * @return {Array<xrx.xml.Location>} The location array.
  */
 xrx.xml.Stream.prototype.namespaces = function(xml) {
   var locs = {};
@@ -582,7 +582,7 @@ xrx.xml.Stream.prototype.namespaces = function(xml) {
  * Streams a start-tag or an empty tag and returns an array of 
  * locations of all attributes and namespaces found in the tag.
  * @param {!string} xml The start-tag or empty tag string.
- * @return {Array.<xrx.xml.Location>} The location array.
+ * @return {Array<xrx.xml.Location>} The location array.
  */
 xrx.xml.Stream.prototype.secondaries = function(xml) {
   var locs = {};

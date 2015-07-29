@@ -128,7 +128,7 @@ xrx.shape.RectCreate = function(drawing) {
 
 /**
  * Returns the coordinates of the rectangle currently created.
- * @return Array.<Array.<number>> The coordinates.
+ * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.RectCreate.prototype.getCoords = function() {
   return this.rect_.getCoords();

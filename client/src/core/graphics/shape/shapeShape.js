@@ -79,7 +79,7 @@ xrx.shape.Shape.prototype.isModifiable = function() {
 
 /**
  * Returns the coordinates of the shape.
- * @return {Array.<Array.<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  */
 xrx.shape.Shape.prototype.getCoords = function() {
   return this.engineShape_.getCoords();
@@ -89,7 +89,7 @@ xrx.shape.Shape.prototype.getCoords = function() {
 
 /**
  * Returns a copy of the shape's coordinate object.
- * @return {Array.<Array.<number>>} A new coordinate object.
+ * @return {Array<Array<number>>} A new coordinate object.
  */
 xrx.shape.Shape.prototype.getCoordsCopy = function() {
   var coords = this.engineShape_.getCoords();
@@ -108,7 +108,7 @@ xrx.shape.Shape.prototype.getCoordsCopy = function() {
 
 /**
  * Sets the shape's coordinates.
- * @param {Array.<Array.<number>>} The new coordinates.
+ * @param {Array<Array<number>>} The new coordinates.
  */
 xrx.shape.Shape.prototype.setCoords = function(coords) {
   this.engineShape_.setCoords(coords);
@@ -119,7 +119,7 @@ xrx.shape.Shape.prototype.setCoords = function(coords) {
 /**
  * Changes one point of the coordinates at a position.
  * @param {number} pos The position.
- * @param {Array.<number>} The new point.
+ * @param {Array<number>} The new point.
  */
 xrx.shape.Shape.prototype.setCoordAt = function(pos, coord) {
   this.engineShape_.setCoordAt(pos, coord);

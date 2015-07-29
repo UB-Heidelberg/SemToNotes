@@ -24,7 +24,7 @@ xrx.svg.Group = function(element) {
 
   /**
    * The child elements of the group.
-   * @type {Array.<xrx.svg.Element>}
+   * @type {Array<xrx.svg.Element>}
    */
   this.childs_ = [];
 };

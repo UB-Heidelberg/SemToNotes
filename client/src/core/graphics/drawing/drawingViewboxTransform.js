@@ -8,7 +8,7 @@ goog.provide('xrx.drawing.ViewboxTransform');
 
 
 goog.require('xrx.drawing.FastAffineTransform');
-goog.require('xrx.drawing.FixPoint');
+goog.require('xrx.drawing.Orientation');
 goog.require('xrx.drawing.ViewboxTranslate');
 
 
@@ -45,7 +45,7 @@ xrx.drawing.ViewboxTransform.prototype.setCTM = function(ctm) {
 
 /**
  * Returns a dump of the current CTM as an array.
- * @return Array.<number> The number array.
+ * @return Array<number> The number array.
  */
 xrx.drawing.ViewboxTransform.prototype.ctmDump = function() {
   return [this.ctm_.m00_, this.ctm_.m10_, this.ctm_.m01_,
@@ -56,7 +56,7 @@ xrx.drawing.ViewboxTransform.prototype.ctmDump = function() {
 
 /**
  * Restores a CTM from an array.
- * @param Array.<number> dump The number array.
+ * @param Array<number> dump The number array.
  */
 xrx.drawing.ViewboxTransform.prototype.ctmRestore = function(dump) {
   if (dump.length !== 6) throw Error('Invalid CTM dump.');
@@ -96,11 +96,11 @@ xrx.drawing.ViewboxTransform.prototype.fitToWidth = function() {
   var image = this.getDrawing().getLayerBackground().getImage();
 	var canvasWidth = this.drawing_.getCanvas().getWidth();
   var scale = canvasWidth / image.getWidth();
-  var tmp = this.rotation_; // we want to keep the rotation
+  var tmp = this.ctm_.getRotation(); // we want to keep the rotation
 
   this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.FixPoint.NW);
-  this.zoom(scale, xrx.drawing.FixPoint.NW);
+  this.rotate(tmp, xrx.drawing.Orientation.NW);
+  this.zoom(scale, xrx.drawing.Orientation.NW);
 };
 
 
@@ -109,11 +109,11 @@ xrx.drawing.ViewboxTransform.prototype.fitToHeight = function() {
   var image = this.getDrawing().getLayerBackground().getImage();
 	var canvasHeight = this.drawing_.getCanvas().getHeight();
   var scale = canvasHeight / image.getHeight();
-  var tmp = this.rotation_; // we want to keep the rotation
+  var tmp = this.ctm_.getRotation(); // we want to keep the rotation
 
   this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.FixPoint.NW);
-  this.zoom(scale, xrx.drawing.FixPoint.NW);
+  this.rotate(tmp, xrx.drawing.Orientation.NW);
+  this.zoom(scale, xrx.drawing.Orientation.NW);
 };
 
 
@@ -128,7 +128,6 @@ xrx.drawing.ViewboxTransform.prototype.fit = function() {
  */
 xrx.drawing.ViewboxTransform.prototype.resetTransform_ = function() {
   this.ctm_.setTransform(1, 0, 0, 1, 0, 0);
-  this.rotation_ = 0;
 };
 
 
@@ -138,7 +137,7 @@ xrx.drawing.ViewboxTransform.prototype.resetTransform_ = function() {
  */
 xrx.drawing.ViewboxTransform.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
   var at = this.ctm_.clone();
-  at.rotate(goog.math.toRadians(-this.rotation_), 0, 0);
+  at.rotate(goog.math.toRadians(-this.ctm_.getRotation()), 0, 0);
   var scl = at.getScaleX();
   var image = this.getDrawing().getLayerBackground().getImage();
   var width = image.getWidth() * scl;

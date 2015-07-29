@@ -26,7 +26,7 @@ goog.inherits(xrx.canvas.Polyline, xrx.canvas.Stylable);
 
 /**
  * Sets the coordinates for the poly-line.
- * @param {Array.<Array.<number>>} coords The coordinates.
+ * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.canvas.Polyline.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
@@ -36,7 +36,7 @@ xrx.canvas.Polyline.prototype.setCoords = function(coords) {
 
 /**
  * Returns the coordinates of the poly-line.
- * @return {Array.<Array.<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  */
 xrx.canvas.Polyline.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
@@ -46,7 +46,7 @@ xrx.canvas.Polyline.prototype.getCoords = function(coords) {
 
 /**
  * Appends a coordinate to the poly-line.
- * @param {Array.<number>} coord The new coordinate.
+ * @param {Array<number>} coord The new coordinate.
  */
 xrx.canvas.Polyline.prototype.appendCoord = function(coord) {
   this.geometry_.coords.push(coord);

@@ -5,7 +5,7 @@
 
 goog.provide('xrx.drawing');
 goog.provide('xrx.drawing.EventType');
-goog.provide('xrx.drawing.FixPoint');
+goog.provide('xrx.drawing.Orientation');
 goog.provide('xrx.drawing.Mode');
 goog.provide('xrx.drawing.State');
 
@@ -46,10 +46,10 @@ xrx.drawing.Mode = {
 
 
 /**
- * Enumeration of fix points as used in the drawing view-box.
+ * Enumeration of orientations, used by the drawing view-box.
  * @enum {string}
  */
-xrx.drawing.FixPoint = {
+xrx.drawing.Orientation = {
   C: 'C', // center
   NE: 'NE', // northeast
   SE: 'SE', // southeast

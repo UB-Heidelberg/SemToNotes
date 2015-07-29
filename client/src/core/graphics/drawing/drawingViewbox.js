@@ -6,7 +6,6 @@ goog.provide('xrx.drawing.Viewbox');
 
 
 
-goog.require('goog.math');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.FastAffineTransform');
 goog.require('xrx.drawing.ViewboxTransform');
@@ -43,7 +42,7 @@ xrx.drawing.Viewbox = function(drawing) {
   /**
    * The last mouse point. This member is used when dragging
    * or panning the view-box.
-   * @type {Array.<number>}
+   * @type {Array<number>}
    */
   this.origin_;
 
