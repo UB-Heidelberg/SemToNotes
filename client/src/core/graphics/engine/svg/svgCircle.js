@@ -73,8 +73,13 @@ xrx.svg.Circle.prototype.setRadius = function(r) {
 
 /**
  * Draws the circle on the canvas.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.svg.Circle.prototype.draw = function() {};
+xrx.svg.Circle.prototype.draw = function(scale) {
+  this.element_.setAttribute('r', this.getRadius() / scale);
+  this.element_.setAttribute('stroke-width',
+      this.stylable_.getStrokeWidth() / scale);
+};
 
 
 

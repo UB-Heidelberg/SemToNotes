@@ -29,9 +29,7 @@ goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
 xrx.drawing.EventHandler.prototype.getOffsetPoint = function(clientPoint) {
   var pos = goog.style.getClientPosition(this.canvas_.getEventTarget());
   var offset = [clientPoint[0] - pos.x, clientPoint[1] - pos.y];
-  var transformed = new Array(2);
-  this.getViewbox().getCTM().getInverse().transform(offset, 0, transformed, 0, 1);
-  return transformed;
+  return this.getViewbox().getCTM().transformPoint(offset);
 };
 
 

@@ -47,7 +47,7 @@ goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
 
 
 drawing.eventViewboxChange = function() {
-  var text1 = 'Zoom value: ' + viewbox.getCTM().getZoomValue();
+  var text1 = 'Zoom value: ' + viewbox.getCTM().getScale();
   goog.dom.setTextContent(output1, text1);
   var text2 = 'Rotation: ' + viewbox.getCTM().getRotation();
   goog.dom.setTextContent(output2, text2);

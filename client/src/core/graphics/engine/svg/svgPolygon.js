@@ -61,8 +61,12 @@ xrx.svg.Polygon.prototype.setCoordAt = function(pos, coord) {
 
 /**
  * Draws the polygon.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.svg.Polygon.prototype.draw = function() {};
+xrx.svg.Polygon.prototype.draw = function(scale) {
+  this.element_.setAttribute('stroke-width',
+      this.stylable_.getStrokeWidth() / scale);
+};
 
 
 

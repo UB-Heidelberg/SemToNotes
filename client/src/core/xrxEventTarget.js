@@ -1,8 +1,8 @@
 /**
  * @fileoverview A class representing an event-target. This
  * class is introduced (in addition to goog.event.EventTarget)
- * since we sometimes want to offer events for "foreign" JavaScript
- * applications such as jQuery or Angular that do not know about
+ * since we sometimes want to offer events for external JavaScript
+ * classes such as jQuery or Angular that do not know about
  * Google Closure event handling.
  */
 
@@ -30,7 +30,7 @@ xrx.EventTarget = function() {};
  * @param {?Object} opt_eventTarget The object used to apply the event.
  *   Defaults to the "this" object.  
  */
-xrx.EventTarget.prototype.dispatchEvent = function(eventType, opt_eventTarget) {
+xrx.EventTarget.prototype.dispatchExternal = function(eventType, opt_eventTarget) {
   if (!goog.string.startsWith(eventType, 'event')) throw Error('Invalid event-type "' +
       '". Prefix "event*" expected.');
   var target;
@@ -46,6 +46,9 @@ xrx.EventTarget.prototype.dispatchEvent = function(eventType, opt_eventTarget) {
 
 
 
+/**
+ * @private
+ */
 xrx.EventTarget.prototype.argsArray_ = function(args) {
   var length = args.length - 2;
   var arr = new Array(length);

@@ -51,7 +51,7 @@ goog.inherits(xrx.drawing.Hoverable, xrx.EventTarget);
 xrx.drawing.Hoverable.prototype.pop_ = function() {
   if (this.last_) {
     this.last_.getEngineShape().setStylable(this.stylable_);
-    this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_OUT,
+    this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_OUT,
         this.drawing_, this.last_);
   };
 };
@@ -65,7 +65,7 @@ xrx.drawing.Hoverable.prototype.push_ = function(shape) {
   if (shape) {
     this.stylable_.setAll(shape.getEngineShape().getStylable());
     this.last_ = shape;
-    this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_IN,
+    this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_IN,
         this.drawing_, shape);
   } else {
     this.last_ = null;
@@ -84,7 +84,7 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
     // cache the style of the shape currently hovered
     this.push_(shape);
   }
-  if (shape) this.dispatchEvent(xrx.drawing.EventType.SHAPE_HOVER_MOVE,
+  if (shape) this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_MOVE,
       this.drawing_, shape);
 };
 

@@ -70,10 +70,11 @@ xrx.canvas.Polyline.prototype.drawPath_ = function() {
 
 /**
  * Draws the poly-line.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.canvas.Polyline.prototype.draw = function() {
+xrx.canvas.Polyline.prototype.draw = function(scale) {
   this.drawPath_();
-  this.strokeAndFill_();
+  this.strokeAndFill_(scale);
 };
 
 

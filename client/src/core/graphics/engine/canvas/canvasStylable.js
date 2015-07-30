@@ -113,12 +113,12 @@ xrx.canvas.Stylable.prototype.setFillOpacity = function(factor) {
 /**
  * @private
  */
-xrx.canvas.Stylable.prototype.strokeAndFill_ = function() {
+xrx.canvas.Stylable.prototype.strokeAndFill_ = function(scale) {
   this.context_.fillStyle = this.stylable_.getFillColor();
   this.context_.globalAlpha = this.stylable_.getFillOpacity();
   this.context_.fill();
   this.context_.globalAlpha = 1;
   this.context_.strokeStyle = this.stylable_.getStrokeColor();
-  this.context_.lineWidth = this.stylable_.getStrokeWidth();
+  this.context_.lineWidth = this.stylable_.getStrokeWidth() / scale;
   if (this.stylable_.getStrokeWidth() > 0) this.context_.stroke();
 };

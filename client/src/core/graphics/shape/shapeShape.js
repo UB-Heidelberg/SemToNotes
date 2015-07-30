@@ -26,7 +26,7 @@ xrx.shape.Shape = function(drawing) {
   this.engineShape_;
 
   /**
-   * Whether the shape is set modifiable. Deafault is true.
+   * Whether the shape is set modifiable. Defaults to true.
    * @type {boolean}
    */
   this.isModifiable_ = true;
@@ -170,7 +170,7 @@ xrx.shape.Shape.prototype.setStrokeColor = function(color) {
 /**
  * Returns an array of vertex dragging elements according to the number of 
  * vertexes of the shape.
- * @return {xrx.shape.VertexDragger} The vertex draggin elements.
+ * @return {xrx.shape.VertexDragger} The vertex dragging elements.
  */
 xrx.shape.Shape.prototype.getVertexDraggers = function() {
   var coords = this.getCoords();

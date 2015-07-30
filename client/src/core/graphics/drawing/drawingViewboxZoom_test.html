@@ -61,21 +61,6 @@
   <div class="drawing zoom" id="zoom4"></div>
 </div>
 
-<h1>Zoom, respecting a fix-point</h1>
-<div>
-  <form id="fscale">
-    <input type="radio" name="dir" value="C" checked>Center<br>
-    <input type="radio" name="dir" value="NE">Northeast<br>
-    <input type="radio" name="dir" value="SE">Southeast<br>
-    <input type="radio" name="dir" value="SW">Southwest<br>
-    <input type="radio" name="dir" value="NW">Northwest<br>
-  </form>
-  <div class="drawing" id="scale"></div>
-  <button id="bzoomIn">Zoom in</button>
-  <button id="bzoomOut">Zoom out</button>
-  <button id="bscaleRotate">Rotate</button>
-</div>
-
 <h1>Zoom with Slider</h1>
 <div class="wrapper2">
   <div class="goog-slider" role="slider" id="slider">
@@ -214,42 +199,6 @@ function test4zoomWithSlider() {
   canvas.eventViewboxChange = function() {
     slider.setValue(viewbox.getZoomStep());
   };
-};
-
-
-
-function test5zoomRespectingFixPoint() {
-  var canvas = new xrx.drawing.Drawing(goog.dom.getElement('scale'));
-  var viewbox = canvas.getViewbox();
-
-  // form
-  var form = goog.dom.getElement('fscale');
-  var fixPoint = function() {
-    var element = goog.dom.findNode(form, function(n) {
-      return goog.dom.isElement(n) && n.checked;
-    });
-    return viewbox.getFixPoint(element.value, true);
-  };
-
-  // buttons
-  var buttonZoomIn = goog.dom.getElement('bzoomIn');
-  goog.events.listen(buttonZoomIn, goog.events.EventType.CLICK, function() {
-    viewbox.zoomIn(fixPoint());
-    canvas.draw();
-  });
-  var buttonZoomOut = goog.dom.getElement('bzoomOut');
-  goog.events.listen(buttonZoomOut, goog.events.EventType.CLICK, function() {
-    viewbox.zoomOut(fixPoint());
-    canvas.draw();
-  });
-  var rotateRight = goog.dom.getElement('bscaleRotate');
-  goog.events.listen(rotateRight, goog.events.EventType.CLICK, function() {
-    viewbox.rotateRight();
-    canvas.draw();
-  });
-
-  // canvas
-  canvas.setBackgroundImage(url);
 };
 
 </script>

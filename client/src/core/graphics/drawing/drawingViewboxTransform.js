@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class implementing transformation related
- * functions for a drawing view-box.
+ * @fileoverview A class implementing transformation functions for
+ * a drawing view-box.
  */
 
 goog.provide('xrx.drawing.ViewboxTransform');
@@ -13,6 +13,11 @@ goog.require('xrx.drawing.ViewboxTranslate');
 
 
 
+/**
+ * @fileoverview A class implementing transformation functions for
+ * a drawing view-box.
+ * @constructor
+ */
 xrx.drawing.ViewboxTransform = function() {
 
   this.ctm_ = new xrx.drawing.FastAffineTransform();
@@ -25,7 +30,7 @@ goog.inherits(xrx.drawing.ViewboxTransform, xrx.drawing.ViewboxTranslate);
 
 /**
  * Returns the current transformation matrix of the view-box.
- * @return {goog.math.affineTransform} The transformation matrix.
+ * @return {xrx.drawing.FastAffineTransform} The transformation matrix.
  */
 xrx.drawing.ViewboxTransform.prototype.getCTM = function() {
   return this.ctm_;
@@ -35,7 +40,7 @@ xrx.drawing.ViewboxTransform.prototype.getCTM = function() {
 
 /**
  * Sets the current transformation matrix of the view-box.
- * @param {goog.math.affineTransform} ctm The matrix object.
+ * @param {xrx.drawing.FastAffineTransform} ctm The matrix object.
  */
 xrx.drawing.ViewboxTransform.prototype.setCTM = function(ctm) {
   this.ctm_ = ctm;
@@ -44,7 +49,7 @@ xrx.drawing.ViewboxTransform.prototype.setCTM = function(ctm) {
 
 
 /**
- * Returns a dump of the current CTM as an array.
+ * Returns a dump of the current transformation matrix as an array.
  * @return Array<number> The number array.
  */
 xrx.drawing.ViewboxTransform.prototype.ctmDump = function() {
@@ -55,7 +60,7 @@ xrx.drawing.ViewboxTransform.prototype.ctmDump = function() {
 
 
 /**
- * Restores a CTM from an array.
+ * Restores the current transformation matrix from an array.
  * @param Array<number> dump The number array.
  */
 xrx.drawing.ViewboxTransform.prototype.ctmRestore = function(dump) {
@@ -67,87 +72,39 @@ xrx.drawing.ViewboxTransform.prototype.ctmRestore = function(dump) {
 
 
 /**
- * Makes the whole view-box width visible.
- * @deprecated
+ * Makes the view-box equally wide to the drawing canvas.
  */
-xrx.drawing.ViewboxTransform.prototype.setOptimalWidth = function() {
-  var canvasWidth = this.drawing_.getCanvas().getWidth();
-  var imageWidth = this.drawing_.getLayerBackground().getImage().getWidth();
-  var scale = canvasWidth / imageWidth;
-  this.ctm_.scale(scale, scale);
-};
-
-
-
-/**
- * Makes the whole view-box height visible.
- * @deprecated
- */
-xrx.drawing.ViewboxTransform.prototype.setOptimalHeight = function() {
-  var canvasHeight = this.drawing_.getCanvas().getHeight();
-  var imageHeight = this.drawing_.getLayerBackground().getImage().getHeight();
-  var scale = canvasHeight / imageHeight;
-  this.ctm_.scale(scale, scale);
-};
-
-
-
 xrx.drawing.ViewboxTransform.prototype.fitToWidth = function() {
-  var image = this.getDrawing().getLayerBackground().getImage();
+  var viewboxWidth = this.getWidth(true, true);
 	var canvasWidth = this.drawing_.getCanvas().getWidth();
-  var scale = canvasWidth / image.getWidth();
-  var tmp = this.ctm_.getRotation(); // we want to keep the rotation
-
-  this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.Orientation.NW);
-  this.zoom(scale, xrx.drawing.Orientation.NW);
+  var scale = canvasWidth / viewboxWidth;
+  this.ctm_.scale(scale, scale);
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
 
 
 
+/**
+ * Makes the view-box equally high to the drawing canvas.
+ */
 xrx.drawing.ViewboxTransform.prototype.fitToHeight = function() {
-  var image = this.getDrawing().getLayerBackground().getImage();
+  var viewboxHeight = this.getHeight(true, true);
 	var canvasHeight = this.drawing_.getCanvas().getHeight();
-  var scale = canvasHeight / image.getHeight();
-  var tmp = this.ctm_.getRotation(); // we want to keep the rotation
-
-  this.resetTransform_();
-  this.rotate(tmp, xrx.drawing.Orientation.NW);
-  this.zoom(scale, xrx.drawing.Orientation.NW);
-};
-
-
-
-xrx.drawing.ViewboxTransform.prototype.fit = function() {
+  var scale = canvasHeight / viewboxHeight;
+  this.ctm_.scale(scale, scale);
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
 
 
 
 /**
- * @private
+ * Makes the view-box size such that it fits into the drawing
+ * canvas and optionally centers the view-box.
+ * @param {?boolean} opt_center Whether also center the canvas.
  */
-xrx.drawing.ViewboxTransform.prototype.resetTransform_ = function() {
-  this.ctm_.setTransform(1, 0, 0, 1, 0, 0);
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.ViewboxTransform.prototype.getOffsetTranslate_ = function(scale, fixPoint) {
-  var at = this.ctm_.clone();
-  at.rotate(goog.math.toRadians(-this.ctm_.getRotation()), 0, 0);
-  var scl = at.getScaleX();
-  var image = this.getDrawing().getLayerBackground().getImage();
-  var width = image.getWidth() * scl;
-  var height = image.getHeight() * scl;
-  var offset = {
-    0: [0, 0],
-    1: [0, -(height * scale - height)],
-    2: [0, 0],
-    3: [0, -(scale * height - height)]
-  };
-  var off = offset[this.getDirection_()];
-  return {x: off[0], y: off[1]};
+xrx.drawing.ViewboxTransform.prototype.fit = function(opt_center) {
+  var width = this.getWidth(true, true);
+  var height = this.getHeight(true, true);
+  width > height ? this.fitToWidth() : this.fitToHeight();
+  if (opt_center === true) this.center();
 };

@@ -31,6 +31,8 @@ var drawing = new xrx.drawing.Drawing(element);
 var viewbox = drawing.getViewbox();
 var count = 0;
 
+
+
 drawing.setBackgroundImage(url, function() {
   viewbox.rotateRight('NW');
   viewbox.zoomIn();
@@ -45,8 +47,10 @@ drawing.setBackgroundImage(url, function() {
 function test_isMouseOver() {
   goog.events.listen(element, goog.events.EventType.MOUSEMOVE, function(e) {
     var point = new Array(2);
-    viewbox.ctm_.createInverse().transform([e.clientX, e.clientY], 0, point, 0, 1);
-    var text = viewbox.containsPoint(point) + ' ('+ count++ + ')'
+    var eventPoint = drawing.getEventPoint(e);
+    viewbox.ctm_.transform(eventPoint, 0, point, 0, 1);
+    var text = viewbox.containsPoint(eventPoint) + ' ('+ count++ + ')' +
+        ' (' + eventPoint[0] + ', ' + eventPoint[1] + ')';
     goog.dom.setTextContent(output, text);
   });
 };

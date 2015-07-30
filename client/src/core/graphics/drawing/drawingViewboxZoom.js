@@ -58,7 +58,7 @@ xrx.drawing.ViewboxZoom.prototype.setZoomFactor = function(factor) {
  */
 xrx.drawing.ViewboxZoom.prototype.getZoomValue = function(opt_zoomStep) {
   if (opt_zoomStep === undefined) {
-    return this.ctm_.getZoomValue();
+    return this.ctm_.getScale();
   } else {
     return this.zoomMin_ + opt_zoomStep * this.zoomFactor_;
   }
@@ -125,7 +125,10 @@ xrx.drawing.ViewboxZoom.prototype.setZoomMax = function(value) {
 
 
 /**
- * 
+ * Returns the current zoom step or the zoom step of a zoom value if
+ * opt_zoomValue is defined. 
+ * @param {?number} opt_zoomValue A zoom value.
+ * @return {number} The zoom step.
  */
 xrx.drawing.ViewboxZoom.prototype.getZoomStep = function(opt_zoomValue) {
   var value = opt_zoomValue !== undefined ? opt_zoomValue : this.getZoomValue();
@@ -149,7 +152,9 @@ xrx.drawing.ViewboxZoom.prototype.zoomOffset_ = function(point, zoomValue) {
 
 
 /**
- * 
+ * Zooms the view-box to a value, optionally respecting a fix-point.
+ * @param {number} zoomValue The zoom value.
+ * @param {?number} opt_fixPoint A fix-point.
  */
 xrx.drawing.ViewboxZoom.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
   var fixPoint;
@@ -169,27 +174,23 @@ xrx.drawing.ViewboxZoom.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
 	this.zoomOffset_(fixPoint, scale);
 	this.ctm_.scale(scale, scale);
 
-  this.dispatchEvent(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
 
 
 
 /**
- * Zoom in on the view-box, optionally respecting a fix-point.
- * @param {?Array<number>} opt_fixPoint A fix-point, defaults to the
- * center of the view-box.
+ * Zoom in on the view-box.
  */
 xrx.drawing.ViewboxZoom.prototype.zoomIn = function(opt_fixPoint) {
-  this.zoomTo(this.getZoomValue() + this.zoomFactor_, opt_fixPoint);
+  this.zoomTo(this.ctm_.getScale() + this.zoomFactor_, opt_fixPoint);
 };
 
 
 
 /**
- * Zoom out the view-box, optionally respecting a fix-point.
- * @param {?Array<number>} opt_fixPoint A fix-point, defaults to the
- * center of the view-box.
+ * Zoom out the view-box.
  */
 xrx.drawing.ViewboxZoom.prototype.zoomOut = function(opt_fixPoint) {
-  this.zoomTo(this.getZoomValue() - this.zoomFactor_, opt_fixPoint);
+  this.zoomTo(this.ctm_.getScale() - this.zoomFactor_, opt_fixPoint);
 };

@@ -9,11 +9,8 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('goog.dom.forms');
   goog.require('goog.events');
   goog.require('goog.events.EventType');
-  goog.require('goog.ui.Component.EventType');
-  goog.require('goog.ui.Slider');
   goog.require('xrx');
 </script>
 </head>
@@ -24,7 +21,7 @@
 <div>
   <button id="bfitToWidth">Fit to width</button>
   <button id="bfitToHeight">Fit to height</button>
-  <button id="bfitToWidthHeight">Fit to width height</button>
+  <button id="bfitToWidthHeight">Fit (width or height)</button>
   <button id="bfitTestRotate">Rotate</button>
 </div>
 
@@ -43,14 +40,17 @@ function test1fit() {
   var fitTestRotate = goog.dom.getElement('bfitTestRotate');
   goog.events.listen(fitToWidth, goog.events.EventType.CLICK, function() {
     canvas.getViewbox().fitToWidth();
+    canvas.getViewbox().center();
     canvas.draw();
   });
   goog.events.listen(fitToHeight, goog.events.EventType.CLICK, function() {
     canvas.getViewbox().fitToHeight();
+    canvas.getViewbox().center();
     canvas.draw();
   });
   goog.events.listen(fitToWidthHeight, goog.events.EventType.CLICK, function() {
-    canvas.getViewbox().fitToWidthHeight();
+    canvas.getViewbox().fit();
+    canvas.getViewbox().center();
     canvas.draw();
   });
   goog.events.listen(fitTestRotate, goog.events.EventType.CLICK, function() {

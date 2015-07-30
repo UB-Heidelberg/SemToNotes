@@ -62,7 +62,7 @@ xrx.svg.setCoords = function(element, coordinates) {
 
 
 /**
- * Re-renders a SVG element according to a transformation matrix.
+ * Re-renders an SVG element according to a transformation matrix.
  * @param {Element} element The HTML element to be transformed and rendered.
  * @param {goog.math.AffineTransform} affineTransform Transformation matrix to
  *     be applied.

@@ -54,7 +54,6 @@
   <div class="drawing" id="rotateMousePointer"></div>
 </div>
 
-
 <h1>Rotate, respecting a fix-point</h1>
 <div>
   <form id="frotate">
@@ -65,8 +64,8 @@
     <input type="radio" name="dir" value="NW">Northwest<br>
   </form>
   <div class="drawing" id="rotateFixPoint"></div>
-  <button id="brotateLeft">Rotate left</button>
-  <button id="brotateRight">Rotate right</button>
+  <button id="brotateLeft1">Rotate left</button>
+  <button id="brotateRight1">Rotate right</button>
 </div>
 
 <script type="text/javascript">
@@ -141,8 +140,8 @@ function test4rotateFixPoint() {
   };
 
   // buttons
-  var rotateLeft = goog.dom.getElement('brotateLeft');
-  var rotateRight = goog.dom.getElement('brotateRight');
+  var rotateLeft = goog.dom.getElement('brotateLeft1');
+  var rotateRight = goog.dom.getElement('brotateRight1');
   goog.events.listen(rotateLeft, goog.events.EventType.CLICK, function() {
     viewbox.rotateBy(-90, orientation());
     canvas.draw();

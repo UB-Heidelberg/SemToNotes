@@ -22,6 +22,8 @@ xrx.drawing.FastAffineTransform = function() {
   this.identity_;
 
   this.inverse_;
+
+  this.clone_;
 };
 goog.inherits(xrx.drawing.FastAffineTransform, goog.math.AffineTransform);
 
@@ -51,19 +53,25 @@ xrx.drawing.FastAffineTransform.prototype.getInverse = function() {
 
 
 
-xrx.drawing.FastAffineTransform.prototype.transformPoint = function(point, opt_newPoint) {
-  var p = opt_newPoint ? opt_newPoint : new Array(2);
+xrx.drawing.FastAffineTransform.prototype.getClone = function() {
+  if (!this.clone_) this.clone_ = new xrx.drawing.FastAffineTransform();
+  return this.clone_.copyFrom(this);
+};
+
+
+
+xrx.drawing.FastAffineTransform.prototype.transformPoint = function(point, opt_targetPoint) {
+  var p = opt_targetPoint !== undefined ? opt_targetPoint : new Array(2);
   this.createInverse().transform(point, 0, p, 0, 1);
   return p;
 };
 
 
 
-xrx.drawing.FastAffineTransform.prototype.getZoomValue = function() {
-  var scaleX = this.getScaleX();
-  var shearX = this.getShearX();
-  var value = Math.sqrt(scaleX * scaleX + shearX * shearX);
-  return parseFloat(value.toFixed(2));
+xrx.drawing.FastAffineTransform.prototype.getScale = function() {
+  var rotation = this.getRotation();
+  this.getClone().rotate(goog.math.toRadians(360 - rotation));
+  return this.clone_.getScaleX();
 };
 
 

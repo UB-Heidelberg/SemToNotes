@@ -107,7 +107,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
     this.rotateBy_(angle, undefined, undefined);
   } else if (this.isFixPoint_(opt_fixPoint)) {
     this.rotateBy_(angle, undefined, opt_fixPoint);
-  } else if (this.isDirection_(opt_fixPoint)) {
+  } else if (this.isOrientation_(opt_fixPoint)) {
     this.rotateBy_(angle, opt_fixPoint, undefined);
   } else {
     throw Error('Invalid fix-point. Array[2] or xrx.drawing.Orientation.* expected.');
@@ -155,7 +155,7 @@ xrx.drawing.ViewboxRotate.prototype.isFixPoint_ = function(fixPoint) {
  * @param {?} fixPoint The fix-point.
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.isDirection_ = function(fixPoint) {
+xrx.drawing.ViewboxRotate.prototype.isOrientation_ = function(fixPoint) {
   return (typeof fixPoint === 'string' && goog.object.containsValue(
       xrx.drawing.Orientation, fixPoint));
 };
@@ -194,7 +194,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
       fixPoint = this.getPivotPoint_(xrx.drawing.Orientation.C, reverse, true);
   this.ctm_.rotate(goog.math.toRadians(angle), fixPoint[0], fixPoint[1]);
 
-  this.dispatchEvent(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
 
 
@@ -253,6 +253,6 @@ xrx.drawing.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
     [-height / 2 + width, height / 2], // west
     [width / 2, width / 2], // north
     [height / 2, height / 2], // east 
-    [width / 2, width / 2 + height / 2], // south
+    [width / 2, width / 2 + height / 2] // south
   ];
 };

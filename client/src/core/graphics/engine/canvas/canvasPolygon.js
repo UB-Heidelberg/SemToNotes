@@ -75,10 +75,11 @@ xrx.canvas.Polygon.prototype.drawPath_ = function() {
 
 /**
  * Draws the polygon.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.canvas.Polygon.prototype.draw = function() {
+xrx.canvas.Polygon.prototype.draw = function(scale) {
   this.drawPath_();
-  this.strokeAndFill_();
+  this.strokeAndFill_(scale);
 };
 
 
