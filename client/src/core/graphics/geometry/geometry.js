@@ -18,7 +18,7 @@ xrx.geometry.addCoordsX = function(coords, value) {
 
 
 
-xrx.geometry.addCoordsY = function(coords, value) {
+xrx.geometry.addCoordsY = function(coords, value) { 
   for (var i = 0, len = coords.length; i < len; i++) {
     coords[i][1] += value;
   }

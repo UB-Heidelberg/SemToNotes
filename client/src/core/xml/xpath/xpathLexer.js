@@ -9,12 +9,12 @@ goog.provide('xrx.xpath.Lexer');
 /**
  * Constructs a lexer.
  *
- * @param {!Array.<string>} tokens Tokens to iterate over.
+ * @param {!Array<string>} tokens Tokens to iterate over.
  * @constructor
  */
 xrx.xpath.Lexer = function(tokens) {
   /**
-   * @type {!Array.<string>}
+   * @type {!Array<string>}
    * @private
    */
   this.tokens_ = tokens;

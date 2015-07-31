@@ -27,7 +27,7 @@ goog.inherits(xrx.canvas.Polygon, xrx.canvas.Stylable);
 
 /**
  * Sets the coordinates for the polygon.
- * @param {Array.<Array.<number>>} coords The coordinates.
+ * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.canvas.Polygon.prototype.setCoords = function(coords) {
   this.geometry_.coords = coords;
@@ -37,7 +37,7 @@ xrx.canvas.Polygon.prototype.setCoords = function(coords) {
 
 /**
  * Returns the coordinates of the polygon.
- * @return {Array.<Array.<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  */
 xrx.canvas.Polygon.prototype.getCoords = function(coords) {
   return this.geometry_.coords;
@@ -48,7 +48,7 @@ xrx.canvas.Polygon.prototype.getCoords = function(coords) {
 /**
  * Updates one coordinate in the list of coordinates.
  * @param {number} pos Index of the coordinate to be updated.
- * @param {Array.<number>} coord The new coordinate.
+ * @param {Array<number>} coord The new coordinate.
  */
 xrx.canvas.Polygon.prototype.setCoordAt = function(pos, coord) {
   this.geometry_.coords[pos] = coord;
@@ -75,10 +75,11 @@ xrx.canvas.Polygon.prototype.drawPath_ = function() {
 
 /**
  * Draws the polygon.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.canvas.Polygon.prototype.draw = function() {
+xrx.canvas.Polygon.prototype.draw = function(scale) {
   this.drawPath_();
-  this.strokeAndFill_();
+  this.strokeAndFill_(scale);
 };
 
 

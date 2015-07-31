@@ -509,7 +509,7 @@ xrx.xml.Pilot.prototype.tag = function(context, target, opt_update) {
  * 
  * @param {?} context
  * @param {!xrx.token.StartEmptyTag} target The start-empty tag.
- * @return {!Array.<xrx.token.Attribute>}
+ * @return {!Array<xrx.token.Attribute>}
  */
 xrx.xml.Pilot.prototype.attributes = function(context, target) {
   var pos = this.stream_.pos();

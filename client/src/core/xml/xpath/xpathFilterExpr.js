@@ -56,7 +56,7 @@ xrx.xpath.FilterExpr.prototype.getPrimary = function() {
 
 /**
  * Returns the predicate expressions of this filter expression.
- * @return {Array.<xrx.xpath.Expr>} The primary expressions.
+ * @return {Array<xrx.xpath.Expr>} The primary expressions.
  */
 xrx.xpath.FilterExpr.prototype.getPredicates = function() {
   return this.predicates_;

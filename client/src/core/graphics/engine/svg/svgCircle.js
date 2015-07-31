@@ -28,7 +28,7 @@ goog.inherits(xrx.svg.Circle, xrx.svg.Stylable);
 
 /**
  * Returns the centre point of the circle.
- * @return {Array.<number>}
+ * @return {Array<number>}
  */
 xrx.svg.Circle.prototype.getCenter = function() {
   return [this.geometry_.cx, this.geometry_.cy];
@@ -73,8 +73,13 @@ xrx.svg.Circle.prototype.setRadius = function(r) {
 
 /**
  * Draws the circle on the canvas.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.svg.Circle.prototype.draw = function() {};
+xrx.svg.Circle.prototype.draw = function(scale) {
+  this.element_.setAttribute('r', this.getRadius() / scale);
+  this.element_.setAttribute('stroke-width',
+      this.stylable_.getStrokeWidth() / scale);
+};
 
 
 

@@ -23,7 +23,7 @@ xrx.vml.Group = function(raphael) {
 
   /**
    * The child elements of the group.
-   * @type {Array.<xrx.vml.Element>}
+   * @type {Array<xrx.vml.Element>}
    */
   this.childs_ = [];
 };

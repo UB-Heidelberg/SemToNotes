@@ -17,7 +17,7 @@ goog.require('xrx.xpath.NodeSet');
  * Constructor for PathExpr.
  *
  * @param {!xrx.xpath.Expr} filter A filter expression.
- * @param {!Array.<!xrx.xpath.Step>} steps The steps in the location path.
+ * @param {!Array<!xrx.xpath.Step>} steps The steps in the location path.
  * @extends {xrx.xpath.Expr}
  * @constructor
  */
@@ -31,7 +31,7 @@ xrx.xpath.PathExpr = function(filter, steps) {
   this.filter_ = filter;
 
   /**
-   * @type {!Array.<!xrx.xpath.Step>}
+   * @type {!Array<!xrx.xpath.Step>}
    * @private
    */
   this.steps_ = steps;
@@ -68,7 +68,7 @@ xrx.xpath.PathExpr.prototype.getFilter = function() {
 
 /**
  * Returns the single steps of the path expression.
- * @return {Array.<xrx.xpath.Step>} The step expressions.
+ * @return {Array<xrx.xpath.Step>} The step expressions.
  */
 xrx.xpath.PathExpr.prototype.getSteps = function() {
   return this.steps_;

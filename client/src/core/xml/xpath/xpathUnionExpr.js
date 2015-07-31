@@ -15,7 +15,7 @@ goog.require('xrx.xpath.Expr');
 /**
  * Constructor for UnionExpr.
  *
- * @param {!Array.<!xrx.xpath.Expr>} paths The paths in the union.
+ * @param {!Array<!xrx.xpath.Expr>} paths The paths in the union.
  * @extends {xrx.xpath.Expr}
  * @constructor
  */
@@ -23,7 +23,7 @@ xrx.xpath.UnionExpr = function(paths) {
   xrx.xpath.Expr.call(this, xrx.xpath.DataType.NODESET);
 
   /**
-   * @type {!Array.<!xrx.xpath.Expr>}
+   * @type {!Array<!xrx.xpath.Expr>}
    * @private
    */
   this.paths_ = paths;
@@ -40,7 +40,7 @@ goog.inherits(xrx.xpath.UnionExpr, xrx.xpath.Expr);
 
 /**
  * Returns the path expressions of this union expression.
- * @return {Array.<xrx.xpath.PathExpr>} The path expressions.
+ * @return {Array<xrx.xpath.PathExpr>} The path expressions.
  */
 xrx.xpath.UnionExpr.prototype.getPaths = function() {
   return this.paths_;

@@ -65,7 +65,7 @@ xrx.shape.VertexDragger.prototype.setPosition = function(pos) {
 
 /**
  * Returns the coordinates of the vertex dragging element.
- * @return {Array.<Array.<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  */
 xrx.shape.VertexDragger.prototype.getCoords = function() {
   return [this.engineShape_.getCenter()];
@@ -75,7 +75,7 @@ xrx.shape.VertexDragger.prototype.getCoords = function() {
 
 /**
  * Returns a copy of the shape's coordinate object.
- * @return {Array.<Array.<number>>} A new coordinate object.
+ * @return {Array<Array<number>>} A new coordinate object.
  */
 xrx.shape.VertexDragger.prototype.getCoordsCopy = function() {
   var coords = [this.engineShape_.getCenter()];
@@ -92,7 +92,7 @@ xrx.shape.VertexDragger.prototype.getCoordsCopy = function() {
 
 /**
  * Sets the shape's coordinates.
- * @param {Array.<Array.<number>>} The new coordinates.
+ * @param {Array<Array<number>>} The new coordinates.
  */
 xrx.shape.VertexDragger.prototype.setCoords = function(coords) {
   this.engineShape_.setCenter(coords[0][0], coords[0][1]);
@@ -127,7 +127,7 @@ xrx.shape.VertexDragger.prototype.setRadius = function(radius) {
  */
 xrx.shape.VertexDragger.create = function(drawing) {
   var dragger = new xrx.shape.VertexDragger(drawing);
-  dragger.setRadius(8);
+  dragger.setRadius(3);
   dragger.setStrokeColor('black');
   dragger.setStrokeWidth(1);
   dragger.setFillColor('white');

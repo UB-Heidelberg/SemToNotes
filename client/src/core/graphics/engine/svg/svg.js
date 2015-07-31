@@ -49,7 +49,7 @@ xrx.svg.isSupported = function() {
 /**
  * Sets the coordinates for various SVG elements such as polygons.
  * @param {Element} element The SVG element.
- * @param {Array.<Array.<number>>} points Array of coordinates.
+ * @param {Array<Array<number>>} points Array of coordinates.
  */
 xrx.svg.setCoords = function(element, coordinates) {
   var s = '';
@@ -62,7 +62,7 @@ xrx.svg.setCoords = function(element, coordinates) {
 
 
 /**
- * Re-renders a SVG element according to a transformation matrix.
+ * Re-renders an SVG element according to a transformation matrix.
  * @param {Element} element The HTML element to be transformed and rendered.
  * @param {goog.math.AffineTransform} affineTransform Transformation matrix to
  *     be applied.

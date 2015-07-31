@@ -26,8 +26,18 @@ goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
 /**
  *
  */
-xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
+xrx.drawing.EventHandler.prototype.getOffsetPoint = function(clientPoint) {
   var pos = goog.style.getClientPosition(this.canvas_.getEventTarget());
+  var offset = [clientPoint[0] - pos.x, clientPoint[1] - pos.y];
+  return this.getViewbox().getCTM().transformPoint(offset);
+};
+
+
+
+/**
+ *
+ */
+xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
   var touches = e.getBrowserEvent().changedTouches;
   var x;
   var y;
@@ -38,16 +48,13 @@ xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
     x = e.clientX;
     y = e.clientY;
   }
-  var eventPoint = [x - pos.x, y - pos.y];
-  var point = new Array(2);
-  this.getViewbox().getCTM().createInverse().transform(eventPoint, 0, point, 0, 1);
-  return point;
+  return this.getOffsetPoint([x, y]);
 };
 
 
 
 /**
- * Returns the shape which the user currently selected with the mouse.
+ * Returns the shape currently selected by the user.
  * @return {xrx.shape.Shape}
  */
 xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {

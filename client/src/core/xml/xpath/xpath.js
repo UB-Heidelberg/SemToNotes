@@ -300,7 +300,7 @@ xrx.xpath.XPathResult.prototype.castAsBoolean = function() {
 
 /**
  * Cast the XPath result as an array of nodes.
- * @return {Array.<xrx.node.Node>|boolean} The node array.
+ * @return {Array<xrx.node.Node>|boolean} The node array.
  */
 xrx.xpath.XPathResult.prototype.castAsNode = function() {
   switch(this.resultType) {
@@ -325,7 +325,7 @@ xrx.xpath.XPathResult.prototype.castAsNode = function() {
 
 /**
  * Cast the XPath result as an array of nodes.
- * @return {Array.<xrx.node.Node>|boolean} The node array.
+ * @return {Array<xrx.node.Node>|boolean} The node array.
  */
 xrx.xpath.XPathResult.prototype.castAsNumber = function() {
   switch(this.resultType) {

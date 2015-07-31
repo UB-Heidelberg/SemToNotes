@@ -15,5 +15,5 @@ xrx.event.Handler = {
   MOVE: 'handleMove',
   OUT: 'handleOut',
   UP: 'handleUp',
-  ZOOM: 'handleZoom'
+  WHEEL: 'handleWheel'
 };

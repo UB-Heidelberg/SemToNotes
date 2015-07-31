@@ -22,7 +22,7 @@ xrx.canvas.Group = function(canvas) {
 
   /**
    * The child elements of the group.
-   * @type {Array.<xrx.canvas.Element>}
+   * @type {Array<xrx.canvas.Element>}
    */
   this.childs_ = [];
 };
@@ -76,10 +76,11 @@ xrx.canvas.Group.prototype.removeChildAt = function(index) {
 
 /**
  * Draws each child element of the group.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.canvas.Group.prototype.draw = function() {
+xrx.canvas.Group.prototype.draw = function(scale) {
   for(var i = 0, len = this.childs_.length; i < len; i++) {
-    this.childs_[i].draw();
+    this.childs_[i].draw(scale);
   }
 };
 

@@ -18,7 +18,7 @@ goog.require('xrx.xpath.Expr');
  * An abstract class for expressions with predicates.
  *
  * @constructor
- * @param {!Array.<!xrx.xpath.Expr>} predicates The array of predicates.
+ * @param {!Array<!xrx.xpath.Expr>} predicates The array of predicates.
  * @param {boolean=} opt_reverse Whether to iterate over the nodeset in reverse.
  */
 xrx.xpath.Predicates = function(predicates, opt_reverse) {
@@ -27,7 +27,7 @@ xrx.xpath.Predicates = function(predicates, opt_reverse) {
    * List of predicates
    *
    * @private
-   * @type {!Array.<!xrx.xpath.Expr>}
+   * @type {!Array<!xrx.xpath.Expr>}
    */
   this.predicates_ = predicates;
 
@@ -55,7 +55,7 @@ xrx.xpath.Predicates.prototype.getPredicate = function(i) {
 
 /**
  * Returns the predicate expressions.
- * @return {Array.<xrx.xpath.Expr>} Array of expressions.
+ * @return {Array<xrx.xpath.Expr>} Array of expressions.
  */
 xrx.xpath.Predicates.prototype.getPredicates = function() {
   return this.predicates_;
@@ -144,7 +144,7 @@ xrx.xpath.Predicates.prototype.getLength = function() {
 /**
  * Returns the set of predicates.
  *
- * @return {!Array.<!xrx.xpath.Expr>} The predicates.
+ * @return {!Array<!xrx.xpath.Expr>} The predicates.
  */
 xrx.xpath.Predicates.prototype.getPredicates = function() {
   return this.predicates_;

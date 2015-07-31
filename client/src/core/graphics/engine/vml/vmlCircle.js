@@ -27,7 +27,7 @@ goog.inherits(xrx.vml.Circle, xrx.vml.Stylable);
 
 /**
  * Returns the centre point of the circle.
- * @return {Array.<number>}
+ * @return {Array<number>}
  */
 xrx.vml.Circle.prototype.getCenter = function() {
   return [this.geometry_.cx, this.geometry_.cy];

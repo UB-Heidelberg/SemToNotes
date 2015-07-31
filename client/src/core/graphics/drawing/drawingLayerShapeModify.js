@@ -49,7 +49,7 @@ xrx.drawing.LayerShapeModify.prototype.activate = function(modifiers) {
 
 /**
  * Updates the coordinates of the vertex dragging element currently selected.
- * @param {Array.<Array.<number>>} coords The coordinates.
+ * @param {Array<Array<number>>} coords The coordinates.
  * @param {number} position The position of the modifier element, which
  * is not updated but all others.
  */

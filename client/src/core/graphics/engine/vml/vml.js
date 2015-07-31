@@ -30,7 +30,7 @@ xrx.vml.isSupported = function() {
  * Sets the coordinates for various VML elements such as polygons using
  * the Raphael library.
  * @param {Object} raphael The Raphael object.
- * @param {Array.<Array.<number>>} points Array of coordinates.
+ * @param {Array<Array<number>>} points Array of coordinates.
  */
 xrx.vml.setCoords = function(raphael, coordinates, closePath) {
   var s = 'M' + coordinates[0][0].toString() + ' ' + coordinates[0][1].toString();

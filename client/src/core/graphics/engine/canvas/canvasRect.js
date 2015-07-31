@@ -67,8 +67,9 @@ xrx.canvas.Rect.prototype.setHeight = function(height) {
 
 /**
  * Draws the rectangle.
+ * @param {number} scale The current scale of the view-box.
  */
-xrx.canvas.Rect.prototype.draw = function() {
+xrx.canvas.Rect.prototype.draw = function(scale) {
   var x = this.geometry_.x;
   var y = this.geometry_.y;
   var width = this.geometry_.width;
@@ -79,7 +80,7 @@ xrx.canvas.Rect.prototype.draw = function() {
   this.context_.lineTo(x + width, y + height);
   this.context_.lineTo(x + width, y);
   this.context_.closePath();
-  this.strokeAndFill_();
+  this.strokeAndFill_(scale);
 };
 
 

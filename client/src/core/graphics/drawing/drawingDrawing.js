@@ -260,7 +260,7 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 /**
  * Whether a point is inside the current view-box.
- * @param {Array.<number>} point The point.
+ * @param {Array<number>} point The point.
  */
 xrx.drawing.Drawing.prototype.isValidPoint = function(point) {
   return point[0] >= this.viewbox_.box.x && point[0] <= this.viewbox_.box.x2 &&
@@ -313,6 +313,9 @@ xrx.drawing.Drawing.prototype.draw = function() {
   } else if (this.engine_.hasRenderer(xrx.engine.SVG)) {
     xrx.svg.render(this.viewbox_.getGroup().getElement(),
         this.viewbox_.getCTM());
+    self.layer_[1].draw();
+    self.layer_[2].draw();
+    self.layer_[3].draw();
   } else if (this.engine_.hasRenderer(xrx.engine.VML)) {
     xrx.vml.render(this.viewbox_.getGroup().getRaphael(),
         this.viewbox_.getCTM());

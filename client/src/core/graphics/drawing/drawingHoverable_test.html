@@ -94,34 +94,34 @@ function initHover_() {
     incrementDebug(debugOutNum);
   };
 
-  drawingCanvas.handleHoverIn = function(shape) {
+  drawingCanvas.eventShapeHoverIn = function(shape) {
     handleIn(this, shape);
   };
-  drawingCanvas.handleHoverMove = function(shape) {
+  drawingCanvas.eventShapeHoverMove = function(shape) {
     shape.setStrokeColor('red');
     handleMove(this, shape);
   };
-  drawingCanvas.handleHoverOut = function(shape) {
+  drawingCanvas.eventShapeHoverOut = function(shape) {
     handleOut(this, shape);
   };
-  drawingSVG.handleHoverIn = function(shape) {
+  drawingSVG.eventShapeHoverIn = function(shape) {
     handleIn(this, shape);
   };
-  drawingSVG.handleHoverMove = function(shape) {
+  drawingSVG.eventShapeHoverMove = function(shape) {
     shape.setStrokeColor('green');
     handleMove(this, shape);
   };
-  drawingSVG.handleHoverOut = function(shape) {
+  drawingSVG.eventShapeHoverOut = function(shape) {
     handleOut(this, shape);
   };
-  drawingVML.handleHoverIn = function(shape) {
+  drawingVML.eventShapeHoverIn = function(shape) {
     handleIn(this, shape);
   };
-  drawingVML.handleHoverMove = function(shape) {
+  drawingVML.eventShapeHoverMove = function(shape) {
     shape.setStrokeColor('blue');
     handleMove(this, shape);
   };
-  drawingVML.handleHoverOut = function(shape) {
+  drawingVML.eventShapeHoverOut = function(shape) {
     handleOut(this, shape);
   };
 };

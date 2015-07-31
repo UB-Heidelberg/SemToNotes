@@ -65,4 +65,4 @@ xrx.event.Type.UP = goog.userAgent.MOBILE ? goog.events.EventType.TOUCHEND :
 
 
 
-xrx.event.Type.ZOOM = goog.events.MouseWheelHandler.EventType.MOUSEWHEEL;
+xrx.event.Type.WHEEL = goog.events.MouseWheelHandler.EventType.MOUSEWHEEL;

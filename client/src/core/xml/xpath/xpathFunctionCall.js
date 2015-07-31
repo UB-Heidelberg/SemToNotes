@@ -24,7 +24,7 @@ goog.require('xrx.xpath.NodeSet');
  * @constructor
  * @extends {xrx.xpath.Expr}
  * @param {!xrx.xpath.FunctionCall.BuiltInFunc} func Function.
- * @param {!Array.<!xrx.xpath.Expr>} args Arguments to the function.
+ * @param {!Array<!xrx.xpath.Expr>} args Arguments to the function.
  */
 xrx.xpath.FunctionCall = function(func, args) {
   // Check the provided arguments match the function parameters.
@@ -53,7 +53,7 @@ xrx.xpath.FunctionCall = function(func, args) {
   this.func_ = func;
 
   /**
-   * @type {!Array.<!xrx.xpath.Expr>}
+   * @type {!Array<!xrx.xpath.Expr>}
    * @private
    */
   this.args_ = args;
@@ -106,7 +106,7 @@ xrx.xpath.FunctionCall.prototype.getArg = function(n) {
 
 /**
  * Returns the arguments of the function call.
- * @return {!Array.<xrx.xpath.Expr>} 
+ * @return {!Array<xrx.xpath.Expr>} 
  */
 xrx.xpath.FunctionCall.prototype.getArgs = function() {
   return this.args_;
