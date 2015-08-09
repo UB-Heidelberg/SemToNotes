@@ -101,7 +101,6 @@ xrx.vml.Canvas.prototype.setHeight = function(height) {
  */
 xrx.vml.Canvas.prototype.addChild = function(element) {
   goog.dom.append(this.getElement(), element.getElement());
-  element.draw();
 };
 
 

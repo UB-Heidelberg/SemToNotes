@@ -8,7 +8,7 @@ goog.provide('xrx.svg.Element');
 
 /**
  * SVG super class.
- * @param {Element} element A SVG element.
+ * @param {Element} element An SVG element.
  * @constructor
  */
 xrx.svg.Element = function(element) {

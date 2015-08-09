@@ -7,7 +7,7 @@ goog.provide('xrx.shape.VertexDragger');
 
 
 
-goog.require('xrx.shape.Shape');
+goog.require('xrx.shape.Stylable');
 
 
 
@@ -28,7 +28,7 @@ xrx.shape.VertexDragger = function(drawing) {
    */
   this.pos_;
 };
-goog.inherits(xrx.shape.VertexDragger, xrx.shape.Shape);
+goog.inherits(xrx.shape.VertexDragger, xrx.shape.Stylable);
 
 
 

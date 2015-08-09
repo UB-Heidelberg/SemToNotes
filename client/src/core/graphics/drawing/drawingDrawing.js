@@ -319,6 +319,9 @@ xrx.drawing.Drawing.prototype.draw = function() {
   } else if (this.engine_.hasRenderer(xrx.engine.VML)) {
     xrx.vml.render(this.viewbox_.getGroup().getRaphael(),
         this.viewbox_.getCTM());
+    self.layer_[1].draw();
+    self.layer_[2].draw();
+    self.layer_[3].draw();
     this.viewbox_.getGroup().draw();
   } else {
     throw Error('Unknown engine.');
@@ -556,6 +559,7 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
+  return; // TODO
   this.shield_ = this.engine_.getRenderer().Rect.create(this.canvas_);
   this.shield_.setX(0);
   this.shield_.setY(0);

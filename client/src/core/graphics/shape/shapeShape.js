@@ -56,6 +56,12 @@ xrx.shape.Shape.prototype.getEngineShape = function() {
 
 
 
+xrx.shape.Shape.prototype.draw = function() {
+  this.engineShape_.draw(this);
+};
+
+
+
 /**
  * Sets whether the shape shall be modifiable or not. Defaults
  * to true.
@@ -78,16 +84,6 @@ xrx.shape.Shape.prototype.isModifiable = function() {
 
 
 /**
- * Returns the coordinates of the shape.
- * @return {Array<Array<number>>} The coordinates.
- */
-xrx.shape.Shape.prototype.getCoords = function() {
-  return this.engineShape_.getCoords();
-};
-
-
-
-/**
  * Returns a copy of the shape's coordinate object.
  * @return {Array<Array<number>>} A new coordinate object.
  */
@@ -102,67 +98,6 @@ xrx.shape.Shape.prototype.getCoordsCopy = function() {
     newCoords[i][1] = coords[i][1];
   }
   return newCoords;
-};
-
-
-
-/**
- * Sets the shape's coordinates.
- * @param {Array<Array<number>>} The new coordinates.
- */
-xrx.shape.Shape.prototype.setCoords = function(coords) {
-  this.engineShape_.setCoords(coords);
-};
-
-
-
-/**
- * Changes one point of the coordinates at a position.
- * @param {number} pos The position.
- * @param {Array<number>} The new point.
- */
-xrx.shape.Shape.prototype.setCoordAt = function(pos, coord) {
-  this.engineShape_.setCoordAt(pos, coord);
-};
-
-
-
-/**
- * Sets the fill-color of the shape.
- * @param {string} color The color.
- */
-xrx.shape.Shape.prototype.setFillColor = function(color) {
-  this.engineShape_.setFillColor(color);
-};
-
-
-
-/**
- * Sets the fill-opacity of the shape.
- * @param {number} factor The opacity factor.
- */
-xrx.shape.Shape.prototype.setFillOpacity = function(factor) {
-  this.engineShape_.setFillOpacity(factor);
-};
-
-
-
-/**
- * Sets the stroke-width of the shape.
- * @param {number} width The new width.
- */
-xrx.shape.Shape.prototype.setStrokeWidth = function(width) {
-  this.engineShape_.setStrokeWidth(width);
-};
-
-
-
-/**
- * Sets the stroke-color of the shape.
- * @param {string} color The new color.
- */
-xrx.shape.Shape.prototype.setStrokeColor = function(color) {
-  this.engineShape_.setStrokeColor(color);
 };
 
 
@@ -194,7 +129,4 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
 xrx.shape.Shape.prototype.create_ = function() {
   var primitiveShape = this.drawing_.getGraphics()[this.engineClass_];
   this.engineShape_ = primitiveShape.create(this.drawing_.getCanvas());
-  this.engineShape_.setStrokeColor('#47D1FF');
-  this.engineShape_.setStrokeWidth(3.);
-  this.engineShape_.setFillOpacity(0.);
 };

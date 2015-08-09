@@ -114,7 +114,6 @@ xrx.canvas.Canvas.prototype.setHeight = function(height) {
  */
 xrx.canvas.Canvas.prototype.addChild = function(element) {
   this.childs_.push(element);
-  element.draw();
 };
 
 

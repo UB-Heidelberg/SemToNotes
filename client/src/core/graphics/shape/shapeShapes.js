@@ -6,6 +6,8 @@ goog.provide('xrx.shape.Shapes');
 
 
 
+goog.require('xrx.shape.Circle');
+goog.require('xrx.shape.Image');
 goog.require('xrx.shape.Polygon');
 goog.require('xrx.shape.PolygonModify');
 goog.require('xrx.shape.PolygonCreate');

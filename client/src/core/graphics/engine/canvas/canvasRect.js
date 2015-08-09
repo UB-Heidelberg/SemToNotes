@@ -19,68 +19,36 @@ goog.require('xrx.geometry.Rect');
  */
 xrx.canvas.Rect = function(canvas) {
 
-  goog.base(this, canvas, new xrx.geometry.Rect());
+  goog.base(this, canvas);
 };
 goog.inherits(xrx.canvas.Rect, xrx.canvas.Stylable);
 
 
 
 /**
- * Sets the X coordinate of the rectangle.
- * @param {number} x The coordinate.
+ * @private
  */
-xrx.canvas.Rect.prototype.setX = function(x) {
-  this.geometry_.x = x;
-};
-
-
-
-/**
- * Sets the Y coordinate of the rectangle.
- * @param {number} y The coordinate.
- */
-xrx.canvas.Rect.prototype.setY = function(y) {
-  this.geometry_.y = y;
-};
-
-
-
-/**
- * Sets the width of the rectangle.
- * @param {number} width The width.
- */
-xrx.canvas.Rect.prototype.setWidth = function(width) {
-  this.geometry_.width = width;
-};
-
-
-
-/**
- * Sets the height of the rectangle.
- * @param {height} height The height.
- */
-xrx.canvas.Rect.prototype.setHeight = function(height) {
-  this.geometry_.height = height;
-};
-
-
-
-/**
- * Draws the rectangle.
- * @param {number} scale The current scale of the view-box.
- */
-xrx.canvas.Rect.prototype.draw = function(scale) {
-  var x = this.geometry_.x;
-  var y = this.geometry_.y;
-  var width = this.geometry_.width;
-  var height = this.geometry_.height;
+xrx.canvas.Rect.prototype.drawPath_ = function(graphic) {
+  var coords = graphic.getGeometry().coords;
+  if (!coords[0]) return;
   this.context_.beginPath();
-  this.context_.moveTo(x, y);
-  this.context_.lineTo(x, y + height);
-  this.context_.lineTo(x + width, y + height);
-  this.context_.lineTo(x + width, y);
+  this.context_.moveTo(coords[0][0], coords[0][1]);
+  for(var i = 1, len = coords.length; i < len; i++) {
+    this.context_.lineTo(coords[i][0], coords[i][1]);
+  }
+  this.context_.lineTo(coords[0][0], coords[0][1]);
   this.context_.closePath();
-  this.strokeAndFill_(scale);
+};
+
+
+
+/**
+ * Draws the polygon.
+ * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ */
+xrx.canvas.Rect.prototype.draw = function(graphic) {
+  this.drawPath_(graphic);
+  this.strokeAndFill_(graphic);
 };
 
 

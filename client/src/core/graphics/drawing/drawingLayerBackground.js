@@ -71,6 +71,6 @@ xrx.drawing.LayerBackground.prototype.create_ = function() {
   this.group_ = graphics.Group.create(canvas);
 
   // install the background image
-  this.image_ = graphics.Image.create(undefined, canvas);
+  this.image_ = graphics.Image.create(canvas);
   this.group_.addChildren(this.image_);
 };

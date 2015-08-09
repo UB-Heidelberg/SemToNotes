@@ -13,9 +13,15 @@ goog.require('xrx.geometry');
 /**
  * @constructor
  */
-xrx.geometry.Path = function() {
+xrx.geometry.Path = function(opt_length) {
 
-  this.coords = [];
+  this.coords = opt_length === undefined ? [] : new Array(opt_length);
+
+  if (opt_length !== undefined) {
+    for (var i = 0; i < opt_length; i++) {
+      this.coords[i] = new Array(2);
+    }
+  };
 };
 
 

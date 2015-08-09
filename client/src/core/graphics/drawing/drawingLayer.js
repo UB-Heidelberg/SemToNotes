@@ -81,7 +81,9 @@ xrx.drawing.Layer.prototype.getShapes = function() {
  * Draws all shapes of the layer.
  */
 xrx.drawing.Layer.prototype.draw = function() {
-  this.group_.draw(this.drawing_.getViewbox().getZoomValue());
+  for(var i = 0, len = this.shapes_.length; i < len; i++) {
+    this.shapes_[i].draw(this.drawing_.getViewbox().getZoomValue());
+  }
 };
 
 

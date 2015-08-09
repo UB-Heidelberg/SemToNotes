@@ -20,7 +20,7 @@ goog.require('xrx.vml.Stylable');
  */
 xrx.vml.Rect = function(raphael) {
 
-  goog.base(this, raphael, new xrx.geometry.Rect());
+  goog.base(this, raphael);
 };
 goog.inherits(xrx.vml.Rect, xrx.vml.Stylable);
 
@@ -31,7 +31,6 @@ goog.inherits(xrx.vml.Rect, xrx.vml.Stylable);
  * @param {number} x The coordinate.
  */
 xrx.vml.Rect.prototype.setX = function(x) {
-  this.geometry_.x = x;
   this.raphael_.attr({x: x});
 };
 
@@ -42,7 +41,6 @@ xrx.vml.Rect.prototype.setX = function(x) {
  * @param {number} y The coordinate.
  */
 xrx.vml.Rect.prototype.setY = function(y) {
-  this.geometry_.y = y;
   this.raphael_.attr({y: y});
 };
 
@@ -53,7 +51,6 @@ xrx.vml.Rect.prototype.setY = function(y) {
  * @param {number} width The width.
  */
 xrx.vml.Rect.prototype.setWidth = function(width) {
-  this.geometry_.width = width;
   this.raphael_.attr({width: width});
 };
 
@@ -64,7 +61,6 @@ xrx.vml.Rect.prototype.setWidth = function(width) {
  * @param {height} height The height.
  */
 xrx.vml.Rect.prototype.setHeight = function(height) {
-  this.geometry_.height = height;
   this.raphael_.attr({height: height});
 };
 
@@ -72,8 +68,15 @@ xrx.vml.Rect.prototype.setHeight = function(height) {
 
 /**
  * Draws the rectangle.
+ * @param {xrx.shape.Shape} graphic The graphic to be drawn.
  */
-xrx.vml.Rect.prototype.draw = function() {
+xrx.vml.Rect.prototype.draw = function(graphic) {
+  var geometry = graphic.getGeometry();
+  this.setX(graphic.getX());
+  this.setY(graphic.getY());
+  this.setWidth(graphic.getWidth());
+  this.setHeight(graphic.getHeight());
+  this.strokeAndFill_(graphic);
   this.raphael_.show();
 };
 

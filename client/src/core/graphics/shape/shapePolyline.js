@@ -6,7 +6,8 @@ goog.provide('xrx.shape.Polyline');
 
 
 
-goog.require('xrx.shape.Shape');
+goog.require('xrx.geometry.Path');
+goog.require('xrx.shape.Stylable');
 
 
 
@@ -15,19 +16,13 @@ goog.require('xrx.shape.Shape');
  */
 xrx.shape.Polyline = function(drawing) {
 
-  goog.base(this, drawing);
+  goog.base(this, drawing, new xrx.geometry.Path());
 };
-goog.inherits(xrx.shape.Polyline, xrx.shape.Shape);
+goog.inherits(xrx.shape.Polyline, xrx.shape.Stylable);
 
 
 
 xrx.shape.Polyline.prototype.engineClass_ = 'Polyline';
-
-
-
-xrx.shape.Polyline.prototype.appendCoord = function(coord) {
-  this.engineShape_.appendCoord(coord);
-};
 
 
 

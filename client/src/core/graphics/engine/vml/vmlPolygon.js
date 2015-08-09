@@ -20,7 +20,7 @@ goog.require('xrx.vml.Stylable');
  */
 xrx.vml.Polygon = function(raphael) {
 
-  goog.base(this, raphael, new xrx.geometry.Path());
+  goog.base(this, raphael);
 };
 goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
 
@@ -31,38 +31,18 @@ goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
  * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.vml.Polygon.prototype.setCoords = function(coords) {
-  this.geometry_.coords = coords;
   xrx.vml.setCoords(this.raphael_, coords, true);
 };
 
 
 
 /**
- * Returns the coordinates of the polygon.
- * @return {Array<Array<number>>} The coordinates.
- */
-xrx.vml.Polygon.prototype.getCoords = function(coords) {
-  return this.geometry_.coords;
-};
-
-
-
-/**
- * Updates one coordinate in the list of coordinates.
- * @param {number} pos Index of the coordinate to be updated.
- * @param {Array<number>} coord The new coordinate.
- */
-xrx.vml.Polygon.prototype.setCoordAt = function(pos, coord) {
-  this.geometry_.coords[pos] = coord;
-  xrx.vml.setCoords(this.raphael_, this.geometry_.coords, true);
-};
-
-
-
-/**
  * Draws the polygon.
+ * @param {xrx.shape.Shape} graphic The graphic to be drawn.
  */
-xrx.vml.Polygon.prototype.draw = function() {
+xrx.vml.Polygon.prototype.draw = function(graphic) {
+  this.setCoords(graphic.getGeometry().coords);
+  this.strokeAndFill_(graphic);
   this.raphael_.show();
 };
 

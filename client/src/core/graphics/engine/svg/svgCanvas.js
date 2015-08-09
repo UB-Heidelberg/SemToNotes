@@ -98,7 +98,6 @@ xrx.svg.Canvas.prototype.setHeight = function(height) {
  */
 xrx.svg.Canvas.prototype.addChild = function(element) {
   goog.dom.append(this.element_, element.getElement());
-  element.draw();
 };
 
 

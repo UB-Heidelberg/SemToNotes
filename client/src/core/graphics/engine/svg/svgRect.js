@@ -31,7 +31,6 @@ goog.inherits(xrx.svg.Rect, xrx.svg.Stylable);
  * @param {number} x The coordinate.
  */
 xrx.svg.Rect.prototype.setX = function(x) {
-  this.geometry_.x = x;
   this.element_.setAttribute('x', x);
 };
 
@@ -42,7 +41,6 @@ xrx.svg.Rect.prototype.setX = function(x) {
  * @param {number} y The coordinate.
  */
 xrx.svg.Rect.prototype.setY = function(y) {
-  this.geometry_.y = y;
   this.element_.setAttribute('y', y);
 };
 
@@ -53,7 +51,6 @@ xrx.svg.Rect.prototype.setY = function(y) {
  * @param {number} width The width.
  */
 xrx.svg.Rect.prototype.setWidth = function(width) {
-  this.geometry_.width = width;
   this.element_.setAttribute('width', width);
 };
 
@@ -64,7 +61,6 @@ xrx.svg.Rect.prototype.setWidth = function(width) {
  * @param {height} height The height.
  */
 xrx.svg.Rect.prototype.setHeight = function(height) {
-  this.geometry_.height = height;
   this.element_.setAttribute('height', height);
 };
 
@@ -72,8 +68,16 @@ xrx.svg.Rect.prototype.setHeight = function(height) {
 
 /**
  * Draws the rectangle.
+ * @param {xrx.shape.Shape} graphic The graphic to be drawn.
  */
-xrx.svg.Rect.prototype.draw = function() {};
+xrx.svg.Rect.prototype.draw = function(graphic) {
+  var geometry = graphic.getGeometry();
+  this.setX(graphic.getX());
+  this.setY(graphic.getY());
+  this.setWidth(graphic.getWidth());
+  this.setHeight(graphic.getHeight());
+  this.strokeAndFill_(graphic);
+};
 
 
 

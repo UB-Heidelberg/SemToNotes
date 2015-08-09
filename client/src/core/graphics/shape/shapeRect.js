@@ -10,9 +10,9 @@ goog.provide('xrx.shape.RectModify');
 
 
 goog.require('xrx.engine.Engines');
+goog.require('xrx.geometry.Path');
 goog.require('xrx.mvc');
-goog.require('xrx.shape.Polygon');
-goog.require('xrx.shape.Shape');
+goog.require('xrx.shape.Stylable');
 goog.require('xrx.shape.VertexDragger');
 
 
@@ -24,9 +24,9 @@ goog.require('xrx.shape.VertexDragger');
  */
 xrx.shape.Rect = function(drawing) {
 
-  goog.base(this, drawing);
+  goog.base(this, drawing, new xrx.geometry.Path(4));
 };
-goog.inherits(xrx.shape.Rect, xrx.shape.Shape);
+goog.inherits(xrx.shape.Rect, xrx.shape.Stylable);
 
 
 
@@ -36,6 +36,94 @@ goog.inherits(xrx.shape.Rect, xrx.shape.Shape);
  * @const
  */
 xrx.shape.Rect.prototype.engineClass_ = 'Polygon';
+
+
+
+/**
+ * Sets the X coordinate of the rectangle.
+ * @param {number} x The coordinate.
+ */
+xrx.shape.Rect.prototype.setX = function(x) {
+  this.geometry_.coords[0][0] = x;
+  this.geometry_.coords[3][0] = x;
+};
+
+
+
+/**
+ * Returns the X coordinate of the rectangle.
+ * @return {number} The coordinate.
+ */
+xrx.shape.Rect.prototype.getX = function() {
+  return this.geometry_.coords[0][0];
+};
+
+
+
+/**
+ * Sets the Y coordinate of the rectangle.
+ * @param {number} y The coordinate.
+ */
+xrx.shape.Rect.prototype.setY = function(y) {
+  this.geometry_.coords[0][1] = y;
+  this.geometry_.coords[1][1] = y;
+};
+
+
+
+/**
+ * Returns the Y coordinate of the rectangle.
+ * @return {number} The coordinate.
+ */
+xrx.shape.Rect.prototype.getY = function() {
+  return this.geometry_.coords[0][1];
+};
+
+
+
+/**
+ * Sets the width of the rectangle.
+ * @param {number} width The width.
+ */
+xrx.shape.Rect.prototype.setWidth = function(width) {
+  var x = this.geometry_.coords[0][0];
+  this.geometry_.coords[1][0] = x + width;
+  this.geometry_.coords[2][0] = x + width;
+};
+
+
+
+/**
+ * Returns the width of the rectangle.
+ * @return {number} The width.
+ */
+xrx.shape.Rect.prototype.getWidth = function() {
+  var coords = this.geometry_.coords;
+  return coords[1][0] - coords[0][0];
+};
+
+
+
+/**
+ * Sets the height of the rectangle.
+ * @param {height} height The height.
+ */
+xrx.shape.Rect.prototype.setHeight = function(height) {
+  var y = this.geometry_.coords[0][1];
+  this.geometry_.coords[2][1] = y + height;
+  this.geometry_.coords[3][1] = y + height;
+};
+
+
+
+/**
+ * Returns the height of the rectangle.
+ * @return {number} The height.
+ */
+xrx.shape.Rect.prototype.getHeight = function() {
+  var coords = this.geometry_.coords;
+  return coords[3][1] - coords[0][1];
+};
 
 
 

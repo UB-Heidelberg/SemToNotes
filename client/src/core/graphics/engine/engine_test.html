@@ -7,7 +7,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx.engine.Engines');
+  goog.require('xrx');
 </script>
 <style>
 table {
@@ -75,12 +75,53 @@ height: 100;
 	  <td><span>Empty canvas?</span></td>
   </tr>
 </table>
-
+<div id="dummy"></div>
 <script type="text/javascript">
 
-function isOldIE() {
-  return !document.createElementNS;
-};
+
+
+var drawing = new xrx.drawing.Drawing(goog.dom.getElement('dummy'));
+
+var shapes = {};
+
+shapes.Polygon = new xrx.shape.Polygon(drawing);
+shapes.Polygon.setCoords([[10,10], [90,0], [0,60]]);
+shapes.Polygon.setStrokeColor('red');
+shapes.Polygon.setStrokeWidth(2);
+shapes.Polygon.setFillColor('green');
+shapes.Polygon.setFillOpacity(.5);
+
+shapes.Polyline = new xrx.shape.Polyline(drawing);
+shapes.Polyline.setCoords([[10,10], [90,0], [0,60]]);
+shapes.Polyline.setStrokeColor('red');
+shapes.Polyline.setStrokeWidth(2);
+shapes.Polyline.setFillColor('');
+shapes.Polyline.setFillOpacity(.0);
+
+shapes.Rect = new xrx.shape.Rect(drawing);
+shapes.Rect.setX(10);
+shapes.Rect.setY(10);
+shapes.Rect.setWidth(10);
+shapes.Rect.setHeight(10);
+shapes.Rect.setStrokeColor('red');
+shapes.Rect.setStrokeWidth(2);
+shapes.Rect.setFillColor('green');
+shapes.Rect.setFillOpacity(.5);
+
+shapes.Circle = new xrx.shape.Circle(drawing);
+shapes.Circle.setRadius(30);
+shapes.Circle.setCenter(50, 50);
+shapes.Circle.setStrokeColor('red');
+shapes.Circle.setStrokeWidth(2);
+shapes.Circle.setFillColor('green');
+shapes.Circle.setFillOpacity(.5);
+
+
+
+shapes.Image = new xrx.shape.Image(drawing);
+shapes.Image.setImage(goog.dom.getElement('testImage'));
+
+
 
 function getCanvasSvg(id) {
   var divSvg = goog.dom.getElement(id);
@@ -90,6 +131,8 @@ function getCanvasSvg(id) {
   return svgCanvas;
 };
 
+
+
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
   var canvasCanvas = xrx.canvas.Canvas.create(divCanvas);
@@ -97,6 +140,8 @@ function getCanvasCanvas(id) {
   canvasCanvas.setHeight(100);
   return canvasCanvas;
 };
+
+
 
 function getCanvasVml(id) {
   var divCanvas = goog.dom.getElement(id);
@@ -106,98 +151,52 @@ function getCanvasVml(id) {
   return vmlCanvas;
 };
 
-function makeStyle(shape) {
-  shape.setStrokeColor('red');
-  shape.setStrokeWidth(2);
-  shape.setFillColor('green');
-  shape.setFillOpacity(.5);
-};
 
-function getRect(graphics, opt_canvas) {
-  var rect = graphics.Rect.create(opt_canvas);
-  rect.setX(10);
-  rect.setY(10);
-  rect.setWidth(10);
-  rect.setHeight(10);
-  makeStyle(rect);
-  return rect;
-};
-
-function getPolygon(graphics, opt_canvas) {
-  var coords = new Array(3);
-  coords[0] = [10,10];
-  coords[1] = [90,0];
-  coords[2] = [0,60];
-  var polygon = graphics.Polygon.create(opt_canvas);
-  polygon.setCoords(coords);
-  makeStyle(polygon);
-  return polygon;
-};
-
-function getPolyline(graphics, opt_canvas) {
-  var coords = new Array(3);
-  coords[0] = [10,10];
-  coords[1] = [90,0];
-  coords[2] = [0,60];
-  var polyline = graphics.Polyline.create(opt_canvas);
-  polyline.setCoords(coords);
-  polyline.setStrokeColor('red');
-  polyline.setStrokeWidth(2);
-  polyline.setFillColor('');
-  polyline.setFillOpacity(0);
-  return polyline;
-};
-
-function getCircle(graphics, opt_canvas) {
-  var circle = graphics.Circle.create(opt_canvas);
-  circle.setRadius(30);
-  circle.setCenter(50,50);
-  makeStyle(circle);
-  return circle;
-};
-
-function getImage(graphics, img, opt_canvas) {
-  var image = graphics.Image.create(img, opt_canvas);
-  return image;
-};
 
 function test1Shapes() {
-  var shapes = ['Circle', 'Polygon', 'Polyline', 'Rect'];
+  var classes = ['Circle', 'Polygon', 'Polyline', 'Rect'];
   var shape;
-  for (var i = 0, len = shapes.length; i < len; i++) {
-    shape = shapes[i];
-    if (!isOldIE()) {
+  for (var i = 0, len = classes.length; i < len; i++) {
+    shape = classes[i];
+    if (!xrx.engine.isOldIE()) {
       var svgCanvas = getCanvasSvg('svg' + shape);
-      var svgShape = this['get' + shape](xrx.svg);
+      var svgShape = xrx.svg[shape].create(svgCanvas);
       svgCanvas.addChild(svgShape);
+      svgShape.draw(shapes[shape]);
 
       var canvasCanvas = getCanvasCanvas('canvas' + shape);
-      var canvasShape = this['get' + shape](xrx.canvas, canvasCanvas);
+      var canvasShape = xrx.canvas[shape].create(canvasCanvas);
       canvasCanvas.addChild(canvasShape);
+      canvasShape.draw(shapes[shape]);
     }
     var vmlCanvas = getCanvasVml('vml' + shape);
-    var vmlShape = this['get' + shape](xrx.vml, vmlCanvas);
+    var vmlShape = xrx.vml[shape].create(vmlCanvas);
     vmlCanvas.addChild(vmlShape);
+    vmlShape.draw(shapes[shape]);
   }
 };
 
+
+
 function test2Image() {
-  var image = goog.dom.getElement('testImage');
-  if (!isOldIE()) {
+  if (!xrx.engine.isOldIE()) {
     var svgCanvas = getCanvasSvg('svgImage');  
-    var svgImage = getImage(xrx.svg, image);
+    var svgImage = xrx.svg.Image.create(svgCanvas);
     svgCanvas.addChild(svgImage);
+    //svgImage.draw(shapes.Image);
 
     var canvasCanvas = getCanvasCanvas('canvasImage');
-    var canvasImage = getImage(xrx.canvas, image, canvasCanvas);
+    var canvasImage = xrx.canvas.Image.create(canvasCanvas);
     canvasCanvas.addChild(canvasImage);
   }
   var vmlCanvas = getCanvasVml('vmlImage');
-  var vmlImage = getImage(xrx.vml, image, vmlCanvas);
+  var vmlImage = xrx.vml.Image.create(vmlCanvas);
   vmlCanvas.addChild(vmlImage);
 };
 
-function test3Group() {
+
+
+function xxtest3Group() {
   if (!isOldIE()) {
     var svgCanvas = getCanvasSvg('svgGroup');
     var svgGroup = xrx.svg.Group.create();
@@ -238,7 +237,7 @@ function test3Group() {
 
 // make sure that Raphael components are not rendered before
 // function addChild(), respectively addChildren() is called
-function test4Vml() {
+function xxtest4Vml() {
   var image = goog.dom.getElement('testImage');
   if (!isOldIE()) {
     var svgCanvas = getCanvasSvg('svgRaphael');
