@@ -1,7 +1,6 @@
 build/classes
 build
 dist
-java/lib
 config/library/exist.xml
 config/library/expath-pkg.xml
 config/library/repo.xml
