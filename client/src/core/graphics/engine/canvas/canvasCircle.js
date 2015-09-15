@@ -26,14 +26,19 @@ goog.inherits(xrx.canvas.Circle, xrx.canvas.Stylable);
 
 /**
  * Draws the circle on the canvas.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {number} cx X-coordinate of the circle's center point.
+ * @param {number} cy Y-coordinate of the circle's center point.
+ * @param {number} r Radius of the circle.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.canvas.Circle.prototype.draw = function(graphic) {
-  var geometry = graphic.getGeometry();
+xrx.canvas.Circle.prototype.draw = function(cx, cy, r, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
   this.context_.beginPath();
-  this.context_.arc(geometry.cx, geometry.cy, geometry.r,
-      0, 2 * Math.PI);
-  this.strokeAndFill_(graphic);
+  this.context_.arc(cx, cy, r, 0, 2 * Math.PI);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

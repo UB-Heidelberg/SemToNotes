@@ -50,13 +50,19 @@ xrx.svg.Circle.prototype.setRadius = function(r) {
 
 /**
  * Draws the circle on the canvas.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {number} cx X-coordinate of the circle's center point.
+ * @param {number} cy Y-coordinate of the circle's center point.
+ * @param {number} r Radius of the circle.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.svg.Circle.prototype.draw = function(graphic) {
-  var geometry = graphic.getGeometry();
-  this.setCenter(geometry.cx, geometry.cy);
-  this.setRadius(geometry.r);
-  this.strokeAndFill_(graphic);
+xrx.svg.Circle.prototype.draw = function(cx, cy, r, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setCenter(cx, cy);
+  this.setRadius(r);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

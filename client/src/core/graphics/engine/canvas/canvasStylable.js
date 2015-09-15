@@ -29,12 +29,13 @@ goog.inherits(xrx.canvas.Stylable, xrx.canvas.Element);
 /**
  * @private
  */
-xrx.canvas.Stylable.prototype.strokeAndFill_ = function(graphic) {
-  this.context_.fillStyle = graphic.getFillColor();
-  this.context_.globalAlpha = graphic.getFillOpacity();
+xrx.canvas.Stylable.prototype.strokeAndFill_ = function(fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.context_.fillStyle = fillColor;
+  this.context_.globalAlpha = fillOpacity;
   this.context_.fill();
   this.context_.globalAlpha = 1;
-  this.context_.strokeStyle = graphic.getStrokeColor();
-  this.context_.lineWidth = graphic.getStrokeWidth();
-  if (graphic.getStrokeWidth() > 0) this.context_.stroke();
+  this.context_.strokeStyle = strokeColor;
+  this.context_.lineWidth = strokeWidth;
+  if (strokeWidth > 0) this.context_.stroke();
 };

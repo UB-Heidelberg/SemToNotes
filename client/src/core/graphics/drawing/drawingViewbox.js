@@ -9,6 +9,7 @@ goog.provide('xrx.drawing.Viewbox');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.FastAffineTransform');
 goog.require('xrx.drawing.ViewboxTransform');
+goog.require('xrx.shape.Group');
 
 
 
@@ -155,7 +156,5 @@ xrx.drawing.Viewbox.prototype.resetState_ = function() {
  * @private
  */
 xrx.drawing.Viewbox.prototype.create_ = function() {
-  var graphics = this.drawing_.getGraphics();
-  var canvas = this.drawing_.getCanvas();
-  this.group_ = graphics.Group.create(canvas);
+  this.group_ = xrx.shape.Group.create(this.drawing_);
 };

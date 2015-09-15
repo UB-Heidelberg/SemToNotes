@@ -27,8 +27,7 @@ goog.inherits(xrx.canvas.Polyline, xrx.canvas.Stylable);
 /**
  * @private
  */
-xrx.canvas.Polyline.prototype.drawPath_ = function(graphic) {
-  var coords = graphic.getGeometry().coords;
+xrx.canvas.Polyline.prototype.drawPath_ = function(coords) {
   this.context_.beginPath();
   this.context_.moveTo(coords[0][0], coords[0][1]);
   for(var i = 1, len = coords.length; i < len; i++) {
@@ -40,11 +39,16 @@ xrx.canvas.Polyline.prototype.drawPath_ = function(graphic) {
 
 /**
  * Draws the poly-line.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {Array<Array<number>>} coords The coordinates of the poly-line.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.canvas.Polyline.prototype.draw = function(graphic) {
-  this.drawPath_(graphic);
-  this.strokeAndFill_(graphic);
+xrx.canvas.Polyline.prototype.draw = function(coords, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.drawPath_(coords);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

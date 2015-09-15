@@ -7,6 +7,8 @@ goog.provide('xrx.drawing.LayerBackground');
 
 
 goog.require('xrx.drawing.Layer');
+goog.require('xrx.shape.Group');
+goog.require('xrx.shape.Rect');
 
 
 
@@ -65,12 +67,9 @@ xrx.drawing.LayerBackground.prototype.draw = function() {
  * @private
  */
 xrx.drawing.LayerBackground.prototype.create_ = function() {
-  var graphics = this.getDrawing().getGraphics();
-  var canvas = this.getDrawing().getCanvas();
-
-  this.group_ = graphics.Group.create(canvas);
-
+  var drawing = this.getDrawing();
+  this.group_ = xrx.shape.Group.create(drawing);
   // install the background image
-  this.image_ = graphics.Image.create(canvas);
+  this.image_ = xrx.shape.Image.create(drawing);
   this.group_.addChildren(this.image_);
 };

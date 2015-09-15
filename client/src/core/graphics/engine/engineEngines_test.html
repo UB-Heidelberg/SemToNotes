@@ -9,13 +9,13 @@
   goog.require('goog.object');
   goog.require('goog.testing.jsunit');
   goog.require('xrx');
-  goog.require('xrx.engine');
-  goog.require('xrx.engine.Engines');
 </script>
 </head>
 <body>
 
 <script type="text/javascript">
+
+
 
 function methodsTest(impl, methods) {
   goog.array.forEach(methods, function(e, i, a) {
@@ -31,6 +31,8 @@ function methodsTest(impl, methods) {
   });
 };
 
+
+
 function staticsTest(impl, methods) {
   goog.array.forEach(methods, function(e, i, a) {
     assertFalse('Static function ' + e + '() is not implemented for class ' + impl +
@@ -45,13 +47,16 @@ function staticsTest(impl, methods) {
   });
 };
 
+
+
 function test1Canvas() {
   var methods = [
       'getWidth',
       'setWidth',
       'getHeight',
       'setHeight',
-      'addChild'
+      'getElement',
+      'getEventTarget'
   ];
   var statics = [
       'create'
@@ -60,12 +65,10 @@ function test1Canvas() {
   staticsTest('Canvas', statics);
 };
 
+
+
 function test2Circle() {
   var methods = [
-      'getCenter',
-      'setCenter',
-      'getRadius',
-      'setRadius',
       'draw'
   ];
   var statics = [
@@ -75,31 +78,32 @@ function test2Circle() {
   staticsTest('Circle', statics);
 };
 
+
+
 function test3Element() {
   // individual methods
 };
 
-function test4Group() {
+
+
+function test4Container() {
   var methods = [
+      'addChild',
       'getChildren',
-      'addChildren',
       'removeChildren',
-      'removeChildAt',
-      'draw'
+      'removeChildAt'
   ];
   var statics = [
       'create'
   ];
-  methodsTest('Group', methods);
-  staticsTest('Group', statics);
+  methodsTest('Container', methods);
+  staticsTest('Container', statics);
 };
+
+
 
 function test5Image() {
   var methods = [
-      'getWidth',
-      'getHeight',
-      'getImage',
-      'setImage',
       'draw'
   ];
   var statics = [
@@ -109,11 +113,10 @@ function test5Image() {
   staticsTest('Image', statics);
 };
 
+
+
 function test6Polyline() {
   var methods = [
-      'setCoords',
-      'getCoords',
-      'appendCoord',
       'draw'
   ];
   var statics = [
@@ -123,11 +126,10 @@ function test6Polyline() {
   staticsTest('Polyline', statics);
 };
 
+
+
 function test7Polygon() {
   var methods = [
-      'setCoords',
-      'getCoords',
-      'setCoordAt',
       'draw'
   ];
   var statics = [
@@ -137,12 +139,10 @@ function test7Polygon() {
   staticsTest('Polygon', statics);
 };
 
+
+
 function test8Rect() {
   var methods = [
-      'setX',
-      'setY',
-      'setWidth',
-      'setHeight',
       'draw'
   ];
   var statics = [
@@ -152,16 +152,25 @@ function test8Rect() {
   staticsTest('Rect', statics);
 };
 
+
+
 function test9Stylable() {
   var methods = [
-      'getGeometry',
-      'setStrokeWidth',
-      'setStrokeColor',
-      'setFillColor',
-      'setFillOpacity'
+      'strokeAndFill_'
   ];
   methodsTest('Stylable', methods);
 };
+
+
+
+function test10Group() {
+  var statics = [
+      'create'
+  ];
+  staticsTest('Group', statics);
+};
+
+
 
 </script>
 

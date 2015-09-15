@@ -8,14 +8,14 @@ goog.provide('xrx.svg.Element');
 
 /**
  * SVG super class.
- * @param {Element} element An SVG element.
+ * @param {SVGElement} element An SVG element.
  * @constructor
  */
 xrx.svg.Element = function(element) {
 
   /**
    * The SVG element.
-   * @type {Element}
+   * @type {SVGElement}
    */
   this.element_ = element;
 };
@@ -24,7 +24,7 @@ xrx.svg.Element = function(element) {
 
 /**
  * Returns the SVG element.
- * @return {Element} The SVG element.
+ * @return {SVGElement} The SVG element.
  */
 xrx.svg.Element.prototype.getElement = function() {
   return this.element_;

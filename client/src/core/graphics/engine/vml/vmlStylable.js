@@ -29,11 +29,12 @@ goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
 /**
  * @private
  */
-xrx.vml.Stylable.prototype.strokeAndFill_ = function(graphic) {
-  this.setStrokeWidth(graphic.getStrokeWidth());
-  this.setStrokeColor(graphic.getStrokeColor());
-  this.setFillColor(graphic.getFillColor());
-  this.setFillOpacity(graphic.getFillOpacity());
+xrx.vml.Stylable.prototype.strokeAndFill_ = function(fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setFillColor(fillColor);
+  this.setFillOpacity(fillOpacity);
+  this.setStrokeColor(strokeColor);
+  this.setStrokeWidth(strokeWidth);
 };
 
 

@@ -38,11 +38,16 @@ xrx.svg.Polygon.prototype.setCoords = function(coords) {
 
 /**
  * Draws the polygon.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {Array<Array<number>>} coords The polygon's coordinates.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.svg.Polygon.prototype.draw = function(graphic) {
-  this.setCoords(graphic.getGeometry().coords);
-  this.strokeAndFill_(graphic);
+xrx.svg.Polygon.prototype.draw = function(coords, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setCoords(coords);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

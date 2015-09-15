@@ -28,27 +28,32 @@ goog.inherits(xrx.canvas.Rect, xrx.canvas.Stylable);
 /**
  * @private
  */
-xrx.canvas.Rect.prototype.drawPath_ = function(graphic) {
-  var coords = graphic.getGeometry().coords;
-  if (!coords[0]) return;
+xrx.canvas.Rect.prototype.drawPath_ = function(x, y, width, height) {
   this.context_.beginPath();
-  this.context_.moveTo(coords[0][0], coords[0][1]);
-  for(var i = 1, len = coords.length; i < len; i++) {
-    this.context_.lineTo(coords[i][0], coords[i][1]);
-  }
-  this.context_.lineTo(coords[0][0], coords[0][1]);
+  this.context_.moveTo(x, y);
+  this.context_.lineTo(x + width, y);
+  this.context_.lineTo(x + width, y + height);
+  this.context_.lineTo(x, y + height);
   this.context_.closePath();
 };
 
 
 
 /**
- * Draws the polygon.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * Draws the rectangle.
+ * @param {number} x The X offset.
+ * @param {number} y The Y offset.
+ * @param {number} width The width.
+ * @param {number} height The height.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.canvas.Rect.prototype.draw = function(graphic) {
-  this.drawPath_(graphic);
-  this.strokeAndFill_(graphic);
+xrx.canvas.Rect.prototype.draw = function(x, y, width, height, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.drawPath_(x, y, width, height);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

@@ -38,11 +38,16 @@ xrx.vml.Polyline.prototype.setCoords = function(coords) {
 
 /**
  * Draws the polygon.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {Array<Array<number>>} coords The coordinates of the poly-line.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.vml.Polyline.prototype.draw = function(graphic) {
-  this.setCoords(graphic.getGeometry().coords);
-  this.strokeAndFill_(graphic);
+xrx.vml.Polyline.prototype.draw = function(coords, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setCoords(coords);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
   this.raphael_.show();
 };
 

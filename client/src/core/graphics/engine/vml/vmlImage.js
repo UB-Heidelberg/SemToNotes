@@ -26,40 +26,23 @@ goog.inherits(xrx.vml.Image, xrx.vml.Stylable);
 
 
 /**
- * @private
- */
-xrx.vml.Image.prototype.setWidth_ = function(width) {
-  this.raphael_.attr({width: width});
-};
-
-
-
-/**
- * @private
- */
-xrx.vml.Image.prototype.setHeight_ = function(height) {
-  this.raphael_.attr({height: height});
-};
-
-
-
-/**
  * Sets a new HTML image element.
  * @param {Image} image The HTML image element.
  */
 xrx.vml.Image.prototype.setImage = function(image) {
   this.raphael_.attr({'src': image.src, 'width': image.naturalWidth,
       'height': image.naturalHeight});
-  this.setWidth_(image.naturalWidth);
-  this.setHeight_(image.naturalHeight);
 };
 
 
 
 /**
  * Draws the image.
+ * @param {HTMLImageElement} image The image to draw. Make sure
+ *     that image has naturalWidth and naturalHeight attributes.
  */
-xrx.vml.Image.prototype.draw = function() {
+xrx.vml.Image.prototype.draw = function(image) {
+  this.setImage(image);
   this.raphael_.show();
 };
 

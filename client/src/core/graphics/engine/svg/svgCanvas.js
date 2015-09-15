@@ -8,7 +8,7 @@ goog.provide('xrx.svg.Canvas');
 
 goog.require('goog.dom.DomHelper');
 goog.require('xrx.svg');
-goog.require('xrx.svg.Element');
+goog.require('xrx.svg.Container');
 
 
 
@@ -23,12 +23,6 @@ xrx.svg.Canvas = function(element) {
   goog.base(this, element);
 
   /**
-   * The child elements of the canvas.
-   * @type {xrx.svg.Element}
-   */
-  this.childs_ = [];
-
-  /**
    * The canvas width.
    * @type {number}
    */
@@ -40,10 +34,15 @@ xrx.svg.Canvas = function(element) {
    */
   this.height_ = 0;
 };
-goog.inherits(xrx.svg.Canvas, xrx.svg.Element);
+goog.inherits(xrx.svg.Canvas, xrx.svg.Container);
 
 
 
+/**
+ * Returns the root element of this canvas to be used as
+ * the event target.
+ * @return {SVGElement} The event target element.
+ */
 xrx.svg.Canvas.prototype.getEventTarget = function() {
   return this.element_;
 };
@@ -93,18 +92,8 @@ xrx.svg.Canvas.prototype.setHeight = function(height) {
 
 
 /**
- * Adds a child element to the canvas.
- * @param {Object} element The child element.
- */
-xrx.svg.Canvas.prototype.addChild = function(element) {
-  goog.dom.append(this.element_, element.getElement());
-};
-
-
-
-/**
  * Creates a new canvas.
- * @param {Element} parent The parent HTML element to which the canvas
+ * @param {HTMLElement} parent The parent HTML element to which the canvas
  *     shall be appended.
  */
 xrx.svg.Canvas.create = function(parent) {

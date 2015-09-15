@@ -7,6 +7,7 @@ goog.provide('xrx.canvas.Canvas');
 
 
 goog.require('goog.dom.DomHelper');
+goog.require('xrx.canvas.Container');
 
 
 
@@ -18,22 +19,10 @@ goog.require('goog.dom.DomHelper');
 xrx.canvas.Canvas = function(element) {
 
   /**
-   * The rendering context.
-   * @type {CanvasRenderingContext2D}
-   */
-  this.context_ = element.getContext('2d');
-
-  /**
    * The HTML canvas element.
    * @type {HTMLCanvasElement}
    */
   this.element_ = element;
-
-  /**
-   * The child elements of the canvas.
-   * @type {xrx.canvas.Element}
-   */
-  this.childs_ = [];
 
   /**
    * The canvas width.
@@ -46,7 +35,10 @@ xrx.canvas.Canvas = function(element) {
    * @type {number}
    */
   this.height_ = 0;
+
+  goog.base(this, this);
 };
+goog.inherits(xrx.canvas.Canvas, xrx.canvas.Container);
 
 
 
@@ -60,6 +52,11 @@ xrx.canvas.Canvas.prototype.getElement = function() {
 
 
 
+/**
+ * Returns the root element of this canvas to be used as
+ * the event target.
+ * @return {HTMLCanvasElement} The event target element.
+ */
 xrx.canvas.Canvas.prototype.getEventTarget = function() {
   return this.element_;
 };
@@ -104,16 +101,6 @@ xrx.canvas.Canvas.prototype.getHeight = function() {
 xrx.canvas.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
   this.element_.setAttribute('height', height);
-};
-
-
-
-/**
- * Adds a child element to the canvas.
- * @param {Object} element The child element.
- */
-xrx.canvas.Canvas.prototype.addChild = function(element) {
-  this.childs_.push(element);
 };
 
 

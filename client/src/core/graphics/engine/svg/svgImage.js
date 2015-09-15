@@ -28,7 +28,7 @@ goog.inherits(xrx.svg.Image, xrx.svg.Stylable);
 /**
  * @private
  */
-xrx.svg.Image.prototype.setWidth_ = function(width) {
+xrx.svg.Image.prototype.setWidth = function(width) {
   this.element_.setAttribute('width', width);
 };
 
@@ -37,7 +37,7 @@ xrx.svg.Image.prototype.setWidth_ = function(width) {
 /**
  * @private
  */
-xrx.svg.Image.prototype.setHeight_ = function(height) {
+xrx.svg.Image.prototype.setHeight = function(height) {
   this.element_.setAttribute('height', height);
 };
 
@@ -49,16 +49,20 @@ xrx.svg.Image.prototype.setHeight_ = function(height) {
  */
 xrx.svg.Image.prototype.setImage = function(image) {
   this.element_.setAttributeNS(xrx.svg.Namespace['xlink'], 'xlink:href', image.src);
-  this.setWidth_(image.naturalWidth);
-  this.setHeight_(image.naturalHeight);
 };
 
 
 
 /**
  * Draws the image.
+ * @param {HTMLImageElement} image The image to draw. Make sure
+ *     that image has naturalWidth and naturalHeight attributes.
  */
-xrx.svg.Image.prototype.draw = function() {};
+xrx.svg.Image.prototype.draw = function(image) {
+  this.setImage(image);
+  this.setWidth(image.naturalWidth);
+  this.setHeight(image.naturalHeight);
+};
 
 
 

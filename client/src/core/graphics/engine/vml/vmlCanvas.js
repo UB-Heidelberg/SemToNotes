@@ -9,7 +9,7 @@ goog.provide('xrx.vml.Canvas');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.style');
 goog.require('xrx.vml.Raphael');
-goog.require('xrx.vml.Element');
+goog.require('xrx.vml.Container');
 
 
 
@@ -22,12 +22,6 @@ goog.require('xrx.vml.Element');
 xrx.vml.Canvas = function(raphael) {
 
   goog.base(this, raphael);
-
-  /**
-   * The child elements of the canvas.
-   * @type {xrx.vml.Element}
-   */
-  this.childs_ = [];
 
   /**
    * The canvas width.
@@ -43,10 +37,15 @@ xrx.vml.Canvas = function(raphael) {
 
   this.shield_;
 };
-goog.inherits(xrx.vml.Canvas, xrx.vml.Element);
+goog.inherits(xrx.vml.Canvas, xrx.vml.Container);
 
 
 
+/**
+ * Returns the root element of this canvas to be used as
+ * the event target.
+ * @return {Object} The event target element.
+ */
 xrx.vml.Canvas.prototype.getEventTarget = function() {
   return this.raphael_.canvas;
 };

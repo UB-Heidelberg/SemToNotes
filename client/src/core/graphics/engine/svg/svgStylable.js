@@ -29,11 +29,12 @@ goog.inherits(xrx.svg.Stylable, xrx.svg.Element);
 /**
  * @private
  */
-xrx.svg.Stylable.prototype.strokeAndFill_ = function(graphic) {
-  this.setStrokeWidth(graphic.getStrokeWidth());
-  this.setStrokeColor(graphic.getStrokeColor());
-  this.setFillColor(graphic.getFillColor());
-  this.setFillOpacity(graphic.getFillOpacity());
+xrx.svg.Stylable.prototype.strokeAndFill_ = function(fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setFillColor(fillColor);
+  this.setFillOpacity(fillOpacity);
+  this.setStrokeColor(strokeColor);
+  this.setStrokeWidth(strokeWidth);
 };
 
 

@@ -68,15 +68,22 @@ xrx.svg.Rect.prototype.setHeight = function(height) {
 
 /**
  * Draws the rectangle.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {number} x The X offset.
+ * @param {number} y The Y offset.
+ * @param {number} width The width.
+ * @param {number} height The height.
+ * @param {string} fillColor The fill color.
+ * @param {number} fillOpacity Opacity of the fill color.
+ * @param {string} strokeColor The stroke color.
+ * @param {number} strokeWidth The stroke width.
  */
-xrx.svg.Rect.prototype.draw = function(graphic) {
-  var geometry = graphic.getGeometry();
-  this.setX(graphic.getX());
-  this.setY(graphic.getY());
-  this.setWidth(graphic.getWidth());
-  this.setHeight(graphic.getHeight());
-  this.strokeAndFill_(graphic);
+xrx.svg.Rect.prototype.draw = function(x, y, width, height, fillColor,
+    fillOpacity, strokeColor, strokeWidth) {
+  this.setX(x);
+  this.setY(y);
+  this.setWidth(width);
+  this.setHeight(height);
+  this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
 

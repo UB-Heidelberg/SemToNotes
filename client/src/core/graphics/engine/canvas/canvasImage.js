@@ -26,13 +26,12 @@ goog.inherits(xrx.canvas.Image, xrx.canvas.Stylable);
 
 /**
  * Draws the image.
- * @param {xrx.shape.Shape} graphic The graphic to be drawn.
+ * @param {HTMLImageElement} image The image to draw. Make sure
+ *     that image has naturalWidth and naturalHeight attributes.
  */
-xrx.canvas.Image.prototype.draw = function(graphic) {
-  var geometry = graphic.getGeometry();
-  var image = graphic.getImage();
-  if (image) this.context_.drawImage(image, geometry.x,
-      geometry.y, geometry.width, geometry.height);
+xrx.canvas.Image.prototype.draw = function(image) {
+  if (image) this.context_.drawImage(image, 0, 0, image.naturalWidth,
+      image.naturalHeight);
 };
 
 
