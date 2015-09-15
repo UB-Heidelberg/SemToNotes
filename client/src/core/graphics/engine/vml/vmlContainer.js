@@ -36,7 +36,12 @@ goog.inherits(xrx.vml.Container, xrx.vml.Element);
 xrx.vml.Container.prototype.addChild = function(element) {
   var shield = this.raphael_.paper.getById('shield');
   this.childs_.push(element);
-  this.raphael_.push(element.getRaphael());
+  if (this.raphael_ instanceof Array) { // Raphael set?
+    this.raphael_.push(element.getRaphael());
+  } else { // Raphael paper?
+    if (this.getElement()) goog.dom.append(this.getElement(),
+        element.getElement());
+  }
   if (shield) shield.toFront();
 };
 
@@ -56,11 +61,17 @@ xrx.vml.Container.prototype.getChildren = function() {
  * Removes all child elements from this container.
  */
 xrx.vml.Container.prototype.removeChildren = function() {
-  var len = this.raphael_.length;
-  this.childs_ = [];
-  for (var i = 0; i < len; i++) {
-    goog.dom.removeNode(this.raphael_.pop().node);
+  var len = this.childs_.length;
+  if (this.raphael_ instanceof Array) {
+    for (var i = 0; i < len; i++) {
+      goog.dom.removeNode(this.raphael_.pop().node);
+    }
+  } else {
+    for (var i = 0; i < len; i++) {
+      this.childs_[i].getRaphael().remove();
+    }
   }
+  this.childs_ = [];
 };
 
 
@@ -70,6 +81,10 @@ xrx.vml.Container.prototype.removeChildren = function() {
  * @param {number} index The index.
  */
 xrx.vml.Container.prototype.removeChildAt = function(index) {
+  if (this.raphael_ instanceof Array) { // Raphael set?
+    goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
+  } else {
+    this.childs_[index].getRaphael().remove();
+  }
   this.childs_.splice(index, 1);
-  goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
 };

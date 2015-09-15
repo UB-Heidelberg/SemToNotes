@@ -5012,7 +5012,6 @@ xrx.vml.Raphael = function(element, width, height) {
         }
         var paper = this.paper;
         paper.__set__ && paper.__set__.exclude(this);
-        eve.unbind("raphael.*.*." + this.id);
         if (this.gradient) {
             paper.defs.removeChild(this.gradient);
         }
@@ -5023,7 +5022,7 @@ xrx.vml.Raphael = function(element, width, height) {
             this.node.parentNode.removeChild(this.node);
         }
         for (var i in this) {
-            this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
+            //this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
         this.removed = true;
     };
@@ -5477,7 +5476,7 @@ xrx.vml.Raphael = function(element, width, height) {
     R.prototype.remove = function () {
         this.canvas.parentNode && this.canvas.parentNode.removeChild(this.canvas);
         for (var i in this) {
-            this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
+            //this[i] = typeof this[i] == "function" ? R._removedFactory(i) : null;
         }
     };
     var setproto = R.st;

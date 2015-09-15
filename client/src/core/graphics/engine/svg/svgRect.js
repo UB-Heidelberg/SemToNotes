@@ -79,10 +79,10 @@ xrx.svg.Rect.prototype.setHeight = function(height) {
  */
 xrx.svg.Rect.prototype.draw = function(x, y, width, height, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
-  this.setX(x);
-  this.setY(y);
-  this.setWidth(width);
-  this.setHeight(height);
+  if (x !== undefined) this.setX(x);
+  if (y !== undefined) this.setY(y);
+  if (width !== undefined) this.setWidth(width);
+  if (height !== undefined) this.setHeight(height);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 

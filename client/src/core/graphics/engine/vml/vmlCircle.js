@@ -31,7 +31,8 @@ goog.inherits(xrx.vml.Circle, xrx.vml.Stylable);
  * @param {number} cy The Y coordinate of the centre point.
  */
 xrx.vml.Circle.prototype.setCenter = function(cx, cy) {
-  this.raphael_.attr({'cx': cx, 'cy': cy});
+  if (cx !== undefined) this.raphael_.attr({'cx': cx});
+  if (cy !== undefined) this.raphael_.attr({'cy': cy});
 };
 
 
@@ -59,7 +60,7 @@ xrx.vml.Circle.prototype.setRadius = function(r) {
 xrx.vml.Circle.prototype.draw = function(cx, cy, r, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
   this.setCenter(cx, cy);
-  this.setRadius(r);
+  if (r !== undefined) this.setRadius(r);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
   this.raphael_.show();
 };

@@ -32,8 +32,8 @@ goog.inherits(xrx.svg.Circle, xrx.svg.Stylable);
  * @param {number} cy The Y coordinate of the centre point.
  */
 xrx.svg.Circle.prototype.setCenter = function(cx, cy) {
-  this.element_.setAttribute('cx', cx);
-  this.element_.setAttribute('cy', cy);
+  if (cx !== undefined) this.element_.setAttribute('cx', cx);
+  if (cy !== undefined) this.element_.setAttribute('cy', cy);
 };
 
 
@@ -61,7 +61,7 @@ xrx.svg.Circle.prototype.setRadius = function(r) {
 xrx.svg.Circle.prototype.draw = function(cx, cy, r, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
   this.setCenter(cx, cy);
-  this.setRadius(r);
+  if (r !== undefined) this.setRadius(r);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 

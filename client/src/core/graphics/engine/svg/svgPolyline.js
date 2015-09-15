@@ -46,7 +46,7 @@ xrx.svg.Polyline.prototype.setCoords = function(coords) {
  */
 xrx.svg.Polyline.prototype.draw = function(coords, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
-  this.setCoords(coords);
+  if (coords !== undefined) this.setCoords(coords);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 

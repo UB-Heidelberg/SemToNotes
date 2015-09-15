@@ -31,10 +31,10 @@ goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
  */
 xrx.vml.Stylable.prototype.strokeAndFill_ = function(fillColor,
     fillOpacity, strokeColor, strokeWidth) {
-  this.setFillColor(fillColor);
-  this.setFillOpacity(fillOpacity);
-  this.setStrokeColor(strokeColor);
-  this.setStrokeWidth(strokeWidth);
+  if (fillColor !== undefined) this.setFillColor(fillColor);
+  if (fillOpacity !== undefined) this.setFillOpacity(fillOpacity);
+  if (strokeColor !== undefined) this.setStrokeColor(strokeColor);
+  if (strokeWidth !== undefined) this.setStrokeWidth(strokeWidth);
 };
 
 

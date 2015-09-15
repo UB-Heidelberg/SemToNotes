@@ -122,12 +122,14 @@ function test1Circle() {
     var svgCircle = xrx.svg.Circle.create(svgCanvas);
     svgCanvas.addChild(svgCircle);
     svgCircle.draw(50, 50, 30, 'green', .5, 'red', 2);
+    svgCircle.draw(); // undefined test
   }
   // VML
   var vmlCanvas = getCanvasVml('vmlCircle');
   var vmlCircle = xrx.vml.Circle.create(vmlCanvas);
   vmlCanvas.addChild(vmlCircle);
   vmlCircle.draw(50, 50, 30, 'green', .5, 'red', 2);
+  vmlCircle.draw(); // undefined test
 };
 
 
@@ -206,12 +208,14 @@ function test4Polygon() {
     var svgPolygon = xrx.svg.Polygon.create(svgCanvas);
     svgCanvas.addChild(svgPolygon);
     svgPolygon.draw(coords, 'green', .5, 'red', 2);
+    svgPolygon.draw(); // undefined test
   }
   // VML
   var vmlCanvas = getCanvasVml('vmlPolygon');
   var vmlPolygon = xrx.vml.Polygon.create(vmlCanvas);
   vmlCanvas.addChild(vmlPolygon);
   vmlPolygon.draw(coords, 'green', .5, 'red', 2);
+  vmlPolygon.draw(); // undefined test
 };
 
 
@@ -229,12 +233,14 @@ function test5Polyline() {
     var svgPolyline = xrx.svg.Polyline.create(svgCanvas);
     svgCanvas.addChild(svgPolyline);
     svgPolyline.draw(coords, '', .0, 'red', 2);
+    svgPolyline.draw(); // undefined test
   }
   // VML
   var vmlCanvas = getCanvasVml('vmlPolyline');
   var vmlPolyline = xrx.vml.Polyline.create(vmlCanvas);
   vmlCanvas.addChild(vmlPolyline);
   vmlPolyline.draw(coords, '', .0, 'red', 2);
+  vmlPolyline.draw(); // undefined test
 };
 
 
@@ -251,19 +257,21 @@ function test6Rect() {
     var svgRect = xrx.svg.Rect.create(svgCanvas);
     svgCanvas.addChild(svgRect);
     svgRect.draw(10, 10, 80, 80, 'green', .5, 'red', 2);
+    svgRect.draw(); // undefined test
   }
   // VML
   var vmlCanvas = getCanvasVml('vmlRect');
   var vmlRect = xrx.vml.Rect.create(vmlCanvas);
   vmlCanvas.addChild(vmlRect);
   vmlRect.draw(10, 10, 80, 80, 'green', .5, 'red', 2);
+  vmlRect.draw(); // undefined test
 };
 
 
 
 // make sure that Raphael components are not rendered before
 // function addChild(), respectively addChildren() is called
-function test3Vml() {
+function test7Vml() {
   var image = goog.dom.getElement('testImage');
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -288,6 +296,70 @@ function test3Vml() {
   var vmlRect = xrx.vml.Rect.create(vmlCanvas);
   var vmlPolygon = xrx.vml.Polygon.create(vmlCanvas);
   var vmlPolyline = xrx.vml.Polyline.create(vmlCanvas);
+};
+
+
+
+function test8removeChildren() {
+  if (!xrx.engine.isOldIE()) {
+    // Canvas
+    var canvasCanvas = getCanvasCanvas(goog.dom.createElement('div'));
+    var canvasCircle = xrx.canvas.Circle.create(canvasCanvas);
+    var canvasImage = xrx.canvas.Image.create(canvasCanvas);
+    var canvasRect = xrx.canvas.Rect.create(canvasCanvas);
+    var canvasPolygon = xrx.canvas.Polygon.create(canvasCanvas);
+    var canvasPolyline = xrx.canvas.Polyline.create(canvasCanvas);
+    canvasCanvas.addChild(canvasCircle);
+    canvasCanvas.addChild(canvasImage);
+    canvasCanvas.addChild(canvasRect);
+    canvasCanvas.addChild(canvasPolygon);
+    canvasCanvas.addChild(canvasPolyline);
+    assertEquals(5, canvasCanvas.getChildren().length);
+    canvasCanvas.removeChildAt(1);
+    assertEquals(4, canvasCanvas.getChildren().length);
+    canvasCanvas.removeChildren();
+    assertEquals(0, canvasCanvas.getChildren().length);
+    // SVG
+    var svgCanvas = getCanvasSvg('svgRaphael');
+    var svgCircle = xrx.svg.Circle.create(svgCanvas);
+    var svgImage = xrx.svg.Image.create(svgCanvas);
+    var svgRect = xrx.svg.Rect.create(svgCanvas);
+    var svgPolygon = xrx.svg.Polygon.create(svgCanvas);
+    var svgPolyline = xrx.svg.Polyline.create(svgCanvas);
+    svgCanvas.addChild(svgCircle);
+    svgCanvas.addChild(svgImage);
+    svgCanvas.addChild(svgRect);
+    svgCanvas.addChild(svgPolygon);
+    svgCanvas.addChild(svgPolyline);
+    assertEquals(5, svgCanvas.getChildren().length);
+    assertEquals(5, goog.dom.getChildren(svgCanvas.getElement()).length);
+    svgCanvas.removeChildAt(1);
+    assertEquals(4, svgCanvas.getChildren().length);
+    assertEquals(4, goog.dom.getChildren(svgCanvas.getElement()).length);
+    svgCanvas.removeChildren();
+    assertEquals(0, svgCanvas.getChildren().length);
+    assertEquals(0, goog.dom.getChildren(svgCanvas.getElement()).length);
+  }
+  // VML
+  var vmlCanvas = getCanvasVml('vmlRaphael');
+  var vmlCircle = xrx.vml.Circle.create(vmlCanvas);
+  var vmlImage = xrx.vml.Image.create(vmlCanvas);
+  var vmlRect = xrx.vml.Rect.create(vmlCanvas);
+  var vmlPolygon = xrx.vml.Polygon.create(vmlCanvas);
+  var vmlPolyline = xrx.vml.Polyline.create(vmlCanvas);
+  vmlCanvas.addChild(vmlCircle);
+  vmlCanvas.addChild(vmlImage);
+  vmlCanvas.addChild(vmlRect);
+  vmlCanvas.addChild(vmlPolygon);
+  vmlCanvas.addChild(vmlPolyline);
+  assertEquals(5, vmlCanvas.getChildren().length);
+  assertEquals(5 + 2, goog.dom.getChildren(vmlCanvas.getElement()).length);
+  vmlCanvas.removeChildAt(1);
+  assertEquals(4, vmlCanvas.getChildren().length);
+  assertEquals(4 + 2, goog.dom.getChildren(vmlCanvas.getElement()).length);
+  vmlCanvas.removeChildren();
+  assertEquals(0, vmlCanvas.getChildren().length);
+  assertEquals(0 + 2, goog.dom.getChildren(vmlCanvas.getElement()).length);
 };
 
 </script>
