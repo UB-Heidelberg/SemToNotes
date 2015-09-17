@@ -66,7 +66,7 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
 
   /**
    * The graphics canvas.
-   * @type {xrx.engine.Canvas}
+   * @type {xrx.shape.Canvas}
    * @private
    */
   this.canvas_;
@@ -81,7 +81,7 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
   /**
    * A shield in front of the canvas needed by the SVG and the
    * VML rendering engine for smooth dragging of elements.
-   * @type {?}
+   * @type {xrx.shape.Rect}
    */
   this.shield_;
 
@@ -559,7 +559,7 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  return; // TODO
+  return;
   this.shield_ = this.engine_.getRenderer().Rect.create(this.canvas_);
   this.shield_.setX(0);
   this.shield_.setY(0);

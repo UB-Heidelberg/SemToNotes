@@ -1,5 +1,6 @@
 /**
- * @fileoverview
+ * @fileoverview A class representing an engine-independent
+ * image graphic.
  */
 
 goog.provide('xrx.shape.Image');
@@ -12,25 +13,35 @@ goog.require('xrx.shape.Stylable');
 
 
 /**
+ * A class representing an engine-independent image graphic.
  * @constructor
  */
-xrx.shape.Image = function(drawing) {
+xrx.shape.Image = function(canvas) {
 
-  goog.base(this, drawing, new xrx.geometry.Rect());
+  goog.base(this, canvas, new xrx.geometry.Rect());
 
+  /**
+   * The HTML image element.
+   * @type {HTMLImage}
+   */
   this.image_;
 };
 goog.inherits(xrx.shape.Image, xrx.shape.Stylable);
 
 
 
+/**
+ * The engine class used to render this image graphic.
+ * @type {string}
+ * @const
+ */
 xrx.shape.Image.prototype.engineClass_ = 'Image';
 
 
 
 /**
  * Returns the HTML image element used to create the image.
- * @return {Image} The HTML image element.
+ * @return {HTMLImage} The HTML image element.
  */
 xrx.shape.Image.prototype.getImage = function() {
   return this.image_;
@@ -40,7 +51,7 @@ xrx.shape.Image.prototype.getImage = function() {
 
 /**
  * Sets a new HTML image element.
- * @param {Image} image The HTML image element.
+ * @param {HTMLImage} image The HTML image element.
  */
 xrx.shape.Image.prototype.setImage = function(image) {
   this.image_ = image;
@@ -50,6 +61,19 @@ xrx.shape.Image.prototype.setImage = function(image) {
 
 
 
-xrx.shape.Image.create = function(drawing) {
-  return new xrx.shape.Circle(drawing);
+/**
+ * Draws this image.
+ */
+xrx.shape.Image.prototype.draw = function() {
+  this.engineElement_.draw(this.image_);
+};
+
+
+
+/**
+ * Creates a new image graphic.
+ * @param {xrx.shape.Canvas} The parent canvas object.
+ */
+xrx.shape.Image.create = function(canvas) {
+  return new xrx.shape.Image(canvas);
 };

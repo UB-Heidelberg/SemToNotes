@@ -1,19 +1,27 @@
 /**
- * @fileoverview Class representing a container graphic.
+ * @fileoverview An abstract class representing a graphic container.
  */
 
 goog.provide('xrx.shape.Container');
 
 
 
-xrx.shape.Container = function() {
+goog.require('xrx.shape.Shape');
 
-  /**
-   * The child elements of this container.
-   * @type {Array<xrx.shape.Shape>}
-   */
-  this.child_ = [];
+
+
+/**
+ * An abstract class representing a graphic container.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @constructor
+ */
+xrx.shape.Container = function(canvas) {
+
+  goog.base(this, canvas);
+
+  this.childs_ = [];
 };
+goog.inherits(xrx.shape.Container, xrx.shape.Shape);
 
 
 
@@ -22,7 +30,7 @@ xrx.shape.Container = function() {
  * @return {Array<xrx.shape.Shape>} The child elements.
  */
 xrx.shape.Container.prototype.getChildren = function() {
-  return this.child_;
+  return this.childs_;
 };
 
 
@@ -33,9 +41,9 @@ xrx.shape.Container.prototype.getChildren = function() {
  */
 xrx.shape.Container.prototype.addChildren = function(children) {
   if (!goog.isArray(children)) children = [children];
-  var child;
   for(var i = 0, len = children.length; i < len; i++) {
-    this.child_.push(children[i]);
+    this.childs_.push(children[i]);
+    this.engineElement_.addChild(children[i].getEngineElement());
   }
 };
 
@@ -45,7 +53,8 @@ xrx.shape.Container.prototype.addChildren = function(children) {
  * Removes all elements from this container.
  */
 xrx.shape.Container.prototype.removeChildren = function() {
-  this.child_ = [];
+  this.childs_ = [];
+  this.engineElement_.removeChildren();
 };
 
 
@@ -55,5 +64,6 @@ xrx.shape.Container.prototype.removeChildren = function() {
  * @param {number} index The index.
  */
 xrx.shape.Container.prototype.removeChildAt = function(index) {
-  this.child_.splice(index, 1);
+  this.childs_.splice(index, 1);
+  this.engineElement_.removeChildAt(index);
 };

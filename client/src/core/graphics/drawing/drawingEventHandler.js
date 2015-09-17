@@ -70,7 +70,7 @@ xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
       shapes = layer.getShapes() || [];
       for (var j = shapes.length - 1; j >= 0; j--) {
         shape = shapes[j];
-        if (shape.getEngineShape().getGeometry().containsPoint(point)) {
+        if (shape.getEngineElement().getGeometry().containsPoint(point)) {
           found = true;
           break;
         }

@@ -1,5 +1,5 @@
 /**
- * @fileoverview A class describing style information for shapes.
+ * @fileoverview An abstract class describing style information for shapes.
  */
 
 goog.provide('xrx.shape.Stylable');
@@ -11,11 +11,12 @@ goog.require('xrx.shape.Shape');
 
 
 /**
+ * An abstract class describing style information for shapes.
  * @constructor
  */
-xrx.shape.Stylable = function(drawing, geometry) {
+xrx.shape.Stylable = function(canvas, geometry) {
 
-  goog.base(this, drawing);
+  goog.base(this, canvas);
 
   /**
    * Object describing the stroke style.
@@ -34,7 +35,7 @@ xrx.shape.Stylable = function(drawing, geometry) {
   };
 
   /**
-   * Object describing the geometry of the stylable element.
+   * Object describing the geometry of this stylable element.
    * @type {xrx.geometry.Geometry}
    */
   this.geometry_ = geometry;
@@ -44,7 +45,7 @@ goog.inherits(xrx.shape.Stylable, xrx.shape.Shape);
 
 
 /**
- * Returns the geometry object of the stylable element.
+ * Returns the geometry object of this stylable element.
  * @return {xrx.geometry.Geometry} The geometry object.
  */
 xrx.shape.Stylable.prototype.getGeometry = function() {
@@ -54,7 +55,7 @@ xrx.shape.Stylable.prototype.getGeometry = function() {
 
 
 /**
- * Sets the coordinates for the polygon.
+ * Sets the coordinates for this stylable element.
  * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.shape.Stylable.prototype.setCoords = function(coords) {
@@ -64,7 +65,7 @@ xrx.shape.Stylable.prototype.setCoords = function(coords) {
 
 
 /**
- * Returns the coordinates of the polygon.
+ * Returns the coordinates of this stylable element.
  * @return {Array<Array<number>>} The coordinates.
  */
 xrx.shape.Stylable.prototype.getCoords = function(coords) {
@@ -98,7 +99,7 @@ xrx.shape.Stylable.prototype.setAll = function(stylable) {
 
 
 /**
- * Returns the stroke width of the stylable element.
+ * Returns the stroke width of this stylable element.
  * @return {number} The stroke width.
  */
 xrx.shape.Stylable.prototype.getStrokeWidth = function() {
@@ -108,7 +109,7 @@ xrx.shape.Stylable.prototype.getStrokeWidth = function() {
 
 
 /**
- * Sets the stroke width of the stylable element.
+ * Sets the stroke width of this stylable element.
  * @param {number} width The stroke width.
  */
 xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
@@ -118,7 +119,7 @@ xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
 
 
 /**
- * Returns the stroke color of the stylable element.
+ * Returns the stroke color of this stylable element.
  * @return {string} The stroke color.
  */
 xrx.shape.Stylable.prototype.getStrokeColor = function() {
@@ -128,7 +129,7 @@ xrx.shape.Stylable.prototype.getStrokeColor = function() {
 
 
 /**
- * Sets the stroke color of the stylable element.
+ * Sets the stroke color of this stylable element.
  * @param {string} color The stroke color.
  */
 xrx.shape.Stylable.prototype.setStrokeColor = function(color) {
@@ -138,7 +139,7 @@ xrx.shape.Stylable.prototype.setStrokeColor = function(color) {
 
 
 /**
- * Returns the fill color of the stylable element.
+ * Returns the fill color of this stylable element.
  * @return {string} The fill color.
  */
 xrx.shape.Stylable.prototype.getFillColor = function() {
@@ -148,7 +149,7 @@ xrx.shape.Stylable.prototype.getFillColor = function() {
 
 
 /**
- * Sets the fill color of the stylable element.
+ * Sets the fill color of this stylable element.
  * @param {string} color The fill color.
  */
 xrx.shape.Stylable.prototype.setFillColor = function(color) {
@@ -158,7 +159,7 @@ xrx.shape.Stylable.prototype.setFillColor = function(color) {
 
 
 /**
- * Returns the fill opacity of the stylable element.
+ * Returns the fill opacity of this stylable element.
  * @return {number} The fill opacity.
  */
 xrx.shape.Stylable.prototype.getFillOpacity = function() {
@@ -168,7 +169,7 @@ xrx.shape.Stylable.prototype.getFillOpacity = function() {
 
 
 /**
- * Sets the fill opacity of the stylable element.
+ * Sets the fill opacity of this stylable element.
  * @param {number} factor The fill opacity.
  */
 xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {

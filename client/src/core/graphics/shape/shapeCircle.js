@@ -1,5 +1,6 @@
 /**
- * @fileoverview
+ * @fileoverview A class representing an engine-independent
+ * circle graphic.
  */
 
 goog.provide('xrx.shape.Circle');
@@ -12,22 +13,28 @@ goog.require('xrx.shape.Stylable');
 
 
 /**
+ * A class representing an engine-independent circle graphic.
  * @constructor
  */
-xrx.shape.Circle = function(drawing) {
+xrx.shape.Circle = function(canvas) {
 
-  goog.base(this, drawing, new xrx.geometry.Circle());
+  goog.base(this, canvas, new xrx.geometry.Circle());
 };
 goog.inherits(xrx.shape.Circle, xrx.shape.Stylable);
 
 
 
+/**
+ * The engine class used to render this circle.
+ * @type {string}
+ * @const
+ */
 xrx.shape.Circle.prototype.engineClass_ = 'Circle';
 
 
 
 /**
- * Returns the center point of the circle.
+ * Returns the center point of this circle.
  * @return {Array<number>}
  */
 xrx.shape.Circle.prototype.getCenter = function() {
@@ -37,9 +44,9 @@ xrx.shape.Circle.prototype.getCenter = function() {
 
 
 /**
- * Sets the centre point of a circle.
- * @param {number} cx The X coordinate of the centre point.
- * @param {number} cy The Y coordinate of the centre point.
+ * Sets the center point of this circle.
+ * @param {number} cx The X coordinate of the center point.
+ * @param {number} cy The Y coordinate of the center point.
  */
 xrx.shape.Circle.prototype.setCenter = function(cx, cy) {
   this.geometry_.cx = cx;
@@ -49,7 +56,7 @@ xrx.shape.Circle.prototype.setCenter = function(cx, cy) {
 
 
 /**
- * Returns the radius of the circle.
+ * Returns the radius of this circle.
  * @return {number} The radius.
  */
 xrx.shape.Circle.prototype.getRadius = function() {
@@ -59,7 +66,7 @@ xrx.shape.Circle.prototype.getRadius = function() {
 
 
 /**
- * Sets the radius of the circle.
+ * Sets the radius of this circle.
  * @param {number} r The radius.
  */
 xrx.shape.Circle.prototype.setRadius = function(r) {
@@ -68,6 +75,22 @@ xrx.shape.Circle.prototype.setRadius = function(r) {
 
 
 
-xrx.shape.Circle.create = function(drawing) {
-  return new xrx.shape.Circle(drawing);
+/**
+ * Draws this circle.
+ */
+xrx.shape.Circle.prototype.draw = function() {
+  var center = this.getCenter();
+  this.engineElement_.draw(center[0], center[1], this.getRadius(),
+      this.getFillColor(), this.getFillOpacity(), this.getStrokeColor(),
+      this.getStrokeWidth());
+};
+
+
+
+/**
+ * Creates a new circle.
+ * @param {xrx.shape.Canvas} The parent canvas object.
+ */
+xrx.shape.Circle.create = function(canvas) {
+  return new xrx.shape.Circle(canvas);
 };

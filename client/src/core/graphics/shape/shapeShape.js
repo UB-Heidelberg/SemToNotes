@@ -1,32 +1,38 @@
 /**
- * @fileoverview Super-class representing a shape.
+ * @fileoverview Super-class representing an engine-independent
+ * shape.
  */
 
 goog.provide('xrx.shape.Shape');
 
 
 
+goog.require('xrx.engine.Engines');
+
+
+
 /**
- * Super-class representing a shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * Super-class representing an engine-independent
+ * shape.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
  * @constructor
  */
-xrx.shape.Shape = function(drawing) {
+xrx.shape.Shape = function(canvas) {
 
   /**
-   * The parent drawing object.
-   * @type {xrx.drawing.Drawing}
+   * The parent canvas object.
+   * @type {xrx.shape.Canvas}
    */
-  this.drawing_ = drawing;
+  this.canvas_ = canvas;
 
   /**
-   * Pointer to the underlying engine rendering shape.
-   * @type {Object}
+   * Pointer to the underlying engine shape.
+   * @type {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
    */
-  this.engineShape_;
+  this.engineElement_;
 
   /**
-   * Whether the shape is set modifiable. Defaults to true.
+   * Whether this shape is set modifiable. Defaults to true.
    * @type {boolean}
    */
   this.isModifiable_ = true;
@@ -37,27 +43,12 @@ xrx.shape.Shape = function(drawing) {
 
 
 /**
- * Returns the parent drawing object.
- * @return {xrx.drawing.Drawing} The parent drawing object.
+ * Returns the underlying engine element.
+ * @return {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
+ * The engine element.
  */
-xrx.shape.Shape.prototype.getDrawing = function() {
-  return this.drawing_;
-};
-
-
-
-/**
- * Returns the underlying engine rendering shape.
- * @return {Object} The rendering shape.
- */
-xrx.shape.Shape.prototype.getEngineShape = function() {
-  return this.engineShape_;
-};
-
-
-
-xrx.shape.Shape.prototype.draw = function() {
-  this.engineShape_.draw(this);
+xrx.shape.Shape.prototype.getEngineElement = function() {
+  return this.engineElement_;
 };
 
 
@@ -65,7 +56,7 @@ xrx.shape.Shape.prototype.draw = function() {
 /**
  * Sets whether the shape shall be modifiable or not. Defaults
  * to true.
- * @param {boolean} Whether modifiable or not, defaults to true.
+ * @param {boolean} modifiable Whether modifiable or not.
  */
 xrx.shape.Shape.prototype.setModifiable = function(modifiable) {
   modifiable === false ? this.isModifiable_ = false : this.isModifiable_ = true;
@@ -84,11 +75,11 @@ xrx.shape.Shape.prototype.isModifiable = function() {
 
 
 /**
- * Returns a copy of the shape's coordinate object.
- * @return {Array<Array<number>>} A new coordinate object.
+ * Returns a copy of the shape's coordinate array.
+ * @return {Array<Array<number>>} A new coordinate array.
  */
 xrx.shape.Shape.prototype.getCoordsCopy = function() {
-  var coords = this.engineShape_.getCoords();
+  var coords = this.engineElement_.getCoords();
   var len = coords.length;
   var newCoords = new Array(len);
   var coord;
@@ -104,20 +95,18 @@ xrx.shape.Shape.prototype.getCoordsCopy = function() {
 
 /**
  * Returns an array of vertex dragging elements according to the number of 
- * vertexes of the shape.
- * @return {xrx.shape.VertexDragger} The vertex dragging elements.
+ * vertexes of this shape.
+ * @return {Array<xrx.shape.VertexDragger>} The vertex dragging elements.
  */
 xrx.shape.Shape.prototype.getVertexDraggers = function() {
   var coords = this.getCoords();
   var draggers = [];
   var dragger;
-
   for(var i = 0, len = coords.length; i < len; i++) {
     dragger = xrx.shape.VertexDragger.create(this.drawing_);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }
-
   return draggers;
 };
 
@@ -127,6 +116,6 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
  * @private
  */
 xrx.shape.Shape.prototype.create_ = function() {
-  var primitiveShape = this.drawing_.getGraphics()[this.engineClass_];
-  this.engineShape_ = primitiveShape.create(this.drawing_.getCanvas());
+  var primitiveShape = xrx[this.canvas_.getEngine()][this.engineClass_];
+  this.engineElement_ = primitiveShape.create(this.canvas_.getEngineElement());
 };

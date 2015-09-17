@@ -6,6 +6,10 @@ goog.provide('xrx.drawing.Layer');
 
 
 
+goog.require('xrx.shape.Group');
+
+
+
 /**
  * A class representing a layer of a drawing canvas.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
@@ -97,7 +101,7 @@ xrx.drawing.Layer.prototype.addShapes = function(shapes) {
   var primitiveShapes = [];
   for(var i = 0, len = shapes.length; i < len; i++) {
     this.shapes_.push(shapes[i]);
-    primitiveShapes.push(shapes[i].getEngineShape());
+    primitiveShapes.push(shapes[i].getEngineElement());
   }
   this.group_.addChildren(primitiveShapes);
 };
@@ -136,7 +140,5 @@ xrx.drawing.Layer.prototype.removeShape = function(shape) {
  * @private
  */
 xrx.drawing.Layer.prototype.create_ = function() {
-  var graphics = this.drawing_.getGraphics();
-  var canvas = this.drawing_.getCanvas();
-  this.group_ = graphics.Group.create(canvas);
+  this.group_ = xrx.shape.Group.create(this.drawing_);
 };

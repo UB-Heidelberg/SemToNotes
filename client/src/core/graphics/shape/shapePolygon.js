@@ -1,6 +1,6 @@
 /**
  * @fileoverview Classes representing a modifiable and creatable
- *     polygon shape.
+ *     engine-independent polygon shape.
  */
 
 goog.provide('xrx.shape.Polygon');
@@ -21,7 +21,7 @@ goog.require('xrx.shape.VertexDragger');
 
 
 /**
- * A class representing a polygon shape.
+ * A class representing an engine-independent polygon shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
  */
@@ -43,11 +43,21 @@ xrx.shape.Polygon.prototype.engineClass_ = 'Polygon';
 
 
 /**
- * Creates a new polygon shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * Draws this polygon shape.
  */
-xrx.shape.Polygon.create = function(drawing) {
-  return new xrx.shape.Polygon(drawing);
+xrx.shape.Polygon.prototype.draw = function() {
+  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
+      this.getFillOpacity(), this.getStrokeColor(), this.getStrokeWidth());
+};
+
+
+
+/**
+ * Creates a new polygon shape.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ */
+xrx.shape.Polygon.create = function(canvas) {
+  return new xrx.shape.Polygon(canvas);
 };
 
 

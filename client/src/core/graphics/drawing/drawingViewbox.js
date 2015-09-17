@@ -30,7 +30,7 @@ xrx.drawing.Viewbox = function(drawing) {
 
   /**
    * The group where matrix transformations are applied to.
-   * {?}
+   * {xrx.shape.Group}
    */
   this.group_;
 

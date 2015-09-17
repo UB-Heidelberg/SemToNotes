@@ -50,7 +50,7 @@ goog.inherits(xrx.drawing.Hoverable, xrx.EventTarget);
  */
 xrx.drawing.Hoverable.prototype.pop_ = function() {
   if (this.last_) {
-    this.last_.getEngineShape().setStylable(this.stylable_);
+    this.last_.getEngineElement().setStylable(this.stylable_);
     this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_OUT,
         this.drawing_, this.last_);
   };
@@ -63,7 +63,7 @@ xrx.drawing.Hoverable.prototype.pop_ = function() {
  */
 xrx.drawing.Hoverable.prototype.push_ = function(shape) {
   if (shape) {
-    this.stylable_.setAll(shape.getEngineShape().getStylable());
+    this.stylable_.setAll(shape.getEngineElement().getStylable());
     this.last_ = shape;
     this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_IN,
         this.drawing_, shape);

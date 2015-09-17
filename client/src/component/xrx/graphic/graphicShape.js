@@ -40,28 +40,28 @@ goog.inherits(xrx.graphic.Shape, xrx.mvc.ComponentView);
 
 xrx.graphic.Shape.prototype.setStrokeWidth = function(width) {
   if (width === undefined || width === null) return;
-  this.shape_.getEngineShape().setStrokeWidth(parseFloat(width));
+  this.shape_.getEngineElement().setStrokeWidth(parseFloat(width));
 };
 
 
 
 xrx.graphic.Shape.prototype.setStrokeColor = function(color) {
   if (color === undefined || color === null) return;
-  this.shape_.getEngineShape().setStrokeColor('' + color);
+  this.shape_.getEngineElement().setStrokeColor('' + color);
 };
 
 
 
 xrx.graphic.Shape.prototype.setFillColor = function(color) {
   if (color === undefined || color === null) return;
-  this.shape_.getEngineShape().setFillColor('' + color);
+  this.shape_.getEngineElement().setFillColor('' + color);
 };
 
 
 
 xrx.graphic.Shape.prototype.setFillOpacity = function(factor) {
   if (factor === undefined || factor === null) return;
-  this.shape_.getEngineShape().setFillOpacity(parseFloat(factor));
+  this.shape_.getEngineElement().setFillOpacity(parseFloat(factor));
 };
 
 

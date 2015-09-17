@@ -320,7 +320,7 @@ function test8removeChildren() {
     canvasCanvas.removeChildren();
     assertEquals(0, canvasCanvas.getChildren().length);
     // SVG
-    var svgCanvas = getCanvasSvg('svgRaphael');
+    var svgCanvas = getCanvasSvg(goog.dom.createElement('div'));
     var svgCircle = xrx.svg.Circle.create(svgCanvas);
     var svgImage = xrx.svg.Image.create(svgCanvas);
     var svgRect = xrx.svg.Rect.create(svgCanvas);
@@ -341,7 +341,7 @@ function test8removeChildren() {
     assertEquals(0, goog.dom.getChildren(svgCanvas.getElement()).length);
   }
   // VML
-  var vmlCanvas = getCanvasVml('vmlRaphael');
+  var vmlCanvas = getCanvasVml(goog.dom.createElement('div'));
   var vmlCircle = xrx.vml.Circle.create(vmlCanvas);
   var vmlImage = xrx.vml.Image.create(vmlCanvas);
   var vmlRect = xrx.vml.Rect.create(vmlCanvas);

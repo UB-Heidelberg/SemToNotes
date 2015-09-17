@@ -1,6 +1,6 @@
 /**
  * @fileoverview Classes representing a modifiable and creatable
- *     rectangle shape.
+ *     engine-independent rectangle shape.
  */
 
 goog.provide('xrx.shape.Rect');
@@ -18,13 +18,13 @@ goog.require('xrx.shape.VertexDragger');
 
 
 /**
- * A class representing a rectangle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * A class representing an engine-independent rectangle shape.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object. 
  * @constructor
  */
-xrx.shape.Rect = function(drawing) {
+xrx.shape.Rect = function(canvas) {
 
-  goog.base(this, drawing, new xrx.geometry.Path(4));
+  goog.base(this, canvas, new xrx.geometry.Path(4));
 };
 goog.inherits(xrx.shape.Rect, xrx.shape.Stylable);
 
@@ -40,7 +40,7 @@ xrx.shape.Rect.prototype.engineClass_ = 'Polygon';
 
 
 /**
- * Sets the X coordinate of the rectangle.
+ * Sets the X coordinate of this rectangle.
  * @param {number} x The coordinate.
  */
 xrx.shape.Rect.prototype.setX = function(x) {
@@ -51,7 +51,7 @@ xrx.shape.Rect.prototype.setX = function(x) {
 
 
 /**
- * Returns the X coordinate of the rectangle.
+ * Returns the X coordinate of this rectangle.
  * @return {number} The coordinate.
  */
 xrx.shape.Rect.prototype.getX = function() {
@@ -61,7 +61,7 @@ xrx.shape.Rect.prototype.getX = function() {
 
 
 /**
- * Sets the Y coordinate of the rectangle.
+ * Sets the Y coordinate of this rectangle.
  * @param {number} y The coordinate.
  */
 xrx.shape.Rect.prototype.setY = function(y) {
@@ -72,7 +72,7 @@ xrx.shape.Rect.prototype.setY = function(y) {
 
 
 /**
- * Returns the Y coordinate of the rectangle.
+ * Returns the Y coordinate of this rectangle.
  * @return {number} The coordinate.
  */
 xrx.shape.Rect.prototype.getY = function() {
@@ -82,7 +82,7 @@ xrx.shape.Rect.prototype.getY = function() {
 
 
 /**
- * Sets the width of the rectangle.
+ * Sets the width of this rectangle.
  * @param {number} width The width.
  */
 xrx.shape.Rect.prototype.setWidth = function(width) {
@@ -94,7 +94,7 @@ xrx.shape.Rect.prototype.setWidth = function(width) {
 
 
 /**
- * Returns the width of the rectangle.
+ * Returns the width of this rectangle.
  * @return {number} The width.
  */
 xrx.shape.Rect.prototype.getWidth = function() {
@@ -105,7 +105,7 @@ xrx.shape.Rect.prototype.getWidth = function() {
 
 
 /**
- * Sets the height of the rectangle.
+ * Sets the height of this rectangle.
  * @param {height} height The height.
  */
 xrx.shape.Rect.prototype.setHeight = function(height) {
@@ -117,7 +117,7 @@ xrx.shape.Rect.prototype.setHeight = function(height) {
 
 
 /**
- * Returns the height of the rectangle.
+ * Returns the height of this rectangle.
  * @return {number} The height.
  */
 xrx.shape.Rect.prototype.getHeight = function() {
@@ -128,11 +128,21 @@ xrx.shape.Rect.prototype.getHeight = function() {
 
 
 /**
- * Creates a new rectangle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * Draws this rectangle.
  */
-xrx.shape.Rect.create = function(drawing) {
-  var rect = new xrx.shape.Rect(drawing);
+xrx.shape.Rect.prototype.draw = function() {
+  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
+      this.getFillOpacity(), this.getStrokeColor(), this.getStrokeWidth());
+};
+
+
+
+/**
+ * Creates a new rectangle shape.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ */
+xrx.shape.Rect.create = function(canvas) {
+  var rect = new xrx.shape.Rect(canvas);
   rect.setCoords([[0,0],[0,0],[0,0],[0,0]]);
   return rect;
 };
