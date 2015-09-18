@@ -65,7 +65,7 @@ xrx.drawing.Viewbox.prototype.getDrawing = function() {
 
 /**
  * Returns the group of the view-box.
- * @return {Object} The group.
+ * @return {xrx.shape.Group} The group.
  */
 xrx.drawing.Viewbox.prototype.getGroup = function() {
   return this.group_;
@@ -156,5 +156,5 @@ xrx.drawing.Viewbox.prototype.resetState_ = function() {
  * @private
  */
 xrx.drawing.Viewbox.prototype.create_ = function() {
-  this.group_ = xrx.shape.Group.create(this.drawing_);
+  this.group_ = xrx.shape.Group.create(this.drawing_.getCanvas());
 };

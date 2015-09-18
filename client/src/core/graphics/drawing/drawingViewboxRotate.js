@@ -192,6 +192,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
   }
   if (fixPoint === undefined)
       fixPoint = this.getPivotPoint_(xrx.drawing.Orientation.C, reverse, true);
+  
   this.ctm_.rotate(goog.math.toRadians(angle), fixPoint[0], fixPoint[1]);
 
   this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);

@@ -6,7 +6,15 @@ goog.provide('xrx.geometry.Box');
 
 
 
-xrx.geometry.Box = function() {};
+goog.require('xrx.geometry.Geometry');
+
+
+
+xrx.geometry.Box = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.geometry.Box, xrx.geometry.Geometry);
 
 
 

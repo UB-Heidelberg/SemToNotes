@@ -14,11 +14,14 @@ goog.require('xrx.shape.Stylable');
 
 /**
  * A class representing an engine-independent image graphic.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Image = function(canvas) {
+xrx.shape.Image = function(canvas, engineElement) {
 
-  goog.base(this, canvas, new xrx.geometry.Rect());
+  goog.base(this, canvas, engineElement, new xrx.geometry.Rect());
 
   /**
    * The HTML image element.
@@ -27,15 +30,6 @@ xrx.shape.Image = function(canvas) {
   this.image_;
 };
 goog.inherits(xrx.shape.Image, xrx.shape.Stylable);
-
-
-
-/**
- * The engine class used to render this image graphic.
- * @type {string}
- * @const
- */
-xrx.shape.Image.prototype.engineClass_ = 'Image';
 
 
 
@@ -62,10 +56,30 @@ xrx.shape.Image.prototype.setImage = function(image) {
 
 
 /**
+ * Returns the height of this image.
+ * @return {number} The height.
+ */
+xrx.shape.Image.prototype.getHeight = function() {
+  return this.geometry_.height;
+};
+
+
+
+/**
+ * Returns the width of this image.
+ * @return {number} The width.
+ */
+xrx.shape.Image.prototype.getWidth = function() {
+  return this.geometry_.width;
+};
+
+
+
+/**
  * Draws this image.
  */
 xrx.shape.Image.prototype.draw = function() {
-  this.engineElement_.draw(this.image_);
+  if (this.image_) this.engineElement_.draw(this.image_);
 };
 
 
@@ -75,5 +89,17 @@ xrx.shape.Image.prototype.draw = function() {
  * @param {xrx.shape.Canvas} The parent canvas object.
  */
 xrx.shape.Image.create = function(canvas) {
-  return new xrx.shape.Image(canvas);
+  var engineElement;
+  var engine = canvas.getEngine();
+  var canvasElement = canvas.getEngineElement();
+  if (engine.typeOf(xrx.engine.CANVAS)) {
+    engineElement = xrx.canvas.Image.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.SVG)) {
+    engineElement = xrx.svg.Image.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.VML)) {
+    engineElement = xrx.vml.Image.create(canvasElement);
+  } else {
+    throw Error('Unknown engine.');
+  }
+  return new xrx.shape.Image(canvas, engineElement);
 };

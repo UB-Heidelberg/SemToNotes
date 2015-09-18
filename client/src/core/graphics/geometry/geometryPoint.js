@@ -6,7 +6,15 @@ goog.provide('xrx.geometry.Point');
 
 
 
-xrx.geometry.Point = function() {};
+goog.require('xrx.geometry.Geometry');
+
+
+
+xrx.geometry.Point = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.geometry.Point, xrx.geometry.Geometry);
 
 
 

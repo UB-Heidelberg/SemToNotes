@@ -13,11 +13,13 @@ goog.require('xrx.shape.Shape');
 /**
  * An abstract class representing a graphic container.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Container = function(canvas) {
+xrx.shape.Container = function(canvas, engineElement) {
 
-  goog.base(this, canvas);
+  goog.base(this, canvas, engineElement);
 
   this.childs_ = [];
 };

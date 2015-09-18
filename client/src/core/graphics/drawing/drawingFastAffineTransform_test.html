@@ -31,7 +31,9 @@ var output1 = goog.dom.getElement('output1');
 
 // configure drawing canvas
 drawing.setModeView();
-drawing.setBackgroundImage(url);
+drawing.setBackgroundImage(url, function() {
+  drawing.draw();
+});
 
 // buttons
 var rotateLeft = goog.dom.getElement('brotateLeft');

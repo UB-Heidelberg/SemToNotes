@@ -29,7 +29,7 @@ goog.inherits(xrx.drawing.ViewboxTransform, xrx.drawing.ViewboxTranslate);
 
 
 /**
- * Returns the current transformation matrix of the view-box.
+ * Returns the current transformation matrix of this view-box.
  * @return {xrx.drawing.FastAffineTransform} The transformation matrix.
  */
 xrx.drawing.ViewboxTransform.prototype.getCTM = function() {
@@ -100,7 +100,7 @@ xrx.drawing.ViewboxTransform.prototype.fitToHeight = function() {
 /**
  * Makes the view-box size such that it fits into the drawing
  * canvas and optionally centers the view-box.
- * @param {?boolean} opt_center Whether also center the canvas.
+ * @param {?boolean} opt_center Whether to also center the canvas.
  */
 xrx.drawing.ViewboxTransform.prototype.fit = function(opt_center) {
   var width = this.getWidth(true, true);

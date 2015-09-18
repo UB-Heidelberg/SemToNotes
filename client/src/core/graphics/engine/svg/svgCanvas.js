@@ -91,6 +91,16 @@ xrx.svg.Canvas.prototype.setHeight = function(height) {
 
 
 
+xrx.svg.Canvas.prototype.startDrawing = function() {
+};
+
+
+
+xrx.svg.Canvas.prototype.finishDrawing = function() {
+};
+
+
+
 /**
  * Creates a new canvas.
  * @param {HTMLElement} parent The parent HTML element to which the canvas

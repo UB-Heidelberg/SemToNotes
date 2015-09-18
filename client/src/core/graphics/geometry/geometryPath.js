@@ -7,6 +7,7 @@ goog.provide('xrx.geometry.Path');
 
 
 goog.require('xrx.geometry');
+goog.require('xrx.geometry.Geometry');
 
 
 
@@ -14,6 +15,8 @@ goog.require('xrx.geometry');
  * @constructor
  */
 xrx.geometry.Path = function(opt_length) {
+
+  goog.base(this);
 
   this.coords = opt_length === undefined ? [] : new Array(opt_length);
 
@@ -23,6 +26,7 @@ xrx.geometry.Path = function(opt_length) {
     }
   };
 };
+goog.inherits(xrx.geometry.Path, xrx.geometry.Geometry);
 
 
 

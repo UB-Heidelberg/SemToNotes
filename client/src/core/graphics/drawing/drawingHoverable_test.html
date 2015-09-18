@@ -33,6 +33,8 @@ var debugInNum = goog.dom.getElement('debugInNum');
 var debugMoveNum = goog.dom.getElement('debugMoveNum');
 var debugOutNum = goog.dom.getElement('debugOutNum');
 
+
+
 // create drawing canvases and switch them into mode hover
 function initDrawings_() {
   drawingCanvas = new xrx.drawing.Drawing(goog.dom.getElement('drawingCanvas'),
@@ -46,12 +48,14 @@ function initDrawings_() {
   drawingVML.setModeHover();
 };
 
+
+
 // create shapes, add them to and render them on the shapes layers
 function initShapes_() {
   var init = function(drawing) {
-    var rectangle = new xrx.shape.Rect.create(drawing);
+    var rectangle = new xrx.shape.Rect.create(drawing.getCanvas());
     rectangle.setCoords([[10,10],[100,10],[100,110],[10,110]]);
-    var polygon = new xrx.shape.Polygon.create(drawing);
+    var polygon = new xrx.shape.Polygon.create(drawing.getCanvas());
     polygon.setCoords([[200,10],[300,15],[250,110],[240,31],[230,100]]);
     drawing.getLayerShape().addShapes([rectangle,polygon]);
     drawing.draw();
@@ -60,6 +64,8 @@ function initShapes_() {
   init(drawingSVG);
   init(drawingVML);
 };
+
+
 
 // define what shall happen when shape is hovered
 function initHover_() {
@@ -125,6 +131,8 @@ function initHover_() {
     handleOut(this, shape);
   };
 };
+
+
 
 // create test
 function test() {

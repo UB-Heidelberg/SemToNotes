@@ -31,8 +31,6 @@ goog.require('xrx.shape.Shapes');
  */
 xrx.event.HandlerTarget = function() {
 
-  goog.base(this);
-
   this.handler_ = new goog.events.EventHandler(this);
 
   this.keyClick_;
@@ -51,7 +49,6 @@ xrx.event.HandlerTarget = function() {
 
   this.keyWheel_;
 };
-goog.inherits(xrx.event.HandlerTarget, goog.Disposable);
 
 
 
@@ -75,7 +72,8 @@ xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
 
 xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
   var self = this;
-  if (!this.keyClick_) this.keyClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyClick_) this.keyClick_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.CLICK); },
     true,
@@ -87,7 +85,8 @@ xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
 
 xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
   var self = this;
-  if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DBLCLICK); },
     true,
@@ -102,7 +101,8 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
   var self = this;
-  if (!this.keyDown_) this.keyDown_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyDown_) this.keyDown_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DOWN); },
     true,
@@ -125,7 +125,8 @@ xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
   var self = this;
-  if (!this.keyMove_) this.keyMove_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyMove_) this.keyMove_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
     true,
@@ -140,7 +141,8 @@ xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
   var self = this;
-  if (!this.keyHover_) this.keyHover_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyHover_) this.keyHover_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
     true,
@@ -152,7 +154,8 @@ xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
 
 xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
   var self = this;
-  if (!this.keyOut_) this.keyOut_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyOut_) this.keyOut_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.OUT); },
     true,
@@ -167,7 +170,8 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
   var self = this;
-  if (!this.keyUp_) this.keyUp_ = this.handler_.listen(self.canvas_.getEventTarget(),
+  if (!this.keyUp_) this.keyUp_ = this.handler_.listen(
+    self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.UP,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.UP) },
     true,
@@ -180,7 +184,7 @@ xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
 xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   if (goog.userAgent.MOBILE) return;
   var self = this;
-  var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEventTarget());
+  var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEngineElement().getEventTarget());
   if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.event.Type.WHEEL,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.WHEEL) },
     true,

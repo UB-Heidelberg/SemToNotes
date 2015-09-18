@@ -8,6 +8,7 @@ goog.provide('xrx.shape.Shapes');
 
 goog.require('xrx.shape.Canvas');
 goog.require('xrx.shape.Circle');
+goog.require('xrx.shape.Ellipse');
 goog.require('xrx.shape.Group');
 goog.require('xrx.shape.Image');
 goog.require('xrx.shape.Polygon');

@@ -15,22 +15,15 @@ goog.require('xrx.shape.Stylable');
 /**
  * Classes representing an engine-independent poly-line shape.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Polyline = function(canvas) {
+xrx.shape.Polyline = function(canvas, engineElement) {
 
-  goog.base(this, canvas, new xrx.geometry.Path());
+  goog.base(this, canvas, engineElement, new xrx.geometry.Path());
 };
 goog.inherits(xrx.shape.Polyline, xrx.shape.Stylable);
-
-
-
-/**
- * The engine class used to render this shape.
- * @type {string}
- * @const
- */
-xrx.shape.Polyline.prototype.engineClass_ = 'Polyline';
 
 
 
@@ -50,5 +43,17 @@ xrx.shape.Polyline.prototype.draw = function() {
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  */
 xrx.shape.Polyline.create = function(canvas) {
-  return new xrx.shape.Polyline(canvas);
+  var engineElement;
+  var engine = canvas.getEngine();
+  var canvasElement = canvas.getEngineElement();
+  if (engine.typeOf(xrx.engine.CANVAS)) {
+    engineElement = xrx.canvas.Polyline.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.SVG)) {
+    engineElement = xrx.svg.Polyline.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.VML)) {
+    engineElement = xrx.vml.Polyline.create(canvasElement);
+  } else {
+    throw Error('Unknown engine.');
+  }
+  return new xrx.shape.Polyline(canvas, engineElement);
 };

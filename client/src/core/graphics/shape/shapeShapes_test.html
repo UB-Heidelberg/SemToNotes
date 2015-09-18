@@ -25,6 +25,7 @@ border: solid grey 1px;
   <tr>
     <td></td>
 	  <td><span>Circle</span></td>
+	  <td><span>Ellipse</span></td>
 	  <td><span>Group</span></td>
 	  <td><span>Image</span></td>
 	  <td><span>Rectangle</span></td>
@@ -34,6 +35,7 @@ border: solid grey 1px;
   <tr>
     <td><span>Canvas</span></td>
 	  <td id="canvasCircle"></td>
+	  <td id="canvasEllipse"></td>
 	  <td id="canvasGroup"></td>
 	  <td id="canvasImage"></td>
 	  <td id="canvasRect"></td>
@@ -43,6 +45,7 @@ border: solid grey 1px;
   <tr>
     <td><span>SVG</span></td>
 	  <td id="svgCircle"></td>
+	  <td id="svgEllipse"></td>
 	  <td id="svgGroup"></td>
 	  <td id="svgImage"></td>
 	  <td id="svgRect"></td>
@@ -52,6 +55,7 @@ border: solid grey 1px;
   <tr>
     <td><span>VML</span></td>
 	  <td id="vmlCircle"></td>
+	  <td id="vmlEllipse"></td>
 	  <td id="vmlGroup"></td>
 	  <td id="vmlImage"></td>
 	  <td id="vmlRect"></td>
@@ -60,6 +64,7 @@ border: solid grey 1px;
   </tr>
   <tr>
     <td><span>Comment</span></td>
+	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
@@ -75,7 +80,8 @@ border: solid grey 1px;
 
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
-  var canvas = xrx.shape.Canvas.create(divCanvas, xrx.engine.CANVAS);
+  var engine = new xrx.engine.Engine(xrx.engine.CANVAS);
+  var canvas = xrx.shape.Canvas.create(divCanvas, engine);
   canvas.setWidth(100);
   canvas.setHeight(100);
   return canvas;
@@ -85,7 +91,8 @@ function getCanvasCanvas(id) {
 
 function getCanvasSvg(id) {
   var divSvg = goog.dom.getElement(id);
-  var canvas = xrx.shape.Canvas.create(divSvg, xrx.engine.SVG);
+  var engine = new xrx.engine.Engine(xrx.engine.SVG);
+  var canvas = xrx.shape.Canvas.create(divSvg, engine);
   canvas.setWidth(100);
   canvas.setHeight(100);
   return canvas;
@@ -95,7 +102,8 @@ function getCanvasSvg(id) {
 
 function getCanvasVml(id) {
   var divVml = goog.dom.getElement(id);
-  var canvas = xrx.shape.Canvas.create(divVml, xrx.engine.VML);
+  var engine = new xrx.engine.Engine(xrx.engine.VML);
+  var canvas = xrx.shape.Canvas.create(divVml, engine);
   canvas.setWidth(100);
   canvas.setHeight(100);
   return canvas;
@@ -122,9 +130,19 @@ function getCircle(canvas) {
 
 
 
+function getEllipse(canvas) {
+  var ellipse = xrx.shape.Ellipse.create(canvas);
+  ellipse.setCenter(50, 50);
+  ellipse.setRadiusX(10);
+  ellipse.setRadiusY(40);
+  makeStyle(ellipse);
+  return ellipse;
+};
+
+
+
 function getImage(canvas) {
   var img = xrx.shape.Image.create(canvas);
-  console.log(img);
   img.setImage(goog.dom.getElement('testImage'));
   return img;
 };
@@ -181,7 +199,7 @@ function getGroup(canvas) {
 
 
 function test1Shapes() {
-  var shapes = ['Circle', 'Group', 'Image', 'Rect', 'Polygon', 'Polyline'];
+  var shapes = ['Circle', 'Ellipse', 'Group', 'Image', 'Rect', 'Polygon', 'Polyline'];
   var shape;
   for (var i = 0, len = shapes.length; i < len; i++) {
     shape = shapes[i];

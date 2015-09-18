@@ -11,7 +11,7 @@ var _allTests = [
   './core/graphics/drawing/drawingLayerShapeModify_test.html',
   './core/graphics/drawing/drawingViewbox_test.html',
   // core :: graphics :: engine
-  './core/graphics/engine/engine_test.html',
+  './core/graphics/engine/engineElement_test.html',
   './core/graphics/engine/engineEngines_test.html',
   // core :: graphics :: geometry
   './core/graphics/geometry/geometry_test.html',

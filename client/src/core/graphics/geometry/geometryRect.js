@@ -7,6 +7,7 @@ goog.provide('xrx.geometry.Rect');
 
 
 goog.require('xrx.geometry');
+goog.require('xrx.geometry.Geometry');
 goog.require('goog.math.Box');
 
 
@@ -16,6 +17,8 @@ goog.require('goog.math.Box');
  */
 xrx.geometry.Rect = function() {
 
+  goog.base(this);
+
   this.x = 0;
 
   this.y = 0;
@@ -24,6 +27,7 @@ xrx.geometry.Rect = function() {
 
   this.height = 0;
 };
+goog.inherits(xrx.geometry.Rect, xrx.geometry.Geometry);
 
 
 

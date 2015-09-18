@@ -106,6 +106,27 @@ xrx.canvas.Canvas.prototype.setHeight = function(height) {
 
 
 /**
+ * Starts drawing this canvas.
+ */
+xrx.canvas.Canvas.prototype.startDrawing = function() {
+  this.context_.save();
+  this.context_.clearRect(0, 0, this.width_, this.height_);
+  this.context_.beginPath();
+};
+
+
+
+/**
+ * Finishes drawing this canvas.
+ */
+xrx.canvas.Canvas.prototype.finishDrawing = function() {
+  this.context_.closePath();
+  this.context_.restore();
+};
+
+
+
+/**
  * Creates a new canvas.
  * @param {Element} parent The parent HTML element to which the canvas
  *     shall be appended.

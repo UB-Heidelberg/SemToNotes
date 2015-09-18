@@ -40,23 +40,3 @@ xrx.vml.setCoords = function(raphael, coordinates, closePath) {
   if (closePath) s += 'Z';
   raphael.attr({'path': s});
 };
-
-
-
-/**
- * Re-renders a VML canvas according to a transformation matrix using the Raphael
- * library.
- * @param {Raphael} raphael The Raphael canvas to be transformed and rendered.
- * @param {goog.math.AffineTransform} affineTransform Transformation matrix to
- *     be applied.
- */
-xrx.vml.render = function(raphael, affineTransform) {
-  raphael.forEach(function(el) {
-    el.transform(['m', affineTransform.m00_, affineTransform.m10_, affineTransform.m01_,
-        affineTransform.m11_, affineTransform.m02_, affineTransform.m12_]);
-  });
-};
-
-
-
-goog.exportSymbol('xrx.vml', xrx.vml);

@@ -16,8 +16,8 @@ goog.require('xrx.vml');
 /**
  * A class representing a graphics rendering engine.
  * @param {string} opt_engine The rendering engine to be used. If no
- *     parameter is overloaded, the engine class searches for the
- *     best rendering engine available.
+ *   parameter is overloaded, the engine class searches for the
+ *   best rendering engine available.
  * @constructor
  */
 xrx.engine.Engine = function(opt_engine) {
@@ -28,14 +28,7 @@ xrx.engine.Engine = function(opt_engine) {
    * @type {string}
    * @private
    */
-  this.engine_ = opt_engine;
-
-  /**
-   * Pointer to the rendering engine base class.
-   * @type {(xrx.canvas|xrx.svg|xrx.vml)}
-   * @private
-   */
-  this.renderer_;
+  this.name_ = opt_engine;
 
   /**
    * Indicates whether a rendering engine could be initialized
@@ -51,23 +44,23 @@ xrx.engine.Engine = function(opt_engine) {
 
 
 /**
- * Returns the installed graphics renderer.
- * @return {(xrx.canvas|xrx.svg|xrx.vml)} The renderer.
+ * Returns the name of this rendering engine.
+ * @return {(xrx.canvas|xrx.svg|xrx.vml)} The name.
  */
-xrx.engine.Engine.prototype.getRenderer = function() {
-  return this.renderer_;
+xrx.engine.Engine.prototype.getName = function() {
+  return this.name_;
 };
 
 
 
 /**
- * Tests whether the overloaded renderer name is the currently installed.
+ * Whether the overloaded renderer name is the current.
  * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} name The
  *     renderer name.
  * @return {boolean} Whether the renderer matches.
  */
-xrx.engine.Engine.prototype.hasRenderer = function(name) {
-  return this.engine_ === name;
+xrx.engine.Engine.prototype.typeOf = function(name) {
+  return this.name_ === name;
 }; 
 
 
@@ -87,15 +80,15 @@ xrx.engine.Engine.prototype.isAvailable = function() {
  */
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
   if (xrx.canvas.isSupported()) {
-    this.engine_ = xrx.engine.CANVAS;
+    this.name_ = xrx.engine.CANVAS;
     this.renderer_ = xrx.canvas;
     this.available_ = true;
   } else if (xrx.svg.isSupported()) {
-    this.engine_ = xrx.engine.SVG;
+    this.name_ = xrx.engine.SVG;
     this.renderer_ = xrx.svg;
     this.available_ = true;
   } else if (xrx.vml.isSupported()) {
-    this.engine_ = xrx.engine.VML;
+    this.name_ = xrx.engine.VML;
     this.renderer_ = xrx.vml;
     this.available_ = true;
   } else {
@@ -109,13 +102,13 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
  * @private
  */
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
-  if (this.engine_ === xrx.engine.CANVAS) {
+  if (this.name_ === xrx.engine.CANVAS) {
     this.renderer_ = xrx.canvas;
     this.available_ = xrx.canvas.isSupported();
-  } else if (this.engine_ === xrx.engine.SVG) {
+  } else if (this.name_ === xrx.engine.SVG) {
     this.renderer_ = xrx.svg;
     this.available_ = xrx.svg.isSupported();
-  } else if (this.engine_ === xrx.engine.VML) {
+  } else if (this.name_ === xrx.engine.VML) {
     this.renderer_ = xrx.vml;
     this.available_ = xrx.vml.isSupported();
   } else {
@@ -130,7 +123,7 @@ xrx.engine.Engine.prototype.forceRenderer_ = function() {
  * @private
  */
 xrx.engine.Engine.prototype.init_ = function() {
-  if (this.engine_) {
+  if (this.name_) {
     this.forceRenderer_();
   } else {
     this.findOptimalRenderer_();

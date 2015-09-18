@@ -58,22 +58,3 @@ xrx.svg.setCoords = function(element, coordinates) {
   }
   element.setAttribute('points', s);
 };
-
-
-
-/**
- * Re-renders an SVG element according to a transformation matrix.
- * @param {Element} element The HTML element to be transformed and rendered.
- * @param {goog.math.AffineTransform} affineTransform Transformation matrix to
- *     be applied.
- */
-xrx.svg.render = function(element, affineTransform) {
-  var s = 'matrix(' + affineTransform.m00_ + ',' + affineTransform.m10_ +
-      ',' + affineTransform.m01_ + ',' + affineTransform.m11_ +
-      ',' + affineTransform.m02_ + ',' + affineTransform.m12_ + ')';
-  element.setAttribute('transform', s);  
-};
-
-
-
-goog.exportSymbol('xrx.svg', xrx.svg);

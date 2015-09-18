@@ -6,6 +6,7 @@ goog.provide('xrx.vml.Element');
 
 
 
+goog.require('xrx.engine.Element');
 goog.require('xrx.vml');
 
 
@@ -17,12 +18,15 @@ goog.require('xrx.vml');
  */
 xrx.vml.Element = function(raphael) {
 
+  goog.base(this);
+
   /**
    * The Raphael object.
    * @type {Raphael}
    */
   this.raphael_ = raphael;
 };
+goog.inherits(xrx.vml.Element, xrx.engine.Element);
 
 
 
@@ -42,4 +46,12 @@ xrx.vml.Element.prototype.getRaphael = function() {
  */
 xrx.vml.Element.prototype.getElement = function() {
   return this.raphael_.canvas || this.raphael_.node;
+};
+
+
+
+xrx.vml.Element.prototype.applyTransform = function(matrix) {
+  if (!matrix) return;
+  this.raphael_.transform(['m', matrix.m00_, matrix.m10_, matrix.m01_,
+        matrix.m11_, matrix.m02_, matrix.m12_]);
 };

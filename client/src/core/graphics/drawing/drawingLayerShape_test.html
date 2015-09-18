@@ -7,9 +7,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine');
-  goog.require('xrx.shape.Shapes');
+  goog.require('xrx');
 </script>
 <style>
 .drawing {
@@ -25,28 +23,28 @@
 <table>
   <tr>
     <td>Test</td>
-	<td>Canvas</td>
+	  <td>Canvas</td>
     <td>SVG</td>
     <td>VML</td>
 	<td>Comment</td>
   </tr>
   <tr>
     <td>Add shapes</td>
-	<td><div id="canvasAddShapes" class="drawing"></div></td>
+	  <td><div id="canvasAddShapes" class="drawing"></div></td>
     <td><div id="svgAddShapes" class="drawing"></div></td>
     <td><div id="vmlAddShapes" class="drawing"></div></td>
     <td>A small and a large rectangle plus a polygon.</td>
   </tr>
   <tr>
     <td>Remove shapes</td>
-	<td><div id="canvasRemoveShapes" class="drawing"></div></td>
+	  <td><div id="canvasRemoveShapes" class="drawing"></div></td>
     <td><div id="svgRemoveShapes" class="drawing"></div></td>
     <td><div id="vmlRemoveShapes" class="drawing"></div></td>
     <td>Drawing canvas should be empty.</td>
   </tr>
   <tr>
     <td>Remove one shape</td>
-	<td><div id="canvasRemoveOneShape" class="drawing"></div></td>
+	  <td><div id="canvasRemoveOneShape" class="drawing"></div></td>
     <td><div id="svgRemoveOneShape" class="drawing"></div></td>
     <td><div id="vmlRemoveOneShape" class="drawing"></div></td>
     <td>A small and a large rectangle.</td>
@@ -55,63 +53,74 @@
 
 <script type="text/javascript">
 
+
+
 var rectCoords1 = [[10,10],[10,30],[30,30],[30,10]];
 var rectCoords2 = [[40,40],[40,140],[140,140],[140,40]];
 var polygonCoords = [[15,17],[60,30],[60,98],[40,80],[30,30]];
+
+
 
 function getDrawingCanvas(id, callback) {
   var canvasDiv = goog.dom.getElement(id);
   var canvasDrawing = new xrx.drawing.Drawing(canvasDiv,
     xrx.engine.CANVAS);
-  var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
+  var canvasRect1 = xrx.shape.Rect.create(canvasDrawing.getCanvas());
   canvasRect1.setCoords(rectCoords1);
-  var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
+  var canvasRect2 = xrx.shape.Rect.create(canvasDrawing.getCanvas());
   canvasRect2.setCoords(rectCoords2);
-  var canvasPolygon = xrx.shape.Polygon.create(canvasDrawing);
+  var canvasPolygon = xrx.shape.Polygon.create(canvasDrawing.getCanvas());
   canvasPolygon.setCoords(polygonCoords);
   canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2, canvasPolygon]);
   canvasDrawing.draw();
   return canvasDrawing;
 };
 
+
+
 function getDrawingSvg(id, callback) {
   var svgDiv = goog.dom.getElement(id);
   var svgDrawing = new xrx.drawing.Drawing(svgDiv,
       xrx.engine.SVG);
-  var svgRect1 = xrx.shape.Rect.create(svgDrawing);
+  var svgRect1 = xrx.shape.Rect.create(svgDrawing.getCanvas());
   svgRect1.setCoords(rectCoords1);
-  var svgRect2 = xrx.shape.Rect.create(svgDrawing);
+  var svgRect2 = xrx.shape.Rect.create(svgDrawing.getCanvas());
   svgRect2.setCoords(rectCoords2);
-  var svgPolygon = xrx.shape.Polygon.create(svgDrawing);
+  var svgPolygon = xrx.shape.Polygon.create(svgDrawing.getCanvas());
   svgPolygon.setCoords(polygonCoords);
   svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2, svgPolygon]);
   svgDrawing.draw();
   return svgDrawing;
 };
 
+
+
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
   var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
-      xrx.engine.VML);
-  var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
+      xrx.engine.VML, true);
+  var vmlRect1 = xrx.shape.Rect.create(vmlDrawing.getCanvas());
   vmlRect1.setCoords(rectCoords1);
-  var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);
+  var vmlRect2 = xrx.shape.Rect.create(vmlDrawing.getCanvas());
   vmlRect2.setCoords(rectCoords2);
-  var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing);
+  var vmlPolygon = xrx.shape.Polygon.create(vmlDrawing.getCanvas());
   vmlPolygon.setCoords(polygonCoords);
   vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2, vmlPolygon]);
   vmlDrawing.draw();
   return vmlDrawing;
 };
 
+
+
 function test1AddShapes() {
   if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasAddShapes');
     var svgDrawing = getDrawingSvg('svgAddShapes');
-  } else {
-    var vmlDrawing = getDrawingVml('vmlAddShapes');
   }
+  var vmlDrawing = getDrawingVml('vmlAddShapes');
 };
+
+
 
 function test2RemoveShapes() {
   if (!xrx.engine.isOldIE()) {
@@ -127,16 +136,17 @@ function test2RemoveShapes() {
     assertEquals(0, svgDrawing.getLayerShape().getShapes().length);
     assertEquals(0, canvasDrawing.getLayerShape().getGroup().getChildren().length);
     assertEquals(0, svgDrawing.getLayerShape().getGroup().getChildren().length);
-  } else {
-    var vmlDrawing = getDrawingVml('vmlRemoveShapes');
-
-    vmlDrawing.getLayerShape().removeShapes();
-    vmlDrawing.draw();
-
-    assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
-    assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
   }
+  var vmlDrawing = getDrawingVml('vmlRemoveShapes');
+
+  vmlDrawing.getLayerShape().removeShapes();
+  vmlDrawing.draw();
+
+  assertEquals(0, vmlDrawing.getLayerShape().getGroup().getChildren().length);
+  assertEquals(0, vmlDrawing.getLayerShape().getShapes().length);
 };
+
+
 
 function test3RemoveOneShape() {
   if (!xrx.engine.isOldIE()) {
@@ -155,16 +165,15 @@ function test3RemoveOneShape() {
     assertEquals(2, svgDrawing.getLayerShape().getShapes().length);
     assertEquals(2, canvasDrawing.getLayerShape().getGroup().getChildren().length);
     assertEquals(2, svgDrawing.getLayerShape().getGroup().getChildren().length);
-  } else {
-    var vmlDrawing = getDrawingVml('vmlRemoveOneShape');
-    var vmlPolygon = vmlDrawing.getLayerShape().getShapes()[2];
-
-    vmlDrawing.getLayerShape().removeShape(vmlPolygon);
-    vmlDrawing.draw();
-
-    assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
-    assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
   }
+  var vmlDrawing = getDrawingVml('vmlRemoveOneShape');
+  var vmlPolygon = vmlDrawing.getLayerShape().getShapes()[2];
+
+  vmlDrawing.getLayerShape().removeShape(vmlPolygon);
+  vmlDrawing.draw();
+
+  assertEquals(2, vmlDrawing.getLayerShape().getShapes().length);
+  assertEquals(2, vmlDrawing.getLayerShape().getGroup().getChildren().length);
 };
 
 </script>

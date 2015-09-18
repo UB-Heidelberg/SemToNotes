@@ -25,6 +25,7 @@ goog.require('xrx.drawing.LayerTool');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.Selectable');
+goog.require('xrx.drawing.ShapeIterator');
 goog.require('xrx.drawing.State');
 goog.require('xrx.drawing.Viewbox');
 goog.require('xrx.engine');
@@ -126,6 +127,8 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
    */
   this.viewbox_;
 
+  this.shapeIterator_ = new xrx.drawing.ShapeIterator(this);
+
   // install the canvas
   this.install_(opt_engine, opt_force);
 };
@@ -163,7 +166,7 @@ xrx.drawing.Drawing.prototype.getGraphics = function() {
 
 
 /**
- * Returns the wrapper element around the canvas.
+ * Returns the wrapper element of this drawing canvas.
  * @return {DOMElement} The wrapper.
  */
 xrx.drawing.Drawing.prototype.getElement = function() {
@@ -281,7 +284,7 @@ xrx.drawing.Drawing.prototype.isValidBBox = function(bbox) {
 
 
 xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
-  var img = this.layer_[0].getImage().getImage();
+  var img = this.layer_[0].getImage();
   if (img && img.src === url) return;
   var self = this;
   var imageLoader = new goog.net.ImageLoader();
@@ -290,10 +293,9 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
   tmpImage.src = url;
   goog.events.listen(imageLoader, goog.events.EventType.LOAD, function(e) {
     self.layer_[0].setImage(e.target);
-    self.draw();
     if (callback) callback();
+    self.draw();
   });
-
   imageLoader.addImage('_tmp', tmpImage);
   imageLoader.start();
 };
@@ -302,36 +304,21 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
-  if (this.engine_.hasRenderer(xrx.engine.CANVAS)) {
-    xrx.canvas.render(this.canvas_.getElement(), this.viewbox_.getCTM(),
-        function() {
-          self.layer_[0].draw();
-          self.layer_[1].draw();
-          self.layer_[2].draw();
-          self.layer_[3].draw();
-  });
-  } else if (this.engine_.hasRenderer(xrx.engine.SVG)) {
-    xrx.svg.render(this.viewbox_.getGroup().getElement(),
-        this.viewbox_.getCTM());
-    self.layer_[1].draw();
-    self.layer_[2].draw();
-    self.layer_[3].draw();
-  } else if (this.engine_.hasRenderer(xrx.engine.VML)) {
-    xrx.vml.render(this.viewbox_.getGroup().getRaphael(),
-        this.viewbox_.getCTM());
-    self.layer_[1].draw();
-    self.layer_[2].draw();
-    self.layer_[3].draw();
-    this.viewbox_.getGroup().draw();
-  } else {
-    throw Error('Unknown engine.');
-  }
+  // prepare drawing
+  this.shapeIterator_.next = function(element) {
+    // copy the current view-box matrix to the view-box group
+    if (element === self.getViewbox().getGroup()) {
+      element.setCTM(self.getViewbox().getCTM());
+    }
+  };
+  this.shapeIterator_.iterate(this.getCanvas());
+  this.canvas_.draw();
 };
 
 
 
 /**
- * Returns the mode.
+ * Returns the current mode of this drawing canvas.
  * @return {number} The mode.
  */
 xrx.drawing.Drawing.prototype.getMode = function() {
@@ -492,13 +479,11 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   var self = this;
-
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
-
-  this.canvas_ = this.getGraphics().Canvas.create(self.element_);
+  this.canvas_ = xrx.shape.Canvas.create(self.element_, this.engine_.engine_);
   this.canvas_.setHeight(this.element_.clientHeight);
   this.canvas_.setWidth(this.element_.clientWidth);
 };
@@ -510,7 +495,7 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
  */
 xrx.drawing.Drawing.prototype.installViewbox_ = function() {
   this.viewbox_ = new xrx.drawing.Viewbox(this);
-  this.canvas_.addChild(this.viewbox_.getGroup());
+  this.canvas_.addChildren(this.viewbox_.getGroup());
 };
 
 
@@ -559,18 +544,18 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  return;
-  this.shield_ = this.engine_.getRenderer().Rect.create(this.canvas_);
+  this.shield_ = xrx.shape.Rect.create(this.canvas_);
   this.shield_.setX(0);
   this.shield_.setY(0);
   this.shield_.setWidth(this.element_.clientWidth);
   this.shield_.setHeight(this.element_.clientHeight);
   this.shield_.setFillOpacity(0);
   this.shield_.setStrokeWidth(0);
-  if (this.shield_.raphael_) { // hack for Raphael rendering
-    this.shield_.raphael_.id = 'shield';
+  // hack for Raphael rendering
+  if (this.shield_.getEngineElement() instanceof xrx.vml.Element) {
+    this.shield_.getEngineElement().getRaphael().id = 'shield';
   }
-  this.canvas_.addChild(this.shield_);
+  this.canvas_.addChildren(this.shield_);
 };
 
 

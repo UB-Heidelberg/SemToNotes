@@ -8,8 +8,8 @@ goog.provide('xrx.shape.Canvas');
 
 
 goog.require('xrx.engine');
-goog.require('xrx.shape.Container');
 goog.require('xrx.engine.Engines');
+goog.require('xrx.shape.Container');
 
 
 
@@ -17,11 +17,13 @@ goog.require('xrx.engine.Engines');
  * A class representing an engine-independent graphic canvas.
  * @param {HTMLElement} element The HTML element to create
  *   the canvas.
- * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} engine
- *   Enumeration value representing the engine.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Canvas = function(element, engine) {
+xrx.shape.Canvas = function(element, engine, engineElement) {
+
+  goog.base(this, this, engineElement);
 
   /**
    * HTML element to create the canvas.
@@ -30,11 +32,10 @@ xrx.shape.Canvas = function(element, engine) {
   this.element_ = element;
 
   /**
-   * Enumeration value representing the engine.
+   * The engine to be used for rendering.
+   * @type {xrx.engine.Engine}
    */
   this.engine_ = engine;
-
-  goog.base(this, this);
 };
 goog.inherits(xrx.shape.Canvas, xrx.shape.Container);
 
@@ -51,8 +52,8 @@ xrx.shape.Canvas.prototype.getElement = function() {
 
 
 /**
- * Returns the name of the rendering engine.
- * @return (xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML) The name.
+ * Returns the rendering engine.
+ * @return {xrx.engine.Engine} The rendering engine.
  */
 xrx.shape.Canvas.prototype.getEngine = function() {
   return this.engine_;
@@ -84,19 +85,11 @@ xrx.shape.Canvas.prototype.setWidth = function(width) {
  * Draws this canvas and all its containers and shapes contained.
  */
 xrx.shape.Canvas.prototype.draw = function() {
-  var children = this.childs_;
-  for (var i = 0, len = children.length; i < len; i++) {
-    children[i].draw();
+  this.engineElement_.startDrawing();
+  for (var i = 0, len = this.childs_.length; i < len; i++) {
+    this.childs_[i].draw();
   }
-};
-
-
-
-/**
- * @private
- */
-xrx.shape.Canvas.prototype.create_ = function() {
-  this.engineElement_ = xrx[this.engine_].Canvas.create(this.element_);
+  this.engineElement_.finishDrawing();
 };
 
 
@@ -105,9 +98,18 @@ xrx.shape.Canvas.prototype.create_ = function() {
  * Creates a new canvas element.
  * @param {HTMLElement} element The HTML element on which the canvas
  *   shall be created.
- * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} The
- *   name of the rendering engine.
+ * @param {xrx.engine.Engine} The engine to be used for rendering.
  */
 xrx.shape.Canvas.create = function(element, engine) {
-  return new xrx.shape.Canvas(element, engine);
+  var engineElement;
+  if (engine.typeOf(xrx.engine.CANVAS)) {
+    engineElement = xrx.canvas.Canvas.create(element);
+  } else if (engine.typeOf(xrx.engine.SVG)) {
+    engineElement = xrx.svg.Canvas.create(element);
+  } else if (engine.typeOf(xrx.engine.VML)) {
+    engineElement = xrx.vml.Canvas.create(element);
+  } else {
+    throw Error('Unknown engine.');
+  }
+  return new xrx.shape.Canvas(element, engine, engineElement);
 };

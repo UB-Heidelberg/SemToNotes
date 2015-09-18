@@ -7,6 +7,7 @@ goog.provide('xrx.geometry.Circle');
 
 
 goog.require('xrx.geometry');
+goog.require('xrx.geometry.Geometry');
 
 
 
@@ -15,12 +16,15 @@ goog.require('xrx.geometry');
  */
 xrx.geometry.Circle = function() {
 
+  goog.base(this);
+
   this.cx = 0;
 
   this.cy = 0;
 
   this.r = 0;
 };
+goog.inherits(xrx.geometry.Circle, xrx.geometry.Geometry);
 
 
 

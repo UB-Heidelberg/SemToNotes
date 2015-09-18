@@ -15,9 +15,11 @@ goog.require('xrx.engine.Engines');
  * Super-class representing an engine-independent
  * shape.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Shape = function(canvas) {
+xrx.shape.Shape = function(canvas, engineElement) {
 
   /**
    * The parent canvas object.
@@ -29,7 +31,7 @@ xrx.shape.Shape = function(canvas) {
    * Pointer to the underlying engine shape.
    * @type {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
    */
-  this.engineElement_;
+  this.engineElement_ = engineElement;
 
   /**
    * Whether this shape is set modifiable. Defaults to true.
@@ -37,7 +39,21 @@ xrx.shape.Shape = function(canvas) {
    */
   this.isModifiable_ = true;
 
-  this.create_();
+  /**
+   * The current transformation matrix of this shape.
+   * @type {goog.math.AffineTransform}}
+   */
+  this.ctm_;
+};
+
+
+
+/**
+ * Returns the parent canvas object of this shape.
+ * @return {xrx.shape.Canvas} The canvas object.
+ */
+xrx.shape.Shape.prototype.getCanvas = function() {
+  return this.canvas_;
 };
 
 
@@ -45,10 +61,16 @@ xrx.shape.Shape = function(canvas) {
 /**
  * Returns the underlying engine element.
  * @return {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
- * The engine element.
+ *     The engine element.
  */
 xrx.shape.Shape.prototype.getEngineElement = function() {
   return this.engineElement_;
+};
+
+
+
+xrx.shape.Shape.prototype.setEngineElement = function(element) {
+  this.engineElement_ = element;
 };
 
 
@@ -79,7 +101,7 @@ xrx.shape.Shape.prototype.isModifiable = function() {
  * @return {Array<Array<number>>} A new coordinate array.
  */
 xrx.shape.Shape.prototype.getCoordsCopy = function() {
-  var coords = this.engineElement_.getCoords();
+  var coords = this.getCoords();
   var len = coords.length;
   var newCoords = new Array(len);
   var coord;
@@ -103,7 +125,7 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(this.drawing_);
+    dragger = xrx.shape.VertexDragger.create(this.canvas_);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }
@@ -113,9 +135,9 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
 
 
 /**
- * @private
+ * Sets a transformation matrix for this shape.
+ * @param {goog.math.AffineTransform} matrix The matrix.
  */
-xrx.shape.Shape.prototype.create_ = function() {
-  var primitiveShape = xrx[this.canvas_.getEngine()][this.engineClass_];
-  this.engineElement_ = primitiveShape.create(this.canvas_.getEngineElement());
+xrx.shape.Shape.prototype.setCTM = function(matrix) {
+  this.ctm_ = matrix;
 };

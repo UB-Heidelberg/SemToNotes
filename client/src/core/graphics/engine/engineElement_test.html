@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.engine.Rect, xrx.engine.Polygon, xrx.engine.Circle, xrx.engine.Group, xrx.engine.Image</title>
+<title>XRX++ Unit Tests - xrx.engine.Element</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
@@ -26,43 +26,47 @@ height: 100;
 <table>
   <tr>
     <td></td>
-	  <td><span>Rectangle</span></td>
+	  <td><span>Circle</span></td>
+	  <td><span>Ellipse</span></td>
+	  <td><span>Group</span></td>
+	  <td><span>Image</span></td>
 	  <td><span>Polygon</span></td>
 	  <td><span>Poly-line</span></td>
-	  <td><span>Circle</span></td>
-	  <td><span>Image</span></td>
-	  <td><span>Group</span></td>
 	  <td><span>Raphael test</span></td>
-  </tr>
-  <tr>
-    <td><span>SVG</span></td>
-	  <td id="svgRect"></td>
-	  <td id="svgPolygon"></td>
-	  <td id="svgPolyline"></td>
-	  <td id="svgCircle"></td>
-	  <td id="svgImage"></td>
-	  <td id="svgGroup"></td>
-	  <td id="svgRaphael"></td>
+	  <td><span>Rectangle</span></td>
   </tr>
   <tr>
     <td><span>Canvas</span></td>
-	  <td id="canvasRect"></td>
+	  <td id="canvasCircle"></td>
+	  <td id="canvasEllipse"></td>
+	  <td id="canvasGroup"></td>
+	  <td id="canvasImage"></td>
 	  <td id="canvasPolygon"></td>
 	  <td id="canvasPolyline"></td>
-	  <td id="canvasCircle"></td>
-	  <td id="canvasImage"></td>
-	  <td id="canvasGroup"></td>
 	  <td id="canvasRaphael"></td>
+	  <td id="canvasRect"></td>
+  </tr>
+  <tr>
+    <td><span>SVG</span></td>
+	  <td id="svgCircle"></td>
+	  <td id="svgEllipse"></td>
+	  <td id="svgGroup"></td>
+	  <td id="svgImage"></td>
+	  <td id="svgPolygon"></td>
+	  <td id="svgPolyline"></td>
+	  <td id="svgRaphael"></td>
+	  <td id="svgRect"></td>
   </tr>
   <tr>
     <td><span>VML</span></td>
-	  <td id="vmlRect"></td>
+	  <td id="vmlCircle"></td>
+	  <td id="vmlEllipse"></td>
+	  <td id="vmlGroup"></td>
+	  <td id="vmlImage"></td>
 	  <td id="vmlPolygon"></td>
 	  <td id="vmlPolyline"></td>
-	  <td id="vmlCircle"></td>
-	  <td id="vmlImage"></td>
-	  <td id="vmlGroup"></td>
 	  <td id="vmlRaphael"></td>
+	  <td id="vmlRect"></td>
   </tr>
   <tr>
     <td><span>Comment</span></td>
@@ -73,6 +77,7 @@ height: 100;
 	  <td><span>Look alike?</span></td>
 	  <td><span>Look alike?</span></td>
 	  <td><span>Empty canvas?</span></td>
+	  <td><span>Look alike?</span></td>
   </tr>
 </table>
 <div id="dummy"></div>
@@ -134,7 +139,31 @@ function test1Circle() {
 
 
 
-function test2Group() {
+function test2Ellipse() {
+  if (!xrx.engine.isOldIE()) {
+    // Canvas
+    var canvasCanvas = getCanvasCanvas('canvasEllipse');
+    var canvasEllipse = xrx.canvas.Ellipse.create(canvasCanvas);
+    canvasCanvas.addChild(canvasEllipse);
+    canvasEllipse.draw(50, 50, 110, 20, 'green', .5, 'red', 2);
+    // SVG
+    var svgCanvas = getCanvasSvg('svgEllipse');
+    var svgEllipse = xrx.svg.Ellipse.create(svgCanvas);
+    svgCanvas.addChild(svgEllipse);
+    svgEllipse.draw(50, 50, 110, 20, 'green', .5, 'red', 2);
+    svgEllipse.draw(); // undefined test
+  }
+  // VML
+  var vmlCanvas = getCanvasVml('vmlEllipse');
+  var vmlEllipse = xrx.vml.Ellipse.create(vmlCanvas);
+  vmlCanvas.addChild(vmlEllipse);
+  vmlEllipse.draw(50, 50, 110, 20, 'green', .5, 'red', 2);
+  vmlEllipse.draw(); // undefined test
+};
+
+
+
+function test3Group() {
   var image = goog.dom.getElement('testImage');
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -172,7 +201,7 @@ function test2Group() {
 
 
 
-function test3Image() {
+function test4Image() {
   var image = goog.dom.getElement('testImage');
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -195,7 +224,7 @@ function test3Image() {
 
 
 
-function test4Polygon() {
+function test5Polygon() {
   var coords = [[10,10], [90,0], [0,60]];
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -220,7 +249,7 @@ function test4Polygon() {
 
 
 
-function test5Polyline() {
+function test6Polyline() {
   var coords = [[10,10], [90,0], [10,60], [100,100]];
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -245,7 +274,7 @@ function test5Polyline() {
 
 
 
-function test6Rect() {
+function test7Rect() {
   if (!xrx.engine.isOldIE()) {
     // Canvas
     var canvasCanvas = getCanvasCanvas('canvasRect');
@@ -271,7 +300,7 @@ function test6Rect() {
 
 // make sure that Raphael components are not rendered before
 // function addChild(), respectively addChildren() is called
-function test7Vml() {
+function test8Raphael() {
   var image = goog.dom.getElement('testImage');
   if (!xrx.engine.isOldIE()) {
     // Canvas
@@ -300,7 +329,7 @@ function test7Vml() {
 
 
 
-function test8removeChildren() {
+function test9removeChildren() {
   if (!xrx.engine.isOldIE()) {
     // Canvas
     var canvasCanvas = getCanvasCanvas(goog.dom.createElement('div'));

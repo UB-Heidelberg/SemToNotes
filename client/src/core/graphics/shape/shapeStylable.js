@@ -12,11 +12,16 @@ goog.require('xrx.shape.Shape');
 
 /**
  * An abstract class describing style information for shapes.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
+ * @param {xrx.geometry.Geometry} geometry The geometry object
+ *   of this stylable shape.
  * @constructor
  */
-xrx.shape.Stylable = function(canvas, geometry) {
+xrx.shape.Stylable = function(canvas, engineElement, geometry) {
 
-  goog.base(this, canvas);
+  goog.base(this, canvas, engineElement);
 
   /**
    * Object describing the stroke style.
@@ -113,7 +118,7 @@ xrx.shape.Stylable.prototype.getStrokeWidth = function() {
  * @param {number} width The stroke width.
  */
 xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
-  this.stroke_.width = width || this.stroke_.width;
+  if (width !== undefined) this.stroke_.width = width;
 };
 
 
@@ -173,5 +178,5 @@ xrx.shape.Stylable.prototype.getFillOpacity = function() {
  * @param {number} factor The fill opacity.
  */
 xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {
-  this.fill_.opacity = factor || this.fill_.opacity;
+  if (factor !== undefined) this.fill_.opacity = factor;
 };

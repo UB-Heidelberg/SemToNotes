@@ -27,7 +27,7 @@ goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
  *
  */
 xrx.drawing.EventHandler.prototype.getOffsetPoint = function(clientPoint) {
-  var pos = goog.style.getClientPosition(this.canvas_.getEventTarget());
+  var pos = goog.style.getClientPosition(this.canvas_.getEngineElement().getEventTarget());
   var offset = [clientPoint[0] - pos.x, clientPoint[1] - pos.y];
   return this.getViewbox().getCTM().transformPoint(offset);
 };
@@ -70,7 +70,7 @@ xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
       shapes = layer.getShapes() || [];
       for (var j = shapes.length - 1; j >= 0; j--) {
         shape = shapes[j];
-        if (shape.getEngineElement().getGeometry().containsPoint(point)) {
+        if (shape.getGeometry().containsPoint(point)) {
           found = true;
           break;
         }

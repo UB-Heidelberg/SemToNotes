@@ -22,23 +22,16 @@ goog.require('xrx.shape.VertexDragger');
 
 /**
  * A class representing an engine-independent polygon shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.engine.Element} engineElement The engine element
+ *   used to render this shape.
  * @constructor
  */
-xrx.shape.Polygon = function(drawing) {
+xrx.shape.Polygon = function(canvas, engineElement) {
 
-  goog.base(this, drawing, new xrx.geometry.Path());
+  goog.base(this, canvas, engineElement, new xrx.geometry.Path());
 };
 goog.inherits(xrx.shape.Polygon, xrx.shape.Stylable);
-
-
-
-/**
- * The engine class used to render this shape.
- * @type {string}
- * @const
- */
-xrx.shape.Polygon.prototype.engineClass_ = 'Polygon';
 
 
 
@@ -57,7 +50,19 @@ xrx.shape.Polygon.prototype.draw = function() {
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  */
 xrx.shape.Polygon.create = function(canvas) {
-  return new xrx.shape.Polygon(canvas);
+  var engineElement;
+  var engine = canvas.getEngine();
+  var canvasElement = canvas.getEngineElement();
+  if (engine.typeOf(xrx.engine.CANVAS)) {
+    engineElement = xrx.canvas.Polygon.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.SVG)) {
+    engineElement = xrx.svg.Polygon.create(canvasElement);
+  } else if (engine.typeOf(xrx.engine.VML)) {
+    engineElement = xrx.vml.Polygon.create(canvasElement);
+  } else {
+    throw Error('Unknown engine.');
+  }
+  return new xrx.shape.Polygon(canvas, engineElement);
 };
 
 
@@ -85,14 +90,12 @@ xrx.shape.PolygonModify = function() {};
  * @param {xrx.shape.Polygon} polygon The related polygon shape.
  */
 xrx.shape.PolygonModify.create = function(polygon) {
-  var drawing = polygon.getDrawing();
-  var graphics = drawing.getGraphics();
   var coords = polygon.getCoords();
   var draggers = [];
   var dragger;
 
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(drawing);
+    dragger = xrx.shape.VertexDragger.create(polygon.getCanvas());
     dragger.setCoords([coords[i]]);
     dragger.setPosition(i);
     draggers.push(dragger);
@@ -233,7 +236,3 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     if (this.handleValueChanged) this.handleValueChanged();
   } 
 };
-
-
-
-goog.exportProperty(xrx.shape, 'PolygonCreate', xrx.shape.PolygonCreate);

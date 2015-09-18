@@ -36,9 +36,9 @@ goog.inherits(xrx.vml.Container, xrx.vml.Element);
 xrx.vml.Container.prototype.addChild = function(element) {
   var shield = this.raphael_.paper.getById('shield');
   this.childs_.push(element);
-  if (this.raphael_ instanceof Array) { // Raphael set?
+  if (this.raphael_.type === 'set') {
     this.raphael_.push(element.getRaphael());
-  } else { // Raphael paper?
+  } else {
     if (this.getElement()) goog.dom.append(this.getElement(),
         element.getElement());
   }
@@ -62,7 +62,7 @@ xrx.vml.Container.prototype.getChildren = function() {
  */
 xrx.vml.Container.prototype.removeChildren = function() {
   var len = this.childs_.length;
-  if (this.raphael_ instanceof Array) {
+  if (this.raphael_.type === 'set') {
     for (var i = 0; i < len; i++) {
       goog.dom.removeNode(this.raphael_.pop().node);
     }
@@ -81,7 +81,7 @@ xrx.vml.Container.prototype.removeChildren = function() {
  * @param {number} index The index.
  */
 xrx.vml.Container.prototype.removeChildAt = function(index) {
-  if (this.raphael_ instanceof Array) { // Raphael set?
+  if (this.raphael_.type === 'set') {
     goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
   } else {
     this.childs_[index].getRaphael().remove();

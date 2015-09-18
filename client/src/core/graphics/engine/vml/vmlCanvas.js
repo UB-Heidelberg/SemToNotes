@@ -95,12 +95,22 @@ xrx.vml.Canvas.prototype.setHeight = function(height) {
 
 
 /**
- * Adds a child element to the canvas.
+ * Adds a child element to this canvas.
  * @param {Object} element The child element.
  */
 xrx.vml.Canvas.prototype.addChild = function(element) {
   this.childs_.push(element);
   goog.dom.append(this.getElement(), element.getElement());
+};
+
+
+
+xrx.vml.Canvas.prototype.startDrawing = function() {
+};
+
+
+
+xrx.vml.Canvas.prototype.finishDrawing = function() {
 };
 
 

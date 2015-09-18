@@ -6,6 +6,7 @@ goog.provide('xrx.canvas.Element');
 
 
 
+goog.require('xrx.engine.Element');
 goog.require('xrx.canvas');
 
 
@@ -16,6 +17,8 @@ goog.require('xrx.canvas');
  * @constructor
  */
 xrx.canvas.Element = function(canvas) {
+
+  goog.base(this);
 
   /**
    * The parent canvas object.
@@ -29,6 +32,7 @@ xrx.canvas.Element = function(canvas) {
    */
   this.context_ = canvas.getElement().getContext('2d');
 };
+goog.inherits(xrx.canvas.Element, xrx.engine.Element);
 
 
 
@@ -48,4 +52,16 @@ xrx.canvas.Element.prototype.getCanvas = function() {
  */
 xrx.canvas.Element.prototype.getContext = function() {
   return this.context_;
+};
+
+
+
+/**
+ * Applies a transformation matrix on this element.
+ * @param {goog.math.AffineTransform} matrix The transformtaion matrix.
+ */
+xrx.canvas.Element.prototype.applyTransform = function(matrix) {
+  if (!matrix) return;
+  this.context_.setTransform(matrix.m00_, matrix.m10_, matrix.m01_,
+      matrix.m11_, matrix.m02_, matrix.m12_);
 };

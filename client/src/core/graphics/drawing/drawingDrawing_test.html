@@ -9,9 +9,7 @@
   goog.require('goog.dom.DomHelper');
   goog.require('goog.style');
   goog.require('goog.userAgent');
-  goog.require('xrx.drawing.Drawing');
-  goog.require('xrx.engine');
-  goog.require('xrx.shape.Shapes');
+  goog.require('xrx');
 </script>
 <style>
 .drawing {
@@ -65,13 +63,21 @@
 </table>
 
 <div id="backgroundTest">
-  <h2>Background Test</h2>
+  <h2>Background Color Test</h2>
+  <div>The examples should all show the same green background, i.e., the
+    HTMLCanvas, SVGElement and VMLElement background color should not overdraw
+    the background color of the drawing div.</div>
+  <h3>Canvas</h3>
   <div id="canvasBackground"></div>
+  <h3>SVG</h3>
   <div id="svgBackground"></div>
+  <h3>VML</h3>
   <div id="vmlBackground"></div>
 </div>
 
 <script type="text/javascript">
+
+
 
 function getDrawingCanvas(id) {
   var canvasDiv = goog.dom.getElement(id);
@@ -79,17 +85,23 @@ function getDrawingCanvas(id) {
     xrx.engine.CANVAS);
 };
 
+
+
 function getDrawingSvg(id) {
   var svgDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(svgDiv,
       xrx.engine.SVG);
 };
 
+
+
 function getDrawingVml(id) {
   var vmlDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(vmlDiv,
-      xrx.engine.VML);
+      xrx.engine.VML, true);
 };
+
+
 
 function test1drawing() {
   if (!xrx.engine.isOldIE()) {
@@ -103,71 +115,85 @@ function test1drawing() {
     assertEquals(152, svgDrawing.getElement().offsetWidth);
 
     // canvas size
-    assertEquals('150', canvasDrawing.getCanvas().getElement().getAttribute('width'));
-    assertEquals('150', canvasDrawing.getCanvas().getElement().getAttribute('height'));
-    assertEquals('150', svgDrawing.getCanvas().getElement().getAttribute('width'));
-    assertEquals('150', svgDrawing.getCanvas().getElement().getAttribute('height'));
+    var canvasEngineElement = canvasDrawing.getCanvas().getEngineElement().getElement();
+    var svgEngineElement = svgDrawing.getCanvas().getEngineElement().getElement();
+    assertEquals('150', canvasEngineElement.getAttribute('width'));
+    assertEquals('150', canvasEngineElement.getAttribute('height'));
+    assertEquals('150', svgEngineElement.getAttribute('width'));
+    assertEquals('150', svgEngineElement.getAttribute('height'));
   } else {
     var vmlDrawing = getDrawingVml('vmlDrawing');
-
     // drawing size
     assertEquals(152, goog.style.getSize(vmlDrawing.getElement()).width);
-
     // canvas size
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).width);
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).height);
   }
 };
 
+
+
 function test2setBackgroundImage() {
   var url = './drawing_test.png';
   if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasBackgroundImage');
     var svgDrawing = getDrawingSvg('svgBackgroundImage');
-
-    canvasDrawing.setBackgroundImage(url);
-    svgDrawing.setBackgroundImage(url);
-  } else {
-    var vmlDrawing = getDrawingVml('vmlBackgroundImage');
-    vmlDrawing.setBackgroundImage(url);
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.draw();
+    });
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.draw();
+    });
   }
+  var vmlDrawing = getDrawingVml('vmlBackgroundImage');
+  vmlDrawing.setBackgroundImage(url, function() {
+    vmlDrawing.draw();
+  });
 };
 
-function test3resize() {
+
+
+function xtest3resize() {
 };
+
+
 
 function test4addShapes() {
   if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasAddShapes');
+    var canvasCanvas = canvasDrawing.getCanvas();
     var svgDrawing = getDrawingSvg('svgAddShapes');
+    var svgCanvas = svgDrawing.getCanvas();
 
-    var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
+    var canvasRect1 = xrx.shape.Rect.create(canvasCanvas);
     canvasRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-    var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
+    var canvasRect2 = xrx.shape.Rect.create(canvasCanvas);
     canvasRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
 
     canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2]);
     canvasDrawing.draw();
 
-    var svgRect1 = xrx.shape.Rect.create(svgDrawing);
+    var svgRect1 = xrx.shape.Rect.create(svgCanvas);
     svgRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-    var svgRect2 = xrx.shape.Rect.create(svgDrawing);
+    var svgRect2 = xrx.shape.Rect.create(svgCanvas);
     svgRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
 
     svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2]);
     svgDrawing.draw();
-  } else {
-    var vmlDrawing = getDrawingVml('vmlAddShapes');
-
-    var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
-    vmlRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-    var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);
-    vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
-
-    vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
-    vmlDrawing.draw();
   }
+  var vmlDrawing = getDrawingVml('vmlAddShapes');
+  var vmlCanvas = vmlDrawing.getCanvas();
+
+  var vmlRect1 = xrx.shape.Rect.create(vmlCanvas);
+  vmlRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
+  var vmlRect2 = xrx.shape.Rect.create(vmlCanvas);
+  vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
+
+  vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
+  vmlDrawing.draw();
 };
+
+
 
 function test5background() {
   var url = './drawing_test.png';
@@ -176,16 +202,18 @@ function test5background() {
     var svgDrawing = getDrawingSvg('svgBackground');
     canvasDrawing.setModeView();
     svgDrawing.setModeView();
-    canvasDrawing.setBackgroundImage(url);
-    svgDrawing.setBackgroundImage(url);
-    canvasDrawing.draw();
-    svgDrawing.draw();
-  } else {
-    var vmlDrawing = getDrawingVml('vmlBackground');
-    vmlDrawing.setModeView();
-    vmlDrawing.setBackgroundImage(url);
-    vmlDrawing.draw();
+    canvasDrawing.setBackgroundImage(url, function() {
+      canvasDrawing.draw();
+    });
+    svgDrawing.setBackgroundImage(url, function() {
+      svgDrawing.draw();
+    });
   }
+  var vmlDrawing = getDrawingVml('vmlBackground');
+  vmlDrawing.setModeView();
+  vmlDrawing.setBackgroundImage(url, function() {
+    vmlDrawing.draw();
+  });
 };
 
 </script>
