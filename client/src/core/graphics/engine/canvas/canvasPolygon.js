@@ -7,7 +7,6 @@ goog.provide('xrx.canvas.Polygon');
 
 
 goog.require('xrx.canvas.Stylable');
-goog.require('xrx.geometry.Path');
 
 
 

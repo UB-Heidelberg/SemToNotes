@@ -6,7 +6,6 @@ goog.provide('xrx.svg.Rect');
 
 
 
-goog.require('xrx.geometry.Rect');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
@@ -20,7 +19,7 @@ goog.require('xrx.svg.Stylable');
  */
 xrx.svg.Rect = function(element) {
 
-  goog.base(this, element, new xrx.geometry.Rect());
+  goog.base(this, element);
 };
 goog.inherits(xrx.svg.Rect, xrx.svg.Stylable);
 

@@ -3,13 +3,13 @@
  * a drawing view-box.
  */
 
-goog.provide('xrx.drawing.ViewboxRotate');
+goog.provide('xrx.viewbox.ViewboxRotate');
 
 
 
 goog.require('goog.object');
 goog.require('xrx.drawing.Orientation');
-goog.require('xrx.drawing.ViewboxGeometry');
+goog.require('xrx.viewbox.ViewboxGeometry');
 
 
 
@@ -17,11 +17,11 @@ goog.require('xrx.drawing.ViewboxGeometry');
  * A class implementing the rotation model for a drawing view-box.
  * @constructor
  */
-xrx.drawing.ViewboxRotate = function() {
+xrx.viewbox.ViewboxRotate = function() {
 
   goog.base(this);
 };
-goog.inherits(xrx.drawing.ViewboxRotate, xrx.drawing.ViewboxGeometry);
+goog.inherits(xrx.viewbox.ViewboxRotate, xrx.viewbox.ViewboxGeometry);
 
 
 
@@ -29,18 +29,18 @@ goog.inherits(xrx.drawing.ViewboxRotate, xrx.drawing.ViewboxGeometry);
  * Returns the current rotation in degrees.
  * @return {number} The current rotation in degrees.
  */
-xrx.drawing.ViewboxRotate.prototype.getRotation = function() {
+xrx.viewbox.ViewboxRotate.prototype.getRotation = function() {
   return this.ctm_.getRotation();
 };
 
 
 
 /**
- * Check whether the rotation value is valid.
+ * Checks whether the rotation value is valid.
  * @param {number} rotation The rotation in degrees.
  * @return {boolean} Whether the rotation is valid.
  */
-xrx.drawing.ViewboxRotate.prototype.isValidRotation = function(rotation) {
+xrx.viewbox.ViewboxRotate.prototype.isValidRotation = function(rotation) {
   var abs = Math.abs(rotation);
   return abs === 0 || abs === 90 || abs === 180 || abs === 270;
 };
@@ -51,7 +51,7 @@ xrx.drawing.ViewboxRotate.prototype.isValidRotation = function(rotation) {
  * Whether the the view-box currently is in vertical orientation.
  * @return {boolean} Whether the view-box is oriented vertically.
  */
-xrx.drawing.ViewboxRotate.prototype.isVertical = function() {
+xrx.viewbox.ViewboxRotate.prototype.isVertical = function() {
   var rotation = this.ctm_.getRotation();
   return rotation === 0 || rotation === 180;
 };
@@ -62,7 +62,7 @@ xrx.drawing.ViewboxRotate.prototype.isVertical = function() {
  * Whether the the view-box currently is in horizontal orientation.
  * @return {boolean} Whether the view-box is oriented horizontally.
  */
-xrx.drawing.ViewboxRotate.prototype.isHorizontal = function() {
+xrx.viewbox.ViewboxRotate.prototype.isHorizontal = function() {
   var rotation = this.ctm_.getRotation();
   return rotation === 90 || rotation === 270;
 };
@@ -74,7 +74,7 @@ xrx.drawing.ViewboxRotate.prototype.isHorizontal = function() {
  * @enum {number}
  * @private
  */
-xrx.drawing.ViewboxRotate.Direction_ = {
+xrx.viewbox.ViewboxRotate.Direction_ = {
   '0':    0,
   '90':   1,
   '180':  2,
@@ -89,9 +89,9 @@ xrx.drawing.ViewboxRotate.Direction_ = {
  * @return {number} The orientation.
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.direction_ = function() {
+xrx.viewbox.ViewboxRotate.prototype.direction_ = function() {
   var rotation = this.ctm_.getRotation();
-  return xrx.drawing.ViewboxRotate.Direction_[parseInt(rotation)];
+  return xrx.viewbox.ViewboxRotate.Direction_[parseInt(rotation)];
 };
 
 
@@ -102,7 +102,7 @@ xrx.drawing.ViewboxRotate.prototype.direction_ = function() {
  * @param {?(Array<number>|string)} opt_fixPoint A fix-point or an orientation.
  *   Defaults to the center of the view-box.
  */
-xrx.drawing.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
+xrx.viewbox.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
   if (opt_fixPoint === undefined) {
     this.rotateBy_(angle, undefined, undefined);
   } else if (this.isFixPoint_(opt_fixPoint)) {
@@ -121,7 +121,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
  * a fix-point or an orientation.
  * @param {?(Array<number>|string)} opt_fixPoint The fix-point.
  */
-xrx.drawing.ViewboxRotate.prototype.rotateLeft = function(opt_fixPoint) {
+xrx.viewbox.ViewboxRotate.prototype.rotateLeft = function(opt_fixPoint) {
   this.rotateBy(-90, opt_fixPoint);
 };
 
@@ -132,7 +132,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateLeft = function(opt_fixPoint) {
  * a fix-point or an orientation.
  * @param {?(Array<number>|string)} opt_fixPoint The fix-point.
  */
-xrx.drawing.ViewboxRotate.prototype.rotateRight = function(opt_fixPoint) {
+xrx.viewbox.ViewboxRotate.prototype.rotateRight = function(opt_fixPoint) {
   this.rotateBy(90, opt_fixPoint);
 };
 
@@ -143,7 +143,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateRight = function(opt_fixPoint) {
  * @param {?} fixPoint The fix-point.
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.isFixPoint_ = function(fixPoint) {
+xrx.viewbox.ViewboxRotate.prototype.isFixPoint_ = function(fixPoint) {
   return (fixPoint instanceof Array && fixPoint.length === 2);
 };
 
@@ -155,7 +155,7 @@ xrx.drawing.ViewboxRotate.prototype.isFixPoint_ = function(fixPoint) {
  * @param {?} fixPoint The fix-point.
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.isOrientation_ = function(fixPoint) {
+xrx.viewbox.ViewboxRotate.prototype.isOrientation_ = function(fixPoint) {
   return (typeof fixPoint === 'string' && goog.object.containsValue(
       xrx.drawing.Orientation, fixPoint));
 };
@@ -172,7 +172,7 @@ xrx.drawing.ViewboxRotate.prototype.isOrientation_ = function(fixPoint) {
  *   of the view-box.
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
+xrx.viewbox.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
       opt_fixPoint) {
   if (angle === 0) return;
   if (!this.isValidRotation(angle))
@@ -203,7 +203,7 @@ xrx.drawing.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
 /**
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.getPivotPoint_ = function(orientation,
+xrx.viewbox.ViewboxRotate.prototype.getPivotPoint_ = function(orientation,
     reverse, opt_transformed) {
   var pivotPoints = this.getPivotPoints_(reverse);
   var point_ = {
@@ -242,7 +242,7 @@ xrx.drawing.ViewboxRotate.prototype.getPivotPoint_ = function(orientation,
  * @return {Array<Array<number>>}
  * @private
  */
-xrx.drawing.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
+xrx.viewbox.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
   var width = this.getWidth();
   var height = this.getHeight();
   return !reverse ? [

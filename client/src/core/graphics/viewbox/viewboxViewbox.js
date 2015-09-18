@@ -2,13 +2,13 @@
  * @fileoverview A class representing the view-box of a drawing canvas.
  */
 
-goog.provide('xrx.drawing.Viewbox');
+goog.provide('xrx.viewbox.Viewbox');
 
 
 
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.FastAffineTransform');
-goog.require('xrx.drawing.ViewboxTransform');
+goog.require('xrx.viewbox.ViewboxTransform');
 goog.require('xrx.shape.Group');
 
 
@@ -18,7 +18,7 @@ goog.require('xrx.shape.Group');
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
  */
-xrx.drawing.Viewbox = function(drawing) {
+xrx.viewbox.Viewbox = function(drawing) {
 
   goog.base(this);
 
@@ -49,7 +49,7 @@ xrx.drawing.Viewbox = function(drawing) {
 
   this.create_();
 };
-goog.inherits(xrx.drawing.Viewbox, xrx.drawing.ViewboxTransform);
+goog.inherits(xrx.viewbox.Viewbox, xrx.viewbox.ViewboxTransform);
 
 
 
@@ -57,7 +57,7 @@ goog.inherits(xrx.drawing.Viewbox, xrx.drawing.ViewboxTransform);
  * Returns the parent drawing object of the view-box.
  * @return {xrx.drawing.Drawing} The drawing object.
  */
-xrx.drawing.Viewbox.prototype.getDrawing = function() {
+xrx.viewbox.Viewbox.prototype.getDrawing = function() {
   return this.drawing_;
 };
 
@@ -67,7 +67,7 @@ xrx.drawing.Viewbox.prototype.getDrawing = function() {
  * Returns the group of the view-box.
  * @return {xrx.shape.Group} The group.
  */
-xrx.drawing.Viewbox.prototype.getGroup = function() {
+xrx.viewbox.Viewbox.prototype.getGroup = function() {
   return this.group_;
 };
 
@@ -77,7 +77,7 @@ xrx.drawing.Viewbox.prototype.getGroup = function() {
  * Handles double-click events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
+xrx.viewbox.Viewbox.prototype.handleDblClick = function(e) {
   this.rotateRight([e.offsetX, e.offsetY]);
 };
 
@@ -87,7 +87,7 @@ xrx.drawing.Viewbox.prototype.handleDblClick = function(e) {
  * Handles mouse-down events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleDown = function(e) {
+xrx.viewbox.Viewbox.prototype.handleDown = function(e) {
   var eventPoint = [e.clientX, e.clientY];
   var identity = this.ctm_.getIdentity();
   if (!this.origin_) this.origin_ = new Array(2);
@@ -101,7 +101,7 @@ xrx.drawing.Viewbox.prototype.handleDown = function(e) {
  * Handles mouse-move events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleMove = function(e) {
+xrx.viewbox.Viewbox.prototype.handleMove = function(e) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
   var x = e.clientX - this.origin_[0];
   var y = e.clientY - this.origin_[1];
@@ -115,7 +115,7 @@ xrx.drawing.Viewbox.prototype.handleMove = function(e) {
  * Handles mouse-out events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleOut = function(e) {
+xrx.viewbox.Viewbox.prototype.handleOut = function(e) {
   this.resetState_();
 };
 
@@ -125,7 +125,7 @@ xrx.drawing.Viewbox.prototype.handleOut = function(e) {
  * Handles mouse-up events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleUp = function(e) {
+xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
   this.state_ = xrx.drawing.State.NONE;
 };
 
@@ -135,7 +135,7 @@ xrx.drawing.Viewbox.prototype.handleUp = function(e) {
  * Handles mouse-wheel events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Viewbox.prototype.handleWheel = function(e) {
+xrx.viewbox.Viewbox.prototype.handleWheel = function(e) {
   e.deltaY < 0 ? this.zoomIn([e.offsetX, e.offsetY]) :
       this.zoomOut([e.offsetX, e.offsetY]);
 };
@@ -145,7 +145,7 @@ xrx.drawing.Viewbox.prototype.handleWheel = function(e) {
 /**
  * @private
  */
-xrx.drawing.Viewbox.prototype.resetState_ = function() {
+xrx.viewbox.Viewbox.prototype.resetState_ = function() {
   this.state_ = xrx.drawing.State.NONE;
   this.origin_ = null;
 };
@@ -155,6 +155,6 @@ xrx.drawing.Viewbox.prototype.resetState_ = function() {
 /**
  * @private
  */
-xrx.drawing.Viewbox.prototype.create_ = function() {
+xrx.viewbox.Viewbox.prototype.create_ = function() {
   this.group_ = xrx.shape.Group.create(this.drawing_.getCanvas());
 };

@@ -6,7 +6,6 @@ goog.provide('xrx.vml.Image');
 
 
 
-goog.require('xrx.geometry.Rect');
 goog.require('xrx.vml.Stylable');
 
 

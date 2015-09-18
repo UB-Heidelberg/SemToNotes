@@ -6,7 +6,6 @@ goog.provide('xrx.svg.Ellipse');
 
 
 
-goog.require('xrx.geometry.Ellipse');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
@@ -20,7 +19,7 @@ goog.require('xrx.svg.Stylable');
  */
 xrx.svg.Ellipse = function(element) {
 
-  goog.base(this, element, new xrx.geometry.Ellipse());
+  goog.base(this, element);
 };
 goog.inherits(xrx.svg.Ellipse, xrx.svg.Stylable);
 

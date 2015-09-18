@@ -62,11 +62,31 @@ xrx.shape.Canvas.prototype.getEngine = function() {
 
 
 /**
+ * Returns the height of the canvas.
+ * @return {number} The height.
+ */
+xrx.shape.Canvas.prototype.getHeight = function() {
+  return this.engineElement_.getHeight();
+};
+
+
+
+/**
  * Sets the height of the canvas.
  * @param {number} The height.
  */
 xrx.shape.Canvas.prototype.setHeight = function(height) {
   this.engineElement_.setHeight(height);
+};
+
+
+
+/**
+ * Returns the width of the canvas.
+ * @return {number} The width.
+ */
+xrx.shape.Canvas.prototype.getWidth = function() {
+  return this.engineElement_.getWidth();
 };
 
 

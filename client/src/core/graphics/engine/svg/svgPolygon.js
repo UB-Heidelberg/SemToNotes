@@ -6,7 +6,6 @@ goog.provide('xrx.svg.Polygon');
 
 
 
-goog.require('xrx.geometry.Path');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 

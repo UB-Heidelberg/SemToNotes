@@ -6,7 +6,6 @@ goog.provide('xrx.vml.Circle');
 
 
 
-goog.require('xrx.geometry.Circle');
 goog.require('xrx.vml.Stylable');
 
 

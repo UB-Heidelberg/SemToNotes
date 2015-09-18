@@ -1,6 +1,6 @@
 
-var url = './drawing_test.png';
-var url2 = './drawing_test_vertical.png';
+var url = './viewbox_test.png';
+var url2 = './viewbox_test_vertical.png';
 
 
 
@@ -25,6 +25,6 @@ function getDrawingCanvas(id, callback) {
 function getDrawingVml(id, callback) {
   var vmlDiv = goog.dom.getElement(id);
   var vmlDrawing = new xrx.drawing.Drawing(vmlDiv,
-    xrx.engine.VML);
+    xrx.engine.VML, true);
   return vmlDrawing;
 };

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.drawing.ViewboxRotate</title>
+<title>XRX++ Unit Tests - xrx.viewbox.ViewboxRotate</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
-<script src='./drawingViewbox_test.js'></script>
-<link rel="stylesheet" type="text/css" href="./drawingViewbox_test.css">
+<script src='./viewboxViewbox_test.js'></script>
+<link rel="stylesheet" type="text/css" href="./viewboxViewbox_test.css">
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
@@ -84,13 +84,12 @@ function test1RotateLeft() {
       canvasDrawing.getViewbox().rotateLeft();
       canvasDrawing.draw();
     });
-  } else {
-    var vmlDrawing = getDrawingVml('vmlRotateLeft');
-    vmlDrawing.setBackgroundImage(url, function() {
-      vmlDrawing.getViewbox().rotateLeft();
-      vmlDrawing.draw();
-    });
   }
+  var vmlDrawing = getDrawingVml('vmlRotateLeft');
+  vmlDrawing.setBackgroundImage(url, function() {
+    vmlDrawing.getViewbox().rotateLeft();
+    vmlDrawing.draw();
+  });
 };
 
 
@@ -107,13 +106,12 @@ function test2RotateRight() {
       canvasDrawing.getViewbox().rotateRight();
       canvasDrawing.draw();
     });
-  } else {
-    var vmlDrawing = getDrawingVml('vmlRotateLeft');
-    vmlDrawing.setBackgroundImage(url, function() {
-      vmlDrawing.getViewbox().rotateRight();
-      vmlDrawing.draw();
-    });
   }
+  var vmlDrawing = getDrawingVml('vmlRotateLeft');
+  vmlDrawing.setBackgroundImage(url, function() {
+    vmlDrawing.getViewbox().rotateRight();
+    vmlDrawing.draw();
+  });
 };
 
 

@@ -6,7 +6,6 @@ goog.provide('xrx.vml.Ellipse');
 
 
 
-goog.require('xrx.geometry.Ellipse');
 goog.require('xrx.vml.Stylable');
 
 

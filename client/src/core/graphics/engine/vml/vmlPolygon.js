@@ -6,7 +6,6 @@ goog.provide('xrx.vml.Polygon');
 
 
 
-goog.require('xrx.geometry.Path');
 goog.require('xrx.vml');
 goog.require('xrx.vml.Stylable');
 

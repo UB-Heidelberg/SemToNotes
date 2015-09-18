@@ -6,7 +6,6 @@ goog.provide('xrx.svg.Circle');
 
 
 
-goog.require('xrx.geometry.Circle');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Stylable');
 
@@ -20,7 +19,7 @@ goog.require('xrx.svg.Stylable');
  */
 xrx.svg.Circle = function(element) {
 
-  goog.base(this, element, new xrx.geometry.Circle());
+  goog.base(this, element);
 };
 goog.inherits(xrx.svg.Circle, xrx.svg.Stylable);
 

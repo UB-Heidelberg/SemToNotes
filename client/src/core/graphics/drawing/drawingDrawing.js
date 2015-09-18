@@ -27,7 +27,7 @@ goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.Selectable');
 goog.require('xrx.drawing.ShapeIterator');
 goog.require('xrx.drawing.State');
-goog.require('xrx.drawing.Viewbox');
+goog.require('xrx.viewbox.Viewbox');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Engine');
 goog.require('xrx.engine.Engines');
@@ -483,7 +483,7 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
-  this.canvas_ = xrx.shape.Canvas.create(self.element_, this.engine_.engine_);
+  this.canvas_ = xrx.shape.Canvas.create(self.element_, this.engine_);
   this.canvas_.setHeight(this.element_.clientHeight);
   this.canvas_.setWidth(this.element_.clientWidth);
 };
@@ -494,7 +494,7 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installViewbox_ = function() {
-  this.viewbox_ = new xrx.drawing.Viewbox(this);
+  this.viewbox_ = new xrx.viewbox.Viewbox(this);
   this.canvas_.addChildren(this.viewbox_.getGroup());
 };
 

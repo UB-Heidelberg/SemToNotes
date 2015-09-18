@@ -13,7 +13,6 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.dataset');
 goog.require('goog.object');
 goog.require('xrx.drawing.Drawing');
-goog.require('xrx.drawing.Toolbar');
 goog.require('xrx.mvc');
 goog.require('xrx.mvc.Component');
 goog.require('xrx.mvc.ComponentView');

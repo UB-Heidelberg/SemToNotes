@@ -6,7 +6,6 @@ goog.provide('xrx.vml.Rect');
 
 
 
-goog.require('xrx.geometry.Rect');
 goog.require('xrx.vml.Element');
 goog.require('xrx.vml.Stylable');
 
