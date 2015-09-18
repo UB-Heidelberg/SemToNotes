@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/graphics/viewbox/viewboxViewboxRotate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/graphics/viewbox/viewboxViewboxRotate.js</h1>
+
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview A class implementing a rotation model for
+ * a drawing view-box.
+ */
+
+goog.provide('xrx.viewbox.ViewboxRotate');
+
+
+
+goog.require('goog.object');
+goog.require('xrx.drawing.Orientation');
+goog.require('xrx.viewbox.ViewboxGeometry');
+
+
+
+/**
+ * A class implementing the rotation model for a drawing view-box.
+ * @constructor
+ */
+xrx.viewbox.ViewboxRotate = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.viewbox.ViewboxRotate, xrx.viewbox.ViewboxGeometry);
+
+
+
+/**
+ * Returns the current rotation in degrees.
+ * @return {number} The current rotation in degrees.
+ */
+xrx.viewbox.ViewboxRotate.prototype.getRotation = function() {
+  return this.ctm_.getRotation();
+};
+
+
+
+/**
+ * Checks whether the rotation value is valid.
+ * @param {number} rotation The rotation in degrees.
+ * @return {boolean} Whether the rotation is valid.
+ */
+xrx.viewbox.ViewboxRotate.prototype.isValidRotation = function(rotation) {
+  var abs = Math.abs(rotation);
+  return abs === 0 || abs === 90 || abs === 180 || abs === 270;
+};
+
+
+
+/**
+ * Whether the the view-box currently is in vertical orientation.
+ * @return {boolean} Whether the view-box is oriented vertically.
+ */
+xrx.viewbox.ViewboxRotate.prototype.isVertical = function() {
+  var rotation = this.ctm_.getRotation();
+  return rotation === 0 || rotation === 180;
+};
+
+
+
+/**
+ * Whether the the view-box currently is in horizontal orientation.
+ * @return {boolean} Whether the view-box is oriented horizontally.
+ */
+xrx.viewbox.ViewboxRotate.prototype.isHorizontal = function() {
+  var rotation = this.ctm_.getRotation();
+  return rotation === 90 || rotation === 270;
+};
+
+
+
+/**
+ * Utility enumeration for view-box orientations.
+ * @enum {number}
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.Direction_ = {
+  '0':    0,
+  '90':   1,
+  '180':  2,
+  '270':  3
+};
+
+
+
+/**
+ * Returns a positional utility number representing the current orientation
+ * of the view-box.
+ * @return {number} The orientation.
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.direction_ = function() {
+  var rotation = this.ctm_.getRotation();
+  return xrx.viewbox.ViewboxRotate.Direction_[parseInt(rotation)];
+};
+
+
+
+/**
+ * Rotates the view-box by an angle, respecting a fix-point or an orientation.
+ * @param {?number} angle The angle of rotation in degrees, e.g. 90 or 180.
+ * @param {?(Array&lt;number>|string)} opt_fixPoint A fix-point or an orientation.
+ *   Defaults to the center of the view-box.
+ */
+xrx.viewbox.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
+  if (opt_fixPoint === undefined) {
+    this.rotateBy_(angle, undefined, undefined);
+  } else if (this.isFixPoint_(opt_fixPoint)) {
+    this.rotateBy_(angle, undefined, opt_fixPoint);
+  } else if (this.isOrientation_(opt_fixPoint)) {
+    this.rotateBy_(angle, opt_fixPoint, undefined);
+  } else {
+    throw Error('Invalid fix-point. Array[2] or xrx.drawing.Orientation.* expected.');
+  }
+};
+
+
+
+/**
+ * Rotates the view-box by 90° in left direction, optionally respecting
+ * a fix-point or an orientation.
+ * @param {?(Array&lt;number>|string)} opt_fixPoint The fix-point.
+ */
+xrx.viewbox.ViewboxRotate.prototype.rotateLeft = function(opt_fixPoint) {
+  this.rotateBy(-90, opt_fixPoint);
+};
+
+
+
+/**
+ * Rotates the view-box by 90° in right direction, optionally respecting
+ * a fix-point or an orientation.
+ * @param {?(Array&lt;number>|string)} opt_fixPoint The fix-point.
+ */
+xrx.viewbox.ViewboxRotate.prototype.rotateRight = function(opt_fixPoint) {
+  this.rotateBy(90, opt_fixPoint);
+};
+
+
+
+/**
+ * Whether the fix-point is a point, that is an Array of length 2.
+ * @param {?} fixPoint The fix-point.
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.isFixPoint_ = function(fixPoint) {
+  return (fixPoint instanceof Array &amp;&amp; fixPoint.length === 2);
+};
+
+
+
+/**
+ * Whether the fix-point is an orientation, that is one of
+ * xrx.drawing.Orientation.*.
+ * @param {?} fixPoint The fix-point.
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.isOrientation_ = function(fixPoint) {
+  return (typeof fixPoint === 'string' &amp;&amp; goog.object.containsValue(
+      xrx.drawing.Orientation, fixPoint));
+};
+
+
+
+/**
+ * Rotates the view-box by an angle, respecting a fix-point or an
+ * orientation.
+ * @param {?number} angle The angle of rotation in degrees, e.g. 90 or 180.
+ * @param {?string} opt_orientation An orientation, defaults to
+ *   xrx.drawing.Orientation.C.
+ * @param {?Array&lt;number>} opt_fixPoint A fix-point, defaults to the center
+ *   of the view-box.
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.rotateBy_ = function(angle, opt_orientation,
+      opt_fixPoint) {
+  if (angle === 0) return;
+  if (!this.isValidRotation(angle))
+      throw Error('Invalid rotation. 0, 90, 180 or 270 expected.');
+
+  var fixPoint;
+  var reverse = angle > 0 ? false : true;
+
+  if (opt_orientation !== undefined)
+      fixPoint = this.getPivotPoint_(opt_orientation, reverse, true);
+  if (opt_fixPoint !== undefined) {
+    if (this.containsPoint(opt_fixPoint)) {
+      fixPoint = this.ctm_.transformPoint(opt_fixPoint);
+    } else {
+      fixPoint = this.getPivotPoint_(xrx.drawing.Orientation.C, reverse, true);
+    }
+  }
+  if (fixPoint === undefined)
+      fixPoint = this.getPivotPoint_(xrx.drawing.Orientation.C, reverse, true);
+  
+  this.ctm_.rotate(goog.math.toRadians(angle), fixPoint[0], fixPoint[1]);
+
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
+};
+
+
+
+/**
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.getPivotPoint_ = function(orientation,
+    reverse, opt_transformed) {
+  var pivotPoints = this.getPivotPoints_(reverse);
+  var point_ = {
+    'C': function(pp, vb) {
+      return vb.getCenterPoint_();
+    },
+    'NE': function(pp, vb, reverse) {
+      var order = [0, 1, 2, 3];
+      console.log(vb.direction_());
+      return pp[order[vb.direction_()]];
+    },
+    'SE': function(pp, vb, reverse) {
+      var order = [3, 0, 1, 2];
+      return pp[order[vb.direction_()]];
+    },
+    'SW': function(pp, vb, reverse) {
+      var order = [2, 3, 0, 1];
+      return pp[order[vb.direction_()]];
+    },
+    'NW': function(pp, vb, reverse) {
+      var order = [1, 2, 3, 0];
+      return pp[order[vb.direction_()]];
+    }
+  };
+  var point = point_[orientation](pivotPoints, this, reverse);
+  if (opt_transformed === true) this.ctm_.transformPoint(point);
+  return point;
+};
+
+
+
+/**
+ * Returns the four pivot points of this view-box.
+ * @param {boolean} reverse If we rotate in right or left direction.
+ *   If reverse is true we assume left direction otherwise right direction.
+ * @return {Array&lt;Array&lt;number>>}
+ * @private
+ */
+xrx.viewbox.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
+  var width = this.getWidth();
+  var height = this.getHeight();
+  return !reverse ? [
+    [width / 2, width / 2], // north
+    [height / 2, height / 2], // east 
+    [width / 2, width / 2 + height / 2], // south
+    [-height / 2 + width, height / 2] // west
+  ] : [
+    [-height / 2 + width, height / 2], // west
+    [width / 2, width / 2], // north
+    [height / 2, height / 2], // east 
+    [width / 2, width / 2 + height / 2] // south
+  ];
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#core/graphics/engine/engineElement.js">core/graphics/engine/engineElement.js</a></li><li><a href="global.html#core/graphics/viewbox/viewboxViewboxTransform.js">core/graphics/viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.component.Component.html">Component</a></li><li><a href="xrx.component.Console.html">Console</a></li><li><a href="xrx.component.Output.html">Output</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.engine.Stylable.html">Stylable</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.EventTarget.html">EventTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.graphic.Canvas.html">Canvas</a></li><li><a href="xrx.graphic.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.graphic.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.graphic.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.graphic.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.graphic.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.graphic.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.graphic.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.graphic.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.graphic.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.graphic.Shape.html">Shape</a></li><li><a href="xrx.graphic.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.graphic.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.graphic.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.graphic.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.graphic.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.graphic.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.graphic.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.graphic.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.graphic.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.graphic.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.graphic.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.graphic.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.graphic.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.graphic.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.graphic.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.graphic.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.AbstractAction.html">AbstractAction</a></li><li><a href="xrx.mvc.AbstractUpdate.html">AbstractUpdate</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Auth.html">Auth</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.ChildComponent.html">ChildComponent</a></li><li><a href="xrx.mvc.ClassesAdd.html">ClassesAdd</a></li><li><a href="xrx.mvc.ClassesRemove.html">ClassesRemove</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Dispatch.html">Dispatch</a></li><li><a href="xrx.mvc.Dom.html">Dom</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.InstanceGithub.html">InstanceGithub</a></li><li><a href="xrx.mvc.InstanceRest.html">InstanceRest</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Origin.html">Origin</a></li><li><a href="xrx.mvc.Password.html">Password</a></li><li><a href="xrx.mvc.Remove.html">Remove</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Script.html">Script</a></li><li><a href="xrx.mvc.Signin.html">Signin</a></li><li><a href="xrx.mvc.Signout.html">Signout</a></li><li><a href="xrx.mvc.Uidl.html">Uidl</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.mvc.User.html">User</a></li><li><a href="xrx.mvc.Validate.html">Validate</a></li><li><a href="xrx.mvc.Xpath.html">Xpath</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AngularShape">AngularShape</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Sep 18 2015 21:12:10 GMT+0200 (MESZ)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

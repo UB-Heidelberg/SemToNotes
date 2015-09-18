@@ -29,7 +29,7 @@ xrx.shape.Shape = function(canvas, engineElement) {
 
   /**
    * Pointer to the underlying engine shape.
-   * @type {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
+   * @type {xrx.engine.Element}
    */
   this.engineElement_ = engineElement;
 
@@ -41,7 +41,7 @@ xrx.shape.Shape = function(canvas, engineElement) {
 
   /**
    * The current transformation matrix of this shape.
-   * @type {goog.math.AffineTransform}}
+   * @type {goog.math.AffineTransform}
    */
   this.ctm_;
 };

@@ -26,7 +26,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
- * @fileoverview A static class rebuild operations on binary encodings. 
+ * @fileoverview A static class providing rebuild operations on binary encodings. 
  */
 
 goog.provide('xrx.index.Rebuild');
@@ -52,12 +52,10 @@ xrx.index.Rebuild = function() {};
  * @param {!xrx.index} index The index.
  * @param {!integer} diff The offset difference.
  */
-xrx.index.Rebuild.offset = function(index, diff) {
-  var row = index.iterGetRow();
-
+xrx.index.Rebuild.offset = function(struct, diff) {
   do {
-    row.updateOffset(diff);
-  } while (row = index.iterNext());
+    struct.updateOffset(diff);
+  } while (struct.next());
 };
 
 
@@ -69,42 +67,41 @@ xrx.index.Rebuild.offset = function(index, diff) {
  * @param {!integer} diff The offset difference.
  * @param {!integer} parentKey The index key of the parent token which was
  * updated.
- * @param {!intger} numParent Number of subsequent rows that were removed or
+ * @param {!number} numParent Number of subsequent rows that were removed or
  * inserted. Positive integer, if rows were inserted and negative integer if
  * rows were removed.
- * @param {!intger} numPosition Number of positions decremented or incremented
+ * @param {!number} numPosition Number of positions decremented or incremented
  * during remove or insert. Positive integer for insertions, negative for deletions.
  */
-xrx.index.Rebuild.relabel = function(index, diff, parentKey, numParent, numPosition) {
-  var row = index.iterGetRow();
+xrx.index.Rebuild.relabel = function(struct, diff, start, end) {
+  var k;
+  var p;
   var key;
-  var sibling = -3;
-  var last = index.getLastKey();
-
+  var type;
+  var label;
+  struct.atPos(end);
+  var length = struct.getLabel().length();
+  struct.previous();
   do {
-    key = index.iterGetKey();
-
-    if (row.getParent() === parentKey &amp;&amp; row.getType() !== xrx.token.END_TAG) {
-      row.updatePosition(numPosition);
-      sibling = key;
-    }
-    if (row.getParent() === parentKey &amp;&amp; row.getType() === xrx.token.END_TAG) {
-      if (key !== last) row.updatePosition(numPosition);
-      sibling = -3;
-    }
-    if (row.getParent() === sibling - numParent) {
-      row.updateParent(numParent);
-    }
-
-    row.updateOffset(diff);
-  } while (row = index.iterNext());
+    k = struct.getKey();
+    p = struct.getPos();
+    if (p === start) break;
+    type = struct.getType();
+    label = struct.getLabel();
+    label.getArray()[length]++;
+    key = struct.createKey(type, label);
+    struct.updateOffset(diff);
+    struct.rename(k, key);
+  } while (struct.previous());
+  struct.atPos(end);
+  xrx.index.Rebuild.offset(struct, diff);
 };
 
 
 
 /**
- * Rebuilds an index after a XML instance has been updated by
- * a insertAttribute update operation.
+ * Rebuilds an index after an XML instance has been updated by
+ * an insertAttribute update operation.
  * 
  * @param {!xrx.index} index The index.
  * @param {!(xrx.token.StartTag|xrx.token.EmptyTag)} parent The tag token into which the
@@ -112,16 +109,13 @@ xrx.index.Rebuild.relabel = function(index, diff, parentKey, numParent, numPosit
  * @param {!integer} diff The length difference of the updated parent token.
  */
 xrx.index.Rebuild.insertAttribute = function(index, parent, diff) {
-  var key = index.getKeyByTag(parent);
-  var row = index.getRowByKey(key);
-
-  row.updateLength1(diff);
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.index.Rebuild.offset(index, diff);  
+  var struct = index.getStructuralIndex();
+  var key = struct.createKey(parent.type(), parent.label());
+  struct.atKey(key);
+  struct.updateLength1(diff);
+  struct.updateLength2(diff);
+  struct.next();
+  xrx.index.Rebuild.offset(struct, diff);  
 };
 
 
@@ -129,7 +123,7 @@ xrx.index.Rebuild.insertAttribute = function(index, parent, diff) {
 
 /**
  * Rebuilds an index after a XML instance has been updated by
- * a insertEmptyTag update operation.
+ * an insertEmptyTag update operation.
  * 
  * @param {!xrx.index} index The index.
  * @param {!xrx.token.NotTag} token The not-tag token into which the empty tag
@@ -138,39 +132,38 @@ xrx.index.Rebuild.insertAttribute = function(index, parent, diff) {
  *   empty tag was inserted.
  * @param {!integer} diff The length difference of the updated token.
  */
-xrx.index.Rebuild.insertEmptyTag = function(index, token, offset, diff) {
-  var key = index.getKeyByNotTag(token);
-  var row = index.getRowByKey(key);
-  var length1 = row.getLength1();
-  var length2 = row.getLength2();
+xrx.index.Rebuild.insertEmptyTag = function(index, notTag, rowType, offset, diff) {
+  var struct = index.getStructuralIndex();
+  var rowLabel = notTag.label().clone();
+  if (rowLabel.last() === 0) rowLabel.pop();
+  var parentLabel = notTag.label().clone();
+  parentLabel.pop();
+  struct.atKey(struct.createKey(rowType, rowLabel));
+
+  var length1 = struct.getLength1();
+  var length2 = struct.getLength2();
   var rest = length2 - length1 - offset;
   
-  // rebuild updated row
-  row.updateLength2(length1 + offset - length2);
+  // set length of updated row
+  struct.updateLength2(length1 + offset - length2);
+
+  // search row to start relabeling
+  var start = struct.getPos();
+  struct.atKey(struct.createKey(xrx.token.END_TAG, parentLabel));
+  var end = struct.getPos();
+  // rebuild all following siblings
+  xrx.index.Rebuild.relabel(struct, diff, start, end);
 
   // insert new row
-  var newRow = new xrx.index.Row();
-  var newLabel = token.label().clone();
+  struct.atPos(start);
+  var newRow = new Array(3);
+  newRow[0] = struct.getOffset() + struct.getLength2();
+  newRow[1] = diff;
+  newRow[2] = diff + rest;
+  var newLabel = notTag.label().clone();
   newLabel.nextSibling();
-  var newParentLabel = newLabel.clone();
-  newParentLabel.parent();
-  var newParentToken = new xrx.token.StartEmptyTag(newParentLabel);
-  var newParentKey = index.getKeyByTag(newParentToken);
-
-  newRow.setType(xrx.token.EMPTY_TAG);
-  newRow.setPosition(newLabel.last());
-  newRow.setParent(newParentKey);
-  newRow.setOffset(row.getOffset() + row.getLength2());
-  newRow.setLength1(diff);
-  newRow.setLength2(diff + rest);
-  index.insertRowAfter(key, newRow);
-
-  // rebuild all following rows
-  index.iterSetKey(key);
-  index.iterNext();
-  index.iterNext();
-
-  xrx.index.Rebuild.relabel(index, diff, newParentKey, 1, 1);
+  var newKey = struct.createKey(xrx.token.EMPTY_TAG, newLabel);
+  struct.insert(newKey, newRow);
 };
 
 
@@ -201,16 +194,15 @@ xrx.index.Rebuild.insertMixed = function(index, token, offset, diff) {
  * @param {!xrx.token.NotTag} token The not-tag token which was updated.
  * @param {!integer} diff The length difference of the updated token.
  */
-xrx.index.Rebuild.insertNotTag = function(index, token, diff) {
-  var key = index.getKeyByNotTag(token);
-  var row = index.getRowByKey(key);
-
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.index.Rebuild.offset(index, diff);
+xrx.index.Rebuild.insertNotTag = function(index, notTag, rowType, diff) {
+  var struct = index.getStructuralIndex();
+  var rowLabel = notTag.label().clone();
+  if (rowLabel.last() === 0) rowLabel.pop();
+  struct.atKey(struct.createKey(rowType, rowLabel));
+  console.log(struct.getKey());
+  struct.updateLength2(diff);
+  struct.next();
+  xrx.index.Rebuild.offset(struct, diff);
 };
 
 
@@ -220,7 +212,7 @@ xrx.index.Rebuild.insertNotTag = function(index, token, diff) {
  */
 xrx.index.Rebuild.insertStartEndTag = function(index, token1, token2, offset1, offset2,
     diff1, diff2) {
-  // TODO: iimplement this
+  // TODO: implement this
 };
 
 
@@ -234,20 +226,15 @@ xrx.index.Rebuild.insertStartEndTag = function(index, token1, token2, offset1, o
  * @param {!xrx.token.Attribute} token The attribute token which was removed.
  * @param {!integer} diff The length difference of the updated parent token.
  */
-xrx.index.Rebuild.removeAttribute = function(index, token, diff) {
+xrx.index.Rebuild.removeAttribute = function(index, token, rowType, diff) {
+  var struct = index.getStructuralIndex();
   var parentLabel = token.label().clone();
   parentLabel.parent();
-  var parentToken = new xrx.token.StartEmptyTag(parentLabel);
-  var key = index.getKeyByTag(parentToken);
-  var row = index.getRowByKey(key);
-
-  row.updateLength1(diff);
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.index.Rebuild.offset(index, diff);  
+  struct.atKey(struct.createKey(rowType, parentLabel));
+  struct.updateLength1(diff);
+  struct.updateLength2(diff);
+  struct.next();
+  xrx.index.Rebuild.offset(struct, diff);  
 };
 
 
@@ -292,7 +279,8 @@ xrx.index.Rebuild.removeEmptyTag = function(index, token, diff) {
 /**
  *
  */
-xrx.index.Rebuild.removeFragment = function() {
+xrx.index.Rebuild.removeFragment = function(index, xml) {
+  index.rebuild(xml);
 };
 
 
@@ -355,33 +343,27 @@ xrx.index.Rebuild.removeStartEndTag = function(index, token1, token2, diff1, dif
 
     //TODO: implement this
   }
-
 };
 
 
 
 /**
- * Rebuilds an index after a XML instance has been updated by
+ * Rebuilds an index after an XML instance has been updated by
  * a replaceAttrValue update operation.
  * 
  * @param {!xrx.index} index The index.
  * @param {!xrx.token.AttrValue} token The attribute value token which was updated.
  * @param {!integer} diff The length difference of the updated token.
  */
-xrx.index.Rebuild.replaceAttrValue = function(index, token, diff) {
-  var label = token.label().clone();
-  label.parent();
-  var tag = new xrx.token.StartEmptyTag(label);
-  var key = index.getKeyByTag(tag);
-  var row = index.getRowByKey(key);
-
-  row.updateLength1(diff);
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.index.Rebuild.offset(index, diff);
+xrx.index.Rebuild.replaceAttrValue = function(index, token, rowType, diff) {
+  var struct = index.getStructuralIndex();
+  var parentLabel = token.label().clone();
+  parentLabel.parent();
+  struct.atKey(struct.createKey(rowType, parentLabel));
+  struct.updateLength1(diff);
+  struct.updateLength2(diff);
+  struct.next();
+  xrx.index.Rebuild.offset(struct, diff);
 };
 
 
@@ -394,16 +376,14 @@ xrx.index.Rebuild.replaceAttrValue = function(index, token, diff) {
  * @param {!xrx.token.NotTag} token The not-tag token which was updated.
  * @param {!integer} diff The length difference of the updated token.
  */
-xrx.index.Rebuild.replaceNotTag = function(index, token, diff) {
-  var key = index.getKeyByNotTag(token);
-  var row = index.getRowByKey(key);
-
-  row.updateLength2(diff);
-
-  index.iterSetKey(key);
-  index.iterNext();
-
-  xrx.index.Rebuild.offset(index, diff);
+xrx.index.Rebuild.replaceNotTag = function(index, token, rowType, diff) {
+  var struct = index.getStructuralIndex();
+  var rowLabel = token.label().clone();
+  if (rowLabel.last() === 0) rowLabel.pop();
+  struct.atKey(struct.createKey(rowType, rowLabel));
+  struct.updateLength2(diff);
+  struct.next();
+  xrx.index.Rebuild.offset(struct, diff);
 };
 
 
@@ -424,13 +404,13 @@ xrx.index.Rebuild.replaceTagName = function(instance, token, localName, opt_name
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.EventTarget.html">EventTarget</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.drawing.Toolbar.html">Toolbar</a></li><li><a href="xrx.drawing.Viewbox.html">Viewbox</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.widget.Canvas.html">Canvas</a></li><li><a href="xrx.widget.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.widget.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.widget.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.widget.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.widget.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.widget.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.widget.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.widget.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.widget.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.widget.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.widget.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.widget.Console.html">Console</a></li><li><a href="xrx.widget.Shape.html">Shape</a></li><li><a href="xrx.widget.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.widget.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.widget.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.widget.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.widget.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.widget.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.widget.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.widget.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.widget.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.widget.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.widget.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.widget.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.widget.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.widget.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.widget.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.widget.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#core/graphics/engine/engineElement.js">core/graphics/engine/engineElement.js</a></li><li><a href="global.html#core/graphics/viewbox/viewboxViewboxTransform.js">core/graphics/viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.component.Component.html">Component</a></li><li><a href="xrx.component.Console.html">Console</a></li><li><a href="xrx.component.Output.html">Output</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.engine.Stylable.html">Stylable</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.EventTarget.html">EventTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.graphic.Canvas.html">Canvas</a></li><li><a href="xrx.graphic.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.graphic.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.graphic.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.graphic.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.graphic.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.graphic.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.graphic.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.graphic.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.graphic.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.graphic.Shape.html">Shape</a></li><li><a href="xrx.graphic.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.graphic.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.graphic.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.graphic.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.graphic.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.graphic.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.graphic.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.graphic.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.graphic.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.graphic.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.graphic.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.graphic.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.graphic.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.graphic.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.graphic.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.graphic.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.AbstractAction.html">AbstractAction</a></li><li><a href="xrx.mvc.AbstractUpdate.html">AbstractUpdate</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Auth.html">Auth</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.ChildComponent.html">ChildComponent</a></li><li><a href="xrx.mvc.ClassesAdd.html">ClassesAdd</a></li><li><a href="xrx.mvc.ClassesRemove.html">ClassesRemove</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Dispatch.html">Dispatch</a></li><li><a href="xrx.mvc.Dom.html">Dom</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.InstanceGithub.html">InstanceGithub</a></li><li><a href="xrx.mvc.InstanceRest.html">InstanceRest</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Origin.html">Origin</a></li><li><a href="xrx.mvc.Password.html">Password</a></li><li><a href="xrx.mvc.Remove.html">Remove</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Script.html">Script</a></li><li><a href="xrx.mvc.Signin.html">Signin</a></li><li><a href="xrx.mvc.Signout.html">Signout</a></li><li><a href="xrx.mvc.Uidl.html">Uidl</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.mvc.User.html">User</a></li><li><a href="xrx.mvc.Validate.html">Validate</a></li><li><a href="xrx.mvc.Xpath.html">Xpath</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AngularShape">AngularShape</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Nov 14 2014 17:09:45 GMT+0100 (MEZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Sep 18 2015 21:12:10 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>
