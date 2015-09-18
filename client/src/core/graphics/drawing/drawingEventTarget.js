@@ -26,38 +26,33 @@ goog.require('xrx.shape.Shapes');
 
 /**
  * A class implementing the event target behavior of a drawing canvas.
- * It receives events and invokes handler functions in xrx.drawing.EventHandler.
+ * It receives events and invokes handler functions.
  * @constructor
  */
 xrx.event.HandlerTarget = function() {
 
+  /**
+   * The event handler of this drawing canvas.
+   * @type {goog.events.EventHandler}
+   */
   this.handler_ = new goog.events.EventHandler(this);
-
-  this.keyClick_;
-
-  this.keyDblClick_;
-
-  this.keyDown_;
-
-  this.keyHover_;
-
-  this.keyMove_;
-
-  this.keyOut_;
-
-  this.keyUp_;
-
-  this.keyWheel_;
 };
 
 
 
+/**
+ * Returns the event handler of this drawing canvas.
+ * @return {goog.events.EventHandler} The event handler.
+ */
 xrx.event.HandlerTarget.prototype.getHandler = function() {
   return this.handler_;
 };
 
 
 
+/**
+ * @private
+ */
 xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
   // re-initialize the browser event in the case of mobile touch events
   if (e.getBrowserEvent().changedTouches) 
@@ -70,9 +65,13 @@ xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
 
 
 
+/**
+ * Function registers a click event which is propagated to a handler object.
+ * @param {Object} The handler object.
+ */
 xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
   var self = this;
-  if (!this.keyClick_) this.keyClick_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.CLICK); },
@@ -83,9 +82,13 @@ xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
 
 
 
+/**
+ * Function registers a double-click event which is propagated to a handler object.
+ * @param {Object} The handler object.
+ */
 xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
   var self = this;
-  if (!this.keyDblClick_) this.keyDblClick_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DBLCLICK); },
@@ -101,7 +104,7 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
   var self = this;
-  if (!this.keyDown_) this.keyDown_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DOWN); },
@@ -112,6 +115,10 @@ xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
 
 
 
+/**
+ * Function registers a drag event which is propagated to a handler object.
+ * @param {Object} The handler object.
+ */
 xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
   this.registerDown_(handler);
   this.registerMove_(handler);
@@ -125,7 +132,7 @@ xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
   var self = this;
-  if (!this.keyMove_) this.keyMove_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
@@ -141,7 +148,7 @@ xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
   var self = this;
-  if (!this.keyHover_) this.keyHover_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
@@ -152,9 +159,13 @@ xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
 
 
 
+/**
+ * Function registers a mouse out event which is propagated to a handler object.
+ * @param {Object} The handler object.
+ */
 xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
   var self = this;
-  if (!this.keyOut_) this.keyOut_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.OUT); },
@@ -170,7 +181,7 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
  */
 xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
   var self = this;
-  if (!this.keyUp_) this.keyUp_ = this.handler_.listen(
+  this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.UP,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.UP) },
@@ -181,11 +192,15 @@ xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
 
 
 
+/**
+ * Function registers a wheel event which is propagated to a handler object.
+ * @param {Object} The handler object.
+ */
 xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   if (goog.userAgent.MOBILE) return;
   var self = this;
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEngineElement().getEventTarget());
-  if (!this.keyWheel_) this.keyWheel_ = this.handler_.listen(mwh, xrx.event.Type.WHEEL,
+  this.handler_.listen(mwh, xrx.event.Type.WHEEL,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.WHEEL) },
     true,
     handler
@@ -207,22 +222,13 @@ xrx.event.HandlerTarget.prototype.disposeInternal = function() {
 
 
 
-xrx.event.HandlerTarget.prototype.unregisterAll = function() {
-  this.handler_.removeAll();
-  this.keyClick_ = null;
-  this.keyDblClick_ = null;
-  this.keyDown_ = null;
-  this.keyHover_ = null;
-  this.keyMove_ = null;
-  this.keyOut_ = null;
-  this.keyUp_ = null;
-  this.keyWheel_ = null;
-};
-
-
-
+/**
+ * Function registers all events necessary for a specific mode of this
+ * drawing canvas.
+ * @param {string} The mode.
+ */
 xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
-  this.unregisterAll();
+  this.handler_.removeAll();
 
   switch(mode) {
   case undefined:

@@ -60,8 +60,7 @@ xrx.shape.Shape.prototype.getCanvas = function() {
 
 /**
  * Returns the underlying engine element.
- * @return {(xrx.canvas.Element|xrx.svg.Element|xrx.vml.Element)}
- *     The engine element.
+ * @return {xrx.engine.Element} The engine element.
  */
 xrx.shape.Shape.prototype.getEngineElement = function() {
   return this.engineElement_;
@@ -69,6 +68,10 @@ xrx.shape.Shape.prototype.getEngineElement = function() {
 
 
 
+/**
+ * Sets the underlying engine element.
+ * @param {xrx.engine.Element} element An engine element.
+ */
 xrx.shape.Shape.prototype.setEngineElement = function(element) {
   this.engineElement_ = element;
 };
@@ -140,4 +143,17 @@ xrx.shape.Shape.prototype.getVertexDraggers = function() {
  */
 xrx.shape.Shape.prototype.setCTM = function(matrix) {
   this.ctm_ = matrix;
+};
+
+
+
+xrx.shape.Shape.prototype.startDrawing_ = function() {
+  this.engineElement_.startDrawing();
+  this.engineElement_.applyTransform(this.ctm_);
+};
+
+
+
+xrx.shape.Shape.prototype.finishDrawing_ = function() {
+  this.engineElement_.finishDrawing();
 };

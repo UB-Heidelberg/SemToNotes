@@ -11,3 +11,11 @@ goog.provide('xrx.engine.Element');
  * @constructor
  */
 xrx.engine.Element = function() {};
+
+
+
+xrx.engine.Element.prototype.startDrawing = function() {};
+
+
+
+xrx.engine.Element.prototype.finishDrawing = function() {};

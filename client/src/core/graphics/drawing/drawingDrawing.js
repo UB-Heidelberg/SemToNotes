@@ -13,7 +13,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.userAgent');
-goog.require('xrx.canvas');
 goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.Hoverable');
@@ -28,13 +27,7 @@ goog.require('xrx.drawing.Selectable');
 goog.require('xrx.drawing.ShapeIterator');
 goog.require('xrx.drawing.State');
 goog.require('xrx.viewbox.Viewbox');
-goog.require('xrx.engine');
-goog.require('xrx.engine.Engine');
-goog.require('xrx.engine.Engines');
-goog.require('xrx.shape.Shape');
 goog.require('xrx.shape.Shapes');
-goog.require('xrx.svg');
-goog.require('xrx.vml');
 
 
 
@@ -43,7 +36,9 @@ goog.require('xrx.vml');
  * image and thereby can serve as an image annotation tool.
  *
  * @param {DOMElement} element The HTML element used to install the canvas.
- * @param {string} The name of the rendering engine.
+ * @param {string} opt_engine The name of the rendering engine.
+ * @param {boolean} opt_force Whether to force Raphael rendering. For debugging
+ *   only.
  * @see xrx.engine
  * @constructor
  */
@@ -127,41 +122,17 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
    */
   this.viewbox_;
 
+  /**
+   * A helper class to iterate over all shapes contained in this
+   * drawing canvas.
+   * @type {xrx.drawing.ShapeIterator}
+   */
   this.shapeIterator_ = new xrx.drawing.ShapeIterator(this);
 
   // install the canvas
   this.install_(opt_engine, opt_force);
 };
 goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
-
-
-
-xrx.drawing.Drawing.prototype.getEngine = function() {
-  return this.engine_;
-};
-
-
-
-xrx.drawing.Drawing.prototype.getWidth = function() {
-  return this.getElement().offsetWidth;
-};
-
-
-
-xrx.drawing.Drawing.prototype.getHeight = function() {
-  return this.getElement().offsetHeight;
-};
-
-
-
-/**
- * Returns the engine used for rendering.
- * @see xrx.engine
- * @return {Object} The rendering engine.
- */
-xrx.drawing.Drawing.prototype.getGraphics = function() {
-  return this.engine_.getRenderer();
-};
 
 
 
@@ -176,8 +147,18 @@ xrx.drawing.Drawing.prototype.getElement = function() {
 
 
 /**
- * Returns the root element of the canvas.
- * @return {DOMElement} The root element.
+ * Returns the engine used for rendering.
+ * @return {xrx.engine.Engine} The engine.
+ */
+xrx.drawing.Drawing.prototype.getEngine = function() {
+  return this.engine_;
+};
+
+
+
+/**
+ * Returns the canvas object of this drawing canvas.
+ * @return {xrx.shape.Canvas} The canvas object.
  */
 xrx.drawing.Drawing.prototype.getCanvas = function() {
   return this.canvas_;
@@ -186,8 +167,8 @@ xrx.drawing.Drawing.prototype.getCanvas = function() {
 
 
 /**
- * Returns the background group of the canvas.
- * @return {DOMElement} The element representing the background group.
+ * Returns the background layer of this drawing canvas.
+ * @return {xrx.drawing.LayerBackground} The background layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerBackground = function() {
   return this.layer_[0];
@@ -196,8 +177,8 @@ xrx.drawing.Drawing.prototype.getLayerBackground = function() {
 
 
 /**
- * Returns the group of the canvas where shapes are rendered.
- * @return {DOMElement} The element representing the shape group.
+ * Returns the shape layer of this drawing canvas.
+ * @return {xrx.drawing.LayerShape} The shape layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerShape = function() {
   return this.layer_[1];
@@ -206,8 +187,8 @@ xrx.drawing.Drawing.prototype.getLayerShape = function() {
 
 
 /**
- * Returns the group of the canvas where shapes can be modified.
- * @return {DOMElement} The element representing the shape modify group.
+ * Returns the layer where shapes can be modified. 
+ * @return {xrx.drawing.LayerShapeModify} The shape modify layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
   return this.layer_[2];
@@ -216,8 +197,8 @@ xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
 
 
 /**
- * Returns the group of the canvas where new shapes can be drawn.
- * @return {?} The element representing the shape create group.
+ * Returns the layer where new shapes can be drawn.
+ * @return {xrx.drawing.LayerShapeCreate} The create layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
   return this.layer_[3];
@@ -225,28 +206,12 @@ xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
 
 
 
-xrx.drawing.Drawing.prototype.getLayers = function() {
-  return [this.layer_[0], this.layer_[1], this.layer_[2], this.layer_[3]];
-};
-
-
-
 /**
- * Returns the layer of the canvas where tools can be plugged in.
- * @return {?} The element representing the shape create group.
+ * Returns the layer of this drawing canvas where tools can be plugged in.
+ * @return {xrx.drawing.LayerTool} The tool layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerTool = function() {
   return this.layer_[4];
-};
-
-
-
-/**
- * Returns the shape currently created by the user.
- * @return {xrx.shape.Shape} The shape.
- */
-xrx.drawing.Drawing.prototype.getCreate = function() {
-  return this.create_;
 };
 
 
@@ -262,27 +227,21 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 
 /**
- * Whether a point is inside the current view-box.
- * @param {Array<number>} point The point.
+ * Returns the shape currently created by the user.
+ * @return {xrx.shape.Shape} The shape.
  */
-xrx.drawing.Drawing.prototype.isValidPoint = function(point) {
-  return point[0] >= this.viewbox_.box.x && point[0] <= this.viewbox_.box.x2 &&
-      point[1] >= this.viewbox_.box.y && point[1] <= this.viewbox_.box.y2;
+xrx.drawing.Drawing.prototype.getCreate = function() {
+  return this.create_;
 };
 
 
 
 /**
- * Whether the bounding box of a shape is inside the current view-box.
- * @param {Object} bbox The bounding box.
+ * Sets a background image to this drawing canvas.
+ * @param {string} url The URL of the image.
+ * @param {function} callback A callback function that is evaluated after
+ *   the image is loaded.
  */
-xrx.drawing.Drawing.prototype.isValidBBox = function(bbox) {
-  return bbox.x >= this.viewbox_.box.x && bbox.x2 <= this.viewbox_.box.x2 &&
-      bbox.y >= this.viewbox_.box.y && bbox.y2 <= this.viewbox_.box.y2;
-};
-
-
-
 xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
   var img = this.layer_[0].getImage();
   if (img && img.src === url) return;
@@ -302,6 +261,9 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
 
 
 
+/**
+ * Draws this canvas and all its layers, tools and shapes contained.
+ */
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
   // prepare drawing
@@ -464,6 +426,12 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
 
 
 
+/**
+ * Handles resizing of this drawing canvas. This function is
+ * automatically called whenever the size of the browser window
+ * changes. It can be also called by an application that changes
+ * the size of this drawing canvas during live time.
+ */
 xrx.drawing.Drawing.prototype.handleResize = function() {
   this.canvas_.setHeight(this.element_.clientHeight);
   this.canvas_.setWidth(this.element_.clientWidth);
@@ -596,7 +564,7 @@ xrx.drawing.Drawing.prototype.initEngine_ = function(opt_engine) {
  */
 xrx.drawing.Drawing.prototype.install_ = function(opt_engine, opt_force) {
 
-  // initialize the graphics rendering engine
+  // initialize the rendering engine
   this.initEngine_(opt_engine);
 
   if (this.engine_.isAvailable() || opt_force) {

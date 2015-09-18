@@ -105,11 +105,11 @@ xrx.shape.Canvas.prototype.setWidth = function(width) {
  * Draws this canvas and all its containers and shapes contained.
  */
 xrx.shape.Canvas.prototype.draw = function() {
-  this.engineElement_.startDrawing();
+  this.startDrawing_();
   for (var i = 0, len = this.childs_.length; i < len; i++) {
     this.childs_[i].draw();
   }
-  this.engineElement_.finishDrawing();
+  this.finishDrawing_();
 };
 
 

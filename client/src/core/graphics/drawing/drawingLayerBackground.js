@@ -15,7 +15,7 @@ goog.require('xrx.shape.Rect');
 /**
  * A class representing the background layer of a drawing canvas. The 
  * background layer can hold an image for image annotation.
- * @param {xrx.drawing.Drawing} canvas A canvas object.
+ * @param {xrx.drawing.Drawing} canvas The parent drawing canvas.
  * @constructor
  * @extends xrx.drawing.Layer
  */
@@ -25,7 +25,7 @@ xrx.drawing.LayerBackground = function(drawing) {
 
   /**
    * Pointer to the background image object.
-   * @type {Object}
+   * @type {xrx.shape.Image}
    * @private
    */
   this.image_;
@@ -36,7 +36,7 @@ goog.inherits(xrx.drawing.LayerBackground, xrx.drawing.Layer);
 
 /**
  * Returns the background image object.
- * @return {Object} The background image object. 
+ * @return {xrx.shape.Image} The background image object. 
  */
 xrx.drawing.LayerBackground.prototype.getImage = function(image) {
   return this.image_;
@@ -46,19 +46,10 @@ xrx.drawing.LayerBackground.prototype.getImage = function(image) {
 
 /**
  * Sets a new background image.
- * @param {Image} image The new image.
+ * @param {HTMLImage} image The new image.
  */
 xrx.drawing.LayerBackground.prototype.setImage = function(image) {
   this.image_.setImage(image);
-};
-
-
-
-/**
- * Draws the layer.
- */
-xrx.drawing.LayerBackground.prototype.draw = function() {
-  this.image_.draw();
 };
 
 

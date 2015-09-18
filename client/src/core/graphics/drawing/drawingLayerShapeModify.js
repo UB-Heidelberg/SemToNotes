@@ -13,7 +13,7 @@ goog.require('xrx.drawing.Layer');
 
 /**
  * A class representing a drawing layer where shapes can be modified.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  * @extends xrx.drawing.Layer
  */
@@ -35,9 +35,8 @@ xrx.drawing.LayerShapeModify.prototype.getVertexDraggers_ = function() {
 
 
 /**
- * Add modifiers such as vertex dragging elements for shape modification to the
- * layer.
- * @param {Object} modifiers The modifier elements.
+ * Add modifiers such as vertex dragging elements to this layer.
+ * @param {Array<xrx.shape.Shape>} modifiers The modifier elements.
  */
 xrx.drawing.LayerShapeModify.prototype.activate = function(modifiers) {
   this.removeShapes();
@@ -55,7 +54,6 @@ xrx.drawing.LayerShapeModify.prototype.activate = function(modifiers) {
  */
 xrx.drawing.LayerShapeModify.prototype.update = function(coords, position) {
   var vertexDraggers = this.getVertexDraggers_();
-
   for(var d = 0, len = vertexDraggers.length; d < len; d++) {
     if (d != position) vertexDraggers[d].setCenter(coords[d][0], coords[d][1]);
   }

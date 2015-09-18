@@ -54,8 +54,8 @@ xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
 
 
 /**
- * Returns the shape currently selected by the user.
- * @return {xrx.shape.Shape}
+ * Returns the shape currently selected or hovered by the user.
+ * @return {xrx.shape.Shape} The selected shape.
  */
 xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
   var layer;

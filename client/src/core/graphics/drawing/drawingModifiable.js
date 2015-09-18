@@ -13,6 +13,7 @@ goog.require('xrx.shape.VertexDragger');
 
 
 /**
+ * A class representing a modifiable shape. 
  * @constructor
  */
 xrx.drawing.Modifiable = function(drawing) {

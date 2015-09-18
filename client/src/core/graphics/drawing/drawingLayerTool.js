@@ -1,6 +1,6 @@
 /**
  * @fileoverview A class representing a drawing layer where tools can be
- *     plugged in.
+ *   plugged in.
  */
 
 goog.provide('xrx.drawing.LayerTool');
@@ -14,7 +14,7 @@ goog.require('xrx.drawing.tool.Magnifier');
 
 /**
  * A class representing a drawing layer where tools can be plugged in.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  * @extends {xrx.drawing.Layer}
  */

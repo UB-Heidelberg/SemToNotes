@@ -12,7 +12,7 @@ goog.provide('xrx.drawing.State');
 
 
 /**
- * A static class providing enumerations shared by all drawing classes.
+ * A static class providing enumerations for the drawing classes.
  */
 xrx.drawing = function() {};
 

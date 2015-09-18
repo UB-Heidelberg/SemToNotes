@@ -30,11 +30,12 @@ goog.inherits(xrx.shape.Group, xrx.shape.Container);
  * Draws this group and all its groups and shapes contained.
  */
 xrx.shape.Group.prototype.draw = function() {
-  this.engineElement_.applyTransform(this.ctm_);
+  this.startDrawing_();
   var children = this.getChildren();
   for(var i = 0, len = children.length; i < len; i++) {
     children[i].draw();
   };
+  this.finishDrawing_();
 };
 
 

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.shape.Polygon, xrx.shape.PolygonModify, xrx.shape.PolygonCreate</title>
+<script src='../../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../../deps.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.dom.DomHelper');
+  goog.require('xrx');
+</script>
+<style>
+table {
+border-collapse: collapse;
+}
+td {
+border: solid grey 1px;
+}
+.canvas {
+width: 500px;
+height: 500px;
+}
+</style>
+</head>
+<body>
+
+<h1>Polygon Tests</h1>
+
+<h2>Mode View</h2>
+<div>Make sure that line width is constant.</div>
+<div>Test with mobile devices.</div>
+<table>
+  <tr>
+	  <td><span>Canvas</span></td>
+	  <td><span>SVG</span></td>
+	  <td><span>VML</span></td>
+  </tr>
+  <tr>
+	  <td class="canvas" id="canvasPolygon"></td>
+	  <td class="canvas" id="svgPolygon"></td>
+	  <td class="canvas" id="vmlPolygon"></td>
+  </tr>
+</table>
+
+<h2>Mode Modify</h2>
+<table>
+  <tr>
+	  <td><span>Canvas</span></td>
+	  <td><span>SVG</span></td>
+	  <td><span>VML</span></td>
+  </tr>
+  <tr>
+	  <td class="canvas" id="canvasPolygonModify"></td>
+	  <td class="canvas" id="svgPolygonModify"></td>
+	  <td class="canvas" id="vmlPolygonModify"></td>
+  </tr>
+</table>
+
+<h2>Mode Create</h2>
+<table>
+  <tr>
+	  <td><span>Canvas</span></td>
+	  <td><span>SVG</span></td>
+	  <td><span>VML</span></td>
+  </tr>
+  <tr>
+	  <td class="canvas" id="canvasPolygonCreate"></td>
+	  <td class="canvas" id="svgPolygonCreate"></td>
+	  <td class="canvas" id="vmlPolygonCreate"></td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+
+
+
+function getCanvasDrawing(id) {
+  var element = goog.dom.getElement(id);
+  var drawing = new xrx.drawing.Drawing(element, xrx.engine.CANVAS);
+  drawing.setBackgroundImage('./shape_test2.png');
+  return drawing;
+};
+
+
+
+function getSvgDrawing(id) {
+  var element = goog.dom.getElement(id);
+  var drawing = xrx.drawing.Drawing(element, xrx.engine.SVG);
+  drawing.setBackgroundImage('./shape_test2.png');
+  return drawing;
+};
+
+
+
+function getVmlDrawing(id) {
+  var element = goog.dom.getElement(id);
+  var drawing = xrx.drawing.Drawing(element, xrx.engine.VML, true);
+  drawing.setBackgroundImage('./shape_test2.png');
+  return drawing;
+};
+
+
+
+function getPolygons(drawing) {
+  var coords1 = [[12,12], [25,15], [100,60], [60,90], [50,50], [30,40], [20,20]];
+  var coords2 = [[112,112], [125,115], [400,160], [160,190], [150,150], [130,140], [120,120]];
+  var coords3 = [[112,312], [125,315], [200,360], [160,390], [150,350], [130,340], [120,320]];
+  var polygon1 = xrx.shape.Polygon.create(drawing.getCanvas());
+  var polygon2 = xrx.shape.Polygon.create(drawing.getCanvas());
+  var polygon3 = xrx.shape.Polygon.create(drawing.getCanvas());
+  polygon1.setCoords(coords1);
+  polygon2.setCoords(coords2);
+  polygon3.setCoords(coords3);
+  return [polygon1, polygon2, polygon3];
+};
+
+
+
+function test1View() {
+  var canvasDrawing = getCanvasDrawing('canvasPolygon');
+  canvasDrawing.setModeView();
+  canvasDrawing.getLayerShape().addShapes(getPolygons(canvasDrawing));
+  var svgDrawing = getCanvasDrawing('svgPolygon');
+  svgDrawing.setModeView();
+  svgDrawing.getLayerShape().addShapes(getPolygons(svgDrawing));
+  var vmlDrawing = getCanvasDrawing('vmlPolygon');
+  vmlDrawing.setModeView();
+  vmlDrawing.getLayerShape().addShapes(getPolygons(vmlDrawing));
+};
+
+
+
+function test2Modify() {
+  var canvasDrawing = getCanvasDrawing('canvasPolygonModify');
+  canvasDrawing.setModeModify();
+  canvasDrawing.getLayerShape().addShapes(getPolygons(canvasDrawing));
+  var svgDrawing = getCanvasDrawing('svgPolygonModify');
+  svgDrawing.setModeModify();
+  svgDrawing.getLayerShape().addShapes(getPolygons(svgDrawing));
+  var vmlDrawing = getCanvasDrawing('vmlPolygonModify');
+  vmlDrawing.setModeModify();
+  vmlDrawing.getLayerShape().addShapes(getPolygons(vmlDrawing));
+};
+
+
+
+function test3Create() {
+  var canvasDrawing = getCanvasDrawing('canvasPolygonCreate');
+  canvasDrawing.setModeCreate();
+  canvasDrawing.getLayerShape().addShapes(getPolygons(canvasDrawing));
+  var svgDrawing = getCanvasDrawing('svgPolygonCreate');
+  svgDrawing.setModeCreate();
+  svgDrawing.getLayerShape().addShapes(getPolygons(svgDrawing));
+  var vmlDrawing = getCanvasDrawing('vmlPolygonCreate');
+  vmlDrawing.setModeCreate();
+  vmlDrawing.getLayerShape().addShapes(getPolygons(vmlDrawing));
+};
+
+</script>
+</body>
+</html>
