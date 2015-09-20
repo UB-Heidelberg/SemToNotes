@@ -24,6 +24,12 @@ xrx.shape.Stylable = function(canvas, engineElement, geometry) {
   goog.base(this, canvas, engineElement);
 
   /**
+   * The current zoom factor which, e.g., influences stroke width.
+   * @type {number}
+   */
+  this.zoomFactor_ = 1;
+
+  /**
    * Object describing the stroke style.
    */
   this.stroke_ = {
@@ -46,6 +52,17 @@ xrx.shape.Stylable = function(canvas, engineElement, geometry) {
   this.geometry_ = geometry;
 };
 goog.inherits(xrx.shape.Stylable, xrx.shape.Shape);
+
+
+
+/**
+ * Sets the current zoom factor, useful for shapes with constant size
+ * or constant stroke width.
+ * @param {number} factor The zoom factor.
+ */
+xrx.shape.Stylable.prototype.setZoomFactor = function(factor) {
+  this.zoomFactor_ = factor;
+};
 
 
 
@@ -90,6 +107,12 @@ xrx.shape.Stylable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+xrx.shape.Stylable.prototype.appendCoord = function(coord) {
+  this.geometry_.coords.push(coord);
+};
+
+
+
 /**
  * Sets all stylable parameters at once from another stylable object.
  * @param {xrx.shape.Stylable} stylable 
@@ -108,7 +131,7 @@ xrx.shape.Stylable.prototype.setAll = function(stylable) {
  * @return {number} The stroke width.
  */
 xrx.shape.Stylable.prototype.getStrokeWidth = function() {
-  return this.stroke_.width;
+  return this.stroke_.width / this.zoomFactor_;
 };
 
 

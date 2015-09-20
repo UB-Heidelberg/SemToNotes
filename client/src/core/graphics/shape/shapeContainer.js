@@ -1,5 +1,5 @@
 /**
- * @fileoverview An abstract class representing a graphic container.
+ * @fileoverview An abstract class representing a shape container.
  */
 
 goog.provide('xrx.shape.Container');
@@ -11,7 +11,7 @@ goog.require('xrx.shape.Shape');
 
 
 /**
- * An abstract class representing a graphic container.
+ * An abstract class representing a shape container.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  * @param {xrx.engine.Element} engineElement The engine element
  *   used to render this shape.

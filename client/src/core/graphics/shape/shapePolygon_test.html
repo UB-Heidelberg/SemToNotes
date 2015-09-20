@@ -43,6 +43,8 @@ height: 500px;
 </table>
 
 <h2>Mode Modify</h2>
+<div>Make sure that size of modifiers is constant.</div>
+<div>Test with mobile devices.</div>
 <table>
   <tr>
 	  <td><span>Canvas</span></td>
@@ -57,6 +59,8 @@ height: 500px;
 </table>
 
 <h2>Mode Create</h2>
+<div>Make sure that size of modifiers is constant.</div>
+<div>Test with mobile devices.</div>
 <table>
   <tr>
 	  <td><span>Canvas</span></td>
@@ -109,8 +113,11 @@ function getPolygons(drawing) {
   var polygon2 = xrx.shape.Polygon.create(drawing.getCanvas());
   var polygon3 = xrx.shape.Polygon.create(drawing.getCanvas());
   polygon1.setCoords(coords1);
+  polygon1.setStrokeWidth(1);
   polygon2.setCoords(coords2);
+  polygon2.setStrokeWidth(1);
   polygon3.setCoords(coords3);
+  polygon3.setStrokeWidth(1);
   return [polygon1, polygon2, polygon3];
 };
 
@@ -146,13 +153,16 @@ function test2Modify() {
 
 function test3Create() {
   var canvasDrawing = getCanvasDrawing('canvasPolygonCreate');
-  canvasDrawing.setModeCreate();
+  var canvasCreatable = new xrx.shape.PolygonCreate(canvasDrawing);
+  canvasDrawing.setModeCreate(canvasCreatable);
   canvasDrawing.getLayerShape().addShapes(getPolygons(canvasDrawing));
   var svgDrawing = getCanvasDrawing('svgPolygonCreate');
-  svgDrawing.setModeCreate();
+  var svgCreatable = new xrx.shape.PolygonCreate(svgDrawing);
+  svgDrawing.setModeCreate(svgCreatable);
   svgDrawing.getLayerShape().addShapes(getPolygons(svgDrawing));
   var vmlDrawing = getCanvasDrawing('vmlPolygonCreate');
-  vmlDrawing.setModeCreate();
+  var vmlCreatable = new xrx.shape.PolygonCreate(vmlDrawing);
+  vmlDrawing.setModeCreate(vmlCreatable);
   vmlDrawing.getLayerShape().addShapes(getPolygons(vmlDrawing));
 };
 

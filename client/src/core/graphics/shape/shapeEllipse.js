@@ -93,10 +93,12 @@ xrx.shape.Ellipse.prototype.setRadiusY = function(ry) {
  * Draws this ellipse.
  */
 xrx.shape.Ellipse.prototype.draw = function() {
+  this.startDrawing_();
   var center = this.getCenter();
   this.engineElement_.draw(center[0], center[1], this.getRadiusX(),
       this.getRadiusY(), this.getFillColor(), this.getFillOpacity(),
       this.getStrokeColor(), this.getStrokeWidth());
+  this.finishDrawing_();
 };
 
 

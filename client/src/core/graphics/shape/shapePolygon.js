@@ -39,8 +39,10 @@ goog.inherits(xrx.shape.Polygon, xrx.shape.Stylable);
  * Draws this polygon shape.
  */
 xrx.shape.Polygon.prototype.draw = function() {
+  this.startDrawing_();
   this.engineElement_.draw(this.getCoords(), this.getFillColor(),
       this.getFillOpacity(), this.getStrokeColor(), this.getStrokeWidth());
+  this.finishDrawing_();
 };
 
 
@@ -177,12 +179,12 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
 
   if (this.count_ === 0) { // user creates the first point
     // insert a poly-line
-    this.polyline_ = xrx.shape.Polyline.create(this.drawing_);
+    this.polyline_ = xrx.shape.Polyline.create(this.drawing_.getCanvas());
     this.polyline_.setCoords([point]);
     this.drawing_.getLayerShapeCreate().addShapes(this.polyline_);
 
     // insert a vertex
-    this.close_ = xrx.shape.VertexDragger.create(this.drawing_);
+    this.close_ = xrx.shape.VertexDragger.create(this.drawing_.getCanvas());
     this.close_.setCoords([point]);
     this.drawing_.getLayerShapeCreate().addShapes(this.close_);
     this.vertexes_.push(this.close_);
@@ -205,7 +207,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     coords[this.vertexes_.length] = this.vertexes_[0].getCoordsCopy()[0];
 
     // insert the polygon
-    polygon = xrx.shape.Polygon.create(this.drawing_);
+    polygon = xrx.shape.Polygon.create(this.drawing_.getCanvas());
     polygon.setCoords(coords);
     this.drawing_.getLayerShape().addShapes(polygon);
     if (this.drawing_.handleCreated) this.drawing_.handleCreated();
@@ -224,7 +226,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
     this.polyline_.appendCoord(point);
 
     // insert another vertex
-    vertex = xrx.shape.VertexDragger.create(this.drawing_);
+    vertex = xrx.shape.VertexDragger.create(this.drawing_.getCanvas());
     vertex.setCoords([point]);
     this.drawing_.getLayerShapeCreate().addShapes(vertex);
     this.vertexes_.push(vertex);

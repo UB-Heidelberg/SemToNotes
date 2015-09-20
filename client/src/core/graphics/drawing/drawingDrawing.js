@@ -26,7 +26,9 @@ goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.Selectable');
 goog.require('xrx.drawing.ShapeIterator');
 goog.require('xrx.drawing.State');
+goog.require('xrx.engine.Engine');
 goog.require('xrx.viewbox.Viewbox');
+goog.require('xrx.shape');
 goog.require('xrx.shape.Shapes');
 
 
@@ -266,14 +268,18 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
  */
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
-  // prepare drawing
-  this.shapeIterator_.next = function(element) {
-    // copy the current view-box matrix to the view-box group
-    if (element === self.getViewbox().getGroup()) {
-      element.setCTM(self.getViewbox().getCTM());
+  var viewbox = this.getViewbox();
+  this[xrx.shape.EventType.SHAPE_BEFORE_DRAW] = function(element) {
+    // apply the current view-box matrix to the view-box group
+    if (element === viewbox.getGroup()) {
+      element.setCTM(viewbox.getCTM());
     }
+    // change zoom factor of each stylable shape
+    else if (element instanceof xrx.shape.Stylable) {
+      element.setZoomFactor(viewbox.getZoomValue());
+    }
+    else {};
   };
-  this.shapeIterator_.iterate(this.getCanvas());
   this.canvas_.draw();
 };
 
@@ -454,6 +460,7 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   this.canvas_ = xrx.shape.Canvas.create(self.element_, this.engine_);
   this.canvas_.setHeight(this.element_.clientHeight);
   this.canvas_.setWidth(this.element_.clientWidth);
+  this.canvas_.setEventHandler(this);
 };
 
 

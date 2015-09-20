@@ -25,21 +25,21 @@ xrx.EventTarget = function() {};
 /**
  * Dispatch an event to a foreign JavaScript application. The function only
  * applies the event if the foreign JavaScript object implements
- * an according event handler.
+ * an according event handler function.
  * @param {string} eventType The name of the event. Must start with prefix "event*".
- * @param {?Object} opt_eventTarget The object used to apply the event.
- *   Defaults to the "this" object.  
+ * @param {?Object} opt_eventHandler The object used to apply the event.
+ *   Defaults to this or this.eventHanlder_ if available.  
  */
-xrx.EventTarget.prototype.dispatchExternal = function(eventType, opt_eventTarget) {
+xrx.EventTarget.prototype.dispatchExternal = function(eventType, opt_eventHandler) {
   if (!goog.string.startsWith(eventType, 'event')) throw Error('Invalid event-type "' +
       '". Prefix "event*" expected.');
-  var target;
-  opt_eventTarget === undefined ? target = this : target = opt_eventTarget;
-  if (target[eventType]) {
+  var handler;
+  opt_eventHandler !== undefined ? handler = opt_eventHandler : handler = this;
+  if (handler[eventType]) {
     if (arguments.length <= 2) {
-      target[eventType].apply(target);
+      handler[eventType].apply(handler);
     } else {
-      target[eventType].apply(target, this.argsArray_(arguments));
+      handler[eventType].apply(handler, this.argsArray_(arguments));
     }
   }
 };

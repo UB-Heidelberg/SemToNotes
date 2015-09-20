@@ -31,9 +31,11 @@ goog.inherits(xrx.shape.Polyline, xrx.shape.Stylable);
  * Draws this poly-line shape.
  */
 xrx.shape.Polyline.prototype.draw = function() {
+  this.startDrawing_();
   this.engineElement_.draw(this.getCoords(), this.getFillColor(),
       this.getFillOpacity(), this.getStrokeColor(),
       this.getStrokeWidth());
+  this.finishDrawing_();
 };
 
 

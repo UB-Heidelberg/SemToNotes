@@ -9,6 +9,7 @@ goog.provide('xrx.shape.Canvas');
 
 goog.require('xrx.engine');
 goog.require('xrx.engine.Engines');
+goog.require('xrx.shape');
 goog.require('xrx.shape.Container');
 
 
@@ -36,8 +37,36 @@ xrx.shape.Canvas = function(element, engine, engineElement) {
    * @type {xrx.engine.Engine}
    */
   this.engine_ = engine;
+
+  /**
+   * An event handler object to propagate
+   * events such as 'eventShapeBeforeDraw'
+   * @type {Object}
+   */
+  this.eventHandler_;
 };
 goog.inherits(xrx.shape.Canvas, xrx.shape.Container);
+
+
+
+/**
+ * Returns the event handler object to which events such as
+ * 'eventShapeBeforeDraw' are propagated.
+ * @param {Object} handler The handler object.
+ */
+xrx.shape.Canvas.prototype.setEventHandler = function(handler) {
+  this.eventHandler_ = handler;
+};
+
+
+
+/**
+ * Returns the event handler object.
+ * @return {Object}
+ */
+xrx.shape.Canvas.prototype.getEventHandler = function() {
+  return this.eventHandler_ || this;
+};
 
 
 

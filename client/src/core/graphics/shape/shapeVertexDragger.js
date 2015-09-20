@@ -76,6 +76,11 @@ xrx.shape.VertexDragger.prototype.setCoords = function(coords) {
 
 
 
+xrx.shape.VertexDragger.prototype.getRadius = function() {
+  return this.geometry_.r / this.zoomFactor_;
+};
+
+
 
 /**
  * Creates a new vertex dragging shape.

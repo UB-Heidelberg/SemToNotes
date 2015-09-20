@@ -124,8 +124,10 @@ xrx.shape.Rect.prototype.getHeight = function() {
  * Draws this rectangle.
  */
 xrx.shape.Rect.prototype.draw = function() {
+  this.startDrawing_();
   this.engineElement_.draw(this.getCoords(), this.getFillColor(),
       this.getFillOpacity(), this.getStrokeColor(), this.getStrokeWidth());
+  this.finishDrawing_();
 };
 
 

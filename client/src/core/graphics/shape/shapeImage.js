@@ -79,7 +79,9 @@ xrx.shape.Image.prototype.getWidth = function() {
  * Draws this image.
  */
 xrx.shape.Image.prototype.draw = function() {
+  this.startDrawing_();
   if (this.image_) this.engineElement_.draw(this.image_);
+  this.finishDrawing_();
 };
 
 

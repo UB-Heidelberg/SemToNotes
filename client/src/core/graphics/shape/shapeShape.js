@@ -8,18 +8,21 @@ goog.provide('xrx.shape.Shape');
 
 
 goog.require('xrx.engine.Engines');
+goog.require('xrx.EventTarget');
+goog.require('xrx.shape');
 
 
 
 /**
- * Super-class representing an engine-independent
- * shape.
+ * Super-class representing an engine-independent shape.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  * @param {xrx.engine.Element} engineElement The engine element
  *   used to render this shape.
  * @constructor
  */
 xrx.shape.Shape = function(canvas, engineElement) {
+
+  goog.base(this);
 
   /**
    * The parent canvas object.
@@ -45,6 +48,7 @@ xrx.shape.Shape = function(canvas, engineElement) {
    */
   this.ctm_;
 };
+goog.inherits(xrx.shape.Shape, xrx.EventTarget);
 
 
 
@@ -148,8 +152,10 @@ xrx.shape.Shape.prototype.setCTM = function(matrix) {
 
 
 xrx.shape.Shape.prototype.startDrawing_ = function() {
-  this.engineElement_.startDrawing();
+  this.dispatchExternal(xrx.shape.EventType.SHAPE_BEFORE_DRAW,
+      this.canvas_.getEventHandler(), this);
   this.engineElement_.applyTransform(this.ctm_);
+  this.engineElement_.startDrawing();
 };
 
 
