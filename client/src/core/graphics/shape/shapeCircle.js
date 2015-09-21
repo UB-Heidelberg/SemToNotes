@@ -4,10 +4,13 @@
  */
 
 goog.provide('xrx.shape.Circle');
+goog.provide('xrx.shape.CircleModify');
+goog.provide('xrx.shape.CircleCreate');
 
 
 
 goog.require('xrx.geometry.Circle');
+goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Stylable');
 
 
@@ -33,6 +36,26 @@ goog.inherits(xrx.shape.Circle, xrx.shape.Stylable);
  */
 xrx.shape.Circle.prototype.getCenter = function() {
   return [this.geometry_.cx, this.geometry_.cy];
+};
+
+
+
+/**
+ * Returns the coordinates of this circle. We assume the center point.
+ * @return {Array<Array<<number>>}
+ */
+xrx.shape.Circle.prototype.getCoords = function() {
+  return [this.getCenter()];
+};
+
+
+
+/**
+ * Sets the coordinates of this circle. We assume the center point.
+ * @param {Array<Array<<number>>} coords The coordinate.
+ */
+xrx.shape.Circle.prototype.setCoords = function(coords) {
+  return this.setCenter(coords[0][0], coords[0][1]);
 };
 
 
@@ -101,4 +124,49 @@ xrx.shape.Circle.create = function(canvas) {
     throw Error('Unknown engine.');
   }
   return new xrx.shape.Circle(canvas, engineElement);
+};
+
+
+
+/**
+ * Returns a modifiable circle shape. Create it lazily if not existent.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.CircleModify} The modifiable circle shape.
+ */
+xrx.shape.Circle.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.CircleModify.create(this);
+  return this.modifiable_;
+};
+
+
+
+/**
+ * Returns a creatable circle shape. Create it lazily if not existent.
+ * @return {xrx.shape.CircleCreate} The creatable circle shape.
+ */
+xrx.shape.Circle.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreate.create(this);
+  return this.creatable_;
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.CircleModify = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.shape.CircleModify, xrx.shape.Modifiable);
+
+
+
+xrx.shape.CircleModify.create = function(circle) {
+  var center = circle.getCenter();
+  var radius = circle.getRadius();
+  var dragger = xrx.shape.VertexDragger.create(circle.getCanvas());
+  dragger.setCoords([[center[0] + radius, center[1]]]);
+  dragger.setPosition(0);
+  return [dragger];
 };

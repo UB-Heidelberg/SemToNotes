@@ -45,6 +45,7 @@ xrx.shape.Polyline.prototype.draw = function() {
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  */
 xrx.shape.Polyline.create = function(canvas) {
+  var polyline;
   var engineElement;
   var engine = canvas.getEngine();
   var canvasElement = canvas.getEngineElement();
@@ -57,5 +58,7 @@ xrx.shape.Polyline.create = function(canvas) {
   } else {
     throw Error('Unknown engine.');
   }
-  return new xrx.shape.Polyline(canvas, engineElement);
+  polyline = new xrx.shape.Polyline(canvas, engineElement);
+  polyline.setCoords([[0, 0]]);
+  return polyline;
 };

@@ -397,28 +397,19 @@ xrx.drawing.Drawing.prototype.setModeModify = function() {
 /**
  * Switch the drawing canvas over into mode <i>create</i> to allow drawing of new shapes.
  * @see xrx.drawing.Mode
- * @param {string} shape The shape to create.
+ * @param {xrx.shape.Creatable} shape The shape to create.
  */
 xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   if (!shape) return;
   var self = this;
+  this.create_ = shape;
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);
   this.getLayerShapeCreate().setLocked(false);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  this.create_ = shape instanceof String ? new xrx.shape[shape](this) : shape;
-  if (this.drawEvent_) goog.events.unlistenByKey(this.drawEvent_);
-  this.drawEvent_ = goog.events.listen(self.canvas_.getElement(),
-      xrx.event.Type.DOWN,
-      function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        if (self.mode_ === xrx.drawing.Mode.CREATE) self.create_.handleClick(e);
-      },
-      true
-  );
+  shape.setEventHandler(this);
   this.setMode_(xrx.drawing.Mode.CREATE);
 };
 

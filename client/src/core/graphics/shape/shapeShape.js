@@ -43,6 +43,13 @@ xrx.shape.Shape = function(canvas, engineElement) {
   this.isModifiable_ = true;
 
   /**
+   *
+   */
+  this.modifiable_;
+
+  this.creatable_;
+
+  /**
    * The current transformation matrix of this shape.
    * @type {goog.math.AffineTransform}
    */
@@ -53,9 +60,27 @@ goog.inherits(xrx.shape.Shape, xrx.EventTarget);
 
 
 /**
+ * Abstract function to be implemented by each shape class. Returns
+ * a modifiable shape.
+ * @return {xrx.shape.Modifiable} A modifiable shape.
+ */
+xrx.shape.Shape.prototype.getModifiable = goog.abstractMethod;
+
+
+
+/**
+ * Abstract function to be implemented by each shape class. Returns
+ * a creatable shape.
+ * @return {xrx.shape.Creatable} A creatable shape.
+ */
+xrx.shape.Shape.prototype.getCreatable = goog.abstractMethod;
+
+
+
+/**
  * Returns the parent canvas object of this shape.
  * @return {xrx.shape.Canvas} The canvas object.
- */
+ */ 
 xrx.shape.Shape.prototype.getCanvas = function() {
   return this.canvas_;
 };

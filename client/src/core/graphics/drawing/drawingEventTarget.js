@@ -54,12 +54,14 @@ xrx.event.HandlerTarget.prototype.getHandler = function() {
  * @private
  */
 xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
+  var point = this.getEventPoint(e);
+  var shape = this.getShapeSelected(point);
   // re-initialize the browser event in the case of mobile touch events
   if (e.getBrowserEvent().changedTouches) 
       e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
   e.preventDefault();
   e.stopPropagation();
-  handler[event](e);
+  handler[event](e, point, shape);
   this.draw();
 };
 
@@ -75,8 +77,7 @@ xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.CLICK); },
-    true,
-    handler
+    true
   );
 };
 
@@ -92,8 +93,7 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DBLCLICK); },
-    true,
-    handler
+    true
   );
 };
 
@@ -108,8 +108,7 @@ xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DOWN); },
-    true,
-    handler
+    true
   );
 };
 
@@ -136,8 +135,7 @@ xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
-    true,
-    handler
+    true
   );
 };
 
@@ -152,8 +150,7 @@ xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
-    true,
-    handler
+    true
   );
 };
 
@@ -169,8 +166,7 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.OUT); },
-    true,
-    handler
+    true
   );
 };
 
@@ -185,8 +181,7 @@ xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.UP,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.UP) },
-    true,
-    handler
+    true
   );
 };
 
@@ -202,8 +197,7 @@ xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEngineElement().getEventTarget());
   this.handler_.listen(mwh, xrx.event.Type.WHEEL,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.WHEEL) },
-    true,
-    handler
+    true
   );
 };
 
@@ -253,6 +247,8 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.CREATE:
+    this.registerClick(this.create_);
+    this.registerMove_(this.create_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVER:

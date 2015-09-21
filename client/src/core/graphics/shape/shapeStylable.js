@@ -107,6 +107,13 @@ xrx.shape.Stylable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+xrx.shape.Stylable.prototype.setLastCoord = function(coord) {
+  var last = this.geometry_.coords.length - 1;
+  this.geometry_.coords[last] = coord;
+};
+
+
+
 xrx.shape.Stylable.prototype.appendCoord = function(coord) {
   this.geometry_.coords.push(coord);
 };
@@ -117,7 +124,7 @@ xrx.shape.Stylable.prototype.appendCoord = function(coord) {
  * Sets all stylable parameters at once from another stylable object.
  * @param {xrx.shape.Stylable} stylable 
  */
-xrx.shape.Stylable.prototype.setAll = function(stylable) {
+xrx.shape.Stylable.prototype.setStylable = function(stylable) {
   this.stroke_.color = stylable.getStrokeColor();
   this.stroke_.width = stylable.getStrokeWidth();
   this.fill_.color = stylable.getFillColor();

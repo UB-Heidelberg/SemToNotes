@@ -11,9 +11,12 @@ goog.provide('xrx.shape.PolygonCreate');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
+goog.require('goog.object');
 goog.require('xrx.engine.Engines');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.mvc');
+goog.require('xrx.shape.Creatable');
+goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Polyline');
 goog.require('xrx.shape.Stylable');
 goog.require('xrx.shape.VertexDragger');
@@ -70,11 +73,24 @@ xrx.shape.Polygon.create = function(canvas) {
 
 
 /**
- * Creates a new instance of a modifiable polygon shape.
+ * Returns a modifiable polygon shape. Create it lazily if not existent.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.PolygonModify} The modifiable polygon shape.
  */
-xrx.shape.Polygon.prototype.createModify = function(drawing) {
-  return xrx.shape.PolygonModify.create(this);
+xrx.shape.Polygon.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModify.create(this);
+  return this.modifiable_;
+};
+
+
+
+/**
+ * Returns a creatable polygon shape. Create it lazily if not existent.
+ * @return {xrx.shape.PolygonCreate} The creatable polygon shape.
+ */
+xrx.shape.Polygon.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreate.create(this);
+  return this.creatable_;
 };
 
 
@@ -83,7 +99,11 @@ xrx.shape.Polygon.prototype.createModify = function(drawing) {
  * A class representing a modifiable polygon shape.
  * @constructor
  */
-xrx.shape.PolygonModify = function() {};
+xrx.shape.PolygonModify = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.shape.PolygonModify, xrx.shape.Modifiable);
 
 
 
@@ -95,14 +115,12 @@ xrx.shape.PolygonModify.create = function(polygon) {
   var coords = polygon.getCoords();
   var draggers = [];
   var dragger;
-
   for(var i = 0, len = coords.length; i < len; i++) {
     dragger = xrx.shape.VertexDragger.create(polygon.getCanvas());
     dragger.setCoords([coords[i]]);
     dragger.setPosition(i);
     draggers.push(dragger);
   }
-
   return draggers;
 };
 
@@ -110,33 +128,20 @@ xrx.shape.PolygonModify.create = function(polygon) {
 
 /**
  * A class representing a creatable polygon shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @param {xrx.shape.Polygon} polygon A styled polygon to be drawn.
  * @constructor
  */
-xrx.shape.PolygonCreate = function(drawing) {
+xrx.shape.PolygonCreate = function(polygon) {
 
-  /**
-   * The parent drawing object.
-   * @type {xrx.drawing.Drawing}
-   * @private
-   */
-  this.drawing_ = drawing;
+  goog.base(this, polygon, xrx.shape.Polyline.create(polygon.getCanvas()));
 
   /**
    * The first vertex created by the user, which at the same time
-   * closes the polygon when touched.
+   * closes the polygon when clicked.
    * @type {xrx.shape.VertexDragger}
    * @private
    */
   this.close_;
-
-  /**
-   * A poly-line shape to give the user a preview of the created
-   *     polygon.
-   * @type {xrx.shape.Polyline}
-   * @private
-   */
-  this.polyline_;
 
   /**
    * An array of vertexes the user has created so far.
@@ -152,6 +157,7 @@ xrx.shape.PolygonCreate = function(drawing) {
    */
   this.count_ = 0;
 };
+goog.inherits(xrx.shape.PolygonCreate, xrx.shape.Creatable);
 
 
 
@@ -161,7 +167,7 @@ xrx.shape.PolygonCreate = function(drawing) {
  * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.PolygonCreate.prototype.getCoords = function() {
-  return this.polyline_.getCoords();
+  return this.helper_.getCoords();
 };
 
 
@@ -170,71 +176,72 @@ xrx.shape.PolygonCreate.prototype.getCoords = function() {
  * Handles click events for a creatable polygon shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.PolygonCreate.prototype.handleClick = function(e) {
+xrx.shape.PolygonCreate.prototype.handleClick = function(e, point, shape) {
   var vertex;
   var polygon;
   var coords;
-  var point = this.drawing_.getEventPoint(e);
-  var shape = this.drawing_.getShapeSelected(point);
-
   if (this.count_ === 0) { // user creates the first point
-    // insert a poly-line
-    this.polyline_ = xrx.shape.Polyline.create(this.drawing_.getCanvas());
-    this.polyline_.setCoords([point]);
-    this.drawing_.getLayerShapeCreate().addShapes(this.polyline_);
-
+    // update the poly-line
+    this.helper_.setCoords([point, point]);
     // insert a vertex
-    this.close_ = xrx.shape.VertexDragger.create(this.drawing_.getCanvas());
+    this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
     this.close_.setCoords([point]);
-    this.drawing_.getLayerShapeCreate().addShapes(this.close_);
     this.vertexes_.push(this.close_);
-
-    // redraw
-    this.drawing_.draw();
     this.count_ += 1;
-
-    if (this.handleValueChanged) this.handleValueChanged();
-  } else if (shape === this.close_ && this.count_ === 1) { // user tries to create an invalid vertex
+    this.eventHandler_.eventShapeCreate([this.helper_, this.close_]);
+  } else if (shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
-
   } else if (shape === this.close_) { // user closes the polygon
+    var polygon;
     // get the coordinates
     coords = new Array(this.vertexes_.length + 1);
     for (var i = 0; i < this.vertexes_.length; i++) {
       coords[i] = this.vertexes_[i].getCoordsCopy()[0];
     }
     coords[this.vertexes_.length] = this.vertexes_[0].getCoordsCopy()[0];
-
-    // insert the polygon
-    polygon = xrx.shape.Polygon.create(this.drawing_.getCanvas());
-    polygon.setCoords(coords);
-    this.drawing_.getLayerShape().addShapes(polygon);
-    if (this.drawing_.handleCreated) this.drawing_.handleCreated();
-
-    // remove the temporary shapes
-    this.drawing_.getLayerShapeCreate().removeShapes();
+    // update the polygon
+    this.target_.setCoords(coords);
+    // reset for next drawing
     this.close_ = null;
     this.vertexes_ = [];
-
-    // redraw
-    this.drawing_.draw();
     this.count_ = 0;
-
+    polygon = xrx.shape.Polygon.create(this.target_.getCanvas());
+    polygon.setStylable(this.target_);
+    polygon.setCoords(this.target_.getCoordsCopy());
+    this.eventHandler_.eventShapeCreated(polygon);
   } else { // user creates another vertex
     // extend the poly-line
-    this.polyline_.appendCoord(point);
-
-    // insert another vertex
-    vertex = xrx.shape.VertexDragger.create(this.drawing_.getCanvas());
+    this.helper_.setLastCoord(point);
+    this.helper_.appendCoord(point);
+    // create another vertex
+    vertex = xrx.shape.VertexDragger.create(this.target_.getCanvas());
     vertex.setCoords([point]);
-    this.drawing_.getLayerShapeCreate().addShapes(vertex);
     this.vertexes_.push(vertex);
-
-    // redraw
-    this.drawing_.draw();
     this.count_ += 1;
-
-    if (this.handleValueChanged) this.handleValueChanged();
+    this.eventHandler_.eventShapeCreate(vertex);
   } 
+};
+
+
+
+xrx.shape.PolygonCreate.prototype.handleMove = function(e, point, shape) {
+  if (this.count_ === 0) {
+    return;
+  } else {
+    this.helper_.setLastCoord(point);
+  }
+  if (shape === this.close_) {
+    this.close_.setStrokeColor('red');
+    this.close_.setStrokeWidth(3);
+  } else {
+    this.close_.setStrokeColor('black');
+    this.close_.setStrokeWidth(1);
+  }
+};
+
+
+
+xrx.shape.PolygonCreate.create = function(polygon) {
+  return new xrx.shape.PolygonCreate(polygon);
 };

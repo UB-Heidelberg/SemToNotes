@@ -34,7 +34,7 @@ xrx.engine.Stylable = function() {
  * Sets all stylable parameters at once from another stylable object.
  * @param {xrx.engine.Stylable} stylable 
  */
-xrx.engine.Stylable.prototype.setAll = function(stylable) {
+xrx.engine.Stylable.prototype.setStylable = function(stylable) {
   this.stroke_.color = stylable.getStrokeColor();
   this.stroke_.width = stylable.getStrokeWidth();
   this.fill_.color = stylable.getFillColor();
