@@ -24,7 +24,6 @@ goog.require('xrx.drawing.LayerTool');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.drawing.Modifiable');
 goog.require('xrx.drawing.Selectable');
-goog.require('xrx.drawing.ShapeIterator');
 goog.require('xrx.drawing.State');
 goog.require('xrx.engine.Engine');
 goog.require('xrx.viewbox.Viewbox');
@@ -41,7 +40,6 @@ goog.require('xrx.shape.Shapes');
  * @param {string} opt_engine The name of the rendering engine.
  * @param {boolean} opt_force Whether to force Raphael rendering. For debugging
  *   only.
- * @see xrx.engine
  * @constructor
  */
 xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
@@ -80,6 +78,7 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
    * A shield in front of the canvas needed by the SVG and the
    * VML rendering engine for smooth dragging of elements.
    * @type {xrx.shape.Rect}
+   * @private
    */
   this.shield_;
 
@@ -123,13 +122,6 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
    * @private
    */
   this.viewbox_;
-
-  /**
-   * A helper class to iterate over all shapes contained in this
-   * drawing canvas.
-   * @type {xrx.drawing.ShapeIterator}
-   */
-  this.shapeIterator_ = new xrx.drawing.ShapeIterator(this);
 
   // install the canvas
   this.install_(opt_engine, opt_force);
@@ -209,7 +201,7 @@ xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
 
 
 /**
- * Returns the layer of this drawing canvas where tools can be plugged in.
+ * Returns the layer where tools can be plugged in.
  * @return {xrx.drawing.LayerTool} The tool layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerTool = function() {
@@ -219,7 +211,7 @@ xrx.drawing.Drawing.prototype.getLayerTool = function() {
 
 
 /**
- * Returns the view-box of the drawing canvas.
+ * Returns the view-box of this drawing canvas.
  * @return {Object} The view-box.
  */
 xrx.drawing.Drawing.prototype.getViewbox = function() {
@@ -230,7 +222,7 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 /**
  * Returns the shape currently created by the user.
- * @return {xrx.shape.Shape} The shape.
+ * @return {xrx.shape.Creatable} The shape.
  */
 xrx.drawing.Drawing.prototype.getCreate = function() {
   return this.create_;
@@ -241,10 +233,10 @@ xrx.drawing.Drawing.prototype.getCreate = function() {
 /**
  * Sets a background image to this drawing canvas.
  * @param {string} url The URL of the image.
- * @param {function} callback A callback function that is evaluated after
+ * @param {function} opt_callback A callback function that is evaluated after
  *   the image is loaded.
  */
-xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
+xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
   var img = this.layer_[0].getImage();
   if (img && img.src === url) return;
   var self = this;
@@ -254,7 +246,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, callback) {
   tmpImage.src = url;
   goog.events.listen(imageLoader, goog.events.EventType.LOAD, function(e) {
     self.layer_[0].setImage(e.target);
-    if (callback) callback();
+    if (opt_callback) opt_callback();
     self.draw();
   });
   imageLoader.addImage('_tmp', tmpImage);
@@ -274,7 +266,7 @@ xrx.drawing.Drawing.prototype.draw = function() {
     if (element === viewbox.getGroup()) {
       element.setCTM(viewbox.getCTM());
     }
-    // change zoom factor of each stylable shape
+    // tell each stylable shape the current scale of the viewbox
     else if (element instanceof xrx.shape.Stylable) {
       element.setZoomFactor(viewbox.getZoomValue());
     }
