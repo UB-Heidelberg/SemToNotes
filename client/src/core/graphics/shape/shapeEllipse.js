@@ -15,13 +15,13 @@ goog.require('xrx.shape.Stylable');
 /**
  * A class representing an engine-independent ellipse graphic.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  */
-xrx.shape.Ellipse = function(canvas, engineElement) {
+xrx.shape.Ellipse = function(canvas) {
 
-  goog.base(this, canvas, engineElement, new xrx.geometry.Ellipse());
+  goog.base(this, canvas,
+      canvas.getEngine().createEllipse(canvas.getEngineElement()),
+      new xrx.geometry.Ellipse());
 };
 goog.inherits(xrx.shape.Ellipse, xrx.shape.Stylable);
 
@@ -108,17 +108,5 @@ xrx.shape.Ellipse.prototype.draw = function() {
  * @param {xrx.shape.Canvas} The parent canvas object.
  */
 xrx.shape.Ellipse.create = function(canvas) {
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Ellipse.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Ellipse.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Ellipse.create(canvasElement);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  return new xrx.shape.Ellipse(canvas, engineElement);
+  return new xrx.shape.Ellipse(canvas);
 };

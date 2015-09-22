@@ -12,7 +12,6 @@ goog.provide('xrx.shape.PolygonCreate');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
 goog.require('goog.object');
-goog.require('xrx.engine.Engines');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.mvc');
 goog.require('xrx.shape.Creatable');
@@ -26,13 +25,13 @@ goog.require('xrx.shape.VertexDragger');
 /**
  * A class representing an engine-independent polygon shape.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  */
 xrx.shape.Polygon = function(canvas, engineElement) {
 
-  goog.base(this, canvas, engineElement, new xrx.geometry.Path());
+  goog.base(this, canvas,
+      canvas.getEngine().createPolygon(canvas.getEngineElement()),
+      new xrx.geometry.Path());
 };
 goog.inherits(xrx.shape.Polygon, xrx.shape.Stylable);
 
@@ -55,19 +54,7 @@ xrx.shape.Polygon.prototype.draw = function() {
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  */
 xrx.shape.Polygon.create = function(canvas) {
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Polygon.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Polygon.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Polygon.create(canvasElement);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  return new xrx.shape.Polygon(canvas, engineElement);
+  return new xrx.shape.Polygon(canvas);
 };
 
 

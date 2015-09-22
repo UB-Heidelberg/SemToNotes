@@ -19,13 +19,13 @@ goog.require('xrx.shape.Stylable');
 /**
  * A class representing an engine-independent circle graphic.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  */
-xrx.shape.Circle = function(canvas, engineElement) {
+xrx.shape.Circle = function(canvas) {
 
-  goog.base(this, canvas, engineElement, new xrx.geometry.Circle());
+  goog.base(this, canvas,
+      canvas.getEngine().createCircle(canvas.getEngineElement()),
+      new xrx.geometry.Circle());
 };
 goog.inherits(xrx.shape.Circle, xrx.shape.Stylable);
 
@@ -112,19 +112,7 @@ xrx.shape.Circle.prototype.draw = function() {
  * @param {xrx.shape.Canvas} The parent canvas object.
  */
 xrx.shape.Circle.create = function(canvas) {
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Circle.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Circle.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Circle.create(canvasElement);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  return new xrx.shape.Circle(canvas, engineElement);
+  return new xrx.shape.Circle(canvas);
 };
 
 

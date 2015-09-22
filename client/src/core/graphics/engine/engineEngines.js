@@ -38,8 +38,8 @@ goog.require('xrx.vml.Ellipse');
 goog.require('xrx.vml.Group');
 goog.require('xrx.vml.Image');
 goog.require('xrx.vml.Line');
-goog.require('xrx.vml.Polyline');
 goog.require('xrx.vml.Polygon');
+goog.require('xrx.vml.Polyline');
 goog.require('xrx.vml.Rect');
 
 

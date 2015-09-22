@@ -14,13 +14,12 @@ goog.require('xrx.shape.Container');
 /**
  * A class representing an engine-independent shape group.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  */
-xrx.shape.Group = function(canvas, engineElement) {
+xrx.shape.Group = function(canvas) {
 
-  goog.base(this, canvas, engineElement);
+  goog.base(this, canvas,
+      canvas.getEngine().createGroup(canvas.getEngineElement()));
 };
 goog.inherits(xrx.shape.Group, xrx.shape.Container);
 
@@ -45,17 +44,5 @@ xrx.shape.Group.prototype.draw = function() {
  * @param {xrx.shape.Canvas} The parent canvas object.
  */
 xrx.shape.Group.create = function(canvas) {
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Group.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Group.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Group.create(canvasElement);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  return new xrx.shape.Group(canvas, engineElement);
+  return new xrx.shape.Group(canvas);
 };

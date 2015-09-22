@@ -26,22 +26,25 @@ goog.inherits(xrx.canvas.Line, xrx.canvas.Stylable);
 /**
  * @private
  */
-xrx.canvas.Line.prototype.drawPath_ = function(coords) {
+xrx.canvas.Line.prototype.drawPath_ = function(x1, y1, x2, y2) {
   this.context_.beginPath();
-  this.context_.moveTo(coords[0][0], coords[0][1]);
-  this.context_.lineTo(coords[1][0], coords[1][1]);
+  this.context_.moveTo(x1, y1);
+  this.context_.lineTo(x2, y2);
 };
 
 
 
 /**
- * Draws the line.
- * @param {Array<Array<number>>} coords The coordinates of the line.
+ * Draws this line.
+ * @param {number} x1 The x coordinate of the start point.
+ * @param {number} y1 The y coordinate of the start point.
+ * @param {number} x2 The x coordinate of the end point.
+ * @param {number} y2 The y coordinate of the end point.
  * @param {string} strokeColor The stroke color.
  * @param {number} strokeWidth The stroke width.
  */
-xrx.canvas.Line.prototype.draw = function(coords, strokeColor, strokeWidth) {
-  this.drawPath_(coords);
+xrx.canvas.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWidth) {
+  this.drawPath_(x1, y1, x2, y2);
   this.strokeAndFill_(undefined, undefined, strokeColor, strokeWidth);
 };
 

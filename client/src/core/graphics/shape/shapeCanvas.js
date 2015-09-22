@@ -7,8 +7,6 @@ goog.provide('xrx.shape.Canvas');
 
 
 
-goog.require('xrx.engine');
-goog.require('xrx.engine.Engines');
 goog.require('xrx.shape');
 goog.require('xrx.shape.Container');
 
@@ -22,9 +20,9 @@ goog.require('xrx.shape.Container');
  *   used to render this shape.
  * @constructor
  */
-xrx.shape.Canvas = function(element, engine, engineElement) {
+xrx.shape.Canvas = function(element, engine) {
 
-  goog.base(this, this, engineElement);
+  goog.base(this, this, engine.createCanvas(element));
 
   /**
    * HTML element to create the canvas.
@@ -150,15 +148,5 @@ xrx.shape.Canvas.prototype.draw = function() {
  * @param {xrx.engine.Engine} The engine to be used for rendering.
  */
 xrx.shape.Canvas.create = function(element, engine) {
-  var engineElement;
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Canvas.create(element);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Canvas.create(element);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Canvas.create(element);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  return new xrx.shape.Canvas(element, engine, engineElement);
+  return new xrx.shape.Canvas(element, engine);
 };

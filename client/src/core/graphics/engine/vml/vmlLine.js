@@ -37,12 +37,15 @@ xrx.vml.Line.prototype.setCoords = function(coords) {
 
 /**
  * Draws this line.
- * @param {Array<Array<number>>} coords The coordinates of the line.
+ * @param {number} x1 The x coordinate of the start point.
+ * @param {number} y1 The y coordinate of the start point.
+ * @param {number} x2 The x coordinate of the end point.
+ * @param {number} y2 The y coordinate of the end point.
  * @param {string} strokeColor The stroke color.
  * @param {number} strokeWidth The stroke width.
  */
-xrx.vml.Line.prototype.draw = function(coords, strokeColor, strokeWidth) {
-  if (coords !== undefined) this.setCoords(coords);
+xrx.vml.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWidth) {
+  this.setCoords([[x1, y1], [x2, y2]]);
   this.strokeAndFill_(undefined, undefined, strokeColor, strokeWidth);
   this.raphael_.show();
 };

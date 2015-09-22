@@ -10,7 +10,6 @@ goog.provide('xrx.shape.RectModify');
 
 
 goog.require('goog.array');
-goog.require('xrx.engine.Engines');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Stylable');
@@ -21,13 +20,13 @@ goog.require('xrx.shape.VertexDragger');
 /**
  * A class representing an engine-independent rectangle shape.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  */
-xrx.shape.Rect = function(canvas, engineElement) {
+xrx.shape.Rect = function(canvas) {
 
-  goog.base(this, canvas, engineElement, new xrx.geometry.Path(4));
+  goog.base(this, canvas,
+      canvas.getEngine().createRect(canvas.getEngineElement()),
+      new xrx.geometry.Path(4));
 };
 goog.inherits(xrx.shape.Rect, xrx.shape.Stylable);
 
@@ -138,22 +137,7 @@ xrx.shape.Rect.prototype.draw = function() {
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  */
 xrx.shape.Rect.create = function(canvas) {
-  var rect;
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Polygon.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Polygon.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Polygon.create(canvasElement);
-  } else {
-    throw Error('Unknown engine.');
-  }
-  rect = new xrx.shape.Rect(canvas, engineElement);
-  rect.setCoords([[0,0],[0,0],[0,0],[0,0]]);
-  return rect;
+  return new xrx.shape.Rect(canvas);
 };
 
 
