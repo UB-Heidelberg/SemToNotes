@@ -208,7 +208,34 @@ xrx.shape.Rect.prototype.getCreatable = function() {
  * A class representing a modifiable rectangle shape.
  * @constructor
  */
-xrx.shape.RectModify = function() {};
+xrx.shape.RectModify = function(rect, helper) {
+
+  goog.base(this, rect, helper);
+};
+goog.inherits(xrx.shape.RectModify, xrx.shape.Modifiable);
+
+
+
+
+xrx.shape.RectModify.prototype.setCoords = function(coords, position) {
+  for(var i = 0, len = this.helper_.length; i < len; i++) {
+    if (i !== position) this.helper_[i].setCoords([coords[i]]);
+  }
+  this.shape_.setCoords(coords);
+};
+
+
+
+xrx.shape.RectModify.prototype.setCoordAt = function(pos, coord) {
+  var coords;
+  this.shape_.setCoordAt(pos, coord);
+  this.shape_.setAffineCoords(pos);
+  coords = this.shape_.getCoords();
+  this.helper_[0].setCoords([coords[0]]);
+  this.helper_[1].setCoords([coords[1]]);
+  this.helper_[2].setCoords([coords[2]]);
+  this.helper_[3].setCoords([coords[3]]);
+};
 
 
 
@@ -216,7 +243,18 @@ xrx.shape.RectModify = function() {};
  * Creates a new modifiable rectangle shape.
  * @param {xrx.shape.Polygon} polygon The related rectangle shape.
  */
-xrx.shape.RectModify.create = xrx.shape.PolygonModify.create;
+xrx.shape.RectModify.create = function(rect) {
+  var coords = rect.getCoords();
+  var draggers = [];
+  var dragger;
+  for(var i = 0, len = coords.length; i < len; i++) {
+    dragger = xrx.shape.VertexDragger.create(rect.getCanvas());
+    dragger.setCoords([coords[i]]);
+    dragger.setPosition(i);
+    draggers.push(dragger);
+  }
+  return new xrx.shape.RectModify(rect, draggers);
+};
 
 
 

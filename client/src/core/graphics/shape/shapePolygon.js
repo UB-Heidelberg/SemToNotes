@@ -74,10 +74,9 @@ xrx.shape.Polygon.create = function(canvas) {
 
 /**
  * Returns a modifiable polygon shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @return {xrx.shape.PolygonModify} The modifiable polygon shape.
  */
-xrx.shape.Polygon.prototype.getModifiable = function(drawing) {
+xrx.shape.Polygon.prototype.getModifiable = function() {
   if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModify.create(this);
   return this.modifiable_;
 };
@@ -99,11 +98,28 @@ xrx.shape.Polygon.prototype.getCreatable = function() {
  * A class representing a modifiable polygon shape.
  * @constructor
  */
-xrx.shape.PolygonModify = function() {
+xrx.shape.PolygonModify = function(polygon, helper) {
 
-  goog.base(this);
+  goog.base(this, polygon, helper);
 };
 goog.inherits(xrx.shape.PolygonModify, xrx.shape.Modifiable);
+
+
+
+
+xrx.shape.PolygonModify.prototype.setCoords = function(coords, position) {
+  for(var i = 0, len = this.helper_.length; i < len; i++) {
+    if (i !== position) this.helper_[i].setCoords([coords[i]]);
+  }
+  this.shape_.setCoords(coords);
+};
+
+
+
+xrx.shape.PolygonModify.prototype.setCoordAt = function(pos, coord) {
+  this.helper_[pos].setCoords([coord]);
+  this.shape_.setCoordAt(pos, coord);
+};
 
 
 
@@ -121,7 +137,7 @@ xrx.shape.PolygonModify.create = function(polygon) {
     dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return draggers;
+  return new xrx.shape.PolygonModify(polygon, draggers);
 };
 
 

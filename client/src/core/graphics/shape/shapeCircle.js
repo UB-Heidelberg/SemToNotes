@@ -9,6 +9,7 @@ goog.provide('xrx.shape.CircleCreate');
 
 
 
+goog.require('goog.array');
 goog.require('xrx.geometry.Circle');
 goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Stylable');
@@ -55,7 +56,7 @@ xrx.shape.Circle.prototype.getCoords = function() {
  * @param {Array<Array<<number>>} coords The coordinate.
  */
 xrx.shape.Circle.prototype.setCoords = function(coords) {
-  return this.setCenter(coords[0][0], coords[0][1]);
+  this.setCenter(coords[0][0], coords[0][1]);
 };
 
 
@@ -154,11 +155,30 @@ xrx.shape.Circle.prototype.getCreatable = function() {
 /**
  * @constructor
  */
-xrx.shape.CircleModify = function() {
+xrx.shape.CircleModify = function(circle, helper) {
 
-  goog.base(this);
+  goog.base(this, circle, helper);
 };
 goog.inherits(xrx.shape.CircleModify, xrx.shape.Modifiable);
+
+
+
+xrx.shape.CircleModify.prototype.setCoords = function(coords) {
+  var helperCoords;
+  this.shape_.setCoords(coords);
+  helperCoords = this.shape_.getCoordsCopy();
+  helperCoords[0][0] += this.shape_.getRadius();
+  this.helper_[0].setCoords(helperCoords);
+};
+
+
+
+xrx.shape.CircleModify.prototype.setCoordAt = function(pos, coords) {
+  var helperCoords = this.helper_[0].getCoordsCopy();
+  helperCoords[0][0] = coords[0];
+  this.helper_[0].setCoords(helperCoords);
+  this.shape_.setRadius(Math.abs(coords[0] - this.shape_.getCenter()[0]));
+};
 
 
 
@@ -168,5 +188,5 @@ xrx.shape.CircleModify.create = function(circle) {
   var dragger = xrx.shape.VertexDragger.create(circle.getCanvas());
   dragger.setCoords([[center[0] + radius, center[1]]]);
   dragger.setPosition(0);
-  return [dragger];
+  return new xrx.shape.CircleModify(circle, [dragger]);
 };

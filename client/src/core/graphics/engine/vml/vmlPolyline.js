@@ -36,7 +36,7 @@ xrx.vml.Polyline.prototype.setCoords = function(coords) {
 
 
 /**
- * Draws the polygon.
+ * Draws this poly-line.
  * @param {Array<Array<number>>} coords The coordinates of the poly-line.
  * @param {string} fillColor The fill color.
  * @param {number} fillOpacity Opacity of the fill color.

@@ -13,6 +13,7 @@ goog.require('xrx.shape.CircleCreate');
 goog.require('xrx.shape.Ellipse');
 goog.require('xrx.shape.Group');
 goog.require('xrx.shape.Image');
+goog.require('xrx.shape.Line');
 goog.require('xrx.shape.Polygon');
 goog.require('xrx.shape.PolygonModify');
 goog.require('xrx.shape.PolygonCreate');

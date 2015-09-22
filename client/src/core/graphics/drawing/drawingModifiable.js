@@ -109,13 +109,9 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e, point, shape) {
 
   if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGVERTEX) {
     var pos = this.dragger_.getPosition();
-    this.shape_.setCoordAt(pos, this.coords_[0]);
-    if (this.shape_.setAffineCoords) this.shape_.setAffineCoords(pos);
-    this.dragger_.setCoords(this.coords_);
-    this.drawing_.getLayerShapeModify().update(this.shape_.getCoords(), pos);
+    this.shape_.getModifiable().setCoordAt(pos, this.coords_[0]);
   } else {
-    this.shape_.setCoords(this.coords_);
-    this.drawing_.getLayerShapeModify().update(this.shape_.getCoords());
+    this.shape_.getModifiable().setCoords(this.coords_);
   }
   if (this.shape_.handleValueChanged) this.shape_.handleValueChanged();
 };

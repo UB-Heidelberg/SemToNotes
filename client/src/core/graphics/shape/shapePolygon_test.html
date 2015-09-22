@@ -115,10 +115,10 @@ function test2Modify() {
   var canvasDrawing = getCanvasDrawing('canvasPolygonModify');
   canvasDrawing.setModeModify();
   canvasDrawing.getLayerShape().addShapes(getPolygons(canvasDrawing));
-  var svgDrawing = getCanvasDrawing('svgPolygonModify');
+  var svgDrawing = getSvgDrawing('svgPolygonModify');
   svgDrawing.setModeModify();
   svgDrawing.getLayerShape().addShapes(getPolygons(svgDrawing));
-  var vmlDrawing = getCanvasDrawing('vmlPolygonModify');
+  var vmlDrawing = getVmlDrawing('vmlPolygonModify');
   vmlDrawing.setModeModify();
   vmlDrawing.getLayerShape().addShapes(getPolygons(vmlDrawing));
 };
