@@ -6,11 +6,8 @@ goog.provide('xrx.engine.Engine');
 
 
 
-goog.require('xrx.canvas');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Engines');
-goog.require('xrx.svg');
-goog.require('xrx.vml');
 
 
 

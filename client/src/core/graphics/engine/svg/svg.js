@@ -4,6 +4,7 @@
  */
 
 goog.provide('xrx.svg');
+goog.provide('xrx.svg.Namespace');
 
 
 

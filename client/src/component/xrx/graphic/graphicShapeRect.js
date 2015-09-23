@@ -571,7 +571,7 @@ xrx.graphic.ShapeRectCreate.prototype.mvcRefresh = function() {};
 
 xrx.graphic.ShapeRectCreate.prototype.createDom = function() {
   var self = this;
-  this.shape_ = new xrx.shape.RectCreate(this.getDrawing());
+  this.shape_ = new xrx.shape.RectCreatable(this.getDrawing());
   // handle value changed
   this.shape_.handleValueChanged = function() {
     self.mvcModelUpdateData();

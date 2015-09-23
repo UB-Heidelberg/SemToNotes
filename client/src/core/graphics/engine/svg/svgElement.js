@@ -6,6 +6,7 @@ goog.provide('xrx.svg.Element');
 
 
 
+goog.require('xrx.engine');
 goog.require('xrx.engine.Element');
 
 

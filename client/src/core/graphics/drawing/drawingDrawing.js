@@ -8,6 +8,8 @@ goog.provide('xrx.drawing.Drawing');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.ViewportSizeMonitor');
+goog.require('xrx.engine.Engine');
+goog.require('xrx.engine.Engines');
 goog.require('goog.events');
 goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');

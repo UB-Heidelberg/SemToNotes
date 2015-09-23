@@ -37,15 +37,21 @@ goog.inherits(xrx.canvas.Ellipse, xrx.canvas.Stylable);
  */
 xrx.canvas.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
-  var x;
-  var y;
-  for (var i = 0 * Math.PI; i < 2 * Math.PI; i += 0.01) {
-    x = cy + (rx * Math.sin(i));
-    y = cx - (ry * Math.cos(i));
-    if (i == 0) {
-      this.context_.moveTo(x, y);
-    } else {
-      this.context_.lineTo(x, y);
+  if (this.context_.ellipse) {
+    this.context_.beginPath();
+    this.context_.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI, true);
+    this.context_.closePath();
+  } else {
+    var x;
+    var y;
+    for (var i = 0 ; i <= 2 * Math.PI; i += 0.01) {
+      x = cx + (rx * Math.sin(i));
+      y = cy - (ry * Math.cos(i));
+      if (i === 0) {
+        this.context_.moveTo(x, y);
+      } else {
+        this.context_.lineTo(x, y);
+      }
     }
   }
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);

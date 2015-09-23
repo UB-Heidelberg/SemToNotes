@@ -102,14 +102,38 @@ xrx.shape.Stylable.prototype.getCoords = function(coords) {
  * @param {Array<number>} coord The new coordinate.
  */
 xrx.shape.Stylable.prototype.setCoordAt = function(pos, coord) {
-  this.geometry_.coords[pos] = coord;
+  this.geometry_.coords[pos][0] = coord[0];
+  this.geometry_.coords[pos][1] = coord[1];
+};
+
+
+
+/**
+ * Updates one x coordinate in the list of coordinates.
+ * @param {number} pos Index of the x coordinate to be updated.
+ * @param {number} x The new x coordinate.
+ */
+xrx.shape.Stylable.prototype.setCoordXAt = function(pos, x) {
+  this.geometry_.coords[pos][0] = x;
+};
+
+
+
+/**
+ * Updates one y coordinate in the list of coordinates.
+ * @param {number} pos Index of the y coordinate to be updated.
+ * @param {number} y The new y coordinate.
+ */
+xrx.shape.Stylable.prototype.setCoordYAt = function(pos, y) {
+  this.geometry_.coords[pos][1] = y;
 };
 
 
 
 xrx.shape.Stylable.prototype.setLastCoord = function(coord) {
   var last = this.geometry_.coords.length - 1;
-  this.geometry_.coords[last] = coord;
+  this.geometry_.coords[last][0] = coord[0];
+  this.geometry_.coords[last][1] = coord[1];
 };
 
 

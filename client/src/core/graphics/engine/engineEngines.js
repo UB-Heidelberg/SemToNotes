@@ -18,8 +18,6 @@ goog.require('xrx.canvas.Line');
 goog.require('xrx.canvas.Polyline');
 goog.require('xrx.canvas.Polygon');
 goog.require('xrx.canvas.Rect');
-goog.require('xrx.engine');
-goog.require('xrx.engine.Element');
 goog.require('xrx.svg');
 goog.require('xrx.svg.Canvas');
 goog.require('xrx.svg.Circle');

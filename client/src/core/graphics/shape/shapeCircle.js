@@ -4,13 +4,14 @@
  */
 
 goog.provide('xrx.shape.Circle');
+goog.provide('xrx.shape.CircleCreatable');
 goog.provide('xrx.shape.CircleModifiable');
-goog.provide('xrx.shape.CircleCreate');
 
 
 
 goog.require('goog.array');
 goog.require('xrx.geometry.Circle');
+goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Stylable');
 
@@ -75,7 +76,7 @@ xrx.shape.Circle.prototype.setRadius = function(r) {
 
 /**
  * Returns the coordinates of this circle. We assume the center point.
- * @return {Array<Array<<number>>}
+ * @return {Array<Array<<number>>} The coordinates.
  */
 xrx.shape.Circle.prototype.getCoords = function() {
   return [this.getCenter()];
@@ -154,7 +155,7 @@ xrx.shape.Circle.prototype.getModifiable = function(drawing) {
  * @return {xrx.shape.CircleCreatable} The creatable circle shape.
  */
 xrx.shape.Circle.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreate.create(this);
+  if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreatable.create(this);
   return this.creatable_;
 };
 
@@ -193,4 +194,83 @@ xrx.shape.CircleModifiable.create = function(circle) {
   dragger.setCoords([[center[0] + radius, center[1]]]);
   dragger.setPosition(0);
   return new xrx.shape.CircleModifiable(circle, [dragger]);
+};
+
+
+
+/**
+ * A class representing a creatable circle shape.
+ * @param
+ * @constructor
+ */
+xrx.shape.CircleCreatable = function(circle) {
+
+  goog.base(this, circle, xrx.shape.Circle.create(circle.getCanvas()));
+
+  /**
+   * Number of vertexes the user has created so far.
+   * @type {number}
+   * @private
+   */
+  this.count_ = 0;
+
+  this.point_ = new Array(2);
+};
+goog.inherits(xrx.shape.CircleCreatable, xrx.shape.Creatable);
+
+
+
+/**
+ * Returns the coordinates of the circle currently created.
+ * @return Array<Array<number>> The coordinates.
+ */
+xrx.shape.CircleCreatable.prototype.getCoords = function() {
+  return this.helper_.getCoords();
+};
+
+
+
+/**
+ * Handles click events for a creatable circle shape.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
+xrx.shape.CircleCreatable.prototype.handleClick = function(e, point, shape) {
+  var vertex;
+  var shape;
+  var coords;
+  if (this.count_ === 1) { // The user touches the second time
+                           // in that creates the circle
+    // insert a circle
+    var circle = xrx.shape.Circle.create(this.target_.getCanvas());
+    var center = this.helper_.getCenter();
+    circle.setStylable(this.target_);
+    circle.setCenter(center[0], center[1]);
+    circle.setRadius(this.helper_.getRadius());
+    this.eventHandler_.eventShapeCreated(circle);
+    // reset for next drawing
+    this.count_ = 0;
+  } else { // The user touches the first time
+    // initialize helper coordinates
+    this.point_[0] = point[0];
+    this.point_[1] = point[1];
+    this.helper_.setCenter(point[0], point[1]);
+    this.count_ += 1;
+    this.eventHandler_.eventShapeCreate([this.helper_]);
+  }
+};
+
+
+
+xrx.shape.CircleCreatable.prototype.handleMove = function(e, point, shape) {
+  if (this.count_ === 0) return;
+  var distX = point[0] - this.point_[0];
+  var distY = point[1] - this.point_[1];
+  this.helper_.setCenter(point[0] - distX / 2, point[1] - distY / 2);
+  this.helper_.setRadius(Math.sqrt(distX * distX + distY * distY) / 2);
+};
+
+
+
+xrx.shape.CircleCreatable.create = function(circle) {
+  return new xrx.shape.CircleCreatable(circle);
 };

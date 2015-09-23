@@ -7,7 +7,7 @@ goog.provide('xrx.svg.Canvas');
 
 
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.svg');
+goog.require('xrx.svg.Namespace');
 goog.require('xrx.svg.Container');
 
 

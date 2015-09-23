@@ -4,8 +4,8 @@
  */
 
 goog.provide('xrx.shape.Rect');
-goog.provide('xrx.shape.RectCreate');
-goog.provide('xrx.shape.RectModify');
+goog.provide('xrx.shape.RectCreatable');
+goog.provide('xrx.shape.RectModifiable');
 
 
 
@@ -168,10 +168,10 @@ xrx.shape.Rect.prototype.setAffineCoords = function(position) {
 /**
  * Returns a modifiable rectangle shape. Create it lazily if not existent.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.RectModify} The modifiable rectangle shape.
+ * @return {xrx.shape.RectModifiable} The modifiable rectangle shape.
  */
 xrx.shape.Rect.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.RectModify.create(this);
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.RectModifiable.create(this);
   return this.modifiable_;
 };
 
@@ -179,10 +179,10 @@ xrx.shape.Rect.prototype.getModifiable = function(drawing) {
 
 /**
  * Returns a creatable rectangle shape. Create it lazily if not existent.
- * @return {xrx.shape.RectCreate} The creatable rectangle shape.
+ * @return {xrx.shape.RectCreatable} The creatable rectangle shape.
  */
 xrx.shape.Rect.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.RectCreate.create(this);
+  if (!this.creatable_) this.creatable_ = xrx.shape.RectCreatable.create(this);
   return this.creatable_;
 };
 
@@ -192,33 +192,40 @@ xrx.shape.Rect.prototype.getCreatable = function() {
  * A class representing a modifiable rectangle shape.
  * @constructor
  */
-xrx.shape.RectModify = function(rect, helper) {
+xrx.shape.RectModifiable = function(rect, helper) {
 
   goog.base(this, rect, helper);
 };
-goog.inherits(xrx.shape.RectModify, xrx.shape.Modifiable);
+goog.inherits(xrx.shape.RectModifiable, xrx.shape.Modifiable);
 
 
 
 
-xrx.shape.RectModify.prototype.setCoords = function(coords, position) {
-  for(var i = 0, len = this.helper_.length; i < len; i++) {
-    if (i !== position) this.helper_[i].setCoords([coords[i]]);
+xrx.shape.RectModifiable.prototype.setCoords = function(coords, position) {
+  for(var i = 0, len = this.dragger_.length; i < len; i++) {
+    if (i !== position) {
+      this.dragger_[i].setCoordX(coords[i][0]);
+      this.dragger_[i].setCoordY(coords[i][1]);
+    }
   }
   this.shape_.setCoords(coords);
 };
 
 
 
-xrx.shape.RectModify.prototype.setCoordAt = function(pos, coord) {
+xrx.shape.RectModifiable.prototype.setCoordAt = function(pos, coord) {
   var coords;
   this.shape_.setCoordAt(pos, coord);
   this.shape_.setAffineCoords(pos);
   coords = this.shape_.getCoords();
-  this.helper_[0].setCoords([coords[0]]);
-  this.helper_[1].setCoords([coords[1]]);
-  this.helper_[2].setCoords([coords[2]]);
-  this.helper_[3].setCoords([coords[3]]);
+  this.dragger_[0].setCoordX(coords[0][0]);
+  this.dragger_[0].setCoordY(coords[0][1]);
+  this.dragger_[1].setCoordX(coords[1][0]);
+  this.dragger_[1].setCoordY(coords[1][1]);
+  this.dragger_[2].setCoordX(coords[2][0]);
+  this.dragger_[2].setCoordY(coords[2][1]);
+  this.dragger_[3].setCoordX(coords[3][0]);
+  this.dragger_[3].setCoordY(coords[3][1]);
 };
 
 
@@ -227,7 +234,7 @@ xrx.shape.RectModify.prototype.setCoordAt = function(pos, coord) {
  * Creates a new modifiable rectangle shape.
  * @param {xrx.shape.Polygon} polygon The related rectangle shape.
  */
-xrx.shape.RectModify.create = function(rect) {
+xrx.shape.RectModifiable.create = function(rect) {
   var coords = rect.getCoords();
   var draggers = [];
   var dragger;
@@ -237,7 +244,7 @@ xrx.shape.RectModify.create = function(rect) {
     dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return new xrx.shape.RectModify(rect, draggers);
+  return new xrx.shape.RectModifiable(rect, draggers);
 };
 
 
@@ -247,7 +254,7 @@ xrx.shape.RectModify.create = function(rect) {
  * @param
  * @constructor
  */
-xrx.shape.RectCreate = function(rect) {
+xrx.shape.RectCreatable = function(rect) {
 
   goog.base(this, rect, xrx.shape.Rect.create(rect.getCanvas()));
 
@@ -258,7 +265,7 @@ xrx.shape.RectCreate = function(rect) {
    */
   this.count_ = 0;
 };
-goog.inherits(xrx.shape.RectCreate, xrx.shape.Creatable);
+goog.inherits(xrx.shape.RectCreatable, xrx.shape.Creatable);
 
 
 
@@ -266,7 +273,7 @@ goog.inherits(xrx.shape.RectCreate, xrx.shape.Creatable);
  * Returns the coordinates of the rectangle currently created.
  * @return Array<Array<number>> The coordinates.
  */
-xrx.shape.RectCreate.prototype.getCoords = function() {
+xrx.shape.RectCreatable.prototype.getCoords = function() {
   return this.helper_.getCoords();
 };
 
@@ -276,9 +283,7 @@ xrx.shape.RectCreate.prototype.getCoords = function() {
  * Handles click events for a creatable rectangle shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.RectCreate.prototype.handleClick = function(e, point, shape) {
-  var vertex;
-  var shape;
+xrx.shape.RectCreatable.prototype.handleClick = function(e, point, shape) {
   var coords;
   if (this.count_ === 1) { // The user creates the second vertex and
                            // in that the rectangle
@@ -297,17 +302,14 @@ xrx.shape.RectCreate.prototype.handleClick = function(e, point, shape) {
     coords[2] = goog.array.clone(point);
     coords[3] = goog.array.clone(point);
     this.helper_.setCoords(coords);
-    // insert a new vertex
-    vertex = xrx.shape.VertexDragger.create(this.target_.getCanvas());
-    vertex.setCoords([point]);
     this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([vertex, this.helper_]);
+    this.eventHandler_.eventShapeCreate([this.helper_]);
   }
 };
 
 
 
-xrx.shape.RectCreate.prototype.handleMove = function(e, point, shape) {
+xrx.shape.RectCreatable.prototype.handleMove = function(e, point, shape) {
   if (this.count_ === 0) return;
   this.helper_.setCoordAt(2, point);
   this.helper_.setAffineCoords(2);
@@ -315,6 +317,6 @@ xrx.shape.RectCreate.prototype.handleMove = function(e, point, shape) {
 
 
 
-xrx.shape.RectCreate.create = function(rect) {
-  return new xrx.shape.RectCreate(rect);
+xrx.shape.RectCreatable.create = function(rect) {
+  return new xrx.shape.RectCreatable(rect);
 };

@@ -15,7 +15,7 @@ goog.require('xrx.mvc.ChildComponent');
 goog.require('xrx.mvc.ComponentView');
 goog.require('xrx.mvc.Controller');
 goog.require('xrx.shape.Polygon');
-goog.require('xrx.shape.PolygonCreate');
+goog.require('xrx.shape.PolygonCreatable');
 goog.require('xrx.graphic.Shape');
 
 
@@ -155,7 +155,7 @@ xrx.graphic.ShapePolygonCreate.prototype.mvcModelUpdateData = function() {
 
 xrx.graphic.ShapePolygonCreate.prototype.createDom = function() {
   var self = this;
-  this.shape_ = new xrx.shape.PolygonCreate(this.getDrawing());
+  this.shape_ = new xrx.shape.PolygonCreatable(this.getDrawing());
   this.shapePolygonCoords_ = new xrx.graphic.ShapePolygonCoords(this);
   // handle value changes
   this.shape_.handleValueChanged = function() {

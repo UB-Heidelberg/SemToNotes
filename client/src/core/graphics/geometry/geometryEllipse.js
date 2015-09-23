@@ -27,3 +27,10 @@ xrx.geometry.Ellipse = function() {
   this.ry = 0;
 };
 goog.inherits(xrx.geometry.Ellipse, xrx.geometry.Geometry);
+
+
+
+xrx.geometry.Ellipse.prototype.containsPoint = function(point) {
+  return (((point[0] - this.cx) * (point[0] - this.cx)) / (this.rx * this.rx) + 
+      ((point[1] - this.cy) * (point[1] - this.cy)) / (this.ry * this.ry)) <= 1;
+};

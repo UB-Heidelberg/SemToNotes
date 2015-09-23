@@ -4,8 +4,8 @@
  */
 
 goog.provide('xrx.shape.Polygon');
-goog.provide('xrx.shape.PolygonModify');
-goog.provide('xrx.shape.PolygonCreate');
+goog.provide('xrx.shape.PolygonModifiable');
+goog.provide('xrx.shape.PolygonCreatable');
 
 
 
@@ -61,10 +61,10 @@ xrx.shape.Polygon.create = function(canvas) {
 
 /**
  * Returns a modifiable polygon shape. Create it lazily if not existent.
- * @return {xrx.shape.PolygonModify} The modifiable polygon shape.
+ * @return {xrx.shape.PolygonModifiable} The modifiable polygon shape.
  */
 xrx.shape.Polygon.prototype.getModifiable = function() {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModify.create(this);
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModifiable.create(this);
   return this.modifiable_;
 };
 
@@ -72,10 +72,10 @@ xrx.shape.Polygon.prototype.getModifiable = function() {
 
 /**
  * Returns a creatable polygon shape. Create it lazily if not existent.
- * @return {xrx.shape.PolygonCreate} The creatable polygon shape.
+ * @return {xrx.shape.PolygonCreatable} The creatable polygon shape.
  */
 xrx.shape.Polygon.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreate.create(this);
+  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreatable.create(this);
   return this.creatable_;
 };
 
@@ -85,27 +85,32 @@ xrx.shape.Polygon.prototype.getCreatable = function() {
  * A class representing a modifiable polygon shape.
  * @constructor
  */
-xrx.shape.PolygonModify = function(polygon, helper) {
+xrx.shape.PolygonModifiable = function(polygon, helper) {
 
   goog.base(this, polygon, helper);
 };
-goog.inherits(xrx.shape.PolygonModify, xrx.shape.Modifiable);
+goog.inherits(xrx.shape.PolygonModifiable, xrx.shape.Modifiable);
 
 
 
 
-xrx.shape.PolygonModify.prototype.setCoords = function(coords, position) {
-  for(var i = 0, len = this.helper_.length; i < len; i++) {
-    if (i !== position) this.helper_[i].setCoords([coords[i]]);
+xrx.shape.PolygonModifiable.prototype.setCoords = function(coords, position) {
+  for(var i = 0, len = this.dragger_.length; i < len; i++) {
+    if (i !== position) {
+      this.dragger_[i].setCoordX(coords[i][0]);
+      this.dragger_[i].setCoordY(coords[i][1]);
+    }
   }
   this.shape_.setCoords(coords);
 };
 
 
 
-xrx.shape.PolygonModify.prototype.setCoordAt = function(pos, coord) {
-  this.helper_[pos].setCoords([coord]);
-  this.shape_.setCoordAt(pos, coord);
+xrx.shape.PolygonModifiable.prototype.setCoordAt = function(pos, coord) {
+  this.dragger_[pos].setCoordX(coord[0]);
+  this.dragger_[pos].setCoordY(coord[1]);
+  this.shape_.setCoordXAt(pos, coord[0]);
+  this.shape_.setCoordYAt(pos, coord[1]);
 };
 
 
@@ -114,7 +119,7 @@ xrx.shape.PolygonModify.prototype.setCoordAt = function(pos, coord) {
  * Creates a new modifiable polygon shape.
  * @param {xrx.shape.Polygon} polygon The related polygon shape.
  */
-xrx.shape.PolygonModify.create = function(polygon) {
+xrx.shape.PolygonModifiable.create = function(polygon) {
   var coords = polygon.getCoords();
   var draggers = [];
   var dragger;
@@ -124,7 +129,7 @@ xrx.shape.PolygonModify.create = function(polygon) {
     dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return new xrx.shape.PolygonModify(polygon, draggers);
+  return new xrx.shape.PolygonModifiable(polygon, draggers);
 };
 
 
@@ -134,7 +139,7 @@ xrx.shape.PolygonModify.create = function(polygon) {
  * @param {xrx.shape.Polygon} polygon A styled polygon to be drawn.
  * @constructor
  */
-xrx.shape.PolygonCreate = function(polygon) {
+xrx.shape.PolygonCreatable = function(polygon) {
 
   goog.base(this, polygon, xrx.shape.Polyline.create(polygon.getCanvas()));
 
@@ -160,7 +165,7 @@ xrx.shape.PolygonCreate = function(polygon) {
    */
   this.count_ = 0;
 };
-goog.inherits(xrx.shape.PolygonCreate, xrx.shape.Creatable);
+goog.inherits(xrx.shape.PolygonCreatable, xrx.shape.Creatable);
 
 
 
@@ -169,7 +174,7 @@ goog.inherits(xrx.shape.PolygonCreate, xrx.shape.Creatable);
  * polygon.
  * @return Array<Array<number>> The coordinates.
  */
-xrx.shape.PolygonCreate.prototype.getCoords = function() {
+xrx.shape.PolygonCreatable.prototype.getCoords = function() {
   return this.helper_.getCoords();
 };
 
@@ -179,7 +184,7 @@ xrx.shape.PolygonCreate.prototype.getCoords = function() {
  * Handles click events for a creatable polygon shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.PolygonCreate.prototype.handleClick = function(e, point, shape) {
+xrx.shape.PolygonCreatable.prototype.handleClick = function(e, point, shape) {
   var vertex;
   var polygon;
   var coords;
@@ -228,7 +233,7 @@ xrx.shape.PolygonCreate.prototype.handleClick = function(e, point, shape) {
 
 
 
-xrx.shape.PolygonCreate.prototype.handleMove = function(e, point, shape) {
+xrx.shape.PolygonCreatable.prototype.handleMove = function(e, point, shape) {
   if (this.count_ === 0) {
     return;
   } else {
@@ -245,6 +250,6 @@ xrx.shape.PolygonCreate.prototype.handleMove = function(e, point, shape) {
 
 
 
-xrx.shape.PolygonCreate.create = function(polygon) {
-  return new xrx.shape.PolygonCreate(polygon);
+xrx.shape.PolygonCreatable.create = function(polygon) {
+  return new xrx.shape.PolygonCreatable(polygon);
 };

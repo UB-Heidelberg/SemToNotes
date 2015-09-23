@@ -54,11 +54,11 @@ xrx.event.HandlerTarget.prototype.getHandler = function() {
  * @private
  */
 xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
-  var point = this.getEventPoint(e);
-  var shape = this.getShapeSelected(point);
   // re-initialize the browser event in the case of mobile touch events
   if (e.getBrowserEvent().changedTouches) 
       e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
+  var point = this.getEventPoint(e);
+  var shape = this.getShapeSelected(point);
   e.preventDefault();
   e.stopPropagation();
   handler[event](e, point, shape);
@@ -77,7 +77,7 @@ xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.CLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.CLICK); },
-    true
+    false
   );
 };
 
@@ -93,7 +93,7 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DBLCLICK,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DBLCLICK); },
-    true
+    false
   );
 };
 
@@ -108,7 +108,7 @@ xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.DOWN,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.DOWN); },
-    true
+    false
   );
 };
 
@@ -135,7 +135,7 @@ xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
-    true
+    false
   );
 };
 
@@ -150,7 +150,7 @@ xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.MOVE,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.MOVE); },
-    true
+    false
   );
 };
 
@@ -166,7 +166,7 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.OUT,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.OUT); },
-    true
+    false
   );
 };
 
@@ -181,7 +181,7 @@ xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
     self.canvas_.getEngineElement().getEventTarget(),
     xrx.event.Type.UP,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.UP) },
-    true
+    false
   );
 };
 
@@ -197,7 +197,7 @@ xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEngineElement().getEventTarget());
   this.handler_.listen(mwh, xrx.event.Type.WHEEL,
     function(e) { self.registerEvent_(e, handler, xrx.event.Handler.WHEEL) },
-    true
+    false
   );
 };
 
