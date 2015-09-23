@@ -4,7 +4,7 @@
  */
 
 goog.provide('xrx.shape.Circle');
-goog.provide('xrx.shape.CircleModify');
+goog.provide('xrx.shape.CircleModifiable');
 goog.provide('xrx.shape.CircleCreate');
 
 
@@ -42,26 +42,6 @@ xrx.shape.Circle.prototype.getCenter = function() {
 
 
 /**
- * Returns the coordinates of this circle. We assume the center point.
- * @return {Array<Array<<number>>}
- */
-xrx.shape.Circle.prototype.getCoords = function() {
-  return [this.getCenter()];
-};
-
-
-
-/**
- * Sets the coordinates of this circle. We assume the center point.
- * @param {Array<Array<<number>>} coords The coordinate.
- */
-xrx.shape.Circle.prototype.setCoords = function(coords) {
-  this.setCenter(coords[0][0], coords[0][1]);
-};
-
-
-
-/**
  * Sets the center point of this circle.
  * @param {number} cx The X coordinate of the center point.
  * @param {number} cy The Y coordinate of the center point.
@@ -94,6 +74,46 @@ xrx.shape.Circle.prototype.setRadius = function(r) {
 
 
 /**
+ * Returns the coordinates of this circle. We assume the center point.
+ * @return {Array<Array<<number>>}
+ */
+xrx.shape.Circle.prototype.getCoords = function() {
+  return [this.getCenter()];
+};
+
+
+
+/**
+ * Sets the coordinates of this circle. We assume the center point.
+ * @param {Array<Array<<number>>} coords The coordinate.
+ */
+xrx.shape.Circle.prototype.setCoords = function(coords) {
+  this.setCenter(coords[0][0], coords[0][1]);
+};
+
+
+
+/**
+ * Sets the x coordinate of this circle. We assume the center point.
+ * @param {number} coords The x coordinate.
+ */
+xrx.shape.Circle.prototype.setCoordX = function(x) {
+  this.geometry_.cx = x;
+};
+
+
+
+/**
+ * Sets the y coordinate of this circle. We assume the center point.
+ * @param {number} coords The y coordinate.
+ */
+xrx.shape.Circle.prototype.setCoordY = function(y) {
+  this.geometry_.cy = y;
+};
+
+
+
+/**
  * Draws this circle.
  */
 xrx.shape.Circle.prototype.draw = function() {
@@ -120,10 +140,10 @@ xrx.shape.Circle.create = function(canvas) {
 /**
  * Returns a modifiable circle shape. Create it lazily if not existent.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.CircleModify} The modifiable circle shape.
+ * @return {xrx.shape.CircleModifiable} The modifiable circle shape.
  */
 xrx.shape.Circle.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.CircleModify.create(this);
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.CircleModifiable.create(this);
   return this.modifiable_;
 };
 
@@ -131,7 +151,7 @@ xrx.shape.Circle.prototype.getModifiable = function(drawing) {
 
 /**
  * Returns a creatable circle shape. Create it lazily if not existent.
- * @return {xrx.shape.CircleCreate} The creatable circle shape.
+ * @return {xrx.shape.CircleCreatable} The creatable circle shape.
  */
 xrx.shape.Circle.prototype.getCreatable = function() {
   if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreate.create(this);
@@ -143,38 +163,34 @@ xrx.shape.Circle.prototype.getCreatable = function() {
 /**
  * @constructor
  */
-xrx.shape.CircleModify = function(circle, helper) {
+xrx.shape.CircleModifiable = function(circle, dragger) {
 
-  goog.base(this, circle, helper);
+  goog.base(this, circle, dragger);
 };
-goog.inherits(xrx.shape.CircleModify, xrx.shape.Modifiable);
+goog.inherits(xrx.shape.CircleModifiable, xrx.shape.Modifiable);
 
 
 
-xrx.shape.CircleModify.prototype.setCoords = function(coords) {
-  var helperCoords;
+xrx.shape.CircleModifiable.prototype.setCoords = function(coords) {
   this.shape_.setCoords(coords);
-  helperCoords = this.shape_.getCoordsCopy();
-  helperCoords[0][0] += this.shape_.getRadius();
-  this.helper_[0].setCoords(helperCoords);
+  this.dragger_[0].setCoordX(coords[0][0] + this.shape_.getRadius());
+  this.dragger_[0].setCoordY(coords[0][1]);
 };
 
 
 
-xrx.shape.CircleModify.prototype.setCoordAt = function(pos, coords) {
-  var helperCoords = this.helper_[0].getCoordsCopy();
-  helperCoords[0][0] = coords[0];
-  this.helper_[0].setCoords(helperCoords);
-  this.shape_.setRadius(Math.abs(coords[0] - this.shape_.getCenter()[0]));
+xrx.shape.CircleModifiable.prototype.setCoordAt = function(pos, coord) {
+  this.shape_.setRadius(Math.abs(coord[0] - this.shape_.getCenter()[0]));
+  this.dragger_[0].setCoordX(coord[0]);
 };
 
 
 
-xrx.shape.CircleModify.create = function(circle) {
+xrx.shape.CircleModifiable.create = function(circle) {
   var center = circle.getCenter();
   var radius = circle.getRadius();
   var dragger = xrx.shape.VertexDragger.create(circle.getCanvas());
   dragger.setCoords([[center[0] + radius, center[1]]]);
   dragger.setPosition(0);
-  return new xrx.shape.CircleModify(circle, [dragger]);
+  return new xrx.shape.CircleModifiable(circle, [dragger]);
 };

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.shape.Polyline, xrx.shape.PolylineModify, xrx.shape.PolylineCreate</title>
+<script src='../../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../../deps.js'></script>
+<script src='./shapeTest.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.dom.DomHelper');
+  goog.require('xrx');
+</script>
+<link rel="stylesheet" type="text/css" href="./shapeTest.css">
+</head>
+<body>
+<script type="text/javascript">
+
+
+
+createTables('Polyline', goog.dom);
+
+
+
+function getPolylines(drawing) {
+  var coords1 = [[12,12], [25,15], [100,60], [60,90], [50,50]];
+  var coords2 = [[112,112], [125,115], [400,160], [160,190], [150,150]];
+  var coords3 = [[112,312], [125,315], [200,360], [160,390], [150,350]];
+  var polyline1 = xrx.shape.Polyline.create(drawing.getCanvas());
+  var polyline2 = xrx.shape.Polyline.create(drawing.getCanvas());
+  var polyline3 = xrx.shape.Polyline.create(drawing.getCanvas());
+  polyline1.setCoords(coords1);
+  polyline1.setStrokeWidth(1);
+  polyline2.setCoords(coords2);
+  polyline2.setStrokeWidth(1);
+  polyline3.setCoords(coords3);
+  polyline3.setStrokeWidth(1);
+  return [polyline1, polyline2, polyline3];
+};
+
+
+
+function test1View() {
+  modeView('Polyline');
+};
+
+
+
+function test2Modify() {
+  modeModify('Polyline');
+};
+
+
+
+function test3Create() {
+  modeCreate('Polyline');
+};
+
+</script>
+</body>
+</html>

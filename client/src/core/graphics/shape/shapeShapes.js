@@ -8,7 +8,7 @@ goog.provide('xrx.shape.Shapes');
 
 goog.require('xrx.shape.Canvas');
 goog.require('xrx.shape.Circle');
-goog.require('xrx.shape.CircleModify');
+goog.require('xrx.shape.CircleModifiable');
 goog.require('xrx.shape.CircleCreate');
 goog.require('xrx.shape.Ellipse');
 goog.require('xrx.shape.Group');

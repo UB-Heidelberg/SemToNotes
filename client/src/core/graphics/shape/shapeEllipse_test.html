@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>XRX++ Unit Tests - xrx.shape.Ellipse, xrx.shape.CircleModifiable, xrx.shape.CircleCreate</title>
+<script src='../../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../../deps.js'></script>
+<script src='./shapeTest.js'></script>
+<script type="text/javascript">
+  goog.require('goog.testing.jsunit');
+  goog.require('goog.dom.DomHelper');
+  goog.require('xrx');
+</script>
+<link rel="stylesheet" type="text/css" href="./shapeTest.css">
+</head>
+<body>
+<script type="text/javascript">
+
+
+
+createTables('Ellipse', goog.dom);
+
+
+
+function getEllipses(drawing) {
+  var ellipse1 = xrx.shape.Ellipse.create(drawing.getCanvas());
+  var ellipse2 = xrx.shape.Ellipse.create(drawing.getCanvas());
+  var ellipse3 = xrx.shape.Ellipse.create(drawing.getCanvas());
+  ellipse1.setCenter(20, 20);
+  ellipse1.setRadiusX(50);
+  ellipse1.setRadiusY(10);
+  ellipse1.setStrokeWidth(1);
+  ellipse2.setCenter(200, 200);
+  ellipse2.setRadiusX(10);
+  ellipse2.setRadiusY(30);
+  ellipse2.setStrokeWidth(1);
+  ellipse3.setCenter(100, 300);
+  ellipse3.setRadiusX(100);
+  ellipse3.setRadiusY(50);
+  ellipse3.setStrokeWidth(1);
+  return [ellipse1, ellipse2, ellipse3];
+};
+
+
+
+function test1View() {
+  modeView('Ellipse');
+};
+
+
+
+function test2Modify() {
+  modeModify('Ellipse');
+};
+
+
+
+function test3Create() {
+  modeCreate('Ellipse');
+};
+
+
+
+</script>
+</body>
+</html>

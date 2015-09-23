@@ -155,11 +155,11 @@ function getImage(canvas) {
 
 
 function getLine(canvas) {
-  var coords = new Array(2);
-  coords[0] = [10,10];
-  coords[1] = [90,90];
   var line = xrx.shape.Line.create(canvas);
-  line.setCoords(coords);
+  line.setX1(10);
+  line.setY1(10);
+  line.setX2(90);
+  line.setY2(90);
   line.setStrokeColor('red');
   line.setStrokeWidth(4);
   return line;

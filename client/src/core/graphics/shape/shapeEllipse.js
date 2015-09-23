@@ -110,3 +110,43 @@ xrx.shape.Ellipse.prototype.draw = function() {
 xrx.shape.Ellipse.create = function(canvas) {
   return new xrx.shape.Ellipse(canvas);
 };
+
+
+
+/**
+ * Returns a modifiable ellipse shape. Create it lazily if not existent.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.EllipseModifiable} The modifiable ellipse shape.
+ */
+xrx.shape.Ellipse.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.EllipseModifiable.create(this);
+  return this.modifiable_;
+};
+
+
+
+/**
+ * Returns a creatable ellipse shape. Create it lazily if not existent.
+ * @return {xrx.shape.EllipseCreatable} The creatable ellipse shape.
+ */
+xrx.shape.Ellipse.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreate.create(this);
+  return this.creatable_;
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseModifiable = function(ellipse) {
+
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseCreatable = function(ellipse) {
+};

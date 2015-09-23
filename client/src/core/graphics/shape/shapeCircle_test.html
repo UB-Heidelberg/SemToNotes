@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.shape.Circle, xrx.shape.CircleModify, xrx.shape.CircleCreate</title>
+<title>XRX++ Unit Tests - xrx.shape.Circle, xrx.shape.CircleModifiable, xrx.shape.CircleCreate</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
 <script src='./shapeTest.js'></script>
@@ -10,72 +10,15 @@
   goog.require('goog.dom.DomHelper');
   goog.require('xrx');
 </script>
-<style>
-table {
-border-collapse: collapse;
-}
-td {
-border: solid grey 1px;
-}
-.canvas {
-width: 500px;
-height: 500px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="./shapeTest.css">
 </head>
 <body>
 
-<h1>Circle Tests</h1>
-
-<h2>Mode View</h2>
-<div>Make sure that line width is constant.</div>
-<div>Test with mobile devices.</div>
-<table>
-  <tr>
-	  <td><span>Canvas</span></td>
-	  <td><span>SVG</span></td>
-	  <td><span>VML</span></td>
-  </tr>
-  <tr>
-	  <td class="canvas" id="canvasCircle"></td>
-	  <td class="canvas" id="svgCircle"></td>
-	  <td class="canvas" id="vmlCircle"></td>
-  </tr>
-</table>
-
-<h2>Mode Modify</h2>
-<div>Make sure that size of modifiers is constant.</div>
-<div>Test with mobile devices.</div>
-<table>
-  <tr>
-	  <td><span>Canvas</span></td>
-	  <td><span>SVG</span></td>
-	  <td><span>VML</span></td>
-  </tr>
-  <tr>
-	  <td class="canvas" id="canvasCircleModify"></td>
-	  <td class="canvas" id="svgCircleModify"></td>
-	  <td class="canvas" id="vmlCircleModify"></td>
-  </tr>
-</table>
-
-<h2>Mode Create</h2>
-<div>Make sure that size of modifiers is constant.</div>
-<div>Test with mobile devices.</div>
-<table>
-  <tr>
-	  <td><span>Canvas</span></td>
-	  <td><span>SVG</span></td>
-	  <td><span>VML</span></td>
-  </tr>
-  <tr>
-	  <td class="canvas" id="canvasCircleCreate"></td>
-	  <td class="canvas" id="svgCircleCreate"></td>
-	  <td class="canvas" id="vmlCircleCreate"></td>
-  </tr>
-</table>
-
 <script type="text/javascript">
+
+
+
+createTables('Circle', goog.dom);
 
 
 
@@ -98,64 +41,19 @@ function getCircles(drawing) {
 
 
 function test1View() {
-  var canvasDrawing = getCanvasDrawing('canvasCircle');
-  canvasDrawing.setModeView();
-  canvasDrawing.getLayerShape().addShapes(getCircles(canvasDrawing));
-  var svgDrawing = getCanvasDrawing('svgCircle');
-  svgDrawing.setModeView();
-  svgDrawing.getLayerShape().addShapes(getCircles(svgDrawing));
-  var vmlDrawing = getCanvasDrawing('vmlCircle');
-  vmlDrawing.setModeView();
-  vmlDrawing.getLayerShape().addShapes(getCircles(vmlDrawing));
+  modeView('Circle');
 };
 
 
 
 function test2Modify() {
-  var canvasDrawing = getCanvasDrawing('canvasCircleModify');
-  canvasDrawing.setModeModify();
-  canvasDrawing.getLayerShape().addShapes(getCircles(canvasDrawing));
-  var svgDrawing = getSvgDrawing('svgCircleModify');
-  svgDrawing.setModeModify();
-  svgDrawing.getLayerShape().addShapes(getCircles(svgDrawing));
-  var vmlDrawing = getVmlDrawing('vmlCircleModify');
-  vmlDrawing.setModeModify();
-  vmlDrawing.getLayerShape().addShapes(getCircles(vmlDrawing));
+  modeModify('Circle');
 };
 
 
 
 function xtest3Create() {
-  var canvasDrawing = getCanvasDrawing('canvasRectCreate');
-  var canvasRect = xrx.shape.Rect.create(canvasDrawing.getCanvas());
-  canvasRect.setStrokeWidth(1);
-  canvasRect.setStrokeColor('blue');
-  var canvasCreatable = canvasRect.getCreatable();
-  canvasCreatable.setStrokeColor('blue');
-  canvasCreatable.setStrokeWidth(5);
-  canvasCreatable.setFillColor('blue');
-  canvasCreatable.setFillOpacity(.2);
-  canvasDrawing.setModeCreate(canvasCreatable);
-  var svgDrawing = getSvgDrawing('svgRectCreate');
-  var svgRect = xrx.shape.Rect.create(svgDrawing.getCanvas());
-  svgRect.setStrokeWidth(1);
-  svgRect.setStrokeColor('green');
-  var svgCreatable = svgRect.getCreatable();
-  svgCreatable.setStrokeColor('green');
-  svgCreatable.setStrokeWidth(5);
-  svgCreatable.setFillColor('green');
-  svgCreatable.setFillOpacity(.2);
-  svgDrawing.setModeCreate(svgCreatable);
-  var vmlDrawing = getVmlDrawing('vmlRectCreate');
-  var vmlRect = xrx.shape.Rect.create(vmlDrawing.getCanvas());
-  vmlRect.setStrokeWidth(1);
-  vmlRect.setStrokeColor('red');
-  var vmlCreatable = vmlRect.getCreatable();
-  vmlCreatable.setStrokeColor('red');
-  vmlCreatable.setStrokeWidth(5);
-  vmlCreatable.setFillColor('red');
-  vmlCreatable.setFillOpacity(.2);
-  vmlDrawing.setModeCreate(vmlCreatable);
+  modeCreate('Circle');
 };
 
 </script>

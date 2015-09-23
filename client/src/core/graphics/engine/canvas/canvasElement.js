@@ -7,7 +7,6 @@ goog.provide('xrx.canvas.Element');
 
 
 goog.require('xrx.engine.Element');
-goog.require('xrx.canvas');
 
 
 
@@ -58,7 +57,7 @@ xrx.canvas.Element.prototype.getContext = function() {
 
 /**
  * Applies a transformation matrix on this element.
- * @param {goog.math.AffineTransform} matrix The transformtaion matrix.
+ * @param {goog.math.AffineTransform} matrix The transformation matrix.
  */
 xrx.canvas.Element.prototype.applyTransform = function(matrix) {
   if (!matrix) return;

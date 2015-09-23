@@ -7,11 +7,11 @@ goog.provide('xrx.shape.Modifiable');
 
 
 
-xrx.shape.Modifiable = function(shape, helper) {
+xrx.shape.Modifiable = function(shape, dragger) {
 
   this.shape_ = shape;
 
-  this.helper_ = helper;
+  this.dragger_ = dragger;
 };
 
 
@@ -25,5 +25,5 @@ xrx.shape.Modifiable.prototype.setCoordAt = goog.abstractMethod;
 
 
 xrx.shape.Modifiable.prototype.getHelper = function() {
-  return this.helper_;
+  return this.dragger_;
 };
