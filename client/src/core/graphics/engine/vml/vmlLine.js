@@ -47,7 +47,6 @@ xrx.vml.Line.prototype.setCoords = function(coords) {
 xrx.vml.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWidth) {
   this.setCoords([[x1, y1], [x2, y2]]);
   this.strokeAndFill_(undefined, undefined, strokeColor, strokeWidth);
-  this.raphael_.show();
 };
 
 
@@ -58,6 +57,5 @@ xrx.vml.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWidth)
  */
 xrx.vml.Line.create = function(canvas) {
   var raphael = canvas.getRaphael().path('M0 0');
-  raphael.hide();
   return new xrx.vml.Line(raphael);
 };

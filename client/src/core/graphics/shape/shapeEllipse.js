@@ -247,9 +247,6 @@ xrx.shape.EllipseCreatable.prototype.getCoords = function() {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.shape.EllipseCreatable.prototype.handleClick = function(e, point, shape) {
-  var vertex;
-  var shape;
-  var coords;
   if (this.count_ === 1) { // The user touches the second time
                            // in that creates the ellipse
     // insert a ellipse
@@ -279,8 +276,8 @@ xrx.shape.EllipseCreatable.prototype.handleMove = function(e, point, shape) {
   var distX = point[0] - this.point_[0];
   var distY = point[1] - this.point_[1];
   this.helper_.setCenter(point[0] - distX / 2, point[1] - distY / 2);
-  this.helper_.setRadiusX(distX / 2);
-  this.helper_.setRadiusY(distY / 2);
+  this.helper_.setRadiusX(Math.abs(distX / 2));
+  this.helper_.setRadiusY(Math.abs(distY / 2));
 };
 
 

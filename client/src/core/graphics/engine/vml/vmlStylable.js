@@ -14,13 +14,13 @@ goog.require('xrx.engine.Stylable');
 
 /**
  * VML class representing a stylable element.
- * @param {Object} raphael A Raphael object.
+ * @param
  * @constructor
  * @extends {xrx.vml.Element}
  */
-xrx.vml.Stylable = function(raphael) {
+xrx.vml.Stylable = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 };
 goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
 
@@ -44,7 +44,6 @@ xrx.vml.Stylable.prototype.strokeAndFill_ = function(fillColor,
  * @param {number} width The stroke width.
  */
 xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
-  this.raphael_.attr({'stroke-width': width});
 };
 
 
@@ -54,7 +53,7 @@ xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
-  this.raphael_.attr({'stroke': color});
+  this.element_['strokecolor'] = '' + color;
 };
 
 
@@ -64,7 +63,7 @@ xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.vml.Stylable.prototype.setFillColor = function(color) {
-  this.raphael_.attr({'fill': color});
+  this.element_['fillcolor'] = '' + color;
 };
 
 
@@ -74,5 +73,4 @@ xrx.vml.Stylable.prototype.setFillColor = function(color) {
  * @param {number} factor The fill opacity.
  */
 xrx.vml.Stylable.prototype.setFillOpacity = function(factor) {
-  this.raphael_.attr({'fill-opacity': factor});
 };

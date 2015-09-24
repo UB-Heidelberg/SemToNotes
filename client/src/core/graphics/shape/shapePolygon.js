@@ -9,6 +9,7 @@ goog.provide('xrx.shape.PolygonCreatable');
 
 
 
+goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.classes');
 goog.require('goog.object');
@@ -152,13 +153,6 @@ xrx.shape.PolygonCreatable = function(polygon) {
   this.close_;
 
   /**
-   * An array of vertexes the user has created so far.
-   * @type {xrx.shape.VertexDragger}
-   * @private
-   */
-  this.vertexes_ = [];
-
-  /**
    * Number of vertexes the user has created so far.
    * @type {number}
    * @private
@@ -185,49 +179,31 @@ xrx.shape.PolygonCreatable.prototype.getCoords = function() {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.shape.PolygonCreatable.prototype.handleClick = function(e, point, shape) {
-  var vertex;
-  var polygon;
-  var coords;
   if (this.count_ === 0) { // user creates the first point
-    // update the poly-line
-    this.helper_.setCoords([point, point]);
-    // insert a vertex
+    // update the poly-line preview
+    this.helper_.setCoords([point, goog.array.clone(point)]);
+    // create the closing dragger
     this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
     this.close_.setCoords([point]);
-    this.vertexes_.push(this.close_);
     this.count_ += 1;
     this.eventHandler_.eventShapeCreate([this.helper_, this.close_]);
-  } else if (shape === this.close_ && this.count_ === 1) {
+  } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
-  } else if (shape === this.close_) { // user closes the polygon
-    var polygon;
-    // get the coordinates
-    coords = new Array(this.vertexes_.length + 1);
-    for (var i = 0; i < this.vertexes_.length; i++) {
-      coords[i] = this.vertexes_[i].getCoordsCopy()[0];
-    }
-    coords[this.vertexes_.length] = this.vertexes_[0].getCoordsCopy()[0];
-    // update the polygon
-    this.target_.setCoords(coords);
+  } else if (this.close_ && shape === this.close_) { // user closes the polygon
+    // create a polygon
+    var polygon = xrx.shape.Polygon.create(this.target_.getCanvas());
+    polygon.setStylable(this.target_);
+    polygon.setCoords(this.helper_.getCoordsCopy());
+    this.eventHandler_.eventShapeCreated(polygon);
     // reset for next drawing
     this.close_ = null;
-    this.vertexes_ = [];
     this.count_ = 0;
-    polygon = xrx.shape.Polygon.create(this.target_.getCanvas());
-    polygon.setStylable(this.target_);
-    polygon.setCoords(this.target_.getCoordsCopy());
-    this.eventHandler_.eventShapeCreated(polygon);
-  } else { // user creates another vertex
-    // extend the poly-line
+  } else { // user creates another point
+    // extend the poly-line preview
     this.helper_.setLastCoord(point);
     this.helper_.appendCoord(point);
-    // create another vertex
-    vertex = xrx.shape.VertexDragger.create(this.target_.getCanvas());
-    vertex.setCoords([point]);
-    this.vertexes_.push(vertex);
     this.count_ += 1;
-    this.eventHandler_.eventShapeCreate(vertex);
   } 
 };
 

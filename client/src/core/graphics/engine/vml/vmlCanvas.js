@@ -15,13 +15,13 @@ goog.require('xrx.vml.Container');
 
 /**
  * VML rendering class representing a canvas.
- * @param {Raphael} raphael The Raphael object.
+ * @param
  * @constructor
  * @extends xrx.vml.Element
  */
-xrx.vml.Canvas = function(raphael) {
+xrx.vml.Canvas = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 
   /**
    * The canvas width.
@@ -34,8 +34,6 @@ xrx.vml.Canvas = function(raphael) {
    * @type {number}
    */
   this.height_ = 0;
-
-  this.shield_;
 };
 goog.inherits(xrx.vml.Canvas, xrx.vml.Container);
 
@@ -47,7 +45,7 @@ goog.inherits(xrx.vml.Canvas, xrx.vml.Container);
  * @return {Object} The event target element.
  */
 xrx.vml.Canvas.prototype.getEventTarget = function() {
-  return this.raphael_.canvas;
+  return this.element_;
 };
 
 
@@ -68,7 +66,7 @@ xrx.vml.Canvas.prototype.getWidth = function() {
  */
 xrx.vml.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
-  this.raphael_.setSize(this.width_, this.height_);
+  goog.style.setSize(this.element_, width, this.height_);
 };
 
 
@@ -89,20 +87,8 @@ xrx.vml.Canvas.prototype.getHeight = function() {
  */
 xrx.vml.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
-  this.raphael_.setSize(this.width_, this.height_);
+  goog.style.setSize(this.element_, this.width_, height);
 };
-
-
-
-/**
- * Adds a child element to this canvas.
- * @param {Object} element The child element.
- */
-xrx.vml.Canvas.prototype.addChild = function(element) {
-  this.childs_.push(element);
-  goog.dom.append(this.getElement(), element.getElement());
-};
-
 
 
 xrx.vml.Canvas.prototype.startDrawing = function() {
@@ -117,14 +103,12 @@ xrx.vml.Canvas.prototype.finishDrawing = function() {
 
 /**
  * Creates a new canvas.
- * @param {Element} parent The parent HTML element to which the canvas
+ * @param {HTMLElement} parent The parent HTML element to which the canvas
  *     shall be appended.
  */
 xrx.vml.Canvas.create = function(parent) {
   var element = goog.dom.createElement('div');
-  var raphael = xrx.vml.Raphael(element, 0, 0);
-  var canvas = new xrx.vml.Canvas(raphael);
-  goog.style.setStyle(canvas.getElement(), 'z-index', '25');
+  var canvas = new xrx.vml.Canvas(element);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 };

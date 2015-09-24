@@ -47,7 +47,6 @@ xrx.vml.Polygon.prototype.draw = function(coords, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
   if (coords !== undefined) this.setCoords(coords);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
-  this.raphael_.show();
 };
 
 
@@ -58,6 +57,5 @@ xrx.vml.Polygon.prototype.draw = function(coords, fillColor,
  */
 xrx.vml.Polygon.create = function(canvas) {
   var raphael = canvas.getRaphael().path('M0 0');
-  raphael.hide();
   return new xrx.vml.Polygon(raphael);
 };

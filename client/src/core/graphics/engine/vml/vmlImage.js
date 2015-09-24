@@ -42,7 +42,6 @@ xrx.vml.Image.prototype.setImage = function(image) {
  */
 xrx.vml.Image.prototype.draw = function(image) {
   this.setImage(image);
-  this.raphael_.show();
 };
 
 
@@ -53,6 +52,5 @@ xrx.vml.Image.prototype.draw = function(image) {
  */
 xrx.vml.Image.create = function(canvas) {
   var raphael = canvas.getRaphael().image('', 0, 0, 0, 0);
-  raphael.hide();
   return new xrx.vml.Image(raphael);
 };

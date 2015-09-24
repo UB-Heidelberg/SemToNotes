@@ -6,18 +6,19 @@ goog.provide('xrx.vml.Container');
 
 
 
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.vml.Element');
 
 
 
 /**
  * Abstract VML class representing a container.
- * @param {Raphael} raphael The Raphael object.
+ * @param
  * @constructor
  */
-xrx.vml.Container = function(raphael) {
+xrx.vml.Container = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 
   /**
    * The child elements of this container.
@@ -34,15 +35,9 @@ goog.inherits(xrx.vml.Container, xrx.vml.Element);
  * @param {xrx.vml.Element} element The child element.
  */
 xrx.vml.Container.prototype.addChild = function(element) {
-  var shield = this.raphael_.paper.getById('shield');
+  console.log(element);
   this.childs_.push(element);
-  if (this.raphael_.type === 'set') {
-    this.raphael_.push(element.getRaphael());
-  } else {
-    if (this.getElement()) goog.dom.append(this.getElement(),
-        element.getElement());
-  }
-  if (shield) shield.toFront();
+  this.element_.appendChild(element.getElement());
 };
 
 
@@ -61,30 +56,18 @@ xrx.vml.Container.prototype.getChildren = function() {
  * Removes all child elements from this container.
  */
 xrx.vml.Container.prototype.removeChildren = function() {
-  var len = this.childs_.length;
-  if (this.raphael_.type === 'set') {
-    for (var i = 0; i < len; i++) {
-      goog.dom.removeNode(this.raphael_.pop().node);
-    }
-  } else {
-    for (var i = 0; i < len; i++) {
-      this.childs_[i].getRaphael().remove();
-    }
-  }
+  goog.dom.removeChildren(this.element_);
   this.childs_ = [];
 };
 
 
 
 /**
- * Removes a child element at an index.
+ * Removes one child element at an index.
  * @param {number} index The index.
  */
 xrx.vml.Container.prototype.removeChildAt = function(index) {
-  if (this.raphael_.type === 'set') {
-    goog.dom.removeNode(this.raphael_.splice(index, 1)[0].node);
-  } else {
-    this.childs_[index].getRaphael().remove();
-  }
+  var child = this.childs_[index];
+  goog.dom.removeNode(child.getElement());
   this.childs_.splice(index, 1);
 };

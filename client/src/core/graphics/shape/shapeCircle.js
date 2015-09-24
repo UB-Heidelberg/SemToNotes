@@ -235,9 +235,6 @@ xrx.shape.CircleCreatable.prototype.getCoords = function() {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.shape.CircleCreatable.prototype.handleClick = function(e, point, shape) {
-  var vertex;
-  var shape;
-  var coords;
   if (this.count_ === 1) { // The user touches the second time
                            // in that creates the circle
     // insert a circle

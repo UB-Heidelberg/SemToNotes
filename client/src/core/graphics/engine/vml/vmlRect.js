@@ -6,20 +6,21 @@ goog.provide('xrx.vml.Rect');
 
 
 
-goog.require('xrx.vml.Element');
+goog.require('goog.style');
+goog.require('xrx.vml');
 goog.require('xrx.vml.Stylable');
 
 
 
 /**
  * VML class representing a rectangle.
- * @param {Raphael.rect} raphael The Raphael object.
+ * @param
  * @constructor
  * @extends {xrx.vml.Stylable}
  */
-xrx.vml.Rect = function(raphael) {
+xrx.vml.Rect = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 };
 goog.inherits(xrx.vml.Rect, xrx.vml.Stylable);
 
@@ -30,7 +31,7 @@ goog.inherits(xrx.vml.Rect, xrx.vml.Stylable);
  * @param {number} x The coordinate.
  */
 xrx.vml.Rect.prototype.setX = function(x) {
-  this.raphael_.attr({x: x});
+  this.element_.style['left'] = x + 'px';
 };
 
 
@@ -40,7 +41,7 @@ xrx.vml.Rect.prototype.setX = function(x) {
  * @param {number} y The coordinate.
  */
 xrx.vml.Rect.prototype.setY = function(y) {
-  this.raphael_.attr({y: y});
+  this.element_.style['top'] = y + 'px';
 };
 
 
@@ -50,7 +51,7 @@ xrx.vml.Rect.prototype.setY = function(y) {
  * @param {number} width The width.
  */
 xrx.vml.Rect.prototype.setWidth = function(width) {
-  this.raphael_.attr({width: width});
+  this.element_.style['width'] = width + 'px';
 };
 
 
@@ -60,7 +61,7 @@ xrx.vml.Rect.prototype.setWidth = function(width) {
  * @param {height} height The height.
  */
 xrx.vml.Rect.prototype.setHeight = function(height) {
-  this.raphael_.attr({height: height});
+  this.element_.style['height'] = height + 'px';
 };
 
 
@@ -83,7 +84,6 @@ xrx.vml.Rect.prototype.draw = function(x, y, width, height, fillColor,
   if (width !== undefined) this.setWidth(width);
   if (height !== undefined) this.setHeight(height);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
-  this.raphael_.show();
 };
 
 
@@ -93,7 +93,7 @@ xrx.vml.Rect.prototype.draw = function(x, y, width, height, fillColor,
  * @param {xrx.vml.Canvas} canvas The parent canvas object.
  */
 xrx.vml.Rect.create = function(canvas) {
-  var raphael = canvas.getRaphael().rect(0, 0, 0, 0);
-  raphael.hide();
-  return new xrx.vml.Rect(raphael);
+  var element = xrx.vml.createVml('rect');
+  element.style['position'] = 'relative';
+  return new xrx.vml.Rect(element);
 };

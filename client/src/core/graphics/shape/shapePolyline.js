@@ -9,6 +9,7 @@ goog.provide('xrx.shape.PolylineModifiable');
 
 
 
+goog.require('goog.array');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.shape.Stylable');
 
@@ -170,12 +171,8 @@ xrx.shape.PolylineCreatable.prototype.getCoords = function() {
  */
 xrx.shape.PolylineCreatable.prototype.handleClick = function(e, point, shape) {
   if (this.count_ === 0) { // user creates the first point
-    // update the poly-line
-    this.helper_.setCoords([point, point]);
-    // insert a vertex
-    //this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
-    //this.close_.setCoords([point]);
-    //this.vertexes_.push(this.close_);
+    // update the poly-line preview
+    this.helper_.setCoords([point, goog.array.clone(point)]);
     this.count_ += 1;
     this.eventHandler_.eventShapeCreate([this.helper_]);
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
@@ -193,11 +190,13 @@ xrx.shape.PolylineCreatable.prototype.handleClick = function(e, point, shape) {
   } else { // user creates another point
     // extend the poly-line
     this.helper_.appendCoord(point);
-    // create or move the closing point
-    if (this.count_ === 1) this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
+    // create the closing point as soon as the user creates the second point
+    if (this.count_ === 1) {
+      this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
+      this.eventHandler_.eventShapeCreate([this.close_]);
+    }
     this.close_.setCoords([point]);
     this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([this.close_]);
   } 
 };
 

@@ -284,7 +284,6 @@ xrx.shape.RectCreatable.prototype.getCoords = function() {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.shape.RectCreatable.prototype.handleClick = function(e, point, shape) {
-  var coords;
   if (this.count_ === 1) { // The user creates the second vertex and
                            // in that the rectangle
     // insert a rectangle
@@ -296,7 +295,7 @@ xrx.shape.RectCreatable.prototype.handleClick = function(e, point, shape) {
     this.count_ = 0;
   } else { // The user creates the first vertex
     // initialize helper coordinates
-    coords = new Array(4);
+    var coords = new Array(4);
     coords[0] = goog.array.clone(point);
     coords[1] = goog.array.clone(point);
     coords[2] = goog.array.clone(point);

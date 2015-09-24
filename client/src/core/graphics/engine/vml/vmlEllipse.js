@@ -73,7 +73,6 @@ xrx.vml.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
   if (rx !== undefined) this.setRadiusX(rx);
   if (ry !== undefined) this.setRadiusY(ry);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
-  this.raphael_.show();
 };
 
 
@@ -84,6 +83,5 @@ xrx.vml.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
  */
 xrx.vml.Ellipse.create = function(canvas) {
   var raphael = canvas.getRaphael().ellipse(0, 0, 0, 0);
-  raphael.hide();
   return new xrx.vml.Ellipse(raphael);
 };

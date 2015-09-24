@@ -30,6 +30,5 @@ goog.inherits(xrx.vml.Group, xrx.vml.Container);
  */
 xrx.vml.Group.create = function(canvas) {
   var raphael = canvas.getRaphael().set();
-  raphael.hide();
   return new xrx.vml.Group(raphael);
 };

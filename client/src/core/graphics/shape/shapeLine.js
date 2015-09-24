@@ -266,9 +266,6 @@ xrx.shape.LineCreatable.prototype.getCoords = function() {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.shape.LineCreatable.prototype.handleClick = function(e, point, shape) {
-  var vertex;
-  var shape;
-  var coords;
   if (this.count_ === 1) { // The user touches the second time
                            // in that creates the line
     // insert a line
