@@ -118,7 +118,7 @@ xrx.shape.PolylineModifiable.create = function(polyline) {
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(polyline.getCanvas());
+    dragger = xrx.shape.Dragger.create(polyline.getCanvas());
     dragger.setCoords([coords[i]]);
     dragger.setPosition(i);
     draggers.push(dragger);
@@ -139,7 +139,7 @@ xrx.shape.PolylineCreatable = function(polyline) {
 
   /**
    * The last point created by the user, which closes the poly-line when clicked.
-   * @type {xrx.shape.VertexDragger}
+   * @type {xrx.shape.Dragger}
    * @private
    */
   this.close_;
@@ -192,7 +192,7 @@ xrx.shape.PolylineCreatable.prototype.handleClick = function(e, point, shape) {
     this.helper_.appendCoord(point);
     // create the closing point as soon as the user creates the second point
     if (this.count_ === 1) {
-      this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
+      this.close_ = xrx.shape.Dragger.create(this.target_.getCanvas());
       this.eventHandler_.eventShapeCreate([this.close_]);
     }
     this.close_.setCoords([point]);

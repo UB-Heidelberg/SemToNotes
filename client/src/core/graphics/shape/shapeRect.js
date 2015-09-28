@@ -13,7 +13,7 @@ goog.require('goog.array');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Stylable');
-goog.require('xrx.shape.VertexDragger');
+goog.require('xrx.shape.Dragger');
 
 
 
@@ -239,7 +239,7 @@ xrx.shape.RectModifiable.create = function(rect) {
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(rect.getCanvas());
+    dragger = xrx.shape.Dragger.create(rect.getCanvas());
     dragger.setCoords([coords[i]]);
     dragger.setPosition(i);
     draggers.push(dragger);

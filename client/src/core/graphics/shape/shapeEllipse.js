@@ -199,10 +199,10 @@ xrx.shape.EllipseModifiable.create = function(ellipse) {
   var center = ellipse.getCenter();
   var radiusX = ellipse.getRadiusX();
   var radiusY = ellipse.getRadiusY();
-  var draggerX = xrx.shape.VertexDragger.create(ellipse.getCanvas());
+  var draggerX = xrx.shape.Dragger.create(ellipse.getCanvas());
   draggerX.setCoords([[center[0] + radiusX, center[1]]]);
   draggerX.setPosition(0);
-  var draggerY = xrx.shape.VertexDragger.create(ellipse.getCanvas());
+  var draggerY = xrx.shape.Dragger.create(ellipse.getCanvas());
   draggerY.setCoords([[center[0], center[1] + radiusY]]);
   draggerY.setPosition(1);
   return new xrx.shape.EllipseModifiable(ellipse, [draggerX, draggerY]);

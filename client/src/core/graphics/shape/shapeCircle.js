@@ -1,11 +1,13 @@
 /**
  * @fileoverview A class representing an engine-independent
- * circle graphic.
+ * creatable, hoverable, modifiable and selectable circle graphic.
  */
 
 goog.provide('xrx.shape.Circle');
 goog.provide('xrx.shape.CircleCreatable');
+goog.provide('xrx.shape.CircleHoverable');
 goog.provide('xrx.shape.CircleModifiable');
+goog.provide('xrx.shape.CircleSelectable');
 
 
 
@@ -18,7 +20,8 @@ goog.require('xrx.shape.Stylable');
 
 
 /**
- * A class representing an engine-independent circle graphic.
+ * A class representing an engine-independent creatable, hoverable,
+ * modifiable and selectable circle graphic.
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  * @constructor
  */
@@ -129,7 +132,7 @@ xrx.shape.Circle.prototype.draw = function() {
 
 
 /**
- * Creates a new circle.
+ * Creates a new circle shape.
  * @param {xrx.shape.Canvas} The parent canvas object.
  */
 xrx.shape.Circle.create = function(canvas) {
@@ -138,14 +141,45 @@ xrx.shape.Circle.create = function(canvas) {
 
 
 
+xrx.shape.Circle.prototype.getHoverable = function() {
+  if (!this.hoverable_) this.hoverable_ = xrx.shape.CircleHoverable.create(this);
+  return this.hoverable_;
+};
+
+
+
+xrx.shape.Circle.prototype.setHoverable = function(hoverable) {
+  this.hoverable_ = hoverable;
+};
+
+
+
+xrx.shape.Circle.prototype.getSelectable = function() {
+  if (!this.selectable_) this.selectable_ = xrx.shape.CircleSelectable.create(this);
+  return this.selectable_;
+};
+
+
+
+xrx.shape.Circle.prototype.setSelectable = function(selectable) {
+  this.selectable_ = selectable;
+};
+
+
+
 /**
  * Returns a modifiable circle shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @return {xrx.shape.CircleModifiable} The modifiable circle shape.
  */
-xrx.shape.Circle.prototype.getModifiable = function(drawing) {
+xrx.shape.Circle.prototype.getModifiable = function() {
   if (!this.modifiable_) this.modifiable_ = xrx.shape.CircleModifiable.create(this);
   return this.modifiable_;
+};
+
+
+
+xrx.shape.Circle.prototype.setModifiable = function(modifiable) {
+  this.modifiable_ = modifiable;
 };
 
 
@@ -157,6 +191,12 @@ xrx.shape.Circle.prototype.getModifiable = function(drawing) {
 xrx.shape.Circle.prototype.getCreatable = function() {
   if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreatable.create(this);
   return this.creatable_;
+};
+
+
+
+xrx.shape.Circle.prototype.setCreatable = function(creatable) {
+  this.creatable_ = creatable;
 };
 
 
@@ -187,13 +227,23 @@ xrx.shape.CircleModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+xrx.shape.CircleModifiable.prototype.move = function(distX, distY) {
+  var coords = this.shape_.getCoordsCopy();
+  coords[0][0] += distX;
+  coords[0][1] += distY;
+  this.setCoords(coords);
+};
+
+
+
 xrx.shape.CircleModifiable.create = function(circle) {
   var center = circle.getCenter();
   var radius = circle.getRadius();
-  var dragger = xrx.shape.VertexDragger.create(circle.getCanvas());
+  var modifiable = new xrx.shape.CircleModifiable(circle);
+  var dragger = xrx.shape.Dragger.create(modifiable, 0);
   dragger.setCoords([[center[0] + radius, center[1]]]);
-  dragger.setPosition(0);
-  return new xrx.shape.CircleModifiable(circle, [dragger]);
+  modifiable.setDragger([dragger]);
+  return modifiable;
 };
 
 
@@ -207,13 +257,6 @@ xrx.shape.CircleCreatable = function(circle) {
 
   goog.base(this, circle, xrx.shape.Circle.create(circle.getCanvas()));
 
-  /**
-   * Number of vertexes the user has created so far.
-   * @type {number}
-   * @private
-   */
-  this.count_ = 0;
-
   this.point_ = new Array(2);
 };
 goog.inherits(xrx.shape.CircleCreatable, xrx.shape.Creatable);
@@ -225,45 +268,51 @@ goog.inherits(xrx.shape.CircleCreatable, xrx.shape.Creatable);
  * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.CircleCreatable.prototype.getCoords = function() {
-  return this.helper_.getCoords();
+  return this.preview_.getCoords();
 };
 
 
 
 /**
- * Handles click events for a creatable circle shape.
+ *
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.CircleCreatable.prototype.handleClick = function(e, point, shape) {
-  if (this.count_ === 1) { // The user touches the second time
-                           // in that creates the circle
-    // insert a circle
-    var circle = xrx.shape.Circle.create(this.target_.getCanvas());
-    var center = this.helper_.getCenter();
-    circle.setStylable(this.target_);
-    circle.setCenter(center[0], center[1]);
-    circle.setRadius(this.helper_.getRadius());
-    this.eventHandler_.eventShapeCreated(circle);
-    // reset for next drawing
-    this.count_ = 0;
-  } else { // The user touches the first time
-    // initialize helper coordinates
-    this.point_[0] = point[0];
-    this.point_[1] = point[1];
-    this.helper_.setCenter(point[0], point[1]);
-    this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([this.helper_]);
-  }
+xrx.shape.CircleCreatable.prototype.handleDown = function(e, point) {
+  this.point_[0] = point[0];
+  this.point_[1] = point[1];
+  this.preview_.setCenter(point[0], point[1]);
+  this.eventHandler_.eventShapeCreate([this.preview_]);
 };
 
 
 
-xrx.shape.CircleCreatable.prototype.handleMove = function(e, point, shape) {
+/**
+ *
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
+xrx.shape.CircleCreatable.prototype.handleMove = function(e, point) {
   if (this.count_ === 0) return;
   var distX = point[0] - this.point_[0];
   var distY = point[1] - this.point_[1];
-  this.helper_.setCenter(point[0] - distX / 2, point[1] - distY / 2);
-  this.helper_.setRadius(Math.sqrt(distX * distX + distY * distY) / 2);
+  this.preview_.setCenter(point[0] - distX / 2, point[1] - distY / 2);
+  this.preview_.setRadius(Math.sqrt(distX * distX + distY * distY) / 2);
+};
+
+
+
+/**
+ *
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
+xrx.shape.CircleCreatable.prototype.handleUp = function(e, point) {
+  var circle = xrx.shape.Circle.create(this.target_.getCanvas());
+  var center = this.preview_.getCenter();
+  circle.setStylable(this.target_);
+  circle.setCenter(center[0], center[1]);
+  circle.setRadius(this.preview_.getRadius());
+  this.eventHandler_.eventShapeCreated(circle);
+  // reset for next drawing
+  this.preview_.setRadius(0);
 };
 
 

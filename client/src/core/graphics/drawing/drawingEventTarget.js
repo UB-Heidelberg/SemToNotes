@@ -54,13 +54,13 @@ xrx.event.HandlerTarget.prototype.getHandler = function() {
  * @private
  */
 xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
-  // re-initialize the browser event in the case of mobile touch events
-  if (e.getBrowserEvent().changedTouches) 
-      e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
-  var point = this.getEventPoint(e);
+  var point = this.getOffsetPoint(e, true);
   var shape = this.getShapeSelected(point);
   e.preventDefault();
   e.stopPropagation();
+  // re-initialize the browser event in the case of mobile touch events
+  if (e.getBrowserEvent().changedTouches) 
+      e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
   handler[event](e, point, shape);
   this.draw();
 };
@@ -102,7 +102,7 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerDown = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -119,9 +119,9 @@ xrx.event.HandlerTarget.prototype.registerDown_ = function(handler) {
  * @param {Object} The handler object.
  */
 xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
-  this.registerDown_(handler);
-  this.registerMove_(handler);
-  this.registerUp_(handler);
+  this.registerDown(handler);
+  this.registerMove(handler);
+  this.registerUp(handler);
 };
 
 
@@ -129,7 +129,7 @@ xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerMove = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -144,7 +144,7 @@ xrx.event.HandlerTarget.prototype.registerMove_ = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerHover_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerHover = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -175,7 +175,7 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerUp_ = function(handler) {
+xrx.event.HandlerTarget.prototype.registerUp = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -223,7 +223,6 @@ xrx.event.HandlerTarget.prototype.disposeInternal = function() {
  */
 xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
   this.handler_.removeAll();
-
   switch(mode) {
   case undefined:
   case xrx.drawing.Mode.DISABLED:
@@ -247,12 +246,13 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.CREATE:
-    this.registerClick(this.create_);
-    this.registerMove_(this.create_);
+    this.registerDown(this.create_);
+    this.registerMove(this.create_);
+    this.registerUp(this.create_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVER:
-    this.registerHover_(this.hoverable_);
+    this.registerHover(this.hoverable_);
     this.registerOut(this.hoverable_);
     this.registerWheel(this.viewbox_);
     this.registerDrag(this.viewbox_);

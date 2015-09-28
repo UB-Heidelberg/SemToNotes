@@ -19,7 +19,7 @@ goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Polyline');
 goog.require('xrx.shape.Stylable');
-goog.require('xrx.shape.VertexDragger');
+goog.require('xrx.shape.Dragger');
 
 
 
@@ -125,7 +125,7 @@ xrx.shape.PolygonModifiable.create = function(polygon) {
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(polygon.getCanvas());
+    dragger = xrx.shape.Dragger.create(polygon.getCanvas());
     dragger.setCoords([coords[i]]);
     dragger.setPosition(i);
     draggers.push(dragger);
@@ -147,7 +147,7 @@ xrx.shape.PolygonCreatable = function(polygon) {
   /**
    * The first vertex created by the user, which at the same time
    * closes the polygon when clicked.
-   * @type {xrx.shape.VertexDragger}
+   * @type {xrx.shape.Dragger}
    * @private
    */
   this.close_;
@@ -183,7 +183,7 @@ xrx.shape.PolygonCreatable.prototype.handleClick = function(e, point, shape) {
     // update the poly-line preview
     this.helper_.setCoords([point, goog.array.clone(point)]);
     // create the closing dragger
-    this.close_ = xrx.shape.VertexDragger.create(this.target_.getCanvas());
+    this.close_ = xrx.shape.Dragger.create(this.target_.getCanvas());
     this.close_.setCoords([point]);
     this.count_ += 1;
     this.eventHandler_.eventShapeCreate([this.helper_, this.close_]);

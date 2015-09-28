@@ -7,11 +7,11 @@ goog.provide('xrx.shape.Creatable');
 
 
 
-xrx.shape.Creatable = function(target, helper) {
+xrx.shape.Creatable = function(target, preview) {
 
   this.target_ = target;
 
-  this.helper_ = helper;
+  this.preview_ = preview;
 
   this.eventHandler_;
 };
@@ -25,23 +25,23 @@ xrx.shape.Creatable.prototype.setEventHandler = function(handler) {
 
 
 xrx.shape.Creatable.prototype.setFillColor = function(color) {
-  this.helper_.setFillColor(color);
+  this.preview_.setFillColor(color);
 };
 
 
 
 xrx.shape.Creatable.prototype.setFillOpacity = function(factor) {
-  this.helper_.setFillOpacity(factor);
+  this.preview_.setFillOpacity(factor);
 };
 
 
 
 xrx.shape.Creatable.prototype.setStrokeColor = function(color) {
-  this.helper_.setStrokeColor(color);
+  this.preview_.setStrokeColor(color);
 };
 
 
 
 xrx.shape.Creatable.prototype.setStrokeWidth = function(width) {
-  this.helper_.setStrokeWidth(width);
+  this.preview_.setStrokeWidth(width);
 };
