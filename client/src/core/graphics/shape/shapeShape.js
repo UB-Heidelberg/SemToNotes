@@ -45,8 +45,21 @@ xrx.shape.Shape = function(canvas, engineElement) {
   /**
    *
    */
+  this.hoverable_;
+
+  /**
+   *
+   */
+  this.selectable_;
+
+  /**
+   *
+   */
   this.modifiable_;
 
+  /**
+   *
+   */
   this.creatable_;
 
   /**
@@ -59,6 +72,22 @@ goog.inherits(xrx.shape.Shape, xrx.EventTarget);
 
 
 
+xrx.shape.Shape.prototype.getHoverable = goog.abstractMethod;
+
+
+
+xrx.shape.Shape.prototype.setHoverable = goog.abstractMethod;
+
+
+
+xrx.shape.Shape.prototype.getSelectable = goog.abstractMethod;
+
+
+
+xrx.shape.Shape.prototype.setSelectable = goog.abstractMethod;
+
+
+
 /**
  * Abstract function to be implemented by each shape class. Returns
  * a modifiable shape.
@@ -68,12 +97,20 @@ xrx.shape.Shape.prototype.getModifiable = goog.abstractMethod;
 
 
 
+xrx.shape.Shape.prototype.setModifiable = goog.abstractMethod;
+
+
+
 /**
  * Abstract function to be implemented by each shape class. Returns
  * a creatable shape.
  * @return {xrx.shape.Creatable} A creatable shape.
  */
 xrx.shape.Shape.prototype.getCreatable = goog.abstractMethod;
+
+
+
+xrx.shape.Shape.prototype.setCreatable = goog.abstractMethod;
 
 
 
@@ -93,16 +130,6 @@ xrx.shape.Shape.prototype.getCanvas = function() {
  */
 xrx.shape.Shape.prototype.getEngineElement = function() {
   return this.engineElement_;
-};
-
-
-
-/**
- * Sets the underlying engine element.
- * @param {xrx.engine.Element} element An engine element.
- */
-xrx.shape.Shape.prototype.setEngineElement = function(element) {
-  this.engineElement_ = element;
 };
 
 
@@ -150,14 +177,14 @@ xrx.shape.Shape.prototype.getCoordsCopy = function() {
 /**
  * Returns an array of vertex dragging elements according to the number of 
  * vertexes of this shape.
- * @return {Array<xrx.shape.VertexDragger>} The vertex dragging elements.
+ * @return {Array<xrx.shape.Dragger>} The vertex dragging elements.
  */
 xrx.shape.Shape.prototype.getVertexDraggers = function() {
   var coords = this.getCoords();
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.VertexDragger.create(this.canvas_);
+    dragger = xrx.shape.Dragger.create(this.canvas_);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }

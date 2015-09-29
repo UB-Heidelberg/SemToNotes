@@ -22,7 +22,7 @@ goog.require('xrx.shape.Polyline');
 goog.require('xrx.shape.Rect');
 goog.require('xrx.shape.RectModifiable');
 goog.require('xrx.shape.RectCreatable');
-goog.require('xrx.shape.VertexDragger');
+goog.require('xrx.shape.Dragger');
 
 
 

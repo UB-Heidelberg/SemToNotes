@@ -2,76 +2,49 @@
 
 
 
+function createTable(shapeName, $, mode) {
+  return $.createDom('div', undefined,
+    // mode view
+    $.htmlToDocumentFragment('<h1>' + shapeName + ' Tests</h1>'),
+    $.htmlToDocumentFragment('<h2>Mode ' + mode + '</h2>'),
+    $.htmlToDocumentFragment('<div>Make sure that line width is constant.</div>'),
+    $.htmlToDocumentFragment('<div>Test with mobile devices.</div>'),
+    $.createDom('table', undefined,
+      $.createDom('tr', undefined,
+        $.createDom('td', undefined, 
+          $.htmlToDocumentFragment('<span>Canvas</span>')
+        ),
+        $.createDom('td', undefined, 
+          $.htmlToDocumentFragment('<span>SVG</span>')
+        ),
+        $.createDom('td', undefined, 
+          $.htmlToDocumentFragment('<span>VML</span>')
+        )
+      ),
+      $.createDom('tr', undefined,
+        $.createDom('td', {'class': 'canvas', 'id': 'canvas' + shapeName + mode}),
+        $.createDom('td', {'class': 'canvas', 'id': 'svg' + shapeName + mode}),
+        $.createDom('td', {'class': 'canvas', 'id': 'vml' + shapeName + mode})
+      )
+    )
+  )
+};
+
+
+
 function createTables(shapeName, $) {
 
   var div = $.createDom('div', undefined,
     // mode view
-    $.htmlToDocumentFragment('<h1>' + shapeName + ' Tests</h1>'),
-    $.htmlToDocumentFragment('<h2>Mode View</h2>'),
-    $.htmlToDocumentFragment('<div>Make sure that line width is constant.</div>'),
-    $.htmlToDocumentFragment('<div>Test with mobile devices.</div>'),
-    $.createDom('table', undefined,
-      $.createDom('tr', undefined,
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>Canvas</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>SVG</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>VML</span>')
-        )
-      ),
-      $.createDom('tr', undefined,
-        $.createDom('td', {'class': 'canvas', 'id': 'canvas' + shapeName}),
-        $.createDom('td', {'class': 'canvas', 'id': 'svg' + shapeName}),
-        $.createDom('td', {'class': 'canvas', 'id': 'vml' + shapeName})
-      )
-    ),
+    createTable(shapeName, $, 'View'),
+    // mode hover
+    createTable(shapeName, $, 'Hover'),
+    // mode select
+    createTable(shapeName, $, 'Select'),
     // mode modify
-    $.htmlToDocumentFragment('<h2>Mode Modify</h2>'),
-    $.htmlToDocumentFragment('<div>Make sure that line width is constant.</div>'),
-    $.htmlToDocumentFragment('<div>Test with mobile devices.</div>'),
-    $.createDom('table', undefined,
-      $.createDom('tr', undefined,
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>Canvas</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>SVG</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>VML</span>')
-        )
-      ),
-      $.createDom('tr', undefined,
-        $.createDom('td', {'class': 'canvas', 'id': 'canvas' + shapeName + 'Modify'}),
-        $.createDom('td', {'class': 'canvas', 'id': 'svg' + shapeName + 'Modify'}),
-        $.createDom('td', {'class': 'canvas', 'id': 'vml' + shapeName + 'Modify'})
-      )
-    ),
+    createTable(shapeName, $, 'Modify'),
     // mode create
-    $.htmlToDocumentFragment('<h2>Mode Create</h2>'),
-    $.htmlToDocumentFragment('<div>Make sure that line width is constant.</div>'),
-    $.htmlToDocumentFragment('<div>Test with mobile devices.</div>'),
-    $.createDom('table', undefined,
-      $.createDom('tr', undefined,
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>Canvas</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>SVG</span>')
-        ),
-        $.createDom('td', undefined, 
-          $.htmlToDocumentFragment('<span>VML</span>')
-        )
-      ),
-      $.createDom('tr', undefined,
-        $.createDom('td', {'class': 'canvas', 'id': 'canvas' + shapeName + 'Create'}),
-        $.createDom('td', {'class': 'canvas', 'id': 'svg' + shapeName + 'Create'}),
-        $.createDom('td', {'class': 'canvas', 'id': 'vml' + shapeName + 'Create'})
-      )
-    )
+    createTable(shapeName, $, 'Create')
   )
   $.insertChildAt($.getDocument().body, div, 1);
 };
@@ -109,34 +82,44 @@ function getVmlDrawing(id) {
 
 
 
-function modeView(shapeName) {
+function modeMode(shapeName, mode) {
   if (!xrx.engine.isOldIE()) {
-    var canvasDrawing = getCanvasDrawing('canvas' + shapeName);
-    canvasDrawing.setModeView();
+    var canvasDrawing = getCanvasDrawing('canvas' + shapeName + mode);
+    canvasDrawing['setMode' + mode]();
     canvasDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](canvasDrawing));
-    var svgDrawing = getSvgDrawing('svg' + shapeName);
-    svgDrawing.setModeView();
+    var svgDrawing = getSvgDrawing('svg' + shapeName + mode);
+    svgDrawing['setMode' + mode]();
     svgDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](svgDrawing));
   }
-  var vmlDrawing = getVmlDrawing('vml' + shapeName);
-  vmlDrawing.setModeView();
+  /*
+  var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
+  vmlDrawing['setMode' + mode]();
   vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
+  */
+};
+
+
+
+function modeView(shapeName) {
+  modeMode(shapeName, 'View');
+};
+
+
+
+function modeHover(shapeName) {
+  modeMode(shapeName, 'Hover');
+};
+
+
+
+function modeSelect(shapeName) {
+  modeMode(shapeName, 'Select');
 };
 
 
 
 function modeModify(shapeName) {
-  if (!xrx.engine.isOldIE()) {
-    var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Modify');
-    canvasDrawing.setModeModify();
-    canvasDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](canvasDrawing));
-    var svgDrawing = getSvgDrawing('svg' + shapeName + 'Modify');
-    svgDrawing.setModeModify();
-    svgDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](svgDrawing));
-  }
-  var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Modify');
-  vmlDrawing.setModeModify();
-  vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
+  modeMode(shapeName, 'Modify');
 };
 
 
@@ -168,6 +151,7 @@ function modeCreate(shapeName) {
     }
     svgDrawing.setModeCreate(svgCreatable);
   }
+  /*
   var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
   var vmlShape = xrx.shape[shapeName].create(vmlDrawing.getCanvas());
   vmlShape.setStrokeWidth(1);
@@ -180,4 +164,5 @@ function modeCreate(shapeName) {
     vmlCreatable.setFillOpacity(.2);
   }
   vmlDrawing.setModeCreate(vmlCreatable);
+  */
 };

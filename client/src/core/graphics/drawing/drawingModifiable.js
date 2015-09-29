@@ -1,5 +1,6 @@
 /**
- * @fileoverview A class representing a modifiable shape. 
+ * @fileoverview A class representing the shape currently modified
+ * by the user. 
  */
 
 goog.provide('xrx.drawing.Modifiable');
@@ -8,136 +9,94 @@ goog.provide('xrx.drawing.Modifiable');
 
 goog.require('xrx.drawing');
 goog.require('xrx.geometry');
-goog.require('xrx.shape.VertexDragger');
+goog.require('xrx.shape.Dragger');
 
 
 
 /**
- * A class representing a modifiable shape. 
+ * A class representing the shape currently modified by the user. 
  * @constructor
  */
 xrx.drawing.Modifiable = function(drawing) {
 
   this.drawing_ = drawing;
 
-  this.state_ = xrx.drawing.State.NONE;
-
-  this.mode_;
-
-  this.shape_;
-
-  this.coords_;
-
-  this.originCoords_;
-
-  this.shapeOriginCoords_;
+  this.mode_ = xrx.drawing.Modifiable.Mode.SHAPEHOVER;
 
   this.dragger_;
 
-  this.draggerOriginCoords_;
+  this.shape_;
 
-  this.mousePoint_ = new Array(2);
+  this.origin_;
 };
 
 
 
 xrx.drawing.Modifiable.Mode = {
   DRAGSHAPE: 1,
-  DRAGVERTEX: 2
+  HOVERSHAPE: 2,
+  DRAGDRAGGER: 3
 };
 
 
 
 xrx.drawing.Modifiable.prototype.handleDown = function(e, point, shape) {
   var modifiable;
-  this.mousePoint_ = point;
+  this.origin_ = point;
   if (shape && shape.isModifiable()) {
     this.state_ = xrx.drawing.State.DRAG;
-    if (shape instanceof xrx.shape.VertexDragger) {
-      this.mode_ = xrx.drawing.Modifiable.Mode.DRAGVERTEX;
+    if (shape instanceof xrx.shape.Dragger) {
+      this.mode_ = xrx.drawing.Modifiable.Mode.DRAGDRAGGER;
       this.dragger_ = shape;
-      this.draggerOriginCoords_ = this.dragger_.getCoordsCopy();
     } else {
       this.mode_ = xrx.drawing.Modifiable.Mode.DRAGSHAPE;
       this.shape_ = shape;
-      this.shapeOriginCoords_ = this.shape_.getCoordsCopy();
-      modifiable = this.shape_.getModifiable(this.shape_);
+      modifiable = this.shape_.getModifiable();
       this.drawing_.getLayerShapeModify().activate(modifiable);
     }
   } else {
     this.drawing_.getLayerShapeModify().removeShapes();
-    this.state_ = xrx.drawing.State.NONE;
+    this.resetState_();
   }
+};
+
+
+
+xrx.drawing.Modifiable.prototype.handleHover_ = function(e, point, shape) {
+  console.log('TODO');
+};
+
+
+
+xrx.drawing.Modifiable.prototype.handleDragShape_ = function(e, point, shape) {
+  var distX = point[0] - this.origin_[0];
+  var distY = point[1] - this.origin_[1];
+  this.shape_.getModifiable().move(distX, distY);
+  this.origin_ = point;
 };
 
 
 
 xrx.drawing.Modifiable.prototype.handleMove = function(e, point, shape) {
-  if (this.state_ !== xrx.drawing.State.DRAG) return;
-  if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGVERTEX) {
-    this.originCoords_ = this.draggerOriginCoords_;
+  if (this.mode_ === xrx.drawing.Modifiable.Mode.SHAPEHOVER) {
+    this.handleHover_(e, point, shape);
+  } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGDRAGGER) {
+    this.dragger_.setCoord(point);
+  } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGSHAPE) {
+    this.handleDragShape_(e, point, shape);
   } else {
-    this.originCoords_ = this.shapeOriginCoords_;
+    return;
   }
-  var bboxA = this.drawing_.getViewbox().getBox();
-  var diff = {
-    x: 0,
-    y: 0,
-    x2: 0,
-    y2: 0
-  };
-  var bboxS;
-  this.coords_ = new Array(this.originCoords_.length);
-
-  for (var i = 0, len = this.originCoords_.length; i < len; i++) {
-    this.coords_[i] = new Array(2);
-    this.coords_[i][0] = - this.mousePoint_[0] + point[0] + this.originCoords_[i][0];
-    this.coords_[i][1] = - this.mousePoint_[1] + point[1] + this.originCoords_[i][1];
-  };
-
-  bboxS = xrx.geometry.getBBox(this.coords_);
-
-  diff.x = bboxS.x - bboxA.x;
-  diff.x2 = bboxA.x2 - bboxS.x2;
-  diff.y = bboxS.y - bboxA.y;
-  diff.y2 = bboxA.y2 - bboxS.y2;
-
-  if (diff.x < 0) xrx.geometry.addCoordsX(this.coords_, -diff.x);
-  if (diff.x2 < 0) xrx.geometry.addCoordsX(this.coords_, diff.x2);
-  if (diff.y < 0) xrx.geometry.addCoordsY(this.coords_, -diff.y);
-  if (diff.y2 < 0) xrx.geometry.addCoordsY(this.coords_, diff.y2);
-
-  if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGVERTEX) {
-    var pos = this.dragger_.getPosition();
-    this.shape_.getModifiable().setCoordAt(pos, this.coords_[0]);
-  } else {
-    this.shape_.getModifiable().setCoords(this.coords_);
-  }
-  if (this.shape_.handleValueChanged) this.shape_.handleValueChanged();
 };
 
 
 
 xrx.drawing.Modifiable.prototype.handleUp = function(e) {
-  this.state_ = xrx.drawing.State.NONE;
+  this.resetState_();
 };
 
 
 
-xrx.drawing.Modifiable.prototype.handleClick = function(e) {
-  var drawing = this.drawing_;
-  if (drawing.getMode() !== xrx.drawing.Mode.DELETE) return;
-  this.mousePoint_ = drawing.getEventPoint(e);
-  var shape = drawing.getShapeSelected(this.mousePoint_);
-  if (shape && shape.isModifiable()) {
-    drawing.getLayerShapeModify().activate(shape.getVertexDraggers());
-    var confirm = window.confirm('Delete forever?');
-    if (confirm) {
-      if (shape.handleDeleted) shape.handleDeleted();
-      drawing.getLayerShape().removeShape(shape);
-      drawing.getLayerShapeModify().removeShapes();
-    }
-  } else {
-    drawing.getLayerShapeModify().removeShapes();
-  }
+xrx.drawing.Modifiable.prototype.resetState_ = function() {
+  this.mode_ = xrx.drawing.Modifiable.Mode.SHAPEHOVER;
 };

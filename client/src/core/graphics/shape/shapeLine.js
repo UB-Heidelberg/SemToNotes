@@ -220,10 +220,10 @@ xrx.shape.LineModifiable.prototype.setCoordAt = function(pos, coord) {
  * @constructor
  */
 xrx.shape.LineModifiable.create = function(line) {
-  var dragger1 = xrx.shape.VertexDragger.create(line.getCanvas());
+  var dragger1 = xrx.shape.Dragger.create(line.getCanvas());
   dragger1.setCoords([[line.getX1(), line.getY1()]]);
   dragger1.setPosition(0);
-  var dragger2 = xrx.shape.VertexDragger.create(line.getCanvas());
+  var dragger2 = xrx.shape.Dragger.create(line.getCanvas());
   dragger2.setCoords([[line.getX2(), line.getY2()]]);
   dragger2.setPosition(1);
   return new xrx.shape.LineModifiable(line, [dragger1, dragger2]);

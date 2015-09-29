@@ -75,10 +75,10 @@ xrx.viewbox.Viewbox.prototype.getGroup = function() {
 
 /**
  * Handles double-click events for the view-box.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleDblClick = function(e) {
-  this.rotateRight([e.offsetX, e.offsetY]);
+xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, offsetPoint) {
+  this.rotateRight(offsetPoint);
 };
 
 
@@ -86,12 +86,10 @@ xrx.viewbox.Viewbox.prototype.handleDblClick = function(e) {
 /**
  * Handles mouse-down events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleDown = function(e) {
-  var eventPoint = [e.clientX, e.clientY];
-  var identity = this.ctm_.getIdentity();
-  if (!this.origin_) this.origin_ = new Array(2);
-  identity.transformPoint(eventPoint, this.origin_);
+xrx.viewbox.Viewbox.prototype.handleDown = function(e, offsetPoint) {
+  this.origin_ = offsetPoint;
   this.state_ = xrx.drawing.State.DRAG;
 };
 
@@ -100,13 +98,14 @@ xrx.viewbox.Viewbox.prototype.handleDown = function(e) {
 /**
  * Handles mouse-move events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleMove = function(e) {
+xrx.viewbox.Viewbox.prototype.handleMove = function(e, offsetPoint) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
-  var x = e.clientX - this.origin_[0];
-  var y = e.clientY - this.origin_[1];
-  this.translate(x, y);
-  this.origin_ = [e.clientX, e.clientY];
+  var distX = offsetPoint[0] - this.origin_[0];
+  var distY = offsetPoint[1] - this.origin_[1];
+  this.translate(distX, distY);
+  this.origin_ = offsetPoint;
 };
 
 
@@ -126,18 +125,18 @@ xrx.viewbox.Viewbox.prototype.handleOut = function(e) {
  * @param {goog.events.BrowserEvent} e The browser event.
  */
 xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
-  this.state_ = xrx.drawing.State.NONE;
+  this.resetState_();
 };
 
 
 
 /**
  * Handles mouse-wheel events for the view-box.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleWheel = function(e) {
-  e.deltaY < 0 ? this.zoomIn([e.offsetX, e.offsetY]) :
-      this.zoomOut([e.offsetX, e.offsetY]);
+xrx.viewbox.Viewbox.prototype.handleWheel = function(e, offsetPoint) {
+  e.deltaY < 0 ? this.zoomIn(offsetPoint) :
+      this.zoomOut(offsetPoint);
 };
 
 

@@ -23,6 +23,9 @@ goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
 
 
 
+/**
+ * 
+ */
 xrx.drawing.EventHandler.prototype.eventShapeCreate = function(shapes) {
   this.getLayerShapeCreate().addShapes(shapes);
   this.draw();
@@ -31,6 +34,9 @@ xrx.drawing.EventHandler.prototype.eventShapeCreate = function(shapes) {
 
 
 
+/**
+ * 
+ */
 xrx.drawing.EventHandler.prototype.eventShapeCreated = function(shape) {
   this.getLayerShape().addShapes(shape);
   this.getLayerShapeCreate().removeShapes();
@@ -41,20 +47,9 @@ xrx.drawing.EventHandler.prototype.eventShapeCreated = function(shape) {
 
 
 /**
- *
+ * 
  */
-xrx.drawing.EventHandler.prototype.getOffsetPoint = function(clientPoint) {
-  var pos = goog.style.getClientPosition(this.canvas_.getEngineElement().getEventTarget());
-  var offset = [clientPoint[0] - pos.x, clientPoint[1] - pos.y];
-  return this.getViewbox().getCTM().transformPoint(offset);
-};
-
-
-
-/**
- *
- */
-xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
+xrx.drawing.EventHandler.prototype.getClientPoint = function(e) {
   var touches = e.getBrowserEvent().changedTouches;
   var x;
   var y;
@@ -65,7 +60,23 @@ xrx.drawing.EventHandler.prototype.getEventPoint = function(e) {
     x = e.clientX;
     y = e.clientY;
   }
-  return this.getOffsetPoint([x, y]);
+  return [x, y];
+};
+
+
+
+/**
+ *
+ */
+xrx.drawing.EventHandler.prototype.getOffsetPoint = function(e, opt_transformed) {
+  var pos = goog.style.getClientPosition(this.canvas_.getEngineElement().getEventTarget());
+  var clientPoint = this.getClientPoint(e);
+  var offset = [clientPoint[0] - pos.x, clientPoint[1] - pos.y];
+  if (opt_transformed === true) {
+    return this.getViewbox().getCTM().transformPoint(offset);
+  } else {
+    return offset;
+  }
 };
 
 
