@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.shape.Shapes</title>
+<title>XRX++ Unit Tests - xrx.shape.Shape</title>
 <script src='../../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../../deps.js'></script>
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.graphic');
+  goog.require('xrx.drawing.Drawing');
 </script>
 <style>
 table {
@@ -83,7 +84,7 @@ border: solid grey 1px;
 
 
 
-var style = new xrx.graphic.Style();
+var style = new xrx.shape.Stylable();
 style.setFillColor('green');
 style.setFillOpacity(.5);
 style.setStrokeColor('red');
@@ -91,41 +92,38 @@ style.setStrokeWidth(2);
 
 
 
-function getCanvasCanvas(id) {
-  var divCanvas = goog.dom.getElement(id);
-  var engine = new xrx.engine.Engine(xrx.engine.CANVAS);
-  var canvas = xrx.shape.Canvas.create(divCanvas, engine);
-  canvas.setWidth(100);
-  canvas.setHeight(100);
-  return canvas;
+function getDrawingCanvas(id) {
+  var div = goog.dom.getElement(id);
+  var drawing = new xrx.drawing.Drawing(div, xrx.engine.CANVAS);
+  drawing.setWidth(100);
+  drawing.setHeight(100);
+  return drawing;
 };
 
 
 
-function getCanvasSvg(id) {
-  var divSvg = goog.dom.getElement(id);
-  var engine = new xrx.engine.Engine(xrx.engine.SVG);
-  var canvas = xrx.shape.Canvas.create(divSvg, engine);
-  canvas.setWidth(100);
-  canvas.setHeight(100);
-  return canvas;
+function getDrawingSvg(id) {
+  var div = goog.dom.getElement(id);
+  var drawing = new xrx.drawing.Drawing(div, xrx.engine.SVG);
+  drawing.setWidth(100);
+  drawing.setHeight(100);
+  return drawing;
 };
 
 
 
-function getCanvasVml(id) {
-  var divVml = goog.dom.getElement(id);
-  var engine = new xrx.engine.Engine(xrx.engine.VML);
-  var canvas = xrx.shape.Canvas.create(divVml, engine);
-  canvas.setWidth(100);
-  canvas.setHeight(100);
-  return canvas;
+function getDrawingVml(id) {
+  var div = goog.dom.getElement(id);
+  var drawing = new xrx.drawing.Drawing(div, xrx.engine.VML);
+  drawing.setWidth(100);
+  drawing.setHeight(100);
+  return drawing;
 };
 
 
 
-function getCircle(canvas) {
-  var circle = xrx.shape.Circle.create(canvas);
+function getCircle(drawing) {
+  var circle = xrx.shape.Circle.create(drawing);
   circle.setCenter(50, 50);
   circle.setRadius(30);
   circle.setStyle(style);
@@ -134,8 +132,8 @@ function getCircle(canvas) {
 
 
 
-function getEllipse(canvas) {
-  var ellipse = xrx.shape.Ellipse.create(canvas);
+function getEllipse(drawing) {
+  var ellipse = xrx.shape.Ellipse.create(drawing);
   ellipse.setCenter(50, 50);
   ellipse.setRadiusX(10);
   ellipse.setRadiusY(40);
@@ -145,16 +143,16 @@ function getEllipse(canvas) {
 
 
 
-function getImage(canvas) {
-  var img = xrx.shape.Image.create(canvas);
+function getImage(drawing) {
+  var img = xrx.shape.Image.create(drawing);
   img.setImage(goog.dom.getElement('testImage'));
   return img;
 };
 
 
 
-function getLine(canvas) {
-  var line = xrx.shape.Line.create(canvas);
+function getLine(drawing) {
+  var line = xrx.shape.Line.create(drawing);
   line.setX1(10);
   line.setY1(10);
   line.setX2(90);
@@ -165,12 +163,12 @@ function getLine(canvas) {
 
 
 
-function getPolygon(canvas) {
+function getPolygon(drawing) {
   var coords = new Array(3);
   coords[0] = [10,10];
   coords[1] = [90,0];
   coords[2] = [0,60];
-  var polygon = xrx.shape.Polygon.create(canvas);
+  var polygon = xrx.shape.Polygon.create(drawing);
   polygon.setCoords(coords);
   polygon.setStyle(style);
   return polygon;
@@ -178,13 +176,13 @@ function getPolygon(canvas) {
 
 
 
-function getPolyline(canvas) {
+function getPolyline(drawing) {
   var coords = new Array(4);
   coords[0] = [10,10];
   coords[1] = [90,90];
   coords[2] = [5,60];
   coords[3] = [30,40];
-  var polyline = xrx.shape.Polyline.create(canvas);
+  var polyline = xrx.shape.Polyline.create(drawing);
   polyline.setCoords(coords);
   polyline.setStyle(style);
   return polyline;
@@ -192,8 +190,8 @@ function getPolyline(canvas) {
 
 
 
-function getRect(canvas) {
-  var rect = xrx.shape.Rect.create(canvas);
+function getRect(drawing) {
+  var rect = xrx.shape.Rect.create(drawing);
   rect.setX(10);
   rect.setY(10);
   rect.setWidth(10);
@@ -204,10 +202,10 @@ function getRect(canvas) {
 
 
 
-function getGroup(canvas) {
-  var group = xrx.shape.Group.create(canvas);
-  group.addChildren([this.getCircle(canvas),
-      this.getImage(canvas), this.getPolyline(canvas)]);
+function getGroup(drawing) {
+  var group = xrx.shape.Group.create(drawing);
+  group.addChildren([this.getCircle(drawing),
+      this.getImage(drawing), this.getPolyline(drawing)]);
   return group;
 };
 
@@ -220,23 +218,22 @@ function test1Shapes() {
     shape = shapes[i];
     if (!xrx.engine.isOldIE()) {
       // Canvas
-      var canvasCanvas = getCanvasCanvas('canvas' + shape);
-      var canvasShape = this['get' + shape](canvasCanvas);
-      canvasCanvas.addChildren(canvasShape);
-      canvasCanvas.draw();
+      var canvasDrawing = getDrawingCanvas('canvas' + shape);
+      var canvasShape = this['get' + shape](canvasDrawing);
+      canvasDrawing.getLayerShape().addShapes(canvasShape);
+      canvasDrawing.draw();
       // SVG
-      var svgCanvas = getCanvasSvg('svg' + shape);
-      var svgShape = this['get' + shape](svgCanvas);
-      svgCanvas.addChildren(svgShape);
-      svgCanvas.draw();
+      var svgDrawing = getDrawingSvg('svg' + shape);
+      var svgShape = this['get' + shape](svgDrawing);
+      svgDrawing.getLayerShape().addShapes(svgShape);
+      svgDrawing.draw();
+    } else {
+      // VML
+      var vmlDrawing = getDrawingVml('vml' + shape);
+      var vmlShape = this['get' + shape](vmlDrawing);
+      vmlDrawing.getLayerShape().addShapes(vmlShape);
+      vmlDrawing.draw();
     }
-    // VML
-    /*
-    var vmlCanvas = getCanvasVml('vml' + shape);
-    var vmlShape = this['get' + shape](vmlCanvas);
-    vmlCanvas.addChildren(vmlShape);
-    vmlCanvas.draw();
-    */
   }
 };
 

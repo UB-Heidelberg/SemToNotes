@@ -10,23 +10,22 @@ goog.provide('xrx.shape.EllipseCreatable');
 
 
 goog.require('xrx.geometry.Ellipse');
+goog.require('xrx.shape.Geometry');
 goog.require('xrx.shape.Modifiable');
-goog.require('xrx.shape.Stylable');
 
 
 
 /**
  * A class representing an engine-independent ellipse graphic.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Ellipse = function(canvas) {
+xrx.shape.Ellipse = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createEllipse(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Ellipse());
 };
-goog.inherits(xrx.shape.Ellipse, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Ellipse, xrx.shape.Geometry);
 
 
 
@@ -128,10 +127,14 @@ xrx.shape.Ellipse.prototype.draw = function() {
 
 /**
  * Creates a new ellipse.
- * @param {xrx.shape.Canvas} The parent canvas object.
+ * @param {xrx.drawing.Drawing} The parent drawing canvas.
  */
-xrx.shape.Ellipse.create = function(canvas) {
-  return new xrx.shape.Ellipse(canvas);
+xrx.shape.Ellipse.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createEllipse(engineCanvas);
+  return new xrx.shape.Ellipse(drawing, engineElement);
 };
 
 

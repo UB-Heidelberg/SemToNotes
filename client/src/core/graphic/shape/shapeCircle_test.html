@@ -24,14 +24,14 @@ createTables('Circle', goog.dom);
 
 
 function getCircles(drawing) {
-  var hoverableStyle = new xrx.graphic.Style();
+  var hoverableStyle = new xrx.shape.Stylable();
   hoverableStyle.setFillColor('green');
   hoverableStyle.setFillOpacity(.2);
   hoverableStyle.setStrokeColor('green');
   hoverableStyle.setStrokeWidth(2);
-  var circle1 = xrx.shape.Circle.create(drawing.getCanvas());
-  var circle2 = xrx.shape.Circle.create(drawing.getCanvas());
-  var circle3 = xrx.shape.Circle.create(drawing.getCanvas());
+  var circle1 = xrx.shape.Circle.create(drawing);
+  var circle2 = xrx.shape.Circle.create(drawing);
+  var circle3 = xrx.shape.Circle.create(drawing);
   circle1.setCenter(20, 20);
   circle1.setRadius(50);
   circle1.setStrokeWidth(2);
@@ -39,10 +39,11 @@ function getCircles(drawing) {
   circle2.setCenter(200, 200);
   circle2.setRadius(10);
   circle2.setStrokeWidth(2);
-  circle2.getHoverable().setStyle();
+  circle2.getHoverable().setStyle(hoverableStyle);
   circle3.setCenter(100, 300);
   circle3.setRadius(100);
   circle3.setStrokeWidth(2);
+  circle3.getHoverable().setStyle(hoverableStyle);
   return [circle1, circle2, circle3];
 };
 

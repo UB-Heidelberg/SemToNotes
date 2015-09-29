@@ -3,7 +3,7 @@
  */
 
 goog.provide('xrx.graphic.Action');
-goog.provide('xrx.graphic.StyleSet');
+goog.provide('xrx.shape.StyleSet');
 
 
 
@@ -21,16 +21,16 @@ goog.inherits(xrx.graphic.Action, xrx.mvc.AbstractAction);
 
 
 
-xrx.graphic.StyleSet = function(element) {
+xrx.shape.StyleSet = function(element) {
 
   goog.base(this, element);
 };
-goog.inherits(xrx.graphic.StyleSet, xrx.graphic.Action);
-xrx.mvc.registerComponent('xrx-canvas-stylable-set', xrx.graphic.StyleSet);
+goog.inherits(xrx.shape.StyleSet, xrx.graphic.Action);
+xrx.mvc.registerComponent('xrx-canvas-stylable-set', xrx.shape.StyleSet);
 
 
 
-xrx.graphic.StyleSet.prototype.execute_ = function(opt_params) {
+xrx.shape.StyleSet.prototype.execute_ = function(opt_params) {
   var c;
   var drawing;
   var strokeWidth = this.getDatasetParam('xrxStrokeWidth', opt_params);

@@ -6,24 +6,24 @@ goog.provide('xrx.shape.Container');
 
 
 
-goog.require('xrx.shape.Shape');
+goog.require('xrx.shape.Geometry');
 
 
 
 /**
  * An abstract class representing a shape container.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} canvas The parent drawing canvas.
  * @param {xrx.engine.Element} engineElement The engine element
  *   used to render this shape.
  * @constructor
  */
-xrx.shape.Container = function(canvas, engineElement) {
+xrx.shape.Container = function(drawing, engineElement) {
 
-  goog.base(this, canvas, engineElement);
+  goog.base(this, drawing, engineElement);
 
   this.childs_ = [];
 };
-goog.inherits(xrx.shape.Container, xrx.shape.Shape);
+goog.inherits(xrx.shape.Container, xrx.shape.Geometry);
 
 
 

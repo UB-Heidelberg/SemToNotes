@@ -23,8 +23,8 @@ xrx.EventTarget = function() {};
 
 
 /**
- * Dispatch an event to a foreign JavaScript application. The function only
- * applies the event if the foreign JavaScript object implements
+ * Dispatch an event to a foreign JavaScript application. The function
+ * dispatches the event only if the foreign JavaScript object implements
  * an according event handler function.
  * @param {string} eventType The name of the event. Must start with prefix "event*".
  * @param {?Object} opt_eventHandler The object used to apply the event.

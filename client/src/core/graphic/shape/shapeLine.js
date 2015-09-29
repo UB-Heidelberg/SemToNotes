@@ -10,23 +10,22 @@ goog.provide('xrx.shape.LineModifiable');
 
 
 goog.require('xrx.geometry.Line');
+goog.require('xrx.shape.Geometry');
 goog.require('xrx.shape.Modifiable');
-goog.require('xrx.shape.Stylable');
 
 
 
 /**
  * Classes representing an engine-independent line shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Line = function(canvas) {
+xrx.shape.Line = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createLine(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Line());
 };
-goog.inherits(xrx.shape.Line, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Line, xrx.shape.Geometry);
 
 
 
@@ -148,10 +147,14 @@ xrx.shape.Line.prototype.draw = function() {
 
 /**
  * Creates a new line shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Line.create = function(canvas) {
-  return new xrx.shape.Line(canvas);
+xrx.shape.Line.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createLine(engineCanvas);
+  return new xrx.shape.Line(drawing, engineElement);
 };
 
 

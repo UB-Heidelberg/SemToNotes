@@ -3,25 +3,26 @@
  */
 
 var _allTests = [
-  // core/graphics/drawing
-  './core/graphics/drawing/drawingDrawing_test.html',
-  './core/graphics/drawing/drawingEventTarget_test.html',
-  './core/graphics/drawing/drawingLayerBackground_test.html',
-  './core/graphics/drawing/drawingLayerShape_test.html',
-  './core/graphics/drawing/drawingLayerShapeModify_test.html',
-  // core/graphics/engine
-  './core/graphics/engine/engineElement_test.html',
-  './core/graphics/engine/engineEngines_test.html',
-  // core/graphics/geometry
-  './core/graphics/geometry/geometry_test.html',
-  // core/graphics/shape
-  // core/graphics/viewbox
-  './core/graphics/viewbox/viewboxViewbox_test.html',
-  './core/graphics/viewbox/viewboxViewboxGeometry_test.html',
-  './core/graphics/viewbox/viewboxviewboxViewboxRotate_test.html',
-  './core/graphics/viewbox/viewboxViewboxTransform_test.html',
-  './core/graphics/viewbox/viewboxViewboxTranslate_test.html',
-  './core/graphics/viewbox/viewboxViewboxZoom_test.html',
+  // core/graphic/drawing
+  './core/graphic/drawing/drawingDrawing_test.html',
+  './core/graphic/drawing/drawingEventTarget_test.html',
+  './core/graphic/drawing/drawingLayerBackground_test.html',
+  './core/graphic/drawing/drawingLayerShape_test.html',
+  './core/graphic/drawing/drawingLayerShapeModify_test.html',
+  // core/graphic/engine
+  './core/graphic/engine/engineElement_test.html',
+  './core/graphic/engine/engineEngines_test.html',
+  // core/graphic/geometry
+  './core/graphic/geometry/geometry_test.html',
+  // core/graphic/shape
+  './core/graphic/shape/shapeShape_test.html',
+  // core/graphic/viewbox
+  './core/graphic/viewbox/viewboxViewbox_test.html',
+  './core/graphic/viewbox/viewboxViewboxGeometry_test.html',
+  './core/graphic/viewbox/viewboxviewboxViewboxRotate_test.html',
+  './core/graphic/viewbox/viewboxViewboxTransform_test.html',
+  './core/graphic/viewbox/viewboxViewboxTranslate_test.html',
+  './core/graphic/viewbox/viewboxViewboxZoom_test.html',
   // core/mvc
   './core/mvc/mvc_test.html',
   './core/mvc/mvcBind_test.html',

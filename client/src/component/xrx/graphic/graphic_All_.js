@@ -23,7 +23,7 @@ goog.require('xrx.graphic.ShapePolygonInsert');
 goog.require('xrx.graphic.ShapeRect');
 goog.require('xrx.graphic.ShapeRectCreate');
 goog.require('xrx.graphic.ShapeRectInsert');
-goog.require('xrx.graphic.StyleSet');
+goog.require('xrx.shape.StyleSet');
 
 
 

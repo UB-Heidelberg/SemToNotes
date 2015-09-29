@@ -14,57 +14,14 @@ goog.require('xrx.shape.Container');
 
 /**
  * A class representing an engine-independent graphic canvas.
- * @param {HTMLElement} element The HTML element to create
- *   the canvas.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Canvas = function(element, engine) {
+xrx.shape.Canvas = function(drawing, engineElement) {
 
-  goog.base(this, this, engine.createCanvas(element));
-
-  /**
-   * HTML element to create the canvas.
-   * @type {HTMLElement}
-   */
-  this.element_ = element;
-
-  /**
-   * The engine to be used for rendering.
-   * @type {xrx.engine.Engine}
-   */
-  this.engine_ = engine;
-
-  /**
-   * An event handler object to propagate
-   * events such as 'eventShapeBeforeDraw'
-   * @type {Object}
-   */
-  this.eventHandler_;
+  goog.base(this, drawing, engineElement);
 };
 goog.inherits(xrx.shape.Canvas, xrx.shape.Container);
-
-
-
-/**
- * Returns the event handler object to which events such as
- * 'eventShapeBeforeDraw' are propagated.
- * @param {Object} handler The handler object.
- */
-xrx.shape.Canvas.prototype.setEventHandler = function(handler) {
-  this.eventHandler_ = handler;
-};
-
-
-
-/**
- * Returns the event handler object.
- * @return {Object}
- */
-xrx.shape.Canvas.prototype.getEventHandler = function() {
-  return this.eventHandler_ || this;
-};
 
 
 
@@ -73,7 +30,7 @@ xrx.shape.Canvas.prototype.getEventHandler = function() {
  * @return {HTMLElement} The HTML element.
  */
 xrx.shape.Canvas.prototype.getElement = function() {
-  return this.element_;
+  return this.drawing_.getElement();
 };
 
 
@@ -83,7 +40,7 @@ xrx.shape.Canvas.prototype.getElement = function() {
  * @return {xrx.engine.Engine} The rendering engine.
  */
 xrx.shape.Canvas.prototype.getEngine = function() {
-  return this.engine_;
+  return this.drawing_.getEngine();
 };
 
 
@@ -143,10 +100,10 @@ xrx.shape.Canvas.prototype.draw = function() {
 
 /**
  * Creates a new canvas element.
- * @param {HTMLElement} element The HTML element on which the canvas
- *   shall be created.
- * @param {xrx.engine.Engine} The engine to be used for rendering.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Canvas.create = function(element, engine) {
-  return new xrx.shape.Canvas(element, engine);
+xrx.shape.Canvas.create = function(drawing) {
+  var element = drawing.getElement();
+  var engineElement = drawing.getEngine().createCanvas(element)
+  return new xrx.shape.Canvas(drawing, engineElement);
 };

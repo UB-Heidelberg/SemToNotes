@@ -8,19 +8,18 @@ goog.provide('xrx.shape.Image');
 
 
 goog.require('xrx.geometry.Rect');
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Geometry');
 
 
 
 /**
  * A class representing an engine-independent image graphic.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Image = function(canvas) {
+xrx.shape.Image = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createImage(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Rect());
 
   /**
@@ -29,7 +28,7 @@ xrx.shape.Image = function(canvas) {
    */
   this.image_;
 };
-goog.inherits(xrx.shape.Image, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Image, xrx.shape.Geometry);
 
 
 
@@ -88,8 +87,12 @@ xrx.shape.Image.prototype.draw = function() {
 
 /**
  * Creates a new image graphic.
- * @param {xrx.shape.Canvas} The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Image.create = function(canvas) {
-  return new xrx.shape.Image(canvas);
+xrx.shape.Image.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createImage(engineCanvas);
+  return new xrx.shape.Image(drawing, engineElement);
 };

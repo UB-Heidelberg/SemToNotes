@@ -16,25 +16,24 @@ goog.require('goog.object');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.mvc');
 goog.require('xrx.shape.Creatable');
+goog.require('xrx.shape.Dragger');
+goog.require('xrx.shape.PathLike');
 goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Polyline');
-goog.require('xrx.shape.Stylable');
-goog.require('xrx.shape.Dragger');
 
 
 
 /**
  * A class representing an engine-independent polygon shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Polygon = function(canvas, engineElement) {
+xrx.shape.Polygon = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createPolygon(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Path());
 };
-goog.inherits(xrx.shape.Polygon, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
 
 
 
@@ -52,10 +51,14 @@ xrx.shape.Polygon.prototype.draw = function() {
 
 /**
  * Creates a new polygon shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Polygon.create = function(canvas) {
-  return new xrx.shape.Polygon(canvas);
+xrx.shape.Polygon.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createPolygon(engineCanvas);
+  return new xrx.shape.Polygon(drawing, engineElement);
 };
 
 

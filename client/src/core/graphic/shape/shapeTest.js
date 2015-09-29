@@ -127,7 +127,7 @@ function modeModify(shapeName) {
 function modeCreate(shapeName) {
   if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Create');
-    var canvasShape = xrx.shape[shapeName].create(canvasDrawing.getCanvas());
+    var canvasShape = xrx.shape[shapeName].create(canvasDrawing);
     canvasShape.setStrokeWidth(1);
     canvasShape.setStrokeColor('blue');
     var canvasCreatable = canvasShape.getCreatable();
@@ -139,7 +139,7 @@ function modeCreate(shapeName) {
     }
     canvasDrawing.setModeCreate(canvasCreatable);
     var svgDrawing = getSvgDrawing('svg' + shapeName + 'Create');
-    var svgShape = xrx.shape[shapeName].create(svgDrawing.getCanvas());
+    var svgShape = xrx.shape[shapeName].create(svgDrawing);
     svgShape.setStrokeWidth(1);
     svgShape.setStrokeColor('green');
     var svgCreatable = svgShape.getCreatable();
@@ -153,7 +153,7 @@ function modeCreate(shapeName) {
   }
   /*
   var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
-  var vmlShape = xrx.shape[shapeName].create(vmlDrawing.getCanvas());
+  var vmlShape = xrx.shape[shapeName].create(vmlDrawing);
   vmlShape.setStrokeWidth(1);
   vmlShape.setStrokeColor('red');
   var vmlCreatable = vmlShape.getCreatable();

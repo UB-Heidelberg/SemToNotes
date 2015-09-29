@@ -155,5 +155,5 @@ xrx.viewbox.Viewbox.prototype.resetState_ = function() {
  * @private
  */
 xrx.viewbox.Viewbox.prototype.create_ = function() {
-  this.group_ = xrx.shape.Group.create(this.drawing_.getCanvas());
+  this.group_ = xrx.shape.Group.create(this.drawing_);
 };

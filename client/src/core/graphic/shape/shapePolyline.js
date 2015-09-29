@@ -11,22 +11,21 @@ goog.provide('xrx.shape.PolylineModifiable');
 
 goog.require('goog.array');
 goog.require('xrx.geometry.Path');
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.PathLike');
 
 
 
 /**
  * Classes representing an engine-independent poly-line shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Polyline = function(canvas) {
+xrx.shape.Polyline = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createPolyline(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Path());
 };
-goog.inherits(xrx.shape.Polyline, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
 
 
 
@@ -45,10 +44,14 @@ xrx.shape.Polyline.prototype.draw = function() {
 
 /**
  * Creates a new poly-line shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Polyline.create = function(canvas) {
-  return new xrx.shape.Polyline(canvas);
+xrx.shape.Polyline.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createPolyline(engineCanvas);
+  return new xrx.shape.Polyline(drawing, engineElement);
 };
 
 

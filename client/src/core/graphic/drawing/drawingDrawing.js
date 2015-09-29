@@ -37,14 +37,11 @@ goog.require('xrx.shape.Shapes');
 /**
  * A class representing a drawing canvas. The drawing canvas can have a background
  * image and thereby can serve as an image annotation tool.
- *
  * @param {DOMElement} element The HTML element used to install the canvas.
  * @param {string} opt_engine The name of the rendering engine.
- * @param {boolean} opt_force Whether to force Raphael rendering. For debugging
- *   only.
  * @constructor
  */
-xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
+xrx.drawing.Drawing = function(element, opt_engine) {
 
   goog.base(this);
 
@@ -126,7 +123,7 @@ xrx.drawing.Drawing = function(element, opt_engine, opt_force) {
   this.viewbox_;
 
   // install the canvas
-  this.install_(opt_engine, opt_force);
+  this.install_(opt_engine);
 };
 goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
 
@@ -232,6 +229,18 @@ xrx.drawing.Drawing.prototype.getCreate = function() {
 
 
 
+xrx.drawing.Drawing.prototype.setWidth = function(width) {
+  this.canvas_.setWidth(width);
+};
+
+
+
+xrx.drawing.Drawing.prototype.setHeight = function(height) {
+  this.canvas_.setHeight(height);
+};
+
+
+
 /**
  * Sets a background image to this drawing canvas.
  * @param {string} url The URL of the image.
@@ -263,7 +272,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
 xrx.drawing.Drawing.prototype.draw = function() {
   var self = this;
   var viewbox = this.getViewbox();
-  this[xrx.shape.EventType.SHAPE_BEFORE_DRAW] = function(element) {
+  this.eventBeforeRendering = function(element) {
     // apply the current view-box matrix to the view-box group
     if (element === viewbox.getGroup()) {
       element.setCTM(viewbox.getCTM());
@@ -442,10 +451,9 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
-  this.canvas_ = xrx.shape.Canvas.create(self.element_, this.engine_);
+  this.canvas_ = xrx.shape.Canvas.create(this);
   this.canvas_.setHeight(this.element_.clientHeight);
   this.canvas_.setWidth(this.element_.clientWidth);
-  this.canvas_.setEventHandler(this);
 };
 
 
@@ -504,17 +512,13 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  this.shield_ = xrx.shape.Rect.create(this.canvas_);
+  this.shield_ = xrx.shape.Rect.create(this);
   this.shield_.setX(0);
   this.shield_.setY(0);
   this.shield_.setWidth(this.element_.clientWidth);
   this.shield_.setHeight(this.element_.clientHeight);
   this.shield_.setFillOpacity(0);
   this.shield_.setStrokeWidth(0);
-  // hack for Raphael rendering
-  if (this.shield_.getEngineElement() instanceof xrx.vml.Element) {
-    this.shield_.getEngineElement().getRaphael().id = 'shield';
-  }
   this.canvas_.addChildren(this.shield_);
 };
 
@@ -554,12 +558,12 @@ xrx.drawing.Drawing.prototype.initEngine_ = function(opt_engine) {
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.install_ = function(opt_engine, opt_force) {
+xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
   // initialize the rendering engine
   this.initEngine_(opt_engine);
 
-  if (this.engine_.isAvailable() || opt_force) {
+  if (this.engine_.isAvailable()) {
     // install the drawing canvas
     this.installCanvas_();
 

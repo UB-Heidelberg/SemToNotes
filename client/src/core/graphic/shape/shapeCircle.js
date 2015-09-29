@@ -1,6 +1,6 @@
 /**
  * @fileoverview A class representing an engine-independent
- * creatable, hoverable, modifiable and selectable circle graphic.
+ * creatable, hoverable, modifiable and selectable circle shape.
  */
 
 goog.provide('xrx.shape.Circle');
@@ -11,29 +11,26 @@ goog.provide('xrx.shape.CircleSelectable');
 
 
 
-goog.require('goog.array');
 goog.require('xrx.geometry.Circle');
 goog.require('xrx.shape.Creatable');
+goog.require('xrx.shape.Geometry');
 goog.require('xrx.shape.Hoverable');
 goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Selectable');
-goog.require('xrx.shape.Stylable');
 
 
 
 /**
  * A class representing an engine-independent creatable, hoverable,
- * modifiable and selectable circle graphic.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * modifiable and selectable circle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Circle = function(canvas) {
+xrx.shape.Circle = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createCircle(canvas.getEngineElement()),
-      new xrx.geometry.Circle());
+  goog.base(this, drawing, engineElement, new xrx.geometry.Circle());
 };
-goog.inherits(xrx.shape.Circle, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Circle, xrx.shape.Geometry);
 
 
 
@@ -133,16 +130,6 @@ xrx.shape.Circle.prototype.draw = function() {
 
 
 
-/**
- * Creates a new circle shape.
- * @param {xrx.shape.Canvas} The parent canvas object.
- */
-xrx.shape.Circle.create = function(canvas) {
-  return new xrx.shape.Circle(canvas);
-};
-
-
-
 xrx.shape.Circle.prototype.getHoverable = function() {
   if (!this.hoverable_) this.hoverable_ = xrx.shape.CircleHoverable.create(this);
   return this.hoverable_;
@@ -165,6 +152,20 @@ xrx.shape.Circle.prototype.getSelectable = function() {
 
 xrx.shape.Circle.prototype.setSelectable = function(selectable) {
   this.selectable_ = selectable;
+};
+
+
+
+/**
+ * Creates a new circle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ */
+xrx.shape.Circle.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createCircle(engineCanvas);
+  return new xrx.shape.Circle(drawing, engineElement);
 };
 
 
@@ -293,7 +294,7 @@ xrx.shape.CircleModifiable.create = function(circle) {
  */
 xrx.shape.CircleCreatable = function(circle) {
 
-  goog.base(this, circle, xrx.shape.Circle.create(circle.getCanvas()));
+  goog.base(this, circle, xrx.shape.Circle.create(circle.getDrawing()));
 
   this.point_ = new Array(2);
 };

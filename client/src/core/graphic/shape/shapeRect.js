@@ -12,23 +12,22 @@ goog.provide('xrx.shape.RectModifiable');
 goog.require('goog.array');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.shape.Creatable');
-goog.require('xrx.shape.Stylable');
 goog.require('xrx.shape.Dragger');
+goog.require('xrx.shape.PathLike');
 
 
 
 /**
  * A class representing an engine-independent rectangle shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Rect = function(canvas) {
+xrx.shape.Rect = function(drawing, engineElement) {
 
-  goog.base(this, canvas,
-      canvas.getEngine().createRect(canvas.getEngineElement()),
+  goog.base(this, drawing, engineElement,
       new xrx.geometry.Path(4));
 };
-goog.inherits(xrx.shape.Rect, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Rect, xrx.shape.PathLike);
 
 
 
@@ -134,10 +133,14 @@ xrx.shape.Rect.prototype.draw = function() {
 
 /**
  * Creates a new rectangle shape.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Rect.create = function(canvas) {
-  return new xrx.shape.Rect(canvas);
+xrx.shape.Rect.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createRect(engineCanvas);
+  return new xrx.shape.Rect(drawing, engineElement);
 };
 
 

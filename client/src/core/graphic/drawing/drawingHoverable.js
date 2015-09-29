@@ -45,7 +45,7 @@ goog.inherits(xrx.drawing.Hoverable, xrx.EventTarget);
  */
 xrx.drawing.Hoverable.prototype.pop_ = function() {
   if (this.last_) {
-    this.last_.setStylable(this.stylable_);
+    this.last_.getHoverable().hoverOut();
     this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_OUT,
         this.drawing_, this.last_);
   };
@@ -58,7 +58,7 @@ xrx.drawing.Hoverable.prototype.pop_ = function() {
  */
 xrx.drawing.Hoverable.prototype.push_ = function(shape) {
   if (shape) {
-    this.stylable_.setStylable(shape);
+    shape.getHoverable().hoverIn();
     this.last_ = shape;
     this.dispatchExternal(xrx.drawing.EventType.SHAPE_HOVER_IN,
         this.drawing_, shape);
@@ -86,7 +86,7 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
 
 
 /**
- * Function handles mouse move event.
+ * Function handles mouse move events.
  */
 xrx.drawing.Hoverable.prototype.handleMove = function(e, point, shape) {
   this.hover_(shape);
@@ -95,7 +95,7 @@ xrx.drawing.Hoverable.prototype.handleMove = function(e, point, shape) {
 
 
 /**
- * Function handles mouse out event.
+ * Function handles mouse out events.
  */
 xrx.drawing.Hoverable.prototype.handleOut = function(e) {
   this.pop_();
