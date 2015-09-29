@@ -6,19 +6,20 @@ goog.provide('xrx.vml.Image');
 
 
 
+goog.require('xrx.vml');
 goog.require('xrx.vml.Stylable');
 
 
 
 /**
  * VML class representing an image.
- * @param {Raphael.circle} raphael The Raphael circle object.
+ * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.canvas.Stylable
  */
-xrx.vml.Image = function(raphael) {
+xrx.vml.Image = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 };
 goog.inherits(xrx.vml.Image, xrx.vml.Stylable);
 
@@ -29,8 +30,9 @@ goog.inherits(xrx.vml.Image, xrx.vml.Stylable);
  * @param {Image} image The HTML image element.
  */
 xrx.vml.Image.prototype.setImage = function(image) {
-  this.raphael_.attr({'src': image.src, 'width': image.naturalWidth,
-      'height': image.naturalHeight});
+  this.element_.src = image.src;
+  this.element_['width'] = image.naturalWidth;
+  this.element_['height'] = image.naturalHeight;
 };
 
 
@@ -41,7 +43,7 @@ xrx.vml.Image.prototype.setImage = function(image) {
  *     that image has naturalWidth and naturalHeight attributes.
  */
 xrx.vml.Image.prototype.draw = function(image) {
-  this.setImage(image);
+  if (image !== undefined) this.setImage(image);
 };
 
 
@@ -51,6 +53,12 @@ xrx.vml.Image.prototype.draw = function(image) {
  * @param {Raphael} canvas The parent Raphael object.
  */
 xrx.vml.Image.create = function(canvas) {
-  var raphael = canvas.getRaphael().image('', 0, 0, 0, 0);
-  return new xrx.vml.Image(raphael);
+  var element = goog.dom.htmlToDocumentFragment('<image' +
+      '  xmlns="urn:schemas-microsoft.com:vml" class="xrx-vml" src="about:blank">' +
+      '</image>');
+  element.style['position'] = 'absolute';
+  element.style['display'] = 'inline';
+  element.style['left'] = '0px';
+  element.style['top'] = '0px';
+  return new xrx.vml.Image(element);
 };

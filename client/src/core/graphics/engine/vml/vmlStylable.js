@@ -6,6 +6,7 @@ goog.provide('xrx.vml.Stylable');
 
 
 
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.vml.Element');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Stylable');
@@ -21,6 +22,14 @@ goog.require('xrx.engine.Stylable');
 xrx.vml.Stylable = function(element) {
 
   goog.base(this, element);
+
+  var children = goog.dom.getChildren(element);
+
+  this.fill_ = children[0];
+
+  this.stroke_ = children[1];
+
+  this.skew_ = children[2];
 };
 goog.inherits(xrx.vml.Stylable, xrx.vml.Element);
 
@@ -44,6 +53,7 @@ xrx.vml.Stylable.prototype.strokeAndFill_ = function(fillColor,
  * @param {number} width The stroke width.
  */
 xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
+  this.stroke_['weight'] = '' + width;
 };
 
 
@@ -53,7 +63,7 @@ xrx.vml.Stylable.prototype.setStrokeWidth = function(width) {
  * @param {string} color The stroke color.
  */
 xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
-  this.element_['strokecolor'] = '' + color;
+  this.stroke_['color'] = '' + color;
 };
 
 
@@ -63,7 +73,7 @@ xrx.vml.Stylable.prototype.setStrokeColor = function(color) {
  * @param {string} color The fill color.
  */
 xrx.vml.Stylable.prototype.setFillColor = function(color) {
-  this.element_['fillcolor'] = '' + color;
+  this.fill_['color'] = '' + color;
 };
 
 
@@ -73,4 +83,5 @@ xrx.vml.Stylable.prototype.setFillColor = function(color) {
  * @param {number} factor The fill opacity.
  */
 xrx.vml.Stylable.prototype.setFillOpacity = function(factor) {
+  this.fill_['opacity'] = '' + factor;
 };

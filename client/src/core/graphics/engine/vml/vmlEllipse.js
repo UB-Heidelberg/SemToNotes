@@ -12,26 +12,32 @@ goog.require('xrx.vml.Stylable');
 
 /**
  * VML rendering class representing an ellipse.
- * @param {Raphael.ellipse} raphael The Raphael ellipse object.
+ * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.vml.Stylable
  */
-xrx.vml.Ellipse = function(raphael) {
+xrx.vml.Ellipse = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
+
+  this.rx_;
+
+  this.ry_;
 };
 goog.inherits(xrx.vml.Ellipse, xrx.vml.Stylable);
 
 
 
 /**
- * Sets the centre point of this ellipse.
+ * Sets the center point of this ellipse.
  * @param {number} cx The X coordinate of the centre point.
  * @param {number} cy The Y coordinate of the centre point.
  */
 xrx.vml.Ellipse.prototype.setCenter = function(cx, cy) {
-  if (cx !== undefined) this.raphael_.attr({'cx': cx});
-  if (cy !== undefined) this.raphael_.attr({'cy': cy});
+  var offsetX = cx - this.rx_;
+  var offsetY = cy - this.ry_;
+  if (cx !== undefined) this.element_.style['left'] = offsetX + 'px';
+  if (cy !== undefined) this.element_.style['top'] = offsetY + 'px';
 };
 
 
@@ -41,7 +47,8 @@ xrx.vml.Ellipse.prototype.setCenter = function(cx, cy) {
  * @param {number} rx The radius.
  */
 xrx.vml.Ellipse.prototype.setRadiusX = function(rx) {
-  this.raphael_.attr({'rx': rx});
+  this.rx_ = rx;
+  this.element_.style['width'] = this.rx_ * 2 + 'px';
 };
 
 
@@ -51,7 +58,8 @@ xrx.vml.Ellipse.prototype.setRadiusX = function(rx) {
  * @param {number} ry The radius.
  */
 xrx.vml.Ellipse.prototype.setRadiusY = function(ry) {
-  this.raphael_.attr({'ry': ry});
+  this.ry_ = ry;
+  this.element_.style['height'] = this.ry_ * 2 + 'px';
 };
 
 
@@ -69,9 +77,9 @@ xrx.vml.Ellipse.prototype.setRadiusY = function(ry) {
  */
 xrx.vml.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
     fillOpacity, strokeColor, strokeWidth) {
-  this.setCenter(cx, cy);
   if (rx !== undefined) this.setRadiusX(rx);
   if (ry !== undefined) this.setRadiusY(ry);
+  this.setCenter(cx, cy);
   this.strokeAndFill_(fillColor, fillOpacity, strokeColor, strokeWidth);
 };
 
@@ -82,6 +90,7 @@ xrx.vml.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
  * @param {xrx.vml.Canvas} canvas The parent canvas object.
  */
 xrx.vml.Ellipse.create = function(canvas) {
-  var raphael = canvas.getRaphael().ellipse(0, 0, 0, 0);
-  return new xrx.vml.Ellipse(raphael);
+  var element = xrx.vml.createElement('oval');
+  element.style['position'] = 'absolute';
+  return new xrx.vml.Ellipse(element);
 };

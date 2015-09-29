@@ -8,7 +8,7 @@ goog.provide('xrx.vml.Canvas');
 
 goog.require('goog.dom.DomHelper');
 goog.require('goog.style');
-goog.require('xrx.vml.Raphael');
+goog.require('xrx.vml');
 goog.require('xrx.vml.Container');
 
 
@@ -66,7 +66,7 @@ xrx.vml.Canvas.prototype.getWidth = function() {
  */
 xrx.vml.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
-  goog.style.setSize(this.element_, width, this.height_);
+  //goog.style.setSize(this.element_, width, this.height_);
 };
 
 
@@ -87,8 +87,9 @@ xrx.vml.Canvas.prototype.getHeight = function() {
  */
 xrx.vml.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
-  goog.style.setSize(this.element_, this.width_, height);
+  //goog.style.setSize(this.element_, this.width_, height);
 };
+
 
 
 xrx.vml.Canvas.prototype.startDrawing = function() {
@@ -107,8 +108,23 @@ xrx.vml.Canvas.prototype.finishDrawing = function() {
  *     shall be appended.
  */
 xrx.vml.Canvas.create = function(parent) {
+  xrx.vml.initVmlRendering();
   var element = goog.dom.createElement('div');
-  var canvas = new xrx.vml.Canvas(element);
-  goog.dom.appendChild(parent, canvas.getElement());
+  element.style['display'] = 'inline-block';
+  element.style['position'] = 'relative';
+  element.style['overflow'] = 'hidden';
+  element.style['width'] = '100px';
+  element.style['height'] = '100px';
+  var group = goog.dom.htmlToDocumentFragment('<group' +
+      '  xmlns="urn:schemas-microsoft.com:vml" class="xrx-vml" coordorigin="0,0" coordsize="100,100">' +
+      '</group>');
+  goog.dom.appendChild(element, group);
+  goog.dom.appendChild(parent, element);
+  group.style['position'] = 'absolute';
+  group.style['left'] = '0px';
+  group.style['top'] = '0px';
+  group.style['width'] = '100px';
+  group.style['height'] = '100px';
+  var canvas = new xrx.vml.Canvas(group);
   return canvas;
 };
