@@ -13,13 +13,13 @@ goog.require('xrx.vml.Stylable');
 
 /**
  * VML class representing a polygon.
- * @param {Raphael.path} raphael The Raphael path object.
+ * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.vml.Stylable
  */
-xrx.vml.Polygon = function(raphael) {
+xrx.vml.Polygon = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 };
 goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
 
@@ -30,7 +30,7 @@ goog.inherits(xrx.vml.Polygon, xrx.vml.Stylable);
  * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.vml.Polygon.prototype.setCoords = function(coords) {
-  xrx.vml.setCoords(this.raphael_, coords, true);
+  xrx.vml.setPath(this.element_, coords, true);
 };
 
 
@@ -56,6 +56,11 @@ xrx.vml.Polygon.prototype.draw = function(coords, fillColor,
  * @param {xrx.vml.Canvas} canvas The parent canvas object.
  */
 xrx.vml.Polygon.create = function(canvas) {
-  var raphael = canvas.getRaphael().path('M0 0');
-  return new xrx.vml.Polygon(raphael);
+  var element = xrx.vml.createElement('shape');
+  element.style['position'] = 'absolute';
+  element.style['top'] = '0px';
+  element.style['left'] = '0px';
+  element.style['width'] = '100px';
+  element.style['height'] = '100px';
+  return new xrx.vml.Polygon(element);
 };

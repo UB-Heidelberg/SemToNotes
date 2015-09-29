@@ -13,13 +13,13 @@ goog.require('xrx.vml.Stylable');
 
 /**
  * VML class representing a line.
- * @param {Raphael.path} raphael The Raphael object.
+ * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.vml.Stylable
  */
-xrx.vml.Line = function(raphael) {
+xrx.vml.Line = function(element) {
 
-  goog.base(this, raphael);
+  goog.base(this, element);
 };
 goog.inherits(xrx.vml.Line, xrx.vml.Stylable);
 
@@ -30,7 +30,7 @@ goog.inherits(xrx.vml.Line, xrx.vml.Stylable);
  * @param {Array<Array<number>>} coords The coordinates.
  */
 xrx.vml.Line.prototype.setCoords = function(coords) {
-  xrx.vml.setCoords(this.raphael_, coords, false);
+  xrx.vml.setPath(this.element_, coords, false);
 };
 
 
@@ -56,6 +56,11 @@ xrx.vml.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWidth)
  * @param {xrx.vml.Canvas} canvas The parent canvas object.
  */
 xrx.vml.Line.create = function(canvas) {
-  var raphael = canvas.getRaphael().path('M0 0');
-  return new xrx.vml.Line(raphael);
+  var element = xrx.vml.createElement('shape');
+  element.style['position'] = 'absolute';
+  element.style['top'] = '0px';
+  element.style['left'] = '0px';
+  element.style['width'] = '100px';
+  element.style['height'] = '100px';
+  return new xrx.vml.Line(element);
 };

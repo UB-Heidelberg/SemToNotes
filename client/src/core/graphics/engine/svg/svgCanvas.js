@@ -7,6 +7,7 @@ goog.provide('xrx.svg.Canvas');
 
 
 goog.require('goog.dom.DomHelper');
+goog.require('goog.style');
 goog.require('xrx.svg.Namespace');
 goog.require('xrx.svg.Container');
 
@@ -108,6 +109,7 @@ xrx.svg.Canvas.prototype.finishDrawing = function() {
  */
 xrx.svg.Canvas.create = function(parent) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'svg');
+  goog.style.setStyle(element, 'overflow', 'hidden');
   var canvas = new xrx.svg.Canvas(element);
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;

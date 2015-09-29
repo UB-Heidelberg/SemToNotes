@@ -14,7 +14,7 @@ goog.require('xrx.vml.Stylable');
 
 /**
  * VML class representing a rectangle.
- * @param
+ * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends {xrx.vml.Stylable}
  */
@@ -93,7 +93,7 @@ xrx.vml.Rect.prototype.draw = function(x, y, width, height, fillColor,
  * @param {xrx.vml.Canvas} canvas The parent canvas object.
  */
 xrx.vml.Rect.create = function(canvas) {
-  var element = xrx.vml.createVml('rect');
-  element.style['position'] = 'relative';
+  var element = xrx.vml.createElement('rect');
+  element.style['position'] = 'absolute';
   return new xrx.vml.Rect(element);
 };
