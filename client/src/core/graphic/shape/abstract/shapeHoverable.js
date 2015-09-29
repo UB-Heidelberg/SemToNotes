@@ -23,13 +23,13 @@ goog.inherits(xrx.shape.Hoverable, xrx.shape.Stylable);
 
 
 
-xrx.shape.Hoverable.prototype.hoverIn = function() {
+xrx.shape.Hoverable.prototype.hoverOn = function() {
   this.store_.setStyle(this.shape_);
   this.shape_.setStyle(this);
 };
 
 
 
-xrx.shape.Hoverable.prototype.hoverOut = function() {
+xrx.shape.Hoverable.prototype.hoverOff = function() {
   this.shape_.setStyle(this.store_);
 };

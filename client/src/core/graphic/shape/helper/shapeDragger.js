@@ -12,7 +12,7 @@ goog.require('xrx.shape.Circle');
 
 
 /**
- * A class representing a dragger to modify the size or vertexes
+ * A class representing a dragger to modify the size or the vertexes
  * of a shape.
  * @param {xrx.shape.Modifiable} shape The parent modifiable shape.
  * @param {xrx.engine.Element} engineElement The engine element
@@ -21,7 +21,9 @@ goog.require('xrx.shape.Circle');
  */
 xrx.shape.Dragger = function(modifiable, pos) {
 
-  goog.base(this, modifiable.getShape().getCanvas());
+  var drawing = modifiable.getShape().getDrawing();
+  goog.base(this, drawing,
+      drawing.getEngine().createCircle(drawing.getCanvas().getEngineElement()));
 
   this.modifiable_ = modifiable;
 

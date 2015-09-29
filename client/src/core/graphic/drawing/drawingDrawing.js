@@ -343,23 +343,31 @@ xrx.drawing.Drawing.prototype.setModeView = function() {
 
 /**
  * Switch the drawing canvas over into mode <i>hover</i> to allow hovering
- * shapes.
+ * of shapes.
+ * @param {boolean} opt_multiple Whether to highlight all hovered shapes that
+ *   lie on top of each other or just the most forward. opt_multiple defaults
+ *   to false.
  */
-xrx.drawing.Drawing.prototype.setModeHover = function() {
+xrx.drawing.Drawing.prototype.setModeHover = function(opt_multiple) {
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(false);
   this.getLayerShapeModify().setLocked(true);
   this.getLayerShapeCreate().setLocked(true);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  this.setMode_(xrx.drawing.Mode.HOVER);
+  this.hoverable_.setMultiple(opt_multiple);
+  if (opt_multiple === true) {
+    this.setMode_(xrx.drawing.Mode.HOVERMULTIPLE);
+  } else {
+    this.setMode_(xrx.drawing.Mode.HOVER);
+  }
 };
 
 
 
 /**
  * Switch the drawing canvas over into mode <i>select</i> to allow selecting
- * shapes.
+ * of shapes.
  */
 xrx.drawing.Drawing.prototype.setModeSelect = function() {
   this.getLayerBackground().setLocked(true);
@@ -369,22 +377,6 @@ xrx.drawing.Drawing.prototype.setModeSelect = function() {
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
   this.setMode_(xrx.drawing.Mode.SELECT);
-};
-
-
-
-/**
- * Switch the drawing canvas over into mode <i>delete</i> to allow deletion of shapes.
- * @see xrx.drawing.Mode
- */
-xrx.drawing.Drawing.prototype.setModeDelete = function() {
-  this.getLayerBackground().setLocked(true);
-  this.getLayerShape().setLocked(false);
-  this.getLayerShapeModify().setLocked(true);
-  this.getLayerShapeCreate().setLocked(true);
-  this.getLayerShapeModify().removeShapes();
-  this.getLayerShapeCreate().removeShapes();
-  this.setMode_(xrx.drawing.Mode.DELETE);
 };
 
 
@@ -429,8 +421,8 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
 /**
  * Handles resizing of this drawing canvas. This function is
  * automatically called whenever the size of the browser window
- * changes. It can be also called by an application that changes
- * the size of this drawing canvas during live time.
+ * changes. It can be also called by an application that manually
+ * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
   this.canvas_.setHeight(this.element_.clientHeight);

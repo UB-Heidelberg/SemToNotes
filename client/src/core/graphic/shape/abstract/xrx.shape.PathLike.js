@@ -36,25 +36,6 @@ xrx.shape.PathLike.prototype.getCoords = function(coords) {
 
 
 /**
- * Returns a copy of the shape's coordinate array.
- * @return {Array<Array<number>>} A new coordinate array.
- */
-xrx.shape.PathLike.prototype.getCoordsCopy = function() {
-  var coords = this.getCoords();
-  var len = coords.length;
-  var newCoords = new Array(len);
-  var coord;
-  for (var i = 0; i < len; i++) {
-    newCoords[i] = new Array(2);
-    newCoords[i][0] = coords[i][0];
-    newCoords[i][1] = coords[i][1];
-  }
-  return newCoords;
-};
-
-
-
-/**
  * Updates one coordinate in the list of coordinates.
  * @param {number} pos Index of the coordinate to be updated.
  * @param {Array<number>} coord The new coordinate.

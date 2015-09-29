@@ -36,7 +36,7 @@ xrx.shape.Polyline.prototype.draw = function() {
   this.startDrawing_();
   this.engineElement_.draw(this.getCoords(), this.getFillColor(),
       this.getFillOpacity(), this.getStrokeColor(),
-      this.getStrokeWidth());
+      this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

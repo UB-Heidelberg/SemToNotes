@@ -124,7 +124,7 @@ xrx.shape.Circle.prototype.draw = function() {
   var center = this.getCenter();
   this.engineElement_.draw(center[0], center[1], this.getRadius(),
       this.getFillColor(), this.getFillOpacity(), this.getStrokeColor(),
-      this.getStrokeWidth());
+      this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 
@@ -316,11 +316,13 @@ xrx.shape.CircleCreatable.prototype.getCoords = function() {
  *
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.CircleCreatable.prototype.handleDown = function(e, point) {
+xrx.shape.CircleCreatable.prototype.handleDown = function(e, cursor) {
+  var point = cursor.getPointTransformed();
   this.point_[0] = point[0];
   this.point_[1] = point[1];
   this.preview_.setCenter(point[0], point[1]);
-  this.eventHandler_.eventShapeCreate([this.preview_]);
+  this.preview_.setRadius(0);
+  this.target_.getDrawing().eventShapeCreate([this.preview_]);
 };
 
 
@@ -329,7 +331,8 @@ xrx.shape.CircleCreatable.prototype.handleDown = function(e, point) {
  *
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.CircleCreatable.prototype.handleMove = function(e, point) {
+xrx.shape.CircleCreatable.prototype.handleMove = function(e, cursor) {
+  var point = cursor.getPointTransformed();
   if (this.count_ === 0) return;
   var distX = point[0] - this.point_[0];
   var distY = point[1] - this.point_[1];
@@ -343,15 +346,14 @@ xrx.shape.CircleCreatable.prototype.handleMove = function(e, point) {
  *
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.CircleCreatable.prototype.handleUp = function(e, point) {
-  var circle = xrx.shape.Circle.create(this.target_.getCanvas());
+xrx.shape.CircleCreatable.prototype.handleUp = function(e, cursor) {
+  var point = cursor.getPointTransformed();
+  var circle = xrx.shape.Circle.create(this.target_.getDrawing());
   var center = this.preview_.getCenter();
-  circle.setStylable(this.target_);
+  circle.setStyle(this.target_);
   circle.setCenter(center[0], center[1]);
   circle.setRadius(this.preview_.getRadius());
-  this.eventHandler_.eventShapeCreated(circle);
-  // reset for next drawing
-  this.preview_.setRadius(0);
+  this.target_.getDrawing().eventShapeCreated(circle);
 };
 
 

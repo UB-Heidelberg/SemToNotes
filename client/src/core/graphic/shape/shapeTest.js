@@ -39,6 +39,8 @@ function createTables(shapeName, $) {
     createTable(shapeName, $, 'View'),
     // mode hover
     createTable(shapeName, $, 'Hover'),
+    // mode hover multiple
+    createTable(shapeName, $, 'HoverMultiple'),
     // mode select
     createTable(shapeName, $, 'Select'),
     // mode modify
@@ -108,6 +110,25 @@ function modeView(shapeName) {
 
 function modeHover(shapeName) {
   modeMode(shapeName, 'Hover');
+};
+
+
+
+function modeHoverMultiple(shapeName) {
+  var mode = 'HoverMultiple';
+  if (!xrx.engine.isOldIE()) {
+    var canvasDrawing = getCanvasDrawing('canvas' + shapeName + mode);
+    canvasDrawing.setModeHover(true);
+    canvasDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](canvasDrawing));
+    var svgDrawing = getSvgDrawing('svg' + shapeName + mode);
+    svgDrawing.setModeHover(true);
+    svgDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](svgDrawing));
+  }
+  /*
+  var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
+  vmlDrawing.setModeHover(true);
+  vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
+  */
 };
 
 

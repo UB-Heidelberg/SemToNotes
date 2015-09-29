@@ -139,7 +139,7 @@ xrx.shape.Line.prototype.setCoords = function(coords) {
 xrx.shape.Line.prototype.draw = function() {
   this.startDrawing_();
   this.engineElement_.draw(this.geometry_.x1, this.geometry_.y1, this.geometry_.x2,
-      this.geometry_.y2, this.getStrokeColor(), this.getStrokeWidth());
+      this.geometry_.y2, this.getStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

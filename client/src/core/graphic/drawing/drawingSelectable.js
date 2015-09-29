@@ -1,5 +1,6 @@
 /**
- * @fileoverview A class representing a selectable shape.
+ * @fileoverview A class representing a pointer to the shape
+ * currently selected by the user.
  */
 
 goog.provide('xrx.drawing.Selectable');
@@ -17,16 +18,19 @@ xrx.drawing.Selectable = function(drawing) {
    * @type {xrx.drawing.Drawing}
    */
   this.drawing_ = drawing;
+
+  this.last_;
 };
 
 
 
 /**
- * Handles click events for this selectable shape.
+ * Handles down events for this selectable shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.drawing.Selectable.prototype.handleClick = function(e) {
-  var mousePoint = this.drawing_.getEventPoint(e);
-  var shape = this.drawing_.getShapeSelected(mousePoint);
-  if (shape && shape.handleSelected) shape.handleSelected();
+xrx.drawing.Selectable.prototype.handleDown = function(e, cursor) {
+  var shape = cursor.getShape();
+  if (this.last_) this.last_.getSelectable().selectOff();
+  shape.getSelectable().selectOn();
+  this.last_ = shape;
 };

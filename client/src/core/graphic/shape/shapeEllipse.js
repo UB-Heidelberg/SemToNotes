@@ -119,7 +119,7 @@ xrx.shape.Ellipse.prototype.draw = function() {
   var center = this.getCenter();
   this.engineElement_.draw(center[0], center[1], this.getRadiusX(),
       this.getRadiusY(), this.getFillColor(), this.getFillOpacity(),
-      this.getStrokeColor(), this.getStrokeWidth());
+      this.getStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

@@ -40,7 +40,8 @@ xrx.drawing.Mode = {
   CREATE: 4,
   DISABLED: 5,
   SELECT: 6,
-  HOVER: 7
+  HOVER: 7,
+  HOVERMULTIPLE: 8
 };
 
 

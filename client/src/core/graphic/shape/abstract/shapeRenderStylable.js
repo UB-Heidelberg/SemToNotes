@@ -55,7 +55,7 @@ xrx.shape.RenderStylable.prototype.setZoomFactor = function(factor) {
  * Returns the stroke width of this shape.
  * @return {number} The stroke width.
  */
-xrx.shape.RenderStylable.prototype.getStrokeWidth = function() {
+xrx.shape.RenderStylable.prototype.getRenderingStrokeWidth = function() {
   return this.stroke_.width / this.zoomFactor_;
 };
 

@@ -40,9 +40,10 @@ xrx.drawing.Modifiable.Mode = {
 
 
 
-xrx.drawing.Modifiable.prototype.handleDown = function(e, point, shape) {
+xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
   var modifiable;
-  this.origin_ = point;
+  var shape = cursor.getShape();
+  this.origin_ = cursor.getPointTransformed();
   if (shape && shape.isModifiable()) {
     this.state_ = xrx.drawing.State.DRAG;
     if (shape instanceof xrx.shape.Dragger) {
@@ -62,13 +63,14 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, point, shape) {
 
 
 
-xrx.drawing.Modifiable.prototype.handleHover_ = function(e, point, shape) {
+xrx.drawing.Modifiable.prototype.handleHover_ = function(e, cursor) {
   console.log('TODO');
 };
 
 
 
-xrx.drawing.Modifiable.prototype.handleDragShape_ = function(e, point, shape) {
+xrx.drawing.Modifiable.prototype.handleDragShape_ = function(e, cursor) {
+  var point = cursor.getPointTransformed();
   var distX = point[0] - this.origin_[0];
   var distY = point[1] - this.origin_[1];
   this.shape_.getModifiable().move(distX, distY);
@@ -77,13 +79,14 @@ xrx.drawing.Modifiable.prototype.handleDragShape_ = function(e, point, shape) {
 
 
 
-xrx.drawing.Modifiable.prototype.handleMove = function(e, point, shape) {
+xrx.drawing.Modifiable.prototype.handleMove = function(e, cursor) {
+  var point = cursor.getPointTransformed();
   if (this.mode_ === xrx.drawing.Modifiable.Mode.SHAPEHOVER) {
-    this.handleHover_(e, point, shape);
+    this.handleHover_(e, cursor);
   } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGDRAGGER) {
     this.dragger_.setCoord(point);
   } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGSHAPE) {
-    this.handleDragShape_(e, point, shape);
+    this.handleDragShape_(e, cursor);
   } else {
     return;
   }

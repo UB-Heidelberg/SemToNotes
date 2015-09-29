@@ -43,7 +43,7 @@ goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
 xrx.shape.Polygon.prototype.draw = function() {
   this.startDrawing_();
   this.engineElement_.draw(this.getCoords(), this.getFillColor(),
-      this.getFillOpacity(), this.getStrokeColor(), this.getStrokeWidth());
+      this.getFillOpacity(), this.getStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

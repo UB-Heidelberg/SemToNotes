@@ -29,22 +29,36 @@ function getCircles(drawing) {
   hoverableStyle.setFillOpacity(.2);
   hoverableStyle.setStrokeColor('green');
   hoverableStyle.setStrokeWidth(2);
+  var selectableStyle = new xrx.shape.Selectable();
+  selectableStyle.setFillColor('grey');
+  selectableStyle.setFillOpacity(.2);
+  selectableStyle.setStrokeColor('yellow');
+  selectableStyle.setStrokeWidth(2);
   var circle1 = xrx.shape.Circle.create(drawing);
   var circle2 = xrx.shape.Circle.create(drawing);
   var circle3 = xrx.shape.Circle.create(drawing);
+  var circle4 = xrx.shape.Circle.create(drawing);
   circle1.setCenter(20, 20);
   circle1.setRadius(50);
   circle1.setStrokeWidth(2);
   circle1.getHoverable().setStyle(hoverableStyle);
+  circle1.getSelectable().setStyle(selectableStyle);
   circle2.setCenter(200, 200);
   circle2.setRadius(10);
   circle2.setStrokeWidth(2);
   circle2.getHoverable().setStyle(hoverableStyle);
+  circle2.getSelectable().setStyle(selectableStyle);
   circle3.setCenter(100, 300);
   circle3.setRadius(100);
   circle3.setStrokeWidth(2);
   circle3.getHoverable().setStyle(hoverableStyle);
-  return [circle1, circle2, circle3];
+  circle3.getSelectable().setStyle(selectableStyle);
+  circle4.setCenter(100, 330);
+  circle4.setRadius(40);
+  circle4.setStrokeWidth(2);
+  circle4.getHoverable().setStyle(hoverableStyle);
+  circle4.getSelectable().setStyle(selectableStyle);
+  return [circle1, circle2, circle3, circle4];
 };
 
 
@@ -61,19 +75,25 @@ function test2Hover() {
 
 
 
-function test3Select() {
+function test3HoverMultiple() {
+  modeHoverMultiple('Circle');
+};
+
+
+
+function test4Select() {
   modeSelect('Circle');
 };
 
 
 
-function test4Modify() {
+function test5Modify() {
   modeModify('Circle');
 };
 
 
 
-function test5Create() {
+function test6Create() {
   modeCreate('Circle');
 };
 

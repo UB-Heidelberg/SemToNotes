@@ -32,7 +32,7 @@ xrx.viewbox.Viewbox = function(drawing) {
    * The group where matrix transformations are applied to.
    * {xrx.shape.Group}
    */
-  this.group_;
+  this.group_ = xrx.shape.Group.create(this.drawing_);
 
   /**
    * The state of the drawing canvas, either DRAG or NONE.
@@ -46,8 +46,6 @@ xrx.viewbox.Viewbox = function(drawing) {
    * @type {Array<number>}
    */
   this.origin_;
-
-  this.create_();
 };
 goog.inherits(xrx.viewbox.Viewbox, xrx.viewbox.ViewboxTransform);
 
@@ -77,8 +75,8 @@ xrx.viewbox.Viewbox.prototype.getGroup = function() {
  * Handles double-click events for the view-box.
  * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, offsetPoint) {
-  this.rotateRight(offsetPoint);
+xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, cursor) {
+  this.rotateRight(cursor.getPointTransformed());
 };
 
 
@@ -88,8 +86,8 @@ xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, offsetPoint) {
  * @param {goog.events.BrowserEvent} e The browser event.
  * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleDown = function(e, offsetPoint) {
-  this.origin_ = offsetPoint;
+xrx.viewbox.Viewbox.prototype.handleDown = function(e, cursor) {
+  this.origin_ = cursor.getPoint();
   this.state_ = xrx.drawing.State.DRAG;
 };
 
@@ -100,12 +98,12 @@ xrx.viewbox.Viewbox.prototype.handleDown = function(e, offsetPoint) {
  * @param {goog.events.BrowserEvent} e The browser event.
  * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleMove = function(e, offsetPoint) {
+xrx.viewbox.Viewbox.prototype.handleMove = function(e, cursor) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
-  var distX = offsetPoint[0] - this.origin_[0];
-  var distY = offsetPoint[1] - this.origin_[1];
+  var distX = cursor.getPoint()[0] - this.origin_[0];
+  var distY = cursor.getPoint()[1] - this.origin_[1];
   this.translate(distX, distY);
-  this.origin_ = offsetPoint;
+  this.origin_ = cursor.getPoint();
 };
 
 
@@ -134,9 +132,9 @@ xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
  * Handles mouse-wheel events for the view-box.
  * @param {Array<number>} offsetPoint The offset point.
  */
-xrx.viewbox.Viewbox.prototype.handleWheel = function(e, offsetPoint) {
-  e.deltaY < 0 ? this.zoomIn(offsetPoint) :
-      this.zoomOut(offsetPoint);
+xrx.viewbox.Viewbox.prototype.handleWheel = function(e, cursor) {
+  e.deltaY < 0 ? this.zoomIn(cursor.getPointTransformed()) :
+      this.zoomOut(cursor.getPointTransformed());
 };
 
 
@@ -147,13 +145,4 @@ xrx.viewbox.Viewbox.prototype.handleWheel = function(e, offsetPoint) {
 xrx.viewbox.Viewbox.prototype.resetState_ = function() {
   this.state_ = xrx.drawing.State.NONE;
   this.origin_ = null;
-};
-
-
-
-/**
- * @private
- */
-xrx.viewbox.Viewbox.prototype.create_ = function() {
-  this.group_ = xrx.shape.Group.create(this.drawing_);
 };

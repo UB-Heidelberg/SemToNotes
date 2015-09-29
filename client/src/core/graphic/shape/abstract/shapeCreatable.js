@@ -12,8 +12,6 @@ xrx.shape.Creatable = function(target, preview) {
   this.target_ = target;
 
   this.preview_ = preview;
-
-  this.eventHandler_;
 };
 
 

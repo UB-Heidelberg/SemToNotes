@@ -108,3 +108,31 @@ xrx.drawing.EventHandler.prototype.getShapeSelected = function(point) {
   }
   return found ? shape : undefined;
 };
+
+
+
+/**
+ * Returns the shapes currently selected or hovered by the user.
+ * @return {Array<xrx.shape.Shape>} The shapes.
+ */
+xrx.drawing.EventHandler.prototype.getShapesSelected = function(point) {
+  var layer;
+  var shapes;
+  var shape;
+  var coords;
+  var coord;
+  var found = [];
+  for (var i = this.layer_.length - 1; i >= 0; i--) {
+    layer = this.layer_[i];
+    if (!layer.isLocked()) {
+      shapes = layer.getShapes() || [];
+      for (var j = shapes.length - 1; j >= 0; j--) {
+        shape = shapes[j];
+        if (shape.getGeometry().containsPoint(point)) {
+          found.push(shape);
+        }
+      }
+    }
+  }
+  return found;
+};

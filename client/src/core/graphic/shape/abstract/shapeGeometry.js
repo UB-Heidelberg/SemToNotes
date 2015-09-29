@@ -64,3 +64,22 @@ xrx.shape.Geometry.prototype.getGeometry = function() {
 xrx.shape.Geometry.prototype.setCTM = function(matrix) {
   this.ctm_ = matrix;
 };
+
+
+
+/**
+ * Returns a copy of the shape's coordinate array.
+ * @return {Array<Array<number>>} A new coordinate array.
+ */
+xrx.shape.Geometry.prototype.getCoordsCopy = function() {
+  var coords = this.getCoords();
+  var len = coords.length;
+  var newCoords = new Array(len);
+  var coord;
+  for (var i = 0; i < len; i++) {
+    newCoords[i] = new Array(2);
+    newCoords[i][0] = coords[i][0];
+    newCoords[i][1] = coords[i][1];
+  }
+  return newCoords;
+};
