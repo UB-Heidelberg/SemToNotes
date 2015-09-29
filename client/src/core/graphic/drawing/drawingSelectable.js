@@ -31,6 +31,10 @@ xrx.drawing.Selectable = function(drawing) {
 xrx.drawing.Selectable.prototype.handleDown = function(e, cursor) {
   var shape = cursor.getShape();
   if (this.last_) this.last_.getSelectable().selectOff();
-  shape.getSelectable().selectOn();
-  this.last_ = shape;
+  if (shape) {
+    shape.getSelectable().selectOn();
+    this.last_ = shape;
+  } else {
+    this.last_ = null;
+  }
 };
