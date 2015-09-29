@@ -83,6 +83,14 @@ border: solid grey 1px;
 
 
 
+var style = new xrx.graphic.Style();
+style.setFillColor('green');
+style.setFillOpacity(.5);
+style.setStrokeColor('red');
+style.setStrokeWidth(2);
+
+
+
 function getCanvasCanvas(id) {
   var divCanvas = goog.dom.getElement(id);
   var engine = new xrx.engine.Engine(xrx.engine.CANVAS);
@@ -116,20 +124,11 @@ function getCanvasVml(id) {
 
 
 
-function makeStyle(shape) {
-  shape.setStrokeColor('red');
-  shape.setStrokeWidth(2);
-  shape.setFillColor('green');
-  shape.setFillOpacity(.5);
-};
-
-
-
 function getCircle(canvas) {
   var circle = xrx.shape.Circle.create(canvas);
   circle.setCenter(50, 50);
   circle.setRadius(30);
-  makeStyle(circle);
+  circle.setStyle(style);
   return circle;
 };
 
@@ -140,7 +139,7 @@ function getEllipse(canvas) {
   ellipse.setCenter(50, 50);
   ellipse.setRadiusX(10);
   ellipse.setRadiusY(40);
-  makeStyle(ellipse);
+  ellipse.setStyle(style);
   return ellipse;
 };
 
@@ -160,8 +159,7 @@ function getLine(canvas) {
   line.setY1(10);
   line.setX2(90);
   line.setY2(90);
-  line.setStrokeColor('red');
-  line.setStrokeWidth(4);
+  line.setStyle(style);
   return line;
 };
 
@@ -174,7 +172,7 @@ function getPolygon(canvas) {
   coords[2] = [0,60];
   var polygon = xrx.shape.Polygon.create(canvas);
   polygon.setCoords(coords);
-  makeStyle(polygon);
+  polygon.setStyle(style);
   return polygon;
 };
 
@@ -188,8 +186,7 @@ function getPolyline(canvas) {
   coords[3] = [30,40];
   var polyline = xrx.shape.Polyline.create(canvas);
   polyline.setCoords(coords);
-  polyline.setStrokeColor('red');
-  polyline.setStrokeWidth(4);
+  polyline.setStyle(style);
   return polyline;
 };
 
@@ -201,7 +198,7 @@ function getRect(canvas) {
   rect.setY(10);
   rect.setWidth(10);
   rect.setHeight(10);
-  makeStyle(rect);
+  rect.setStyle(style);
   return rect;
 };
 
@@ -234,10 +231,12 @@ function test1Shapes() {
       svgCanvas.draw();
     }
     // VML
+    /*
     var vmlCanvas = getCanvasVml('vml' + shape);
     var vmlShape = this['get' + shape](vmlCanvas);
     vmlCanvas.addChildren(vmlShape);
     vmlCanvas.draw();
+    */
   }
 };
 

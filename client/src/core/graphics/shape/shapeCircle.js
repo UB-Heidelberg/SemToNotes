@@ -14,7 +14,9 @@ goog.provide('xrx.shape.CircleSelectable');
 goog.require('goog.array');
 goog.require('xrx.geometry.Circle');
 goog.require('xrx.shape.Creatable');
+goog.require('xrx.shape.Hoverable');
 goog.require('xrx.shape.Modifiable');
+goog.require('xrx.shape.Selectable');
 goog.require('xrx.shape.Stylable');
 
 
@@ -197,6 +199,42 @@ xrx.shape.Circle.prototype.getCreatable = function() {
 
 xrx.shape.Circle.prototype.setCreatable = function(creatable) {
   this.creatable_ = creatable;
+};
+
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.CircleHoverable = function(circle) {
+
+  goog.base(this, circle);
+};
+goog.inherits(xrx.shape.CircleHoverable, xrx.shape.Hoverable);
+
+
+
+xrx.shape.CircleHoverable.create = function(circle) {
+  return new xrx.shape.CircleHoverable(circle);
+};
+
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.CircleSelectable = function(circle) {
+
+  goog.base(this, circle);
+};
+goog.inherits(xrx.shape.CircleSelectable, xrx.shape.Selectable);
+
+
+
+xrx.shape.CircleSelectable.create = function(circle) {
+  return new xrx.shape.CircleSelectable(circle);
 };
 
 

@@ -8,7 +8,6 @@ goog.provide('xrx.canvas.Stylable');
 
 goog.require('xrx.canvas.Element');
 goog.require('xrx.engine');
-goog.require('xrx.engine.Stylable');
 
 
 

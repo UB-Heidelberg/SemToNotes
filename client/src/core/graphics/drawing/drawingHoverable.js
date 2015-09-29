@@ -1,5 +1,6 @@
 /**
- * @fileoverview A class representing a hoverable shape.
+ * @fileoverview A class representing a pointer to the shape
+ * currently hovered by the user.
  */
 
 goog.provide('xrx.drawing.Hoverable');
@@ -8,13 +9,13 @@ goog.provide('xrx.drawing.Hoverable');
 
 goog.require('xrx.drawing.EventType');
 goog.require('xrx.engine');
-goog.require('xrx.engine.Stylable');
 goog.require('xrx.EventTarget');
 
 
 
 /**
- * A class representing a hoverable shape.
+ * A class representing a pointer to the shape currently hovered by
+ * the user.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
@@ -23,23 +24,17 @@ xrx.drawing.Hoverable = function(drawing) {
   goog.base(this);
 
   /**
-   * The drawing canvas.
+   * The parent drawing canvas.
+   * @type {xrx.drawing.Drawing}
    */
   this.drawing_ = drawing;
 
   /**
    * Reference to the last shape hovered.
-   * @type {?}
+   * @type {xrx.shape.Shape}
    * @private
    */
   this.last_ = null;
-
-  /**
-   * The style of the lastly hovered shape.
-   * @type {xrx.engine.Stylable}
-   * @private
-   */
-  this.stylable_ = new xrx.engine.Stylable();
 };
 goog.inherits(xrx.drawing.Hoverable, xrx.EventTarget);
 
@@ -93,9 +88,7 @@ xrx.drawing.Hoverable.prototype.hover_ = function(shape) {
 /**
  * Function handles mouse move event.
  */
-xrx.drawing.Hoverable.prototype.handleMove = function(e) {
-  var mousePoint = this.drawing_.getEventPoint(e);
-  var shape = this.drawing_.getShapeSelected(mousePoint);
+xrx.drawing.Hoverable.prototype.handleMove = function(e, point, shape) {
   this.hover_(shape);
 };
 

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Graphic base class.
+ * @fileoverview Graphic module.
  */
 
 goog.provide('xrx.graphic');

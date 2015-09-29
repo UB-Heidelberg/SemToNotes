@@ -8,7 +8,6 @@ goog.provide('xrx.svg.Stylable');
 
 goog.require('xrx.svg.Element');
 goog.require('xrx.engine');
-goog.require('xrx.engine.Stylable');
 
 
 

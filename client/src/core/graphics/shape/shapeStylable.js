@@ -6,6 +6,8 @@ goog.provide('xrx.shape.Stylable');
 
 
 
+goog.require('xrx.graphic');
+goog.require('xrx.graphic.Style');
 goog.require('xrx.shape.Shape');
 
 
@@ -30,20 +32,9 @@ xrx.shape.Stylable = function(canvas, engineElement, geometry) {
   this.zoomFactor_ = 1;
 
   /**
-   * Object describing the stroke style.
+   * Object describing the style of this shape.
    */
-  this.stroke_ = {
-    color: 'black',
-    width: 3
-  };
-
-  /**
-   * Object describing the fill style.
-   */
-  this.fill_ = {
-    color: '',
-    opacity: 0
-  };
+  this.style_ = new xrx.graphic.Style();
 
   /**
    * Object describing the geometry of this stylable element.
@@ -145,14 +136,11 @@ xrx.shape.Stylable.prototype.appendCoord = function(coord) {
 
 
 /**
- * Sets all stylable parameters at once from another stylable object.
- * @param {xrx.shape.Stylable} stylable 
+ * Sets the style for this shape.
+ * @param {xrx.graphic.Style} style 
  */
-xrx.shape.Stylable.prototype.setStylable = function(stylable) {
-  this.stroke_.color = stylable.getStrokeColor();
-  this.stroke_.width = stylable.getStrokeWidth();
-  this.fill_.color = stylable.getFillColor();
-  this.fill_.opacity = stylable.getFillOpacity();
+xrx.shape.Stylable.prototype.setStyle = function(style) {
+  this.style_ = style;
 };
 
 
@@ -162,7 +150,7 @@ xrx.shape.Stylable.prototype.setStylable = function(stylable) {
  * @return {number} The stroke width.
  */
 xrx.shape.Stylable.prototype.getStrokeWidth = function() {
-  return this.stroke_.width / this.zoomFactor_;
+  return this.style_.getStrokeWidth() / this.zoomFactor_;
 };
 
 
@@ -182,7 +170,7 @@ xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
  * @return {string} The stroke color.
  */
 xrx.shape.Stylable.prototype.getStrokeColor = function() {
-  return this.stroke_.color;
+  return this.style_.getStrokeColor();
 };
 
 
@@ -202,7 +190,7 @@ xrx.shape.Stylable.prototype.setStrokeColor = function(color) {
  * @return {string} The fill color.
  */
 xrx.shape.Stylable.prototype.getFillColor = function() {
-  return this.fill_.color;
+  return this.style_.getFillColor();
 };
 
 
@@ -222,7 +210,7 @@ xrx.shape.Stylable.prototype.setFillColor = function(color) {
  * @return {number} The fill opacity.
  */
 xrx.shape.Stylable.prototype.getFillOpacity = function() {
-  return this.fill_.opacity;
+  return this.style_.getFillOpacity();
 };
 
 

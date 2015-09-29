@@ -8,7 +8,6 @@ goog.provide('xrx.vml.Stylable');
 
 goog.require('xrx.vml.Element');
 goog.require('xrx.engine');
-goog.require('xrx.engine.Stylable');
 
 
 

@@ -211,7 +211,6 @@ xrx.event.HandlerTarget.prototype.disposeInternal = function() {
     this.handler_.dispose();
     this.handler_ = null;
   }
-  goog.base(this, 'disposeInternal');
 };
 
 
