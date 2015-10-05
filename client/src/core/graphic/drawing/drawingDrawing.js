@@ -267,6 +267,16 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
 
 
 /**
+ * Adds one or more shapes to this drawing canvas.
+ * @param {Array<xrx.shape.Shape>|xrx.shape.Shape} shapes The shape(s).
+ */
+xrx.drawing.Drawing.prototype.addShapes = function(shapes) {
+  this.layer_[1].addShapes(shapes);
+};
+
+
+
+/**
  * Draws this canvas and all its layers, tools and shapes contained.
  */
 xrx.drawing.Drawing.prototype.draw = function() {

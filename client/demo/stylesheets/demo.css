@@ -1,31 +1,19 @@
 
-.xrx-canvas {
-width: 100%;
-height: 500px;
+#content {
+margin-top: 80px;
+margin-bottom: 80px;
 }
 
-.toolbar {
-position: absolute;
+#drawing {
+width:100%;
+height:500px;
+border:solid grey 1px;
 }
 
-.toolbar-item {
-border-bottom: solid white 4px;
+.col-md-3, .eq-height {
+min-height: 300px;
 }
 
-.toolbar-item:hover {
-border-bottom: solid grey 4px;
-}
-
-.toolbar-item-selected {
-border-bottom: solid red 4px;
-}
-
-.shape {
-border-color: #47D1FF;
-}
-
-.xrx-canvas-error {
-position: absolute;
-right: 0px;
-color: red;
+.jumbotron-separator {
+background-color: #ccc !important;
 }

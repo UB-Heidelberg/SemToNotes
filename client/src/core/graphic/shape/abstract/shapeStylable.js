@@ -99,6 +99,7 @@ xrx.shape.Stylable.prototype.getFillColor = function() {
  * @param {string} color The fill color.
  */
 xrx.shape.Stylable.prototype.setFillColor = function(color) {
+  if (this.fill_.opacity === 0) this.fill_.opacity = 1;
   if (color !== undefined) this.fill_.color = color;
 };
 
