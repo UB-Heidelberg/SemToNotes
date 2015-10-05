@@ -64,7 +64,7 @@ xrx.shape.Shape.prototype.getHoverable = goog.abstractMethod;
 
 
 
-xrx.shape.Shape.prototype.setHoverable = goog.abstractMethod;
+xrx.shape.Shape.prototype.setHoverable =  goog.abstractMethod;
 
 
 
@@ -72,7 +72,7 @@ xrx.shape.Shape.prototype.getSelectable = goog.abstractMethod;
 
 
 
-xrx.shape.Shape.prototype.setSelectable = goog.abstractMethod;
+xrx.shape.Shape.prototype.setSelectable =  goog.abstractMethod;
 
 
 

@@ -41,7 +41,7 @@ xrx.drawing.EventHandler.prototype.eventShapeCreated = function(shape) {
   this.getLayerShape().addShapes(shape);
   this.getLayerShapeCreate().removeShapes();
   this.draw();
-  //if (this.drawing_.handleCreated) this.drawing_.handleCreated();
+  //if (this.drawing_.handleCreated) this.draw ing_.handleCreated();
 };
 
 

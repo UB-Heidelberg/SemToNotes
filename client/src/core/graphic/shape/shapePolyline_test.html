@@ -23,18 +23,30 @@ createTables('Polyline', goog.dom);
 
 
 function getPolylines(drawing) {
-  var coords1 = [[12,12], [25,15], [100,60], [60,90], [50,50]];
+  var hoverableStyle = new xrx.shape.Stylable();
+  hoverableStyle.setStrokeColor('green');
+  hoverableStyle.setStrokeWidth(2);
+  var selectableStyle = new xrx.shape.Selectable();
+  selectableStyle.setStrokeColor('yellow');
+  selectableStyle.setStrokeWidth(2);
+  var coords1 = [[12,12], [25,15], [100,60], [60,90], [500,500]];
   var coords2 = [[112,112], [125,115], [400,160], [160,190], [150,150]];
   var coords3 = [[112,312], [125,315], [200,360], [160,390], [150,350]];
-  var polyline1 = xrx.shape.Polyline.create(drawing.getCanvas());
-  var polyline2 = xrx.shape.Polyline.create(drawing.getCanvas());
-  var polyline3 = xrx.shape.Polyline.create(drawing.getCanvas());
+  var polyline1 = xrx.shape.Polyline.create(drawing);
+  var polyline2 = xrx.shape.Polyline.create(drawing);
+  var polyline3 = xrx.shape.Polyline.create(drawing);
   polyline1.setCoords(coords1);
   polyline1.setStrokeWidth(1);
+  polyline1.getHoverable().setStyle(hoverableStyle);
+  polyline1.getSelectable().setStyle(selectableStyle);
   polyline2.setCoords(coords2);
   polyline2.setStrokeWidth(1);
+  polyline2.getHoverable().setStyle(hoverableStyle);
+  polyline2.getSelectable().setStyle(selectableStyle);
   polyline3.setCoords(coords3);
   polyline3.setStrokeWidth(1);
+  polyline3.getHoverable().setStyle(hoverableStyle);
+  polyline3.getSelectable().setStyle(selectableStyle);
   return [polyline1, polyline2, polyline3];
 };
 
@@ -46,13 +58,31 @@ function test1View() {
 
 
 
-function test2Modify() {
+function test2Hover() {
+  modeHover('Polyline');
+};
+
+
+
+function test3HoverMultiple() {
+  modeHoverMultiple('Polyline');
+};
+
+
+
+function test4Select() {
+  modeSelect('Polyline');
+};
+
+
+
+function test5Modify() {
   modeModify('Polyline');
 };
 
 
 
-function test3Create() {
+function test6Create() {
   modeCreate('Polyline');
 };
 

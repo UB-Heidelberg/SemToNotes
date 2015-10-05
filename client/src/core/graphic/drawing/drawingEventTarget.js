@@ -258,6 +258,7 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
   case xrx.drawing.Mode.CREATE:
     this.cursor_.needPoint();
     this.cursor_.needPointTransformed();
+    this.cursor_.needShape();
     this.registerDown(this.create_);
     this.registerMove(this.create_);
     this.registerUp(this.create_);

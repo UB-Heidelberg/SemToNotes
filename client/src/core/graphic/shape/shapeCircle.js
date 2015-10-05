@@ -1,6 +1,6 @@
 /**
  * @fileoverview A class representing an engine-independent
- * creatable, hoverable, modifiable and selectable circle shape.
+ * hoverable, selectable, modifiable and creatable circle shape.
  */
 
 goog.provide('xrx.shape.Circle');
@@ -117,7 +117,7 @@ xrx.shape.Circle.prototype.setCoordY = function(y) {
 
 
 /**
- * Draws this circle.
+ * Draws this circle shape.
  */
 xrx.shape.Circle.prototype.draw = function() {
   this.startDrawing_();
@@ -138,6 +138,8 @@ xrx.shape.Circle.prototype.getHoverable = function() {
 
 
 xrx.shape.Circle.prototype.setHoverable = function(hoverable) {
+  if (!hoverable instanceof xrx.shape.CircleHoverable)
+      throw Error('Instance of xrx.shape.CircleHoverable expected.');
   this.hoverable_ = hoverable;
 };
 
@@ -151,21 +153,9 @@ xrx.shape.Circle.prototype.getSelectable = function() {
 
 
 xrx.shape.Circle.prototype.setSelectable = function(selectable) {
+  if (!selectable instanceof xrx.shape.CircleSelectable)
+      throw Error('Instance of xrx.shape.CircleSelectable expected.');
   this.selectable_ = selectable;
-};
-
-
-
-/**
- * Creates a new circle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Circle.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createCircle(engineCanvas);
-  return new xrx.shape.Circle(drawing, engineElement);
 };
 
 
@@ -182,6 +172,8 @@ xrx.shape.Circle.prototype.getModifiable = function() {
 
 
 xrx.shape.Circle.prototype.setModifiable = function(modifiable) {
+  if (!modifiable instanceof xrx.shape.CircleModifiable)
+      throw Error('Instance of xrx.shape.CircleModifiable expected.');
   this.modifiable_ = modifiable;
 };
 
@@ -199,9 +191,24 @@ xrx.shape.Circle.prototype.getCreatable = function() {
 
 
 xrx.shape.Circle.prototype.setCreatable = function(creatable) {
+  if (!creatable instanceof xrx.shape.CircleCreatable)
+      throw Error('Instance of xrx.shape.CircleCreatable expected.');
   this.creatable_ = creatable;
 };
 
+
+
+/**
+ * Creates a new circle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ */
+xrx.shape.Circle.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createCircle(engineCanvas);
+  return new xrx.shape.Circle(drawing, engineElement);
+};
 
 
 
@@ -243,9 +250,9 @@ xrx.shape.CircleSelectable.create = function(circle) {
 /**
  * @constructor
  */
-xrx.shape.CircleModifiable = function(circle, dragger) {
+xrx.shape.CircleModifiable = function(circle) {
 
-  goog.base(this, circle, dragger);
+  goog.base(this, circle);
 };
 goog.inherits(xrx.shape.CircleModifiable, xrx.shape.Modifiable);
 

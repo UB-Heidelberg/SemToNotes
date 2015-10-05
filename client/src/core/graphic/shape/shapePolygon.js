@@ -4,22 +4,22 @@
  */
 
 goog.provide('xrx.shape.Polygon');
-goog.provide('xrx.shape.PolygonModifiable');
 goog.provide('xrx.shape.PolygonCreatable');
+goog.provide('xrx.shape.PolygonHoverable');
+goog.provide('xrx.shape.PolygonModifiable');
+goog.provide('xrx.shape.PolygonSelectable');
 
 
 
 goog.require('goog.array');
-goog.require('goog.dom.DomHelper');
-goog.require('goog.dom.classes');
-goog.require('goog.object');
 goog.require('xrx.geometry.Path');
-goog.require('xrx.mvc');
 goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Dragger');
-goog.require('xrx.shape.PathLike');
+goog.require('xrx.shape.Hoverable');
 goog.require('xrx.shape.Modifiable');
+goog.require('xrx.shape.PathLike');
 goog.require('xrx.shape.Polyline');
+goog.require('xrx.shape.Selectable');
 
 
 
@@ -49,6 +49,75 @@ xrx.shape.Polygon.prototype.draw = function() {
 
 
 
+xrx.shape.Polygon.prototype.getHoverable = function() {
+  if (!this.hoverable_) this.hoverable_ = xrx.shape.PolygonHoverable.create(this);
+  return this.hoverable_;
+};
+
+
+
+xrx.shape.Polygon.prototype.setHoverable = function(hoverable) {
+  if (!hoverable instanceof xrx.shape.PolygonHoverable)
+      throw Error('Instance of xrx.shape.PolygonHoverable expected.');
+  this.hoverable_ = hoverable;
+};
+
+
+
+xrx.shape.Polygon.prototype.getSelectable = function() {
+  if (!this.selectable_) this.selectable_ = xrx.shape.PolygonSelectable.create(this);
+  return this.selectable_;
+};
+
+
+
+xrx.shape.Polygon.prototype.setSelectable = function(selectable) {
+  if (!selectable instanceof xrx.shape.PolygonSelectable)
+      throw Error('Instance of xrx.shape.PolygonSelectable expected.');
+  this.selectable_ = selectable;
+};
+
+
+
+/**
+ * Returns a modifiable polygon shape. Create it lazily if not existent.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.LineModifiable} The modifiable polygon shape.
+ */
+xrx.shape.Polygon.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModifiable.create(this);
+  return this.modifiable_;
+};
+
+
+
+xrx.shape.Polygon.prototype.setModifiable = function(modifiable) {
+  if (!modifiable instanceof xrx.shape.PolygonModifiable)
+      throw Error('Instance of xrx.shape.PolygonModifiable expected.');
+  this.modifiable_ = modifiable;
+};
+
+
+
+/**
+ * Returns a creatable polygon shape. Create it lazily if not existent.
+ * @return {xrx.shape.EllipseCreatable} The creatable polygon shape.
+ */
+xrx.shape.Polygon.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreatable.create(this);
+  return this.creatable_;
+};
+
+
+
+xrx.shape.Polygon.prototype.setCreatable = function(creatable) {
+  if (!creatable instanceof xrx.shape.PolygonCreatable)
+      throw Error('Instance of xrx.shape.PolygonCreatable expected.');
+  this.creatable_ = creatable;
+};
+
+
+
 /**
  * Creates a new polygon shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
@@ -64,24 +133,38 @@ xrx.shape.Polygon.create = function(drawing) {
 
 
 /**
- * Returns a modifiable polygon shape. Create it lazily if not existent.
- * @return {xrx.shape.PolygonModifiable} The modifiable polygon shape.
+ * @constructor
  */
-xrx.shape.Polygon.prototype.getModifiable = function() {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModifiable.create(this);
-  return this.modifiable_;
+xrx.shape.PolygonHoverable = function(polygon) {
+
+  goog.base(this, polygon);
 };
+goog.inherits(xrx.shape.PolygonHoverable, xrx.shape.Hoverable);
+
+
+
+xrx.shape.PolygonHoverable.create = function(polygon) {
+  return new xrx.shape.PolygonHoverable(polygon);
+};
+
 
 
 
 /**
- * Returns a creatable polygon shape. Create it lazily if not existent.
- * @return {xrx.shape.PolygonCreatable} The creatable polygon shape.
+ * @constructor
  */
-xrx.shape.Polygon.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreatable.create(this);
-  return this.creatable_;
+xrx.shape.PolygonSelectable = function(polygon) {
+
+  goog.base(this, polygon);
 };
+goog.inherits(xrx.shape.PolygonSelectable, xrx.shape.Selectable);
+
+
+
+xrx.shape.PolygonSelectable.create = function(polygon) {
+  return new xrx.shape.PolygonSelectable(polygon);
+};
+
 
 
 
@@ -119,21 +202,33 @@ xrx.shape.PolygonModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+xrx.shape.PolygonModifiable.prototype.move = function(distX, distY) {
+  var coords = this.shape_.getCoordsCopy();
+  for (var i = 0, len = coords.length; i < len; i++) {
+    coords[i][0] += distX;
+    coords[i][1] += distY;
+  }
+  this.setCoords(coords);
+};
+
+
+
 /**
  * Creates a new modifiable polygon shape.
  * @param {xrx.shape.Polygon} polygon The related polygon shape.
  */
 xrx.shape.PolygonModifiable.create = function(polygon) {
   var coords = polygon.getCoords();
+  var modifiable = new xrx.shape.PolygonModifiable(polygon);
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(polygon.getCanvas());
+    dragger = xrx.shape.Dragger.create(modifiable, i);
     dragger.setCoords([coords[i]]);
-    dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return new xrx.shape.PolygonModifiable(polygon, draggers);
+  modifiable.setDragger(draggers);
+  return modifiable;
 };
 
 
@@ -145,7 +240,7 @@ xrx.shape.PolygonModifiable.create = function(polygon) {
  */
 xrx.shape.PolygonCreatable = function(polygon) {
 
-  goog.base(this, polygon, xrx.shape.Polyline.create(polygon.getCanvas()));
+  goog.base(this, polygon, xrx.shape.Polyline.create(polygon.getDrawing()));
 
   /**
    * The first vertex created by the user, which at the same time
@@ -172,7 +267,7 @@ goog.inherits(xrx.shape.PolygonCreatable, xrx.shape.Creatable);
  * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.PolygonCreatable.prototype.getCoords = function() {
-  return this.helper_.getCoords();
+  return this.preview_.getCoords();
 };
 
 
@@ -181,42 +276,46 @@ xrx.shape.PolygonCreatable.prototype.getCoords = function() {
  * Handles click events for a creatable polygon shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.PolygonCreatable.prototype.handleClick = function(e, point, shape) {
+xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
   if (this.count_ === 0) { // user creates the first point
     // update the poly-line preview
-    this.helper_.setCoords([point, goog.array.clone(point)]);
+    this.preview_.setCoords([point, goog.array.clone(point)]);
     // create the closing dragger
-    this.close_ = xrx.shape.Dragger.create(this.target_.getCanvas());
+    this.close_ = xrx.shape.Dragger.create(this.target_.getModifiable(), 0);
     this.close_.setCoords([point]);
     this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([this.helper_, this.close_]);
+    this.target_.getDrawing().eventShapeCreate([this.preview_, this.close_]);
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
   } else if (this.close_ && shape === this.close_) { // user closes the polygon
     // create a polygon
-    var polygon = xrx.shape.Polygon.create(this.target_.getCanvas());
-    polygon.setStylable(this.target_);
-    polygon.setCoords(this.helper_.getCoordsCopy());
-    this.eventHandler_.eventShapeCreated(polygon);
+    var polygon = xrx.shape.Polygon.create(this.target_.getDrawing());
+    polygon.setStyle(this.target_);
+    polygon.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
+    this.target_.getDrawing().eventShapeCreated(polygon);
     // reset for next drawing
     this.close_ = null;
     this.count_ = 0;
   } else { // user creates another point
     // extend the poly-line preview
-    this.helper_.setLastCoord(point);
-    this.helper_.appendCoord(point);
+    this.preview_.setLastCoord(point);
+    this.preview_.appendCoord(point);
     this.count_ += 1;
   } 
 };
 
 
 
-xrx.shape.PolygonCreatable.prototype.handleMove = function(e, point, shape) {
+xrx.shape.PolygonCreatable.prototype.handleMove = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
   if (this.count_ === 0) {
     return;
   } else {
-    this.helper_.setLastCoord(point);
+    this.preview_.setLastCoord(point);
   }
   if (shape === this.close_) {
     this.close_.setStrokeColor('red');
@@ -225,6 +324,11 @@ xrx.shape.PolygonCreatable.prototype.handleMove = function(e, point, shape) {
     this.close_.setStrokeColor('black');
     this.close_.setStrokeWidth(1);
   }
+};
+
+
+
+xrx.shape.PolygonCreatable.prototype.handleUp = function() {
 };
 
 

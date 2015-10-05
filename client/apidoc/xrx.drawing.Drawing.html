@@ -41,7 +41,7 @@
     
         
 <dt>
-    <h4 class="name" id="Drawing"><span class="type-signature"></span>new Drawing<span class="signature">(element, opt_engine, opt_force)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Drawing"><span class="type-signature"></span>new Drawing<span class="signature">(element, opt_engine)</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -126,29 +126,6 @@
         </tr>
 
     
-
-        <tr>
-            
-                <td class="name"><code>opt_force</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Whether to force Raphael rendering. For debugging  only.</td>
-        </tr>
-
-    
     </tbody>
 </table>
     
@@ -176,19 +153,12 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line45">line 45</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
     
 
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="xrx.engine.html">xrx.engine</a></li>
-        </ul>
-    </dd>
     
 
     
@@ -225,142 +195,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Members</h3>
-
-        <dl>
-            
-<dt>
-    <h4 class="name" id="shapeIterator_"><span class="type-signature"></span>shapeIterator_<span class="type-signature"> :xrx.drawing.ShapeIterator</span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        A helper class to iterate over all shapes contained in thisdrawing canvas.
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type">xrx.drawing.ShapeIterator</span>
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line130">line 130</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="shield_"><span class="type-signature"></span>shield_<span class="type-signature"> :<a href="xrx.shape.Rect.html">xrx.shape.Rect</a></span></h4>
-
-    
-</dt>
-<dd>
-    
-    <div class="description">
-        A shield in front of the canvas needed by the SVG and theVML rendering engine for smooth dragging of elements.
-    </div>
-    
-
-    
-        <h5>Type:</h5>
-        <ul>
-            <li>
-                
-<span class="param-type"><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></span>
-
-
-            </li>
-        </ul>
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line82">line 82</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-    
-
-    
-</dd>
-
-        </dl>
     
 
     
@@ -410,7 +244,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line267">line 267</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line272">line 272</a>
     </li></ul></dd>
     
 
@@ -481,7 +315,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line163">line 163</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line156">line 156</a>
     </li></ul></dd>
     
 
@@ -533,7 +367,7 @@
         
             
 <dt>
-    <h4 class="name" id="getCreate"><span class="type-signature"></span>getCreate<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="xrx.shape.Shape.html">xrx.shape.Shape</a>}</span></h4>
+    <h4 class="name" id="getCreate"><span class="type-signature"></span>getCreate<span class="signature">()</span><span class="type-signature"> &rarr; {xrx.shape.Creatable}</span></h4>
 
     
 </dt>
@@ -574,7 +408,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line233">line 233</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line226">line 226</a>
     </li></ul></dd>
     
 
@@ -612,7 +446,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="xrx.shape.Shape.html">xrx.shape.Shape</a></span>
+<span class="param-type">xrx.shape.Creatable</span>
 
 
     </dd>
@@ -667,7 +501,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line143">line 143</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -760,7 +594,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line153">line 153</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -853,7 +687,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line173">line 173</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -946,7 +780,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line183">line 183</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line176">line 176</a>
     </li></ul></dd>
     
 
@@ -1039,7 +873,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line203">line 203</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line196">line 196</a>
     </li></ul></dd>
     
 
@@ -1132,7 +966,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line193">line 193</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line186">line 186</a>
     </li></ul></dd>
     
 
@@ -1192,7 +1026,7 @@
 
     
     <div class="description">
-        Returns the layer of this drawing canvas where tools can be plugged in.
+        Returns the layer where tools can be plugged in.
     </div>
     
 
@@ -1225,7 +1059,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line213">line 213</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line206">line 206</a>
     </li></ul></dd>
     
 
@@ -1318,7 +1152,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line286">line 286</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line295">line 295</a>
     </li></ul></dd>
     
 
@@ -1378,7 +1212,7 @@
 
     
     <div class="description">
-        Returns the view-box of the drawing canvas.
+        Returns the view-box of this drawing canvas.
     </div>
     
 
@@ -1411,7 +1245,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line223">line 223</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line216">line 216</a>
     </li></ul></dd>
     
 
@@ -1471,7 +1305,7 @@
 
     
     <div class="description">
-        Handles resizing of this drawing canvas. This function isautomatically called whenever the size of the browser windowchanges. It can be also called by an application that changesthe size of this drawing canvas during live time.
+        Handles resizing of this drawing canvas. This function isautomatically called whenever the size of the browser windowchanges. It can be also called by an application that manuallychanges the size of this drawing canvas during live time.
     </div>
     
 
@@ -1504,7 +1338,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line435">line 435</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line427">line 427</a>
     </li></ul></dd>
     
 
@@ -1534,7 +1368,7 @@
         
             
 <dt>
-    <h4 class="name" id="setBackgroundImage"><span class="type-signature"></span>setBackgroundImage<span class="signature">(url, callback)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setBackgroundImage"><span class="type-signature"></span>setBackgroundImage<span class="signature">(url, opt_callback)</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1599,7 +1433,7 @@
 
         <tr>
             
-                <td class="name"><code>callback</code></td>
+                <td class="name"><code>opt_callback</code></td>
             
 
             <td class="type">
@@ -1646,7 +1480,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line245">line 245</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line250">line 250</a>
     </li></ul></dd>
     
 
@@ -1724,7 +1558,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">xrx.shape.Creatable</span>
 
 
             
@@ -1765,85 +1599,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line404">line 404</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="xrx.html#drawing#Mode">xrx.drawing.Mode</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="setModeDelete"><span class="type-signature"></span>setModeDelete<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-</dt>
-<dd>
-
-    
-    <div class="description">
-        Switch the drawing canvas over into mode <i>delete</i> to allow deletion of shapes.
-    </div>
-    
-
-    
-
-    
-
-    
-
-    
-<dl class="details">
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line371">line 371</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line405">line 405</a>
     </li></ul></dd>
     
 
@@ -1921,7 +1677,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line307">line 307</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line316">line 316</a>
     </li></ul></dd>
     
 
@@ -1951,7 +1707,7 @@
         
             
 <dt>
-    <h4 class="name" id="setModeHover"><span class="type-signature"></span>setModeHover<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setModeHover"><span class="type-signature"></span>setModeHover<span class="signature">(opt_multiple)</span><span class="type-signature"></span></h4>
 
     
 </dt>
@@ -1959,7 +1715,7 @@
 
     
     <div class="description">
-        Switch the drawing canvas over into mode <i>hover</i> to allow hoveringshapes.
+        Switch the drawing canvas over into mode <i>hover</i> to allow hoveringof shapes.
     </div>
     
 
@@ -1967,6 +1723,54 @@
 
     
 
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>opt_multiple</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Whether to highlight all hovered shapes that  lie on top of each other or just the most forward. opt_multiple defaults  to false.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
     
 
     
@@ -1992,7 +1796,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line339">line 339</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line351">line 351</a>
     </li></ul></dd>
     
 
@@ -2063,7 +1867,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line387">line 387</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line388">line 388</a>
     </li></ul></dd>
     
 
@@ -2108,7 +1912,7 @@
 
     
     <div class="description">
-        Switch the drawing canvas over into mode <i>select</i> to allow selectingshapes.
+        Switch the drawing canvas over into mode <i>select</i> to allow selectingof shapes.
     </div>
     
 
@@ -2141,7 +1945,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line355">line 355</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line372">line 372</a>
     </li></ul></dd>
     
 
@@ -2212,7 +2016,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="drawingDrawing.js.html">core/graphics/drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line323">line 323</a>
+        <a href="drawingDrawing.js.html">drawing/drawingDrawing.js</a>, <a href="drawingDrawing.js.html#line332">line 332</a>
     </li></ul></dd>
     
 
@@ -2255,13 +2059,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#core/graphics/engine/engineElement.js">core/graphics/engine/engineElement.js</a></li><li><a href="global.html#core/graphics/viewbox/viewboxViewboxTransform.js">core/graphics/viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.component.Component.html">Component</a></li><li><a href="xrx.component.Console.html">Console</a></li><li><a href="xrx.component.Output.html">Output</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.engine.Stylable.html">Stylable</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.EventTarget.html">EventTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.graphic.Canvas.html">Canvas</a></li><li><a href="xrx.graphic.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.graphic.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.graphic.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.graphic.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.graphic.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.graphic.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.graphic.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.graphic.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.graphic.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.graphic.Shape.html">Shape</a></li><li><a href="xrx.graphic.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.graphic.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.graphic.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.graphic.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.graphic.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.graphic.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.graphic.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.graphic.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.graphic.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.graphic.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.graphic.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.graphic.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.graphic.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.graphic.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.graphic.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.graphic.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.AbstractAction.html">AbstractAction</a></li><li><a href="xrx.mvc.AbstractUpdate.html">AbstractUpdate</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Auth.html">Auth</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.ChildComponent.html">ChildComponent</a></li><li><a href="xrx.mvc.ClassesAdd.html">ClassesAdd</a></li><li><a href="xrx.mvc.ClassesRemove.html">ClassesRemove</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Dispatch.html">Dispatch</a></li><li><a href="xrx.mvc.Dom.html">Dom</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.InstanceGithub.html">InstanceGithub</a></li><li><a href="xrx.mvc.InstanceRest.html">InstanceRest</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Origin.html">Origin</a></li><li><a href="xrx.mvc.Password.html">Password</a></li><li><a href="xrx.mvc.Remove.html">Remove</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Script.html">Script</a></li><li><a href="xrx.mvc.Signin.html">Signin</a></li><li><a href="xrx.mvc.Signout.html">Signout</a></li><li><a href="xrx.mvc.Uidl.html">Uidl</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.mvc.User.html">User</a></li><li><a href="xrx.mvc.Validate.html">Validate</a></li><li><a href="xrx.mvc.Xpath.html">Xpath</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AngularShape">AngularShape</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#viewbox/viewboxViewboxTransform.js">viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Line.html">Line</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Element.html">Element</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Line.html">Line</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Polyline.html">Polyline</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.CircleCreatable.html">CircleCreatable</a></li><li><a href="xrx.shape.CircleHoverable.html">CircleHoverable</a></li><li><a href="xrx.shape.CircleModifiable.html">CircleModifiable</a></li><li><a href="xrx.shape.CircleSelectable.html">CircleSelectable</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Dragger.html">Dragger</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.EllipseCreatable.html">EllipseCreatable</a></li><li><a href="xrx.shape.EllipseHoverable.html">EllipseHoverable</a></li><li><a href="xrx.shape.EllipseModifiable.html">EllipseModifiable</a></li><li><a href="xrx.shape.EllipseModifiable.create.html">create</a></li><li><a href="xrx.shape.EllipseSelectable.html">EllipseSelectable</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Line.html">Line</a></li><li><a href="xrx.shape.LineCreatable.html">LineCreatable</a></li><li><a href="xrx.shape.LineHoverable.html">LineHoverable</a></li><li><a href="xrx.shape.LineModifiable.html">LineModifiable</a></li><li><a href="xrx.shape.LineModifiable.create.html">create</a></li><li><a href="xrx.shape.LineSelectable.html">LineSelectable</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreatable.html">PolygonCreatable</a></li><li><a href="xrx.shape.PolygonHoverable.html">PolygonHoverable</a></li><li><a href="xrx.shape.PolygonModifiable.html">PolygonModifiable</a></li><li><a href="xrx.shape.PolygonSelectable.html">PolygonSelectable</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.PolylineCreatable.html">PolylineCreatable</a></li><li><a href="xrx.shape.PolylineHoverable.html">PolylineHoverable</a></li><li><a href="xrx.shape.PolylineModifiable.html">PolylineModifiable</a></li><li><a href="xrx.shape.PolylineSelectable.html">PolylineSelectable</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreatable.html">RectCreatable</a></li><li><a href="xrx.shape.RectModifiable.html">RectModifiable</a></li><li><a href="xrx.shape.RenderStylable.html">RenderStylable</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Line.html">Line</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Line.html">Line</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Sep 18 2015 21:14:14 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 30 2015 16:54:32 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>

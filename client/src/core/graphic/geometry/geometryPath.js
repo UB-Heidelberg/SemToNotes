@@ -36,16 +36,13 @@ xrx.geometry.Path.prototype.containsPoint = function(point) {
   var xi;
   var xj;
   var intersect;
-
-  var inside = false;
+  var contains = false;
   for (var i = 0, j = coords.length - 1; i < coords.length; j = i++) {
     xi = coords[i][0], yi = coords[i][1];
     xj = coords[j][0], yj = coords[j][1];
-
     intersect = ((yi > y) != (yj > y))
         && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-    if (intersect) inside = !inside;
+    if (intersect) contains = !contains;
   }
-
-  return inside;
+  return contains;
 };

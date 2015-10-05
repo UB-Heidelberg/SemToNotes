@@ -23,22 +23,45 @@ createTables('Ellipse', goog.dom);
 
 
 function getEllipses(drawing) {
-  var ellipse1 = xrx.shape.Ellipse.create(drawing.getCanvas());
-  var ellipse2 = xrx.shape.Ellipse.create(drawing.getCanvas());
-  var ellipse3 = xrx.shape.Ellipse.create(drawing.getCanvas());
+  var hoverableStyle = new xrx.shape.Stylable();
+  hoverableStyle.setFillColor('green');
+  hoverableStyle.setFillOpacity(.2);
+  hoverableStyle.setStrokeColor('green');
+  hoverableStyle.setStrokeWidth(2);
+  var selectableStyle = new xrx.shape.Selectable();
+  selectableStyle.setFillColor('grey');
+  selectableStyle.setFillOpacity(.2);
+  selectableStyle.setStrokeColor('yellow');
+  selectableStyle.setStrokeWidth(2);
+  var ellipse1 = xrx.shape.Ellipse.create(drawing);
+  var ellipse2 = xrx.shape.Ellipse.create(drawing);
+  var ellipse3 = xrx.shape.Ellipse.create(drawing);
+  var ellipse4 = xrx.shape.Ellipse.create(drawing);
   ellipse1.setCenter(20, 20);
   ellipse1.setRadiusX(50);
   ellipse1.setRadiusY(10);
   ellipse1.setStrokeWidth(1);
+  ellipse1.getHoverable().setStyle(hoverableStyle);
+  ellipse1.getSelectable().setStyle(selectableStyle);
   ellipse2.setCenter(200, 200);
   ellipse2.setRadiusX(10);
   ellipse2.setRadiusY(30);
   ellipse2.setStrokeWidth(1);
+  ellipse2.getHoverable().setStyle(hoverableStyle);
+  ellipse2.getSelectable().setStyle(selectableStyle);
   ellipse3.setCenter(100, 300);
   ellipse3.setRadiusX(100);
   ellipse3.setRadiusY(50);
   ellipse3.setStrokeWidth(1);
-  return [ellipse1, ellipse2, ellipse3];
+  ellipse3.getHoverable().setStyle(hoverableStyle);
+  ellipse3.getSelectable().setStyle(selectableStyle);
+  ellipse4.setCenter(200, 200);
+  ellipse4.setRadiusX(30);
+  ellipse4.setRadiusY(20);
+  ellipse4.setStrokeWidth(1);
+  ellipse4.getHoverable().setStyle(hoverableStyle);
+  ellipse4.getSelectable().setStyle(selectableStyle);
+  return [ellipse1, ellipse2, ellipse3, ellipse4];
 };
 
 
@@ -49,13 +72,31 @@ function test1View() {
 
 
 
-function test2Modify() {
+function test2Hover() {
+  modeHover('Ellipse');
+};
+
+
+
+function test3HoverMultiple() {
+  modeHoverMultiple('Ellipse');
+};
+
+
+
+function test4Select() {
+  modeSelect('Ellipse');
+};
+
+
+
+function test5Modify() {
   modeModify('Ellipse');
 };
 
 
 
-function test3Create() {
+function test6Create() {
   modeCreate('Ellipse');
 };
 

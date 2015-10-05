@@ -5,13 +5,19 @@
 
 goog.provide('xrx.shape.Polyline');
 goog.provide('xrx.shape.PolylineCreatable');
+goog.provide('xrx.shape.PolylineHoverable');
 goog.provide('xrx.shape.PolylineModifiable');
+goog.provide('xrx.shape.PolylineSelectable');
 
 
 
 goog.require('goog.array');
-goog.require('xrx.geometry.Path');
+goog.require('xrx.geometry.Polyline');
 goog.require('xrx.shape.PathLike');
+goog.require('xrx.shape.Hoverable');
+goog.require('xrx.shape.Modifiable');
+goog.require('xrx.shape.PathLike');
+goog.require('xrx.shape.Selectable');
 
 
 
@@ -23,7 +29,7 @@ goog.require('xrx.shape.PathLike');
 xrx.shape.Polyline = function(drawing, engineElement) {
 
   goog.base(this, drawing, engineElement,
-      new xrx.geometry.Path());
+      new xrx.geometry.Polyline());
 };
 goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
 
@@ -38,6 +44,75 @@ xrx.shape.Polyline.prototype.draw = function() {
       this.getFillOpacity(), this.getStrokeColor(),
       this.getRenderingStrokeWidth());
   this.finishDrawing_();
+};
+
+
+
+xrx.shape.Polyline.prototype.getHoverable = function() {
+  if (!this.hoverable_) this.hoverable_ = xrx.shape.PolylineHoverable.create(this);
+  return this.hoverable_;
+};
+
+
+
+xrx.shape.Polyline.prototype.setHoverable = function(hoverable) {
+  if (!hoverable instanceof xrx.shape.PolylineHoverable)
+      throw Error('Instance of xrx.shape.PolylineHoverable expected.');
+  this.hoverable_ = hoverable;
+};
+
+
+
+xrx.shape.Polyline.prototype.getSelectable = function() {
+  if (!this.selectable_) this.selectable_ = xrx.shape.PolylineSelectable.create(this);
+  return this.selectable_;
+};
+
+
+
+xrx.shape.Polyline.prototype.setSelectable = function(selectable) {
+  if (!selectable instanceof xrx.shape.PolylineSelectable)
+      throw Error('Instance of xrx.shape.PolylineSelectable expected.');
+  this.selectable_ = selectable;
+};
+
+
+
+/**
+ * Returns a modifiable poly-line shape. Create it lazily if not existent.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.LineModifiable} The modifiable poly-line shape.
+ */
+xrx.shape.Polyline.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolylineModifiable.create(this);
+  return this.modifiable_;
+};
+
+
+
+xrx.shape.Polyline.prototype.setModifiable = function(modifiable) {
+  if (!modifiable instanceof xrx.shape.PolylineModifiable)
+      throw Error('Instance of xrx.shape.PolylineModifiable expected.');
+  this.modifiable_ = modifiable;
+};
+
+
+
+/**
+ * Returns a creatable poly-line shape. Create it lazily if not existent.
+ * @return {xrx.shape.EllipseCreatable} The creatable poly-line shape.
+ */
+xrx.shape.Polyline.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.PolylineCreatable.create(this);
+  return this.creatable_;
+};
+
+
+
+xrx.shape.Polyline.prototype.setCreatable = function(creatable) {
+  if (!creatable instanceof xrx.shape.PolylineCreatable)
+      throw Error('Instance of xrx.shape.PolylineCreatable expected.');
+  this.creatable_ = creatable;
 };
 
 
@@ -57,23 +132,36 @@ xrx.shape.Polyline.create = function(drawing) {
 
 
 /**
- * Returns a modifiable poly-line shape. Create it lazily if not existent.
- * @return {xrx.shape.PolylineModify} The modifiable poly-line shape.
+ * @constructor
  */
-xrx.shape.Polyline.prototype.getModifiable = function() {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolylineModifiable.create(this);
-  return this.modifiable_;
+xrx.shape.PolylineHoverable = function(polyline) {
+
+  goog.base(this, polyline);
+};
+goog.inherits(xrx.shape.PolylineHoverable, xrx.shape.Hoverable);
+
+
+
+xrx.shape.PolylineHoverable.create = function(polyline) {
+  return new xrx.shape.PolylineHoverable(polyline);
 };
 
 
 
+
 /**
- * Returns a creatable poly-line shape. Create it lazily if not existent.
- * @return {xrx.shape.PolylineModify} The creatable poly-line shape.
+ * @constructor
  */
-xrx.shape.Polyline.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.PolylineCreatable.create(this);
-  return this.creatable_;
+xrx.shape.PolylineSelectable = function(polyline) {
+
+  goog.base(this, polyline);
+};
+goog.inherits(xrx.shape.PolylineSelectable, xrx.shape.Selectable);
+
+
+
+xrx.shape.PolylineSelectable.create = function(polyline) {
+  return new xrx.shape.PolylineSelectable(polyline);
 };
 
 
@@ -118,15 +206,27 @@ xrx.shape.PolylineModifiable.prototype.setCoordAt = function(pos, coord) {
  */
 xrx.shape.PolylineModifiable.create = function(polyline) {
   var coords = polyline.getCoords();
+  var modifiable = new xrx.shape.PolylineModifiable(polyline);
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(polyline.getCanvas());
+    dragger = xrx.shape.Dragger.create(modifiable, i);
     dragger.setCoords([coords[i]]);
-    dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return new xrx.shape.PolylineModifiable(polyline, draggers);
+  modifiable.setDragger(draggers);
+  return modifiable;
+};
+
+
+
+xrx.shape.PolylineModifiable.prototype.move = function(distX, distY) {
+  var coords = this.shape_.getCoordsCopy();
+  for (var i = 0, len = coords.length; i < len; i++) {
+    coords[i][0] += distX;
+    coords[i][1] += distY;
+  }
+  this.setCoords(coords);
 };
 
 
@@ -138,7 +238,7 @@ xrx.shape.PolylineModifiable.create = function(polyline) {
  */
 xrx.shape.PolylineCreatable = function(polyline) {
 
-  goog.base(this, polyline, xrx.shape.Polyline.create(polyline.getCanvas()));
+  goog.base(this, polyline, xrx.shape.Polyline.create(polyline.getDrawing()));
 
   /**
    * The last point created by the user, which closes the poly-line when clicked.
@@ -163,7 +263,7 @@ goog.inherits(xrx.shape.PolylineCreatable, xrx.shape.Creatable);
  * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.PolylineCreatable.prototype.getCoords = function() {
-  return this.helper_.getCoords();
+  return this.preview_.getCoords();
 };
 
 
@@ -172,31 +272,33 @@ xrx.shape.PolylineCreatable.prototype.getCoords = function() {
  * Handles click events for a creatable poly-line shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.PolylineCreatable.prototype.handleClick = function(e, point, shape) {
+xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
   if (this.count_ === 0) { // user creates the first point
     // update the poly-line preview
-    this.helper_.setCoords([point, goog.array.clone(point)]);
+    this.preview_.setCoords([point, goog.array.clone(point)]);
     this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([this.helper_]);
+    this.target_.getDrawing().eventShapeCreate([this.preview_]);
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
   } else if (this.close_ && shape === this.close_) { // user closes the poly-line
     // create a poly-line
-    var polyline = xrx.shape.Polyline.create(this.target_.getCanvas());
-    polyline.setStylable(this.target_);
-    polyline.setCoords(this.helper_.getCoordsCopy());
-    this.eventHandler_.eventShapeCreated(polyline);
+    var polyline = xrx.shape.Polyline.create(this.target_.getDrawing());
+    polyline.setStyle(this.target_);
+    polyline.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
+    this.target_.getDrawing().eventShapeCreated(polyline);
     // reset for next drawing
     this.close_ = null;
     this.count_ = 0;
   } else { // user creates another point
     // extend the poly-line
-    this.helper_.appendCoord(point);
+    this.preview_.appendCoord(point);
     // create the closing point as soon as the user creates the second point
     if (this.count_ === 1) {
-      this.close_ = xrx.shape.Dragger.create(this.target_.getCanvas());
-      this.eventHandler_.eventShapeCreate([this.close_]);
+      this.close_ = xrx.shape.Dragger.create(this.target_.getModifiable(), 0);
+      this.target_.getDrawing().eventShapeCreate([this.close_]);
     }
     this.close_.setCoords([point]);
     this.count_ += 1;
@@ -205,11 +307,13 @@ xrx.shape.PolylineCreatable.prototype.handleClick = function(e, point, shape) {
 
 
 
-xrx.shape.PolylineCreatable.prototype.handleMove = function(e, point, shape) {
+xrx.shape.PolylineCreatable.prototype.handleMove = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
   if (this.count_ === 0) {
     return;
   } else {
-    this.helper_.setLastCoord(point);
+    this.preview_.setLastCoord(point);
   }
   if (this.close_ && shape === this.close_) {
     this.close_.setStrokeColor('red');
@@ -218,6 +322,11 @@ xrx.shape.PolylineCreatable.prototype.handleMove = function(e, point, shape) {
     this.close_.setStrokeColor('black');
     this.close_.setStrokeWidth(1);
   } else {}
+};
+
+
+
+xrx.shape.PolylineCreatable.prototype.handleUp = function(e, cursor) {
 };
 
 

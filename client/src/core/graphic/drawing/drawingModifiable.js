@@ -28,6 +28,8 @@ xrx.drawing.Modifiable = function(drawing) {
   this.shape_;
 
   this.origin_;
+
+  this.propageted_ = false;
 };
 
 
@@ -43,6 +45,11 @@ xrx.drawing.Modifiable.Mode = {
 xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
   var modifiable;
   var shape = cursor.getShape();
+  if (!shape) {
+    this.drawing_.getViewbox().handleDown(e, cursor);
+    this.propageted_ = true;
+    return;
+  }
   this.origin_ = cursor.getPointTransformed();
   if (shape && shape.isModifiable()) {
     this.state_ = xrx.drawing.State.DRAG;
@@ -80,6 +87,11 @@ xrx.drawing.Modifiable.prototype.handleDragShape_ = function(e, cursor) {
 
 
 xrx.drawing.Modifiable.prototype.handleMove = function(e, cursor) {
+  var shape = cursor.getShape();
+  if (this.propageted_) {
+    this.drawing_.getViewbox().handleMove(e, cursor);
+    return;
+  }
   var point = cursor.getPointTransformed();
   if (this.mode_ === xrx.drawing.Modifiable.Mode.SHAPEHOVER) {
     this.handleHover_(e, cursor);
@@ -94,8 +106,13 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e, cursor) {
 
 
 
-xrx.drawing.Modifiable.prototype.handleUp = function(e) {
+xrx.drawing.Modifiable.prototype.handleUp = function(e, cursor) {
+  var shape = cursor.getShape();
+  if (!shape) {
+    this.drawing_.getViewbox().handleUp(e, cursor);
+  }
   this.resetState_();
+  this.propageted_ = false;
 };
 
 

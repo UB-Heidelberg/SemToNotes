@@ -23,24 +23,36 @@ createTables('Line', goog.dom);
 
 
 function getLines(drawing) {
-  var line1 = xrx.shape.Line.create(drawing.getCanvas());
-  var line2 = xrx.shape.Line.create(drawing.getCanvas());
-  var line3 = xrx.shape.Line.create(drawing.getCanvas());
+  var hoverableStyle = new xrx.shape.Stylable();
+  hoverableStyle.setStrokeColor('green');
+  hoverableStyle.setStrokeWidth(2);
+  var selectableStyle = new xrx.shape.Selectable();
+  selectableStyle.setStrokeColor('yellow');
+  selectableStyle.setStrokeWidth(2);
+  var line1 = xrx.shape.Line.create(drawing);
+  var line2 = xrx.shape.Line.create(drawing);
+  var line3 = xrx.shape.Line.create(drawing);
   line1.setX1(20);
   line1.setY1(20);
   line1.setX2(100);
   line1.setY2(100);
-  line1.setStrokeWidth(1);
+  line1.getHoverable().setStyle(hoverableStyle);
+  line1.getSelectable().setStyle(selectableStyle);
+  line1.setStrokeWidth(2);
   line2.setX1(200);
   line2.setY1(200);
   line2.setX2(250);
   line2.setY2(25);
-  line2.setStrokeWidth(1);
+  line2.setStrokeWidth(2);
+  line2.getHoverable().setStyle(hoverableStyle);
+  line2.getSelectable().setStyle(selectableStyle);
   line3.setX1(100);
   line3.setX2(10);
   line3.setY1(10);
   line3.setY2(100);
-  line3.setStrokeWidth(1);
+  line3.setStrokeWidth(2);
+  line3.getHoverable().setStyle(hoverableStyle);
+  line3.getSelectable().setStyle(selectableStyle);
   return [line1, line2, line3];
 };
 
@@ -52,13 +64,31 @@ function test1View() {
 
 
 
-function test2Modify() {
+function test2Hover() {
+  modeHover('Line');
+};
+
+
+
+function test3HoverMultiple() {
+  modeHoverMultiple('Line');
+};
+
+
+
+function test4Select() {
+  modeSelect('Line');
+};
+
+
+
+function test5Modify() {
   modeModify('Line');
 };
 
 
 
-function test3Create() {
+function test6Create() {
   modeCreate('Line');
 };
 

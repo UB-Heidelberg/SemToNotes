@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: core/graphics/shape/shapeEllipse.js</title>
+    <title>JSDoc: Source: shape/shapeEllipse.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: core/graphics/shape/shapeEllipse.js</h1>
+    <h1 class="page-title">Source: shape/shapeEllipse.js</h1>
 
     
 
@@ -27,30 +27,37 @@
         <article>
             <pre class="prettyprint source linenums"><code>/**
  * @fileoverview A class representing an engine-independent
- * ellipse graphic.
+ * hoverable, selectable, modifiable and creatable ellipse shape.
  */
 
 goog.provide('xrx.shape.Ellipse');
+goog.provide('xrx.shape.EllipseCreatable');
+goog.provide('xrx.shape.EllipseHoverable');
+goog.provide('xrx.shape.EllipseModifiable');
+goog.provide('xrx.shape.EllipseSelectable');
 
 
 
 goog.require('xrx.geometry.Ellipse');
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Creatable');
+goog.require('xrx.shape.Geometry');
+goog.require('xrx.shape.Hoverable');
+goog.require('xrx.shape.Modifiable');
+goog.require('xrx.shape.Selectable');
 
 
 
 /**
- * A class representing an engine-independent ellipse graphic.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
+ * A class representing an engine-independent ellipse shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Ellipse = function(canvas, engineElement) {
+xrx.shape.Ellipse = function(drawing, engineElement) {
 
-  goog.base(this, canvas, engineElement, new xrx.geometry.Ellipse());
+  goog.base(this, drawing, engineElement,
+      new xrx.geometry.Ellipse());
 };
-goog.inherits(xrx.shape.Ellipse, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Ellipse, xrx.shape.Geometry);
 
 
 
@@ -117,35 +124,281 @@ xrx.shape.Ellipse.prototype.setRadiusY = function(ry) {
 
 
 /**
+ * Returns the coordinates of this ellipse. We assume the center point.
+ * @return {Array&lt;Array&lt;&lt;number>>} The coordinates.
+ */
+xrx.shape.Ellipse.prototype.getCoords = function() {
+  return [this.getCenter()];
+};
+
+
+
+/**
+ * Sets the coordinates of this ellipse. We assume the center point.
+ * @param {Array&lt;Array&lt;&lt;number>>} coords The coordinates.
+ */
+xrx.shape.Ellipse.prototype.setCoords = function(coords) {
+  this.setCenter(coords[0][0], coords[0][1]);
+};
+
+
+
+/**
  * Draws this ellipse.
  */
 xrx.shape.Ellipse.prototype.draw = function() {
+  this.startDrawing_();
   var center = this.getCenter();
   this.engineElement_.draw(center[0], center[1], this.getRadiusX(),
       this.getRadiusY(), this.getFillColor(), this.getFillOpacity(),
-      this.getStrokeColor(), this.getStrokeWidth());
+      this.getStrokeColor(), this.getRenderingStrokeWidth());
+  this.finishDrawing_();
+};
+
+
+
+xrx.shape.Ellipse.prototype.getHoverable = function() {
+  if (!this.hoverable_) this.hoverable_ = xrx.shape.EllipseHoverable.create(this);
+  return this.hoverable_;
+};
+
+
+
+xrx.shape.Ellipse.prototype.setHoverable = function(hoverable) {
+  if (!hoverable instanceof xrx.shape.EllipseHoverable)
+      throw Error('Instance of xrx.shape.EllipseHoverable expected.');
+  this.hoverable_ = hoverable;
+};
+
+
+
+xrx.shape.Ellipse.prototype.getSelectable = function() {
+  if (!this.selectable_) this.selectable_ = xrx.shape.EllipseSelectable.create(this);
+  return this.selectable_;
+};
+
+
+
+xrx.shape.Ellipse.prototype.setSelectable = function(selectable) {
+  if (!selectable instanceof xrx.shape.EllipseSelectable)
+      throw Error('Instance of xrx.shape.EllipseSelectable expected.');
+  this.selectable_ = selectable;
+};
+
+
+
+/**
+ * Returns a modifiable ellipse shape. Create it lazily if not existent.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * @return {xrx.shape.EllipseModifiable} The modifiable ellipse shape.
+ */
+xrx.shape.Ellipse.prototype.getModifiable = function(drawing) {
+  if (!this.modifiable_) this.modifiable_ = xrx.shape.EllipseModifiable.create(this);
+  return this.modifiable_;
+};
+
+
+
+xrx.shape.Ellipse.prototype.setModifiable = function(modifiable) {
+  if (!modifiable instanceof xrx.shape.EllipseModifiable)
+      throw Error('Instance of xrx.shape.EllipseModifiable expected.');
+  this.modifiable_ = modifiable;
+};
+
+
+
+/**
+ * Returns a creatable ellipse shape. Create it lazily if not existent.
+ * @return {xrx.shape.EllipseCreatable} The creatable ellipse shape.
+ */
+xrx.shape.Ellipse.prototype.getCreatable = function() {
+  if (!this.creatable_) this.creatable_ = xrx.shape.EllipseCreatable.create(this);
+  return this.creatable_;
+};
+
+
+
+xrx.shape.Ellipse.prototype.setCreatable = function(creatable) {
+  if (!creatable instanceof xrx.shape.EllipseCreatable)
+      throw Error('Instance of xrx.shape.EllipseCreatable expected.');
+  this.creatable_ = creatable;
 };
 
 
 
 /**
  * Creates a new ellipse.
- * @param {xrx.shape.Canvas} The parent canvas object.
+ * @param {xrx.drawing.Drawing} The parent drawing canvas.
  */
-xrx.shape.Ellipse.create = function(canvas) {
-  var engineElement;
-  var engine = canvas.getEngine();
-  var canvasElement = canvas.getEngineElement();
-  if (engine.typeOf(xrx.engine.CANVAS)) {
-    engineElement = xrx.canvas.Ellipse.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.SVG)) {
-    engineElement = xrx.svg.Ellipse.create(canvasElement);
-  } else if (engine.typeOf(xrx.engine.VML)) {
-    engineElement = xrx.vml.Ellipse.create(canvasElement);
+xrx.shape.Ellipse.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createEllipse(engineCanvas);
+  return new xrx.shape.Ellipse(drawing, engineElement);
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseHoverable = function(ellipse) {
+
+  goog.base(this, ellipse);
+};
+goog.inherits(xrx.shape.EllipseHoverable, xrx.shape.Hoverable);
+
+
+
+xrx.shape.EllipseHoverable.create = function(ellipse) {
+  return new xrx.shape.EllipseHoverable(ellipse);
+};
+
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseSelectable = function(ellipse) {
+
+  goog.base(this, ellipse);
+};
+goog.inherits(xrx.shape.EllipseSelectable, xrx.shape.Selectable);
+
+
+
+xrx.shape.EllipseSelectable.create = function(ellipse) {
+  return new xrx.shape.EllipseSelectable(ellipse);
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseModifiable = function(ellipse) {
+
+  goog.base(this, ellipse);
+};
+goog.inherits(xrx.shape.EllipseModifiable, xrx.shape.Modifiable);
+
+
+
+xrx.shape.EllipseModifiable.prototype.setCoords = function(coords) {
+  this.shape_.setCoords(coords);
+  this.dragger_[0].setCoordX(coords[0][0] + this.shape_.getRadiusX());
+  this.dragger_[0].setCoordY(coords[0][1]);
+  this.dragger_[1].setCoordX(coords[0][0]);
+  this.dragger_[1].setCoordY(coords[0][1] + this.shape_.getRadiusY());
+};
+
+
+
+xrx.shape.EllipseModifiable.prototype.setCoordAt = function(pos, coord) {
+  if (pos === 0) {
+    this.dragger_[0].setCoordX(coord[0]);
+    this.shape_.setRadiusX(Math.abs(coord[0] - this.shape_.getCenter()[0]));
   } else {
-    throw Error('Unknown engine.');
+    this.dragger_[1].setCoordY(coord[1]);
+    this.shape_.setRadiusY(Math.abs(coord[1] - this.shape_.getCenter()[1]));
   }
-  return new xrx.shape.Ellipse(canvas, engineElement);
+};
+
+
+
+xrx.shape.EllipseModifiable.prototype.move = function(distX, distY) {
+  var coords = this.shape_.getCoordsCopy();
+  coords[0][0] += distX;
+  coords[0][1] += distY;
+  this.setCoords(coords);
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.EllipseModifiable.create = function(ellipse) {
+  var center = ellipse.getCenter();
+  var radiusX = ellipse.getRadiusX();
+  var radiusY = ellipse.getRadiusY();
+  var modifiable = new xrx.shape.EllipseModifiable(ellipse)
+  var draggerX = xrx.shape.Dragger.create(modifiable, 0);
+  draggerX.setCoords([[center[0] + radiusX, center[1]]]);
+  var draggerY = xrx.shape.Dragger.create(modifiable, 1);
+  draggerY.setCoords([[center[0], center[1] + radiusY]]);
+  modifiable.setDragger([draggerX, draggerY]);
+  return modifiable;
+};
+
+
+
+/**
+ * A class representing a creatable ellipse shape.
+ * @param
+ * @constructor
+ */
+xrx.shape.EllipseCreatable = function(ellipse) {
+
+  goog.base(this, ellipse, xrx.shape.Ellipse.create(ellipse.getDrawing()));
+
+  this.point_ = new Array(2);
+};
+goog.inherits(xrx.shape.EllipseCreatable, xrx.shape.Creatable);
+
+
+
+/**
+ * Returns the coordinates of the ellipse currently created.
+ * @return Array&lt;Array&lt;number>> The coordinates.
+ */
+xrx.shape.EllipseCreatable.prototype.getCoords = function() {
+  return this.helper_.getCoords();
+};
+
+
+
+/**
+ * Handles down events for a creatable ellipse shape.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ */
+xrx.shape.EllipseCreatable.prototype.handleDown = function(e, cursor) {
+  var point = cursor.getPointTransformed();
+  this.point_[0] = point[0];
+  this.point_[1] = point[1];
+  this.preview_.setCenter(point[0], point[1]);
+  this.target_.getDrawing().eventShapeCreate([this.preview_]);
+};
+
+
+
+xrx.shape.EllipseCreatable.prototype.handleMove = function(e, cursor) {
+  var point = cursor.getPointTransformed();
+  var distX = point[0] - this.point_[0];
+  var distY = point[1] - this.point_[1];
+  this.preview_.setCenter(point[0] - distX / 2, point[1] - distY / 2);
+  this.preview_.setRadiusX(Math.abs(distX / 2));
+  this.preview_.setRadiusY(Math.abs(distY / 2));
+};
+
+
+
+xrx.shape.EllipseCreatable.prototype.handleUp = function(e, cursor) {
+  var ellipse = xrx.shape.Ellipse.create(this.target_.getDrawing());
+  var center = this.preview_.getCenter();
+  ellipse.setStyle(this.target_);
+  ellipse.setCenter(center[0], center[1]);
+  ellipse.setRadiusX(this.preview_.getRadiusX());
+  ellipse.setRadiusY(this.preview_.getRadiusY());
+  this.target_.getDrawing().eventShapeCreated(ellipse);
+};
+
+
+
+xrx.shape.EllipseCreatable.create = function(ellipse) {
+  return new xrx.shape.EllipseCreatable(ellipse);
 };
 </code></pre>
         </article>
@@ -157,13 +410,13 @@ xrx.shape.Ellipse.create = function(canvas) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#core/graphics/engine/engineElement.js">core/graphics/engine/engineElement.js</a></li><li><a href="global.html#core/graphics/viewbox/viewboxViewboxTransform.js">core/graphics/viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.component.Component.html">Component</a></li><li><a href="xrx.component.Console.html">Console</a></li><li><a href="xrx.component.Output.html">Output</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.engine.Stylable.html">Stylable</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.EventTarget.html">EventTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.graphic.Canvas.html">Canvas</a></li><li><a href="xrx.graphic.CanvasBackgroundImage.html">CanvasBackgroundImage</a></li><li><a href="xrx.graphic.CanvasGroup.html">CanvasGroup</a></li><li><a href="xrx.graphic.CanvasToolbar.html">CanvasToolbar</a></li><li><a href="xrx.graphic.CanvasToolbarClickItem.html">CanvasToolbarClickItem</a></li><li><a href="xrx.graphic.CanvasToolbarItemCreate.html">CanvasToolbarItemCreate</a></li><li><a href="xrx.graphic.CanvasToolbarItemDelete.html">CanvasToolbarItemDelete</a></li><li><a href="xrx.graphic.CanvasToolbarItemModify.html">CanvasToolbarItemModify</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateLeft.html">CanvasToolbarItemRotateLeft</a></li><li><a href="xrx.graphic.CanvasToolbarItemRotateRight.html">CanvasToolbarItemRotateRight</a></li><li><a href="xrx.graphic.CanvasToolbarItemView.html">CanvasToolbarItemView</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomIn.html">CanvasToolbarItemZoomIn</a></li><li><a href="xrx.graphic.CanvasToolbarItemZoomOut.html">CanvasToolbarItemZoomOut</a></li><li><a href="xrx.graphic.CanvasToolbarToggleItem.html">CanvasToolbarToggleItem</a></li><li><a href="xrx.graphic.Shape.html">Shape</a></li><li><a href="xrx.graphic.ShapePolygon.html">ShapePolygon</a></li><li><a href="xrx.graphic.ShapePolygonCoords.html">ShapePolygonCoords</a></li><li><a href="xrx.graphic.ShapePolygonCreate.html">ShapePolygonCreate</a></li><li><a href="xrx.graphic.ShapePolygonInsert.html">ShapePolygonInsert</a></li><li><a href="xrx.graphic.ShapeRect.html">ShapeRect</a></li><li><a href="xrx.graphic.ShapeRectBottom.html">ShapeRectBottom</a></li><li><a href="xrx.graphic.ShapeRectCreate.html">ShapeRectCreate</a></li><li><a href="xrx.graphic.ShapeRectGeometry.html">ShapeRectGeometry</a></li><li><a href="xrx.graphic.ShapeRectHeight.html">ShapeRectHeight</a></li><li><a href="xrx.graphic.ShapeRectInsert.html">ShapeRectInsert</a></li><li><a href="xrx.graphic.ShapeRectLeft.html">ShapeRectLeft</a></li><li><a href="xrx.graphic.ShapeRectRight.html">ShapeRectRight</a></li><li><a href="xrx.graphic.ShapeRectTop.html">ShapeRectTop</a></li><li><a href="xrx.graphic.ShapeRectWidth.html">ShapeRectWidth</a></li><li><a href="xrx.graphic.ShapeRectX.html">ShapeRectX</a></li><li><a href="xrx.graphic.ShapeRectY.html">ShapeRectY</a></li><li><a href="xrx.index.Index.html">Index</a></li><li><a href="xrx.mvc.html">mvc</a></li><li><a href="xrx.mvc.AbstractAction.html">AbstractAction</a></li><li><a href="xrx.mvc.AbstractUpdate.html">AbstractUpdate</a></li><li><a href="xrx.mvc.Action.html">Action</a></li><li><a href="xrx.mvc.Auth.html">Auth</a></li><li><a href="xrx.mvc.Bind.html">Bind</a></li><li><a href="xrx.mvc.ChildComponent.html">ChildComponent</a></li><li><a href="xrx.mvc.ClassesAdd.html">ClassesAdd</a></li><li><a href="xrx.mvc.ClassesRemove.html">ClassesRemove</a></li><li><a href="xrx.mvc.Component.html">Component</a></li><li><a href="xrx.mvc.ComponentModel.html">ComponentModel</a></li><li><a href="xrx.mvc.ComponentView.html">ComponentView</a></li><li><a href="xrx.mvc.Dispatch.html">Dispatch</a></li><li><a href="xrx.mvc.Dom.html">Dom</a></li><li><a href="xrx.mvc.Insert.html">Insert</a></li><li><a href="xrx.mvc.Instance.html">Instance</a></li><li><a href="xrx.mvc.InstanceGithub.html">InstanceGithub</a></li><li><a href="xrx.mvc.InstanceRest.html">InstanceRest</a></li><li><a href="xrx.mvc.Mvc.html">Mvc</a></li><li><a href="xrx.mvc.Namespace.html">Namespace</a></li><li><a href="xrx.mvc.Origin.html">Origin</a></li><li><a href="xrx.mvc.Password.html">Password</a></li><li><a href="xrx.mvc.Remove.html">Remove</a></li><li><a href="xrx.mvc.Repeat.html">Repeat</a></li><li><a href="xrx.mvc.RepeatItem.html">RepeatItem</a></li><li><a href="xrx.mvc.Script.html">Script</a></li><li><a href="xrx.mvc.Signin.html">Signin</a></li><li><a href="xrx.mvc.Signout.html">Signout</a></li><li><a href="xrx.mvc.Uidl.html">Uidl</a></li><li><a href="xrx.mvc.Update.html">Update</a></li><li><a href="xrx.mvc.User.html">User</a></li><li><a href="xrx.mvc.Validate.html">Validate</a></li><li><a href="xrx.mvc.Xpath.html">Xpath</a></li><li><a href="xrx.node.AttributeB.html">AttributeB</a></li><li><a href="xrx.node.Binary.html">Binary</a></li><li><a href="xrx.node.Document.html">Document</a></li><li><a href="xrx.node.DocumentB.html">DocumentB</a></li><li><a href="xrx.node.DocumentS.html">DocumentS</a></li><li><a href="xrx.node.ElementB.html">ElementB</a></li><li><a href="xrx.node.ElementS.html">ElementS</a></li><li><a href="xrx.node.Node.html">Node</a></li><li><a href="xrx.node.Streaming.html">Streaming</a></li><li><a href="xrx.node.TextB.html">TextB</a></li><li><a href="xrx.node.TextS.html">TextS</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreate.html">PolygonCreate</a></li><li><a href="xrx.shape.PolygonModify.html">PolygonModify</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreate.html">RectCreate</a></li><li><a href="xrx.shape.RectModify.html">RectModify</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.shape.VertexDragger.html">VertexDragger</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.token.Attribute.html">Attribute</a></li><li><a href="xrx.token.AttrName.html">AttrName</a></li><li><a href="xrx.token.AttrValue.html">AttrValue</a></li><li><a href="xrx.token.EmptyTag.html">EmptyTag</a></li><li><a href="xrx.token.EndTag.html">EndTag</a></li><li><a href="xrx.token.Fragment.html">Fragment</a></li><li><a href="xrx.token.Mixed.html">Mixed</a></li><li><a href="xrx.token.Namespace.html">Namespace</a></li><li><a href="xrx.token.NotTag.html">NotTag</a></li><li><a href="xrx.token.NsPrefix.html">NsPrefix</a></li><li><a href="xrx.token.NsUri.html">NsUri</a></li><li><a href="xrx.token.Root.html">Root</a></li><li><a href="xrx.token.StartEmptyTag.html">StartEmptyTag</a></li><li><a href="xrx.token.StartTag.html">StartTag</a></li><li><a href="xrx.token.Tag.html">Tag</a></li><li><a href="xrx.token.TagName.html">TagName</a></li><li><a href="xrx.token.Token.html">Token</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li><li><a href="xrx.xml.Label.html">Label</a></li><li><a href="xrx.xml.Lexer.html">Lexer</a></li><li><a href="xrx.xml.Location.html">Location</a></li><li><a href="xrx.xml.Parser.html">Parser</a></li><li><a href="xrx.xml.Pilot.html">Pilot</a></li><li><a href="xrx.xml.Reader.html">Reader</a></li><li><a href="xrx.xml.Stream.html">Stream</a></li><li><a href="xrx.xpath.Context.html">Context</a></li><li><a href="xrx.xpath.Expr.html">Expr</a></li><li><a href="xrx.xpath.FilterExpr.html">FilterExpr</a></li><li><a href="xrx.xpath.FunctionCall.html">FunctionCall</a></li><li><a href="xrx.xpath.KindTest.html">KindTest</a></li><li><a href="xrx.xpath.Lexer.html">Lexer</a></li><li><a href="xrx.xpath.Literal.html">Literal</a></li><li><a href="xrx.xpath.NameTest.html">NameTest</a></li><li><a href="xrx.xpath.NodeSet.html">NodeSet</a></li><li><a href="xrx.xpath.NodeSet.Iterator.html">Iterator</a></li><li><a href="xrx.xpath.Number.html">Number</a></li><li><a href="xrx.xpath.Parser.html">Parser</a></li><li><a href="xrx.xpath.PathExpr.html">PathExpr</a></li><li><a href="xrx.xpath.PathExpr.ContextHelperExpr.html">ContextHelperExpr</a></li><li><a href="xrx.xpath.PathExpr.RootHelperExpr.html">RootHelperExpr</a></li><li><a href="xrx.xpath.Predicates.html">Predicates</a></li><li><a href="xrx.xpath.Step.html">Step</a></li><li><a href="xrx.xpath.UnaryExpr.html">UnaryExpr</a></li><li><a href="xrx.xpath.UnionExpr.html">UnionExpr</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AngularShape">AngularShape</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="global.html#viewbox/viewboxViewboxTransform.js">viewbox/viewboxViewboxTransform.js</a></li><li><a href="xrx.canvas.html">canvas</a></li><li><a href="xrx.canvas.Canvas.html">Canvas</a></li><li><a href="xrx.canvas.Circle.html">Circle</a></li><li><a href="xrx.canvas.Container.html">Container</a></li><li><a href="xrx.canvas.Element.html">Element</a></li><li><a href="xrx.canvas.Ellipse.html">Ellipse</a></li><li><a href="xrx.canvas.Group.html">Group</a></li><li><a href="xrx.canvas.Image.html">Image</a></li><li><a href="xrx.canvas.Line.html">Line</a></li><li><a href="xrx.canvas.Polygon.html">Polygon</a></li><li><a href="xrx.canvas.Polyline.html">Polyline</a></li><li><a href="xrx.canvas.Rect.html">Rect</a></li><li><a href="xrx.canvas.Stylable.html">Stylable</a></li><li><a href="xrx.drawing.Drawing.html">Drawing</a></li><li><a href="xrx.drawing.EventHandler.html">EventHandler</a></li><li><a href="xrx.drawing.FastAffineTransform.html">FastAffineTransform</a></li><li><a href="xrx.drawing.Hoverable.html">Hoverable</a></li><li><a href="xrx.drawing.Layer.html">Layer</a></li><li><a href="xrx.drawing.LayerBackground.html">LayerBackground</a></li><li><a href="xrx.drawing.LayerShape.html">LayerShape</a></li><li><a href="xrx.drawing.LayerShapeCreate.html">LayerShapeCreate</a></li><li><a href="xrx.drawing.LayerShapeModify.html">LayerShapeModify</a></li><li><a href="xrx.drawing.LayerTool.html">LayerTool</a></li><li><a href="xrx.drawing.Modifiable.html">Modifiable</a></li><li><a href="xrx.drawing.Selectable.html">Selectable</a></li><li><a href="xrx.drawing.tool.Magnifier.html">Magnifier</a></li><li><a href="xrx.engine.html">engine</a></li><li><a href="xrx.engine.Element.html">Element</a></li><li><a href="xrx.engine.Engine.html">Engine</a></li><li><a href="xrx.engine.Engines.html">Engines</a></li><li><a href="xrx.event.HandlerTarget.html">HandlerTarget</a></li><li><a href="xrx.geometry.Circle.html">Circle</a></li><li><a href="xrx.geometry.Ellipse.html">Ellipse</a></li><li><a href="xrx.geometry.Geometry.html">Geometry</a></li><li><a href="xrx.geometry.Line.html">Line</a></li><li><a href="xrx.geometry.Path.html">Path</a></li><li><a href="xrx.geometry.Polyline.html">Polyline</a></li><li><a href="xrx.geometry.Rect.html">Rect</a></li><li><a href="xrx.shape.Canvas.html">Canvas</a></li><li><a href="xrx.shape.Circle.html">Circle</a></li><li><a href="xrx.shape.CircleCreatable.html">CircleCreatable</a></li><li><a href="xrx.shape.CircleHoverable.html">CircleHoverable</a></li><li><a href="xrx.shape.CircleModifiable.html">CircleModifiable</a></li><li><a href="xrx.shape.CircleSelectable.html">CircleSelectable</a></li><li><a href="xrx.shape.Container.html">Container</a></li><li><a href="xrx.shape.Dragger.html">Dragger</a></li><li><a href="xrx.shape.Ellipse.html">Ellipse</a></li><li><a href="xrx.shape.EllipseCreatable.html">EllipseCreatable</a></li><li><a href="xrx.shape.EllipseHoverable.html">EllipseHoverable</a></li><li><a href="xrx.shape.EllipseModifiable.html">EllipseModifiable</a></li><li><a href="xrx.shape.EllipseModifiable.create.html">create</a></li><li><a href="xrx.shape.EllipseSelectable.html">EllipseSelectable</a></li><li><a href="xrx.shape.Group.html">Group</a></li><li><a href="xrx.shape.Image.html">Image</a></li><li><a href="xrx.shape.Line.html">Line</a></li><li><a href="xrx.shape.LineCreatable.html">LineCreatable</a></li><li><a href="xrx.shape.LineHoverable.html">LineHoverable</a></li><li><a href="xrx.shape.LineModifiable.html">LineModifiable</a></li><li><a href="xrx.shape.LineModifiable.create.html">create</a></li><li><a href="xrx.shape.LineSelectable.html">LineSelectable</a></li><li><a href="xrx.shape.Polygon.html">Polygon</a></li><li><a href="xrx.shape.PolygonCreatable.html">PolygonCreatable</a></li><li><a href="xrx.shape.PolygonHoverable.html">PolygonHoverable</a></li><li><a href="xrx.shape.PolygonModifiable.html">PolygonModifiable</a></li><li><a href="xrx.shape.PolygonSelectable.html">PolygonSelectable</a></li><li><a href="xrx.shape.Polyline.html">Polyline</a></li><li><a href="xrx.shape.PolylineCreatable.html">PolylineCreatable</a></li><li><a href="xrx.shape.PolylineHoverable.html">PolylineHoverable</a></li><li><a href="xrx.shape.PolylineModifiable.html">PolylineModifiable</a></li><li><a href="xrx.shape.PolylineSelectable.html">PolylineSelectable</a></li><li><a href="xrx.shape.Rect.html">Rect</a></li><li><a href="xrx.shape.RectCreatable.html">RectCreatable</a></li><li><a href="xrx.shape.RectModifiable.html">RectModifiable</a></li><li><a href="xrx.shape.RenderStylable.html">RenderStylable</a></li><li><a href="xrx.shape.Shape.html">Shape</a></li><li><a href="xrx.shape.Shapes.html">Shapes</a></li><li><a href="xrx.shape.Stylable.html">Stylable</a></li><li><a href="xrx.svg.html">svg</a></li><li><a href="xrx.svg.Canvas.html">Canvas</a></li><li><a href="xrx.svg.Circle.html">Circle</a></li><li><a href="xrx.svg.Container.html">Container</a></li><li><a href="xrx.svg.Element.html">Element</a></li><li><a href="xrx.svg.Ellipse.html">Ellipse</a></li><li><a href="xrx.svg.Group.html">Group</a></li><li><a href="xrx.svg.Image.html">Image</a></li><li><a href="xrx.svg.Line.html">Line</a></li><li><a href="xrx.svg.Polygon.html">Polygon</a></li><li><a href="xrx.svg.Polyline.html">Polyline</a></li><li><a href="xrx.svg.Rect.html">Rect</a></li><li><a href="xrx.svg.Stylable.html">Stylable</a></li><li><a href="xrx.viewbox.Viewbox.html">Viewbox</a></li><li><a href="xrx.viewbox.ViewboxGeometry.html">ViewboxGeometry</a></li><li><a href="xrx.viewbox.ViewboxRotate.html">ViewboxRotate</a></li><li><a href="xrx.viewbox.ViewboxTranslate.html">ViewboxTranslate</a></li><li><a href="xrx.viewbox.ViewboxZoom.html">ViewboxZoom</a></li><li><a href="xrx.vml.html">vml</a></li><li><a href="xrx.vml.Canvas.html">Canvas</a></li><li><a href="xrx.vml.Circle.html">Circle</a></li><li><a href="xrx.vml.Container.html">Container</a></li><li><a href="xrx.vml.Element.html">Element</a></li><li><a href="xrx.vml.Ellipse.html">Ellipse</a></li><li><a href="xrx.vml.Group.html">Group</a></li><li><a href="xrx.vml.Image.html">Image</a></li><li><a href="xrx.vml.Line.html">Line</a></li><li><a href="xrx.vml.Polygon.html">Polygon</a></li><li><a href="xrx.vml.Polyline.html">Polyline</a></li><li><a href="xrx.vml.Rect.html">Rect</a></li><li><a href="xrx.vml.Stylable.html">Stylable</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Fri Sep 18 2015 21:12:10 GMT+0200 (MESZ)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha8</a> on Wed Sep 30 2015 16:54:18 GMT+0200 (MESZ)
 </footer>
 
 <script> prettyPrint(); </script>
