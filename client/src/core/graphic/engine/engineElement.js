@@ -6,6 +6,10 @@ goog.provide('xrx.engine.Element');
 
 
 
+goog.require('xrx.engine');
+
+
+
 /**
  * Abstract super-class of all engine elements.
  * @constructor

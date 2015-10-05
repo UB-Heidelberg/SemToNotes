@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Basic Template</title>
+    <style>
+      #drawing {
+      width: 100px;
+      height: 100px;
+      border: solid black 1px;
+      }
+    </style>
+    <script src='../../xrx.api.graphic.min.js'></script>
+  </head>
+  <body>
+    <h1>Basic Template</h1>
+    <div id="drawing"></div>
+    <script>
+      (function() {
+        var element = document.getElementById('drawing');
+        var drawing = new xrx.drawing.Drawing(element);
+        var circle = xrx.shape.Circle.create(drawing);
+        drawing.addShapes(circle);
+        circle.setCenter(60, 60);
+        circle.setRadius(30);
+        circle.setStrokeColor('magenta');
+        circle.setStrokeWidth(4);
+        drawing.draw();
+        return drawing;
+      })();
+    </script>
+  </body>
+</html>

@@ -5,7 +5,9 @@
 
 goog.provide('xrx.shape.Rect');
 goog.provide('xrx.shape.RectCreatable');
+goog.provide('xrx.shape.RectHoverable');
 goog.provide('xrx.shape.RectModifiable');
+goog.provide('xrx.shape.RectSelectable');
 
 
 
@@ -13,7 +15,10 @@ goog.require('goog.array');
 goog.require('xrx.geometry.Path');
 goog.require('xrx.shape.Creatable');
 goog.require('xrx.shape.Dragger');
+goog.require('xrx.shape.Hoverable');
+goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.PathLike');
+goog.require('xrx.shape.Selectable');
 
 
 
@@ -120,32 +125,6 @@ xrx.shape.Rect.prototype.getHeight = function() {
 
 
 /**
- * Draws this rectangle.
- */
-xrx.shape.Rect.prototype.draw = function() {
-  this.startDrawing_();
-  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
-      this.getFillOpacity(), this.getStrokeColor(), this.getRenderingStrokeWidth());
-  this.finishDrawing_();
-};
-
-
-
-/**
- * Creates a new rectangle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Rect.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createRect(engineCanvas);
-  return new xrx.shape.Rect(drawing, engineElement);
-};
-
-
-
-/**
  * Function makes sure that the underlying polygon rendering class
  * stays a rectangle.
  * @param {number} position The nth vertex currently modified.
@@ -169,9 +148,51 @@ xrx.shape.Rect.prototype.setAffineCoords = function(position) {
 
 
 /**
+ * Draws this rectangle.
+ */
+xrx.shape.Rect.prototype.draw = function() {
+  this.startDrawing_();
+  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
+      this.getFillOpacity(), this.getStrokeColor(), this.getRenderingStrokeWidth());
+  this.finishDrawing_();
+};
+
+
+
+xrx.shape.Rect.prototype.getHoverable = function() {
+  if (!this.hoverable_) this.hoverable_ = xrx.shape.RectHoverable.create(this);
+  return this.hoverable_;
+};
+
+
+
+xrx.shape.Rect.prototype.setHoverable = function(hoverable) {
+  if (!hoverable instanceof xrx.shape.RectHoverable)
+      throw Error('Instance of xrx.shape.RectHoverable expected.');
+  this.hoverable_ = hoverable;
+};
+
+
+
+xrx.shape.Rect.prototype.getSelectable = function() {
+  if (!this.selectable_) this.selectable_ = xrx.shape.RectSelectable.create(this);
+  return this.selectable_;
+};
+
+
+
+xrx.shape.Rect.prototype.setSelectable = function(selectable) {
+  if (!selectable instanceof xrx.shape.RectSelectable)
+      throw Error('Instance of xrx.shape.RectSelectable expected.');
+  this.selectable_ = selectable;
+};
+
+
+
+/**
  * Returns a modifiable rectangle shape. Create it lazily if not existent.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.RectModifiable} The modifiable rectangle shape.
+ * @return {xrx.shape.LineModifiable} The modifiable rectangle shape.
  */
 xrx.shape.Rect.prototype.getModifiable = function(drawing) {
   if (!this.modifiable_) this.modifiable_ = xrx.shape.RectModifiable.create(this);
@@ -180,13 +201,78 @@ xrx.shape.Rect.prototype.getModifiable = function(drawing) {
 
 
 
+xrx.shape.Rect.prototype.setModifiable = function(modifiable) {
+  if (!modifiable instanceof xrx.shape.RectModifiable)
+      throw Error('Instance of xrx.shape.RectModifiable expected.');
+  this.modifiable_ = modifiable;
+};
+
+
+
 /**
  * Returns a creatable rectangle shape. Create it lazily if not existent.
- * @return {xrx.shape.RectCreatable} The creatable rectangle shape.
+ * @return {xrx.shape.EllipseCreatable} The creatable rectangle shape.
  */
 xrx.shape.Rect.prototype.getCreatable = function() {
   if (!this.creatable_) this.creatable_ = xrx.shape.RectCreatable.create(this);
   return this.creatable_;
+};
+
+
+
+xrx.shape.Rect.prototype.setCreatable = function(creatable) {
+  if (!creatable instanceof xrx.shape.RectCreatable)
+      throw Error('Instance of xrx.shape.RectCreatable expected.');
+  this.creatable_ = creatable;
+};
+
+
+
+/**
+ * Creates a new rectangle shape.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ */
+xrx.shape.Rect.create = function(drawing) {
+  var shapeCanvas = drawing.getCanvas();
+  var engine = shapeCanvas.getEngine();
+  var engineCanvas = shapeCanvas.getEngineElement();
+  var engineElement = engine.createRect(engineCanvas);
+  return new xrx.shape.Rect(drawing, engineElement);
+};
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.RectHoverable = function(rect) {
+
+  goog.base(this, rect);
+};
+goog.inherits(xrx.shape.RectHoverable, xrx.shape.Hoverable);
+
+
+
+xrx.shape.RectHoverable.create = function(rect) {
+  return new xrx.shape.RectHoverable(rect);
+};
+
+
+
+
+/**
+ * @constructor
+ */
+xrx.shape.RectSelectable = function(rect) {
+
+  goog.base(this, rect);
+};
+goog.inherits(xrx.shape.RectSelectable, xrx.shape.Selectable);
+
+
+
+xrx.shape.RectSelectable.create = function(rect) {
+  return new xrx.shape.RectSelectable(rect);
 };
 
 
@@ -233,21 +319,33 @@ xrx.shape.RectModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+xrx.shape.RectModifiable.prototype.move = function(distX, distY) {
+  var coords = this.shape_.getCoordsCopy();
+  for (var i = 0, len = coords.length; i < len; i++) {
+    coords[i][0] += distX;
+    coords[i][1] += distY;
+  }
+  this.setCoords(coords);
+};
+
+
+
 /**
  * Creates a new modifiable rectangle shape.
- * @param {xrx.shape.Polygon} polygon The related rectangle shape.
+ * @param {xrx.shape.Rect} polygon The related rectangle shape.
  */
 xrx.shape.RectModifiable.create = function(rect) {
   var coords = rect.getCoords();
   var draggers = [];
   var dragger;
+  var modifiable = new xrx.shape.RectModifiable(rect);
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(rect.getCanvas());
+    dragger = xrx.shape.Dragger.create(modifiable, i);
     dragger.setCoords([coords[i]]);
-    dragger.setPosition(i);
     draggers.push(dragger);
   }
-  return new xrx.shape.RectModifiable(rect, draggers);
+  modifiable.setDragger(draggers);
+  return modifiable;
 };
 
 
@@ -259,14 +357,7 @@ xrx.shape.RectModifiable.create = function(rect) {
  */
 xrx.shape.RectCreatable = function(rect) {
 
-  goog.base(this, rect, xrx.shape.Rect.create(rect.getCanvas()));
-
-  /**
-   * Number of vertexes the user has created so far.
-   * @type {number}
-   * @private
-   */
-  this.count_ = 0;
+  goog.base(this, rect, xrx.shape.Rect.create(rect.getDrawing()));
 };
 goog.inherits(xrx.shape.RectCreatable, xrx.shape.Creatable);
 
@@ -277,44 +368,41 @@ goog.inherits(xrx.shape.RectCreatable, xrx.shape.Creatable);
  * @return Array<Array<number>> The coordinates.
  */
 xrx.shape.RectCreatable.prototype.getCoords = function() {
-  return this.helper_.getCoords();
+  return this.preview_.getCoords();
 };
 
 
 
 /**
- * Handles click events for a creatable rectangle shape.
+ * Handles down events for a creatable rectangle shape.
  * @param {goog.events.BrowserEvent} e The browser event.
  */
-xrx.shape.RectCreatable.prototype.handleClick = function(e, point, shape) {
-  if (this.count_ === 1) { // The user creates the second vertex and
-                           // in that the rectangle
-    // insert a rectangle
-    var rect = xrx.shape.Rect.create(this.target_.getCanvas());
-    rect.setStylable(this.target_);
-    rect.setCoords(this.helper_.getCoordsCopy());
-    this.eventHandler_.eventShapeCreated(rect);
-    // reset for next drawing
-    this.count_ = 0;
-  } else { // The user creates the first vertex
-    // initialize helper coordinates
-    var coords = new Array(4);
-    coords[0] = goog.array.clone(point);
-    coords[1] = goog.array.clone(point);
-    coords[2] = goog.array.clone(point);
-    coords[3] = goog.array.clone(point);
-    this.helper_.setCoords(coords);
-    this.count_ += 1;
-    this.eventHandler_.eventShapeCreate([this.helper_]);
-  }
+xrx.shape.RectCreatable.prototype.handleDown = function(e, cursor) {
+  var point = cursor.getPointTransformed();
+  var coords = new Array(4);
+  coords[0] = goog.array.clone(point);
+  coords[1] = goog.array.clone(point);
+  coords[2] = goog.array.clone(point);
+  coords[3] = goog.array.clone(point);
+  this.preview_.setCoords(coords);
+  this.target_.getDrawing().eventShapeCreate([this.preview_]);
 };
 
 
 
-xrx.shape.RectCreatable.prototype.handleMove = function(e, point, shape) {
-  if (this.count_ === 0) return;
-  this.helper_.setCoordAt(2, point);
-  this.helper_.setAffineCoords(2);
+xrx.shape.RectCreatable.prototype.handleMove = function(e, cursor) {
+  var point = cursor.getPointTransformed();
+  this.preview_.setCoordAt(2, point);
+  this.preview_.setAffineCoords(2);
+};
+
+
+
+xrx.shape.RectCreatable.prototype.handleUp = function(e, cursor) {
+  var rect = xrx.shape.Rect.create(this.target_.getDrawing());
+  rect.setStyle(this.target_);
+  rect.setCoords(this.preview_.getCoordsCopy());
+  this.target_.getDrawing().eventShapeCreated(rect);
 };
 
 

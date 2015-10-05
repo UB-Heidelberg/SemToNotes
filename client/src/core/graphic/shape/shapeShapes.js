@@ -6,6 +6,7 @@ goog.provide('xrx.shape.Shapes');
 
 
 
+goog.require('xrx.shape');
 goog.require('xrx.shape.Canvas');
 goog.require('xrx.shape.Circle');
 goog.require('xrx.shape.CircleCreatable');
@@ -36,7 +37,9 @@ goog.require('xrx.shape.PolylineModifiable');
 goog.require('xrx.shape.PolylineSelectable');
 goog.require('xrx.shape.Rect');
 goog.require('xrx.shape.RectCreatable');
+goog.require('xrx.shape.RectHoverable');
 goog.require('xrx.shape.RectModifiable');
+goog.require('xrx.shape.RectSelectable');
 goog.require('xrx.shape.Dragger');
 
 

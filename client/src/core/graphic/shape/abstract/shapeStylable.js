@@ -6,6 +6,10 @@ goog.provide('xrx.shape.Stylable');
 
 
 
+goog.require('xrx.shape');
+
+
+
 /**
  * A class describing style information for shapes.
  * @constructor

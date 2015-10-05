@@ -101,7 +101,7 @@ xrx.shape.Polygon.prototype.setModifiable = function(modifiable) {
 
 /**
  * Returns a creatable polygon shape. Create it lazily if not existent.
- * @return {xrx.shape.EllipseCreatable} The creatable polygon shape.
+ * @return {xrx.shape.PolygonCreatable} The creatable polygon shape.
  */
 xrx.shape.Polygon.prototype.getCreatable = function() {
   if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreatable.create(this);

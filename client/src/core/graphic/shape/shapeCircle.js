@@ -340,7 +340,6 @@ xrx.shape.CircleCreatable.prototype.handleDown = function(e, cursor) {
  */
 xrx.shape.CircleCreatable.prototype.handleMove = function(e, cursor) {
   var point = cursor.getPointTransformed();
-  if (this.count_ === 0) return;
   var distX = point[0] - this.point_[0];
   var distY = point[1] - this.point_[1];
   this.preview_.setCenter(point[0] - distX / 2, point[1] - distY / 2);

@@ -5,14 +5,15 @@ goog.provide('xrx.demo.Demo');
 
 
 goog.require('goog.dom.classes');
+goog.require('goog.dom.dataset');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventType');
 goog.require('goog.net.XhrIo');
 goog.require('goog.string');
+goog.require('goog.style');
 goog.require('xrx.graphic');
-goog.require('xrx.drawing.Drawing');
 
 
 
@@ -26,13 +27,24 @@ xrx.demo.Demo = function() {
 
   this.handler_ =  new goog.events.EventHandler(this);
 
+  this.example_;
+
+  this.status_ = true;
+
   this.init_();
 };
 
 
 
+xrx.demo.Demo.prototype.getExampleId = function() {
+  return goog.dom.getWindow().location.hash.split('!')[1];
+};
+
+
+
 xrx.demo.Demo.prototype.isPageExamples = function(hash) {
-  return hash === 'examples';
+  var tok = hash.split('\!');
+  return hash === 'examples' || tok[0] === 'examples';
 };
 
 
@@ -64,6 +76,7 @@ xrx.demo.Demo.prototype.reset_ = function() {
 
 xrx.demo.Demo.prototype.loadPage_ = function(title, url, navbarLink,
       opt_callback) {
+  this.reset_();
   var self = this;
   var contentElement = goog.dom.getElement('content');
   var titleElement = goog.dom.getElementsByTagNameAndClass('title')[0];
@@ -75,9 +88,11 @@ xrx.demo.Demo.prototype.loadPage_ = function(title, url, navbarLink,
     var html = goog.dom.htmlToDocumentFragment(text);
     if (e.target.getStatus() === 200) {
       goog.dom.replaceNode(html, contentElement);
+      self.status_ = true;
     } else {
       goog.dom.setTextContent(fallback, e.target.getStatusText());
       goog.dom.replaceNode(fallback, contentElement);
+      self.status_ = false;
     }
     if (self.activeNavbarLink_) goog.dom.classes.remove(self.activeNavbarLink_,
         'active');
@@ -97,8 +112,9 @@ xrx.demo.Demo.prototype.loadPageHome_ = function() {
 
 
 xrx.demo.Demo.prototype.loadPageExamples_ = function() {
-  var initLinks = function(demo) {
+  var init = function(demo) {
     var href;
+    var b = goog.dom.getElementsByTagNameAndClass('body')[0];
     var contentElement = goog.dom.getElement('content');
     var links = goog.dom.getElementsByTagNameAndClass('a');
     for(var i = 0, len = links.length; i < len; i++) {
@@ -111,22 +127,71 @@ xrx.demo.Demo.prototype.loadPageExamples_ = function() {
     }
   }
   this.loadPage_('Examples | SemToNotes', 'client/demo/examples.html',
-      goog.dom.getElement('examplesLink'), initLinks);
+      goog.dom.getElement('examplesLink'), init);
 };
 
 
 
-xrx.demo.Demo.prototype.loadPageExample_ = function(pageId) {
+xrx.demo.Demo.prototype.installExampleBacklink_ = function(exampleId) {
+  var self = this;
+  var content = goog.dom.getElement('content');
+  var backlink = goog.dom.htmlToDocumentFragment(
+      '<a class="glyphicon glyphicon-arrow-left" href="#examples!' +
+      exampleId + '"><strong> back</strong></a>');
+  this.handler_.listen(backlink, goog.events.EventType.CLICK, function(e) {
+    self.loadPageExamples_();
+  });
+  goog.dom.insertChildAt(content, backlink, 0);
+};
+
+
+
+xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId) {
+  var content = goog.dom.getElement('content');
+  var type = goog.dom.dataset.get(content, 'type') || 'js';
+  var wrapper = goog.dom.createElement('div');
+  var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Usage</h3>') :
+      goog.dom.htmlToDocumentFragment('<h3>Source</h3>');
+  var pre = goog.dom.createElement('pre');
+  var href = type === 'js' ? 'client/demo/example/' + exampleId + '.js' :
+      'client/demo/example/' + exampleId + '.htm.html';
+  var label = type === 'js' ? 'View Source &raquo;' : 'Try it yourself &raquo;'
+  var viewSource = goog.dom.htmlToDocumentFragment(
+      '<a href="' + href + '">' + label + '</a>');
+  goog.dom.append(wrapper, [heading, pre, viewSource]);
+  goog.dom.append(content, wrapper);
+  goog.dom.setTextContent(pre, src);
+  goog.dom.classes.add(pre, 'lang-' + type);
+  goog.dom.classes.add(pre, 'prettyprint');
+  PR.prettyPrint();
+};
+
+
+
+xrx.demo.Demo.prototype.installExample_ = function(src, exampleId) {
+  var content = goog.dom.getElement('content');
+  var type = goog.dom.dataset.get(content, 'type') || 'js';
+  this.installExampleBacklink_(exampleId);
+  this.installExampleSource_(src, exampleId);
+  type === 'js' ? this.example_ = eval(src) : this.example_ = null;
+};
+
+
+
+xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
+  var self = this;
   var loadScript = function(demo) {
-    var oldScript = goog.dom.getElement('exampleScript');
-    var newScript = goog.dom.htmlToDocumentFragment(
-        '<script tyle="text/javascript" id="exampleScript" src="client/demo/example/' +
-        'rendering-shapes.js">');
-    goog.dom.replaceNode(newScript, oldScript);
-    goog.dom.getWindow().example();
-  }
+    var content = goog.dom.getElement('content');
+    var type = goog.dom.dataset.get(content, 'type') || 'js';
+    var url = type === 'js' ? 'client/demo/example/' + exampleId + '.' + type :
+        'client/demo/example/' + exampleId + '.htm.' + type
+    goog.net.XhrIo.send(url, function(e) {
+      var src = e.target.getResponseText();
+      if (self.status_ === true) demo.installExample_(src, exampleId);
+    });
+  };
   this.loadPage_('Example | SemToNotes', 'client/demo/example/' + 
-      pageId + '.html', undefined, loadScript);
+      exampleId + '.html', undefined, loadScript);
 };
 
 

@@ -9,7 +9,6 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.graphic');
-  goog.require('xrx.drawing.Drawing');
 </script>
 <link rel="stylesheet" type="text/css" href="./shapeTest.css">
 </head>
@@ -23,19 +22,41 @@ createTables('Rect', goog.dom);
 
 
 function getRects(drawing) {
+  var hoverableStyle = new xrx.shape.Stylable();
+  hoverableStyle.setFillColor('green');
+  hoverableStyle.setFillOpacity(.2);
+  hoverableStyle.setStrokeColor('green');
+  hoverableStyle.setStrokeWidth(2);
+  var selectableStyle = new xrx.shape.Selectable();
+  selectableStyle.setFillColor('grey');
+  selectableStyle.setFillOpacity(.2);
+  selectableStyle.setStrokeColor('yellow');
+  selectableStyle.setStrokeWidth(2);
   var coords1 = [[12,12], [12,25], [25,25], [25,12]];
   var coords2 = [[112,112], [112,125], [125,125], [125,112]];
   var coords3 = [[212,212], [212,315], [315,315], [315,212]];
-  var rect1 = xrx.shape.Rect.create(drawing.getCanvas());
-  var rect2 = xrx.shape.Rect.create(drawing.getCanvas());
-  var rect3 = xrx.shape.Rect.create(drawing.getCanvas());
+  var coords4 = [[200,200], [200,300], [300,300], [300,200]];
+  var rect1 = xrx.shape.Rect.create(drawing);
+  var rect2 = xrx.shape.Rect.create(drawing);
+  var rect3 = xrx.shape.Rect.create(drawing);
+  var rect4 = xrx.shape.Rect.create(drawing);
   rect1.setCoords(coords1);
   rect1.setStrokeWidth(1);
+  rect1.getHoverable().setStyle(hoverableStyle);
+  rect1.getSelectable().setStyle(selectableStyle);
   rect2.setCoords(coords2);
   rect2.setStrokeWidth(1);
+  rect2.getHoverable().setStyle(hoverableStyle);
+  rect2.getSelectable().setStyle(selectableStyle);
   rect3.setCoords(coords3);
   rect3.setStrokeWidth(1);
-  return [rect1, rect2, rect3];
+  rect3.getHoverable().setStyle(hoverableStyle);
+  rect3.getSelectable().setStyle(selectableStyle);
+  rect4.setCoords(coords4);
+  rect4.setStrokeWidth(1);
+  rect4.getHoverable().setStyle(hoverableStyle);
+  rect4.getSelectable().setStyle(selectableStyle);
+  return [rect1, rect2, rect3, rect4];
 };
 
 
@@ -46,13 +67,31 @@ function test1View() {
 
 
 
-function test2Modify() {
+function test2Hover() {
+  modeHover('Rect');
+};
+
+
+
+function test3HoverMultiple() {
+  modeHoverMultiple('Rect');
+};
+
+
+
+function test4Select() {
+  modeSelect('Rect');
+};
+
+
+
+function test5Modify() {
   modeModify('Rect'); 
 };
 
 
 
-function test3Create() {
+function test6Create() {
   modeCreate('Rect');
 };
 

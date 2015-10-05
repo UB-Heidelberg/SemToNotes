@@ -52,4 +52,6 @@
   // we explicitly have to draw the canvas
   drawing.draw();
 
+  return drawing;
+
 })();
