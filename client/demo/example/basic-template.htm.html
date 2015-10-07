@@ -1,18 +1,23 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Basic Template</title>
+    <script src="../../xrx.api.graphic.min.js"></script>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
       #drawing {
       width: 100px;
       height: 100px;
-      border: solid black 1px;
       }
     </style>
-    <script src='../../xrx.api.graphic.min.js'></script>
   </head>
   <body>
-    <h1>Basic Template</h1>
-    <div id="drawing"></div>
+    <div class="container">
+      <h1>Basic Template</h1>
+      <div id="drawing"></div>
+    </div>
+    <!-- alternatively you can include the source file here -->
+    <!--script src="../../xrx.api.graphic.min.js"></script-->
     <script>
       (function() {
         var element = document.getElementById('drawing');

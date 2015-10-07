@@ -229,14 +229,9 @@ xrx.drawing.Drawing.prototype.getCreate = function() {
 
 
 
-xrx.drawing.Drawing.prototype.setWidth = function(width) {
-  this.canvas_.setWidth(width);
-};
-
-
-
-xrx.drawing.Drawing.prototype.setHeight = function(height) {
-  this.canvas_.setHeight(height);
+xrx.drawing.Drawing.prototype.setSize = function(width, height) {
+  goog.style.setSize(this.element_, width + 'px', height + 'px');
+  this.handleResize();
 };
 
 
@@ -435,10 +430,11 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
  * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  this.canvas_.setHeight(this.element_.clientHeight);
-  this.canvas_.setWidth(this.element_.clientWidth);
-  this.shield_.setHeight(this.element_.clientHeight);
-  this.shield_.setWidth(this.element_.clientWidth);
+  var size = this.getSize_();
+  this.canvas_.setHeight(size.height);
+  this.canvas_.setWidth(size.width);
+  this.shield_.setHeight(size.height);
+  this.shield_.setWidth(size.width);
   this.draw();
 };
 
@@ -447,15 +443,32 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
 /**
  * @private
  */
+xrx.drawing.Drawing.prototype.getSize_ = function() {
+  var size = goog.style.getSize(this.element_);
+  var paddingBox = goog.style.getPaddingBox(this.element_);
+  var borderBox = goog.style.getBorderBox(this.element_);
+  var height = size.height - paddingBox.top - paddingBox.bottom -
+      borderBox.top - borderBox.bottom;
+  var width = size.width - paddingBox.left - paddingBox.right -
+      borderBox.left - borderBox.right;
+  return { width: width, height: height };
+};
+
+
+
+/**
+ * @private
+ */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
+  var size = this.getSize_();
   var self = this;
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
   this.canvas_ = xrx.shape.Canvas.create(this);
-  this.canvas_.setHeight(this.element_.clientHeight);
-  this.canvas_.setWidth(this.element_.clientWidth);
+  this.canvas_.setHeight(size.height);
+  this.canvas_.setWidth(size.width);
 };
 
 
@@ -514,11 +527,12 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
+  var size = this.getSize_();
   this.shield_ = xrx.shape.Rect.create(this);
   this.shield_.setX(0);
   this.shield_.setY(0);
-  this.shield_.setWidth(this.element_.clientWidth);
-  this.shield_.setHeight(this.element_.clientHeight);
+  this.shield_.setWidth(size.width);
+  this.shield_.setHeight(size.height);
   this.shield_.setFillOpacity(0);
   this.shield_.setStrokeWidth(0);
   this.canvas_.addChildren(this.shield_);

@@ -66,7 +66,8 @@ xrx.vml.Canvas.prototype.getWidth = function() {
  */
 xrx.vml.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
-  //goog.style.setSize(this.element_, width, this.height_);
+  this.element_.parentElement.style['width'] = width + 'px';
+  this.element_.style['width'] = width + 'px';
 };
 
 
@@ -87,7 +88,8 @@ xrx.vml.Canvas.prototype.getHeight = function() {
  */
 xrx.vml.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
-  //goog.style.setSize(this.element_, this.width_, height);
+  this.element_.parentElement.style['height'] = height + 'px';
+  this.element_.style['height'] = height + 'px';
 };
 
 

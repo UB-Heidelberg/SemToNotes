@@ -151,7 +151,7 @@ xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId) {
   var type = goog.dom.dataset.get(content, 'type') || 'js';
   var wrapper = goog.dom.createElement('div');
   var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Usage</h3>') :
-      goog.dom.htmlToDocumentFragment('<h3>Source</h3>');
+      goog.dom.htmlToDocumentFragment('<h3>Example</h3>');
   var pre = goog.dom.createElement('pre');
   var href = type === 'js' ? 'client/demo/example/' + exampleId + '.js' :
       'client/demo/example/' + exampleId + '.htm.html';
@@ -188,7 +188,7 @@ xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
     goog.net.XhrIo.send(url, function(e) {
       var src = e.target.getResponseText();
       if (self.status_ === true) demo.installExample_(src, exampleId);
-    });
+    }, undefined, { cache: false });
   };
   this.loadPage_('Example | SemToNotes', 'client/demo/example/' + 
       exampleId + '.html', undefined, loadScript);

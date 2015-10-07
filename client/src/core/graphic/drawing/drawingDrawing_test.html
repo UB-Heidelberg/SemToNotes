@@ -9,32 +9,37 @@
   goog.require('goog.dom.DomHelper');
   goog.require('goog.style');
   goog.require('goog.userAgent');
-  goog.require('xrx');
+  goog.require('xrx.graphic');
 </script>
 <style>
 .drawing {
-  display: block;
-  width: 150px;
-  height: 150px;
-  border: solid grey 1px;
-}
-#backgroundTest {
-  display: block;
-  
+display: block;
+width: 150px;
+height: 150px;
 }
 #canvasBackground,
 #svgBackground,
 #vmlBackground {
-  width: 200px;
-  height: 200px;
-  border: 4px solid grey;
-  background-color: #E8FAE8;
-  margin: 10px;
+width: 200px;
+height: 200px;
+background-color: #E8FAE8;
+margin: 10px;
+}
+.bordered-drawing {
+border: dashed grey 5px;
+width: 150px;
+height: 150px;
+background-color: black;
+}
+.bordered-drawing canvas,
+.bordered-drawing svg,
+.bordered-drawing group.xrx-vml {
+background-color: orange;
 }
 </style>
 </head>
 <body>
-
+<h1>API Functions</h1>
 <table>
   <tr>
     <td></td>
@@ -61,19 +66,36 @@
     <td><div id="vmlAddShapes" class="drawing"></div></td>
   </tr>
 </table>
-
-<div id="backgroundTest">
-  <h2>Background Color Test</h2>
-  <div>The examples should all show the same green background, i.e., the
+<h1>Styling Tests</h1>
+<table>
+  <tr>
+    <td></td>
+    <td>Background Color Test</td>
+    <td>Padding Test</td>
+  </tr>
+  <tr>
+    <td>Canvas</td>
+    <td><div id="canvasBackground" class="drawing"></div></td>
+    <td><div id="canvasPadding" class="bordered-drawing" style="padding: 20px;"></div></td>
+  </tr>
+  <tr>
+    <td>SVG</td>
+    <td><div id="svgBackground" class="drawing"></div></td>
+    <td><div id="svgPadding" class="bordered-drawing" style="padding: 20px;"></div></td>
+  </tr>
+  <tr>
+    <td>VML</td>
+    <td><div id="vmlBackground" class="drawing"></div></td>
+    <td><div id="vmlPadding" class="bordered-drawing" style="padding: 20px;"></div></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>The examples should all show the same green background, i.e., the
     HTMLCanvas, SVGElement and VMLElement background color should not overdraw
-    the background color of the drawing div.</div>
-  <h3>Canvas</h3>
-  <div id="canvasBackground"></div>
-  <h3>SVG</h3>
-  <div id="svgBackground"></div>
-  <h3>VML</h3>
-  <div id="vmlBackground"></div>
-</div>
+    the background color of the drawing DIV.</td>
+    <td>Is the orange engine element centered and is has 20px of padding?</td>
+  </tr>
+</table>
 
 <script type="text/javascript">
 
@@ -98,7 +120,7 @@ function getDrawingSvg(id) {
 function getDrawingVml(id) {
   var vmlDiv = goog.dom.getElement(id);
   return new xrx.drawing.Drawing(vmlDiv,
-      xrx.engine.VML, true);
+      xrx.engine.VML);
 };
 
 
@@ -110,9 +132,9 @@ function test1drawing() {
 
     // drawing size
     assertEquals(150, canvasDrawing.getElement().clientWidth);
-    assertEquals(152, canvasDrawing.getElement().offsetWidth);
+    assertEquals(150, canvasDrawing.getElement().offsetWidth);
     assertEquals(150, svgDrawing.getElement().clientWidth);
-    assertEquals(152, svgDrawing.getElement().offsetWidth);
+    assertEquals(150, svgDrawing.getElement().offsetWidth);
 
     // canvas size
     var canvasEngineElement = canvasDrawing.getCanvas().getEngineElement().getElement();
@@ -124,7 +146,7 @@ function test1drawing() {
   } else {
     var vmlDrawing = getDrawingVml('vmlDrawing');
     // drawing size
-    assertEquals(152, goog.style.getSize(vmlDrawing.getElement()).width);
+    assertEquals(150, goog.style.getSize(vmlDrawing.getElement()).width);
     // canvas size
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).width);
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).height);
@@ -144,16 +166,12 @@ function test2setBackgroundImage() {
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.draw();
     });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlBackgroundImage');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.draw();
+    });
   }
-  var vmlDrawing = getDrawingVml('vmlBackgroundImage');
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.draw();
-  });
-};
-
-
-
-function xtest3resize() {
 };
 
 
@@ -161,36 +179,34 @@ function xtest3resize() {
 function test4addShapes() {
   if (!xrx.engine.isOldIE()) {
     var canvasDrawing = getDrawingCanvas('canvasAddShapes');
-    var canvasCanvas = canvasDrawing.getCanvas();
     var svgDrawing = getDrawingSvg('svgAddShapes');
-    var svgCanvas = svgDrawing.getCanvas();
 
-    var canvasRect1 = xrx.shape.Rect.create(canvasCanvas);
+    var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
     canvasRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-    var canvasRect2 = xrx.shape.Rect.create(canvasCanvas);
+    var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
     canvasRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
 
     canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2]);
     canvasDrawing.draw();
 
-    var svgRect1 = xrx.shape.Rect.create(svgCanvas);
+    var svgRect1 = xrx.shape.Rect.create(svgDrawing);
     svgRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-    var svgRect2 = xrx.shape.Rect.create(svgCanvas);
+    var svgRect2 = xrx.shape.Rect.create(svgDrawing);
     svgRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
 
     svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2]);
     svgDrawing.draw();
+  } else {
+    var vmlDrawing = getDrawingVml('vmlAddShapes');
+
+    var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
+    vmlRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
+    var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);
+    vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
+
+    vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
+    vmlDrawing.draw();
   }
-  var vmlDrawing = getDrawingVml('vmlAddShapes');
-  var vmlCanvas = vmlDrawing.getCanvas();
-
-  var vmlRect1 = xrx.shape.Rect.create(vmlCanvas);
-  vmlRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
-  var vmlRect2 = xrx.shape.Rect.create(vmlCanvas);
-  vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
-
-  vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
-  vmlDrawing.draw();
 };
 
 
@@ -208,12 +224,24 @@ function test5background() {
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.draw();
     });
+  } else {
+    var vmlDrawing = getDrawingVml('vmlBackground');
+    vmlDrawing.setModeView();
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.draw();
+    });
   }
-  var vmlDrawing = getDrawingVml('vmlBackground');
-  vmlDrawing.setModeView();
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.draw();
-  });
+};
+
+
+
+function test6paddingFixedSize() {
+  if (!xrx.engine.isOldIE()) {
+    var canvasDrawing = getDrawingCanvas('canvasPadding');
+    var svgDrawing = getDrawingSvg('svgPadding');
+  } else {
+    var vmlDrawing = getDrawingVml('vmlBackground');
+  }
 };
 
 </script>
