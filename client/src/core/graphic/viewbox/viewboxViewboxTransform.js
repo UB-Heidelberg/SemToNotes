@@ -14,7 +14,7 @@ goog.require('xrx.viewbox.ViewboxTranslate');
 
 
 /**
- * @fileoverview A class implementing transformation functions for
+ * A class implementing transformation functions for
  * a drawing view-box.
  * @constructor
  */

@@ -16,18 +16,18 @@
       <h1>Basic Template</h1>
       <div id="drawing"></div>
     </div>
-    <!-- alternatively you can include the source file here -->
+    <!-- alternatively include the source file here -->
     <!--script src="../../xrx.api.graphic.min.js"></script-->
     <script>
       (function() {
         var element = document.getElementById('drawing');
         var drawing = new xrx.drawing.Drawing(element);
         var circle = xrx.shape.Circle.create(drawing);
-        drawing.addShapes(circle);
         circle.setCenter(60, 60);
         circle.setRadius(30);
         circle.setStrokeColor('magenta');
         circle.setStrokeWidth(4);
+        drawing.addShapes(circle);
         drawing.draw();
         return drawing;
       })();

@@ -1,5 +1,5 @@
 <div id="content" class="container" data-type="html">
-  <h1>HTML DOM and Browser Support</h1>
+  <h1>Browser Support</h1>
   <ul>
     <li>Shapes can be rendered with three different browser engines: <a href="http://www.w3.org/TR/2dcontext/">Canvas</a>,
         <a href="http://www.w3.org/TR/SVG/">SVG</a> and <a href="http://www.w3.org/TR/1998/NOTE-VML-19980513">VML</a>.</li>
@@ -10,33 +10,4 @@
     <li>It is recommended to wrap a constructor call with a <code>xrx.canvas.isSupported()</code>, <code>xrx.svg.isSupported()</code> or 
         <code>xrx.vml.isSupported()</code> condition if one forces a special rendering engine.</li>
   </ul>
-  <p>The SVG rendering engine gives nice insight into the internal mode of operation of a drawing canvas.</p>
-  <pre class="prettyprint lang-html">&lt;svg height=&quot;300&quot; width=&quot;540&quot; style=&quot;overflow: hidden;&quot;&gt;
-  &lt;g transform=&quot;matrix(1,0,0,1,0,0)&quot;&gt; &lt;!-- view-box --&gt;
-    &lt;g&gt; &lt;!-- background layer --&gt;
-      &lt;image&gt;&lt;/image&gt;
-    &lt;/g&gt;
-    &lt;g&gt; &lt;!-- shape-layer --&gt;
-      &lt;polygon points=&quot;10,10 50,15 51,100 178,120 3,190 &quot; stroke=&quot;#1919A3&quot; stroke-color=&quot;#1919A3&quot; stroke-width=&quot;4&quot;&gt;&lt;/polygon&gt;
-    &lt;/g&gt;
-    &lt;g&gt;&lt;/g&gt; &lt;!-- shape-modify-layer --&gt;
-    &lt;g&gt;&lt;/g&gt;  &lt;!-- shape-create-layer --&gt;
-  &lt;/g&gt;
-  &lt;g&gt;&lt;/g&gt;  &lt;!-- tool-layer --&gt;
-  &lt;polygon points=&quot;0,0 540,0 540,300 0,300 &quot; fill=&quot;&quot; fill-opacity=&quot;0&quot; stroke=&quot;black&quot; stroke-color=&quot;black&quot; stroke-width=&quot;0&quot;&gt;&lt;/polygon&gt;
-&lt;/svg&gt;
-  </pre>
-  <ul>
-    <li>The first child element of a drawing canvas is a graphic group <code>&lt;g&gt;</code> representing the <strong>view-box</strong> of a drawing canvas. The view-box group
-        has a transformation matrix attached that is used to realize pan-zoom-rotate functionality.</li>
-    <li>Inside the view-box group there are four different layers: <strong>background-layer</strong>, <strong>shape-layer</strong>, <strong>shape-modify-layer</strong>, and <strong>shape-create-layer</strong>.
-        holds all shapes that shall be rendered on the drawing canvas.</li>
-    <ul>
-      <li>The <strong>background-layer</strong> is useful to realize annotation functionality with a drawing canvas. Annotation tools aim to draw shapes not just on a blank paper but in front of an
-        image, PDF document or a video, for example. Currently, only images are supported for the background-layer.</li>
-      <li></li>
-    </ul>
-  </ul>
-  <p>This mode of operation is the same for all rendering engines, besides that VML rendering uses different DOM elements and the Canvas rendering engine
-     has only one DOM element <code>&lt;canvas&gt;</code> whilst all shapes are rendered on the pixel-level without any DOM representation.</p>
 </div>

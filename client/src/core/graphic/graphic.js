@@ -2,6 +2,7 @@
  * @fileoverview Graphic module.
  */
 
+goog.provide('xrx');
 goog.provide('xrx.graphic');
 
 
@@ -16,8 +17,11 @@ goog.require('xrx.shape.Shapes');
 
 
 
+/**
+ * @namespace
+ */
+xrx = function() {};
+
+
+
 xrx.graphic = function() {};
-
-
-
-goog.exportSymbol('xrx.graphic', xrx.graphic);

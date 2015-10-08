@@ -3,12 +3,9 @@
 <ul>
   <li>The size of a drawing canvas can be defined with CSS rules or programmatically.</li>
   <li>CSS sizes can be absolute values such as <code>#drawing1 { width: 200px; height: 200px; }</code> or relative values, e.g.,
-      <code>#drawing2 { width: 50%; min-height: 150px; }</code>. <strong>In the case of relative values, the drawing canvas <em>automatically</em> resizes
-      the internal rendering engine element (<code>&lt;canvas&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;vml:group&gt;</code>) whenever the size
-      of the browser window changes</strong>.</li>
+      <code>#drawing2 { width: 50%; min-height: 150px; }</code>.</li>
   <li>One can set the size programmatically with a <code>drawing3.setSize(300, 200)</code> function that expects the width and height in
-      pixel. Programmatic size definitions overwrite CSS rules. <strong>Again, the drawing canvas automatically resizes the internal rendering engine element.</strong>.</li>
+      pixel. Programmatic size definitions overwrite CSS rules.</li>
   <li>One can define all kinds of CSS styling rules for a drawing canvas such as <code>#drawing4 { background-color: #D1F0FF; margin: 20px; padding: 20px; }</code>.</li>
-  <li><span class="text-danger"><strong>It is not recommended to apply any CSS rules to the rendering engine elements. Use the drawing canvas element for styling instead</strong>.</span></li>
 </ul>
 </div>

@@ -13,6 +13,8 @@ goog.provide('xrx.drawing.State');
 
 /**
  * A static class providing enumerations for the drawing classes.
+ * @namespace xrx.drawing
+ * @memberof xrx
  */
 xrx.drawing = function() {};
 

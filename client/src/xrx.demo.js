@@ -10,6 +10,7 @@ goog.require('goog.dom.DomHelper');
 goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.events.EventType');
+goog.require('goog.History');
 goog.require('goog.net.XhrIo');
 goog.require('goog.string');
 goog.require('goog.style');
@@ -26,6 +27,8 @@ xrx.demo.Demo = function() {
   this.activeNavbarLink_;
 
   this.handler_ =  new goog.events.EventHandler(this);
+
+  this.history_ = new goog.History();
 
   this.example_;
 
@@ -114,16 +117,10 @@ xrx.demo.Demo.prototype.loadPageHome_ = function() {
 xrx.demo.Demo.prototype.loadPageExamples_ = function() {
   var init = function(demo) {
     var href;
-    var b = goog.dom.getElementsByTagNameAndClass('body')[0];
     var contentElement = goog.dom.getElement('content');
     var links = goog.dom.getElementsByTagNameAndClass('a');
     for(var i = 0, len = links.length; i < len; i++) {
       href = links[i].href;
-      if (goog.string.contains(href, 'example!')) {
-        demo.handler_.listen(links[i], goog.events.EventType.CLICK, function(e) {
-          demo.loadPageExample_(e.target.href.split('\!')[1]);
-        });
-      }
     }
   }
   this.loadPage_('Examples | SemToNotes', 'client/demo/examples.html',
@@ -146,9 +143,8 @@ xrx.demo.Demo.prototype.installExampleBacklink_ = function(exampleId) {
 
 
 
-xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId) {
+xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId, type) {
   var content = goog.dom.getElement('content');
-  var type = goog.dom.dataset.get(content, 'type') || 'js';
   var wrapper = goog.dom.createElement('div');
   var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Usage</h3>') :
       goog.dom.htmlToDocumentFragment('<h3>Example</h3>');
@@ -168,26 +164,29 @@ xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId) {
 
 
 
-xrx.demo.Demo.prototype.installExample_ = function(src, exampleId) {
-  var content = goog.dom.getElement('content');
-  var type = goog.dom.dataset.get(content, 'type') || 'js';
+xrx.demo.Demo.prototype.installExample_ = function(src, exampleId, type) {
   this.installExampleBacklink_(exampleId);
-  this.installExampleSource_(src, exampleId);
+  if (type) this.installExampleSource_(src, exampleId, type);
   type === 'js' ? this.example_ = eval(src) : this.example_ = null;
 };
 
 
 
 xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
-  var self = this;
   var loadScript = function(demo) {
     var content = goog.dom.getElement('content');
-    var type = goog.dom.dataset.get(content, 'type') || 'js';
-    var url = type === 'js' ? 'client/demo/example/' + exampleId + '.' + type :
-        'client/demo/example/' + exampleId + '.htm.' + type
+    var type = goog.dom.dataset.get(content, 'type');
+    var url;
+    if (type === 'js') {
+      url = 'client/demo/example/' + exampleId + '.js';
+    } else if (type === 'html') {
+      url = 'client/demo/example/' + exampleId + '.htm.html';
+    } else {
+      PR.prettyPrint();
+    }
     goog.net.XhrIo.send(url, function(e) {
       var src = e.target.getResponseText();
-      if (self.status_ === true) demo.installExample_(src, exampleId);
+      if (demo.status_ === true) demo.installExample_(src, exampleId, type);
     }, undefined, { cache: false });
   };
   this.loadPage_('Example | SemToNotes', 'client/demo/example/' + 
@@ -232,7 +231,7 @@ xrx.demo.Demo.prototype.installNavbar_ = function() {
 
 
 
-xrx.demo.Demo.prototype.init_ = function() {
+xrx.demo.Demo.prototype.navigate_ = function() {
   var hash = goog.dom.getWindow().location.hash.split('#')[1] ||
       'home';
   if (this.isPageExamples(hash)) {
@@ -246,6 +245,17 @@ xrx.demo.Demo.prototype.init_ = function() {
   } else {
     this.loadPageHome_();
   } 
+};
+
+
+
+xrx.demo.Demo.prototype.init_ = function() {
+  var self = this;
+  this.navigate_();
+  goog.events.listen(this.history_, goog.history.EventType.NAVIGATE,
+    self.navigate_, false, self
+  );
+  this.history_.setEnabled(true);
   this.installNavbar_();
 };
 
