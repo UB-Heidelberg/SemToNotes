@@ -11,6 +11,10 @@ goog.require('xrx.shape.Stylable');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.Hoverable = function(shape) {
 
   goog.base(this);

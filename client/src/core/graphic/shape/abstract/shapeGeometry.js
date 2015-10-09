@@ -11,6 +11,10 @@ goog.require('xrx.shape.Shape');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.Geometry = function(drawing, engineElement, geometry) {
 
   goog.base(this, drawing, engineElement);

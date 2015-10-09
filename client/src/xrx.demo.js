@@ -251,7 +251,6 @@ xrx.demo.Demo.prototype.navigate_ = function() {
 
 xrx.demo.Demo.prototype.init_ = function() {
   var self = this;
-  this.navigate_();
   goog.events.listen(this.history_, goog.history.EventType.NAVIGATE,
     self.navigate_, false, self
   );

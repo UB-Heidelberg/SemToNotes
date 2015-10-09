@@ -13,6 +13,7 @@ goog.require('xrx.shape');
 /**
  * A class describing style information for shapes.
  * @constructor
+ * @private
  */
 xrx.shape.Stylable = function() {
 

@@ -16,6 +16,7 @@ goog.require('xrx.shape.Dragger');
 /**
  * A class representing the shape currently modified by the user. 
  * @constructor
+ * @private
  */
 xrx.drawing.Modifiable = function(drawing) {
 

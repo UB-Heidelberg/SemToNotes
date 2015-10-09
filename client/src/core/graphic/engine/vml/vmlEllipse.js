@@ -15,6 +15,7 @@ goog.require('xrx.vml.Stylable');
  * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.vml.Stylable
+ * @private
  */
 xrx.vml.Ellipse = function(element) {
 

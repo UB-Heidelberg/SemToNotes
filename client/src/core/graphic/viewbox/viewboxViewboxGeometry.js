@@ -18,6 +18,7 @@ goog.require('xrx.EventTarget');
 /**
  * A class implementing geometry related functions for a drawing view-box.
  * @constructor
+ * @private
  */
 xrx.viewbox.ViewboxGeometry = function() {
 

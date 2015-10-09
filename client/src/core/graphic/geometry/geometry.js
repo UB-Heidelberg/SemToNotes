@@ -6,6 +6,12 @@ goog.provide('xrx.geometry');
 
 
 
+/**
+ * @constructor
+ * @namespace xrx.geometry
+ * @memberof xrx
+ * @private
+ */
 xrx.geometry = function() {};
 
 

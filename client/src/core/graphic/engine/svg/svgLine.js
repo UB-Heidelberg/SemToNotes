@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGLineElement} element The SVG line element.
  * @constructor
  * @extends xrx.svg.Stylable
+ * @private
  */
 xrx.svg.Line = function(element) {
 

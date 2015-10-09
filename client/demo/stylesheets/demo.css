@@ -20,6 +20,15 @@ background-color: #ccc !important;
 
 /* apidoc */
 
+body {
+line-height: 130%;
+}
+
+header {
+display: block;
+padding: 6px 4px;
+}
+
 .class-description {
 font-style: italic;
 font-family: Palatino, 'Palatino Linotype', serif;
@@ -27,6 +36,12 @@ font-size: 130%;
 line-height: 140%;
 margin-bottom: 1em;
 margin-top: 1em;
+}
+
+section {
+display: block;
+padding: 12px 24px;
+border-bottom: 1px solid #ccc;
 }
 
 .variation {
@@ -38,6 +53,14 @@ font-size: 60%;
 color: #aaa;
 font-style: italic;
 font-weight: lighter;
+}
+
+footer {
+display: block;
+padding: 6px;
+margin-top: 12px;
+font-style: italic;
+font-size: 90%;
 }
 
 .ancestors {
@@ -67,7 +90,7 @@ font-family: Consolas, "Lucida Console", Monaco, monospace;
 }
 
 .details { margin-top: 14px; border-left: 2px solid #DDD; }
-.details dt { width:100px; float:left; padding-left: 10px;  padding-top: 6px; }
+.details dt { width:100px; float:left; padding-left: 10px; padding-top: 6px; }
 .details dd { margin-left: 50px; }
 .details ul { margin: 0; }
 .details ul { list-style-type: none; }
@@ -148,7 +171,6 @@ border-collapse: collapse;
 }
 
 .params .name, .props .name, .name code {
-color: #A35A00;
 font-family: Consolas, 'Lucida Console', Monaco, monospace;
 font-size: 100%;
 }

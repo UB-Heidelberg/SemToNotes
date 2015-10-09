@@ -18,6 +18,7 @@ goog.require('xrx.vml.Container');
  * @param
  * @constructor
  * @extends xrx.vml.Element
+ * @private
  */
 xrx.vml.Canvas = function(element) {
 

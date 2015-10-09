@@ -15,6 +15,7 @@ goog.require('xrx.canvas.Stylable');
  * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
  * @extends xrx.canvas.Stylable
+ * @private
  */
 xrx.canvas.Polygon = function(canvas) {
 

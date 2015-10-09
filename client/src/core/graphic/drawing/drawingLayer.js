@@ -14,6 +14,7 @@ goog.require('xrx.shape.Group');
  * An abstract class representing a layer of a drawing canvas.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
+ * @private
  */
 xrx.drawing.Layer = function(drawing) {
 

@@ -19,6 +19,7 @@ goog.require('xrx.shape');
  * @param {xrx.engine.Element} engineElement The engine element
  *   used to render this shape.
  * @constructor
+ * @private
  */
 xrx.shape.Shape = function(drawing, engineElement) {
 

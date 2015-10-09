@@ -15,6 +15,7 @@ goog.require('xrx.engine.Element');
  * Canvas super class.
  * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
+ * @private
  */
 xrx.canvas.Element = function(canvas) {
 

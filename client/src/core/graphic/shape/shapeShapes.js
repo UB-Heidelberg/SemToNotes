@@ -47,5 +47,6 @@ goog.require('xrx.shape.Dragger');
 /**
  * Utility class useful to include all shape classes at once.
  * @constructor
+ * @private
  */
 xrx.shape.Shapes = function() {};

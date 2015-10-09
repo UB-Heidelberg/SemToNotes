@@ -9,6 +9,8 @@ goog.provide('xrx.canvas');
 /**
  * Canvas base class providing static functions.
  * @constructor
+ * @namespace xrx.canvas
+ * @memberof xrx
  */
 xrx.canvas = function() {};
 

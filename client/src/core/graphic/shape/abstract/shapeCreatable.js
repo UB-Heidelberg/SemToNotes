@@ -7,6 +7,10 @@ goog.provide('xrx.shape.Creatable');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.Creatable = function(target, preview) {
 
   this.target_ = target;

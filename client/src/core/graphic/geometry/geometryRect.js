@@ -14,6 +14,7 @@ goog.require('goog.math.Box');
 
 /**
  * @constructor
+ * @private
  */
 xrx.geometry.Rect = function() {
 

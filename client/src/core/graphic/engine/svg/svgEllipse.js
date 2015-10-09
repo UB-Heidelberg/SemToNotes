@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGEllipseElement} element The SVG ellipse element.
  * @constructor
  * @extends xrx.svg.Stylable
+ * @private
  */
 xrx.svg.Ellipse = function(element) {
 

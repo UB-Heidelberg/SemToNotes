@@ -14,6 +14,7 @@ goog.require('xrx.viewbox.ViewboxRotate');
 /**
  * A class implementing a zooming model for the drawing view-box.
  * @constructor
+ * @private
  */
 xrx.viewbox.ViewboxZoom = function() {
 

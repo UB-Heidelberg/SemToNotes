@@ -29,6 +29,7 @@ goog.require('xrx.shape.Shapes');
  * A class implementing the event target behavior of a drawing canvas.
  * It receives events and invokes handler functions.
  * @constructor
+ * @private
  */
 xrx.event.HandlerTarget = function() {
 

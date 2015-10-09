@@ -16,6 +16,8 @@ goog.require('goog.style');
  * VML base class providing enumerations and static functions
  * for the VML sub-classes.
  * @constructor
+ * @namespace xrx.vml
+ * @memberof xrx
  */
 xrx.vml = function() {};
 

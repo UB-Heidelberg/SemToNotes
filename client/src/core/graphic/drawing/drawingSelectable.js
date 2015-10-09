@@ -10,6 +10,7 @@ goog.provide('xrx.drawing.Selectable');
 /**
  * A class representing a selectable shape.
  * @constructor
+ * @private
  */
 xrx.drawing.Selectable = function(drawing) {
 

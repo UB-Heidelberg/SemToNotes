@@ -15,6 +15,7 @@ goog.require('xrx.canvas.Container');
  * Canvas rendering class representing a canvas.
  * @param {HTMLCanvasElement} element The HTML canvas element.
  * @constructor
+ * @private
  */
 xrx.canvas.Canvas = function(element) {
 

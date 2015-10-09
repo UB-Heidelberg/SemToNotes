@@ -13,6 +13,8 @@ goog.require('goog.userAgent');
 /**
  * Engine base class.
  * @constructor
+ * @namespace xrx.engine
+ * @memberof xrx
  */
 xrx.engine = function() {};
 

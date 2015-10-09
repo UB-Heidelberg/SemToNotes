@@ -7,6 +7,10 @@ goog.provide('xrx.drawing.Cursor');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.drawing.Cursor = function(drawing) {
 
   this.drawing_ = drawing;

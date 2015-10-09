@@ -16,6 +16,7 @@ goog.require('xrx.engine');
  * @param {HTMLCanvasElement} canvas The parent canvas element.
  * @constructor
  * @extends {xrx.canvas.Element}
+ * @private
  */
 xrx.canvas.Stylable = function(canvas) {
 

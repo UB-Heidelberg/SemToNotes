@@ -7,6 +7,10 @@ goog.provide('xrx.shape.Modifiable');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.Modifiable = function(shape) {
 
   this.shape_ = shape;

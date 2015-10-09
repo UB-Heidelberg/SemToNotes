@@ -15,6 +15,7 @@ goog.require('xrx.vml.Element');
  * Abstract VML class representing a container.
  * @param
  * @constructor
+ * @private
  */
 xrx.vml.Container = function(element) {
 

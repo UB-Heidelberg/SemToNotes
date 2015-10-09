@@ -9,7 +9,10 @@ goog.provide('xrx.Util');
 goog.require('goog.math');
 
 
-
+/**
+ * @constructor
+ * @private
+ */
 xrx.Util = function() {};
 
 

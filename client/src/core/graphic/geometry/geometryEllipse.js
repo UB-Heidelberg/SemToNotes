@@ -13,6 +13,7 @@ goog.require('xrx.geometry.Geometry');
 
 /**
  * @constructor
+ * @private
  */
 xrx.geometry.Ellipse = function() {
 

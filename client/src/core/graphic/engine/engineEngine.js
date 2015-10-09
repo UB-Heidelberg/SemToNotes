@@ -17,6 +17,7 @@ goog.require('xrx.engine.Engines');
  *   parameter is overloaded, the engine class searches for the
  *   best rendering engine available.
  * @constructor
+ * @private
  */
 xrx.engine.Engine = function(opt_engine) {
 

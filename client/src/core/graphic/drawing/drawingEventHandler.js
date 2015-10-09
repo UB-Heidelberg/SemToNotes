@@ -14,6 +14,7 @@ goog.require('xrx.event.HandlerTarget');
 
 /**
  * @constructor
+ * @private
  */
 xrx.drawing.EventHandler = function() {
 

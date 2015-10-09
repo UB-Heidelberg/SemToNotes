@@ -16,6 +16,7 @@ goog.require('xrx.vml.Stylable');
  * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.canvas.Stylable
+ * @private
  */
 xrx.vml.Image = function(element) {
 

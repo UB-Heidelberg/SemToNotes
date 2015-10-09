@@ -13,6 +13,7 @@ goog.require('xrx.engine');
 /**
  * Abstract super-class of all engine elements.
  * @constructor
+ * @private
  */
 xrx.engine.Element = function() {};
 

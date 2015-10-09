@@ -16,6 +16,7 @@ goog.require('xrx.viewbox.ViewboxGeometry');
 /**
  * A class implementing the rotation model for a drawing view-box.
  * @constructor
+ * @private
  */
 xrx.viewbox.ViewboxRotate = function() {
 

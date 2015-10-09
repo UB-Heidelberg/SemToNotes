@@ -10,6 +10,10 @@ goog.require('xrx.geometry.Geometry');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.geometry.Box = function() {
 
   goog.base(this);

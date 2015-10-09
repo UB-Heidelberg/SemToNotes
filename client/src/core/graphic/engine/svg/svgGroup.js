@@ -17,6 +17,7 @@ goog.require('xrx.svg.Container');
  * @param {SVGGroupElement} element The SVG group element.
  * @constructor
  * @extends xrx.svg.Element
+ * @private
  */
 xrx.svg.Group = function(element) {
 

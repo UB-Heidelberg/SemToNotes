@@ -5,6 +5,12 @@
 goog.provide('xrx');
 
 
+
+/**
+ * @namespace xrx
+ */
+
+
 /*
 goog.require('xrx.func');
 goog.require('xrx.mvc');

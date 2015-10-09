@@ -16,6 +16,7 @@ goog.require('xrx.engine');
  * @param {SVGElement} element An SVG element.
  * @constructor
  * @extends {xrx.svg.Element}
+ * @private
  */
 xrx.svg.Stylable = function(element) {
 

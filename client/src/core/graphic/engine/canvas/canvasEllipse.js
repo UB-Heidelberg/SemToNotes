@@ -15,6 +15,7 @@ goog.require('xrx.canvas.Stylable');
  * @param {xrx.canvas.Canvas} element The parent canvas object.
  * @constructor
  * @extends xrx.canvas.Stylable
+ * @private
  */
 xrx.canvas.Ellipse = function(canvas) {
 

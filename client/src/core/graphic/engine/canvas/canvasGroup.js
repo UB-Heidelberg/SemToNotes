@@ -15,6 +15,7 @@ goog.require('xrx.canvas.Container');
  * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
  * @extends xrx.canvas.Element
+ * @private
  */
 xrx.canvas.Group = function(canvas) {
 

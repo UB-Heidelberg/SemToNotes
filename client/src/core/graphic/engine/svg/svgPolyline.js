@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGPolylineElement} element The SVG polyline element.
  * @constructor
  * @extends xrx.svg.Stylable
+ * @private
  */
 xrx.svg.Polyline = function(element) {
 

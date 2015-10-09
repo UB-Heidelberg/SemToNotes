@@ -17,6 +17,7 @@ goog.require('xrx.shape.Group');
  * A class representing the view-box of a drawing canvas.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
+ * @private
  */
 xrx.viewbox.Viewbox = function(drawing) {
 

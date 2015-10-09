@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGCircleElement} element The SVG circle element.
  * @constructor
  * @extends xrx.svg.Stylable
+ * @private
  */
 xrx.svg.Circle = function(element) {
 

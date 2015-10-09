@@ -15,6 +15,7 @@ goog.require('xrx.drawing.Layer');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  * @extends xrx.drawing.Layer
+ * @private
  */
 xrx.drawing.LayerShape = function(drawing) {
 

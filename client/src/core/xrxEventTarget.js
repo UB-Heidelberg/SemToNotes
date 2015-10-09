@@ -17,6 +17,7 @@ goog.require('goog.string');
 /**
  * A class representing an event-target.
  * @constructor
+ * @private
  */
 xrx.EventTarget = function() {};
 

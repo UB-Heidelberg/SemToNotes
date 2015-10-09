@@ -11,6 +11,10 @@ goog.require('xrx.shape.Stylable');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.Selectable = function(shape) {
 
   goog.base(this);

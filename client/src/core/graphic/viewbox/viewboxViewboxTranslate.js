@@ -16,6 +16,7 @@ goog.require('xrx.viewbox.ViewboxZoom');
 /**
  * A class implementing translation functions for a drawing view-box.
  * @constructor
+ * @private
  */
 xrx.viewbox.ViewboxTranslate = function() {
 

@@ -18,6 +18,7 @@ goog.require('xrx.svg.Container');
  * @param {SVGElement} element The SVG element.
  * @constructor
  * @extends xrx.svg.Element
+ * @private
  */
 xrx.svg.Canvas = function(element) {
 

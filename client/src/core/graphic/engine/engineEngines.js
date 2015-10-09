@@ -47,5 +47,6 @@ goog.require('xrx.vml.Rect');
  * Engine entry-point class useful to include all rendering engine
  * classes at once.
  * @constructor
+ * @private
  */
 xrx.engine.Engines = function() {};

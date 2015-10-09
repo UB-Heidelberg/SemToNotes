@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGRectElement} element The SVG element.
  * @constructor
  * @extends {xrx.svg.Stylable}
+ * @private
  */
 xrx.svg.Rect = function(element) {
 

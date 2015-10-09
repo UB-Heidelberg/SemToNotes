@@ -15,6 +15,7 @@ goog.require('goog.math.AffineTransform');
 /**A class providing optimizations and extensions for class
  * goog.math.AffineTransform
  * @constructor
+ * @private
  */
 xrx.drawing.FastAffineTransform = function() {
 

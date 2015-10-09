@@ -16,6 +16,7 @@ goog.require('xrx.svg.Stylable');
  * @param {SVGPolygonElement} element The SVG polygon element.
  * @constructor
  * @extends xrx.svg.Stylable
+ * @private
  */
 xrx.svg.Polygon = function(element) {
 

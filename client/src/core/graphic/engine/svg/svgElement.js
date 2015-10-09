@@ -14,6 +14,7 @@ goog.require('xrx.engine.Element');
  * SVG super class.
  * @param {SVGElement} element An SVG element.
  * @constructor
+ * @private
  */
 xrx.svg.Element = function(element) {
 

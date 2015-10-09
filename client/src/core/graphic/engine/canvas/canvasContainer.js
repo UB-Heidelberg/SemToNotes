@@ -14,6 +14,7 @@ goog.require('xrx.canvas.Element');
  * Abstract Canvas class representing a container.
  * @param {xrx.canvas.Canvas} canvas The parent canvas object.
  * @constructor
+ * @private
  */
 xrx.canvas.Container = function(canvas) {
 

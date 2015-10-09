@@ -14,6 +14,7 @@ goog.require('xrx.geometry.Line');
 
 /**
  * @constructor
+ * @private
  */
 xrx.geometry.Polyline = function(opt_length) {
 

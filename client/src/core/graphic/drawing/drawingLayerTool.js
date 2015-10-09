@@ -17,6 +17,7 @@ goog.require('xrx.drawing.tool.Magnifier');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  * @extends {xrx.drawing.Layer}
+ * @private
  */
 xrx.drawing.LayerTool = function(drawing) {
 

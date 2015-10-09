@@ -17,6 +17,7 @@ goog.require('xrx.engine');
  * @param
  * @constructor
  * @extends {xrx.vml.Element}
+ * @private
  */
 xrx.vml.Stylable = function(element) {
 

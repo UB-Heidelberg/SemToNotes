@@ -19,6 +19,7 @@ goog.require('xrx.EventTarget');
  * the user.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @private
  */
 xrx.drawing.Hoverable = function(drawing) {
 

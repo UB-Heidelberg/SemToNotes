@@ -16,6 +16,7 @@ goog.require('xrx.shape.Container');
  * A class representing an engine-independent graphic canvas.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @private
  */
 xrx.shape.Canvas = function(drawing, engineElement) {
 

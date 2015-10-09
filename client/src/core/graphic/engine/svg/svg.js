@@ -12,6 +12,8 @@ goog.provide('xrx.svg.Namespace');
  * SVG base class providing enumerations and static functions
  * for the SVG sub-classes.
  * @constructor
+ * @namespace xrx.svg
+ * @memberof xrx
  */
 xrx.svg = function() {};
 

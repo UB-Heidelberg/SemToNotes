@@ -18,6 +18,7 @@ goog.require('xrx.shape.Rect');
  * @param {xrx.drawing.Drawing} canvas The parent drawing canvas.
  * @constructor
  * @extends xrx.drawing.Layer
+ * @private
  */
 xrx.drawing.LayerBackground = function(drawing) {
 

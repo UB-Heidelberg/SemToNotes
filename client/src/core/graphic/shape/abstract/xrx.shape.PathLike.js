@@ -7,6 +7,10 @@ goog.provide('xrx.shape.PathLike');
 
 
 
+/**
+ * @constructor
+ * @private
+ */
 xrx.shape.PathLike = function(drawing, engineElement, geometry) {
 
   goog.base(this, drawing, engineElement, geometry);

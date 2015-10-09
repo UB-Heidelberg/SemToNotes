@@ -17,6 +17,7 @@ goog.require('xrx.vml.Container');
  * @param {HTMLElement} The HTML element.
  * @constructor
  * @extends xrx.vml.Element
+ * @private
  */
 xrx.vml.Group = function(element) {
 

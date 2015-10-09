@@ -15,6 +15,7 @@ goog.require('xrx.svg.Element');
  * Abstract SVG class representing a container.
  * @param {SVGElement} element An SVG element.
  * @constructor
+ * @private
  */
 xrx.svg.Container = function(element) {
 

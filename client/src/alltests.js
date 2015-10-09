@@ -2,6 +2,9 @@
  * @fileoverview An array of all JSUnit test files.
  */
 
+/**
+ * @private
+ */
 var _allTests = [
   // core/graphic/drawing
   './core/graphic/drawing/drawingDrawing_test.html',

@@ -15,6 +15,7 @@ goog.require('xrx.vml');
  * VML super class.
  * @param
  * @constructor
+ * @private
  */
 xrx.vml.Element = function(element) {
 
