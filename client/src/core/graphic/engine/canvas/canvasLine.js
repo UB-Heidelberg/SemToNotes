@@ -58,3 +58,9 @@ xrx.canvas.Line.prototype.draw = function(x1, y1, x2, y2, strokeColor, strokeWid
 xrx.canvas.Line.create = function(canvas) {
   return new xrx.canvas.Line(canvas);
 };
+
+
+
+xrx.canvas.Line.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

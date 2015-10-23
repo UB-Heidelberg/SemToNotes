@@ -1,0 +1,15 @@
+<div id="content" class="container" data-type="js">
+  <h1>Modifying Shapes</h1>
+  <ul>
+    <li>A Shape can be moved as a whole by touching and dragging it.</li>
+    <li>When touching a shape, <em>helper shapes</em> appear (small circles) that can be used to change the geometry of a shape. For circle and ellipse shapes,
+        the helper shape changes the radius / the radii of the shape. For all other shapes (line, polygon, poly-line, rectangle), the helper shape moves one coordinate point of the shape.</li>
+    <li><strong>When modifying a shape, the drawing canvas recalculates all coordinate points and the sizes of a shape. Remarkably, the drawing
+        canvas does not realize modification of shapes with an additional transformation matrix (scale, translation) applied to the original coordinates.
+        This is by design and is an accommodation for the easy implementation of annotation tools (interested in the native coordinates and sizes at any time).</strong></li>
+  </ul>
+  <div class="container">
+    <div id="drawing" class="col-sm-6 col-md-6"></div>
+    <div id="console" class="col-sm-6 col-md-6"></div>
+  </div>
+</div>

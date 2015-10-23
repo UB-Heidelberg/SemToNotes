@@ -7,6 +7,7 @@ goog.provide('xrx.shape.Geometry');
 
 
 
+goog.require('goog.object');
 goog.require('xrx.shape.Shape');
 
 
@@ -86,4 +87,14 @@ xrx.shape.Geometry.prototype.getCoordsCopy = function() {
     newCoords[i][1] = coords[i][1];
   }
   return newCoords;
+};
+
+
+
+xrx.shape.Geometry.prototype.disposeInternal = function() {
+  goog.dispose(this.geometry_);
+  this.geometry_ = null;
+  goog.dispose(this.ctm_);
+  this.ctm_ = null;
+  goog.base(this, 'disposeInternal');
 };

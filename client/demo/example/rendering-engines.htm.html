@@ -20,17 +20,23 @@
       <h1>HTML DOM and Browser Support</h1>
       <h2>Canvas rendering</h2>
       <div>
-        <div id="drawing1" class="col-sm-6 col-md-6"></div>
+        <div id="drawing1" class="col-sm-6 col-md-6">
+          <span>Your browser does not support HTML Canvas rendering.</span>
+        </div>
         <div id="dom1" class="col-sm-6 col-md-6"><pre></pre></div>
       </div>
       <h2>SVG Rendering</h2>
       <div>
-        <div id="drawing2" class="col-sm-6 col-md-6"></div>
+        <div id="drawing2" class="col-sm-6 col-md-6">
+          <span>Your browser does not support SVG rendering.</span>
+        </div>
         <div id="dom2" class="col-sm-6 col-md-6"><pre></pre></div>
       </div>
       <h2>VML Rendering</h2>
       <div>
-        <div id="drawing3" class="col-sm-6 col-md-6"></div>
+        <div id="drawing3" class="col-sm-6 col-md-6">
+          <span>Your browser does not support VML rendering.</span>
+        </div>
         <div id="dom3" class="col-sm-6 col-md-6"><pre></pre></div>
       </div>
     </div>
@@ -39,8 +45,8 @@
       (function() {
 
         /**
-         * Reusable function that creates a shape, adds it to the
-         * drawing canvas and draws it.
+         * Reusable function that creates a shape and adds it to the
+         * drawing canvas.
          * @param {xrx.drawing.Drawing} drawing The drawing canvas.
          */
         var addShape = function(drawing) {
@@ -59,8 +65,7 @@
           rect.setStrokeWidth(4);
           rect.setFillColor('#AB296A');
           rect.setFillOpacity(.8);
-          drawing.addShapes([polygon, rect]);
-          drawing.draw();
+          drawing.addShapes(polygon, rect);
         }
 
         /**
@@ -79,7 +84,7 @@
 
         // create a drawing canvas using the HTML Canvas rendering engine,
         // only if canvas rendering is supported by the current browser
-        if (xrx.canvas.isSupported()) {
+        if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
           var element1 = document.getElementById('drawing1');
           var drawing1 = new xrx.drawing.Drawing(element1, xrx.engine.CANVAS);
           addShape(drawing1);
@@ -88,7 +93,7 @@
 
         // create a drawing canvas using the SVG rendering engine,
         // only if SVG rendering is supported by the current browser
-        if (xrx.svg.isSupported()) {
+        if (xrx.engine.isSupported(xrx.engine.SVG)) {
           var element2 = document.getElementById('drawing2');
           var drawing2 = new xrx.drawing.Drawing(element2, xrx.engine.SVG);
           addShape(drawing2);
@@ -97,7 +102,7 @@
 
         // create a drawing canvas using the VML rendering engine,
         // only if VML rendering is supported by the current browser
-        if (xrx.vml.isSupported()) {
+        if (xrx.engine.isSupported(xrx.engine.VML)) {
           var element3 = document.getElementById('drawing3');
           var drawing3 = new xrx.drawing.Drawing(element3, xrx.engine.VML);
           addShape(drawing3);

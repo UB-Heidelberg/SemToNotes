@@ -6,6 +6,7 @@ goog.provide('xrx.drawing.Layer');
 
 
 
+goog.require('goog.Disposable');
 goog.require('xrx.shape.Group');
 
 
@@ -18,6 +19,8 @@ goog.require('xrx.shape.Group');
  */
 xrx.drawing.Layer = function(drawing) {
 
+  goog.base(this);
+
   this.drawing_ = drawing;
 
   this.locked_ = false;
@@ -28,6 +31,7 @@ xrx.drawing.Layer = function(drawing) {
 
   this.create_();
 };
+goog.inherits(xrx.drawing.Layer, goog.Disposable);
 
 
 
@@ -140,4 +144,20 @@ xrx.drawing.Layer.prototype.removeShape = function(shape) {
  */
 xrx.drawing.Layer.prototype.create_ = function() {
   this.group_ = xrx.shape.Group.create(this.drawing_);
+};
+
+
+
+xrx.drawing.Layer.prototype.disposeInternal = function() {
+  this.drawing_.dispose();
+  this.drawing_ = null;
+  this.group_.dispose();
+  this.group_ = null;
+  var shape;
+  while(shape = this.shapes_.pop()) {
+    shape.dispose();
+    shape = null;
+  }
+  this.shapes_ = null;
+  goog.base(this, 'disposeInternal');
 };

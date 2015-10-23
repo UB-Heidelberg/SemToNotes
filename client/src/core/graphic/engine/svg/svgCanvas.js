@@ -115,3 +115,9 @@ xrx.svg.Canvas.create = function(parent) {
   goog.dom.appendChild(parent, canvas.getElement());
   return canvas;
 };
+
+
+
+xrx.svg.Canvas.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

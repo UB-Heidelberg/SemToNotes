@@ -23,3 +23,9 @@ xrx.drawing.LayerShapeCreate = function(drawing) {
   goog.base(this, drawing);
 };
 goog.inherits(xrx.drawing.LayerShapeCreate, xrx.drawing.Layer);
+
+
+
+xrx.drawing.LayerShapeCreate.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

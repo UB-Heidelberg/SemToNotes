@@ -59,3 +59,9 @@ xrx.svg.Polygon.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'polygon');
   return new xrx.svg.Polygon(element);
 };
+
+
+
+xrx.svg.Polygon.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

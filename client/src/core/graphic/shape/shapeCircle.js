@@ -26,9 +26,9 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Circle = function(drawing, engineElement) {
+xrx.shape.Circle = function(drawing) {
 
-  goog.base(this, drawing, engineElement, new xrx.geometry.Circle());
+  goog.base(this, drawing, this.create_(drawing), new xrx.geometry.Circle());
 };
 goog.inherits(xrx.shape.Circle, xrx.shape.Geometry);
 
@@ -202,12 +202,17 @@ xrx.shape.Circle.prototype.setCreatable = function(creatable) {
  * Creates a new circle shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  */
-xrx.shape.Circle.create = function(drawing) {
+xrx.shape.Circle.prototype.create_ = function(drawing) {
   var shapeCanvas = drawing.getCanvas();
   var engine = shapeCanvas.getEngine();
   var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createCircle(engineCanvas);
-  return new xrx.shape.Circle(drawing, engineElement);
+  return engine.createCircle(engineCanvas);
+};
+
+
+
+xrx.shape.Circle.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 

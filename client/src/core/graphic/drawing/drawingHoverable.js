@@ -32,7 +32,7 @@ xrx.drawing.Hoverable = function(drawing) {
   this.drawing_ = drawing;
 
   /**
-   * Reference to the last shape hovered.
+   * Reference to the last shape(s) hovered.
    * @type {Array<xrx.shape.Shape>}
    * @private
    */
@@ -127,4 +127,18 @@ xrx.drawing.Hoverable.prototype.handleMove = function(e, cursor) {
  */
 xrx.drawing.Hoverable.prototype.handleOut = function(e) {
   this.pop_();
+};
+
+
+
+xrx.drawing.Hoverable.prototype.disposeInternal = function() {
+  this.drawing_.dispose();
+  this.drawing_ = null;
+  var shape;
+  while(shape = this.last_.pop()) {
+    shape.dispose();
+    shape = null;
+  }
+  this.last_ = null;
+  goog.base(this, 'disposeInternal');
 };

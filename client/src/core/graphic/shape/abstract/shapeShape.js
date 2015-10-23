@@ -131,3 +131,19 @@ xrx.shape.Shape.prototype.setModifiable = function(modifiable) {
 xrx.shape.Shape.prototype.isModifiable = function() {
   return this.isModifiable_;
 };
+
+
+
+xrx.shape.Shape.prototype.disposeInternal = function() {
+  this.drawing_.dispose();
+  this.drawing_ = null;
+  goog.dispose(this.hoverable_);
+  this.hoverable_ = null;
+  goog.dispose(this.selectable_);
+  this.selectable_ = null;
+  goog.dispose(this.modifiable_);
+  this.modifiable_ = null;
+  goog.dispose(this.creatable_);
+  this.creatable_ = null;
+  goog.base(this, 'disposeInternal');
+};

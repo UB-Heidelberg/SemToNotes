@@ -80,3 +80,10 @@ xrx.geometry.Line.prototype.containsPoint = function(point) {
   this.arr_[1][1] = this.y2;
   return xrx.geometry.Line.containsPoint(this.arr_, point);
 };
+
+
+
+xrx.geometry.Line.prototype.disposeInternal = function() {
+  this.arr_ = null;
+  goog.base(this, 'disposeInternal');
+};

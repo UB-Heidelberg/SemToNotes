@@ -66,3 +66,14 @@ xrx.canvas.Container.prototype.removeChildren = function() {
 xrx.canvas.Container.prototype.removeChildAt = function(index) {
   this.childs_.splice(index, 1);
 };
+
+
+
+xrx.canvas.Container.prototype.disposeInternal = function() {
+  var child;
+  while(child = this.childs_.pop()) {
+    child.dispose();
+  }
+  this.childs_ = null;
+  goog.base(this, 'disposeInternal');
+};

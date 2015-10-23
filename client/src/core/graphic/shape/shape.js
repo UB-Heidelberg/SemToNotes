@@ -20,6 +20,7 @@ xrx.shape = function() {};
 /**
  * Events thrown by the shape classes.
  * @type {string}
+ * @private
  */
 xrx.shape.EventType = {
   SHAPE_BEFORE_DRAW: 'eventShapeBeforeDraw'

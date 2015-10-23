@@ -43,3 +43,9 @@ xrx.geometry.Rect.prototype.containsPoint = function(point) {
   return point[0] >= this.x && point[1] >= this.y &&
       point[0] <= this.x + this.width && point[1] <= this.y + this.height; 
 };
+
+
+
+xrx.geometry.Rect.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

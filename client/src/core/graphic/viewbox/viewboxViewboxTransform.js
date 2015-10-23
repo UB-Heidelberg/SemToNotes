@@ -7,7 +7,7 @@ goog.provide('xrx.viewbox.ViewboxTransform');
 
 
 
-goog.require('xrx.drawing.FastAffineTransform');
+goog.require('xrx.viewbox.FastAffineTransform');
 goog.require('xrx.drawing.Orientation');
 goog.require('xrx.viewbox.ViewboxTranslate');
 
@@ -21,7 +21,7 @@ goog.require('xrx.viewbox.ViewboxTranslate');
  */
 xrx.viewbox.ViewboxTransform = function() {
 
-  this.ctm_ = new xrx.drawing.FastAffineTransform();
+  this.ctm_ = new xrx.viewbox.FastAffineTransform();
 
   goog.base(this);
 };
@@ -31,7 +31,7 @@ goog.inherits(xrx.viewbox.ViewboxTransform, xrx.viewbox.ViewboxTranslate);
 
 /**
  * Returns the current transformation matrix of this view-box.
- * @return {xrx.drawing.FastAffineTransform} The transformation matrix.
+ * @return {xrx.viewbox.FastAffineTransform} The transformation matrix.
  */
 xrx.viewbox.ViewboxTransform.prototype.getCTM = function() {
   return this.ctm_;
@@ -41,7 +41,7 @@ xrx.viewbox.ViewboxTransform.prototype.getCTM = function() {
 
 /**
  * Sets the current transformation matrix of the view-box.
- * @param {xrx.drawing.FastAffineTransform} ctm The matrix object.
+ * @param {xrx.viewbox.FastAffineTransform} ctm The matrix object.
  */
 xrx.viewbox.ViewboxTransform.prototype.setCTM = function(ctm) {
   this.ctm_ = ctm;
@@ -108,4 +108,12 @@ xrx.viewbox.ViewboxTransform.prototype.fit = function(opt_center) {
   var height = this.getHeight(true, true);
   width > height ? this.fitToWidth() : this.fitToHeight();
   if (opt_center === true) this.center();
+};
+
+
+
+xrx.viewbox.ViewboxTransform.prototype.disposeInternal = function() {
+  this.ctm_.disposeInternal();
+  this.ctm_ = null;
+  goog.base(this, 'disposeInternal');
 };

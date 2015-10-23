@@ -108,3 +108,9 @@ xrx.shape.Canvas.create = function(drawing) {
   var engineElement = drawing.getEngine().createCanvas(element)
   return new xrx.shape.Canvas(drawing, engineElement);
 };
+
+
+
+xrx.shape.Canvas.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

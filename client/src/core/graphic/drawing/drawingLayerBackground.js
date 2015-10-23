@@ -64,3 +64,11 @@ xrx.drawing.LayerBackground.prototype.create_ = function() {
   this.image_ = xrx.shape.Image.create(this.drawing_);
   this.group_.addChildren(this.image_);
 };
+
+
+
+xrx.drawing.LayerBackground.prototype.disposeInternal = function() {
+  this.image_.dispose();
+  this.image_ = null;
+  goog.base(this, 'disposeInternal');
+};

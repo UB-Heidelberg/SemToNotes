@@ -51,3 +51,9 @@ xrx.canvas.Circle.prototype.draw = function(cx, cy, r, fillColor,
 xrx.canvas.Circle.create = function(canvas) {
   return new xrx.canvas.Circle(canvas);
 };
+
+
+
+xrx.canvas.Circle.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

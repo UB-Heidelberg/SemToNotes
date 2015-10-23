@@ -49,3 +49,9 @@ xrx.shape.Group.create = function(drawing) {
   var engineElement = engine.createGroup(engineCanvas);
   return new xrx.shape.Group(drawing, engineElement);
 };
+
+
+
+xrx.shape.Group.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

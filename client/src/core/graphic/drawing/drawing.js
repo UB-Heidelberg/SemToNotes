@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class providing enumerations and static functions for
- * the drawing classes.
+ * @fileoverview Namespace for the drawing canvas. Also a
+ * static class providing enumerations.
  */
 
 goog.provide('xrx.drawing');
@@ -12,7 +12,8 @@ goog.provide('xrx.drawing.State');
 
 
 /**
- * A static class providing enumerations for the drawing classes.
+ * Namespace for the drawing canvas. Also a static class providing
+ * enumerations and utility functions.
  * @namespace xrx.drawing
  * @memberof xrx
  */
@@ -23,6 +24,7 @@ xrx.drawing = function() {};
 /**
  * Enumeration for drawing states.
  * @enum (number)
+ * @private
  */
 xrx.drawing.State = {
   DRAG: 1,
@@ -51,6 +53,7 @@ xrx.drawing.Mode = {
 /**
  * Enumeration of orientations, used by the drawing view-box.
  * @enum {string}
+ * @private
  */
 xrx.drawing.Orientation = {
   C: 'C', // center

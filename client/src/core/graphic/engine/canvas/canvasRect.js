@@ -65,3 +65,9 @@ xrx.canvas.Rect.prototype.draw = function(x, y, width, height, fillColor,
 xrx.canvas.Rect.create = function(canvas) {
   return new xrx.canvas.Rect(canvas);
 };
+
+
+
+xrx.canvas.Rect.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -29,7 +29,7 @@ xrx.geometry.Polyline = function(opt_length) {
   };
 };
 goog.inherits(xrx.geometry.Polyline, xrx.geometry.Geometry);
-
+ 
 
 
 xrx.geometry.Polyline.prototype.containsPoint = function(point) {
@@ -39,4 +39,11 @@ xrx.geometry.Polyline.prototype.containsPoint = function(point) {
     if (contains === true) break;
   }
   return contains;
+};
+
+
+
+xrx.geometry.Polyline.prototype.disposeInternal = function() {
+  this.coords = null;
+  goog.base(this, 'disposeInternal');
 };

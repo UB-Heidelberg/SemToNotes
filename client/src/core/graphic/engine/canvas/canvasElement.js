@@ -31,7 +31,7 @@ xrx.canvas.Element = function(canvas) {
    * The rendering context.
    * @type {CanvasRenderingContext2D}
    */
-  this.context_ = canvas.getElement().getContext('2d');
+  this.context_ = this.canvas_.getElement().getContext('2d');
 };
 goog.inherits(xrx.canvas.Element, xrx.engine.Element);
 
@@ -65,4 +65,12 @@ xrx.canvas.Element.prototype.applyTransform = function(matrix) {
   if (!matrix) return;
   this.context_.setTransform(matrix.m00_, matrix.m10_, matrix.m01_,
       matrix.m11_, matrix.m02_, matrix.m12_);
+};
+
+
+
+xrx.canvas.Element.prototype.disposeInternal = function() {
+  this.canvas_.dispose();
+  this.context_ = null;
+  goog.base(this, 'disposeInternal');
 };

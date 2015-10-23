@@ -258,3 +258,9 @@ xrx.viewbox.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
     [width / 2, width / 2 + height / 2] // south
   ];
 };
+
+
+
+xrx.viewbox.ViewboxRotate.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

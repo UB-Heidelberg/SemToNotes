@@ -27,3 +27,9 @@ xrx.geometry.Point.distancePoint = function(point, otherPoint) {
   var dy = point[1] - otherPoint[1];
   return Math.sqrt(dx * dx + dy * dy);
 };
+
+
+
+xrx.geometry.Point.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

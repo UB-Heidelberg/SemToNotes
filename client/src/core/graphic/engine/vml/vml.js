@@ -1,6 +1,5 @@
 /**
- * @fileoverview VML base class providing enumerations and static functions
- *     for the VML sub-classes.
+ * @fileoverview Namespace for the VML rendering engine.
  */
 
 goog.provide('xrx.vml');
@@ -13,8 +12,8 @@ goog.require('goog.style');
 
 
 /**
- * VML base class providing enumerations and static functions
- * for the VML sub-classes.
+ * Namespace for the VML rendering engine. Also a
+ * a static class providing utility functions.
  * @constructor
  * @namespace xrx.vml
  * @memberof xrx
@@ -26,6 +25,7 @@ xrx.vml = function() {};
 /**
  * Whether the browser already has VML rendering enabled.
  * @type {boolean}
+ * @private
  */
 xrx.vml.browserEnabled = false;
 
@@ -33,6 +33,7 @@ xrx.vml.browserEnabled = false;
 
 /**
  * Initialize the browser for VML rendering.
+ * @private
  */
 xrx.vml.initVmlRendering = function() {
   if (xrx.vml.browserEnabled) return;
@@ -43,12 +44,16 @@ xrx.vml.initVmlRendering = function() {
 
 
 
-/**
- * Returns whether VML rendering is supported by the current user agent.
- * @return {boolean} Whether VML rendering is supported.
- */
-xrx.vml.isSupported = function() {
-  return !!document.namespaces;
+xrx.vml.createFillAndCo = function(element) {
+  var fill = document.createElement('xrxvml:fill');
+  var stroke = document.createElement('xrxvml:stroke');
+  var skew = document.createElement('xrxvml:skew');
+  fill.setAttribute('class', 'xrx-vml');
+  stroke.setAttribute('class', 'xrx-vml');
+  skew.setAttribute('class', 'xrx-vml');
+  goog.dom.appendChild(element, fill);
+  goog.dom.appendChild(element, stroke);
+  goog.dom.appendChild(element, skew);
 };
 
 
@@ -56,18 +61,19 @@ xrx.vml.isSupported = function() {
 /**
  * Creates a new VML element including fill, stroke and skew.
  * @param {string} tagName The tag name of the HTML element.
+ * @param {boolean} opt_fillAndCo Whether to append fill, stroke and
+ *    skew element.
  * @return {HTMLElement} The HTML element.
+ * @private
  */
-xrx.vml.createElement = function(tagName) {
-  var fill = '<fill xmlns="urn:schemas-microsoft.com:vml" ' +
-      'class="xrx-vml"></fill>';
-  var stroke = '<stroke xmlns="urn:schemas-microsoft.com:vml" ' +
-      'class="xrx-vml"></stroke>';
-  var skew = '<skew xmlns="urn:schemas-microsoft.com:vml" ' +
-      'class="xrx-vml"></skew>';
-  return goog.dom.htmlToDocumentFragment('<' + tagName +
-      '  xmlns="urn:schemas-microsoft.com:vml" class="xrx-vml">' +
-      fill + stroke + skew + '</' + tagName + '>');
+xrx.vml.createElement = function(tagName, opt_fillAndCo) {
+  var element;
+  !document.namespaces.xrxvml &&
+      document.namespaces.add('xrxvml', 'urn:schemas-microsoft-com:vml');
+  element = document.createElement('xrxvml:' + tagName);
+  element.setAttribute('class', 'xrx-vml');
+  if (opt_fillAndCo !== false) xrx.vml.createFillAndCo(element);
+  return element;
 };
 
 

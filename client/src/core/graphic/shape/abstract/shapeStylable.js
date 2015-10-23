@@ -6,6 +6,7 @@ goog.provide('xrx.shape.Stylable');
 
 
 
+goog.require('goog.Disposable');
 goog.require('xrx.shape');
 
 
@@ -16,6 +17,8 @@ goog.require('xrx.shape');
  * @private
  */
 xrx.shape.Stylable = function() {
+
+  goog.base(this);
 
   /**
    * Object describing the fill style.
@@ -33,6 +36,7 @@ xrx.shape.Stylable = function() {
     width: 1
   };
 };
+goog.inherits(xrx.shape.Stylable, goog.Disposable);
 
 
 
@@ -126,4 +130,12 @@ xrx.shape.Stylable.prototype.getFillOpacity = function() {
  */
 xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {
   if (factor !== undefined) this.fill_.opacity = factor;
+};
+
+
+
+xrx.shape.Stylable.prototype.disposeInternal = function() {
+  this.fill_ = null;
+  this.stroke_ = null;
+  goog.base(this, 'disposeInternal');
 };

@@ -70,3 +70,15 @@ xrx.shape.Container.prototype.removeChildAt = function(index) {
   this.childs_.splice(index, 1);
   this.engineElement_.removeChildAt(index);
 };
+
+
+
+xrx.shape.Container.prototype.disposeInternal = function() {
+  var child;
+  while(child = this.childs_.pop()) {
+    child.dispose();
+    child = null;
+  };
+  this.childs_ = null;
+  goog.base(this, 'disposeInternal');
+};

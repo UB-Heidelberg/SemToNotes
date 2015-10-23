@@ -77,3 +77,9 @@ xrx.svg.Stylable.prototype.setFillColor = function(color) {
 xrx.svg.Stylable.prototype.setFillOpacity = function(factor) {
   this.element_.setAttribute('fill-opacity', factor);
 };
+
+
+
+xrx.svg.Stylable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

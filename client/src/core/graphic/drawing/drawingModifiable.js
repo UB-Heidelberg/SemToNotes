@@ -7,6 +7,7 @@ goog.provide('xrx.drawing.Modifiable');
 
 
 
+goog.require('goog.Disposable');
 goog.require('xrx.drawing');
 goog.require('xrx.geometry');
 goog.require('xrx.shape.Dragger');
@@ -20,6 +21,8 @@ goog.require('xrx.shape.Dragger');
  */
 xrx.drawing.Modifiable = function(drawing) {
 
+  goog.base(this);
+
   this.drawing_ = drawing;
 
   this.mode_ = xrx.drawing.Modifiable.Mode.SHAPEHOVER;
@@ -32,6 +35,7 @@ xrx.drawing.Modifiable = function(drawing) {
 
   this.propageted_ = false;
 };
+goog.inherits(xrx.drawing.Modifiable, goog.Disposable);
 
 
 
@@ -72,7 +76,6 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
 
 
 xrx.drawing.Modifiable.prototype.handleHover_ = function(e, cursor) {
-  console.log('TODO');
 };
 
 
@@ -120,4 +123,15 @@ xrx.drawing.Modifiable.prototype.handleUp = function(e, cursor) {
 
 xrx.drawing.Modifiable.prototype.resetState_ = function() {
   this.mode_ = xrx.drawing.Modifiable.Mode.SHAPEHOVER;
+};
+
+
+
+xrx.drawing.Modifiable.prototype.disposeInternal = function() {
+  this.drawing_.dispose();
+  this.drawing_ = null;
+  goog.dispose(this.dragger_);
+  goog.dispose(this.shape_);
+  this.origin_ = null;
+  goog.base(this, 'disposeInternal');
 };

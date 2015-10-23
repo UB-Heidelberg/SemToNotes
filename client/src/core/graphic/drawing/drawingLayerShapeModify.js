@@ -34,3 +34,9 @@ xrx.drawing.LayerShapeModify.prototype.activate = function(modifiable) {
   this.removeShapes();
   this.addShapes(modifiable.getHelper());
 };
+
+
+
+xrx.drawing.LayerShapeModify.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

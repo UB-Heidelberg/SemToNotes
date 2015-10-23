@@ -7,7 +7,7 @@ goog.provide('xrx.viewbox.Viewbox');
 
 
 goog.require('xrx.drawing');
-goog.require('xrx.drawing.FastAffineTransform');
+goog.require('xrx.viewbox.FastAffineTransform');
 goog.require('xrx.viewbox.ViewboxTransform');
 goog.require('xrx.shape.Group');
 
@@ -146,4 +146,15 @@ xrx.viewbox.Viewbox.prototype.handleWheel = function(e, cursor) {
 xrx.viewbox.Viewbox.prototype.resetState_ = function() {
   this.state_ = xrx.drawing.State.NONE;
   this.origin_ = null;
+};
+
+
+
+xrx.viewbox.Viewbox.prototype.disposeInternal = function() {
+  this.drawing_.dispose();
+  this.drawing_ = null;
+  this.group_.dispose();
+  this.group_ = null;
+  this.origin_ = null;
+  goog.base(this, 'disposeInternal');
 };

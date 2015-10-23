@@ -126,28 +126,25 @@ function getDrawingVml(id) {
 
 
 function test1drawing() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getDrawingCanvas('canvasDrawing');
-    var svgDrawing = getDrawingSvg('svgDrawing');
-
-    // drawing size
     assertEquals(150, canvasDrawing.getElement().clientWidth);
     assertEquals(150, canvasDrawing.getElement().offsetWidth);
-    assertEquals(150, svgDrawing.getElement().clientWidth);
-    assertEquals(150, svgDrawing.getElement().offsetWidth);
-
-    // canvas size
     var canvasEngineElement = canvasDrawing.getCanvas().getEngineElement().getElement();
-    var svgEngineElement = svgDrawing.getCanvas().getEngineElement().getElement();
     assertEquals('150', canvasEngineElement.getAttribute('width'));
     assertEquals('150', canvasEngineElement.getAttribute('height'));
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    var svgDrawing = getDrawingSvg('svgDrawing');
+    assertEquals(150, svgDrawing.getElement().clientWidth);
+    assertEquals(150, svgDrawing.getElement().offsetWidth);
+    var svgEngineElement = svgDrawing.getCanvas().getEngineElement().getElement();
     assertEquals('150', svgEngineElement.getAttribute('width'));
     assertEquals('150', svgEngineElement.getAttribute('height'));
-  } else {
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getDrawingVml('vmlDrawing');
-    // drawing size
     assertEquals(150, goog.style.getSize(vmlDrawing.getElement()).width);
-    // canvas size
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).width);
     assertEquals(150, goog.style.getSize(vmlDrawing.getCanvas().getElement()).height);
   }
@@ -157,16 +154,19 @@ function test1drawing() {
 
 function test2setBackgroundImage() {
   var url = './drawing_test.png';
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getDrawingCanvas('canvasBackgroundImage');
-    var svgDrawing = getDrawingSvg('svgBackgroundImage');
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    var svgDrawing = getDrawingSvg('svgBackgroundImage');
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.draw();
     });
-  } else {
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getDrawingVml('vmlBackgroundImage');
     vmlDrawing.setBackgroundImage(url, function() {
       vmlDrawing.draw();
@@ -177,33 +177,30 @@ function test2setBackgroundImage() {
 
 
 function test4addShapes() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getDrawingCanvas('canvasAddShapes');
-    var svgDrawing = getDrawingSvg('svgAddShapes');
-
     var canvasRect1 = xrx.shape.Rect.create(canvasDrawing);
     canvasRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
     var canvasRect2 = xrx.shape.Rect.create(canvasDrawing);
     canvasRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
-
     canvasDrawing.getLayerShape().addShapes([canvasRect1, canvasRect2]);
     canvasDrawing.draw();
-
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    var svgDrawing = getDrawingSvg('svgAddShapes');
     var svgRect1 = xrx.shape.Rect.create(svgDrawing);
     svgRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
     var svgRect2 = xrx.shape.Rect.create(svgDrawing);
     svgRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
-
     svgDrawing.getLayerShape().addShapes([svgRect1, svgRect2]);
     svgDrawing.draw();
-  } else {
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getDrawingVml('vmlAddShapes');
-
     var vmlRect1 = xrx.shape.Rect.create(vmlDrawing);
     vmlRect1.setCoords([[10,10],[100,10],[100,100],[10,100]]);
     var vmlRect2 = xrx.shape.Rect.create(vmlDrawing);
     vmlRect2.setCoords([[40,40],[140,40],[140,140],[40,140]]);
-
     vmlDrawing.getLayerShape().addShapes([vmlRect1, vmlRect2]);
     vmlDrawing.draw();
   }
@@ -213,18 +210,21 @@ function test4addShapes() {
 
 function test5background() {
   var url = './drawing_test.png';
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getDrawingCanvas('canvasBackground');
-    var svgDrawing = getDrawingSvg('svgBackground');
     canvasDrawing.setModeView();
-    svgDrawing.setModeView();
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    var svgDrawing = getDrawingSvg('svgBackground');
+    svgDrawing.setModeView();
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.draw();
     });
-  } else {
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getDrawingVml('vmlBackground');
     vmlDrawing.setModeView();
     vmlDrawing.setBackgroundImage(url, function() {
@@ -236,11 +236,31 @@ function test5background() {
 
 
 function test6paddingFixedSize() {
-  if (!xrx.engine.isOldIE()) {
-    var canvasDrawing = getDrawingCanvas('canvasPadding');
-    var svgDrawing = getDrawingSvg('svgPadding');
-  } else {
-    var vmlDrawing = getDrawingVml('vmlBackground');
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
+    getDrawingCanvas('canvasPadding');
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    getDrawingSvg('svgPadding');
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    getDrawingVml('vmlBackground');
+  }
+};
+
+
+
+function test7dispose() {
+  goog.Disposable.MONITORING_MODE = goog.Disposable.MonitoringMode.INTERACTIVE;
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
+    var canvasDrawing = new xrx.drawing.Drawing(
+        goog.dom.createElement('div'), xrx.engine.CANVAS);
+    canvasDrawing.dispose();
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    //getDrawingSvg('svgPadding');
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    //getDrawingVml('vmlBackground');
   }
 };
 

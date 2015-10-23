@@ -34,13 +34,13 @@
       width: 0px;
       height: 0px;
       }
-      /* drawing canvas with various styles */
+      /* styles, will be overwritten programmatically */
       #drawing4 {
       width: 200px;
       height: 200px;
-      background-color: #D1F0FF;
-      margin: 20px;
-      padding: 20px;
+      background-color: black;
+      margin: 0px;
+      padding: 0px;
       }
     </style>
   </head>
@@ -53,15 +53,15 @@
       <div id="drawing2" class="drawing"></div>
       <h2>Change the size programmatically</h2>
       <div id="drawing3" class="drawing"></div>
-      <h2>Styling a drawing canvas</h2>
+      <h2>Change the style programmatically</h2>
       <div id="drawing4" class="drawing"></div>
     </div>
     <script>
       (function() {
 
         /**
-         * Reusable function that creates a shape, adds it to the
-         * drawing canvas and draws it.
+         * Reusable function that creates a shape and adds it to the
+         * drawing canvas.
          * @param {xrx.drawing.Drawing} drawing The drawing canvas.
          */
         var addShape = function(drawing) {
@@ -73,7 +73,6 @@
           rect.setFillColor('orange');
           rect.setFillOpacity(.4);
           drawing.addShapes(rect);
-          drawing.draw();
         }
 
         // create a drawing canvas for fixed CSS size
@@ -87,15 +86,19 @@
         addShape(drawing2);
 
         // create a drawing canvas and size it programmatically
-        // the function overwrites existing CSS rules
+        // this overwrites the existing CSS rules above
         var element3 = document.getElementById('drawing3');
         var drawing3 = new xrx.drawing.Drawing(element3);
         drawing3.setSize(300, 200);
         addShape(drawing3);
 
-        // create a drawing canvas to demonstrate various CSS styles
+        // create a drawing canvas and style it programmatically
+        // this overwrites the existing CSS rules above
         var element4 = document.getElementById('drawing4');
         var drawing4 = new xrx.drawing.Drawing(element4);
+        drawing4.setStyle('padding', '20px');
+        drawing4.setStyle('margin', '20px');
+        drawing4.setStyle('background-color', '#D1F0FF');
         addShape(drawing4);
 
         return [drawing1, drawing2, drawing3, drawing4];

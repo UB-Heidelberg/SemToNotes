@@ -6,6 +6,7 @@ goog.provide('xrx.drawing.Drawing');
 
 
 
+goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('xrx.engine.Engine');
@@ -113,14 +114,32 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @type {Object}
    * @private
    */
-  this.create_;
+  this.creatable_;
 
   /**
    * The view-box of the drawing canvas.
-   * @type {Object}
+   * @type {xrx.viewbox.Viewbox}
    * @private
    */
   this.viewbox_;
+
+  /**
+   * The width of this drawing canvas.
+   * @type {number}
+   * @private
+   */
+  this.width_;
+
+  /**
+   * The height of this drawing canvas.
+   * @type {number}
+   * @private
+   */
+  this.height_;
+
+  this.eventBeforeRendering;
+
+  this.vsm_;
 
   // install the canvas
   this.install_(opt_engine);
@@ -220,17 +239,44 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 
 /**
- * Returns the shape currently created by the user.
- * @return {xrx.shape.Creatable} The shape.
+ * Sets the size of this drawing canvas.
+ * @param {number} width The width in pixel.
+ * @param {number} height The height in pixel.
  */
-xrx.drawing.Drawing.prototype.getCreate = function() {
-  return this.create_;
+xrx.drawing.Drawing.prototype.setSize = function(width, height) {
+  goog.style.setSize(this.element_, width + 'px', height + 'px');
+  this.handleResize();
 };
 
 
 
-xrx.drawing.Drawing.prototype.setSize = function(width, height) {
-  goog.style.setSize(this.element_, width + 'px', height + 'px');
+/**
+ * Sets the width of this drawing canvas.
+ * @param {number} width The width in pixel.
+ */
+xrx.drawing.Drawing.prototype.setWidth = function(width) {
+  this.setSize(width, this.height_);
+};
+
+
+
+/**
+ * Sets the height of this drawing canvas.
+ * @param {number} height The height in pixel.
+ */
+xrx.drawing.Drawing.prototype.setHeight = function(height) {
+  this.setSize(this.width_, height);
+};
+
+
+
+/**
+ * Sets a CSS style for this drawing canvas.
+ * @param {string} The style name such as 'padding'.
+ * @param {string} The style value such as '20px'.
+ */
+xrx.drawing.Drawing.prototype.setStyle = function(name, value) {
+  goog.style.setStyle(this.element_, name, value);
   this.handleResize();
 };
 
@@ -263,10 +309,34 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
 
 /**
  * Adds one or more shapes to this drawing canvas.
- * @param {Array<xrx.shape.Shape>|xrx.shape.Shape} shapes The shape(s).
+ * @param {xrx.shape.Shape*} var_args The shapes.
  */
-xrx.drawing.Drawing.prototype.addShapes = function(shapes) {
-  this.layer_[1].addShapes(shapes);
+xrx.drawing.Drawing.prototype.addShapes = function(var_args) {
+  this.layer_[1].addShapes(goog.array.toArray(arguments));
+  this.draw();
+};
+
+
+
+/**
+ * Returns the shapes currently rendered by this drawing canvas.
+ * @return {Array<xrx.shape.Shape>} The shapes.
+ */
+xrx.drawing.Drawing.prototype.getShapes = function() {
+  return this.layer_[1].getShapes() || [];
+};
+
+
+
+xrx.drawing.Drawing.prototype.removeShape = function(shape) {
+  this.layer_[1].removeShape(shape);
+  this.draw();
+};
+
+
+
+xrx.drawing.Drawing.prototype.getSelectedShape = function() {
+  return this.selectable_.getShape();
 };
 
 
@@ -386,6 +456,13 @@ xrx.drawing.Drawing.prototype.setModeSelect = function() {
 
 
 
+xrx.drawing.Drawing.prototype.setSelected = function(shape) {
+  this.selectable_.setSelected(shape);
+  this.draw();
+};
+
+
+
 /**
  * Switch the drawing canvas over into mode <i>modify</i> to allow modification of shapes.
  * @see xrx.drawing.Mode
@@ -410,7 +487,7 @@ xrx.drawing.Drawing.prototype.setModeModify = function() {
 xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   if (!shape) return;
   var self = this;
-  this.create_ = shape;
+  this.creatable_ = shape;
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);
@@ -430,11 +507,11 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
  * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  var size = this.getSize_();
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
-  this.shield_.setHeight(size.height);
-  this.shield_.setWidth(size.width);
+  this.calculateSize_();
+  this.canvas_.setHeight(this.height_);
+  this.canvas_.setWidth(this.width_);
+  this.shield_.setHeight(this.height_);
+  this.shield_.setWidth(this.width_);
   this.draw();
 };
 
@@ -443,7 +520,7 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.getSize_ = function() {
+xrx.drawing.Drawing.prototype.calculateSize_ = function() {
   var size = goog.style.getSize(this.element_);
   var paddingBox = goog.style.getPaddingBox(this.element_);
   var borderBox = goog.style.getBorderBox(this.element_);
@@ -451,7 +528,8 @@ xrx.drawing.Drawing.prototype.getSize_ = function() {
       borderBox.top - borderBox.bottom;
   var width = size.width - paddingBox.left - paddingBox.right -
       borderBox.left - borderBox.right;
-  return { width: width, height: height };
+  this.width_ = width;
+  this.height_ = height;
 };
 
 
@@ -460,15 +538,14 @@ xrx.drawing.Drawing.prototype.getSize_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
-  var size = this.getSize_();
   var self = this;
-  var vsm = new goog.dom.ViewportSizeMonitor();
-  goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
+  this.vsm_ = new goog.dom.ViewportSizeMonitor();
+  goog.events.listen(this.vsm_, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
   this.canvas_ = xrx.shape.Canvas.create(this);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.height_);
+  this.canvas_.setWidth(this.width_);
 };
 
 
@@ -516,7 +593,7 @@ xrx.drawing.Drawing.prototype.installLayerShapeModify_ = function() {
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
+xrx.drawing.Drawing.prototype.installLayerShapecreatable_ = function() {
   this.layer_[3] = new xrx.drawing.LayerShapeCreate(this);
   this.viewbox_.getGroup().addChildren(this.layer_[3].getGroup());
 };
@@ -527,12 +604,11 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  var size = this.getSize_();
   this.shield_ = xrx.shape.Rect.create(this);
   this.shield_.setX(0);
   this.shield_.setY(0);
-  this.shield_.setWidth(size.width);
-  this.shield_.setHeight(size.height);
+  this.shield_.setWidth(this.width_);
+  this.shield_.setHeight(this.height_);
   this.shield_.setFillOpacity(0);
   this.shield_.setStrokeWidth(0);
   this.canvas_.addChildren(this.shield_);
@@ -545,19 +621,6 @@ xrx.drawing.Drawing.prototype.installShield_ = function() {
  */
 xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
   this.layer_[4] = new xrx.drawing.LayerTool(this);
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Drawing.prototype.installFallback_ = function(opt_engine) {
-  var span = goog.dom.createElement('span');
-  goog.dom.setTextContent(span, 'Your browser does not support ' + opt_engine +
-      ' rendering.');
-  goog.dom.classes.add(span, 'xrx-canvas-error');
-  goog.dom.appendChild(this.element_, span);
 };
 
 
@@ -580,6 +643,12 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
   this.initEngine_(opt_engine);
 
   if (this.engine_.isAvailable()) {
+    // remove the fall-back message if some exists
+    goog.dom.removeChildren(this.element_);
+
+    // calculate the size of the canvas
+    this.calculateSize_();
+
     // install the drawing canvas
     this.installCanvas_();
 
@@ -590,7 +659,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
     this.installLayerBackground_();
     this.installLayerShape_();
     this.installLayerShapeModify_();
-    this.installLayerShapeCreate_();
+    this.installLayerShapecreatable_();
 
     // install a shield
     this.installShield_();
@@ -609,8 +678,39 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
     };
     */
 
-  } else {
-    // install an unavailable message
-    this.installFallback_(opt_engine);
   }
+};
+
+
+
+xrx.drawing.Drawing.prototype.disposeInternal = function() {
+  goog.dom.removeNode(this.element_);
+  this.element_ = null;
+  this.engine_.dispose();
+  this.engine_ = null;
+  this.canvas_.dispose();
+  this.canvas_ = null;
+  var layer;
+  while(layer = this.layer_.pop()) {
+    layer.dispose();
+    layer = null;
+  }
+  this.layer_ = null;
+  this.shield_.dispose();
+  this.shield_ = null;
+  this.modifiable_.dispose();
+  this.modifiable_ = null;
+  this.selectable_.dispose();
+  this.selectable_ = null;
+  this.hoverable_.dispose();
+  this.hoverable_ = null;
+  goog.dispose(this.creatable_);
+  this.creatable_ = null;
+  this.viewbox_.dispose();
+  this.viewbox_ = null;
+  this.eventBeforeRendering = null;
+  this.vsm_.removeAllListeners();
+  this.vsm_.dispose();
+  this.vsm_ = null;
+  goog.base(this, 'disposeInternal');
 };

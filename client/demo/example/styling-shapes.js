@@ -47,10 +47,7 @@
   rect.setFillOpacity(1);
 
   // add the shapes to the drawing canvas
-  drawing.addShapes([circle, ellipse, line, polygon, polyline, rect]);
-
-  // we explicitly have to draw the canvas
-  drawing.draw();
+  drawing.addShapes(circle, ellipse, line, polygon, polyline, rect);
 
   return drawing;
 

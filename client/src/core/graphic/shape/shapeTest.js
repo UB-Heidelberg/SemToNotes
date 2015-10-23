@@ -54,7 +54,7 @@ function createTables(shapeName, $) {
 
 
 function getCanvasDrawing(id) {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var element = goog.dom.getElement(id);
     var drawing = new xrx.drawing.Drawing(element, xrx.engine.CANVAS);
     drawing.setBackgroundImage('./shape_test2.png');
@@ -65,7 +65,7 @@ function getCanvasDrawing(id) {
 
 
 function getSvgDrawing(id) {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var element = goog.dom.getElement(id);
     var drawing = new xrx.drawing.Drawing(element, xrx.engine.SVG);
     drawing.setBackgroundImage('./shape_test2.png');
@@ -76,28 +76,32 @@ function getSvgDrawing(id) {
 
 
 function getVmlDrawing(id) {
-  var element = goog.dom.getElement(id);
-  var drawing = new xrx.drawing.Drawing(element, xrx.engine.VML, true);
-  drawing.setBackgroundImage('./shape_test2.png');
-  return drawing;
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var element = goog.dom.getElement(id);
+    var drawing = new xrx.drawing.Drawing(element, xrx.engine.VML, true);
+    drawing.setBackgroundImage('./shape_test2.png');
+    return drawing;
+  }
 };
 
 
 
 function modeMode(shapeName, mode) {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + mode);
     canvasDrawing['setMode' + mode]();
     canvasDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](canvasDrawing));
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var svgDrawing = getSvgDrawing('svg' + shapeName + mode);
     svgDrawing['setMode' + mode]();
     svgDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](svgDrawing));
   }
-  /*
-  var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
-  vmlDrawing['setMode' + mode]();
-  vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
-  */
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
+    vmlDrawing['setMode' + mode]();
+    vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
+  }
 };
 
 
@@ -116,19 +120,21 @@ function modeHover(shapeName) {
 
 function modeHoverMultiple(shapeName) {
   var mode = 'HoverMultiple';
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + mode);
     canvasDrawing.setModeHover(true);
     canvasDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](canvasDrawing));
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var svgDrawing = getSvgDrawing('svg' + shapeName + mode);
     svgDrawing.setModeHover(true);
     svgDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](svgDrawing));
   }
-  /*
-  var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
-  vmlDrawing.setModeHover(true);
-  vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
-  */
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getVmlDrawing('vml' + shapeName + mode);
+    vmlDrawing.setModeHover(true);
+    vmlDrawing.getLayerShape().addShapes(this['get' + shapeName + 's'](vmlDrawing));
+  }
 };
 
 
@@ -146,7 +152,7 @@ function modeModify(shapeName) {
 
 
 function modeCreate(shapeName) {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Create');
     var canvasShape = xrx.shape[shapeName].create(canvasDrawing);
     canvasShape.setStrokeWidth(1);
@@ -159,6 +165,8 @@ function modeCreate(shapeName) {
       canvasCreatable.setFillOpacity(.2);
     }
     canvasDrawing.setModeCreate(canvasCreatable);
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var svgDrawing = getSvgDrawing('svg' + shapeName + 'Create');
     var svgShape = xrx.shape[shapeName].create(svgDrawing);
     svgShape.setStrokeWidth(1);
@@ -172,18 +180,18 @@ function modeCreate(shapeName) {
     }
     svgDrawing.setModeCreate(svgCreatable);
   }
-  /*
-  var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
-  var vmlShape = xrx.shape[shapeName].create(vmlDrawing);
-  vmlShape.setStrokeWidth(1);
-  vmlShape.setStrokeColor('red');
-  var vmlCreatable = vmlShape.getCreatable();
-  vmlCreatable.setStrokeColor('red');
-  vmlCreatable.setStrokeWidth(5);
-  if (shapeName !== 'Polyline') {
-    vmlCreatable.setFillColor('red');
-    vmlCreatable.setFillOpacity(.2);
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
+    var vmlShape = xrx.shape[shapeName].create(vmlDrawing);
+    vmlShape.setStrokeWidth(1);
+    vmlShape.setStrokeColor('red');
+    var vmlCreatable = vmlShape.getCreatable();
+    vmlCreatable.setStrokeColor('red');
+    vmlCreatable.setStrokeWidth(5);
+    if (shapeName !== 'Polyline') {
+      vmlCreatable.setFillColor('red');
+      vmlCreatable.setFillOpacity(.2);
+    }
+    vmlDrawing.setModeCreate(vmlCreatable);
   }
-  vmlDrawing.setModeCreate(vmlCreatable);
-  */
 };

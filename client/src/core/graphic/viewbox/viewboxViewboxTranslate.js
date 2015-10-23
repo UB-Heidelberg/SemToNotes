@@ -73,3 +73,9 @@ xrx.viewbox.ViewboxTranslate.prototype.centerVertically = function() {
   this.translate(0, dy);
   this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
+
+
+
+xrx.viewbox.ViewboxTranslate.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

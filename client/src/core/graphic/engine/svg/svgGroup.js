@@ -34,3 +34,9 @@ xrx.svg.Group.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'g');
   return new xrx.svg.Group(element);
 };
+
+
+
+xrx.svg.Group.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

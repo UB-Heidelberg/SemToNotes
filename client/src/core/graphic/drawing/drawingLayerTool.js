@@ -41,3 +41,10 @@ xrx.drawing.LayerTool.prototype.toggleMagnifier = function() {
     this.magnifier_.show();
   }
 };
+
+
+xrx.drawing.LayerTool.prototype.disposeInternal = function() {
+  this.magnifier_ = null;
+  goog.base(this, 'disposeInternal');
+};
+

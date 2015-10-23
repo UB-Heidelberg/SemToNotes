@@ -74,3 +74,9 @@ xrx.svg.Circle.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'circle');
   return new xrx.svg.Circle(element);
 };
+
+
+
+xrx.svg.Circle.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

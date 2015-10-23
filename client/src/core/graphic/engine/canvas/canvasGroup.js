@@ -32,3 +32,9 @@ goog.inherits(xrx.canvas.Group, xrx.canvas.Container);
 xrx.canvas.Group.create = function(canvas) {
   return new xrx.canvas.Group(canvas);
 };
+
+
+
+xrx.canvas.Group.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -95,3 +95,9 @@ xrx.svg.Rect.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'rect');
   return new xrx.svg.Rect(element);
 };
+
+
+
+xrx.svg.Rect.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

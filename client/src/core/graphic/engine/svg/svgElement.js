@@ -47,3 +47,12 @@ xrx.svg.Element.prototype.applyTransform = function(matrix) {
       ',' + matrix.m02_ + ',' + matrix.m12_ + ')';
   this.element_.setAttribute('transform', s); 
 };
+
+
+
+xrx.svg.Element.prototype.disposeInternal = function() {
+  goog.dom.removeNode(this.element_);
+  this.element_.style = null;
+  this.element_ = null;
+  goog.base(this, 'disposeInternal');
+};

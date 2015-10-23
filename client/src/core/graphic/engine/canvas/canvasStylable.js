@@ -39,3 +39,9 @@ xrx.canvas.Stylable.prototype.strokeAndFill_ = function(fillColor,
   this.context_.lineWidth = strokeWidth;
   if (strokeWidth > 0) this.context_.stroke();
 };
+
+
+
+xrx.canvas.Stylable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -47,3 +47,10 @@ xrx.geometry.Path.prototype.containsPoint = function(point) {
   }
   return contains;
 };
+
+
+
+xrx.geometry.Path.prototype.disposeInternal = function() {
+  this.coords = null;
+  goog.base(this, 'disposeInternal');
+};

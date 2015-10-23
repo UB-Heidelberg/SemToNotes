@@ -64,3 +64,9 @@ xrx.canvas.Polygon.prototype.draw = function(coords, fillColor,
 xrx.canvas.Polygon.create = function(canvas) {
   return new xrx.canvas.Polygon(canvas);
 };
+
+
+
+xrx.canvas.Polygon.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

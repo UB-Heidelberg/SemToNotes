@@ -33,6 +33,8 @@ goog.require('xrx.shape.Shapes');
  */
 xrx.event.HandlerTarget = function() {
 
+  goog.base(this);
+
   /**
    * The event handler of this drawing canvas.
    * @type {goog.events.EventHandler}
@@ -45,6 +47,7 @@ xrx.event.HandlerTarget = function() {
    */
   this.cursor_ = new xrx.drawing.Cursor(this);
 };
+goog.inherits(xrx.event.HandlerTarget, goog.Disposable);
 
 
 
@@ -287,4 +290,15 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
     throw Error('Unknown mode.');
     break;
   }
+};
+
+
+
+xrx.event.HandlerTarget.prototype.disposeInternal = function() {
+  this.handler_.removeAll();
+  this.handler_.dispose();
+  this.handler_ = null;
+  this.cursor_.dispose();
+  this.cursor_ = null;
+  goog.base(this, 'disposeInternal');
 };

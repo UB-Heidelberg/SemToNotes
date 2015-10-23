@@ -7,11 +7,17 @@ goog.provide('xrx.drawing.Cursor');
 
 
 
+goog.require('goog.Disposable');
+
+
+
 /**
  * @constructor
  * @private
  */
 xrx.drawing.Cursor = function(drawing) {
+
+  goog.base(this);
 
   this.drawing_ = drawing;
 
@@ -31,6 +37,7 @@ xrx.drawing.Cursor = function(drawing) {
 
   this.shapes_ = null;
 };
+goog.inherits(xrx.drawing.Cursor, goog.Disposable);
 
 
 

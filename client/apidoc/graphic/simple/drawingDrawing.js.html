@@ -56,6 +56,7 @@ goog.provide('xrx.drawing.Drawing');
 
 
 
+goog.require('goog.array');
 goog.require('goog.dom.DomHelper');
 goog.require('goog.dom.ViewportSizeMonitor');
 goog.require('xrx.engine.Engine');
@@ -172,6 +173,20 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    */
   this.viewbox_;
 
+  /**
+   * The width of this drawing canvas.
+   * @type {number}
+   * @private
+   */
+  this.width_;
+
+  /**
+   * The height of this drawing canvas.
+   * @type {number}
+   * @private
+   */
+  this.height_;
+
   // install the canvas
   this.install_(opt_engine);
 };
@@ -270,17 +285,44 @@ xrx.drawing.Drawing.prototype.getViewbox = function() {
 
 
 /**
- * Returns the shape currently created by the user.
- * @return {xrx.shape.Creatable} The shape.
+ * Sets the size of this drawing canvas.
+ * @param {number} width The width in pixel.
+ * @param {number} height The height in pixel.
  */
-xrx.drawing.Drawing.prototype.getCreate = function() {
-  return this.create_;
+xrx.drawing.Drawing.prototype.setSize = function(width, height) {
+  goog.style.setSize(this.element_, width + 'px', height + 'px');
+  this.handleResize();
 };
 
 
 
-xrx.drawing.Drawing.prototype.setSize = function(width, height) {
-  goog.style.setSize(this.element_, width + 'px', height + 'px');
+/**
+ * Sets the width of this drawing canvas.
+ * @param {number} width The width in pixel.
+ */
+xrx.drawing.Drawing.prototype.setWidth = function(width) {
+  this.setSize(width, this.height_);
+};
+
+
+
+/**
+ * Sets the height of this drawing canvas.
+ * @param {number} height The height in pixel.
+ */
+xrx.drawing.Drawing.prototype.setHeight = function(height) {
+  this.setSize(this.width_, height);
+};
+
+
+
+/**
+ * Sets a CSS style for this drawing canvas.
+ * @param {string} The style name such as 'padding'.
+ * @param {string} The style value such as '20px'.
+ */
+xrx.drawing.Drawing.prototype.setStyle = function(name, value) {
+  goog.style.setStyle(this.element_, name, value);
   this.handleResize();
 };
 
@@ -313,10 +355,34 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
 
 /**
  * Adds one or more shapes to this drawing canvas.
- * @param {Array&lt;xrx.shape.Shape>|xrx.shape.Shape} shapes The shape(s).
+ * @param {xrx.shape.Shape*} var_args The shapes.
  */
-xrx.drawing.Drawing.prototype.addShapes = function(shapes) {
-  this.layer_[1].addShapes(shapes);
+xrx.drawing.Drawing.prototype.addShapes = function(var_args) {
+  this.layer_[1].addShapes(goog.array.toArray(arguments));
+  this.draw();
+};
+
+
+
+/**
+ * Returns the shapes currently rendered by this drawing canvas.
+ * @return {Array&lt;xrx.shape.Shape>} The shapes.
+ */
+xrx.drawing.Drawing.prototype.getShapes = function() {
+  return this.layer_[1].getShapes() || [];
+};
+
+
+
+xrx.drawing.Drawing.prototype.removeShape = function(shape) {
+  this.layer_[1].removeShape(shape);
+  this.draw();
+};
+
+
+
+xrx.drawing.Drawing.prototype.getSelectedShape = function() {
+  return this.selectable_.getShape();
 };
 
 
@@ -436,6 +502,13 @@ xrx.drawing.Drawing.prototype.setModeSelect = function() {
 
 
 
+xrx.drawing.Drawing.prototype.setSelected = function(shape) {
+  this.selectable_.setSelected(shape);
+  this.draw();
+};
+
+
+
 /**
  * Switch the drawing canvas over into mode &lt;i>modify&lt;/i> to allow modification of shapes.
  * @see xrx.drawing.Mode
@@ -480,11 +553,11 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
  * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  var size = this.getSize_();
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
-  this.shield_.setHeight(size.height);
-  this.shield_.setWidth(size.width);
+  this.calculateSize_();
+  this.canvas_.setHeight(this.height_);
+  this.canvas_.setWidth(this.width_);
+  this.shield_.setHeight(this.height_);
+  this.shield_.setWidth(this.width_);
   this.draw();
 };
 
@@ -493,7 +566,7 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
 /**
  * @private
  */
-xrx.drawing.Drawing.prototype.getSize_ = function() {
+xrx.drawing.Drawing.prototype.calculateSize_ = function() {
   var size = goog.style.getSize(this.element_);
   var paddingBox = goog.style.getPaddingBox(this.element_);
   var borderBox = goog.style.getBorderBox(this.element_);
@@ -501,7 +574,8 @@ xrx.drawing.Drawing.prototype.getSize_ = function() {
       borderBox.top - borderBox.bottom;
   var width = size.width - paddingBox.left - paddingBox.right -
       borderBox.left - borderBox.right;
-  return { width: width, height: height };
+  this.width_ = width;
+  this.height_ = height;
 };
 
 
@@ -510,15 +584,14 @@ xrx.drawing.Drawing.prototype.getSize_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installCanvas_ = function() {
-  var size = this.getSize_();
   var self = this;
   var vsm = new goog.dom.ViewportSizeMonitor();
   goog.events.listen(vsm, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
   this.canvas_ = xrx.shape.Canvas.create(this);
-  this.canvas_.setHeight(size.height);
-  this.canvas_.setWidth(size.width);
+  this.canvas_.setHeight(this.height_);
+  this.canvas_.setWidth(this.width_);
 };
 
 
@@ -577,12 +650,11 @@ xrx.drawing.Drawing.prototype.installLayerShapeCreate_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  var size = this.getSize_();
   this.shield_ = xrx.shape.Rect.create(this);
   this.shield_.setX(0);
   this.shield_.setY(0);
-  this.shield_.setWidth(size.width);
-  this.shield_.setHeight(size.height);
+  this.shield_.setWidth(this.width_);
+  this.shield_.setHeight(this.height_);
   this.shield_.setFillOpacity(0);
   this.shield_.setStrokeWidth(0);
   this.canvas_.addChildren(this.shield_);
@@ -595,19 +667,6 @@ xrx.drawing.Drawing.prototype.installShield_ = function() {
  */
 xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
   this.layer_[4] = new xrx.drawing.LayerTool(this);
-};
-
-
-
-/**
- * @private
- */
-xrx.drawing.Drawing.prototype.installFallback_ = function(opt_engine) {
-  var span = goog.dom.createElement('span');
-  goog.dom.setTextContent(span, 'Your browser does not support ' + opt_engine +
-      ' rendering.');
-  goog.dom.classes.add(span, 'xrx-canvas-error');
-  goog.dom.appendChild(this.element_, span);
 };
 
 
@@ -630,6 +689,12 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
   this.initEngine_(opt_engine);
 
   if (this.engine_.isAvailable()) {
+    // remove the fall-back message if some exists
+    goog.dom.removeChildren(this.element_);
+
+    // calculate the size of the canvas
+    this.calculateSize_();
+
     // install the drawing canvas
     this.installCanvas_();
 
@@ -659,9 +724,6 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
     };
     */
 
-  } else {
-    // install an unavailable message
-    this.installFallback_(opt_engine);
   }
 };
 </code></pre>
@@ -673,7 +735,7 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
 
     </div>
     <nav class="col-md-3">
-      <h2><a href="index.html">Index</a></h2><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.drawing.tool.Magnifier.html">xrx.drawing.tool.Magnifier</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.CircleCreatable.html">xrx.shape.CircleCreatable</a></li><li><a href="xrx.shape.CircleHoverable.html">xrx.shape.CircleHoverable</a></li><li><a href="xrx.shape.CircleModifiable.html">xrx.shape.CircleModifiable</a></li><li><a href="xrx.shape.CircleSelectable.html">xrx.shape.CircleSelectable</a></li><li><a href="xrx.shape.Dragger.html">xrx.shape.Dragger</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.EllipseCreatable.html">xrx.shape.EllipseCreatable</a></li><li><a href="xrx.shape.EllipseHoverable.html">xrx.shape.EllipseHoverable</a></li><li><a href="xrx.shape.EllipseModifiable.html">xrx.shape.EllipseModifiable</a></li><li><a href="xrx.shape.EllipseModifiable.create.html">xrx.shape.EllipseModifiable.create</a></li><li><a href="xrx.shape.EllipseSelectable.html">xrx.shape.EllipseSelectable</a></li><li><a href="xrx.shape.Group.html">xrx.shape.Group</a></li><li><a href="xrx.shape.Image.html">xrx.shape.Image</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.LineCreatable.html">xrx.shape.LineCreatable</a></li><li><a href="xrx.shape.LineHoverable.html">xrx.shape.LineHoverable</a></li><li><a href="xrx.shape.LineModifiable.html">xrx.shape.LineModifiable</a></li><li><a href="xrx.shape.LineModifiable.create.html">xrx.shape.LineModifiable.create</a></li><li><a href="xrx.shape.LineSelectable.html">xrx.shape.LineSelectable</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.PolygonCreatable.html">xrx.shape.PolygonCreatable</a></li><li><a href="xrx.shape.PolygonHoverable.html">xrx.shape.PolygonHoverable</a></li><li><a href="xrx.shape.PolygonModifiable.html">xrx.shape.PolygonModifiable</a></li><li><a href="xrx.shape.PolygonSelectable.html">xrx.shape.PolygonSelectable</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.PolylineCreatable.html">xrx.shape.PolylineCreatable</a></li><li><a href="xrx.shape.PolylineHoverable.html">xrx.shape.PolylineHoverable</a></li><li><a href="xrx.shape.PolylineModifiable.html">xrx.shape.PolylineModifiable</a></li><li><a href="xrx.shape.PolylineSelectable.html">xrx.shape.PolylineSelectable</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.RectCreatable.html">xrx.shape.RectCreatable</a></li><li><a href="xrx.shape.RectHoverable.html">xrx.shape.RectHoverable</a></li><li><a href="xrx.shape.RectModifiable.html">xrx.shape.RectModifiable</a></li><li><a href="xrx.shape.RectSelectable.html">xrx.shape.RectSelectable</a></li></ul>
+      <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.drawing.tool.Magnifier.html">xrx.drawing.tool.Magnifier</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.CircleCreatable.html">xrx.shape.CircleCreatable</a></li><li><a href="xrx.shape.CircleHoverable.html">xrx.shape.CircleHoverable</a></li><li><a href="xrx.shape.CircleModifiable.html">xrx.shape.CircleModifiable</a></li><li><a href="xrx.shape.CircleSelectable.html">xrx.shape.CircleSelectable</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.EllipseCreatable.html">xrx.shape.EllipseCreatable</a></li><li><a href="xrx.shape.EllipseHoverable.html">xrx.shape.EllipseHoverable</a></li><li><a href="xrx.shape.EllipseModifiable.html">xrx.shape.EllipseModifiable</a></li><li><a href="xrx.shape.EllipseModifiable.create.html">xrx.shape.EllipseModifiable.create</a></li><li><a href="xrx.shape.EllipseSelectable.html">xrx.shape.EllipseSelectable</a></li><li><a href="xrx.shape.Group.html">xrx.shape.Group</a></li><li><a href="xrx.shape.Image.html">xrx.shape.Image</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.LineCreatable.html">xrx.shape.LineCreatable</a></li><li><a href="xrx.shape.LineHoverable.html">xrx.shape.LineHoverable</a></li><li><a href="xrx.shape.LineModifiable.html">xrx.shape.LineModifiable</a></li><li><a href="xrx.shape.LineModifiable.create.html">xrx.shape.LineModifiable.create</a></li><li><a href="xrx.shape.LineSelectable.html">xrx.shape.LineSelectable</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.PolygonCreatable.html">xrx.shape.PolygonCreatable</a></li><li><a href="xrx.shape.PolygonHoverable.html">xrx.shape.PolygonHoverable</a></li><li><a href="xrx.shape.PolygonModifiable.html">xrx.shape.PolygonModifiable</a></li><li><a href="xrx.shape.PolygonSelectable.html">xrx.shape.PolygonSelectable</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.PolylineCreatable.html">xrx.shape.PolylineCreatable</a></li><li><a href="xrx.shape.PolylineHoverable.html">xrx.shape.PolylineHoverable</a></li><li><a href="xrx.shape.PolylineModifiable.html">xrx.shape.PolylineModifiable</a></li><li><a href="xrx.shape.PolylineSelectable.html">xrx.shape.PolylineSelectable</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.RectCreatable.html">xrx.shape.RectCreatable</a></li><li><a href="xrx.shape.RectHoverable.html">xrx.shape.RectHoverable</a></li><li><a href="xrx.shape.RectModifiable.html">xrx.shape.RectModifiable</a></li><li><a href="xrx.shape.RectSelectable.html">xrx.shape.RectSelectable</a></li></ul><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul>
     </nav>
   </div>
   <script>prettyPrint();</script>

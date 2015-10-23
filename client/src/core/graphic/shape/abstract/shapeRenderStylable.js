@@ -79,3 +79,11 @@ xrx.shape.RenderStylable.prototype.startDrawing_ = function() {
 xrx.shape.RenderStylable.prototype.finishDrawing_ = function() {
   this.engineElement_.finishDrawing();
 };
+
+
+
+xrx.shape.RenderStylable.prototype.disposeInternal = function() {
+  this.engineElement_.dispose();
+  this.engineElement_ = null;
+  goog.base(this, 'disposeInternal');
+};

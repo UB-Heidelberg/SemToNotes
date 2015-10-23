@@ -32,13 +32,11 @@ goog.inherits(xrx.vml.Group, xrx.vml.Container);
  * @param {xrx.vml.Canvas} canvas The parent canvas of the group.
  */
 xrx.vml.Group.create = function(canvas) {
-  var element = goog.dom.htmlToDocumentFragment('<group' +
-      '  xmlns="urn:schemas-microsoft.com:vml" class="xrx-vml">' +
-      '</group>');
+  var element = xrx.vml.createElement('group', false);
   element.style['position'] = 'absolute';
   element.style['left'] = '0px';
   element.style['top'] = '0px';
-  element.style['width'] = '100px';
-  element.style['height'] = '100px';
+  element.style['width'] = canvas.getWidth() + 'px';
+  element.style['height'] = canvas.getHeight() + 'px';
   return new xrx.vml.Group(element);
 };

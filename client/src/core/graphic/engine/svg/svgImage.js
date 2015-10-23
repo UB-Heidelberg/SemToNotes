@@ -75,3 +75,9 @@ xrx.svg.Image.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'image');
   return new xrx.svg.Image(element);
 };
+
+
+
+xrx.svg.Image.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

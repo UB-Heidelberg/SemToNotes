@@ -10,6 +10,7 @@ goog.provide('xrx.EventTarget');
 
 
 
+goog.require('goog.Disposable');
 goog.require('goog.string');
 
 
@@ -19,7 +20,11 @@ goog.require('goog.string');
  * @constructor
  * @private
  */
-xrx.EventTarget = function() {};
+xrx.EventTarget = function() {
+
+  goog.base(this);
+};
+goog.inherits(xrx.EventTarget, goog.Disposable);
 
 
 
@@ -57,4 +62,10 @@ xrx.EventTarget.prototype.argsArray_ = function(args) {
     arr[i] = args[i + 2];
   };
   return arr;
-}; 
+};
+
+
+
+xrx.EventTarget.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -33,3 +33,9 @@ xrx.geometry.Circle.prototype.containsPoint = function(point) {
   return ((this.cx - point[0]) * (this.cx - point[0]) + (this.cy - point[1]) *
       (this.cy - point[1]) <= this.r * this.r) 
 };
+
+
+
+xrx.geometry.Circle.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

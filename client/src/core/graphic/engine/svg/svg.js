@@ -1,6 +1,5 @@
 /**
- * @fileoverview SVG base class providing enumerations and static functions
- *     for the SVG sub-classes.
+ * @fileoverview Namespace for the SVG rendering engine.
  */
 
 goog.provide('xrx.svg');
@@ -9,8 +8,8 @@ goog.provide('xrx.svg.Namespace');
 
 
 /**
- * SVG base class providing enumerations and static functions
- * for the SVG sub-classes.
+ * Namespace for the SVG rendering engine. Also a
+ * a static class providing utility functions.
  * @constructor
  * @namespace xrx.svg
  * @memberof xrx
@@ -22,6 +21,7 @@ xrx.svg = function() {};
 /**
  * Enumeration of SVG related namespaces.
  * @enum {string}
+ * @private
  */
 xrx.svg.Namespace = {
 
@@ -53,6 +53,7 @@ xrx.svg.isSupported = function() {
  * Sets the coordinates for various SVG elements such as polygons.
  * @param {Element} element The SVG element.
  * @param {Array<Array<number>>} points Array of coordinates.
+ * @private
  */
 xrx.svg.setCoords = function(element, coordinates) {
   var s = '';

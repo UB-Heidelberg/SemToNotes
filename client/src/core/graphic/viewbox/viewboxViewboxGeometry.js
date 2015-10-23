@@ -22,6 +22,8 @@ goog.require('xrx.EventTarget');
  */
 xrx.viewbox.ViewboxGeometry = function() {
 
+  goog.base(this);
+
   this.testPoint_ = new Array(2);
 };
 goog.inherits(xrx.viewbox.ViewboxGeometry, xrx.EventTarget);
@@ -186,4 +188,11 @@ xrx.viewbox.ViewboxGeometry.prototype.getFixPoint_ = function(orientation,
     return point;
   }
   return fixPoint;
+};
+
+
+
+xrx.viewbox.ViewboxGeometry.prototype.disposeInternal = function() {
+  this.testPoint_ = null;
+  goog.base(this, 'disposeInternal');
 };

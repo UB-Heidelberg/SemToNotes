@@ -4,6 +4,8 @@ goog.provide('xrx.demo.Demo');
 
 
 
+goog.require('goog.Disposable');
+goog.require('goog.array');
 goog.require('goog.dom.classes');
 goog.require('goog.dom.dataset');
 goog.require('goog.dom.DomHelper');
@@ -102,7 +104,7 @@ xrx.demo.Demo.prototype.loadPage_ = function(title, url, navbarLink,
     if (navbarLink) goog.dom.classes.add(navbarLink, 'active');
     if (navbarLink) self.activeNavbarLink_ = navbarLink;
     if (opt_callback !== undefined) opt_callback(self);
-  }, undefined, { cache: false });
+  }, 'GET', undefined, { 'cache-control': 'no-cache' });
 };
 
 
@@ -167,7 +169,9 @@ xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId, type) {
 xrx.demo.Demo.prototype.installExample_ = function(src, exampleId, type) {
   this.installExampleBacklink_(exampleId);
   if (type) this.installExampleSource_(src, exampleId, type);
-  type === 'js' ? this.example_ = eval(src) : this.example_ = null;
+  if (type === 'js') {
+    this.example_ = eval(src);
+  }
 };
 
 
@@ -187,7 +191,7 @@ xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
     goog.net.XhrIo.send(url, function(e) {
       var src = e.target.getResponseText();
       if (demo.status_ === true) demo.installExample_(src, exampleId, type);
-    }, undefined, { cache: false });
+    }, 'GET', undefined, { 'cache-control': 'no-cache' });
   };
   this.loadPage_('Example | SemToNotes', 'client/demo/example/' + 
       exampleId + '.html', undefined, loadScript);
@@ -232,6 +236,15 @@ xrx.demo.Demo.prototype.installNavbar_ = function() {
 
 
 xrx.demo.Demo.prototype.navigate_ = function() {
+  // dispose the last example
+  if (this.example_) {
+    if (!goog.isArray(this.example_)) this.example_ = [this.example_];
+    for (var i = 0, len = this.example_.length; i < len; i++) {
+      this.example_[i].dispose();
+    }
+    this.example_ = null;
+  }
+  // resolve URL and navigate
   var hash = goog.dom.getWindow().location.hash.split('#')[1] ||
       'home';
   if (this.isPageExamples(hash)) {

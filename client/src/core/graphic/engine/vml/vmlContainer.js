@@ -36,7 +36,6 @@ goog.inherits(xrx.vml.Container, xrx.vml.Element);
  * @param {xrx.vml.Element} element The child element.
  */
 xrx.vml.Container.prototype.addChild = function(element) {
-  console.log(element);
   this.childs_.push(element);
   this.element_.appendChild(element.getElement());
 };

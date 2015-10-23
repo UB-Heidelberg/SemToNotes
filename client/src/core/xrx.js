@@ -1,5 +1,5 @@
 /**
- * @fileoverview The XRX++ main class.
+ * @fileoverview The xrx namespace.
  */
 
 goog.provide('xrx');
@@ -7,6 +7,7 @@ goog.provide('xrx');
 
 
 /**
+ * The xrx namespace.
  * @namespace xrx
  */
 

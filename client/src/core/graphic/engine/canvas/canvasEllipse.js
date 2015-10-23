@@ -67,3 +67,9 @@ xrx.canvas.Ellipse.prototype.draw = function(cx, cy, rx, ry, fillColor,
 xrx.canvas.Ellipse.create = function(canvas) {
   return new xrx.canvas.Ellipse(canvas);
 };
+
+
+
+xrx.canvas.Ellipse.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

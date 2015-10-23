@@ -21,6 +21,7 @@ var _allTests = [
   './core/graphic/shape/shapeShape_test.html',
   // core/graphic/viewbox
   './core/graphic/viewbox/viewboxViewbox_test.html',
+  './core/graphic/viewbox/viewboxFastAffineTransform_test.html',
   './core/graphic/viewbox/viewboxViewboxGeometry_test.html',
   './core/graphic/viewbox/viewboxviewboxViewboxRotate_test.html',
   './core/graphic/viewbox/viewboxViewboxTransform_test.html',

@@ -6,6 +6,7 @@ goog.provide('xrx.engine.Engine');
 
 
 
+goog.require('goog.Disposable');
 goog.require('xrx.engine');
 goog.require('xrx.engine.Engines');
 
@@ -20,6 +21,8 @@ goog.require('xrx.engine.Engines');
  * @private
  */
 xrx.engine.Engine = function(opt_engine) {
+
+  goog.base(this);
 
   /**
    * Name of the rendering engine.
@@ -39,6 +42,7 @@ xrx.engine.Engine = function(opt_engine) {
 
   this.init_();
 };
+goog.inherits(xrx.engine.Engine, goog.Disposable);
 
 
 
@@ -251,17 +255,14 @@ xrx.engine.Engine.prototype.isAvailable = function() {
  * @private
  */
 xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
-  if (xrx.canvas.isSupported()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     this.name_ = xrx.engine.CANVAS;
-    this.renderer_ = xrx.canvas;
     this.available_ = true;
-  } else if (xrx.svg.isSupported()) {
+  } else if (xrx.engine.isSupported(xrx.engine.SVG)) {
     this.name_ = xrx.engine.SVG;
-    this.renderer_ = xrx.svg;
     this.available_ = true;
-  } else if (xrx.vml.isSupported()) {
+  } else if (xrx.engine.isSupported(xrx.engine.VML)) {
     this.name_ = xrx.engine.VML;
-    this.renderer_ = xrx.vml;
     this.available_ = true;
   } else {
     throw Error('There is no graphics rendering engine available.');
@@ -275,14 +276,11 @@ xrx.engine.Engine.prototype.findOptimalRenderer_ = function() {
  */
 xrx.engine.Engine.prototype.forceRenderer_ = function() {
   if (this.name_ === xrx.engine.CANVAS) {
-    this.renderer_ = xrx.canvas;
-    this.available_ = xrx.canvas.isSupported();
+    this.available_ = xrx.engine.isSupported(xrx.engine.CANVAS);
   } else if (this.name_ === xrx.engine.SVG) {
-    this.renderer_ = xrx.svg;
-    this.available_ = xrx.svg.isSupported();
+    this.available_ = xrx.engine.isSupported(xrx.engine.SVG);
   } else if (this.name_ === xrx.engine.VML) {
-    this.renderer_ = xrx.vml;
-    this.available_ = xrx.vml.isSupported();
+    this.available_ = xrx.engine.isSupported(xrx.engine.VML);
   } else {
     this.available_ = false;
     throw Error('Unknown graphics rendering engine.');
@@ -300,4 +298,10 @@ xrx.engine.Engine.prototype.init_ = function() {
   } else {
     this.findOptimalRenderer_();
   }
+};
+
+
+
+xrx.engine.Engine.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };

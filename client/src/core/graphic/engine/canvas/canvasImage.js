@@ -44,3 +44,9 @@ xrx.canvas.Image.prototype.draw = function(image) {
 xrx.canvas.Image.create = function(canvas) {
   return new xrx.canvas.Image(canvas);
 };
+
+
+
+xrx.canvas.Image.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -61,7 +61,7 @@ xrx.vml.Polyline.create = function(canvas) {
   element.style['position'] = 'absolute';
   element.style['top'] = '0px';
   element.style['left'] = '0px';
-  element.style['width'] = '100px';
-  element.style['height'] = '100px';
+  element.style['width'] = canvas.getWidth() + 'px';
+  element.style['height'] = canvas.getHeight() + 'px';
   return new xrx.vml.Polyline(element);
 };

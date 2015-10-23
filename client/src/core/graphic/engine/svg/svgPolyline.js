@@ -59,3 +59,9 @@ xrx.svg.Polyline.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'polyline');
   return new xrx.svg.Polyline(element);
 };
+
+
+
+xrx.svg.Polyline.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

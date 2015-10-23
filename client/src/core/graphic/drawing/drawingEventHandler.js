@@ -137,3 +137,9 @@ xrx.drawing.EventHandler.prototype.getShapesSelected = function(point) {
   }
   return found;
 };
+
+
+
+xrx.drawing.EventHandler.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -65,3 +65,9 @@ xrx.svg.Line.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'line');
   return new xrx.svg.Line(element);
 };
+
+
+
+xrx.svg.Line.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

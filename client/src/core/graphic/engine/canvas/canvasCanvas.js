@@ -135,6 +135,14 @@ xrx.canvas.Canvas.prototype.finishDrawing = function() {
 xrx.canvas.Canvas.create = function(parent) {
   var element = goog.dom.createElement('canvas');
   var canvas = new xrx.canvas.Canvas(element);
-  goog.dom.appendChild(parent, canvas.getElement());
+  goog.dom.appendChild(parent, element);
   return canvas;
+};
+
+
+
+xrx.canvas.Canvas.prototype.disposeInternal = function() {
+  goog.dom.removeNode(this.element_);
+  this.element_ = null;
+  goog.base(this, 'disposeInternal');
 };

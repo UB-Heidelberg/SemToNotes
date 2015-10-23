@@ -60,3 +60,9 @@ xrx.canvas.Polyline.prototype.draw = function(coords, fillColor,
 xrx.canvas.Polyline.create = function(canvas) {
   return new xrx.canvas.Polyline(canvas);
 };
+
+
+
+xrx.canvas.Polyline.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

@@ -86,3 +86,9 @@ xrx.svg.Ellipse.create = function(undefined_) {
   var element = document.createElementNS(xrx.svg.Namespace['svg'], 'ellipse');
   return new xrx.svg.Ellipse(element);
 };
+
+
+
+xrx.svg.Ellipse.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};

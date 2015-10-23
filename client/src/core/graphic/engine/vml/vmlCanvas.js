@@ -69,6 +69,8 @@ xrx.vml.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
   this.element_.parentElement.style['width'] = width + 'px';
   this.element_.style['width'] = width + 'px';
+  this.element_['coordorigin'] = '0, 0';
+  this.element_['coordsize'] = this.width_ + ', ' + this.height_;
 };
 
 
@@ -91,6 +93,8 @@ xrx.vml.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
   this.element_.parentElement.style['height'] = height + 'px';
   this.element_.style['height'] = height + 'px';
+  this.element_['coordorigin'] = '0, 0';
+  this.element_['coordsize'] = this.width_ + ', ' + this.height_;
 };
 
 
@@ -118,9 +122,7 @@ xrx.vml.Canvas.create = function(parent) {
   element.style['overflow'] = 'hidden';
   element.style['width'] = '100px';
   element.style['height'] = '100px';
-  var group = goog.dom.htmlToDocumentFragment('<group' +
-      '  xmlns="urn:schemas-microsoft.com:vml" class="xrx-vml" coordorigin="0,0" coordsize="100,100">' +
-      '</group>');
+  var group = xrx.vml.createElement('group', false);
   goog.dom.appendChild(element, group);
   goog.dom.appendChild(parent, element);
   group.style['position'] = 'absolute';
