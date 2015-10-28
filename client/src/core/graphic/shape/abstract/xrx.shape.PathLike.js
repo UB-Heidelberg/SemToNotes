@@ -11,9 +11,9 @@ goog.provide('xrx.shape.PathLike');
  * @constructor
  * @private
  */
-xrx.shape.PathLike = function(drawing, engineElement, geometry) {
+xrx.shape.PathLike = function(drawing, geometry) {
 
-  goog.base(this, drawing, engineElement, geometry);
+  goog.base(this, drawing, geometry);
 };
 goog.inherits(xrx.shape.PathLike, xrx.shape.Geometry);
 

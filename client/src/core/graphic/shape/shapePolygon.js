@@ -28,10 +28,11 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Polygon = function(drawing, engineElement) {
+xrx.shape.Polygon = function(drawing) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Path());
+  goog.base(this, drawing, new xrx.geometry.Path());
+
+  this.engineElement_ = this.drawing_.getEngine().createPolygon();
 };
 goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
 
@@ -114,20 +115,6 @@ xrx.shape.Polygon.prototype.setCreatable = function(creatable) {
   if (!creatable instanceof xrx.shape.PolygonCreatable)
       throw Error('Instance of xrx.shape.PolygonCreatable expected.');
   this.creatable_ = creatable;
-};
-
-
-
-/**
- * Creates a new polygon shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Polygon.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createPolygon(engineCanvas);
-  return new xrx.shape.Polygon(drawing, engineElement);
 };
 
 

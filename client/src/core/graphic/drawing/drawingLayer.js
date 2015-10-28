@@ -143,7 +143,7 @@ xrx.drawing.Layer.prototype.removeShape = function(shape) {
  * @private
  */
 xrx.drawing.Layer.prototype.create_ = function() {
-  this.group_ = xrx.shape.Group.create(this.drawing_);
+  this.group_ = new xrx.shape.Group(this.drawing_);
 };
 
 

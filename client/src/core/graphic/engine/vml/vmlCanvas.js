@@ -130,6 +130,5 @@ xrx.vml.Canvas.create = function(parent) {
   group.style['top'] = '0px';
   group.style['width'] = '100px';
   group.style['height'] = '100px';
-  var canvas = new xrx.vml.Canvas(group);
-  return canvas;
+  return new xrx.vml.Canvas(group);
 };

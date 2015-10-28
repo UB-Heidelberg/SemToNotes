@@ -25,10 +25,11 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Ellipse = function(drawing, engineElement) {
+xrx.shape.Ellipse = function(drawing) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Ellipse());
+  goog.base(this, drawing, new xrx.geometry.Ellipse());
+
+  this.engineElement_ = this.drawing_.getEngine().createEllipse();
 };
 goog.inherits(xrx.shape.Ellipse, xrx.shape.Geometry);
 
@@ -195,20 +196,6 @@ xrx.shape.Ellipse.prototype.setCreatable = function(creatable) {
   if (!creatable instanceof xrx.shape.EllipseCreatable)
       throw Error('Instance of xrx.shape.EllipseCreatable expected.');
   this.creatable_ = creatable;
-};
-
-
-
-/**
- * Creates a new ellipse.
- * @param {xrx.drawing.Drawing} The parent drawing canvas.
- */
-xrx.shape.Ellipse.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createEllipse(engineCanvas);
-  return new xrx.shape.Ellipse(drawing, engineElement);
 };
 
 

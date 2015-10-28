@@ -134,9 +134,7 @@ xrx.canvas.Canvas.prototype.finishDrawing = function() {
  */
 xrx.canvas.Canvas.create = function(parent) {
   var element = goog.dom.createElement('canvas');
-  var canvas = new xrx.canvas.Canvas(element);
-  goog.dom.appendChild(parent, element);
-  return canvas;
+  return new xrx.canvas.Canvas(element);
 };
 
 

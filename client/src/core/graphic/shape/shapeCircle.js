@@ -28,7 +28,9 @@ goog.require('xrx.shape.Selectable');
  */
 xrx.shape.Circle = function(drawing) {
 
-  goog.base(this, drawing, this.create_(drawing), new xrx.geometry.Circle());
+  goog.base(this, drawing, new xrx.geometry.Circle());
+
+  this.engineElement_ = this.drawing_.getEngine().createCircle();
 };
 goog.inherits(xrx.shape.Circle, xrx.shape.Geometry);
 
@@ -131,7 +133,7 @@ xrx.shape.Circle.prototype.draw = function() {
 
 
 xrx.shape.Circle.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.CircleHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.CircleHoverable(this);
   return this.hoverable_;
 };
 
@@ -146,7 +148,7 @@ xrx.shape.Circle.prototype.setHoverable = function(hoverable) {
 
 
 xrx.shape.Circle.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.CircleSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.CircleSelectable(this);
   return this.selectable_;
 };
 
@@ -165,7 +167,7 @@ xrx.shape.Circle.prototype.setSelectable = function(selectable) {
  * @return {xrx.shape.CircleModifiable} The modifiable circle shape.
  */
 xrx.shape.Circle.prototype.getModifiable = function() {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.CircleModifiable.create(this);
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.CircleModifiable(this);
   return this.modifiable_;
 };
 
@@ -184,7 +186,7 @@ xrx.shape.Circle.prototype.setModifiable = function(modifiable) {
  * @return {xrx.shape.CircleCreatable} The creatable circle shape.
  */
 xrx.shape.Circle.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.CircleCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.CircleCreatable(this);
   return this.creatable_;
 };
 
@@ -194,19 +196,6 @@ xrx.shape.Circle.prototype.setCreatable = function(creatable) {
   if (!creatable instanceof xrx.shape.CircleCreatable)
       throw Error('Instance of xrx.shape.CircleCreatable expected.');
   this.creatable_ = creatable;
-};
-
-
-
-/**
- * Creates a new circle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Circle.prototype.create_ = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  return engine.createCircle(engineCanvas);
 };
 
 
@@ -228,12 +217,6 @@ goog.inherits(xrx.shape.CircleHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.CircleHoverable.create = function(circle) {
-  return new xrx.shape.CircleHoverable(circle);
-};
-
-
-
 
 /**
  * @constructor
@@ -246,18 +229,14 @@ goog.inherits(xrx.shape.CircleSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.CircleSelectable.create = function(circle) {
-  return new xrx.shape.CircleSelectable(circle);
-};
-
-
-
 /**
  * @constructor
  */
 xrx.shape.CircleModifiable = function(circle) {
 
   goog.base(this, circle);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.CircleModifiable, xrx.shape.Modifiable);
 
@@ -287,14 +266,12 @@ xrx.shape.CircleModifiable.prototype.move = function(distX, distY) {
 
 
 
-xrx.shape.CircleModifiable.create = function(circle) {
-  var center = circle.getCenter();
-  var radius = circle.getRadius();
-  var modifiable = new xrx.shape.CircleModifiable(circle);
-  var dragger = xrx.shape.Dragger.create(modifiable, 0);
+xrx.shape.CircleModifiable.prototype.init_ = function() {
+  var center = this.shape_.getCenter();
+  var radius = this.shape_.getRadius();
+  var dragger = xrx.shape.Dragger.create(this, 0);
   dragger.setCoords([[center[0] + radius, center[1]]]);
-  modifiable.setDragger([dragger]);
-  return modifiable;
+  this.setDragger([dragger]);
 };
 
 
@@ -306,7 +283,7 @@ xrx.shape.CircleModifiable.create = function(circle) {
  */
 xrx.shape.CircleCreatable = function(circle) {
 
-  goog.base(this, circle, xrx.shape.Circle.create(circle.getDrawing()));
+  goog.base(this, circle, new xrx.shape.Circle(circle.getDrawing()));
 
   this.point_ = new Array(2);
 };
@@ -359,16 +336,10 @@ xrx.shape.CircleCreatable.prototype.handleMove = function(e, cursor) {
  */
 xrx.shape.CircleCreatable.prototype.handleUp = function(e, cursor) {
   var point = cursor.getPointTransformed();
-  var circle = xrx.shape.Circle.create(this.target_.getDrawing());
+  var circle = new xrx.shape.Circle(this.target_.getDrawing());
   var center = this.preview_.getCenter();
   circle.setStyle(this.target_);
   circle.setCenter(center[0], center[1]);
   circle.setRadius(this.preview_.getRadius());
   this.target_.getDrawing().eventShapeCreated(circle);
-};
-
-
-
-xrx.shape.CircleCreatable.create = function(circle) {
-  return new xrx.shape.CircleCreatable(circle);
 };

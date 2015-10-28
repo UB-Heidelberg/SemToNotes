@@ -27,8 +27,9 @@ goog.require('xrx.shape.Selectable');
  */
 xrx.shape.Line = function(drawing, engineElement) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Line());
+  goog.base(this, drawing, new xrx.geometry.Line());
+
+  this.engineElement_ = this.drawing_.getEngine().createLine();
 };
 goog.inherits(xrx.shape.Line, xrx.shape.Geometry);
 
@@ -215,20 +216,6 @@ xrx.shape.Line.prototype.setCreatable = function(creatable) {
   if (!creatable instanceof xrx.shape.LineCreatable)
       throw Error('Instance of xrx.shape.LineCreatable expected.');
   this.creatable_ = creatable;
-};
-
-
-
-/**
- * Creates a new line shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Line.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createLine(engineCanvas);
-  return new xrx.shape.Line(drawing, engineElement);
 };
 
 

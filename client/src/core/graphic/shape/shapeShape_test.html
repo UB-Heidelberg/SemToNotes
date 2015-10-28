@@ -8,7 +8,6 @@
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
   goog.require('xrx.graphic');
-  goog.require('xrx.drawing.Drawing');
 </script>
 <style>
 table {
@@ -123,7 +122,7 @@ function getDrawingVml(id) {
 
 
 function getCircle(drawing) {
-  var circle = xrx.shape.Circle.create(drawing);
+  var circle = new xrx.shape.Circle(drawing);
   circle.setCenter(50, 50);
   circle.setRadius(30);
   circle.setStyle(style);
@@ -133,7 +132,7 @@ function getCircle(drawing) {
 
 
 function getEllipse(drawing) {
-  var ellipse = xrx.shape.Ellipse.create(drawing);
+  var ellipse = new xrx.shape.Ellipse(drawing);
   ellipse.setCenter(50, 50);
   ellipse.setRadiusX(10);
   ellipse.setRadiusY(40);
@@ -144,7 +143,7 @@ function getEllipse(drawing) {
 
 
 function getImage(drawing) {
-  var img = xrx.shape.Image.create(drawing);
+  var img = new xrx.shape.Image(drawing);
   img.setImage(goog.dom.getElement('testImage'));
   return img;
 };
@@ -152,7 +151,7 @@ function getImage(drawing) {
 
 
 function getLine(drawing) {
-  var line = xrx.shape.Line.create(drawing);
+  var line = new xrx.shape.Line(drawing);
   line.setX1(10);
   line.setY1(10);
   line.setX2(90);
@@ -168,7 +167,7 @@ function getPolygon(drawing) {
   coords[0] = [10,10];
   coords[1] = [90,0];
   coords[2] = [0,60];
-  var polygon = xrx.shape.Polygon.create(drawing);
+  var polygon = new xrx.shape.Polygon(drawing);
   polygon.setCoords(coords);
   polygon.setStyle(style);
   return polygon;
@@ -182,7 +181,7 @@ function getPolyline(drawing) {
   coords[1] = [90,90];
   coords[2] = [5,60];
   coords[3] = [30,40];
-  var polyline = xrx.shape.Polyline.create(drawing);
+  var polyline = new xrx.shape.Polyline(drawing);
   polyline.setCoords(coords);
   polyline.setStyle(style);
   return polyline;
@@ -191,7 +190,7 @@ function getPolyline(drawing) {
 
 
 function getRect(drawing) {
-  var rect = xrx.shape.Rect.create(drawing);
+  var rect = new xrx.shape.Rect(drawing);
   rect.setX(10);
   rect.setY(10);
   rect.setWidth(10);
@@ -203,7 +202,7 @@ function getRect(drawing) {
 
 
 function getGroup(drawing) {
-  var group = xrx.shape.Group.create(drawing);
+  var group = new xrx.shape.Group(drawing);
   group.addChildren([this.getCircle(drawing),
       this.getImage(drawing), this.getPolyline(drawing)]);
   return group;
@@ -216,19 +215,22 @@ function test1Shapes() {
   var shape;
   for (var i = 0, len = shapes.length; i < len; i++) {
     shape = shapes[i];
-    if (!xrx.engine.isOldIE()) {
-      // Canvas
+    // Canvas
+    if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
       var canvasDrawing = getDrawingCanvas('canvas' + shape);
       var canvasShape = this['get' + shape](canvasDrawing);
       canvasDrawing.getLayerShape().addShapes(canvasShape);
       canvasDrawing.draw();
-      // SVG
+    }
+    // SVG
+    if (xrx.engine.isSupported(xrx.engine.SVG)) {
       var svgDrawing = getDrawingSvg('svg' + shape);
       var svgShape = this['get' + shape](svgDrawing);
       svgDrawing.getLayerShape().addShapes(svgShape);
       svgDrawing.draw();
-    } else {
-      // VML
+    }
+    // VML
+    if (xrx.engine.isSupported(xrx.engine.VML)) {
       var vmlDrawing = getDrawingVml('vml' + shape);
       var vmlShape = this['get' + shape](vmlDrawing);
       vmlDrawing.getLayerShape().addShapes(vmlShape);

@@ -263,9 +263,9 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
     this.cursor_.needPoint();
     this.cursor_.needPointTransformed();
     this.cursor_.needShape();
-    this.registerDown(this.create_);
-    this.registerMove(this.create_);
-    this.registerUp(this.create_);
+    this.registerDown(this.creatable_);
+    this.registerMove(this.creatable_);
+    this.registerUp(this.creatable_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVER:

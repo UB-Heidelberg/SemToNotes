@@ -16,9 +16,11 @@ goog.require('xrx.shape.Container');
  * @param {xrx.shape.Canvas} canvas The parent canvas object.
  * @constructor
  */
-xrx.shape.Group = function(drawing, engineElement) {
+xrx.shape.Group = function(drawing) {
 
-  goog.base(this, drawing, engineElement);
+  goog.base(this, drawing);
+
+  this.engineElement_ = this.drawing_.getEngine().createGroup();
 };
 goog.inherits(xrx.shape.Group, xrx.shape.Container);
 
@@ -34,20 +36,6 @@ xrx.shape.Group.prototype.draw = function() {
     children[i].draw();
   };
   this.finishDrawing_();
-};
-
-
-
-/**
- * Creates a new graphic group.
- * @param {xrx.drawing.Drawing} The parent drawing canvas.
- */
-xrx.shape.Group.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createGroup(engineCanvas);
-  return new xrx.shape.Group(drawing, engineElement);
 };
 
 

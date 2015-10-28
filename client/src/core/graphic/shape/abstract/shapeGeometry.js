@@ -16,9 +16,9 @@ goog.require('xrx.shape.Shape');
  * @constructor
  * @private
  */
-xrx.shape.Geometry = function(drawing, engineElement, geometry) {
+xrx.shape.Geometry = function(drawing, geometry) {
 
-  goog.base(this, drawing, engineElement);
+  goog.base(this, drawing);
 
   /**
    * Object describing the geometry of this shape.

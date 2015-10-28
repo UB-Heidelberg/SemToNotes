@@ -16,14 +16,12 @@ goog.require('xrx.shape');
 /**
  * Super-class representing an engine-independent shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
  * @constructor
  * @private
  */
-xrx.shape.Shape = function(drawing, engineElement) {
+xrx.shape.Shape = function(drawing) {
 
-  goog.base(this, engineElement);
+  goog.base(this);
 
   /**
    * The parent drawing canvas.

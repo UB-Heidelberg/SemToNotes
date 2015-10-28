@@ -26,10 +26,11 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Polyline = function(drawing, engineElement) {
+xrx.shape.Polyline = function(drawing) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Polyline());
+  goog.base(this, drawing, new xrx.geometry.Polyline());
+
+  this.engineElement_ = this.drawing_.getEngine().createPolyline();
 };
 goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
 
@@ -113,20 +114,6 @@ xrx.shape.Polyline.prototype.setCreatable = function(creatable) {
   if (!creatable instanceof xrx.shape.PolylineCreatable)
       throw Error('Instance of xrx.shape.PolylineCreatable expected.');
   this.creatable_ = creatable;
-};
-
-
-
-/**
- * Creates a new poly-line shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Polyline.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createPolyline(engineCanvas);
-  return new xrx.shape.Polyline(drawing, engineElement);
 };
 
 

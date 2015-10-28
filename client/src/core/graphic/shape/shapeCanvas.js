@@ -7,6 +7,7 @@ goog.provide('xrx.shape.Canvas');
 
 
 
+goog.require('goog.dom.DomHelper');
 goog.require('xrx.shape');
 goog.require('xrx.shape.Container');
 
@@ -18,9 +19,13 @@ goog.require('xrx.shape.Container');
  * @constructor
  * @private
  */
-xrx.shape.Canvas = function(drawing, engineElement) {
+xrx.shape.Canvas = function(drawing) {
 
-  goog.base(this, drawing, engineElement);
+  goog.base(this, drawing);
+
+  this.engineElement_ = this.drawing_.getEngine().getCanvas();
+
+  goog.dom.append(this.drawing_.getElement(), this.engineElement_.getElement());
 };
 goog.inherits(xrx.shape.Canvas, xrx.shape.Container);
 
@@ -95,18 +100,6 @@ xrx.shape.Canvas.prototype.draw = function() {
     this.childs_[i].draw();
   }
   this.finishDrawing_();
-};
-
-
-
-/**
- * Creates a new canvas element.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Canvas.create = function(drawing) {
-  var element = drawing.getElement();
-  var engineElement = drawing.getEngine().createCanvas(element)
-  return new xrx.shape.Canvas(drawing, engineElement);
 };
 
 

@@ -154,7 +154,7 @@ function modeModify(shapeName) {
 function modeCreate(shapeName) {
   if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Create');
-    var canvasShape = xrx.shape[shapeName].create(canvasDrawing);
+    var canvasShape = new xrx.shape[shapeName](canvasDrawing);
     canvasShape.setStrokeWidth(1);
     canvasShape.setStrokeColor('blue');
     var canvasCreatable = canvasShape.getCreatable();
@@ -168,7 +168,7 @@ function modeCreate(shapeName) {
   }
   if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var svgDrawing = getSvgDrawing('svg' + shapeName + 'Create');
-    var svgShape = xrx.shape[shapeName].create(svgDrawing);
+    var svgShape = new xrx.shape[shapeName](svgDrawing);
     svgShape.setStrokeWidth(1);
     svgShape.setStrokeColor('green');
     var svgCreatable = svgShape.getCreatable();
@@ -182,7 +182,7 @@ function modeCreate(shapeName) {
   }
   if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
-    var vmlShape = xrx.shape[shapeName].create(vmlDrawing);
+    var vmlShape = new xrx.shape[shapeName](vmlDrawing);
     vmlShape.setStrokeWidth(1);
     vmlShape.setStrokeColor('red');
     var vmlCreatable = vmlShape.getCreatable();

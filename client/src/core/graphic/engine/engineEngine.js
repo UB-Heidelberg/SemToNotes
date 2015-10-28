@@ -20,7 +20,7 @@ goog.require('xrx.engine.Engines');
  * @constructor
  * @private
  */
-xrx.engine.Engine = function(opt_engine) {
+xrx.engine.Engine = function(opt_engine, element) {
 
   goog.base(this);
 
@@ -41,8 +41,25 @@ xrx.engine.Engine = function(opt_engine) {
   this.available_ = false;
 
   this.init_();
+
+  /**
+   * The canvas rendering element of this engine.
+   * @type {xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas}
+   */
+  this.canvas_ = this.createCanvas_(element);
 };
 goog.inherits(xrx.engine.Engine, goog.Disposable);
+
+
+
+/**
+ * Returns the canvas rendering element of this engine.
+ * @return {xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas}
+ *     The canvas rendering element.
+ */
+xrx.engine.Engine.prototype.getCanvas = function() {
+  return this.canvas_;
+};
 
 
 
@@ -51,7 +68,7 @@ goog.inherits(xrx.engine.Engine, goog.Disposable);
  * @param {HTMLElement} The HTML element to append the new canvas.
  * @return {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The canvas element.
  */
-xrx.engine.Engine.prototype.createCanvas = function(element) {
+xrx.engine.Engine.prototype.createCanvas_ = function(element) {
   if (this.typeOf(xrx.engine.CANVAS)) {
     return xrx.canvas.Canvas.create(element);
   } else if (this.typeOf(xrx.engine.SVG)) {
@@ -67,17 +84,15 @@ xrx.engine.Engine.prototype.createCanvas = function(element) {
 
 /**
  * Creates a new circle element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Circle|xrx.svg.Circle|xrx.vml.Circle)} The circle element.
  */
-xrx.engine.Engine.prototype.createCircle = function(canvas) {
+xrx.engine.Engine.prototype.createCircle = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Circle.create(canvas);
+    return xrx.canvas.Circle.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Circle.create(canvas);
+    return xrx.svg.Circle.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Circle.create(canvas);
+    return xrx.vml.Circle.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -87,17 +102,15 @@ xrx.engine.Engine.prototype.createCircle = function(canvas) {
 
 /**
  * Creates a new ellipse element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Ellipse|xrx.svg.Ellipse|xrx.vml.Ellipse)} The ellipse element.
  */
-xrx.engine.Engine.prototype.createEllipse = function(canvas) {
+xrx.engine.Engine.prototype.createEllipse = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Ellipse.create(canvas);
+    return xrx.canvas.Ellipse.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Ellipse.create(canvas);
+    return xrx.svg.Ellipse.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Ellipse.create(canvas);
+    return xrx.vml.Ellipse.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -106,17 +119,15 @@ xrx.engine.Engine.prototype.createEllipse = function(canvas) {
 
 /**
  * Creates a new group element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Group|xrx.svg.Group|xrx.vml.Group)} The group element.
  */
-xrx.engine.Engine.prototype.createGroup = function(canvas) {
+xrx.engine.Engine.prototype.createGroup = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Group.create(canvas);
+    return xrx.canvas.Group.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Group.create(canvas);
+    return xrx.svg.Group.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Group.create(canvas);
+    return xrx.vml.Group.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -125,17 +136,15 @@ xrx.engine.Engine.prototype.createGroup = function(canvas) {
 
 /**
  * Creates a new image element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Image|xrx.svg.Image|xrx.vml.Image)} The image element.
  */
-xrx.engine.Engine.prototype.createImage = function(canvas) {
+xrx.engine.Engine.prototype.createImage = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Image.create(canvas);
+    return xrx.canvas.Image.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Image.create(canvas);
+    return xrx.svg.Image.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Image.create(canvas);
+    return xrx.vml.Image.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -144,17 +153,15 @@ xrx.engine.Engine.prototype.createImage = function(canvas) {
 
 /**
  * Creates a new line element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Line|xrx.svg.Line|xrx.vml.Line)} The line element.
  */
-xrx.engine.Engine.prototype.createLine = function(canvas) {
+xrx.engine.Engine.prototype.createLine = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Line.create(canvas);
+    return xrx.canvas.Line.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Line.create(canvas);
+    return xrx.svg.Line.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Line.create(canvas);
+    return xrx.vml.Line.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -163,17 +170,15 @@ xrx.engine.Engine.prototype.createLine = function(canvas) {
 
 /**
  * Creates a new polygon element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Polygon|xrx.svg.Polygon|xrx.vml.Polygon)} The polygon element.
  */
-xrx.engine.Engine.prototype.createPolygon = function(canvas) {
+xrx.engine.Engine.prototype.createPolygon = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Polygon.create(canvas);
+    return xrx.canvas.Polygon.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Polygon.create(canvas);
+    return xrx.svg.Polygon.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Polygon.create(canvas);
+    return xrx.vml.Polygon.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -182,17 +187,15 @@ xrx.engine.Engine.prototype.createPolygon = function(canvas) {
 
 /**
  * Creates a new polyline element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Polyline|xrx.svg.Polyline|xrx.vml.Polyline)} The polyline element.
  */
-xrx.engine.Engine.prototype.createPolyline = function(canvas) {
+xrx.engine.Engine.prototype.createPolyline = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Polyline.create(canvas);
+    return xrx.canvas.Polyline.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Polyline.create(canvas);
+    return xrx.svg.Polyline.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Polyline.create(canvas);
+    return xrx.vml.Polyline.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -201,17 +204,15 @@ xrx.engine.Engine.prototype.createPolyline = function(canvas) {
 
 /**
  * Creates a new rect element.
- * @param {(xrx.canvas.Canvas|xrx.svg.Canvas|xrx.vml.Canvas)} The parent
- *   canvas element.
  * @return {(xrx.canvas.Rect|xrx.svg.Rect|xrx.vml.Rect)} The rect element.
  */
-xrx.engine.Engine.prototype.createRect = function(canvas) {
+xrx.engine.Engine.prototype.createRect = function() {
   if (this.typeOf(xrx.engine.CANVAS)) {
-    return xrx.canvas.Polygon.create(canvas);
+    return xrx.canvas.Polygon.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.SVG)) {
-    return xrx.svg.Polygon.create(canvas);
+    return xrx.svg.Polygon.create(this.canvas_);
   } else if (this.typeOf(xrx.engine.VML)) {
-    return xrx.vml.Polygon.create(canvas);
+    return xrx.vml.Polygon.create(this.canvas_);
   } else {
     throw Error('Unknown engine.');
   }
@@ -303,5 +304,7 @@ xrx.engine.Engine.prototype.init_ = function() {
 
 
 xrx.engine.Engine.prototype.disposeInternal = function() {
+  this.canvas_.dispose();
+  this.canvas_ = null;
   goog.base(this, 'disposeInternal');
 };

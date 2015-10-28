@@ -33,7 +33,7 @@ xrx.viewbox.Viewbox = function(drawing) {
    * The group where matrix transformations are applied to.
    * {xrx.shape.Group}
    */
-  this.group_ = xrx.shape.Group.create(this.drawing_);
+  this.group_ = new xrx.shape.Group(this.drawing_);
 
   /**
    * The state of the drawing canvas, either DRAG or NONE.

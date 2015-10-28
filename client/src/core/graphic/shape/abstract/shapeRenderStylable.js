@@ -17,15 +17,9 @@ goog.require('xrx.shape.Stylable');
  * @constructor
  * @private
  */
-xrx.shape.RenderStylable = function(engineElement) {
+xrx.shape.RenderStylable = function() {
 
   goog.base(this);
-
-  /**
-   * Pointer to the underlying engine shape.
-   * @type {xrx.engine.Element}
-   */
-  this.engineElement_ = engineElement;
 
   /**
    * @type {number}

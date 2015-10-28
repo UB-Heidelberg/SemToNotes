@@ -494,7 +494,6 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
   this.getLayerShapeCreate().setLocked(false);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  shape.setEventHandler(this);
   this.setMode_(xrx.drawing.Mode.CREATE);
 };
 
@@ -543,7 +542,7 @@ xrx.drawing.Drawing.prototype.installCanvas_ = function() {
   goog.events.listen(this.vsm_, goog.events.EventType.RESIZE, function(e) {
     self.handleResize();
   }, false, self);
-  this.canvas_ = xrx.shape.Canvas.create(this);
+  this.canvas_ = new xrx.shape.Canvas(this);
   this.canvas_.setHeight(this.height_);
   this.canvas_.setWidth(this.width_);
 };
@@ -604,7 +603,7 @@ xrx.drawing.Drawing.prototype.installLayerShapecreatable_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installShield_ = function() {
-  this.shield_ = xrx.shape.Rect.create(this);
+  this.shield_ = new xrx.shape.Rect(this);
   this.shield_.setX(0);
   this.shield_.setY(0);
   this.shield_.setWidth(this.width_);
@@ -629,7 +628,7 @@ xrx.drawing.Drawing.prototype.installLayerTool_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.initEngine_ = function(opt_engine) {
-  this.engine_ = new xrx.engine.Engine(opt_engine);
+  this.engine_ = new xrx.engine.Engine(opt_engine, this.element_);
 };
 
 

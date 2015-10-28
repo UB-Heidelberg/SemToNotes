@@ -17,10 +17,11 @@ goog.require('xrx.shape.Geometry');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Image = function(drawing, engineElement) {
+xrx.shape.Image = function(drawing) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Rect());
+  goog.base(this, drawing, new xrx.geometry.Rect());
+
+  this.engineElement_ = this.drawing_.getEngine().createImage();
 
   /**
    * The HTML image element.

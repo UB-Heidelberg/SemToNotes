@@ -59,9 +59,9 @@ xrx.drawing.LayerBackground.prototype.setImage = function(image) {
  * @private
  */
 xrx.drawing.LayerBackground.prototype.create_ = function() {
-  this.group_ = xrx.shape.Group.create(this.drawing_);
+  this.group_ = new xrx.shape.Group(this.drawing_);
   // install the background image
-  this.image_ = xrx.shape.Image.create(this.drawing_);
+  this.image_ = new xrx.shape.Image(this.drawing_);
   this.group_.addChildren(this.image_);
 };
 

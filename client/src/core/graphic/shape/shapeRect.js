@@ -27,10 +27,11 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Rect = function(drawing, engineElement) {
+xrx.shape.Rect = function(drawing) {
 
-  goog.base(this, drawing, engineElement,
-      new xrx.geometry.Path(4));
+  goog.base(this, drawing, new xrx.geometry.Path(4));
+
+  this.engineElement_ = this.drawing_.getEngine().createRect();
 };
 goog.inherits(xrx.shape.Rect, xrx.shape.PathLike);
 
