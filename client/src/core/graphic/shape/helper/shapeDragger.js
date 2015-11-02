@@ -15,8 +15,7 @@ goog.require('xrx.shape.Circle');
  * A class representing a dragger to modify the size or the vertexes
  * of a shape.
  * @param {xrx.shape.Modifiable} shape The parent modifiable shape.
- * @param {xrx.engine.Element} engineElement The engine element
- *   used to render this shape.
+ * @param {number} pos The nth dragger of a shape.
  * @constructor
  * @private
  */
@@ -26,6 +25,11 @@ xrx.shape.Dragger = function(modifiable, pos) {
   goog.base(this, drawing,
       drawing.getEngine().createCircle(drawing.getCanvas().getEngineElement()));
 
+  /**
+   * The parent modifiable shape.
+   * @type {xrx.shape.Modifiable}
+   * @private
+   */
   this.modifiable_ = modifiable;
 
   /**
@@ -34,11 +38,16 @@ xrx.shape.Dragger = function(modifiable, pos) {
    * @private
    */
   this.pos_ = pos;
+
+  this.init_();
 };
 goog.inherits(xrx.shape.Dragger, xrx.shape.Circle);
 
 
 
+/**
+ * @private
+ */
 xrx.shape.Dragger.prototype.setCoord = function(coord) {
   this.modifiable_.setCoordAt(this.pos_, coord)
 };
@@ -49,6 +58,7 @@ xrx.shape.Dragger.prototype.setCoord = function(coord) {
  * Returns the position n of the vertex dragging element in the list
  * of dragging elements.
  * @return {number} The position.
+ * @private
  */
 xrx.shape.Dragger.prototype.getPosition = function() {
   return this.pos_;
@@ -56,6 +66,9 @@ xrx.shape.Dragger.prototype.getPosition = function() {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.Dragger.prototype.getRadius = function() {
   return this.geometry_.r / this.zoomFactor_;
 };
@@ -63,15 +76,23 @@ xrx.shape.Dragger.prototype.getRadius = function() {
 
 
 /**
- * Creates a new dragger.
- * @param {xrx.shape.Modifiable} shape The parent modifiable shape.
+ * @private
  */
-xrx.shape.Dragger.create = function(modifiable, pos) {
-  var dragger = new xrx.shape.Dragger(modifiable, pos);
-  dragger.setRadius(5);
-  dragger.setStrokeColor('black');
-  dragger.setStrokeWidth(1);
-  dragger.setFillColor('white');
-  dragger.setFillOpacity(1.0);
-  return dragger;
+xrx.shape.Dragger.prototype.init_ = function(modifiable, pos) {
+  this.setRadius(5);
+  this.setStrokeColor('black');
+  this.setStrokeWidth(1);
+  this.setFillColor('white');
+  this.setFillOpacity(1.0);
+};
+
+
+
+/**
+ * Disposes this dragger.
+ */
+xrx.shape.Dragger.prototype.disposeInternal = function() {
+  this.modifiable_.dispose();
+  this.modifiable_ = null;
+  goog.base(this, 'disposeInternal');
 };

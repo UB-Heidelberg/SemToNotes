@@ -16,10 +16,10 @@ function run1TestDispose() {
   var element = goog.dom.createElement('div');
   var drawing = new xrx.drawing.Drawing(element);
   this.circle = new xrx.shape.Circle(drawing);
-  //circle.getCreatable();
-  //circle.getHoverable();
-  //circle.getModifiable();
-  //circle.getSelectable();
+  circle.getCreatable();
+  circle.getHoverable();
+  circle.getModifiable();
+  circle.getSelectable();
   drawing.addShapes(circle);
   // dispose shapes
   this.circle.dispose();

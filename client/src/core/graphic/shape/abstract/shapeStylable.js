@@ -22,6 +22,8 @@ xrx.shape.Stylable = function() {
 
   /**
    * Object describing the fill style.
+   * @type {Object}
+   * @private
    */
   this.fill_ = {
     color: '',
@@ -30,6 +32,8 @@ xrx.shape.Stylable = function() {
 
   /**
    * Object describing the stroke style.
+   * @type {Object}
+   * @private
    */
   this.stroke_ = {
     color: 'black',
@@ -134,6 +138,9 @@ xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {
 
 
 
+/**
+ * Disposes this style information object.
+ */
 xrx.shape.Stylable.prototype.disposeInternal = function() {
   this.fill_ = null;
   this.stroke_ = null;

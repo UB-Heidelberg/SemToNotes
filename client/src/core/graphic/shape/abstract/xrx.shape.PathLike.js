@@ -8,6 +8,10 @@ goog.provide('xrx.shape.PathLike');
 
 
 /**
+ * An abstract class representing a path-like shape
+ * such as a polygon or poly-line.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @param {xrx.geometry.Geometry} geometry A geometry object.
  * @constructor
  * @private
  */
@@ -73,6 +77,10 @@ xrx.shape.PathLike.prototype.setCoordYAt = function(pos, y) {
 
 
 
+/**
+ * Updates the last coordinate of this path-like shape.
+ * @param {Array<number>} coord The new coordinate.
+ */
 xrx.shape.PathLike.prototype.setLastCoord = function(coord) {
   var last = this.geometry_.coords.length - 1;
   this.geometry_.coords[last][0] = coord[0];
@@ -81,6 +89,18 @@ xrx.shape.PathLike.prototype.setLastCoord = function(coord) {
 
 
 
+/**
+ * Appends a new coordinate to this path-like shape.
+ * @param {Array<number>} coord The new coordinate.
+ */
 xrx.shape.PathLike.prototype.appendCoord = function(coord) {
   this.geometry_.coords.push(coord);
+};
+
+
+/**
+ * Disposes this path-like shape.
+ */
+xrx.shape.PathLike.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };

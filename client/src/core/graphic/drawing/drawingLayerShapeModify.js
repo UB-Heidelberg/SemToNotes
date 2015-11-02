@@ -32,7 +32,7 @@ goog.inherits(xrx.drawing.LayerShapeModify, xrx.drawing.Layer);
  */
 xrx.drawing.LayerShapeModify.prototype.activate = function(modifiable) {
   this.removeShapes();
-  this.addShapes(modifiable.getHelper());
+  this.addShapes(modifiable.getDragger());
 };
 
 
