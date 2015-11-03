@@ -6,27 +6,28 @@
  * @private
  */
 var _allTests = [
-  // core/graphic/drawing
-  './core/graphic/drawing/drawingDrawing_test.html',
-  './core/graphic/drawing/drawingEventTarget_test.html',
-  './core/graphic/drawing/drawingLayerBackground_test.html',
-  './core/graphic/drawing/drawingLayerShape_test.html',
-  './core/graphic/drawing/drawingLayerShapeModify_test.html',
-  // core/graphic/engine
-  './core/graphic/engine/engineElement_test.html',
-  './core/graphic/engine/engineEngines_test.html',
-  // core/graphic/geometry
-  './core/graphic/geometry/geometry_test.html',
-  // core/graphic/shape
-  './core/graphic/shape/shapeShape_test.html',
-  // core/graphic/viewbox
-  './core/graphic/viewbox/viewboxViewbox_test.html',
-  './core/graphic/viewbox/viewboxFastAffineTransform_test.html',
-  './core/graphic/viewbox/viewboxViewboxGeometry_test.html',
-  './core/graphic/viewbox/viewboxviewboxViewboxRotate_test.html',
-  './core/graphic/viewbox/viewboxViewboxTransform_test.html',
-  './core/graphic/viewbox/viewboxViewboxTranslate_test.html',
-  './core/graphic/viewbox/viewboxViewboxZoom_test.html',
+  // core/drawing/drawing
+  './core/drawing/drawing/drawingDrawing_test.html',
+  './core/drawing/drawing/drawingEventTarget_test.html',
+  // core/drawing/engine
+  './core/drawing/engine/engineElement_test.html',
+  './core/drawing/engine/engineEngines_test.html',
+  // core/drawing/geometry
+  './core/drawing/geometry/geometry_test.html',
+  // core/drawing/layer
+  './core/drawing/layer/drawingLayerBackground_test.html',
+  './core/drawing/layer/drawingLayerShape_test.html',
+  './core/drawing/layer/drawingLayerShapeModify_test.html',
+  // core/drawing/shape
+  './core/drawing/shape/shapeShape_test.html',
+  // core/drawing/viewbox
+  './core/drawing/viewbox/viewboxViewbox_test.html',
+  './core/drawing/viewbox/viewboxFastAffineTransform_test.html',
+  './core/drawing/viewbox/viewboxViewboxGeometry_test.html',
+  './core/drawing/viewbox/viewboxviewboxViewboxRotate_test.html',
+  './core/drawing/viewbox/viewboxViewboxTransform_test.html',
+  './core/drawing/viewbox/viewboxViewboxTranslate_test.html',
+  './core/drawing/viewbox/viewboxViewboxZoom_test.html',
   // core/mvc
   './core/mvc/mvc_test.html',
   './core/mvc/mvcBind_test.html',

@@ -47,6 +47,13 @@ xrx.demo.Demo.prototype.getExampleId = function() {
 
 
 
+xrx.demo.Demo.prototype.isPageAnnotation = function(hash) {
+  var tok = hash.split('\!');
+  return hash === 'annotation' || tok[0] === 'annotation';
+};
+
+
+
 xrx.demo.Demo.prototype.isPageExamples = function(hash) {
   var tok = hash.split('\!');
   return hash === 'examples' || tok[0] === 'examples';
@@ -57,6 +64,13 @@ xrx.demo.Demo.prototype.isPageExamples = function(hash) {
 xrx.demo.Demo.prototype.isPageExample = function(hash) {
   var tok = hash.split('\!');
   return tok[0] === 'example';
+};
+
+
+
+xrx.demo.Demo.prototype.isPageRetrieval = function(hash) {
+  var tok = hash.split('\!');
+  return hash === 'retrieval' || tok[0] === 'retrieval';
 };
 
 
@@ -213,23 +227,33 @@ xrx.demo.Demo.prototype.loadPageApi_ = function() {
 
 
 
+xrx.demo.Demo.prototype.loadPageAnnotation_ = function() {
+  this.loadPage_('Annotation | SemToNotes', 'client/demo/annotation.html',
+      goog.dom.getElement('annotationLink'));
+};
+
+
+
+xrx.demo.Demo.prototype.loadPageRetrieval_ = function() {
+  this.loadPage_('Retrieval | SemToNotes', 'client/demo/retrieval.html',
+      goog.dom.getElement('retrievalLink'));
+};
+
+
+
 xrx.demo.Demo.prototype.installNavbar_ = function() {
   var self = this;
   var linkHome = goog.dom.getElement('homeLink');
-  var linkExamples = goog.dom.getElement('examplesLink');
-  var linkTutorials = goog.dom.getElement('tutorialsLink');
-  var linkApi = goog.dom.getElement('apiLink');
+  var linkAnnotation = goog.dom.getElement('annotationLink');
+  var linkRetrieval = goog.dom.getElement('retrievalLink');
   goog.events.listen(linkHome, goog.events.EventType.CLICK, function(e) {
     self.loadPageHome_();
   });
-  goog.events.listen(linkExamples, goog.events.EventType.CLICK, function(e) {
-    self.loadPageExamples_();
+  goog.events.listen(linkAnnotation, goog.events.EventType.CLICK, function(e) {
+    self.loadPageAnnotation_();
   });
-  goog.events.listen(linkTutorials, goog.events.EventType.CLICK, function(e) {
-    self.loadPageTutorials_();
-  });
-  goog.events.listen(linkApi, goog.events.EventType.CLICK, function(e) {
-    self.loadPageApi_();
+  goog.events.listen(linkRetrieval, goog.events.EventType.CLICK, function(e) {
+    self.loadPageRetrieval_();
   });
 };
 
@@ -247,7 +271,11 @@ xrx.demo.Demo.prototype.navigate_ = function() {
   // resolve URL and navigate
   var hash = goog.dom.getWindow().location.hash.split('#')[1] ||
       'home';
-  if (this.isPageExamples(hash)) {
+  if (this.isPageAnnotation(hash)) {
+    this.loadPageAnnotation_();
+  } else if (this.isPageRetrieval(hash)) {
+    this.loadPageRetrieval_();
+  } else if (this.isPageExamples(hash)) {
     this.loadPageExamples_();
   } else if (this.isPageExample(hash)) {
     this.loadPageExample_(hash.split('\!')[1]);
