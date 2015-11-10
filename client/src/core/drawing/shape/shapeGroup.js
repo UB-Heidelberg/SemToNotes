@@ -1,5 +1,5 @@
 /**
- * @fileoverview Class representing an engine-independent graphic
+ * @fileoverview A class representing an engine-independent graphic
  * group.
  */
 
@@ -13,13 +13,19 @@ goog.require('xrx.shape.Container');
  
 /**
  * A class representing an engine-independent shape group.
- * @param {xrx.shape.Canvas} canvas The parent canvas object.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @private
  */
 xrx.shape.Group = function(drawing) {
 
   goog.base(this, drawing);
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Group|xrx.svg.Group|xrx.vml.Group)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createGroup();
 };
 goog.inherits(xrx.shape.Group, xrx.shape.Container);
@@ -28,6 +34,7 @@ goog.inherits(xrx.shape.Group, xrx.shape.Container);
 
 /**
  * Draws this group and all its groups and shapes contained.
+ * @private
  */
 xrx.shape.Group.prototype.draw = function() {
   this.startDrawing_();
@@ -40,6 +47,9 @@ xrx.shape.Group.prototype.draw = function() {
 
 
 
+/**
+ * Disposes this group.
+ */
 xrx.shape.Group.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };

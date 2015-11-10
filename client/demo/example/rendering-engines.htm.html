@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Browser Support</title>
-    <script src="../../xrx.api.graphic.min.js"></script>
+    <script src="../../xrx.api.drawing.min.js"></script>
     <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
       #drawing1, #drawing2, #drawing3 {
@@ -45,18 +45,18 @@
       (function() {
 
         /**
-         * Reusable function that creates a shape and adds it to the
+         * Reusable function that creates some shapes and adds them to the
          * drawing canvas.
          * @param {xrx.drawing.Drawing} drawing The drawing canvas.
          */
         var addShape = function(drawing) {
-          var polygon = xrx.shape.Polygon.create(drawing);
+          var polygon = new xrx.shape.Polygon(drawing);
           polygon.setCoords([[10,10],[50,15],[51,100],[178,120],[3,190]]);
           polygon.setStrokeColor('#1919A3');
           polygon.setStrokeWidth(4);
           polygon.setFillColor('#1919A3');
           polygon.setFillOpacity(.8);
-          var rect = xrx.shape.Rect.create(drawing);
+          var rect = new xrx.shape.Rect(drawing);
           rect.setX(120);
           rect.setY(140);
           rect.setWidth(80);

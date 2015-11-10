@@ -8,7 +8,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx.graphic');
+  goog.require('xrx.api.drawing');
 </script>
 <link rel="stylesheet" type="text/css" href="./shapeTest.css">
 </head>
@@ -36,10 +36,10 @@ function getRects(drawing) {
   var coords2 = [[112,112], [112,125], [125,125], [125,112]];
   var coords3 = [[212,212], [212,315], [315,315], [315,212]];
   var coords4 = [[200,200], [200,300], [300,300], [300,200]];
-  var rect1 = xrx.shape.Rect.create(drawing);
-  var rect2 = xrx.shape.Rect.create(drawing);
-  var rect3 = xrx.shape.Rect.create(drawing);
-  var rect4 = xrx.shape.Rect.create(drawing);
+  var rect1 = new xrx.shape.Rect(drawing);
+  var rect2 = new xrx.shape.Rect(drawing);
+  var rect3 = new xrx.shape.Rect(drawing);
+  var rect4 = new xrx.shape.Rect(drawing);
   rect1.setCoords(coords1);
   rect1.setStrokeWidth(1);
   rect1.getHoverable().setStyle(hoverableStyle);

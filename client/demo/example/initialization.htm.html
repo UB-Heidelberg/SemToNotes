@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Initialization</title>
-    <script src="../../xrx.api.graphic.min.js"></script>
+    <script src="../../xrx.api.drawing.min.js"></script>
     <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <style>
       /*
@@ -65,7 +65,7 @@
          * @param {xrx.drawing.Drawing} drawing The drawing canvas.
          */
         var addShape = function(drawing) {
-          var rect = xrx.shape.Rect.create(drawing);
+          var rect = new xrx.shape.Rect(drawing);
           rect.setX(10);
           rect.setY(10);
           rect.setWidth(130);

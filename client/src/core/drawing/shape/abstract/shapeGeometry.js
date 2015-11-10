@@ -82,7 +82,7 @@ xrx.shape.Geometry.prototype.setCTM = function(matrix) {
 
 /**
  * Returns a copy of the shape's coordinate array.
- * @return {Array<Array<number>>} A new coordinate array.
+ * @return {Array<number>} A new coordinate array.
  */
 xrx.shape.Geometry.prototype.getCoordsCopy = function() {
   var coords = this.getCoords();

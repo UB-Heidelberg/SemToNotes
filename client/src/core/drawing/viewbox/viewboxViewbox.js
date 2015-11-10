@@ -6,7 +6,6 @@ goog.provide('xrx.viewbox.Viewbox');
 
 
 
-goog.require('xrx.drawing');
 goog.require('xrx.viewbox.FastAffineTransform');
 goog.require('xrx.viewbox.ViewboxTransform');
 goog.require('xrx.shape.Group');

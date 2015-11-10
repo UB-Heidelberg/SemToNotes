@@ -1,6 +1,6 @@
 /**
- * @fileoverview Classes representing a modifiable and creatable
- *     engine-independent line shape.
+ * @fileoverview A class representing an engine-independent
+ * hoverable, selectable, modifiable and creatable line shape.
  */
 
 goog.provide('xrx.shape.Line');
@@ -25,10 +25,15 @@ goog.require('xrx.shape.Selectable');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  */
-xrx.shape.Line = function(drawing, engineElement) {
+xrx.shape.Line = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Line());
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Line|xrx.svg.Line|xrx.vml.Line)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createLine();
 };
 goog.inherits(xrx.shape.Line, xrx.shape.Geometry);
@@ -141,6 +146,7 @@ xrx.shape.Line.prototype.setCoords = function(coords) {
 
 /**
  * Draws this line shape.
+ * @private
  */
 xrx.shape.Line.prototype.draw = function() {
   this.startDrawing_();
@@ -151,77 +157,64 @@ xrx.shape.Line.prototype.draw = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape hoverable.
+ * @return {xrx.shape.LineHoverable} The hoverable line shape.
+ */
 xrx.shape.Line.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.LineHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.LineHoverable(this);
   return this.hoverable_;
 };
 
 
 
-xrx.shape.Line.prototype.setHoverable = function(hoverable) {
-  if (!hoverable instanceof xrx.shape.LineHoverable)
-      throw Error('Instance of xrx.shape.LineHoverable expected.');
-  this.hoverable_ = hoverable;
-};
-
-
-
+/**
+ * Returns a helper shape that makes this shape selectable.
+ * @return {xrx.shape.LineSelectable} The selectable line shape.
+ */
 xrx.shape.Line.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.LineSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.LineSelectable(this);
   return this.selectable_;
 };
 
 
 
-xrx.shape.Line.prototype.setSelectable = function(selectable) {
-  if (!selectable instanceof xrx.shape.LineSelectable)
-      throw Error('Instance of xrx.shape.LineSelectable expected.');
-  this.selectable_ = selectable;
-};
-
-
-
 /**
- * Returns a modifiable line shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * Returns a helper shape that makes this shape modifiable.
  * @return {xrx.shape.LineModifiable} The modifiable line shape.
  */
 xrx.shape.Line.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.LineModifiable.create(this);
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.LineModifiable(this);
   return this.modifiable_;
 };
 
 
 
-xrx.shape.Line.prototype.setModifiable = function(modifiable) {
-  if (!modifiable instanceof xrx.shape.LineModifiable)
-      throw Error('Instance of xrx.shape.LineModifiable expected.');
-  this.modifiable_ = modifiable;
-};
-
-
-
 /**
- * Returns a creatable line shape. Create it lazily if not existent.
- * @return {xrx.shape.EllipseCreatable} The creatable line shape.
+ * Returns a helper shape that makes this shape creatable.
+ * @return {xrx.shape.LineCreatable} The creatable line shape.
  */
 xrx.shape.Line.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.LineCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.LineCreatable(this);
   return this.creatable_;
 };
 
 
 
-xrx.shape.Line.prototype.setCreatable = function(creatable) {
-  if (!creatable instanceof xrx.shape.LineCreatable)
-      throw Error('Instance of xrx.shape.LineCreatable expected.');
-  this.creatable_ = creatable;
+/**
+ * Disposes this line shape.
+ */
+xrx.shape.Line.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a hoverable line shape.
+ * @param {xrx.shape.Line} line The parent line shape.
  * @constructor
+ * @private
  */
 xrx.shape.LineHoverable = function(line) {
 
@@ -231,15 +224,20 @@ goog.inherits(xrx.shape.LineHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.LineHoverable.create = function(line) {
-  return new xrx.shape.LineHoverable(line);
+/**
+ * Disposes this hoverable line shape.
+ */
+xrx.shape.LineHoverable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
-
 /**
+ * A class representing a selectable line shape.
+ * @param {xrx.shape.Line} line The parent line shape.
  * @constructor
+ * @private
  */
 xrx.shape.LineSelectable = function(line) {
 
@@ -249,23 +247,43 @@ goog.inherits(xrx.shape.LineSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.LineSelectable.create = function(line) {
-  return new xrx.shape.LineSelectable(line);
+/**
+ * Disposes this selectable line shape.
+ */
+xrx.shape.LineSelectable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a modifiable line shape.
+ * @param {xrx.shape.Line} line The parent line shape.
  * @constructor
+ * @private
  */
 xrx.shape.LineModifiable = function(line, dragger) {
 
   goog.base(this, line, dragger);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.LineModifiable, xrx.shape.Modifiable);
 
 
 
+/**
+ * Disposes this modifiable line shape.
+ */
+xrx.shape.LineModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};
+
+
+
+/**
+ * @private
+ */
 xrx.shape.LineModifiable.prototype.setCoords = function(coords) {
   this.shape_.setCoords(coords);
   this.dragger_[0].setCoordX(coords[0][0]);
@@ -276,6 +294,9 @@ xrx.shape.LineModifiable.prototype.setCoords = function(coords) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.LineModifiable.prototype.setCoordAt = function(pos, coord) {
   if (pos === 0) {
     this.dragger_[0].setCoordX(coord[0]);
@@ -292,6 +313,9 @@ xrx.shape.LineModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.LineModifiable.prototype.move = function(distX, distY) {
   var coords = this.shape_.getCoordsCopy();
   coords[0][0] += distX;
@@ -304,28 +328,36 @@ xrx.shape.LineModifiable.prototype.move = function(distX, distY) {
 
 
 /**
- * @constructor
+ * @private
  */
-xrx.shape.LineModifiable.create = function(line) {
-  var modifiable = new xrx.shape.LineModifiable(line)
-  var dragger1 = xrx.shape.Dragger.create(modifiable, 0);
-  dragger1.setCoords([[line.getX1(), line.getY1()]]);
-  var dragger2 = xrx.shape.Dragger.create(modifiable, 1);
-  dragger2.setCoords([[line.getX2(), line.getY2()]]);
-  modifiable.setDragger([dragger1, dragger2]);
-  return modifiable;
+xrx.shape.LineModifiable.prototype.init_ = function() {
+  var dragger1 = new xrx.shape.Dragger(this, 0);
+  dragger1.setCoords([[this.shape_.getX1(), this.shape_.getY1()]]);
+  var dragger2 = new xrx.shape.Dragger(this, 1);
+  dragger2.setCoords([[this.shape_.getX2(), this.shape_.getY2()]]);
+  this.setDragger([dragger1, dragger2]);
+};
+
+
+
+/**
+ * Disposes this modifiable line shape.
+ */
+xrx.shape.LineModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
  * A class representing a creatable line shape.
- * @param
+ * @param {xrx.shape.Line} line The parent line shape.
  * @constructor
+ * @private
  */
 xrx.shape.LineCreatable = function(line) {
 
-  goog.base(this, line, xrx.shape.Line.create(line.getDrawing()));
+  goog.base(this, line, new xrx.shape.Line(line.getDrawing()));
 };
 goog.inherits(xrx.shape.LineCreatable, xrx.shape.Creatable);
 
@@ -333,7 +365,7 @@ goog.inherits(xrx.shape.LineCreatable, xrx.shape.Creatable);
 
 /**
  * Returns the coordinates of the line currently created.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
  */
 xrx.shape.LineCreatable.prototype.getCoords = function() {
   return this.helper_.getCoords();
@@ -354,6 +386,9 @@ xrx.shape.LineCreatable.prototype.handleDown = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.LineCreatable.prototype.handleMove = function(e, cursor) {
   var point = cursor.getPointTransformed();
   this.preview_.setX2(point[0]);
@@ -362,9 +397,12 @@ xrx.shape.LineCreatable.prototype.handleMove = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.LineCreatable.prototype.handleUp = function(e, cursor) {
   var point = cursor.getPointTransformed();
-  var line = xrx.shape.Line.create(this.target_.getDrawing());
+  var line = new xrx.shape.Line(this.target_.getDrawing());
   line.setStyle(this.target_);
   line.setX1(this.preview_.getX1());
   line.setY1(this.preview_.getY1());
@@ -375,6 +413,9 @@ xrx.shape.LineCreatable.prototype.handleUp = function(e, cursor) {
 
 
 
-xrx.shape.LineCreatable.create = function(ellipse) {
-  return new xrx.shape.LineCreatable(ellipse);
+/**
+ * Disposes this creatable line shape.
+ */
+xrx.shape.LineCreatable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };

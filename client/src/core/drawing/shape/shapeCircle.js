@@ -197,6 +197,7 @@ xrx.shape.Circle.prototype.disposeInternal = function() {
 
 /**
  * A class representing a hoverable circle shape.
+ * @param {xrx.shape.Circle} circle The parent circle shape.
  * @constructor
  * @private
  */
@@ -336,7 +337,7 @@ goog.inherits(xrx.shape.CircleCreatable, xrx.shape.Creatable);
 
 /**
  * Returns the coordinates of the circle currently created.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
  * @private
  */
 xrx.shape.CircleCreatable.prototype.getCoords = function() {
@@ -400,5 +401,6 @@ xrx.shape.CircleCreatable.prototype.handleUp = function(e, cursor) {
  * @private
  */
 xrx.shape.CircleCreatable.prototype.disposeInternal = function() {
+  this.point_ = null;
   goog.base(this, 'disposeInternal');
 };

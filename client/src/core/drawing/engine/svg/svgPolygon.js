@@ -28,7 +28,7 @@ goog.inherits(xrx.svg.Polygon, xrx.svg.Stylable);
 
 /**
  * Sets the coordinates for the polygon.
- * @param {Array<Array<number>>} coords The coordinates.
+ * @param {Array<number>} coords The coordinates.
  */
 xrx.svg.Polygon.prototype.setCoords = function(coords) {
   xrx.svg.setCoords(this.element_, coords);
@@ -38,7 +38,7 @@ xrx.svg.Polygon.prototype.setCoords = function(coords) {
 
 /**
  * Draws the polygon.
- * @param {Array<Array<number>>} coords The polygon's coordinates.
+ * @param {Array<number>} coords The polygon's coordinates.
  * @param {string} fillColor The fill color.
  * @param {number} fillOpacity Opacity of the fill color.
  * @param {string} strokeColor The stroke color.

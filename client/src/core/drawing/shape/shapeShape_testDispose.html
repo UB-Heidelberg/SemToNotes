@@ -6,7 +6,7 @@
 <script src="../../../deps.js"></script>
 <script>
 goog.require('goog.dom.DomHelper');
-goog.require('xrx.graphic');
+goog.require('xrx.api.drawing');
 </script>
 <script>
 
@@ -14,15 +14,45 @@ goog.require('xrx.graphic');
 
 function run1TestDispose() {
   var element = goog.dom.createElement('div');
-  var drawing = new xrx.drawing.Drawing(element);
-  this.circle = new xrx.shape.Circle(drawing);
-  circle.getCreatable();
-  circle.getHoverable();
-  circle.getModifiable();
-  circle.getSelectable();
-  drawing.addShapes(circle);
-  // dispose shapes
+  this.drawing = new xrx.drawing.Drawing(element);
+  this.circle = new xrx.shape.Circle(this.drawing);
+  this.ellipse = new xrx.shape.Ellipse(this.drawing);
+  this.line = new xrx.shape.Line(this.drawing);
+  this.polygon = new xrx.shape.Polygon(this.drawing);
+  this.polyline = new xrx.shape.Polyline(this.drawing);
+  this.rect = new xrx.shape.Rect(drawing);
+  this.circle.getCreatable();
+  this.circle.getHoverable();
+  this.circle.getModifiable();
+  this.circle.getSelectable();
+  this.ellipse.getCreatable();
+  this.ellipse.getHoverable();
+  this.ellipse.getModifiable();
+  this.ellipse.getSelectable();
+  this.line.getCreatable();
+  this.line.getHoverable();
+  this.line.getModifiable();
+  this.line.getSelectable();
+  this.polygon.getCreatable();
+  this.polygon.getHoverable();
+  this.polygon.getModifiable();
+  this.polygon.getSelectable();
+  this.polyline.getCreatable();
+  this.polyline.getHoverable();
+  this.polyline.getModifiable();
+  this.polyline.getSelectable();
+  this.rect.getCreatable();
+  this.rect.getHoverable();
+  this.rect.getModifiable();
+  this.rect.getSelectable();
+  // dispose drawing and shapes
+  this.drawing.dispose();
   this.circle.dispose();
+  this.ellipse.dispose();
+  this.line.dispose();
+  this.polygon.dispose();
+  this.polyline.dispose();
+  this.rect.dispose();
   goog.dom.removeNode(element);
   element = null;
 };

@@ -18,7 +18,6 @@ goog.require('goog.style');
 goog.require('goog.userAgent');
 goog.require('xrx.event.Handler');
 goog.require('xrx.event.Type');
-goog.require('xrx.drawing');
 goog.require('xrx.drawing.Cursor');
 goog.require('xrx.drawing.Mode');
 goog.require('xrx.shape.Shapes');

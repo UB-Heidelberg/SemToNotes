@@ -16,7 +16,7 @@ goog.require('goog.History');
 goog.require('goog.net.XhrIo');
 goog.require('goog.string');
 goog.require('goog.style');
-goog.require('xrx.graphic');
+goog.require('xrx.api.drawing');
 
 
 
@@ -43,46 +43,6 @@ xrx.demo.Demo = function() {
 
 xrx.demo.Demo.prototype.getExampleId = function() {
   return goog.dom.getWindow().location.hash.split('!')[1];
-};
-
-
-
-xrx.demo.Demo.prototype.isPageAnnotation = function(hash) {
-  var tok = hash.split('\!');
-  return hash === 'annotation' || tok[0] === 'annotation';
-};
-
-
-
-xrx.demo.Demo.prototype.isPageExamples = function(hash) {
-  var tok = hash.split('\!');
-  return hash === 'examples' || tok[0] === 'examples';
-};
-
-
-
-xrx.demo.Demo.prototype.isPageExample = function(hash) {
-  var tok = hash.split('\!');
-  return tok[0] === 'example';
-};
-
-
-
-xrx.demo.Demo.prototype.isPageRetrieval = function(hash) {
-  var tok = hash.split('\!');
-  return hash === 'retrieval' || tok[0] === 'retrieval';
-};
-
-
-
-xrx.demo.Demo.prototype.isPageTutorials = function(hash) {
-  return hash === 'tutorials';
-};
-
-
-
-xrx.demo.Demo.prototype.isPageApi = function(hash) {
-  return hash === 'api';
 };
 
 
@@ -123,14 +83,14 @@ xrx.demo.Demo.prototype.loadPage_ = function(title, url, navbarLink,
 
 
 
-xrx.demo.Demo.prototype.loadPageHome_ = function() {
+xrx.demo.Demo.prototype.loadPage_home_ = function() {
   this.loadPage_('SemToNotes', 'client/demo/home.html',
       goog.dom.getElement('homeLink'));
 };
 
 
 
-xrx.demo.Demo.prototype.loadPageExamples_ = function() {
+xrx.demo.Demo.prototype.loadPage_documentation_ = function() {
   var init = function(demo) {
     var href;
     var contentElement = goog.dom.getElement('content');
@@ -140,7 +100,7 @@ xrx.demo.Demo.prototype.loadPageExamples_ = function() {
     }
   }
   this.loadPage_('Examples | SemToNotes', 'client/demo/examples.html',
-      goog.dom.getElement('examplesLink'), init);
+      goog.dom.getElement('apiLink'), init);
 };
 
 
@@ -149,11 +109,8 @@ xrx.demo.Demo.prototype.installExampleBacklink_ = function(exampleId) {
   var self = this;
   var content = goog.dom.getElement('content');
   var backlink = goog.dom.htmlToDocumentFragment(
-      '<a class="glyphicon glyphicon-arrow-left" href="#examples!' +
+      '<a class="glyphicon glyphicon-arrow-left" href="#documentation!' +
       exampleId + '"><strong> back</strong></a>');
-  this.handler_.listen(backlink, goog.events.EventType.CLICK, function(e) {
-    self.loadPageExamples_();
-  });
   goog.dom.insertChildAt(content, backlink, 0);
 };
 
@@ -162,7 +119,7 @@ xrx.demo.Demo.prototype.installExampleBacklink_ = function(exampleId) {
 xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId, type) {
   var content = goog.dom.getElement('content');
   var wrapper = goog.dom.createElement('div');
-  var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Usage</h3>') :
+  var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Example</h3>') :
       goog.dom.htmlToDocumentFragment('<h3>Example</h3>');
   var pre = goog.dom.createElement('pre');
   var href = type === 'js' ? 'client/demo/example/' + exampleId + '.js' :
@@ -190,7 +147,10 @@ xrx.demo.Demo.prototype.installExample_ = function(src, exampleId, type) {
 
 
 
-xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
+xrx.demo.Demo.prototype.loadPage_example_ = function() {
+  var page = goog.dom.getWindow().location.hash.split('#')[1] ||
+      'home';
+  var exampleId = page.split('!')[1];
   var loadScript = function(demo) {
     var content = goog.dom.getElement('content');
     var type = goog.dom.dataset.get(content, 'type');
@@ -213,48 +173,16 @@ xrx.demo.Demo.prototype.loadPageExample_ = function(exampleId) {
 
 
 
-xrx.demo.Demo.prototype.loadPageTutorials_ = function() {
-  this.loadPage_('Tutorials | SemToNotes', 'client/demo/tutorials.html',
-      goog.dom.getElement('tutorialsLink'));
-};
-
-
-
-xrx.demo.Demo.prototype.loadPageApi_ = function() {
-  this.loadPage_('API | SemToNotes', 'client/demo/api.html',
-      goog.dom.getElement('apiLink'));
-};
-
-
-
-xrx.demo.Demo.prototype.loadPageAnnotation_ = function() {
-  this.loadPage_('Annotation | SemToNotes', 'client/demo/annotation.html',
-      goog.dom.getElement('annotationLink'));
-};
-
-
-
-xrx.demo.Demo.prototype.loadPageRetrieval_ = function() {
+xrx.demo.Demo.prototype.loadPage_retrieval_ = function() {
   this.loadPage_('Retrieval | SemToNotes', 'client/demo/retrieval.html',
       goog.dom.getElement('retrievalLink'));
 };
 
 
 
-xrx.demo.Demo.prototype.installNavbar_ = function() {
-  var self = this;
-  var linkHome = goog.dom.getElement('homeLink');
-  var linkAnnotation = goog.dom.getElement('annotationLink');
-  var linkRetrieval = goog.dom.getElement('retrievalLink');
-  goog.events.listen(linkHome, goog.events.EventType.CLICK, function(e) {
-    self.loadPageHome_();
-  });
-  goog.events.listen(linkAnnotation, goog.events.EventType.CLICK, function(e) {
-    self.loadPageAnnotation_();
-  });
-  goog.events.listen(linkRetrieval, goog.events.EventType.CLICK, function(e) {
-    self.loadPageRetrieval_();
-  });
+xrx.demo.Demo.prototype.loadPage_about_ = function() {
+  this.loadPage_('About | SemToNotes', 'client/demo/about.html',
+      goog.dom.getElement('apiLink'));
 };
 
 
@@ -265,27 +193,19 @@ xrx.demo.Demo.prototype.navigate_ = function() {
     if (!goog.isArray(this.example_)) this.example_ = [this.example_];
     for (var i = 0, len = this.example_.length; i < len; i++) {
       this.example_[i].dispose();
+      this.example_[i] = null;
     }
     this.example_ = null;
   }
   // resolve URL and navigate
-  var hash = goog.dom.getWindow().location.hash.split('#')[1] ||
+  var page = goog.dom.getWindow().location.hash.split('#')[1] ||
       'home';
-  if (this.isPageAnnotation(hash)) {
-    this.loadPageAnnotation_();
-  } else if (this.isPageRetrieval(hash)) {
-    this.loadPageRetrieval_();
-  } else if (this.isPageExamples(hash)) {
-    this.loadPageExamples_();
-  } else if (this.isPageExample(hash)) {
-    this.loadPageExample_(hash.split('\!')[1]);
-  } else if (this.isPageTutorials(hash)) {
-    this.loadPageTutorials_();
-  } else if (this.isPageApi(hash)) {
-    this.loadPageApi_();
+  if (goog.string.contains(page, '!')) page = page.split('!')[0];
+  if (this['loadPage_' + page + '_']) {
+    this['loadPage_' + page + '_']();
   } else {
-    this.loadPageHome_();
-  } 
+    this.loadPage_();
+  }
 };
 
 
@@ -296,7 +216,6 @@ xrx.demo.Demo.prototype.init_ = function() {
     self.navigate_, false, self
   );
   this.history_.setEnabled(true);
-  this.installNavbar_();
 };
 
 

@@ -1,6 +1,6 @@
 /**
- * @fileoverview Classes representing a modifiable and creatable
- *     engine-independent poly-line shape.
+ * @fileoverview A class representing an engine-independent
+ * hoverable, selectable, modifiable and creatable poly-line shape.
  */
 
 goog.provide('xrx.shape.Polyline');
@@ -22,14 +22,20 @@ goog.require('xrx.shape.Selectable');
 
 
 /**
- * Classes representing an engine-independent poly-line shape.
+ * A class representing an engine-independent poly-line shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.PathLike}
  * @constructor
  */
 xrx.shape.Polyline = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Polyline());
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Polyline|xrx.svg.Polyline|xrx.vml.Polyline)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createPolyline();
 };
 goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
@@ -38,6 +44,7 @@ goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
 
 /**
  * Draws this poly-line shape.
+ * @private
  */
 xrx.shape.Polyline.prototype.draw = function() {
   this.startDrawing_();
@@ -49,77 +56,64 @@ xrx.shape.Polyline.prototype.draw = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape hoverable.
+ * @return {xrx.shape.PolylineHoverable} The hoverable poly-line shape.
+ */
 xrx.shape.Polyline.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.PolylineHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.PolylineHoverable(this);
   return this.hoverable_;
 };
 
 
 
-xrx.shape.Polyline.prototype.setHoverable = function(hoverable) {
-  if (!hoverable instanceof xrx.shape.PolylineHoverable)
-      throw Error('Instance of xrx.shape.PolylineHoverable expected.');
-  this.hoverable_ = hoverable;
-};
-
-
-
+/**
+ * Returns a helper shape that makes this shape selectable.
+ * @return {xrx.shape.PolylineSelectable} The selectable poly-line shape.
+ */
 xrx.shape.Polyline.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.PolylineSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.PolylineSelectable(this);
   return this.selectable_;
 };
 
 
 
-xrx.shape.Polyline.prototype.setSelectable = function(selectable) {
-  if (!selectable instanceof xrx.shape.PolylineSelectable)
-      throw Error('Instance of xrx.shape.PolylineSelectable expected.');
-  this.selectable_ = selectable;
-};
-
-
-
 /**
- * Returns a modifiable poly-line shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.LineModifiable} The modifiable poly-line shape.
+ * Returns a helper shape that makes this shape modifiable.
+ * @return {xrx.shape.PolylineModifiable} The modifiable poly-line shape.
  */
 xrx.shape.Polyline.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolylineModifiable.create(this);
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.PolylineModifiable(this);
   return this.modifiable_;
 };
 
 
 
-xrx.shape.Polyline.prototype.setModifiable = function(modifiable) {
-  if (!modifiable instanceof xrx.shape.PolylineModifiable)
-      throw Error('Instance of xrx.shape.PolylineModifiable expected.');
-  this.modifiable_ = modifiable;
-};
-
-
-
 /**
- * Returns a creatable poly-line shape. Create it lazily if not existent.
- * @return {xrx.shape.EllipseCreatable} The creatable poly-line shape.
+ * Returns a helper shape that makes this shape creatable.
+ * @return {xrx.shape.PolylineCreatable} The creatable poly-line shape.
  */
 xrx.shape.Polyline.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.PolylineCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.PolylineCreatable(this);
   return this.creatable_;
 };
 
 
 
-xrx.shape.Polyline.prototype.setCreatable = function(creatable) {
-  if (!creatable instanceof xrx.shape.PolylineCreatable)
-      throw Error('Instance of xrx.shape.PolylineCreatable expected.');
-  this.creatable_ = creatable;
+/**
+ * Disposes this poly-line shape.
+ */
+xrx.shape.Polyline.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a hoverable poly-line shape.
+ * @param {xrx.shape.Polyline} poly-line The parent poly-line shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolylineHoverable = function(polyline) {
 
@@ -129,15 +123,20 @@ goog.inherits(xrx.shape.PolylineHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.PolylineHoverable.create = function(polyline) {
-  return new xrx.shape.PolylineHoverable(polyline);
+/**
+ * Disposes this hoverable poly-line shape.
+ */
+xrx.shape.PolylineHoverable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
-
 /**
+ * A class representing a selectable poly-line shape.
+ * @param {xrx.shape.Polyline} poly-line The parent poly-line shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolylineSelectable = function(polyline) {
 
@@ -147,25 +146,34 @@ goog.inherits(xrx.shape.PolylineSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.PolylineSelectable.create = function(polyline) {
-  return new xrx.shape.PolylineSelectable(polyline);
+/**
+ * Disposes this selectable poly-line shape.
+ */
+xrx.shape.PolylineSelectable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
  * A class representing a modifiable poly-line shape.
+ * @param {xrx.shape.Polyline} poly-line The parent poly-line shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolylineModifiable = function(polyline, helper) {
 
   goog.base(this, polyline, helper);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.PolylineModifiable, xrx.shape.Modifiable);
 
 
 
-
+/**
+ * @private
+ */
 xrx.shape.PolylineModifiable.prototype.setCoords = function(coords, position) {
   for(var i = 0, len = this.dragger_.length; i < len; i++) {
     if (i !== position) {
@@ -178,6 +186,9 @@ xrx.shape.PolylineModifiable.prototype.setCoords = function(coords, position) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolylineModifiable.prototype.setCoordAt = function(pos, coord) {
   this.dragger_[pos].setCoordX(coord[0]);
   this.dragger_[pos].setCoordY(coord[1]);
@@ -188,25 +199,34 @@ xrx.shape.PolylineModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 /**
- * Creates a new modifiable poly-line shape.
- * @param {xrx.shape.Polygon} polyline The related poly-line shape.
+ * @private
  */
-xrx.shape.PolylineModifiable.create = function(polyline) {
-  var coords = polyline.getCoords();
-  var modifiable = new xrx.shape.PolylineModifiable(polyline);
+xrx.shape.PolylineModifiable.prototype.init_ = function() {
+  var coords = this.shape_.getCoords();
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(modifiable, i);
+    dragger = new xrx.shape.Dragger(this, i);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }
-  modifiable.setDragger(draggers);
-  return modifiable;
+  this.setDragger(draggers);
 };
 
 
 
+/**
+ * Disposes this modifiable poly-line shape.
+ */
+xrx.shape.PolylineModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};
+
+
+
+/**
+ * @private
+ */
 xrx.shape.PolylineModifiable.prototype.move = function(distX, distY) {
   var coords = this.shape_.getCoordsCopy();
   for (var i = 0, len = coords.length; i < len; i++) {
@@ -220,12 +240,13 @@ xrx.shape.PolylineModifiable.prototype.move = function(distX, distY) {
 
 /**
  * A class representing a creatable poly-line shape.
- * @param {xrx.shape.Polygon} polygon A styled poly-line to be drawn.
+ * @param {xrx.shape.Polyline} poly-line The parent poly-line shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolylineCreatable = function(polyline) {
 
-  goog.base(this, polyline, xrx.shape.Polyline.create(polyline.getDrawing()));
+  goog.base(this, polyline, new xrx.shape.Polyline(polyline.getDrawing()));
 
   /**
    * The last point created by the user, which closes the poly-line when clicked.
@@ -247,7 +268,8 @@ goog.inherits(xrx.shape.PolylineCreatable, xrx.shape.Creatable);
 
 /**
  * Returns the coordinates of the poly-line created so far.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
+ * @private
  */
 xrx.shape.PolylineCreatable.prototype.getCoords = function() {
   return this.preview_.getCoords();
@@ -256,8 +278,7 @@ xrx.shape.PolylineCreatable.prototype.getCoords = function() {
 
 
 /**
- * Handles click events for a creatable poly-line shape.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
  */
 xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
   var shape = cursor.getShape();
@@ -272,7 +293,7 @@ xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
     // when there is only one point yet
   } else if (this.close_ && shape === this.close_) { // user closes the poly-line
     // create a poly-line
-    var polyline = xrx.shape.Polyline.create(this.target_.getDrawing());
+    var polyline = new xrx.shape.Polyline(this.target_.getDrawing());
     polyline.setStyle(this.target_);
     polyline.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
     this.target_.getDrawing().eventShapeCreated(polyline);
@@ -284,7 +305,7 @@ xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
     this.preview_.appendCoord(point);
     // create the closing point as soon as the user creates the second point
     if (this.count_ === 1) {
-      this.close_ = xrx.shape.Dragger.create(this.target_.getModifiable(), 0);
+      this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
       this.target_.getDrawing().eventShapeCreate([this.close_]);
     }
     this.close_.setCoords([point]);
@@ -294,6 +315,9 @@ xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolylineCreatable.prototype.handleMove = function(e, cursor) {
   var shape = cursor.getShape();
   var point = cursor.getPointTransformed();
@@ -313,12 +337,20 @@ xrx.shape.PolylineCreatable.prototype.handleMove = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolylineCreatable.prototype.handleUp = function(e, cursor) {
 };
 
 
 
-xrx.shape.PolylineCreatable.create = function(polygon) {
-  return new xrx.shape.PolylineCreatable(polygon);
+/**
+ * Disposes this creatable poly-line shape.
+ */
+xrx.shape.PolylineCreatable.prototype.disposeInternal = function() {
+  this.close_.dispose();
+  this.close_ = null;
+  goog.base(this, 'disposeInternal');
 };
 

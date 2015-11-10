@@ -28,7 +28,7 @@ goog.inherits(xrx.vml.Polyline, xrx.vml.Stylable);
 
 /**
  * Sets the coordinates for the poly-line.
- * @param {Array<Array<number>>} coords The coordinates.
+ * @param {Array<number>} coords The coordinates.
  */
 xrx.vml.Polyline.prototype.setCoords = function(coords) {
   xrx.vml.setPath(this.element_, coords);
@@ -38,7 +38,7 @@ xrx.vml.Polyline.prototype.setCoords = function(coords) {
 
 /**
  * Draws this poly-line.
- * @param {Array<Array<number>>} coords The coordinates of the poly-line.
+ * @param {Array<number>} coords The coordinates of the poly-line.
  * @param {string} fillColor The fill color.
  * @param {number} fillOpacity Opacity of the fill color.
  * @param {string} strokeColor The stroke color.

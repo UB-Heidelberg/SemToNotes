@@ -39,7 +39,7 @@ xrx.canvas.Polyline.prototype.drawPath_ = function(coords) {
 
 /**
  * Draws the poly-line.
- * @param {Array<Array<number>>} coords The coordinates of the poly-line.
+ * @param {Array<number>} coords The coordinates of the poly-line.
  * @param {string} fillColor The fill color.
  * @param {number} fillOpacity Opacity of the fill color.
  * @param {string} strokeColor The stroke color.

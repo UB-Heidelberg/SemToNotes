@@ -19,7 +19,7 @@ goog.require('xrx.demo');
 <script id="exampleScript"></script>
 </head>
 <body>
-<nav id="nav" class="navbar navbar-default navbar-fixed-top">
+<nav id="nav" class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"></button>
@@ -28,8 +28,16 @@ goog.require('xrx.demo');
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li id="homeLink"><a href="#home">Home</a></li>
-        <li id="annotationLink"><a href="#annotation">Annotation</a></li>
-        <li id="retrievalLink"><a href="#retrieval">Retrieval</a></li>
+        <li id="apiLink">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">JavaScript API <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li id="documentationLink"><a href="#documentation">API Documentation</a></li>
+            <li><a href="./client/api/drawing/simple/index.html">Simple API Reference <small>(for users)</small></a></li>
+            <li><a href="./client/api/drawing/full/index.html">Full API Reference <small>(for developers)</small></a></li>
+            <li id="aboutLink"><a href="#about">About</a></li>
+          </ul>
+        </li>
+        <li id="retrievalLink"><a href="#retrieval">Retrieval System</a></li>
       </ul>
     </div>
     </div><!--/.nav-collapse -->

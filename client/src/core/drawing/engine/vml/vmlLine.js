@@ -28,7 +28,7 @@ goog.inherits(xrx.vml.Line, xrx.vml.Stylable);
 
 /**
  * Sets the coordinates for this line.
- * @param {Array<Array<number>>} coords The coordinates.
+ * @param {Array<number>} coords The coordinates.
  */
 xrx.vml.Line.prototype.setCoords = function(coords) {
   xrx.vml.setPath(this.element_, coords, false);

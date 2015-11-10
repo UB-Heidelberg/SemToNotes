@@ -8,7 +8,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx.graphic');
+  goog.require('xrx.api.drawing');
 </script>
 <link rel="stylesheet" type="text/css" href="./shapeTest.css">
 </head>
@@ -32,10 +32,10 @@ function getEllipses(drawing) {
   selectableStyle.setFillOpacity(.2);
   selectableStyle.setStrokeColor('yellow');
   selectableStyle.setStrokeWidth(2);
-  var ellipse1 = xrx.shape.Ellipse.create(drawing);
-  var ellipse2 = xrx.shape.Ellipse.create(drawing);
-  var ellipse3 = xrx.shape.Ellipse.create(drawing);
-  var ellipse4 = xrx.shape.Ellipse.create(drawing);
+  var ellipse1 = new xrx.shape.Ellipse(drawing);
+  var ellipse2 = new xrx.shape.Ellipse(drawing);
+  var ellipse3 = new xrx.shape.Ellipse(drawing);
+  var ellipse4 = new xrx.shape.Ellipse(drawing);
   ellipse1.setCenter(20, 20);
   ellipse1.setRadiusX(50);
   ellipse1.setRadiusY(10);

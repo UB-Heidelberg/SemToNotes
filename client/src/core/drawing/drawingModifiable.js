@@ -8,7 +8,6 @@ goog.provide('xrx.drawing.Modifiable');
 
 
 goog.require('goog.Disposable');
-goog.require('xrx.drawing');
 goog.require('xrx.geometry');
 goog.require('xrx.shape.Dragger');
 

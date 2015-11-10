@@ -16,7 +16,6 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.userAgent');
-goog.require('xrx.drawing');
 goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.Hoverable');
 goog.require('xrx.drawing.LayerBackground');
@@ -39,7 +38,8 @@ goog.require('xrx.shape.Shapes');
  * A class representing a drawing canvas. The drawing canvas can have a background
  * image and thereby can serve as an image annotation tool.
  * @param {DOMElement} element The HTML element used to install the canvas.
- * @param {string} opt_engine The name of the rendering engine.
+ * @param {(xrx.engine.Canvas|xrx.engine.SVG|xrx.engine.VML)} opt_engine The
+ *   rendering engine type.
  * @constructor
  */
 xrx.drawing.Drawing = function(element, opt_engine) {
@@ -419,19 +419,19 @@ xrx.drawing.Drawing.prototype.setModeView = function() {
 /**
  * Switch the drawing canvas over into mode <i>hover</i> to allow hovering
  * of shapes.
- * @param {boolean} opt_multiple Whether to highlight all hovered shapes that
- *   lie on top of each other or just the most forward. opt_multiple defaults
+ * @param {boolean} opt_overlapping Whether to highlight all hovered shapes that
+ *   lie on top of each other or just the most forward. opt_overlapping defaults
  *   to false.
  */
-xrx.drawing.Drawing.prototype.setModeHover = function(opt_multiple) {
+xrx.drawing.Drawing.prototype.setModeHover = function(opt_overlapping) {
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(false);
   this.getLayerShapeModify().setLocked(true);
   this.getLayerShapeCreate().setLocked(true);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
-  this.hoverable_.setMultiple(opt_multiple);
-  if (opt_multiple === true) {
+  this.hoverable_.setMultiple(opt_overlapping);
+  if (opt_overlapping === true) {
     this.setMode_(xrx.drawing.Mode.HOVERMULTIPLE);
   } else {
     this.setMode_(xrx.drawing.Mode.HOVER);
@@ -456,6 +456,10 @@ xrx.drawing.Drawing.prototype.setModeSelect = function() {
 
 
 
+/**
+ * Sets a shape as the selected.
+ * @param {xrx.shape.Shape} shape The shape to be selected.
+ */
 xrx.drawing.Drawing.prototype.setSelected = function(shape) {
   this.selectable_.setSelected(shape);
   this.draw();

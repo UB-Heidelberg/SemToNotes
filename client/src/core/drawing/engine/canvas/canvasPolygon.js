@@ -43,7 +43,7 @@ xrx.canvas.Polygon.prototype.drawPath_ = function(coords) {
 
 /**
  * Draws the polygon.
- * @param {Array<Array<number>>} coords The polygon's coordinates.
+ * @param {Array<number>} coords The polygon's coordinates.
  * @param {string} fillColor The fill color.
  * @param {number} fillOpacity Opacity of the fill color.
  * @param {string} strokeColor The stroke color.

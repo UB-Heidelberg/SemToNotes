@@ -29,6 +29,11 @@ xrx.shape.Ellipse = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Ellipse());
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Ellipse|xrx.svg.Ellipse|xrx.vml.Ellipse)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createEllipse();
 };
 goog.inherits(xrx.shape.Ellipse, xrx.shape.Geometry);
@@ -100,6 +105,7 @@ xrx.shape.Ellipse.prototype.setRadiusY = function(ry) {
 /**
  * Returns the coordinates of this ellipse. We assume the center point.
  * @return {Array<Array<<number>>} The coordinates.
+ * @private
  */
 xrx.shape.Ellipse.prototype.getCoords = function() {
   return [this.getCenter()];
@@ -110,6 +116,7 @@ xrx.shape.Ellipse.prototype.getCoords = function() {
 /**
  * Sets the coordinates of this ellipse. We assume the center point.
  * @param {Array<Array<<number>>} coords The coordinates.
+ * @private
  */
 xrx.shape.Ellipse.prototype.setCoords = function(coords) {
   this.setCenter(coords[0][0], coords[0][1]);
@@ -119,6 +126,7 @@ xrx.shape.Ellipse.prototype.setCoords = function(coords) {
 
 /**
  * Draws this ellipse.
+ * @private
  */
 xrx.shape.Ellipse.prototype.draw = function() {
   this.startDrawing_();
@@ -131,77 +139,64 @@ xrx.shape.Ellipse.prototype.draw = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape hoverable.
+ * @return {xrx.shape.EllipseHoverable} The hoverable ellipse shape.
+ */
 xrx.shape.Ellipse.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.EllipseHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.EllipseHoverable(this);
   return this.hoverable_;
 };
 
 
 
-xrx.shape.Ellipse.prototype.setHoverable = function(hoverable) {
-  if (!hoverable instanceof xrx.shape.EllipseHoverable)
-      throw Error('Instance of xrx.shape.EllipseHoverable expected.');
-  this.hoverable_ = hoverable;
-};
-
-
-
+/**
+ * Returns a helper shape that makes this shape selectable.
+ * @return {xrx.shape.EllipseSelectable} The selectable ellipse shape.
+ */
 xrx.shape.Ellipse.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.EllipseSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.EllipseSelectable(this);
   return this.selectable_;
 };
 
 
 
-xrx.shape.Ellipse.prototype.setSelectable = function(selectable) {
-  if (!selectable instanceof xrx.shape.EllipseSelectable)
-      throw Error('Instance of xrx.shape.EllipseSelectable expected.');
-  this.selectable_ = selectable;
-};
-
-
-
 /**
- * Returns a modifiable ellipse shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
+ * Returns a helper shape that makes this shape modifiable.
  * @return {xrx.shape.EllipseModifiable} The modifiable ellipse shape.
  */
-xrx.shape.Ellipse.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.EllipseModifiable.create(this);
+xrx.shape.Ellipse.prototype.getModifiable = function() {
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.EllipseModifiable(this);
   return this.modifiable_;
 };
 
 
 
-xrx.shape.Ellipse.prototype.setModifiable = function(modifiable) {
-  if (!modifiable instanceof xrx.shape.EllipseModifiable)
-      throw Error('Instance of xrx.shape.EllipseModifiable expected.');
-  this.modifiable_ = modifiable;
-};
-
-
-
 /**
- * Returns a creatable ellipse shape. Create it lazily if not existent.
+ * Returns a helper shape that makes this shape creatable.
  * @return {xrx.shape.EllipseCreatable} The creatable ellipse shape.
  */
 xrx.shape.Ellipse.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.EllipseCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.EllipseCreatable(this);
   return this.creatable_;
 };
 
 
 
-xrx.shape.Ellipse.prototype.setCreatable = function(creatable) {
-  if (!creatable instanceof xrx.shape.EllipseCreatable)
-      throw Error('Instance of xrx.shape.EllipseCreatable expected.');
-  this.creatable_ = creatable;
+/**
+ * Disposes this ellipse shape.
+ */
+xrx.shape.Ellipse.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a hoverable ellipse shape.
+ * @param {xrx.shape.Ellipse} ellipse The parent ellipse shape.
  * @constructor
+ * @private
  */
 xrx.shape.EllipseHoverable = function(ellipse) {
 
@@ -211,15 +206,21 @@ goog.inherits(xrx.shape.EllipseHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.EllipseHoverable.create = function(ellipse) {
-  return new xrx.shape.EllipseHoverable(ellipse);
+/**
+ * Disposes this hoverable ellipse shape.
+ */
+xrx.shape.EllipseHoverable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 
 /**
+ * A class representing a selectable ellipse shape.
+ * @param {xrx.shape.Ellipse} ellipse The parent ellipse shape.
  * @constructor
+ * @private
  */
 xrx.shape.EllipseSelectable = function(ellipse) {
 
@@ -229,23 +230,34 @@ goog.inherits(xrx.shape.EllipseSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.EllipseSelectable.create = function(ellipse) {
-  return new xrx.shape.EllipseSelectable(ellipse);
+/**
+ * Disposes this selectable ellipse shape.
+ */
+xrx.shape.EllipseSelectable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a modifiable ellipse shape.
+ * @param {xrx.shape.Ellipse} ellipse The parent ellipse shape.
  * @constructor
+ * @private
  */
 xrx.shape.EllipseModifiable = function(ellipse) {
 
   goog.base(this, ellipse);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.EllipseModifiable, xrx.shape.Modifiable);
 
 
 
+/**
+ * @private
+ */
 xrx.shape.EllipseModifiable.prototype.setCoords = function(coords) {
   this.shape_.setCoords(coords);
   this.dragger_[0].setCoordX(coords[0][0] + this.shape_.getRadiusX());
@@ -256,6 +268,9 @@ xrx.shape.EllipseModifiable.prototype.setCoords = function(coords) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.EllipseModifiable.prototype.setCoordAt = function(pos, coord) {
   if (pos === 0) {
     this.dragger_[0].setCoordX(coord[0]);
@@ -268,6 +283,9 @@ xrx.shape.EllipseModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.EllipseModifiable.prototype.move = function(distX, distY) {
   var coords = this.shape_.getCoordsCopy();
   coords[0][0] += distX;
@@ -278,32 +296,44 @@ xrx.shape.EllipseModifiable.prototype.move = function(distX, distY) {
 
 
 /**
- * @constructor
+ * @private
  */
-xrx.shape.EllipseModifiable.create = function(ellipse) {
-  var center = ellipse.getCenter();
-  var radiusX = ellipse.getRadiusX();
-  var radiusY = ellipse.getRadiusY();
-  var modifiable = new xrx.shape.EllipseModifiable(ellipse)
-  var draggerX = xrx.shape.Dragger.create(modifiable, 0);
+xrx.shape.EllipseModifiable.prototype.init_ = function() {
+  var center = this.shape_.getCenter();
+  var radiusX = this.shape_.getRadiusX();
+  var radiusY = this.shape_.getRadiusY();
+  var draggerX = new xrx.shape.Dragger(this, 0);
   draggerX.setCoords([[center[0] + radiusX, center[1]]]);
-  var draggerY = xrx.shape.Dragger.create(modifiable, 1);
+  var draggerY = new xrx.shape.Dragger(this, 1);
   draggerY.setCoords([[center[0], center[1] + radiusY]]);
-  modifiable.setDragger([draggerX, draggerY]);
-  return modifiable;
+  this.setDragger([draggerX, draggerY]);
+};
+
+
+
+/**
+ * Disposes this modifiable ellipse shape.
+ */
+xrx.shape.EllipseModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
  * A class representing a creatable ellipse shape.
- * @param
+ * @param {xrx.shape.Ellipse} ellipse The parent ellipse shape.
  * @constructor
+ * @private
  */
 xrx.shape.EllipseCreatable = function(ellipse) {
 
-  goog.base(this, ellipse, xrx.shape.Ellipse.create(ellipse.getDrawing()));
+  goog.base(this, ellipse, new xrx.shape.Ellipse(ellipse.getDrawing()));
 
+  /**
+   * Center point helper.
+   * @type {Array<number>}
+   */
   this.point_ = new Array(2);
 };
 goog.inherits(xrx.shape.EllipseCreatable, xrx.shape.Creatable);
@@ -312,7 +342,8 @@ goog.inherits(xrx.shape.EllipseCreatable, xrx.shape.Creatable);
 
 /**
  * Returns the coordinates of the ellipse currently created.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
+ * @private
  */
 xrx.shape.EllipseCreatable.prototype.getCoords = function() {
   return this.helper_.getCoords();
@@ -321,19 +352,28 @@ xrx.shape.EllipseCreatable.prototype.getCoords = function() {
 
 
 /**
- * Handles down events for a creatable ellipse shape.
+ * Handles down gestures.
  * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {xrx.drawing.Cursor} cursor The drawing cursor.
+ * @private
  */
 xrx.shape.EllipseCreatable.prototype.handleDown = function(e, cursor) {
   var point = cursor.getPointTransformed();
   this.point_[0] = point[0];
   this.point_[1] = point[1];
   this.preview_.setCenter(point[0], point[1]);
+  this.preview_.setRadiusX(0);
+  this.preview_.setRadiusY(0);
   this.target_.getDrawing().eventShapeCreate([this.preview_]);
 };
 
 
-
+/**
+ * Handles <em>move</em> gestures.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {xrx.drawing.Cursor} cursor The drawing cursor.
+ * @private
+ */
 xrx.shape.EllipseCreatable.prototype.handleMove = function(e, cursor) {
   var point = cursor.getPointTransformed();
   var distX = point[0] - this.point_[0];
@@ -344,9 +384,14 @@ xrx.shape.EllipseCreatable.prototype.handleMove = function(e, cursor) {
 };
 
 
-
+/**
+ * Handles <em>up</em> gestures.
+ * @param {goog.events.BrowserEvent} e The browser event.
+ * @param {xrx.drawing.Cursor} cursor The drawing cursor.
+ * @private
+ */
 xrx.shape.EllipseCreatable.prototype.handleUp = function(e, cursor) {
-  var ellipse = xrx.shape.Ellipse.create(this.target_.getDrawing());
+  var ellipse = new xrx.shape.Ellipse(this.target_.getDrawing());
   var center = this.preview_.getCenter();
   ellipse.setStyle(this.target_);
   ellipse.setCenter(center[0], center[1]);
@@ -356,7 +401,11 @@ xrx.shape.EllipseCreatable.prototype.handleUp = function(e, cursor) {
 };
 
 
-
-xrx.shape.EllipseCreatable.create = function(ellipse) {
-  return new xrx.shape.EllipseCreatable(ellipse);
+/**
+ * Disposes this creatable ellipse shape.
+ * @private
+ */
+xrx.shape.EllipseCreatable.prototype.disposeInternal = function() {
+  this.point_ = null;
+  goog.base(this, 'disposeInternal');
 };

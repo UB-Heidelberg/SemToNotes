@@ -8,7 +8,7 @@
 <script type="text/javascript">
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx.graphic');
+  goog.require('xrx.api.drawing');
 </script>
 <link rel="stylesheet" type="text/css" href="./shapeTest.css">
 </head>
@@ -28,9 +28,9 @@ function getLines(drawing) {
   var selectableStyle = new xrx.shape.Selectable();
   selectableStyle.setStrokeColor('yellow');
   selectableStyle.setStrokeWidth(2);
-  var line1 = xrx.shape.Line.create(drawing);
-  var line2 = xrx.shape.Line.create(drawing);
-  var line3 = xrx.shape.Line.create(drawing);
+  var line1 = new xrx.shape.Line(drawing);
+  var line2 = new xrx.shape.Line(drawing);
+  var line3 = new xrx.shape.Line(drawing);
   line1.setX1(20);
   line1.setY1(20);
   line1.setX2(100);

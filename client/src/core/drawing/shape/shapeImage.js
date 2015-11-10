@@ -16,11 +16,17 @@ goog.require('xrx.shape.Geometry');
  * A class representing an engine-independent image graphic.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @private
  */
 xrx.shape.Image = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Rect());
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Image|xrx.svg.Image|xrx.vml.Image)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createImage();
 
   /**
@@ -77,6 +83,7 @@ xrx.shape.Image.prototype.getWidth = function() {
 
 /**
  * Draws this image.
+ * @private
  */
 xrx.shape.Image.prototype.draw = function() {
   this.startDrawing_();
@@ -86,14 +93,7 @@ xrx.shape.Image.prototype.draw = function() {
 
 
 
-/**
- * Creates a new image graphic.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- */
-xrx.shape.Image.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createImage(engineCanvas);
-  return new xrx.shape.Image(drawing, engineElement);
+xrx.shape.Image.prototype.disposeInternal = function() {
+  this.image_ = null;
+  goog.base(this, 'disposeInternal');
 };

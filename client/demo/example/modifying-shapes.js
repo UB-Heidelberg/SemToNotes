@@ -10,19 +10,19 @@
   drawing.setModeModify();
 
   // create a styled circle shape
-  var circle = xrx.shape.Circle.create(drawing);
+  var circle = new xrx.shape.Circle(drawing);
   circle.setCenter(100, 100);
   circle.setRadius(50);
   circle.setFillColor('rgb(153, 0, 153)');
   // create a styled ellipse shape
-  var ellipse = xrx.shape.Ellipse.create(drawing);
+  var ellipse = new xrx.shape.Ellipse(drawing);
   ellipse.setCenter(200, 100);
   ellipse.setRadiusX(30);
   ellipse.setRadiusY(70);
   ellipse.setFillColor('green');
   ellipse.setFillOpacity(.2);
   // create a styled line shape
-  var line = xrx.shape.Line.create(drawing);
+  var line = new xrx.shape.Line(drawing);
   line.setX1(300);
   line.setY1(40);
   line.setX2(320);
@@ -30,19 +30,19 @@
   line.setStrokeWidth(5);
   line.setStrokeColor('red');
   // create a styled polygon shape
-  var polygon = xrx.shape.Polygon.create(drawing);
+  var polygon = new xrx.shape.Polygon(drawing);
   polygon.setCoords([[50, 200], [170, 210], [160, 300], [155, 280]]);
   polygon.setStrokeColor('#805C6E');
   polygon.setStrokeWidth('3');
   polygon.setFillColor('#805C6E');
   polygon.setFillOpacity(.2);
   // create a styled poly-line shape
-  var polyline = xrx.shape.Polyline.create(drawing);
+  var polyline = new xrx.shape.Polyline(drawing);
   polyline.setCoords([[200, 200], [320, 210], [310, 300], [305, 280]]);
   polyline.setStrokeColor('#24246B');
   polyline.setStrokeWidth(4);
   // create a styled rectangle shape
-  var rect = xrx.shape.Rect.create(drawing);
+  var rect = new xrx.shape.Rect(drawing);
   rect.setX(100);
   rect.setY(330);
   rect.setWidth(150);

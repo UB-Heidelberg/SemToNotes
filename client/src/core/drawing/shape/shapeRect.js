@@ -1,6 +1,6 @@
 /**
- * @fileoverview Classes representing a modifiable and creatable
- *     engine-independent rectangle shape.
+ * @fileoverview A class representing an engine-independent
+ * hoverable, selectable, modifiable and creatable rectangle shape.
  */
 
 goog.provide('xrx.shape.Rect');
@@ -25,12 +25,18 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent rectangle shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.PathLike}
  * @constructor
  */
 xrx.shape.Rect = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Path(4));
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Rect|xrx.svg.Rect|xrx.vml.Rect)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createRect();
 };
 goog.inherits(xrx.shape.Rect, xrx.shape.PathLike);
@@ -129,6 +135,7 @@ xrx.shape.Rect.prototype.getHeight = function() {
  * Function makes sure that the underlying polygon rendering class
  * stays a rectangle.
  * @param {number} position The nth vertex currently modified.
+ * @private
  */
 xrx.shape.Rect.prototype.setAffineCoords = function(position) {
   var coords = this.getCoords();
@@ -150,6 +157,7 @@ xrx.shape.Rect.prototype.setAffineCoords = function(position) {
 
 /**
  * Draws this rectangle.
+ * @private
  */
 xrx.shape.Rect.prototype.draw = function() {
   this.startDrawing_();
@@ -160,91 +168,64 @@ xrx.shape.Rect.prototype.draw = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape hoverable.
+ * @return {xrx.shape.RectHoverable} The hoverable rectangle shape.
+ */
 xrx.shape.Rect.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.RectHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.RectHoverable(this);
   return this.hoverable_;
 };
 
 
 
-xrx.shape.Rect.prototype.setHoverable = function(hoverable) {
-  if (!hoverable instanceof xrx.shape.RectHoverable)
-      throw Error('Instance of xrx.shape.RectHoverable expected.');
-  this.hoverable_ = hoverable;
-};
-
-
-
+/**
+ * Returns a helper shape that makes this shape selectable.
+ * @return {xrx.shape.RectSelectable} The selectable rectangle shape.
+ */
 xrx.shape.Rect.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.RectSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.RectSelectable(this);
   return this.selectable_;
 };
 
 
 
-xrx.shape.Rect.prototype.setSelectable = function(selectable) {
-  if (!selectable instanceof xrx.shape.RectSelectable)
-      throw Error('Instance of xrx.shape.RectSelectable expected.');
-  this.selectable_ = selectable;
-};
-
-
-
 /**
- * Returns a modifiable rectangle shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.LineModifiable} The modifiable rectangle shape.
+ * Returns a helper shape that makes this shape modifiable.
+ * @return {xrx.shape.RectHoverable} The modifiable rectangle shape.
  */
 xrx.shape.Rect.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.RectModifiable.create(this);
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.RectModifiable(this);
   return this.modifiable_;
 };
 
 
 
-xrx.shape.Rect.prototype.setModifiable = function(modifiable) {
-  if (!modifiable instanceof xrx.shape.RectModifiable)
-      throw Error('Instance of xrx.shape.RectModifiable expected.');
-  this.modifiable_ = modifiable;
-};
-
-
-
 /**
- * Returns a creatable rectangle shape. Create it lazily if not existent.
- * @return {xrx.shape.EllipseCreatable} The creatable rectangle shape.
+ * Returns a helper shape that makes this shape creatable.
+ * @return {xrx.shape.RectHoverable} The creatable rectangle shape.
  */
 xrx.shape.Rect.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.RectCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.RectCreatable(this);
   return this.creatable_;
 };
 
 
 
-xrx.shape.Rect.prototype.setCreatable = function(creatable) {
-  if (!creatable instanceof xrx.shape.RectCreatable)
-      throw Error('Instance of xrx.shape.RectCreatable expected.');
-  this.creatable_ = creatable;
-};
-
-
-
 /**
- * Creates a new rectangle shape.
- * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * Disposes this rectangle shape.
  */
-xrx.shape.Rect.create = function(drawing) {
-  var shapeCanvas = drawing.getCanvas();
-  var engine = shapeCanvas.getEngine();
-  var engineCanvas = shapeCanvas.getEngineElement();
-  var engineElement = engine.createRect(engineCanvas);
-  return new xrx.shape.Rect(drawing, engineElement);
+xrx.shape.Rect.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a hoverable rectangle shape.
+ * @param {xrx.shape.Rect} rect The parent rectangle shape.
  * @constructor
+ * @private
  */
 xrx.shape.RectHoverable = function(rect) {
 
@@ -254,15 +235,21 @@ goog.inherits(xrx.shape.RectHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.RectHoverable.create = function(rect) {
-  return new xrx.shape.RectHoverable(rect);
+/**
+ * Disposes this hoverable rectangle shape.
+ */
+xrx.shape.RectHoverable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 
 /**
+ * A class representing a selectable rectangle shape.
+ * @param {xrx.shape.Rect} rect The parent rectangle shape.
  * @constructor
+ * @private
  */
 xrx.shape.RectSelectable = function(rect) {
 
@@ -272,25 +259,34 @@ goog.inherits(xrx.shape.RectSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.RectSelectable.create = function(rect) {
-  return new xrx.shape.RectSelectable(rect);
+/**
+ * Disposes this selectable shape.
+ */
+xrx.shape.RectSelectable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
  * A class representing a modifiable rectangle shape.
+ * @param {xrx.shape.Rect} rect The parent rectangle shape.
  * @constructor
+ * @private
  */
 xrx.shape.RectModifiable = function(rect, helper) {
 
   goog.base(this, rect, helper);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.RectModifiable, xrx.shape.Modifiable);
 
 
 
-
+/**
+ * @private
+ */
 xrx.shape.RectModifiable.prototype.setCoords = function(coords, position) {
   for(var i = 0, len = this.dragger_.length; i < len; i++) {
     if (i !== position) {
@@ -303,6 +299,9 @@ xrx.shape.RectModifiable.prototype.setCoords = function(coords, position) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.RectModifiable.prototype.setCoordAt = function(pos, coord) {
   var coords;
   this.shape_.setCoordAt(pos, coord);
@@ -320,6 +319,9 @@ xrx.shape.RectModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.RectModifiable.prototype.move = function(distX, distY) {
   var coords = this.shape_.getCoordsCopy();
   for (var i = 0, len = coords.length; i < len; i++) {
@@ -332,33 +334,40 @@ xrx.shape.RectModifiable.prototype.move = function(distX, distY) {
 
 
 /**
- * Creates a new modifiable rectangle shape.
- * @param {xrx.shape.Rect} polygon The related rectangle shape.
+ * Disposes this modifiable rectangle shape.
  */
-xrx.shape.RectModifiable.create = function(rect) {
-  var coords = rect.getCoords();
+xrx.shape.RectModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.RectModifiable.prototype.init_ = function() {
+  var coords = this.shape_.getCoords();
   var draggers = [];
   var dragger;
-  var modifiable = new xrx.shape.RectModifiable(rect);
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(modifiable, i);
+    dragger = new xrx.shape.Dragger(this, i);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }
-  modifiable.setDragger(draggers);
-  return modifiable;
+  this.setDragger(draggers);
 };
 
 
 
 /**
  * A class representing a creatable rectangle shape.
- * @param
+ * @param {xrx.shape.Rect} rect The parent rectangle shape.
  * @constructor
+ * @private
  */
 xrx.shape.RectCreatable = function(rect) {
 
-  goog.base(this, rect, xrx.shape.Rect.create(rect.getDrawing()));
+  goog.base(this, rect, new xrx.shape.Rect(rect.getDrawing()));
 };
 goog.inherits(xrx.shape.RectCreatable, xrx.shape.Creatable);
 
@@ -366,7 +375,8 @@ goog.inherits(xrx.shape.RectCreatable, xrx.shape.Creatable);
 
 /**
  * Returns the coordinates of the rectangle currently created.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
+ * @private
  */
 xrx.shape.RectCreatable.prototype.getCoords = function() {
   return this.preview_.getCoords();
@@ -375,8 +385,7 @@ xrx.shape.RectCreatable.prototype.getCoords = function() {
 
 
 /**
- * Handles down events for a creatable rectangle shape.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
  */
 xrx.shape.RectCreatable.prototype.handleDown = function(e, cursor) {
   var point = cursor.getPointTransformed();
@@ -391,6 +400,9 @@ xrx.shape.RectCreatable.prototype.handleDown = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.RectCreatable.prototype.handleMove = function(e, cursor) {
   var point = cursor.getPointTransformed();
   this.preview_.setCoordAt(2, point);
@@ -399,8 +411,11 @@ xrx.shape.RectCreatable.prototype.handleMove = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.RectCreatable.prototype.handleUp = function(e, cursor) {
-  var rect = xrx.shape.Rect.create(this.target_.getDrawing());
+  var rect = new xrx.shape.Rect(this.target_.getDrawing());
   rect.setStyle(this.target_);
   rect.setCoords(this.preview_.getCoordsCopy());
   this.target_.getDrawing().eventShapeCreated(rect);
@@ -408,6 +423,9 @@ xrx.shape.RectCreatable.prototype.handleUp = function(e, cursor) {
 
 
 
-xrx.shape.RectCreatable.create = function(rect) {
-  return new xrx.shape.RectCreatable(rect);
+/**
+ * Disposes this creatable rectangle shape.
+ */
+xrx.shape.RectCreatable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };

@@ -7,7 +7,7 @@
    */
   var addSelectableShapes = function(drawing) {
     // create a hoverable rectangle
-    var rect = xrx.shape.Rect.create(drawing);
+    var rect = new xrx.shape.Rect(drawing);
     rect.setX(10);
     rect.setY(10);
     rect.setWidth(130);
@@ -19,7 +19,7 @@
     rect.getSelectable().setFillOpacity(.4);
 
     // create a hoverable circle
-    var circle = xrx.shape.Circle.create(drawing);
+    var circle = new xrx.shape.Circle(drawing);
     circle.setCenter(90, 90);
     circle.setRadius(70);
     circle.setFillColor('yellow');
@@ -28,7 +28,7 @@
     circle.getSelectable().setFillColor('#99CCFF');
     circle.getSelectable().setFillOpacity(.3);
 
-    // add the shapes and draw the canvas
+    // add the shapes to the drawing canvas
     drawing.addShapes(rect, circle);
   }
 

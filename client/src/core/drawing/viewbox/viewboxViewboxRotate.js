@@ -240,7 +240,7 @@ xrx.viewbox.ViewboxRotate.prototype.getPivotPoint_ = function(orientation,
  * Returns the four pivot points of this view-box.
  * @param {boolean} reverse If we rotate in right or left direction.
  *   If reverse is true we assume left direction otherwise right direction.
- * @return {Array<Array<number>>}
+ * @return {Array<number>}
  * @private
  */
 xrx.viewbox.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {

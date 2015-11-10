@@ -1,6 +1,6 @@
 /**
- * @fileoverview Classes representing a modifiable and creatable
- *     engine-independent polygon shape.
+ * @fileoverview A class representing an engine-independent
+ * hoverable, selectable, modifiable and creatable polygon shape.
  */
 
 goog.provide('xrx.shape.Polygon');
@@ -26,12 +26,18 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent polygon shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.PathLike}
  * @constructor
  */
 xrx.shape.Polygon = function(drawing) {
 
   goog.base(this, drawing, new xrx.geometry.Path());
 
+  /**
+   * The engine element.
+   * @type {(xrx.canvas.Polygon|xrx.svg.Polygon|xrx.vml.Polygon)}
+   * @private
+   */
   this.engineElement_ = this.drawing_.getEngine().createPolygon();
 };
 goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
@@ -40,6 +46,7 @@ goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
 
 /**
  * Draws this polygon shape.
+ * @private
  */
 xrx.shape.Polygon.prototype.draw = function() {
   this.startDrawing_();
@@ -50,77 +57,64 @@ xrx.shape.Polygon.prototype.draw = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape hoverable.
+ * @return {xrx.shape.PolygonHoverable} The hoverable polygon shape.
+ */
 xrx.shape.Polygon.prototype.getHoverable = function() {
-  if (!this.hoverable_) this.hoverable_ = xrx.shape.PolygonHoverable.create(this);
+  if (!this.hoverable_) this.hoverable_ = new xrx.shape.PolygonHoverable(this);
   return this.hoverable_;
 };
 
 
 
-xrx.shape.Polygon.prototype.setHoverable = function(hoverable) {
-  if (!hoverable instanceof xrx.shape.PolygonHoverable)
-      throw Error('Instance of xrx.shape.PolygonHoverable expected.');
-  this.hoverable_ = hoverable;
-};
-
-
-
+/**
+ * Returns a helper shape that makes this shape selectable.
+ * @return {xrx.shape.PolygonSelectable} The selectable polygon shape.
+ */
 xrx.shape.Polygon.prototype.getSelectable = function() {
-  if (!this.selectable_) this.selectable_ = xrx.shape.PolygonSelectable.create(this);
+  if (!this.selectable_) this.selectable_ = new xrx.shape.PolygonSelectable(this);
   return this.selectable_;
 };
 
 
 
-xrx.shape.Polygon.prototype.setSelectable = function(selectable) {
-  if (!selectable instanceof xrx.shape.PolygonSelectable)
-      throw Error('Instance of xrx.shape.PolygonSelectable expected.');
-  this.selectable_ = selectable;
-};
-
-
-
 /**
- * Returns a modifiable polygon shape. Create it lazily if not existent.
- * @param {xrx.drawing.Drawing} drawing The parent drawing object.
- * @return {xrx.shape.LineModifiable} The modifiable polygon shape.
+ * Returns a helper shape that makes this shape modifiable.
+ * @return {xrx.shape.PolygonModifiable} The modifiable polygon shape.
  */
 xrx.shape.Polygon.prototype.getModifiable = function(drawing) {
-  if (!this.modifiable_) this.modifiable_ = xrx.shape.PolygonModifiable.create(this);
+  if (!this.modifiable_) this.modifiable_ = new xrx.shape.PolygonModifiable(this);
   return this.modifiable_;
 };
 
 
 
-xrx.shape.Polygon.prototype.setModifiable = function(modifiable) {
-  if (!modifiable instanceof xrx.shape.PolygonModifiable)
-      throw Error('Instance of xrx.shape.PolygonModifiable expected.');
-  this.modifiable_ = modifiable;
-};
-
-
-
 /**
- * Returns a creatable polygon shape. Create it lazily if not existent.
+ * Returns a helper shape that makes this shape creatable.
  * @return {xrx.shape.PolygonCreatable} The creatable polygon shape.
  */
 xrx.shape.Polygon.prototype.getCreatable = function() {
-  if (!this.creatable_) this.creatable_ = xrx.shape.PolygonCreatable.create(this);
+  if (!this.creatable_) this.creatable_ = new xrx.shape.PolygonCreatable(this);
   return this.creatable_;
 };
 
 
 
-xrx.shape.Polygon.prototype.setCreatable = function(creatable) {
-  if (!creatable instanceof xrx.shape.PolygonCreatable)
-      throw Error('Instance of xrx.shape.PolygonCreatable expected.');
-  this.creatable_ = creatable;
+/**
+ * Disposes this polygon shape.
+ */
+xrx.shape.Polygon.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
 /**
+ * A class representing a hoverable polygon shape.
+ * @param {xrx.shape.Polygon} polygon The parent polygon shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolygonHoverable = function(polygon) {
 
@@ -130,15 +124,20 @@ goog.inherits(xrx.shape.PolygonHoverable, xrx.shape.Hoverable);
 
 
 
-xrx.shape.PolygonHoverable.create = function(polygon) {
-  return new xrx.shape.PolygonHoverable(polygon);
+/**
+ * Disposes this hoverable polygon shape.
+ */
+xrx.shape.PolygonHoverable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
 
 
 
-
 /**
+ * A class representing a selectable polygon shape.
+ * @param {xrx.shape.Polygon} polygon The parent polygon shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolygonSelectable = function(polygon) {
 
@@ -148,26 +147,34 @@ goog.inherits(xrx.shape.PolygonSelectable, xrx.shape.Selectable);
 
 
 
-xrx.shape.PolygonSelectable.create = function(polygon) {
-  return new xrx.shape.PolygonSelectable(polygon);
+/**
+ * Disposes this selectable polygon shape.
+ */
+xrx.shape.PolygonSelectable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
 };
-
 
 
 
 /**
  * A class representing a modifiable polygon shape.
+ * @param {xrx.shape.Polygon} polygon The parent polygon shape.
  * @constructor
+ * @private
  */
 xrx.shape.PolygonModifiable = function(polygon, helper) {
 
   goog.base(this, polygon, helper);
+
+  this.init_();
 };
 goog.inherits(xrx.shape.PolygonModifiable, xrx.shape.Modifiable);
 
 
 
-
+/**
+ * @private
+ */
 xrx.shape.PolygonModifiable.prototype.setCoords = function(coords, position) {
   for(var i = 0, len = this.dragger_.length; i < len; i++) {
     if (i !== position) {
@@ -180,6 +187,9 @@ xrx.shape.PolygonModifiable.prototype.setCoords = function(coords, position) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolygonModifiable.prototype.setCoordAt = function(pos, coord) {
   this.dragger_[pos].setCoordX(coord[0]);
   this.dragger_[pos].setCoordY(coord[1]);
@@ -189,6 +199,9 @@ xrx.shape.PolygonModifiable.prototype.setCoordAt = function(pos, coord) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolygonModifiable.prototype.move = function(distX, distY) {
   var coords = this.shape_.getCoordsCopy();
   for (var i = 0, len = coords.length; i < len; i++) {
@@ -201,21 +214,27 @@ xrx.shape.PolygonModifiable.prototype.move = function(distX, distY) {
 
 
 /**
- * Creates a new modifiable polygon shape.
- * @param {xrx.shape.Polygon} polygon The related polygon shape.
+ * Disposes this modifiable polygon shape.
  */
-xrx.shape.PolygonModifiable.create = function(polygon) {
-  var coords = polygon.getCoords();
-  var modifiable = new xrx.shape.PolygonModifiable(polygon);
+xrx.shape.PolygonModifiable.prototype.disposeInternal = function() {
+  goog.base(this, 'disposeInternal');
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.PolygonModifiable.prototype.init_ = function() {
+  var coords = this.shape_.getCoords();
   var draggers = [];
   var dragger;
   for(var i = 0, len = coords.length; i < len; i++) {
-    dragger = xrx.shape.Dragger.create(modifiable, i);
+    dragger = new xrx.shape.Dragger(this, i);
     dragger.setCoords([coords[i]]);
     draggers.push(dragger);
   }
-  modifiable.setDragger(draggers);
-  return modifiable;
+  this.setDragger(draggers);
 };
 
 
@@ -224,10 +243,11 @@ xrx.shape.PolygonModifiable.create = function(polygon) {
  * A class representing a creatable polygon shape.
  * @param {xrx.shape.Polygon} polygon A styled polygon to be drawn.
  * @constructor
+ * @private
  */
 xrx.shape.PolygonCreatable = function(polygon) {
 
-  goog.base(this, polygon, xrx.shape.Polyline.create(polygon.getDrawing()));
+  goog.base(this, polygon, new xrx.shape.Polyline(polygon.getDrawing()));
 
   /**
    * The first vertex created by the user, which at the same time
@@ -251,7 +271,8 @@ goog.inherits(xrx.shape.PolygonCreatable, xrx.shape.Creatable);
 /**
  * Returns the coordinates of the poly-line currently creating a
  * polygon.
- * @return Array<Array<number>> The coordinates.
+ * @return Array<number> The coordinates.
+ * @private
  */
 xrx.shape.PolygonCreatable.prototype.getCoords = function() {
   return this.preview_.getCoords();
@@ -260,8 +281,7 @@ xrx.shape.PolygonCreatable.prototype.getCoords = function() {
 
 
 /**
- * Handles click events for a creatable polygon shape.
- * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
  */
 xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
   var shape = cursor.getShape();
@@ -270,7 +290,7 @@ xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
     // update the poly-line preview
     this.preview_.setCoords([point, goog.array.clone(point)]);
     // create the closing dragger
-    this.close_ = xrx.shape.Dragger.create(this.target_.getModifiable(), 0);
+    this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
     this.close_.setCoords([point]);
     this.count_ += 1;
     this.target_.getDrawing().eventShapeCreate([this.preview_, this.close_]);
@@ -279,7 +299,7 @@ xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
     // when there is only one point yet
   } else if (this.close_ && shape === this.close_) { // user closes the polygon
     // create a polygon
-    var polygon = xrx.shape.Polygon.create(this.target_.getDrawing());
+    var polygon = new xrx.shape.Polygon(this.target_.getDrawing());
     polygon.setStyle(this.target_);
     polygon.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
     this.target_.getDrawing().eventShapeCreated(polygon);
@@ -296,6 +316,9 @@ xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolygonCreatable.prototype.handleMove = function(e, cursor) {
   var shape = cursor.getShape();
   var point = cursor.getPointTransformed();
@@ -315,11 +338,19 @@ xrx.shape.PolygonCreatable.prototype.handleMove = function(e, cursor) {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.PolygonCreatable.prototype.handleUp = function() {
 };
 
 
 
-xrx.shape.PolygonCreatable.create = function(polygon) {
-  return new xrx.shape.PolygonCreatable(polygon);
+/**
+ * Disposes this creatable polygon shape.
+ */
+xrx.shape.PolygonCreatable.prototype.disposeInternal = function() {
+  this.close_.dispose();
+  this.close_ = null;
+  goog.base(this, 'disposeInternal');
 };
