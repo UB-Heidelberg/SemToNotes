@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a polygon.
+ * @private
  */
 
 goog.provide('xrx.vml.Polygon');

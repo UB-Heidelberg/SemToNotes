@@ -1,6 +1,7 @@
 /**
  * @fileoverview Super-class representing an engine-independent
  * shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Shape');

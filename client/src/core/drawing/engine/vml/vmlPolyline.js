@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a poly-line.
+ * @private
  */
 
 goog.provide('xrx.vml.Polyline');

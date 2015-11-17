@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML rendering class representing a circle.
+ * @private
  */
 
 goog.provide('xrx.vml.Circle');

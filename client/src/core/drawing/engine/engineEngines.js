@@ -1,6 +1,7 @@
 /**
  * @fileoverview Engine entry-point class useful to include all rendering engine
  *     classes at once.
+ * @private
  */
 
 goog.provide('xrx.engine.Engines');

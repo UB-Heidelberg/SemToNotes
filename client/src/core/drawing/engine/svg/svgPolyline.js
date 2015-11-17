@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a poly-line.
+ * @private
  */
 
 goog.provide('xrx.svg.Polyline');

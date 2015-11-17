@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG rendering class representing a circle.
+ * @private
  */
 
 goog.provide('xrx.svg.Circle');

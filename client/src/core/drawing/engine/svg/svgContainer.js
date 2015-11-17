@@ -1,5 +1,6 @@
 /**
  * @fileoverview Abstract SVG class representing a container.
+ * @private
  */
 
 goog.provide('xrx.svg.Container');

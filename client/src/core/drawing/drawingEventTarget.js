@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class implementing the event target behavior of a
- *     drawing canvas.
+ * drawing canvas.
+ * @private
  */
 
 goog.provide('xrx.event.HandlerTarget');

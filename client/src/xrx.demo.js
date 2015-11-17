@@ -127,7 +127,7 @@ xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId, type) {
   var label = type === 'js' ? 'View Source &raquo;' : 'Try it yourself &raquo;'
   var viewSource = goog.dom.htmlToDocumentFragment(
       '<a href="' + href + '">' + label + '</a>');
-  goog.dom.append(wrapper, [heading, pre, viewSource]);
+  goog.dom.append(wrapper, [heading, viewSource, pre]);
   goog.dom.append(content, wrapper);
   goog.dom.setTextContent(pre, src);
   goog.dom.classes.add(pre, 'lang-' + type);
@@ -174,7 +174,7 @@ xrx.demo.Demo.prototype.loadPage_example_ = function() {
 
 
 xrx.demo.Demo.prototype.loadPage_retrieval_ = function() {
-  this.loadPage_('Retrieval | SemToNotes', 'client/demo/retrieval.html',
+  this.loadPage_('Topological Retrieval | SemToNotes', 'client/demo/retrieval.html',
       goog.dom.getElement('retrievalLink'));
 };
 

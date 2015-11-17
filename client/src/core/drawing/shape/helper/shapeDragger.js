@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing a vertex dragging element to
  *   modify the vertexes of a shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Dragger');
@@ -92,7 +93,7 @@ xrx.shape.Dragger.prototype.init_ = function(modifiable, pos) {
  * Disposes this dragger.
  */
 xrx.shape.Dragger.prototype.disposeInternal = function() {
-  this.modifiable_.dispose();
+  goog.dispose(this.modifiable_);
   this.modifiable_ = null;
   goog.base(this, 'disposeInternal');
 };

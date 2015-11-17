@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG rendering class representing an ellipse.
+ * @private
  */
 
 goog.provide('xrx.svg.Ellipse');

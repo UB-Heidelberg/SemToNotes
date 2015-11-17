@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing an engine-independent
  * selectable shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Selectable');

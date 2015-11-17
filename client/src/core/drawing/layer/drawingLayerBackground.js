@@ -1,5 +1,7 @@
 /**
- * @fileoverview A class representing the background layer of a drawing canvas.
+ * @fileoverview A class representing the background layer of
+ *   a drawing canvas.
+ * @private
  */
 
 goog.provide('xrx.drawing.LayerBackground');

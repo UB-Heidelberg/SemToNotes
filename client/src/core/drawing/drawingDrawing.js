@@ -251,11 +251,31 @@ xrx.drawing.Drawing.prototype.setSize = function(width, height) {
 
 
 /**
+ * Returns the width of this drawing canvas.
+ * @param {number} width The width in pixel.
+ */
+xrx.drawing.Drawing.prototype.getWidth = function() {
+  return this.width_;
+};
+
+
+
+/**
  * Sets the width of this drawing canvas.
  * @param {number} width The width in pixel.
  */
 xrx.drawing.Drawing.prototype.setWidth = function(width) {
   this.setSize(width, this.height_);
+};
+
+
+
+/**
+ * Returns the height of this drawing canvas.
+ * @param {number} height The height in pixel.
+ */
+xrx.drawing.Drawing.prototype.getHeight = function() {
+  return this.height_;
 };
 
 
@@ -278,6 +298,16 @@ xrx.drawing.Drawing.prototype.setHeight = function(height) {
 xrx.drawing.Drawing.prototype.setStyle = function(name, value) {
   goog.style.setStyle(this.element_, name, value);
   this.handleResize();
+};
+
+
+
+/**
+ * Returns the current background image of this drawing canvas.
+ * @return {HTMLImage} The background image.
+ */
+xrx.drawing.Drawing.prototype.getBackgroundImage = function() {
+  return this.layer_[0].getImage().getImage();
 };
 
 
@@ -377,7 +407,7 @@ xrx.drawing.Drawing.prototype.getMode = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
-  if (mode !== this.mode_) {
+  if (mode !== this.mode_ || mode === xrx.drawing.Mode.CREATE) {
     this.mode_ = mode;
     this.registerEvents(mode);
   }
@@ -486,12 +516,14 @@ xrx.drawing.Drawing.prototype.setModeModify = function() {
 /**
  * Switch the drawing canvas over into mode <i>create</i> to allow drawing of new shapes.
  * @see xrx.drawing.Mode
- * @param {xrx.shape.Creatable} shape The shape to create.
+ * @param {xrx.shape.Creatable} creatable The shape to be created.
  */
-xrx.drawing.Drawing.prototype.setModeCreate = function(shape) {
-  if (!shape) return;
-  var self = this;
-  this.creatable_ = shape;
+xrx.drawing.Drawing.prototype.setModeCreate = function(creatable) {
+  if (!creatable) return;
+  if (!(creatable instanceof xrx.shape.Creatable)) {
+    throw Error('Instance of xrx.shape.Creatable expected.');
+  }
+  this.creatable_ = creatable;
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(true);
   this.getLayerShapeModify().setLocked(true);

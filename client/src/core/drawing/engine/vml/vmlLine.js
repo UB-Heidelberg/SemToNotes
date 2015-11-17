@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a line.
+ * @private
  */
 
 goog.provide('xrx.vml.Line');

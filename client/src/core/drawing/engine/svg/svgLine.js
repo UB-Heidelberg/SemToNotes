@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a line.
+ * @private
  */
 
 goog.provide('xrx.svg.Line');

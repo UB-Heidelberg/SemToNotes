@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Viewer</title>
+    <script src="../../xrx.api.drawing.min.js"></script>
+    <link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .container, body, html {
+    display: block;
+    height: 100%;
+    }
+    #drawing {
+    display: block;
+    height: 100%;
+    width: 100%;
+    }
+    #slider {
+    float: right;
+    width: 300px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <button class="btn btn-default" aria-label="Rotate"
+          onclick="window.drawing.getViewbox().rotateRight()">
+        <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Rotate
+      </button>
+      <button class="btn btn-default" aria-label="Zoom in"
+          onclick="window.drawing.getViewbox().zoomIn()">
+        <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> Zoom in
+      </button>
+      <button class="btn btn-default" aria-label="Zoom out"
+          onclick="window.drawing.getViewbox().zoomOut()">
+        <span class="glyphicon glyphicon-zoom-out" aria-hidden="true"></span> Zoom out
+      </button>
+      <button class="btn btn-default" aria-label="Fit"
+          onclick="window.drawing.getViewbox().fit()">
+        <span class="glyphicon glyphicon-resize-small" aria-hidden="true"></span> Fit
+      </button>
+      <span id="message"></span>
+      <input id="slider" type="range" min="" step="" max=""
+          oninput="window.drawing.getViewbox().zoomTo(this.value)">
+      <div id="drawing"></div>
+    </div>
+    <script>
+    (function() {
+
+      // create and initialize a drawing canvas
+      var element = document.getElementById('drawing');
+      window.drawing = new xrx.drawing.Drawing(element);
+
+      // switch the drawing canvas into mode view
+      window.drawing.setModeView();
+
+      // set a background image
+      var url = '.../../../../../data/SachsenspiegelHeidelberg/Bilder-34553-28167-1600.jpg';
+      window.drawing.setBackgroundImage(url, function() {
+        // find a proper zoom model as soon as the image is loaded
+        var image = window.drawing.getBackgroundImage();
+        var imageWidth = image.naturalWidth;
+        var min = 100 / imageWidth; // minimum of 100px
+        var max = 2000 / imageWidth; // maximum of 2000px
+        // zoom from min to max by about 1% of the image width for
+        // each step
+        var factor = (max - min) * (10 / imageWidth);
+        // configure the view-box zoom model and the slider
+        // model in the same way
+        window.drawing.getViewbox().setZoomMin(min);
+        window.drawing.getViewbox().setZoomMax(max);
+        window.drawing.getViewbox().setZoomFactor(factor);
+        slider.min = min;
+        slider.max = max;
+        slider.step = factor;
+        // make the whole view-box visible
+        window.drawing.getViewbox().fit();
+      });
+
+      // synchronize all UI components whenever the view-box changes
+      var slider = document.getElementById('slider');
+      var message = document.getElementById('message');
+      window.drawing.eventViewboxChange = function() {
+        var viewbox = window.drawing.getViewbox();
+        // update the slider whenever the view-box' zoom value
+        // changes, e.g., changed by the mouse wheel or by the
+        // 'zoom-in button'
+        var value = viewbox.getZoomValue();
+        slider.value = value;
+        // output the current zoom value and the current rotation of
+        // the view-box
+        var output = '   Rotation: ' + viewbox.getRotation() +
+            ', Zoom: ' + Math.round(viewbox.getZoomValue() * 100) + '%';
+        message.textContent = output;
+      }
+
+      return window.drawing;
+
+    })();
+    </script>
+  </body>
+</html>

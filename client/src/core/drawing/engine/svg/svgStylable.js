@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a stylable element.
+ * @private
  */
 
 goog.provide('xrx.svg.Stylable');

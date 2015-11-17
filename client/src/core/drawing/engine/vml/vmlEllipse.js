@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML rendering class representing an ellipse.
+ * @private
  */
 
 goog.provide('xrx.vml.Ellipse');

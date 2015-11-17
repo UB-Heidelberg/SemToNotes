@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing an engine-independent
- * hoverable shape.
+ *   hoverable shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Hoverable');

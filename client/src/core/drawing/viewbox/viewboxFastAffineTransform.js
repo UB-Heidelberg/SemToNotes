@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class providing optimizations and extensions for
  * class goog.math.AffineTransform, e.g., to avoid object allocations.
+ * @private
  */
 
 goog.provide('xrx.viewbox.FastAffineTransform');

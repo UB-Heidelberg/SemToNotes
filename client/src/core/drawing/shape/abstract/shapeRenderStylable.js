@@ -1,5 +1,6 @@
 /**
  * @fileoverview A class implementing dynamic rendering of shapes.
+ * @private
  */
 
 goog.provide('xrx.shape.RenderStylable');

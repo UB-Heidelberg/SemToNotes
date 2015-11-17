@@ -1,5 +1,6 @@
 /**
  * @fileoverview An abstract class describing style information for shapes.
+ * @private
  */
 
 goog.provide('xrx.shape.Stylable');

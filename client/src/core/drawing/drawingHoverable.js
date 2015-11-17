@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing a pointer to the shape
  * currently hovered by the user.
+ * @private
  */
 
 goog.provide('xrx.drawing.Hoverable');

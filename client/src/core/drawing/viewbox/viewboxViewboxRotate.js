@@ -16,6 +16,7 @@ goog.require('xrx.viewbox.ViewboxGeometry');
 /**
  * A class implementing the rotation model for a drawing view-box.
  * @constructor
+ * @extends {xrx.viewbox.ViewboxGeometry}
  * @private
  */
 xrx.viewbox.ViewboxRotate = function() {
@@ -40,6 +41,7 @@ xrx.viewbox.ViewboxRotate.prototype.getRotation = function() {
  * Checks whether the rotation value is valid.
  * @param {number} rotation The rotation in degrees.
  * @return {boolean} Whether the rotation is valid.
+ * @private
  */
 xrx.viewbox.ViewboxRotate.prototype.isValidRotation = function(rotation) {
   var abs = Math.abs(rotation);
@@ -49,8 +51,9 @@ xrx.viewbox.ViewboxRotate.prototype.isValidRotation = function(rotation) {
 
 
 /**
- * Whether the the view-box currently is in vertical orientation.
+ * Whether the view-box currently is in vertical orientation.
  * @return {boolean} Whether the view-box is oriented vertically.
+ * @private
  */
 xrx.viewbox.ViewboxRotate.prototype.isVertical = function() {
   var rotation = this.ctm_.getRotation();
@@ -60,8 +63,9 @@ xrx.viewbox.ViewboxRotate.prototype.isVertical = function() {
 
 
 /**
- * Whether the the view-box currently is in horizontal orientation.
+ * Whether the view-box currently is in horizontal orientation.
  * @return {boolean} Whether the view-box is oriented horizontally.
+ * @private
  */
 xrx.viewbox.ViewboxRotate.prototype.isHorizontal = function() {
   var rotation = this.ctm_.getRotation();
@@ -102,6 +106,7 @@ xrx.viewbox.ViewboxRotate.prototype.direction_ = function() {
  * @param {?number} angle The angle of rotation in degrees, e.g. 90 or 180.
  * @param {?(Array<number>|string)} opt_fixPoint A fix-point or an orientation.
  *   Defaults to the center of the view-box.
+ * @private
  */
 xrx.viewbox.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
   if (opt_fixPoint === undefined) {
@@ -113,6 +118,7 @@ xrx.viewbox.ViewboxRotate.prototype.rotateBy = function(angle, opt_fixPoint) {
   } else {
     throw Error('Invalid fix-point. Array[2] or xrx.drawing.Orientation.* expected.');
   }
+  this.drawing_.draw();
 };
 
 
@@ -261,6 +267,9 @@ xrx.viewbox.ViewboxRotate.prototype.getPivotPoints_ = function(reverse) {
 
 
 
+/**
+ * Disposes this view-box.
+ */
 xrx.viewbox.ViewboxRotate.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };

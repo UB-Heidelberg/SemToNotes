@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing an engine-independent graphic
  * group.
+ * @private
  */
 
 goog.provide('xrx.shape.Group');

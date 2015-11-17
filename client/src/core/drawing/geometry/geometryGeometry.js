@@ -1,5 +1,6 @@
 /**
  * @fileoverview Super-class of all geometry classes.
+ * @private
  */
 
 goog.provide('xrx.geometry.Geometry');

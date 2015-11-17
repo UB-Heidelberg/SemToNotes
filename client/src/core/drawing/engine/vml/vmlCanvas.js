@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML rendering class representing a canvas.
+ * @private
  */
 
 goog.provide('xrx.vml.Canvas');

@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas rendering class representing a circle.
+ * @private
  */
 
 goog.provide('xrx.canvas.Circle');

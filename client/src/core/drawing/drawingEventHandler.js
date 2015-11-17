@@ -1,5 +1,6 @@
 /**
  * @fileoverview
+ * @private
  */
 
 goog.provide('xrx.drawing.EventHandler');

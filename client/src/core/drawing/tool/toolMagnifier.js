@@ -1,5 +1,7 @@
 /**
- * @fileoverview A class implementing a magnifier tool for a drawing canvas.
+ * @fileoverview A class implementing a magnifier tool for
+ * a drawing canvas.
+ * @private
  */
 
 goog.provide('xrx.drawing.tool.Magnifier');

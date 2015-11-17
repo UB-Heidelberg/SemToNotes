@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing a stylable element.
+ * @private
  */
 
 goog.provide('xrx.canvas.Stylable');

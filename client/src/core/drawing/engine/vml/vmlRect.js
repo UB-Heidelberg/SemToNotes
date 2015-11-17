@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a rectangle.
+ * @private
  */
 
 goog.provide('xrx.vml.Rect');

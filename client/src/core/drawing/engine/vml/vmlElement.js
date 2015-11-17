@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML super class.
+ * @private
  */
 
 goog.provide('xrx.vml.Element');

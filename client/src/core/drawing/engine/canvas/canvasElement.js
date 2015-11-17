@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas super class.
+ * @private
  */
 
 goog.provide('xrx.canvas.Element');

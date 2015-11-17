@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing the geometry
- * of a shape.
+ *   of a shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Geometry');

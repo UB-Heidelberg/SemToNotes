@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a rectangle.
+ * @private
  */
 
 goog.provide('xrx.svg.Rect');

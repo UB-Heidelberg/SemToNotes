@@ -39,6 +39,7 @@ goog.inherits(xrx.viewbox.ViewboxGeometry, xrx.EventTarget);
  * @param {boolean} opt_visible Whether to return the visible width
  *   respecting the current rotation.
  * @return {number} The width.
+ * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getWidth = function(opt_transformed,
     opt_visible) {
@@ -62,6 +63,7 @@ xrx.viewbox.ViewboxGeometry.prototype.getWidth = function(opt_transformed,
  * @param {boolean} opt_visible Whether to return the visible height
  *   respecting the current rotation.
  * @return {number} The height.
+ * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getHeight = function(opt_transformed, opt_visible) {
   if (opt_visible === true && this.isHorizontal()) {
@@ -79,6 +81,7 @@ xrx.viewbox.ViewboxGeometry.prototype.getHeight = function(opt_transformed, opt_
  * Returns the bounding-box for this view-box, respecting transformation.
  * @return {goog.math.Box} The bounding box, coordinates are the visibles
  * and are transformed.
+ * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getBox = function() {
   var box;
@@ -105,7 +108,8 @@ xrx.viewbox.ViewboxGeometry.prototype.getBox = function() {
 
 /**
  * Whether a point is contained in this view-box.
- * @param {Array<number>} point The native point, without translation. 
+ * @param {Array<number>} point The native point, without translation.
+ * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.containsPoint = function(point) {
   var box = this.getBox();
@@ -192,6 +196,9 @@ xrx.viewbox.ViewboxGeometry.prototype.getFixPoint_ = function(orientation,
 
 
 
+/**
+ * Disposes this view-box.
+ */
 xrx.viewbox.ViewboxGeometry.prototype.disposeInternal = function() {
   this.testPoint_ = null;
   goog.base(this, 'disposeInternal');

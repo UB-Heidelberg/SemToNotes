@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing a creatable
  *   shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Creatable');
@@ -31,6 +32,12 @@ xrx.shape.Creatable = function(target, preview) {
    * @private
    */
   this.preview_ = preview;
+};
+
+
+
+xrx.shape.Creatable.prototype.setStyle = function(stylable) {
+  this.preview_.setStyle(stylable);
 };
 
 

@@ -1,5 +1,6 @@
 /**
  * @fileoverview Graphic module.
+ * @private
  */
 
 goog.provide('xrx.api.drawing');

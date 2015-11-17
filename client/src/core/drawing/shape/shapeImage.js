@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing an engine-independent
  * image graphic.
+ * @private
  */
 
 goog.provide('xrx.shape.Image');

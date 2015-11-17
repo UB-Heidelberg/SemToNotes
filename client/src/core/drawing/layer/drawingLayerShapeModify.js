@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing a drawing layer where shapes
- * can be modified.
+ *   can be modified.
+ * @private
  */
 
 goog.provide('xrx.drawing.LayerShapeModify');

@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG super class.
+ * @private
  */
 
 goog.provide('xrx.svg.Element');

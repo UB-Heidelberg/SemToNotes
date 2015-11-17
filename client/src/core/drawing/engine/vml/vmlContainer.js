@@ -1,5 +1,6 @@
 /**
  * @fileoverview Abstract VML class representing a container.
+ * @private
  */
 
 goog.provide('xrx.vml.Container');

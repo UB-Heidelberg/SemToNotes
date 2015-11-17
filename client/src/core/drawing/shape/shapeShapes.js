@@ -1,5 +1,7 @@
 /**
- * @fileoverview Utility class useful to include all shape classes at once.
+ * @fileoverview Utility class useful to include all shape
+ *   classes at once.
+ * @private
  */
 
 goog.provide('xrx.shape.Shapes');

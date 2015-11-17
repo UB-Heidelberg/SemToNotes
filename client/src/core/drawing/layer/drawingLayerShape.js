@@ -1,5 +1,7 @@
 /**
- * @fileoverview A class representing a drawing layer where shapes can be rendered.
+ * @fileoverview A class representing a drawing layer where shapes
+ *   can be rendered.
+ * @private
  */
 
 goog.provide('xrx.drawing.LayerShape');

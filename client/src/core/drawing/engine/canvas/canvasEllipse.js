@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas rendering class representing an ellipse.
+ * @private
  */
 
 goog.provide('xrx.canvas.Ellipse');

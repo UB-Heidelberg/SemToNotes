@@ -16,7 +16,7 @@ goog.require('xrx.shape.Group');
  * A class representing the view-box of a drawing canvas.
  * @param {xrx.drawing.Drawing} drawing The parent drawing object.
  * @constructor
- * @private
+ * @extends {xrx.viewbox.ViewboxTransform}
  */
 xrx.viewbox.Viewbox = function(drawing) {
 
@@ -25,18 +25,21 @@ xrx.viewbox.Viewbox = function(drawing) {
   /**
    * The parent drawing object.
    * @type {xrx.drawing.Drawing}
+   * @private
    */
   this.drawing_ = drawing;
 
   /**
    * The group where matrix transformations are applied to.
    * {xrx.shape.Group}
+   * @private
    */
   this.group_ = new xrx.shape.Group(this.drawing_);
 
   /**
    * The state of the drawing canvas, either DRAG or NONE.
    * @type {number}
+   * @private
    */
   this.state_ = xrx.drawing.State.NONE;
 
@@ -44,6 +47,7 @@ xrx.viewbox.Viewbox = function(drawing) {
    * The last mouse point. This member is used when dragging
    * or panning the view-box.
    * @type {Array<number>}
+   * @private
    */
   this.origin_;
 };
@@ -54,6 +58,7 @@ goog.inherits(xrx.viewbox.Viewbox, xrx.viewbox.ViewboxTransform);
 /**
  * Returns the parent drawing object of the view-box.
  * @return {xrx.drawing.Drawing} The drawing object.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.getDrawing = function() {
   return this.drawing_;
@@ -64,6 +69,7 @@ xrx.viewbox.Viewbox.prototype.getDrawing = function() {
 /**
  * Returns the group of the view-box.
  * @return {xrx.shape.Group} The group.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.getGroup = function() {
   return this.group_;
@@ -74,6 +80,7 @@ xrx.viewbox.Viewbox.prototype.getGroup = function() {
 /**
  * Handles double-click events for the view-box.
  * @param {Array<number>} offsetPoint The offset point.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, cursor) {
   this.rotateRight(cursor.getPointTransformed());
@@ -85,6 +92,7 @@ xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, cursor) {
  * Handles mouse-down events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  * @param {Array<number>} offsetPoint The offset point.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleDown = function(e, cursor) {
   this.origin_ = cursor.getPoint();
@@ -97,6 +105,7 @@ xrx.viewbox.Viewbox.prototype.handleDown = function(e, cursor) {
  * Handles mouse-move events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
  * @param {Array<number>} offsetPoint The offset point.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleMove = function(e, cursor) {
   if (this.state_ !== xrx.drawing.State.DRAG) return;
@@ -111,6 +120,7 @@ xrx.viewbox.Viewbox.prototype.handleMove = function(e, cursor) {
 /**
  * Handles mouse-out events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleOut = function(e) {
   this.resetState_();
@@ -121,6 +131,7 @@ xrx.viewbox.Viewbox.prototype.handleOut = function(e) {
 /**
  * Handles mouse-up events for the view-box.
  * @param {goog.events.BrowserEvent} e The browser event.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
   this.resetState_();
@@ -131,6 +142,7 @@ xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
 /**
  * Handles mouse-wheel events for the view-box.
  * @param {Array<number>} offsetPoint The offset point.
+ * @private
  */
 xrx.viewbox.Viewbox.prototype.handleWheel = function(e, cursor) {
   e.deltaY < 0 ? this.zoomIn(cursor.getPointTransformed()) :
@@ -149,6 +161,9 @@ xrx.viewbox.Viewbox.prototype.resetState_ = function() {
 
 
 
+/**
+ * Disposes this view-box.
+ */
 xrx.viewbox.Viewbox.prototype.disposeInternal = function() {
   this.drawing_.dispose();
   this.drawing_ = null;

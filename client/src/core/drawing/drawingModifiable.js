@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing the shape currently modified
  * by the user. 
+ * @private
  */
 
 goog.provide('xrx.drawing.Modifiable');

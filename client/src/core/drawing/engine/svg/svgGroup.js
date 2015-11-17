@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a group.
+ * @private
  */
 
 goog.provide('xrx.svg.Group');

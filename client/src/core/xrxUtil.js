@@ -1,5 +1,6 @@
 /**
  * @fileoverview XRX utility functions.
+ * @private
  */
 
 goog.provide('xrx.Util');

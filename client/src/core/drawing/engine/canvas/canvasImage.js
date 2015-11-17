@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing an image.
+ * @private
  */
 
 goog.provide('xrx.canvas.Image');

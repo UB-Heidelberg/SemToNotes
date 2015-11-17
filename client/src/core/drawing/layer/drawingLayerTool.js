@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing a drawing layer where tools can be
  *   plugged in.
+ * @private
  */
 
 goog.provide('xrx.drawing.LayerTool');

@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing a modifiable
  *   shape.
+ * @private
  */
 
 goog.provide('xrx.shape.Modifiable');

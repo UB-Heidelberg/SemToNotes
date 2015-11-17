@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing a poly-line.
+ * @private
  */
 
 goog.provide('xrx.canvas.Polyline');

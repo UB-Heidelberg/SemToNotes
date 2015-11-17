@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG class representing a polygon.
+ * @private
  */
 
 goog.provide('xrx.svg.Polygon');

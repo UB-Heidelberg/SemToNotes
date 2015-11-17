@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing a group.
+ * @private
  */
 
 goog.provide('xrx.canvas.Group');

@@ -1,5 +1,6 @@
 /**
  * @fileoverview SVG rendering class representing a canvas.
+ * @private
  */
 
 goog.provide('xrx.svg.Canvas');

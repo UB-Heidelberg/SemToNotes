@@ -1,5 +1,6 @@
 /**
  * @fileoverview Abstract Canvas class representing a container.
+ * @private
  */
 
 goog.provide('xrx.canvas.Container');

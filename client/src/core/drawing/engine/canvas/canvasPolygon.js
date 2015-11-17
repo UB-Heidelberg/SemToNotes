@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing a polygon.
+ * @private
  */
 
 goog.provide('xrx.canvas.Polygon');

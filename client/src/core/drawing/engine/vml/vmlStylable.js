@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a stylable element.
+ * @private
  */
 
 goog.provide('xrx.vml.Stylable');

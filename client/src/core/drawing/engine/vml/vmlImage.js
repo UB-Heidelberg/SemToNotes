@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing an image.
+ * @private
  */
 
 goog.provide('xrx.vml.Image');

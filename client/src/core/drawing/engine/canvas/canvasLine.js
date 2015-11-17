@@ -1,5 +1,6 @@
 /**
  * @fileoverview Canvas class representing a line.
+ * @private
  */
 
 goog.provide('xrx.canvas.Line');

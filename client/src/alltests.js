@@ -1,5 +1,6 @@
 /**
  * @fileoverview An array of all JSUnit test files.
+ * @private
  */
 
 /**

@@ -1,5 +1,6 @@
 /**
  * @fileoverview Test classes for xrx.EventTarget.
+ * @private
  */
 
 goog.provide('xrx.test.EventTargetA');

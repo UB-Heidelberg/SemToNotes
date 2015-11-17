@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class representing a drawing layer where new shapes
- * can be created.
+ *   can be created.
+ * @private
  */
 
 goog.provide('xrx.drawing.LayerShapeCreate');

@@ -1,6 +1,7 @@
 /**
  * @fileoverview An abstract class representing a path-like shape
  * such as a polygon or poly-line.
+ * @private
  */
 
 goog.provide('xrx.shape.PathLike');

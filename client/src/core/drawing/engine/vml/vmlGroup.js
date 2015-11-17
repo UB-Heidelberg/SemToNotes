@@ -1,5 +1,6 @@
 /**
  * @fileoverview VML class representing a group.
+ * @private
  */
 
 goog.provide('xrx.vml.Group');

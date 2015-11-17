@@ -1,5 +1,6 @@
 /**
  * @fileoverview Abstract super-class of all engine elements.
+ * @private
  */
 
 goog.provide('xrx.engine.Element');

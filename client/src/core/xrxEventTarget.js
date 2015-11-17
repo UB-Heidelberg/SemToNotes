@@ -4,6 +4,7 @@
  * since we sometimes want to offer events for external JavaScript
  * classes such as jQuery or Angular that do not know about
  * Google Closure event handling.
+ * @private
  */
 
 goog.provide('xrx.EventTarget');

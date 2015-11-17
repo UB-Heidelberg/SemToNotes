@@ -1,6 +1,7 @@
 /**
  * @fileoverview A class offering configurable information
  * about the mouse, respectively, the touch point.
+ * @private
  */
 
 goog.provide('xrx.drawing.Cursor');

@@ -14,6 +14,7 @@ goog.require('xrx.viewbox.ViewboxRotate');
 /**
  * A class implementing a zooming model for the drawing view-box.
  * @constructor
+ * @extends {xrx.viewbox.ViewboxRotate}
  * @private
  */
 xrx.viewbox.ViewboxZoom = function() {
@@ -34,7 +35,7 @@ xrx.viewbox.ViewboxZoom.prototype.zoomFactor_ = .1;
 
 
 /**
- * Returns the current zoom factor.
+ * Returns the current zoom factor, defaults to .1.
  * @return {number} The zoom factor.
  */
 xrx.viewbox.ViewboxZoom.prototype.getZoomFactor = function() {
@@ -44,7 +45,7 @@ xrx.viewbox.ViewboxZoom.prototype.getZoomFactor = function() {
 
 
 /**
- * Sets a new zoom factor.
+ * Sets a new zoom factor, e.g. 0.1.
  * @param {number} factor The new zoom factor.
  */
 xrx.viewbox.ViewboxZoom.prototype.setZoomFactor = function(factor) {
@@ -88,7 +89,7 @@ xrx.viewbox.ViewboxZoom.prototype.getZoomMin = function() {
 
 /**
  * Sets the minimum zoom value.
- * @param {number} The minimum zoom value.
+ * @param {number} value The minimum zoom value.
  */
 xrx.viewbox.ViewboxZoom.prototype.setZoomMin = function(value) {
   this.zoomMin_ = value;
@@ -97,11 +98,11 @@ xrx.viewbox.ViewboxZoom.prototype.setZoomMin = function(value) {
 
 
 /**
- * The maximum zoom value, defaults to 4.
+ * The maximum zoom value, defaults to 2.
  * @type {number}
  * @private
  */
-xrx.viewbox.ViewboxZoom.prototype.zoomMax_ = 4;
+xrx.viewbox.ViewboxZoom.prototype.zoomMax_ = 2;
 
 
 
@@ -117,7 +118,7 @@ xrx.viewbox.ViewboxZoom.prototype.getZoomMax = function() {
 
 /**
  * Sets the maximum zoom value.
- * @param {number} The maximum zoom value.
+ * @param {number} value The maximum zoom value.
  */
 xrx.viewbox.ViewboxZoom.prototype.setZoomMax = function(value) {
   this.zoomMax_ = value;
@@ -175,6 +176,7 @@ xrx.viewbox.ViewboxZoom.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
 	this.zoomOffset_(fixPoint, scale);
 	this.ctm_.scale(scale, scale);
 
+  this.drawing_.draw();
   this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };
 
@@ -200,6 +202,9 @@ xrx.viewbox.ViewboxZoom.prototype.zoomOut = function(opt_fixPoint) {
 
 
 
+/**
+ * Disposes this view-box.
+ */
 xrx.viewbox.ViewboxZoom.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };

@@ -1,5 +1,6 @@
 /**
  * @fileoverview An abstract class representing a shape container.
+ * @private
  */
 
 goog.provide('xrx.shape.Container');
