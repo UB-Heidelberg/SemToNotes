@@ -74,6 +74,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent ellipse shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.Stylable}
  * @constructor
  */
 xrx.shape.Ellipse = function(drawing) {
@@ -155,7 +156,7 @@ xrx.shape.Ellipse.prototype.setRadiusY = function(ry) {
 
 /**
  * Returns the coordinates of this ellipse. We assume the center point.
- * @return {Array&lt;Array&lt;&lt;number>>} The coordinates.
+ * @return {Array&lt;Array&lt;Number>>} The coordinates.
  * @private
  */
 xrx.shape.Ellipse.prototype.getCoords = function() {
@@ -166,7 +167,7 @@ xrx.shape.Ellipse.prototype.getCoords = function() {
 
 /**
  * Sets the coordinates of this ellipse. We assume the center point.
- * @param {Array&lt;Array&lt;&lt;number>>} coords The coordinates.
+ * @param {Array&lt;Array&lt;Number>>} coords The coordinates.
  * @private
  */
 xrx.shape.Ellipse.prototype.setCoords = function(coords) {
@@ -469,7 +470,7 @@ xrx.shape.EllipseCreatable.prototype.disposeInternal = function() {
 
     </div>
     <nav class="col-md-3">
-      <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.PathLike.html">xrx.shape.PathLike</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.Stylable.html">xrx.shape.Stylable</a></li><li><a href="xrx.viewbox.Viewbox.html">xrx.viewbox.Viewbox</a></li></ul><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.viewbox.html">xrx.viewbox</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul>
+      <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.Stylable.html">xrx.shape.Stylable</a></li><li><a href="xrx.viewbox.Viewbox.html">xrx.viewbox.Viewbox</a></li></ul><h3>Events</h3><ul><li><a href="xrx.drawing.Drawing.html#event:eventShapeModify">xrx.drawing.Drawing#event:eventShapeModify</a></li></ul><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.viewbox.html">xrx.viewbox</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul>
     </nav>
   </div>
   <script>prettyPrint();</script>

@@ -38,7 +38,7 @@
   var drawing1 = new xrx.drawing.Drawing(element1);
   drawing1.setModeSelect(); // turn the drawing canvas into mode select
   addSelectableShapes(drawing1); // add some selectable shapes
-  drawing1.setSelected(drawing1.getShapes()[1]); // turn the second shape into selected state
+  drawing1.setSelected(drawing1.getShapes()[0]); // turn the second shape into selected state
 
   // create and initialize a drawing canvas
   var element2 = document.getElementById('drawing2');

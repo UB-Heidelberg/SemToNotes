@@ -8,6 +8,10 @@ goog.provide('xrx.shape.Modifiable');
 
 
 
+goog.require('xrx.shape.Stylable');
+
+
+
 /**
  * An abstract class representing a modifiable shape.
  * @param {xrx.shape.Shape} shape The target shape to be modified.
@@ -15,6 +19,8 @@ goog.provide('xrx.shape.Modifiable');
  * @private
  */
 xrx.shape.Modifiable = function(shape) {
+
+  goog.base(this);
 
   /**
    * The target shape to be modified.
@@ -29,6 +35,36 @@ xrx.shape.Modifiable = function(shape) {
    * @private
    */
   this.dragger_ = [];
+
+  /**
+   * Helper to restore the style when deselected.
+   * @type {xrx.shape.Stylable}
+   * @private
+   */
+  this.store_ = new xrx.shape.Stylable();
+
+  this.store_.setStyle(this.shape_);
+  this.setStyle(this.shape_);
+};
+goog.inherits(xrx.shape.Modifiable, xrx.shape.Stylable);
+
+
+
+/**
+ * Selects this shape.
+ */
+xrx.shape.Modifiable.prototype.selectOn = function() {
+  this.store_.setStyle(this.shape_);
+  this.shape_.setStyle(this);
+};
+
+
+
+/**
+ * De-selects this shape.
+ */
+xrx.shape.Modifiable.prototype.selectOff = function() {
+  this.shape_.setStyle(this.store_);
 };
 
 

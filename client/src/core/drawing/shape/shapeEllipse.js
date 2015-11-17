@@ -23,6 +23,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent ellipse shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.Stylable}
  * @constructor
  */
 xrx.shape.Ellipse = function(drawing) {
@@ -104,7 +105,7 @@ xrx.shape.Ellipse.prototype.setRadiusY = function(ry) {
 
 /**
  * Returns the coordinates of this ellipse. We assume the center point.
- * @return {Array<Array<<number>>} The coordinates.
+ * @return {Array<Array<Number>>} The coordinates.
  * @private
  */
 xrx.shape.Ellipse.prototype.getCoords = function() {
@@ -115,7 +116,7 @@ xrx.shape.Ellipse.prototype.getCoords = function() {
 
 /**
  * Sets the coordinates of this ellipse. We assume the center point.
- * @param {Array<Array<<number>>} coords The coordinates.
+ * @param {Array<Array<Number>>} coords The coordinates.
  * @private
  */
 xrx.shape.Ellipse.prototype.setCoords = function(coords) {

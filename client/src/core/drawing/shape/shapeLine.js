@@ -23,6 +23,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * Classes representing an engine-independent line shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
+ * @extends {xrx.shape.Stylable}
  * @constructor
  */
 xrx.shape.Line = function(drawing) {
@@ -122,7 +123,7 @@ xrx.shape.Line.prototype.setY2 = function(y2) {
 
 /**
  * Returns the coordinates of this line.
- * @return {Array<Array<<number>>} The coordinates.
+ * @return {Array<Array<Number>>} The coordinates.
  */
 xrx.shape.Line.prototype.getCoords = function() {
   return [[this.geometry_.x1, this.geometry_.y1], [this.geometry_.x2,
@@ -133,7 +134,7 @@ xrx.shape.Line.prototype.getCoords = function() {
 
 /**
  * Sets the coordinates of this line.
- * @param {Array<Array<<number>>} coords The coordinates.
+ * @param {Array<Array<Number>>} coords The coordinates.
  */
 xrx.shape.Line.prototype.setCoords = function(coords) {
   this.geometry_.x1 = coords[0][0];

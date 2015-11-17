@@ -25,7 +25,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent rectangle shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- * @extends {xrx.shape.PathLike}
+ * @extends {xrx.shape.Stylable}
  * @constructor
  */
 xrx.shape.Rect = function(drawing) {

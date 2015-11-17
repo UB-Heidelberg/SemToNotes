@@ -54,6 +54,53 @@
   // add the shapes to the drawing canvas
   drawing.addShapes(circle, ellipse, line, polygon, polyline, rect);
 
+  // define the style for shapes during modification
+  var style = new xrx.shape.Stylable();
+  style.setStrokeColor('#cc3300');
+  style.setStrokeWidth(3);
+  style.setFillColor('#cc3300');
+  style.setFillOpacity(.3);
+  circle.getModifiable().setStyle(style);
+  ellipse.getModifiable().setStyle(style);
+  line.getModifiable().setStyle(style);
+  polygon.getModifiable().setStyle(style);
+  polyline.getModifiable().setStyle(style);
+  rect.getModifiable().setStyle(style);
+
+  // output the current coordinates of the shape whenever a shape is modified
+  drawing.eventShapeModify = function(shape) {
+    if (shape instanceof xrx.shape.Circle) {
+      document.getElementById('consoleCircle').textContent = 'Radius: ' +
+          shape.getRadius() + ', Center: ' + shape.getCenter();
+    } else if (shape instanceof xrx.shape.Ellipse) {
+      document.getElementById('consoleEllipse').textContent = 'Radius x: ' +
+          shape.getRadiusX() + ', Radius y: ' + shape.getRadiusY() + ', Center: ' +
+          shape.getCenter();
+    } else if (shape instanceof xrx.shape.Line) {
+      document.getElementById('consoleLine').textContent = 'x1: ' +
+          shape.getX1() + ', y1: ' + shape.getY1() + ', x2: ' +
+          shape.getX2() + ', y2: ' + shape.getY2();
+    } else if (shape instanceof xrx.shape.Polygon) {
+      document.getElementById('consolePolygon').textContent = 'Coordinates: ' +
+          shape.getCoords();
+    } else if (shape instanceof xrx.shape.Polyline) {
+      document.getElementById('consolePolyline').textContent = 'Coordinates: ' +
+          shape.getCoords();
+    } else if (shape instanceof xrx.shape.Rect) {
+      document.getElementById('consoleRect').textContent = 'x: ' + shape.getX() +
+          ', y: ' + shape.getY() + ', width: ' + shape.getWidth() + ', height: ' +
+          shape.getHeight();
+    } else {}
+  };
+  
+  // initialize the output
+  drawing.eventShapeModify(circle);
+  drawing.eventShapeModify(ellipse);
+  drawing.eventShapeModify(line);
+  drawing.eventShapeModify(polygon);
+  drawing.eventShapeModify(polyline);
+  drawing.eventShapeModify(rect);
+
   return drawing;
 
 })();

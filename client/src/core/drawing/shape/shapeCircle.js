@@ -25,6 +25,7 @@ goog.require('xrx.shape.Selectable');
  * modifiable and creatable circle shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @extends {xrx.shape.Stylable}
  */
 xrx.shape.Circle = function(drawing) {
 
@@ -85,7 +86,7 @@ xrx.shape.Circle.prototype.setRadius = function(r) {
 
 /**
  * Returns the coordinates of this circle. We assume the center point.
- * @return {Array<Array<<number>>} The coordinates.
+ * @return {Array<Array<number>>} The coordinates.
  * @private
  */
 xrx.shape.Circle.prototype.getCoords = function() {
@@ -96,7 +97,7 @@ xrx.shape.Circle.prototype.getCoords = function() {
 
 /**
  * Sets the coordinates of this circle. We assume the center point.
- * @param {Array<Array<<number>>} coords The coordinate.
+ * @param {Array<Array<number>>} coords The coordinate.
  * @private
  */
 xrx.shape.Circle.prototype.setCoords = function(coords) {

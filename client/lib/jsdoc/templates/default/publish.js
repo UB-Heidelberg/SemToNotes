@@ -330,6 +330,18 @@ function buildNav(members) {
         }
     }
 
+    if (members.events.length) {
+        nav += '<h3>Events</h3><ul>';
+        members.events.forEach(function(e) {
+            if ( !hasOwnProp.call(seen, e.longname) ) {
+                nav += '<li>' + linkto(e.longname, e.longname) + '</li>';
+            }
+            seen[e.longname] = true;
+        });
+
+        nav += '</ul>';
+    }
+
     if (members.namespaces.length) {
         nav += '<h3>Namespaces</h3><ul>';
         members.namespaces.forEach(function(n) {
@@ -337,18 +349,6 @@ function buildNav(members) {
                 nav += '<li>' + linkto(n.longname, n.longname) + '</li>';
             }
             seen[n.longname] = true;
-        });
-
-        nav += '</ul>';
-    }
-
-    if (members.events.length) {
-        nav += '<h3>Events</h3><ul>';
-        members.events.forEach(function(e) {
-            if ( !hasOwnProp.call(seen, e.longname) ) {
-                nav += '<li>' + linkto(e.longname, e.name) + '</li>';
-            }
-            seen[e.longname] = true;
         });
 
         nav += '</ul>';

@@ -14,6 +14,7 @@ goog.provide('xrx.shape.PathLike');
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @param {xrx.geometry.Geometry} geometry A geometry object.
  * @constructor
+ * @private
  */
 xrx.shape.PathLike = function(drawing, geometry) {
 

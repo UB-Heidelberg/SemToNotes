@@ -8,7 +8,7 @@ goog.provide('xrx.drawing.Modifiable');
 
 
 
-goog.require('goog.Disposable');
+goog.require('xrx.EventTarget');
 goog.require('xrx.geometry');
 goog.require('xrx.shape.Dragger');
 
@@ -35,7 +35,7 @@ xrx.drawing.Modifiable = function(drawing) {
 
   this.propageted_ = false;
 };
-goog.inherits(xrx.drawing.Modifiable, goog.Disposable);
+goog.inherits(xrx.drawing.Modifiable, xrx.EventTarget);
 
 
 
@@ -53,6 +53,9 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
   if (!shape) {
     this.drawing_.getViewbox().handleDown(e, cursor);
     this.propageted_ = true;
+    this.drawing_.getLayerShapeModify().removeShapes();
+    this.shape_.getModifiable().selectOff();
+    this.resetState_();
     return;
   }
   this.origin_ = cursor.getPointTransformed();
@@ -63,12 +66,15 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
       this.dragger_ = shape;
     } else {
       this.mode_ = xrx.drawing.Modifiable.Mode.DRAGSHAPE;
+      if (this.shape_) this.shape_.getModifiable().selectOff();
       this.shape_ = shape;
       modifiable = this.shape_.getModifiable();
       this.drawing_.getLayerShapeModify().activate(modifiable);
+      this.shape_.getModifiable().selectOn();
     }
   } else {
     this.drawing_.getLayerShapeModify().removeShapes();
+    this.shape_.getModifiable().selectOff();
     this.resetState_();
   }
 };
@@ -101,8 +107,10 @@ xrx.drawing.Modifiable.prototype.handleMove = function(e, cursor) {
     this.handleHover_(e, cursor);
   } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGDRAGGER) {
     this.dragger_.setCoord(point);
+    this.dispatchExternal(xrx.drawing.EventType.SHAPE_MODIFY, this.drawing_, this.shape_);
   } else if (this.mode_ === xrx.drawing.Modifiable.Mode.DRAGSHAPE) {
     this.handleDragShape_(e, cursor);
+    this.dispatchExternal(xrx.drawing.EventType.SHAPE_MODIFY, this.drawing_, this.shape_);
   } else {
     return;
   }

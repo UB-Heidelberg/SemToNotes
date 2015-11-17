@@ -24,7 +24,7 @@ goog.addDependency('../../../../src/core/drawing/drawingDrawing.js', ['xrx.drawi
 goog.addDependency('../../../../src/core/drawing/drawingEventHandler.js', ['xrx.drawing.EventHandler'], ['goog.style', 'xrx.event.HandlerTarget']);
 goog.addDependency('../../../../src/core/drawing/drawingEventTarget.js', ['xrx.event.HandlerTarget'], ['goog.Disposable', 'goog.events', 'goog.events.EventHandler', 'goog.events.EventType', 'goog.events.MouseWheelHandler', 'goog.events.MouseWheelHandler.EventType', 'goog.math', 'goog.style', 'goog.userAgent', 'xrx.drawing.Cursor', 'xrx.drawing.Mode', 'xrx.event.Handler', 'xrx.event.Type', 'xrx.shape.Shapes']);
 goog.addDependency('../../../../src/core/drawing/drawingHoverable.js', ['xrx.drawing.Hoverable'], ['goog.array', 'xrx.EventTarget', 'xrx.drawing.EventType', 'xrx.engine']);
-goog.addDependency('../../../../src/core/drawing/drawingModifiable.js', ['xrx.drawing.Modifiable'], ['goog.Disposable', 'xrx.geometry', 'xrx.shape.Dragger']);
+goog.addDependency('../../../../src/core/drawing/drawingModifiable.js', ['xrx.drawing.Modifiable'], ['xrx.EventTarget', 'xrx.geometry', 'xrx.shape.Dragger']);
 goog.addDependency('../../../../src/core/drawing/drawingSelectable.js', ['xrx.drawing.Selectable'], ['goog.Disposable']);
 goog.addDependency('../../../../src/core/drawing/engine/canvas/canvas.js', ['xrx.canvas'], []);
 goog.addDependency('../../../../src/core/drawing/engine/canvas/canvasCanvas.js', ['xrx.canvas.Canvas'], ['goog.dom.DomHelper', 'xrx.canvas.Container']);
@@ -89,7 +89,7 @@ goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeContainer.j
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeCreatable.js', ['xrx.shape.Creatable'], []);
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeGeometry.js', ['xrx.shape.Geometry'], ['goog.object', 'xrx.shape.Shape']);
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeHoverable.js', ['xrx.shape.Hoverable'], ['xrx.shape.Stylable']);
-goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeModifiable.js', ['xrx.shape.Modifiable'], []);
+goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeModifiable.js', ['xrx.shape.Modifiable'], ['xrx.shape.Stylable']);
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapePathLike.js', ['xrx.shape.PathLike'], []);
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeRenderStylable.js', ['xrx.shape.RenderStylable'], ['xrx.shape.Stylable']);
 goog.addDependency('../../../../src/core/drawing/shape/abstract/shapeSelectable.js', ['xrx.shape.Selectable'], ['xrx.shape.Stylable']);

@@ -149,6 +149,15 @@ goog.inherits(xrx.drawing.Drawing, xrx.drawing.EventHandler);
 
 
 /**
+ * Event that is thrown whenever a shape is modified.
+ * @param {xrx.shape.Shape} shape The shape that was modified.
+ * @event
+ */
+ xrx.drawing.Drawing.prototype.eventShapeModify = function(shape) {};
+
+
+
+/**
  * Returns the wrapper element of this drawing canvas.
  * @return {DOMElement} The wrapper.
  */
@@ -339,7 +348,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
 
 /**
  * Adds one or more shapes to this drawing canvas.
- * @param {xrx.shape.Shape*} var_args The shapes.
+ * @param {xrx.shape.Shape} var_args The shapes.
  */
 xrx.drawing.Drawing.prototype.addShapes = function(var_args) {
   this.layer_[1].addShapes(goog.array.toArray(arguments));

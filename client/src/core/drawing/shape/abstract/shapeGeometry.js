@@ -20,6 +20,7 @@ goog.require('xrx.shape.Shape');
  * @param {xrx.geometry.Geometry} geometry The geometry object for
  *   this shape.
  * @constructor
+ * @extends {xrx.shape.Shape}
  * @private
  */
 xrx.shape.Geometry = function(drawing, geometry) {

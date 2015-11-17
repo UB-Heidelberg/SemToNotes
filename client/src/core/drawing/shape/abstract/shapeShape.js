@@ -18,6 +18,7 @@ goog.require('xrx.shape');
  * Super-class representing an engine-independent shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
+ * @extends {xrx.shape.RenderStylable}
  * @private
  */
 xrx.shape.Shape = function(drawing) {

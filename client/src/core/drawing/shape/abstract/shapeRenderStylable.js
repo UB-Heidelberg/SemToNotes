@@ -14,6 +14,7 @@ goog.require('xrx.shape.Stylable');
 /**
  * A class implementing dynamic rendering of shapes.
  * @constructor
+ * @extends {xrx.shape.Stylable}
  * @private
  */
 xrx.shape.RenderStylable = function() {
