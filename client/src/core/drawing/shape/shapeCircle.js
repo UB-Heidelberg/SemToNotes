@@ -25,7 +25,7 @@ goog.require('xrx.shape.Selectable');
  * modifiable and creatable circle shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
- * @extends {xrx.shape.Stylable}
+ * @extends {xrx.shape.Style}
  */
 xrx.shape.Circle = function(drawing) {
 

@@ -7,14 +7,14 @@ goog.provide('xrx.shape.RenderStylable');
 
 
 
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Style');
 
 
 
 /**
  * A class implementing dynamic rendering of shapes.
  * @constructor
- * @extends {xrx.shape.Stylable}
+ * @extends {xrx.shape.Style}
  * @private
  */
 xrx.shape.RenderStylable = function() {
@@ -26,7 +26,7 @@ xrx.shape.RenderStylable = function() {
    */
   this.zoomFactor_ = 1;
 };
-goog.inherits(xrx.shape.RenderStylable, xrx.shape.Stylable);
+goog.inherits(xrx.shape.RenderStylable, xrx.shape.Style);
 
 
 

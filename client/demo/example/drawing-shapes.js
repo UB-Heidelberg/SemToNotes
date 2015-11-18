@@ -9,13 +9,13 @@
   // create and initialize a reusable style object
   // this is the style a shape will have after it is
   // finally created
-  var style = new xrx.shape.Stylable();
+  var style = new xrx.shape.Style();
   style.setStrokeColor('#0000BB');
   style.setStrokeWidth(3);
 
   // create and initialize a second style for shape creation
   // this is the style a shape has during creation
-  var styleCreatable = new xrx.shape.Stylable();
+  var styleCreatable = new xrx.shape.Style();
   styleCreatable.setFillColor('#3B3BFF');
   styleCreatable.setFillOpacity(.3);
   styleCreatable.setStrokeWidth(3);

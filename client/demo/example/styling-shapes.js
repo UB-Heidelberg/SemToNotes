@@ -31,7 +31,7 @@
   polyline.setStrokeColor('#24246B');
   polyline.setStrokeWidth(4);
   // create a style definition object to be used by the polyline and rectangle shape
-  var style = new xrx.shape.Stylable();
+  var style = new xrx.shape.Style();
   style.setStrokeColor('#805C6E');
   style.setStrokeWidth('3');
   style.setFillColor('#805C6E');

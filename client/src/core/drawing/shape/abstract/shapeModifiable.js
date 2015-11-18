@@ -8,7 +8,7 @@ goog.provide('xrx.shape.Modifiable');
 
 
 
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Style');
 
 
 
@@ -38,15 +38,15 @@ xrx.shape.Modifiable = function(shape) {
 
   /**
    * Helper to restore the style when deselected.
-   * @type {xrx.shape.Stylable}
+   * @type {xrx.shape.Style}
    * @private
    */
-  this.store_ = new xrx.shape.Stylable();
+  this.store_ = new xrx.shape.Style();
 
   this.store_.setStyle(this.shape_);
   this.setStyle(this.shape_);
 };
-goog.inherits(xrx.shape.Modifiable, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Modifiable, xrx.shape.Style);
 
 
 

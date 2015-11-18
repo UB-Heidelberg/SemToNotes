@@ -392,7 +392,7 @@ xrx.drawing.Drawing.prototype.draw = function() {
       element.setCTM(viewbox.getCTM());
     }
     // tell each stylable shape the current scale of the viewbox
-    else if (element instanceof xrx.shape.Stylable) {
+    else if (element instanceof xrx.shape.Style) {
       element.setZoomFactor(viewbox.getZoomValue());
     }
     else {};

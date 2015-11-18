@@ -23,7 +23,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * Classes representing an engine-independent line shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- * @extends {xrx.shape.Stylable}
+ * @extends {xrx.shape.Style}
  * @constructor
  */
 xrx.shape.Line = function(drawing) {

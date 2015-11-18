@@ -24,7 +24,7 @@ goog.require('xrx.shape.Selectable');
 /**
  * A class representing an engine-independent poly-line shape.
  * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
- * @extends {xrx.shape.Stylable}
+ * @extends {xrx.shape.Style}
  * @constructor
  */
 xrx.shape.Polyline = function(drawing) {

@@ -55,7 +55,7 @@
   drawing.addShapes(circle, ellipse, line, polygon, polyline, rect);
 
   // define the style for shapes during modification
-  var style = new xrx.shape.Stylable();
+  var style = new xrx.shape.Style();
   style.setStrokeColor('#cc3300');
   style.setStrokeWidth(3);
   style.setFillColor('#cc3300');

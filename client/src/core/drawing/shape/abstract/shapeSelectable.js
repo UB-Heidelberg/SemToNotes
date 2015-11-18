@@ -8,7 +8,7 @@ goog.provide('xrx.shape.Selectable');
 
 
 
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Style');
 
 
 
@@ -32,12 +32,12 @@ xrx.shape.Selectable = function(shape) {
 
   /**
    * Helper to restore the style when deselected.
-   * @type {xrx.shape.Stylable}
+   * @type {xrx.shape.Style}
    * @private
    */
-  this.store_ = new xrx.shape.Stylable();
+  this.store_ = new xrx.shape.Style();
 };
-goog.inherits(xrx.shape.Selectable, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Selectable, xrx.shape.Style);
 
 
 

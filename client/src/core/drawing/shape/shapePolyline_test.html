@@ -22,10 +22,10 @@ createTables('Polyline', goog.dom);
 
 
 function getPolylines(drawing) {
-  var hoverableStyle = new xrx.shape.Stylable();
+  var hoverableStyle = new xrx.shape.Style();
   hoverableStyle.setStrokeColor('green');
   hoverableStyle.setStrokeWidth(2);
-  var selectableStyle = new xrx.shape.Stylable();
+  var selectableStyle = new xrx.shape.Style();
   selectableStyle.setStrokeColor('yellow');
   selectableStyle.setStrokeWidth(2);
   var coords1 = [[12,12], [25,15], [100,60], [60,90], [500,500]];

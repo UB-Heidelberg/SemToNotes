@@ -8,7 +8,7 @@ goog.provide('xrx.shape.Hoverable');
 
 
 
-goog.require('xrx.shape.Stylable');
+goog.require('xrx.shape.Style');
 
 
 
@@ -33,12 +33,12 @@ xrx.shape.Hoverable = function(shape) {
   /**
    * Style helper to restore the original style when
    * de-hovering this shape.
-   * @type {xrx.shape.Stylable}
+   * @type {xrx.shape.Style}
    * @private
    */
-  this.store_ = new xrx.shape.Stylable();
+  this.store_ = new xrx.shape.Style();
 };
-goog.inherits(xrx.shape.Hoverable, xrx.shape.Stylable);
+goog.inherits(xrx.shape.Hoverable, xrx.shape.Style);
 
 
 
