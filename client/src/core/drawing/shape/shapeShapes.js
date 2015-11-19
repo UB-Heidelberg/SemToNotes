@@ -15,6 +15,7 @@ goog.require('xrx.shape.CircleCreatable');
 goog.require('xrx.shape.CircleHoverable');
 goog.require('xrx.shape.CircleModifiable');
 goog.require('xrx.shape.CircleSelectable');
+goog.require('xrx.shape.Dragger');
 goog.require('xrx.shape.Ellipse');
 goog.require('xrx.shape.EllipseCreatable');
 goog.require('xrx.shape.EllipseHoverable');
@@ -42,7 +43,7 @@ goog.require('xrx.shape.RectCreatable');
 goog.require('xrx.shape.RectHoverable');
 goog.require('xrx.shape.RectModifiable');
 goog.require('xrx.shape.RectSelectable');
-goog.require('xrx.shape.Dragger');
+goog.require('xrx.shape.ShapeGroup');
 
 
 

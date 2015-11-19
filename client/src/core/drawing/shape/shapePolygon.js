@@ -50,8 +50,9 @@ goog.inherits(xrx.shape.Polygon, xrx.shape.PathLike);
  */
 xrx.shape.Polygon.prototype.draw = function() {
   this.startDrawing_();
-  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
-      this.getFillOpacity(), this.getStrokeColor(), this.getRenderingStrokeWidth());
+  this.engineElement_.draw(this.getCoords(), this.getRenderingFillColor(),
+      this.getRenderingFillOpacity(), this.getRenderingStrokeColor(),
+      this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 
@@ -297,21 +298,9 @@ xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
-  } else if (this.close_ && shape === this.close_) { // user closes the polygon
-    // create a polygon
-    var polygon = new xrx.shape.Polygon(this.target_.getDrawing());
-    polygon.setStyle(this.target_);
-    polygon.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
-    this.target_.getDrawing().eventShapeCreated(polygon);
-    // reset for next drawing
-    this.close_ = null;
-    this.count_ = 0;
-  } else { // user creates another point
-    // extend the poly-line preview
+  } else { // user touches down to move to the next point or to close the polygon
     this.preview_.setLastCoord(point);
-    this.preview_.appendCoord(point);
-    this.count_ += 1;
-  } 
+  }
 };
 
 
@@ -341,7 +330,24 @@ xrx.shape.PolygonCreatable.prototype.handleMove = function(e, cursor) {
 /**
  * @private
  */
-xrx.shape.PolygonCreatable.prototype.handleUp = function() {
+xrx.shape.PolygonCreatable.prototype.handleUp = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
+  if (this.close_ && shape === this.close_) { // user closes the polygon
+    // create a polygon
+    var polygon = new xrx.shape.Polygon(this.target_.getDrawing());
+    polygon.setStyle(this.target_);
+    polygon.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
+    this.target_.getDrawing().eventShapeCreated(polygon);
+    // reset for next drawing
+    this.close_ = null;
+    this.count_ = 0;
+  } else { // user creates another point
+    // extend the poly-line preview
+    this.preview_.setLastCoord(point);
+    this.preview_.appendCoord(point);
+    this.count_ += 1;
+  } 
 };
 
 

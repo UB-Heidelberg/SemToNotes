@@ -161,8 +161,9 @@ xrx.shape.Rect.prototype.setAffineCoords = function(position) {
  */
 xrx.shape.Rect.prototype.draw = function() {
   this.startDrawing_();
-  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
-      this.getFillOpacity(), this.getStrokeColor(), this.getRenderingStrokeWidth());
+  this.engineElement_.draw(this.getCoords(), this.getRenderingFillColor(),
+      this.getRenderingFillOpacity(), this.getRenderingStrokeColor(),
+      this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

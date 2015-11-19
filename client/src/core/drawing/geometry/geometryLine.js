@@ -58,8 +58,8 @@ xrx.geometry.Line.containsPoint = function(line, point) {
     yMin = y2;
     yMax = y1;
   }
-  if (point[0] < xMin || point[0] > xMax || point[1] < yMin ||
-      point[1] > yMax) {
+  if (point[0] < xMin - tolerance || point[0] > xMax + tolerance ||
+      point[1] < yMin - tolerance || point[1] > yMax + tolerance) {
     return false;
   } else if (Math.abs(x1 - x2) < tolerance) { // vertical line
     return (Math.abs(point[0] - x1) < tolerance);

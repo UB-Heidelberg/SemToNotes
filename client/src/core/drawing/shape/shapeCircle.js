@@ -136,8 +136,8 @@ xrx.shape.Circle.prototype.draw = function() {
   this.startDrawing_();
   var center = this.getCenter();
   this.engineElement_.draw(center[0], center[1], this.getRadius(),
-      this.getFillColor(), this.getFillOpacity(), this.getStrokeColor(),
-      this.getRenderingStrokeWidth());
+      this.getRenderingFillColor(), this.getRenderingFillOpacity(),
+      this.getRenderingStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 

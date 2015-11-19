@@ -152,7 +152,7 @@ xrx.shape.Line.prototype.setCoords = function(coords) {
 xrx.shape.Line.prototype.draw = function() {
   this.startDrawing_();
   this.engineElement_.draw(this.geometry_.x1, this.geometry_.y1, this.geometry_.x2,
-      this.geometry_.y2, this.getStrokeColor(), this.getRenderingStrokeWidth());
+      this.geometry_.y2, this.getRenderingStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 
@@ -382,6 +382,8 @@ xrx.shape.LineCreatable.prototype.handleDown = function(e, cursor) {
   var point = cursor.getPointTransformed();
   this.preview_.setX1(point[0]);
   this.preview_.setY1(point[1]);
+  this.preview_.setX2(point[0]);
+  this.preview_.setY2(point[1]);
   this.target_.getDrawing().eventShapeCreate([this.preview_]);
 };
 

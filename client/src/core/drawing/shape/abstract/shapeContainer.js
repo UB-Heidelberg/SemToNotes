@@ -8,6 +8,7 @@ goog.provide('xrx.shape.Container');
 
 
 goog.require('xrx.shape.Geometry');
+goog.require('xrx.geometry.Group');
 
 
 
@@ -19,7 +20,7 @@ goog.require('xrx.shape.Geometry');
  */
 xrx.shape.Container = function(drawing) {
 
-  goog.base(this, drawing);
+  goog.base(this, drawing, new xrx.geometry.Group());
 
   /**
    * The child shapes of this container.

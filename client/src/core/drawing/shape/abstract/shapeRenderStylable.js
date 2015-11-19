@@ -25,8 +25,22 @@ xrx.shape.RenderStylable = function() {
    * @type {number}
    */
   this.zoomFactor_ = 1;
+
+  this.shapeGroup_;
 };
 goog.inherits(xrx.shape.RenderStylable, xrx.shape.Style);
+
+
+
+xrx.shape.RenderStylable.prototype.getShapeGroup = function() {
+  return this.shapeGroup_;
+};
+
+
+
+xrx.shape.RenderStylable.prototype.setShapeGroup = function(shapeGroup) {
+  this.shapeGroup_ = shapeGroup;
+};
 
 
 
@@ -46,12 +60,34 @@ xrx.shape.RenderStylable.prototype.setZoomFactor = function(factor) {
 
 
 
+xrx.shape.RenderStylable.prototype.getRenderingFillColor = function() {
+  return this.shapeGroup_ ? this.shapeGroup_.getFillColor() :
+      this.fill_.color;
+};
+
+
+
+xrx.shape.RenderStylable.prototype.getRenderingFillOpacity = function() {
+  return this.shapeGroup_ ? this.shapeGroup_.getFillOpacity() :
+      this.fill_.opacity;
+};
+
+
+
+xrx.shape.RenderStylable.prototype.getRenderingStrokeColor = function() {
+  return this.shapeGroup_ ? this.shapeGroup_.getStrokeColor() :
+      this.stroke_.color;
+};
+
+
+
 /**
  * Returns the stroke width of this shape.
  * @return {number} The stroke width.
  */
 xrx.shape.RenderStylable.prototype.getRenderingStrokeWidth = function() {
-  return this.stroke_.width / this.zoomFactor_;
+  return this.shapeGroup_ ? this.shapeGroup_.getStrokeWidth() / this.zoomFactor_ :
+      this.stroke_.width / this.zoomFactor_;
 };
 
 

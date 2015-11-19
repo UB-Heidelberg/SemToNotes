@@ -48,9 +48,8 @@ goog.inherits(xrx.shape.Polyline, xrx.shape.PathLike);
  */
 xrx.shape.Polyline.prototype.draw = function() {
   this.startDrawing_();
-  this.engineElement_.draw(this.getCoords(), this.getFillColor(),
-      this.getFillOpacity(), this.getStrokeColor(),
-      this.getRenderingStrokeWidth());
+  this.engineElement_.draw(this.getCoords(), this.getRenderingFillColor(),
+      0, this.getRenderingStrokeColor(), this.getRenderingStrokeWidth());
   this.finishDrawing_();
 };
 
@@ -291,26 +290,9 @@ xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
-  } else if (this.close_ && shape === this.close_) { // user closes the poly-line
-    // create a poly-line
-    var polyline = new xrx.shape.Polyline(this.target_.getDrawing());
-    polyline.setStyle(this.target_);
-    polyline.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
-    this.target_.getDrawing().eventShapeCreated(polyline);
-    // reset for next drawing
-    this.close_ = null;
-    this.count_ = 0;
-  } else { // user creates another point
-    // extend the poly-line
-    this.preview_.appendCoord(point);
-    // create the closing point as soon as the user creates the second point
-    if (this.count_ === 1) {
-      this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
-      this.target_.getDrawing().eventShapeCreate([this.close_]);
-    }
-    this.close_.setCoords([point]);
-    this.count_ += 1;
-  } 
+  } else { // user touches down to move to the next point or end point
+    this.preview_.setLastCoord(point);
+  }
 };
 
 
@@ -341,6 +323,28 @@ xrx.shape.PolylineCreatable.prototype.handleMove = function(e, cursor) {
  * @private
  */
 xrx.shape.PolylineCreatable.prototype.handleUp = function(e, cursor) {
+  var shape = cursor.getShape();
+  var point = cursor.getPointTransformed();
+  if (this.close_ && shape === this.close_) { // user closes the poly-line
+    // create a poly-line
+    var polyline = new xrx.shape.Polyline(this.target_.getDrawing());
+    polyline.setStyle(this.target_);
+    polyline.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
+    this.target_.getDrawing().eventShapeCreated(polyline);
+    // reset for next drawing
+    this.close_ = null;
+    this.count_ = 0;
+  } else { // user creates another point
+    // extend the poly-line
+    this.preview_.appendCoord(point);
+    // create the closing point as soon as the user creates the second point
+    if (this.count_ === 1) {
+      this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
+      this.target_.getDrawing().eventShapeCreate([this.close_]);
+    }
+    this.close_.setCoords([point]);
+    this.count_ += 1;
+  } 
 };
 
 
