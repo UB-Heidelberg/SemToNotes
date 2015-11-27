@@ -151,8 +151,8 @@ function test4rotateFixPoint() {
 
   // canvas and view-box configuration
   canvas.setModeView();
-  canvas.getViewbox().setZoomMax(4);
-  canvas.getViewbox().setZoomMin(.4);
+  canvas.getViewbox().setZoomFactorMax(4);
+  canvas.getViewbox().setZoomFactorMin(.4);
   canvas.getViewbox().getCTM().translate(20, 20);
   canvas.setBackgroundImage(url2);
 };

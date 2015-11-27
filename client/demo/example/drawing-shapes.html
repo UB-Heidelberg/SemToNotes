@@ -1,8 +1,8 @@
 <div id="content" class="container" data-type="js">
 <h1>Drawing Shapes</h1>
 <div>
-  <p>In order to draw shapes, switch a drawing canvas into mode <em>create</em> by calling <code>drawing.setModeCreate()</code>.</p>
-  <p>The <code>drawing.setModeCreate()</code> function expects a helper shape called "creatable" that can be reached by the
+  <p>In order to draw shapes, switch a drawing canvas into mode <em>create</em> by calling <code>drawing.setModeCreate(creatable)</code>.</p>
+  <p>The <code>drawing.setModeCreate(circle.getCreatable())</code> function expects a helper shape called "creatable" that can be reached by the
       <code>circle.getCreatable()</code>, <code>ellipse.getCreatable()</code>, etc. functions.</p>
   <p>Creatable helper shapes can have individual styles different from the shape that is finally created. To define the style
       for the helper shape, all functions of <code>xrx.shape.Style</code> such as <code>line.getCreatable().setStyle()</code> or

@@ -32,6 +32,7 @@ function getShapeGroups(drawing) {
   selectableStyle.setFillOpacity(.2);
   selectableStyle.setStrokeColor('yellow');
   selectableStyle.setStrokeWidth(2);
+  var modifiableStyle = selectableStyle;
   // fist shape group
   var style1 = new xrx.shape.Style();
   style1.setFillColor('purple');
@@ -41,6 +42,7 @@ function getShapeGroups(drawing) {
   var shapeGroup1 = new xrx.shape.ShapeGroup(drawing);
   shapeGroup1.setStyle(style1);
   shapeGroup1.getHoverable().setStyle(hoverableStyle);
+  shapeGroup1.getModifiable().setStyle(modifiableStyle);
   shapeGroup1.getSelectable().setStyle(selectableStyle);
   var circle1 = new xrx.shape.Circle(drawing);
   circle1.setCenter(100, 110);
@@ -65,6 +67,7 @@ function getShapeGroups(drawing) {
   var shapeGroup2 = new xrx.shape.ShapeGroup(drawing);
   shapeGroup2.setStyle(style2);
   shapeGroup2.getHoverable().setStyle(hoverableStyle);
+  shapeGroup2.getModifiable().setStyle(modifiableStyle);
   shapeGroup2.getSelectable().setStyle(selectableStyle);
   var circle2 = new xrx.shape.Circle(drawing);
   circle2.setCenter(300, 310);
@@ -83,6 +86,7 @@ function getShapeGroups(drawing) {
   var shapeGroup3 = new xrx.shape.ShapeGroup(drawing);
   shapeGroup3.setStyle(style3);
   shapeGroup3.getHoverable().setStyle(hoverableStyle);
+  shapeGroup3.getModifiable().setStyle(modifiableStyle);
   shapeGroup3.getSelectable().setStyle(selectableStyle);
   var ellipse3 = new xrx.shape.Ellipse(drawing);
   ellipse3.setCenter(270, 270);
@@ -124,7 +128,7 @@ function test5Modify() {
 
 
 
-function xtest6Create() {
+function test6Create() {
   modeCreate('ShapeGroup');
 };
 

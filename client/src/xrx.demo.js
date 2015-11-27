@@ -119,7 +119,7 @@ xrx.demo.Demo.prototype.installExampleBacklink_ = function(exampleId) {
 xrx.demo.Demo.prototype.installExampleSource_ = function(src, exampleId, type) {
   var content = goog.dom.getElement('content');
   var wrapper = goog.dom.createElement('div');
-  var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Example</h3>') :
+  var heading = type === 'js' ? goog.dom.htmlToDocumentFragment('<h3>Source</h3>') :
       goog.dom.htmlToDocumentFragment('<h3>Example</h3>');
   var pre = goog.dom.createElement('pre');
   var href = type === 'js' ? 'client/demo/example/' + exampleId + '.js' :

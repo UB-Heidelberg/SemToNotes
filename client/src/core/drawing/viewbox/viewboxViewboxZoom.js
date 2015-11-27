@@ -91,7 +91,7 @@ xrx.viewbox.ViewboxZoom.prototype.getZoomMin = function() {
  * Sets the minimum zoom value.
  * @param {number} value The minimum zoom value.
  */
-xrx.viewbox.ViewboxZoom.prototype.setZoomMin = function(value) {
+xrx.viewbox.ViewboxZoom.prototype.setZoomFactorMin = function(value) {
   this.zoomMin_ = value;
 };
 
@@ -120,7 +120,7 @@ xrx.viewbox.ViewboxZoom.prototype.getZoomMax = function() {
  * Sets the maximum zoom value.
  * @param {number} value The maximum zoom value.
  */
-xrx.viewbox.ViewboxZoom.prototype.setZoomMax = function(value) {
+xrx.viewbox.ViewboxZoom.prototype.setZoomFactorMax = function(value) {
   this.zoomMax_ = value;
 };
 

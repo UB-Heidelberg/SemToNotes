@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Source: drawing/shape/abstract/shapeStylable.js | API Reference | SemToNotes</title>
+  <title>Source: core/drawing/shape/abstract/shapeStylable.js | API Reference | SemToNotes</title>
   <script src="scripts/prettify/prettify.js"></script>
   <script src="scripts/prettify/lang-css.js"></script>
   <!--[if lt IE 9]>
@@ -42,7 +42,7 @@
   </nav>
   <div id="content" class="container">
     <div id="main" class="col-md-9">
-      <h1 class="page-title">Source: drawing/shape/abstract/shapeStylable.js</h1>
+      <h1 class="page-title">Source: core/drawing/shape/abstract/shapeStylable.js</h1>
       
 
 
@@ -54,7 +54,7 @@
  * @private
  */
 
-goog.provide('xrx.shape.Stylable');
+goog.provide('xrx.shape.Style');
 
 
 
@@ -67,7 +67,7 @@ goog.require('xrx.shape');
  * A class describing style information for shapes.
  * @constructor
  */
-xrx.shape.Stylable = function() {
+xrx.shape.Style = function() {
 
   goog.base(this);
 
@@ -91,7 +91,7 @@ xrx.shape.Stylable = function() {
     width: 1
   };
 };
-goog.inherits(xrx.shape.Stylable, goog.Disposable);
+goog.inherits(xrx.shape.Style, goog.Disposable);
 
 
 
@@ -99,7 +99,7 @@ goog.inherits(xrx.shape.Stylable, goog.Disposable);
  * Sets a stylable object for this shape.
  * @param {xrx.shape.Style} style 
  */
-xrx.shape.Stylable.prototype.setStyle = function(stylable) {
+xrx.shape.Style.prototype.setStyle = function(stylable) {
   this.stroke_.color = stylable.getStrokeColor();
   this.stroke_.width = stylable.getStrokeWidth();
   this.fill_.color = stylable.getFillColor();
@@ -112,7 +112,7 @@ xrx.shape.Stylable.prototype.setStyle = function(stylable) {
  * Returns the stroke width of this shape.
  * @return {number} The stroke width.
  */
-xrx.shape.Stylable.prototype.getStrokeWidth = function() {
+xrx.shape.Style.prototype.getStrokeWidth = function() {
   return this.stroke_.width;
 };
 
@@ -122,7 +122,7 @@ xrx.shape.Stylable.prototype.getStrokeWidth = function() {
  * Sets the stroke width of this shape.
  * @param {number} width The stroke width.
  */
-xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
+xrx.shape.Style.prototype.setStrokeWidth = function(width) {
   if (width !== undefined) this.stroke_.width = width;
 };
 
@@ -132,7 +132,7 @@ xrx.shape.Stylable.prototype.setStrokeWidth = function(width) {
  * Returns the stroke color of this shape.
  * @return {string} The stroke color.
  */
-xrx.shape.Stylable.prototype.getStrokeColor = function() {
+xrx.shape.Style.prototype.getStrokeColor = function() {
   return this.stroke_.color;
 };
 
@@ -142,7 +142,7 @@ xrx.shape.Stylable.prototype.getStrokeColor = function() {
  * Sets the stroke color of this shape.
  * @param {string} color The stroke color.
  */
-xrx.shape.Stylable.prototype.setStrokeColor = function(color) {
+xrx.shape.Style.prototype.setStrokeColor = function(color) {
   if (color !== undefined) this.stroke_.color = color;
 };
 
@@ -152,7 +152,7 @@ xrx.shape.Stylable.prototype.setStrokeColor = function(color) {
  * Returns the fill color of this shape.
  * @return {string} The fill color.
  */
-xrx.shape.Stylable.prototype.getFillColor = function() {
+xrx.shape.Style.prototype.getFillColor = function() {
   return this.fill_.color;
 };
 
@@ -162,7 +162,7 @@ xrx.shape.Stylable.prototype.getFillColor = function() {
  * Sets the fill color of this shape.
  * @param {string} color The fill color.
  */
-xrx.shape.Stylable.prototype.setFillColor = function(color) {
+xrx.shape.Style.prototype.setFillColor = function(color) {
   if (this.fill_.opacity === 0) this.fill_.opacity = 1;
   if (color !== undefined) this.fill_.color = color;
 };
@@ -173,7 +173,7 @@ xrx.shape.Stylable.prototype.setFillColor = function(color) {
  * Returns the fill opacity of this shape.
  * @return {number} The fill opacity.
  */
-xrx.shape.Stylable.prototype.getFillOpacity = function() {
+xrx.shape.Style.prototype.getFillOpacity = function() {
   return this.fill_.opacity;
 };
 
@@ -183,7 +183,7 @@ xrx.shape.Stylable.prototype.getFillOpacity = function() {
  * Sets the fill opacity of this shape.
  * @param {number} factor The fill opacity.
  */
-xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {
+xrx.shape.Style.prototype.setFillOpacity = function(factor) {
   if (factor !== undefined) this.fill_.opacity = factor;
 };
 
@@ -192,7 +192,7 @@ xrx.shape.Stylable.prototype.setFillOpacity = function(factor) {
 /**
  * Disposes this style information object.
  */
-xrx.shape.Stylable.prototype.disposeInternal = function() {
+xrx.shape.Style.prototype.disposeInternal = function() {
   this.fill_ = null;
   this.stroke_ = null;
   goog.base(this, 'disposeInternal');
@@ -206,7 +206,7 @@ xrx.shape.Stylable.prototype.disposeInternal = function() {
 
     </div>
     <nav class="col-md-3">
-      <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.Stylable.html">xrx.shape.Stylable</a></li><li><a href="xrx.viewbox.Viewbox.html">xrx.viewbox.Viewbox</a></li></ul><h3>Events</h3><ul><li><a href="xrx.drawing.Drawing.html#event:eventShapeModify">xrx.drawing.Drawing#event:eventShapeModify</a></li></ul><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.viewbox.html">xrx.viewbox</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul>
+      <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="xrx.drawing.Drawing.html">xrx.drawing.Drawing</a></li><li><a href="xrx.shape.Circle.html">xrx.shape.Circle</a></li><li><a href="xrx.shape.DiPolygon.html">xrx.shape.DiPolygon</a></li><li><a href="xrx.shape.DiPolygonArrow.html">xrx.shape.DiPolygonArrow</a></li><li><a href="xrx.shape.DiPolygonArrowModifiable.html">xrx.shape.DiPolygonArrowModifiable</a></li><li><a href="xrx.shape.Ellipse.html">xrx.shape.Ellipse</a></li><li><a href="xrx.shape.Line.html">xrx.shape.Line</a></li><li><a href="xrx.shape.Polygon.html">xrx.shape.Polygon</a></li><li><a href="xrx.shape.Polyline.html">xrx.shape.Polyline</a></li><li><a href="xrx.shape.Rect.html">xrx.shape.Rect</a></li><li><a href="xrx.shape.Style.html">xrx.shape.Style</a></li><li><a href="xrx.viewbox.Viewbox.html">xrx.viewbox.Viewbox</a></li></ul><h3>Events</h3><ul><li><a href="xrx.drawing.Drawing.html#event:eventShapeModify">xrx.drawing.Drawing#event:eventShapeModify</a></li></ul><h3>Namespaces</h3><ul><li><a href="xrx.html">xrx</a></li><li><a href="xrx.canvas.html">xrx.canvas</a></li><li><a href="xrx.drawing.html">xrx.drawing</a></li><li><a href="xrx.engine.html">xrx.engine</a></li><li><a href="xrx.shape.html">xrx.shape</a></li><li><a href="xrx.svg.html">xrx.svg</a></li><li><a href="xrx.viewbox.html">xrx.viewbox</a></li><li><a href="xrx.vml.html">xrx.vml</a></li></ul>
     </nav>
   </div>
   <script>prettyPrint();</script>

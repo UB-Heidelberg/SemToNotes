@@ -93,8 +93,34 @@ goog.inherits(xrx.shape.ShapeGroupModifiable, xrx.shape.Modifiable);
 
 
 
+xrx.shape.ShapeGroupModifiable.prototype.getDragger = function() {
+  var childs = this.shape_.getChildren();
+  var dragger = [];
+  for(var i = 0, len = childs.length; i < len; i++) {
+    dragger = dragger.concat(childs[i].getModifiable().getDragger());
+  }
+  return dragger;
+};
+
+
+
+xrx.shape.ShapeGroupModifiable.prototype.move = function(distX, distY) {
+  var childs = this.shape_.getChildren();
+  for(var i = 0, len = childs.length; i < len; i++) {
+    childs[i].getModifiable().move(distX, distY);
+  }
+};
+
+
+
 xrx.shape.ShapeGroupCreatable = function(shapeGroup) {
 
-  goog.base(this, shapeGroup);
+  goog.base(this, shapeGroup, new xrx.shape.ShapeGroup(shapeGroup.getDrawing()));
 };
 goog.inherits(xrx.shape.ShapeGroupCreatable, xrx.shape.Creatable);
+
+
+
+xrx.shape.ShapeGroupCreatable.prototype.handleDown = function() {
+
+};
