@@ -29,16 +29,16 @@
 <p>Configuring such a model gives nice user experience, especially for applications that deal with images of significantly
 		different sizes.</p>
 	<p>A nice formula for a zoom model dealing with images of different sizes therefore is:</p>
-	<p><em>Let <code>imageWidth</code> be the width of the actual image, <code>minFactor</code> the lower limit and <code>maxFactor</code>
+	<p><em>Let <code>imageWidth</code> be the width of the actual image, <code>minValue</code> the lower limit and <code>maxValue</code>
 		the upper limit, an image can be zoomed to. All values are pixel values. Let <code>steps</code> be the
 		number of steps needed to zoom from maximum to minimum size. Then, the zoom factors can be configured as follows:</em></p>
 	<ul>
-		<li>Minimum zoom factor: <code>drawing.getViewbox.setZoomFactorMin(minFactor / imageWidth)</code></li>
-		<li>Maximum zoom factor: <code>drawing.getViewbox.setZoomFactorMax(maxFactor / imageWidth)</code></li>
-		<li>Zoom factor per step: <code>drawing.getViewbox.setZoomFactor(((maxFactor - minFactor) / steps) / imageWidth)</code></li>
+		<li>Minimum zoom factor: <code>drawing.getViewbox.setZoomFactorMin(minValue / imageWidth)</code></li>
+		<li>Maximum zoom factor: <code>drawing.getViewbox.setZoomFactorMax(maxValue / imageWidth)</code></li>
+		<li>Zoom factor per step: <code>drawing.getViewbox.setZoomFactor(((maxValue - minValue) / steps) / imageWidth)</code></li>
 	</ul>
 	<p>Advanced configurations should also respect the height of an image (for extreme upright formats) and must handle cases where the
-		native size of an image is larger or smaller than a normally expected maximum or minimum image size.</p>
+		native size of an image is larger or smaller than a normally expected maximum or minimum value.</p>
 	<p>See the example below for implementing a zooming model in combination with a standard HTML range slider:
 	  <code>&lt;input id="slider" type="range" min="" step="" max=""
           oninput="window.drawing.getViewbox().zoomTo(this.value)"&gt;</code>.</p>
