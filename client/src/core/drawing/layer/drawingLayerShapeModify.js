@@ -38,6 +38,9 @@ xrx.drawing.LayerShapeModify.prototype.activate = function(modifiable) {
 
 
 
+/**
+ * Disposes this layer.
+ */
 xrx.drawing.LayerShapeModify.prototype.disposeInternal = function() {
   goog.base(this, 'disposeInternal');
 };

@@ -18,7 +18,11 @@ goog.require('xrx.shape.Modifiable');
 goog.require('xrx.shape.Selectable');
 
 
-
+/**
+ * A class representing a group of shapes sharing
+ * style definitions and behaviour.
+ * @constructor
+ */
 xrx.shape.ShapeGroup = function(drawing) {
 
   goog.base(this, drawing);
@@ -27,6 +31,10 @@ goog.inherits(xrx.shape.ShapeGroup, xrx.shape.Group);
 
 
 
+/**
+ * Adds shapes to this shape group.
+ * @param {Array<xrx.shape.Shape>} children The shapes to add.
+ */
 xrx.shape.ShapeGroup.prototype.addChildren = function(children) {
   goog.base(this, 'addChildren', children);
   for (var i = 0, len = this.childs_.length; i < len; i++) {
@@ -37,6 +45,10 @@ xrx.shape.ShapeGroup.prototype.addChildren = function(children) {
 
 
 
+/**
+ * Returns a helper shape that makes this shape group hoverable.
+ * @return {xrx.shape.ShapeGroupHoverable} The hoverable shape group.
+ */
 xrx.shape.ShapeGroup.prototype.getHoverable = function() {
   if (this.hoverable_ === undefined) this.hoverable_ =
       new xrx.shape.ShapeGroupHoverable(this);
@@ -45,6 +57,10 @@ xrx.shape.ShapeGroup.prototype.getHoverable = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape group selectable.
+ * @return {xrx.shape.ShapeGroupSelectable} The selectable shape group.
+ */
 xrx.shape.ShapeGroup.prototype.getSelectable = function() {
   if (this.selectable_ === undefined) this.selectable_ =
       new xrx.shape.ShapeGroupSelectable(this);
@@ -53,6 +69,10 @@ xrx.shape.ShapeGroup.prototype.getSelectable = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape group modifiable.
+ * @return {xrx.shape.ShapeGroupModifiable} The modifiable shape group.
+ */
 xrx.shape.ShapeGroup.prototype.getModifiable = function() {
   if (this.modifiable_ === undefined) this.modifiable_ =
       new xrx.shape.ShapeGroupModifiable(this);
@@ -61,6 +81,10 @@ xrx.shape.ShapeGroup.prototype.getModifiable = function() {
 
 
 
+/**
+ * Returns a helper shape that makes this shape group creatable.
+ * @return {xrx.shape.ShapeGroupCreatable} The creatable shape group.
+ */
 xrx.shape.ShapeGroup.prototype.getCreatable = function() {
   if (this.creatable_ === undefined) this.creatable_ =
       new xrx.shape.ShapeGroupCreatable(this);
@@ -69,6 +93,12 @@ xrx.shape.ShapeGroup.prototype.getCreatable = function() {
 
 
 
+/**
+ * A class representing a hoverable shape group.
+ * @param {xrx.shape.ShapeGroup} shapeGroup The parent shape group.
+ * @consturctor
+ * @private
+ */
 xrx.shape.ShapeGroupHoverable = function(shapeGroup) {
 
   goog.base(this, shapeGroup);
@@ -77,6 +107,12 @@ goog.inherits(xrx.shape.ShapeGroupHoverable, xrx.shape.Hoverable);
 
 
 
+/**
+ * A class representing a selectable shape group.
+ * @param {xrx.shape.ShapeGroup} shapeGroup The parent shape group.
+ * @consturctor
+ * @private
+ */
 xrx.shape.ShapeGroupSelectable = function(shapeGroup) {
 
   goog.base(this, shapeGroup);
@@ -85,6 +121,12 @@ goog.inherits(xrx.shape.ShapeGroupSelectable, xrx.shape.Selectable);
 
 
 
+/**
+ * A class representing a modifiable shape group.
+ * @param {xrx.shape.ShapeGroup} shapeGroup The parent shape group.
+ * @consturctor
+ * @private
+ */
 xrx.shape.ShapeGroupModifiable = function(shapeGroup) {
 
   goog.base(this, shapeGroup);
@@ -93,6 +135,9 @@ goog.inherits(xrx.shape.ShapeGroupModifiable, xrx.shape.Modifiable);
 
 
 
+/**
+ * @private
+ */
 xrx.shape.ShapeGroupModifiable.prototype.getDragger = function() {
   var childs = this.shape_.getChildren();
   var dragger = [];
@@ -104,6 +149,9 @@ xrx.shape.ShapeGroupModifiable.prototype.getDragger = function() {
 
 
 
+/**
+ * @private
+ */
 xrx.shape.ShapeGroupModifiable.prototype.move = function(distX, distY) {
   var childs = this.shape_.getChildren();
   for(var i = 0, len = childs.length; i < len; i++) {
@@ -113,6 +161,13 @@ xrx.shape.ShapeGroupModifiable.prototype.move = function(distX, distY) {
 
 
 
+/**
+ * A class representing a creatable shape group.
+ * TODO: implement this.
+ * @param {xrx.shape.ShapeGroup} shapeGroup The parent shape group.
+ * @consturctor
+ * @private
+ */
 xrx.shape.ShapeGroupCreatable = function(shapeGroup) {
 
   goog.base(this, shapeGroup, new xrx.shape.ShapeGroup(shapeGroup.getDrawing()));
