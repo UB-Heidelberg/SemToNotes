@@ -16,6 +16,7 @@ goog.require('goog.events.MouseWheelHandler');
 goog.require('goog.events.MouseWheelHandler.EventType');
 goog.require('goog.math');
 goog.require('goog.style');
+goog.require('goog.Timer');
 goog.require('goog.userAgent');
 goog.require('xrx.event.Handler');
 goog.require('xrx.event.Type');

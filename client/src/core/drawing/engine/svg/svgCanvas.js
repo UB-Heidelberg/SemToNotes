@@ -69,8 +69,6 @@ xrx.svg.Canvas.prototype.getWidth = function() {
 xrx.svg.Canvas.prototype.setWidth = function(width) {
   this.width_ = width;
   this.element_.setAttribute('width', width);
-  this.element_.setAttribute('viewBox', '0 0 ' + width + ' ' +
-      this.height_);
 };
 
 
@@ -92,8 +90,6 @@ xrx.svg.Canvas.prototype.getHeight = function() {
 xrx.svg.Canvas.prototype.setHeight = function(height) {
   this.height_ = height;
   this.element_.setAttribute('height', height);
-  this.element_.setAttribute('viewBox', '0 0 ' + height + ' ' +
-      this.width_);
 };
 
 

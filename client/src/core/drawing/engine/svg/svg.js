@@ -58,7 +58,7 @@ xrx.svg.isSupported = function() {
 xrx.svg.setCoords = function(element, coordinates) {
   var s = '';
   for(var i = 0, len = coordinates.length; i < len; i++) {
-    s += coordinates[i][0] + ',' + coordinates[i][1] + ' ';
+    s += Math.round(coordinates[i][0]) + ',' + Math.round(coordinates[i][1]) + ' ';
   }
   element.setAttribute('points', s);
 };

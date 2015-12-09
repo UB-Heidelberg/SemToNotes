@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.drawing.Drawing</title>
+<title>XRX++ Unit Tests - Performance Test SVG (xrx.drawing.Drawing)</title>
 <script src='../../../lib/closure-library/closure/goog/base.js'></script>
 <script src='../../deps.js'></script>
 <script type="text/javascript">
@@ -18,9 +18,14 @@ height: 1000px;
 </style>
 </head>
 <body>
+<div id="counter">0</div>
 <div id="drawing"></div>
 
 <script type="text/javascript">
+
+
+
+var countDraws = 0;
 
 
 
@@ -28,9 +33,15 @@ function getPolygons(drawing) {
   var polygon;
   var polygons = [];
   var coords = [[10,10],[12,12],[10,50],[22,100],[100,22],[50,50]];
+  var newCoords;
   for(var i = 0; i < 100; i++) {
     polygon = new xrx.shape.Polygon(drawing);
-    polygon.setCoords(coords);
+    newCoords = new Array(coords.length);
+    for (var j = 0; j < newCoords.length; j++) {
+      newCoords[j] = [coords[j][0] + i * 10, coords[j][1] + i * 15];
+    }
+    polygon.setCoords(newCoords);
+    polygon.getHoverable().setFillColor('magenta');
     polygons.push(polygon);
   }
   return polygons;
@@ -51,6 +62,11 @@ function testPerformance() {
     viewbox.fit();
     drawing.addShapes.apply(drawing, getPolygons(drawing));
   });
+  var counter = goog.dom.getElement('counter');
+  drawing.eventBeforeDraw = function() {
+    countDraws++;
+    goog.dom.setTextContent(counter, countDraws);
+  };
 };
 
 

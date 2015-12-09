@@ -49,6 +49,17 @@ xrx.engine.VML = 'vml';
 
 
 /**
+ * Whether an eninge uses a DOM representation.
+ * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} engine The engine to test.
+ * @return {boolean} Whether the engine uses a DOM representation.
+ */
+xrx.engine.hasDom = function(engine) {
+  return engine === xrx.engine.SVG || engine === xrx.engine.VML;
+};
+
+
+
+/**
  * Whether an engine is supported by the current browser.
  * @param {(xrx.engine.CANVAS|xrx.engine.SVG|xrx.engine.VML)} engine The engine to test.
  */

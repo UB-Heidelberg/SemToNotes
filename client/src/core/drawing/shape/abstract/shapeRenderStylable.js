@@ -7,17 +7,19 @@ goog.provide('xrx.shape.RenderStylable');
 
 
 
+goog.require('xrx.engine');
 goog.require('xrx.shape.Style');
 
 
 
 /**
  * A class implementing dynamic rendering of shapes.
+ * @param {xrx.drawing.Drawing} drawing The parent drawing canvas.
  * @constructor
  * @extends {xrx.shape.Style}
  * @private
  */
-xrx.shape.RenderStylable = function() {
+xrx.shape.RenderStylable = function(drawing) {
 
   goog.base(this);
 
@@ -33,6 +35,35 @@ xrx.shape.RenderStylable = function() {
    * @type {xrx.shape.ShapeGroup}
    */
   this.shapeGroup_;
+
+  /**
+   * Whether this shape has a DOM representation.
+   * @type {boolean}
+   * @private
+   */
+  this.hasDom_ = xrx.engine.hasDom(drawing.getEngine().getName());
+
+  /**
+   * Object describing whether the fill style did change
+   * since the last drawing.
+   * @type {Object}
+   * @private
+   */
+  this.fillChanged_ = {
+    color: true,
+    opacity: true
+  };
+
+  /**
+   * Object describing whether the stroke style did change
+   * since the last drawing.
+   * @type {Object}
+   * @private
+   */
+  this.strokeChanged_ = {
+    color: true,
+    width: true
+  };
 };
 goog.inherits(xrx.shape.RenderStylable, xrx.shape.Style);
 
@@ -82,9 +113,44 @@ xrx.shape.RenderStylable.prototype.setZoomFactor = function(factor) {
 /**
  * @private
  */
+xrx.shape.RenderStylable.prototype.setStyle = function(style) {
+  goog.base(this, 'setStyle', style);
+  this.fillChanged_.color = true;
+  this.fillChanged_.opacity = true;
+  this.strokeChanged_.color = true;
+  this.strokeChanged_.width = true;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.RenderStylable.prototype.setFillColor = function(color) {
+  goog.base(this, 'setFillColor', color);
+  this.fillChanged_.color = true;
+};
+
+
+
+/**
+ * @private
+ */
 xrx.shape.RenderStylable.prototype.getRenderingFillColor = function() {
-  return this.shapeGroup_ ? this.shapeGroup_.getFillColor() :
-      this.fill_.color;
+  var color = this.shapeGroup_ ? this.shapeGroup_.getFillColor() :
+      ((this.hasDom_ && (this.fillChanged_.color === false)) ? undefined : this.fill_.color);
+  this.fillChanged_.color = false;
+  return color;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.RenderStylable.prototype.setFillOpacity = function(factor) {
+  goog.base(this, 'setFillOpacity', factor);
+  this.fillChanged_.opacity = true;
 };
 
 
@@ -93,8 +159,20 @@ xrx.shape.RenderStylable.prototype.getRenderingFillColor = function() {
  * @private
  */
 xrx.shape.RenderStylable.prototype.getRenderingFillOpacity = function() {
-  return this.shapeGroup_ ? this.shapeGroup_.getFillOpacity() :
-      this.fill_.opacity;
+  var opacity = this.shapeGroup_ ? this.shapeGroup_.getFillOpacity() :
+      this.hasDom_ && this.fillChanged_.opacity === false ? undefined : this.fill_.opacity;
+  this.fillChanged_.opacity = false;
+  return opacity;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.RenderStylable.prototype.setStrokeColor = function(color) {
+  goog.base(this, 'setStrokeColor', color);
+  this.strokeChanged_.color = true;
 };
 
 
@@ -103,8 +181,20 @@ xrx.shape.RenderStylable.prototype.getRenderingFillOpacity = function() {
  * @private
  */
 xrx.shape.RenderStylable.prototype.getRenderingStrokeColor = function() {
-  return this.shapeGroup_ ? this.shapeGroup_.getStrokeColor() :
-      this.stroke_.color;
+  var color = this.shapeGroup_ ? this.shapeGroup_.getStrokeColor() :
+      this.hasDom_ && this.strokeChanged_.color === false ? undefined : this.stroke_.color;
+  this.strokeChanged_.color = false;
+  return color;
+};
+
+
+
+/**
+ * @private
+ */
+xrx.shape.RenderStylable.prototype.setStrokeWidth = function(width) {
+  goog.base(this, 'setStrokeWidth', width);
+  this.strokeChanged_.width = true;
 };
 
 
@@ -114,8 +204,11 @@ xrx.shape.RenderStylable.prototype.getRenderingStrokeColor = function() {
  * @return {number} The stroke width.
  */
 xrx.shape.RenderStylable.prototype.getRenderingStrokeWidth = function() {
-  return this.shapeGroup_ ? this.shapeGroup_.getStrokeWidth() / this.zoomFactor_ :
+  var width = this.shapeGroup_ ? this.shapeGroup_.getStrokeWidth() / this.zoomFactor_ :
+      this.hasDom_ && this.strokeChanged_.width === false ? undefined :
       this.stroke_.width / this.zoomFactor_;
+  this.strokeChanged_.width = false;
+  return width;
 };
 
 
@@ -140,6 +233,9 @@ xrx.shape.RenderStylable.prototype.finishDrawing_ = function() {
 
 
 
+/**
+ * Disposes this rendering style object.
+ */
 xrx.shape.RenderStylable.prototype.disposeInternal = function() {
   this.engineElement_.dispose();
   this.engineElement_ = null;

@@ -141,6 +141,8 @@ xrx.drawing.Drawing = function(element, opt_engine) {
 
   this.vsm_;
 
+  this.delay_;
+
   // install the canvas
   this.install_(opt_engine);
 };
@@ -397,7 +399,11 @@ xrx.drawing.Drawing.prototype.draw = function() {
     }
     else {};
   };
-  this.canvas_.draw();
+  clearTimeout(this.delay_);
+  this.delay_ = setTimeout(function() {
+    if (self.eventBeforeDraw) self.eventBeforeDraw();
+    self.canvas_.draw();
+  }, 10);
 };
 
 

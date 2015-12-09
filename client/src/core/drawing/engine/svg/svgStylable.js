@@ -45,7 +45,7 @@ xrx.svg.Stylable.prototype.strokeAndFill_ = function(fillColor,
  * @param {number} width The stroke width.
  */
 xrx.svg.Stylable.prototype.setStrokeWidth = function(width) {
-  this.element_.setAttribute('stroke-width', width);
+  this.element_.setAttribute('stroke-width', Math.round(width));
 };
 
 

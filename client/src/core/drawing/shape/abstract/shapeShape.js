@@ -23,7 +23,7 @@ goog.require('xrx.shape');
  */
 xrx.shape.Shape = function(drawing) {
 
-  goog.base(this);
+  goog.base(this, drawing);
 
   /**
    * The parent drawing canvas.
