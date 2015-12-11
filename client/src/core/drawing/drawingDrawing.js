@@ -579,13 +579,14 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(creatable) {
  * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
+  var self = this;
   goog.dom.getWindow().clearTimeout(this.timeoutResize_);
   this.timeoutResize_ = goog.dom.getWindow().setTimeout(function() {
-    this.calculateSize_();
-    this.canvas_.setHeight(this.height_);
-    this.canvas_.setWidth(this.width_);
-    this.shield_.setHeight(this.height_);
-    this.shield_.setWidth(this.width_);
+    self.calculateSize_();
+    self.canvas_.setHeight(this.height_);
+    self.canvas_.setWidth(this.width_);
+    self.shield_.setHeight(this.height_);
+    self.shield_.setWidth(this.width_);
   });
   this.draw();
 };
