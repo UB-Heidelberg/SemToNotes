@@ -137,11 +137,33 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    */
   this.height_;
 
+  /**
+   * Just for debugging.
+   * @private
+   */
   this.eventBeforeRendering;
 
+  /**
+   * Viewport size monitor. Fires events whenever the size of
+   * the browser window changes.
+   * @type {goog.dom.VieportSizeMonitor}
+   * @private
+   */
   this.vsm_;
 
-  this.delay_;
+  /**
+   * Timeout function for function draw() to improve performance.
+   * @type {function}
+   * @private
+   */
+  this.timeoutDraw_;
+
+  /**
+   * Timeout function for function handleResize() to improve performance.
+   * @type {function}
+   * @private
+   */
+  this.timeoutResize_;
 
   // install the canvas
   this.install_(opt_engine);
@@ -399,11 +421,11 @@ xrx.drawing.Drawing.prototype.draw = function() {
     }
     else {};
   };
-  clearTimeout(this.delay_);
-  this.delay_ = setTimeout(function() {
+  goog.dom.getWindow().clearTimeout(this.timeoutDraw_);
+  this.timeoutDraw_ = goog.dom.getWindow().setTimeout(function() {
     if (self.eventBeforeDraw) self.eventBeforeDraw();
     self.canvas_.draw();
-  }, 10);
+  });
 };
 
 
@@ -557,11 +579,14 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(creatable) {
  * changes the size of this drawing canvas during live time.
  */
 xrx.drawing.Drawing.prototype.handleResize = function() {
-  this.calculateSize_();
-  this.canvas_.setHeight(this.height_);
-  this.canvas_.setWidth(this.width_);
-  this.shield_.setHeight(this.height_);
-  this.shield_.setWidth(this.width_);
+  goog.dom.getWindow().clearTimeout(this.timeoutResize_);
+  this.timeoutResize_ = goog.dom.getWindow().setTimeout(function() {
+    this.calculateSize_();
+    this.canvas_.setHeight(this.height_);
+    this.canvas_.setWidth(this.width_);
+    this.shield_.setHeight(this.height_);
+    this.shield_.setWidth(this.width_);
+  });
   this.draw();
 };
 
@@ -762,5 +787,7 @@ xrx.drawing.Drawing.prototype.disposeInternal = function() {
   this.vsm_.removeAllListeners();
   this.vsm_.dispose();
   this.vsm_ = null;
+  this.timeoutDraw_ = null;
+  this.timeoutResize_ = null;
   goog.base(this, 'disposeInternal');
 };
