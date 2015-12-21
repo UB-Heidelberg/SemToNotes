@@ -14,7 +14,7 @@
   goog.require('goog.events.EventType');
   goog.require('goog.ui.Component.EventType');
   goog.require('goog.ui.Slider');
-  goog.require('xrx');
+  goog.require('xrx.api.drawing');
 </script>
 </head>
 <body>
@@ -74,61 +74,73 @@
 
 
 function test0Original() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var svgDrawing = getDrawingSvg('svgOriginal');
     svgDrawing.setBackgroundImage(url);
     svgDrawing.draw();
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var canvasDrawing = getDrawingCanvas('canvasOriginal');
     canvasDrawing.setBackgroundImage(url);
     canvasDrawing.draw();
   }
-  var vmlDrawing = getDrawingVml('vmlOriginal');
-  vmlDrawing.setBackgroundImage(url);
-  vmlDrawing.draw();
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getDrawingVml('vmlOriginal');
+    vmlDrawing.setBackgroundImage(url);
+    vmlDrawing.draw();
+  }
 };
 
 
 
 function test1ZoomIn() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var svgDrawing = getDrawingSvg('svgZoomIn');
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.getViewbox().zoomTo(2, [0, 0]);
       svgDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var canvasDrawing = getDrawingCanvas('canvasZoomIn');
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.getViewbox().zoomTo(2, [0, 0]);
       canvasDrawing.draw();
     });
   }
-  var vmlDrawing = getDrawingVml('vmlZoomIn');
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.getViewbox().zoomTo(2, [0, 0]);
-    vmlDrawing.draw();
-  });
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getDrawingVml('vmlZoomIn');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().zoomTo(2, [0, 0]);
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
 
 function test2ZoomOut() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var svgDrawing = getDrawingSvg('svgZoomOut');
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.getViewbox().zoomTo(.5, [0, 0]);
       svgDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var canvasDrawing = getDrawingCanvas('canvasZoomOut');
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.getViewbox().zoomTo(.5, [0, 0]);
       canvasDrawing.draw();
     });
   }
-  var vmlDrawing = getDrawingVml('vmlZoomIn');
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.getViewbox().zoomTo(.5, [0, 0]);
-    vmlDrawing.draw();
-  });
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getDrawingVml('vmlZoomIn');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().zoomTo(.5, [0, 0]);
+      vmlDrawing.draw();
+    });
+  }
 };
 
 

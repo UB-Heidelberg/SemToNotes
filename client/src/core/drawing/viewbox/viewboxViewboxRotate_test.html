@@ -14,7 +14,7 @@
   goog.require('goog.events.EventType');
   goog.require('goog.ui.Component.EventType');
   goog.require('goog.ui.Slider');
-  goog.require('xrx');
+  goog.require('xrx.api.drawing');
 </script>
 </head>
 <body>
@@ -73,45 +73,53 @@
 
 
 function test1RotateLeft() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var svgDrawing = getDrawingSvg('svgRotateLeft');
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.getViewbox().rotateLeft();
       svgDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var canvasDrawing = getDrawingCanvas('canvasRotateLeft');
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.getViewbox().rotateLeft();
       canvasDrawing.draw();
     });
   }
-  var vmlDrawing = getDrawingVml('vmlRotateLeft');
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.getViewbox().rotateLeft();
-    vmlDrawing.draw();
-  });
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getDrawingVml('vmlRotateLeft');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().rotateLeft();
+      vmlDrawing.draw();
+    });
+  }
 };
 
 
 
 function test2RotateRight() {
-  if (!xrx.engine.isOldIE()) {
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var svgDrawing = getDrawingSvg('svgRotateRight');
     svgDrawing.setBackgroundImage(url, function() {
       svgDrawing.getViewbox().rotateRight();
       svgDrawing.draw();
     });
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var canvasDrawing = getDrawingCanvas('canvasRotateRight');
     canvasDrawing.setBackgroundImage(url, function() {
       canvasDrawing.getViewbox().rotateRight();
       canvasDrawing.draw();
     });
   }
-  var vmlDrawing = getDrawingVml('vmlRotateLeft');
-  vmlDrawing.setBackgroundImage(url, function() {
-    vmlDrawing.getViewbox().rotateRight();
-    vmlDrawing.draw();
-  });
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getDrawingVml('vmlRotateLeft');
+    vmlDrawing.setBackgroundImage(url, function() {
+      vmlDrawing.getViewbox().rotateRight();
+      vmlDrawing.draw();
+    });
+  }
 };
 
 

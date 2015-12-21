@@ -187,6 +187,7 @@ xrx.viewbox.ViewboxZoom.prototype.zoomTo = function(zoomValue, opt_fixPoint) {
  * @param {Array<number>} opt_fixPoint A fix-point.
  */
 xrx.viewbox.ViewboxZoom.prototype.zoomIn = function(opt_fixPoint) {
+  console.log(opt_fixPoint);
   this.zoomTo(this.ctm_.getScale() + this.zoomFactor_, opt_fixPoint);
 };
 
@@ -197,6 +198,7 @@ xrx.viewbox.ViewboxZoom.prototype.zoomIn = function(opt_fixPoint) {
  * @param {Array<number>} opt_fixPoint A fix-point.
  */
 xrx.viewbox.ViewboxZoom.prototype.zoomOut = function(opt_fixPoint) {
+  console.log(opt_fixPoint);
   this.zoomTo(this.ctm_.getScale() - this.zoomFactor_, opt_fixPoint);
 };
 

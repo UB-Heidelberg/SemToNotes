@@ -145,8 +145,8 @@ xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
  * @private
  */
 xrx.viewbox.Viewbox.prototype.handleWheel = function(e, cursor) {
-  e.deltaY < 0 ? this.zoomIn(cursor.getPointTransformed()) :
-      this.zoomOut(cursor.getPointTransformed());
+  e.deltaY < 0 ? this.zoomIn(cursor.getPoint()) :
+      this.zoomOut(cursor.getPoint());
 };
 
 
