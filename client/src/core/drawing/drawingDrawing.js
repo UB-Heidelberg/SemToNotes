@@ -399,7 +399,12 @@ xrx.drawing.Drawing.prototype.removeShape = function(shape) {
 
 
 xrx.drawing.Drawing.prototype.getSelectedShape = function() {
-  return this.selectable_.getShape();
+  if (this.mode_ === xrx.drawing.Mode.SELECT) {
+    return this.selectable_.getShape();
+  } else if (this.mode_ === xrx.drawing.Mode.MODIFY) {
+    return this.modifiable_.getShape();
+  }
+  return null;
 };
 
 
@@ -583,10 +588,10 @@ xrx.drawing.Drawing.prototype.handleResize = function() {
   goog.dom.getWindow().clearTimeout(this.timeoutResize_);
   this.timeoutResize_ = goog.dom.getWindow().setTimeout(function() {
     self.calculateSize_();
-    self.canvas_.setHeight(this.height_);
-    self.canvas_.setWidth(this.width_);
-    self.shield_.setHeight(this.height_);
-    self.shield_.setWidth(this.width_);
+    self.canvas_.setHeight(self.height_);
+    self.canvas_.setWidth(self.width_);
+    self.shield_.setHeight(self.height_);
+    self.shield_.setWidth(self.width_);
   });
   this.draw();
 };

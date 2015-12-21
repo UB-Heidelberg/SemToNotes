@@ -23,12 +23,24 @@ xrx.drawing.Layer = function(drawing) {
 
   goog.base(this);
 
+  /**
+   * @private
+   */
   this.drawing_ = drawing;
 
+  /**
+   * @private
+   */
   this.locked_ = false;
 
+  /**
+   * @private
+   */
   this.group_;
 
+  /**
+   * @private
+   */
   this.shapes_ = [];
 
   this.create_();
@@ -69,7 +81,7 @@ xrx.drawing.Layer.prototype.isLocked = function() {
 
 
 /**
- * Returns the layers group.
+ * Returns the layers' group.
  * @return {Object} The group.
  */
 xrx.drawing.Layer.prototype.getGroup = function() {
@@ -150,6 +162,9 @@ xrx.drawing.Layer.prototype.create_ = function() {
 
 
 
+/**
+ * Disposes this layer.
+ */
 xrx.drawing.Layer.prototype.disposeInternal = function() {
   this.drawing_.dispose();
   this.drawing_ = null;

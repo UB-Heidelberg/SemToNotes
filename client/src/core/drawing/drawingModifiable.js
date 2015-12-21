@@ -47,6 +47,12 @@ xrx.drawing.Modifiable.Mode = {
 
 
 
+xrx.drawing.Modifiable.prototype.getShape = function() {
+  return this.shape_;
+};
+
+
+
 xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
   var modifiable;
   var shape = cursor.getShape();
