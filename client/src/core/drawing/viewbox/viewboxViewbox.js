@@ -83,7 +83,7 @@ xrx.viewbox.Viewbox.prototype.getGroup = function() {
  * @private
  */
 xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, cursor) {
-  this.rotateRight(cursor.getPointTransformed());
+  this.rotateRight(cursor.getPoint());
 };
 
 

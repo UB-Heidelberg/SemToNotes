@@ -393,6 +393,7 @@ xrx.drawing.Drawing.prototype.getShapes = function() {
 
 xrx.drawing.Drawing.prototype.removeShape = function(shape) {
   this.layer_[1].removeShape(shape);
+  this.layer_[2].removeShapes();
   this.draw();
 };
 
