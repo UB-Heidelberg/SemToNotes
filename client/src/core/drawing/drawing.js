@@ -6,6 +6,7 @@
 goog.provide('xrx.drawing');
 goog.provide('xrx.drawing.EventType');
 goog.provide('xrx.drawing.Orientation');
+goog.provide('xrx.drawing.Position');
 goog.provide('xrx.drawing.Mode');
 goog.provide('xrx.drawing.State');
 
@@ -57,6 +58,20 @@ xrx.drawing.Mode = {
  */
 xrx.drawing.Orientation = {
   C: 'C', // center
+  NE: 'NE', // northeast
+  SE: 'SE', // southeast
+  SW: 'SW', // southwest
+  NW: 'NW'  // northwest
+};
+
+
+
+/**
+ * Enumerations of positions used by the drawing view-box.
+ * @enum {string}
+ * @private
+ */
+xrx.drawing.Position = {
   NE: 'NE', // northeast
   SE: 'SE', // southeast
   SW: 'SW', // southwest

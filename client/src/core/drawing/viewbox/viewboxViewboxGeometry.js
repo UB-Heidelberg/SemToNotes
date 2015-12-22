@@ -197,7 +197,7 @@ xrx.viewbox.ViewboxGeometry.prototype.getFixPoint_ = function(orientation,
 
 
 /**
- * Disposes this view-box.
+ * Disposes this view-box.++
  */
 xrx.viewbox.ViewboxGeometry.prototype.disposeInternal = function() {
   this.testPoint_ = null;
