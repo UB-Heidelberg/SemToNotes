@@ -135,7 +135,7 @@ xrx.viewbox.Viewbox.prototype.getGroup = function() {
  * @private
  */
 xrx.viewbox.Viewbox.prototype.handleDblClick = function(e, cursor) {
-  this.rotateRight(cursor.getPointTransformed());
+  this.rotateRight(cursor.getPoint());
 };
 
 
@@ -197,8 +197,8 @@ xrx.viewbox.Viewbox.prototype.handleUp = function(e) {
  * @private
  */
 xrx.viewbox.Viewbox.prototype.handleWheel = function(e, cursor) {
-  e.deltaY &lt; 0 ? this.zoomIn(cursor.getPointTransformed()) :
-      this.zoomOut(cursor.getPointTransformed());
+  e.deltaY &lt; 0 ? this.zoomIn(cursor.getPoint()) :
+      this.zoomOut(cursor.getPoint());
 };
 
 

@@ -61,6 +61,7 @@ goog.provide('xrx.viewbox.ViewboxTranslate');
 
 goog.require('xrx.drawing.EventType');
 goog.require('xrx.drawing.Orientation');
+goog.require('xrx.drawing.Position');
 goog.require('xrx.viewbox.ViewboxZoom');
 
 
@@ -129,6 +130,31 @@ xrx.viewbox.ViewboxTranslate.prototype.centerVertically = function() {
   var height = this.getHeight(true, true);
   var dy = this.getDrawing().getHeight() / 2 - (upperLeft[1] + height / 2);
   this.translate(0, dy);
+  this.drawing_.draw();
+  this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
+};
+
+
+
+/**
+ * Translates the view-box to a certain position of the drawing canvas.
+ * @param {string} position A position as declared in {xrx.drawing.Position}.
+ */
+xrx.viewbox.ViewboxTranslate.prototype.setPosition = function(position) {
+  var width = this.drawing_.getWidth();
+  var height = this.drawing_.getHeight();
+  var fixPoint = this.getFixPoint_(position, true, true);
+  if (position === xrx.drawing.Position.NW) {
+    this.translate(-fixPoint[0], -fixPoint[1]);
+  } else if (position === xrx.drawing.Position.NE) {
+    this.translate(width - fixPoint[0], -fixPoint[1]);
+  } else if (position === xrx.drawing.Position.SE) {
+    this.translate(width - fixPoint[0], height - fixPoint[1]);
+  } else if (position === xrx.drawing.Position.SW) {
+    this.translate(-fixPoint[0], height - fixPoint[1]);
+  } else {
+    throw Error('Unknown position.');
+  }
   this.drawing_.draw();
   this.dispatchExternal(xrx.drawing.EventType.VIEWBOX_CHANGE, this.drawing_);
 };

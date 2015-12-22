@@ -99,6 +99,12 @@ xrx.drawing.Modifiable.Mode = {
 
 
 
+xrx.drawing.Modifiable.prototype.getShape = function() {
+  return this.shape_;
+};
+
+
+
 xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
   var modifiable;
   var shape = cursor.getShape();
@@ -106,7 +112,8 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
     this.drawing_.getViewbox().handleDown(e, cursor);
     this.propageted_ = true;
     this.drawing_.getLayerShapeModify().removeShapes();
-    this.shape_.getModifiable().selectOff();
+    if (this.shape_) this.shape_.getModifiable().selectOff();
+    this.shape_ = null;
     this.resetState_();
     return;
   }
@@ -126,7 +133,7 @@ xrx.drawing.Modifiable.prototype.handleDown = function(e, cursor) {
     }
   } else {
     this.drawing_.getLayerShapeModify().removeShapes();
-    this.shape_.getModifiable().selectOff();
+    if (this.shape_) this.shape_.getModifiable().selectOff();
     this.resetState_();
   }
 };
