@@ -47,7 +47,7 @@ xrx.viewbox.ViewboxGeometry.prototype.getWidth = function(opt_transformed,
     return this.getHeight(opt_transformed);
   } else {
     var image = this.getDrawing().getLayerBackground().getImage();
-    var width = image.getWidth();
+    var width = image.getImage() ? image.getWidth() : this.drawing_.getWidth();
     return !opt_transformed ? width : width * this.ctm_.getScale();
   }
 };
@@ -70,7 +70,7 @@ xrx.viewbox.ViewboxGeometry.prototype.getHeight = function(opt_transformed, opt_
     return this.getWidth(opt_transformed);
   } else {
     var image = this.getDrawing().getLayerBackground().getImage();
-    var height = image.getHeight();
+    var height = image.getImage() ? image.getHeight() : this.drawing_.getHeight();
     return !opt_transformed ? height : height * this.ctm_.getScale();
   }
 };
@@ -87,9 +87,8 @@ xrx.viewbox.ViewboxGeometry.prototype.getBox = function() {
   var box;
   var rotation = this.getRotation();
   var transformed = new Array(4);
-  var image = this.getDrawing().getLayerBackground().getImage();
-  var width = image.getWidth();
-  var height = image.getHeight();
+  var width = this.getWidth();
+  var height = this.getHeight();
   var coords = [0, 0, width, height]
   this.ctm_.transform(coords, 0, transformed, 0, 4);
   if (rotation === 0) {
@@ -122,8 +121,7 @@ xrx.viewbox.ViewboxGeometry.prototype.containsPoint = function(point) {
  * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getCenterPoint_ = function(opt_transformed) {
-  var image = this.getDrawing().getLayerBackground().getImage();
-  var natural = [image.getWidth() / 2, image.getHeight() / 2];
+  var natural = [this.getWidth() / 2, this.getHeight() / 2];
   var transformed;
   if (opt_transformed !== true) {
     return natural;
@@ -165,9 +163,8 @@ xrx.viewbox.ViewboxGeometry.prototype.FixPoints_ = {
  * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getFixPoints_ = function() {
-  var image = this.getDrawing().getLayerBackground().getImage();
-  var width = image.getWidth();
-  var height = image.getHeight();
+  var width = this.getWidth();
+  var height = this.getHeight();
   this.FixPoints_.C = [width / 2, height / 2];
   this.FixPoints_.NE = [width, 0];
   this.FixPoints_.SE = [width, height];

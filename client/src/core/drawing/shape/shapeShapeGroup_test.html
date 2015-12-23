@@ -129,7 +129,41 @@ function test5Modify() {
 
 
 function test6Create() {
-  modeCreate('ShapeGroup');
+  var shapeName = 'ShapeGroup';
+  if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
+    var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Create');
+    var canvasShape = getShapeGroups(canvasDrawing)[0];
+    var canvasCreatable = canvasShape.getCreatable();
+    canvasCreatable.setStrokeColor('blue');
+    canvasCreatable.setStrokeWidth(5);
+    canvasCreatable.setFillColor('blue');
+    canvasCreatable.setFillOpacity(.2);
+    canvasDrawing.setModeCreate(canvasCreatable);
+  }
+  if (xrx.engine.isSupported(xrx.engine.SVG)) {
+    var svgDrawing = getSvgDrawing('svg' + shapeName + 'Create');
+    var svgShape = getShapeGroups(svgDrawing)[0];
+    var svgCreatable = svgShape.getCreatable();
+    svgCreatable.setStrokeColor('green');
+    svgCreatable.setStrokeWidth(5);
+    if (shapeName !== 'Polyline') {
+    svgCreatable.setFillColor('green');
+    svgCreatable.setFillOpacity(.2);
+    }
+    svgDrawing.setModeCreate(svgCreatable);
+  }
+  if (xrx.engine.isSupported(xrx.engine.VML)) {
+    var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
+    var vmlShape = getShapeGroups(vmlDrawing)[0];
+    var vmlCreatable = vmlShape.getCreatable();
+    vmlCreatable.setStrokeColor('red');
+    vmlCreatable.setStrokeWidth(5);
+    if (shapeName !== 'Polyline') {
+    vmlCreatable.setFillColor('red');
+    vmlCreatable.setFillOpacity(.2);
+    }
+    vmlDrawing.setModeCreate(vmlCreatable);
+  }
 };
 
 

@@ -44,6 +44,17 @@ xrx.shape.Container.prototype.getChildren = function() {
 
 
 /**
+ * Returns the n'th child element of this container.
+ * @param {number} index The child elements' index.
+ * @return {Array<xrx.shape.Shape>} The child elements.
+ */
+xrx.shape.Container.prototype.getChild = function(index) {
+  return this.childs_[index];
+};
+
+
+
+/**
  * Adds child elements to this container.
  * @param {(xrx.shape.Shape|Array<xrx.shape.Shape>)} children The elements to add.
  */
