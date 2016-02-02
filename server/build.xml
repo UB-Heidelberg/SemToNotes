@@ -52,19 +52,6 @@
     </target>
 
     <target name="process" description="Process template files">
-        <copy file="config/application/expath-pkg.xml.tmpl"
-            tofile="config/application/expath-pkg.xml">
-            <filterset>
-                <filter token="VERSION" value="${module.version}"/>
-                <filter token="TITLE" value="${module.title}"/>
-            </filterset>
-        </copy>
-        <copy file="config/application/repo.xml.tmpl" tofile="config/application/repo.xml">
-            <filterset>
-                <filter token="VERSION" value="${module.version}"/>
-                <filter token="TITLE" value="${module.title}"/>
-            </filterset>
-        </copy>
         <copy file="config/library/expath-pkg.xml.tmpl" tofile="config/library/expath-pkg.xml">
             <filterset>
                 <filter token="VERSION" value="${module.version}"/>

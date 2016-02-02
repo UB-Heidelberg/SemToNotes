@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import org.exist.xquery.AbstractInternalModule;
 import org.exist.xquery.Cardinality;
@@ -41,7 +41,7 @@ import org.exist.xquery.value.Type;
  */
 public class GeoModule extends AbstractInternalModule {
     
-    private static final Logger LOG = LogManager.getLogger(GeoModule.class);
+    //private static final Logger LOG = LogManager.getLogger(GeoModule.class);
 
     public final static String NAMESPACE_URI = "http://exist-db.org/xquery/geo";
 

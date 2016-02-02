@@ -25,8 +25,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 import org.exist.dom.QName;
 import org.exist.xquery.BasicFunction;
@@ -62,7 +62,7 @@ import com.vividsolutions.jts.io.WKTWriter;
  */
 public class GeoFunctions extends BasicFunction {
     
-    private static final Logger LOG = LogManager.getLogger(GeoFunctions.class);
+    //private static final Logger LOG = LogManager.getLogger(GeoFunctions.class);
     
     public final static FunctionSignature[] signatures = new FunctionSignature[GeoModule.FUNC.size()];
     
