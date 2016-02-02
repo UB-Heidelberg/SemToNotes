@@ -1,1 +1,47 @@
-<div id="content" class="container"></div>
+<div id="content" class="container">
+<h1>Topological Retrieval</h1>
+<p>The topological retrieval system of SemToNotes is an implementation of the
+<a href="http://expath.org/spec/geo">EXPath Geo Module</a> for the
+<a href="http://exist-db.org/">eXist Native XML Database</a>.</p>
+<p>It allows textual and topological retrieval in a combined way by means of the
+<a href="https://www.w3.org/TR/xquery-30/">XQuery</a> language.</p>
+<h2><small>Example</small></h2>
+<h2>Installation</h2>
+<p>In the following it is described how to extend a standard eXist installation (eXist-2.0)
+on a Windows PC (Java 6) with the EXPath Geo Module of SemToNotes. Other eXist versions, Java versions and
+operating systems work accordingly.</p>
+<h3>Prequisites</h3>
+<p>Install <a href="http://www.oracle.com/technetwork/java/javaee/downloads/java-ee-sdk-6u3-jdk-6u29-downloads-523388.html">Java JDK 6</a>,
+<a href="https://code.google.com/archive/p/winant/">Ant</a> and <a href="https://git-scm.com/download/win">Git</a> on your PC.</p>
+<p>Download <a href="https://github.com/eXist-db/exist/archive/eXist-2.0.zip">eXist-2.0</a> and
+<a href="https://github.com/HKIKoeln/SemToNotes/archive/develop.zip">SemToNotes</a>.</p>
+<p>Unzip eXist and SemToNotes, both in the same folder, e.g., into <samp>C:\Users\me\exist-eXist-2.0</samp>
+and <samp>C:\Users\me\SemToNotes-develop</samp></p>
+<h3>Building and Integrating the EXPath Geo Module into eXist</h3>
+<h4>eXist</h4>
+<p>Open a terminal and move into directory <samp>C:\Users\me\exist-eXist-2.0</samp>.</p>
+<p>Type:<br>
+  <code>mkdir lib\extensions</code><br>
+  <code>mkdir extensions\modules\lib</code><br>
+  <code>.\build.bat</code>
+</p>
+<p>Configuration:<br></p>
+<h4>EXPath Geo Module</h4>
+<p>Move into directory <samp>C:\Users\me\SemToNotes-develop\server</samp>.</p>
+<p>Type:<br>
+  <code>ant setup</code> (downloads the <a href="http://www.vividsolutions.com/jts">Java Topology Suite (JTS)</a>)<br>
+  <code>ant jar</code> (creates <samp>exist-geo-0.5.jar</samp>)<br>
+  <code>ant install</code> (copies <samp>exist-geo-0.5.jar</samp> into the local eXist installation and configures eXist)
+</p>
+<h3>Hello EXPath Geo Module</h3>
+<p>Move into directory <samp>C:\Users\me\exist-eXist-2.0</samp>.</p>
+<p>Start eXist with <code>.\bin\startup.bat</code></p>
+<p>Open eXide in a browser, <a href="http://localhost:8080/exist/apps/eXide/index.html">http://localhost:8080/exist/apps/eXide/index.html</a>,
+and paste in the following query:</p>
+<pre class="lang-xquery prettyprint">xquery version "3.0";
+import module namespace geo="http://exist-db.org/xquery/geo";
+geo:num-points('POLYGON ((50 100, 100 100, 100 50, 50 50, 50 100))')
+</pre>
+<p>Evaluate the query. If you get <samp>5</samp> as a result and there are no error messages, everything works fine.</p>
+<h3>Well Known Text Format (WKT)</h3>
+</div>
