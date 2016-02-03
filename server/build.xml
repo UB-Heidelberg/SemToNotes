@@ -44,7 +44,7 @@
         <mkdir dir="${build.libs}"/>
         <mkdir dir="${tmp.dir}"/>
         <get src="http://www.vividsolutions.com/jts/bin/jts-1.8.0.zip"
-            dest="${tmp.dir}"/>
+            dest="${tmp.dir}/jts-1.8.0.zip"/>
         <unzip src="${tmp.dir}/jts-1.8.0.zip" dest="${tmp.dir}/jts"/>
         <copy file="${tmp.dir}/jts/lib/jts-1.8.jar" todir="${java.libs}"/>
         <copy file="${tmp.dir}/jts/lib/jtsio-1.8.jar" todir="${java.libs}"/>

@@ -165,6 +165,7 @@ xrx.demo.Demo.prototype.loadPage_example_ = function() {
     goog.net.XhrIo.send(url, function(e) {
       var src = e.target.getResponseText();
       if (demo.status_ === true) demo.installExample_(src, exampleId, type);
+      PR.prettyPrint();
     }, 'GET', undefined, { 'cache-control': 'no-cache' });
   };
   this.loadPage_('Example | SemToNotes', 'client/demo/example/' + 
