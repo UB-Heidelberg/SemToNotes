@@ -21,7 +21,7 @@
         proxyport="${proxy.port}" proxypassword="${proxy.password}" proxyuser="${proxy.user}"
         socksproxyhost="${proxy.socks.host}" socksproxyport="${proxy.socks.port}"/>
 
-    <!-- Seup build path -->
+    <!-- Setup build path -->
     <path id="classpath">
         <fileset dir="${exist.dir}">
             <include name="*.jar"/>
@@ -40,7 +40,7 @@
         </fileset>
     </path>
 
-    <target name="setup" description="Setup 3d party libraries">
+    <target name="setup" description="Download Java Topology Suite">
         <mkdir dir="${build.libs}"/>
         <mkdir dir="${tmp.dir}"/>
         <get src="http://www.vividsolutions.com/jts/bin/jts-1.8.0.zip"
@@ -136,6 +136,10 @@
         <copy todir="${exist.dir}/lib/user">
             <fileset dir="${java.libs}" includes="*.jar" excludes="*sources*,*javadoc*"/>
         </copy>
+        <copy file="${exist.dir}/conf.xml" tofile="${exist.dir}/conf.xml.original" />
+        <xslt in="${exist.dir}/conf.xml.original" style="exist.conf.xsl"
+            out="${exist.dir}/conf.xml">
+        </xslt>
     </target>
 
 </project>

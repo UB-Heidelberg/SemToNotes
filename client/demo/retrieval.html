@@ -6,6 +6,7 @@
 <p>It allows textual and topological retrieval in a combined way by means of the
 <a href="https://www.w3.org/TR/xquery-30/">XQuery</a> language.</p>
 <h2><small>Example</small></h2>
+<p>Currently, for a limited time, there is an eXist Sandbox available to play with topological queries.</p>
 <h2>Installation</h2>
 <p>In the following it is described how to extend a standard eXist installation (eXist-2.0)
 on a Windows PC (Java 6) with the EXPath Geo Module of SemToNotes. Other eXist versions, Java versions and
@@ -36,12 +37,14 @@ and <samp>C:\Users\me\SemToNotes-develop</samp></p>
 <h3>Hello EXPath Geo Module</h3>
 <p>Move into directory <samp>C:\Users\me\exist-eXist-2.0</samp>.</p>
 <p>Start eXist with <code>.\bin\startup.bat</code></p>
-<p>Open eXide in a browser, <a href="http://localhost:8080/exist/apps/eXide/index.html">http://localhost:8080/exist/apps/eXide/index.html</a>,
+<p>Open the eXide XQuery editor in a browser, <a href="http://localhost:8080/exist/apps/eXide/index.html">http://localhost:8080/exist/apps/eXide/index.html</a>,
 and paste in the following query:</p>
 <pre class="lang-xquery prettyprint">xquery version "3.0";
 import module namespace geo="http://exist-db.org/xquery/geo";
 geo:num-points('POLYGON ((50 100, 100 100, 100 50, 50 50, 50 100))')
 </pre>
 <p>Evaluate the query. If you get <samp>5</samp> as a result and there are no error messages, everything works fine.</p>
-<h3>Well Known Text Format (WKT)</h3>
+<h3>Usage</h3>
+<h4>Well Known Text Format (WKT)</h4>
+<h3>Usage Example from Codicology</h3>
 </div>
