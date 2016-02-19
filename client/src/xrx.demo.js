@@ -78,6 +78,7 @@ xrx.demo.Demo.prototype.loadPage_ = function(title, url, navbarLink,
     if (navbarLink) goog.dom.classes.add(navbarLink, 'active');
     if (navbarLink) self.activeNavbarLink_ = navbarLink;
     if (opt_callback !== undefined) opt_callback(self);
+    $('#app').app();
   }, 'GET', undefined, { 'cache-control': 'no-cache' });
 };
 

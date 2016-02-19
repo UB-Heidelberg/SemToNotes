@@ -361,7 +361,7 @@ xrx.drawing.Drawing.prototype.setBackgroundImage = function(url, opt_callback) {
   tmpImage.src = url;
   goog.events.listen(imageLoader, goog.events.EventType.LOAD, function(e) {
     self.layer_[0].setImage(e.target);
-    if (opt_callback) opt_callback();
+    if (opt_callback) opt_callback.apply(self);
     self.draw();
   });
   imageLoader.addImage('_tmp', tmpImage);
@@ -453,6 +453,7 @@ xrx.drawing.Drawing.prototype.setMode_ = function(mode) {
   if (mode !== this.mode_ || mode === xrx.drawing.Mode.CREATE) {
     this.mode_ = mode;
     this.registerEvents(mode);
+    this.draw();
   }
 };
 

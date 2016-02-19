@@ -101,6 +101,6 @@
   createShapeGroup(drawing5);
   drawing5.setModeCreate(drawing5.getShapes()[0].getCreatable());
 
-  return [drawing1, drawing2, drawing3, drawing4];
+  return [drawing1, drawing2, drawing3, drawing4, drawing5];
 
 })();

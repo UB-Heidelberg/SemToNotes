@@ -80,7 +80,7 @@ xrx.shape.Dragger.prototype.getRadius = function() {
  * @private
  */
 xrx.shape.Dragger.prototype.init_ = function(modifiable, pos) {
-  this.setRadius(5);
+  this.setRadius(3);
   this.setStrokeColor('black');
   this.setStrokeWidth(1);
   this.setFillColor('white');

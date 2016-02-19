@@ -165,18 +165,4 @@ for more information. Currently, all shapes are supported besides curve shapes.<
     </tr>
   </tbody>
 </table>
-<h3>A Simple Example</h3>
-<p>Combined textual / topological queries can be used, for example, to compute the average height of text lines annotated on a manuscript page.</p>
-<p>Imagine that a person annotating a manuscript page does not care about the order text lines appear on a page when annotating. The person does not start with the
-first text line but annotates some lines on the bottom, moves over to some illustrations or initials and finishes with text lines on the top.</p>
-<p>The order of elements in the resulting XML document thus does not represent the order of text lines on the manuscript page.</p>
-<code>
-</code>
-<p>A textual / topological query can compute the average line height in three steps:
-<ul>
-<li>sort out all annotations that do <em>not</em> mark lines</li>
-<li>order the line annotations with the help of their coordinates</li>
-<li>compute the average line height using the Y-coordinate of the centroid of each line annotation</li>
-</ul>
-</p>
 </div>
