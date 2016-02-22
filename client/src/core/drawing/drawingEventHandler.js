@@ -27,10 +27,8 @@ goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
 /**
  * 
  */
-xrx.drawing.EventHandler.prototype.eventShapeCreate = function(shapes) {
-  this.getLayerShapeCreate().addShapes(shapes);
-  this.draw();
-  //if (this.handleValueChanged) this.handleValueChanged();
+xrx.drawing.EventHandler.prototype.handleShapeCreate = function(shapes) {
+  this.creatable_.handleCreate(shapes);
 };
 
 
@@ -38,11 +36,8 @@ xrx.drawing.EventHandler.prototype.eventShapeCreate = function(shapes) {
 /**
  * 
  */
-xrx.drawing.EventHandler.prototype.eventShapeCreated = function(shape) {
-  this.getLayerShape().addShapes(shape);
-  this.getLayerShapeCreate().removeShapes();
-  this.draw();
-  //if (this.drawing_.handleCreated) this.draw ing_.handleCreated();
+xrx.drawing.EventHandler.prototype.handleShapeCreated = function(shape) {
+  this.creatable_.handleCreated(shape);
 };
 
 

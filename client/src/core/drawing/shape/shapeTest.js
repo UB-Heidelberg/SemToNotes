@@ -1,7 +1,4 @@
 
-
-
-
 function createTable(shapeName, $, mode) {
   return $.createDom('div', undefined,
     // mode view

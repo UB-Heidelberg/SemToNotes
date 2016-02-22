@@ -68,7 +68,7 @@
     $.app.shapeGroup = new xrx.shape.ShapeGroup($.app.drawing);
     $.app.shapeGroup.setStyle($.app.style);
     $.app.shapeGroup.getHoverable().setStyle($.app.styleHoverable);
-    //$.app.shapeGroup.getCreatable().setStyle($.app.styleCreatable);
+    $.app.shapeGroup.getCreatable().setStyle($.app.styleCreatable);
     var polygon = new xrx.shape.Polygon($.app.drawing);
     var line = new xrx.shape.Line($.app.drawing);
     $.app.shapeGroup.addChildren([polygon, line]);
@@ -103,7 +103,7 @@
           group = new xrx.shape.ShapeGroup($.app.drawing);
           group.setStyle($.app.style);
           group.getHoverable().setStyle($.app.styleHoverable);
-          //group.getCreatable().setStyle($.app.styleCreatable);
+          group.getCreatable().setStyle($.app.styleCreatable);
           polygon = new xrx.shape.Polygon($.app.drawing);
           polygon.setCoords(value.shapes._0.coords);
           line = new xrx.shape.Line($.app.drawing);
@@ -129,3 +129,4 @@
     });
   };
 }(jQuery));
+$('#app').app();

@@ -111,6 +111,19 @@ xrx.shape.RenderStylable.prototype.setZoomFactor = function(factor) {
 
 
 /**
+ * Copy all styles from another shape.
+ * @param {xrx.shape.Shape}
+ */
+xrx.shape.RenderStylable.prototype.setStyles = function(shape) {
+  this.setStyle(shape);
+  this.getHoverable().setStyle(shape.getHoverable());
+  this.getModifiable().setStyle(shape.getModifiable());
+  this.getSelectable().setStyle(shape.getSelectable());
+};
+
+
+
+/**
  * @private
  */
 xrx.shape.RenderStylable.prototype.setStyle = function(style) {

@@ -16,6 +16,7 @@ goog.require('goog.events.EventType');
 goog.require('goog.net.ImageLoader');
 goog.require('goog.style');
 goog.require('goog.userAgent');
+goog.require('xrx.drawing.Creatable');
 goog.require('xrx.drawing.EventHandler');
 goog.require('xrx.drawing.Hoverable');
 goog.require('xrx.drawing.LayerBackground');
@@ -114,7 +115,7 @@ xrx.drawing.Drawing = function(element, opt_engine) {
    * @type {Object}
    * @private
    */
-  this.creatable_;
+  this.creatable_ = new xrx.drawing.Creatable(this);
 
   /**
    * The view-box of the drawing canvas.
@@ -236,7 +237,7 @@ xrx.drawing.Drawing.prototype.getLayerShape = function() {
  * @return {xrx.drawing.LayerShapeModify} The shape modify layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
-  return this.layer_[2];
+  return this.layer_[3];
 };
 
 
@@ -246,7 +247,7 @@ xrx.drawing.Drawing.prototype.getLayerShapeModify = function() {
  * @return {xrx.drawing.LayerShapeCreate} The create layer object.
  */
 xrx.drawing.Drawing.prototype.getLayerShapeCreate = function() {
-  return this.layer_[3];
+  return this.layer_[2];
 };
 
 
@@ -393,7 +394,7 @@ xrx.drawing.Drawing.prototype.getShapes = function() {
 
 xrx.drawing.Drawing.prototype.removeShape = function(shape) {
   this.layer_[1].removeShape(shape);
-  this.layer_[2].removeShapes();
+  this.layer_[3].removeShapes();
   this.draw();
 };
 
@@ -567,10 +568,10 @@ xrx.drawing.Drawing.prototype.setModeCreate = function(creatable) {
   if (!(creatable instanceof xrx.shape.Creatable)) {
     throw Error('Instance of xrx.shape.Creatable expected.');
   }
-  this.creatable_ = creatable;
+  this.creatable_.setShapeCreatable(creatable);
   this.getLayerBackground().setLocked(true);
   this.getLayerShape().setLocked(true);
-  this.getLayerShapeModify().setLocked(true);
+  this.getLayerShapeModify().setLocked(false);
   this.getLayerShapeCreate().setLocked(false);
   this.getLayerShapeModify().removeShapes();
   this.getLayerShapeCreate().removeShapes();
@@ -667,8 +668,8 @@ xrx.drawing.Drawing.prototype.installLayerShape_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installLayerShapeModify_ = function() {
-  this.layer_[2] = new xrx.drawing.LayerShapeModify(this);
-  this.viewbox_.getGroup().addChildren(this.layer_[2].getGroup());
+  this.layer_[3] = new xrx.drawing.LayerShapeModify(this);
+  this.viewbox_.getGroup().addChildren(this.layer_[3].getGroup());
 };
 
 
@@ -677,8 +678,8 @@ xrx.drawing.Drawing.prototype.installLayerShapeModify_ = function() {
  * @private
  */
 xrx.drawing.Drawing.prototype.installLayerShapecreatable_ = function() {
-  this.layer_[3] = new xrx.drawing.LayerShapeCreate(this);
-  this.viewbox_.getGroup().addChildren(this.layer_[3].getGroup());
+  this.layer_[2] = new xrx.drawing.LayerShapeCreate(this);
+  this.viewbox_.getGroup().addChildren(this.layer_[2].getGroup());
 };
 
 
@@ -741,8 +742,8 @@ xrx.drawing.Drawing.prototype.install_ = function(opt_engine) {
     // install the drawing layers
     this.installLayerBackground_();
     this.installLayerShape_();
-    this.installLayerShapeModify_();
     this.installLayerShapecreatable_();
+    this.installLayerShapeModify_();
 
     // install a shield
     this.installShield_();

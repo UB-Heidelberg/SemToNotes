@@ -366,7 +366,7 @@ xrx.shape.EllipseCreatable.prototype.handleDown = function(e, cursor) {
   this.preview_.setCenter(point[0], point[1]);
   this.preview_.setRadiusX(0);
   this.preview_.setRadiusY(0);
-  this.target_.getDrawing().eventShapeCreate([this.preview_]);
+  this.target_.getDrawing().handleShapeCreate([this.preview_]);
 };
 
 
@@ -399,7 +399,7 @@ xrx.shape.EllipseCreatable.prototype.handleUp = function(e, cursor) {
   ellipse.setCenter(center[0], center[1]);
   ellipse.setRadiusX(this.preview_.getRadiusX());
   ellipse.setRadiusY(this.preview_.getRadiusY());
-  this.target_.getDrawing().eventShapeCreated(ellipse);
+  this.target_.getDrawing().handleShapeCreated(ellipse);
 };
 
 

@@ -33,6 +33,7 @@ function getShapeGroups(drawing) {
   selectableStyle.setStrokeColor('yellow');
   selectableStyle.setStrokeWidth(2);
   var modifiableStyle = selectableStyle;
+  var creatableStyle = selectableStyle;
   // fist shape group
   var style1 = new xrx.shape.Style();
   style1.setFillColor('purple');
@@ -44,6 +45,7 @@ function getShapeGroups(drawing) {
   shapeGroup1.getHoverable().setStyle(hoverableStyle);
   shapeGroup1.getModifiable().setStyle(modifiableStyle);
   shapeGroup1.getSelectable().setStyle(selectableStyle);
+  shapeGroup1.getCreatable().setStyle(creatableStyle);
   var circle1 = new xrx.shape.Circle(drawing);
   circle1.setCenter(100, 110);
   circle1.setRadius(40);
@@ -69,6 +71,7 @@ function getShapeGroups(drawing) {
   shapeGroup2.getHoverable().setStyle(hoverableStyle);
   shapeGroup2.getModifiable().setStyle(modifiableStyle);
   shapeGroup2.getSelectable().setStyle(selectableStyle);
+  shapeGroup2.getCreatable().setStyle(creatableStyle);
   var circle2 = new xrx.shape.Circle(drawing);
   circle2.setCenter(300, 310);
   circle2.setRadius(50);
@@ -88,6 +91,7 @@ function getShapeGroups(drawing) {
   shapeGroup3.getHoverable().setStyle(hoverableStyle);
   shapeGroup3.getModifiable().setStyle(modifiableStyle);
   shapeGroup3.getSelectable().setStyle(selectableStyle);
+  shapeGroup3.getCreatable().setStyle(creatableStyle);
   var ellipse3 = new xrx.shape.Ellipse(drawing);
   ellipse3.setCenter(270, 270);
   ellipse3.setRadiusX(150);
@@ -132,37 +136,18 @@ function test6Create() {
   var shapeName = 'ShapeGroup';
   if (xrx.engine.isSupported(xrx.engine.CANVAS)) {
     var canvasDrawing = getCanvasDrawing('canvas' + shapeName + 'Create');
-    var canvasShape = getShapeGroups(canvasDrawing)[0];
-    var canvasCreatable = canvasShape.getCreatable();
-    canvasCreatable.setStrokeColor('blue');
-    canvasCreatable.setStrokeWidth(5);
-    canvasCreatable.setFillColor('blue');
-    canvasCreatable.setFillOpacity(.2);
-    canvasDrawing.setModeCreate(canvasCreatable);
+    var canvasShape = getShapeGroups(canvasDrawing)[1];
+    canvasDrawing.setModeCreate(canvasShape.getCreatable());
   }
   if (xrx.engine.isSupported(xrx.engine.SVG)) {
     var svgDrawing = getSvgDrawing('svg' + shapeName + 'Create');
-    var svgShape = getShapeGroups(svgDrawing)[0];
-    var svgCreatable = svgShape.getCreatable();
-    svgCreatable.setStrokeColor('green');
-    svgCreatable.setStrokeWidth(5);
-    if (shapeName !== 'Polyline') {
-    svgCreatable.setFillColor('green');
-    svgCreatable.setFillOpacity(.2);
-    }
-    svgDrawing.setModeCreate(svgCreatable);
+    var svgShape = getShapeGroups(svgDrawing)[1];
+    svgDrawing.setModeCreate(svgShape.getCreatable());
   }
   if (xrx.engine.isSupported(xrx.engine.VML)) {
     var vmlDrawing = getVmlDrawing('vml' + shapeName + 'Create');
-    var vmlShape = getShapeGroups(vmlDrawing)[0];
-    var vmlCreatable = vmlShape.getCreatable();
-    vmlCreatable.setStrokeColor('red');
-    vmlCreatable.setStrokeWidth(5);
-    if (shapeName !== 'Polyline') {
-    vmlCreatable.setFillColor('red');
-    vmlCreatable.setFillOpacity(.2);
-    }
-    vmlDrawing.setModeCreate(vmlCreatable);
+    var vmlShape = getShapeGroups(vmlDrawing)[1];
+    vmlDrawing.setModeCreate(vmlShape.getCreatable());
   }
 };
 

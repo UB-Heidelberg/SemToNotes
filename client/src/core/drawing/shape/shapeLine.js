@@ -384,7 +384,7 @@ xrx.shape.LineCreatable.prototype.handleDown = function(e, cursor) {
   this.preview_.setY1(point[1]);
   this.preview_.setX2(point[0]);
   this.preview_.setY2(point[1]);
-  this.target_.getDrawing().eventShapeCreate([this.preview_]);
+  this.target_.getDrawing().handleShapeCreate([this.preview_]);
 };
 
 
@@ -411,7 +411,7 @@ xrx.shape.LineCreatable.prototype.handleUp = function(e, cursor) {
   line.setY1(this.preview_.getY1());
   line.setX2(point[0]);
   line.setY2(point[1]);
-  this.target_.getDrawing().eventShapeCreated(line);
+  this.target_.getDrawing().handleShapeCreated(line);
 };
 
 

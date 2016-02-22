@@ -294,7 +294,7 @@ xrx.shape.PolygonCreatable.prototype.handleDown = function(e, cursor) {
     this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
     this.close_.setCoords([point]);
     this.count_ += 1;
-    this.target_.getDrawing().eventShapeCreate([this.preview_, this.close_]);
+    this.target_.getDrawing().handleShapeCreate([this.preview_, this.close_]);
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
@@ -338,7 +338,7 @@ xrx.shape.PolygonCreatable.prototype.handleUp = function(e, cursor) {
     var polygon = new xrx.shape.Polygon(this.target_.getDrawing());
     polygon.setStyle(this.target_);
     polygon.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
-    this.target_.getDrawing().eventShapeCreated(polygon);
+    this.target_.getDrawing().handleShapeCreated(polygon);
     // reset for next drawing
     this.close_ = null;
     this.count_ = 0;

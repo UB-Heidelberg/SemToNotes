@@ -359,7 +359,7 @@ xrx.shape.CircleCreatable.prototype.handleDown = function(e, cursor) {
   this.point_[1] = point[1];
   this.preview_.setCenter(point[0], point[1]);
   this.preview_.setRadius(0);
-  this.target_.getDrawing().eventShapeCreate([this.preview_]);
+  this.target_.getDrawing().handleShapeCreate([this.preview_]);
 };
 
 
@@ -393,7 +393,7 @@ xrx.shape.CircleCreatable.prototype.handleUp = function(e, cursor) {
   circle.setStyle(this.target_);
   circle.setCenter(center[0], center[1]);
   circle.setRadius(this.preview_.getRadius());
-  this.target_.getDrawing().eventShapeCreated(circle);
+  this.target_.getDrawing().handleShapeCreated(circle);
 };
 
 

@@ -36,8 +36,20 @@ xrx.shape.Creatable = function(target, preview) {
 
 
 
-xrx.shape.Creatable.prototype.setStyle = function(stylable) {
-  this.preview_.setStyle(stylable);
+xrx.shape.Creatable.prototype.getTarget = function() {
+  return this.target_;
+};
+
+
+
+xrx.shape.Creatable.prototype.getPreview = function() {
+  return this.preview_;
+};
+
+
+
+xrx.shape.Creatable.prototype.setStyle = function(style) {
+  this.preview_.setStyle(style);
 };
 
 

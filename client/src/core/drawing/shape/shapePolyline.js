@@ -286,7 +286,7 @@ xrx.shape.PolylineCreatable.prototype.handleDown = function(e, cursor) {
     // update the poly-line preview
     this.preview_.setCoords([point, goog.array.clone(point)]);
     this.count_ += 1;
-    this.target_.getDrawing().eventShapeCreate([this.preview_]);
+    this.target_.getDrawing().handleShapeCreate([this.preview_]);
   } else if (this.close_ && shape === this.close_ && this.count_ === 1) {
     // Do nothing if the user tries to close the path at the time
     // when there is only one point yet
@@ -330,7 +330,7 @@ xrx.shape.PolylineCreatable.prototype.handleUp = function(e, cursor) {
     var polyline = new xrx.shape.Polyline(this.target_.getDrawing());
     polyline.setStyle(this.target_);
     polyline.setCoords(this.preview_.getCoordsCopy().splice(0, this.count_));
-    this.target_.getDrawing().eventShapeCreated(polyline);
+    this.target_.getDrawing().handleShapeCreated(polyline);
     // reset for next drawing
     this.close_ = null;
     this.count_ = 0;
@@ -340,7 +340,7 @@ xrx.shape.PolylineCreatable.prototype.handleUp = function(e, cursor) {
     // create the closing point as soon as the user creates the second point
     if (this.count_ === 1) {
       this.close_ = new xrx.shape.Dragger(this.target_.getModifiable(), 0);
-      this.target_.getDrawing().eventShapeCreate([this.close_]);
+      this.target_.getDrawing().handleShapeCreate([this.close_]);
     }
     this.close_.setCoords([point]);
     this.count_ += 1;

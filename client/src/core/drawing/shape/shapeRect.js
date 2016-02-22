@@ -396,7 +396,7 @@ xrx.shape.RectCreatable.prototype.handleDown = function(e, cursor) {
   coords[2] = goog.array.clone(point);
   coords[3] = goog.array.clone(point);
   this.preview_.setCoords(coords);
-  this.target_.getDrawing().eventShapeCreate([this.preview_]);
+  this.target_.getDrawing().handleShapeCreate([this.preview_]);
 };
 
 
@@ -419,7 +419,7 @@ xrx.shape.RectCreatable.prototype.handleUp = function(e, cursor) {
   var rect = new xrx.shape.Rect(this.target_.getDrawing());
   rect.setStyle(this.target_);
   rect.setCoords(this.preview_.getCoordsCopy());
-  this.target_.getDrawing().eventShapeCreated(rect);
+  this.target_.getDrawing().handleShapeCreated(rect);
 };
 
 

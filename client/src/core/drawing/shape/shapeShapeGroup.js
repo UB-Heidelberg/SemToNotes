@@ -171,42 +171,37 @@ xrx.shape.ShapeGroupCreatable = function(shapeGroup) {
 
   goog.base(this, shapeGroup, new xrx.shape.ShapeGroup(shapeGroup.getDrawing()));
   
-  this.current_ = 0;
-  
-  var self = this;
-  
-  this.target_.getDrawing().eventShapeCreated = function(shape) {
-    self.preview_.addChildren(shape);
-    if (self.current_ < self.target_.getChildren().length - 1) {
-      self.current_++;
-    } else {
-      var shapeGroup = new xrx.shape.ShapeGroup(self.target_.getDrawing());
-      shapeGroup.addChildren(self.preview_.getChildren());
-      shapeGroup.setStyle(self.target_);
-      self.target_.getDrawing().getLayerShape().addShapes(shapeGroup);
-      self.target_.getDrawing().getLayerShapeCreate().removeShapes();
-      self.target_.getDrawing().draw();
-      self.current_ = 0;
-      self.preview_.removeChildren();
-    }
-  };
+  this.current = 0;
 };
 goog.inherits(xrx.shape.ShapeGroupCreatable, xrx.shape.Creatable);
 
 
 
+xrx.shape.ShapeGroupCreatable.prototype.allShapesCreated = function() {
+  return this.current === this.target_.getChildren().length - 1;
+};
+
+
+
+xrx.shape.ShapeGroupCreatable.prototype.reset = function() {
+  this.current = 0;
+  this.preview_.removeChildren();
+};
+
+
+
 xrx.shape.ShapeGroupCreatable.prototype.handleDown = function(e, cursor) {
-  this.target_.getChild(this.current_).getCreatable().handleDown(e, cursor);
+  this.target_.getChild(this.current).getCreatable().handleDown(e, cursor);
 };
 
 
 
 xrx.shape.ShapeGroupCreatable.prototype.handleMove = function(e, cursor) {
-  this.target_.getChild(this.current_).getCreatable().handleMove(e, cursor);
+  this.target_.getChild(this.current).getCreatable().handleMove(e, cursor);
 };
 
 
 
 xrx.shape.ShapeGroupCreatable.prototype.handleUp = function(e, cursor) {
-  this.target_.getChild(this.current_).getCreatable().handleUp(e, cursor);
+  this.target_.getChild(this.current).getCreatable().handleUp(e, cursor);
 };

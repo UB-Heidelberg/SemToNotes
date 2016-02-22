@@ -1,6 +1,6 @@
 /**
- * @fileoverview A class offering configurable information
- * about the mouse, respectively, the touch point.
+ * @fileoverview A class offering information
+ * about the mouse point or the touch point.
  * @private
  */
 
@@ -13,88 +13,109 @@ goog.require('goog.Disposable');
 
 
 /**
- * @constructor
+ * @constructor A class offering information
+ * about the mouse point or the touch point.
  * @private
  */
 xrx.drawing.Cursor = function(drawing) {
 
   goog.base(this);
 
+  /**
+   * The parent drawing canvas.
+   * @type {xrx.drawing.Drawing}
+   */
   this.drawing_ = drawing;
 
-  this.needPoint_ = false;
-
+  /**
+   * The mouse or touch point relative to the drawing canvas,
+   * ignoring view-box transformations.
+   * @type {Array<number>}
+   */
   this.point = null;
 
-  this.needPointTransformed_ = false;
-
+  /**
+   * The mouse or touch point relative to the view-box,
+   * respecting view-box transformations.
+   * @type {Array<number>}
+   */
   this.pointTransformed_ = null;
 
-  this.needShape_ = false;
-
+  /**
+   * The foremost shape currently selected by the mouse or touch point.
+   * @type {xrx.shape.Shape}
+   */
   this.shape_ = null;
 
-  this.needShapes_ = false;
-
+  /**
+   * The shapes currently selected by the mouse or touch point,
+   * including overlapping shapes.
+   * @type {Array<xrx.shape.Shape>}
+   */
   this.shapes_ = null;
+  
+  /**
+   * The current browser event.
+   * @type {goog.events.BrowserEvent}
+   */
+  this.event_ = null;
 };
 goog.inherits(xrx.drawing.Cursor, goog.Disposable);
 
 
 
+/**
+ * Returns the mouse or touch point relative to the drawing canvas,
+ * ignoring view-box transformations.
+ * @return {Array<number>}
+ */
 xrx.drawing.Cursor.prototype.getPoint = function() {
+  if (this.point_ === null) this.calculatePoint_(); 
   return this.point_;
 };
 
 
 
+/**
+ * Returns the mouse or touch point relative to the view-box,
+ * respecting view-box transformations.
+ * @return {Array<number>}
+ */
 xrx.drawing.Cursor.prototype.getPointTransformed = function() {
+  if (this.pointTransformed_ === null) this.calculatePointTransformed_(); 
   return this.pointTransformed_;
 };
 
 
 
+/**
+ * Returns the foremost shape currently selected by the mouse or touch point.
+ * @type {xrx.shape.Shape}
+ */
 xrx.drawing.Cursor.prototype.getShape = function() {
+  if (this.shape_ === null) this.calculateShape_();
   return this.shape_;
 };
 
 
 
+/**
+ * Returns the shapes currently selected by the mouse or touch point,
+ * including overlapping shapes.
+ * @type {Array<xrx.shape.Shape>}
+ */
 xrx.drawing.Cursor.prototype.getShapes = function() {
+  if (this.shapes_ === null) this.calculateShapes_();
   return this.shapes_;
 };
 
 
 
-xrx.drawing.Cursor.prototype.reset = function() {
-  this.needPoint_ = false;
-  this.needPointTransformed_ = false;
-  this.needShape_ = false;
-  this.needShapes_ = false;
-};
-
-
-
-xrx.drawing.Cursor.prototype.needPoint = function() {
-  this.needPoint_ = true;
-};
-
-
-
-xrx.drawing.Cursor.prototype.needPointTransformed = function() {
-  this.needPointTransformed_ = true;
-};
-
-
-
-xrx.drawing.Cursor.prototype.needShape = function() {
-  this.needShape_ = true;
-};
-
-
-
-xrx.drawing.Cursor.prototype.needShapes = function() {
-  this.needShapes_ = true;
+/**
+ * @private
+ */
+xrx.drawing.Cursor.prototype.calculatePoint_ = function() {
+  this.point_ = this.drawing_.getOffsetPoint(this.event_);
 };
 
 
@@ -102,9 +123,9 @@ xrx.drawing.Cursor.prototype.needShapes = function() {
 /**
  * @private
  */
-xrx.drawing.Cursor.prototype.calculatePoint_ = function(e) {
-  this.needPoint_ ? this.point_ = this.drawing_.getOffsetPoint(e) :
-      this.point_ = null;
+xrx.drawing.Cursor.prototype.calculatePointTransformed_ = function() {
+  if (this.point_ === null) this.calculatePoint_();
+  this.pointTransformed_ = this.drawing_.getViewbox().getCTM().transformPoint(this.point_);
 };
 
 
@@ -112,11 +133,9 @@ xrx.drawing.Cursor.prototype.calculatePoint_ = function(e) {
 /**
  * @private
  */
-xrx.drawing.Cursor.prototype.calculatePointTransformed_ = function(e) {
-  if (this.point_ === null) this.calculatePoint_(e);
-  this.needPointTransformed_ ? this.pointTransformed_ =
-      this.drawing_.getViewbox().getCTM().transformPoint(this.point_) :
-      this.pointTransformed_ = null;
+xrx.drawing.Cursor.prototype.calculateShape_ = function() {
+  if (this.pointTransformed_ === null) this.calculatePointTransformed_();
+  this.shape_ = this.drawing_.getShapeSelected(this.pointTransformed_);
 };
 
 
@@ -124,31 +143,20 @@ xrx.drawing.Cursor.prototype.calculatePointTransformed_ = function(e) {
 /**
  * @private
  */
-xrx.drawing.Cursor.prototype.calculateShape_ = function(e) {
-  if (this.pointTransformed_ === null) this.calculatePointTransformed_(e);
-  this.needShape_ ? this.shape_ = this.drawing_.getShapeSelected(this.pointTransformed_) :
-      this.shape_ = null;
+xrx.drawing.Cursor.prototype.calculateShapes_ = function() {
+  if (this.pointTransformed_ === null) this.calculatePointTransformed_();
+  this.shapes_ = this.drawing_.getShapesSelected(this.pointTransformed_);
 };
 
 
 
 /**
- * @private
+ * Initializes the cursor with a new event.
  */
-xrx.drawing.Cursor.prototype.calculateShapes_ = function(e) {
-  if (this.pointTransformed_ === null) this.calculatePointTransformed_(e);
-  this.needShapes_ ? this.shapes_ = this.drawing_.getShapesSelected(this.pointTransformed_) :
-      this.shapes_ = null;
-};
-
-
-
-/**
- * Calculates cursor information as configured.
- */
-xrx.drawing.Cursor.prototype.calculate = function(e) {
-  this.calculatePoint_(e);
-  this.calculatePointTransformed_(e);
-  this.calculateShape_(e);
-  this.calculateShapes_(e);
+xrx.drawing.Cursor.prototype.init = function(e) {
+  this.point_ = null;
+  this.pointTransformed_ = null;
+  this.shape_ = null;
+  this.shapes_ = null;
+  this.event_ = e;
 };

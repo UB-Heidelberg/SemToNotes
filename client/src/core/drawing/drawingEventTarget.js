@@ -66,7 +66,7 @@ xrx.event.HandlerTarget.prototype.getHandler = function() {
  * @private
  */
 xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
-  this.cursor_.calculate(e);
+  this.cursor_.init(e);
   e.preventDefault();
   e.stopPropagation();
   // re-initialize the browser event in the case of mobile touch events
@@ -233,55 +233,37 @@ xrx.event.HandlerTarget.prototype.disposeInternal = function() {
  */
 xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
   this.handler_.removeAll();
-  this.cursor_.reset();
   switch(mode) {
   case undefined:
   case xrx.drawing.Mode.DISABLED:
     break;
   case xrx.drawing.Mode.VIEW:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
     this.registerDblClick(this.viewbox_);
     this.registerDrag(this.viewbox_);
     this.registerOut(this.viewbox_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.SELECT:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
-    this.cursor_.needShape();
     this.registerDown(this.selectable_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.MODIFY:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
-    this.cursor_.needShape();
     this.registerDrag(this.modifiable_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.CREATE:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
-    this.cursor_.needShape();
     this.registerDown(this.creatable_);
     this.registerMove(this.creatable_);
     this.registerUp(this.creatable_);
     this.registerWheel(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVER:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
-    this.cursor_.needShape();
     this.registerHover(this.hoverable_);
     this.registerOut(this.hoverable_);
     this.registerWheel(this.viewbox_);
     this.registerDrag(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVERMULTIPLE:
-    this.cursor_.needPoint();
-    this.cursor_.needPointTransformed();
-    this.cursor_.needShapes();
     this.registerHover(this.hoverable_);
     this.registerOut(this.hoverable_);
     this.registerWheel(this.viewbox_);
