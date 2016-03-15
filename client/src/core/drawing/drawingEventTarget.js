@@ -4,7 +4,7 @@
  * @private
  */
 
-goog.provide('xrx.event.HandlerTarget');
+goog.provide('xrx.drawing.EventTarget');
 
 
 
@@ -32,7 +32,7 @@ goog.require('xrx.shape.Shapes');
  * @constructor
  * @private
  */
-xrx.event.HandlerTarget = function() {
+xrx.drawing.EventTarget = function() {
 
   goog.base(this);
 
@@ -47,8 +47,37 @@ xrx.event.HandlerTarget = function() {
    * @type {xrx.drawing.Cursor}
    */
   this.cursor_ = new xrx.drawing.Cursor(this);
+
+
+  /**
+   * The event target. If xrx.drawing.EventTarget.DRAWING, panning is possible,
+   * just dragging of image otherwise.
+   * @type {xrx.drawing.EventTarget.DRAWING|xrx.drawing.EventTarget.VIEWBOX}
+   */
+  this.eventTarget_ = xrx.drawing.EventTarget.DRAWING;
 };
-goog.inherits(xrx.event.HandlerTarget, goog.Disposable);
+goog.inherits(xrx.drawing.EventTarget, goog.Disposable);
+
+
+
+xrx.drawing.EventTarget.DRAWING = 'DRAWING';
+
+
+
+xrx.drawing.EventTarget.VIEWBOX = 'VIEWBOX';
+
+
+
+/**
+ * Either makes the drawing canvas or just the background image the target for all events.
+ * @param {xrx.drawing.EventTarget.DRAWING|xrx.drawing.EventTarget.VIEWBOX} target The target.
+ */
+xrx.drawing.EventTarget.prototype.setEventTarget = function(target) {
+  if (target !== xrx.drawing.EventTarget.DRAWING &&
+      target !== xrx.drawing.EventTarget.VIEWBOX) throw Error('xrx.drawing.EventTarget.DRAWING' +
+      ' or xrx.drawing.EventTarget.VIEWBOX expected.');
+  this.eventTarget_ = target;
+};
 
 
 
@@ -56,7 +85,7 @@ goog.inherits(xrx.event.HandlerTarget, goog.Disposable);
  * Returns the event handler of this drawing canvas.
  * @return {goog.events.EventHandler} The event handler.
  */
-xrx.event.HandlerTarget.prototype.getHandler = function() {
+xrx.drawing.EventTarget.prototype.getHandler = function() {
   return this.handler_;
 };
 
@@ -65,15 +94,19 @@ xrx.event.HandlerTarget.prototype.getHandler = function() {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
+xrx.drawing.EventTarget.prototype.registerEvent_ = function(e, handler, event) {
   this.cursor_.init(e);
-  e.preventDefault();
-  e.stopPropagation();
-  // re-initialize the browser event in the case of mobile touch events
-  if (e.getBrowserEvent().changedTouches) 
-      e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
-  handler[event](e, this.cursor_);
-  this.draw();
+  var isInViewbox = this.viewbox_.containsPoint(this.cursor_.getPoint());
+  if ((this.eventTarget_ === xrx.drawing.EventTarget.VIEWBOX && isInViewbox) ||
+        this.eventTarget_ === xrx.drawing.EventTarget.DRAWING) {
+    e.preventDefault();
+    e.stopPropagation();
+    // re-initialize the browser event in the case of mobile touch events
+    if (e.getBrowserEvent().changedTouches) 
+        e.init(e.getBrowserEvent().changedTouches[0], e.currentTarget);
+    handler[event](e, this.cursor_);
+    this.draw();
+  }
 };
 
 
@@ -82,7 +115,7 @@ xrx.event.HandlerTarget.prototype.registerEvent_ = function(e, handler, event) {
  * Function registers a click event which is propagated to a handler object.
  * @param {Object} The handler object.
  */
-xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
+xrx.drawing.EventTarget.prototype.registerClick = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -98,7 +131,7 @@ xrx.event.HandlerTarget.prototype.registerClick = function(handler) {
  * Function registers a double-click event which is propagated to a handler object.
  * @param {Object} The handler object.
  */
-xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
+xrx.drawing.EventTarget.prototype.registerDblClick = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -113,7 +146,7 @@ xrx.event.HandlerTarget.prototype.registerDblClick = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerDown = function(handler) {
+xrx.drawing.EventTarget.prototype.registerDown = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -129,7 +162,7 @@ xrx.event.HandlerTarget.prototype.registerDown = function(handler) {
  * Function registers a drag event which is propagated to a handler object.
  * @param {Object} The handler object.
  */
-xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
+xrx.drawing.EventTarget.prototype.registerDrag = function(handler) {
   this.registerDown(handler);
   this.registerMove(handler);
   this.registerUp(handler);
@@ -140,7 +173,7 @@ xrx.event.HandlerTarget.prototype.registerDrag = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerMove = function(handler) {
+xrx.drawing.EventTarget.prototype.registerMove = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -155,7 +188,7 @@ xrx.event.HandlerTarget.prototype.registerMove = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerHover = function(handler) {
+xrx.drawing.EventTarget.prototype.registerHover = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -171,7 +204,7 @@ xrx.event.HandlerTarget.prototype.registerHover = function(handler) {
  * Function registers a mouse out event which is propagated to a handler object.
  * @param {Object} The handler object.
  */
-xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
+xrx.drawing.EventTarget.prototype.registerOut = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -186,7 +219,7 @@ xrx.event.HandlerTarget.prototype.registerOut = function(handler) {
 /**
  * @private
  */
-xrx.event.HandlerTarget.prototype.registerUp = function(handler) {
+xrx.drawing.EventTarget.prototype.registerUp = function(handler) {
   var self = this;
   this.handler_.listen(
     self.canvas_.getEngineElement().getEventTarget(),
@@ -202,7 +235,7 @@ xrx.event.HandlerTarget.prototype.registerUp = function(handler) {
  * Function registers a wheel event which is propagated to a handler object.
  * @param {Object} The handler object.
  */
-xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
+xrx.drawing.EventTarget.prototype.registerWheel = function(handler) {
   if (goog.userAgent.MOBILE) return;
   var self = this;
   var mwh = new goog.events.MouseWheelHandler(self.canvas_.getEngineElement().getEventTarget());
@@ -217,7 +250,7 @@ xrx.event.HandlerTarget.prototype.registerWheel = function(handler) {
 /**
  * @override
  */
-xrx.event.HandlerTarget.prototype.disposeInternal = function() {
+xrx.drawing.EventTarget.prototype.disposeInternal = function() {
   if (this.handler_) {
     this.handler_.dispose();
     this.handler_ = null;
@@ -231,7 +264,7 @@ xrx.event.HandlerTarget.prototype.disposeInternal = function() {
  * drawing canvas.
  * @param {string} The mode.
  */
-xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
+xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
   this.handler_.removeAll();
   switch(mode) {
   case undefined:
@@ -277,7 +310,7 @@ xrx.event.HandlerTarget.prototype.registerEvents = function(mode) {
 
 
 
-xrx.event.HandlerTarget.prototype.disposeInternal = function() {
+xrx.drawing.EventTarget.prototype.disposeInternal = function() {
   this.handler_.removeAll();
   this.handler_.dispose();
   this.handler_ = null;

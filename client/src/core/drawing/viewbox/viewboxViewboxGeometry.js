@@ -24,7 +24,11 @@ xrx.viewbox.ViewboxGeometry = function() {
 
   goog.base(this);
 
-  this.testPoint_ = new Array(2);
+  this.box_ = new Array(4);
+  
+  this.xy_ = new Array(2);
+  
+  this.wh_ = new Array(2);
 };
 goog.inherits(xrx.viewbox.ViewboxGeometry, xrx.EventTarget);
 
@@ -84,23 +88,33 @@ xrx.viewbox.ViewboxGeometry.prototype.getHeight = function(opt_transformed, opt_
  * @private
  */
 xrx.viewbox.ViewboxGeometry.prototype.getBox = function() {
-  var box;
   var rotation = this.getRotation();
-  var transformed = new Array(4);
-  var width = this.getWidth();
-  var height = this.getHeight();
-  var coords = [0, 0, width, height]
-  this.ctm_.transform(coords, 0, transformed, 0, 4);
+  var width = this.getWidth(false, false);
+  var height = this.getHeight(false, false);
+  this.ctm_.transform([0, 0], 0, this.xy_, 0, 1);
+  this.ctm_.transform([width, height], 0, this.wh_, 0, 1);
   if (rotation === 0) {
-    box = [transformed[1], transformed[2], transformed[3], transformed[0]];
+    this.box_[0] = this.xy_[1];
+    this.box_[1] = this.wh_[0];
+    this.box_[2] = this.wh_[1];
+    this.box_[3] = this.xy_[0];
   } else if (rotation === 90) {
-    box = [transformed[2], transformed[3], transformed[0], transformed[1]];
+    this.box_[0] = this.xy_[1];
+    this.box_[1] = this.xy_[0];
+    this.box_[2] = this.wh_[1];
+    this.box_[3] = this.wh_[0];
   } else if (rotation === 180) {
-    box = [transformed[3], transformed[0], transformed[1], transformed[2]];
+    this.box_[0] = this.wh_[1];
+    this.box_[1] = this.xy_[0];
+    this.box_[2] = this.xy_[1];
+    this.box_[3] = this.wh_[0];
   } else {
-    box = [transformed[0], transformed[1], transformed[2], transformed[3]];
+    this.box_[0] = this.wh_[1];
+    this.box_[1] = this.wh_[0];
+    this.box_[2] = this.xy_[1];
+    this.box_[3] = this.xy_[0];
   }
-  return box;
+  return this.box_;
 };
 
 
@@ -197,6 +211,6 @@ xrx.viewbox.ViewboxGeometry.prototype.getFixPoint_ = function(orientation,
  * Disposes this view-box.++
  */
 xrx.viewbox.ViewboxGeometry.prototype.disposeInternal = function() {
-  this.testPoint_ = null;
+  this.box_ = null;
   goog.base(this, 'disposeInternal');
 };

@@ -8,7 +8,7 @@ goog.provide('xrx.drawing.EventHandler');
 
 
 goog.require('goog.style');
-goog.require('xrx.event.HandlerTarget');
+goog.require('xrx.drawing.EventTarget');
 
 
 
@@ -20,7 +20,7 @@ xrx.drawing.EventHandler = function() {
 
   goog.base(this);
 };
-goog.inherits(xrx.drawing.EventHandler, xrx.event.HandlerTarget);
+goog.inherits(xrx.drawing.EventHandler, xrx.drawing.EventTarget);
 
 
 

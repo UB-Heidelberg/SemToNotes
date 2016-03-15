@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>XRX++ Unit Tests - xrx.drawing.DrawingEventTarget</title>
-<script src='../../../../lib/closure-library/closure/goog/base.js'></script>
-<script src='../../../deps.js'></script>
+<title>XRX++ Unit Tests - xrx.drawing.EventTarget</title>
+<script src='../../../lib/closure-library/closure/goog/base.js'></script>
+<script src='../../deps.js'></script>
 <script type="text/javascript">
-  goog.require('goog.events');
-  goog.require('goog.events.EventHandler');
   goog.require('goog.testing.jsunit');
   goog.require('goog.dom.DomHelper');
-  goog.require('xrx');
+  goog.require('xrx.api.drawing');
 </script>
 </head>
 <body>
 
-<div id="drawing" style="display:none"></div>
+<div id="drawing1" style="display:none"></div>
+<h1>EventTarget Drawing</h1>
+<div id="drawing2"></div>
+<h1>EventTarget Viewbox</h1>
+<div id="drawing3"></div>
 
 <script type="text/javascript">
 
-function test1RegisterUnregister() {
-  var div = goog.dom.getElement('drawing');
+function stest1RegisterUnregister() {
+  var div = goog.dom.getElement('drawing1');
   var drawing = new xrx.drawing.Drawing(div, xrx.engine.CANVAS);
   var target = drawing.getCanvas().getElement();
   var handler = drawing.getHandler();
@@ -48,6 +50,33 @@ function test1RegisterUnregister() {
 
   drawing.unregisterAll();
   assertEquals(0, handler.getListenerCount());
+};
+
+
+
+function test2EventTargetDrawing() {
+  var div = goog.dom.getElement('drawing2');
+  var drawing = new xrx.drawing.Drawing(div);
+  drawing.setModeView();
+  drawing.setStyle('width', '100%');
+  drawing.setHeight(500);
+  var url = '../../../../data/SachsenspiegelHeidelberg/Bilder-34553-28167-1600.jpg'
+  drawing.setBackgroundImage(url, function() {
+  });
+};
+
+
+
+function test3EventTargetViewbox() {
+  var div = goog.dom.getElement('drawing3');
+  var drawing = new xrx.drawing.Drawing(div);
+  drawing.setModeView();
+  drawing.setEventTarget(xrx.drawing.EventTarget.VIEWBOX);
+  drawing.setStyle('width', '100%');
+  drawing.setHeight(500);
+  var url = '../../../../data/SachsenspiegelHeidelberg/Bilder-34553-28167-1600.jpg'
+  drawing.setBackgroundImage(url, function() {
+  });
 };
 
 </script>
