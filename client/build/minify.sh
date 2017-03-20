@@ -1,5 +1,5 @@
 
-./lib/closure-library/closure/bin/build/closurebuilder.py \
+python ./lib/closure-library/closure/bin/build/closurebuilder.py \
   --root=./lib/closure-library/ \
   --root=./src \
   --namespace="xrx.api.drawing" \
@@ -8,7 +8,7 @@
   --compiler_flags="--compilation_level=SIMPLE_OPTIMIZATIONS" \
   > ./xrx.api.drawing.min.js
 
-  ./lib/closure-library/closure/bin/build/closurebuilder.py \
+python ./lib/closure-library/closure/bin/build/closurebuilder.py \
   --root=./lib/closure-library/ \
   --root=./src \
   --namespace="xrx.demo" \
