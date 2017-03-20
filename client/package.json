@@ -4,7 +4,7 @@
   "description": "Semantic Topological Notes: A Topological Image Annotation and Image Retrieval System",
   "main": "xrx.api.drawing.min.node.js",
   "scripts": {
-    "prepublish": "cp xrx.api.drawing.min.js xrx.api.drawing.min.node.js; echo 'module.exports = xrx' >> xrx.api.drawing.min.node.js",
+    "prepublish": "make node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -1,6 +1,10 @@
 PYTHON = python
 
+.PHONY: build
 build: xrx.api.drawing.min.node.js
+
+.PHONY: node
+node: xrx.api.drawing.min.node.js
 
 deps.js:
 	cd src && $(PYTHON) ../lib/closure-library/closure/bin/build/depswriter.py --root_with_prefix=". ../../../../src" > "$@"
