@@ -197,6 +197,11 @@ xrx.viewbox.ViewboxGeometry.prototype.getFixPoint_ = function(orientation,
   var fixPoints = this.getFixPoints_();
   var fixPoint = !opt_visible ? fixPoints[orientation] :
       fixPoints[this.getVisibleOrientation_(orientation)];
+if (!fixPoint) {
+    console.error("fixPoint could not be determined. Is the element containing the canvas visible?");
+}
+    // console.log(this)
+ // if (!fixPoint) fixPoint = [0,0]
   if (opt_transformed === true) {
     var point = new Array(2);
     this.ctm_.transform(fixPoint, 0, point, 0, 1);
