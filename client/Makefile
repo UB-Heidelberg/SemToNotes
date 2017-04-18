@@ -21,7 +21,7 @@ xrx.api.drawing.min.js: deps.js
 
 xrx.api.drawing.min.node.js: xrx.api.drawing.min.js
 	cp "$<" "$@"
-	echo 'module.exports = {xrx: xrx, goog: goog}' >> "$@"
+	echo 'module.exports = xrx; module.exports.goog = goog' >> "$@"
 
 xrx.demo.min.js:
 	python ./lib/closure-library/closure/bin/build/closurebuilder.py \
