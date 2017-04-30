@@ -88,6 +88,7 @@ xrx.drawing.EventType = {
   VIEWBOX_CHANGE: 'eventViewboxChange',
   SHAPE_MODIFY: 'eventShapeModify',
   SHAPE_CREATED: 'eventShapeCreated',
+  SHAPE_SELECTED: 'eventShapeSelected',
   SHAPE_HOVER_IN: 'eventShapeHoverIn',
   SHAPE_HOVER_MOVE: 'eventShapeHoverMove',
   SHAPE_HOVER_OUT: 'eventShapeHoverOut',
