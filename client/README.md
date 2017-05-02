@@ -1,5 +1,14 @@
 # SemToNotes Client
 
+## Usage
+
+Serve `./xrx.api.drawing.min.js` or use unpkg for testing:
+
+```html
+<script src="https://unpkg.com/semtonotes-client@0.1.3"></script>
+```
+
+
 ## Building
 
 ```sh
