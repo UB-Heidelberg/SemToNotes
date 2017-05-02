@@ -5,7 +5,7 @@
 Serve `./xrx.api.drawing.min.js` or use unpkg for testing:
 
 ```html
-<script src="https://unpkg.com/semtonotes-client@0.1.3"></script>
+<script src="https://unpkg.com/semtonotes-client@0.2.0"></script>
 ```
 
 
