@@ -1,7 +1,7 @@
 PYTHON = python
 
 .PHONY: build
-build: xrx.api.drawing.min.node.js
+build: xrx.api.drawing.min.js
 
 .PHONY: node
 node: xrx.api.drawing.min.node.js
@@ -21,7 +21,7 @@ xrx.api.drawing.min.js: deps.js
 
 xrx.api.drawing.min.node.js: xrx.api.drawing.min.js
 	cp "$<" "$@"
-	echo 'module.exports = xrx; module.exports.goog = goog' >> "$@"
+	echo 'module.exports = xrx; module.exports.xrx = xrx; module.exports.goog = goog' >> "$@"
 
 xrx.demo.min.js:
 	python ./lib/closure-library/closure/bin/build/closurebuilder.py \
