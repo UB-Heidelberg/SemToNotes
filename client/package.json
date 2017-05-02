@@ -4,17 +4,15 @@
   "description": "Semantic Topological Notes: A Topological Image Annotation and Image Retrieval System",
   "main": "xrx.api.drawing.min.node.js",
   "scripts": {
-    "prepublish": "make node",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "make node"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/HKIKoeln/SemToNotes.git"
-  },
+  "repository": "github:HKIKoeln/SemToNotes",
   "author": "Jochen Graf, Dulip Withanage",
   "license": "GPL-2.0",
-  "bugs": {
-    "url": "https://github.com/HKIKoeln/SemToNotes/issues"
-  },
-  "homepage": "https://github.com/HKIKoeln/SemToNotes#readme"
+  "bugs": "https://github.com/HKIKoeln/SemToNotes/issues",
+  "homepage": "https://github.com/HKIKoeln/SemToNotes#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0"
+  }
 }

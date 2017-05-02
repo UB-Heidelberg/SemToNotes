@@ -5,3 +5,5 @@ lib
 res
 src
 xrx.demo.min.js
+xrx.api.drawing.min.js
+dist/xrx.js.map
