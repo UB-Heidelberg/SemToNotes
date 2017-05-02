@@ -1,0 +1,10 @@
+/exist/
+server/build/classes/
+server/build/
+server/dist/
+server/config/library/exist.xml
+server/config/library/expath-pkg.xml
+server/config/library/repo.xml
+.DS_Store
+client/xrx.api.drawing.min.node.js
+client/node_modules
