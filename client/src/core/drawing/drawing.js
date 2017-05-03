@@ -86,6 +86,7 @@ xrx.drawing.Position = {
  */
 xrx.drawing.EventType = {
   VIEWBOX_CHANGE: 'eventViewboxChange',
+  SHAPE_ACTIVATED: 'eventShapeActivated',
   SHAPE_MODIFY: 'eventShapeModify',
   SHAPE_CREATED: 'eventShapeCreated',
   SHAPE_SELECTED: 'eventShapeSelected',

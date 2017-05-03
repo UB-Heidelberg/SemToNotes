@@ -8,7 +8,7 @@ goog.provide('xrx.drawing.Layer');
 
 
 
-goog.require('goog.Disposable');
+goog.require('xrx.EventTarget');
 goog.require('xrx.shape.Group');
 
 
@@ -45,7 +45,7 @@ xrx.drawing.Layer = function(drawing) {
 
   this.create_();
 };
-goog.inherits(xrx.drawing.Layer, goog.Disposable);
+goog.inherits(xrx.drawing.Layer, xrx.EventTarget);
 
 
 
