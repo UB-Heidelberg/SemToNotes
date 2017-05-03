@@ -1,6 +1,6 @@
 {
   "name": "semtonotes-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Semantic Topological Notes: A Topological Image Annotation and Image Retrieval System",
   "main": "xrx.api.drawing.min.js",
   "scripts": {
