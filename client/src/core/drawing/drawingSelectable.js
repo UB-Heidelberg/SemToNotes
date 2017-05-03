@@ -43,7 +43,10 @@ xrx.drawing.Selectable.prototype.getShape = function() {
 
 
 xrx.drawing.Selectable.prototype.setSelected = function(shape) {
-  if (this.last_) this.last_.getSelectable().selectOff();
+  if (this.last_){
+      this.dispatchExternal(xrx.drawing.EventType.SHAPE_UNSELECTED, this.drawing_, this.last_);
+      this.last_.getSelectable().selectOff();
+  }
   if (shape) {
     shape.getSelectable().selectOn();
     this.last_ = shape;

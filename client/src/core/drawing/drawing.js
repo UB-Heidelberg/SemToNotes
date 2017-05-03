@@ -89,6 +89,7 @@ xrx.drawing.EventType = {
   SHAPE_MODIFY: 'eventShapeModify',
   SHAPE_CREATED: 'eventShapeCreated',
   SHAPE_SELECTED: 'eventShapeSelected',
+  SHAPE_UNSELECTED: 'eventShapeUnselected',
   SHAPE_HOVER_IN: 'eventShapeHoverIn',
   SHAPE_HOVER_MOVE: 'eventShapeHoverMove',
   SHAPE_HOVER_OUT: 'eventShapeHoverOut',
