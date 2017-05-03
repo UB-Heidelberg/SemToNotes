@@ -34,7 +34,7 @@ goog.inherits(xrx.drawing.LayerShapeModify, xrx.drawing.Layer);
 xrx.drawing.LayerShapeModify.prototype.activate = function(modifiable) {
   this.removeShapes();
   this.addShapes(modifiable.getDragger());
-  this.dispatchExternal(xrx.drawing.EventType.SHAPE_ACTIVATED, this.drawing_, modifiable);
+  this.dispatchExternal(xrx.drawing.EventType.SHAPE_ACTIVATED, this.drawing_, modifiable.shape_);
 };
 
 

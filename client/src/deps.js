@@ -81,7 +81,7 @@ goog.addDependency('../../../../src/core/drawing/geometry/geometryPath.js', ['xr
 goog.addDependency('../../../../src/core/drawing/geometry/geometryPoint.js', ['xrx.geometry.Point'], ['xrx.geometry.Geometry']);
 goog.addDependency('../../../../src/core/drawing/geometry/geometryPolyline.js', ['xrx.geometry.Polyline'], ['xrx.geometry', 'xrx.geometry.Geometry', 'xrx.geometry.Line']);
 goog.addDependency('../../../../src/core/drawing/geometry/geometryRect.js', ['xrx.geometry.Rect'], ['goog.math.Box', 'xrx.geometry', 'xrx.geometry.Geometry']);
-goog.addDependency('../../../../src/core/drawing/layer/drawingLayer.js', ['xrx.drawing.Layer'], ['goog.Disposable', 'xrx.shape.Group']);
+goog.addDependency('../../../../src/core/drawing/layer/drawingLayer.js', ['xrx.drawing.Layer'], ['xrx.EventTarget', 'xrx.shape.Group']);
 goog.addDependency('../../../../src/core/drawing/layer/drawingLayerBackground.js', ['xrx.drawing.LayerBackground'], ['xrx.drawing.Layer', 'xrx.shape.Group', 'xrx.shape.Rect']);
 goog.addDependency('../../../../src/core/drawing/layer/drawingLayerShape.js', ['xrx.drawing.LayerShape'], ['xrx.drawing.Layer']);
 goog.addDependency('../../../../src/core/drawing/layer/drawingLayerShapeCreate.js', ['xrx.drawing.LayerShapeCreate'], ['xrx.drawing.Layer']);
