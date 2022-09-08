@@ -292,13 +292,13 @@ xrx.drawing.EventTarget.prototype.registerEvents = function(mode) {
     break;
   case xrx.drawing.Mode.HOVER:
     this.registerHover(this.hoverable_);
-    this.registerOut(this.hoverable_);
+    this.registerOut(this.viewbox_);
     this.registerWheel(this.viewbox_);
     this.registerDrag(this.viewbox_);
     break;
   case xrx.drawing.Mode.HOVERMULTIPLE:
     this.registerHover(this.hoverable_);
-    this.registerOut(this.hoverable_);
+    this.registerOut(this.viewbox_);
     this.registerWheel(this.viewbox_);
     this.registerDrag(this.viewbox_);
     break;
