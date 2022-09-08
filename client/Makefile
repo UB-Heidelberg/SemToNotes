@@ -1,4 +1,4 @@
-PYTHON = python
+PYTHON = python2
 
 .PHONY: build
 build: xrx.api.drawing.min.js
